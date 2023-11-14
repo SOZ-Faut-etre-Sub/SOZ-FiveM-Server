@@ -10,16 +10,13 @@ import { BankService } from '../../bank/bank.service';
 import { FieldProvider } from '../../farm/field.provider';
 import { InventoryManager } from '../../inventory/inventory.manager';
 import { ItemService } from '../../item/item.service';
+import { JobService } from '../../job.service';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
 import { ProgressService } from '../../player/progress.service';
-import { QBCore } from '../../qbcore';
 
 @Provider()
 export class StonkDeliveryProvider {
-    @Inject(QBCore)
-    private QBCore: QBCore;
-
     @Inject(ItemService)
     private itemService: ItemService;
 
@@ -37,6 +34,9 @@ export class StonkDeliveryProvider {
 
     @Inject(FieldProvider)
     private fieldService: FieldProvider;
+
+    @Inject(JobService)
+    private jobService: JobService;
 
     @Inject(Notifier)
     private notifier: Notifier;
@@ -84,12 +84,12 @@ export class StonkDeliveryProvider {
         const [playerJob, playerJobGrade] = this.playerService.getPlayerJobAndGrade(source);
 
         if (
-            !this.QBCore.hasJobPermission(
+            !(await this.jobService.hasTargetJobPermission(
                 JobType.CashTransfer,
                 playerJob,
                 playerJobGrade,
                 JobPermission.CashTransfer_CollectSecure
-            )
+            ))
         ) {
             this.notifier.notify(source, `Vous n'avez pas les accreditations nécessaires.`, 'error');
             return;

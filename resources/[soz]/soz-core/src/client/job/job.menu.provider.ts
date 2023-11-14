@@ -1,7 +1,8 @@
+import { Command } from '../../core/decorators/command';
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { NuiEvent } from '../../shared/event';
+import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { JobGrade, JobPermission } from '../../shared/job';
 import { JobMenuData } from '../../shared/nui/player';
 import { InputService } from '../nui/input.service';
@@ -35,7 +36,8 @@ export class JobMenuProvider {
             return;
         }
 
-        TriggerServerEvent('job:grade:add', name);
+        TriggerServerEvent(ServerEvent.JOB_GRADE_ADD, name);
+
         this.nuiMenu.closeMenu();
     }
 
@@ -49,13 +51,13 @@ export class JobMenuProvider {
             return;
         }
 
-        TriggerServerEvent('job:grade:remove', grade.id);
+        TriggerServerEvent(ServerEvent.JOB_GRADE_REMOVE, grade.id);
         this.nuiMenu.closeMenu();
     }
 
     @OnNuiEvent(NuiEvent.PlayerMenuJobGradeSetDefault)
     public async onPlayerMenuJobGradeSetDefault({ gradeId }: { gradeId: number }) {
-        TriggerServerEvent('job:grade:set-default', gradeId);
+        TriggerServerEvent(ServerEvent.JOB_GRADE_SET_DEFAULT, gradeId);
         this.nuiMenu.closeMenu();
     }
 
@@ -73,7 +75,7 @@ export class JobMenuProvider {
 
         const salaryNumber = parseInt(salary, 10);
 
-        TriggerServerEvent('job:grade:set-salary', gradeId, salaryNumber);
+        TriggerServerEvent(ServerEvent.JOB_GRADE_SET_SALARY, gradeId, salaryNumber);
         this.nuiMenu.closeMenu();
     }
 
@@ -91,7 +93,7 @@ export class JobMenuProvider {
 
         const weightNumber = parseInt(weight, 10);
 
-        TriggerServerEvent('job:grade:set-weight', gradeId, weightNumber);
+        TriggerServerEvent(ServerEvent.JOB_GRADE_SET_WEIGHT, gradeId, weightNumber);
         this.nuiMenu.closeMenu();
     }
 
@@ -105,11 +107,28 @@ export class JobMenuProvider {
         permission: JobPermission;
         value: boolean;
     }) {
-        if (value) {
-            TriggerServerEvent('job:grade:add-permission', gradeId, permission);
-        } else {
-            TriggerServerEvent('job:grade:remove-permission', gradeId, permission);
+        TriggerServerEvent(ServerEvent.JOB_GRADE_SET_PERMISSION, gradeId, permission, value);
+    }
+
+    @Command('society-menu', {
+        description: 'Ouvrir le menu entreprise',
+        keys: [{ mapper: 'keyboard', key: 'F3' }],
+    })
+    public openSocietyMenu() {
+        const player = this.playerService.getPlayer();
+
+        if (!player || player.metadata.isdead) {
+            return;
         }
+
+        const job = this.jobService.getJob(player.job.id);
+
+        if (!job) {
+            return;
+        }
+
+        const event = job.menuCallback || ClientEvent.JOB_OPEN_MENU;
+        TriggerEvent(event, job.id);
     }
 
     public getJobMenuData(): JobMenuData {

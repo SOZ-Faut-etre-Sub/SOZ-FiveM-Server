@@ -6,7 +6,7 @@ local function PlayerHaveAccessToInvoices(PlayerData, account)
         return true
     end
 
-    return SozJobCore.Functions.HasPermission(account, PlayerData.job.id, PlayerData.job.grade, SozJobCore.JobPermission.SocietyBankInvoices)
+    return exports["soz-core"]:HasJobPermission(account, PlayerData.job.id, PlayerData.job.grade, "society-bank-invoices")
 end
 
 local function GetAllInvoices(PlayerData)
@@ -231,11 +231,13 @@ local function CreateInvoice(Emitter, Target, account, targetAccount, label, amo
         return false
     end
 
+    local emitterJob = exports["soz-core"]:GetJob(Emitter.PlayerData.job.id)
+
     local id = MySQL.insert.await(
                    "INSERT INTO invoices (citizenid, emitter, emitterName, emitterSafe, targetAccount, label, amount, kind) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", {
             Target.PlayerData.citizenid,
             Emitter.PlayerData.citizenid,
-            SozJobCore.Jobs[Emitter.PlayerData.job.id].label,
+            emitterJob.label,
             "safe_" .. Emitter.PlayerData.job.id,
             targetAccount,
             label,
@@ -252,7 +254,7 @@ local function CreateInvoice(Emitter, Target, account, targetAccount, label, amo
             id = id,
             citizenid = Target.PlayerData.citizenid,
             emitter = Emitter.PlayerData.citizenid,
-            emitterName = SozJobCore.Jobs[Emitter.PlayerData.job.id].label,
+            emitterName = emitterJob.label,
             emitterSafe = "safe_" .. Emitter.PlayerData.job.id,
             targetAccount = targetAccount,
             label = label,
@@ -261,7 +263,7 @@ local function CreateInvoice(Emitter, Target, account, targetAccount, label, amo
         }
 
         if PlayerHaveAccessToInvoices(Target.PlayerData, targetAccount) then
-            TriggerClientEvent("banking:client:invoiceReceived", Target.PlayerData.source, id, label, amount, SozJobCore.Jobs[Emitter.PlayerData.job.id].label)
+            TriggerClientEvent("banking:client:invoiceReceived", Target.PlayerData.source, id, label, amount, emitterJob.label)
         end
 
         local invoiceJob = ""

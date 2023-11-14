@@ -42,9 +42,10 @@ RegisterNetEvent("pawl:client:OpenSocietyMenu", function()
                 displayResellBlip = value
 
                 if not QBCore.Functions.GetBlip("pawl_resell") then
-                    QBCore.Functions.CreateBlip("pawl_resell", {
+                    QBCore.Functions.CreateBlip("pawl_resell",
+                                                {
                         name = "Zone de rente",
-                        coords = SozJobCore.Jobs[SozJobCore.JobType.Pawl].resell.primary.coords,
+                        coords = Config.Resell.primary.coords,
                         sprite = Config.Blip.Sprite,
                         scale = 0.8,
                     })

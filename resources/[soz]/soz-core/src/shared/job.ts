@@ -1,3 +1,5 @@
+import { Zone } from '@public/shared/polyzone/box.zone';
+
 import { ClientEvent } from './event';
 
 export enum JobType {
@@ -120,17 +122,15 @@ export type JobPermissionData = {
 export type Job = {
     // Must use the getJobs method to generate the id from the object.
     id: JobType;
-    grades: JobGrade[];
     label: string;
     permissions: Partial<Record<JobPermission, JobPermissionData>>;
     platePrefix?: string;
-    // TODO: Complete when necessary
-    temporary?: any;
-    bossZones?: any;
+    bossZones?: Zone[];
     canInvoice?: boolean;
-    menuCallback?: ClientEvent;
+    menuCallback?: ClientEvent | string;
     resell?: any;
     phone?: string;
+    canReceiveSocietyInvoice: boolean;
 };
 
 export type JobGrade = {
@@ -139,7 +139,7 @@ export type JobGrade = {
     name: string;
     weight: number;
     salary: number;
-    owner: number;
+    owner: boolean;
     is_default: boolean;
     permissions: JobPermission[];
 };

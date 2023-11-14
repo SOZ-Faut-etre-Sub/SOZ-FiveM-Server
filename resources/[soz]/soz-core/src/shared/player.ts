@@ -212,7 +212,19 @@ export enum PlayerLicenceType {
     Rescuer = 'rescuer',
 }
 
-export type PlayerListStateKey = 'dead' | 'zipped' | 'wearingPatientOutfit';
+export const PlayerLicenceLabels = {
+    [PlayerLicenceType.Car]: 'Permis voiture',
+    [PlayerLicenceType.Truck]: 'Permis poids lourd',
+    [PlayerLicenceType.Moto]: 'Permis moto',
+    [PlayerLicenceType.Boat]: 'Permis maritime',
+    [PlayerLicenceType.Heli]: "Permis d'aviation",
+    [PlayerLicenceType.Weapon]: "Permis port d'arme",
+    [PlayerLicenceType.Fishing]: 'Permis de pêche',
+    [PlayerLicenceType.Hunting]: 'Permis de chasse',
+    [PlayerLicenceType.Rescuer]: 'Secouriste',
+};
+
+export type PlayerListStateKey = 'dead' | 'zipped' | 'wearingPatientOutfit' | 'escorted';
 
 export enum PlayerCriminalState {
     None,
@@ -275,4 +287,5 @@ export type PlayerMetadata = PlayerHealthBook & {
     mood?: string | null;
     rp_death: boolean;
     is_senator: boolean;
+    injail: boolean;
 };

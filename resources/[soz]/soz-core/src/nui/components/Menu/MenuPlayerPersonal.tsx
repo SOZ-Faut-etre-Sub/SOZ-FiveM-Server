@@ -9,6 +9,7 @@ import { MenuType } from '../../../shared/nui/menu';
 import { JobMenuData, PlayerPersonalMenuData, Shortcut } from '../../../shared/nui/player';
 import { fetchNui } from '../../fetch';
 import { usePlayer } from '../../hook/data';
+import { useJobGrades } from '../../hook/job';
 import { useNuiEvent } from '../../hook/nui';
 import {
     MainMenu,
@@ -443,9 +444,13 @@ type MenuJobProps = {
 };
 
 const MenuJob: FunctionComponent<MenuJobProps> = ({ data }) => {
+    const grades = useJobGrades();
+
     if (!data.enabled) {
         return null;
     }
+
+    const jobGrades = grades.filter(grade => grade.jobId === data.job.id);
 
     return (
         <>
@@ -462,7 +467,7 @@ const MenuJob: FunctionComponent<MenuJobProps> = ({ data }) => {
                         Ajouter un grade
                     </MenuItemButton>
 
-                    {data.job.grades.map((grade, i) => {
+                    {jobGrades.map((grade, i) => {
                         return (
                             <MenuItemSubMenuLink key={i} id={`job_grade_${grade.id}`}>
                                 {grade.name} {!!grade.is_default && '(par défaut)'}
@@ -471,7 +476,7 @@ const MenuJob: FunctionComponent<MenuJobProps> = ({ data }) => {
                     })}
                 </MenuContent>
             </SubMenu>
-            {data.job.grades
+            {jobGrades
                 .sort((a, b) => {
                     return b.weight - a.weight;
                 })

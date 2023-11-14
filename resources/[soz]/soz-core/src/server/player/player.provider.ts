@@ -7,7 +7,13 @@ import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { Permissions } from '../../core/permissions';
 import { ServerEvent } from '../../shared/event';
-import { PlayerClientState, PlayerData, PlayerListStateKey, PlayerServerState } from '../../shared/player';
+import {
+    PlayerClientState,
+    PlayerData,
+    PlayerLicenceType,
+    PlayerListStateKey,
+    PlayerServerState,
+} from '../../shared/player';
 import { RpcServerEvent } from '../../shared/rpc';
 import { PermissionService } from '../permission.service';
 import { QBCore } from '../qbcore';
@@ -137,5 +143,10 @@ export class PlayerProvider {
         }
 
         return null;
+    }
+
+    @Rpc(RpcServerEvent.PLAYER_GET_LICENCES)
+    public async getLicences(source: number, target: number): Promise<Partial<Record<PlayerLicenceType, number>>> {
+        return this.serverStateService.getPlayer(target).metadata.licences;
     }
 }

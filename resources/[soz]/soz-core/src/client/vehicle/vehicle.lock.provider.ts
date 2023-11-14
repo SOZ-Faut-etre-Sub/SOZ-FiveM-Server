@@ -390,6 +390,14 @@ export class VehicleLockProvider {
         ],
     })
     async openVehicleTrunk() {
+        this.openVehicleTrunkInner();
+    }
+
+    async openVehiclePolice(vehicle: number) {
+        this.openVehicleTrunkInner(vehicle, false);
+    }
+
+    private async openVehicleTrunkInner(definedVehicle?: number, checkOpen = true) {
         const ped = PlayerPedId();
 
         const player = this.playerService.getPlayer();
@@ -402,9 +410,11 @@ export class VehicleLockProvider {
             return;
         }
 
-        const vehicle = this.vehicleService.getClosestVehicle({
-            maxDistance: 15.0,
-        });
+        const vehicle = definedVehicle
+            ? definedVehicle
+            : this.vehicleService.getClosestVehicle({
+                  maxDistance: 15.0,
+              });
 
         if (!vehicle || !IsEntityAVehicle(vehicle)) {
             this.notifier.notify('Aucun véhicule à proximité.', 'error');
@@ -438,7 +448,7 @@ export class VehicleLockProvider {
 
         const vehicleState = await this.vehicleStateService.getServerVehicleState(vehicle);
 
-        if (!vehicleState.forced && !player.metadata.godmode && !vehicleState.open) {
+        if (!vehicleState.forced && !player.metadata.godmode && checkOpen && !vehicleState.open) {
             this.notifier.notify('Véhicule verrouillé.', 'error');
 
             return;

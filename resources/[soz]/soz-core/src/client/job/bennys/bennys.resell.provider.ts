@@ -2,16 +2,16 @@ import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
-import { JobPermission } from '../../../shared/job';
+import { JobPermission, JobType } from '../../../shared/job';
 import { BennysConfig } from '../../../shared/job/bennys';
 import { BoxZone } from '../../../shared/polyzone/box.zone';
 import { Vector3 } from '../../../shared/polyzone/vector';
 import { Err, Ok } from '../../../shared/result';
 import { InputService } from '../../nui/input.service';
 import { PlayerService } from '../../player/player.service';
-import { Qbcore } from '../../qbcore';
 import { TargetFactory } from '../../target/target.factory';
 import { VehicleModificationService } from '../../vehicle/vehicle.modification.service';
+import { JobService } from '../job.service';
 
 @Provider()
 export class BennysResellProvider {
@@ -24,8 +24,8 @@ export class BennysResellProvider {
     @Inject(InputService)
     private inputService: InputService;
 
-    @Inject(Qbcore)
-    private QBCore: Qbcore;
+    @Inject(JobService)
+    private jobService: JobService;
 
     @Inject(VehicleModificationService)
     private vehicleModificationService: VehicleModificationService;
@@ -58,7 +58,7 @@ export class BennysResellProvider {
                     const vehicleType = GetVehicleClass(entity);
                     return (
                         this.playerService.isOnDuty() &&
-                        this.QBCore.hasJobPermission('bennys', JobPermission.BennysResell) &&
+                        this.jobService.hasPermission(JobType.Bennys, JobPermission.BennysResell) &&
                         zone.isPointInside(point) &&
                         allowedTypes.includes(vehicleType)
                     );

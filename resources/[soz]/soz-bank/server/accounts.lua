@@ -17,9 +17,7 @@ setmetatable(Account, {
 })
 
 MySQL.ready(function()
-    local SozJobCore = exports["soz-jobs"]:GetCoreObject()
-
-    local EnterpriseAccountNotLoaded = table.clone(SozJobCore.Jobs)
+    local EnterpriseAccountNotLoaded = table.clone(exports["soz-core"]:GetJobs())
     local EnterpriseSafeNotLoaded = table.clone(Config.SafeStorages)
     local BankNotLoaded = table.clone(Config.BankPedLocations)
     local AtmNotLoaded = table.clone(Config.AtmLocations)
@@ -30,8 +28,9 @@ MySQL.ready(function()
                 if v.account_type == "player" then
                     Account.Create(v.accountid, v.citizenid, v.account_type, v.citizenid, v.money)
                 elseif v.account_type == "business" then
-                    Account.Create(v.businessid, SozJobCore.Jobs[v.businessid] and SozJobCore.Jobs[v.businessid].label or v.name, v.account_type, v.businessid,
-                                   v.money)
+                    local job = exports["soz-core"]:GetJob(v.businessid)
+
+                    Account.Create(v.businessid, job and job.label or v.name, v.account_type, v.businessid, v.money)
                     EnterpriseAccountNotLoaded[v.businessid] = nil
                 elseif v.account_type == "safestorages" then
                     if v.houseid then
@@ -328,3 +327,4 @@ local function GetAccountCapacity(account)
 end
 
 exports("GetAccountCapacity", GetAccountCapacity)
+exports("AddAccountMoney", Account.AddMoney)

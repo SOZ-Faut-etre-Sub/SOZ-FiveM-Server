@@ -1,43 +1,41 @@
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { emitRpc } from '../../core/rpc';
 import { NuiEvent, ServerEvent } from '../../shared/event';
 import { Job } from '../../shared/job';
+import { JobRegistry } from '../../shared/job/config';
 import { Ok } from '../../shared/result';
-import { RpcServerEvent } from '../../shared/rpc';
 import { Notifier } from '../notifier';
-import { NuiDispatch } from '../nui/nui.dispatch';
-import { Qbcore } from '../qbcore';
+import { JobGradeRepository } from '../repository/job.grade.repository';
 
 @Provider()
 export class AdminMenuJobProvider {
-    @Inject(NuiDispatch)
-    private nuiDispatch: NuiDispatch;
-
-    @Inject(Qbcore)
-    private QBCore: Qbcore;
-
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @OnNuiEvent(NuiEvent.AdminGetJobs)
-    public async getJobs() {
-        const jobs = await emitRpc<Job[]>(RpcServerEvent.JOB_GET_JOBS);
-        return Ok(jobs);
+    @Inject(JobGradeRepository)
+    private jobGradeRepository: JobGradeRepository;
+
+    @OnNuiEvent(NuiEvent.AdminGetJobGrades)
+    public async getJobGrades() {
+        const grades = this.jobGradeRepository.get();
+
+        return Ok(grades);
     }
 
     @OnNuiEvent(NuiEvent.AdminSetJob)
-    public async setJob({ jobId, jobGrade }: { jobId: Job['id']; jobGrade: number }): Promise<void> {
+    public async setJob({ jobId, jobGrade }: { jobId: Job['id']; jobGrade?: number }): Promise<void> {
+        if (!jobGrade) {
+            const grades = this.jobGradeRepository.getGradesByJob(jobId);
+            jobGrade = grades.length > 0 ? grades[0].id : 0;
+        }
+
+        const grade = this.jobGradeRepository.find(jobGrade);
+        const job = JobRegistry[jobId];
+
         TriggerServerEvent(ServerEvent.ADMIN_SET_JOB, jobId, jobGrade);
 
-        const jobs = await emitRpc<Job[]>(RpcServerEvent.JOB_GET_JOBS);
-        const job = jobs.find(job => job.id === jobId);
-        const grade = job.grades.find(value => value.id.toString() === jobGrade.toString()) || '';
-
-        this.notifier.notify(
-            `Vous êtes maintenant ${grade ? '~g~' + grade.name + '~s~' : ''} chez ~g~${job.label}~s~!`
-        );
+        this.notifier.notify(`Vous êtes maintenant '~g~'${grade ? grade.name : 'N/A'}'~s~' chez ~g~${job.label}~s~!`);
     }
 
     @OnNuiEvent(NuiEvent.AdminToggleDuty)

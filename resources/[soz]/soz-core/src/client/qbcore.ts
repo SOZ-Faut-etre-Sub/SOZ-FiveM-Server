@@ -1,17 +1,14 @@
 import { Injectable } from '../core/decorators/injectable';
 import { Blip } from '../shared/blip';
 import { Item } from '../shared/item';
-import { Job, JobPermission, JobType } from '../shared/job';
 import { PlayerData } from '../shared/player';
 
 @Injectable()
 export class Qbcore {
     private QBCore;
-    private SozJobCore;
 
     public constructor() {
         this.QBCore = exports['qb-core'].GetCoreObject();
-        this.SozJobCore = exports['soz-jobs'].GetCoreObject();
     }
 
     public getPlayer(): PlayerData {
@@ -44,20 +41,5 @@ export class Qbcore {
 
     public hasBlip(id: string): boolean {
         return !!this.QBCore.Functions.GetBlip(id);
-    }
-
-    public getJobs(): Job[] {
-        const jobs = this.SozJobCore.Jobs as { [key in JobType]: Job };
-        if (!jobs) {
-            return [];
-        }
-        return Object.entries(jobs)
-            .sort((a, b) => a[1].label.localeCompare(b[1].label))
-            .map(([key, value]) => ({ ...value, id: key as JobType }));
-    }
-
-    // Temporary method that would be moved
-    public hasJobPermission(job: string, permission: JobPermission): boolean {
-        return this.SozJobCore.Functions.HasPermission(job, permission);
     }
 }

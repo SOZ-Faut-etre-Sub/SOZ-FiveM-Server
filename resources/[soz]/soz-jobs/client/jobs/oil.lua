@@ -97,7 +97,7 @@ local function SpawnFieldZones()
             debugPoly = false,
         })
         fieldZone:onPlayerInOut(function(isInside)
-            if isInside and PlayerData.job.id == SozJobCore.JobType.Oil and PlayerData.job.onduty then
+            if isInside and PlayerData.job.id == "oil" and PlayerData.job.onduty then
                 exports["qb-target"]:AddTargetModel({"p_oil_pjack_01_s", "p_oil_pjack_02_s", "p_oil_pjack_03_s"}, {
                     options = {
                         {
@@ -227,7 +227,7 @@ CreateThread(function()
                 icon = "c:fuel/remplir.png",
                 event = "soz-core:client:oil:update-station-price",
                 canInteract = function()
-                    return PlayerData.job.onduty and SozJobCore.Functions.HasPermission("oil", SozJobCore.JobPermission.Fueler.ChangePrice)
+                    return PlayerData.job.onduty and exports["soz-core"]:HasJobPermission("oil", "fueler-change-price")
                 end,
                 job = "oil",
             },

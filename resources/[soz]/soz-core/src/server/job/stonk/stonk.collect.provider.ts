@@ -5,20 +5,16 @@ import { ServerEvent } from '../../../shared/event';
 import { JobPermission, JobType } from '../../../shared/job';
 import { StonkBagType, StonkConfig } from '../../../shared/job/stonk';
 import { toVector3Object, Vector3 } from '../../../shared/polyzone/vector';
-import { BankService } from '../../bank/bank.service';
 import { InventoryManager } from '../../inventory/inventory.manager';
 import { ItemService } from '../../item/item.service';
+import { JobService } from '../../job.service';
 import { Monitor } from '../../monitor/monitor';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
 import { ProgressService } from '../../player/progress.service';
-import { QBCore } from '../../qbcore';
 
 @Provider()
 export class StonkCollectProvider {
-    @Inject(QBCore)
-    private QBCore: QBCore;
-
     @Inject(ItemService)
     private itemService: ItemService;
 
@@ -31,8 +27,8 @@ export class StonkCollectProvider {
     @Inject(ProgressService)
     private progressService: ProgressService;
 
-    @Inject(BankService)
-    private bankService: BankService;
+    @Inject(JobService)
+    private jobService: JobService;
 
     @Inject(Notifier)
     private notifier: Notifier;
@@ -47,12 +43,12 @@ export class StonkCollectProvider {
         const [playerJob, playerJobGrade] = this.playerService.getPlayerJobAndGrade(source);
 
         if (
-            !this.QBCore.hasJobPermission(
+            !(await this.jobService.hasTargetJobPermission(
                 JobType.CashTransfer,
                 playerJob,
                 playerJobGrade,
                 JobPermission.CashTransfer_CollectBags
-            )
+            ))
         ) {
             this.notifier.notify(source, `Vous n'avez pas les accréditations nécessaires.`, 'error');
             return;

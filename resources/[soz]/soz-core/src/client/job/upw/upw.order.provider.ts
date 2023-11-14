@@ -15,7 +15,7 @@ import { Err, Ok } from '@public/shared/result';
 import { RpcServerEvent } from '@public/shared/rpc';
 import { Vehicle } from '@public/shared/vehicle/vehicle';
 
-import { JobPermissionService } from '../job.permission.service';
+import { JobService } from '../job.service';
 
 @Provider()
 export class UpwOrderProvider {
@@ -34,8 +34,8 @@ export class UpwOrderProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
-    @Inject(JobPermissionService)
-    private jobPermissionService: JobPermissionService;
+    @Inject(JobService)
+    private jobService: JobService;
 
     @OnNuiEvent(NuiEvent.UpwCancelOrder)
     public async onCancelOrder(uuid: string) {
@@ -96,7 +96,7 @@ export class UpwOrderProvider {
                 canInteract: () => {
                     return (
                         this.playerService.isOnDuty() &&
-                        this.jobPermissionService.hasPermission(JobType.Upw, JobPermission.UpwOrder)
+                        this.jobService.hasPermission(JobType.Upw, JobPermission.UpwOrder)
                     );
                 },
                 action: this.openOrderMenu.bind(this),
@@ -111,7 +111,7 @@ export class UpwOrderProvider {
                 canInteract: () => {
                     return (
                         this.playerService.isOnDuty() &&
-                        this.jobPermissionService.hasPermission(JobType.Upw, JobPermission.UpwChangePrice)
+                        this.jobService.hasPermission(JobType.Upw, JobPermission.UpwChangePrice)
                     );
                 },
                 action: this.setChargerPrice.bind(this),

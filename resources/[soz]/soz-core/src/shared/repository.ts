@@ -37,12 +37,12 @@ export interface RepositoryConfig extends Record<RepositoryType, Record<any, any
     // Implemented
     [RepositoryType.Housing]: Record<number, Property>;
     [RepositoryType.Zone]: Record<number, ZoneTyped>;
+    [RepositoryType.JobGrade]: Record<number, JobGrade>;
     [RepositoryType.TowRope]: Record<string, TowRope>;
     // Not implemented
     [RepositoryType.Billboard]: Record<number, Billboard>;
     [RepositoryType.ChargerUpw]: Record<number, UpwCharger>;
     [RepositoryType.Garage]: Record<string, Garage>;
-    [RepositoryType.JobGrade]: Record<number, JobGrade>;
     [RepositoryType.Object]: Record<string, WorldObject>;
     [RepositoryType.Race]: Record<number, Race>;
     [RepositoryType.Radar]: Record<number, Radar>;

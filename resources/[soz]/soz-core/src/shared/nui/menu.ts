@@ -1,5 +1,5 @@
 import { JobType } from '@public/shared/job';
-import { NuiJobEmployeeOnDuty } from '@public/shared/nui/job';
+import { NuiJobEmployeeOnDuty, PromoteMenuData } from '@public/shared/nui/job';
 import { PlayerPersonalMenuData } from '@public/shared/nui/player';
 
 import { AdminMenuStateProps } from '../../nui/components/Admin/AdminMenu';
@@ -8,6 +8,12 @@ import { DrivingSchoolMenuData } from '../driving-school';
 import { FuelType } from '../fuel';
 import { AdminMapperMenuData, HousingUpgradesMenuData } from '../housing/menu';
 import { DmcJobMenuData } from '../job/dmc';
+import {
+    PoliceJobFineMenuData,
+    PoliceJobLicencesMenuData,
+    PoliceJobMenuData,
+    PoliceJobMoneycheckerMenuData,
+} from '../job/police';
 import { MenuUpwData, UpwOrderMenuData } from '../job/upw';
 import { Race } from '../race';
 import { BossShopMenu, ShopProduct } from '../shop';
@@ -89,7 +95,12 @@ export enum MenuType {
     GouvJobMenu = 'gouv_job',
     FDFJobMenu = 'fdf_job',
     DmcJobMenu = 'dmc_job',
+    PoliceJobMenu = 'police_job_menu',
+    PoliceJobLicences = 'police_job_licences',
+    PoliceJobMoneychecker = 'police_job_moneychecker',
+    PoliceJobFines = 'police_job_fines',
     PitStopPriceMenu = 'pitstop_price',
+    Promote = 'promote',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {
@@ -136,5 +147,10 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.FDFJobMenu]: any;
     [MenuType.JobNews]: { job: JobType };
     [MenuType.DmcJobMenu]: DmcJobMenuData;
+    [MenuType.PoliceJobLicences]: PoliceJobLicencesMenuData;
+    [MenuType.PoliceJobMoneychecker]: PoliceJobMoneycheckerMenuData;
+    [MenuType.PoliceJobFines]: PoliceJobFineMenuData;
+    [MenuType.PoliceJobMenu]: PoliceJobMenuData;
     [MenuType.PitStopPriceMenu]: never;
+    [MenuType.Promote]: PromoteMenuData;
 }

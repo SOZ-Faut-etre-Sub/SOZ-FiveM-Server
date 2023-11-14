@@ -168,20 +168,20 @@ function StartConsumptionLoop()
             local energies = {}
 
             -- Handle job terminal consumption
-            for jobId, v in pairs(SozJobCore.Jobs) do
-                local terminal = GetTerminalJob(jobId)
+            for k, job in pairs(exports["soz-core"]:GetJobs()) do
+                local terminal = GetTerminalJob(job.id)
 
                 if terminal ~= nil then
-                    local _, count = QBCore.Functions.GetPlayersOnDuty(jobId)
+                    local _, count = QBCore.Functions.GetPlayersOnDuty(job.id)
                     local consumptionJobThisTick = Config.Consumption.EnergyJobPerTick * count
 
                     if terminal:CanConsume() then
                         terminal:Consume(consumptionJobThisTick)
                     end
 
-                    energies[jobId] = terminal:GetEnergyPercent()
+                    energies[job.id] = terminal:GetEnergyPercent()
                 else
-                    energies[jobId] = 100
+                    energies[job.id] = 100
                 end
             end
 

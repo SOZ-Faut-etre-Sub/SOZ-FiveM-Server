@@ -47,7 +47,7 @@ export class NewsMenuProvider {
     }
 
     @OnNuiEvent(NuiEvent.NewsCreateAnnounce)
-    public async onCreateAnnounce({ type }: { type: string }) {
+    public async onCreateAnnounce({ type, title }: { type: string; title: string }) {
         const player = this.playerService.getPlayer();
 
         if (!player) {
@@ -55,7 +55,7 @@ export class NewsMenuProvider {
         }
 
         const message = await this.inputService.askInput({
-            title: 'Message de la communication',
+            title,
             maxCharacters: 235,
             defaultValue: '',
         });

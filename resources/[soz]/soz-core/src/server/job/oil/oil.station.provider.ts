@@ -118,7 +118,7 @@ export class OilStationProvider {
             return;
         }
 
-        if (!this.jobService.hasPermission(player, JobType.Oil, JobPermission.FuelerChangePrice)) {
+        if (!(await this.jobService.hasPermission(player, JobType.Oil, JobPermission.FuelerChangePrice))) {
             this.notifier.notify(source, "Vous n'avez pas la permission de faire ça.", 'error');
 
             return;

@@ -33,6 +33,7 @@ import { PawlModule } from './client/job/pawl/pawl.module';
 import { PoliceModule } from './client/job/police/police.module';
 import { StonkModule } from './client/job/stonk/stonk.module';
 import { TaxiModule } from './client/job/taxi/taxi.module';
+import { JobTemporaryModule } from './client/job/temporary/temporary.module';
 import { UpwModule } from './client/job/upw/upw.module';
 import { MonitorModule } from './client/monitor/monitor.module';
 import { NuiModule } from './client/nui/nui.module';
@@ -113,6 +114,7 @@ async function bootstrap() {
         FDFModule,
         NewsModule,
         DMCModule,
+        JobTemporaryModule,
         ...PrivateModules
     );
 

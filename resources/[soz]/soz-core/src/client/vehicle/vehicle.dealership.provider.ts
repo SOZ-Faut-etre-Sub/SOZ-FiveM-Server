@@ -16,7 +16,7 @@ import { RpcServerEvent } from '../../shared/rpc';
 import { AuctionVehicle, ShowVehicle } from '../../shared/vehicle/auction';
 import { Vehicle, VehicleDealershipMenuData } from '../../shared/vehicle/vehicle';
 import { BlipFactory } from '../blip';
-import { JobPermissionService } from '../job/job.permission.service';
+import { JobService } from '../job/job.service';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
@@ -45,8 +45,8 @@ export class VehicleDealershipProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
-    @Inject(JobPermissionService)
-    private jobPermissionService: JobPermissionService;
+    @Inject(JobService)
+    private jobService: JobService;
 
     @Inject(InputService)
     private inputService: InputService;
@@ -481,7 +481,7 @@ export class VehicleDealershipProvider {
             return;
         }
 
-        if (!this.jobPermissionService.hasPermission(player.job.id, JobPermission.SocietyDealershipVehicle)) {
+        if (!this.jobService.hasPermission(player.job.id, JobPermission.SocietyDealershipVehicle)) {
             this.notifier.notify("Vous n'avez pas les droits d'accéder au concessionnaire.", 'error');
 
             return;

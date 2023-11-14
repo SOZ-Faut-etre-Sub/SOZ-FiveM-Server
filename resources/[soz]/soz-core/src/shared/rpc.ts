@@ -33,7 +33,6 @@ export enum RpcServerEvent {
 
     INVENTORY_SEARCH = 'soz-core:inventory:search',
 
-    JOB_GET_JOBS = 'soz-core:jobs:get-jobs',
     JOBS_USE_WORK_CLOTHES = 'soz-core:server:job:use-work-clothes',
 
     OIL_GET_STATION = 'soz-core:job:oil:get-station',
@@ -43,7 +42,9 @@ export enum RpcServerEvent {
     PLAYER_GET_LIST_STATE = 'soz-core:player:get-list-state',
     PLAYER_GET_SERVER_STATE = 'soz-core:player:get-server-state',
     PLAYER_GET_JWT_TOKEN = 'soz-core:player:get-jwt-token',
+    PLAYER_GET_LICENCES = 'soz-core:player:get-licences',
     PLAYER_TELEPORT = 'soz-core:player:teleport',
+    PLAYER_GET_JOB = 'soz-core:player:get-job',
 
     BANK_GET_ACCOUNT = 'soz-core:bank:get-account',
 
@@ -79,6 +80,7 @@ export enum RpcServerEvent {
     VEHICLE_PITSTOP_DATA = 'soz-core:rpc:vehicle:pitstop:data',
     VEHICLE_PITSTOP_PRICES = 'soz-core:rpc:vehicle:pitstop:price',
     VEHICLE_PITSTOP_PRICES_UPDATE = 'soz-core:rpc:vehicle:pitstop:price-update',
+    VEHICLE_SPAWN_TEMPORARY = 'soz-core:rpc:vehicle:spawn-temporary',
 
     VOIP_IS_MUTED = 'soz-core:voip:is-muted',
     VOIP_GET_MEGAPHONE_PLAYERS = 'soz-core:voip:get-megaphone-players',
@@ -118,6 +120,10 @@ export enum RpcServerEvent {
 
     POLICE_ALCOOLLEVEL = 'soz-core:server:police:alcool-level',
     POLICE_DRUGLEVEL = 'soz-core:server:police:drug-level',
+    POLICE_GET_WANTED_PLAYERS = 'soz-core:server:police:get-wanted-players',
+    POLICE_DELETE_WANTED_PLAYER = 'soz-core:server:police:delete-wanted-player',
+    POLICE_GET_VEHICLE_OWNER = 'soz-core:server:police:get-vehicule-owner',
+    POLICE_GET_MARKED_MONEY = 'soz-core:server:police:get-marked-money',
     HUB_EXIT_TIME = 'soz-core:server:hub:exit-time',
 
     BIN_IS_NOT_LOCKED = 'soz-core:server:bin:is-locked',

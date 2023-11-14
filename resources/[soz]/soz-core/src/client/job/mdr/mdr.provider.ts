@@ -12,7 +12,7 @@ import { BlipFactory } from '../../blip';
 import { NuiMenu } from '../../nui/nui.menu';
 import { PlayerService } from '../../player/player.service';
 import { TargetFactory } from '../../target/target.factory';
-import { JobPermissionService } from '../job.permission.service';
+import { JobService } from '../job.service';
 
 @Provider()
 export class MandatoryProvider {
@@ -37,8 +37,8 @@ export class MandatoryProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @Inject(JobPermissionService)
-    private jobPermissionService: JobPermissionService;
+    @Inject(JobService)
+    private jobService: JobService;
 
     private state = {
         radar: false,
@@ -65,7 +65,7 @@ export class MandatoryProvider {
                     canInteract: () => {
                         return (
                             this.playerService.isOnDuty() &&
-                            this.jobPermissionService.hasPermission(JobType.MDR, JobPermission.MdrMarkedMoneyCleaning)
+                            this.jobService.hasPermission(JobType.MDR, JobPermission.MdrMarkedMoneyCleaning)
                         );
                     },
                     job: JobType.MDR,
@@ -107,14 +107,14 @@ export class MandatoryProvider {
         });
     }
 
-    @OnNuiEvent(NuiEvent.ToggleRadar)
+    @OnNuiEvent(NuiEvent.ToggleRadarMendatory)
     public toogleRadar(value: boolean): Promise<void> {
         this.state.radar = value;
         this.vehicleRadarProvider.toggleBlip(value);
         return;
     }
 
-    @OnNuiEvent(NuiEvent.RedCall)
+    @OnNuiEvent(NuiEvent.RedCallMendatory)
     public redCall(): Promise<void> {
         const ped = PlayerPedId();
         const coords = GetEntityCoords(ped);
@@ -127,7 +127,7 @@ export class MandatoryProvider {
             }
 
             TriggerEvent(
-                'police:client:RedCall',
+                ClientEvent.POLICE_RED_CALL,
                 '555-POLICE',
                 `Code Rouge !!! Un membre de Mandatory a besoin d'aide vers ${name}`,
                 `Code Rouge !!! Un membre de Mandatory a besoin d'aide vers <span {class}>${name}</span>`

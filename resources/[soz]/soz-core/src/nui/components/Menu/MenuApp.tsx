@@ -25,6 +25,10 @@ import { HousingUpgradesMenu } from '../Housing/HousingUpgradesMenu';
 import { JobOnDutyMenu } from '../Job/OnDutyMenu';
 import { LsmcJobMenu } from '../LSMC/LsmcJobMenu';
 import { MandatoryJobMenu } from '../Mandatory/MandatoryJobMenu';
+import { FinesMenu } from '../Police/Fines';
+import { LicencesMenu } from '../Police/Licences';
+import { MoneyChecker } from '../Police/MoneyChecker';
+import { PoliceJobMenu } from '../Police/PoliceJobMenu';
 import { MenuRaceAdmin } from '../Race/MenuRaceAdmin';
 import { MenuRaceRank } from '../Race/MenuRaceRanking';
 import { BarberShopMenu } from '../Shop/BarberShopMenu';
@@ -39,6 +43,7 @@ import { DmcJobMenu } from './Job/DmcJobMenu';
 import { GouvJobMenu } from './Job/GouvJobMenu';
 import { MenuBennys } from './Job/MenuBennys';
 import { MenuNews } from './Job/MenuNews';
+import { MenuPromote } from './Job/MenuPromote';
 import { MenuUpw } from './Job/MenuUpw';
 import { MenuAlbum } from './MenuAlbum';
 import { MenuBennysUpgradeVehicle } from './MenuBennysUpgradeVehicle';
@@ -222,7 +227,12 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.FDFJobMenu}/*`} element={<FdfJobMenu data={menuData} />} />
             <Route path={`/${MenuType.JobNews}/*`} element={<MenuNews data={menuData} />} />
             <Route path={`/${MenuType.DmcJobMenu}/*`} element={<DmcJobMenu data={menuData} />} />
+            <Route path={`/${MenuType.PoliceJobLicences}/*`} element={<LicencesMenu data={menuData} />} />
+            <Route path={`/${MenuType.PoliceJobFines}/*`} element={<FinesMenu data={menuData} />} />
+            <Route path={`/${MenuType.PoliceJobMenu}/*`} element={<PoliceJobMenu data={menuData} />} />
+            <Route path={`/${MenuType.PoliceJobMoneychecker}/*`} element={<MoneyChecker data={menuData} />} />
             <Route path={`/${MenuType.PitStopPriceMenu}/*`} element={<PitStopPriceMenu />} />
+            <Route path={`/${MenuType.Promote}/*`} element={<MenuPromote data={menuData} />} />
         </Routes>
     );
 };

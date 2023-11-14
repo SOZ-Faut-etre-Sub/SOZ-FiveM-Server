@@ -1,6 +1,6 @@
 -- Resell Port of Los Santos
 Citizen.CreateThread(function()
-    local resellOpt = SozJobCore.Jobs[SozJobCore.JobType.DMC].resell.primary
+    local resellOpt = DMCResell.primary
     local coords = resellOpt.coords
 
     exports["qb-target"]:SpawnPed({
