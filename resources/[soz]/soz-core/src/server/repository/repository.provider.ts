@@ -15,7 +15,6 @@ import { FuelStationRepository } from './fuel.station.repository';
 import { GarageRepository } from './garage.repository';
 import { GloveShopRepository } from './glove.shop.repository';
 import { HousingRepository } from './housing.repository';
-import { JobGradeRepository } from './job.grade.repository';
 import { ObjectRepository } from './object.repository';
 import { RaceRepository } from './race.repository';
 import { Repository, RepositoryLegacy } from './repository';
@@ -32,9 +31,6 @@ export class RepositoryProvider {
 
     @Inject(VehicleRepository)
     private vehicleRepository: VehicleRepository;
-
-    @Inject(JobGradeRepository)
-    private jobGradeRepository: JobGradeRepository;
 
     @Inject(FuelStationRepository)
     private fuelStationRepository: FuelStationRepository;
@@ -87,7 +83,6 @@ export class RepositoryProvider {
     public setup() {
         this.legacyRepositories['garage'] = this.garageRepository;
         this.legacyRepositories['vehicle'] = this.vehicleRepository;
-        this.legacyRepositories['jobGrade'] = this.jobGradeRepository;
         this.legacyRepositories['fuelStation'] = this.fuelStationRepository;
         this.legacyRepositories['upwCharger'] = this.upwChargerRepository;
         this.legacyRepositories['upwStation'] = this.upwStationRepository;

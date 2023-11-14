@@ -107,7 +107,6 @@ local function BlackoutJobCheck() return true end
 CreateThread(function()
 	if not Config.Standalone then
 		local QBCore = exports['qb-core']:GetCoreObject()
-		local SozJobCore = exports["soz-jobs"]:GetCoreObject()
 		local PlayerData = QBCore.Functions.GetPlayerData()
 
 		ItemCount = function(item)
@@ -126,7 +125,7 @@ CreateThread(function()
 				end
 			elseif type(job) == 'string' and job == PlayerData.job.id then
 				if permission then
-					return SozJobCore.Functions.HasPermission(job, permission)
+					return exports["soz-core"]:HasJobPermission(job, permission)
 				end
 
 				return true

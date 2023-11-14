@@ -27,7 +27,7 @@ export const InputApp: FunctionComponent = () => {
 
     useInputNuiEvent('AskInput', askInput => {
         setAskInput(askInput);
-        setValue(askInput.defaultValue);
+        setValue(askInput.defaultValue || '');
     });
 
     const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

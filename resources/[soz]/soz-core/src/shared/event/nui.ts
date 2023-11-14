@@ -4,7 +4,7 @@ export enum NuiEvent {
     AdminTriggerNotification = 'soz-core:client:admin:trigger-notification',
     AdminCopyCoords = 'soz-core:client:admin:copy-coords',
     AdminCreateZone = 'soz-core:client:admin:create-zone',
-    AdminGetJobs = 'soz-core:client:admin:get-jobs',
+    AdminGetJobGrades = 'soz-core:client:admin:get-job-grades',
     AdminGetPlayers = 'soz-core:client:admin:get-players',
     AdminGetVehicles = 'soz-core:client:admin:get-vehicles',
     AdminGiveLicence = 'soz-core:client:admin:give-licence',
@@ -115,6 +115,7 @@ export enum NuiEvent {
     Loaded = 'soz-core:nui:loaded',
     MenuClosed = 'menu_closed',
     JobBossShopBuyItem = 'soz-core:nui:job:boss-shop:buy-item',
+    JobPromote = 'soz-core:nui:job:promote',
     OilAskStationPrice = 'soz-core:nui:job:oil:ask-station-price',
     UpwDisplayBlips = 'soz-core:nui:job:upw:display-blips',
 
@@ -222,8 +223,19 @@ export enum NuiEvent {
 
     HousingUpgradeApartment = 'soz-core:client:housing:upgrade-apartment',
 
-    ToggleRadar = 'soz-core:client:radar:toggle',
+    ToggleRadarMendatory = 'soz-core:client:mendatory:radar:toggle',
+    RedCallMendatory = 'soz-core:client:mendatory:red-call',
+    ToggleRadar = 'soz-core:client:police:radar:toggle',
     RedCall = 'soz-core:client:police:red-call',
+    PoliceRemovePointsLicence = 'soz-core:client:police:remove-points-licence',
+    PoliceRemoveLicence = 'soz-core:client:police:remove-licence',
+    PoliceAddLicence = 'soz-core:client:police:add-licence',
+    PolicePreFine = 'soz-core:client:police:pre-fine',
+    PolicePreCustomFine = 'soz-core:client:police:pre-custom-fine',
+    PoliceShowBadge = 'soz-core:client:police:show-badge',
+    PoliceGetWantedPlayers = 'soz-core:client:police:get-wantedPlayers',
+    PoliceDeleteWantedPlayer = 'soz-core:client:police:delete-wantedPlayer',
+    PoliceGatherMoneyMarked = 'soz-core:client:police:gather-money-marked',
 
     IllegalShopBuyItem = 'soz-core:client:hubshop:buy',
 

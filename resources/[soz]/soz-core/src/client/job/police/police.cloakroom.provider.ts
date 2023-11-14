@@ -1,6 +1,7 @@
 import { PlayerService } from '@public/client/player/player.service';
 import { PlayerWardrobe } from '@public/client/player/player.wardrobe';
-import { OnEvent } from '@public/core/decorators/event';
+import { TargetFactory } from '@public/client/target/target.factory';
+import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { Component } from '@public/shared/cloth';
@@ -15,8 +16,30 @@ import {
     PrisonerClothes,
     RankOutfit,
 } from '@public/shared/job/police';
+import { Vector3 } from '@public/shared/polyzone/vector';
 
 import { JobCloakroomProvider } from '../job.cloakroom.provider';
+
+const prisonerCloakroomInfos = [
+    {
+        job: JobType.LSPD,
+        position: [580.91, -29.72, 76.63] as Vector3,
+        length: 0.6,
+        width: 9.0,
+        heading: 350,
+        minZ: 75.63,
+        maxZ: 78.63,
+    },
+    {
+        job: JobType.BCSO,
+        position: [1864.93, 3681.1, 30.27] as Vector3,
+        length: 1.0,
+        width: 7.8,
+        heading: 30,
+        minZ: 29.27,
+        maxZ: 32.27,
+    },
+];
 
 @Provider()
 export class PoliceCloakRoomProvider {
@@ -26,8 +49,39 @@ export class PoliceCloakRoomProvider {
     @Inject(PlayerWardrobe)
     private playerWardrobe: PlayerWardrobe;
 
+    @Inject(TargetFactory)
+    private targetFactory: TargetFactory;
+
     @Inject(JobCloakroomProvider)
     private jobCloakroomProvider: JobCloakroomProvider;
+
+    @Once(OnceStep.Start)
+    public onStart() {
+        for (const prisonerCloakroomInfo of prisonerCloakroomInfos) {
+            this.targetFactory.createForBoxZone(
+                `${prisonerCloakroomInfo.job}:prisonerCloakroom`,
+                {
+                    center: prisonerCloakroomInfo.position,
+                    length: prisonerCloakroomInfo.length,
+                    width: prisonerCloakroomInfo.width,
+                    heading: prisonerCloakroomInfo.heading,
+                    minZ: prisonerCloakroomInfo.minZ,
+                    maxZ: prisonerCloakroomInfo.maxZ,
+                },
+                [
+                    {
+                        label: 'Se changer',
+                        color: prisonerCloakroomInfo.job,
+                        icon: 'fas fa-tshirt',
+                        action: async () => {
+                            await this.setPrisonerClothes();
+                        },
+                    },
+                ],
+                2.5
+            );
+        }
+    }
 
     @OnEvent(ClientEvent.POLICE_OPEN_CLOAKROOM)
     public async openCloakroom(storageIdToSave: string) {

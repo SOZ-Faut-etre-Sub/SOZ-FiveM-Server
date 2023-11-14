@@ -192,7 +192,7 @@ export class UpwStationProvider {
             return;
         }
 
-        if (!this.jobService.hasPermission(player, JobType.Upw, JobPermission.UpwChangePrice)) {
+        if (!(await this.jobService.hasPermission(player, JobType.Upw, JobPermission.UpwChangePrice))) {
             this.notifier.notify(source, "Vous n'avez pas la permission de faire ça.", 'error');
 
             return;

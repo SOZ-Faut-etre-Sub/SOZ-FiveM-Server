@@ -1,31 +1,72 @@
-import { Injectable } from '@core/decorators/injectable';
+import { Inject, Injectable } from '@core/decorators/injectable';
+import { JobGradeRepository } from '@public/server/repository/job.grade.repository';
+import { JobRegistry } from '@public/shared/job/config';
 
 import { Job, JobPermission, JobType } from '../shared/job';
 import { PlayerData } from '../shared/player';
 
 @Injectable()
 export class JobService {
-    private SozJobCore;
+    @Inject(JobGradeRepository)
+    private jobGradeRepository: JobGradeRepository;
 
-    public constructor() {
-        this.SozJobCore = exports['soz-jobs'].GetCoreObject();
+    public async hasPermissions(player: PlayerData, targetJob: JobType, permissions: JobPermission[]) {
+        for (const permission of permissions) {
+            if (!(await this.hasPermission(player, targetJob, permission))) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
-    public hasPermission(player: PlayerData, job: JobType, permission: JobPermission): boolean {
-        return this.SozJobCore.Functions.HasPermission(job, player.job.id, player.job.grade, permission);
+    public async hasTargetJobPermission(
+        targetJobId: JobType,
+        jobId: JobType,
+        gradeId: number,
+        permission: JobPermission
+    ): Promise<boolean> {
+        if (targetJobId !== jobId) {
+            return false;
+        }
+
+        const grade = await this.jobGradeRepository.find(gradeId);
+
+        if (!grade) {
+            return false;
+        }
+
+        if (grade.owner) {
+            return true;
+        }
+
+        if (grade.permissions && grade.permissions.includes(permission)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public async hasPermission(player: PlayerData, targetJob: JobType, permission: JobPermission) {
+        return this.hasTargetJobPermission(targetJob, player.job.id, Number(player.job.grade), permission);
     }
 
     public getJobs(): Record<JobType, Job> {
-        return this.SozJobCore.Jobs as { [key in JobType]: Job };
-    }
+        const jobs = {};
 
-    public getJob(jobId: string): Job | null {
-        const jobs = this.SozJobCore.Jobs as { [key in JobType]: Job };
+        for (const jobType of Object.keys(JobRegistry)) {
+            const job = JobRegistry[jobType];
 
-        if (!jobs) {
-            return null;
+            jobs[jobType] = {
+                ...job,
+                id: jobType as JobType,
+            };
         }
 
-        return jobs[jobId] || null;
+        return jobs as Record<JobType, Job>;
+    }
+
+    public getJob(jobId: JobType): Job | null {
+        return this.getJobs()[jobId] || null;
     }
 }

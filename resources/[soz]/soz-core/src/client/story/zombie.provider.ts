@@ -4,8 +4,6 @@ import { Provider } from '@core/decorators/provider';
 import { ResourceLoader } from '@public/client/repository/resource.loader';
 import { Feature, isFeatureEnabled } from '@public/shared/features';
 
-import { joaat } from '../../shared/joaat';
-
 // For some reason populationPedCreating does not use int32 for model hash
 // so cannot use GetHashKey
 const Animals = [

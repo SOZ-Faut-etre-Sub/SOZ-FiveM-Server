@@ -1,6 +1,7 @@
 import { On, Once, OnceStep, OnEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
+import { Rpc } from '@core/decorators/rpc';
 import { Logger } from '@core/logger';
 import { emitClientRpc, emitClientRpcConfig } from '@core/rpc';
 import { uuidv4, wait } from '@core/utils';
@@ -10,7 +11,7 @@ import { GarageRepository } from '@public/server/repository/garage.repository';
 import { JobType } from '@public/shared/job';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { MultiZone } from '@public/shared/polyzone/multi.zone';
-import { RpcClientEvent } from '@public/shared/rpc';
+import { RpcClientEvent, RpcServerEvent } from '@public/shared/rpc';
 import { Ear } from '@public/shared/voip';
 
 import { ClientEvent, ServerEvent } from '../../shared/event';
@@ -192,19 +193,18 @@ export class VehicleSpawner {
         }
     }
 
-    @OnEvent(ServerEvent.VEHICLE_FREE_JOB_SPAWN)
-    private async onVehicleServerSpawn(source: number, model: string, position: Vector4, event: string) {
+    @Rpc(RpcServerEvent.VEHICLE_SPAWN_TEMPORARY)
+    private async spawnTemporaryJobVehicle(source: number, model: string, position: Vector4) {
         const player = this.playerService.getPlayer(source);
 
         if (!player) {
             return null;
         }
 
-        const modelHash = GetHashKey(model);
         const vehicleNetId = await this.spawn(
             source,
             {
-                hash: modelHash,
+                hash: GetHashKey(model),
                 model,
                 position,
                 warp: false,
@@ -217,9 +217,13 @@ export class VehicleSpawner {
             getDefaultVehicleCondition()
         );
 
+        if (!vehicleNetId) {
+            return null;
+        }
+
         this.vehicleStateService.handleVehicleOpenChange(vehicleNetId);
 
-        TriggerClientEvent(event, source, vehicleNetId);
+        return vehicleNetId;
     }
 
     public async getClosestVehicle(source: number): Promise<null | ClosestVehicle> {

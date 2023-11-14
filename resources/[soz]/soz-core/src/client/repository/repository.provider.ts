@@ -9,7 +9,6 @@ import { ClientEvent } from '../../shared/event';
 import { BillboardRepository } from './billboard.repository';
 import { FuelStationRepository } from './fuel.station.repository';
 import { GarageRepository } from './garage.repository';
-import { JobGradeRepository } from './job.grade.repository';
 import { RaceRepository } from './race.repository';
 import { Repository } from './repository';
 import { UnderTypesShopRepository } from './under_types.shop.repository';
@@ -20,9 +19,6 @@ import { VehicleRepository } from './vehicle.repository';
 export class RepositoryProvider {
     @Inject(GarageRepository)
     private garageRepository: GarageRepository;
-
-    @Inject(JobGradeRepository)
-    private jobGradeRepository: JobGradeRepository;
 
     @Inject(VehicleRepository)
     private vehicleRepository: VehicleRepository;
@@ -57,7 +53,6 @@ export class RepositoryProvider {
     @Once(OnceStep.PlayerLoaded)
     public async onRepositoryStart() {
         await this.garageRepository.load();
-        await this.jobGradeRepository.load();
         await this.vehicleRepository.load();
         await this.fuelStationRepository.load();
         await this.upwChargerRepository.load();
@@ -101,9 +96,6 @@ export class RepositoryProvider {
         switch (repositoryName) {
             case 'garage':
                 this.garageRepository.update(data);
-                break;
-            case 'jobGrade':
-                this.jobGradeRepository.update(data);
                 break;
             case 'vehicle':
                 this.vehicleRepository.update(data);

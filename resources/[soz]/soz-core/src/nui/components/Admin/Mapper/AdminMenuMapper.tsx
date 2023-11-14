@@ -5,10 +5,10 @@ import { NuiEvent } from '../../../../shared/event';
 import { Property } from '../../../../shared/housing/housing';
 import { AdminMapperMenuData } from '../../../../shared/housing/menu';
 import { JobType } from '../../../../shared/job';
+import { JobRegistry } from '../../../../shared/job/config';
 import { MenuType } from '../../../../shared/nui/menu';
 import { Zone, ZoneType, ZoneTyped } from '../../../../shared/polyzone/box.zone';
 import { fetchNui } from '../../../fetch';
-import { useJobs } from '../../../hook/job';
 import {
     MainMenu,
     Menu,
@@ -32,7 +32,6 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
     const [properties, setProperties] = useState<AdminMapperMenuData['properties']>([]);
     const [zones, setZones] = useState<AdminMapperMenuData['zones']>([]);
     const [selectedObject, setSelectedObject] = useState<string>('soz_prop_bb_bin');
-    const jobs = useJobs();
     const [job, setJob] = useState<JobType | null>(null);
     const [event, setEvent] = useState<string | null>(null);
 
@@ -53,6 +52,7 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
         fetchNui(NuiEvent.RaceAdminMenuOpen);
     };
 
+    const jobIds = Object.keys(JobRegistry) as JobType[];
     const sortedProperties = properties.sort((a, b) => a.identifier.localeCompare(b.identifier));
 
     return (
@@ -94,9 +94,9 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                         }}
                     >
                         <MenuItemSelectOption value={null}>Aucun</MenuItemSelectOption>
-                        {jobs.map(job => (
-                            <MenuItemSelectOption value={job.id} key={'job_' + job.id}>
-                                {job.label}
+                        {jobIds.map(jobId => (
+                            <MenuItemSelectOption value={jobId} key={'job_' + jobId}>
+                                {JobRegistry[jobId].label}
                             </MenuItemSelectOption>
                         ))}
                     </MenuItemSelect>

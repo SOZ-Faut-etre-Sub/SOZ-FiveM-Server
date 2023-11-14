@@ -3,7 +3,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Component, Outfit } from '../../shared/cloth';
 import { DrivingSchoolConfig } from '../../shared/driving-school';
-import { ServerEvent } from '../../shared/event';
+import { ClientEvent, ServerEvent } from '../../shared/event';
 import { JobType } from '../../shared/job';
 import { Notifier } from '../notifier';
 import { PlayerMoneyService } from '../player/player.money.service';
@@ -46,7 +46,7 @@ export class AdminMenuGameProvider {
         this.playerStateService.setClientState(source, {
             isHandcuffed: false,
         });
-        TriggerClientEvent('police:client:GetUnCuffed', source);
+        TriggerClientEvent(ClientEvent.POLICE_GET_UNCUFFED, source);
     }
 
     @OnEvent(ServerEvent.ADMIN_SET_GOD_MODE)

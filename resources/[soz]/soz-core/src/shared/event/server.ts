@@ -86,6 +86,19 @@ export enum ServerEvent {
 
     JOBS_PLACE_PROPS = 'job:server:placeProps',
 
+    JOB_TEMPORARY_SET_JOB = 'soz-core:server:job:temporary:set-job',
+    JOB_TEMPORARY_UNEMPLOYED = 'soz-core:server:job:temporary:unemployed',
+    JOB_TEMPORARY_PAYOUT = 'soz-core:server:job:temporary:payout',
+    JOB_RECRUIT = 'soz-core:server:job:recruit',
+    JOB_FIRE = 'soz-core:server:job:fire',
+    JOB_PROMOTE = 'soz-core:server:job:promote',
+    JOB_GRADE_ADD = 'soz-core:server:job:grade:add',
+    JOB_GRADE_REMOVE = 'soz-core:server:job:grade:remove',
+    JOB_GRADE_SET_DEFAULT = 'soz-core:server:job:grade:set-default',
+    JOB_GRADE_SET_SALARY = 'soz-core:server:job:grade:set-salary',
+    JOB_GRADE_SET_WEIGHT = 'soz-core:server:job:grade:set-weight',
+    JOB_GRADE_SET_PERMISSION = 'soz-core:server:job:grade:set-permission',
+
     LSMC_BLOOD_FILL_FLASK = 'soz-core:server:job:lsmc:blood-fill-flask',
     LSMC_BLOOD_ANALYZE = 'soz-core:server:job:lsmc:blood-analyze',
     LSMC_BUY_ITEM = 'soz-core:server:job:lsmc:buy-item',
@@ -273,6 +286,18 @@ export enum ServerEvent {
 
     PLAYER_SHOW_IDENTITY = 'soz-core:server:player:show-identity',
     POLICE_TAKE_DOWN = 'soz-core:server:takedown',
+    POLICE_REMOVE_POINT = 'soz-core:server:police:remove-point',
+    POLICE_REMOVE_LICENCE = 'soz-core:server:police:remove-licence',
+    POLICE_GIVE_LICENCE = 'soz-core:server:police:give-licence',
+    POLICE_CONFISCATE_MONEY = 'soz-core:server:police:confiscate-money',
+    POLICE_PLACE_SPIKE = 'soz-core:server:police:place-spike',
+    POLICE_ADD_SPIKE = 'soz-core:server:police:add-spike',
+    POLICE_REMOVE_SPIKE = 'soz-core:server:police:remove-spike',
+
+    ESCORT_PLAYER = 'soz-core:server:escort',
+    REMOVE_ESCORT_PLAYER = 'soz-core:server:remove-escort',
+    CUFF_PLAYER = 'soz-core:server:cuff',
+    UNCUFF_PLAYER = 'soz-core:server:uncuff',
 
     HELICO_ADD_LIGHT = 'soz-core:server:police:add-light',
     HELICO_REMOVE_LIGHT = 'soz-core:server:police:del-light',

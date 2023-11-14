@@ -73,6 +73,7 @@ export enum ClientEvent {
     JOBS_TWITCH_NEWS_OPEN_SOCIETY_MENU = 'soz-jobs:client:twitch-news:OpenSocietyMenu',
     JOBS_YOU_NEWS_OPEN_SOCIETY_MENU = 'soz-jobs:client:you-news:OpenSocietyMenu',
     JOBS_DMC_OPEN_SOCIETY_MENU = 'soz-jobs:client:dmc:OpenSocietyMenu',
+    JOBS_POLICE_OPEN_SOCIETY_MENU = 'soz-jobs:client:police:OpenSocietyMenu',
 
     JOBS_CHECK_CLOAKROOM_STORAGE = 'soz-jobs:client:check-cloakroom-storage',
     JOB_OPEN_MENU = 'soz-core:client:job:open-menu',
@@ -222,6 +223,18 @@ export enum ClientEvent {
     POLICE_SETUP_ARMOR = 'soz-core:client:police:setup-armor',
     POLICE_MOBILE_RADAR = 'soz-core:client:police:mobile-radar',
     POLICE_BREATHANALYZER_TARGET = 'soz-core:client:police:breathanalyzer-target',
+    POLICE_HANDCUFF_ANIMATION = 'soz-core:client:police:handcuff-animation',
+    POLICE_UNCUFF_ANIMATION = 'soz-core:client:police:uncuff-animation',
+    POLICE_GET_UNCUFFED = 'soz-core:client:police:get-uncuffed',
+    POLICE_GET_CUFFED = 'soz-core:client:police:get-cuffed',
+    POLICE_RED_CALL = 'soz-core:client:police:red-call',
+    POLICE_REQUEST_ADD_SPIKE = 'soz-core:client:police:request-add-spike',
+    POLICE_SYNC_SPIKE = 'soz-core:client:police:sync-spikes',
+    POLICE_OPEN_STASH_CLOAKROOM = 'police:cloakroom:openStash',
+
+    SET_ESCORTING = 'soz-core:client:police:set-escorting',
+    GET_ESCORTED = 'soz-core:client:police:get-escorted',
+    REMOVE_ESCORTED = 'soz-core:client:police:remove-escorted',
 
     HELICO_ADD_LIGHT = 'soz-core:client:police:add-light',
     HELICO_REMOVE_LIGHT = 'soz-core:client:police:del-light',

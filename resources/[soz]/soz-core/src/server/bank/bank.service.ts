@@ -33,6 +33,15 @@ export class BankService {
         });
     }
 
+    public addAccountMoney(
+        account: any,
+        amount: number,
+        type: 'money' | 'marked_money' = 'money',
+        allowOverflow = false
+    ): boolean {
+        return exports['soz-bank'].AddAccountMoney(account, amount, type, allowOverflow);
+    }
+
     public getAllInvoicesForPlayer(source: number): Record<string, Invoice> {
         return exports['soz-bank'].GetAllInvoicesForPlayer(source);
     }
