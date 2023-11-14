@@ -68,7 +68,7 @@ export class BankProvider {
                     player.source,
                     'Maze Banque',
                     'Mouvement bancaire',
-                    `Votre salaire de Votre salaire ~g~${payment}$~s~ a été versé sur votre compte bancaire.`,
+                    `Votre salaire de ~g~${payment}$~s~ a été versé sur votre compte bancaire.`,
                     'CHAR_BANK_MAZE'
                 );
 
