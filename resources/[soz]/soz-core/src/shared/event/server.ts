@@ -78,6 +78,17 @@ export enum ServerEvent {
     FFS_RESTOCK = 'soz-core:server:job:ffs:restock',
     FFS_TRANSFORM = 'soz-core:server:job:ffs:transform',
 
+    HOUSING_ADD_ROOMMATE = 'soz-core:server:housing:add-roommate',
+    HOUSING_BELL_APARTMENT = 'soz-core:server:housing:bell-apartment',
+    HOUSING_BUY_APARTMENT = 'soz-core:server:housing:buy-apartment',
+    HOUSING_ENTER_APARTMENT = 'soz-core:server:housing:enter-apartment',
+    HOUSING_EXIT_APARTMENT = 'soz-core:server:housing:exit-apartment',
+    HOUSING_REMOVE_ROOMMATE = 'soz-core:server:housing:remove-roommate',
+    HOUSING_SELL_APARTMENT = 'soz-core:server:housing:sell-apartment',
+    HOUSING_VISIT_APARTMENT = 'soz-core:server:housing:visit-apartment',
+    HOUSING_UPGRADE_APARTMENT_TIER = 'soz-core:server:housing:upgrade-apartment-tier',
+    HOUSING_ADD_PARKING_PLACE = 'soz-core:server:housing:add-parking-place',
+
     STONK_RESELL = 'soz-core:server:job:stonk:resell',
     STONK_COLLECT = 'soz-core:server:job:stonk:collect',
     STONK_FILL_IN = 'soz-core:server:job:stonk:fill-in',
@@ -194,6 +205,7 @@ export enum ServerEvent {
 
     BANKING_TRANSFER_MONEY = 'banking:server:TransferMoney',
     CHARACTER_SET_JOB_CLOTHES = 'soz-character:server:SetPlayerJobClothes',
+    CHARACTER_SET_CLOTHES = 'soz-character:server:SetPlayerClothes',
     QBCORE_CALL_COMMAND = 'QBCore:CallCommand',
     QBCORE_TOGGLE_DUTY = 'QBCore:ToggleDuty',
     QBCORE_SET_DUTY = 'QBCore:Server:SetDuty',
@@ -321,7 +333,6 @@ export enum ServerEvent {
     CRIMI_NAKED = 'soz-core:server:crimi:naked',
     CRIMI_UNNAKED = 'soz-core:server:crimi:unnaked',
     CRIMI_SMOKE_STRESS = 'soz-core:server:crimi:smoke-stress',
-    CRIMI_BLOCK_DATE = 'soz-core:server:crimi:block-date',
     CRIMI_USE_JAMMER = 'soz-core:server:crimi:use-jammer',
     CRIMI_SIPHON = 'soz-core:server:crimi:siphon',
 

@@ -77,6 +77,11 @@ export class PlayerService {
         return this.player.job.onduty;
     }
 
+    /**
+     * Get the closest player
+     *
+     * @returns [number, number] - [playerId, distance]
+     */
     public getClosestPlayer(): [number, number] {
         return this.qbcore.getClosestPlayer();
     }

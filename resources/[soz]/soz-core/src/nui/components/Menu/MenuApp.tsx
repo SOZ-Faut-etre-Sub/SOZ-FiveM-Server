@@ -22,7 +22,15 @@ import { FightForStyleJobMenu } from '../FightForStyle/FightForStyleJobMenu';
 import { FoodJobMenu } from '../Food/FoodJobMenu';
 import { GarbageJobMenu } from '../Garbage/GarbageJobMenu';
 import { MenuGunSmith } from '../GunSmith/GunSmithMenu';
+import { HousingAddRoommateMenu } from '../Housing/HousingAddRoommateMenu';
+import { HousingBellMenu } from '../Housing/HousingBellMenu';
+import { HousingBuyMenu } from '../Housing/HousingBuyMenu';
+import { HousingCloakroomMenu } from '../Housing/HousingCloakroomMenu';
+import { HousingEnterMenu } from '../Housing/HousingEnterMenu';
+import { HousingRemoveRoommateMenu } from '../Housing/HousingRemoveRoommateMenu';
+import { HousingSellMenu } from '../Housing/HousingSellMenu';
 import { HousingUpgradesMenu } from '../Housing/HousingUpgradesMenu';
+import { HousingVisitMenu } from '../Housing/HousingVisitMenu';
 import { JobOnDutyMenu } from '../Job/OnDutyMenu';
 import { LsmcJobMenu } from '../LSMC/LsmcJobMenu';
 import { MandatoryJobMenu } from '../Mandatory/MandatoryJobMenu';
@@ -235,6 +243,20 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.PitStopPriceMenu}/*`} element={<PitStopPriceMenu />} />
             <Route path={`/${MenuType.Promote}/*`} element={<MenuPromote data={menuData} />} />
             <Route path={`/${MenuType.HubEntryAdmin}/*`} element={<MenuHubEntryAdmin />} />
+            <Route
+                path={`/${MenuType.HousingAddRoommateMenu}/*`}
+                element={<HousingAddRoommateMenu data={menuData} />}
+            />
+            <Route path={`/${MenuType.HousingBellMenu}/*`} element={<HousingBellMenu data={menuData} />} />
+            <Route path={`/${MenuType.HousingBuyMenu}/*`} element={<HousingBuyMenu data={menuData} />} />
+            <Route path={`/${MenuType.HousingCloakroomMenu}/*`} element={<HousingCloakroomMenu data={menuData} />} />
+            <Route path={`/${MenuType.HousingEnterMenu}/*`} element={<HousingEnterMenu data={menuData} />} />
+            <Route
+                path={`/${MenuType.HousingRemoveRoommateMenu}/*`}
+                element={<HousingRemoveRoommateMenu data={menuData} />}
+            />
+            <Route path={`/${MenuType.HousingSellMenu}/*`} element={<HousingSellMenu data={menuData} />} />
+            <Route path={`/${MenuType.HousingVisitMenu}/*`} element={<HousingVisitMenu data={menuData} />} />
         </Routes>
     );
 };

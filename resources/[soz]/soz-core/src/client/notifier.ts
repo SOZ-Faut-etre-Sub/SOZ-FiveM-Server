@@ -1,6 +1,8 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
+import { wait } from '@core/utils';
 import { NuiDispatch } from '@public/client/nui/nui.dispatch';
 import { ResourceLoader } from '@public/client/repository/resource.loader';
+import { Control } from '@public/shared/input';
 import { AdvancedNotification, NotificationType, TPoliceNotification } from '@public/shared/notification';
 
 @Injectable()
@@ -17,6 +19,37 @@ export class Notifier {
             message,
             delay,
         });
+    }
+
+    public async notifyWithConfirm(message: string, type: NotificationType = 'info', delay = 20000): Promise<boolean> {
+        let timeout = false;
+
+        wait(delay).then(() => {
+            timeout = true;
+        });
+
+        this.nuiDispatch.dispatch('hud', 'DrawNotification', {
+            style: type,
+            message,
+            delay,
+        });
+
+        while (!timeout) {
+            DisableControlAction(0, Control.MpTextChatTeam, true);
+            DisableControlAction(0, Control.PushToTalk, true);
+
+            if (IsDisabledControlJustPressed(0, Control.MpTextChatTeam)) {
+                return true;
+            }
+
+            if (IsDisabledControlJustPressed(0, Control.PushToTalk)) {
+                return false;
+            }
+
+            await wait(0);
+        }
+
+        return false;
     }
 
     public async notifyAdvanced(notification: Omit<AdvancedNotification, 'id'>) {

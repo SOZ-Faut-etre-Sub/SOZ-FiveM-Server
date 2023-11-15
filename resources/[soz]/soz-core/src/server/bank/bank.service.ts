@@ -67,4 +67,8 @@ export class BankService {
     ) {
         exports['soz-bank'].AddMoney(targetAccount, amount, type, allowOverflow);
     }
+
+    public clearAccount(targetAccount: string) {
+        exports['soz-bank'].ClearAccount(targetAccount);
+    }
 }

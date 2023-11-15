@@ -50,6 +50,7 @@ export type RepositoryMapping = {
     [RepositoryType.StationFuel]: FuelStation;
     [RepositoryType.StationUpw]: UpwStation;
     [RepositoryType.Vehicle]: Vehicle;
+    [RepositoryType.TowRope]: TowRope;
 };
 
 export interface RepositoryConfig extends Record<keyof RepositoryMapping, any> {

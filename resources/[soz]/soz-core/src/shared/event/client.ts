@@ -44,6 +44,7 @@ export enum ClientEvent {
     FOOD_UPDATE_ORDER = 'soz-core:client:food:update-order',
 
     HOUSING_OPEN_UPGRADES_MENU = 'soz-core:client:housing:open-upgrades-menu',
+    HOUSING_REQUEST_ENTER = 'soz-core:client:housing:request-enter',
 
     HALLOWEEN_HAT_TOOGLE = 'soz-core:client:halloween:hat-toggle',
     HALLOWEEN_DEGUISEMENT_USE = 'soz-core:client:halloween:use-deguisement',

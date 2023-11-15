@@ -325,6 +325,15 @@ export class InventoryManager {
         return false;
     }
 
+    public clearApartment(apartmentIdentifier: string): void {
+        this.sozInventory.ClearByOwner(apartmentIdentifier);
+        this.sozInventory.SetHouseStashMaxWeightFromTier(apartmentIdentifier, 0);
+    }
+
+    public setHouseStashMaxWeightFromTier(apartmentIdentifier: string, tier: number): void {
+        this.sozInventory.SetHouseStashMaxWeightFromTier(apartmentIdentifier, tier);
+    }
+
     // TODO: Implement the following method in soz core directly
     // public canSwapItem(source: number, { id: string; amount: number; }[], { id: string; amount: number;}[]): boolean {
 }

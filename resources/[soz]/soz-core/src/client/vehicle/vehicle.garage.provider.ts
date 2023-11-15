@@ -1,9 +1,10 @@
-import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event';
-import { Inject } from '../../core/decorators/injectable';
-import { Provider } from '../../core/decorators/provider';
-import { emitRpc } from '../../core/rpc';
-import { wait } from '../../core/utils';
-import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
+import { Once, OnceStep, OnNuiEvent } from '@core/decorators/event';
+import { Inject } from '@core/decorators/injectable';
+import { Provider } from '@core/decorators/provider';
+import { emitRpc } from '@core/rpc';
+import { wait } from '@core/utils';
+
+import { NuiEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { JobPermission, JobType } from '../../shared/job';
 import { MenuType } from '../../shared/nui/menu';
@@ -457,7 +458,6 @@ export class VehicleGarageProvider {
         this.isShowingGaragePlaces = false;
     }
 
-    @OnEvent(ClientEvent.VEHICLE_GARAGE_HOUSE_OPEN_MENU)
     public async openHouseGarageMenu(propertyId: string) {
         const garage = this.garageRepository.get()[propertyId];
 

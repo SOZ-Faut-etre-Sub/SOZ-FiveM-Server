@@ -1,6 +1,6 @@
+import { Inject, Injectable } from '@core/decorators/injectable';
 import { ItemService } from '@public/client/item/item.service';
 
-import { Inject, Injectable } from '../../core/decorators/injectable';
 import { InventoryItem } from '../../shared/item';
 import { PlayerService } from '../player/player.service';
 
@@ -79,5 +79,9 @@ export class InventoryManager {
 
     public openShopInventory(shopContent, shopHeaderTexture) {
         TriggerEvent('inventory:client:openShop', shopContent, shopHeaderTexture);
+    }
+
+    public openInventory(inventoryType: string, inventoryIdentifier: string, context?: any) {
+        TriggerServerEvent('inventory:server:openInventory', inventoryType, inventoryIdentifier, context);
     }
 }

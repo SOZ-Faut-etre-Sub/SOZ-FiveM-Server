@@ -1,6 +1,7 @@
 import { ServerStateService } from '@public/server/server.state.service';
 import { ClothConfig } from '@public/shared/cloth';
 import { DrivingSchoolLicense } from '@public/shared/driving-school';
+import { Apartment, Property } from '@public/shared/housing/housing';
 import { JobType } from '@public/shared/job';
 
 import { Inject, Injectable } from '../../core/decorators/injectable';
@@ -54,6 +55,47 @@ export class PlayerService {
 
         if (player) {
             player.Functions.UpdateMaxWeight();
+        }
+    }
+
+    public setPlayerApartmentTier(source: number, tier: number): void {
+        const player = this.QBCore.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        player.Functions.SetApartmentTier(tier);
+    }
+
+    public setPlayerApartmentHasParking(source: number, hasParkingPlace: boolean): void {
+        const player = this.QBCore.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        player.Functions.SetApartmentHasParkingPlace(hasParkingPlace);
+    }
+
+    public setPlayerApartment(source: number, apartment: Apartment, property: Property): void {
+        const player = this.QBCore.getPlayer(source);
+
+        if (player) {
+            if (apartment === null) {
+                player.Functions.SetApartment(null);
+
+                return;
+            }
+
+            player.Functions.SetApartment({
+                id: apartment.id,
+                property_id: property.id,
+                label: apartment.label,
+                price: apartment.price,
+                owner: apartment.owner,
+                tier: apartment.tier,
+            });
         }
     }
 

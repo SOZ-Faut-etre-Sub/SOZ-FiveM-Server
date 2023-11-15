@@ -33,6 +33,7 @@ import { JobService } from '../job.service';
 import { LockService } from '../lock.service';
 import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
+import { PlayerCriminalService } from '../player/player.criminal.service';
 import { PlayerMoneyService } from '../player/player.money.service';
 import { PlayerService } from '../player/player.service';
 import { GarageRepository } from '../repository/garage.repository';
@@ -97,7 +98,8 @@ export class VehicleGarageProvider {
     @Inject(Logger)
     private logger: Logger;
 
-    private blockedCrimiDate: Record<string, number> = {};
+    @Inject(PlayerCriminalService)
+    private playerCriminalService: PlayerCriminalService;
 
     @Once(OnceStep.RepositoriesLoaded)
     public async init(): Promise<void> {
@@ -240,7 +242,7 @@ export class VehicleGarageProvider {
             const player = this.playerService.getPlayer(source);
             if (!player || !player.apartment || !player.apartment.id) return 0;
             const apartment = await this.prismaService.housing_apartment.findUnique({
-                where: { id: parseInt(player.apartment.id) },
+                where: { id: player.apartment.id },
             });
             if (!apartment) return 0;
             const apartmentTier = apartment.tier ?? 0;
@@ -271,7 +273,7 @@ export class VehicleGarageProvider {
         const citizenIds = [player.citizenid];
         if (isPropertyGarage && player.apartment && player.apartment.id) {
             const { owner, roommate } = (await this.prismaService.housing_apartment.findUnique({
-                where: { id: parseInt(player.apartment.id) },
+                where: { id: player.apartment.id },
             })) ?? { owner: '', roommate: '' };
             if (player.citizenid === owner && roommate) citizenIds.push(roommate);
             if (player.citizenid === roommate && owner) citizenIds.push(owner);
@@ -290,11 +292,6 @@ export class VehicleGarageProvider {
         const maxPlaces = await this.getMaxPlaces(source, garage);
 
         return Math.max(0, maxPlaces - count);
-    }
-
-    @OnEvent(ServerEvent.CRIMI_BLOCK_DATE, false)
-    public onUpdateBlockedCrimiDate(citizenId: string, date: number) {
-        this.blockedCrimiDate[citizenId] = date;
     }
 
     private getPermissionForGarage(type: GarageType, category: GarageCategory): JobPermission {
@@ -336,8 +333,9 @@ export class VehicleGarageProvider {
 
         const ids = [];
 
-        if (this.blockedCrimiDate[player.citizenid] && this.blockedCrimiDate[player.citizenid] > GetGameTimer()) {
+        if (this.playerCriminalService.isCriminal(player.citizenid)) {
             this.notifier.notify(source, 'Vous devez attendre après avoir réalisé une action criminelle', 'error');
+
             return null;
         }
 
