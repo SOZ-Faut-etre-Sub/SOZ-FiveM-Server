@@ -72,104 +72,114 @@ export class HousingApartmentZoneProvider {
     public createZoneForApartment(property: Property, apartment: Apartment) {
         this.deleteZoneForApartment(apartment);
 
-        this.targetFactory.createForBoxZone(`housing:apartment:${apartment.id}:exit`, apartment.exitZone, [
-            {
-                label: 'Sortir',
-                icon: 'c:housing/enter.png',
-                canInteract: () => {
-                    const player = this.playerService.getPlayer();
+        if (apartment.exitZone) {
+            this.targetFactory.createForBoxZone(`housing:apartment:${apartment.id}:exit`, apartment.exitZone, [
+                {
+                    label: 'Sortir',
+                    icon: 'c:housing/enter.png',
+                    canInteract: () => {
+                        const player = this.playerService.getPlayer();
 
-                    if (!player) {
-                        return false;
-                    }
+                        if (!player) {
+                            return false;
+                        }
 
-                    return isPlayerInsideApartment(player);
+                        return isPlayerInsideApartment(player);
+                    },
+                    action: () => {
+                        TriggerServerEvent(ServerEvent.HOUSING_EXIT_APARTMENT, property.id, apartment.id);
+                    },
                 },
-                action: () => {
-                    TriggerServerEvent(ServerEvent.HOUSING_EXIT_APARTMENT, property.id, apartment.id);
+            ]);
+        }
+
+        if (apartment.stashZone) {
+            this.targetFactory.createForBoxZone(`housing:apartment:${apartment.id}:stash`, apartment.stashZone, [
+                {
+                    label: 'Sortir',
+                    icon: 'c:inventory/ouvrir_le_stockage.png',
+                    canInteract: () => {
+                        const player = this.playerService.getPlayer();
+
+                        if (!player) {
+                            return false;
+                        }
+
+                        return apartment.owner !== null && isPlayerInsideApartment(player);
+                    },
+                    action: () => {
+                        this.inventoryManager.openInventory('house_stash', apartment.identifier, {
+                            apartmentTier: apartment.tier,
+                            propertyId: property.id,
+                            apartmentId: apartment.id,
+                        });
+                    },
                 },
-            },
-        ]);
+            ]);
+        }
 
-        this.targetFactory.createForBoxZone(`housing:apartment:${apartment.id}:stash`, apartment.stashZone, [
-            {
-                label: 'Sortir',
-                icon: 'c:inventory/ouvrir_le_stockage.png',
-                canInteract: () => {
-                    const player = this.playerService.getPlayer();
+        if (apartment.fridgeZone) {
+            this.targetFactory.createForBoxZone(`housing:apartment:${apartment.id}:fridge`, apartment.fridgeZone, [
+                {
+                    label: 'Frigo',
+                    icon: 'c:inventory/ouvrir_le_stockage.png',
+                    canInteract: () => {
+                        const player = this.playerService.getPlayer();
 
-                    if (!player) {
-                        return false;
-                    }
+                        if (!player) {
+                            return false;
+                        }
 
-                    return apartment.owner !== null && isPlayerInsideApartment(player);
+                        return apartment.owner !== null && isPlayerInsideApartment(player);
+                    },
+                    action: () => {
+                        this.inventoryManager.openInventory('house_fridge', apartment.identifier);
+                    },
                 },
-                action: () => {
-                    this.inventoryManager.openInventory('house_stash', apartment.identifier, {
-                        apartmentTier: apartment.tier,
-                        propertyId: property.id,
-                        apartmentId: apartment.id,
-                    });
+            ]);
+        }
+
+        if (apartment.moneyZone) {
+            this.targetFactory.createForBoxZone(`housing:apartment:${apartment.id}:money`, apartment.moneyZone, [
+                {
+                    label: "Coffre d'argent",
+                    icon: 'c:bank/compte_safe.png',
+                    canInteract: () => {
+                        const player = this.playerService.getPlayer();
+
+                        if (!player) {
+                            return false;
+                        }
+
+                        return apartment.owner !== null && isPlayerInsideApartment(player);
+                    },
+                    action: () => {
+                        this.bankService.openHouseSafe(apartment);
+                    },
                 },
-            },
-        ]);
+            ]);
+        }
 
-        this.targetFactory.createForBoxZone(`housing:apartment:${apartment.id}:fridge`, apartment.fridgeZone, [
-            {
-                label: 'Frigo',
-                icon: 'c:inventory/ouvrir_le_stockage.png',
-                canInteract: () => {
-                    const player = this.playerService.getPlayer();
+        if (apartment.closetZone) {
+            this.targetFactory.createForBoxZone(`housing:apartment:${apartment.id}:closet`, apartment.closetZone, [
+                {
+                    label: 'Penderie',
+                    icon: 'c:jobs/habiller.png',
+                    canInteract: () => {
+                        const player = this.playerService.getPlayer();
 
-                    if (!player) {
-                        return false;
-                    }
+                        if (!player) {
+                            return false;
+                        }
 
-                    return apartment.owner !== null && isPlayerInsideApartment(player);
+                        return apartment.owner !== null && isPlayerInsideApartment(player);
+                    },
+                    action: () => {
+                        this.openApartmentCloakroom();
+                    },
                 },
-                action: () => {
-                    this.inventoryManager.openInventory('house_fridge', apartment.identifier);
-                },
-            },
-        ]);
-
-        this.targetFactory.createForBoxZone(`housing:apartment:${apartment.id}:money`, apartment.moneyZone, [
-            {
-                label: "Coffre d'argent",
-                icon: 'c:bank/compte_safe.png',
-                canInteract: () => {
-                    const player = this.playerService.getPlayer();
-
-                    if (!player) {
-                        return false;
-                    }
-
-                    return apartment.owner !== null && isPlayerInsideApartment(player);
-                },
-                action: () => {
-                    this.bankService.openHouseSafe(apartment);
-                },
-            },
-        ]);
-
-        this.targetFactory.createForBoxZone(`housing:apartment:${apartment.id}:closet`, apartment.closetZone, [
-            {
-                label: 'Penderie',
-                icon: 'c:jobs/habiller.png',
-                canInteract: () => {
-                    const player = this.playerService.getPlayer();
-
-                    if (!player) {
-                        return false;
-                    }
-
-                    return apartment.owner !== null && isPlayerInsideApartment(player);
-                },
-                action: () => {
-                    this.openApartmentCloakroom();
-                },
-            },
-        ]);
+            ]);
+        }
     }
 
     public async openApartmentCloakroom() {

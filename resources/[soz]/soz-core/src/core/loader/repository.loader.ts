@@ -29,35 +29,37 @@ export class RepositoryLoader {
     }
 
     public load(provider): void {
-        const repositoryMethodList = getMethodMetadata<RepositoryListenerMetadata<any>>(
+        const repositoryMethodList = getMethodMetadata<RepositoryListenerMetadata<any>[]>(
             RepositoryListenerMetadataKey,
             provider
         );
 
         for (const methodName of Object.keys(repositoryMethodList)) {
-            const metadata = repositoryMethodList[methodName];
+            const metadataList = repositoryMethodList[methodName];
             const method = provider[methodName].bind(provider);
 
-            const decoratedMethod = async data => {
-                try {
-                    await method(data);
-                } catch (e) {
-                    this.logger.error(
-                        `Error on repository listener ${metadata.entityType} - ${metadata.type} in method ${methodName} of provider ${provider.constructor.name}`,
-                        e
-                    );
+            for (const metadata of metadataList) {
+                const decoratedMethod = async data => {
+                    try {
+                        await method(data);
+                    } catch (e) {
+                        this.logger.error(
+                            `Error on repository listener ${metadata.entityType} - ${metadata.type} in method ${methodName} of provider ${provider.constructor.name}`,
+                            e
+                        );
+                    }
+                };
+
+                if (!this.listeners.has(metadata.entityType)) {
+                    this.listeners.set(metadata.entityType, {
+                        insert: [],
+                        update: [],
+                        delete: [],
+                    });
                 }
-            };
 
-            if (!this.listeners.has(metadata.entityType)) {
-                this.listeners.set(metadata.entityType, {
-                    insert: [],
-                    update: [],
-                    delete: [],
-                });
+                this.listeners.get(metadata.entityType)[metadata.type].push(decoratedMethod);
             }
-
-            this.listeners.get(metadata.entityType)[metadata.type].push(decoratedMethod);
         }
     }
 
