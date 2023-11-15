@@ -223,6 +223,17 @@ export enum NuiEvent {
     DrivingSchoolCheckVehicleSlots = 'soz-core:client:driving-school:check-vehicle-slots',
 
     HousingUpgradeApartment = 'soz-core:client:housing:upgrade-apartment',
+    HousingAddRoommate = 'soz-core:nui:housing:add-roommate',
+    HousingBell = 'soz-core:nui:housing:bell',
+    HousingBuy = 'soz-core:nui:housing:buy',
+    HousingEnter = 'soz-core:nui:housing:enter',
+    HousingRemoveRoommate = 'soz-core:nui:housing:remove-roommate',
+    HousingSell = 'soz-core:nui:housing:sell',
+    HousingVisit = 'soz-core:nui:housing:visit',
+    HousingCloakroomApply = 'soz-core:nui:housing:cloakroom:apply',
+    HousingCloakroomSave = 'soz-core:nui:housing:cloakroom:save',
+    HousingCloakroomRename = 'soz-core:nui:housing:cloakroom:rename',
+    HousingCloakroomDelete = 'soz-core:nui:housing:cloakroom:delete',
 
     ToggleRadarMendatory = 'soz-core:client:mendatory:radar:toggle',
     RedCallMendatory = 'soz-core:client:mendatory:red-call',

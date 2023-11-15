@@ -11,6 +11,9 @@ import { Halloween2022, Halloween2023 } from './story/halloween2022';
 
 export type QBCorePlayer = {
     Functions: {
+        SetApartment: (data: any) => void;
+        SetApartmentTier: (tier: number) => void;
+        SetApartmentHasParkingPlace: (hasParkingPlace: boolean) => void;
         SetMetaData: (key: string, val: any) => void;
         SetMetaDatas: (data: Record<string, any>) => void;
         UpdateMaxWeight: () => void;
@@ -27,7 +30,16 @@ export type QBCorePlayer = {
 
 export type PlayerData = {
     address: string;
-    apartment: any;
+    apartment:
+        | {
+              id: number;
+              property_id: number;
+              tier: number;
+              price: number;
+              owner: string;
+          }
+        | null
+        | undefined;
     citizenid: string;
     license: string;
     name: string;

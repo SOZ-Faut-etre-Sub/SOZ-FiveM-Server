@@ -21,6 +21,31 @@ export class VehicleService {
         });
     }
 
+    public async transferToAirport(garage: string, citizenId: string | null = null) {
+        if (!citizenId) {
+            await this.prismaService.playerVehicle.updateMany({
+                where: {
+                    garage: garage,
+                },
+                data: {
+                    garage: 'airport_public',
+                },
+            });
+
+            return;
+        }
+
+        await this.prismaService.playerVehicle.updateMany({
+            where: {
+                citizenid: citizenId,
+                garage: garage,
+            },
+            data: {
+                garage: 'airport_public',
+            },
+        });
+    }
+
     public async generatePlate(): Promise<string> {
         let plate;
         do {

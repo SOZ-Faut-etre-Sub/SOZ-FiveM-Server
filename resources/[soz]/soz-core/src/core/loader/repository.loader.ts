@@ -1,4 +1,4 @@
-import { RepositoryMapping } from '../../shared/repository';
+import { RepositoryType } from '../../shared/repository';
 import { Inject, Injectable } from '../decorators/injectable';
 import { getMethodMetadata } from '../decorators/reflect';
 import {
@@ -15,9 +15,9 @@ export class RepositoryLoader {
     @Inject(Logger)
     private logger: Logger;
 
-    private listeners: Map<keyof RepositoryMapping, Record<RepositoryListenerType, Listener[]>> = new Map();
+    private listeners: Map<RepositoryType, Record<RepositoryListenerType, Listener[]>> = new Map();
 
-    public async trigger<T>(repository: keyof RepositoryMapping, type: RepositoryListenerType, data: T): Promise<void> {
+    public async trigger<T>(repository: RepositoryType, type: RepositoryListenerType, data: T): Promise<void> {
         const listeners = this.listeners.get(repository)?.[type] ?? [];
         const promises = [];
 

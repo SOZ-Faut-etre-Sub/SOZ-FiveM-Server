@@ -1,9 +1,9 @@
-import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event';
+import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
 import { emitQBRpc } from '../../core/rpc';
-import { ClientEvent, NuiEvent } from '../../shared/event';
+import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { PlayerData } from '../../shared/player';
 import { Vector3 } from '../../shared/polyzone/vector';
@@ -136,15 +136,20 @@ export class HousingProvider {
         }
 
         const requiredMoney = price + enableParking && hasParking ? parkingPrice : 0;
+
         if (money < requiredMoney) {
             this.notifier.notify("Vous n'avez pas assez d'argent !", 'error');
             return;
         }
 
-        if (price > 0 && zkeaPrice > 0)
-            TriggerServerEvent('housing:server:UpgradePlayerApartmentTier', tier, price, zkeaPrice);
-        if (enableParking && hasParking && parkingPrice > 0)
-            TriggerServerEvent('housing:server:SetPlayerApartmentParkingPlace', hasParking, parkingPrice);
+        if (price > 0 && zkeaPrice > 0) {
+            TriggerServerEvent(ServerEvent.HOUSING_UPGRADE_APARTMENT_TIER, tier, price, zkeaPrice);
+        }
+
+        if (enableParking && hasParking && parkingPrice > 0) {
+            TriggerServerEvent(ServerEvent.HOUSING_ADD_PARKING_PLACE, hasParking, parkingPrice);
+        }
+
         this.nuiMenu.closeMenu();
     }
 
@@ -186,5 +191,16 @@ export class HousingProvider {
                 },
             }
         );
+    }
+
+    @OnEvent(ClientEvent.HOUSING_REQUEST_ENTER)
+    public async requestEnter(propertyId: number, apartmentId: number, target: number) {
+        const confirmed = await this.notifier.notifyWithConfirm(
+            "Une personne souhaite entrer dans votre appartement.~n~Faites ~g~Y~s~ pour l'accepter ou ~r~N~s~ pour la refuser"
+        );
+
+        if (confirmed) {
+            TriggerServerEvent(ServerEvent.HOUSING_ENTER_APARTMENT, propertyId, apartmentId, target);
+        }
     }
 }

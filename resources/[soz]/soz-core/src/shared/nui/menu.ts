@@ -1,9 +1,10 @@
+import { Property } from '@public/shared/housing/housing';
 import { JobType } from '@public/shared/job';
 import { NuiJobEmployeeOnDuty, PromoteMenuData } from '@public/shared/nui/job';
 import { PlayerPersonalMenuData } from '@public/shared/nui/player';
 
 import { AdminMenuStateProps } from '../../nui/components/Admin/AdminMenu';
-import { WardrobeMenuData } from '../cloth';
+import { PlayerCloakroomItem, WardrobeMenuData } from '../cloth';
 import { DrivingSchoolMenuData } from '../driving-school';
 import { FuelType } from '../fuel';
 import { AdminMapperMenuData, HousingUpgradesMenuData } from '../housing/menu';
@@ -102,6 +103,14 @@ export enum MenuType {
     PitStopPriceMenu = 'pitstop_price',
     Promote = 'promote',
     HubEntryAdmin = 'hub_entry_admin',
+    HousingBuyMenu = 'housing_buy_menu',
+    HousingSellMenu = 'housing_sell_menu',
+    HousingVisitMenu = 'housing_visit_menu',
+    HousingBellMenu = 'housing_bell_menu',
+    HousingEnterMenu = 'housing_enter_menu',
+    HousingAddRoommateMenu = 'housing_add_roommate_menu',
+    HousingRemoveRoommateMenu = 'housing_remove_roommate_menu',
+    HousingCloakroomMenu = 'housing_cloakroom_menu',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {
@@ -154,4 +163,14 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.PoliceJobMenu]: PoliceJobMenuData;
     [MenuType.PitStopPriceMenu]: never;
     [MenuType.Promote]: PromoteMenuData;
+    [MenuType.HousingAddRoommateMenu]: Property;
+    [MenuType.HousingBellMenu]: Property;
+    [MenuType.HousingBuyMenu]: Property;
+    [MenuType.HousingEnterMenu]: Property;
+    [MenuType.HousingRemoveRoommateMenu]: Property;
+    [MenuType.HousingSellMenu]: Property;
+    [MenuType.HousingVisitMenu]: Property;
+    [MenuType.HousingCloakroomMenu]: {
+        items: PlayerCloakroomItem[];
+    };
 }
