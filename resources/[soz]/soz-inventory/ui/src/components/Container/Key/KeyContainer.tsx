@@ -33,9 +33,20 @@ export const KeyContainer = () => {
     }, [closeMenu]);
 
 
-    const giveAllKeys = useCallback((keys: any) => {
+    const giveAllVehicleKeysToTarget = useCallback((keys: any) => {
 
-        fetch(`https://soz-inventory/player/giveAllKeysToTarget`, {
+        fetch(`https://soz-inventory/player/giveAllVehicleKeysToTarget`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: JSON.stringify(keys)
+        }).then()
+    }, [closeMenu]);
+
+    const giveAllAppartmentKeysToTarget = useCallback((keys: any) => {
+
+        fetch(`https://soz-inventory/player/giveAllAppartmentKeysToTarget`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
@@ -108,7 +119,8 @@ export const KeyContainer = () => {
                             display={true}
                             banner={keychainBanner}
                             maxWeight={-1}
-                            giveAllCallback={() => giveAllKeys(playerInventory.map((item, i) => ({ ...item, id: i, slot: i + 1, type: 'key' })))}
+                            giveAllAppartmentKeysCallback={() => giveAllAppartmentKeysToTarget(playerInventory.map((item, i) => ({ ...item, id: i, slot: i + 1, type: 'key' })))}
+                            giveAllVehicleKeysCallback={() => giveAllVehicleKeysToTarget(playerInventory.map((item, i) => ({ ...item, id: i, slot: i + 1, type: 'key' })))}
                         >
                             <ContainerSlots
                                 id="player"
