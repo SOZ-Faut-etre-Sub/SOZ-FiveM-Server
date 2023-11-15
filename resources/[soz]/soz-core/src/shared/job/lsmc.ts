@@ -41,7 +41,7 @@ export const BedLocations: Vector4[] = [
     [328.38, -1446.29, 32.57, 320],
 ];
 export function getBedName(index: number) {
-    return `GARDEN_EXIT_POS_${index}`;
+    return `UHU_BED_POS_${index}`;
 }
 
 export const FailoverLocationName = 'UHU_FAILOVER_LCOCATION';
