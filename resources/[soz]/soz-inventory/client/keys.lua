@@ -52,12 +52,27 @@ RegisterNUICallback("player/giveKeyToTarget", function(data, cb)
     cb(true)
 end)
 
-RegisterNUICallback("player/giveAllKeysToTarget", function(data, cb)
+RegisterNUICallback("player/giveAllVehicleKeysToTarget", function(data, cb)
     local player, distance = QBCore.Functions.GetClosestPlayer()
     if player ~= -1 and distance < 2.0 then
         for _, key in pairs(data) do
             if key.target == "vehicle_key" then
                 TriggerServerEvent("soz-core:server:vehicle:give-key", key.plate, GetPlayerServerId(player))
+            end
+        end
+    else
+        exports["soz-core"]:DrawNotification("Personne n'est à portée de vous", "error")
+    end
+
+    cb(true)
+end)
+
+RegisterNUICallback("player/giveAllAppartmentKeysToTarget", function(data, cb)
+    local player, distance = QBCore.Functions.GetClosestPlayer()
+    if player ~= -1 and distance < 2.0 then
+        for _, key in pairs(data) do
+            if key.target == "apartment_access" then
+                TriggerServerEvent("housing:server:GiveTemporaryAccess", key.propertyId, key.apartmentId, GetPlayerServerId(player))
             end
         end
     else

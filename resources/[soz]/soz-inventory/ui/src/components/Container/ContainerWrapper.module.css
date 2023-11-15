@@ -14,6 +14,22 @@
     user-select: none;
 }
 
+.giveBanner {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+}
+
+.giveBanner > span {
+    float: right;
+    margin-block: .5rem;
+    margin-left: .7rem;
+    font-size: .8rem;
+    line-height: 1.2rem;
+    color: #fff;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
 .Banner > span {
     float: right;
     margin: .5rem 0.8rem;
@@ -58,7 +74,7 @@
 
 .GiveAll img{
     height: 1rem;
-    width: 1rem;
+    width: auto;
     color: #fff;
     margin-right: 0.2rem;
 }
