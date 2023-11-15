@@ -56,7 +56,7 @@ export class HousingProvider {
             return;
         }
 
-        if (!player.metadata.inside) {
+        if (!player.metadata.inside || !player.metadata.inside.property) {
             return;
         }
 
