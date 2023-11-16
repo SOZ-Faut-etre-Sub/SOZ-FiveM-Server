@@ -1,4 +1,5 @@
 import { BlipFactory } from '@public/client/blip';
+import { PedFactory } from '@public/client/factory/ped.factory';
 import { InventoryManager } from '@public/client/inventory/inventory.manager';
 import { NuiDispatch } from '@public/client/nui/nui.dispatch';
 import { NuiMenu } from '@public/client/nui/nui.menu';
@@ -55,6 +56,9 @@ export class PoliceProvider {
     @Inject(BlipFactory)
     private blipFactory: BlipFactory;
 
+    @Inject(PedFactory)
+    private pedFactory: PedFactory;
+
     private radarEnabled = false;
     private displayRadar = false;
 
@@ -71,6 +75,30 @@ export class PoliceProvider {
                 });
             }
         }
+        await this.pedFactory.createPedOnGrid({
+            model: 's_m_y_sheriff_01',
+            coords: {
+                x: 1859.92,
+                y: 3690.31,
+                z: 34.27 - 1,
+                w: 54.28,
+            },
+            freeze: true,
+            invincible: true,
+            blockevents: true,
+        });
+        await this.pedFactory.createPedOnGrid({
+            model: 's_f_y_cop_01',
+            coords: {
+                x: 608.67,
+                y: -15.94,
+                z: 76.63 - 1,
+                w: 347.54,
+            },
+            freeze: true,
+            invincible: true,
+            blockevents: true,
+        });
     }
 
     @OnEvent(ClientEvent.POLICE_OPEN_STASH_CLOAKROOM, false)

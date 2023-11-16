@@ -40,9 +40,6 @@ export const FinesMenu: FunctionComponent<FinesStateProps> = ({ data }) => {
                 </MenuContent>
             </MainMenu>
             {Object.keys(Fines).map(category => {
-                console.log(category);
-                console.log(Fines[category]);
-                console.log(Fines[category].items[0].label);
                 return (
                     <SubMenu id={category}>
                         <MenuTitle banner={banner}>Catégorie {category}</MenuTitle>
