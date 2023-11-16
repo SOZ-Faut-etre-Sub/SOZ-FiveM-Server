@@ -11,7 +11,8 @@ RegisterNetEvent("inventory:client:openPlayerKeyInventory", function(vehicleKeys
         }
     end
 
-    local apartmentKeys = QBCore.Functions.TriggerRpc("housing:server:GetPlayerAccess")
+    local apartmentKeys = exports["soz-core"]:GetPlayerApartmentAccess()
+
     for propertyId, properties in pairs(apartmentKeys) do
         for apartmentId, apartment in pairs(properties) do
             playerKeys[#playerKeys + 1] = {
@@ -43,7 +44,7 @@ RegisterNUICallback("player/giveKeyToTarget", function(data, cb)
         if data.target == "vehicle_key" then
             TriggerServerEvent("soz-core:server:vehicle:give-key", data.plate, playerHit)
         elseif data.target == "apartment_access" then
-            TriggerServerEvent("housing:server:GiveTemporaryAccess", data.propertyId, data.apartmentId, playerHit)
+            TriggerServerEvent("soz-core:server:housing:add-temporary-access", data.propertyId, data.apartmentId, playerHit)
         end
     else
         exports["soz-core"]:DrawNotification("Personne n'est à portée de vous", "error")
@@ -72,7 +73,7 @@ RegisterNUICallback("player/giveAllAppartmentKeysToTarget", function(data, cb)
     if player ~= -1 and distance < 2.0 then
         for _, key in pairs(data) do
             if key.target == "apartment_access" then
-                TriggerServerEvent("housing:server:GiveTemporaryAccess", key.propertyId, key.apartmentId, GetPlayerServerId(player))
+                TriggerServerEvent("soz-core:server:housing:add-temporary-access", key.propertyId, key.apartmentId, GetPlayerServerId(player))
             end
         end
     else

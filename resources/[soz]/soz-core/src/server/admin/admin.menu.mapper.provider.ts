@@ -1,12 +1,9 @@
-import { Command } from '@public/core/decorators/command';
-
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { Property } from '../../shared/housing/housing';
 import { Zone, ZoneTyped } from '../../shared/polyzone/box.zone';
 import { RpcServerEvent } from '../../shared/rpc';
-import { PlayerService } from '../player/player.service';
 import { HousingRepository } from '../repository/housing.repository';
 import { ZoneRepository } from '../repository/zone.repository';
 
@@ -17,9 +14,6 @@ export class AdminMenuMapperProvider {
 
     @Inject(ZoneRepository)
     private zoneRepository: ZoneRepository;
-
-    @Inject(PlayerService)
-    private playerService: PlayerService;
 
     @Rpc(RpcServerEvent.ADMIN_MAPPER_SET_APARTMENT_PRICE)
     public async setApartmentPrice(source: number, apartmentId: number, price: number): Promise<Property[]> {
@@ -125,15 +119,5 @@ export class AdminMenuMapperProvider {
         await this.zoneRepository.removeZone(id);
 
         return this.zoneRepository.get();
-    }
-
-    @Command('housekey', { role: ['staff', 'admin'], description: '/housekey propertyname apartmentname' })
-    public housekey(source: number, propertyname: string, apartmentname: string) {
-        const player = this.playerService.getPlayer(source);
-        if (!player) {
-            return;
-        }
-
-        TriggerEvent('housing:server:GiveAdminAccess', player.source, propertyname, apartmentname, player.citizenid);
     }
 }

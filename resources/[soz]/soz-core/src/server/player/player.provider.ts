@@ -57,9 +57,7 @@ export class PlayerProvider {
         });
         this.playerListStateService.handlePlayer(player, this.playerStateService.getClientState(player.source));
 
-        if (this.permissionService.isGameMaster(player.source)) {
-            TriggerEvent('housing:server:GiveAdminAccess', player.source, 'cayo_villa', 'villa_cayo', player.citizenid);
-        }
+        TriggerEvent(ServerEvent.PLAYER_LOADED, player.source, player);
     }
 
     @On('QBCore:Server:PlayerUpdate', false)
