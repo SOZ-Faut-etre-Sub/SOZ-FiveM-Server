@@ -1,5 +1,6 @@
 import { DrugSeedlingRepository } from '@private/client/repository/drug.seedling.repository';
 import { DrugSellLocationRepository } from '@private/client/repository/drug.sell.location.repository';
+import { Operation } from 'fast-json-patch';
 
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject, MultiInject } from '../../core/decorators/injectable';
@@ -69,26 +70,15 @@ export class RepositoryProvider {
         this.onceLoader.trigger(OnceStep.RepositoriesLoaded);
     }
 
-    @OnEvent(ClientEvent.REPOSITORY_SET_DATA)
-    onUpsertData(type: string, key: any, data: any) {
+    @OnEvent(ClientEvent.REPOSITORY_PATCH_DATA)
+    onPatchData(type: string, patch: Operation[]) {
         const repository = this.repositories.find(repository => repository.type === type);
 
         if (!repository) {
             return;
         }
 
-        repository.set(key, data);
-    }
-
-    @OnEvent(ClientEvent.REPOSITORY_DELETE_DATA)
-    onDeleteData(type: string, key: any) {
-        const repository = this.repositories.find(repository => repository.type === type);
-
-        if (!repository) {
-            return;
-        }
-
-        repository.delete(key);
+        repository.patch(patch);
     }
 
     @OnEvent(ClientEvent.REPOSITORY_SYNC_DATA)

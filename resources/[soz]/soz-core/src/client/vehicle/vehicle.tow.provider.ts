@@ -8,6 +8,8 @@ import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 import { TowRope } from '@public/shared/vehicle/tow.rope';
 import { VehicleClass, VehicleSeat } from '@public/shared/vehicle/vehicle';
 
+import { RepositoryDelete } from '../../core/decorators/repository';
+import { RepositoryType } from '../../shared/repository';
 import { TowRopeRepository } from '../repository/tow.rope.repository';
 import { RopeService } from '../rope.service';
 import { TargetFactory } from '../target/target.factory';
@@ -210,6 +212,13 @@ export class VehicleTowProvider {
                     null
                 );
             }
+        }
+    }
+
+    @RepositoryDelete(RepositoryType.TowRope)
+    public onTowRopeDelete(rope: TowRope) {
+        if (rope && rope.ropeClientId) {
+            DeleteRope(rope.ropeClientId);
         }
     }
 }

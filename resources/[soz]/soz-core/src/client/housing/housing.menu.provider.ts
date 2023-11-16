@@ -102,7 +102,7 @@ export class HousingMenuProvider {
     public async saveCloakroom() {
         const name = await this.inputService.askInput(
             {
-                title: 'Renommer la tenue',
+                title: 'Nommer la tenue',
                 defaultValue: '',
                 maxCharacters: 64,
             },

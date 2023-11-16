@@ -5,6 +5,7 @@ import { Once, OnceStep } from '../../core/decorators/event';
 import { Inject, MultiInject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
+import { Tick } from '../../core/decorators/tick';
 import { OnceLoader } from '../../core/loader/once.loader';
 import { ClientEvent } from '../../shared/event';
 import { RpcServerEvent } from '../../shared/rpc';
@@ -107,6 +108,17 @@ export class RepositoryProvider {
         }
 
         this.onceLoader.trigger(OnceStep.RepositoriesLoaded);
+    }
+
+    @Tick()
+    public synchronizeData() {
+        for (const repository of this.repositories) {
+            const patch = repository.observe();
+
+            if (patch && patch.length > 0) {
+                TriggerLatentClientEvent(ClientEvent.REPOSITORY_PATCH_DATA, -1, 16 * 1024, repository.type, patch);
+            }
+        }
     }
 
     @Rpc(RpcServerEvent.REPOSITORY_GET_DATA)

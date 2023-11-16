@@ -54,8 +54,6 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
             existingApartment.tier = 0;
             existingApartment.hasParkingPlace = false;
         }
-
-        this.sync(apartment.property_id);
     }
 
     public async setApartmentOwner(citizenId: string, apartmentId: number): Promise<void> {
@@ -70,8 +68,6 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
 
         this.data[apartment.property_id].apartments.find(apartment => apartment.id === apartmentId).owner =
             apartment.owner;
-
-        this.sync(apartment.property_id);
     }
 
     public async setApartmentRoommate(citizenId: string | null, apartmentId: number): Promise<void> {
@@ -86,8 +82,6 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
 
         this.data[apartment.property_id].apartments.find(apartment => apartment.id === apartmentId).roommate =
             apartment.roommate;
-
-        this.sync(apartment.property_id);
     }
 
     public async getApartment(propertyId: number, apartmentId: number): Promise<[Property | null, Apartment | null]> {
@@ -123,7 +117,6 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
         });
 
         this.data[propertyId].exteriorCulling.push(culling);
-        this.sync(propertyId);
     }
 
     public async removePropertyExteriorCulling(propertyId: number, culling: number): Promise<void> {
@@ -145,7 +138,6 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
         });
 
         this.data[propertyId].exteriorCulling = exteriorCulling;
-        this.sync(propertyId);
     }
 
     protected async load(): Promise<Record<string, Property>> {
@@ -175,7 +167,6 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
         });
 
         this.data[propertyId].apartments.push(this.serializeApartment(apartment));
-        this.sync(propertyId);
     }
 
     public async setApartmentPrice(apartmentId: number, price: number): Promise<void> {
@@ -190,8 +181,6 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
 
         this.data[apartment.property_id].apartments.find(apartment => apartment.id === apartmentId).price =
             apartment.price;
-
-        this.sync(apartment.property_id);
     }
 
     public async setApartmentTier(apartmentId: number, tier: number): Promise<void> {
@@ -206,8 +195,6 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
 
         this.data[apartment.property_id].apartments.find(apartment => apartment.id === apartmentId).tier =
             apartment.tier;
-
-        this.sync(apartment.property_id);
     }
 
     public async setApartmentHasParking(apartmentId: number, hasParkingPlace: boolean): Promise<void> {
@@ -222,8 +209,6 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
 
         this.data[apartment.property_id].apartments.find(apartment => apartment.id === apartmentId).hasParkingPlace =
             apartment.has_parking_place === 1;
-
-        this.sync(apartment.property_id);
     }
 
     public async setApartmentName(apartmentId: number, name: string): Promise<void> {
@@ -238,8 +223,6 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
 
         this.data[apartment.property_id].apartments.find(apartment => apartment.id === apartmentId).label =
             apartment.label;
-
-        this.sync(apartment.property_id);
     }
 
     public async setApartmentIdentifier(apartmentId: number, identifier: string): Promise<void> {
@@ -254,8 +237,6 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
 
         this.data[apartment.property_id].apartments.find(apartment => apartment.id === apartmentId).identifier =
             apartment.identifier;
-
-        this.sync(apartment.property_id);
     }
 
     public async updateApartmentZone(
@@ -284,7 +265,6 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
                 zone.center[2],
                 zone.heading,
             ];
-            this.sync(apartment.property_id);
         } else {
             const zoneData = JSON.stringify(zoneToLegacyData(zone));
             const apartment = await this.prismaService.housing_apartment.update({
@@ -298,7 +278,6 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
 
             this.data[apartment.property_id].apartments.find(apartment => apartment.id === apartmentId)[`${type}Zone`] =
                 zone;
-            this.sync(apartment.property_id);
         }
     }
 
@@ -312,7 +291,6 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
         this.data[apartment.property_id].apartments = this.data[apartment.property_id].apartments.filter(
             apartment => apartment.id !== apartmentId
         );
-        this.sync(apartment.property_id);
     }
 
     public async addProperty(name: string): Promise<void> {
@@ -323,7 +301,6 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
         });
 
         this.data[property.id] = this.serializeProperty(property);
-        this.sync(property.id);
     }
 
     public async updatePropertyZone(propertyId: number, zone: Zone, type: 'entry' | 'garage') {
@@ -339,7 +316,6 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
         });
 
         this.data[propertyId][`${type}Zone`] = zone;
-        this.sync(propertyId);
     }
 
     public async removeProperty(propertyId: number): Promise<void> {

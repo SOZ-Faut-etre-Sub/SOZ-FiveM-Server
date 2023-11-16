@@ -1,6 +1,8 @@
-import { Inject } from '../../core/decorators/injectable';
-import { RepositoryLoader } from '../../core/loader/repository.loader';
-import { emitRpc } from '../../core/rpc';
+import { Inject } from '@core/decorators/injectable';
+import { RepositoryLoader } from '@core/loader/repository.loader';
+import { emitRpc } from '@core/rpc';
+import { applyPatch, Operation } from 'fast-json-patch';
+
 import { RepositoryConfig, RepositoryMapping, RepositoryType } from '../../shared/repository';
 import { RpcServerEvent } from '../../shared/rpc';
 
@@ -20,26 +22,35 @@ export abstract class Repository<
         this.data = (await emitRpc(RpcServerEvent.REPOSITORY_GET_DATA_2, this.type)) as Record<K, V>;
     }
 
-    public delete(id: K): void {
-        const value = this.data[id];
+    public patch(patch: Operation[]): void {
+        const changedValues: Record<K, V> = {} as Record<K, V>;
 
-        if (!value) {
-            return;
+        for (const operation of patch) {
+            // get key from path
+            const key = operation.path.split('/')[1] || null;
+
+            if (key) {
+                changedValues[key] = this.data[key] || null;
+            }
         }
 
-        delete this.data[id];
+        applyPatch(this.data, patch);
 
-        this.repositoryLoader.trigger(this.type, 'delete', value);
-    }
+        for (const key of Object.keys(changedValues)) {
+            const previousValue = changedValues[key];
+            const newValue = this.data[key] || null;
 
-    public set(id: K, value: V): void {
-        const add = !this.data[id];
-        this.data[id] = value;
+            if (previousValue === null) {
+                this.repositoryLoader.trigger(this.type, 'insert', newValue);
+            }
 
-        if (add) {
-            this.repositoryLoader.trigger(this.type, 'insert', value);
-        } else {
-            this.repositoryLoader.trigger(this.type, 'update', value);
+            if (newValue === null) {
+                this.repositoryLoader.trigger(this.type, 'delete', previousValue);
+            }
+
+            if (previousValue !== null && newValue !== null) {
+                this.repositoryLoader.trigger(this.type, 'update', newValue);
+            }
         }
     }
 

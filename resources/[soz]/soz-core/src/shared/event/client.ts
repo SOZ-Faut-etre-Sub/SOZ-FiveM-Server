@@ -156,6 +156,7 @@ export enum ClientEvent {
 
     REPOSITORY_SYNC_DATA = 'soz-core:client:repository:sync-data',
     REPOSITORY_SET_DATA = 'soz-core:client:repository:set-data',
+    REPOSITORY_PATCH_DATA = 'soz-core:client:repository:patch-data',
     REPOSITORY_DELETE_DATA = 'soz-core:client:repository:delete-data',
 
     STATE_UPDATE_GLOBAL = 'soz-core:client:state:update-global',
