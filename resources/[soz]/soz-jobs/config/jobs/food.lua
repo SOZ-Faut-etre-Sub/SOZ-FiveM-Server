@@ -22,27 +22,27 @@ FoodConfig.Categories = {
 
 FoodConfig.Fields = {
     ["cardinal"] = {
-        prodRange = {min = 250, max = 400},
+        prodRange = {min = 500, max = 800},
         harvestRange = {min = 3, max = 5},
-        refillDelay = 60000, -- in ms
+        refillDelay = 30000, -- in ms
         item = "grape1",
     },
     ["muscat"] = {
-        prodRange = {min = 400, max = 600},
+        prodRange = {min = 800, max = 1200},
         harvestRange = {min = 3, max = 5},
-        refillDelay = 60000, -- in ms
+        refillDelay = 30000, -- in ms
         item = "grape2",
     },
     ["centennial"] = {
-        prodRange = {min = 400, max = 600},
+        prodRange = {min = 800, max = 1200},
         harvestRange = {min = 3, max = 5},
-        refillDelay = 60000, -- in ms
+        refillDelay = 30000, -- in ms
         item = "grape3",
     },
     ["chasselas"] = {
-        prodRange = {min = 400, max = 600},
+        prodRange = {min = 800, max = 1200},
         harvestRange = {min = 3, max = 5},
-        refillDelay = 60000, -- in ms
+        refillDelay = 30000, -- in ms
         item = "grape4",
     },
 }
