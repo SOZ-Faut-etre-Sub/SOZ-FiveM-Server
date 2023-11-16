@@ -10,7 +10,7 @@ import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { JobType } from '@public/shared/job';
 import { getDistance, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 
-const jobsAllowed = [JobType.BCSO, JobType.FBI, JobType.SASP, JobType.LSPD];
+const jobsTarget = { [JobType.BCSO]: 0, [JobType.FBI]: 0, [JobType.SASP]: 0, [JobType.LSPD]: 0 };
 const spikeModel = GetHashKey('p_ld_stinger_s');
 
 @Provider()
@@ -32,63 +32,61 @@ export class PoliceSpikeProvider {
 
     @Once(OnceStep.Start)
     public async onStart() {
-        for (const job of jobsAllowed) {
-            this.targetFactory.createForModel(
-                spikeModel,
-                [
-                    {
-                        label: 'Démonter',
-                        icon: 'c:jobs/demonter.png',
-                        job: job,
-                        canInteract: () => {
-                            return this.playerService.isOnDuty();
-                        },
-                        action: async (entity: number) => {
-                            const { completed } = await this.progressService.progress(
-                                'remove_object',
-                                'Récupération de la herse en cours',
-                                2500,
-                                {
-                                    dictionary: 'weapons@first_person@aim_rng@generic@projectile@thermal_charge@',
-                                    name: 'plant_floor',
-                                    options: {
-                                        onlyUpperBody: true,
-                                    },
+        this.targetFactory.createForModel(
+            spikeModel,
+            [
+                {
+                    label: 'Démonter',
+                    icon: 'c:jobs/demonter.png',
+                    job: jobsTarget,
+                    canInteract: () => {
+                        return this.playerService.isOnDuty();
+                    },
+                    action: async (entity: number) => {
+                        const { completed } = await this.progressService.progress(
+                            'remove_object',
+                            'Récupération de la herse en cours',
+                            2500,
+                            {
+                                dictionary: 'weapons@first_person@aim_rng@generic@projectile@thermal_charge@',
+                                name: 'plant_floor',
+                                options: {
+                                    onlyUpperBody: true,
                                 },
-                                {
-                                    useWhileDead: false,
-                                    canCancel: true,
-                                    disableMovement: true,
-                                    disableCarMovement: true,
-                                    disableMouse: false,
-                                    disableCombat: true,
-                                }
-                            );
-                            if (!completed) {
-                                return;
+                            },
+                            {
+                                useWhileDead: false,
+                                canCancel: true,
+                                disableMovement: true,
+                                disableCarMovement: true,
+                                disableMouse: false,
+                                disableCombat: true,
                             }
-                            TriggerServerEvent(ServerEvent.POLICE_REMOVE_SPIKE, ObjToNet(entity));
-                        },
+                        );
+                        if (!completed) {
+                            return;
+                        }
+                        TriggerServerEvent(ServerEvent.POLICE_REMOVE_SPIKE, ObjToNet(entity));
                     },
-                ],
-                2.5
-            );
-            this.targetFactory.createForModel(
-                ['prop_barrier_work05', 'prop_air_conelight'],
-                [
-                    {
-                        label: 'Démonter',
-                        icon: 'c:jobs/demonter.png',
-                        job: job,
-                        canInteract: () => {
-                            return this.playerService.isOnDuty();
-                        },
-                        event: 'job:client:RemoveObject',
+                },
+            ],
+            2.5
+        );
+        this.targetFactory.createForModel(
+            ['prop_barrier_work05', 'prop_air_conelight'],
+            [
+                {
+                    label: 'Démonter',
+                    icon: 'c:jobs/demonter.png',
+                    job: jobsTarget,
+                    canInteract: () => {
+                        return this.playerService.isOnDuty();
                     },
-                ],
-                2.5
-            );
-        }
+                    event: 'job:client:RemoveObject',
+                },
+            ],
+            2.5
+        );
     }
 
     @OnEvent(ClientEvent.POLICE_REQUEST_ADD_SPIKE)
