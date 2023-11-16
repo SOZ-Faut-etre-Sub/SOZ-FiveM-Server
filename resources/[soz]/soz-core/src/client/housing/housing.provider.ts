@@ -1,11 +1,11 @@
-import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
+import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
 import { emitQBRpc } from '../../core/rpc';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
+import { hasPlayerRentedApartment } from '../../shared/housing/housing';
 import { MenuType } from '../../shared/nui/menu';
-import { PlayerData } from '../../shared/player';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import { BlipFactory } from '../blip';
@@ -46,8 +46,6 @@ export class HousingProvider {
     @Inject(BlipFactory)
     private blipFactory: BlipFactory;
 
-    private blips = [];
-
     @Tick()
     public enableCulling() {
         const player = this.playerService.getPlayer();
@@ -71,43 +69,64 @@ export class HousingProvider {
         }
     }
 
-    @OnEvent(ClientEvent.PLAYER_UPDATE)
-    public updateBlips(player: PlayerData) {
-        const hasMap = this.inventoryManager.getItemCount('house_map');
+    @OnEvent(ClientEvent.HOUSING_REQUEST_ENTER)
+    public async requestEnter(propertyId: number, apartmentId: number, target: number) {
+        const confirmed = await this.notifier.notifyWithConfirm(
+            "Une personne souhaite entrer dans votre appartement.~n~Faites ~g~Y~s~ pour l'accepter ou ~r~N~s~ pour la refuser"
+        );
 
-        if (!hasMap && this.blips.length > 0) {
-            // Delete blips
-            for (const blip of this.blips) {
-                this.blipFactory.remove(blip);
-            }
+        if (confirmed) {
+            TriggerServerEvent(ServerEvent.HOUSING_ENTER_APARTMENT, propertyId, apartmentId, target);
+        }
+    }
+
+    @OnEvent(ClientEvent.PLAYER_UPDATE)
+    @Once(OnceStep.RepositoriesLoaded)
+    public updateBlips() {
+        const player = this.playerService.getPlayer();
+
+        if (!player) {
+            return;
         }
 
-        if (hasMap && this.blips.length === 0) {
-            // Create blips
-            const properties = this.housingRepository.get();
-            const newBlips = [];
+        const hasMap = this.inventoryManager.hasEnoughItem('house_map');
+        const properties = this.housingRepository.get();
 
-            for (const property of properties) {
-                const id = `property_${property.id}`;
-                const category = property.apartments.length > 1 ? 'building' : 'house';
-                let owned = 'free';
+        if (properties.length === 0) {
+            return;
+        }
 
-                for (const apartment of property.apartments) {
-                    if (apartment.owner === player.citizenid || apartment.roommate === player.citizenid) {
-                        owned = 'owned';
-                        break;
-                    }
+        for (const property of properties) {
+            const id = `property_${property.id}`;
+            const isRented = hasPlayerRentedApartment(property, player.citizenid);
+
+            if (!hasMap && !isRented) {
+                if (this.blipFactory.exist(id)) {
+                    this.blipFactory.remove(id);
                 }
 
-                newBlips.push(id);
-
-                this.blipFactory.create(id, {
-                    name: 'Habitation',
-                    position: property.entryZone.center,
-                    sprite: BlipSprite[category][owned],
-                    scale: owned === 'owned' ? 0.8 : 0.5,
-                });
+                continue;
             }
+
+            if (this.blipFactory.exist(id)) {
+                continue;
+            }
+
+            const category = property.apartments.length > 1 ? 'building' : 'house';
+            const owned = isRented ? 'owned' : 'free';
+            const name = isRented
+                ? 'Habitation - Résidence'
+                : category === 'building'
+                ? 'Habitation - Immeuble'
+                : 'Habitation - Maison';
+
+            this.blipFactory.create(id, {
+                name,
+                position: property.entryZone.center,
+                sprite: BlipSprite[category][owned],
+                scale: owned === 'owned' ? 0.8 : 0.5,
+                color: 0,
+            });
         }
     }
 
@@ -191,16 +210,5 @@ export class HousingProvider {
                 },
             }
         );
-    }
-
-    @OnEvent(ClientEvent.HOUSING_REQUEST_ENTER)
-    public async requestEnter(propertyId: number, apartmentId: number, target: number) {
-        const confirmed = await this.notifier.notifyWithConfirm(
-            "Une personne souhaite entrer dans votre appartement.~n~Faites ~g~Y~s~ pour l'accepter ou ~r~N~s~ pour la refuser"
-        );
-
-        if (confirmed) {
-            TriggerServerEvent(ServerEvent.HOUSING_ENTER_APARTMENT, propertyId, apartmentId, target);
-        }
     }
 }

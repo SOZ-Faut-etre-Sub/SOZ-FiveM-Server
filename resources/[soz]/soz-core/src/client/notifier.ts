@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
-import { wait } from '@core/utils';
+import { uuidv4, wait } from '@core/utils';
 import { NuiDispatch } from '@public/client/nui/nui.dispatch';
 import { ResourceLoader } from '@public/client/repository/resource.loader';
 import { Control } from '@public/shared/input';
@@ -28,7 +28,10 @@ export class Notifier {
             timeout = true;
         });
 
+        const id = uuidv4();
+
         this.nuiDispatch.dispatch('hud', 'DrawNotification', {
+            id,
             style: type,
             message,
             delay,
@@ -39,15 +42,21 @@ export class Notifier {
             DisableControlAction(0, Control.PushToTalk, true);
 
             if (IsDisabledControlJustPressed(0, Control.MpTextChatTeam)) {
+                this.nuiDispatch.dispatch('hud', 'CancelNotification', id);
+
                 return true;
             }
 
             if (IsDisabledControlJustPressed(0, Control.PushToTalk)) {
+                this.nuiDispatch.dispatch('hud', 'CancelNotification', id);
+
                 return false;
             }
 
             await wait(0);
         }
+
+        this.nuiDispatch.dispatch('hud', 'CancelNotification', id);
 
         return false;
     }

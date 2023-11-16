@@ -37,7 +37,7 @@ export const HousingBuyMenu: FunctionComponent<HousingBuyMenuProps> = ({ data })
                             >
                                 <div className="pr-2 flex items-center justify-between">
                                     <span>{apartment.label}</span>
-                                    <span>💸 ${apartment.price}</span>
+                                    <span>💸 ${Intl.NumberFormat('fr-FR').format(apartment.price)}</span>
                                 </div>
                             </MenuItemButton>
                         );

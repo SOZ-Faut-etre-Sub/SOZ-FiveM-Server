@@ -96,7 +96,7 @@ export class HousingApartmentZoneProvider {
         if (apartment.stashZone) {
             this.targetFactory.createForBoxZone(`housing:apartment:${apartment.id}:stash`, apartment.stashZone, [
                 {
-                    label: 'Sortir',
+                    label: "Coffre d'argent",
                     icon: 'c:inventory/ouvrir_le_stockage.png',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();

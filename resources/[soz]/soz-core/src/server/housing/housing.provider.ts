@@ -1,6 +1,7 @@
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { ClientEvent } from '../../shared/event/client';
 import { ServerEvent } from '../../shared/event/server';
 import {
     Apartment,
@@ -128,6 +129,8 @@ export class HousingProvider {
             return;
         }
 
+        this.notifier.notify(player.source, `Vous avez sonné à la porte du ${apartment.label}.`, 'info');
+
         let target = this.playerService.getPlayerByCitizenId(apartment.owner);
 
         if (!target && apartment.roommate !== null) {
@@ -138,7 +141,7 @@ export class HousingProvider {
             return;
         }
 
-        // @TODO Request enter
+        TriggerClientEvent(ClientEvent.HOUSING_REQUEST_ENTER, target.source, propertyId, apartmentId, source);
     }
 
     @OnEvent(ServerEvent.HOUSING_BUY_APARTMENT)

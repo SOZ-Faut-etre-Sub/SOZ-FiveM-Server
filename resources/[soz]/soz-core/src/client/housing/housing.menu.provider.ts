@@ -39,7 +39,7 @@ export class HousingMenuProvider {
 
         const [playerId, distance] = this.playerService.getClosestPlayer();
 
-        if (!playerId || distance > 2.0) {
+        if (!playerId || playerId < 0 || distance > 2.0) {
             this.notifier.error("Personne n'est à portée de vous.");
 
             return;
@@ -80,7 +80,9 @@ export class HousingMenuProvider {
 
     @OnNuiEvent(NuiEvent.HousingSell)
     public async sell({ apartmentId, propertyId }: { apartmentId: number; propertyId: number }) {
-        const confirm = await this.inputService.askConfirm('Voulez-vous vraiment vendre cet appartement ?');
+        const confirm = await this.inputService.askConfirm(
+            'Voulez-vous vraiment vendre cet appartement ? Entrez OUI pour confirmer.'
+        );
 
         if (confirm) {
             TriggerServerEvent(ServerEvent.HOUSING_SELL_APARTMENT, propertyId, apartmentId);
@@ -92,6 +94,8 @@ export class HousingMenuProvider {
     @OnNuiEvent(NuiEvent.HousingVisit)
     public async visit({ apartmentId, propertyId }: { apartmentId: number; propertyId: number }) {
         TriggerServerEvent(ServerEvent.HOUSING_VISIT_APARTMENT, propertyId, apartmentId);
+
+        this.nuiMenu.closeMenu();
     }
 
     @OnNuiEvent(NuiEvent.HousingCloakroomSave)
@@ -112,12 +116,12 @@ export class HousingMenuProvider {
         );
 
         if (name) {
-            const saved = await emitQBRpc<string | null>('soz-character:server:SavePlayerClothe', name);
+            const savedError = await emitQBRpc<string | null>('soz-character:server:SavePlayerClothe', name);
 
-            if (saved === null) {
+            if (!savedError) {
                 this.notifier.notify(`La tenue ${name} a été enregistrée.`);
             } else {
-                this.notifier.error(saved);
+                this.notifier.error(savedError);
             }
         }
 
@@ -156,7 +160,7 @@ export class HousingMenuProvider {
             const renamed = await emitQBRpc<boolean>('soz-character:server:RenamePlayerClothe', item.id, newName);
 
             if (renamed) {
-                this.notifier.notify(`La tenue ${name} a été renommé.`);
+                this.notifier.notify(`La tenue ${newName} a été renommé.`);
             }
         }
 
