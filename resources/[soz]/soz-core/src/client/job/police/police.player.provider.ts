@@ -319,7 +319,7 @@ export class PolicePlayerProvider {
     public async getUncuffed() {
         ClearPedTasksImmediately(PlayerPedId());
         TriggerServerEvent('InteractSound_SV:PlayOnSource', 'Uncuff', 0.2);
-        this.phoneService.setPhoneDisabled('uncuff', false);
+        this.phoneService.setPhoneDisabled('cuff', false);
     }
 
     @OnEvent(ClientEvent.SET_ESCORTING)
