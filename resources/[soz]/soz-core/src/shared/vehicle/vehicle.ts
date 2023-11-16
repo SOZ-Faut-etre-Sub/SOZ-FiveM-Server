@@ -397,3 +397,12 @@ export type VehicleLocation = {
     model: string;
     position: Vector3;
 };
+
+export const ALLOWED_AIR_CONTROL: Partial<Record<VehicleClass, true>> = {
+    [VehicleClass.Helicopters]: true,
+    [VehicleClass.Motorcycles]: true,
+    [VehicleClass.Cycles]: true,
+    [VehicleClass.Boats]: true,
+    [VehicleClass.Planes]: true,
+    [VehicleClass.Military]: true,
+};

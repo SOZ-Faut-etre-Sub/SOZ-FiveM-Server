@@ -245,6 +245,7 @@ export enum ServerEvent {
     VEHICLE_PITSTOP = 'soz-core:server:vehicle:pitstop',
     VEHICLE_TOW_ROPE_ADD = 'soz-core:server:vehicle:tow-rope-add',
     VEHICLE_TOW_ROPE_DELETE = 'soz-core:server:vehicle:tow-rope-delete',
+    VEHICLE_DAMAGE_BLUR = 'soz-core:server:vehicle:damage-blur',
 
     VOIP_IS_MUTED = 'voip:server:player:isMuted',
     VOIP_MUTE = 'voip:server:player:mute',

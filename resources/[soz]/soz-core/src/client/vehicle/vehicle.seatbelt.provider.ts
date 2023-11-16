@@ -37,7 +37,6 @@ export class VehicleSeatbeltProvider {
 
     private isSeatbeltOn = false;
     private isSwitchingSeat = false;
-    private lastVehicleSpeed = 0;
     private lastVehiclePosition: Vector3 | null = null;
     private lastVehicleVelocity: Vector3 | null = null;
     private lastVehicleHealth = 0;
@@ -166,7 +165,6 @@ export class VehicleSeatbeltProvider {
         const vehicle = GetVehiclePedIsIn(ped, false);
 
         if (!vehicle) {
-            this.lastVehicleSpeed = 0;
             this.lastVehiclePosition = null;
             this.isSeatbeltOn = false;
             this.lastVehicleHealth = 0;
@@ -175,7 +173,6 @@ export class VehicleSeatbeltProvider {
         }
 
         if (!NetworkGetEntityIsNetworked(vehicle) || !NetworkHasControlOfEntity(vehicle)) {
-            this.lastVehicleSpeed = 0;
             this.lastVehiclePosition = null;
             this.lastVehicleHealth = 0;
 
@@ -188,14 +185,12 @@ export class VehicleSeatbeltProvider {
             return;
         }
 
-        const vehicleSpeed = GetEntitySpeed(vehicle);
         const vehiclePosition = GetEntityCoords(vehicle, false) as Vector3;
         const vehicleVelocity = GetEntityVelocity(vehicle) as Vector3;
         const vehicleHealth = GetEntityHealth(vehicle);
 
         if (!this.lastVehiclePosition || !this.lastVehicleVelocity) {
             this.lastVehiclePosition = vehiclePosition;
-            this.lastVehicleSpeed = vehicleSpeed;
             this.lastVehicleVelocity = vehicleVelocity;
             this.lastVehicleHealth = vehicleHealth;
 
@@ -216,29 +211,13 @@ export class VehicleSeatbeltProvider {
                 vehicleNetworkId,
                 gStrength,
                 this.lastVehicleVelocity,
-                this.getPlayersInVehicle(vehicle)
+                this.vehicleService.getPlayersInVehicle(vehicle)
             );
         }
 
         this.lastVehicleVelocity = vehicleVelocity;
         this.lastVehiclePosition = vehiclePosition;
-        this.lastVehicleSpeed = vehicleSpeed;
         this.lastVehicleHealth = vehicleHealth;
-    }
-
-    private getPlayersInVehicle(vehicle: number): number[] {
-        const maxSeats = GetVehicleMaxNumberOfPassengers(vehicle);
-        const players = [];
-
-        for (let i = -1; i < maxSeats; i++) {
-            const ped = GetPedInVehicleSeat(vehicle, i);
-
-            if (ped && IsPedAPlayer(ped)) {
-                players.push(GetPlayerServerId(NetworkGetPlayerIndexFromPed(ped)));
-            }
-        }
-
-        return players;
     }
 
     @OnEvent(ClientEvent.VEHICLE_ROUTE_EJECTION)
@@ -272,21 +251,7 @@ export class VehicleSeatbeltProvider {
 
                 const duration = Math.min((1000 * damage) / 4, 6000);
                 if (damage > 5) {
-                    const blurAction = async () => {
-                        SetGameplayCamShakeAmplitude(2.0);
-                        TriggerScreenblurFadeIn(500);
-                        await wait(duration);
-                        TriggerScreenblurFadeOut(1000);
-                        for (let u = 0; u < 100; u++) {
-                            await wait(10);
-                            SetGameplayCamShakeAmplitude((2.0 * (100 - u)) / 100);
-                        }
-                        SetGameplayCamShakeAmplitude(0.0);
-                    };
-
-                    if (GetScreenblurFadeCurrentTime() == 0) {
-                        blurAction();
-                    }
+                    this.vehicleService.onBlur(duration);
                 }
                 if (damage > 30) {
                     this.disabledAfterDamage(duration);

@@ -183,6 +183,7 @@ export enum ClientEvent {
     VEHICLE_DELETE_STATE = 'soz-core:client:vehicle:delete-state',
     VEHICLE_LOCKPICK = 'soz-core:client:vehicle:lockpick',
     VEHICLE_SET_OPEN_LIST = 'soz-core:client:vehicle:set-open-list',
+    VEHICLE_DAMAGE_BLUR = 'soz-core:client:vehicle:damage-blur',
 
     VOIP_UPDATE_MODE = 'soz-core:client:voip:update-mode',
     VOIP_SET_MEGAPHONE = 'soz-core:client:voip:set-megaphone',
