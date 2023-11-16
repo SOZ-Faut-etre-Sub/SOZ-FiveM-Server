@@ -1,26 +1,21 @@
-import { wait } from '@public/core/utils';
-
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
 import { AdminPlayer, FullAdminPlayer } from '../../shared/admin/admin';
 import { NuiEvent } from '../../shared/event';
+import { Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
+import { BlipFactory } from '../blip';
 import { DrawService } from '../draw.service';
-import { Qbcore } from '../qbcore';
-import { VehicleService } from '../vehicle/vehicle.service';
 
 @Provider()
 export class AdminMenuInteractiveProvider {
     @Inject(DrawService)
     private drawService: DrawService;
 
-    @Inject(Qbcore)
-    private QBCore: Qbcore;
-
-    @Inject(VehicleService)
-    private vehicleService: VehicleService;
+    @Inject(BlipFactory)
+    private blipFactory: BlipFactory;
 
     public intervalHandlers = {
         displayOwners: null,
@@ -135,7 +130,7 @@ export class AdminMenuInteractiveProvider {
     public async toggleDisplayPlayersOnMap(value: boolean): Promise<void> {
         if (!value) {
             this.playerBlips.forEach((BlipValue, BlipKey) => {
-                this.QBCore.removeBlip('admin:player-blip:' + BlipKey);
+                this.blipFactory.remove('admin:player-blip:' + BlipKey);
                 this.playerBlips.delete(BlipKey);
             });
 
@@ -148,29 +143,31 @@ export class AdminMenuInteractiveProvider {
 
             this.playerBlips.forEach((BlipValue, BlipKey) => {
                 if (!players.some(player => player.citizenId === BlipKey)) {
-                    this.QBCore.removeBlip('admin:player-blip:' + BlipKey);
+                    this.blipFactory.remove('admin:player-blip:' + BlipKey);
                     this.playerBlips.delete(BlipKey);
                 }
             });
 
             for (const player of players) {
-                const blipId = this.playerBlips.get(player.citizenId);
                 const coords = player.coords;
-                if (DoesBlipExist(blipId)) {
-                    SetBlipCoords(blipId, coords[0], coords[1], coords[2]);
-                    SetBlipRotation(blipId, Math.ceil(player.heading));
+                const blipId = 'admin:player-blip:' + player.citizenId;
+                if (this.blipFactory.exist(blipId)) {
+                    this.blipFactory.update('admin:player-blip:' + player.citizenId, {
+                        position: coords as Vector3,
+                        heading: player.heading,
+                    });
                 } else {
-                    const createdBlip = this.QBCore.createBlip('admin:player-blip:' + player.citizenId, {
-                        coords: { x: coords[0], y: coords[1], z: coords[2] },
+                    const createdBlip = this.blipFactory.create('admin:player-blip:' + player.citizenId, {
+                        position: coords as Vector3,
                         heading: player.heading,
                         name: player.rpFullName,
-                        playername: player.rpFullName,
-                        showheading: true,
+                        playerId: player.id,
+                        showHeading: true,
                         sprite: 1,
+                        category: 7,
                     });
-                    SetBlipCategory(createdBlip, 7);
+
                     this.playerBlips.set(player.citizenId, createdBlip);
-                    await wait(1);
                 }
             }
         }, 2500);

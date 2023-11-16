@@ -40,7 +40,9 @@ export const HousingSellMenu: FunctionComponent<HousingSellMenuProps> = ({ data 
                             >
                                 <div className="pr-2 flex items-center justify-between">
                                     <span>{apartment.label}</span>
-                                    <span>💸 ${getResellPrice(apartment, data)}</span>
+                                    <span>
+                                        💸 ${Intl.NumberFormat('fr-FR').format(getResellPrice(apartment, data))}
+                                    </span>
                                 </div>
                             </MenuItemButton>
                         );

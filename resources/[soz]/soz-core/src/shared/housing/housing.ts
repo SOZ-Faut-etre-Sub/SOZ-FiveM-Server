@@ -104,11 +104,11 @@ export const getApartmentGarageName = (apartment: Apartment) => {
     return 'apartment_' + apartment.identifier;
 };
 
-export const isPlayerInsideApartment = (player: PlayerData) => {
+export const isPlayerInsideApartment = (player: PlayerData): boolean => {
     return (
         player &&
         player.metadata.inside &&
-        player.metadata.inside.property !== null &&
-        player.metadata.inside.apartment !== null
+        player.metadata.inside.property &&
+        player.metadata.inside.apartment !== false
     );
 };
