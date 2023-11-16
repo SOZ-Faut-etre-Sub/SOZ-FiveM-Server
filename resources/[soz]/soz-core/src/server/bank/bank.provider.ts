@@ -1,10 +1,10 @@
 import { Rpc } from '@public/core/decorators/rpc';
+import { JobType } from '@public/shared/job';
 import { RpcServerEvent } from '@public/shared/rpc';
 
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
-import { JobType } from '../../shared/job';
 import { isOk } from '../../shared/result';
 import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
@@ -45,13 +45,13 @@ export class BankProvider {
                 continue;
             }
 
-            if (!player.job) {
+            if (!player.job || player.job.id === JobType.Unemployed) {
                 continue;
             }
 
             const grade = await this.jobGradeRepository.find(Number(player.job.grade));
 
-            if (!grade) {
+            if (!grade || grade.jobId != player.job.id) {
                 continue;
             }
 
@@ -61,14 +61,20 @@ export class BankProvider {
                 continue;
             }
 
-            if (player.job.id === JobType.Unemployed) {
-                this.bankService.addAccountMoney(player.charinfo.account, payment, 'money', true);
+            if (!player.job.onduty) {
+                payment = Math.ceil(payment * 0.3);
+            }
 
+            const result = await this.bankService.transferBankMoney(player.job.id, player.charinfo.account, payment);
+
+            if (isOk(result)) {
                 this.notifier.advancedNotify(
                     player.source,
                     'Maze Banque',
                     'Mouvement bancaire',
-                    `Votre salaire de ~g~${payment}$~s~ a été versé sur votre compte bancaire.`,
+                    `Votre salaire  ~g~${
+                        player.job.onduty ? 'en service' : 'hors-service'
+                    }~s~ de ~g~${payment}$~s~ a été versé sur votre compte bancaire.`,
                     'CHAR_BANK_MAZE'
                 );
 
@@ -81,38 +87,6 @@ export class BankProvider {
                         amount: payment,
                     }
                 );
-            } else {
-                if (!player.job.onduty) {
-                    payment = Math.ceil(payment * 0.3);
-                }
-
-                const result = await this.bankService.transferBankMoney(
-                    player.job.id,
-                    player.charinfo.account,
-                    payment
-                );
-
-                if (isOk(result)) {
-                    this.notifier.advancedNotify(
-                        player.source,
-                        'Maze Banque',
-                        'Mouvement bancaire',
-                        `Votre salaire  ~g~${
-                            player.job.onduty ? 'en service' : 'hors-service'
-                        }~s~ de ~g~${payment}$~s~ a été versé sur votre compte bancaire.`,
-                        'CHAR_BANK_MAZE'
-                    );
-
-                    this.monitor.publish(
-                        'paycheck',
-                        {
-                            player_source: player.source,
-                        },
-                        {
-                            amount: payment,
-                        }
-                    );
-                }
             }
 
             if (player.metadata.is_senator) {
