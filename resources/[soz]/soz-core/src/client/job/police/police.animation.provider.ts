@@ -137,7 +137,7 @@ export class PoliceAnimationProvider {
         });
     }
 
-    @Tick(TickInterval.EVERY_SECOND)
+    @Tick(TickInterval.EVERY_FRAME)
     public async manageCuffed() {
         const player = this.playerService.getPlayer();
         if (player && player.metadata) {
@@ -165,7 +165,7 @@ export class PoliceAnimationProvider {
                     !IsEntityPlayingAnim(PlayerPedId(), 'mp_arrest_paired', 'crook_p2_back_right', 3) &&
                     !playerData.isDead
                 ) {
-                    const animation = this.animationService.playAnimation(
+                    this.animationService.playAnimation(
                         {
                             base: {
                                 dictionary: 'mp_arresting',
@@ -182,8 +182,12 @@ export class PoliceAnimationProvider {
                         },
                         {}
                     );
-                    await animation;
+                    await wait(500);
                 }
+            }
+
+            if (!playerData.isHandcuffed && !playerData.isEscorted) {
+                await wait(2000);
             }
         }
     }
