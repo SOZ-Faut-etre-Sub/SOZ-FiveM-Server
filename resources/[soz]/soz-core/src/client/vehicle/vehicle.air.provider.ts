@@ -3,16 +3,7 @@ import { OnEvent } from '../../core/decorators/event';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { ClientEvent } from '../../shared/event';
-import { VehicleClass, VehicleSeat } from '../../shared/vehicle/vehicle';
-
-const ALLOWED_AIR_CONTROL: Partial<Record<VehicleClass, true>> = {
-    [VehicleClass.Helicopters]: true,
-    [VehicleClass.Motorcycles]: true,
-    [VehicleClass.Cycles]: true,
-    [VehicleClass.Boats]: true,
-    [VehicleClass.Planes]: true,
-    [VehicleClass.Military]: true,
-};
+import { ALLOWED_AIR_CONTROL, VehicleSeat } from '../../shared/vehicle/vehicle';
 
 @Provider()
 export class VehicleAirProvider {

@@ -313,6 +313,13 @@ export class VehicleConditionProvider {
         }
     }
 
+    @OnEvent(ServerEvent.VEHICLE_DAMAGE_BLUR)
+    public onVehicleRouteBlur(source: number, players: number[], duration: number) {
+        for (const player of players) {
+            TriggerClientEvent(ClientEvent.VEHICLE_DAMAGE_BLUR, player, duration);
+        }
+    }
+
     @OnEvent(ServerEvent.VEHICLE_UPDATE_MILEAGE)
     public updateMileage(source: number, vehicleNetworkId: number, mileage: number) {
         const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);

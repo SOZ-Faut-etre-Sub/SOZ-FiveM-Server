@@ -1,11 +1,13 @@
+import { OnEvent } from '@public/core/decorators/event';
+import { ClientEvent, ServerEvent } from '@public/shared/event';
+
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
 import { getRandomInt } from '../../shared/random';
-import { isVehicleModelElectric, VehicleClass } from '../../shared/vehicle/vehicle';
-import { VehicleConditionProvider } from './vehicle.condition.provider';
-import { VehicleStateService } from './vehicle.state.service';
+import { ALLOWED_AIR_CONTROL, isVehicleModelElectric, VehicleClass } from '../../shared/vehicle/vehicle';
+import { VehicleService } from './vehicle.service';
 
 type VehicleStatus = {
     engineHealth: number;
@@ -50,15 +52,13 @@ const VEHICLE_CLASS_DAMAGE_MULTIPLIER: Record<VehicleClass, number> = {
 
 @Provider()
 export class VehicleDamageProvider {
-    @Inject(VehicleConditionProvider)
-    private vehicleConditionProvider: VehicleConditionProvider;
-
-    @Inject(VehicleStateService)
-    private vehicleStateService: VehicleStateService;
+    @Inject(VehicleService)
+    private vehicleService: VehicleService;
 
     private currentVehicleStatus: VehicleStatus | null = null;
 
     private adminNoStall = false;
+    private upsideDown = false;
 
     @Tick(0)
     public async preventVehicleFlip() {
@@ -71,6 +71,38 @@ export class VehicleDamageProvider {
         if ((roll > 75.0 || roll < -75.0) && GetEntitySpeed(this.currentVehicleStatus.vehicle) < 2) {
             DisableControlAction(2, 59, true);
             DisableControlAction(2, 60, true);
+        }
+    }
+
+    @Tick(0)
+    public async stallOnFlip() {
+        if (!this.currentVehicleStatus) {
+            this.upsideDown = false;
+            return;
+        }
+
+        const vehicleClass = GetVehicleClass(this.currentVehicleStatus.vehicle);
+
+        if (ALLOWED_AIR_CONTROL[vehicleClass]) {
+            return;
+        }
+
+        if (this.adminNoStall) {
+            return;
+        }
+
+        if (IsEntityUpsidedown(this.currentVehicleStatus.vehicle)) {
+            if (!this.upsideDown) {
+                this.upsideDown = true;
+                this.stallVehicle(this.currentVehicleStatus.vehicle, 6000);
+                TriggerServerEvent(
+                    ServerEvent.VEHICLE_DAMAGE_BLUR,
+                    this.vehicleService.getPlayersInVehicle(this.currentVehicleStatus.vehicle),
+                    2000
+                );
+            }
+        } else {
+            this.upsideDown = false;
         }
     }
 
@@ -197,28 +229,37 @@ export class VehicleDamageProvider {
                 10000
             );
 
-            const end = GetGameTimer() + waitTime;
+            this.stallVehicle(vehicle, waitTime);
+        }
+    }
 
-            setTimeout(async () => {
-                SetVehicleUndriveable(vehicle, true);
+    private stallVehicle(vehicle: number, duration: number) {
+        const end = GetGameTimer() + duration;
 
-                while (GetGameTimer() < end) {
-                    if (IsPedInVehicle(PlayerPedId(), vehicle, false)) {
-                        DisableControlAction(0, 71, true);
-                        DisableControlAction(0, 72, true);
-                    }
+        setTimeout(async () => {
+            SetVehicleUndriveable(vehicle, true);
 
-                    if (GetIsVehicleEngineRunning(vehicle)) {
-                        SetVehicleEngineOn(vehicle, false, true, false);
-                    }
-
-                    await wait(0);
+            while (GetGameTimer() < end) {
+                if (IsPedInVehicle(PlayerPedId(), vehicle, false)) {
+                    DisableControlAction(0, 71, true);
+                    DisableControlAction(0, 72, true);
                 }
 
-                SetVehicleUndriveable(vehicle, false);
-                SetVehicleEngineOn(vehicle, true, false, true);
-            }, 0);
-        }
+                if (GetIsVehicleEngineRunning(vehicle)) {
+                    SetVehicleEngineOn(vehicle, false, true, false);
+                }
+
+                await wait(0);
+            }
+
+            SetVehicleUndriveable(vehicle, false);
+            SetVehicleEngineOn(vehicle, true, false, true);
+        }, 0);
+    }
+
+    @OnEvent(ClientEvent.VEHICLE_DAMAGE_BLUR)
+    public onBlur(duration: number) {
+        this.vehicleService.onBlur(duration);
     }
 
     @Tick(500)

@@ -432,4 +432,36 @@ export class VehicleService {
         const distance = getDistance(backPosition, playerPosition);
         return distance < 2.0;
     }
+
+    public getPlayersInVehicle(vehicle: number): number[] {
+        const maxSeats = GetVehicleMaxNumberOfPassengers(vehicle);
+        const players = [];
+
+        for (let i = -1; i < maxSeats; i++) {
+            const ped = GetPedInVehicleSeat(vehicle, i);
+
+            if (ped && IsPedAPlayer(ped)) {
+                players.push(GetPlayerServerId(NetworkGetPlayerIndexFromPed(ped)));
+            }
+        }
+        return players;
+    }
+
+    public onBlur(duration: number) {
+        const blurAction = async () => {
+            SetGameplayCamShakeAmplitude(2.0);
+            TriggerScreenblurFadeIn(500);
+            await wait(duration);
+            TriggerScreenblurFadeOut(1000);
+            for (let u = 0; u < 100; u++) {
+                await wait(10);
+                SetGameplayCamShakeAmplitude((2.0 * (100 - u)) / 100);
+            }
+            SetGameplayCamShakeAmplitude(0.0);
+        };
+
+        if (GetScreenblurFadeCurrentTime() == 0) {
+            blurAction();
+        }
+    }
 }
