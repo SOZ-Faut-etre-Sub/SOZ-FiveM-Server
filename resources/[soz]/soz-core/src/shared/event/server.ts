@@ -78,6 +78,7 @@ export enum ServerEvent {
     FFS_RESTOCK = 'soz-core:server:job:ffs:restock',
     FFS_TRANSFORM = 'soz-core:server:job:ffs:transform',
 
+    HOUSING_ADD_TEMPORARY_ACCESS = 'soz-core:server:housing:add-temporary-access',
     HOUSING_ADD_ROOMMATE = 'soz-core:server:housing:add-roommate',
     HOUSING_BELL_APARTMENT = 'soz-core:server:housing:bell-apartment',
     HOUSING_BUY_APARTMENT = 'soz-core:server:housing:buy-apartment',
@@ -146,6 +147,7 @@ export enum ServerEvent {
     OIL_SET_STATION_PRICE = 'soz-core:server:oil:set-station-price',
     OIL_DECREMENT_STATION = 'soz-core:server:oil:decrement',
 
+    PLAYER_LOADED = 'soz-core:server:player:loaded',
     PLAYER_INCREASE_STRESS = 'soz-core:server:player:increase-stress',
     PLAYER_INCREASE_STRENGTH = 'soz-core:server:player:increase-strength',
     PLAYER_SET_CURRENT_DISEASE = 'soz-core:server:server:set-current-disease',

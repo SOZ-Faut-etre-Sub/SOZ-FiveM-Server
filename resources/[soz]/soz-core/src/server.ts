@@ -104,7 +104,8 @@ async function bootstrap() {
         NewsModule,
         DMCModule,
         BankModule,
-        HousingModule
+        HousingModule,
+        ...PrivateModules
     );
 
     await app.stop();

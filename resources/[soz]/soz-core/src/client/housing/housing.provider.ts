@@ -2,12 +2,10 @@ import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
-import { emitQBRpc } from '../../core/rpc';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { hasPlayerRentedApartment } from '../../shared/housing/housing';
 import { MenuType } from '../../shared/nui/menu';
 import { Vector3 } from '../../shared/polyzone/vector';
-import { RpcServerEvent } from '../../shared/rpc';
 import { BlipFactory } from '../blip';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { Notifier } from '../notifier';
@@ -175,22 +173,29 @@ export class HousingProvider {
     @OnEvent(ClientEvent.HOUSING_OPEN_UPGRADES_MENU)
     public async openUpgradesMenu() {
         const player = this.playerService.getPlayer();
+
         if (!player.apartment) {
             this.notifier.notify("Vous n'avez pas d'appartement !", 'error');
             return;
         }
+
         const { id, tier, price, property_id } = player.apartment;
-        const properties = await emitQBRpc('housing:server:GetAllProperties' as RpcServerEvent);
-        const property = properties[property_id];
+
+        const property = this.housingRepository.findProperty(property_id);
+
         if (!property) {
             this.notifier.notify("Cet appartement n'appartient à aucune propriété !", 'error');
             return;
         }
+
         const enableParking = property.identifier.includes('trailer');
+
         let hasParking = true;
+
         if (enableParking) {
-            const apartment = property.apartments[id.toString()];
-            hasParking = apartment && apartment.has_parking_place === 1;
+            const apartment = property.apartments[id];
+
+            hasParking = apartment && apartment.hasParkingPlace;
         }
 
         const position = GetEntityCoords(GetPlayerPed(-1)) as Vector3;
