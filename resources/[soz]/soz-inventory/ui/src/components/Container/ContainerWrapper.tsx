@@ -48,18 +48,21 @@ export const ContainerWrapper: FunctionComponent<PropsWithChildren<Props>> = ({
                         </span>
                     </>
                 )}
-                <div className={style.giveBanner}>
-                {giveAllVehicleKeysCallback && (
-                    <span className={style.GiveAll} onClick={giveAllVehicleKeysCallback}>
-                        <img src={vehicleKeyIcon} />
-                    </span>
-                )}
-                {giveAllAppartmentKeysCallback && (
-                    <span className={style.GiveAll} onClick={giveAllAppartmentKeysCallback}>
-                        <img src={appartmentKeyIcon} />
-                    </span>
-                )}
-                </div>
+                {(giveAllAppartmentKeysCallback || giveAllVehicleKeysCallback) && (
+                    <div className={style.giveBanner}>
+                        {giveAllVehicleKeysCallback && (
+                            <span className={style.GiveAll} onClick={giveAllVehicleKeysCallback}>
+                                <img src={vehicleKeyIcon} />
+                            </span>
+                        )}
+                        {giveAllAppartmentKeysCallback && (
+                            <span className={style.GiveAll} onClick={giveAllAppartmentKeysCallback}>
+                                <img src={appartmentKeyIcon} />
+                            </span>
+                        )}
+                    </div>
+                    )
+                }
             </header>
 
             {children}
