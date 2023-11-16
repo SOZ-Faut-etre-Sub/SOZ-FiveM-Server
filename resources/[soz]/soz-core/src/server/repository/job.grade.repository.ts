@@ -52,8 +52,6 @@ export class JobGradeRepository extends Repository<RepositoryType.JobGrade> {
             is_default: grade.is_default === 1,
             permissions: JSON.parse(grade.permissions) as JobPermission[],
         };
-
-        this.sync(grade.id);
     }
 
     public async removeGrade(gradeId: number) {
@@ -89,9 +87,6 @@ export class JobGradeRepository extends Repository<RepositoryType.JobGrade> {
 
         this.data[currentDefaultGrade.id].is_default = false;
         this.data[gradeId].is_default = true;
-
-        this.sync(currentDefaultGrade.id);
-        this.sync(gradeId);
     }
 
     public async setGradeWeight(gradeId: number, weight: number) {
@@ -105,7 +100,6 @@ export class JobGradeRepository extends Repository<RepositoryType.JobGrade> {
         });
 
         this.data[gradeId].weight = weight;
-        this.sync(gradeId);
     }
 
     public async setGradeSalary(gradeId: number, salary: number) {
@@ -119,7 +113,6 @@ export class JobGradeRepository extends Repository<RepositoryType.JobGrade> {
         });
 
         this.data[gradeId].salary = salary;
-        this.sync(gradeId);
     }
 
     public async setGradePermissions(gradeId: number, permissions: JobPermission[]) {
@@ -133,6 +126,5 @@ export class JobGradeRepository extends Repository<RepositoryType.JobGrade> {
         });
 
         this.data[gradeId].permissions = permissions;
-        this.sync(gradeId);
     }
 }

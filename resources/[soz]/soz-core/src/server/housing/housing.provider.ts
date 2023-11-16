@@ -1,4 +1,5 @@
 import { OnEvent } from '../../core/decorators/event';
+import { Exportable } from '../../core/decorators/exports';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent } from '../../shared/event/client';
@@ -59,6 +60,17 @@ export class HousingProvider {
 
     @Inject(PlayerCriminalService)
     private playerCriminalService: PlayerCriminalService;
+
+    @Exportable('GetApartmentTier')
+    public async getApartmentTier(propertyId: number, apartmentId: number) {
+        const [, apartment] = await this.housingRepository.getApartment(propertyId, apartmentId);
+
+        if (!apartment || apartment.tier === null) {
+            return 0;
+        }
+
+        return apartment.tier;
+    }
 
     @OnEvent(ServerEvent.HOUSING_ADD_ROOMMATE)
     public async addRoommate(source: number, targetSource: number, propertyId: number, apartmentId: number) {

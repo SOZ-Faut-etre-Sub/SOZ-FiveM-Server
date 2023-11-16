@@ -5,13 +5,4 @@ import { Repository } from './repository';
 @Injectable(TowRopeRepository, Repository)
 export class TowRopeRepository extends Repository<RepositoryType.TowRope> {
     public type = RepositoryType.TowRope;
-
-    public delete(id: string): void {
-        const rope = this.find(id);
-        if (rope && rope.ropeClientId) {
-            DeleteRope(rope.ropeClientId);
-        }
-
-        super.delete(id);
-    }
 }

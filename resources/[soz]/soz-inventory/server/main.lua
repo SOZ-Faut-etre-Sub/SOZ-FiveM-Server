@@ -1049,7 +1049,7 @@ function GetOrCreateInventory(storageType, invID, ctx)
 
         local tier = 0
         if ctx then
-            tier = exports["soz-housing"]:GetApartmentTier(ctx.propertyId, ctx.apartmentId)
+            tier = exports["soz-core"]:GetApartmentTier(ctx.propertyId, ctx.apartmentId)
         end
         if invID == "villa_cayo" then
             tier = -2

@@ -235,7 +235,7 @@ QBCore.Functions.CreateCallback("banking:server:openHouseSafeStorage", function(
     end
 
     local inside = player.PlayerData.metadata.inside
-    local apartmentTier = exports["soz-housing"]:GetApartmentTier(inside.property, inside.apartment)
+    local apartmentTier = exports["soz-core"]:GetApartmentTier(inside.property, inside.apartment)
     local account = Account(safeStorage)
 
     if account == nil then
