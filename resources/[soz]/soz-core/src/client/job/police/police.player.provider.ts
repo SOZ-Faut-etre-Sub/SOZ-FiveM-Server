@@ -213,7 +213,7 @@ export class PolicePlayerProvider {
                         canInteract: entity => {
                             if (
                                 this.playerService.getPlayer().job.id === JobType.CashTransfer &&
-                                this.stonkCloakRoomProvider.wearVIPClothes()
+                                !this.stonkCloakRoomProvider.wearVIPClothes()
                             ) {
                                 return false;
                             }
@@ -242,7 +242,7 @@ export class PolicePlayerProvider {
                         canInteract: async entity => {
                             if (
                                 this.playerService.getPlayer().job.id === JobType.CashTransfer &&
-                                this.stonkCloakRoomProvider.wearVIPClothes()
+                                !this.stonkCloakRoomProvider.wearVIPClothes()
                             ) {
                                 return false;
                             }
