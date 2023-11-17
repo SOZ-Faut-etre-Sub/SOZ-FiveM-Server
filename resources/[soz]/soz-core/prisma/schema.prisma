@@ -103,6 +103,7 @@ model upw_chargers {
 model housing_apartment {
   id                Int              @id @default(autoincrement())
   property_id       Int
+  senate_party_id   String?
   identifier        String?          @db.VarChar(50)
   label             String?          @db.VarChar(50)
   price             Int?
@@ -117,6 +118,7 @@ model housing_apartment {
   tier              Int?
   has_parking_place Int?
   housing_property  housing_property @relation(fields: [property_id], references: [id], onDelete: Cascade, map: "housing_apartment_housing_property_id_fk")
+  senate_party      SenateParty?     @relation(fields: [senate_party_id], references: [id], onDelete: SetNull, map: "housing_apartment_senate_id_fk")
 
   @@index([property_id], map: "housing_apartment_housing_property_id_fk")
 }
@@ -298,7 +300,7 @@ model phone_twitch_news {
   reporterId String?  @db.VarChar(70)
   image      String?  @db.VarChar(256)
   message    String   @db.VarChar(512)
-  job        String   @db.VarChar(50) @default("news")
+  job        String   @default("news") @db.VarChar(50)
   createdAt  DateTime @default(now()) @db.Timestamp(0)
 
   @@index([type], map: "type")
@@ -331,7 +333,8 @@ model player {
   fishes                  player_fish[]            @relation("fishes")
   sozedex_rewards         player_sozedex_rewards[] @relation("sozedex_rewards")
   race_scores             race_score[]             @relation("race_scores")
-  criminal_actions        criminal_action[]       @relation("criminal_actions")
+  criminal_actions        criminal_action[]        @relation("criminal_actions")
+  SenatePartyMember       SenatePartyMember?
 
   @@index([id], map: "id")
   @@index([last_updated], map: "last_updated")
@@ -640,16 +643,16 @@ model player_sozedex_rewards {
 }
 
 model race {
-  id           Int       @id @default(autoincrement())
-  name          String    @db.VarChar(50)
-  model         String    @db.VarChar(50)
-  npc_position  String    @db.Text
-  start         String    @db.Text
-  checkpoints   String    @db.Text
+  id            Int     @id @default(autoincrement())
+  name          String  @db.VarChar(50)
+  model         String  @db.VarChar(50)
+  npc_position  String  @db.Text
+  start         String  @db.Text
+  checkpoints   String  @db.Text
   enabled       Boolean
   fps           Boolean
-  garage        String?    @db.Text
-  configuration String?    @db.Text
+  garage        String? @db.Text
+  configuration String? @db.Text
 
   scores race_score[] @relation("race_scores_race")
 
@@ -678,58 +681,93 @@ model tetris_score {
   identifier String @db.VarChar(50)
   score      Int
 }
+
 model billboard {
-    id                  Int       @id @default(autoincrement())
-    name                String    @db.VarChar(50)
-    position            String    @db.VarChar(50)
-    originDictName      String    @db.VarChar(50)
-    originTextureName   String    @db.VarChar(50)
-    imageUrl            String    @db.VarChar(200)
-    previewImageUrl     String    @db.VarChar(200)
-    templateImageUrl    String    @db.VarChar(200)
-    width               Int       @db.Int
-    height              Int       @db.Int
-    lastEdit            DateTime  @default(now()) @db.Timestamp(0)
-    lastEditor          String    @db.VarChar(50)
-    owner               String    @db.VarChar(50)
-    enabled             Boolean
+  id                Int      @id @default(autoincrement())
+  name              String   @db.VarChar(50)
+  position          String   @db.VarChar(50)
+  originDictName    String   @db.VarChar(50)
+  originTextureName String   @db.VarChar(50)
+  imageUrl          String   @db.VarChar(200)
+  previewImageUrl   String   @db.VarChar(200)
+  templateImageUrl  String   @db.VarChar(200)
+  width             Int      @db.Int
+  height            Int      @db.Int
+  lastEdit          DateTime @default(now()) @db.Timestamp(0)
+  lastEditor        String   @db.VarChar(50)
+  owner             String   @db.VarChar(50)
+  enabled           Boolean
 }
 
 model vandalism_props {
-  id               String    @db.VarChar(50)
-  kind             String    @db.VarChar(50)
-  location         String    @db.Text
-  model_group      String    @db.VarChar(50)
-  value            Int       @db.Int
+  id          String @db.VarChar(50)
+  kind        String @db.VarChar(50)
+  location    String @db.Text
+  model_group String @db.VarChar(50)
+  value       Int    @db.Int
 
   @@id([id, kind])
 }
 
 enum ZoneType {
-    NoStress
+  NoStress
 }
 
 model Zone {
-    id               Int       @id @default(autoincrement())
-    type             ZoneType  @default(NoStress)
-    zone             String    @db.LongText
-    name             String    @db.VarChar(50)
+  id   Int      @id @default(autoincrement())
+  type ZoneType @default(NoStress)
+  zone String   @db.LongText
+  name String   @db.VarChar(50)
 
-    @@map("zone")
+  @@map("zone")
 }
 
 model fdf_crops {
-  id                  String    @id
-  field               String    @db.VarChar(50)
-  type                String    @db.VarChar(50)
-  coords              String    @db.VarChar(100)
-  hilled              Boolean
+  id        String   @id
+  field     String   @db.VarChar(50)
+  type      String   @db.VarChar(50)
+  coords    String   @db.VarChar(100)
+  hilled    Boolean
   createdAt DateTime @default(now()) @db.Timestamp(0)
 }
 
 model pitstop_price {
-  category        String @id
-  price           Int    @db.Int
+  category String @id
+  price    Int    @db.Int
+}
+
+model SenateParty {
+  id                String              @id @default(uuid())
+  name              String
+  address           String?
+  imageUrl          String?
+  color             String?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  members           SenatePartyMember[]
+  housing_apartment housing_apartment[]
+
+  @@index([id])
+  @@map("senate_party")
+}
+
+model SenatePartyMember {
+  id               String      @id @default(uuid())
+  partyId          String
+  citizenId        String      @unique
+  firstName        String
+  lastName         String
+  senateSeatNumber Int?
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+  party            SenateParty @relation(fields: [partyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  player           player      @relation(fields: [citizenId], references: [citizenid], onDelete: Cascade, map: "FK_senate_party_member_player")
+
+  @@unique([senateSeatNumber])
+  @@index([id])
+  @@index([partyId])
+  @@index([citizenId])
+  @@map("senate_party_member")
 }
 
 model criminal_action {
