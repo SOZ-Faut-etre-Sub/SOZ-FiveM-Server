@@ -135,7 +135,7 @@ export class JobGradeProvider {
             return null;
         }
 
-        if (!(await this.jobService.hasPermissions(player, player.job.id, [JobPermission.ManageGrade]))) {
+        if (!(await this.jobService.hasPermission(player, player.job.id, JobPermission.ManageGrade))) {
             return null;
         }
 
