@@ -490,15 +490,14 @@ export class AdminMenuMapperProvider {
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuMapperTeleportToInsideCoords)
-    public async teleportToInsideCoords({ coords }: { coords: Vector4 | null }): Promise<void> {
-        if (null === coords) {
-            this.notifier.error("La zone d'apparition n'est pas définie");
-
-            return;
-        }
-
-        SetPedCoordsKeepVehicle(PlayerPedId(), coords[0], coords[1], coords[2]);
-        SetEntityHeading(PlayerPedId(), coords[3]);
+    public async teleportToInsideCoords({
+        apartmentId,
+        propertyId,
+    }: {
+        apartmentId: number;
+        propertyId: number;
+    }): Promise<void> {
+        TriggerServerEvent(ServerEvent.HOUSING_ENTER_APARTMENT, propertyId, apartmentId);
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuMapperSetInsideCoords)

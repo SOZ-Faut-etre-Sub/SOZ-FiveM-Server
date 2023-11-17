@@ -321,7 +321,8 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                                     onConfirm={async (i, value) => {
                                         if (value === 'teleport') {
                                             fetchNui(NuiEvent.AdminMenuMapperTeleportToInsideCoords, {
-                                                coords: apartment.position,
+                                                apartmentId: apartment.id,
+                                                propertyId: property.id,
                                             });
                                         }
 
