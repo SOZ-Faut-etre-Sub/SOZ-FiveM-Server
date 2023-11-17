@@ -10,14 +10,14 @@ export class JobService {
     @Inject(JobGradeRepository)
     private jobGradeRepository: JobGradeRepository;
 
-    public async hasPermissions(player: PlayerData, targetJob: JobType, permissions: JobPermission[]) {
+    public async hasAnyPermission(player: PlayerData, targetJob: JobType, permissions: JobPermission[]) {
         for (const permission of permissions) {
-            if (!(await this.hasPermission(player, targetJob, permission))) {
-                return false;
+            if (await this.hasPermission(player, targetJob, permission)) {
+                return true;
             }
         }
 
-        return true;
+        return false;
     }
 
     public async hasTargetJobPermission(

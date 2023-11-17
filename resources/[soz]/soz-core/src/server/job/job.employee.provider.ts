@@ -49,7 +49,7 @@ export class JobEmployeeProvider {
             return;
         }
         if (
-            !(await this.jonService.hasPermissions(player, player.job.id, [
+            !(await this.jonService.hasAnyPermission(player, player.job.id, [
                 JobPermission.Enrollment,
                 JobPermission.ManageGrade,
             ]))
@@ -86,7 +86,7 @@ export class JobEmployeeProvider {
         }
 
         if (
-            !(await this.jonService.hasPermissions(player, player.job.id, [
+            !(await this.jonService.hasAnyPermission(player, player.job.id, [
                 JobPermission.Enrollment,
                 JobPermission.ManageGrade,
             ]))
@@ -145,7 +145,7 @@ export class JobEmployeeProvider {
         }
 
         if (
-            !(await this.jonService.hasPermissions(player, player.job.id, [
+            !(await this.jonService.hasAnyPermission(player, player.job.id, [
                 JobPermission.Enrollment,
                 JobPermission.ManageGrade,
             ]))
