@@ -357,6 +357,7 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
             moneyZone: createZoneFromLegacyData(JSON.parse(apartment.money_zone)),
             tier: apartment.tier,
             hasParkingPlace: apartment.has_parking_place === 1,
+            senatePartyId: apartment.senate_party_id || null,
         };
     }
 }
