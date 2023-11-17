@@ -27,6 +27,7 @@ export type Apartment = {
     moneyZone: Zone | null;
     tier: number;
     hasParkingPlace: boolean;
+    senatePartyId: string | null;
 };
 
 export const UPGRADE_TIER_PERCENT: [number, number, number, number, number] = [0, 20, 45, 70, 100];

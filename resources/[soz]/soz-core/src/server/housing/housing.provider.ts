@@ -1,3 +1,5 @@
+import { Prisma } from '@prisma/client';
+
 import { On, OnEvent } from '../../core/decorators/event';
 import { Exportable } from '../../core/decorators/exports';
 import { Inject } from '../../core/decorators/injectable';
@@ -17,6 +19,7 @@ import { PlayerData } from '../../shared/player';
 import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import { BankService } from '../bank/bank.service';
+import { PrismaService } from '../database/prisma.service';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
@@ -67,10 +70,13 @@ export class HousingProvider {
     @Inject(PermissionService)
     private permissionService: PermissionService;
 
+    @Inject(PrismaService)
+    private prismaService: PrismaService;
+
     private playerTemporaryAccess = new Map<string, Set<number>>();
 
     @On(ServerEvent.PLAYER_LOADED, false)
-    public async addCayoMap(source: number) {
+    public async initPlayerTemporaryAccess(source: number) {
         const player = this.playerService.getPlayer(source);
 
         if (!player) {
@@ -82,14 +88,30 @@ export class HousingProvider {
         }
 
         const temporaryAccess = this.playerTemporaryAccess.get(player.citizenid);
-        const property = await this.housingRepository.get();
+        const properties = await this.housingRepository.get();
 
         if (this.permissionService.isGameMaster(source)) {
-            const cayo = property.find(p => p.identifier === 'cayo_villa');
+            const cayo = properties.find(p => p.identifier === 'cayo_villa');
 
             if (cayo) {
                 for (const apartment of cayo.apartments) {
                     temporaryAccess.add(apartment.id);
+                }
+            }
+        }
+
+        const senateMember = await this.prismaService.senatePartyMember.findUnique({
+            where: {
+                citizenId: player.citizenid,
+            },
+        });
+
+        if (senateMember) {
+            for (const property of properties) {
+                for (const apartment of property.apartments) {
+                    if (apartment.senatePartyId === senateMember.partyId) {
+                        temporaryAccess.add(apartment.id);
+                    }
                 }
             }
         }
@@ -212,6 +234,12 @@ export class HousingProvider {
             return;
         }
 
+        if (apartment.senatePartyId !== null) {
+            this.notifier.error(player.source, 'Cet appartement est réservé à un parti politique.');
+
+            return;
+        }
+
         await this.housingRepository.setApartmentRoommate(target.citizenid, apartment.id);
 
         this.playerService.setPlayerApartment(target.source, apartment, property);
@@ -246,6 +274,12 @@ export class HousingProvider {
             return;
         }
 
+        if (apartment.senatePartyId !== null) {
+            this.notifier.error(player.source, 'Cet appartement est réservé à un parti politique.');
+
+            return;
+        }
+
         TriggerClientEvent(ClientEvent.HOUSING_REQUEST_ENTER, target.source, propertyId, apartmentId, source);
     }
 
@@ -271,6 +305,12 @@ export class HousingProvider {
 
         if (apartment.owner !== null) {
             this.notifier.error(player.source, 'Cet appartement est déjà possédé.');
+
+            return;
+        }
+
+        if (apartment.senatePartyId !== null) {
+            this.notifier.error(player.source, 'Cet appartement est réservé à un parti politique.');
 
             return;
         }
@@ -417,6 +457,12 @@ export class HousingProvider {
             return;
         }
 
+        if (apartment.senatePartyId !== null) {
+            this.notifier.error(player.source, 'Cet appartement est réservé à un parti politique.');
+
+            return;
+        }
+
         const resellPrice = getResellPrice(apartment, property);
 
         if (!this.playerMoneyService.add(player.source, resellPrice)) {
@@ -475,6 +521,12 @@ export class HousingProvider {
         const [property, apartment] = await this.housingRepository.getApartment(propertyId, apartmentId);
 
         if (!property || !apartment) {
+            return;
+        }
+
+        if (apartment.senatePartyId !== null) {
+            this.notifier.error(player.source, 'Cet appartement est réservé à un parti politique.');
+
             return;
         }
 
