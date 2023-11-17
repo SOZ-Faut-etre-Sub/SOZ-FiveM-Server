@@ -255,8 +255,10 @@ export class JobBellProvider {
 
     @Once(OnceStep.PlayerLoaded)
     public loadJobBell() {
-        for (const zone of BELL_ZONES) {
-            this.targetFactory.createForBoxZone(`bell:${zone.data.job}`, zone, [
+        for (const index in BELL_ZONES) {
+            const zone = BELL_ZONES[index];
+
+            this.targetFactory.createForBoxZone(`bell:${zone.data.job}:${index}`, zone, [
                 {
                     label: 'Biper',
                     icon: 'c:jobs/biper.png',
