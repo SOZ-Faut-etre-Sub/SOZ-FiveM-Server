@@ -117,10 +117,7 @@ export class JobEmployeeProvider {
             return false;
         }
 
-        if (
-            !this.jobService.hasPermission(player.job.id, JobPermission.ManageGrade) &&
-            !this.jobService.hasPermission(player.job.id, JobPermission.Enrollment)
-        ) {
+        if (!this.jobService.hasAnyPermission(player.job.id, [JobPermission.ManageGrade, JobPermission.Enrollment])) {
             return false;
         }
 

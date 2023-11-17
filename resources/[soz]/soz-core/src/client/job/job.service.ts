@@ -46,6 +46,16 @@ export class JobService {
         return jobs as Record<JobType, Job>;
     }
 
+    public hasAnyPermission(targetJob: JobType, permissions: JobPermission[]) {
+        for (const permission of permissions) {
+            if (this.hasPermission(targetJob, permission)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public hasPermission(targetJob: JobType, permission: JobPermission): boolean {
         const player = this.playerService.getPlayer();
 
