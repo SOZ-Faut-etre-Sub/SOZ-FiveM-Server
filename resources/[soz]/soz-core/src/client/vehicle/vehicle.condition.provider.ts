@@ -78,13 +78,18 @@ export class VehicleConditionProvider {
             const currentVehicleCondition: VehicleCondition = {
                 ...getDefaultVehicleCondition(),
                 ...this.vehicleService.getClientVehicleCondition(entityId, state),
-                oilLevel: getRandomFloat(0, 100),
-                fuelLevel: getRandomFloat(0, 100),
+                oilLevel: getRandomFloat(30, 100),
+                fuelLevel: getRandomFloat(10, 100),
+                mileage: getRandomFloat(1000000, 25000000),
             };
             const currentVehicleConfiguration = this.vehicleService.getClientVehicleConfiguration(entityId);
 
             this.currentVehicleCondition.set(vehicleNetworkId, currentVehicleCondition);
-            TriggerServerEvent(ServerEvent.VEHICLE_UPDATE_CONDITION_FROM_OWNER, vehicleNetworkId, condition);
+            TriggerServerEvent(
+                ServerEvent.VEHICLE_UPDATE_CONDITION_FROM_OWNER,
+                vehicleNetworkId,
+                currentVehicleCondition
+            );
 
             await emitRpc<VehicleConfiguration>(
                 RpcServerEvent.VEHICLE_CUSTOM_SET_MODS,

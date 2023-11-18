@@ -276,6 +276,7 @@ export type PlayerMetadata = PlayerHealthBook & {
     criminal_state: PlayerCriminalState;
     criminal_reputation: number;
     criminal_talents: Talent[];
+    criminal_lastaction: number;
     drugs_skills: DrugSkill[];
     drugs_heavy_contract_date: number;
     vehiclelimit: number;

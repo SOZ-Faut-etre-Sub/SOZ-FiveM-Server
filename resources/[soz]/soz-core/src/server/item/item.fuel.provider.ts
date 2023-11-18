@@ -6,8 +6,8 @@ import { Provider } from '../../core/decorators/provider';
 import { CommonItem, InventoryItem } from '../../shared/item';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { Notifier } from '../notifier';
-import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../player/progress.service';
+import { VehicleRepository } from '../repository/vehicle.repository';
 import { VehicleSpawner } from '../vehicle/vehicle.spawner';
 import { VehicleStateService } from '../vehicle/vehicle.state.service';
 import { ItemService } from './item.service';
@@ -25,9 +25,6 @@ export class ItemFuelProvider {
     @Inject(ProgressService)
     private progressService: ProgressService;
 
-    @Inject(PlayerService)
-    private playerService: PlayerService;
-
     @Inject(Notifier)
     private notifier: Notifier;
 
@@ -36,6 +33,9 @@ export class ItemFuelProvider {
 
     @Inject(VehicleStateService)
     private vehicleStateService: VehicleStateService;
+
+    @Inject(VehicleRepository)
+    private vehicleRepository: VehicleRepository;
 
     public async useEssenceJerrycan(source: number, item: CommonItem, inventoryItem: InventoryItem) {
         if (this.item.isItemExpired(inventoryItem)) {
@@ -66,6 +66,13 @@ export class ItemFuelProvider {
             vehicleType === 'boat' ||
             isVehicleModelElectric(GetEntityModel(closestVehicle.vehicleEntityId))
         ) {
+            this.notifier.notify(source, 'Vous ne pouvez pas utiliser ce carburant pour ce véhicule.', 'error');
+
+            return;
+        }
+
+        const vehModel = await this.vehicleRepository.findByHash(GetEntityModel(closestVehicle.vehicleEntityId));
+        if (vehModel && vehModel.category == 'Cycles') {
             this.notifier.notify(source, 'Vous ne pouvez pas utiliser ce carburant pour ce véhicule.', 'error');
 
             return;

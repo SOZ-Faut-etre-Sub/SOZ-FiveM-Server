@@ -93,8 +93,12 @@ export class ShopProvider {
             icon: 'fas fa-store',
             event: 'soz-core:client:weapon:open-gunsmith',
             label: 'Accéder au GunSmith',
-            canInteract: () => {
-                return this.currentShop !== null && this.currentShopBrand === ShopBrand.Ammunation;
+            canInteract: entity => {
+                return (
+                    this.currentShop !== null &&
+                    this.currentShopBrand === ShopBrand.Ammunation &&
+                    !IsEntityPlayingAnim(entity, 'random@robbery', 'robbery_main_female', 3)
+                );
             },
         },
         {

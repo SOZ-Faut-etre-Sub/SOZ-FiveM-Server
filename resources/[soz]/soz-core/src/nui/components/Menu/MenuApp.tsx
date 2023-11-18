@@ -1,5 +1,6 @@
 import { MenuDrugAdminLocation } from '@private/nui/drug/MenuDrugAdminLocation';
 import { DrugGardenMenu } from '@private/nui/drug/MenuDrugGarden';
+import { MenuHubEntryAdmin } from '@private/nui/hub/MenuHubEntryAdmin';
 import { MenuIllegalShop } from '@private/nui/illegalshop/MenuIllegalShop';
 import { FunctionComponent, useLayoutEffect, useState } from 'react';
 import { MemoryRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
@@ -233,6 +234,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.PoliceJobMoneychecker}/*`} element={<MoneyChecker data={menuData} />} />
             <Route path={`/${MenuType.PitStopPriceMenu}/*`} element={<PitStopPriceMenu />} />
             <Route path={`/${MenuType.Promote}/*`} element={<MenuPromote data={menuData} />} />
+            <Route path={`/${MenuType.HubEntryAdmin}/*`} element={<MenuHubEntryAdmin />} />
         </Routes>
     );
 };
