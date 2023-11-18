@@ -30,6 +30,11 @@ export type Apartment = {
     senatePartyId: string | null;
 };
 
+export type ApartmentMenuData = {
+    property: Property;
+    apartments: Apartment[];
+};
+
 export const UPGRADE_TIER_PERCENT: [number, number, number, number, number] = [0, 20, 45, 70, 100];
 
 export const isBuilding = (property: Property) => {
@@ -44,8 +49,18 @@ export const isTrailer = (property: Property) => {
     return property.identifier.includes('trailer');
 };
 
+export const hasTemporaryAccess = (property: Property, temporaryAccess: Set<number>) => {
+    for (const apartment of property.apartments) {
+        if (temporaryAccess.has(apartment.id)) {
+            return true;
+        }
+    }
+
+    return false;
+};
+
 export const hasAvailableApartment = (property: Property) => {
-    return property.apartments.some(apartment => apartment.owner === null);
+    return property.apartments.some(apartment => apartment.owner === null && apartment.senatePartyId === null);
 };
 
 export const hasRentedApartment = (property: Property, excludeCitizenId: string = null) => {

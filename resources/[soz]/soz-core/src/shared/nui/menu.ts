@@ -1,4 +1,4 @@
-import { Property } from '@public/shared/housing/housing';
+import { ApartmentMenuData, Property } from '@public/shared/housing/housing';
 import { JobType } from '@public/shared/job';
 import { NuiJobEmployeeOnDuty, PromoteMenuData } from '@public/shared/nui/job';
 import { PlayerPersonalMenuData } from '@public/shared/nui/player';
@@ -163,13 +163,13 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.PoliceJobMenu]: PoliceJobMenuData;
     [MenuType.PitStopPriceMenu]: never;
     [MenuType.Promote]: PromoteMenuData;
-    [MenuType.HousingAddRoommateMenu]: Property;
-    [MenuType.HousingBellMenu]: Property;
-    [MenuType.HousingBuyMenu]: Property;
-    [MenuType.HousingEnterMenu]: Property;
-    [MenuType.HousingRemoveRoommateMenu]: Property;
-    [MenuType.HousingSellMenu]: Property;
-    [MenuType.HousingVisitMenu]: Property;
+    [MenuType.HousingAddRoommateMenu]: ApartmentMenuData;
+    [MenuType.HousingBellMenu]: ApartmentMenuData;
+    [MenuType.HousingBuyMenu]: ApartmentMenuData;
+    [MenuType.HousingEnterMenu]: ApartmentMenuData;
+    [MenuType.HousingRemoveRoommateMenu]: ApartmentMenuData;
+    [MenuType.HousingSellMenu]: ApartmentMenuData;
+    [MenuType.HousingVisitMenu]: ApartmentMenuData;
     [MenuType.HousingCloakroomMenu]: {
         items: PlayerCloakroomItem[];
     };

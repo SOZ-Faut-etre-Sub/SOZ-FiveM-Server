@@ -1,16 +1,13 @@
-import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
-import { Exportable } from '../../core/decorators/exports';
+import { Once, OnceStep } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { RepositoryDelete, RepositoryInsert, RepositoryUpdate } from '../../core/decorators/repository';
-import { emitQBRpc, emitRpc } from '../../core/rpc';
+import { emitQBRpc } from '../../core/rpc';
 import { PlayerCloakroomItem } from '../../shared/cloth';
-import { ClientEvent } from '../../shared/event/client';
 import { ServerEvent } from '../../shared/event/server';
 import { Apartment, isPlayerInsideApartment, Property } from '../../shared/housing/housing';
 import { MenuType } from '../../shared/nui/menu';
 import { RepositoryType } from '../../shared/repository';
-import { RpcServerEvent } from '../../shared/rpc';
 import { BankService } from '../bank/bank.service';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { NuiMenu } from '../nui/nui.menu';
@@ -39,53 +36,6 @@ export class HousingApartmentZoneProvider {
 
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
-
-    private temporaryAccess = new Set<number>();
-
-    @Exportable('GetPlayerApartmentAccess')
-    public getPlayerAccess() {
-        const access = {};
-
-        const player = this.playerService.getPlayer();
-
-        if (!player) {
-            return access;
-        }
-
-        for (const property of this.housingRepository.get()) {
-            const apartments = {};
-
-            for (const apartment of property.apartments) {
-                if (
-                    apartment.owner === player.citizenid ||
-                    apartment.roommate === player.citizenid ||
-                    this.temporaryAccess.has(apartment.id)
-                ) {
-                    apartments[apartment.id] = apartment;
-                }
-            }
-
-            if (Object.keys(apartments).length > 0) {
-                access[property.id] = apartments;
-            }
-        }
-
-        return access;
-    }
-
-    @OnEvent(ClientEvent.HOUSING_ADD_TEMPORARY_ACCESS)
-    public addTemporaryAccess(apartmentId: number) {
-        this.temporaryAccess.add(apartmentId);
-    }
-
-    @Once(OnceStep.PlayerLoaded)
-    public async syncTemporaryAccess() {
-        const ids = await emitRpc<number[]>(RpcServerEvent.HOUSING_GET_TEMPORARY_ACCESS);
-
-        for (const id of ids) {
-            this.temporaryAccess.add(id);
-        }
-    }
 
     @Once(OnceStep.RepositoriesLoaded)
     public onApartmentZoneLoaded() {
