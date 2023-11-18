@@ -13,7 +13,12 @@ type GameBlip = {
 export class BlipFactory {
     private blips = new Map<string, GameBlip>();
 
-    public create(id: string, blip: Blip): number {
+    public create(id: string, blipCreated: Blip): number {
+        const blip = {
+            range: true,
+            ...blipCreated,
+        };
+
         if (blip.coords) {
             blip.position = [blip.coords.x, blip.coords.y, blip.coords.z];
         }
