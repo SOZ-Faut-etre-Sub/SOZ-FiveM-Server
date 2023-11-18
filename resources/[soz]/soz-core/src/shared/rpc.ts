@@ -26,6 +26,7 @@ export enum RpcServerEvent {
 
     CRIMI_CAN_USE_CLOAKROOM = 'soz-core:server:crimi:can-use-cloakroom',
     CRIMI_IS_NAKED = 'soz-core:server:crimi:is-naked',
+    CRIMI_SIPHON_CHECK = 'soz-core:server:crimi:siphon-check',
 
     DRIVING_SCHOOL_SPAWN_VEHICLE = 'soz-core:server:driving-school:spawn-vehicle',
     DRIVING_SCHOOL_CHECK_REMAINING_SLOTS = 'soz-core:server:driving-school:check-vehicle-slots',
