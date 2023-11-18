@@ -417,6 +417,8 @@ export class LSMCDeathProvider {
                 }
             );
 
+            await wait(2000);
+
             this.animationService.playAnimation(
                 {
                     base: {
