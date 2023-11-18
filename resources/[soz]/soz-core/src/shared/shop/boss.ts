@@ -1,4 +1,5 @@
 import { JobType } from '../job';
+import { BoxZone } from '../polyzone/box.zone';
 import { ShopConfig } from '../shop';
 
 export const BossShop: (ShopConfig & { job: JobType })[] = [
@@ -153,14 +154,11 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
     {
         name: 'lsmc',
         job: JobType.LSMC,
-        zone: {
-            center: [309.79, -1417.49, 32.51],
-            length: 0.6,
-            width: 1.25,
-            heading: 50,
-            minZ: 31.51,
-            maxZ: 32.51,
-        },
+        zone: new BoxZone([373.79, -1420.17, 37.99], 1.0, 2.6, {
+            heading: 320.64,
+            minZ: 36.99,
+            maxZ: 38.99,
+        }),
         targets: [],
         products: [
             { id: 'outfit', type: 'item', metadata: { label: 'LSMC', type: 'lsmc' }, price: 100 },

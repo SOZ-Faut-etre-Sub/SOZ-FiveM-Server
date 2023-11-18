@@ -1,4 +1,5 @@
 import { Job, JobPermission, JobPermissionData, JobType } from '../job';
+import { BoxZone } from '../polyzone/box.zone';
 
 const BasePermissions: Partial<Record<JobPermission, JobPermissionData>> = {
     [JobPermission.Enrollment]: { label: 'Gestion des recrutements' },
@@ -129,14 +130,11 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
             ...BasePermissions,
         },
         bossZones: [
-            {
-                center: [311.74, -1419.73, 32.51],
-                length: 8.6,
-                width: 6.6,
-                heading: 320,
-                minZ: 31.51,
-                maxZ: 34.51,
-            },
+            new BoxZone([383.87, -1411.63, 37.99], 21.0, 25.6, {
+                heading: 50.09,
+                minZ: 36.99,
+                maxZ: 38.99,
+            }),
         ],
         phone: '555-LSMC',
         canReceiveSocietyInvoice: true,
