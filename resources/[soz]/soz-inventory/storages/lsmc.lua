@@ -2,8 +2,8 @@ Config.Storages["lsmc_fridge"] = {
     label = "Frigo LSMC",
     type = "fridge",
     owner = "lsmc",
-    position = vector3(359.68, -1419.63, 32.51),
-    size = vec2(1.1, 0.8),
+    position = vector3(387.78, -1402.00, 37.99),
+    size = vec2(6.80, 0.80),
     heading = 320,
 }
 
@@ -11,49 +11,51 @@ Config.Storages["lsmc_armory"] = {
     label = "Stockage des armes LSMC",
     type = "armory",
     owner = "lsmc",
-    position = vector3(314.82, -1404.0, 32.51),
-    size = vec2(2.8, 0.6),
+    position = vector3(391.75, -1427.29, 29.43),
+    size = vec2(1.00, 4.60),
     heading = 320,
-    offsetUpZ = 1.6,
+    minZ = 28.43,
+    maxZ = 30.43,
 }
 
 Config.Storages["lsmc_stash"] = {
     label = "Stockage des médecins",
     type = "storage",
     owner = "lsmc",
-    position = vector3(316.35, -1401.84, 32.51),
-    size = vec2(2.6, 0.8),
+    position = vector3(377.00, -1391.75, 37.99),
+    size = vec2(1.10, 5.60),
     heading = 320,
-    offsetUpZ = 1.6,
 }
 
 Config.Storages["lsmc_boss_storage"] = {
     label = "Coffre Patron LSMC",
     type = "boss_storage",
     owner = "lsmc",
-    position = vector3(309.07, -1422.81, 32.51),
-    size = vec2(0.55, 2.55),
-    heading = 320,
+    position = vector3(374.06, -1412.06, 38.04),
+    size = vec2(2.60, 0.80),
+    heading = 51.07,
 }
 
 Config.Storages["lsmc_organ"] = {
     label = "Stockage des organes",
     type = "organ",
     owner = "lsmc",
-    position = vector3(332.11, -1450.53, 32.51),
-    size = vec2(0.6, 7.2),
-    heading = 320,
+    position = vector3(367.90, -1417.04, 32.51),
+    size = vec2(0.80, 3.20),
+    heading = 230,
+    minZ = 31.51,
+    maxZ = 32.51,
 }
 
 Config.Storages["lsmc_male_cloakroom"] = {
     label = "Vestiaire pour hommes - LSMC",
     type = "cloakroom",
     owner = "ffs",
-    position = vector3(369.85, -1431.23, 32.51),
-    size = vec2(3.8, 0.4),
-    minZ = 31.71,
-    maxZ = 34.01,
-    heading = 320,
+    position = vector3(365.05, -1391.05, 37.99),
+    size = vec2(0.80, 4.00),
+    minZ = 36.99,
+    maxZ = 38.99,
+    heading = 49.35,
     targetOptions = getCloakroomTargetOptions("lsmc", "lsmc_male_cloakroom"),
 }
 
@@ -61,10 +63,10 @@ Config.Storages["lsmc_female_cloakroom"] = {
     label = "Vestiaire pour femmes - LSMC",
     type = "cloakroom",
     owner = "ffs",
-    position = vector3(368.92, -1430.18, 32.51),
-    size = vec2(3.6, 0.4),
-    minZ = 31.51,
-    maxZ = 33.91,
-    heading = 320,
+    position = vector3(356.14, -1384.64, 37.99),
+    size = vec2(0.80, 5.60),
+    minZ = 36.99,
+    maxZ = 38.99,
+    heading = 49.61,
     targetOptions = getCloakroomTargetOptions("lsmc", "lsmc_female_cloakroom"),
 }

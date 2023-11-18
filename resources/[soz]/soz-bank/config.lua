@@ -86,9 +86,11 @@ Config.SafeStorages = {
     ["safe_lsmc"] = {
         label = "Coffre LSMC",
         owner = "lsmc",
-        position = vector3(311.04, -1424.3, 32.51),
-        size = vec2(0.8, 1.95),
+        position = vector3(368.90, -1415.68, 38.19),
+        size = vec2(0.60, 0.70),
         heading = 320,
+        minZ = 37.04,
+        maxZ = 37.99,
     },
     ["safe_news"] = {
         label = "Coffre Twitch News",
