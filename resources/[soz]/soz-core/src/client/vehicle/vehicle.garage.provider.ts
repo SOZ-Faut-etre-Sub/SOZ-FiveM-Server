@@ -143,7 +143,11 @@ export class VehicleGarageProvider {
                 });
             }
 
-            if (garage.type === GarageType.Depot || garage.category == GarageCategory.Sea) {
+            if (
+                garage.type === GarageType.Depot ||
+                garage.category == GarageCategory.Sea ||
+                garage.id == 'lsmc_privateparking'
+            ) {
                 this.objectProvider.createObject({
                     model: jobGaragePayStation,
                     position: [...garage.zone.center, garage.zone.heading] as Vector4,

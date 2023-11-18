@@ -51,7 +51,7 @@ export class LSMCProvider {
             scale: 1.01,
         });
 
-        const lit_ems = [2117668672, 1631638868, -1182962909];
+        const lit_ems = [2117668672, 1631638868, -1182962909, 278214451, 1790451681, 1615299850, 1728397219];
 
         this.targetFactory.createForModel(
             lit_ems,
