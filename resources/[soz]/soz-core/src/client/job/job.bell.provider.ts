@@ -98,12 +98,12 @@ const BELL_ZONES: Zone<BellProps>[] = [
         },
     },
     {
-        center: [358.71, -1415.06, 32.51],
-        length: 0.6,
+        center: [363.8, -1416.03, 32.46],
+        length: 0.3,
         width: 0.4,
-        heading: 0,
-        minZ: 32.41,
-        maxZ: 32.61,
+        heading: 51.56,
+        minZ: 32.46,
+        maxZ: 32.56,
         data: {
             job: JobType.LSMC,
             number: '555-LSMC',

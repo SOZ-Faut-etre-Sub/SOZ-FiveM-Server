@@ -16,6 +16,50 @@ import { Vector3 } from '@public/shared/polyzone/vector';
 
 import { PlayerListStateService } from '../../player/player.list.state.service';
 
+type LSMCBed = {
+    model: number;
+    offset: Vector3;
+    rotation: number;
+};
+
+const lsmcBeds: LSMCBed[] = [
+    {
+        model: 2117668672,
+        offset: [0, 0, 0],
+        rotation: 180,
+    },
+    {
+        model: 1631638868,
+        offset: [0, 0, 0],
+        rotation: 180,
+    },
+    {
+        model: -1182962909,
+        offset: [0, 0, 0],
+        rotation: 0,
+    },
+    {
+        model: GetHashKey('soz_lsmc_operationrm_operation_table'),
+        offset: [0, -0.8, 0],
+        rotation: 0,
+    },
+    {
+        model: GetHashKey('soz_lsmc_operationrm_irm'),
+        offset: [-1, 0.6, 0],
+        rotation: -90,
+    },
+    {
+        model: 1615299850,
+        offset: [0, 0, 0],
+        rotation: 0,
+    },
+    {
+        model: 1728397219,
+        offset: [0, 0, 0],
+        rotation: 0,
+    },
+];
+
 @Provider()
 export class LSMCProvider {
     @Inject(TargetFactory)
@@ -51,23 +95,24 @@ export class LSMCProvider {
             scale: 1.01,
         });
 
-        const lit_ems = [2117668672, 1631638868, -1182962909, 278214451, 1790451681, 1615299850, 1728397219];
-
         this.targetFactory.createForModel(
-            lit_ems,
+            lsmcBeds.map(bed => bed.model),
             [
                 {
                     icon: 'fas fa-bed',
                     label: "S'allonger sur le lit",
                     action: async entity => {
                         const player = PlayerPedId();
-                        const coords = GetEntityCoords(entity);
-                        let heading = GetEntityHeading(entity);
-                        if (heading >= 180) {
-                            heading = heading - 179;
-                        } else {
-                            heading = heading + 179;
-                        }
+                        const model = GetEntityModel(entity);
+                        const bedType = lsmcBeds.find(bed => bed.model == model);
+
+                        const coords = GetOffsetFromEntityInWorldCoords(
+                            entity,
+                            bedType.offset[0],
+                            bedType.offset[1],
+                            bedType.offset[2]
+                        );
+                        const heading = GetEntityHeading(entity) - bedType.rotation;
                         SetEntityHeading(player, heading);
                         SetPedCoordsKeepVehicle(player, coords[0], coords[1], coords[2] + 0.1);
                         await this.resourceLoader.loadAnimationDictionary('anim@gangops@morgue@table@');
