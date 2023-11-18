@@ -247,6 +247,7 @@ export enum ClientEvent {
 
     HUB_ENTER = 'soz-core:client:hub:enter',
     HUB_REMOVE_STATUS = 'soz-core:client:hub:remove-status',
+    HUB_ENTRY_REFRESH = 'soz-core:client:hub:entry-refresh',
 
     CRIMI_HOOD = 'soz-core:client:crimi:hood',
     CRIMI_SMOKE = 'soz-core:client:crimi:smoke',

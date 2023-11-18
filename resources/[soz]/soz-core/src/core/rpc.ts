@@ -7,6 +7,13 @@ export type RpcConfig = {
     retries: number;
 };
 
+type CacheRpcInfo = {
+    last: number;
+    value: any;
+};
+
+const RpcCache = new Map<RpcServerEvent, Map<number, CacheRpcInfo>>();
+
 export const emitRpcTimeout = async <R>(name: RpcServerEvent, timeout: number, ...args: any[]): Promise<R> => {
     let rpcTry = 0;
 
@@ -23,6 +30,27 @@ export const emitRpcTimeout = async <R>(name: RpcServerEvent, timeout: number, .
     }
 
     throw new Error(`RPC ${name} failed`);
+};
+
+export const emitRpcCache = async <R>(name: RpcServerEvent, id: number): Promise<R> => {
+    let cacheForEvent = RpcCache.get(name);
+    if (cacheForEvent) {
+        const cacheInfo = cacheForEvent.get(id);
+        if (cacheInfo && cacheInfo.last + 2000 > Date.now()) {
+            return cacheInfo.value;
+        }
+    } else {
+        cacheForEvent = new Map();
+        RpcCache.set(name, cacheForEvent);
+    }
+
+    const value = await emitRpcTimeout<R>(name, 3000, id);
+    cacheForEvent.set(id, {
+        last: Date.now(),
+        value: value,
+    });
+
+    return value;
 };
 
 export const emitRpc = async <R>(name: RpcServerEvent, ...args: any[]): Promise<R> => {

@@ -246,6 +246,7 @@ export enum ServerEvent {
     VEHICLE_TOW_ROPE_ADD = 'soz-core:server:vehicle:tow-rope-add',
     VEHICLE_TOW_ROPE_DELETE = 'soz-core:server:vehicle:tow-rope-delete',
     VEHICLE_DAMAGE_BLUR = 'soz-core:server:vehicle:damage-blur',
+    VEHICLE_LOCKPICK = 'soz-core:server:vehicle:lockpick',
 
     VOIP_IS_MUTED = 'voip:server:player:isMuted',
     VOIP_MUTE = 'voip:server:player:mute',
@@ -311,12 +312,18 @@ export enum ServerEvent {
     HUB_EXIT = 'soz-core:server:hub:exit',
     HUB_RESELL = 'soz-core:server:hub:resell',
     HUB_SHOP_RESELL = 'soz-core:server:hub:shop-resell',
+    HUB_ENTRY_DELETE = 'soz-core:server:hub:entry:delete',
+    HUB_ENTRY_ADD = 'soz-core:server:hub:entry:add',
+    HUB_ENTRY_UPDATE = 'soz-core:server:hub:entry:update',
 
     CRIMI_HOOD = 'soz-core:server:crimi:hood',
     CRIMI_UNHOOD = 'soz-core:server:crimi:unhood',
+    CRIMI_NAKED = 'soz-core:server:crimi:naked',
+    CRIMI_UNNAKED = 'soz-core:server:crimi:unnaked',
     CRIMI_SMOKE_STRESS = 'soz-core:server:crimi:smoke-stress',
     CRIMI_BLOCK_DATE = 'soz-core:server:crimi:block-date',
     CRIMI_USE_JAMMER = 'soz-core:server:crimi:use-jammer',
+    CRIMI_SIPHON = 'soz-core:server:crimi:siphon',
 
     TALENT_TREE_DISABLE_CRIMI = 'soz-core:server:talent:disable-crimi',
 
