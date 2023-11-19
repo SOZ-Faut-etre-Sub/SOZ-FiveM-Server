@@ -661,6 +661,10 @@ export class HousingProvider {
             return true;
         }
 
+        if (apartment.senatePartyId !== null && apartment.senatePartyId === player.partyMember?.partyId) {
+            return true;
+        }
+
         if (this.playerTemporaryAccess.has(player.citizenid)) {
             return this.playerTemporaryAccess.get(player.citizenid).has(apartment.id);
         }

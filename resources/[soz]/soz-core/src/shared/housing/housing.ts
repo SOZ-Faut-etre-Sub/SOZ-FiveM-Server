@@ -67,13 +67,13 @@ export const hasApartmentAccess = (apartment: Apartment, player: PlayerData, tem
         apartment.owner === player.citizenid ||
         apartment.roommate === player.citizenid ||
         temporaryAccess.has(apartment.id) ||
-        apartment.senatePartyId === player.partyMember?.partyId
+        (apartment.senatePartyId !== null && apartment.senatePartyId === player.partyMember?.partyId)
     );
 };
 
-export const hasPartyAccess = (property: Property, partyId: string) => {
+export const hasPartyAccess = (property: Property, partyId: string | null) => {
     for (const apartment of property.apartments) {
-        if (apartment.senatePartyId === partyId) {
+        if (apartment.senatePartyId !== null && apartment.senatePartyId === partyId) {
             return true;
         }
     }
