@@ -186,7 +186,7 @@ export class HousingProvider {
     }
 
     @OnEvent(ServerEvent.HOUSING_ADD_ROOMMATE)
-    public async addRoommate(source: number, targetSource: number, propertyId: number, apartmentId: number) {
+    public async addRoommate(source: number, propertyId: number, apartmentId: number, targetSource: number) {
         const player = this.playerService.getPlayer(source);
 
         if (!player) {
