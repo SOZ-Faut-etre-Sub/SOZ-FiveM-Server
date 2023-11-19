@@ -63,7 +63,7 @@ export class JobEmployeeProvider {
             return;
         }
 
-        const defaultGrade = await this.jobGradeRepository.getDefaultGrade(targetPlayer.job.id);
+        const defaultGrade = await this.jobGradeRepository.getDefaultGrade(player.job.id);
 
         this.playerService.setJob(target, player.job.id, defaultGrade.id);
 
