@@ -9,16 +9,24 @@ import { MainMenu, Menu, MenuContent, MenuItemButton, MenuTitle } from '../../St
 type MenuPromoteProps = {
     data: PromoteMenuData;
 };
+const banners_in_core = ['dmc', 'you-news'];
 
 export const MenuPromote: FunctionComponent<MenuPromoteProps> = ({ data }) => {
     if (!data) {
         return null;
     }
+    let banner;
+    if (banners_in_core.includes(data.job)) {
+        banner = `https://cfx-nui-soz-core/public/images/banner/menu_job_${data.job}.webp`;
+    } else {
+        banner = `https://nui-img/soz/menu_job_${data.job}`;
+    }
+
 
     return (
         <Menu type={MenuType.Promote}>
             <MainMenu>
-                <MenuTitle banner="https://nui-img/soz/menu_job_poleemploi">Promouvoir un joueur</MenuTitle>
+                <MenuTitle banner={banner}>Promouvoir un joueur</MenuTitle>
                 <MenuContent>
                     {data.grades.map(grade => (
                         <MenuItemButton
