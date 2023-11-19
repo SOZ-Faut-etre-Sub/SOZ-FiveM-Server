@@ -37,7 +37,7 @@ export const MenuGarage: FunctionComponent<MenuGarageProps> = ({ data }) => {
         return null;
     }
 
-    const showFreePlaces = data?.garage.type === GarageType.Private || data?.garage.type === GarageType.House;
+    const showFreePlaces = data?.garage.type === GarageType.Private;
 
     const vehicleShowPlaces = () => {
         fetchNui(NuiEvent.VehicleGarageShowPlaces, { id: data.id, garage: data.garage });
@@ -62,6 +62,8 @@ export const MenuGarage: FunctionComponent<MenuGarageProps> = ({ data }) => {
         );
     }
 
+    console.log(JSON.stringify(data, null, 4));
+
     return (
         <Menu type={MenuType.Garage}>
             <MainMenu>
@@ -71,7 +73,40 @@ export const MenuGarage: FunctionComponent<MenuGarageProps> = ({ data }) => {
                 </MenuTitle>
                 <MenuContent>
                     <MenuItemSubMenuLink id="vehicles">Les véhicules</MenuItemSubMenuLink>
-                    <MenuItemButton onConfirm={vehicleStore}>Ranger mon véhicule</MenuItemButton>
+                    {data.garage.type === GarageType.House && (
+                        <MenuItemSelect
+                            onConfirm={(index, apartment) => {
+                                fetchNui(NuiEvent.VehicleGarageStore, {
+                                    id: apartment.identifier,
+                                    garage: data.garage,
+                                });
+                            }}
+                            title="Ranger mon véhicule"
+                        >
+                            {data.apartments.map(apartment => {
+                                const id = `apartment_${apartment.identifier}`;
+                                console.log(data.apartmentsPlaces);
+                                console.log(data.apartmentsPlaces[id]);
+                                const [free, max] =
+                                    data.apartmentsPlaces && data.apartmentsPlaces[id]
+                                        ? data.apartmentsPlaces[id]
+                                        : [0, 0];
+
+                                return (
+                                    <MenuItemSelectOption
+                                        key={apartment.id}
+                                        value={apartment}
+                                        description={`${free} places disponibles sur ${max} `}
+                                    >
+                                        {apartment.label}
+                                    </MenuItemSelectOption>
+                                );
+                            })}
+                        </MenuItemSelect>
+                    )}
+                    {data.garage.type !== GarageType.House && (
+                        <MenuItemButton onConfirm={vehicleStore}>Ranger mon véhicule</MenuItemButton>
+                    )}
                     {data.garage.allowTrailers && (
                         <MenuItemButton onConfirm={vehicleStoreTrailer}>Ranger ma remorque</MenuItemButton>
                     )}

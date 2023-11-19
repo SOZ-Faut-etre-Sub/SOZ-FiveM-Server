@@ -436,7 +436,20 @@ export class HousingPropertyZoneProvider {
     }
 
     public async openPropertyGarage(property: Property) {
-        await this.vehicleGarageProvider.openHouseGarageMenu(property.identifier);
+        const player = this.playerService.getPlayer();
+
+        if (!player) {
+            return;
+        }
+
+        const apartments = property.apartments.filter(
+            apartment =>
+                apartment.owner === player.citizenid ||
+                apartment.roommate === player.citizenid ||
+                this.temporaryAccess.has(apartment.id)
+        );
+
+        await this.vehicleGarageProvider.openHouseGarageMenu(property.identifier, apartments);
     }
 
     public leavePropertyAsRoommate(property: Property) {

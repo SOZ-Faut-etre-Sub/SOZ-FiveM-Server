@@ -13,7 +13,7 @@ import { Font } from '../../shared/hud';
 import { JobType } from '../../shared/job';
 import { MenuType } from '../../shared/nui/menu';
 import { BoxZone, Zone, ZoneType, ZoneTyped } from '../../shared/polyzone/box.zone';
-import { toVector4Object, Vector3, Vector4 } from '../../shared/polyzone/vector';
+import { toVector4Object, Vector3 } from '../../shared/polyzone/vector';
 import { Err, Ok } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
 import { DrawService } from '../draw.service';

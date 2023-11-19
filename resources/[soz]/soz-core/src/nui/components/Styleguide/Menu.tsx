@@ -631,8 +631,8 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
 }) => {
     const [descendants, setDescendants] = useDescendantsInit();
     const [activeOptionIndex, setActiveOptionIndex] = useState(0);
+    const [itemDescription, setItemDescription] = useState<string | null>(null);
     const [activeValue, setActiveValue] = useState(value);
-    const { setDescription } = useContext(MenuContext);
 
     const onItemConfirm = useCallback(() => {
         onConfirm && onConfirm(activeOptionIndex, activeValue);
@@ -649,17 +649,6 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
         'ml-auto': alignRight,
     });
 
-    const itemSetDescription = useCallback(
-        itemDescription => {
-            if (itemDescription) {
-                setDescription(itemDescription);
-            } else {
-                setDescription(description);
-            }
-        },
-        [description, setDescription]
-    );
-
     return (
         <MenuItemContainer
             onSelected={
@@ -671,7 +660,9 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
             }
             onConfirm={onItemConfirm}
             disabled={disabled}
-            description={descriptionValue ? descriptionValue(activeValue) : description}
+            description={
+                descriptionValue ? descriptionValue(activeValue) : itemDescription ? itemDescription : description
+            }
         >
             <DescendantProvider
                 key={keyDescendant}
@@ -682,7 +673,7 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
                 <MenuItemSelectContext.Provider
                     value={{
                         activeOptionIndex,
-                        setDescription: itemSetDescription,
+                        setDescription: setItemDescription,
                         setActiveOptionIndex,
                         setActiveValue,
                         activeValue,
@@ -851,7 +842,7 @@ const useSelectOption = (
             onSelected && onSelected();
             setDescription(description);
         }
-    }, [isSelected]);
+    }, [isSelected, isItemSelected]);
 
     return [handleRefSet, show, isSelected, onClick, isInitialValue];
 };

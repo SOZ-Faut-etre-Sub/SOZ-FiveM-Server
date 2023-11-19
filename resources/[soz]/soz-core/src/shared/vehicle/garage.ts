@@ -1,3 +1,5 @@
+import { Apartment } from '@public/shared/housing/housing';
+
 import { JobType } from '../job';
 import { Zone } from '../polyzone/box.zone';
 import { PlayerServerVehicle } from './player.vehicle';
@@ -68,6 +70,8 @@ export type GarageMenuData = {
         id: string;
         garage: Garage;
     }[];
+    apartments: Apartment[];
+    apartmentsPlaces: Record<string, [number, number]>; // [current, max]
 };
 
 export function getTransferPrice(weight: number) {

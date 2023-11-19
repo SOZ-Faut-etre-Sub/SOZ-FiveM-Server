@@ -14,6 +14,7 @@ export type Property = {
 
 export type Apartment = {
     id: number;
+    propertyId: number;
     identifier: string;
     label: string;
     price: number;

@@ -1,5 +1,3 @@
-import { Prisma } from '@prisma/client';
-
 import { On, OnEvent } from '../../core/decorators/event';
 import { Exportable } from '../../core/decorators/exports';
 import { Inject } from '../../core/decorators/injectable';
@@ -631,6 +629,28 @@ export class HousingProvider {
             `Vous venez ~g~d'ajouter~s~ une place de parking à votre caravane pour ~b~$${price}~s~.`,
             'success'
         );
+    }
+
+    public async hasAccessToApartment(player: PlayerData, apartmentIdentifier: string) {
+        const apartment = await this.housingRepository.getApartmentByIdentifier(apartmentIdentifier);
+
+        if (!apartment) {
+            return false;
+        }
+
+        if (apartment.owner === player.citizenid) {
+            return true;
+        }
+
+        if (apartment.roommate === player.citizenid) {
+            return true;
+        }
+
+        if (this.playerTemporaryAccess.has(player.citizenid)) {
+            return this.playerTemporaryAccess.get(player.citizenid).has(apartment.id);
+        }
+
+        return false;
     }
 
     private doEnterApartment(player: PlayerData, property: Property, apartment: Apartment) {
