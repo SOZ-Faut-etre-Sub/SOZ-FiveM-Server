@@ -3,6 +3,7 @@ import { ClothConfig } from '@public/shared/cloth';
 import { DrivingSchoolLicense } from '@public/shared/driving-school';
 import { Apartment, Property } from '@public/shared/housing/housing';
 import { JobType } from '@public/shared/job';
+import { SenatePartyMember } from '@public/shared/senate';
 
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { Disease } from '../../shared/disease';
@@ -96,6 +97,14 @@ export class PlayerService {
                 owner: apartment.owner,
                 tier: apartment.tier,
             });
+        }
+    }
+
+    public setPlayerPartyMember(source: number, partyMember: SenatePartyMember | null): void {
+        const player = this.QBCore.getPlayer(source);
+
+        if (player) {
+            player.Functions.SetPartyMember(partyMember);
         }
     }
 

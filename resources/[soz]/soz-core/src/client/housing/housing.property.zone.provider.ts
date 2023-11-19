@@ -11,6 +11,7 @@ import {
     canPlayerAddRoommate,
     canPlayerRemoveRoommate,
     hasAccess,
+    hasApartmentAccess,
     hasAvailableApartment,
     hasPlayerOwnedApartment,
     hasPlayerRentedApartment,
@@ -310,9 +311,7 @@ export class HousingPropertyZoneProvider {
                         return false;
                     }
 
-                    return (
-                        hasAccess(property, player.citizenid, this.temporaryAccess) && !isPlayerInsideApartment(player)
-                    );
+                    return hasAccess(property, player, this.temporaryAccess) && !isPlayerInsideApartment(player);
                 },
                 action: () => {
                     this.enterProperty(property);
@@ -329,7 +328,7 @@ export class HousingPropertyZoneProvider {
                     }
 
                     return (
-                        hasAccess(property, player.citizenid, this.temporaryAccess) &&
+                        hasAccess(property, player, this.temporaryAccess) &&
                         hasPropertyGarage(property) &&
                         !isPlayerInsideApartment(player)
                     );
@@ -430,11 +429,8 @@ export class HousingPropertyZoneProvider {
             return [];
         }
 
-        const apartments = property.apartments.filter(
-            apartment =>
-                apartment.owner === player.citizenid ||
-                apartment.roommate === player.citizenid ||
-                this.temporaryAccess.has(apartment.id)
+        const apartments = property.apartments.filter(apartment =>
+            hasApartmentAccess(apartment, player, this.temporaryAccess)
         );
 
         if (apartments.length === 0) {
@@ -553,11 +549,8 @@ export class HousingPropertyZoneProvider {
             return;
         }
 
-        const apartments = property.apartments.filter(
-            apartment =>
-                apartment.owner === player.citizenid ||
-                apartment.roommate === player.citizenid ||
-                this.temporaryAccess.has(apartment.id)
+        const apartments = property.apartments.filter(apartment =>
+            hasApartmentAccess(apartment, player, this.temporaryAccess)
         );
 
         await this.vehicleGarageProvider.openHouseGarageMenu(property.identifier, apartments);

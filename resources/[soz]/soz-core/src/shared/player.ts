@@ -1,6 +1,7 @@
 import { SozRole } from '@core/permissions';
 import { DrugSkill } from '@private/shared/drugs';
 import { Talent } from '@private/shared/talent';
+import { SenatePartyMember } from '@public/shared/senate';
 
 import { ClothConfig } from './cloth';
 import { Disease, Organ } from './disease';
@@ -13,6 +14,7 @@ export type QBCorePlayer = {
     Functions: {
         SetApartment: (data: any) => void;
         SetApartmentTier: (tier: number) => void;
+        SetPartyMember: (data: SenatePartyMember | null) => void;
         SetApartmentHasParkingPlace: (hasParkingPlace: boolean) => void;
         SetMetaData: (key: string, val: any) => void;
         SetMetaDatas: (data: Record<string, any>) => void;
@@ -30,6 +32,7 @@ export type QBCorePlayer = {
 
 export type PlayerData = {
     address: string;
+    partyMember: SenatePartyMember | null;
     apartment:
         | {
               id: number;
