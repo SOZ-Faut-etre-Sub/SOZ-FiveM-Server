@@ -5,6 +5,7 @@ import { Property } from '../../shared/housing/housing';
 import { Zone, ZoneTyped } from '../../shared/polyzone/box.zone';
 import { RpcServerEvent } from '../../shared/rpc';
 import { HousingProvider } from '../housing/housing.provider';
+import { InventoryManager } from '../inventory/inventory.manager';
 import { PlayerService } from '../player/player.service';
 import { HousingRepository } from '../repository/housing.repository';
 import { SenateRepository } from '../repository/senate.repository';
@@ -26,6 +27,9 @@ export class AdminMenuMapperProvider {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(InventoryManager)
+    private inventoryManager: InventoryManager;
 
     @Rpc(RpcServerEvent.ADMIN_MAPPER_SET_APARTMENT_PRICE)
     public async setApartmentPrice(source: number, apartmentId: number, price: number): Promise<Property[]> {
@@ -189,6 +193,20 @@ export class AdminMenuMapperProvider {
         }
 
         await this.housingProvider.clearApartment(property, apartment, false);
+
+        return this.housingRepository.get();
+    }
+
+    @Rpc(RpcServerEvent.ADMIN_MAPPER_SET_APARTMENT_TIER)
+    public async setTier(source: number, propertyId: number, apartmentId: number, tier: number): Promise<Property[]> {
+        const [property, apartment] = await this.housingRepository.getApartment(propertyId, apartmentId);
+
+        if (!property || !apartment) {
+            return this.housingRepository.get();
+        }
+
+        this.inventoryManager.setHouseStashMaxWeightFromTier(apartment.identifier, tier);
+        await this.housingRepository.setApartmentTier(apartment.id, tier);
 
         return this.housingRepository.get();
     }

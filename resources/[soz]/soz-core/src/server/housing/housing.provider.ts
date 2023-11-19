@@ -583,7 +583,7 @@ export class HousingProvider {
         }
 
         this.inventoryManager.setHouseStashMaxWeightFromTier(apartment.identifier, tier);
-        this.playerService.setPlayerApartment(player.source, apartment, property);
+        this.playerService.setPlayerApartmentTier(player.source, tier);
 
         await this.housingRepository.setApartmentTier(apartment.id, tier);
 

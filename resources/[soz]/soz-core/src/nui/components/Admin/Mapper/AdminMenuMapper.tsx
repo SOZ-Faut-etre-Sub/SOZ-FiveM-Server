@@ -445,6 +445,23 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                                         ❌ Enlever le propriétaire ({apartment.owner})
                                     </MenuItemButton>
                                 )}
+                                <MenuItemSelect
+                                    value={apartment.tier}
+                                    title="Tier de l'appartement"
+                                    onConfirm={(_, value) => {
+                                        fetchNui(NuiEvent.AdminMenuMapperSetApartmentTier, {
+                                            propertyId: property.id,
+                                            apartmentId: apartment.id,
+                                            tier: value,
+                                        });
+                                    }}
+                                >
+                                    <MenuItemSelectOption value={0}>Tier 0</MenuItemSelectOption>
+                                    <MenuItemSelectOption value={1}>Tier 1</MenuItemSelectOption>
+                                    <MenuItemSelectOption value={2}>Tier 2</MenuItemSelectOption>
+                                    <MenuItemSelectOption value={3}>Tier 3</MenuItemSelectOption>
+                                    <MenuItemSelectOption value={4}>Tier 4</MenuItemSelectOption>
+                                </MenuItemSelect>
                             </MenuContent>
                         </SubMenu>
                     ))}

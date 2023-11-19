@@ -705,4 +705,17 @@ export class AdminMenuMapperProvider {
     }): Promise<Property[]> {
         return await emitRpc<Property[]>(RpcServerEvent.ADMIN_MAPPER_CLEAR_OWNER, propertyId, apartmentId);
     }
+
+    @OnNuiEvent(NuiEvent.AdminMenuMapperSetApartmentTier)
+    public async setTier({
+        propertyId,
+        apartmentId,
+        tier,
+    }: {
+        propertyId: number;
+        apartmentId: number;
+        tier: number;
+    }): Promise<Property[]> {
+        return await emitRpc<Property[]>(RpcServerEvent.ADMIN_MAPPER_SET_APARTMENT_TIER, propertyId, apartmentId, tier);
+    }
 }
