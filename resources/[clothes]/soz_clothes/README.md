@@ -18,6 +18,7 @@
 1  4 étoiles or 0
 2  col or et argent 0-7
 3  épaullete stonks
+4  badge LSPD/BCSO
 
     Armor
 0  stonks
@@ -45,7 +46,7 @@
     Accessories
 0  stétho    //same as vanilla?
 1  pistol
-2  badge LSPD/BCSO
+2  badge LSPD/BCSO  -- no longer used IG
 3  harnais holster
 4  holster ceinture
 
