@@ -46,8 +46,16 @@ export const isHouse = (property: Property) => {
     return !isBuilding(property);
 };
 
+export const isAdminHouse = (property: Property) => {
+    return property.identifier === 'cayo_villa';
+};
+
 export const isTrailer = (property: Property) => {
     return property.identifier.includes('trailer');
+};
+
+export const hasAccess = (property: Property, citizenId: string, temporaryAccess: Set<number>) => {
+    return hasTemporaryAccess(property, temporaryAccess) || hasPlayerRentedApartment(property, citizenId);
 };
 
 export const hasTemporaryAccess = (property: Property, temporaryAccess: Set<number>) => {
@@ -61,7 +69,10 @@ export const hasTemporaryAccess = (property: Property, temporaryAccess: Set<numb
 };
 
 export const hasAvailableApartment = (property: Property) => {
-    return property.apartments.some(apartment => apartment.owner === null && apartment.senatePartyId === null);
+    return (
+        !isAdminHouse(property) &&
+        property.apartments.some(apartment => apartment.owner === null && apartment.senatePartyId === null)
+    );
 };
 
 export const hasRentedApartment = (property: Property, excludeCitizenId: string = null) => {

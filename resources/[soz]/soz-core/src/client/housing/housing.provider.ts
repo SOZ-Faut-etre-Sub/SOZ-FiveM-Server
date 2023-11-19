@@ -1,28 +1,14 @@
-import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event';
+import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
-import { hasPlayerRentedApartment } from '../../shared/housing/housing';
 import { MenuType } from '../../shared/nui/menu';
 import { Vector3 } from '../../shared/polyzone/vector';
-import { BlipFactory } from '../blip';
-import { InventoryManager } from '../inventory/inventory.manager';
 import { Notifier } from '../notifier';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
 import { HousingRepository } from '../repository/housing.repository';
-
-const BlipSprite = {
-    house: {
-        free: 350,
-        owned: 40,
-    },
-    building: {
-        free: 476,
-        owned: 475,
-    },
-};
 
 @Provider()
 export class HousingProvider {
@@ -37,12 +23,6 @@ export class HousingProvider {
 
     @Inject(HousingRepository)
     private housingRepository: HousingRepository;
-
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
-
-    @Inject(BlipFactory)
-    private blipFactory: BlipFactory;
 
     @Tick()
     public enableCulling() {
@@ -75,56 +55,6 @@ export class HousingProvider {
 
         if (confirmed) {
             TriggerServerEvent(ServerEvent.HOUSING_ENTER_APARTMENT, propertyId, apartmentId, target);
-        }
-    }
-
-    @OnEvent(ClientEvent.PLAYER_UPDATE)
-    @Once(OnceStep.RepositoriesLoaded)
-    public updateBlips() {
-        const player = this.playerService.getPlayer();
-
-        if (!player) {
-            return;
-        }
-
-        const hasMap = this.inventoryManager.hasEnoughItem('house_map');
-        const properties = this.housingRepository.get();
-
-        if (properties.length === 0) {
-            return;
-        }
-
-        for (const property of properties) {
-            const id = `property_${property.id}`;
-            const isRented = hasPlayerRentedApartment(property, player.citizenid);
-
-            if (!hasMap && !isRented) {
-                if (this.blipFactory.exist(id)) {
-                    this.blipFactory.remove(id);
-                }
-
-                continue;
-            }
-
-            if (this.blipFactory.exist(id)) {
-                continue;
-            }
-
-            const category = property.apartments.length > 1 ? 'building' : 'house';
-            const owned = isRented ? 'owned' : 'free';
-            const name = isRented
-                ? 'Habitation - Résidence'
-                : category === 'building'
-                ? 'Habitation - Immeuble'
-                : 'Habitation - Maison';
-
-            this.blipFactory.create(id, {
-                name,
-                position: property.entryZone.center,
-                sprite: BlipSprite[category][owned],
-                scale: owned === 'owned' ? 0.8 : 0.5,
-                color: 0,
-            });
         }
     }
 

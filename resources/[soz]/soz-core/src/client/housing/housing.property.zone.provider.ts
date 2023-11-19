@@ -10,25 +10,40 @@ import {
     Apartment,
     canPlayerAddRoommate,
     canPlayerRemoveRoommate,
+    hasAccess,
     hasAvailableApartment,
     hasPlayerOwnedApartment,
     hasPlayerRentedApartment,
     hasPlayerRoommateApartment,
     hasPropertyGarage,
     hasRentedApartment,
-    hasTemporaryAccess,
+    isAdminHouse,
     isPlayerInsideApartment,
     Property,
 } from '../../shared/housing/housing';
 import { MenuType } from '../../shared/nui/menu';
+import { isAdminOrStaff } from '../../shared/player';
 import { RepositoryType } from '../../shared/repository';
 import { RpcServerEvent } from '../../shared/rpc';
+import { BlipFactory } from '../blip';
+import { InventoryManager } from '../inventory/inventory.manager';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
 import { HousingRepository } from '../repository/housing.repository';
 import { TargetFactory } from '../target/target.factory';
 import { VehicleGarageProvider } from '../vehicle/vehicle.garage.provider';
 import { HousingMenuProvider } from './housing.menu.provider';
+
+const BlipSprite = {
+    house: {
+        free: 350,
+        owned: 40,
+    },
+    building: {
+        free: 476,
+        owned: 475,
+    },
+};
 
 @Provider()
 export class HousingPropertyZoneProvider {
@@ -49,6 +64,12 @@ export class HousingPropertyZoneProvider {
 
     @Inject(HousingMenuProvider)
     private housingMenuProvider: HousingMenuProvider;
+
+    @Inject(InventoryManager)
+    private inventoryManager: InventoryManager;
+
+    @Inject(BlipFactory)
+    private blipFactory: BlipFactory;
 
     private temporaryAccess = new Set<number>();
 
@@ -104,17 +125,82 @@ export class HousingPropertyZoneProvider {
         for (const property of properties) {
             this.loadPropertyZone(property);
         }
+
+        this.updateBlips();
+    }
+
+    @OnEvent(ClientEvent.PLAYER_UPDATE)
+    public updateBlips() {
+        const player = this.playerService.getPlayer();
+
+        if (!player) {
+            return;
+        }
+
+        const hasMap = this.inventoryManager.hasEnoughItem('house_map');
+        const properties = this.housingRepository.get();
+
+        if (properties.length === 0) {
+            return;
+        }
+
+        for (const property of properties) {
+            const id = `property_${property.id}`;
+            const isAdminRented = isAdminHouse(property) && isAdminOrStaff(player);
+            const isRented = hasPlayerRentedApartment(property, player.citizenid) || isAdminRented;
+            const hasAvailable = hasAvailableApartment(property);
+
+            if (
+                (!hasMap && !isRented) ||
+                (!hasAvailable && !isRented) ||
+                (isAdminHouse(property) && !isAdminOrStaff(player))
+            ) {
+                if (this.blipFactory.exist(id)) {
+                    this.blipFactory.remove(id);
+                }
+
+                continue;
+            }
+
+            const category = property.apartments.length > 1 ? 'building' : 'house';
+            const owned = isRented ? 'owned' : 'free';
+            const name = isRented
+                ? 'Habitation - Résidence'
+                : category === 'building'
+                ? 'Habitation - Immeuble'
+                : 'Habitation - Maison';
+
+            if (this.blipFactory.exist(id)) {
+                this.blipFactory.update(id, {
+                    name,
+                    position: property.entryZone.center,
+                    sprite: BlipSprite[category][owned],
+                    scale: owned === 'owned' ? 0.8 : 0.5,
+                    color: 0,
+                });
+            } else {
+                this.blipFactory.create(id, {
+                    name,
+                    position: property.entryZone.center,
+                    sprite: BlipSprite[category][owned],
+                    scale: owned === 'owned' ? 0.8 : 0.5,
+                    color: 0,
+                });
+            }
+        }
     }
 
     @RepositoryDelete(RepositoryType.Housing)
     public removePropertyZone(property: Property) {
         this.targetFactory.removeBoxZone(`housing:property:${property.id}`);
+        this.updateBlips();
     }
 
     @RepositoryInsert(RepositoryType.Housing)
     @RepositoryUpdate(RepositoryType.Housing)
     public loadPropertyZone(property: Property) {
         this.targetFactory.removeBoxZone(`housing:property:${property.id}`);
+        this.updateBlips();
 
         this.targetFactory.createForBoxZone(`housing:property:${property.id}`, property.entryZone, [
             {
@@ -129,6 +215,7 @@ export class HousingPropertyZoneProvider {
                     }
 
                     return (
+                        !isAdminHouse(property) &&
                         !hasPlayerOwnedApartment(property, player.citizenid) &&
                         hasAvailableApartment(property) &&
                         !isPlayerInsideApartment(player)
@@ -154,7 +241,11 @@ export class HousingPropertyZoneProvider {
                         return false;
                     }
 
-                    return hasPlayerOwnedApartment(property, player.citizenid) && !isPlayerInsideApartment(player);
+                    return (
+                        !isAdminHouse(property) &&
+                        hasPlayerOwnedApartment(property, player.citizenid) &&
+                        !isPlayerInsideApartment(player)
+                    );
                 },
                 action: () => {
                     const player = this.playerService.getPlayer();
@@ -181,7 +272,9 @@ export class HousingPropertyZoneProvider {
                         return false;
                     }
 
-                    return hasAvailableApartment(property) && !isPlayerInsideApartment(player);
+                    return (
+                        !isAdminHouse(property) && hasAvailableApartment(property) && !isPlayerInsideApartment(player)
+                    );
                 },
                 action: () => {
                     this.visitProperty(property);
@@ -197,7 +290,11 @@ export class HousingPropertyZoneProvider {
                         return false;
                     }
 
-                    return hasRentedApartment(property, player.citizenid) && !isPlayerInsideApartment(player);
+                    return (
+                        !isAdminHouse(property) &&
+                        hasRentedApartment(property, player.citizenid) &&
+                        !isPlayerInsideApartment(player)
+                    );
                 },
                 action: () => {
                     this.bellProperty(property);
@@ -214,9 +311,7 @@ export class HousingPropertyZoneProvider {
                     }
 
                     return (
-                        (hasTemporaryAccess(property, this.temporaryAccess) ||
-                            hasPlayerRentedApartment(property, player.citizenid)) &&
-                        !isPlayerInsideApartment(player)
+                        hasAccess(property, player.citizenid, this.temporaryAccess) && !isPlayerInsideApartment(player)
                     );
                 },
                 action: () => {
@@ -233,7 +328,11 @@ export class HousingPropertyZoneProvider {
                         return false;
                     }
 
-                    return hasPropertyGarage(property) && !isPlayerInsideApartment(player);
+                    return (
+                        hasAccess(property, player.citizenid, this.temporaryAccess) &&
+                        hasPropertyGarage(property) &&
+                        !isPlayerInsideApartment(player)
+                    );
                 },
                 action: () => {
                     this.openPropertyGarage(property);
@@ -250,7 +349,11 @@ export class HousingPropertyZoneProvider {
                         return false;
                     }
 
-                    return canPlayerAddRoommate(property, player.citizenid) && !isPlayerInsideApartment(player);
+                    return (
+                        !isAdminHouse(property) &&
+                        canPlayerAddRoommate(property, player.citizenid) &&
+                        !isPlayerInsideApartment(player)
+                    );
                 },
                 action: () => {
                     this.addRoommate(property);
@@ -267,7 +370,11 @@ export class HousingPropertyZoneProvider {
                         return false;
                     }
 
-                    return canPlayerRemoveRoommate(property, player.citizenid) && !isPlayerInsideApartment(player);
+                    return (
+                        !isAdminHouse(property) &&
+                        canPlayerRemoveRoommate(property, player.citizenid) &&
+                        !isPlayerInsideApartment(player)
+                    );
                 },
                 action: () => {
                     this.removeRoommate(property);
@@ -284,7 +391,11 @@ export class HousingPropertyZoneProvider {
                         return false;
                     }
 
-                    return hasPlayerRoommateApartment(property, player.citizenid) && !isPlayerInsideApartment(player);
+                    return (
+                        !isAdminHouse(property) &&
+                        hasPlayerRoommateApartment(property, player.citizenid) &&
+                        !isPlayerInsideApartment(player)
+                    );
                 },
                 action: () => {
                     this.leavePropertyAsRoommate(property);
