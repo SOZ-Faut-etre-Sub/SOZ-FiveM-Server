@@ -14,7 +14,6 @@ import {
     hasApartmentAccess,
     hasAvailableApartment,
     hasPlayerOwnedApartment,
-    hasPlayerRentedApartment,
     hasPlayerRoommateApartment,
     hasPropertyGarage,
     hasRentedApartment,
@@ -88,11 +87,7 @@ export class HousingPropertyZoneProvider {
             const apartments = {};
 
             for (const apartment of property.apartments) {
-                if (
-                    apartment.owner === player.citizenid ||
-                    apartment.roommate === player.citizenid ||
-                    this.temporaryAccess.has(apartment.id)
-                ) {
+                if (hasApartmentAccess(apartment, player, this.temporaryAccess)) {
                     apartments[apartment.id] = apartment;
                 }
             }
@@ -148,12 +143,12 @@ export class HousingPropertyZoneProvider {
         for (const property of properties) {
             const id = `property_${property.id}`;
             const isAdminRented = isAdminHouse(property) && isAdminOrStaff(player);
-            const isRented = hasPlayerRentedApartment(property, player.citizenid) || isAdminRented;
+            const hasPropertyAccess = hasAccess(property, player, this.temporaryAccess) || isAdminRented;
             const hasAvailable = hasAvailableApartment(property);
 
             if (
-                (!hasMap && !isRented) ||
-                (!hasAvailable && !isRented) ||
+                (!hasMap && !hasPropertyAccess) ||
+                (!hasAvailable && !hasPropertyAccess) ||
                 (isAdminHouse(property) && !isAdminOrStaff(player))
             ) {
                 if (this.blipFactory.exist(id)) {
@@ -164,8 +159,8 @@ export class HousingPropertyZoneProvider {
             }
 
             const category = property.apartments.length > 1 ? 'building' : 'house';
-            const owned = isRented ? 'owned' : 'free';
-            const name = isRented
+            const owned = hasPropertyAccess ? 'owned' : 'free';
+            const name = hasPropertyAccess
                 ? 'Habitation - Résidence'
                 : category === 'building'
                 ? 'Habitation - Immeuble'

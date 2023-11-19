@@ -136,7 +136,11 @@ export class HousingProvider {
             return;
         }
 
-        if (apartment.owner !== player.citizenid && apartment.roommate !== player.citizenid) {
+        if (
+            apartment.owner !== player.citizenid &&
+            apartment.roommate !== player.citizenid &&
+            (apartment.senatePartyId === null || apartment.senatePartyId !== player.partyMember?.partyId)
+        ) {
             this.notifier.error(player.source, 'Vous ne possédez pas cet appartement.');
 
             return;
@@ -147,6 +151,13 @@ export class HousingProvider {
         }
 
         this.playerTemporaryAccess.get(target.citizenid).add(apartmentId);
+
+        this.notifier.notify(target.source, `Vous avez reçu un accès temporaire à un appartement.`, 'success');
+        this.notifier.notify(
+            player.source,
+            `Vous avez donné un accès temporaire à l'appartement ${apartment.label}.`,
+            'success'
+        );
 
         TriggerClientEvent(ClientEvent.HOUSING_ADD_TEMPORARY_ACCESS, target.source, apartmentId);
     }
