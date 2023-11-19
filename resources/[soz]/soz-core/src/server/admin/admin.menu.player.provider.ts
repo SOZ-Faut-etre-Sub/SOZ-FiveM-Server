@@ -225,6 +225,66 @@ export class AdminMenuPlayerProvider {
         this.notifier.notify(source, `L'état client du joueur a été réinitialisée.`, 'info');
     }
 
+    @OnEvent(ServerEvent.ADMIN_PLAYER_SET_SENATE_PARTY)
+    public async onPlayerSetSenateParty(source: number, target: number, value: string | null) {
+        const targetPlayer = this.playerService.getPlayer(target);
+
+        if (!targetPlayer) {
+            return;
+        }
+
+        if (value === null) {
+            const deleted = await this.prisma.senatePartyMember.delete({
+                where: {
+                    citizenId: targetPlayer.citizenid,
+                },
+            });
+
+            if (deleted) {
+                this.notifier.notify(source, `Le joueur n'est plus dans un parti.`, 'info');
+            } else {
+                this.notifier.notify(source, `Le joueur n'est pas dans un parti.`, 'info');
+            }
+        } else {
+            const party = await this.prisma.senateParty.findUnique({
+                where: {
+                    id: value,
+                },
+            });
+
+            if (!party) {
+                this.notifier.notify(source, `Le parti n'existe pas.`, 'error');
+
+                return;
+            }
+
+            await this.prisma.senatePartyMember.upsert({
+                create: {
+                    party: {
+                        connect: {
+                            id: value,
+                        },
+                    },
+                    player: {
+                        connect: {
+                            citizenid: targetPlayer.citizenid,
+                        },
+                    },
+                    firstName: targetPlayer.charinfo.firstname,
+                    lastName: targetPlayer.charinfo.lastname,
+                },
+                update: {
+                    partyId: value,
+                },
+                where: {
+                    citizenId: targetPlayer.citizenid,
+                },
+            });
+
+            this.notifier.notify(source, `Le joueur est désormais dans le parti ${party.name}.`, 'info');
+        }
+    }
+
     @OnEvent(ServerEvent.ADMIN_PLAYER_SET_ZOMBIE)
     public async onPlayerSetZombie(source: number, target: number, value: boolean) {
         this.playerStateService.resetClientState(target);

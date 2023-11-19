@@ -162,7 +162,7 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
         this.data[propertyId].exteriorCulling = exteriorCulling;
     }
 
-    protected async load(): Promise<Record<string, Property>> {
+    protected async load(): Promise<Record<number, Property>> {
         const properties = await this.prismaService.housing_property.findMany();
         const appartments = await this.prismaService.housing_apartment.findMany();
 
@@ -348,6 +348,20 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
         });
 
         await this.delete(propertyId);
+    }
+
+    public async setSenateParty(apartmentId: number, senatePartyId: string | null): Promise<void> {
+        const apartment = await this.prismaService.housing_apartment.update({
+            where: {
+                id: apartmentId,
+            },
+            data: {
+                senate_party_id: senatePartyId,
+            },
+        });
+
+        this.data[apartment.property_id].apartments.find(apartment => apartment.id === apartmentId).senatePartyId =
+            apartment.senate_party_id;
     }
 
     private serializeProperty(property: housing_property): Property {

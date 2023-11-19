@@ -1,3 +1,4 @@
+import { SenateParty } from '@public/shared/senate';
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import { SozRole } from '../../../core/permissions';
@@ -20,6 +21,7 @@ import {
 export type PlayerSubMenuProps = {
     banner: string;
     permission: SozRole;
+    parties: SenateParty[];
 };
 
 export interface NuiAdminPlayerSubMenuMethodMap {
@@ -53,7 +55,7 @@ const SCENARIO_OPTIONS = [
     { label: 'Scenario 4', value: 'scenario4' },
 ];
 
-export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, permission }) => {
+export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, permission, parties }) => {
     const [players, setPlayers] = useState<AdminPlayer[]>([]);
     const [searchFilter, setSearchFilter] = useState<string>('');
 
@@ -111,18 +113,6 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                 <SubMenu id={'player_' + player.citizenId} key={`player_index_${index}`}>
                     <MenuTitle banner={banner}>{player.name}</MenuTitle>
                     <MenuContent>
-                        <MenuItemSelect
-                            title={'Mode zombie'}
-                            onConfirm={async (_, value) => {
-                                await fetchNui(NuiEvent.AdminMenuPlayerSetZombie, {
-                                    player,
-                                    value,
-                                });
-                            }}
-                        >
-                            <MenuItemSelectOption value={true}>Activer</MenuItemSelectOption>
-                            <MenuItemSelectOption value={false}>Désactiver</MenuItemSelectOption>
-                        </MenuItemSelect>
                         <MenuItemButton
                             onConfirm={async () => {
                                 await fetchNui(NuiEvent.AdminMenuPlayerSpectate, player);
@@ -389,6 +379,34 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                         >
                             Reset Client State
                         </MenuItemButton>
+                        <MenuItemSelect
+                            title="Parti politique"
+                            onConfirm={async (_, value) => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerSetSenateParty, {
+                                    player,
+                                    value,
+                                });
+                            }}
+                        >
+                            <MenuItemSelectOption value={null}>Aucun</MenuItemSelectOption>
+                            {parties.map(party => (
+                                <MenuItemSelectOption value={party.id} key={`party_${party.id}`}>
+                                    {party.name}
+                                </MenuItemSelectOption>
+                            ))}
+                        </MenuItemSelect>
+                        <MenuItemSelect
+                            title={'Mode zombie'}
+                            onConfirm={async (_, value) => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerSetZombie, {
+                                    player,
+                                    value,
+                                });
+                            }}
+                        >
+                            <MenuItemSelectOption value={true}>Activer</MenuItemSelectOption>
+                            <MenuItemSelectOption value={false}>Désactiver</MenuItemSelectOption>
+                        </MenuItemSelect>
                     </MenuContent>
                 </SubMenu>
             ))}

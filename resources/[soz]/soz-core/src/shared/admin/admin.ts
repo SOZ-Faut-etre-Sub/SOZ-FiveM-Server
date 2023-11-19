@@ -1,4 +1,5 @@
 import { PlayerCharInfo } from '@public/shared/player';
+import { SenateParty } from '@public/shared/senate';
 
 import { SozRole } from '../../core/permissions';
 import { Component, Outfit, Prop } from '../cloth';
@@ -71,6 +72,7 @@ export type AdminMenuData = {
     banner: string;
     permission: SozRole;
     characters: Record<string, PlayerCharInfo>;
+    parties: SenateParty[];
     state: {
         gameMaster: GameMasterSubMenuState;
         interactive: InteractiveSubMenuState;
