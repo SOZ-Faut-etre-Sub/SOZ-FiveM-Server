@@ -223,12 +223,21 @@ export class HousingPropertyZoneProvider {
                     );
                 },
                 action: () => {
-                    this.nuiMenu.openMenu(MenuType.HousingBuyMenu, {
-                        property,
-                        apartments: property.apartments.filter(apartment => {
-                            return apartment.owner === null && apartment.senatePartyId === null;
-                        }),
-                    });
+                    this.nuiMenu.openMenu(
+                        MenuType.HousingBuyMenu,
+                        {
+                            property,
+                            apartments: property.apartments.filter(apartment => {
+                                return apartment.owner === null && apartment.senatePartyId === null;
+                            }),
+                        },
+                        {
+                            position: {
+                                distance: 3,
+                                position: property.entryZone.center,
+                            },
+                        }
+                    );
                 },
             },
             {
@@ -255,12 +264,21 @@ export class HousingPropertyZoneProvider {
                         return;
                     }
 
-                    this.nuiMenu.openMenu(MenuType.HousingSellMenu, {
-                        property,
-                        apartments: property.apartments.filter(apartment => {
-                            return apartment.owner === player.citizenid;
-                        }),
-                    });
+                    this.nuiMenu.openMenu(
+                        MenuType.HousingSellMenu,
+                        {
+                            property,
+                            apartments: property.apartments.filter(apartment => {
+                                return apartment.owner === player.citizenid;
+                            }),
+                        },
+                        {
+                            position: {
+                                distance: 3,
+                                position: property.entryZone.center,
+                            },
+                        }
+                    );
                 },
             },
             {
@@ -411,10 +429,19 @@ export class HousingPropertyZoneProvider {
                 apartment => apartment.owner === null && apartment.senatePartyId === null
             );
 
-            this.nuiMenu.openMenu(MenuType.HousingVisitMenu, {
-                property,
-                apartments,
-            });
+            this.nuiMenu.openMenu(
+                MenuType.HousingVisitMenu,
+                {
+                    property,
+                    apartments,
+                },
+                {
+                    position: {
+                        distance: 3,
+                        position: property.entryZone.center,
+                    },
+                }
+            );
 
             return;
         }
@@ -438,10 +465,19 @@ export class HousingPropertyZoneProvider {
         }
 
         if (apartments.length > 1) {
-            this.nuiMenu.openMenu(MenuType.HousingEnterMenu, {
-                property,
-                apartments,
-            });
+            this.nuiMenu.openMenu(
+                MenuType.HousingEnterMenu,
+                {
+                    property,
+                    apartments,
+                },
+                {
+                    position: {
+                        distance: 3,
+                        position: property.entryZone.center,
+                    },
+                }
+            );
 
             return;
         }
@@ -459,16 +495,25 @@ export class HousingPropertyZoneProvider {
         const apartment = this.getUniqueApartment(property);
 
         if (!apartment) {
-            this.nuiMenu.openMenu(MenuType.HousingBellMenu, {
-                property,
-                apartments: property.apartments.filter(apartment => {
-                    return (
-                        (apartment.owner !== null || apartment.senatePartyId !== null) &&
-                        apartment.owner !== player.citizenid &&
-                        apartment.roommate !== player.citizenid
-                    );
-                }),
-            });
+            this.nuiMenu.openMenu(
+                MenuType.HousingBellMenu,
+                {
+                    property,
+                    apartments: property.apartments.filter(apartment => {
+                        return (
+                            (apartment.owner !== null || apartment.senatePartyId !== null) &&
+                            apartment.owner !== player.citizenid &&
+                            apartment.roommate !== player.citizenid
+                        );
+                    }),
+                },
+                {
+                    position: {
+                        distance: 3,
+                        position: property.entryZone.center,
+                    },
+                }
+            );
 
             return;
         }
@@ -492,10 +537,19 @@ export class HousingPropertyZoneProvider {
         }
 
         if (apartments.length > 1) {
-            this.nuiMenu.openMenu(MenuType.HousingAddRoommateMenu, {
-                property,
-                apartments,
-            });
+            this.nuiMenu.openMenu(
+                MenuType.HousingAddRoommateMenu,
+                {
+                    property,
+                    apartments,
+                },
+                {
+                    position: {
+                        distance: 3,
+                        position: property.entryZone.center,
+                    },
+                }
+            );
 
             return;
         }
@@ -519,10 +573,19 @@ export class HousingPropertyZoneProvider {
         }
 
         if (apartments.length > 1) {
-            this.nuiMenu.openMenu(MenuType.HousingRemoveRoommateMenu, {
-                property,
-                apartments,
-            });
+            this.nuiMenu.openMenu(
+                MenuType.HousingRemoveRoommateMenu,
+                {
+                    property,
+                    apartments,
+                },
+                {
+                    position: {
+                        distance: 3,
+                        position: property.entryZone.center,
+                    },
+                }
+            );
 
             return;
         }
