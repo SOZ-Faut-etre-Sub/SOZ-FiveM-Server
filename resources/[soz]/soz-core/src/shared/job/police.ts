@@ -220,11 +220,16 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 Components: {
                     [Component.Accessories]: {
                         Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Accessories] + 2,
+                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Accessories] + 4,
                         Texture: 0,
                         Palette: 0,
                     },
-                    [Component.Undershirt]: { Drawable: 130, Texture: 0, Palette: 0 },
+                    [Component.Decals]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Decals] + 4,
+                        Texture: 0,
+                        Palette: 0,
+                    },
                 },
                 Props: {},
             },
@@ -410,11 +415,16 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 Components: {
                     [Component.Accessories]: {
                         Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Accessories] + 2,
+                            VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Accessories] + 4,
                         Texture: 0,
                         Palette: 0,
                     },
-                    [Component.Undershirt]: { Drawable: 160, Texture: 0, Palette: 0 },
+                    [Component.Decals]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Decals] + 4,
+                        Texture: 0,
+                        Palette: 0,
+                    },
                 },
                 Props: {},
             },
@@ -584,11 +594,17 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 Components: {
                     [Component.Accessories]: {
                         Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Accessories] + 2,
+                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Accessories] + 4,
+                        Texture: 0,
+                        Palette: 0,
+                    },
+
+                    [Component.Decals]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Decals] + 4,
                         Texture: 1,
                         Palette: 0,
                     },
-                    [Component.Undershirt]: { Drawable: 130, Texture: 0, Palette: 0 },
                 },
                 Props: {},
             },
@@ -756,11 +772,16 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 Components: {
                     [Component.Accessories]: {
                         Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Accessories] + 2,
+                            VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Accessories] + 4,
+                        Texture: 0,
+                        Palette: 0,
+                    },
+                    [Component.Decals]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Decals] + 4,
                         Texture: 1,
                         Palette: 0,
                     },
-                    [Component.Undershirt]: { Drawable: 160, Texture: 0, Palette: 0 },
                 },
                 Props: {},
             },
