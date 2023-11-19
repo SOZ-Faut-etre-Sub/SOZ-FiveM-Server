@@ -435,6 +435,42 @@ export class HousingProvider {
         await this.housingRepository.setApartmentRoommate(null, apartment.id);
     }
 
+    public async clearApartment(property: Property, apartment: Apartment, notify = true) {
+        this.inventoryManager.clearApartment(apartment.identifier);
+        this.bankService.clearAccount(apartment.identifier);
+        this.playerAppearanceService.clearCloakroom(apartment.owner);
+
+        const player = this.playerService.getPlayerByCitizenId(apartment.owner);
+
+        if (player) {
+            this.playerService.setPlayerApartment(player.source, null, null);
+        }
+
+        await this.vehicleService.transferToAirport(getPropertyGarageName(property), apartment.owner);
+
+        if (apartment.roommate !== null) {
+            this.playerAppearanceService.clearCloakroom(apartment.roommate);
+            await this.vehicleService.transferToAirport(getPropertyGarageName(property), apartment.roommate);
+
+            const roommate = this.playerService.getPlayerByCitizenId(apartment.roommate);
+
+            if (roommate) {
+                this.playerService.setPlayerApartment(roommate.source, null, null);
+
+                if (notify) {
+                    this.notifier.notify(
+                        roommate.source,
+                        `Votre colocataire vient de vendre votre appartement.`,
+                        'info'
+                    );
+                }
+            }
+        }
+
+        await this.vehicleService.transferToAirport(getApartmentGarageName(apartment));
+        await this.housingRepository.clearApartment(apartment.id);
+    }
+
     @OnEvent(ServerEvent.HOUSING_SELL_APARTMENT)
     public async sell(source: number, propertyId: number, apartmentId: number) {
         const player = this.playerService.getPlayer(source);
@@ -467,28 +503,7 @@ export class HousingProvider {
             return;
         }
 
-        this.inventoryManager.clearApartment(apartment.identifier);
-        this.bankService.clearAccount(apartment.identifier);
-
-        this.playerAppearanceService.clearCloakroom(apartment.owner);
-        this.playerService.setPlayerApartment(player.source, null, null);
-
-        await this.vehicleService.transferToAirport(getPropertyGarageName(property), apartment.owner);
-
-        if (apartment.roommate !== null) {
-            this.playerAppearanceService.clearCloakroom(apartment.roommate);
-            await this.vehicleService.transferToAirport(getPropertyGarageName(property), apartment.roommate);
-
-            const roommate = this.playerService.getPlayerByCitizenId(apartment.roommate);
-
-            if (roommate) {
-                this.notifier.notify(roommate.source, `Votre colocataire vient de vendre votre appartement.`, 'info');
-                this.playerService.setPlayerApartment(roommate.source, null, null);
-            }
-        }
-
-        await this.vehicleService.transferToAirport(getApartmentGarageName(apartment));
-        await this.housingRepository.clearApartment(apartment.id);
+        await this.clearApartment(property, apartment, true);
 
         this.monitor.publish(
             'house_sell',

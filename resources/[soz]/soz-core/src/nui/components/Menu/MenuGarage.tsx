@@ -62,8 +62,6 @@ export const MenuGarage: FunctionComponent<MenuGarageProps> = ({ data }) => {
         );
     }
 
-    console.log(JSON.stringify(data, null, 4));
-
     return (
         <Menu type={MenuType.Garage}>
             <MainMenu>
@@ -73,7 +71,7 @@ export const MenuGarage: FunctionComponent<MenuGarageProps> = ({ data }) => {
                 </MenuTitle>
                 <MenuContent>
                     <MenuItemSubMenuLink id="vehicles">Les véhicules</MenuItemSubMenuLink>
-                    {data.garage.type === GarageType.House && (
+                    {data.garage.type === GarageType.House && data.apartments.length > 0 && (
                         <MenuItemSelect
                             onConfirm={(index, apartment) => {
                                 fetchNui(NuiEvent.VehicleGarageStore, {
@@ -85,8 +83,6 @@ export const MenuGarage: FunctionComponent<MenuGarageProps> = ({ data }) => {
                         >
                             {data.apartments.map(apartment => {
                                 const id = `apartment_${apartment.identifier}`;
-                                console.log(data.apartmentsPlaces);
-                                console.log(data.apartmentsPlaces[id]);
                                 const [free, max] =
                                     data.apartmentsPlaces && data.apartmentsPlaces[id]
                                         ? data.apartmentsPlaces[id]
@@ -110,7 +106,7 @@ export const MenuGarage: FunctionComponent<MenuGarageProps> = ({ data }) => {
                     {data.garage.allowTrailers && (
                         <MenuItemButton onConfirm={vehicleStoreTrailer}>Ranger ma remorque</MenuItemButton>
                     )}
-                    {data.garage.type === GarageType.House && (
+                    {data.garage.type === GarageType.House && data.apartments.length > 0 && (
                         <MenuItemButton onConfirm={vehicleShowPlaces}>Voir ma place de parking</MenuItemButton>
                     )}
                 </MenuContent>

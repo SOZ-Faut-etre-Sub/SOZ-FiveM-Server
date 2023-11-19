@@ -275,6 +275,17 @@ export class AdminMenuPlayerProvider {
         TriggerServerEvent('inventory:server:openInventory', 'player', player.id);
     }
 
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerSetSenateParty)
+    public async handlePlayerSetSenateParty({
+        player,
+        value,
+    }: {
+        player: AdminPlayer;
+        value: string | null;
+    }): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_PLAYER_SET_SENATE_PARTY, player.id, value);
+    }
+
     @OnNuiEvent(NuiEvent.AdminMenuPlayerSetZombie)
     public async handlePlayerSetZombie({ player, value }: { player: AdminPlayer; value: boolean }): Promise<void> {
         TriggerServerEvent(ServerEvent.ADMIN_PLAYER_SET_ZOMBIE, player.id, value);

@@ -479,7 +479,6 @@ const MenuBarberEyeComponent: FunctionComponent<{
     player_data: PlayerData;
     updateConfiguration: (cat: string, overlay: string, field: string, v: any) => void;
 }> = ({ cat, player_data, updateConfiguration }) => {
-    console.log(cat);
     if (!cat || cat.items.length < 1) {
         return null;
     }

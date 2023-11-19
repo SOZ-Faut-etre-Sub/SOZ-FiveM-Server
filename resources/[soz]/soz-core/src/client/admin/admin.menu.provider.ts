@@ -12,6 +12,7 @@ import { ClothingService } from '../clothing/clothing.service';
 import { HudMinimapProvider } from '../hud/hud.minimap.provider';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
+import { SenateRepository } from '../repository/senate.repository';
 import { VehicleDamageProvider } from '../vehicle/vehicle.damage.provider';
 import { VehiclePoliceLocator } from '../vehicle/vehicle.police.locator.provider';
 import { AdminMenuDeveloperProvider } from './admin.menu.developer.provider';
@@ -42,6 +43,9 @@ export class AdminMenuProvider {
 
     @Inject(VehiclePoliceLocator)
     private vehiclePoliceLocator: VehiclePoliceLocator;
+
+    @Inject(SenateRepository)
+    private senateRepository: SenateRepository;
 
     @OnEvent(ClientEvent.ADMIN_OPEN_MENU)
     @Command('admin', {
@@ -74,6 +78,7 @@ export class AdminMenuProvider {
                 banner,
                 characters,
                 permission: permission as SozRole,
+                parties: this.senateRepository.get(),
                 state: {
                     gameMaster: {
                         invisible: !IsEntityVisible(ped),

@@ -1,4 +1,5 @@
 import { ZoneTyped } from '@public/shared/polyzone/box.zone';
+import { SenateParty } from '@public/shared/senate';
 
 import { Billboard } from './billboard';
 import { GlovesItem } from './cloth';
@@ -22,6 +23,7 @@ export enum RepositoryType {
     Object = 'object',
     Race = 'race',
     Radar = 'radar',
+    SenateParty = 'senateParty',
     Shop = 'shop',
     ShopCategory = 'shopCategory',
     ShopUnderTypes = 'shopUnderTypes',
@@ -29,20 +31,20 @@ export enum RepositoryType {
     StationFuel = 'stationFuel',
     StationUpw = 'stationUpw',
     Vehicle = 'vehicle',
-    Zone = 'zone',
     TowRope = 'towRope',
+    Zone = 'zone',
 }
 
 export type RepositoryMapping = {
-    [RepositoryType.Housing]: Property;
-    [RepositoryType.Zone]: ZoneTyped;
     [RepositoryType.Billboard]: Billboard;
     [RepositoryType.ChargerUpw]: UpwCharger;
     [RepositoryType.Garage]: Garage;
+    [RepositoryType.Housing]: Property;
     [RepositoryType.JobGrade]: JobGrade;
     [RepositoryType.Object]: WorldObject;
     [RepositoryType.Race]: Race;
     [RepositoryType.Radar]: Radar;
+    [RepositoryType.SenateParty]: SenateParty;
     [RepositoryType.Shop]: ClothingShop;
     [RepositoryType.ShopCategory]: any;
     [RepositoryType.ShopUnderTypes]: number[];
@@ -51,14 +53,16 @@ export type RepositoryMapping = {
     [RepositoryType.StationUpw]: UpwStation;
     [RepositoryType.Vehicle]: Vehicle;
     [RepositoryType.TowRope]: TowRope;
+    [RepositoryType.Zone]: ZoneTyped;
 };
 
 export interface RepositoryConfig extends Record<keyof RepositoryMapping, any> {
     // Implemented
     [RepositoryType.Housing]: Record<number, Property>;
-    [RepositoryType.Zone]: Record<number, ZoneTyped>;
     [RepositoryType.JobGrade]: Record<number, JobGrade>;
+    [RepositoryType.SenateParty]: Record<string, SenateParty>;
     [RepositoryType.TowRope]: Record<string, TowRope>;
+    [RepositoryType.Zone]: Record<number, ZoneTyped>;
     // Not implemented
     [RepositoryType.Billboard]: Record<number, Billboard>;
     [RepositoryType.ChargerUpw]: Record<number, UpwCharger>;

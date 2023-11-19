@@ -401,6 +401,50 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                                 >
                                     ❌ Supprimer
                                 </MenuItemButton>
+                                {apartment.owner === null && (
+                                    <MenuItemSelect
+                                        value={apartment.senatePartyId}
+                                        title="Partie politique"
+                                        onConfirm={(_, value) => {
+                                            fetchNui(NuiEvent.AdminMenuMapperSetSenateParty, {
+                                                propertyId: property.id,
+                                                apartmentId: apartment.id,
+                                                senatePartyId: value,
+                                            });
+                                        }}
+                                    >
+                                        <MenuItemSelectOption value={null}>Aucun</MenuItemSelectOption>
+                                        {data.parties.map(party => (
+                                            <MenuItemSelectOption key={party.id} value={party.id}>
+                                                {party.name}
+                                            </MenuItemSelectOption>
+                                        ))}
+                                    </MenuItemSelect>
+                                )}
+                                {apartment.owner === null && (
+                                    <MenuItemButton
+                                        onConfirm={() => {
+                                            fetchNui(NuiEvent.AdminMenuMapperSetOwner, {
+                                                propertyId: property.id,
+                                                apartmentId: apartment.id,
+                                            });
+                                        }}
+                                    >
+                                        Définir le propriétaire
+                                    </MenuItemButton>
+                                )}
+                                {apartment.owner !== null && (
+                                    <MenuItemButton
+                                        onConfirm={() => {
+                                            fetchNui(NuiEvent.AdminMenuMapperClearOwner, {
+                                                propertyId: property.id,
+                                                apartmentId: apartment.id,
+                                            });
+                                        }}
+                                    >
+                                        ❌ Enlever le propriétaire ({apartment.owner})
+                                    </MenuItemButton>
+                                )}
                             </MenuContent>
                         </SubMenu>
                     ))}
