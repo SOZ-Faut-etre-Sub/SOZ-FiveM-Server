@@ -3,6 +3,7 @@ import { Exportable } from '../../core/decorators/exports';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
+import { wait } from '../../core/utils';
 import { ClientEvent } from '../../shared/event/client';
 import { ServerEvent } from '../../shared/event/server';
 import {
@@ -355,7 +356,7 @@ export class HousingProvider {
             return;
         }
 
-        this.doEnterApartment(player, property, apartment);
+        await this.doEnterApartment(player, property, apartment);
     }
 
     @OnEvent(ServerEvent.HOUSING_EXIT_APARTMENT)
@@ -543,7 +544,7 @@ export class HousingProvider {
             return;
         }
 
-        this.doEnterApartment(player, property, apartment);
+        await this.doEnterApartment(player, property, apartment);
     }
 
     @OnEvent(ServerEvent.HOUSING_UPGRADE_APARTMENT_TIER)
@@ -672,7 +673,7 @@ export class HousingProvider {
         return false;
     }
 
-    private doEnterApartment(player: PlayerData, property: Property, apartment: Apartment) {
+    private async doEnterApartment(player: PlayerData, property: Property, apartment: Apartment) {
         if (this.playerCriminalService.isCriminal(player.citizenid)) {
             this.notifier.error(player.source, 'Vous devez attendre après avoir réalisé une action criminelle.');
 
@@ -692,6 +693,9 @@ export class HousingProvider {
         const heading = GetEntityHeading(ped);
 
         this.playerPositionProvider.teleportToCoords(player.source, apartment.position);
+
+        // wait for fade in, so we don't remove culling too early
+        await wait(500);
 
         this.playerService.setPlayerMetadata(player.source, 'inside', {
             apartment: apartment.id,
