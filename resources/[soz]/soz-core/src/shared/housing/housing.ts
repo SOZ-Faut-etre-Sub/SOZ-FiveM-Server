@@ -1,4 +1,4 @@
-import { PlayerData } from '@public/shared/player';
+import { isGameMaster, PlayerData } from '@public/shared/player';
 
 import { Zone } from '../polyzone/box.zone';
 import { Vector4 } from '../polyzone/vector';
@@ -50,12 +50,17 @@ export const isAdminHouse = (property: Property) => {
     return property.identifier === 'cayo_villa';
 };
 
+export const isAdminApartment = (apartment: Apartment) => {
+    return apartment.identifier === 'villa_cayo';
+};
+
 export const isTrailer = (property: Property) => {
     return property.identifier.includes('trailer');
 };
 
 export const hasAccess = (property: Property, player: PlayerData, temporaryAccess: Set<number>) => {
     return (
+        (isAdminHouse(property) && isGameMaster(player)) ||
         hasTemporaryAccess(property, temporaryAccess) ||
         hasPartyAccess(property, player.partyMember?.partyId) ||
         hasPlayerRentedApartment(property, player.citizenid)
@@ -64,6 +69,7 @@ export const hasAccess = (property: Property, player: PlayerData, temporaryAcces
 
 export const hasApartmentAccess = (apartment: Apartment, player: PlayerData, temporaryAccess: Set<number>) => {
     return (
+        (isAdminApartment(apartment) && isGameMaster(player)) ||
         apartment.owner === player.citizenid ||
         apartment.roommate === player.citizenid ||
         temporaryAccess.has(apartment.id) ||

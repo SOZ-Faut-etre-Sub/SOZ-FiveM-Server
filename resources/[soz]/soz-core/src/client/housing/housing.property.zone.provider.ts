@@ -22,7 +22,7 @@ import {
     Property,
 } from '../../shared/housing/housing';
 import { MenuType } from '../../shared/nui/menu';
-import { isAdminOrStaff } from '../../shared/player';
+import { isGameMaster } from '../../shared/player';
 import { RepositoryType } from '../../shared/repository';
 import { RpcServerEvent } from '../../shared/rpc';
 import { BlipFactory } from '../blip';
@@ -142,14 +142,13 @@ export class HousingPropertyZoneProvider {
 
         for (const property of properties) {
             const id = `property_${property.id}`;
-            const isAdminRented = isAdminHouse(property) && isAdminOrStaff(player);
-            const hasPropertyAccess = hasAccess(property, player, this.temporaryAccess) || isAdminRented;
+            const hasPropertyAccess = hasAccess(property, player, this.temporaryAccess);
             const hasAvailable = hasAvailableApartment(property);
 
             if (
                 (!hasMap && !hasPropertyAccess) ||
                 (!hasAvailable && !hasPropertyAccess) ||
-                (isAdminHouse(property) && !isAdminOrStaff(player))
+                (isAdminHouse(property) && !isGameMaster(player))
             ) {
                 if (this.blipFactory.exist(id)) {
                     this.blipFactory.remove(id);

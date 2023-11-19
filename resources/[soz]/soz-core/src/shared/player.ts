@@ -306,6 +306,14 @@ export type PlayerMetadata = PlayerHealthBook & {
     injail: boolean;
 };
 
-export const isAdminOrStaff = (player: PlayerData) => {
-    return player.role === 'admin' || player.role === 'staff';
+export const isAdmin = (player: PlayerData) => {
+    return player.role === 'admin';
+};
+
+export const isStaff = (player: PlayerData) => {
+    return player.role === 'staff' || isAdmin(player);
+};
+
+export const isGameMaster = (player: PlayerData) => {
+    return player.role === 'gamemaster' || isStaff(player);
 };

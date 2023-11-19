@@ -871,8 +871,6 @@ export class VehicleGarageProvider {
 
                 const citizenIds = await this.getCitizenIdsForGarage(player, garage, id);
 
-                console.log(garage.type === GarageType.House, hasApartmentAccess);
-
                 if (!hasApartmentAccess && !citizenIds.has(playerVehicle.citizenid)) {
                     if (
                         !playerVehicle.job &&

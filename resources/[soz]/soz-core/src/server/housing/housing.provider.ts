@@ -1,4 +1,4 @@
-import { On, OnEvent } from '../../core/decorators/event';
+import { OnEvent } from '../../core/decorators/event';
 import { Exportable } from '../../core/decorators/exports';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -18,11 +18,9 @@ import { PlayerData } from '../../shared/player';
 import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import { BankService } from '../bank/bank.service';
-import { PrismaService } from '../database/prisma.service';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
-import { PermissionService } from '../permission.service';
 import { PlayerAppearanceService } from '../player/player.appearance.service';
 import { PlayerCriminalService } from '../player/player.criminal.service';
 import { PlayerMoneyService } from '../player/player.money.service';
@@ -66,55 +64,7 @@ export class HousingProvider {
     @Inject(PlayerCriminalService)
     private playerCriminalService: PlayerCriminalService;
 
-    @Inject(PermissionService)
-    private permissionService: PermissionService;
-
-    @Inject(PrismaService)
-    private prismaService: PrismaService;
-
     private playerTemporaryAccess = new Map<string, Set<number>>();
-
-    @On(ServerEvent.PLAYER_LOADED, false)
-    public async initPlayerTemporaryAccess(source: number) {
-        const player = this.playerService.getPlayer(source);
-
-        if (!player) {
-            return;
-        }
-
-        if (!this.playerTemporaryAccess.has(player.citizenid)) {
-            this.playerTemporaryAccess.set(player.citizenid, new Set());
-        }
-
-        const temporaryAccess = this.playerTemporaryAccess.get(player.citizenid);
-        const properties = await this.housingRepository.get();
-
-        if (this.permissionService.isGameMaster(source)) {
-            const cayo = properties.find(p => p.identifier === 'cayo_villa');
-
-            if (cayo) {
-                for (const apartment of cayo.apartments) {
-                    temporaryAccess.add(apartment.id);
-                }
-            }
-        }
-
-        const senateMember = await this.prismaService.senatePartyMember.findUnique({
-            where: {
-                citizenId: player.citizenid,
-            },
-        });
-
-        if (senateMember) {
-            for (const property of properties) {
-                for (const apartment of property.apartments) {
-                    if (apartment.senatePartyId === senateMember.partyId) {
-                        temporaryAccess.add(apartment.id);
-                    }
-                }
-            }
-        }
-    }
 
     @OnEvent(ServerEvent.HOUSING_ADD_TEMPORARY_ACCESS)
     public async addTemporaryAccess(source: number, propertyId: number, apartmentId: number, targetSource: number) {
@@ -450,15 +400,17 @@ export class HousingProvider {
     public async clearApartment(property: Property, apartment: Apartment, notify = true) {
         this.inventoryManager.clearApartment(apartment.identifier);
         this.bankService.clearAccount(apartment.identifier);
-        this.playerAppearanceService.clearCloakroom(apartment.owner);
 
-        const player = this.playerService.getPlayerByCitizenId(apartment.owner);
+        if (apartment.owner !== null) {
+            this.playerAppearanceService.clearCloakroom(apartment.owner);
+            await this.vehicleService.transferToAirport(getPropertyGarageName(property), apartment.owner);
 
-        if (player) {
-            this.playerService.setPlayerApartment(player.source, null, null);
+            const player = this.playerService.getPlayerByCitizenId(apartment.owner);
+
+            if (player) {
+                this.playerService.setPlayerApartment(player.source, null, null);
+            }
         }
-
-        await this.vehicleService.transferToAirport(getPropertyGarageName(property), apartment.owner);
 
         if (apartment.roommate !== null) {
             this.playerAppearanceService.clearCloakroom(apartment.roommate);
