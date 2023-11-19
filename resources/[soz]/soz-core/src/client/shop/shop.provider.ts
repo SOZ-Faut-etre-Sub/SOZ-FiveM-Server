@@ -13,7 +13,7 @@ import { BlipFactory } from '../blip';
 import { PedFactory } from '../factory/ped.factory';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { JobService } from '../job/job.service';
-import { StonkCollectProvider } from '../job/stonk/stonk.collect.provider';
+import { StonkCollectService } from '../job/stonk/stonk.collect.service';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
 import { TargetFactory, TargetOptions } from '../target/target.factory';
@@ -46,8 +46,8 @@ export class ShopProvider {
     @Inject(ClothingShopProvider)
     private clothingShopProvider: ClothingShopProvider;
 
-    @Inject(StonkCollectProvider)
-    private stonkCollectProvider: StonkCollectProvider;
+    @Inject(StonkCollectService)
+    private stonkCollectService: StonkCollectService;
 
     @Inject(TattooShopProvider)
     private tattooShopProvider: TattooShopProvider;
@@ -105,7 +105,7 @@ export class ShopProvider {
             icon: 'c:stonk/collecter.png',
             label: 'Collecter',
             canInteract: () => {
-                return this.stonkCollectProvider.canBagsBeCollected(this.currentShopBrand);
+                return this.stonkCollectService.canBagsBeCollected(this.currentShopBrand);
             },
             blackoutGlobal: true,
             blackoutJob: JobType.CashTransfer,

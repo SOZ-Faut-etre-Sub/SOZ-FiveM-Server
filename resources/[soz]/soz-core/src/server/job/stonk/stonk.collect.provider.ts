@@ -36,10 +36,15 @@ export class StonkCollectProvider {
     @Inject(Monitor)
     private monitor: Monitor;
 
-    private collectBagHistory: Record<string, { [key in string]?: number }> = {};
+    private collectBagHistory: Record<string, Map<string, number>> = {};
 
     @OnEvent(ServerEvent.STONK_COLLECT)
     public async onCollect(source: number, brand: string, shop: string) {
+        const player = this.playerService.getPlayer(source);
+        if (!player) {
+            return;
+        }
+
         const [playerJob, playerJobGrade] = this.playerService.getPlayerJobAndGrade(source);
 
         if (
@@ -62,7 +67,12 @@ export class StonkCollectProvider {
             return;
         }
 
-        if (!this.canCollect(source, brand, shop, item)) {
+        if (!this.inventoryManager.canCarryItem(source, item, StonkConfig.resell.amount)) {
+            this.notifier.notify(source, `Vous n'avez pas ~r~assez~s~ de place dans vos poches.`);
+            return;
+        }
+
+        if (!this.canCollect(player.citizenid, brand, shop, item)) {
             this.notifier.notify(source, `Ce magasin n'a plus de sacs actuellement !`, 'error');
             return;
         }
@@ -93,21 +103,25 @@ export class StonkCollectProvider {
         }
     }
 
-    private canCollect(source: number, brand: string, shop: string, item: StonkBagType): boolean {
-        const lastCollect = this.collectBagHistory[shop]?.[source] || 0;
-
-        if (!this.inventoryManager.canCarryItem(source, item, StonkConfig.resell.amount)) {
-            this.notifier.notify(source, `Vous n'avez pas ~r~assez~s~ de place dans vos poches.`);
+    private canCollect(citizenid: string, brand: string, shop: string, item: StonkBagType): boolean {
+        if (!Object.values(StonkConfig.collection).some(item => item.takeInAvailableIn.includes(brand))) {
             return false;
         }
 
-        return (
-            lastCollect + StonkConfig.collection[item].timeout <= new Date().getTime() &&
-            Object.values(StonkConfig.collection).some(item => item.takeInAvailableIn.includes(brand))
-        );
+        if (!this.collectBagHistory[shop]) {
+            return true;
+        }
+
+        const lastCollect = this.collectBagHistory[shop].get(citizenid) || 0;
+        return lastCollect + StonkConfig.collection[item].timeout <= Date.now();
     }
 
     private async doCollect(source: number, shop: string, item: StonkBagType): Promise<boolean> {
+        const player = this.playerService.getPlayer(source);
+        if (!player) {
+            return;
+        }
+
         const { completed } = await this.progressService.progress(
             source,
             'stonk_collect',
@@ -132,9 +146,9 @@ export class StonkCollectProvider {
         const addRequest = this.inventoryManager.addItemToInventory(source, item, StonkConfig.resell.amount);
 
         if (this.collectBagHistory[shop] === undefined) {
-            this.collectBagHistory[shop] = {};
+            this.collectBagHistory[shop] = new Map();
         }
-        this.collectBagHistory[shop][source] = new Date().getTime();
+        this.collectBagHistory[shop].set(player.citizenid, Date.now());
 
         return addRequest.success;
     }
