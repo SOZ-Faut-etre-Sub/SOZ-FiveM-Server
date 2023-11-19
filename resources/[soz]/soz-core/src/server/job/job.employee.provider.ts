@@ -16,7 +16,7 @@ export class JobEmployeeProvider {
     private playerService: PlayerService;
 
     @Inject(JobService)
-    private jonService: JobService;
+    private jobService: JobService;
 
     @Inject(Notifier)
     private notifier: Notifier;
@@ -49,7 +49,7 @@ export class JobEmployeeProvider {
             return;
         }
         if (
-            !(await this.jonService.hasAnyPermission(player, player.job.id, [
+            !(await this.jobService.hasAnyPermission(player, player.job.id, [
                 JobPermission.Enrollment,
                 JobPermission.ManageGrade,
             ]))
@@ -86,7 +86,7 @@ export class JobEmployeeProvider {
         }
 
         if (
-            !(await this.jonService.hasAnyPermission(player, player.job.id, [
+            !(await this.jobService.hasAnyPermission(player, player.job.id, [
                 JobPermission.Enrollment,
                 JobPermission.ManageGrade,
             ]))
@@ -145,7 +145,7 @@ export class JobEmployeeProvider {
         }
 
         if (
-            !(await this.jonService.hasAnyPermission(player, player.job.id, [
+            !(await this.jobService.hasAnyPermission(player, player.job.id, [
                 JobPermission.Enrollment,
                 JobPermission.ManageGrade,
             ]))
