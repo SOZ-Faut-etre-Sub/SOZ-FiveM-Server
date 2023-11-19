@@ -1,4 +1,4 @@
-import { ApartmentMenuData, Property } from '@public/shared/housing/housing';
+import { ApartmentMenuData } from '@public/shared/housing/housing';
 import { JobType } from '@public/shared/job';
 import { NuiJobEmployeeOnDuty, PromoteMenuData } from '@public/shared/nui/job';
 import { PlayerPersonalMenuData } from '@public/shared/nui/player';

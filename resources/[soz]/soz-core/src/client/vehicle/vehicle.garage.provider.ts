@@ -3,6 +3,7 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { emitRpc } from '@core/rpc';
 import { wait } from '@core/utils';
+import { Apartment } from '@public/shared/housing/housing';
 
 import { NuiEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
@@ -458,7 +459,7 @@ export class VehicleGarageProvider {
         this.isShowingGaragePlaces = false;
     }
 
-    public async openHouseGarageMenu(propertyId: string) {
+    public async openHouseGarageMenu(propertyId: string, apartments: Apartment[]) {
         const garage = this.garageRepository.get()[propertyId];
 
         if (!garage) {
@@ -467,7 +468,7 @@ export class VehicleGarageProvider {
             return;
         }
 
-        await this.enterGarage(propertyId, garage);
+        await this.enterGarage(propertyId, garage, apartments);
     }
 
     @OnNuiEvent(NuiEvent.VehicleGarageSetName)
@@ -552,20 +553,31 @@ export class VehicleGarageProvider {
         this.nuiMenu.closeMenu();
     }
 
-    public async enterGarage(id: string, garage: Garage) {
+    public async enterGarage(id: string, garage: Garage, apartments: Apartment[] = []) {
         const vehicles = await emitRpc<GarageVehicle[]>(RpcServerEvent.VEHICLE_GARAGE_GET_VEHICLES, id, garage);
         if (vehicles === null) {
             return;
         }
 
         let free_places = null;
-        if (garage.type === GarageType.Private || garage.type === GarageType.House) {
-            free_places = await emitRpc<number>(RpcServerEvent.VEHICLE_GARAGE_GET_FREE_PLACES, id, garage);
+        let max_places = null;
+        let apartmentPlaces = {} as Record<number, [number | null, number | null]>;
+
+        if (garage.type === GarageType.Private) {
+            [free_places, max_places] = await emitRpc<[number, number]>(
+                RpcServerEvent.VEHICLE_GARAGE_GET_PLACES,
+                id,
+                garage
+            );
         }
 
-        let max_places = null;
-        if (garage.type === GarageType.Private || garage.type === GarageType.House) {
-            max_places = await emitRpc<number>(RpcServerEvent.VEHICLE_GARAGE_GET_MAX_PLACES, garage);
+        if (garage.type === GarageType.House) {
+            apartmentPlaces = await emitRpc<Record<string, [number | null, number | null]>>(
+                RpcServerEvent.VEHICLE_GARAGE_GET_PROPERTY_PLACES,
+                id,
+                garage,
+                apartments.map(apartment => apartment.identifier)
+            );
         }
 
         const vehicleRenamed = vehicles.map(garageVehicle => {
@@ -602,6 +614,8 @@ export class VehicleGarageProvider {
                             };
                         })
                         .filter(garage => garage !== null) ?? [],
+                apartments: apartments,
+                apartmentsPlaces: apartmentPlaces,
             },
             {
                 position: {

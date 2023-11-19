@@ -84,6 +84,28 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
             apartment.roommate;
     }
 
+    public async getApartmentByIdentifier(identifier: string): Promise<Apartment | null> {
+        for (const property of await this.get()) {
+            const apartment = property.apartments.find(apartment => apartment.identifier === identifier);
+
+            if (apartment) {
+                return apartment;
+            }
+        }
+
+        return null;
+    }
+
+    public async getPropertyByIdentifier(identifier: string): Promise<Property | null> {
+        for (const property of await this.get()) {
+            if (property.identifier === identifier) {
+                return property;
+            }
+        }
+
+        return null;
+    }
+
     public async getApartment(propertyId: number, apartmentId: number): Promise<[Property | null, Apartment | null]> {
         const property = await this.find(propertyId);
 
@@ -344,6 +366,7 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
 
         return {
             id: apartment.id,
+            propertyId: apartment.property_id,
             identifier: apartment.identifier,
             label: apartment.label,
             price: apartment.price,
