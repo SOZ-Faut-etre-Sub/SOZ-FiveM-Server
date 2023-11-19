@@ -658,13 +658,20 @@ export class AdminMenuMapperProvider {
 
     @OnNuiEvent(NuiEvent.AdminMenuMapperSetSenateParty)
     public async setSenateParty({
+        propertyId,
         apartmentId,
         senatePartyId,
     }: {
+        propertyId: number;
         apartmentId: number;
         senatePartyId: string;
     }): Promise<Property[]> {
-        return await emitRpc<Property[]>(RpcServerEvent.ADMIN_MAPPER_SET_SENATE_PARTY, apartmentId, senatePartyId);
+        return await emitRpc<Property[]>(
+            RpcServerEvent.ADMIN_MAPPER_SET_SENATE_PARTY,
+            propertyId,
+            apartmentId,
+            senatePartyId
+        );
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuMapperSetOwner)

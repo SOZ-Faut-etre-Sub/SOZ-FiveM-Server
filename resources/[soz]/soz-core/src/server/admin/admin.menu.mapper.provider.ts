@@ -140,11 +140,19 @@ export class AdminMenuMapperProvider {
     @Rpc(RpcServerEvent.ADMIN_MAPPER_SET_SENATE_PARTY)
     public async setSenateParty(
         source: number,
+        propertyId: number,
         apartmentId: number,
         senatePartyId: string | null
     ): Promise<Property[]> {
+        const [property, apartment] = await this.housingRepository.getApartment(propertyId, apartmentId);
+
+        if (!property || !apartment) {
+            return this.housingRepository.get();
+        }
+
         if (!senatePartyId) {
             await this.housingRepository.setSenateParty(apartmentId, null);
+            await this.housingProvider.clearApartment(property, apartment, false);
 
             return this.housingRepository.get();
         }
