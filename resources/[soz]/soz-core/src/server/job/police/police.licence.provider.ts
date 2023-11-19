@@ -21,7 +21,10 @@ export class PoliceLicenceProvider {
 
         if (player && target && player != target) {
             if (
-                getDistance(GetEntityCoords(player.source) as Vector3, GetEntityCoords(target.source) as Vector3) > 2.5
+                getDistance(
+                    GetEntityCoords(GetPlayerPed(player.source)) as Vector3,
+                    GetEntityCoords(GetPlayerPed(target.source)) as Vector3
+                ) > 2.5
             ) {
                 TriggerClientEvent(
                     ClientEvent.NOTIFICATION_DRAW,
