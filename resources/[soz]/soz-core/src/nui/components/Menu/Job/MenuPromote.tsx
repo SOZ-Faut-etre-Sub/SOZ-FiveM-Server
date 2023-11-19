@@ -14,11 +14,12 @@ export const MenuPromote: FunctionComponent<MenuPromoteProps> = ({ data }) => {
     if (!data) {
         return null;
     }
+    const banner = `https://nui-img/soz/menu_job_${data.job}`;
 
     return (
         <Menu type={MenuType.Promote}>
             <MainMenu>
-                <MenuTitle banner="https://nui-img/soz/menu_job_poleemploi">Promouvoir un joueur</MenuTitle>
+                <MenuTitle banner={banner}>Promouvoir un joueur</MenuTitle>
                 <MenuContent>
                     {data.grades.map(grade => (
                         <MenuItemButton

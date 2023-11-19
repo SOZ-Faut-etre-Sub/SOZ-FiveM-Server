@@ -5,4 +5,4 @@ export interface NuiJobEmployeeOnDuty {
     state: string[];
 }
 
-export type PromoteMenuData = { grades: JobGrade[]; target: number };
+export type PromoteMenuData = { job: JobType; grades: JobGrade[]; target: number };

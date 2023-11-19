@@ -90,6 +90,7 @@ export class JobEmployeeProvider {
                     const grades = this.jobGradeRepository.getGradesByJob(player.job.id);
 
                     this.nuiMenu.openMenu(MenuType.Promote, {
+                        job: player.job.id,
                         grades,
                         target: targetSource,
                     });
