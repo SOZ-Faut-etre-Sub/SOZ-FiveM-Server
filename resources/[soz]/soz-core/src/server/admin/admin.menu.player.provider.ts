@@ -245,6 +245,8 @@ export class AdminMenuPlayerProvider {
             } else {
                 this.notifier.notify(source, `Le joueur n'est pas dans un parti.`, 'info');
             }
+
+            this.playerService.setPlayerPartyMember(target, null);
         } else {
             const party = await this.prisma.senateParty.findUnique({
                 where: {
@@ -258,7 +260,7 @@ export class AdminMenuPlayerProvider {
                 return;
             }
 
-            await this.prisma.senatePartyMember.upsert({
+            const partyMember = await this.prisma.senatePartyMember.upsert({
                 create: {
                     party: {
                         connect: {
@@ -279,6 +281,13 @@ export class AdminMenuPlayerProvider {
                 where: {
                     citizenId: targetPlayer.citizenid,
                 },
+            });
+
+            this.playerService.setPlayerPartyMember(target, {
+                id: partyMember.id,
+                partyId: partyMember.partyId,
+                citizenId: partyMember.citizenId,
+                senateSeatMember: partyMember.senateSeatNumber,
             });
 
             this.notifier.notify(source, `Le joueur est désormais dans le parti ${party.name}.`, 'info');

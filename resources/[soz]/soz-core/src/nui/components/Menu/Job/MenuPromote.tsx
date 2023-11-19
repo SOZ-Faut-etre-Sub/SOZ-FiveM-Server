@@ -22,7 +22,6 @@ export const MenuPromote: FunctionComponent<MenuPromoteProps> = ({ data }) => {
         banner = `https://nui-img/soz/menu_job_${data.job}`;
     }
 
-
     return (
         <Menu type={MenuType.Promote}>
             <MainMenu>

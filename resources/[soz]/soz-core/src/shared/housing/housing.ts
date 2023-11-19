@@ -54,8 +54,31 @@ export const isTrailer = (property: Property) => {
     return property.identifier.includes('trailer');
 };
 
-export const hasAccess = (property: Property, citizenId: string, temporaryAccess: Set<number>) => {
-    return hasTemporaryAccess(property, temporaryAccess) || hasPlayerRentedApartment(property, citizenId);
+export const hasAccess = (property: Property, player: PlayerData, temporaryAccess: Set<number>) => {
+    return (
+        hasTemporaryAccess(property, temporaryAccess) ||
+        hasPartyAccess(property, player.partyMember?.partyId) ||
+        hasPlayerRentedApartment(property, player.citizenid)
+    );
+};
+
+export const hasApartmentAccess = (apartment: Apartment, player: PlayerData, temporaryAccess: Set<number>) => {
+    return (
+        apartment.owner === player.citizenid ||
+        apartment.roommate === player.citizenid ||
+        temporaryAccess.has(apartment.id) ||
+        apartment.senatePartyId === player.partyMember?.partyId
+    );
+};
+
+export const hasPartyAccess = (property: Property, partyId: string) => {
+    for (const apartment of property.apartments) {
+        if (apartment.senatePartyId === partyId) {
+            return true;
+        }
+    }
+
+    return false;
 };
 
 export const hasTemporaryAccess = (property: Property, temporaryAccess: Set<number>) => {

@@ -37,6 +37,7 @@ export class AdminMenuInteractiveProvider {
                 name: playerData.name,
                 rpFullName: `${playerData.charinfo.firstname} ${playerData.charinfo.lastname}`,
                 injuries: playerData.metadata.injuries_count,
+                partyMember: playerData.partyMember,
             });
         }
         return players;
@@ -63,6 +64,7 @@ export class AdminMenuInteractiveProvider {
                 citizenId: playerData.citizenid,
                 ped: ped,
                 injuries: playerData.metadata.injuries_count,
+                partyMember: playerData.partyMember,
             });
         }
         return players;

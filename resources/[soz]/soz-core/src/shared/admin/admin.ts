@@ -1,5 +1,5 @@
 import { PlayerCharInfo } from '@public/shared/player';
-import { SenateParty } from '@public/shared/senate';
+import { SenateParty, SenatePartyMember } from '@public/shared/senate';
 
 import { SozRole } from '../../core/permissions';
 import { Component, Outfit, Prop } from '../cloth';
@@ -93,6 +93,7 @@ export type AdminPlayer = {
     name: string;
     rpFullName: string;
     injuries: number;
+    partyMember: SenatePartyMember | null;
 };
 
 export type FullAdminPlayer = AdminPlayer & {

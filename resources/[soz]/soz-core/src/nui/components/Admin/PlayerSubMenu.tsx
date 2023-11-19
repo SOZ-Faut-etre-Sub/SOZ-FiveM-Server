@@ -381,6 +381,7 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                         </MenuItemButton>
                         <MenuItemSelect
                             title="Parti politique"
+                            value={player.partyMember?.partyId || null}
                             onConfirm={async (_, value) => {
                                 await fetchNui(NuiEvent.AdminMenuPlayerSetSenateParty, {
                                     player,
