@@ -45,7 +45,7 @@ export class HousingMenuProvider {
             return;
         }
 
-        TriggerServerEvent(ServerEvent.HOUSING_ADD_ROOMMATE, propertyId, apartmentId, playerId);
+        TriggerServerEvent(ServerEvent.HOUSING_ADD_ROOMMATE, propertyId, apartmentId, GetPlayerServerId(playerId));
 
         this.nuiMenu.closeMenu();
     }
