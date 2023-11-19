@@ -7,7 +7,11 @@ import { Repository } from './repository';
 export class JobGradeRepository extends Repository<RepositoryType.JobGrade> {
     public type = RepositoryType.JobGrade;
 
-    public getGradesByJob(jobId: JobType): JobGrade[] {
-        return this.get(grade => grade.jobId === jobId);
+    public getGradesByJob(jobId: JobType, maxGradeWeight?: number): JobGrade[] {
+        if (!maxGradeWeight) {
+            return this.get(grade => grade.jobId === jobId);
+        } else {
+            return this.get(grade => grade.jobId === jobId && grade.weight < maxGradeWeight);
+        }
     }
 }
