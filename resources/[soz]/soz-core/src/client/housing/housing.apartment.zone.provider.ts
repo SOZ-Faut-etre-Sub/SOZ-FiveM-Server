@@ -105,7 +105,10 @@ export class HousingApartmentZoneProvider {
                             return false;
                         }
 
-                        return apartment.owner !== null && isPlayerInsideApartment(player);
+                        return (
+                            (apartment.senatePartyId !== null || apartment.owner !== null) &&
+                            isPlayerInsideApartment(player)
+                        );
                     },
                     action: () => {
                         this.inventoryManager.openInventory('house_stash', apartment.identifier, {
@@ -130,7 +133,10 @@ export class HousingApartmentZoneProvider {
                             return false;
                         }
 
-                        return apartment.owner !== null && isPlayerInsideApartment(player);
+                        return (
+                            (apartment.senatePartyId !== null || apartment.owner !== null) &&
+                            isPlayerInsideApartment(player)
+                        );
                     },
                     action: () => {
                         this.inventoryManager.openInventory('house_fridge', apartment.identifier);
@@ -151,7 +157,10 @@ export class HousingApartmentZoneProvider {
                             return false;
                         }
 
-                        return apartment.owner !== null && isPlayerInsideApartment(player);
+                        return (
+                            (apartment.senatePartyId !== null || apartment.owner !== null) &&
+                            isPlayerInsideApartment(player)
+                        );
                     },
                     action: () => {
                         this.bankService.openHouseSafe(apartment);
@@ -172,7 +181,10 @@ export class HousingApartmentZoneProvider {
                             return false;
                         }
 
-                        return apartment.owner !== null && isPlayerInsideApartment(player);
+                        return (
+                            (apartment.senatePartyId !== null || apartment.owner !== null) &&
+                            isPlayerInsideApartment(player)
+                        );
                     },
                     action: () => {
                         this.openApartmentCloakroom();

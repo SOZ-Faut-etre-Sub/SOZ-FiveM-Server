@@ -302,3 +302,7 @@ export type PlayerMetadata = PlayerHealthBook & {
     is_senator: boolean;
     injail: boolean;
 };
+
+export const isAdminOrStaff = (player: PlayerData) => {
+    return player.role === 'admin' || player.role === 'staff';
+};
