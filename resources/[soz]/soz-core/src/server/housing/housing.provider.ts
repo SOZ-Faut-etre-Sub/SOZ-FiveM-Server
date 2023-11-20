@@ -350,8 +350,10 @@ export class HousingProvider {
         this.playerService.setPlayerMetadata(player.source, 'inside', {
             apartment: false,
             property: null,
-            exitCoord: false,
+            exitCoord: player.metadata.inside.exitCoord, //keep exitCoord for command player-tp-entrance
         });
+
+        TriggerClientEvent(ClientEvent.HOUSING_TELEPORT, player.source, false);
     }
 
     @OnEvent(ServerEvent.HOUSING_REMOVE_ROOMMATE)
@@ -670,5 +672,7 @@ export class HousingProvider {
                 w: heading,
             },
         });
+
+        TriggerClientEvent(ClientEvent.HOUSING_TELEPORT, player.source, apartment.id);
     }
 }
