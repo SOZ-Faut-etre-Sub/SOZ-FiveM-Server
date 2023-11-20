@@ -157,6 +157,10 @@ export class HousingPropertyZoneProvider {
                 continue;
             }
 
+            if (!property.entryZone) {
+                continue;
+            }
+
             const category = property.apartments.length > 1 ? 'building' : 'house';
             const owned = hasPropertyAccess ? 'owned' : 'free';
             const name = hasPropertyAccess
@@ -196,6 +200,10 @@ export class HousingPropertyZoneProvider {
     public loadPropertyZone(property: Property) {
         this.targetFactory.removeBoxZone(`housing:property:${property.id}`);
         this.updateBlips();
+
+        if (!property.entryZone) {
+            return;
+        }
 
         this.targetFactory.createForBoxZone(`housing:property:${property.id}`, property.entryZone, [
             {
