@@ -16,6 +16,7 @@ export class BlipFactory {
     public create(id: string, blipCreated: Blip): number {
         const blip = {
             range: true,
+            scale: 0.8,
             ...blipCreated,
         };
 
