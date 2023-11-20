@@ -103,7 +103,6 @@ async function bootstrap() {
         FDFModule,
         NewsModule,
         DMCModule,
-        BankModule,
         HousingModule,
         ...PrivateModules
     );
