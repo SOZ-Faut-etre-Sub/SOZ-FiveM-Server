@@ -322,7 +322,7 @@ export class VehicleGarageProvider {
 
             result[`apartment_${apartmentIdentifier}`] = await this.getApartmentPlace(
                 `apartment_${apartmentIdentifier}`,
-                garage
+                garage,
                 0
             );
         }
