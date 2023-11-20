@@ -88,7 +88,10 @@ export class JobEmployeeProvider {
                     }
 
                     const playerGrade = this.jobGradeRepository.find(Number(player.job.grade));
-                    const grades = this.jobGradeRepository.getGradesByJob(player.job.id, playerGrade.weight);
+                    const grades = this.jobGradeRepository.getGradesByJob(
+                        player.job.id,
+                        playerGrade.owner ? null : playerGrade.weight
+                    );
 
                     this.nuiMenu.openMenu(MenuType.Promote, {
                         job: player.job.id,
