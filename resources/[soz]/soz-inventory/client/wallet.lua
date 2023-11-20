@@ -13,6 +13,7 @@ RegisterNetEvent("inventory:client:openPlayerWalletInventory", function(cards)
     end
     SendNUIMessage({action = "openPlayerWalletInventory", cards = playerCards})
     SetNuiFocus(true, true)
+    InventoryOpen = true
 end)
 
 RegisterKeyMapping("open-wallet", "Ouvrir le portefeuille", "keyboard", "")
