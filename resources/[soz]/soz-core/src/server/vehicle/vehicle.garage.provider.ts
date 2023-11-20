@@ -749,7 +749,10 @@ export class VehicleGarageProvider {
             id = `apartment_${id}`;
         }
 
-        const [freePlaces, maxPlaces] = garage.type === GarageType.House ? await this.getApartmentPlace(id) : await this.getPrivatePlaces(source, id, garage);
+        const [freePlaces, maxPlaces] =
+            garage.type === GarageType.House
+                ? await this.getApartmentPlace(id)
+                : await this.getPrivatePlaces(source, id, garage);
 
         if (freePlaces !== null && freePlaces <= 0 && id != `property_cayo_villa`) {
             this.notifier.notify(source, `Ce garage est plein, les ${maxPlaces} places sont occupés.`, 'error');
