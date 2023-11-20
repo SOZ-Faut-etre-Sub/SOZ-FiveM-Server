@@ -322,6 +322,7 @@ export class VehicleGarageProvider {
 
             result[`apartment_${apartmentIdentifier}`] = await this.getApartmentPlace(
                 `apartment_${apartmentIdentifier}`,
+                garage
                 0
             );
         }
@@ -344,13 +345,13 @@ export class VehicleGarageProvider {
                 continue;
             }
 
-            result[count.garage] = await this.getApartmentPlace(count.garage, count._count);
+            result[count.garage] = await this.getApartmentPlace(count.garage, garage, count._count);
         }
 
         return result;
     }
 
-    private async getApartmentPlace(garageId: string, count: number | null = null) {
+    private async getApartmentPlace(garageId: string, garage: Garage, count: number | null = null) {
         if (count === null) {
             count = await this.prismaService.playerVehicle.count({
                 where: {
@@ -369,6 +370,10 @@ export class VehicleGarageProvider {
 
         if (apartment) {
             maxPlaces = HouseGarageLimits[apartment.tier ?? 0] ?? 0;
+        }
+
+        if (garage.type === GarageType.House && garage.isTrailerGarage) {
+            maxPlaces = 1;
         }
 
         return [Math.max(0, maxPlaces - count), maxPlaces];
@@ -751,7 +756,7 @@ export class VehicleGarageProvider {
 
         const [freePlaces, maxPlaces] =
             garage.type === GarageType.House
-                ? await this.getApartmentPlace(id)
+                ? await this.getApartmentPlace(id, garage)
                 : await this.getPrivatePlaces(source, id, garage);
 
         if (freePlaces !== null && freePlaces <= 0 && id != `property_cayo_villa`) {
