@@ -110,7 +110,7 @@ export class RepositoryProvider {
         this.onceLoader.trigger(OnceStep.RepositoriesLoaded);
     }
 
-    @Tick()
+    @Tick(500)
     public synchronizeData() {
         for (const repository of this.repositories) {
             const patch = repository.observe();
