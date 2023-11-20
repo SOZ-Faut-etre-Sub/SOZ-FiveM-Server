@@ -28,6 +28,7 @@ RegisterNetEvent("inventory:client:openPlayerKeyInventory", function(vehicleKeys
 
     SendNUIMessage({action = "openPlayerKeyInventory", keys = playerKeys})
     SetNuiFocus(true, true)
+    InventoryOpen = true
 end)
 
 RegisterNUICallback("player/openPlayerKeyInventory", function(data, cb)

@@ -151,7 +151,8 @@ const VEHICLE_FORCE_USE_BONES = {
 type TrunkOpened = {
     vehicle: number;
     vehicleNetworkId: number;
-    zone: BoxZone;
+    min: Vector3;
+    max: Vector3;
 };
 
 @Provider()
@@ -422,25 +423,17 @@ export class VehicleLockProvider {
             return;
         }
 
+        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
         const model = GetEntityModel(vehicle);
         const [min, max] = GetModelDimensions(model) as [Vector3, Vector3];
-        const position = GetEntityCoords(vehicle, false) as Vector3;
+        const opened: TrunkOpened = {
+            vehicle,
+            vehicleNetworkId,
+            min: min,
+            max: max,
+        };
 
-        const center = [
-            position[0] + (max[0] + min[0]) / 2,
-            position[1] + (max[1] + min[1]) / 2,
-            position[2] + min[2],
-        ] as Vector3;
-
-        const vehicleTrunkZone = new BoxZone(center, max[1] - min[1] + 3.0, max[0] - min[0] + 3.0, {
-            heading: GetEntityHeading(vehicle),
-            minZ: center[2],
-            maxZ: center[2] + 6.0,
-        });
-
-        const pedPosition = GetEntityCoords(ped, false) as Vector3;
-
-        if (!vehicleTrunkZone.isPointInside(pedPosition)) {
+        if (!this.isInTrunkZone(opened)) {
             this.notifier.notify('Vous devez être à côté du véhicule.', 'error');
 
             return;
@@ -464,7 +457,6 @@ export class VehicleLockProvider {
         const vehicleModel = GetEntityModel(vehicle);
         const vehicleClass = GetVehicleClass(vehicle);
         const trunkType = VEHICLE_TRUNK_TYPES[vehicleModel] || 'trunk';
-        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
 
         TriggerServerEvent('inventory:server:openInventory', trunkType, plate, {
             model: vehicleModel,
@@ -473,11 +465,31 @@ export class VehicleLockProvider {
         });
         TriggerServerEvent(ServerEvent.VEHICLE_SET_TRUNK_STATE, vehicleNetworkId, true);
 
-        this.vehicleTrunkOpened = {
-            vehicle,
-            vehicleNetworkId,
-            zone: vehicleTrunkZone,
-        };
+        this.vehicleTrunkOpened = opened;
+    }
+
+    private isInTrunkZone(opened: TrunkOpened) {
+        const position = GetEntityCoords(opened.vehicle, false) as Vector3;
+        const center = [
+            position[0] + (opened.max[0] + opened.min[0]) / 2,
+            position[1] + (opened.max[1] + opened.min[1]) / 2,
+            position[2] + opened.min[2],
+        ] as Vector3;
+
+        const vehicleTrunkZone = new BoxZone(
+            center,
+            opened.max[1] - opened.min[1] + 3.0,
+            opened.max[0] - opened.min[0] + 3.0,
+            {
+                heading: GetEntityHeading(opened.vehicle),
+                minZ: center[2],
+                maxZ: center[2] + 6.0,
+            }
+        );
+
+        const pedPosition = GetEntityCoords(PlayerPedId(), false) as Vector3;
+
+        return vehicleTrunkZone.isPointInside(pedPosition);
     }
 
     @Tick(TickInterval.EVERY_SECOND)
@@ -487,13 +499,7 @@ export class VehicleLockProvider {
         }
 
         if (DoesEntityExist(this.vehicleTrunkOpened.vehicle)) {
-            const pedPosition = GetEntityCoords(PlayerPedId(), false) as Vector3;
-            const vehiclePosition = GetEntityCoords(this.vehicleTrunkOpened.vehicle, false) as Vector3;
-
-            if (
-                this.vehicleTrunkOpened.zone.isPointInside(pedPosition) &&
-                this.vehicleTrunkOpened.zone.isPointInside(vehiclePosition)
-            ) {
+            if (this.isInTrunkZone(this.vehicleTrunkOpened)) {
                 return;
             }
         }
