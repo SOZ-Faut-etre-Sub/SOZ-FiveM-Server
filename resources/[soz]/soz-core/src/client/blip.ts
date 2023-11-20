@@ -1,5 +1,7 @@
 import { Once, OnceStep } from '@core/decorators/event';
+import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
+import { Qbcore } from '@public/client/qbcore';
 
 import { Blip } from '../shared/blip';
 
@@ -11,6 +13,9 @@ type GameBlip = {
 
 @Provider()
 export class BlipFactory {
+    @Inject(Qbcore)
+    private qbcore: Qbcore;
+
     private blips = new Map<string, GameBlip>();
 
     public create(id: string, blipCreated: Blip): number {
@@ -47,9 +52,13 @@ export class BlipFactory {
             SetBlipAlpha(gameBlip.gameId, 0);
             SetBlipHiddenOnLegend(gameBlip.gameId, true);
         } else {
-            SetBlipAlpha(gameBlip.gameId, gameBlip.blip.alpha || 255);
+            SetBlipAlpha(gameBlip.gameId, 255);
             SetBlipHiddenOnLegend(gameBlip.gameId, false);
         }
+    }
+
+    public qbHide(id: string, value: boolean): void {
+        this.qbcore.HideBlip(id, value);
     }
 
     public remove(id: string): void {

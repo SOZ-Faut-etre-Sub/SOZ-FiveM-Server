@@ -26,6 +26,7 @@ import { PlayerCriminalService } from '../player/player.criminal.service';
 import { PlayerMoneyService } from '../player/player.money.service';
 import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
+import { ProgressService } from '../player/progress.service';
 import { HousingRepository } from '../repository/housing.repository';
 import { VehicleService } from '../vehicle/vehicle.service';
 
@@ -63,6 +64,9 @@ export class HousingProvider {
 
     @Inject(PlayerCriminalService)
     private playerCriminalService: PlayerCriminalService;
+
+    @Inject(ProgressService)
+    private progressService: ProgressService;
 
     private playerTemporaryAccess = new Map<string, Set<number>>();
 
@@ -344,6 +348,24 @@ export class HousingProvider {
             player.metadata.inside.exitCoord.z,
             player.metadata.inside.exitCoord.w,
         ] as Vector4;
+
+        const { completed } = await this.progressService.progress(
+            player.source,
+            'housing_action',
+            'Vous sortez...',
+            1000,
+            {
+                dictionary: 'mp_doorbell',
+                name: 'ring_bell_b',
+                options: {
+                    onlyUpperBody: true,
+                },
+            }
+        );
+
+        if (!completed) {
+            return;
+        }
 
         this.playerPositionProvider.teleportToCoords(player.source, position);
 
@@ -656,6 +678,24 @@ export class HousingProvider {
 
         const position = GetEntityCoords(ped) as Vector3;
         const heading = GetEntityHeading(ped);
+
+        const { completed } = await this.progressService.progress(
+            player.source,
+            'housing_action',
+            'Vous entrez...',
+            1000,
+            {
+                dictionary: 'mp_doorbell',
+                name: 'ring_bell_b',
+                options: {
+                    onlyUpperBody: true,
+                },
+            }
+        );
+
+        if (!completed) {
+            return;
+        }
 
         this.playerPositionProvider.teleportToCoords(player.source, apartment.position);
 

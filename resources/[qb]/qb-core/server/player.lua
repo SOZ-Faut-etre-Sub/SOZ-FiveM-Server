@@ -12,7 +12,7 @@ function QBCore.Player.Login(source, citizenid, newData)
             local license = QBCore.Functions.GetSozIdentifier(src)
             local PlayerData = exports.oxmysql:singleSync('SELECT * FROM player where citizenid = ?', { citizenid })
             local apartment = exports.oxmysql:singleSync('SELECT id,property_id,label,price,owner,tier,has_parking_place FROM housing_apartment where ? IN (owner, roommate)', { citizenid })
-            local partyMember = exports.oxmysql:singleSync('SELECT * FROM senate_party_member WHERE citizenid = ?', { citizenid })
+            local partyMember = exports.oxmysql:singleSync('SELECT * FROM senate_party_member WHERE citizenId = ?', { citizenid })
             local role = GetConvar("soz_anonymous_default_role", "user")
             local useTestMode = GetConvar("soz_enable_test_auth", "false") == "true"
             local account = QBCore.Functions.GetUserAccount(src, useTestMode)
@@ -44,9 +44,9 @@ function QBCore.Player.Login(source, citizenid, newData)
                 end
 
                 if partyMember then
-                    PlayerData.party = partyMember
+                    PlayerData.partyMember = partyMember
                 else
-                    PlayerData.party = nil
+                    PlayerData.partyMember = nil
                 end
 
                 if PlayerData.gang then
@@ -87,7 +87,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     if PlayerData.apartment then
         PlayerData.apartment.tier = PlayerData.apartment.tier or 0
     end
-    PlayerData.party = PlayerData.party or nil
+    PlayerData.partyMember = PlayerData.partyMember or nil
     -- Charinfo
     PlayerData.charinfo = PlayerData.charinfo or {}
     PlayerData.charinfo.firstname = PlayerData.charinfo.firstname or 'Firstname'
