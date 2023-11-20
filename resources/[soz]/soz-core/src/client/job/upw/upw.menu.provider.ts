@@ -81,11 +81,15 @@ export class UpwMenuProvider {
 
         this.displayedBlips[blip] = value;
         const facilityType: UpwFacilityType = blip == 'jobTerminal' || blip == 'globalTerminal' ? 'terminal' : blip;
+
         if (facilityType == 'resell') {
-            this.blipFactory.hide('job_upw_resell', !value);
+            this.blipFactory.qbHide('job_upw_resell', !value);
+
             return;
         }
+
         const facilities = await emitRpc<UpwFacility[]>(RpcServerEvent.UPW_GET_FACILITIES, facilityType);
+
         for (const facility of facilities) {
             const data = JSON.parse(facility.data);
             const blip_id = 'job_upw_' + facility.identifier;
@@ -95,7 +99,8 @@ export class UpwMenuProvider {
             ) {
                 continue;
             }
-            this.blipFactory.hide(blip_id, !value);
+
+            this.blipFactory.qbHide(blip_id, !value);
         }
     }
 }
