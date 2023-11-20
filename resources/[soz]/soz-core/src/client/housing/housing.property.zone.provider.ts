@@ -312,8 +312,8 @@ export class HousingPropertyZoneProvider {
                     }
 
                     return (
-                        !isAdminHouse(property) &&
-                        hasRentedApartment(property, player.citizenid) &&
+                        hasRentedApartment(property) &&
+                        !hasAccess(property, player, this.temporaryAccess) &&
                         !isPlayerInsideApartment(player)
                     );
                 },
@@ -504,8 +504,7 @@ export class HousingPropertyZoneProvider {
                     apartments: property.apartments.filter(apartment => {
                         return (
                             (apartment.owner !== null || apartment.senatePartyId !== null) &&
-                            apartment.owner !== player.citizenid &&
-                            apartment.roommate !== player.citizenid
+                            !hasApartmentAccess(apartment, player, this.temporaryAccess)
                         );
                     }),
                 },

@@ -13,6 +13,10 @@ export class Qbcore {
         return this.QBCore.Functions.GetPlayerData();
     }
 
+    public HideBlip(blip: string, toggle: boolean): void {
+        this.QBCore.Functions.HideBlip(blip, toggle);
+    }
+
     public getClosestPlayer(): [number, number] {
         return this.QBCore.Functions.GetClosestPlayer();
     }
