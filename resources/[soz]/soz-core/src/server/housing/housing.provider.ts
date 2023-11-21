@@ -605,8 +605,8 @@ export class HousingProvider {
         }
 
         const [property, apartment] = await this.housingRepository.getApartment(
-            player.apartment.id,
-            player.apartment.property_id
+            player.apartment.property_id,
+            player.apartment.id
         );
 
         if (!property || !apartment) {
