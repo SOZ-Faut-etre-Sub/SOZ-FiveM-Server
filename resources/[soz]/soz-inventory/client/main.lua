@@ -3,6 +3,9 @@ PlayerData = QBCore.Functions.GetPlayerData()
 Handle = {}
 Handle.Functions = {}
 
+-- Variable used to detecy an external close during asking for input to avoid reactivate focus
+InventoryOpen = false
+
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     PlayerData = QBCore.Functions.GetPlayerData()
 end)
@@ -20,6 +23,7 @@ RegisterNetEvent("inventory:client:openInventory", function(playerInventory, tar
         targetMoney = targetMoney and (targetMoney["money"] + targetMoney["marked_money"]),
     })
     SetNuiFocus(true, true)
+    InventoryOpen = true
 end)
 
 RegisterNetEvent("inventory:client:requestOpenInventory", function(data)
@@ -56,7 +60,12 @@ function getAmountFromShortcutModifier(keyModifier, amount, maxAmount)
     elseif amount > 1 and keyModifier == "ALT" then
         SetNuiFocus(false, false)
         tempAmount = exports["soz-core"]:Input("Quantité", 5, math.floor(amount / 2))
+
+        if not InventoryOpen then
+            return 0
+        end
         SetNuiFocus(true, true)
+
         return tempAmount
 
     elseif amount >= 1 then
@@ -80,7 +89,7 @@ function getAmountFromShortcutModifier(keyModifier, amount, maxAmount)
 end
 
 RegisterNUICallback("transfertItem", function(data, cb)
-    if not data then
+    if not data or not data.item then
         -- Should not happen but logs show the opposite :sad:
         cb({})
     end
@@ -114,6 +123,12 @@ end)
 RegisterNUICallback("transfertMoney", function(data, cb)
     SetNuiFocus(false, false)
     local amount = exports["soz-core"]:Input("Quantité", 12)
+
+    if not InventoryOpen then
+        cb(false)
+        return
+    end
+
     SetNuiFocus(true, true)
 
     if amount and tonumber(amount) > 0 then
@@ -159,6 +174,7 @@ end)
 RegisterNUICallback("closeNUI", function(data, cb)
     inventoryDisableControlsActions(false)
     SetNuiFocus(false, false)
+    InventoryOpen = false
     cb(true)
     if data.target then
         TriggerServerEvent("inventory:server:closeInventory", data.target)
@@ -171,6 +187,10 @@ end)
 RegisterNUICallback("player/askForAmount", function(data, cb)
     SetNuiFocus(false, false)
     amount = exports["soz-core"]:Input("Quantité", 5, 1)
+    if not InventoryOpen then
+        cb(0)
+        return
+    end
     SetNuiFocus(true, true)
     cb(amount)
 end)
@@ -220,15 +240,16 @@ end)
 
 -- SHOPS
 
-RegisterNetEvent("inventory:client:openShop", function(shopContent, shopHeaderTexture)
-
+AddEventHandler("inventory:client:openShop", function(shopContent, shopHeaderTexture)
     SendNUIMessage({action = "openShop", shopContent = shopContent, shopHeaderTexture = shopHeaderTexture})
     SetNuiFocus(true, true)
+    InventoryOpen = true
 end)
 
 exports("openShop", function(shopContent, shopHeaderTexture)
     SendNUIMessage({action = "openShop", shopContent = shopContent, shopHeaderTexture = shopHeaderTexture})
     SetNuiFocus(true, true)
+    InventoryOpen = true
 end)
 
 RegisterNUICallback("player/validateCart", function(data, cb)

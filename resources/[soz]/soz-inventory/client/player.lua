@@ -25,6 +25,7 @@ RegisterCommand("inventory", function()
                 playerShortcuts = PlayerData.metadata["shortcuts"] or {},
             })
             SetNuiFocus(true, true)
+            InventoryOpen = true
 
             --- Force player to stop using weapon if input is pressed while inventory is open
             SetNuiFocusKeepInput(true)
