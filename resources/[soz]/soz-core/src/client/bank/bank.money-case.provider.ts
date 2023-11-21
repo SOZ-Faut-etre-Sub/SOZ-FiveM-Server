@@ -43,11 +43,7 @@ export class BankMoneyCaseProvider {
         const isPhoneVisible = exports['soz-phone'].isPhoneVisible();
         const isInsideVehicle = IsPedInAnyVehicle(playerPed, true);
 
-        if (isPhoneVisible || isInsideVehicle) {
-            return false;
-        }
-
-        return true;
+        return !(isPhoneVisible || isInsideVehicle);
     }
 
     private hasMoneyCase(): boolean {

@@ -6,6 +6,7 @@ import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject, MultiInject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { OnceLoader } from '../../core/loader/once.loader';
+import { Logger } from '../../core/logger';
 import { ClientEvent } from '../../shared/event';
 import { BillboardRepository } from './billboard.repository';
 import { FuelStationRepository } from './fuel.station.repository';
@@ -51,6 +52,9 @@ export class RepositoryProvider {
     @MultiInject(Repository)
     private repositories: Repository<any>[];
 
+    @MultiInject(Logger)
+    private logger: Logger;
+
     @Once(OnceStep.PlayerLoaded)
     public async onRepositoryStart() {
         await this.garageRepository.load();
@@ -78,7 +82,15 @@ export class RepositoryProvider {
             return;
         }
 
-        repository.patch(patch);
+        if (!repository.isInitialized) {
+            return;
+        }
+
+        try {
+            repository.patch(patch);
+        } catch (e) {
+            this.logger.error(`Error while patching repository ${type}`, e, JSON.stringify(patch));
+        }
     }
 
     @OnEvent(ClientEvent.REPOSITORY_SYNC_DATA)
