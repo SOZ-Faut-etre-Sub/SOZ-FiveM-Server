@@ -60,4 +60,9 @@ export class PoliceSpikeProvider {
             TriggerClientEvent(ClientEvent.POLICE_SYNC_SPIKE, -1, this.spikes);
         }
     }
+
+    @OnEvent(ServerEvent.POLICE_INIT_SPIKE)
+    public async loadSpike(source: number) {
+        TriggerClientEvent(ClientEvent.POLICE_SYNC_SPIKE, source, this.spikes);
+    }
 }
