@@ -310,6 +310,7 @@ export enum ServerEvent {
     POLICE_PLACE_SPIKE = 'soz-core:server:police:place-spike',
     POLICE_ADD_SPIKE = 'soz-core:server:police:add-spike',
     POLICE_REMOVE_SPIKE = 'soz-core:server:police:remove-spike',
+    POLICE_INIT_SPIKE = 'soz-core:server:police:init-spike',
 
     ESCORT_PLAYER = 'soz-core:server:escort',
     REMOVE_ESCORT_PLAYER = 'soz-core:server:remove-escort',
