@@ -87,6 +87,8 @@ export class PoliceSpikeProvider {
             ],
             2.5
         );
+
+        TriggerServerEvent(ServerEvent.POLICE_INIT_SPIKE);
     }
 
     @OnEvent(ClientEvent.POLICE_REQUEST_ADD_SPIKE)
