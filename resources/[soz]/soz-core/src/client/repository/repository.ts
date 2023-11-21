@@ -18,8 +18,11 @@ export abstract class Repository<
 
     public abstract type: RepositoryType;
 
+    public isInitialized = false;
+
     async init(): Promise<void> {
         this.data = (await emitRpc(RpcServerEvent.REPOSITORY_GET_DATA_2, this.type)) as Record<K, V>;
+        this.isInitialized = true;
     }
 
     public patch(patch: Operation[]): void {

@@ -311,11 +311,7 @@ export class HousingPropertyZoneProvider {
                         return false;
                     }
 
-                    return (
-                        hasRentedApartment(property) &&
-                        !hasAccess(property, player, this.temporaryAccess) &&
-                        !isPlayerInsideApartment(player)
-                    );
+                    return hasRentedApartment(property, player.citizenid) && !isPlayerInsideApartment(player);
                 },
                 action: () => {
                     this.bellProperty(property);
