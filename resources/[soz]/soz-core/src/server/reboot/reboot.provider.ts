@@ -85,7 +85,9 @@ export class RebootProvider {
             where: {
                 life_counter: -1,
                 state: {
-                    not: PlayerVehicleState.Missing,
+                    not: {
+                        in: [PlayerVehicleState.Missing, PlayerVehicleState.Destroyed],
+                    },
                 },
             },
             data: {
