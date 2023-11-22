@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@public/core/decorators/injectable';
+import { Logger } from '@public/core/logger';
 import { wait } from '@public/core/utils';
 import { ServerEvent } from '@public/shared/event';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
@@ -18,6 +19,9 @@ export class RopeService {
     @Inject(Notifier)
     private notifier: Notifier;
 
+    @Inject(Logger)
+    private logger: Logger;
+
     private ropeState: RopeState | null = null;
 
     public createNewRope(
@@ -28,83 +32,91 @@ export class RopeService {
         holdingObjectPropName: string,
         ropeData?: string
     ): number | null {
-        const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
-        if (this.ropeState) {
-            this.notifier.notify("Vous vous surestimez. Vous n'êtes pas assez musclé pour tirer deux cordes.", 'error');
+        try {
+            const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
+            if (this.ropeState) {
+                this.notifier.notify(
+                    "Vous vous surestimez. Vous n'êtes pas assez musclé pour tirer deux cordes.",
+                    'error'
+                );
+                return null;
+            }
+            const initLength = getDistance(position, attachPosition);
+            RopeLoadTextures();
+            const [rope] = AddRope(
+                position[0],
+                position[1],
+                position[2],
+                0.0,
+                0.0,
+                0.0,
+                maxLength,
+                ropeType,
+                initLength,
+                0.5,
+                0,
+                false,
+                true,
+                true,
+                1.0,
+                false,
+                0
+            );
+            if (ropeData) {
+                LoadRopeData(rope, ropeData);
+            }
+
+            const object = CreateObject(
+                GetHashKey(holdingObjectPropName),
+                position[0],
+                position[1],
+                position[2] - 1.0,
+                true,
+                true,
+                true
+            );
+            const netId = ObjToNet(object);
+            SetNetworkIdCanMigrate(netId, false);
+            TriggerServerEvent(ServerEvent.OBJECT_ATTACHED_REGISTER, netId);
+            AttachEntityToEntity(
+                object,
+                PlayerPedId(),
+                GetPedBoneIndex(PlayerPedId(), 26610),
+                0.04,
+                -0.04,
+                0.02,
+                305.0,
+                270.0,
+                -40.0,
+                true,
+                true,
+                false,
+                true,
+                0,
+                true
+            );
+
+            this.ropeState = {
+                rope,
+                baseEntity,
+                maxLength,
+                attachPosition,
+                holdingObjectProp: object,
+            };
+            AttachRopeToEntity(
+                this.ropeState.rope,
+                baseEntity,
+                attachPosition[0],
+                attachPosition[1],
+                attachPosition[2],
+                true
+            );
+            ActivatePhysics(this.ropeState.rope);
+            this.manageRopePhysics();
+        } catch (e) {
+            this.logger.error(`error while trying to create a rope ${e}`);
             return null;
         }
-        const initLength = getDistance(position, attachPosition);
-        RopeLoadTextures();
-        const [rope] = AddRope(
-            position[0],
-            position[1],
-            position[2],
-            0.0,
-            0.0,
-            0.0,
-            maxLength,
-            ropeType,
-            initLength,
-            0.5,
-            0,
-            false,
-            true,
-            true,
-            1.0,
-            false,
-            0
-        );
-        if (ropeData) {
-            LoadRopeData(rope, ropeData);
-        }
-
-        const object = CreateObject(
-            GetHashKey(holdingObjectPropName),
-            position[0],
-            position[1],
-            position[2] - 1.0,
-            true,
-            true,
-            true
-        );
-        const netId = ObjToNet(object);
-        SetNetworkIdCanMigrate(netId, false);
-        TriggerServerEvent(ServerEvent.OBJECT_ATTACHED_REGISTER, netId);
-        AttachEntityToEntity(
-            object,
-            PlayerPedId(),
-            GetPedBoneIndex(PlayerPedId(), 26610),
-            0.04,
-            -0.04,
-            0.02,
-            305.0,
-            270.0,
-            -40.0,
-            true,
-            true,
-            false,
-            true,
-            0,
-            true
-        );
-
-        this.ropeState = {
-            rope,
-            baseEntity,
-            maxLength,
-            attachPosition,
-            holdingObjectProp: object,
-        };
-        AttachRopeToEntity(
-            this.ropeState.rope,
-            baseEntity,
-            attachPosition[0],
-            attachPosition[1],
-            attachPosition[2],
-            true
-        );
-        ActivatePhysics(this.ropeState.rope);
-        this.manageRopePhysics();
         return this.ropeState.rope;
     }
 
