@@ -118,7 +118,7 @@ export class JobEmployeeProvider {
 
         const job = JobRegistry[player.job.id];
 
-        if (!job) {
+        if (!job || !job.bossZones) {
             return false;
         }
 
