@@ -11,7 +11,7 @@ import {
     PlayOptions,
     Scenario,
 } from '../../shared/animation';
-import { transformForwardPoint2D, Vector2, Vector3 } from '../../shared/polyzone/vector';
+import { getDistance, transformForwardPoint2D, Vector2, Vector3 } from '../../shared/polyzone/vector';
 import { WeaponName } from '../../shared/weapons/weapon';
 import { ResourceLoader } from '../repository/resource.loader';
 
@@ -287,9 +287,13 @@ export class AnimationFactory {
     }
 
     private async fxLoop(entity: number, prop: AnimationProps) {
+        if (prop.fx.delay) {
+            await wait(prop.fx.delay);
+        }
+        let index = 0;
         do {
             UseParticleFxAsset(prop.fx.dictionary);
-            StartNetworkedParticleFxLoopedOnEntity(
+            StartParticleFxLoopedOnEntity(
                 prop.fx.name,
                 entity,
                 prop.fx.position[0],
@@ -304,7 +308,26 @@ export class AnimationFactory {
                 false
             );
 
-            await wait(prop.fx.duration);
+            if (prop.fx.net) {
+                const playerId = PlayerId();
+                const playerPedId = PlayerPedId();
+                const coords = GetEntityCoords(playerPedId) as Vector3;
+                const playersInrange = [];
+                for (const player of GetActivePlayers()) {
+                    if (playerId == player) {
+                        continue;
+                    }
+
+                    if (getDistance(coords, GetEntityCoords(GetPlayerPed(playerId)) as Vector3) < 100.0) {
+                        playersInrange.push(GetPlayerServerId(player));
+                    }
+                }
+                if (playersInrange.length) {
+                    TriggerServerEvent(ServerEvent.ANIMATION_FX, ObjToNet(entity), prop.fx, playersInrange);
+                }
+            }
+
+            await wait(prop.fx.duration[index++ % prop.fx.duration.length]);
         } while (prop.fx.manualLoop && DoesEntityExist(entity));
     }
 
