@@ -342,6 +342,7 @@ export enum NuiEvent {
     HubEntryDisplay = 'soz-core:client:hub:entry-display',
     HubEntryFetch = 'soz-core:client:hub:entry-fetch',
     HubEntryAdd = 'soz-core:client:hub:entry-add',
+    HubEntryShow = 'soz-core:client:hub:entry-show',
     HubEntryUpdate = 'soz-core:client:hub:entry-update',
     HubEntryAdminMenuOpen = 'soz-core:client:hub:entry-open-menu',
 }
