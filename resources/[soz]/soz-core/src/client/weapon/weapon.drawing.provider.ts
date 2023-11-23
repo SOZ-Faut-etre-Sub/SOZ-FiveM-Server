@@ -55,6 +55,7 @@ export class WeaponDrawingProvider {
 
             const object = CreateObject(weapon.model, 1, 1, 1, true, true, false);
             this.weaponAttached[weapon.model] = object;
+            this.resourceLoader.unloadModel(weapon.model);
 
             const netId = ObjToNet(object);
             SetEntityAsMissionEntity(object, true, true);
