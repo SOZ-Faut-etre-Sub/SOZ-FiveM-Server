@@ -206,6 +206,8 @@ export class VehicleDealershipProvider {
             FreezeEntityPosition(createdVehicle, true);
             SetVehicleNumberPlateText(createdVehicle, 'LUXURY');
 
+            this.resourceLoader.unloadModel(auction.vehicle.hash);
+
             this.targetFactory.createForBoxZone(`auction_${name}`, auction.windows, [
                 {
                     icon: 'c:dealership/bid.png',
@@ -239,6 +241,8 @@ export class VehicleDealershipProvider {
             FreezeEntityPosition(createdVehicle, true);
             SetVehicleNumberPlateText(createdVehicle, 'ELEC');
             SetVehicleDoorsLocked(createdVehicle, 2);
+
+            this.resourceLoader.unloadModel(GetHashKey(vehicle.model));
         }
     }
 
@@ -307,12 +311,6 @@ export class VehicleDealershipProvider {
             return;
         }
 
-        if (this.lastVehicleShowroom) {
-            this.resourceLoader.unloadModel(vehicle.hash);
-
-            return;
-        }
-
         const vehicleEntity = CreateVehicle(
             vehicle.hash,
             dealership.showroom.position[0],
@@ -330,6 +328,7 @@ export class VehicleDealershipProvider {
         SetVehicleNumberPlateText(vehicleEntity, 'SOZ');
 
         this.lastVehicleShowroom = vehicleEntity;
+        this.resourceLoader.unloadModel(vehicle.hash);
     }
 
     @OnNuiEvent<{ vehicle: Vehicle; dealershipId: string; dealership: DealershipConfigItem }>(
