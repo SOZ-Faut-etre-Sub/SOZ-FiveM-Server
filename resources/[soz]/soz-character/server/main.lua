@@ -40,6 +40,7 @@ RegisterNetEvent("soz-character:server:SetPlayerClothes", function(clothes)
     end
 
     clothConfig["TemporaryClothSet"] = nil
+    clothConfig.Config["Naked"] = false
 
     Player.Functions.SetClothConfig(clothConfig, false)
 end)
