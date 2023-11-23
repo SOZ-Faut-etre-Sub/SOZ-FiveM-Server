@@ -764,6 +764,8 @@ export class PropPlacementProvider {
             false
         );
 
+        this.resourceLoader.unloadModel(prop.model);
+
         SetEntityHeading(entity, prop.position[3]);
 
         if (prop.matrix) {

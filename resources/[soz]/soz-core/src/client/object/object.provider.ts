@@ -229,9 +229,13 @@ export class ObjectProvider {
 
             if (!DoesEntityExist(entity)) {
                 console.log('Failed to create prop even after retry', object.id);
+                this.resourceLoader.unloadModel(model);
+
                 return;
             }
         }
+
+        this.resourceLoader.unloadModel(model);
 
         SetEntityHeading(entity, object.position[3]);
 
@@ -258,8 +262,6 @@ export class ObjectProvider {
             entity,
             object,
         };
-
-        this.resourceLoader.unloadModel(model);
 
         await wait(0);
     }

@@ -190,6 +190,8 @@ export class PedFactory {
             ped.isScriptHostPed || false
         );
 
+        this.resourceLoader.unloadModel(hash);
+
         // if (ped.isRandomClothes) {
         //     SetPedRandomComponentVariation(pedId, 0);
         // } else {
@@ -303,6 +305,8 @@ export class PedFactory {
                     false,
                     false
                 );
+
+                this.resourceLoader.unloadModel(prop.model);
 
                 AttachEntityToEntity(
                     propId,
