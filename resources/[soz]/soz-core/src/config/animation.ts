@@ -9735,6 +9735,46 @@ export const Animations: AnimationConfigList = [
                     },
                 ],
             },
+            {
+                type: 'animation',
+                name: 'Paparazzi',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    enter: {
+                        dictionary: 'amb@world_human_paparazzi@male@enter',
+                        name: 'enter',
+                    },
+                    base: {
+                        dictionary: 'amb@world_human_paparazzi@male@idle_a',
+                        name: 'idle_c',
+                        options: { repeat: true },
+                    },
+                    exit: {
+                        dictionary: 'amb@world_human_paparazzi@male@exit',
+                        name: 'exit',
+                    },
+                    props: [
+                        {
+                            model: 'prop_pap_camera_01',
+                            bone: 28422,
+                            position: [0.0, 0.0, 0.0],
+                            rotation: [0.0, 0.0, 0.0],
+                            fx: {
+                                dictionary: 'core',
+                                name: 'ent_anim_paparazzi_flash',
+                                position: [0.08, -0.08, 0.08],
+                                rotation: [0.0, 0.0, 0.0],
+                                scale: 1.0,
+                                duration: [400, 400, 5766],
+                                manualLoop: true,
+                                delay: 6200,
+                                net: true,
+                            },
+                        },
+                    ],
+                },
+            },
         ],
     },
     {

@@ -3,6 +3,7 @@ import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { Rpc } from '@public/core/decorators/rpc';
+import { Vfx } from '@public/shared/animation';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import {
     DebugProp,
@@ -502,5 +503,12 @@ export class PropsProvider {
         }
 
         TriggerClientEvent(ClientEvent.PLAYER_TELEPORT, source, firstProp.object.position);
+    }
+
+    @OnEvent(ServerEvent.ANIMATION_FX)
+    public onAnimationFx(source: number, objectNetId: number, fx: Vfx, players: number[]) {
+        for (const player of players) {
+            TriggerClientEvent(ClientEvent.ANIMATION_FX, player, objectNetId, fx);
+        }
     }
 }
