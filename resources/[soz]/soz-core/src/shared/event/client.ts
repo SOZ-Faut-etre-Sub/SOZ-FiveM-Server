@@ -295,4 +295,6 @@ export enum ClientEvent {
     VANDALISM_ABORT = 'soz-core:client:vandalism:abort',
     VANDALISM_STEP = 'soz-core:client:vandalism:step',
     VANDALISM_UPDATE_PROP = 'soz-core:client:vandalism:update-prop',
+
+    ANIMATION_FX = 'soz-core:client:animation:fx',
 }

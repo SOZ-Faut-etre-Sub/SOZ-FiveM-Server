@@ -129,7 +129,7 @@ export class FDFTreeProvider {
                                             rotation: [0.0, 0.0, 0.0],
                                             scale: 2.0,
                                             manualLoop: true,
-                                            duration: 5000,
+                                            duration: [5000],
                                         },
                                     },
                                 ],
