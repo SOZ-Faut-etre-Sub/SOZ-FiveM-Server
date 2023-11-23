@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@public/core/decorators/injectable';
+import { Logger } from '@public/core/logger';
 import { wait } from '@public/core/utils';
 import { ServerEvent } from '@public/shared/event';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
@@ -17,6 +18,9 @@ interface RopeState {
 export class RopeService {
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(Logger)
+    private logger: Logger;
 
     private ropeState: RopeState | null = null;
 
@@ -103,7 +107,13 @@ export class RopeService {
             attachPosition[2],
             true
         );
-        ActivatePhysics(this.ropeState.rope);
+        try {
+            ActivatePhysics(this.ropeState.rope);
+        } catch (e) {
+            this.logger.error(`error while trying to create a rope ${e}`);
+            this.deleteRope();
+            return null;
+        }
         this.manageRopePhysics();
         return this.ropeState.rope;
     }
