@@ -414,9 +414,16 @@ export class VehicleDealershipProvider {
         });
 
         if (vehicle) {
-            this.notifier.notify('Un véhicule est trop proche du showroom.', 'error');
+            const isVehicleNetwork = NetworkGetEntityIsNetworked(vehicle);
 
-            return;
+            if (isVehicleNetwork) {
+                this.notifier.notify('Un véhicule est trop proche du showroom.', 'error');
+
+                return;
+            }
+
+            SetEntityAsMissionEntity(vehicle, true, true);
+            DeleteVehicle(vehicle);
         }
 
         this.nuiMenu.openMenu(
