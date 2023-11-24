@@ -50,8 +50,8 @@
         "webpack-dev-server": "^4.9.2"
     },
     "dependencies": {
-        "@citizenfx/client": "^2.0.6378-1",
-        "@citizenfx/server": "^2.0.6378-1",
+        "@citizenfx/client": "^2.0.7114-1",
+        "@citizenfx/server": "^2.0.7114-1",
         "@egoist/router": "^1.2.3",
         "@headlessui/react": "^1.7.14",
         "@heroicons/react": "^1.0.6",

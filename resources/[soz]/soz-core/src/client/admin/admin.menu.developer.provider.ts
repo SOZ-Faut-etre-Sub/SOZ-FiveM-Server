@@ -15,6 +15,7 @@ import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiZoneProvider } from '../nui/nui.zone.provider';
 import { ObjectProvider } from '../object/object.provider';
+import { NoClipProvider } from '../utils/noclip.provider';
 import { VehicleConditionProvider } from '../vehicle/vehicle.condition.provider';
 
 @Provider()
@@ -40,6 +41,9 @@ export class AdminMenuDeveloperProvider {
     @Inject(ObjectProvider)
     private objectProvider: ObjectProvider;
 
+    @Inject(NoClipProvider)
+    private noClipProvider: NoClipProvider;
+
     public showCoordinates = false;
 
     public showMileage = false;
@@ -61,11 +65,11 @@ export class AdminMenuDeveloperProvider {
 
     @OnNuiEvent(NuiEvent.AdminToggleNoClip)
     public async toggleNoClip(): Promise<void> {
-        exports['soz-utils'].ToggleNoClipMode();
+        this.noClipProvider.ToggleNoClipMode();
     }
 
     public isIsNoClipMode(): boolean {
-        return exports['soz-utils'].IsNoClipMode();
+        return this.noClipProvider.IsNoClipMode();
     }
 
     @OnNuiEvent(NuiEvent.AdminToggleShowCoordinates)

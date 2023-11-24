@@ -68,13 +68,13 @@ local function Harvest(identifier, harvest)
         message = "Vous déposez..."
     end
 
-    local success, elapsed = exports["soz-utils"]:Progressbar("soz-upw:progressbar:harvest", message, Config.Harvest.Duration, false, true,
-                                                              {
+    local success = exports["soz-core"]:ProgressSynchrone("soz-upw:progressbar:harvest", message, Config.Harvest.Duration, false, true,
+                                                          {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = true,
-    }, {animDict = "anim@mp_radio@garage@low", anim = "action_a"}, {}, {})
+    }, {animDict = "anim@mp_radio@garage@low", anim = "action_a", flags = 1}, nil, nil)
 
     if success then
         local result = QBCore.Functions.TriggerRpc("soz-upw:server:Harvest", identifier, harvest)

@@ -4,6 +4,7 @@ import { ItemBookProvider } from './item.book.provider';
 import { ItemCameraProvider } from './item.camera.provider';
 import { ItemHalloweenProvider } from './item.halloween.provider';
 import { ItemMicrophoneProvider } from './item.microphone.provider';
+import { ItemParachuteProvider } from './item.parachute.provider';
 import { ItemProvider } from './item.provider';
 
 @Module({
@@ -14,6 +15,7 @@ import { ItemProvider } from './item.provider';
         ItemCameraProvider,
         ItemMicrophoneProvider,
         ItemHalloweenProvider,
+        ItemParachuteProvider,
     ],
 })
 export class ItemModule {}

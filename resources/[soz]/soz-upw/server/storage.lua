@@ -130,7 +130,7 @@ function StartConsumptionLoop()
         consumptionLoopRunning = true
 
         while consumptionLoopRunning do
-            local connectedPlayers = QBCore.Functions.TriggerRpc("smallresources:server:GetCurrentPlayers")[1]
+            local connectedPlayers = #QBCore.Functions.GetPlayers()
             local consumptionThisTick = math.ceil(Config.Consumption.EnergyPerTick * connectedPlayers)
 
             local identifiers = {}
