@@ -7,7 +7,7 @@ end
 
 HasExpiredItems = function()
     for _, item in pairs(PlayerData.items or {}) do
-        if exports["soz-utils"]:ItemIsExpired(item) then
+        if exports["soz-core"]:ItemIsExpired(item) then
             return true
         end
     end

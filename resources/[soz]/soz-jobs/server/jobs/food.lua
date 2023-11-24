@@ -128,7 +128,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:food-craft", function(source, c
             return
         end
         local ingItem = exports["soz-inventory"]:GetItem(source, ingId, nil)
-        if ingItem.amount < count or exports["soz-utils"]:ItemIsExpired(ingItem) then
+        if ingItem.amount < count or exports["soz-core"]:ItemIsExpired(ingItem) then
             cb(false, "invalid_ingredient")
             return
         end

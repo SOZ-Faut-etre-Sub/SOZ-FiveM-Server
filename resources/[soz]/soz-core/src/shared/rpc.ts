@@ -183,6 +183,8 @@ export enum RpcServerEvent {
     FDF_GET_CROP_TO_TRACTOR_HARVEST = 'soz-core:server:fdf:get-crops-to-harvest',
     FDF_CROP_WITH_TRACTOR = 'soz-core:server:fdf:crop-with-tractor',
     FDF_PLOW_STATUS = 'soz-core:server:fdf:get-plow-status',
+
+    CURRENT_PLAYERS = 'soz-core:server:utils:getnbplayers',
 }
 
 export enum RpcClientEvent {

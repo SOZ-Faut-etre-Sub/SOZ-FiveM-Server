@@ -263,7 +263,7 @@ FoodJob.Functions.GetItemCountFromInventory = function(itemName)
     local amount = 0
     for _, item in pairs(PlayerData.items or {}) do
         if item.name == itemName then
-            if not exports["soz-utils"]:ItemIsExpired(item) then
+            if not exports["soz-core"]:ItemIsExpired(item) then
                 amount = amount + item.amount
             end
         end

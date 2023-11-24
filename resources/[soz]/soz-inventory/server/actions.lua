@@ -168,7 +168,7 @@ RegisterServerEvent("inventory:server:ResellItem", function(item, amount, resell
         amount = item.amount
     end
 
-    if item.metadata.expiration ~= nil and exports["soz-utils"]:ItemIsExpired(item) then
+    if item.metadata.expiration ~= nil and exports["soz-core"]:ItemIsExpired(item) then
         TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous ne pouvez pas revendre des produits périmés", "error")
         return
     end
