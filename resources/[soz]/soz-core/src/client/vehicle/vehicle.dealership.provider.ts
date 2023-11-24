@@ -312,6 +312,8 @@ export class VehicleDealershipProvider {
         }
 
         if (this.lastVehicleShowroom) {
+            this.resourceLoader.unloadModel(vehicle.hash);
+
             return;
         }
 
