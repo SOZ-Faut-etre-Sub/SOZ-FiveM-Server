@@ -311,6 +311,10 @@ export class VehicleDealershipProvider {
             return;
         }
 
+        if (this.lastVehicleShowroom) {
+            return;
+        }
+
         const vehicleEntity = CreateVehicle(
             vehicle.hash,
             dealership.showroom.position[0],
