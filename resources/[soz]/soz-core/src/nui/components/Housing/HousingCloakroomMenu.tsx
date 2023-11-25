@@ -64,7 +64,7 @@ export const HousingCloakroomMenu: FunctionComponent<HousingCloakroomMenuProps> 
                             >
                                 <MenuItemSelectOption value="apply">Se changer</MenuItemSelectOption>
                                 <MenuItemSelectOption value="rename">Renommer</MenuItemSelectOption>
-                                <MenuItemSelectOption value="delete">Supprimmer</MenuItemSelectOption>
+                                <MenuItemSelectOption value="delete">Supprimer</MenuItemSelectOption>
                             </MenuItemSelect>
                         );
                     })}
