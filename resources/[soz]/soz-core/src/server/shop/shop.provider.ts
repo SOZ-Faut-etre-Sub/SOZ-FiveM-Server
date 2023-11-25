@@ -334,6 +334,7 @@ export class ShopProvider {
         // Update player cloth config through playerService
         this.playerService.updateClothConfig(source, 'BaseClothSet', clothConfig.BaseClothSet, false);
         this.playerService.updateClothConfig(source, 'Config', clothConfig.Config, false);
+        this.playerService.updateClothConfig(source, 'NakedClothSet', clothConfig.NakedClothSet, false);
 
         // Update player stocks
         TriggerClientEvent(ClientEvent.SHOP_UPDATE_STOCKS, source, brand);
