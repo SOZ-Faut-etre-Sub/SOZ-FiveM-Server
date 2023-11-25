@@ -276,6 +276,26 @@ export class BennysVehicleProvider {
     }
 
     public async upgradeVehicle(vehicleEntityId: number) {
+        const vehicleCondition = await this.vehicleStateService.getVehicleCondition(vehicleEntityId);
+
+        if (this.vehicleService.isInBadCondition(vehicleEntityId, vehicleCondition)) {
+            this.notifier.notify(
+                'Ce véhicule est trop endommagé pour être modifié, veuillez le réparer avant de le modifier.',
+                'error'
+            );
+
+            return;
+        }
+
+        if (vehicleCondition.dirtLevel > 0.5) {
+            this.notifier.notify(
+                'Ce véhicule est trop sale pour être modifié, veuillez le laver avant de le modifier.',
+                'error'
+            );
+
+            return;
+        }
+
         const options = this.vehicleModificationService.createOptions(vehicleEntityId);
         const vehicleConfiguration = await this.vehicleService.getVehicleConfiguration(vehicleEntityId);
 
@@ -418,7 +438,8 @@ export class BennysVehicleProvider {
 
         const condition = await this.vehicleStateService.getVehicleCondition(vehicle);
         const model = GetEntityModel(vehicle);
-        const doorExist = [];
+        const doorExist = this.vehicleService.getDoorExists(vehicle, condition);
+        const windowExist = this.vehicleService.getWindowExists(vehicle);
 
         let tabletType: 'car' | 'electric' | 'trailer' = 'car';
 
@@ -427,23 +448,6 @@ export class BennysVehicleProvider {
         }
         if (isVehicleModelTrailer(model)) {
             tabletType = 'trailer';
-        }
-
-        const windowExist = [
-            GetEntityBoneIndexByName(vehicle, 'window_lf') !== -1,
-            GetEntityBoneIndexByName(vehicle, 'window_rf') !== -1,
-            GetEntityBoneIndexByName(vehicle, 'window_lr') !== -1,
-            GetEntityBoneIndexByName(vehicle, 'window_rr') !== -1,
-            GetEntityBoneIndexByName(vehicle, 'window_lm') !== -1,
-            GetEntityBoneIndexByName(vehicle, 'window_rm') !== -1,
-            GetEntityBoneIndexByName(vehicle, 'windscreen') !== -1,
-            GetEntityBoneIndexByName(vehicle, 'windscreen_r') !== -1,
-        ];
-
-        for (const index of Object.keys(condition.doorStatus)) {
-            if (GetIsDoorValid(vehicle, parseInt(index))) {
-                doorExist.push(index);
-            }
         }
 
         this.nuiDispatch.dispatch('repair', 'open', {
