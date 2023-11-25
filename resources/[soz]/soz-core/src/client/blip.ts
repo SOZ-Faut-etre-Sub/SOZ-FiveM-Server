@@ -133,7 +133,7 @@ export class BlipFactory {
         }
 
         if (blip.heading !== undefined) {
-            SetBlipRotation(gameId, blip.heading);
+            SetBlipRotation(gameId, Math.ceil(blip.heading));
         }
 
         if (blip.showHeading !== undefined) {
