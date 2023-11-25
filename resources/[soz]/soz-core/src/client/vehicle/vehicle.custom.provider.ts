@@ -22,6 +22,7 @@ import { NuiMenu } from '../nui/nui.menu';
 import { VehicleRepository } from '../repository/vehicle.repository';
 import { VehicleModificationService } from './vehicle.modification.service';
 import { VehicleService } from './vehicle.service';
+import { VehicleStateService } from './vehicle.state.service';
 
 @Provider()
 export class VehicleCustomProvider {
@@ -39,6 +40,9 @@ export class VehicleCustomProvider {
 
     @Inject(VehicleModificationService)
     private vehicleModificationService: VehicleModificationService;
+
+    @Inject(VehicleStateService)
+    private vehicleStateService: VehicleStateService;
 
     public isPedInsideCustomZone(): boolean {
         const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
@@ -160,6 +164,26 @@ export class VehicleCustomProvider {
         if (!vehicle || !vehicle.price) {
             this.notifier.notify(
                 "Ce véhicule n'est pas enregistré auprès des autorités et ne peut donc pas être modifié, veuillez prendre contact avec les autorités.",
+                'error'
+            );
+
+            return;
+        }
+
+        const vehicleCondition = await this.vehicleStateService.getVehicleCondition(vehicleEntityId);
+
+        if (this.vehicleService.isInBadCondition(vehicleEntityId, vehicleCondition)) {
+            this.notifier.notify(
+                'Ce véhicule est trop endommagé pour être modifié, veuillez le réparer avant de le modifier.',
+                'error'
+            );
+
+            return;
+        }
+
+        if (vehicleCondition.dirtLevel > 0.5) {
+            this.notifier.notify(
+                'Ce véhicule est trop sale pour être modifié, veuillez le laver avant de le modifier.',
                 'error'
             );
 
