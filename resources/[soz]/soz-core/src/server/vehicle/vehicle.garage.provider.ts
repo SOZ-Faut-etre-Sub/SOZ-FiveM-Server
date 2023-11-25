@@ -119,7 +119,7 @@ export class VehicleGarageProvider {
             UPDATE player_vehicles SET garage = 'stonk' WHERE garage = 'cash-transfer';
             UPDATE player_vehicles SET garage = 'pound' WHERE state = 2 AND garage != 'pound';
 
-            UPDATE vehicles v SET v.stock = v.maxStock - (SELECT COUNT(1) FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5);
+            UPDATE vehicles v SET v.stock = v.maxStock - (SELECT COUNT(1) FROM player_vehicles pv WHERE pv.vehicle = v.model AND pv.state != 5 AND pv.citizenid IS NOT NULL);
             UPDATE vehicles v SET v.stock = 0 WHERE v.stock < 0;
         `
             .split(';')
