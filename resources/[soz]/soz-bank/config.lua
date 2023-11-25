@@ -23,7 +23,7 @@ Config.ErrorMessage = {
 }
 
 Config.FarmAccountMoney = {
-    ["bank_refill"] = {money = 10000000, marked_money = 0},
+    ["bank_refill"] = {money = 100000000, marked_money = 0},
     ["bennys_reseller"] = {money = 100000000, marked_money = 0},
     ["farm_bennys"] = {money = 300000, marked_money = 0},
     ["farm_news"] = {money = 300000, marked_money = 0},
