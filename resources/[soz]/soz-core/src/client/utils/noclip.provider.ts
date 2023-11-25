@@ -65,14 +65,15 @@ export class NoClipProvider {
             Timestep() * breakSpeed
         );
 
-        SetEntityCoordsNoOffset(
+        SetEntityCoords(
             this.noClippingEntity,
             c[0] + this.previousVelocity[0],
             c[1] + this.previousVelocity[1],
-            c[2] + this.previousVelocity[2],
+            c[2] + this.previousVelocity[2] - 1,
             true,
             true,
-            true
+            true,
+            false
         );
     }
 
@@ -150,10 +151,12 @@ export class NoClipProvider {
     }
 
     public ToggleNoClipMode() {
+        //return exports['soz-core'].isNoClipping();
         return this.SetNoClip(!this.isNoClipping);
     }
 
     public IsNoClipMode() {
+        //return exports['soz-core'].IsNoClipMode();
         return this.isNoClipping;
     }
 
