@@ -294,6 +294,67 @@ export class VehicleService {
         return true;
     }
 
+    public getWindowExists(vehicle: number): boolean[] {
+        return [
+            GetEntityBoneIndexByName(vehicle, 'window_lf') !== -1,
+            GetEntityBoneIndexByName(vehicle, 'window_rf') !== -1,
+            GetEntityBoneIndexByName(vehicle, 'window_lr') !== -1,
+            GetEntityBoneIndexByName(vehicle, 'window_rr') !== -1,
+            GetEntityBoneIndexByName(vehicle, 'window_lm') !== -1,
+            GetEntityBoneIndexByName(vehicle, 'window_rm') !== -1,
+            GetEntityBoneIndexByName(vehicle, 'windscreen') !== -1,
+            GetEntityBoneIndexByName(vehicle, 'windscreen_r') !== -1,
+        ];
+    }
+
+    public getDoorExists(vehicle: number, condition: VehicleCondition): number[] {
+        const doorExist = [];
+
+        for (const index of Object.keys(condition.doorStatus)) {
+            if (GetIsDoorValid(vehicle, parseInt(index))) {
+                doorExist.push(index);
+            }
+        }
+
+        return doorExist;
+    }
+
+    public isInBadCondition(vehicle: number, condition: VehicleCondition): boolean {
+        if (condition.bodyHealth < 980) {
+            return true;
+        }
+
+        if (condition.tankHealth < 980) {
+            return true;
+        }
+
+        if (condition.engineHealth < 980) {
+            return true;
+        }
+
+        const doorExists = this.getDoorExists(vehicle, condition);
+
+        for (const doorStatus of Object.keys(condition.doorStatus)) {
+            const doorIndex = parseInt(doorStatus);
+
+            if (doorExists.includes(doorIndex) && condition.doorStatus[doorStatus]) {
+                return true;
+            }
+        }
+
+        const windowExists = this.getWindowExists(vehicle);
+
+        for (const windowsStatus of Object.keys(condition.windowStatus)) {
+            const windowIndex = parseInt(windowsStatus);
+
+            if (windowExists[windowIndex] && condition.windowStatus[windowsStatus]) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public async getVehicleConfiguration(vehicleEntityId: number): Promise<VehicleConfiguration> {
         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
         const configuration = await emitRpc<VehicleConfiguration>(
