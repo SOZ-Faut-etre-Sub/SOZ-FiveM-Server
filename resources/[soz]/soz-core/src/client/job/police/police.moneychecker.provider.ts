@@ -132,6 +132,6 @@ export class PoliceMoneyCheckerProvider {
         if (!completed) {
             return;
         }
-        TriggerServerEvent(ServerEvent.POLICE_CONFISCATE_MONEY, target);
+        TriggerServerEvent(ServerEvent.POLICE_CONFISCATE_MONEY, GetPlayerServerId(target));
     }
 }
