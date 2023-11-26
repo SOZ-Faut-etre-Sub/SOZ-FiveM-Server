@@ -25,9 +25,9 @@ export class PlayerCleanService {
         }
 
         const deletedPlayersToClean = (await this.prismaService.$queryRawUnsafe(
-            `SELECT p.citizenId 
-             FROM soz_fivem.player p 
-                LEFT JOIN soz_api.account_identities ai ON p.license = ai.identityId AND ai.identityType = 'STEAM' 
+            `SELECT p.citizenId
+             FROM soz_fivem.player p
+                LEFT JOIN soz_api.account_identities ai ON p.license = ai.identityId AND ai.identityType = 'STEAM'
                 INNER JOIN soz_fivem.housing_apartment h ON h.owner = p.citizenId
              WHERE ai.identityType IS NULL AND p.is_default = 0`
         )) as { citizenId: string }[];
@@ -80,7 +80,7 @@ export class PlayerCleanService {
         await this.prismaService.playerVehicle.updateMany({
             where: {
                 garage: {
-                    in: housingOwnerIdentifiers.map(h => 'property_' + h.identifier),
+                    in: housingOwnerIdentifiers.map(h => 'apartment_' + h.identifier),
                 },
             },
             data: {

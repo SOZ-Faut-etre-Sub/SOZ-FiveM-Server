@@ -141,11 +141,11 @@ export const canPlayerRemoveRoommate = (property: Property, citizenId: string) =
 export const getResellPrice = (apartment: Apartment, property: Property) => {
     let price = apartment.price / 2;
 
-    if (isTrailer(property)) {
+    if (isTrailer(property) && apartment.hasParkingPlace) {
         price += price / 2;
     }
 
-    for (let i = 0; i < apartment.tier; i++) {
+    for (let i = 0; i < apartment.tier + 1; i++) {
         const tierPrice = (apartment.price * UPGRADE_TIER_PERCENT[i]) / 100;
         price += tierPrice / 2;
     }
