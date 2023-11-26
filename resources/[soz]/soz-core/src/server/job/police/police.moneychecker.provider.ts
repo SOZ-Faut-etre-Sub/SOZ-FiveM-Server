@@ -28,18 +28,19 @@ export class PoliceMoneyCheckerProvider {
         if (player && target && player != target) {
             if (jobAllowed.includes(player.job.id)) {
                 const markedAmount = target.money.marked_money;
+                console.log(markedAmount);
                 if (markedAmount > 0) {
-                    this.playerMoneyService.remove(source, markedAmount, 'marked_money');
+                    this.playerMoneyService.remove(targetId, markedAmount, 'marked_money');
                     this.bankService.addMoney('safe_' + player.job.id, markedAmount, 'marked_money', true);
                     TriggerClientEvent(
                         ClientEvent.NOTIFICATION_DRAW,
                         player.source,
-                        `Vous avez confisqué ~g~$${markedAmount}~s~ à ${target.name}`
+                        `Vous avez confisqué ~g~$${markedAmount}~s~ à ${target.charinfo.firstname} ${target.charinfo.lastname}`
                     );
                     TriggerClientEvent(
                         ClientEvent.NOTIFICATION_DRAW,
                         target.source,
-                        `~r~$${markedAmount}~s~ vous ont été confisqué par ${player.name}`
+                        `~r~$${markedAmount}~s~ vous ont été confisqué par ${target.charinfo.firstname} ${target.charinfo.lastname}`
                     );
                 } else {
                     TriggerClientEvent(
