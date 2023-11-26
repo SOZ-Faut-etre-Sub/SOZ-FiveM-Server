@@ -342,16 +342,6 @@ export class VehicleService {
             }
         }
 
-        const windowExists = this.getWindowExists(vehicle);
-
-        for (const windowsStatus of Object.keys(condition.windowStatus)) {
-            const windowIndex = parseInt(windowsStatus);
-
-            if (windowExists[windowIndex] && condition.windowStatus[windowsStatus]) {
-                return true;
-            }
-        }
-
         return false;
     }
 
