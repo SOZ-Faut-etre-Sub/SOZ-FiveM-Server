@@ -29,6 +29,7 @@ export class VehicleRadarProvider {
     private raceProvider: RaceProvider;
 
     private globalDisableTime = 0;
+    private ready = false;
 
     @Once(OnceStep.Start)
     async onStart() {
@@ -78,7 +79,11 @@ export class VehicleRadarProvider {
             }
         }
 
-        TriggerEvent(ClientEvent.VEHICLE_RADAR_ENDINIT);
+        this.ready = true;
+    }
+
+    public isReady() {
+        return this.ready;
     }
 
     @OnEvent(ClientEvent.VEHICLE_RADAR_FLASHED)

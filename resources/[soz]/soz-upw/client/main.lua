@@ -1,5 +1,6 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 PlayerData = QBCore.Functions.GetPlayerData()
+upwReady = false
 
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     PlayerData = QBCore.Functions.GetPlayerData()
@@ -150,7 +151,7 @@ Citizen.CreateThread(function()
         QBCore.Functions.HideBlip("job_upw_resell", true)
     end
 
-    TriggerEvent("upw:init:end")
+    upwReady = true
 end)
 
 function CreateZone(identifier, zoneType, data)
@@ -188,3 +189,7 @@ end
 function OnDutyUpwOrJob(job)
     return (PlayerData.job.id == job or PlayerData.job.id == "upw") and PlayerData.job.onduty
 end
+
+exports("IsReady", function()
+    return upwReady
+end)
