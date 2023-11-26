@@ -287,7 +287,7 @@ export class BennysVehicleProvider {
             return;
         }
 
-        if (vehicleCondition.dirtLevel > 0.5) {
+        if (vehicleCondition.dirtLevel > 5.0) {
             this.notifier.notify(
                 'Ce véhicule est trop sale pour être modifié, veuillez le laver avant de le modifier.',
                 'error'
