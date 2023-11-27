@@ -82,6 +82,7 @@ export class VehicleFuelProvider {
 
     private publicOilStationPrice = 0;
     private publicKeroseneStationPrice = 0;
+    private ready = false;
 
     @Once(OnceStep.RepositoriesLoaded)
     public async onRepositoryLoaded() {
@@ -115,7 +116,7 @@ export class VehicleFuelProvider {
                 station.objectId = await this.objectProvider.createObject({
                     model: station.model,
                     position: station.position,
-                    id: `fuel_station_${station.name}`,
+                    id: 'fuel_station_' + station.id,
                 });
             }
         }
@@ -382,6 +383,12 @@ export class VehicleFuelProvider {
                 },
             },
         ]);
+
+        this.ready = true;
+    }
+
+    public isReady() {
+        return this.ready;
     }
 
     private async fillVehicle(vehicle: number) {
