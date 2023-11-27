@@ -45,6 +45,7 @@ export class ObjectProvider {
     private currentChunks: number[] = [];
 
     private disabled = false;
+    private ready = false;
 
     public getLoadedObjectsCount(): number {
         return Object.keys(this.loadedObjects).length;
@@ -79,6 +80,11 @@ export class ObjectProvider {
         for (const object of objects) {
             await this.createObject(object);
         }
+        this.ready = true;
+    }
+
+    public isReady() {
+        return this.ready;
     }
 
     @OnEvent(ClientEvent.OBJECT_CREATE)
