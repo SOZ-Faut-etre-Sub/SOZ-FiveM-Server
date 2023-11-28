@@ -581,6 +581,18 @@ export class HousingProvider {
             'success'
         );
 
+        this.monitor.publish(
+            'house_upgrade',
+            {
+                player_source: player.source,
+            },
+            {
+                house_id: apartment.identifier,
+                tier: tier,
+                amount: price,
+            }
+        );
+
         if (apartment.roommate) {
             const roommate = this.playerService.getPlayerByCitizenId(apartment.roommate);
 
