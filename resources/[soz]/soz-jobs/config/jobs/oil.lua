@@ -5,7 +5,7 @@ FuelerConfig.SellPrice = 50
 FuelerConfig.Fields = {
     ["petrol1"] = {
         prodRange = {min = 600, max = 1260},
-        refillDelay = 15000, -- in ms
+        refillDelay = 16000, -- in ms
         item = "petroleum",
         zone = {
             vector3(476.27612304688, 2986.7197265625, 37.55),
@@ -19,7 +19,7 @@ FuelerConfig.Fields = {
     },
     ["petrol2"] = {
         prodRange = {min = 600, max = 1260},
-        refillDelay = 15000, -- in ms
+        refillDelay = 16000, -- in ms
         item = "petroleum",
         zone = {
             vector3(1343.3212890625, -2243.3898925782, 61.48),
