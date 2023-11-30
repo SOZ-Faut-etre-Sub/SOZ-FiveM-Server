@@ -320,15 +320,15 @@ export class VehicleService {
     }
 
     public isInBadCondition(vehicle: number, condition: VehicleCondition): boolean {
-        if (condition.bodyHealth < 980) {
+        if (condition.bodyHealth < 930) {
             return true;
         }
 
-        if (condition.tankHealth < 980) {
+        if (condition.tankHealth < 930) {
             return true;
         }
 
-        if (condition.engineHealth < 980) {
+        if (condition.engineHealth < 930) {
             return true;
         }
 
