@@ -9746,7 +9746,7 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['unique'] = false,
         ['combinable'] = nil,
-        ['description'] = "Appât dégoutânt qui n'attirent même pas un seul poisson...",
+        ['description'] = "Appât dégoutânt qui n'attirerait même pas un seul poisson...",
         ['illustrator'] = '.Moustash'
     },
     ['halloween_devil_bait'] = {
