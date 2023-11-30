@@ -10,7 +10,7 @@ import { Feature, isFeatureEnabled } from '../../shared/features';
 import { JobPermission, JobType } from '../../shared/job';
 import { MenuType } from '../../shared/nui/menu';
 import { BoxZone } from '../../shared/polyzone/box.zone';
-import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
+import { getDistance, toVector3Object, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { Err, Ok } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
 import { Garage, GarageCategory, GarageType, GarageVehicle } from '../../shared/vehicle/garage';
@@ -18,6 +18,7 @@ import { VehicleClass } from '../../shared/vehicle/vehicle';
 import { BlipFactory } from '../blip';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { JobService } from '../job/job.service';
+import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
@@ -27,7 +28,6 @@ import { GarageRepository } from '../repository/garage.repository';
 import { VehicleRepository } from '../repository/vehicle.repository';
 import { TargetFactory } from '../target/target.factory';
 import { VehicleService } from './vehicle.service';
-import { VehicleStateService } from './vehicle.state.service';
 
 type BlipConfig = {
     name: string;
@@ -91,8 +91,8 @@ export class VehicleGarageProvider {
     @Inject(JobService)
     private jobService: JobService;
 
-    @Inject(VehicleStateService)
-    private vehicleStateService: VehicleStateService;
+    @Inject(Monitor)
+    private monitor: Monitor;
 
     private pounds: Record<string, Garage> = {};
 
@@ -429,7 +429,19 @@ export class VehicleGarageProvider {
         }
 
         const networkId = NetworkGetNetworkIdFromEntity(vehicle);
+        const plate = GetVehicleNumberPlateText(vehicle).trim();
 
+        this.monitor.publish(
+            'vehicle_garage_in_client_start',
+            {
+                vehicle_plate: plate,
+            },
+            {
+                garage: id,
+                garage_type: garage.type,
+                position: toVector3Object(GetEntityCoords(PlayerPedId()) as Vector3),
+            }
+        );
         TriggerServerEvent(ServerEvent.VEHICLE_GARAGE_STORE, id, garage, networkId, delai, cost);
     }
 
