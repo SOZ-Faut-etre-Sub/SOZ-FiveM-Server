@@ -9737,6 +9737,18 @@ QBShared.Items = {
         ['description'] = "Cet appat musclé permettra d'aller rapidement au contact des animaux marin, la prise devrait arriver plus rapidement.",
         ['illustrator'] = '.Moustash'
     },
+    ['bin_bait'] = {
+        ['name'] = 'bin_bait',
+        ['label'] = "Attrappe-Poubelle",
+        ['weight'] = 250,
+        ['useable'] = false,
+        ['type'] = 'fishing_bait',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Appât dégoutânt qui n'attirerait même pas un seul poisson...",
+        ['illustrator'] = '.Moustash'
+    },
     ['halloween_devil_bait'] = {
         ['name'] = 'halloween_devil_bait',
         ['label'] = "Appât du Diable",
@@ -9773,7 +9785,8 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['combinable'] = nil,
         ['description'] = "Un coup de polish et elles sont niquel... Non ?",
-        ['illustrator'] = '.Poulpito'
+        ['illustrator'] = '.Poulpito',
+        ['price'] = 5
     },
     ['disgusting_jar'] = {
         ['name'] = 'disgusting_jar',
@@ -9785,7 +9798,8 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['combinable'] = nil,
         ['description'] = "Berk, un écosystème autonome s'est établit sur ce bocal.",
-        ['illustrator'] = '.Moustash'
+        ['illustrator'] = '.Moustash',
+        ['price'] = 5
     },
     ['disgusting_can'] = {
         ['name'] = 'disgusting_can',
@@ -9797,7 +9811,8 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['combinable'] = nil,
         ['description'] = "Miam miam le petit ragoût !",
-        ['illustrator'] = '.Moustash'
+        ['illustrator'] = '.Moustash',
+        ['price'] = 5
     },
     ['old_coffee_cup'] = {
         ['name'] = 'old_coffee_cup',
@@ -9809,7 +9824,8 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['combinable'] = nil,
         ['description'] = "Une représentation parfaite de la vie.",
-        ['illustrator'] = '.Poulpito'
+        ['illustrator'] = '.Poulpito',
+        ['price'] = 5
     },
     ['used_junky_syringue'] = {
         ['name'] = 'used_junky_syringue',
@@ -9821,7 +9837,8 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['combinable'] = nil,
         ['description'] = "Les ravages de VALORANT, encore une personne ayant trop joué.",
-        ['illustrator'] = '.Moustash'
+        ['illustrator'] = '.Moustash',
+        ['price'] = 5
     },
     ['lost_tire'] = {
         ['name'] = 'lost_tire',
@@ -9833,7 +9850,8 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['combinable'] = nil,
         ['description'] = "Il y autant d'habitants vivants sur ce pneu qu'une station orbitale de science-fiction dans l'espace.",
-        ['illustrator'] = '.Poulpito'
+        ['illustrator'] = '.Poulpito',
+        ['price'] = 5
     },
 
     --- BADGES ---
