@@ -4,7 +4,7 @@
     <dlcName>soz_custom</dlcName>
     <fullDlcName>mp_f_freemode_01_soz_custom</fullDlcName>
     <eCharacter>SCR_CHAR_MULTIPLAYER_F</eCharacter>
-    <creatureMetaData>MP_CreatureMetadata_soz_bcso</creatureMetaData>
+    <creatureMetaData>MP_CreatureMetadata_f_soz_custom</creatureMetaData>
     <pedOutfits/>
     <pedComponents/>
     <pedProps/>
