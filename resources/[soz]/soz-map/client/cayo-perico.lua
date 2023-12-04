@@ -353,22 +353,24 @@ CreateThread(function()
         if #(pCoords - islandCoords) < 2000.0 then
             if not islandLoaded then
                 SetDeepOceanScaler(0.0)
-                Citizen.InvokeNative(0xF74B1FFA4A15FBEA, 1) -- island path nodes (from Disquse)
+                SetAiGlobalPathNodesType(1) -- island path nodes (from Disquse)
                 SetScenarioGroupEnabled("Heist_Island_Peds", 1)
                 SetAudioFlag("PlayerOnDLCHeist4Island", 1)
                 SetAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Zones", 1, 1)
                 SetAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Disabled_Zones", 0, 1)
+                exports["ExtraMapTiles"]:deleteTile(1)
                 islandLoaded = true
             end
         else
             if islandLoaded then
                 islandLoaded = false
                 ResetDeepOceanScaler()
-                Citizen.InvokeNative(0xF74B1FFA4A15FBEA, 0)
+                SetAiGlobalPathNodesType(0)
                 SetScenarioGroupEnabled("Heist_Island_Peds", 0)
                 SetAudioFlag("PlayerOnDLCHeist4Island", 0)
                 SetAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Zones", 0, 0)
                 SetAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Disabled_Zones", 1, 0)
+                exports["ExtraMapTiles"]:createTile(1)
             end
         end
 
