@@ -33,7 +33,7 @@ export const MockTwitchNewsMessages: TwitchNewsMessage[] = [
     },
     {
         id: 5,
-        type: 'info-traffic',
+        type: 'info-trafic',
         image: 'https://placekitten.com/1920/1080',
         message: 'Lorem ipsum dolor sit amet, conse ctetur adip iscing elit.',
         createdAt: '2022-01-14T09:58:18.000Z',

@@ -5,7 +5,7 @@ export interface TwitchNewsMessage {
         | 'breaking-news'
         | 'publicité'
         | 'fait-divers'
-        | 'info-traffic'
+        | 'info-trafic'
         | 'lspd'
         | 'lspd:end'
         | 'bcso'
