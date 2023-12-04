@@ -93,6 +93,11 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:harvest", function(source,
     exports["soz-inventory"]:AddItem(source, source, itemId, 1, nil, nil, function(success, reason)
         cb(success, reason)
     end)
+
+    exports["soz-core"]:Event("job_baun_harvest", {player_source = player.PlayerData.source, itemId = itemId}, {
+        position = position,
+        amount = 1,
+    })
 end)
 
 QBCore.Functions.CreateCallback("soz-jobs:server:baun:can-restock", function(source, cb, itemId)
