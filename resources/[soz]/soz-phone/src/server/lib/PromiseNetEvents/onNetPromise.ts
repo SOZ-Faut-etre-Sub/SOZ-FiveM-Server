@@ -27,7 +27,7 @@ export function onNetPromise<T = any, P = any>(eventName: string, cb: CBSignatur
         const promiseResp: PromiseEventResp<P> = (data: ServerPromiseResp<P>) => {
             const endTime = process.hrtime.bigint();
             const totalTime = Number(endTime - startTime) / 1e6;
-            emitNet(respEventName, src, data);
+            TriggerLatentClientEvent(respEventName, src, 64 * 1024, data);
             netEventLogger.silly(`Response Promise Event ${respEventName} (${totalTime}ms), Data >>`);
             netEventLogger.silly(data);
         };

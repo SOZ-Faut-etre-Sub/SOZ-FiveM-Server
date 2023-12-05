@@ -34,8 +34,9 @@ end)
 RegisterNetEvent("voip:server:radio:transmission:start", function(channel, kind)
     local emitter = source
     local coord = GetEntityCoords(GetPlayerPed(emitter))
+    local globalState = exports["soz-core"]:GetGlobalState()
 
-    if GlobalState.blackout_level > 1 then
+    if globalState.blackoutLevel > 1 then
         return
     end
 

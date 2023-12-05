@@ -1,0 +1,107 @@
+.Wrapper {
+    font-family: 'Prompt';
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: grid;
+    gap: 0.5rem;
+    background: rgba(0, 0, 0, .6);
+    padding: .5rem;
+    max-height: 50vh;
+
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    pointer-events: all;
+}
+
+.CartHeader {
+    background: rgba(0, 0, 0, .6);
+    display: flex;
+    flex-direction: row;
+    margin-top: 1rem;
+    justify-content: left;
+    padding: 0.2rem;
+    padding-top: 0.5rem;
+    text-transform: uppercase;
+    border-top-left-radius: .5rem;
+    border-top-right-radius: .5rem;
+}
+
+.CartHeaderIcon {
+    color: white;
+    width: 2rem;
+    margin-inline: 1rem;
+}
+
+.CartHeader p, .CartFooter p {
+    color: white;
+    font-weight: 500;
+    font-size: small;
+    margin-right: 1rem;
+}
+
+.CartFooter {
+    background: rgba(0, 0, 0, .6);
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    padding: 0.2rem;
+    text-transform: uppercase;
+    border-bottom-left-radius: .5rem;
+    border-bottom-right-radius: .5rem;
+
+}
+
+
+.CartButton {
+    pointer-events: all;
+    border-radius: 0.35rem;
+    justify-self: center;
+    align-self: center;
+    height: 2rem;
+    background-color: rgb(18, 128, 18);
+    color: white;
+    border: none;
+    width: 5rem;
+    margin-right: 0.5rem;   
+    font-weight: bold;
+}
+
+.CartButton:hover {
+    background: rgb(46, 150, 46);
+    color: white;
+    cursor: pointer;
+}
+
+.CartButton:disabled {
+    background: rgba(18, 128, 18,0.6);
+    color: white;
+    cursor: default;
+}
+
+.Wrapper > * {
+    width: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 0.25rem;
+    box-sizing: border-box;
+}
+
+.Description {
+    padding: .5rem;
+    color: #fefefe;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    border-radius: .5rem;
+    background: rgba(0, 0, 0, .6);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.Description > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.Description > div small {
+    font-weight: lighter;
+    font-size: 0.7rem;
+}

@@ -2,132 +2,6 @@ FoodConfig = {}
 
 FoodConfig.Blip = {Name = "Château Marius", Icon = 176, Coords = vector2(-1889.54, 2045.27), Scale = 1.0}
 
-FoodConfig.BossShop = {
-    [1] = {name = "weapon_machete", metadata = {}, price = 45, amount = 1},
-    [2] = {name = "weapon_musket", metadata = {}, price = 125, amount = 1},
-    [3] = {name = "shotgun_ammo", metadata = {}, price = 10, amount = 1},
-}
-
-FoodConfig.Cloakroom = {
-    [GetHashKey("mp_m_freemode_01")] = {
-        ["Tenue de Direction"] = {
-            Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                [3] = {Drawable = 6, Texture = 0, Palette = 0},
-                [4] = {Drawable = 24, Texture = 0, Palette = 0},
-                [6] = {Drawable = 104, Texture = 4, Palette = 0},
-                [7] = {Drawable = 117, Texture = 4, Palette = 0},
-                [8] = {Drawable = 31, Texture = 0, Palette = 0},
-                [9] = {Drawable = 0, Texture = 0, Palette = 0},
-                [10] = {Drawable = 0, Texture = 0, Palette = 0},
-                [11] = {Drawable = 29, Texture = 0, Palette = 0},
-            },
-            Props = {},
-        },
-        ["Tenue de travail"] = {
-            Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                [3] = {Drawable = 0, Texture = 0, Palette = 0},
-                [4] = {Drawable = 90, Texture = 0, Palette = 0},
-                [6] = {Drawable = 51, Texture = 0, Palette = 0},
-                [7] = {Drawable = 0, Texture = 0, Palette = 0},
-                [8] = {Drawable = 15, Texture = 0, Palette = 0},
-                [9] = {Drawable = 0, Texture = 0, Palette = 0},
-                [10] = {Drawable = 0, Texture = 0, Palette = 0},
-                [11] = {Drawable = 0, Texture = 2, Palette = 0},
-            },
-            Props = {},
-        },
-        ["Tenue de prestation"] = {
-            Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                [3] = {Drawable = 14, Texture = 0, Palette = 0},
-                [4] = {Drawable = 35, Texture = 0, Palette = 0},
-                [6] = {Drawable = 20, Texture = 3, Palette = 0},
-                [7] = {Drawable = 0, Texture = 0, Palette = 0},
-                [8] = {Drawable = 25, Texture = 3, Palette = 0},
-                [9] = {Drawable = 0, Texture = 0, Palette = 0},
-                [10] = {Drawable = 0, Texture = 0, Palette = 0},
-                [11] = {Drawable = 4, Texture = 0, Palette = 0},
-            },
-            Props = {},
-        },
-        ["Tenue de Chasse"] = {
-            Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                [3] = {Drawable = 12, Texture = 0, Palette = 0},
-                [4] = {Drawable = 86, Texture = 6, Palette = 0},
-                [6] = {Drawable = 63, Texture = 4, Palette = 0},
-                [7] = {Drawable = 0, Texture = 0, Palette = 0},
-                [8] = {Drawable = 0, Texture = 20, Palette = 0},
-                [9] = {Drawable = 0, Texture = 0, Palette = 0},
-                [10] = {Drawable = 0, Texture = 0, Palette = 0},
-                [11] = {Drawable = 220, Texture = 6, Palette = 0},
-            },
-            Props = {},
-        },
-    },
-
-    [GetHashKey("mp_f_freemode_01")] = {
-        ["Tenue de Direction"] = {
-            Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                [3] = {Drawable = 3, Texture = 0, Palette = 0},
-                [4] = {Drawable = 37, Texture = 0, Palette = 0},
-                [6] = {Drawable = 42, Texture = 2, Palette = 0},
-                [7] = {Drawable = 87, Texture = 4, Palette = 0},
-                [8] = {Drawable = 38, Texture = 0, Palette = 0},
-                [9] = {Drawable = 0, Texture = 0, Palette = 0},
-                [10] = {Drawable = 0, Texture = 0, Palette = 0},
-                [11] = {Drawable = 7, Texture = 0, Palette = 0},
-            },
-            Props = {},
-        },
-        ["Tenue de travail"] = {
-            Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                [3] = {Drawable = 0, Texture = 0, Palette = 0},
-                [4] = {Drawable = 93, Texture = 0, Palette = 0},
-                [6] = {Drawable = 52, Texture = 0, Palette = 0},
-                [7] = {Drawable = 0, Texture = 0, Palette = 0},
-                [8] = {Drawable = 1, Texture = 0, Palette = 0},
-                [9] = {Drawable = 0, Texture = 0, Palette = 0},
-                [10] = {Drawable = 0, Texture = 0, Palette = 0},
-                [11] = {Drawable = 73, Texture = 1, Palette = 0},
-            },
-            Props = {},
-        },
-        ["Tenue de prestation"] = {
-            Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                [3] = {Drawable = 3, Texture = 0, Palette = 0},
-                [4] = {Drawable = 34, Texture = 0, Palette = 0},
-                [6] = {Drawable = 29, Texture = 1, Palette = 0},
-                [7] = {Drawable = 0, Texture = 0, Palette = 0},
-                [8] = {Drawable = 40, Texture = 7, Palette = 0},
-                [9] = {Drawable = 0, Texture = 0, Palette = 0},
-                [10] = {Drawable = 0, Texture = 0, Palette = 0},
-                [11] = {Drawable = 7, Texture = 0, Palette = 0},
-            },
-            Props = {},
-        },
-        ["Tenue de Chasse"] = {
-            Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                [3] = {Drawable = 0, Texture = 0, Palette = 0},
-                [4] = {Drawable = 89, Texture = 6, Palette = 0},
-                [6] = {Drawable = 66, Texture = 4, Palette = 0},
-                [7] = {Drawable = 0, Texture = 0, Palette = 0},
-                [8] = {Drawable = 229, Texture = 19, Palette = 0},
-                [9] = {Drawable = 0, Texture = 0, Palette = 0},
-                [10] = {Drawable = 0, Texture = 0, Palette = 0},
-                [11] = {Drawable = 230, Texture = 6, Palette = 0},
-            },
-            Props = {},
-        },
-    },
-}
-
 FoodConfig.Collect = {
     Grape = {
         Duration = 10000, -- in ms
@@ -140,8 +14,8 @@ FoodConfig.Collect = {
 }
 
 FoodConfig.Categories = {
-    ["wine"] = {icon = "https://nui-img/soz-items/wine", label = "Vins"},
-    ["grapejuice"] = {icon = "https://nui-img/soz-items/grapejuice", label = "Jus"},
+    ["wine"] = {icon = "https://cfx-nui-soz-core/public/images/items/wine.webp", label = "Vins"},
+    ["grapejuice"] = {icon = "https://cfx-nui-soz-core/public/images/items/grapejuice.webp", label = "Jus"},
     ["cheese"] = {icon = "🧀", label = "Fromages"},
     ["sausage"] = {icon = "🐖", label = "Saucissons"},
 }
@@ -305,7 +179,8 @@ FoodConfig.Zones = {
     },
 }
 
-FoodConfig.HuntingWeapon = GetHashKey("weapon_machete")
+FoodConfig.HuntingWeapon = {GetHashKey("weapon_machete"), GetHashKey("weapon_knife"), GetHashKey("weapon_switchblade")}
+
 FoodConfig.AnimalAllowedToHunt = {
     [GetHashKey("a_c_boar")] = true,
     [GetHashKey("a_c_chickenhawk")] = true,

@@ -4,6 +4,6 @@ export interface PreDBSettings {
 }
 
 export enum SettingsEvents {
+    GET_AVATAR = 'phone:getAvatar',
     UPDATE_PICTURE = 'phone:updateProfilePicture',
-    SET_AVATAR = 'phone:setAvatar',
 }

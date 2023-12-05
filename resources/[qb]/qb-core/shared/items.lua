@@ -21,7 +21,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Une large dague, semblable à une épée.'
+        ['description'] = 'Une large dague, semblable à une épée.',
+        ['illustrator'] = '.Erthes',
     },
     ['weapon_bat'] = {
         ['name'] = 'weapon_bat',
@@ -31,7 +32,19 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Pour claquer ton plus beau home run !'
+        ['description'] = 'Pour claquer ton plus beau home run !',
+        ['illustrator'] = '.LeakFlood',
+    },
+    ['weapon_pickaxe'] = {
+        ['name'] = 'weapon_pickaxe',
+        ['label'] = 'Pioche',
+        ['weight'] = 1000,
+        ['type'] = 'weapon',
+        ['ammotype'] = nil,
+        ['unique'] = true,
+        ['useable'] = false,
+        ['description'] = 'Piochez ! Piochez !',
+        ['illustrator'] = '.GautSlayer',
     },
     ['weapon_bottle'] = {
         ['name'] = 'weapon_bottle',
@@ -41,7 +54,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Une bouteille brisée'
+        ['description'] = 'Une bouteille brisée',
+        ['illustrator'] = '.LeakFlood',
     },
     ['weapon_crowbar'] = {
         ['name'] = 'weapon_crowbar',
@@ -51,7 +65,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Barre de métal utilisée pour forcer des portes, ou forcer des crânes.'
+        ['description'] = 'Barre de métal utilisée pour forcer des portes, ou forcer des crânes.',
+        ['illustrator'] = '.Smogogo',
     },
     ['weapon_flashlight'] = {
         ['name'] = 'weapon_flashlight',
@@ -61,7 +76,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Pour voir dans le noir !'
+        ['description'] = 'Pour voir dans le noir !',
+        ['illustrator'] = '.MimiBloops',
     },
     ['weapon_golfclub'] = {
         ['name'] = 'weapon_golfclub',
@@ -71,7 +87,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Un club utilisé avant tout pour frapper la balle au golf.'
+        ['description'] = 'Un club utilisé avant tout pour frapper la balle au golf.',
+        ['illustrator'] = '.LeakFlood',
     },
     ['weapon_hammer'] = {
         ['name'] = 'weapon_hammer',
@@ -81,7 +98,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Utilisé pour des travaux tels que casser des choses, planter des clous, ou supporter une équipe eSport...'
+        ['description'] = 'Utilisé pour des travaux tels que casser des choses, planter des clous, ou supporter une équipe eSport...',
+        ['illustrator'] = '.LeakFlood',
     },
     ['weapon_hatchet'] = {
         ['name'] = 'weapon_hatchet',
@@ -91,7 +109,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Une petite hache tenable à une main.'
+        ['description'] = 'Une petite hache tenable à une main.',
+        ['illustrator'] = '.PsyTeK',
     },
     ['weapon_knuckle'] = {
         ['name'] = 'weapon_knuckle',
@@ -101,7 +120,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Un poing en métal.'
+        ['description'] = 'Un poing en métal.',
+        ['illustrator'] = '.LeakFlood',
     },
     ['weapon_knife'] = {
         ['name'] = 'weapon_knife',
@@ -111,7 +131,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Instrument composé d\'une lame fixée dans un manche, utilisé pour couper ou comme arme.'
+        ['description'] = 'Instrument composé d\'une lame fixée dans un manche, utilisé pour couper ou comme arme.',
+        ['illustrator'] = '.Smogogo',
     },
     ['weapon_machete'] = {
         ['name'] = 'weapon_machete',
@@ -121,7 +142,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Un long couteau, lame assez lourde.'
+        ['description'] = 'Un long couteau, lame assez lourde.',
+        ['illustrator'] = '.Sniteur',
     },
     ['weapon_switchblade'] = {
         ['name'] = 'weapon_switchblade',
@@ -131,7 +153,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Un couteau avec une lame rétractable.'
+        ['description'] = 'Un couteau avec une lame rétractable.',
+        ['illustrator'] = '.LuckyG',
     },
     ['weapon_nightstick'] = {
         ['name'] = 'weapon_nightstick',
@@ -141,7 +164,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Arme de prédilection des officiers de police.'
+        ['description'] = 'Arme de prédilection des officiers de police.',
+        ['illustrator'] = '.Omega',
     },
     ['weapon_wrench'] = {
         ['name'] = 'weapon_wrench',
@@ -151,7 +175,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Idéal pour réparer la tuyauterie... ou casser des noix.'
+        ['description'] = 'Idéal pour réparer la tuyauterie... ou casser des noix.',
+        ['illustrator'] = '.LuckyG',
     },
     ['weapon_battleaxe'] = {
         ['name'] = 'weapon_battleaxe',
@@ -161,7 +186,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Hache à une main pour combattre tel un Moyen-Ageux.'
+        ['description'] = 'Hache à une main pour combattre tel un Moyen-Ageux.',
+        ['illustrator'] = '.Smogogo',
     },
     ['weapon_poolcue'] = {
         ['name'] = 'weapon_poolcue',
@@ -171,7 +197,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Utilisée pour jouer au billard, ou taper d\'autres trucs.'
+        ['description'] = 'Utilisée pour jouer au billard, ou taper d\'autres trucs.',
+        ['illustrator'] = '.Hawk',
     },
     ['weapon_briefcase'] = {
         ['name'] = 'weapon_briefcase',
@@ -181,7 +208,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Une mallette pour ranger les documents importants.'
+        ['description'] = 'Une mallette pour ranger les documents importants.',
+        ['illustrator'] = '.Smogogo'
     },
     ['weapon_briefcase_02'] = {
         ['name'] = 'weapon_briefcase_02',
@@ -191,7 +219,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Contient sûrement des infos top secrete.'
+        ['description'] = 'Contient sûrement des infos top secrete.',
+        ['illustrator'] = '.Smogogo',
     },
     ['weapon_garbagebag'] = {
         ['name'] = 'weapon_garbagebag',
@@ -201,7 +230,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Pour jeter tout type d\'ordures.'
+        ['description'] = 'Pour jeter tout type d\'ordures.',
+        ['illustrator'] = '.Adrass'
     },
     ['weapon_handcuffs'] = {
         ['name'] = 'weapon_handcuffs',
@@ -211,7 +241,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Menottes pour prisonniers.'
+        ['description'] = 'Menottes pour prisonniers.',
+        ['illustrator'] = '.Hawk',
     },
     ['weapon_bread'] = {
         ['name'] = 'weapon_bread',
@@ -221,7 +252,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Tu veux du pain ?'
+        ['description'] = 'Tu veux du pain ?',
+        ['illustrator'] = '.Kutz',
     },
     ['weapon_stone_hatchet'] = {
         ['name'] = 'weapon_stone_hatchet',
@@ -231,7 +263,19 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = true,
-        ['description'] = 'Retour à l\'âge de pierre.'
+        ['description'] = 'Retour à l\'âge de pierre.',
+        ['illustrator'] = '.Smogogo',
+    },
+    ['weapon_candycane'] = {
+        ['name'] = 'weapon_candycane',
+        ['label'] = 'Canne à sucre',
+        ['weight'] = 500,
+        ['type'] = 'weapon',
+        ['ammotype'] = nil,
+        ['unique'] = true,
+        ['useable'] = true,
+        ['description'] = 'La magie de Noel.',
+        ['illustrator'] = '.NariieL'
     },
 
     -- Handguns
@@ -243,7 +287,8 @@ QBShared.Items = {
         ['ammotype'] = 'AMMO_PISTOL',
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Un pistolet très maniable, parfait pour assurer sa sécurité.'
+        ['description'] = 'Un pistolet très maniable, parfait pour assurer sa sécurité.',
+        ['illustrator'] = '.Sniteur',
     },
     ['weapon_pistol_mk2'] = {
         ['name'] = 'weapon_pistol_mk2',
@@ -253,7 +298,8 @@ QBShared.Items = {
         ['ammotype'] = 'AMMO_PISTOL',
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Une version amélioré du classique pistolet.'
+        ['description'] = 'Une version amélioré du classique pistolet.',
+        ['illustrator'] = '.Sniteur',
     },
     ['weapon_combatpistol'] = {
         ['name'] = 'weapon_combatpistol',
@@ -283,7 +329,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Arme électrique de corps à corps, causant une paralysie.'
+        ['description'] = 'Arme électrique de corps à corps, causant une paralysie.',
+        ['illustrator'] = '.GautSlayer',
     },
     ['weapon_pistol50'] = {
         ['name'] = 'weapon_pistol50',
@@ -327,13 +374,13 @@ QBShared.Items = {
     },
     ['weapon_flaregun'] = {
         ['name'] = 'weapon_flaregun',
-        ['label'] = 'Pistolet de détresse',
-        ['weight'] = 800,
+        ['label'] = 'Pistolet lance-fusée',
+        ['weight'] = 1500,
         ['type'] = 'weapon',
         ['ammotype'] = 'AMMO_FLARE',
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Pour signaler ta position.'
+        ['description'] = 'Moins fatiguant que de lancer à la main.'
     },
     ['weapon_marksmanpistol'] = {
         ['name'] = 'weapon_marksmanpistol',
@@ -363,7 +410,8 @@ QBShared.Items = {
         ['ammotype'] = 'AMMO_PISTOL',
         ['unique'] = true,
         ['useable'] = true,
-        ['description'] = 'Un révolver lourd, lourd dégats.'
+        ['description'] = 'Un révolver lourd, lourd dégats.',
+        ['illustrator'] = '.Sniteur',
     },
     ['weapon_doubleaction'] = {
         ['name'] = 'weapon_doubleaction',
@@ -425,6 +473,27 @@ QBShared.Items = {
         ['useable'] = true,
         ['description'] = 'Arme Pistolet considérée par certains comme étant un gadget'
     },
+    ['weapon_stungun_mp'] = {
+        ['name'] = 'weapon_stungun_mp',
+        ['label'] = 'Taser 2',
+        ['weight'] = 500,
+        ['type'] = 'weapon',
+        ['ammotype'] = nil,
+        ['unique'] = true,
+        ['useable'] = false,
+        ['description'] = 'Arme électrique de corps à corps, causant une paralysie.'
+    },
+    ['weapon_pistolxm3'] = {
+        ['name'] = 'weapon_pistolxm3',
+        ['label'] = 'Pistolet WM 29',
+        ['weight'] = 1500,
+        ['type'] = 'weapon',
+        ['ammotype'] = 'AMMO_PISTOL',
+        ['unique'] = true,
+        ['useable'] = true,
+        ['description'] = 'Un petit pistolet mais efficace.',
+        ['illustrator'] = '.NariieL'
+    },
 
     -- Submachine Guns
     ['weapon_microsmg'] = {
@@ -459,13 +528,14 @@ QBShared.Items = {
     },
     ['weapon_assaultsmg'] = {
         ['name'] = 'weapon_assaultsmg',
-        ['label'] = 'Mitraillette d\'assaut',
-        ['weight'] = 4200,
+        ['label'] = 'P90 GEN2',
+        ['weight'] = 2400,
         ['type'] = 'weapon',
         ['ammotype'] = 'AMMO_SMG',
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Une version plus lourde de la mitrailette.'
+        ['description'] = 'Une version modifié et améliorée de la célèbre P90, idéale pour vider un chargeur en une respiration.',
+        ['illustrator'] = '.Sniteur'
     },
     ['weapon_combatpdw'] = {
         ['name'] = 'weapon_combatpdw',
@@ -480,12 +550,12 @@ QBShared.Items = {
     ['weapon_machinepistol'] = {
         ['name'] = 'weapon_machinepistol',
         ['label'] = 'Tec-9',
-        ['weight'] = 1200,
+        ['weight'] = 2000,
         ['type'] = 'weapon',
         ['ammotype'] = 'AMMO_PISTOL',
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Un pistolet à chargement automatique capable de tirer en rafale ou en mode entièrement automatique.'
+        ['description'] = 'Le summum de la technologie.'
     },
     ['weapon_minismg'] = {
         ['name'] = 'weapon_minismg',
@@ -507,27 +577,38 @@ QBShared.Items = {
         ['useable'] = true,
         ['description'] = 'Adapté pour dégommer tout ce qui passe à votre portée.'
     },
+    ['weapon_tecpistol'] = {
+        ['name'] = 'weapon_tecpistol',
+        ['label'] = 'Mitraillette Tactique',
+        ['weight'] = 1500,
+        ['type'] = 'weapon',
+        ['ammotype'] = 'AMMO_SMG',
+        ['unique'] = true,
+        ['useable'] = true,
+        ['description'] = "La puissance de feu d'une mitraillette avec la taille d'un pistolet.",
+        ['illustrator'] = '.NariieL'
+    },
 
     -- Shotguns
     ['weapon_pumpshotgun'] = {
         ['name'] = 'weapon_pumpshotgun',
-        ['label'] = 'Fusil à pompe',
-        ['weight'] = 2500,
+        ['label'] = 'Remington 870 Non lethal',
+        ['weight'] = 2300,
         ['type'] = 'weapon',
         ['ammotype'] = 'AMMO_SHOTGUN',
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Un fusil à pompe, efficace à courte portée.'
+        ['description'] = "L'arme idéale pour mettre au sol n'importe quel individu sans pour autant l'abattre."
     },
     ['weapon_sawnoffshotgun'] = {
         ['name'] = 'weapon_sawnoffshotgun',
         ['label'] = 'Fusil à canon scié',
-        ['weight'] = 1800,
+        ['weight'] = 3000,
         ['type'] = 'weapon',
         ['ammotype'] = 'AMMO_SHOTGUN',
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Un fusil à pompe avec canon racourci, pour de la courte distance.'
+        ['description'] = 'Un bon coup de 12 ca fait pas de mal.'
     },
     ['weapon_assaultshotgun'] = {
         ['name'] = 'weapon_assaultshotgun',
@@ -557,7 +638,8 @@ QBShared.Items = {
         ['ammotype'] = 'AMMO_SHOTGUN',
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Fusil léger d\'époque, idéal à moyenne distance.'
+        ['description'] = 'Fusil léger d\'époque, idéal à moyenne distance.',
+        ['illustrator'] = '.Poulpito'
     },
     ['weapon_heavyshotgun'] = {
         ['name'] = 'weapon_heavyshotgun',
@@ -721,6 +803,27 @@ QBShared.Items = {
         ['useable'] = true,
         ['description'] = 'Fusil d\'assaut de qualité militaire.'
     },
+    ['weapon_heavyrifle'] = {
+        ['name'] = 'weapon_heavyrifle',
+        ['label'] = 'Fusil lourd',
+        ['weight'] = 4000,
+        ['type'] = 'weapon',
+        ['ammotype'] = 'AMMO_RIFLE',
+        ['unique'] = true,
+        ['useable'] = true,
+        ['description'] = 'Fusil d\'assaut lourd de qualité.'
+    },
+    ['weapon_tacticalrifle'] = {
+        ['name'] = 'weapon_tacticalrifle',
+        ['label'] = 'Fusil tactique',
+        ['weight'] = 4000,
+        ['type'] = 'weapon',
+        ['ammotype'] = 'AMMO_RIFLE',
+        ['unique'] = true,
+        ['useable'] = true,
+        ['description'] = 'Fusil d\'assaut tactique.',
+        ['illustrator'] = '.NariieL'
+    },
 
     -- Light Machine Guns
     ['weapon_mg'] = {
@@ -825,6 +928,27 @@ QBShared.Items = {
         ['useable'] = true,
         ['description'] = 'Un fusil à lunette.'
     },
+    ['weapon_precisionrifle'] = {
+        ['name'] = 'weapon_precisionrifle',
+        ['label'] = 'Fusil de précision',
+        ['weight'] = 4500,
+        ['type'] = 'weapon',
+        ['ammotype'] = 'AMMO_SNIPER',
+        ['unique'] = true,
+        ['useable'] = true,
+        ['description'] = 'Un fusil à lunette.'
+    },
+    ['weapon_precisionrifle'] = {
+        ['name'] = 'weapon_precisionrifle',
+        ['label'] = 'Fusil de précision',
+        ['weight'] = 4500,
+        ['type'] = 'weapon',
+        ['ammotype'] = 'AMMO_SNIPER',
+        ['unique'] = true,
+        ['useable'] = true,
+        ['description'] = "Un fusil de précision lourd sans lunette",
+        ['illustrator'] = '.NariieL'
+    },
 
     -- Heavy Weapons
     ['weapon_rpg'] = {
@@ -917,6 +1041,25 @@ QBShared.Items = {
         ['useable'] = true,
         ['description'] = 'Un minigun futuriste, tirant des lasers.'
     },
+    ['weapon_emplauncher'] = {
+        ['name'] = 'weapon_emplauncher',
+        ['label'] = 'Lanceur EMP',
+        ['weight'] = 6000,
+        ['type'] = 'weapon',
+        ['ammotype'] = 'AMMO_FLARE',
+        ['unique'] = true,
+        ['useable'] = false,
+        ['description'] = 'Un lance-grenades dans un format très compacté.'
+    },
+    ['weapon_railgunxm3'] = {
+        ['name'] = 'weapon_railgunxm3',
+        ['label'] = 'Railgun',
+        ['weight'] = 6000,
+        ['type'] = 'weapon',
+        ['ammotype'] = 'AMMO_FLARE',
+        ['unique'] = true,
+        ['useable'] = false,
+    },
 
     -- Throwables
     ['weapon_grenade'] = {
@@ -977,7 +1120,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Une boule de neige, à lancer sur tout le monde.'
+        ['description'] = 'Une boule de neige, à lancer sur tout le monde.',
+        ['illustrator'] = '.Kutz',
     },
     ['weapon_pipebomb'] = {
         ['name'] = 'weapon_pipebomb',
@@ -997,21 +1141,23 @@ QBShared.Items = {
         ['ammotype'] = 'AMMO_BALL',
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Lance la à ton pote qui a la batte !'
+        ['description'] = 'Lance la à ton pote qui a la batte !',
+        ['illustrator'] = '.Hawk',
     },
     ['weapon_smokegrenade'] = {
         ['name'] = 'weapon_smokegrenade',
-        ['label'] = 'Fumigène',
-        ['weight'] = 500,
+        ['label'] = 'Grenade fumigène',
+        ['weight'] = 300,
         ['type'] = 'weapon',
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Grenade libérant un épais nuage de fumée.'
+        ['description'] = 'Parfaite pour ne strictement plus rien voir devant nous.',
+        ['illustrator'] = '.Sniteur'
     },
     ['weapon_flare'] = {
         ['name'] = 'weapon_flare',
-        ['label'] = 'Pistolet à fusées',
+        ['label'] = 'Fusée éclairante',
         ['weight'] = 800,
         ['type'] = 'weapon',
         ['ammotype'] = 'AMMO_FLARE',
@@ -1019,7 +1165,16 @@ QBShared.Items = {
         ['useable'] = false,
         ['description'] = 'Petit dispositif pyrotechnique utilisés pour l\'éclairage et la signalisation.'
     },
-
+    ['weapon_acidpackage'] = {
+        ['name'] = 'weapon_acidpackage',
+        ['label'] = "Journal",
+        ['weight'] = 800,
+        ['type'] = 'weapon',
+        ['ammotype'] = nil,
+        ['unique'] = true,
+        ['useable'] = false,
+        ['description'] = 'Chute de News'
+    },
     -- Miscellaneous
     ['weapon_petrolcan'] = {
         ['name'] = 'weapon_petrolcan',
@@ -1029,7 +1184,8 @@ QBShared.Items = {
         ['ammotype'] = 'AMMO_PETROLCAN',
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'De quoi faire le plein de ta caisse !'
+        ['description'] = 'De quoi faire le plein de ta caisse !',
+        ['illustrator'] = '.LeakFlood',
     },
     ['weapon_fireextinguisher'] = {
         ['name'] = 'weapon_fireextinguisher',
@@ -1039,7 +1195,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'De quoi éteindre un feu !'
+        ['description'] = 'De quoi éteindre un feu !',
+        ['illustrator'] = '.TheSeds',
     },
     ['weapon_hazardcan'] = {
         ['name'] = 'weapon_hazardcan',
@@ -1049,7 +1206,8 @@ QBShared.Items = {
         ['ammotype'] = 'AMMO_PETROLCAN',
         ['unique'] = true,
         ['useable'] = true,
-        ['description'] = 'Bidon contenant une substance chimique dangereuse.'
+        ['description'] = 'Bidon contenant une substance chimique dangereuse.',
+        ['illustrator'] = '.Kutz',
     },
 
     -- ITEMS
@@ -1061,7 +1219,7 @@ QBShared.Items = {
         ['weight'] = 500,
         ['type'] = 'weapon_ammo',
         ['unique'] = false,
-        ['useable'] = true,
+        ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = 'Munitions pour pistolets.'
@@ -1072,7 +1230,7 @@ QBShared.Items = {
         ['weight'] = 500,
         ['type'] = 'weapon_ammo',
         ['unique'] = false,
-        ['useable'] = true,
+        ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = 'Munitions pour fusils automatiques.'
@@ -1083,7 +1241,7 @@ QBShared.Items = {
         ['weight'] = 500,
         ['type'] = 'weapon_ammo',
         ['unique'] = false,
-        ['useable'] = true,
+        ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = 'Munitions pour mitraillettes légères.'
@@ -1094,7 +1252,7 @@ QBShared.Items = {
         ['weight'] = 500,
         ['type'] = 'weapon_ammo',
         ['unique'] = false,
-        ['useable'] = true,
+        ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = 'Munitions pour fusils à pompe.'
@@ -1105,7 +1263,7 @@ QBShared.Items = {
         ['weight'] = 500,
         ['type'] = 'weapon_ammo',
         ['unique'] = false,
-        ['useable'] = true,
+        ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = 'Munitions pour mitrailleuses lourdes.'
@@ -1116,10 +1274,202 @@ QBShared.Items = {
         ['weight'] = 500,
         ['type'] = 'weapon_ammo',
         ['unique'] = false,
-        ['useable'] = true,
+        ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = 'Munitions pour fusils de précision.'
+    },
+    ['ammo_01'] = {
+        ['name'] = 'ammo_01',
+        ['label'] = '9x19 AP',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = '',
+        ['illustrator'] = '.Sniteur',
+    },
+    ['ammo_02'] = {
+        ['name'] = 'ammo_02',
+        ['label'] = '.357 Magnum',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = '',
+        ['illustrator'] = '.Sniteur',
+    },
+    ['ammo_03'] = {
+        ['name'] = 'ammo_03',
+        ['label'] = 'Fusée éclairante',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Faites briller votre ennui avec des lumières éblouissantes.',
+    },
+    ['ammo_04'] = {
+        ['name'] = 'ammo_04',
+        ['label'] = '5.7x28 SB193',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Elle est destinée à engager des cibles jusqu'à 200 mètres et à perforer les protections individuelles comme les gilets pare-balles ou les casques. Sa légèreté lui permet de perdre rapidement son énergie lors d'un impact, ce qui limite les risques de surpénétration et les dommages collatéraux qu'ils impliquent.",
+        ['illustrator'] = '.Sniteur'
+    },
+    ['ammo_05'] = {
+        ['name'] = 'ammo_05',
+        ['label'] = '7.62x39 BP',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_06'] = {
+        ['name'] = 'ammo_06',
+        ['label'] = '5.56x45 M995',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_07'] = {
+        ['name'] = 'ammo_07',
+        ['label'] = '7.62x51 M62',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = '',
+        ['illustrator'] = '.Sniteur'
+    },
+    ['ammo_08'] = {
+        ['name'] = 'ammo_08',
+        ['label'] = '12/70 Buckshot',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_09'] = {
+        ['name'] = 'ammo_09',
+        ['label'] = 'Lead Bullet',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = '',
+        ['illustrator'] = '.Crash'
+    },
+    ['ammo_10'] = {
+        ['name'] = 'ammo_10',
+        ['label'] = '12,7x108 BZT-44M',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_11'] = {
+        ['name'] = 'ammo_11',
+        ['label'] = '85mm PG-7',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_12'] = {
+        ['name'] = 'ammo_12',
+        ['label'] = '40x46mm M381',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_13'] = {
+        ['name'] = 'ammo_13',
+        ['label'] = '85mn Artifice',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_14'] = {
+        ['name'] = 'ammo_14',
+        ['label'] = 'Munition Alien',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_15'] = {
+        ['name'] = 'ammo_15',
+        ['label'] = 'AIM-9X',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_16'] = {
+        ['name'] = 'ammo_16',
+        ['label'] = '.50 BMG',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_17'] = {
+        ['name'] = 'ammo_17',
+        ['label'] = "Billes caoutchouc",
+        ['weight'] = 300,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Je ne vous conseille pas de subir un tir à l'aide de cette bille ! Elle laisse une marque à vie sur le corps de l'individu."
     },
 
     -- Card ITEMS
@@ -1156,6 +1506,7 @@ QBShared.Items = {
             ['protein'] = 5,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Abolah',
     },
     ['twerks_candy'] = {
         ['name'] = 'twerks_candy',
@@ -1178,6 +1529,75 @@ QBShared.Items = {
             ['alcohol'] = 0,
         },
     },
+    ['peanuts'] = {
+        ['name'] = 'peanuts',
+        ['label'] = 'Sachet de cacahuètes',
+        ['weight'] = 250,
+        ['type'] = 'food',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Attention à l\'étouffement !',
+        ['durability'] = 7,
+        ['nutrition'] = {
+            ['hunger'] = 4,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 1,
+            ['sugar'] = 2,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        ['illustrator'] = '.Kutz',
+    },
+    ['tapas'] = {
+        ['name'] = 'tapas',
+        ['label'] = 'Plateau de tapas',
+        ['weight'] = 500,
+        ['type'] = 'food',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'A partager !',
+        ['durability'] = 7,
+        ['nutrition'] = {
+            ['hunger'] = 4,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 1,
+            ['sugar'] = 2,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        ['illustrator'] = '.Kutz',
+    },
+    ['olives'] = {
+        ['name'] = 'olives',
+        ['label'] = 'Sachet d\'olives',
+        ['weight'] = 300,
+        ['type'] = 'food',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Attention.. Olive !',
+        ['durability'] = 7,
+        ['nutrition'] = {
+            ['hunger'] = 4,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 1,
+            ['sugar'] = 2,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        ['illustrator'] = '.Kutz',
+    },
     ['snikkel_candy'] = {
         ['name'] = 'snikkel_candy',
         ['label'] = 'Sniteuls',
@@ -1198,6 +1618,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Sniteur',
     },
     ['sandwich'] = {
         ['name'] = 'sandwich',
@@ -1211,7 +1632,7 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Avant tout du pain pour l\'estomac.',
         ['nutrition'] = {
-            ['hunger'] = 6,
+            ['hunger'] = 20,
             ['thirst'] = 0,
             ['stamina'] = 0,
             ['fiber'] = 0,
@@ -1220,6 +1641,71 @@ QBShared.Items = {
             ['protein'] = 1,
             ['alcohol'] = 0,
         },
+        prop = {
+            model = 'prop_sandwich_01',
+            bone = 60309,
+            coords = { x = 0.05, y = -0.01, z = -0.01 },
+            rotation = { x = 30.01, y = 0.0, z = 0.0 },
+        },
+        ['illustrator'] = '.LeakFlood',
+    },
+    ['instantazouille'] = {
+        ['name'] = 'instantazouille',
+        ['label'] = 'Instan\'Ta\'Zouille',
+        ['weight'] = 150,
+        ['type'] = 'food',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['durability'] = 2,
+        ['combinable'] = nil,
+        ['description'] = 'En vérité, il faut bien 7min au micro-onde pour qu\'elles soient mangeables.',
+        ['nutrition'] = {
+            ['hunger'] = 20,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 1,
+            ['protein'] = 1,
+            ['alcohol'] = 0,
+        },
+        prop = {
+            model = 'prop_sandwich_01',
+            bone = 60309,
+            coords = { x = 0.05, y = -0.01, z = -0.01 },
+            rotation = { x = 30.01, y = 0.0, z = 0.0 },
+        },
+        ['illustrator'] = '.Poulpito',
+    },
+    ['mini_zigmac'] = {
+        ['name'] = 'mini_zigmac',
+        ['label'] = 'Mini ZigMac',
+        ['weight'] = 150,
+        ['type'] = 'food',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['durability'] = 2,
+        ['combinable'] = nil,
+        ['description'] = 'Froid au centre et brûlant à l\'extérieur.',
+        ['nutrition'] = {
+            ['hunger'] = 20,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 1,
+            ['protein'] = 1,
+            ['alcohol'] = 0,
+        },
+        prop = {
+            model = 'prop_sandwich_01',
+            bone = 60309,
+            coords = { x = 0.05, y = -0.01, z = -0.01 },
+            rotation = { x = 30.01, y = 0.0, z = 0.0 },
+        },
+        ['illustrator'] = '.Poulpito',
     },
 
     -- Drink ITEMS
@@ -1236,7 +1722,7 @@ QBShared.Items = {
         ['description'] = 'De l\'eau, merci.',
         ['nutrition'] = {
             ['hunger'] = 0,
-            ['thirst'] = 8,
+            ['thirst'] = 20,
             ['stamina'] = 0,
             ['fiber'] = 0,
             ['lipid'] = 0,
@@ -1244,6 +1730,68 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        prop = {
+            model = 'ba_prop_club_water_bottle',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.06 },
+        },
+        ['illustrator'] = '.LeakFlood',
+    },
+    ['zait_fruite'] = {
+        ['name'] = 'zait_fruite',
+        ['label'] = 'Zait Fruité',
+        ['weight'] = 150,
+        ['type'] = 'drink',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['durability'] = 31,
+        ['combinable'] = nil,
+        ['description'] = 'Un genre de lait de fruit, les informations diététique sont écrites dans une autre langue.',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 20,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        prop = {
+            model = 'ba_prop_club_water_bottle',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.06 },
+        },
+        ['illustrator'] = '.Poulpito',
+    },
+    ['zanta_glace_energetique'] = {
+        ['name'] = 'zanta_glace_energetique',
+        ['label'] = 'Zanta Glacé Énergétique',
+        ['weight'] = 150,
+        ['type'] = 'drink',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['durability'] = 31,
+        ['combinable'] = nil,
+        ['description'] = 'Prétend fournir de l\'énergie en un temps record... Mais entre nous, il faut surtout une dose d\'imagination pour y croire !',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 20,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        prop = {
+            model = 'ba_prop_club_water_bottle',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.06 },
+        },
+        ['illustrator'] = '.Poulpito',
     },
     ['coffee'] = {
         ['name'] = 'coffee',
@@ -1256,8 +1804,8 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Grande source de caféine.',
         ['nutrition'] = {
-            ['hunger'] = 5,
-            ['thirst'] = 5,
+            ['hunger'] = 10,
+            ['thirst'] = 10,
             ['stamina'] = 0,
             ['fiber'] = 0,
             ['lipid'] = 0.5,
@@ -1265,10 +1813,16 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        ['prop'] = {
+            model = 'prop_fib_coffee',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = 0.01 },
+        },
+        ['illustrator'] = '.Sniteur',
     },
     ['kurkakola'] = {
         ['name'] = 'kurkakola',
-        ['label'] = 'Cola',
+        ['label'] = 'Zola',
         ['weight'] = 300,
         ['type'] = 'drink',
         ['unique'] = false,
@@ -1277,8 +1831,8 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'De l\'eau, beaucoup de sucre et ça pétille !',
         ['nutrition'] = {
-            ['hunger'] = 0,
-            ['thirst'] = 40,
+            ['hunger'] = 5,
+            ['thirst'] = 15,
             ['stamina'] = 5,
             ['fiber'] = 5,
             ['lipid'] = 0,
@@ -1286,6 +1840,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Smogogo',
     },
 
     -- Alcohol
@@ -1323,7 +1878,7 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Raisin violet au goût légèrement sucré.',
         ['nutrition'] = {
-            ['hunger'] = 2,
+            ['hunger'] = 8,
             ['thirst'] = 0,
             ['stamina'] = 0,
             ['fiber'] = 0.4,
@@ -1332,6 +1887,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Freaks',
     },
     ['grape2'] = {
         ['name'] = 'grape2',
@@ -1345,7 +1901,7 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Raisin blanc, assez sucré.',
         ['nutrition'] = {
-            ['hunger'] = 2,
+            ['hunger'] = 8,
             ['thirst'] = 0,
             ['stamina'] = 0,
             ['fiber'] = 0.4,
@@ -1354,6 +1910,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Volkstat',
     },
     ['grape3'] = {
         ['name'] = 'grape3',
@@ -1367,7 +1924,7 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Raisin vert, sucré, avec une pointe d\'acidité.',
         ['nutrition'] = {
-            ['hunger'] = 2,
+            ['hunger'] = 8,
             ['thirst'] = 0,
             ['stamina'] = 0,
             ['fiber'] = 0.4,
@@ -1376,6 +1933,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Freaks',
     },
     ['grape4'] = {
         ['name'] = 'grape4',
@@ -1389,7 +1947,7 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Raisin jaune avec un léger gout de miel.',
         ['nutrition'] = {
-            ['hunger'] = 2,
+            ['hunger'] = 8,
             ['thirst'] = 0,
             ['stamina'] = 0,
             ['fiber'] = 0.4,
@@ -1398,6 +1956,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Freaks',
     },
     ['wine1'] = {
         ['name'] = 'wine1',
@@ -1420,8 +1979,14 @@ QBShared.Items = {
             ['lipid'] = 0,
             ['sugar'] = 0.5,
             ['protein'] = 0,
-            ['alcohol'] = 14,
+            ['alcohol'] = 28,
         },
+        ['prop'] = {
+            model = 'prop_wine_red',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.18 },
+        },
+        ['illustrator'] = '.Omega',
     },
     ['wine2'] = {
         ['name'] = 'wine2',
@@ -1444,8 +2009,14 @@ QBShared.Items = {
             ['lipid'] = 0,
             ['sugar'] = 0.5,
             ['protein'] = 0,
-            ['alcohol'] = 14,
+            ['alcohol'] = 28,
         },
+        ['prop'] = {
+            model = 'prop_wine_white',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.18 },
+        },
+        ['illustrator'] = '.Wyron',
     },
     ['wine3'] = {
         ['name'] = 'wine3',
@@ -1468,8 +2039,14 @@ QBShared.Items = {
             ['lipid'] = 0,
             ['sugar'] = 0.5,
             ['protein'] = 0,
-            ['alcohol'] = 14,
+            ['alcohol'] = 28,
         },
+        ['prop'] = {
+            model = 'prop_wine_bot_02',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.18 },
+        },
+        ['illustrator'] = '.Wyron',
     },
     ['wine4'] = {
         ['name'] = 'wine4',
@@ -1492,8 +2069,14 @@ QBShared.Items = {
             ['lipid'] = 0,
             ['sugar'] = 0.5,
             ['protein'] = 0,
-            ['alcohol'] = 14,
+            ['alcohol'] = 28,
         },
+        ['prop'] = {
+            model = 'prop_wine_white',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.18 },
+        },
+        ['illustrator'] = '.Wyron',
     },
     ['grapejuice1'] = {
         ['name'] = 'grapejuice1',
@@ -1510,7 +2093,7 @@ QBShared.Items = {
         ['resellZone'] = 'Resell:LSPort:Food',
         ['nutrition'] = {
             ['hunger'] = 0,
-            ['thirst'] = 40,
+            ['thirst'] = 50,
             ['stamina'] = 0,
             ['fiber'] = 0,
             ['lipid'] = 0,
@@ -1518,6 +2101,12 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        prop = {
+            model = 'ba_prop_club_tonic_bottle',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.12 },
+        },
+        ['illustrator'] = '.Omega',
     },
     ['grapejuice2'] = {
         ['name'] = 'grapejuice2',
@@ -1534,7 +2123,7 @@ QBShared.Items = {
         ['resellZone'] = 'Resell:LSPort:Food',
         ['nutrition'] = {
             ['hunger'] = 0,
-            ['thirst'] = 40,
+            ['thirst'] = 50,
             ['stamina'] = 0,
             ['fiber'] = 0,
             ['lipid'] = 0,
@@ -1542,6 +2131,12 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        prop = {
+            model = 'ba_prop_club_tonic_bottle',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.12 },
+        },
+        ['illustrator'] = '.Volkstat',
     },
     ['grapejuice3'] = {
         ['name'] = 'grapejuice3',
@@ -1558,7 +2153,7 @@ QBShared.Items = {
         ['resellZone'] = 'Resell:LSPort:Food',
         ['nutrition'] = {
             ['hunger'] = 0,
-            ['thirst'] = 40,
+            ['thirst'] = 50,
             ['stamina'] = 0,
             ['fiber'] = 0,
             ['lipid'] = 0,
@@ -1566,6 +2161,12 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        prop = {
+            model = 'ba_prop_club_tonic_bottle',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.12 },
+        },
+        ['illustrator'] = '.Volkstat',
     },
     ['grapejuice4'] = {
         ['name'] = 'grapejuice4',
@@ -1582,7 +2183,7 @@ QBShared.Items = {
         ['resellZone'] = 'Resell:LSPort:Food',
         ['nutrition'] = {
             ['hunger'] = 0,
-            ['thirst'] = 40,
+            ['thirst'] = 50,
             ['stamina'] = 0,
             ['fiber'] = 0,
             ['lipid'] = 0,
@@ -1590,6 +2191,12 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        prop = {
+            model = 'ba_prop_club_tonic_bottle',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.12 },
+        },
+        ['illustrator'] = '.Volkstat',
     },
     ['grapejuice5'] = {
         ['name'] = 'grapejuice5',
@@ -1606,7 +2213,7 @@ QBShared.Items = {
         ['resellZone'] = 'Resell:LSPort:Food',
         ['nutrition'] = {
             ['hunger'] = 0,
-            ['thirst'] = 40,
+            ['thirst'] = 50,
             ['stamina'] = 0,
             ['fiber'] = 0,
             ['lipid'] = 0,
@@ -1614,6 +2221,12 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        prop = {
+            model = 'ba_prop_club_tonic_bottle',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.12 },
+        },
+        ['illustrator'] = '.Volkstat',
     },
     ['tripe'] = {
         ['name'] = 'tripe',
@@ -1627,7 +2240,7 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Ragoutant, mais vraiment bon !',
         ['nutrition'] = {
-            ['hunger'] = 40,
+            ['hunger'] = 10,
             ['thirst'] = 0,
             ['stamina'] = 0,
             ['fiber'] = 10,
@@ -1636,6 +2249,7 @@ QBShared.Items = {
             ['protein'] = 20,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Freaks',
     },
     ['peau'] = {
         ['name'] = 'peau',
@@ -1647,7 +2261,8 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['durability'] = 14,
         ['combinable'] = nil,
-        ['description'] = 'Bien grillé s\'il vous plaît !'
+        ['description'] = 'Bien grillé s\'il vous plaît !',
+        ['illustrator'] = '.Smogogo',
     },
     ['os'] = {
         ['name'] = 'os',
@@ -1658,7 +2273,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'A ne pas avaler !'
+        ['description'] = 'A ne pas avaler !',
+        ['illustrator'] = '.Kutz',
     },
     ['viscere'] = {
         ['name'] = 'viscere',
@@ -1670,7 +2286,8 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['durability'] = 14,
         ['combinable'] = nil,
-        ['description'] = 'Un régal si bien assaisonné.'
+        ['description'] = 'Un régal si bien assaisonné.',
+        ['illustrator'] = '.GautSlayer',
     },
     ['viande'] = {
         ['name'] = 'viande',
@@ -1693,6 +2310,7 @@ QBShared.Items = {
             ['protein'] = 30,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Freaks',
     },
     ['langue'] = {
         ['name'] = 'langue',
@@ -1715,6 +2333,7 @@ QBShared.Items = {
             ['protein'] = 30,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Smogogo',
     },
     ['abat'] = {
         ['name'] = 'abat',
@@ -1737,6 +2356,7 @@ QBShared.Items = {
             ['protein'] = 30,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.GautSlayer'
     },
     ['rognon'] = {
         ['name'] = 'rognon',
@@ -1759,6 +2379,7 @@ QBShared.Items = {
             ['protein'] = 30,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Smogogo',
     },
     ['sausage1'] = {
         ['name'] = 'sausage1',
@@ -1774,7 +2395,7 @@ QBShared.Items = {
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
         ['nutrition'] = {
-            ['hunger'] = 15,
+            ['hunger'] = 20,
             ['thirst'] = 0,
             ['stamina'] = 0,
             ['fiber'] = 0,
@@ -1783,6 +2404,12 @@ QBShared.Items = {
             ['protein'] = 1,
             ['alcohol'] = 0,
         },
+        prop = {
+            model = 'soz_prop_food_sausage',
+            bone = 60309,
+            coords = { x = 0.04, y = -0.01, z = -0.01 },
+        },
+        ['illustrator'] = '.Volkstat',
     },
     ['sausage2'] = {
         ['name'] = 'sausage2',
@@ -1798,7 +2425,7 @@ QBShared.Items = {
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
         ['nutrition'] = {
-            ['hunger'] = 15,
+            ['hunger'] = 20,
             ['thirst'] = 0,
             ['stamina'] = 0,
             ['fiber'] = 0,
@@ -1807,6 +2434,12 @@ QBShared.Items = {
             ['protein'] = 1,
             ['alcohol'] = 0,
         },
+        prop = {
+            model = 'soz_prop_food_sausage',
+            bone = 60309,
+            coords = { x = 0.04, y = -0.01, z = -0.01 },
+        },
+        ['illustrator'] = '.Volkstat',
     },
     ['sausage3'] = {
         ['name'] = 'sausage3',
@@ -1822,7 +2455,7 @@ QBShared.Items = {
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
         ['nutrition'] = {
-            ['hunger'] = 15,
+            ['hunger'] = 20,
             ['thirst'] = 0,
             ['stamina'] = 0,
             ['fiber'] = 0,
@@ -1831,6 +2464,12 @@ QBShared.Items = {
             ['protein'] = 1,
             ['alcohol'] = 0,
         },
+        prop = {
+            model = 'soz_prop_food_sausage',
+            bone = 60309,
+            coords = { x = 0.04, y = -0.01, z = -0.01 },
+        },
+        ['illustrator'] = '.Volkstat'
     },
     ['sausage4'] = {
         ['name'] = 'sausage4',
@@ -1846,7 +2485,7 @@ QBShared.Items = {
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
         ['nutrition'] = {
-            ['hunger'] = 15,
+            ['hunger'] = 20,
             ['thirst'] = 0,
             ['stamina'] = 0,
             ['fiber'] = 0,
@@ -1855,6 +2494,12 @@ QBShared.Items = {
             ['protein'] = 1,
             ['alcohol'] = 0,
         },
+        prop = {
+            model = 'soz_prop_food_sausage',
+            bone = 60309,
+            coords = { x = 0.04, y = -0.01, z = -0.01 },
+        },
+        ['illustrator'] = '.Volkstat',
     },
     ['sausage5'] = {
         ['name'] = 'sausage5',
@@ -1870,7 +2515,7 @@ QBShared.Items = {
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
         ['nutrition'] = {
-            ['hunger'] = 15,
+            ['hunger'] = 20,
             ['thirst'] = 0,
             ['stamina'] = 0,
             ['fiber'] = 0,
@@ -1879,12 +2524,18 @@ QBShared.Items = {
             ['protein'] = 1,
             ['alcohol'] = 0,
         },
+        prop = {
+            model = 'soz_prop_food_sausage',
+            bone = 60309,
+            coords = { x = 0.04, y = -0.01, z = -0.01 },
+        },
+        ['illustrator'] = '.Volkstat'
     },
     ['milk'] = {
         ['name'] = 'milk',
         ['label'] = 'Pot de lait entier',
         ['weight'] = 3000,
-        ['type'] = 'food',
+        ['type'] = 'drink',
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = false,
@@ -1893,7 +2544,7 @@ QBShared.Items = {
         ['description'] = 'Avant ou après avoir mis les céréales ?',
         ['nutrition'] = {
             ['hunger'] = 5,
-            ['thirst'] = 10,
+            ['thirst'] = 15,
             ['stamina'] = 0,
             ['fiber'] = 0,
             ['lipid'] = 0.5,
@@ -1901,12 +2552,18 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        prop = {
+            model = 'prop_cs_milk_01',
+            bone = 28422,
+            coords = { x = 0.03, y = -0.01, z = -0.06 },
+        },
+        ['illustrator'] = '.Sniteur',
     },
     ['semi_skimmed_milk'] = {
         ['name'] = 'semi_skimmed_milk',
         ['label'] = 'Pot de lait demi-écrémé',
         ['weight'] = 3000,
-        ['type'] = 'food',
+        ['type'] = 'drink',
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = false,
@@ -1915,7 +2572,7 @@ QBShared.Items = {
         ['description'] = 'Avant ou après avoir mis les céréales ?',
         ['nutrition'] = {
             ['hunger'] = 5,
-            ['thirst'] = 10,
+            ['thirst'] = 15,
             ['stamina'] = 0,
             ['fiber'] = 0,
             ['lipid'] = 0.2,
@@ -1923,12 +2580,18 @@ QBShared.Items = {
             ['protein'] = 1,
             ['alcohol'] = 0,
         },
+        prop = {
+            model = 'prop_cs_milk_01',
+            bone = 28422,
+            coords = { x = 0.03, y = -0.01, z = -0.06 },
+        },
+        ['illustrator'] = '.Sniteur',
     },
     ['skimmed_milk'] = {
         ['name'] = 'skimmed_milk',
         ['label'] = 'Pot de lait écrémé',
         ['weight'] = 3000,
-        ['type'] = 'food',
+        ['type'] = 'drink',
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = false,
@@ -1937,7 +2600,7 @@ QBShared.Items = {
         ['description'] = 'Avant ou après avoir mis les céréales ?',
         ['nutrition'] = {
             ['hunger'] = 5,
-            ['thirst'] = 10,
+            ['thirst'] = 15,
             ['stamina'] = 0,
             ['fiber'] = 0,
             ['lipid'] = 0,
@@ -1945,6 +2608,12 @@ QBShared.Items = {
             ['protein'] = 1,
             ['alcohol'] = 0,
         },
+        prop = {
+            model = 'prop_cs_milk_01',
+            bone = 28422,
+            coords = { x = 0.03, y = -0.01, z = -0.06 },
+        },
+        ['illustrator'] = '.Sniteur',
     },
     ['cheese1'] = {
         ['name'] = 'cheese1',
@@ -1960,7 +2629,7 @@ QBShared.Items = {
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
         ['nutrition'] = {
-            ['hunger'] = 15,
+            ['hunger'] = 20,
             ['thirst'] = 0,
             ['stamina'] = 0,
             ['fiber'] = 0,
@@ -1969,6 +2638,13 @@ QBShared.Items = {
             ['protein'] = 0.5,
             ['alcohol'] = 0,
         },
+        prop = {
+            model = 'soz_prop_food_cheese',
+            bone = 60309,
+            coords = { x = -0.01, y = -0.03, z = -0.01 },
+            rotation = { x = 0.01, y = 330.01, z = 90.01 },
+        },
+        ['illustrator'] = '.Volkstat'
     },
     ['cheese2'] = {
         ['name'] = 'cheese2',
@@ -1984,7 +2660,7 @@ QBShared.Items = {
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
         ['nutrition'] = {
-            ['hunger'] = 15,
+            ['hunger'] = 20,
             ['thirst'] = 0,
             ['stamina'] = 0,
             ['fiber'] = 0,
@@ -1993,6 +2669,13 @@ QBShared.Items = {
             ['protein'] = 0.5,
             ['alcohol'] = 0,
         },
+        prop = {
+            model = 'soz_prop_food_cheese',
+            bone = 60309,
+            coords = { x = -0.01, y = -0.03, z = -0.01 },
+            rotation = { x = 0.01, y = 330.01, z = 90.01 },
+        },
+        ['illustrator'] = '.Freaks'
     },
     ['cheese3'] = {
         ['name'] = 'cheese3',
@@ -2008,7 +2691,7 @@ QBShared.Items = {
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
         ['nutrition'] = {
-            ['hunger'] = 15,
+            ['hunger'] = 20,
             ['thirst'] = 0,
             ['stamina'] = 0,
             ['fiber'] = 0,
@@ -2017,6 +2700,13 @@ QBShared.Items = {
             ['protein'] = 0.5,
             ['alcohol'] = 0,
         },
+        prop = {
+            model = 'soz_prop_food_cheese',
+            bone = 60309,
+            coords = { x = -0.01, y = -0.03, z = -0.01 },
+            rotation = { x = 0.01, y = 330.01, z = 90.01 },
+        },
+        ['illustrator'] = '.Freaks'
     },
     ['cheese4'] = {
         ['name'] = 'cheese4',
@@ -2032,7 +2722,7 @@ QBShared.Items = {
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
         ['nutrition'] = {
-            ['hunger'] = 15,
+            ['hunger'] = 20,
             ['thirst'] = 0,
             ['stamina'] = 0,
             ['fiber'] = 0,
@@ -2041,6 +2731,13 @@ QBShared.Items = {
             ['protein'] = 0.5,
             ['alcohol'] = 0,
         },
+        prop = {
+            model = 'soz_prop_food_cheese',
+            bone = 60309,
+            coords = { x = -0.01, y = -0.03, z = -0.01 },
+            rotation = { x = 0.01, y = 330.01, z = 90.01 },
+        },
+        ['illustrator'] = '.Volkstat'
     },
     ['cheese5'] = {
         ['name'] = 'cheese5',
@@ -2056,7 +2753,7 @@ QBShared.Items = {
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
         ['nutrition'] = {
-            ['hunger'] = 15,
+            ['hunger'] = 20,
             ['thirst'] = 0,
             ['stamina'] = 0,
             ['fiber'] = 0,
@@ -2065,6 +2762,13 @@ QBShared.Items = {
             ['protein'] = 0.5,
             ['alcohol'] = 0,
         },
+        prop = {
+            model = 'soz_prop_food_cheese',
+            bone = 60309,
+            coords = { x = -0.01, y = -0.03, z = -0.01 },
+            rotation = { x = 0.01, y = 330.01, z = 90.01 },
+        },
+        ['illustrator'] = '.Volkstat'
     },
     ['cheese6'] = {
         ['name'] = 'cheese6',
@@ -2080,7 +2784,7 @@ QBShared.Items = {
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
         ['nutrition'] = {
-            ['hunger'] = 15,
+            ['hunger'] = 20,
             ['thirst'] = 0,
             ['stamina'] = 0,
             ['fiber'] = 0,
@@ -2089,6 +2793,13 @@ QBShared.Items = {
             ['protein'] = 0.5,
             ['alcohol'] = 0,
         },
+        prop = {
+            model = 'soz_prop_food_cheese',
+            bone = 60309,
+            coords = { x = -0.01, y = -0.03, z = -0.01 },
+            rotation = { x = 0.01, y = 330.01, z = 90.01 },
+        },
+        ['illustrator'] = '.Freaks'
     },
     ['cheese7'] = {
         ['name'] = 'cheese7',
@@ -2104,7 +2815,7 @@ QBShared.Items = {
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
         ['nutrition'] = {
-            ['hunger'] = 15,
+            ['hunger'] = 20,
             ['thirst'] = 0,
             ['stamina'] = 0,
             ['fiber'] = 0,
@@ -2113,6 +2824,13 @@ QBShared.Items = {
             ['protein'] = 0.5,
             ['alcohol'] = 0,
         },
+        prop = {
+            model = 'soz_prop_food_cheese',
+            bone = 60309,
+            coords = { x = -0.01, y = -0.03, z = -0.01 },
+            rotation = { x = 0.01, y = 330.01, z = 90.01 },
+        },
+        ['illustrator'] = '.Freaks'
     },
     ['cheese8'] = {
         ['name'] = 'cheese8',
@@ -2128,7 +2846,7 @@ QBShared.Items = {
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
         ['nutrition'] = {
-            ['hunger'] = 15,
+            ['hunger'] = 20,
             ['thirst'] = 0,
             ['stamina'] = 0,
             ['fiber'] = 0,
@@ -2137,6 +2855,13 @@ QBShared.Items = {
             ['protein'] = 0.5,
             ['alcohol'] = 0,
         },
+        prop = {
+            model = 'soz_prop_food_cheese',
+            bone = 60309,
+            coords = { x = -0.01, y = -0.03, z = -0.01 },
+            rotation = { x = 0.01, y = 330.01, z = 90.01 },
+        },
+        ['illustrator'] = '.Volkstat'
     },
     ['cheese9'] = {
         ['name'] = 'cheese9',
@@ -2152,7 +2877,7 @@ QBShared.Items = {
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
         ['nutrition'] = {
-            ['hunger'] = 15,
+            ['hunger'] = 20,
             ['thirst'] = 0,
             ['stamina'] = 0,
             ['fiber'] = 0,
@@ -2161,6 +2886,13 @@ QBShared.Items = {
             ['protein'] = 0.5,
             ['alcohol'] = 0,
         },
+        prop = {
+            model = 'soz_prop_food_cheese',
+            bone = 60309,
+            coords = { x = -0.01, y = -0.03, z = -0.01 },
+            rotation = { x = 0.01, y = 330.01, z = 90.01 },
+        },
+        ['illustrator'] = '.Freaks'
     },
     ['meal_box'] = {
         ['name'] = 'meal_box',
@@ -2173,6 +2905,7 @@ QBShared.Items = {
         ['durability'] = 7,
         ['combinable'] = nil,
         ['description'] = 'Contient de nombreux plats.',
+        ['illustrator'] = '.Poulpito'
     },
     ['vegan_meal'] = {
         ['name'] = 'vegan_meal',
@@ -2187,7 +2920,7 @@ QBShared.Items = {
         ['description'] = "Un vrai régale !",
         ['nutrition'] = {
             ['hunger'] = 50,
-            ['thirst'] = 40,
+            ['thirst'] = 50,
             ['stamina'] = 0,
             ['fiber'] = 2,
             ['lipid'] = 0,
@@ -2195,6 +2928,7 @@ QBShared.Items = {
             ['protein'] = 1,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Abolah'
     },
     ['onigiri_assortment'] = {
         ['name'] = 'onigiri_assortment',
@@ -2217,6 +2951,7 @@ QBShared.Items = {
             ['protein'] = 1,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Abolah'
     },
     ['meat_festival'] = {
         ['name'] = 'meat_festival',
@@ -2239,7 +2974,9 @@ QBShared.Items = {
             ['protein'] = 2,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Abolah'
     },
+
     ['royal_vegetables'] = {
         ['name'] = 'royal_vegetables',
         ['label'] = "Légume royal aux viandes",
@@ -2261,6 +2998,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Abolah'
     },
 
     -- Drugs
@@ -2339,7 +3077,8 @@ QBShared.Items = {
                 ['timeOut'] = 5000,
             }
         },
-        ['description'] = 'Papier fabriqué spécifiquement pour envelopper et fumer du tabac ou du cannabis.'
+        ['description'] = 'Papier fabriqué spécifiquement pour envelopper et fumer du tabac ou du cannabis.',
+        ['illustrator'] = '.Erthes',
     },
 
     -- Seed And Weed
@@ -2365,7 +3104,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'RECYCLEZ! - Greta Thunberg 2019.'
+        ['description'] = 'RECYCLEZ! - Greta Thunberg 2019.',
+        ['illustrator'] = '.Darabesque',
     },
     ['metalscrap'] = {
         ['name'] = 'metalscrap',
@@ -2376,7 +3116,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Il doit être possible d\'en faire quelque chose.'
+        ['description'] = 'Il doit être possible d\'en faire quelque chose.',
+        ['illustrator'] = '.Darabesque',
     },
     ['copper'] = {
         ['name'] = 'copper',
@@ -2398,7 +3139,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Conserve les restes plus longtemps !'
+        ['description'] = 'Conserve les restes plus longtemps !',
+        ['illustrator'] = '.Darabesque',
     },
     ['aluminumoxide'] = {
         ['name'] = 'aluminumoxide',
@@ -2453,7 +3195,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Élaboré pour résister à des sollicitations mécaniques et chimiques.'
+        ['description'] = 'Élaboré pour résister à des sollicitations mécaniques et chimiques.',
+        ['illustrator'] = '.Smogogo',
     },
     ['rubber'] = {
         ['name'] = 'rubber',
@@ -2464,7 +3207,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Ça conduit pas l\'électricité.'
+        ['description'] = 'Ça conduit pas l\'électricité.',
+        ['illustrator'] = '.Devychou',
     },
     ['glass'] = {
         ['name'] = 'glass',
@@ -2475,20 +3219,22 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Très fragile, attention.'
+        ['description'] = 'Très fragile, attention.',
+        ['illustrator'] = '.Kutz',
     },
 
     -- Tools
     ['lockpick'] = {
         ['name'] = 'lockpick',
         ['label'] = 'Crochet',
-        ['weight'] = 200,
+        ['weight'] = 0,
         ['type'] = 'item_illegal',
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Très utile quand on perd sa clé... Ou pour d\'autres choses...'
+        ['description'] = 'Très utile quand on perd sa clé... Ou pour d\'autres choses...',
+        ['illustrator'] = '.Kutz',
     },
     ['electronickit'] = {
         ['name'] = 'electronickit',
@@ -2505,7 +3251,8 @@ QBShared.Items = {
             reward = 'trojan_usb',
             anim = nil
         },
-        ['description'] = 'Envie de faire de la robotique ?'
+        ['description'] = 'Envie de faire de la robotique ?',
+        ['illustrator'] = '.Tontoncubi',
     },
     ['trojan_usb'] = {
         ['name'] = 'trojan_usb',
@@ -2518,28 +3265,78 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'L\'outil parfait pour faire infecter un ordinateur'
     },
-    -- Vehicle Tools
-    ['repairkit'] = {
-        ['name'] = 'repairkit',
-        ['label'] = 'Kit de réparation',
-        ['weight'] = 5000,
+    ['umbrella'] = {
+        ['name'] = 'umbrella',
+        ['label'] = 'Parapluie',
+        ['weight'] = 600,
         ['type'] = 'item',
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Une belle boîte à outils avec des trucs pour réparer votre véhicule.'
+        ['description'] = 'Pour rester au sec sous la drache',
+        ['illustrator'] = '.Sniteur'
+    },
+    ['protestsign'] = {
+        ['name'] = 'protestsign',
+        ['label'] = 'Pancarte de manifestation',
+        ['weight'] = 600,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Pas content ! Pas content !',
+        ['illustrator'] = '.Poulpito'
+    },
+    -- Vehicle Tools
+    ['repairkit'] = {
+        ['name'] = 'repairkit',
+        ['label'] = 'Kit de réparation mécanique',
+        ['weight'] = 25000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Une belle boîte à outils avec des trucs pour réparer votre véhicule.',
+        ['illustrator'] = '.LeakFlood',
+    },
+    ['bodyrepairkit'] = {
+        ['name'] = 'bodyrepairkit',
+        ['label'] = 'Kit de réparation carosserie',
+        ['weight'] = 10000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Un ensemble de matériaux de réparations pour la carosserie.',
+        ['illustrator'] = '.LeakFlood',
     },
     ['cleaningkit'] = {
         ['name'] = 'cleaningkit',
         ['label'] = 'Kit de nettoyage',
-        ['weight'] = 200,
+        ['weight'] = 5000,
         ['type'] = 'item',
         ['unique'] = false,
-        ['useable'] = true,
+        ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Pour redonner une nouvelle jeunesse à votre voiture !'
+        ['description'] = 'Pour redonner une nouvelle jeunesse à votre voiture !',
+        ['illustrator'] = '.LeakFlood',
+    },
+    ['wheel_kit'] = {
+        ['name'] = 'wheel_kit',
+        ['label'] = 'Kit anti-crevaison',
+        ['weight'] = 3000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Pour éviter de se retrouver à pieds.',
+        ['illustrator'] = '.LeakFlood',
     },
     -- Medication
     ['firstaid'] = {
@@ -2552,7 +3349,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Pour remettre les gens sur pied.'
+        ['description'] = 'Pour remettre les gens sur pied.',
+        ['illustrator'] = '.LeakFlood',
     },
     ['ifaks'] = {
         ['name'] = 'ifaks',
@@ -2574,7 +3372,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Généralement prescrit pour traiter les maux au dos.'
+        ['description'] = 'Généralement prescrit pour traiter les maux au dos.',
+        ['illustrator'] = '.Smogogo',
     },
     ['antibiotic'] = {
         ['name'] = 'antibiotic',
@@ -2586,7 +3385,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Soulage les indigestions'
+        ['description'] = 'Soulage les indigestions',
+        ['illustrator'] = '.Smogogo',
     },
     ['walkstick'] = {
         ['name'] = 'walkstick',
@@ -2597,7 +3397,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Pour que les papys puissent taper sur les voitures.'
+        ['description'] = 'Pour que les papys puissent taper sur les voitures.',
+        ['illustrator'] = '.Hawk'
     },
     ['bloodbag'] = {
         ['name'] = 'bloodbag',
@@ -2608,8 +3409,10 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = true,
+        ['durability'] = 21,
         ['combinable'] = nil,
-        ['description'] = 'Utile pour réanimer'
+        ['description'] = 'Utile pour réanimer',
+        ['illustrator'] = '.Smogogo'
     },
     ['empty_bloodbag'] = {
         ['name'] = 'empty_bloodbag',
@@ -2621,7 +3424,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Utile pour faire une prise de sang'
+        ['description'] = 'Utile pour faire une prise de sang',
+        ['illustrator'] = '.Smogogo'
     },
     ['used_bloodbag'] = {
         ['name'] = 'used_bloodbag',
@@ -2633,7 +3437,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Pas très utile pour réanimer.'
+        ['description'] = 'Pas très utile pour réanimer.',
+        ['illustrator'] = '.Pastouke'
     },
     ['tissue'] = {
         ['name'] = 'tissue',
@@ -2645,7 +3450,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = "Vous débarrasse de n'importe quel rhume."
+        ['description'] = "Vous débarrasse de n'importe quel rhume.",
+        ['illustrator'] = '.Smogogo'
     },
     ['pommade'] = {
         ['name'] = 'pommade',
@@ -2657,7 +3463,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = "Soulage les rougeurs et les irritations."
+        ['description'] = "Soulage les rougeurs et les irritations.",
+        ['illustrator'] = '.LeakFlood'
     },
     ['antiacide'] = {
         ['name'] = 'antiacide',
@@ -2668,7 +3475,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = "Dégazifie votre intérieur."
+        ['description'] = "Dégazifie votre intérieur.",
+        ['illustrator'] = '.Smogogo',
     },
     ['defibrillator'] = {
         ['name'] = 'defibrillator',
@@ -2677,10 +3485,11 @@ QBShared.Items = {
         ['type'] = 'item',
         ['image'] = 'Défibrillateur.png',
         ['unique'] = false,
-        ['useable'] = true,
+        ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Utile pour réanimer'
+        ['description'] = 'Utile pour réanimer',
+        ['illustrator'] = '.Smogogo'
     },
     ['poumon'] = {
         ['name'] = 'poumon',
@@ -2693,7 +3502,8 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['durability'] = 60,
         ['combinable'] = nil,
-        ['description'] = 'Utile pour respirer.'
+        ['description'] = 'Utile pour respirer.',
+        ['illustrator'] = '.TheSeds'
     },
     ['foie'] = {
         ['name'] = 'foie',
@@ -2706,7 +3516,8 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['durability'] = 60,
         ['combinable'] = nil,
-        ['description'] = 'Attention à la crise.'
+        ['description'] = 'Attention à la crise.',
+        ['illustrator'] = '.TheSeds'
     },
     ['rein'] = {
         ['name'] = 'rein',
@@ -2719,7 +3530,8 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['durability'] = 60,
         ['combinable'] = nil,
-        ['description'] = 'Ca pourrait t\'en couter un.'
+        ['description'] = 'Ca pourrait t\'en couter un.',
+        ['illustrator'] = '.TheSeds'
     },
     ['antidepressant'] = {
         ['name'] = 'antidepressant',
@@ -2731,7 +3543,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Soulage le stress.'
+        ['description'] = 'Soulage le stress.',
+        ['illustrator'] = '.Smogogo'
     },
 
     ['garbagebag'] = {
@@ -2741,7 +3554,8 @@ QBShared.Items = {
         ['type'] = 'item',
         ['unique'] = false,
         ['useable'] = false,
-        ['description'] = 'Pour jeter tout type d\'ordures.'
+        ['description'] = 'Pour jeter tout type d\'ordures.',
+        ['illustrator'] = '.Adrass'
     },
     ['cardbord'] = {
         ['name'] = 'cardbord',
@@ -2750,7 +3564,8 @@ QBShared.Items = {
         ['type'] = 'item',
         ['unique'] = false,
         ['useable'] = true,
-        ['description'] = 'Une jolie maison !'
+        ['description'] = 'Une jolie maison !',
+        ['illustrator'] = '.Sniteur'
     },
 
     -- Communication
@@ -2763,7 +3578,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Outil qui zert à communiquer.'
+        ['description'] = 'Outil qui zert à communiquer.',
+        ['illustrator'] = '.LeakFlood'
     },
     ['radio'] = {
         ['name'] = 'radio',
@@ -2774,7 +3590,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Alooo ?'
+        ['description'] = 'Alooo ?',
+        ['illustrator'] = '.Sniteur',
     },
     ['megaphone'] = {
         ['name'] = 'megaphone',
@@ -2785,7 +3602,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Peut servir pour parler a une foule... A déjà permis de faire plusieurs exploits mondiaux'
+        ['description'] = 'Peut servir pour parler a une foule... A déjà permis de faire plusieurs exploits mondiaux',
+        ['illustrator'] = '.Sniteur',
     },
     ['microphone'] = {
         ['name'] = 'microphone',
@@ -2796,11 +3614,12 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Poupipou, il est l\'heure de CHANTER !'
+        ['description'] = 'Poupipou, il est l\'heure de CHANTER !',
+        ['illustrator'] = '.Sniteur',
     },
     ['laptop'] = {
         ['name'] = 'laptop',
-        ['label'] = 'Ordinateur portable volé',
+        ['label'] = 'Ordinateur portable',
         ['weight'] = 1800,
         ['type'] = 'item_illegal',
         ['unique'] = false,
@@ -2811,7 +3630,7 @@ QBShared.Items = {
     },
     ['tablet'] = {
         ['name'] = 'tablet',
-        ['label'] = 'Tablette volée',
+        ['label'] = 'Tablette',
         ['weight'] = 500,
         ['type'] = 'item_illegal',
         ['unique'] = false,
@@ -2819,6 +3638,18 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = 'Tablette qui coûte cher.'
+    },
+    ['zpad'] = {
+        ['name'] = 'zpad',
+        ['label'] = 'ZPAD PRO 14',
+        ['weight'] = 500,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'ZPAD PRO 14',
+        ['illustrator'] = '.Sniteur',
     },
     ['gps'] = {
         ['name'] = 'gps',
@@ -2829,7 +3660,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Trouve ton chemin facilement !'
+        ['description'] = 'Trouve ton chemin facilement !',
+        ['illustrator'] = '.LeakFlood',
     },
     ['compass'] = {
         ['name'] = 'compass',
@@ -2840,7 +3672,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Pour ne jamais perdre le Nord !'
+        ['description'] = 'Pour ne jamais perdre le Nord !',
+        ['illustrator'] = '.Kutz',
     },
 
     -- Theft and Jewelry
@@ -2853,7 +3686,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Cette montre en Or indique que vous êtes à l\'aise financièrement.'
+        ['description'] = 'Cette montre en Or indique que vous êtes à l\'aise financièrement.',
+        ['illustrator'] = '.Darabesque',
     },
     ['diamond_ring'] = {
         ['name'] = 'diamond_ring',
@@ -2864,7 +3698,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Un bijou magnifique.'
+        ['description'] = 'Un bijou magnifique.',
+        ['illustrator'] = '.Darabesque',
     },
     ['goldchain'] = {
         ['name'] = 'goldchain',
@@ -2875,18 +3710,20 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'C\'est du vrai or ?'
+        ['description'] = 'C\'est du vrai or ?',
+        ['illustrator'] = '.Darabesque',
     },
     ['10kgoldchain'] = {
         ['name'] = '10kgoldchain',
-        ['label'] = 'Chaîne en or volée',
+        ['label'] = 'Chaîne en or',
         ['weight'] = 500,
         ['type'] = 'item_illegal',
         ['unique'] = false,
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Chaîne en or volée à son propriétaire !'
+        ['description'] = 'Chaîne en or volée à son propriétaire !',
+        ['illustrator'] = '.Darabesque',
     },
     ['goldbar'] = {
         ['name'] = 'goldbar',
@@ -2897,7 +3734,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Ça semble valoir son pesant... d\'or.'
+        ['description'] = 'Ça semble valoir son pesant... d\'or.',
+        ['illustrator'] = '.Darabesque',
     },
 
     -- Cops Tools
@@ -2910,7 +3748,16 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Il faut parfois se protéger avant de sortir.'
+        ['description'] = 'Il faut parfois se protéger avant de sortir.',
+        ['illustrator'] = {
+            ['unmark'] = '.Omega',
+            ['lspd'] = '.Omega',
+            ['bcso'] = '.Omega',
+            ['fbi'] = '.Omega',
+            ['lsmc'] = '.DanyG',
+            ['stonk'] = '.Biblys',
+            ['news'] = '.LuckyG',
+        },
     },
     ['outfit'] = {
         ['name'] = 'outfit',
@@ -2921,7 +3768,12 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = {
+            ['lsmc'] = '.Smogogo',
+            ['lspd'] = '.Sniteur',
+            ['bcso'] = '.Sniteur',
+        }
     },
     ['handcuffs'] = {
         ['name'] = 'handcuffs',
@@ -2932,7 +3784,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Pour les criminels. Peut avoir d\'autres utilités...'
+        ['description'] = 'Pour les criminels. Peut avoir d\'autres utilités...',
+        ['illustrator'] = '.Sniteur',
     },
     ['handcuffs_key'] = {
         ['name'] = 'handcuffs_key',
@@ -2943,7 +3796,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Pour ouvrir des menottes fermées'
+        ['description'] = 'Pour ouvrir des menottes fermées',
+        ['illustrator'] = '.Sniteur',
     },
     ['spike'] = {
         ['name'] = 'spike',
@@ -2954,7 +3808,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Meilleur outil pour réduire la vitesse !'
+        ['description'] = 'Meilleur outil pour réduire la vitesse !',
+        ['illustrator'] = '.Smogogo'
     },
     ['cone'] = {
         ['name'] = 'cone',
@@ -2965,7 +3820,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Rien à voir avec un cône VLC.'
+        ['description'] = 'Rien à voir avec un cône VLC.',
+        ['illustrator'] = '.Sniteur'
     },
     ['police_barrier'] = {
         ['name'] = 'police_barrier',
@@ -2976,7 +3832,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'VOUS NE PASSEREZ PAAAAAAAAAS !'
+        ['description'] = 'VOUS NE PASSEREZ PAAAAAAAAAS !',
+        ['illustrator'] = '.Sniteur'
     },
 
     -- Firework Tools
@@ -3035,22 +3892,11 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Tout ce qu\'il faut pour aller visiter Nemo'
+        ['description'] = 'Tout ce qu\'il faut pour aller visiter Nemo',
+        ['illustrator'] = '.Kaemy',
     },
 
     -- Other Tools
-    ['moneybag'] = {
-        ['name'] = 'moneybag',
-        ['label'] = 'Sac d\'argent',
-        ['weight'] = 2500,
-        ['type'] = 'item',
-        ['image'] = 'moneybag.png',
-        ['unique'] = false,
-        ['useable'] = true,
-        ['shouldClose'] = true,
-        ['combinable'] = nil,
-        ['description'] = 'Un sac plein de THUNES.'
-    },
     ['parachute'] = {
         ['name'] = 'parachute',
         ['label'] = 'Parachute',
@@ -3060,7 +3906,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Le ciel est la limite ! Woohoo !'
+        ['description'] = 'Le ciel est la limite ! Woohoo !',
+        ['illustrator'] = '.LeakFlood'
     },
     ['binoculars'] = {
         ['name'] = 'binoculars',
@@ -3071,7 +3918,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Pour surveiller des oiseaux... Ou espionner des voisins.'
+        ['description'] = 'Pour surveiller des oiseaux... Ou espionner des voisins.',
+        ['illustrator'] = '.Kaemy'
     },
     ['snowball'] = {
         ['name'] = 'snowball',
@@ -3104,7 +3952,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Certificat attestant d\'une preuve.'
+        ['description'] = 'Certificat attestant d\'une preuve.',
+        ['illustrator'] = '.Kutz',
     },
     ['printerdocument'] = {
         ['name'] = 'printerdocument',
@@ -3115,7 +3964,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Un document'
+        ['description'] = 'Un document',
+        ['illustrator'] = '.Smogogo',
     },
     ['newspaper'] = {
         ['name'] = 'newspaper',
@@ -3126,7 +3976,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Peut être utile pour se culturer'
+        ['description'] = 'Peut être utile pour se culturer',
+        ['illustrator'] = '.Omega',
     },
 
     --- News items
@@ -3139,7 +3990,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.LuckyG',
     },
     ['n_fix_camera'] = {
         ['name'] = 'n_fix_camera',
@@ -3150,7 +4002,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.Omega',
     },
     ['n_fix_light'] = {
         ['name'] = 'n_fix_light',
@@ -3161,7 +4014,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.LuckyG',
     },
     ['n_fix_mic'] = {
         ['name'] = 'n_fix_mic',
@@ -3172,7 +4026,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.LuckyG'
     },
     ['n_camera'] = {
         ['name'] = 'n_camera',
@@ -3183,7 +4038,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.Omega'
     },
     ['n_mic'] = {
         ['name'] = 'n_mic',
@@ -3194,7 +4050,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.LuckyG'
     },
     ['n_bmic'] = {
         ['name'] = 'n_bmic',
@@ -3205,7 +4062,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.LuckyG'
     },
 
     -- mtp
@@ -3218,7 +4076,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Le pétrole brut est raffiné en toutes sortes de ressources à base de pétrole, telles que le carburant.'
+        ['description'] = 'Le pétrole brut est raffiné en toutes sortes de ressources à base de pétrole, telles que le carburant.',
+        ['illustrator'] = '.LeakFlood'
     },
     ['petroleum_refined'] = {
         ['name'] = 'petroleum_refined',
@@ -3229,7 +4088,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Pétrole brut, conditionné pour le transport ou pour être utilisé comme carburant.'
+        ['description'] = 'Pétrole brut, conditionné pour le transport ou pour être utilisé comme carburant.',
+        ['illustrator'] = '.LeakFlood'
     },
     ['petroleum_residue'] = {
         ['name'] = 'petroleum_residue',
@@ -3240,7 +4100,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Du résidus polluants prêt à être livré à BlueBird.'
+        ['description'] = 'Du résidus polluants prêt à être livré à BlueBird.',
+        ['illustrator'] = '.LeakFlood & Renko'
     },
     ['essence'] = {
         ['name'] = 'essence',
@@ -3251,7 +4112,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Du carburant conditionné servant à remplir les différentes stations services.'
+        ['description'] = 'Du carburant conditionné servant à remplir les différentes stations services.',
+        ['illustrator'] = '.LeakFlood'
     },
     ['essence_jerrycan'] = {
         ['name'] = 'essence_jerrycan',
@@ -3262,7 +4124,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Du carburant conditionné servant à remplir les différents véhicules à la main.'
+        ['description'] = 'Du carburant conditionné servant à remplir les différents véhicules à la main.',
+        ['illustrator'] = '.LeakFlood'
     },
     ['oil_jerrycan'] = {
         ['name'] = 'oil_jerrycan',
@@ -3273,7 +4136,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'De l\'huile servant à remplir les différents véhicules à la main.'
+        ['description'] = 'De l\'huile servant à remplir les différents véhicules à la main.',
+        ['illustrator'] = '.Kutz'
     },
     ['kerosene'] = {
         ['name'] = 'kerosene',
@@ -3284,7 +4148,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Du carburant conditionné servant à remplir les différentes stations services.'
+        ['description'] = 'Du carburant conditionné servant à remplir les différentes stations services.',
+        ['illustrator'] = '.LeakFlood'
     },
     ['kerosene_jerrycan'] = {
         ['name'] = 'kerosene_jerrycan',
@@ -3295,7 +4160,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Du carburant conditionné servant à remplir les différents véhicules à la main.'
+        ['description'] = 'Du carburant conditionné servant à remplir les différents véhicules à la main.',
+        ['illustrator'] = '.LeakFlood'
     },
 
     -- UPW
@@ -3308,7 +4174,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.Omega'
     },
     ['energy_cell_fossil'] = {
         ['name'] = 'energy_cell_fossil',
@@ -3319,7 +4186,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.Sniteur'
     },
     ['energy_cell_wind'] = {
         ['name'] = 'energy_cell_wind',
@@ -3330,7 +4198,20 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.Smogogo & Omega'
+    },
+    ['energy_cell_solar'] = {
+        ['name'] = 'energy_cell_solar',
+        ['label'] = "Cellule d'énergie solaire",
+        ['weight'] = 5000,
+        ['type'] = 'energy',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = '',
+        ['illustrator'] = '.Smogogo & Omega'
     },
     ['seeweed_acid'] = {
         ['name'] = 'seeweed_acid',
@@ -3341,7 +4222,56 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.Darabesque'
+    },
+    ['car_charger'] = {
+        ['name'] = 'car_charger',
+        ['label'] = "Borne de recharge",
+        ['weight'] = 50000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Kit d’installation d’une luxueuse borne de recharge idéale aux différentes stations essences de San Andreas.',
+        ['illustrator'] = '.NariieL'
+    },
+    ['lithium_battery'] = {
+        ['name'] = 'lithium_battery',
+        ['label'] = "Batterie lithium-ion",
+        ['weight'] = 25000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'Idéale afin de réaliser l’entretien d’un véhicule électrique.',
+        ['illustrator'] = '.NariieL'
+    },
+    ['empty_lithium_battery'] = {
+        ['name'] = 'empty_lithium_battery',
+        ['label'] = "Batterie lithium-ion vide",
+        ['weight'] = 25000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Elle n'a pas l'air de servir à grand chose.",
+        ['illustrator'] = '.NariieL'
+    },
+    ['car_portable_battery'] = {
+        ['name'] = 'car_portable_battery',
+        ['label'] = "Batterie portable",
+        ['weight'] = 10000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Batterie moderne permettant d’être transportée facilement et de recharger en cas d’urgence n’importe quel véhicule électrique.",
+        ['illustrator'] = '.NariieL'
     },
 
     -- zkea
@@ -3354,20 +4284,22 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Pour retrouver ton chez toi !'
+        ['description'] = 'Pour retrouver ton chez toi !',
+        ['illustrator'] = '.Smogogo',
     },
 
     -- other
     ['welcome_book'] = {
         ['name'] = 'welcome_book',
-        ['label'] = 'Dépliant Touristique',
+        ['label'] = 'Dépliant touristique de San Andreas',
         ['weight'] = 100,
         ['type'] = 'item',
         ['unique'] = true,
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Bienvenue sur SOZ !'
+        ['description'] = "Bienvenue à San Andreas ! N'hésitez pas à aller voir MANDATORY, le Gouvernement ou les Forces de l'ordre afin qu'ils t'initient à la vie de notre merveilleux État.",
+        ['illustrator'] = '.Kutz',
     },
     ['health_book'] = {
         ['name'] = 'health_book',
@@ -3378,7 +4310,20 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Votre guide de santé..'
+        ['description'] = 'Votre guide de santé..',
+        ['illustrator'] = '.NariieL',
+    },
+    ['politic_book'] = {
+        ['name'] = 'politic_book',
+        ['label'] = 'Dépliant politique de San Andreas',
+        ['weight'] = 250,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Tu souhaites comprendre et te renseigner sur la hiérarchie fédérale de San Andreas ? Ce document est idéal pour cela ! La séparation du pouvoir y est expliquée à l'aide du Législatif, du Judiciaire et de l'Exécutif.",
+        ['illustrator'] = '.NariieL',
     },
 
     -- Benny's
@@ -3391,7 +4336,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Pour faire des diagnostics sur les véhicules.'
+        ['description'] = 'Pour faire des diagnostics sur les véhicules.',
+        ['illustrator'] = '.Sniteur'
     },
 
     -- PAWL
@@ -3404,7 +4350,9 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['carrybox'] = 'prop_log_01',
+        ['illustrator'] = '.Omega'
     },
     ['wood_plank'] = {
         ['name'] = 'wood_plank',
@@ -3418,6 +4366,7 @@ QBShared.Items = {
         ['description'] = '',
         ['resellPrice'] = 2,
         ['resellZone'] = 'Resell:LSPort:Pawl',
+        ['illustrator'] = '.DrLuck1'
     },
     ['sawdust'] = {
         ['name'] = 'sawdust',
@@ -3428,7 +4377,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.Crash'
     },
     ['paper'] = {
         ['name'] = 'paper',
@@ -3439,7 +4389,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.DrLuck1'
     },
     ['cabinet_zkea'] = {
         ['name'] = 'cabinet_zkea',
@@ -3452,12 +4403,19 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = '',
         ['resellPrice'] = {
-            [1] = 80,
-            [2] = 250,
-            [3] = 800,
-            [4] = 3000,
+            [1] = 160,
+            [2] = 500,
+            [3] = 1600,
+            [4] = 6000,
+        },
+        ['resellZkeaQty'] = {
+            [1] = 1,
+            [2] = 2,
+            [3] = 4,
+            [4] = 10,
         },
         ['resellZone'] = 'Resell:Zkea',
+        ['illustrator'] = '.DrLuck1'
     },
     --- Summer body health
     ['flask_pee_empty'] = {
@@ -3469,7 +4427,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.Smogogo'
     },
     ['flask_pee_full'] = {
         ['name'] = 'flask_pee_full',
@@ -3480,7 +4439,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.Smogogo'
     },
     ['flask_blood_empty'] = {
         ['name'] = 'flask_blood_empty',
@@ -3491,7 +4451,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.Smogogo'
     },
     ['flask_blood_full'] = {
         ['name'] = 'flask_blood_full',
@@ -3502,7 +4463,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.Smogogo'
     },
     --- Deprecated
     ['milkbucket'] = {
@@ -3515,7 +4477,8 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['durability'] = 14,
         ['combinable'] = nil,
-        ['description'] = 'Bidon archéologique, autrefois utilisé pour produire du lait'
+        ['description'] = 'Bidon archéologique, autrefois utilisé pour produire du lait',
+        ['illustrator'] = '.Sniteur'
     },
     -- BAUN
     liquor_crate = {
@@ -3530,6 +4493,7 @@ QBShared.Items = {
         shouldClose = false,
         combinable = nil,
         description = "Contient des alcools pour cocktail.",
+        illustrator = ".Kutz"
     },
     flavor_crate = {
         name = "flavor_crate",
@@ -3543,12 +4507,13 @@ QBShared.Items = {
         shouldClose = false,
         combinable = nil,
         description = "Contient des saveurs pour cocktail.",
+        illustrator = ".Kutz"
     },
     furniture_crate = {
         name = "furniture_crate",
         label = "Caisse de fournitures",
         pluralLabel = "Caisses de fournitures",
-        weight = 10000,
+        weight = 5000,
         type = "item",
         durability = 2,
         unique = false,
@@ -3556,6 +4521,21 @@ QBShared.Items = {
         shouldClose = false,
         combinable = nil,
         description = "Contient des fournitures pour cocktail.",
+        illustrator = ".Kutz"
+    },
+    snack_crate = {
+        name = "snack_crate",
+        label = "Caisse de snacks",
+        pluralLabel = "Caisses de snacks",
+        weight = 10000,
+        type = "item",
+        durability = 7,
+        unique = false,
+        useable = false,
+        shouldClose = false,
+        combinable = nil,
+        description = "Contient des fournitures pour snacks.",
+        illustrator = ".Kutz"
     },
     vodka = {
         name = 'vodka',
@@ -3576,8 +4556,44 @@ QBShared.Items = {
             ['lipid'] = 0,
             ['sugar'] = 0.5,
             ['protein'] = 0,
-            ['alcohol'] = 8,
+            ['alcohol'] = 16,
         },
+        prop = {
+            model = 'prop_vodka_bottle',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.12 },
+            rotation = { x = 0.01, y = 0.01, z = 90.01 },
+        },
+        illustrator = ".Kutz"
+    },
+    lemonade_bottle = {
+        name = 'lemonade_bottle',
+        label = 'Bouteille de limonade',
+        weight = 700,
+        type = 'liquor',
+        durability = 7,
+        unique = false,
+        useable = true,
+        shouldClose = true,
+        combinable = nil,
+        description = 'Pour toutes les petites soifs !',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 8,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0.5,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        prop = {
+            model = 'prop_vodka_bottle',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.12 },
+            rotation = { x = 0.01, y = 0.01, z = 90.01 },
+        },
+        illustrator = ".Kutz"
     },
     gin = {
         name = 'gin',
@@ -3598,7 +4614,13 @@ QBShared.Items = {
             ['lipid'] = 0,
             ['sugar'] = 0.5,
             ['protein'] = 0,
-            ['alcohol'] = 8,
+            ['alcohol'] = 16,
+        },
+        prop = {
+            model = 'prop_tequila_bottle',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.12 },
+            rotation = { x = 0.01, y = 0.01, z = 90.01 },
         },
     },
     tequila = {
@@ -3620,8 +4642,15 @@ QBShared.Items = {
             ['lipid'] = 0,
             ['sugar'] = 0.5,
             ['protein'] = 0,
-            ['alcohol'] = 8,
+            ['alcohol'] = 16,
         },
+        prop = {
+            model = 'prop_tequila_bottle',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.12 },
+            rotation = { x = 0.01, y = 0.01, z = 90.01 },
+        },
+        illustrator = ".Kutz"
     },
     whisky = {
         name = 'whisky',
@@ -3642,8 +4671,15 @@ QBShared.Items = {
             ['lipid'] = 0,
             ['sugar'] = 0.5,
             ['protein'] = 0,
-            ['alcohol'] = 8,
+            ['alcohol'] = 16,
         },
+        prop = {
+            model = 'prop_whiskey_bottle',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.12 },
+            rotation = { x = 0.01, y = 0.01, z = 90.01 },
+        },
+        illustrator = ".Kutz"
     },
     cognac = {
         name = 'cognac',
@@ -3664,8 +4700,15 @@ QBShared.Items = {
             ['lipid'] = 0,
             ['sugar'] = 0.5,
             ['protein'] = 0,
-            ['alcohol'] = 8,
+            ['alcohol'] = 16,
         },
+        prop = {
+            model = 'prop_bottle_cognac',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.12 },
+            rotation = { x = 0.01, y = 0.01, z = 90.01 },
+        },
+        illustrator = ".Kutz"
     },
     rhum = {
         name = 'rhum',
@@ -3686,8 +4729,15 @@ QBShared.Items = {
             ['lipid'] = 0,
             ['sugar'] = 0.5,
             ['protein'] = 0,
-            ['alcohol'] = 8,
+            ['alcohol'] = 16,
         },
+        prop = {
+            model = 'prop_rum_bottle',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.12 },
+            rotation = { x = 0.01, y = 0.01, z = 90.01 },
+        },
+        illustrator = ".Kutz"
     },
     green_lemon = {
         name = "green_lemon",
@@ -3713,7 +4763,8 @@ QBShared.Items = {
         useable = false,
         shouldClose = false,
         combinable = nil,
-        description = "\"C'est pas là où y'a un festival ?\""
+        description = "C'est pas là où y'a un festival ?",
+        illustrator = ".Kutz"
     },
     ananas_juice = {
         name = "ananas_juice",
@@ -3726,7 +4777,8 @@ QBShared.Items = {
         useable = false,
         shouldClose = false,
         combinable = nil,
-        description = "Très utile pour confectionner un cocktail."
+        description = "Très utile pour confectionner un cocktail.",
+        illustrator = ".Kutz"
     },
     coconut_milk = {
         name = "coconut_milk",
@@ -3739,7 +4791,8 @@ QBShared.Items = {
         useable = false,
         shouldClose = false,
         combinable = nil,
-        description = "Très utile pour confectionner un cocktail."
+        description = "Très utile pour confectionner un cocktail.",
+        illustrator = ".Kutz"
     },
     cinnamon = {
         name = "cinnamon",
@@ -3751,7 +4804,8 @@ QBShared.Items = {
         useable = false,
         shouldClose = false,
         combinable = nil,
-        description = "Très utile pour confectionner un cocktail."
+        description = "Très utile pour confectionner un cocktail.",
+        illustrator = ".Kutz"
     },
     orange_juice = {
         name = "orange_juice",
@@ -3764,7 +4818,8 @@ QBShared.Items = {
         useable = false,
         shouldClose = false,
         combinable = nil,
-        description = "Très utile pour confectionner un cocktail."
+        description = "Très utile pour confectionner un cocktail.",
+        illustrator = ".Kutz"
     },
     strawberry_juice = {
         name = "strawberry_juice",
@@ -3777,7 +4832,8 @@ QBShared.Items = {
         useable = false,
         shouldClose = false,
         combinable = nil,
-        description = "Très utile pour confectionner un cocktail."
+        description = "Très utile pour confectionner un cocktail.",
+        illustrator = ".Kutz"
     },
     apple_juice = {
         name = "apple_juice",
@@ -3790,7 +4846,8 @@ QBShared.Items = {
         useable = false,
         shouldClose = false,
         combinable = nil,
-        description = "Très utile pour confectionner un cocktail."
+        description = "Très utile pour confectionner un cocktail.",
+        illustrator = ".Kutz"
     },
     straw = {
         name = "straw",
@@ -3802,7 +4859,8 @@ QBShared.Items = {
         useable = false,
         shouldClose = false,
         combinable = nil,
-        description = "Très utile pour confectionner un cocktail."
+        description = "Très utile pour confectionner un cocktail.",
+        illustrator = ".Kutz"
     },
     ice_cube = {
         name = "ice_cube",
@@ -3814,7 +4872,8 @@ QBShared.Items = {
         useable = false,
         shouldClose = false,
         combinable = nil,
-        description = "Très utile pour confectionner un cocktail."
+        description = "Très utile pour confectionner un cocktail.",
+        illustrator = ".Kutz"
     },
     fruit_slice = {
         name = "fruit_slice",
@@ -3827,7 +4886,8 @@ QBShared.Items = {
         useable = false,
         shouldClose = false,
         combinable = nil,
-        description = "Très utile pour confectionner un cocktail."
+        description = "Très utile pour confectionner un cocktail.",
+        illustrator = ".Devychou"
     },
     tumbler = {
         name = "tumbler",
@@ -3839,7 +4899,8 @@ QBShared.Items = {
         useable = false,
         shouldClose = false,
         combinable = nil,
-        description = "Très utile pour confectionner un cocktail."
+        description = "Très utile pour confectionner un cocktail.",
+        illustrator = ".Hawk"
     },
     narito = {
         name = "narito",
@@ -3860,8 +4921,14 @@ QBShared.Items = {
             ['lipid'] = 0,
             ['sugar'] = 0.5,
             ['protein'] = 0,
-            ['alcohol'] = 4,
+            ['alcohol'] = 8,
         },
+        prop = {
+            model = 'prop_shots_glass_cs',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.01 },
+        },
+        illustrator = ".Kutz"
     },
     lapicolada = {
         name = "lapicolada",
@@ -3882,8 +4949,14 @@ QBShared.Items = {
             ['lipid'] = 0,
             ['sugar'] = 0.5,
             ['protein'] = 0,
-            ['alcohol'] = 4,
+            ['alcohol'] = 8,
         },
+        prop = {
+            model = 'prop_shots_glass_cs',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.01 },
+        },
+        illustrator = ".Smogogo"
     },
     sunrayou = {
         name = "sunrayou",
@@ -3904,8 +4977,14 @@ QBShared.Items = {
             ['lipid'] = 0,
             ['sugar'] = 0.5,
             ['protein'] = 0,
-            ['alcohol'] = 4,
+            ['alcohol'] = 8,
         },
+        prop = {
+            model = 'prop_shots_glass_cs',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.01 },
+        },
+        illustrator = ".Smogogo"
     },
     ponche = {
         name = "ponche",
@@ -3926,8 +5005,14 @@ QBShared.Items = {
             ['lipid'] = 0,
             ['sugar'] = 0.5,
             ['protein'] = 0,
-            ['alcohol'] = 4,
+            ['alcohol'] = 8,
         },
+        prop = {
+            model = 'prop_shots_glass_cs',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.01 },
+        },
+        illustrator = ".Kutz"
     },
     pinkenny = {
         name = "pinkenny",
@@ -3948,8 +5033,14 @@ QBShared.Items = {
             ['lipid'] = 0,
             ['sugar'] = 0.5,
             ['protein'] = 0,
-            ['alcohol'] = 4,
+            ['alcohol'] = 8,
         },
+        prop = {
+            model = 'prop_shots_glass_cs',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.01 },
+        },
+        illustrator = ".Smogogo"
     },
     phasmopolitan = {
         name = "phasmopolitan",
@@ -3970,8 +5061,14 @@ QBShared.Items = {
             ['lipid'] = 0,
             ['sugar'] = 0.5,
             ['protein'] = 0,
-            ['alcohol'] = 4,
+            ['alcohol'] = 8,
         },
+        prop = {
+            model = 'prop_shots_glass_cs',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.01 },
+        },
+        illustrator = ".Smogogo"
     },
     escalier = {
         name = "escalier",
@@ -3992,8 +5089,14 @@ QBShared.Items = {
             ['lipid'] = 0,
             ['sugar'] = 0.5,
             ['protein'] = 0,
-            ['alcohol'] = 4,
+            ['alcohol'] = 8,
         },
+        prop = {
+            model = 'prop_shots_glass_cs',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.01 },
+        },
+        illustrator = ".Kutz"
     },
     whicanelle = {
         name = "whicanelle",
@@ -4014,8 +5117,346 @@ QBShared.Items = {
             ['lipid'] = 0,
             ['sugar'] = 0.5,
             ['protein'] = 0,
-            ['alcohol'] = 4,
+            ['alcohol'] = 8,
         },
+        prop = {
+            model = 'prop_shots_glass_cs',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.01 },
+        },
+        illustrator = ".Kutz"
+    },
+    feur = {
+        name = "feur",
+        label = "Feur",
+        weight = 300,
+        type = "cocktail",
+        unique = false,
+        useable = true,
+        expiresIn = 240, -- in minutes
+        shouldClose = true,
+        combinable = nil,
+        description = "Quoi ?",
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 5,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0.5,
+            ['protein'] = 0,
+            ['alcohol'] = 8,
+        },
+        prop = {
+            model = 'prop_shots_glass_cs',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.01 },
+        },
+        illustrator = ".Kutz"
+    },
+    pinata = {
+        name = "pinata",
+        label = "Piñata",
+        weight = 300,
+        type = "cocktail",
+        unique = false,
+        useable = true,
+        expiresIn = 240, -- in minutes
+        shouldClose = true,
+        combinable = nil,
+        description = "A disguter les yeux bandés.",
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 5,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0.5,
+            ['protein'] = 0,
+            ['alcohol'] = 8,
+        },
+        prop = {
+            model = 'prop_shots_glass_cs',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.01 },
+        },
+        illustrator = ".Kutz"
+    },
+    mafracas = {
+        name = "mafracas",
+        label = "Mafracas",
+        weight = 300,
+        type = "cocktail",
+        unique = false,
+        useable = true,
+        expiresIn = 240, -- in minutes
+        shouldClose = true,
+        combinable = nil,
+        description = "Ça tape fort..",
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 5,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0.5,
+            ['protein'] = 0,
+            ['alcohol'] = 8,
+        },
+        prop = {
+            model = 'prop_shots_glass_cs',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.01 },
+        },
+        illustrator = ".Kutz"
+    },
+    irish_coffee = {
+        name = "irish_coffee",
+        label = "Irish Coffee",
+        weight = 300,
+        type = "cocktail",
+        unique = false,
+        useable = true,
+        expiresIn = 240, -- in minutes
+        shouldClose = true,
+        combinable = nil,
+        description = "La douce alliance du café et du whsiky.",
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 5,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0.5,
+            ['protein'] = 0,
+            ['alcohol'] = 8,
+        },
+        prop = {
+            model = 'prop_shots_glass_cs',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.01 },
+        },
+        illustrator = ".Kutz"
+    },
+    iced_coffee = {
+        name = "iced_coffee",
+        label = "Café frappé",
+        weight = 300,
+        type = "cocktail",
+        unique = false,
+        useable = true,
+        expiresIn = 240, -- in minutes
+        shouldClose = true,
+        combinable = nil,
+        description = "Du café, du lait, et des glaçons.",
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 5,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0.5,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        prop = {
+            model = 'prop_shots_glass_cs',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.01 },
+        },
+        illustrator = ".Kutz"
+    },
+    strawberry_milkshake = {
+        name = "strawberry_milkshake",
+        label = "Milkshake fraise",
+        weight = 300,
+        type = "cocktail",
+        unique = false,
+        useable = true,
+        expiresIn = 240, -- in minutes
+        shouldClose = true,
+        combinable = nil,
+        description = "Le classique milkshake à la fraise.",
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 5,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0.5,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        prop = {
+            model = 'prop_shots_glass_cs',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.01 },
+        },
+        illustrator = ".Kutz"
+    },
+    coconut_milkshake = {
+        name = "coconut_milkshake",
+        label = "Milkshake coco",
+        weight = 300,
+        type = "cocktail",
+        unique = false,
+        useable = true,
+        expiresIn = 240, -- in minutes
+        shouldClose = true,
+        combinable = nil,
+        description = "Retournez dans les années 50, version noix de coco !",
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 5,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0.5,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        prop = {
+            model = 'prop_shots_glass_cs',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.01 },
+        },
+        illustrator = ".Kutz"
+    },
+    virgin_narito = {
+        name = "virgin_narito",
+        label = "Virgin narito",
+        weight = 300,
+        type = "cocktail",
+        unique = false,
+        useable = true,
+        expiresIn = 240, -- in minutes
+        shouldClose = true,
+        combinable = nil,
+        description = "Le narito des morveux.",
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 5,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0.5,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        prop = {
+            model = 'prop_shots_glass_cs',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.01 },
+        },
+        illustrator = ".Kutz"
+    },
+    acidifer = {
+        name = "acidifer",
+        label = "Acidifer",
+        weight = 300,
+        type = "cocktail",
+        unique = false,
+        useable = true,
+        expiresIn = 240, -- in minutes
+        shouldClose = true,
+        combinable = nil,
+        description = "Il va vous faire fondre.",
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 5,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0.5,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        prop = {
+            model = 'prop_shots_glass_cs',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.01 },
+        },
+        illustrator = ".Kutz"
+    },
+    fraisetival = {
+        name = "fraisetival",
+        label = "Fraisetival",
+        weight = 300,
+        type = "cocktail",
+        unique = false,
+        useable = true,
+        expiresIn = 240, -- in minutes
+        shouldClose = true,
+        combinable = nil,
+        description = "Un festival dans votre bouche !",
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 5,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0.5,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        prop = {
+            model = 'prop_shots_glass_cs',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.01 },
+        },
+        illustrator = ".Kutz"
+    },
+    lemonade_glass = {
+        name = "lemonade_glass",
+        label = "Verre de limonade",
+        weight = 300,
+        type = 'drink',
+        unique = false,
+        useable = true,
+        durability = 2,
+        shouldClose = true,
+        combinable = nil,
+        description = "Un rafraichissant verre de limonade",
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 5,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0.5,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        prop = {
+            model = 'prop_shots_glass_cs',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.01 },
+        },
+        illustrator = ".Kutz"
+    },
+
+    ['horror_cauldron'] = {
+        ['name'] = "horror_cauldron",
+        ['label'] = "Chaudron de l’épouvante",
+        ['weight'] = 1600,
+        ['type'] = "cocktail",
+        ['unique'] = false,
+        ['useable'] = true,
+        ['expiresIn'] = 240, -- in minutes
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Attention aux morceaux qui flottent.",
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 10,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 1,
+            ['protein'] = 0,
+            ['alcohol'] = 20,
+        },
+        ['illustrator'] = ".Erthes"
     },
     cocktail_box = {
         name = 'cocktail_box',
@@ -4026,7 +5467,8 @@ QBShared.Items = {
         useable = false,
         shouldClose = false,
         combinable = nil,
-        description = "Avec ça tu peux aller en boîte, AHAH."
+        description = "Avec ça tu peux aller en boîte, AHAH.",
+        illustrator = ".Kutz"
     },
     -- Fight For Style
     ['cotton_bale'] = {
@@ -4039,7 +5481,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = ".Smogogo"
     },
     ['natural_fiber'] = {
         ['name'] = 'natural_fiber',
@@ -4051,7 +5494,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = ".drako666 & Azur0ra"
     },
     ['synthetic_fiber'] = {
         ['name'] = 'synthetic_fiber',
@@ -4063,7 +5507,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = ".drako666 & Azur0ra"
     },
     ['artificial_fiber'] = {
         ['name'] = 'artificial_fiber',
@@ -4075,7 +5520,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = ".drako666 & Azur0ra"
     },
     ['leather'] = {
         ['name'] = 'leather',
@@ -4087,7 +5533,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = "S'associe bien avec le latex pour une raison... inconnue."
+        ['description'] = "S'associe bien avec le latex pour une raison... inconnue.",
+        ['illustrator'] = ".drako666 & Azur0ra"
     },
     ['latex'] = {
         ['name'] = 'latex',
@@ -4099,7 +5546,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = "S'associe bien avec le cuir pour une raison... inconnue."
+        ['description'] = "S'associe bien avec le cuir pour une raison... inconnue.",
+        ['illustrator'] = ".drako666 & Azur0ra"
     },
     ['sap'] = {
         ['name'] = 'sap',
@@ -4111,7 +5559,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = ".Crash"
     },
     ['garment_top'] = {
         ['name'] = 'garment_top',
@@ -4123,7 +5572,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = "Ta mamie te trouverait très beau avec ce vêtement mais il n'y a bien qu'elle."
+        ['description'] = "Ta mamie te trouverait très beau avec ce vêtement mais il n'y a bien qu'elle.",
+        ['illustrator'] = '.drako666 & Smogogo'
     },
     ['garment_pant'] = {
         ['name'] = 'garment_pant',
@@ -4135,7 +5585,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Il vaut mieux en avoir une paire.'
+        ['description'] = 'Il vaut mieux en avoir une paire.',
+        ['illustrator'] = '.drako666 & Azur0ra'
     },
     ['garment_shoes'] = {
         ['name'] = 'garment_shoes',
@@ -4147,7 +5598,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Toujours trouver chaussure à son pied.'
+        ['description'] = 'Toujours trouver chaussure à son pied.',
+        ['illustrator'] = '.drako666 & Azur0ra'
     },
     ['garment_underwear'] = {
         ['name'] = 'garment_underwear',
@@ -4159,7 +5611,60 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Enrobe délicatement vos formes pour les mettre en valeur lors de soirées trop arrosées.'
+        ['description'] = 'Enrobe délicatement vos formes pour les mettre en valeur lors de soirées trop arrosées.',
+        ['illustrator'] = '.drako666 & Azur0ra'
+    },
+    ['garment_gloves'] = {
+        ['name'] = 'garment_gloves',
+        ['label'] = "Gants",
+        ['pluralLabel'] = "Gants",
+        ['weight'] = 500,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'Protège vos mains des intempéries.',
+        ['illustrator'] = '.Freaks'
+    },
+    ['garment_bag'] = {
+        ['name'] = 'garment_bag',
+        ['label'] = "Sac",
+        ['pluralLabel'] = "Sacs",
+        ['weight'] = 1500,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'Pour transporter vos affaires.',
+        ['illustrator'] = '.Crash'
+    },
+    ['garment_underwear_top'] = {
+        ['name'] = 'garment_underwear_top',
+        ['label'] = "Haut de sous-vêtement",
+        ['pluralLabel'] = "Hauts de sous-vêtement",
+        ['weight'] = 800,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Marre d'être torse nu ?",
+        ['illustrator'] = '.Smogogo'
+    },
+    ['garment_mask'] = {
+        ['name'] = 'garment_mask',
+        ['label'] = "Masque",
+        ['pluralLabel'] = "Masques",
+        ['weight'] = 900,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Parfait pour les soirées déguisées. Ou pour autre chose...",
+        ['illustrator'] = '.Smogogo'
     },
     ['luxury_garment_top'] = {
         ['name'] = 'luxury_garment_top',
@@ -4171,7 +5676,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = "Fait avec les laines les plus douces de l'île"
+        ['description'] = "Fait avec les laines les plus douces de l'île",
+        ['illustrator'] = '.drako666 & Azur0ra'
     },
     ['luxury_garment_pant'] = {
         ['name'] = 'luxury_garment_pant',
@@ -4183,7 +5689,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Il vaut mieux en avoir une paire... et en or!'
+        ['description'] = 'Il vaut mieux en avoir une paire... et en or!',
+        ['illustrator'] = '.Crash'
     },
     ['luxury_garment_shoes'] = {
         ['name'] = 'luxury_garment_shoes',
@@ -4195,7 +5702,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Avec ça, on se sentirait comme Cendrillon.'
+        ['description'] = 'Avec ça, on se sentirait comme Cendrillon.',
+        ['illustrator'] = '.drako666 & Azur0ra'
     },
     ['luxury_garment_underwear'] = {
         ['name'] = 'luxury_garment_underwear',
@@ -4207,7 +5715,47 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = "Ça moule pas trop j'espère ?"
+        ['description'] = "Ça moule pas trop j'espère ?",
+        ['illustrator'] = '.Kutz & Devy'
+    },
+    ['luxury_garment_gloves'] = {
+        ['name'] = 'luxury_garment_gloves',
+        ['label'] = "Gants luxueux",
+        ['pluralLabel'] = "Gants luxueux",
+        ['weight'] = 500,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'De magnifiques gants pour vos magnifiques mains.',
+        ['illustrator'] = '.GautSlayer'
+    },
+    ['luxury_garment_bag'] = {
+        ['name'] = 'luxury_garment_bag',
+        ['label'] = "Sac luxueux",
+        ['pluralLabel'] = "Sacs luxueux",
+        ['weight'] = 1500,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'Celui là est un Louis Zuitton !',
+        ['illustrator'] = '.Crash'
+    },
+    ['luxury_garment_underwear_top'] = {
+        ['name'] = 'luxury_garment_underwear_top',
+        ['label'] = "Haut de sous-vêtement luxueux",
+        ['pluralLabel'] = "Hauts de sous-vêtement luxueux",
+        ['weight'] = 800,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Doux et soyeux, comme une peau de bébé.",
+        ['illustrator'] = '.Smogogo'
     },
     work_clothes = {
         name = 'work_clothes',
@@ -4219,7 +5767,8 @@ QBShared.Items = {
         useable = false,
         shouldClose = false,
         combinable = nil,
-        description = 'Il faut bien porter quelque chose quand on bosse, non ?'
+        description = 'Il faut bien porter quelque chose quand on bosse, non ?',
+        illustrator = '.Azur0ra'
     },
     -- ZEVENT 2022
     ['zevent2022_popcorn'] = {
@@ -4267,5 +5816,5444 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = "Un T-Shirt en hommage au ZEvent 2022.",
+    },
+    --- STONK
+    ['moneybag'] = {
+        ['name'] = 'moneybag',
+        ['label'] = 'Sac d\'argent',
+        ['weight'] = 2500,
+        ['type'] = 'item',
+        ['image'] = 'moneybag.png',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Un sac plein de THUNES.'
+    },
+    ['jewelbag'] = {
+        ['name'] = 'jewelbag',
+        ['label'] = 'Sac de bijoux marqué',
+        ['weight'] = 6000,
+        ['type'] = 'item',
+        ['image'] = 'moneybag.png',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Une rolex, un bracelet et des bagues qui brillent',
+        ['illustrator'] = '.MrAruls'
+    },
+    ['small_moneybag'] = {
+        ['name'] = 'small_moneybag',
+        ['label'] = 'Petit sac d’argent marqué',
+        ['weight'] = 2000,
+        ['type'] = 'item',
+        ['image'] = 'moneybag.png',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'A peine de quoi payer un café',
+        ['illustrator'] = '.Biblys & Smogogo'
+    },
+    ['medium_moneybag'] = {
+        ['name'] = 'medium_moneybag',
+        ['label'] = 'Moyen sac d’argent marqué',
+        ['weight'] = 4000,
+        ['type'] = 'item',
+        ['image'] = 'moneybag.png',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "A votre avis, combien ça vaut ?",
+        ['illustrator'] = '.Biblys & Smogogo'
+    },
+    ['big_moneybag'] = {
+        ['name'] = 'big_moneybag',
+        ['label'] = 'Grand sac d’argent marqué',
+        ['weight'] = 6000,
+        ['type'] = 'item',
+        ['image'] = 'moneybag.png',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "De quoi s'acheter un très gros jet. Privé le jet !",
+        ['illustrator'] = '.Biblys'
+    },
+    ['stonk__secure_container'] = {
+        ['name'] = 'stonk__secure_container',
+        ['label'] = 'Conteneur sécurisé STONK',
+        ['weight'] = 50000,
+        ['type'] = 'item',
+        ['image'] = 'moneybag.png',
+        ['unique'] = true,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Ce que contient ce conteneur est très incertain, mais au vu de son poids, il est irréfutable qu’il serait dangereux de le perdre.',
+        ['illustrator'] = '.Poulpitor'
+    },
+    --- Halloween
+    ['halloween2022_story'] = {
+        ['name'] = 'halloween2022_story',
+        ['label'] = 'Trophée d’Halloween 2022',
+        ['weight'] = 1000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = 'Preuve de la réussite d’une Horror Story lors de l’événement festif d’Halloween 2022.',
+        ['illustrator'] = '.Pastouke'
+    },
+    ['old_relic'] = {
+        ['name'] = 'old_relic',
+        ['label'] = 'Ancienne relique',
+        ['weight'] = 10000,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = 'Une ancienne relique ? Je devrais la ramener au vieux monsieur pour lui raconter la vraie histoire !',
+        ['illustrator'] = '.Smogogo'
+    },
+    ['bloody_knife'] = {
+        ['name'] = 'bloody_knife',
+        ['label'] = 'Couteau ensanglanté',
+        ['weight'] = 200,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = 'Un insigne indique qu’il provient des canaux de vespucci… Etrange…',
+        ['illustrator'] = '.Crash'
+    },
+    --- PAWL
+    ['small_coffin'] = {
+        ['name'] = 'small_coffin',
+        ['label'] = 'Cercueil miniature',
+        ['weight'] = 10000,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = 'Y\'a dla place dans cette petite boite.',
+        ['illustrator'] = '.Crash'
+    },
+    ['witch_broom'] = {
+        ['name'] = 'witch_broom',
+        ['label'] = 'Balais de sorcière',
+        ['weight'] = 4000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = 'Dérivé du Nimbus 3000, idéal pour nettoyer les nuages.',
+        ['illustrator'] = '.Smogogo'
+    },
+    --- LSMC
+    ['batrachian_eye'] = {
+        ['name'] = 'batrachian_eye',
+        ['label'] = 'Œil de batracien',
+        ['weight'] = 1000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = 'Jetez y un coup d\'œil',
+        ['illustrator'] = '.Smogogo'
+    },
+    ['zombie_hand'] = {
+        ['name'] = 'zombie_hand',
+        ['label'] = 'Main de zombie',
+        ['weight'] = 1000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = 'Quand un coup de pouce ne suffit pas !',
+        ['illustrator'] = '.Smogogo'
+    },
+    ['horrific_lollipop'] = {
+        ['name'] = 'horrific_lollipop',
+        ['label'] = 'Sucette horrifique',
+        ['weight'] = 200,
+        ['type'] = 'food',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['description'] = 'Une toute nouvelle recette inédite.',
+        ['nutrition'] = {
+            ['hunger'] = 10,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+            ['health'] = 20,
+        },
+        ['illustrator'] = '.Smogogo'
+    },
+    --- BAUN
+    ['surprise_candie'] = {
+        ['name'] = 'surprise_candie',
+        ['label'] = 'Bonbon surprise',
+        ['weight'] = 1000,
+        ['type'] = 'food',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['description'] = 'Gout crotte de nez ou œuf pourri ?',
+        ['nutrition'] = {
+            ['hunger'] = 15,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+            ['alcohol'] = 5,
+        },
+        ['illustrator'] = '.GautSlayer'
+    },
+    ---
+    ['bag_kibble'] = {
+        ['name'] = 'bag_kibble',
+        ['label'] = 'Croquette pour Iench',
+        ['weight'] = 5000,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = 'Wouaf wouaf wouaf wouaf !',
+        ['illustrator'] = '.Crash'
+    },
+    ['pumpkin'] = {
+        ['name'] = 'pumpkin',
+        ['label'] = 'Citrouille',
+        ['weight'] = 5000,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = 'Légume de saison.',
+        ['illustrator'] = '.Crash'
+    },
+    ['stuffed_pumpkin'] = {
+        ['name'] = 'stuffed_pumpkin',
+        ['label'] = 'Citrouille farcie',
+        ['weight'] = 1500,
+        ['type'] = 'food',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = 'C\'est pas une dinde...',
+        ['nutrition'] = {
+            ['hunger'] = 50,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+    },
+    ['pumpkin_soup'] = {
+        ['name'] = 'pumpkin_soup',
+        ['label'] = 'Soupe à la citrouille',
+        ['weight'] = 1000,
+        ['type'] = 'food',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = 'La bonne soupe de chez Mamie',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 50,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        ['illustrator'] = '.Crash'
+    },
+    --- Divers
+    ['head_of_your_dead'] = {
+        ['name'] = 'head_of_your_dead',
+        ['label'] = 'Tête de tes mort',
+        ['weight'] = 400,
+        ['type'] = 'food',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['description'] = 'Encore un qui a perdu la tête.',
+        ['nutrition'] = {
+            ['hunger'] = 50,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        ['illustrator'] = '.GautSlayer'
+    },
+    ['horror_moon'] = {
+        ['name'] = 'horror_moon',
+        ['label'] = 'Lune horrifique',
+        ['weight'] = 600,
+        ['type'] = 'food',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['description'] = 'Et c\'est pas celle du plombier.',
+        ['nutrition'] = {
+            ['hunger'] = 50,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        ['illustrator'] = '.Crash'
+    },
+    ['unopenable_gift'] = {
+        ['name'] = 'unopenable_gift',
+        ['label'] = 'Cadeau impossible à ouvrir',
+        ['weight'] = 1000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = 'Renforcé par Infochat au scotch.',
+        ['illustrator'] = '.GautSlayer'
+    },
+    ['fake_birthday_cake'] = {
+        ['name'] = 'fake_birthday_cake',
+        ['label'] = 'Faux gâteau d’anniversaire',
+        ['weight'] = 800,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = 'The cake is a lie.',
+        ['illustrator'] = '.Smogogo'
+    },
+    ['naked_brain'] = {
+        ['name'] = 'naked_brain',
+        ['label'] = 'Cerveau tout nu',
+        ['weight'] = 600,
+        ['type'] = 'drink',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['description'] = 'Gratte-lui les méninges',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 100,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        ['illustrator'] = '.SuperPG'
+    },
+    ['halloween_shopping_bag'] = {
+        ['name'] = 'halloween_shopping_bag',
+        ['label'] = 'Sac de courses d’halloween',
+        ['weight'] = 500,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = 'Pour transporter tes horreurs.',
+        ['illustrator'] = '.SuperPG'
+    },
+    ['new_year_bottle_2023'] = {
+        ['name'] = 'new_year_bottle_2023',
+        ['label'] = 'Joyeuze année 2023',
+        ['weight'] = 1000,
+        ['type'] = 'drink',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['durability'] = 365,
+        ['combinable'] = nil,
+        ['description'] = 'Cadeau offert à l\'occassion du début d\'année 2023, accompagné de son luxueux caddy.',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 10,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 10,
+            ['protein'] = 0,
+            ['alcohol'] = 40,
+        },
+    },
+    ['ducktape'] = {
+        ['name'] = 'ducktape',
+        ['label'] = 'Ruban adhésif',
+        ['weight'] = 200,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = 'Attache tout et n\'importe quoi.',
+        ['illustrator'] = '.theseds',
+    },
+    ['plastic_piece'] = {
+        ['name'] = 'plastic_piece',
+        ['label'] = 'Morceau de plastique',
+        ['weight'] = 200,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = 'Issu du tri sélectif.',
+        ['illustrator'] = '.DaraBesque',
+    },
+    ['cigarette_used'] = {
+        ['name'] = 'cigarette_used',
+        ['label'] = "Cigarette usagée 'Era'",
+        ['weight'] = 50,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = 'Cigarette déja utilisée.',
+        ['illustrator'] = '.NariieL',
+    },
+    ['cigarette_pack'] = {
+        ['name'] = 'cigarette_pack',
+        ['label'] = 'Paquet de cigarette \'Era\'',
+        ['weight'] = 300,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['durability'] = 7,
+        ['description'] = 'Mauvais pour la santé, bon pour le business.',
+        ['illustrator'] = '.NariieL',
+    },
+    ['silicone_tube'] = {
+        ['name'] = 'silicone_tube',
+        ['label'] = 'Tube en silicone',
+        ['weight'] = 200,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = 'Origine douteuse vu les résiduts. ',
+        ['illustrator'] = '.Poulpito',
+    },
+    ['failyv_console'] = {
+        ['name'] = 'failyv_console',
+        ['label'] = 'Console portable FailyV',
+        ['weight'] = 800,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = 'Sortie en 2017 mais toujours fonctionnelle. ',
+        ['illustrator'] = '.NariieL',
+    },
+    ['momanus_toothpaste'] = {
+        ['name'] = 'momanus_toothpaste',
+        ['label'] = 'Dentifrice MoMaNuS',
+        ['weight'] = 300,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = 'Qui veut des dents propre ?!',
+        ['illustrator'] = '.Poulpito',
+    },
+    ['bronze_panther'] = {
+        ['name'] = 'bronze_panther',
+        ['label'] = 'Panthère en bronze',
+        ['weight'] = 1000,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = 'Devait orner le bureau d\'un patron.',
+        ['illustrator'] = '.theseds',
+    },
+    ['primed_battery'] = {
+        ['name'] = 'primed_battery',
+        ['label'] = 'Batterie entamée',
+        ['weight'] = 1000,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = 'Suffisant pour allumer une ampoule. ',
+        ['illustrator'] = '.Poulpito',
+    },
+    ['electric_cable'] = {
+        ['name'] = 'electric_cable',
+        ['label'] = 'Câble électrique',
+        ['weight'] = 300,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = 'Ne dispose pas de l\'option wireless',
+        ['illustrator'] = '.Poulpito',
+    },
+    ['metal_pieces'] = {
+        ['name'] = 'metal_pieces',
+        ['label'] = 'Pièces détachées métalliques',
+        ['weight'] = 300,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = 'Certifié qualitée DeMetal.',
+        ['illustrator'] = '.DaraBesque',
+    },
+    ['regulator'] = {
+        ['name'] = 'regulator',
+        ['label'] = 'Régulateur',
+        ['weight'] = 400,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = 'Ne régule pas la vitesse.',
+        ['illustrator'] = '.Poulpito',
+    },
+    ['capacitor'] = {
+        ['name'] = 'capacitor',
+        ['label'] = 'Condensateur',
+        ['weight'] = 400,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = 'Stocke un peu d\'énergie. ',
+        ['illustrator'] = '.Sniteur',
+    },
+    ['phase_control_relay'] = {
+        ['name'] = 'phase_control_relay',
+        ['label'] = 'Relais de contrôle de phase',
+        ['weight'] = 300,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = 'On, Off, On, Off ...',
+        ['illustrator'] = '.Poulpito',
+    },
+    ['radar_lens'] = {
+        ['name'] = 'radar_lens',
+        ['label'] = 'Lentille de radar',
+        ['weight'] = 200,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = 'Correction -5 dioptries.',
+        ['illustrator'] = '.theseds',
+    },
+    ['radar_flash'] = {
+        ['name'] = 'radar_flash',
+        ['label'] = 'Flash de radar',
+        ['weight'] = 200,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = 'Brille de mille feux. ',
+        ['illustrator'] = '.Poulpito',
+    },
+    ['accelerometer'] = {
+        ['name'] = 'accelerometer',
+        ['label'] = 'Accéléromètre',
+        ['weight'] = 500,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = 'Précis entre 0 et 10G. ',
+        ['illustrator'] = '.Sniteur',
+    },
+    ['conductive_wire'] = {
+        ['name'] = 'conductive_wire',
+        ['label'] = 'Fils conducteurs',
+        ['weight'] = 200,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = '100% cuivre.',
+        ['illustrator'] = '.Poulpito',
+    },
+    ['rechargeable_battery'] = {
+        ['name'] = 'rechargeable_battery',
+        ['label'] = 'Batterie rechargeable',
+        ['weight'] = 800,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = 'Indispensable et meilleur pour la planète. ',
+        ['illustrator'] = '.Sniteur',
+    },
+    ['circuit_board'] = {
+        ['name'] = 'circuit_board',
+        ['label'] = 'Circuit imprimé',
+        ['weight'] = 200,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = '2.21 Ghz et 3To de ram. ',
+        ['illustrator'] = '.Sniteur',
+    },
+    ['lcd_screen'] = {
+        ['name'] = 'lcd_screen',
+        ['label'] = 'Ecran LCD',
+        ['weight'] = 400,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = '4k 240Hz quadriLED à variation de lumen. ',
+        ['illustrator'] = '.Poulpito',
+    },
+    ['storage_module'] = {
+        ['name'] = 'storage_module',
+        ['label'] = 'Module de stockage',
+        ['weight'] = 500,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = 'Contient encore des données.',
+        ['illustrator'] = '.Sniteur',
+    },
+    ['programmable_processor'] = {
+        ['name'] = 'programmable_processor',
+        ['label'] = 'Processeur programmable',
+        ['weight'] = 300,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = 'Assez puissant pour faire tourner tetris. ',
+        ['illustrator'] = '.Sniteur',
+    },
+    ['transmitter'] = {
+        ['name'] = 'transmitter',
+        ['label'] = 'Transmetteur',
+        ['weight'] = 800,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = 'Indispensable pour une communication sans fil. ',
+        ['illustrator'] = '.Sniteur',
+    },
+    ['secure_usb_key'] = {
+        ['name'] = 'secure_usb_key',
+        ['label'] = 'Clé USB sécurisé',
+        ['weight'] = 200,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = 'Top Secret.',
+        ['illustrator'] = '.Poulpito',
+    },
+    ['nuts'] = {
+        ['name'] = 'nuts',
+        ['label'] = 'Ecrous',
+        ['weight'] = 300,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = 'Mais où est le boulon qui va avec. ',
+        ['illustrator'] = '.theseds',
+    },
+    ['plexiglass_piece'] = {
+        ['name'] = 'plexiglass_piece',
+        ['label'] = 'Morceau de Plexiglas',
+        ['weight'] = 200,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = 'Dispose encore de son film de protection. ',
+        ['illustrator'] = '.DaraBesque',
+    },
+    ['screw'] = {
+        ['name'] = 'screw',
+        ['label'] = 'Vis',
+        ['weight'] = 300,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = 'Tête cruciforme diamètre 1/4".',
+        ['illustrator'] = '.theseds',
+    },
+    ['plastic_jerrycan'] = {
+        ['name'] = 'plastic_jerrycan',
+        ['label'] = 'Jerrican en plastique',
+        ['weight'] = 500,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = 'Sécurité pour éviter la panne.',
+        ['illustrator'] = '.Poulpito',
+    },
+    ['fuel_additive'] = {
+        ['name'] = 'fuel_additive',
+        ['label'] = 'Additif pour carburant',
+        ['weight'] = 500,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = 'Réduit les émissions de polluants.',
+        ['illustrator'] = '.Sniteur',
+    },
+    ['propane_tank'] = {
+        ['name'] = 'propane_tank',
+        ['label'] = 'Bonbonne de propane',
+        ['weight'] = 500,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = 'Attention, peut exploser à tout moment. ',
+        ['illustrator'] = '.theseds',
+    },
+    ['kenny_lighter'] = {
+        ['name'] = 'kenny_lighter',
+        ['label'] = 'Briquet "Kenny"',
+        ['weight'] = 200,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = 'T\'as du feu mec ? ',
+        ['illustrator'] = '.theseds',
+    },
+    ['fuel_gel'] = {
+        ['name'] = 'fuel_gel',
+        ['label'] = 'Gel combustible',
+        ['weight'] = 500,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = 'Idéal pour allumer un barbecue. ',
+        ['illustrator'] = '.Poulpito',
+    },
+    ['lsmc_calendar_2023'] = {
+        ['name'] = 'lsmc_calendar_2023',
+        ['label'] = 'Calendrier du LSMC 2023',
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Ne laissez pas les accidents vous prendre de court pour 2023',
+        ['illustrator'] = '.NariieL',
+    },
+    ['newcomer_ticket'] = {
+        ['name'] = 'newcomer_ticket',
+        ['label'] = 'Ticket nouvel arrivant',
+        ['weight'] = 0,
+        ['type'] = 'item',
+        ['durability'] = 10,
+        ['unique'] = false,
+        ['useable'] = true,
+        ['not_searchable'] = true,
+        ['description'] = "Bienvenue à Los Santos ! Profite d'avantages particuliers durant toute ta période d'accueil. ❤️",
+        ['illustrator'] = '.NariieL',
+    },
+    ["fake_bracelet"] = {
+        ["name"] = "fake_bracelet",
+        ["label"] = "Bracelet en toc",
+        ["weight"] = 300,
+        ["type"] = "item_illegal",
+        ["unique"] = false,
+        ["useable"] = false,
+        ["description"] = "Vive le dropshipping. ",
+        ['illustrator'] = '.DaraBesque',
+    },
+    ["damaged_smartphone"] = {
+        ["name"] = "damaged_smartphone",
+        ["label"] = "Smartphone endommagé",
+        ["weight"] = 200,
+        ["type"] = "item_illegal",
+        ["unique"] = false,
+        ["useable"] = false,
+        ["description"] = "Si seulement il pouvait raconter ce qu'il a vécu. ",
+        ['illustrator'] = '.DaraBesque',
+    },
+    ["grand_ma_handbag"] = {
+        ["name"] = "grand_ma_handbag",
+        ["label"] = "Sac à mains de Mamie",
+        ["weight"] = 1000,
+        ["type"] = "item_illegal",
+        ["unique"] = false,
+        ["useable"] = false,
+        ["description"] = "Attention au dentier qui peut être dedans. ",
+        ['illustrator'] = '.DaraBesque',
+    },
+    ["random_gift_card"] = {
+        ["name"] = "random_gift_card",
+        ["label"] = "Bon d'achat quelconque",
+        ["weight"] = 200,
+        ["type"] = "item_illegal",
+        ["unique"] = false,
+        ["useable"] = false,
+        ["description"] = "-20% réduction immédiate. ",
+        ['illustrator'] = '.DaraBesque',
+    },
+    ["grand_pa_denture"] = {
+        ["name"] = "grand_pa_denture",
+        ["label"] = "Dentier de papy",
+        ["weight"] = 300,
+        ["type"] = "item_illegal",
+        ["unique"] = false,
+        ["useable"] = false,
+        ["description"] = "Encore baveux.",
+        ['illustrator'] = '.DaraBesque',
+    },
+    ["credit_card"] = {
+        ["name"] = "credit_card",
+        ["label"] = "Carte de crédit",
+        ["weight"] = 200,
+        ["type"] = "item_illegal",
+        ["unique"] = false,
+        ["useable"] = false,
+        ["description"] = "Inutile sans le code",
+        ['illustrator'] = '.Sniteur',
+    },
+    ["express_trip_ticket"] = {
+        ["name"] = "express_trip_ticket",
+        ["label"] = "Ticket VoyageExpress",
+        ["weight"] = 200,
+        ["type"] = "item_illegal",
+        ["unique"] = false,
+        ["useable"] = false,
+        ["description"] = "Rendez vous en terre inconnue. ",
+        ['illustrator'] = '.DaraBesque',
+    },
+    ["brand_new_smartphone"] = {
+        ["name"] = "brand_new_smartphone",
+        ["label"] = "Smartphone tout neuf",
+        ["weight"] = 300,
+        ["type"] = "item_illegal",
+        ["unique"] = false,
+        ["useable"] = false,
+        ["description"] = "Surement un Iphoune 15 XXL.",
+        ['illustrator'] = '.DaraBesque',
+    },
+    ['special_drill'] = {
+        ['name'] = 'special_drill',
+        ['label'] = 'Perceuse spéciale',
+        ['weight'] = 1000,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['durability'] = 7,
+        ['description'] = 'Parfait pour les coffres-forts les mieux protégés.',
+        ['illustrator'] = '.DaraBesque',
+    },
+    ["missive"] = {
+        ["name"] = "missive",
+        ["label"] = "Contrat",
+        ["weight"] = 200,
+        ["type"] = "item_illegal",
+        ["unique"] = false,
+        ["useable"] = true,
+        ["description"] = "Fait attention à ce que tu fais avec pour ne pas avoir de problème...",
+        ['illustrator'] = '.Sniteur',
+    },
+    ['suspicious_package'] = {
+        ['name'] = 'suspicious_package',
+        ['label'] = 'Colis suspect',
+        ['weight'] = 0,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'C\'est suspect... un conseil, n\'essaie pas de l\'ouvrir.',
+        ['illustrator'] = '.Sniteur',
+    },
+    ["light_intervention_outfit"] = {
+        ['name'] = "light_intervention_outfit",
+        ['label'] = "Tenue d'intervention",
+        ['weight'] = 5000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = '',
+    },
+    ["heavy_antiriot_outfit"] = {
+        ['name'] = "heavy_antiriot_outfit",
+        ['label'] = "Tenue antiémeute",
+        ['weight'] = 3000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = '',
+    },
+    ["mobile_radar"] = {
+        ['name'] = "mobile_radar",
+        ['label'] = "Zadar mobile",
+        ['weight'] = 1500,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'L\'arme idéale contre les chauffards. ',
+    },
+    ["breathanalyzer"] = {
+        ['name'] = "breathanalyzer",
+        ['label'] = "Alcootest",
+        ['weight'] = 800,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'Ne doit pas être utilisé pour faire des records. ',
+    },
+    ["screening_test"] = {
+        ['name'] = "screening_test",
+        ['label'] = "Test de dépistage",
+        ['weight'] = 200,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Je vous jure que j'ai pas fumé. Sauf une fois au chalet.",
+        ['illustrator'] = '.Poulpito',
+    },
+    ['zip'] = {
+        ['name'] = 'zip',
+        ['label'] = 'Zip',
+        ['weight'] = 300,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['durability'] = 7,
+        ['combinable'] = nil,
+        ['description'] = 'Idéale pour des fêtes un peu spécial...',
+    },
+    ['lockpick_low'] = {
+        ['name'] = 'lockpick_low',
+        ['label'] = 'Kit de crochetage miteux',
+        ['weight'] = 800,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['durability'] = 7,
+        ['combinable'] = nil,
+        ['description'] = 'Ca casse ou ca passe',
+        ['illustrator'] = '.NariieL',
+    },
+    ['parking_ticket_fake'] = {
+        ['name'] = 'parking_ticket_fake',
+        ['label'] = 'Faux ticket de parking',
+        ['weight'] = 200,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['durability'] = 7,
+        ['combinable'] = nil,
+        ['description'] = 'HTD places qu\'il disait.',
+        ['illustrator'] = '.Poulpito',
+    },
+    ['clothing_job_low'] = {
+        ['name'] = 'clothing_job_low',
+        ['label'] = 'Tenue de stagiaire Pôle emploi',
+        ['weight'] = 2000,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['durability'] = 7,
+        ['combinable'] = nil,
+        ['description'] = 'Prêt pour le monde du travail !',
+        ['illustrator'] = '.Poulpito',
+    },
+    ['antistress_diy'] = {
+        ['name'] = 'antistress_diy',
+        ['label'] = 'Anti-Stress Artisanal.',
+        ['weight'] = 300,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['durability'] = 7,
+        ['combinable'] = nil,
+        ['description'] = 'Une potion magique pour apaiser les nerfs des plus stressés.',
+        ['illustrator'] = '.NariieL',
+    },
+    ['bulletproof_vest_low'] = {
+        ['name'] = 'bulletproof_vest_low',
+        ['label'] = 'Gilet pare-balles miteux',
+        ['weight'] = 5000,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['durability'] = 7,
+        ['combinable'] = nil,
+        ['description'] = 'Ca fera l\'affaire',
+        ['illustrator'] = '.Sniteur',
+    },
+    ['clothing_job_medium'] = {
+        ['name'] = 'clothing_job_medium',
+        ['label'] = 'Tenue de stagiaire d\'entreprise privée',
+        ['weight'] = 2000,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['durability'] = 7,
+        ['combinable'] = nil,
+        ['description'] = 'Stagiaire incognito. ',
+        ['illustrator'] = '.NariieL',
+    },
+    ['mre_zera'] = {
+        ['name'] = 'mre_zera',
+        ['label'] = 'MRE "Zera"',
+        ['weight'] = 1000,
+        ['type'] = 'food',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['durability'] = 7,
+        ['combinable'] = nil,
+        ['description'] = 'Pour ceux qui ont un goût douteux.',
+        ['nutrition'] = {
+            ['hunger'] = 50,
+            ['thirst'] = 50,
+            ['stamina'] = 0,
+            ['fiber'] = 10,
+            ['lipid'] = 5,
+            ['sugar'] = 0,
+            ['protein'] = 10,
+            ['alcohol'] = 0,
+        },
+        ['illustrator'] = '.Chouki',
+    },
+    ['essence_jerrycan_low'] = {
+        ['name'] = 'essence_jerrycan_low',
+        ['label'] = 'Bidons d\'essence artisanal',
+        ['weight'] = 1500,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['durability'] = 7,
+        ['combinable'] = nil,
+        ['description'] = 'Ca siphone, ca siphone',
+        ['illustrator'] = '.DaraBesque',
+    },
+    ['antistress_pro'] = {
+        ['name'] = 'antistress_pro',
+        ['label'] = 'Baume Anti-Stress',
+        ['weight'] = 500,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['durability'] = 7,
+        ['combinable'] = nil,
+        ['description'] = 'Mieux que BAUN',
+        ['illustrator'] = '.Sniteur',
+    },
+    ['lockpick_medium'] = {
+        ['name'] = 'lockpick_medium',
+        ['label'] = 'Kit de crochetage avancé',
+        ['weight'] = 800,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['durability'] = 7,
+        ['combinable'] = nil,
+        ['description'] = 'Capable d\'atteindre la petite goupille au fond à gauche.',
+        ['illustrator'] = '.NariieL',
+    },
+    ['bulletproof_vest_medium'] = {
+        ['name'] = 'bulletproof_vest_medium',
+        ['label'] = 'Gilet pare-balles artisanal',
+        ['weight'] = 8000,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['durability'] = 7,
+        ['combinable'] = nil,
+        ['description'] = 'Fait maison avec amour, ce gilet-par-balle protégera peut-être votre vie... ou pas.',
+        ['illustrator'] = '.Sniteur'
+    },
+    ['remote_crafting_kit'] = {
+        ['name'] = 'remote_crafting_kit',
+        ['label'] = 'Kit de confection mobile',
+        ['weight'] = 10000,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['durability'] = 7,
+        ['combinable'] = nil,
+        ['description'] = 'Walter Withe serait jaloux',
+        ['illustrator'] = '.Sniteur'
+    },
+    ['clothing_job_high'] = {
+        ['name'] = 'clothing_job_high',
+        ['label'] = 'Tenue de stagiaire d\'entreprise public',
+        ['weight'] = 3000,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['durability'] = 7,
+        ['combinable'] = nil,
+        ['description'] = 'Un cosplay fait toujours un bon effet...',
+        ['illustrator'] = '.NariieL'
+    },
+    ['lockpick_high'] = {
+        ['name'] = 'lockpick_high',
+        ['label'] = 'Déverrouilleur universel',
+        ['weight'] = 1000,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Pour ouvrir toutes les portes sans exception.',
+        ['illustrator'] = '.Sniteur'
+    },
+    ['injector_morphine'] = {
+        ['name'] = 'injector_morphine',
+        ['label'] = 'Injecteur de morphine',
+        ['weight'] = 500,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['durability'] = 7,
+        ['combinable'] = nil,
+        ['description'] = 'cl_customcrosshair 1',
+        ['illustrator'] = '.Poulpito'
+    },
+    ['injector_adrenaline'] = {
+        ['name'] = 'injector_adrenaline',
+        ['label'] = 'Injecteur d\'adrénaline',
+        ['weight'] = 500,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['durability'] = 7,
+        ['combinable'] = nil,
+        ['description'] = 'Attention à la crise cardiaque.',
+        ['illustrator'] = '.Poulpito'
+    },
+    ['injector_propital'] = {
+        ['name'] = 'injector_propital',
+        ['label'] = 'Injecteur de stimulant régénérant Propital',
+        ['weight'] = 500,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['durability'] = 7,
+        ['combinable'] = nil,
+        ['description'] = 'MEDIC !!!!!',
+        ['illustrator'] = '.Poulpito'
+    },
+    ['injector_mule'] = {
+        ['name'] = 'injector_mule',
+        ['label'] = 'Injecteur de stimulant M.U.L.E',
+        ['weight'] = 500,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['durability'] = 7,
+        ['combinable'] = nil,
+        ['description'] = 'Enorme et sec. ',
+        ['illustrator'] = '.Poulpito'
+    },
+    ['injector_etgc'] = {
+        ['name'] = 'injector_etgc',
+        ['label'] = 'Injecteur de stimulant régénératif eTG-C',
+        ['weight'] = 500,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['durability'] = 7,
+        ['combinable'] = nil,
+        ['description'] = 'SAGE HEAL PLEASE',
+        ['illustrator'] = '.Poulpito'
+    },
+    ['jewelbag_illegal'] = {
+        ['name'] = 'jewelbag_illegal',
+        ['label'] = 'Sac de bijoux',
+        ['weight'] = 5000,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Même le sac est luxueux. ',
+        ['illustrator'] = '.DaraBesque'
+    },
+    ['small_moneybag_illegal'] = {
+        ['name'] = 'small_moneybag_illegal',
+        ['label'] = 'Petit sac d\'argent',
+        ['weight'] = 1000,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Petite bourse d\'argent bien mérité. ',
+        ['illustrator'] = '.Sniteur'
+    },
+    ['medium_moneybag_illegal'] = {
+        ['name'] = 'medium_moneybag_illegal',
+        ['label'] = 'Moyen sac d’argent',
+        ['weight'] = 1500,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Rempli de liasses. ",
+        ['illustrator'] = '.Sniteur'
+    },
+    ['big_moneybag_illegal'] = {
+        ['name'] = 'big_moneybag_illegal',
+        ['label'] = 'Grand sac d\'argent',
+        ['weight'] = 2000,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "De quoi être plein aux as. ",
+        ['illustrator'] = '.Sniteur'
+    },
+    ['police_pliers'] = {
+        ['name'] = 'police_pliers',
+        ['label'] = 'Pince policière',
+        ['weight'] = 200,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Attention ca coupe. ",
+        ['illustrator'] = '.Poulpito'
+    },
+    ['torn_garbagebag'] = {
+        ['name'] = 'torn_garbagebag',
+        ['label'] = 'Sac de détritus déchiré',
+        ['weight'] = 4000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Quelqu'un est passé par là et à tout déchiré...",
+        ['illustrator'] = '.Poulpito'
+    },
+    ['golden_egg'] = {
+        ['name'] = 'golden_egg',
+        ['label'] = "Œuf d'or",
+        ['weight'] = 1200,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Orné de gravures et d'incrustations précieuses, cet œuf en or est un objet précieux et rare qui est souvent associé à la prospérité. Tu as de la chance de l'avoir !",
+        ['illustrator'] = '.Poulpito'
+    },
+    ['chocolate_bunny'] = {
+        ['name'] = 'chocolate_bunny',
+        ['label'] = "Lapin en chocolat",
+        ['weight'] = 300,
+        ['type'] = 'food',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['durability'] = 14,
+        ['description'] = "Délicieuse gourmandise sucrée fabriqué à partir de chocolat au lait, blanc ou noir et est moulé dans la forme d'un lapin.",
+        ['nutrition'] = {
+            ['hunger'] = 15,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 5,
+            ['sugar'] = 10,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        ['illustrator'] = '.Poulpito'
+    },
+    ['easter_basket'] = {
+        ['name'] = 'easter_basket',
+        ['label'] = "Panier de Pâques",
+        ['weight'] = 500,
+        ['type'] = 'food',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['durability'] = 14,
+        ['description'] = "Objet décoratif traditionnel utilisé pour collecter et contenir des œufs de Pâques. Celui-ci est fabriqué à partir de matériaux naturels tels que de l'osier. De nombreux oeufs de pâques sont prêts à être manger à l'intérieur.",
+        ['nutrition'] = {
+            ['hunger'] = 50,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 15,
+            ['sugar'] = 30,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        ['illustrator'] = '.Poulpito'
+    },
+    ['stuffed_rabbit'] = {
+        ['name'] = 'stuffed_rabbit',
+        ['label'] = "Peluche 'Lapin'",
+        ['weight'] = 150,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Cette peluche est faite d'un tissu doux et moelleux, et sa forme représente celle d'un lapin, avec de grandes oreilles et une queue moelleuse. Sa mignonnerie vous détend et vous rend tout doux !",
+        ['illustrator'] = '.Poulpito'
+    },
+    ['easter_bell'] = {
+        ['name'] = 'easter_bell',
+        ['label'] = "Cloche de Pâques",
+        ['weight'] = 2500,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Traditionnellement utilisé pour annoncer l'arrivée de Pâques, cette cloche vous rappel de bons souvenirs. Son poids est cependant étonnamment important.",
+        ['illustrator'] = '.Poulpito'
+    },
+    ['chocolat_bread'] = {
+        ['name'] = 'chocolat_bread',
+        ['label'] = "Pain au chocolatine",
+        ['weight'] = 200,
+        ['type'] = 'food',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['durability'] = 14,
+        ['description'] = "Tendre et moelleux, cette viennoiserie à la pâte feuilletée vous fait succuber. Mais attendez... Quel est ce nom ? Serait-ce un mix entre un Pain au Chocolat et une Chocolatine ?!....",
+        ['nutrition'] = {
+            ['hunger'] = 15,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 3,
+            ['sugar'] = 8,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        ['illustrator'] = '.Poulpito'
+    },
+    ['chocolat_egg'] = {
+        ['name'] = 'chocolat_egg',
+        ['label'] = "Œuf en chocolat",
+        ['weight'] = 50,
+        ['type'] = 'food',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['durability'] = 14,
+        ['description'] = "Elle est sexy, raffinée (sexy, raffinée) ! Chocolat, cho-cho-cho-chocolat.",
+        ['nutrition'] = {
+            ['hunger'] = 5,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 1,
+            ['sugar'] = 3,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        ['illustrator'] = '.Poulpito'
+    },
+    ['chocolat_milk_egg'] = {
+        ['name'] = 'chocolat_milk_egg',
+        ['label'] = "Œuf en chocolat au lait",
+        ['weight'] = 50,
+        ['type'] = 'food',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['durability'] = 14,
+        ['description'] = "Elle est sexy, raffinée (sexy, raffinée) ! Chocolat, cho-cho-cho-chocolat au lait !",
+        ['nutrition'] = {
+            ['hunger'] = 5,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 1,
+            ['sugar'] = 3,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        ['illustrator'] = '.Poulpito'
+    },
+    ['bunny_ear'] = {
+        ['name'] = 'bunny_ear',
+        ['label'] = "Oreille de lapin.e",
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Mignonne paire d'oreilles de lapin.e ! Idéale pour... Mmmmh.",
+        ['illustrator'] = '.Poulpito'
+    },
+    ['paycrimi_card'] = {
+        ['name'] = 'paycrimi_card',
+        ['label'] = "Carte PayCrimi™",
+        ['weight'] = 150,
+        ['type'] = 'item_illegal',
+        ['durability'] = 7,
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Fabriquée à partir de plusieurs matériaux, cette carte bancaire assure à n'importe qui de pouvoir payer une seule transaction, que ça soit amende ou facture, à l'aide d'argent sale.",
+        ['illustrator'] = '.Poulpito'
+    },
+    ['empty_lunchbox'] = {
+        ['name'] = 'empty_lunchbox',
+        ['label'] = "Panier-Repas vide",
+        ['weight'] = 200,
+        ['type'] = 'crate',
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Idéal pour y ajouter nourritures et boissons !",
+        ['illustrator'] = '.Poulpito'
+    },
+    ['lunchbox'] = {
+        ['name'] = 'lunchbox',
+        ['label'] = "Panier-Repas",
+        ['weight'] = 200,
+        ['useable'] = true,
+        ['type'] = 'crate',
+        ['shouldClose'] = false,
+        ['unique'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Panier-repas contenant :",
+        ['illustrator'] = '.Poulpito'
+    },
+    ['fleeca_money_bag'] = {
+        ['name'] = 'fleeca_money_bag',
+        ['label'] = "Sac de FLEECA",
+        ['weight'] = 5000,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Money money money !',
+        ['illustrator'] = '.Poulpito'
+    },
+    ['medal_of_merit'] = {
+        ['name'] = 'medal_of_merit',
+        ['label'] = "Médaille du mérite",
+        ['weight'] = 500,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Décernée aux membres des forces de l'ordre ainsi qu'aux civils travaillant pour la Défense qui se sont distingués par leur conduite et leur manière de servir ou par des prestations occasionnelles qui revêtent un caractère exceptionnel.",
+    },
+    ['products_heavy_box'] = {
+        ['name'] = 'products_heavy_box',
+        ['label'] = "Lourde caisse de produits",
+        ['weight'] = 2000,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Cette lourde caisse semble être remplit de cachets, seringues et poudres diverses. Une odeur peu familière s'en dégage.",
+        ['illustrator'] = '.Sniteur'
+    },
+    ['900k_album'] = {
+        ['name'] = '900k_album',
+        ['label'] = "Album 900k",
+        ['weight'] = 200,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Album musical du plus grand des artistes français.",
+        ['illustrator'] = '.Nariiel'
+    },
+
+    ['sell_contract'] = {
+        ['name'] = 'sell_contract',
+        ['label'] = 'Contrat de vente',
+        ['weight'] = 250,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['onlyone'] = true,
+        ['durability'] = 10,
+        ['description'] = "Un texte y demandant plusieurs pochons de drogues en même temps, à direction de plusieurs adresses inconnues.",
+        ['illustrator'] = '.Sniteur'
+    },
+    ['heavy_sell_contract'] = {
+        ['name'] = 'heavy_sell_contract',
+        ['label'] = 'Contrat de vente lourde',
+        ['weight'] = 250,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['onlyone'] = true,
+        ['durability'] = 10,
+        ['description'] = "Plusieurs écrits stipulent de lourdes caisses de drogues, en direction de plusieurs adresses mystères.",
+        ['illustrator'] = '.Sniteur'
+    },
+
+    ['mushroom'] = {
+        ['name'] = 'mushroom',
+        ['label'] = 'Champignon',
+        ['weight'] = 750,
+        ['type'] = 'item_illegal',
+        ['durability'] = 14,
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Inoffensifs à première vue, mais à la forte caractéristique hallucinogène.",
+        ['illustrator'] = '.Sniteur'
+    },
+    ['fruiting_bag'] = {
+        ['name'] = 'fruiting_bag',
+        ['label'] = 'Sac de fructification',
+        ['weight'] = 1000,
+        ['type'] = 'drug_pot',
+        ['durability'] = 14,
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Prêt à être utilisé afin d'y faire développer quelconque écosystème.",
+        ['illustrator'] = '.Sniteur',
+        ['drug_pot'] = {
+            ['target'] = 'mushrooms_fruiting_bag',
+            ['ingredient'] = 'mushroom',
+            ['nbIngredient'] = 60,
+        }
+    },
+    ['mushrooms_fruiting_bag'] = {
+        ['name'] = 'mushrooms_fruiting_bag',
+        ['label'] = 'Sac de fructification à champignons',
+        ['weight'] = 7500,
+        ['type'] = 'item_illegal',
+        ['durability'] = 14,
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Permet aux champignons de se développer parfaitement dans un environnement propice à celui-ci.",
+        ['illustrator'] = '.Sniteur'
+    },
+    ['processed_psilocybine'] = {
+        ['name'] = 'processed_psilocybine',
+        ['label'] = 'Psilocybine traitée',
+        ['weight'] = 750,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Est un puissant hallucinogène fabriqué à partir de champignon. Elle est réputée pour ses effets euphoriques et sa capacité à provoquer une hyperactivité.",
+        ['illustrator'] = '.Sniteur'
+    },
+    ['psilocybine_space_cake'] = {
+        ['name'] = 'psilocybine_space_cake',
+        ['label'] = 'Gâteau Spatial Psilocybine',
+        ['weight'] = 250,
+        ['type'] = 'drug',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['durability'] = 14,
+        ['description'] = "Décollage, direction l'espace !",
+        ['nutrition'] = {
+            ['hunger'] = 20,
+            ['drug'] = 30,
+        },
+        ['illustrator'] = '.Sniteur'
+    },
+    ['psilocybine_bag'] = {
+        ['name'] = 'psilocybine_bag',
+        ['label'] = 'Sachet de Psilocybine',
+        ['weight'] = 525,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Contient assez de Psilocybine pour être vendu à n'importe quel client.",
+        ['illustrator'] = '.Sniteur'
+    },
+    ['psilocybine_box'] = {
+        ['name'] = 'psilocybine_box',
+        ['label'] = 'Caisse de Psilocybine',
+        ['weight'] = 2250,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['carrybox'] = 'soz_pack_drugs_3',
+        ['description'] = "Il y a assez de Psilocybine à l'intérieur pour faire une soirée avec pleins d'amis.",
+        ['illustrator'] = '.Sniteur'
+    },
+    ['zeed'] = {
+        ['name'] = 'zeed',
+        ['label'] = 'Feuille de Zeed',
+        ['weight'] = 500,
+        ['type'] = 'item_illegal',
+        ['durability'] = 14,
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Plante naturel qui dégage une odeur agréable.",
+        ['illustrator'] = '.Sniteur'
+    },
+    ['soil_pot'] = {
+        ['name'] = 'soil_pot',
+        ['label'] = 'Pot de terre',
+        ['weight'] = 1000,
+        ['type'] = 'drug_pot',
+        ['durability'] = 14,
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Idéal pour faire pousser de belles plantations.",
+        ['illustrator'] = '.Sniteur',
+        ['drug_pot'] = {
+            ['target'] = 'zeed_pot',
+            ['ingredient'] = 'zeed',
+            ['nbIngredient'] = 60,
+        }
+    },
+    ['zeed_pot'] = {
+        ['name'] = 'zeed_pot',
+        ['label'] = 'Pot de Zeed',
+        ['weight'] = 5000,
+        ['type'] = 'item_illegal',
+        ['durability'] = 14,
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Pousse jeune plante, pousse !",
+        ['illustrator'] = '.Sniteur'
+    },
+    ['processed_zeed'] = {
+        ['name'] = 'processed_zeed',
+        ['label'] = 'Zeed Traitée',
+        ['weight'] = 500,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Est un puissant perturbateurs fabriqué à partir de feuilles naturelles. Elle est réputée pour ses effets de bien-être et sa capacité de provoquer de violent bad-trip.",
+        ['illustrator'] = '.Sniteur'
+    },
+    ['zeed_joint'] = {
+        ['name'] = 'zeed_joint',
+        ['label'] = 'Joint de Zeed',
+        ['weight'] = 250,
+        ['type'] = 'drug',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Idéal pour se mettre bien.",
+        ['illustrator'] = '.Sniteur'
+    },
+    ['zeed_bag'] = {
+        ['name'] = 'zeed_bag',
+        ['label'] = 'Sachet de Zeed',
+        ['weight'] = 350,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Contient assez de Zeed pour être vendu à n'importe quel client.",
+        ['illustrator'] = '.Sniteur'
+    },
+    ['zeed_box'] = {
+        ['name'] = 'zeed_box',
+        ['label'] = 'Caisse de Zeed',
+        ['weight'] = 1500,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['carrybox'] = 'soz_pack_drugs_4',
+        ['description'] = "Il y a assez de Zeed à l'intérieur pour faire une soirée avec pleins d'amis.",
+        ['illustrator'] = '.Sniteur'
+    },
+
+    ['toxic_flesh'] = {
+        ['name'] = 'toxic_flesh',
+        ['label'] = 'Chair toxique',
+        ['weight'] = 1000,
+        ['type'] = 'item_illegal',
+        ['durability'] = 14,
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Ne donne vraiment pas envie d'être dégusté. L'odeur qui s'en dégage est insoutenable.",
+        ['illustrator'] = '.Sniteur'
+    },
+    ['fermentation_pot'] = {
+        ['name'] = 'fermentation_pot',
+        ['label'] = 'Marmite de fermentation',
+        ['weight'] = 4000,
+        ['type'] = 'drug_pot',
+        ['durability'] = 14,
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "C'est important de bien fermenter la viande.",
+        ['illustrator'] = '.Sniteur',
+        ['drug_pot'] = {
+            ['target'] = 'toxic_flesh_pot',
+            ['ingredient'] = 'toxic_flesh',
+            ['nbIngredient'] = 20,
+        }
+    },
+    ['toxic_flesh_pot'] = {
+        ['name'] = 'toxic_flesh_pot',
+        ['label'] = 'Marmite de Chair toxique',
+        ['weight'] = 10000,
+        ['type'] = 'item_illegal',
+        ['durability'] = 14,
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Marmite remplie de chair toxique prête à chauffer à plusieurs centaines de degrés afin d'amplifier les toxines.",
+        ['illustrator'] = '.Sniteur'
+    },
+    ['processed_pandoxine'] = {
+        ['name'] = 'processed_pandoxine',
+        ['label'] = 'Pandoxine Traitée',
+        ['weight'] = 1000,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Est un puissant analgésique fabriqué à partir de chair d'animal. Elle est utilisée pour soulager la douleur extrême, mais son utilisation prolongée peut entraîner une dépendance sévère.",
+        ['illustrator'] = '.Sniteur'
+    },
+    ['tablet_pandoxine'] = {
+        ['name'] = 'tablet_pandoxine',
+        ['label'] = 'Cachet de Pandoxine',
+        ['weight'] = 250,
+        ['type'] = 'drug',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Qui veut mes bonbons sucrés ? Qui veut ?",
+        ['nutrition'] = {
+            ['stress'] = -2,
+            ['drug'] = 25,
+        },
+        ['illustrator'] = '.Poulpito'
+    },
+    ['pandoxine_bag'] = {
+        ['name'] = 'pandoxine_bag',
+        ['label'] = 'Sachet de Pandoxine',
+        ['weight'] = 700,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Contient assez de Pandoxine pour être vendu à n'importe quel client.",
+        ['illustrator'] = '.Sniteur'
+    },
+    ['pandoxine_box'] = {
+        ['name'] = 'pandoxine_box',
+        ['label'] = 'Caisse de Pandoxine',
+        ['weight'] = 3000,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['carrybox'] = 'soz_pack_drugs_2',
+        ['description'] = "Il y a assez de Pandoxine à l'intérieur pour faire une soirée avec pleins d'amis.",
+        ['illustrator'] = '.Sniteur'
+    },
+
+    ['ciguatoxine'] = {
+        ['name'] = 'ciguatoxine',
+        ['label'] = 'Ciguatoxine',
+        ['weight'] = 500,
+        ['type'] = 'item_illegal',
+        ['durability'] = 14,
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Forte toxine provenant d'animal marin.",
+        ['illustrator'] = '.Sniteur'
+    },
+    ['heating_tank'] = {
+        ['name'] = 'heating_tank',
+        ['label'] = 'Bidon de chauffe',
+        ['weight'] = 2000,
+        ['type'] = 'drug_pot',
+        ['durability'] = 14,
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Qu'est-ce qu'on pourrait bien faire chauffer là-dedans ? Sûrement une grande quantité de liquide !",
+        ['illustrator'] = '.Sniteur',
+        ['drug_pot'] = {
+            ['target'] = 'ciguatoxine_tank',
+            ['ingredient'] = 'ciguatoxine',
+            ['nbIngredient'] = 20,
+        }
+    },
+    ['ciguatoxine_tank'] = {
+        ['name'] = 'ciguatoxine_tank',
+        ['label'] = 'Bidon de Ciguatoxine',
+        ['weight'] = 5000,
+        ['type'] = 'item_illegal',
+        ['durability'] = 14,
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Bidon remplit de Ciguatoxine prêt à être bouillie à plusieurs centaines de degrés afin d'en créer une puissante drogue.",
+        ['illustrator'] = '.Sniteur'
+    },
+    ['processed_krakenine'] = {
+        ['name'] = 'processed_krakenine',
+        ['label'] = 'Krakenine Traitée',
+        ['weight'] = 500,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Est un puissant stimulant fabriqué à partir de glandes liquides d'animaux marins. Elle est utilisée pour créer de fortes excitations, mais son utilisation prolongée peut entraîner une folie sévère.",
+        ['illustrator'] = '.Sniteur'
+    },
+    ['syringe_krakenine'] = {
+        ['name'] = 'syringe_krakenine',
+        ['label'] = 'Seringue de Krakenine',
+        ['weight'] = 250,
+        ['type'] = 'drug',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Direction le paradis ou les enfers, au choix.",
+        ['nutrition'] = {
+            ['hunger'] = -10,
+            ['thirst'] = -10,
+            ['stress'] = -4,
+            ['drug'] = 50,
+        },
+        ['stressGroup'] = true,
+        ['illustrator'] = '.Sniteur'
+    },
+    ['krakenine_bag'] = {
+        ['name'] = 'krakenine_bag',
+        ['label'] = 'Sachet de Krakenine',
+        ['weight'] = 350,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Contient assez de Krakenine pour être vendu à n'importe quel client.",
+        ['illustrator'] = '.Sniteur'
+    },
+    ['krakenine_box'] = {
+        ['name'] = 'krakenine_box',
+        ['label'] = 'Caisse de Krakenine',
+        ['weight'] = 1500,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['carrybox'] = 'soz_pack_drugs_1',
+        ['description'] = "Il y a assez de Krakenine à l'intérieur pour faire une soirée avec pleins d'amis.",
+        ['illustrator'] = '.Sniteur'
+    },
+
+    ['restful_patch'] = {
+        ['name'] = 'restful_patch',
+        ['label'] = 'Patch reposant',
+        ['weight'] = 250,
+        ['type'] = 'drug',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Idéal après une longue journée.",
+        ['illustrator'] = '.Sniteur'
+    },
+    ['relax_cookie'] = {
+        ['name'] = 'relax_cookie',
+        ['label'] = 'Cookies relaxant',
+        ['weight'] = 250,
+        ['type'] = 'drug',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['durability'] = 14,
+        ['description'] = "Tout le monde aime les cookies.",
+        ['nutrition'] = {
+            ['hunger'] = 20,
+            ['drug'] = 30,
+            ['stress'] = -2,
+        },
+        ['illustrator'] = '.NariieL'
+    },
+    ['calm_beverage'] = {
+        ['name'] = 'calm_beverage',
+        ['label'] = 'Boisson apaisante',
+        ['weight'] = 250,
+        ['type'] = 'drug',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['durability'] = 14,
+        ['description'] = "Les plantes c'est la vie.",
+        ['nutrition'] = {
+            ['hunger'] = 20,
+            ['drug'] = 20,
+            ['stress'] = -2,
+        },
+        ['illustrator'] = '.NariieL'
+    },
+    ['naloxone'] = {
+        ['name'] = 'naloxone',
+        ['label'] = 'Naloxone',
+        ['weight'] = 200,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Composé polycyclique complexe et le principal antagoniste des récepteurs de la morphine. Dans les cas d'intoxication aiguë aux morphiniques, la naloxone est administrée afin de déplacer la morphine de ses sites récepteurs et d'arrêter son action.",
+        ['illustrator'] = '.Poulpito'
+    },
+    ['lsmc_triathlon_2023_medal'] = {
+        ['name'] = 'lsmc_triathlon_2023_medal',
+        ['label'] = 'Médaille "Triathlon LSMC 2023"',
+        ['useable'] = false,
+        ['weight'] = 500,
+        ['type'] = 'item',
+        ['description'] = "Bravo à toi ! Tu as gagné cette médaille à la sueur de ton front en franchissant la ligne d'arrivée du Marathon LSMC 2023. Y'a pas de quoi flamber non plus, mais ça fera toujours joli dans l'étagère du salon.",
+        ['illustrator'] = '.Beardy',
+    },
+    ['road_festival_2023_trophy'] = {
+        ['name'] = 'road_festival_2023_trophy',
+        ['label'] = 'Trophée "Road Festival 2023"',
+        ['useable'] = false,
+        ['weight'] = 5000,
+        ['type'] = 'item',
+        ['description'] = "Prix du gagnant du festival thématisé autour des courses de rues en 2023. Désigné ainsi meilleur pilote de la ville.",
+        ['illustrator'] = '.Poulpito',
+    },
+    ['dirt_festival_2023_trophy'] = {
+        ['name'] = 'dirt_festival_2023_trophy',
+        ['label'] = 'Trophée "Dirt Festival 2023"',
+        ['useable'] = false,
+        ['weight'] = 5000,
+        ['type'] = 'item',
+        ['description'] = "Prix du gagnant du festival thématisé autour des courses de boues en 2023. Désigné ainsi meilleur pilote de la campagne.",
+        ['illustrator'] = '.Poulpito',
+    },
+    ['mountain_festival_2023_trophy'] = {
+        ['name'] = 'mountain_festival_2023_trophy',
+        ['label'] = 'Trophée "Mountain Festival 2023"',
+        ['useable'] = false,
+        ['weight'] = 5000,
+        ['type'] = 'item',
+        ['description'] = "Prix du gagnant du festival thématisé autour des courses à fort dénivelé en 2023. Désigné ainsi meilleur pilote de la montagne.",
+        ['illustrator'] = '.Poulpito',
+    },
+    ['worldtour_festival_2023_trophy'] = {
+        ['name'] = 'worldtour_festival_2023_trophy',
+        ['label'] = 'Trophée "Worl Tour Festival 2023"',
+        ['useable'] = false,
+        ['weight'] = 5000,
+        ['type'] = 'item',
+        ['description'] = "Prix du gagnant du festival thématisé autour des courses gyrophares allumés en 2023. Désigné ainsi meilleur pilote de véhicules d'intervention.",
+        ['illustrator'] = '.Poulpito',
+    },
+    ['summer_race_2023_gold_medal'] = {
+        ['name'] = 'summer_race_2023_gold_medal',
+        ['label'] = 'Médaille d\'or "Summer Races 2023"',
+        ['useable'] = false,
+        ['weight'] = 2000,
+        ['type'] = 'item',
+        ['description'] = "Prix reçu à l'occasion d'un Top 10 lors d'un festival des Summer Races 2023.",
+        ['illustrator'] = '.Poulpito',
+    },
+    ['summer_race_2023_silver_medal'] = {
+        ['name'] = 'summer_race_2023_silver_medal',
+        ['label'] = 'Médaille d\'argent "Summer Races 2023"',
+        ['useable'] = false,
+        ['weight'] = 2000,
+        ['type'] = 'item',
+        ['description'] = "Prix reçu à l'occasion d'un Top 20 lors d'un festival des Summer Races 2023.",
+        ['illustrator'] = '.Poulpito',
+    },
+    ['summer_race_2023_bronze_medal'] = {
+        ['name'] = 'summer_race_2023_bronze_medal',
+        ['label'] = 'Médaille de bronze "Summer Races 2023"',
+        ['useable'] = false,
+        ['weight'] = 2000,
+        ['type'] = 'item',
+        ['description'] = "Prix reçu à l'occasion d'un Top 30 lors d'un festival des Summer Races 2023.",
+        ['illustrator'] = '.Poulpito',
+    },
+    ['kerozene_jerrycan_low'] = {
+        ['name'] = 'kerozene_jerrycan_low',
+        ['label'] = 'Bidons de kérozène artisanal',
+        ['weight'] = 1000,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['durability'] = 7,
+        ['combinable'] = nil,
+        ['description'] = 'Ton bateau volé te remerciera.',
+        ['illustrator'] = '.Poulpito',
+    },
+    ['mre_peach'] = {
+        ['name'] = 'mre_peach',
+        ['label'] = 'MRE Peach',
+        ['weight'] = 1000,
+        ['type'] = 'food',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['durability'] = 7,
+        ['combinable'] = nil,
+        ['description'] = 'Pour ceux qui ont un goût encore plus douteux.',
+        ['nutrition'] = {
+            ['hunger'] = 50,
+            ['thirst'] = 50,
+            ['stamina'] = 0,
+            ['fiber'] = 5,
+            ['lipid'] = 5,
+            ['sugar'] = 10,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        ['illustrator'] = '.Poulpito',
+    },
+    ['fake_id_papers'] = {
+        ['name'] = 'fake_id_papers',
+        ['label'] = "Papiers d'identités factices",
+        ['weight'] = 1000,
+        ['type'] = 'item_illegal',
+        ['unique'] = true,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Il s'appelle Juste Leblanc... Ah bon, il n'a pas de prénom ?",
+        ['illustrator'] = '.Poulpito',
+    },
+    ['artisanal_jammer'] = {
+        ['name'] = 'artisanal_jammer',
+        ['label'] = "Brouilleur d'ondes artisanal",
+        ['weight'] = 1000,
+        ['type'] = 'item_illegal',
+        ['unique'] = true,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Ce bijou de technologie est capable de faire disparaitre n'importe quel véhicule des forces de l'ordre du radar durant environ une heure.",
+        ['illustrator'] = '.Poulpito',
+    },
+
+    --- PAWL
+    ['chainsaw'] = {
+        ['name'] = 'chainsaw',
+        ['label'] = "Tronçonneuse",
+        ['weight'] = 4000,
+        ['useable'] = false,
+        ['type'] = 'tool',
+        ['shouldClose'] = true,
+        ['unique'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Outil des enfers qui coupe des arbres.",
+        ['illustrator'] = '.Aurukh'
+    },
+    
+    --Ferme de Fou
+    ['apple'] = {
+        ['name'] = 'apple',
+        ['label'] = "Pomme fraîche",
+        ['weight'] = 200,
+        ['type'] = 'food',
+        ['useable'] = true,
+        ['nutrition'] = {
+            ['hunger'] = 5,
+            ['thirst'] = 2,
+            ['fiber'] = 1,
+            ['lipid'] = 0,
+            ['sugar'] = 0.5,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        ['durability'] = 14,
+        ['description'] = "Tu veux une pomme ?",
+        ['illustrator'] = '.Sniteur',
+    },
+    ['orange'] = {
+        ['name'] = 'orange',
+        ['label'] = "Orange fraîche",
+        ['weight'] = 250,
+        ['useable'] = true,
+        ['type'] = 'food',
+        ['nutrition'] = {
+            ['hunger'] = 5,
+            ['thirst'] = 2,
+            ['fiber'] = 1,
+            ['lipid'] = 0,
+            ['sugar'] = 0.5,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        ['durability'] = 14,
+        ['description'] = "À peler, à déguster.",
+        ['illustrator'] = '.Sniteur',
+    },
+    ['lemon'] = {
+        ['name'] = 'lemon',
+        ['label'] = "Citron fraîs",
+        ['weight'] = 250,
+        ['type'] = 'food',
+        ['durability'] = 14,
+        ['description'] = "Idéal pour les cocktails.",
+        ['illustrator'] = '.Moustash',
+    },
+    ['potato'] = {
+        ['name'] = 'potato',
+        ['label'] = "Pomme de terre fraîche",
+        ['weight'] = 200,
+        ['type'] = 'food',
+        ['durability'] = 7,
+        ['description'] = "De quoi faire de belles frites.",
+        ['illustrator'] = '.Sniteur',
+    },
+    ['tomato'] = {
+        ['name'] = 'tomato',
+        ['label'] = "Tomate fraîche",
+        ['weight'] = 150,
+        ['type'] = 'food',
+        ['durability'] = 7,
+        ['description'] = "Très très juteuse.",
+        ['illustrator'] = '.Sniteur',
+    },
+    ['corn'] = {
+        ['name'] = 'corn',
+        ['label'] = "Maïs frais",
+        ['weight'] = 200,
+        ['type'] = 'food',
+        ['durability'] = 7,
+        ['description'] = "Comme une envie de popcorn.",
+        ['illustrator'] = '.Sniteur',
+    },
+    ['cabage'] = {
+        ['name'] = 'cabage',
+        ['label'] = "Chou frais",
+        ['weight'] = 150,
+        ['type'] = 'food',
+        ['durability'] = 7,
+        ['description'] = "Il paraît que les enfants naissent dans les choux.",
+        ['illustrator'] = '.Sniteur',
+    },
+    ['pumpkin_fresh'] = {
+        ['name'] = 'pumpkin_fresh',
+        ['label'] = "Citrouille fraîche",
+        ['weight'] = 500,
+        ['type'] = 'food',
+        ['durability'] = 7,
+        ['description'] = "On lui fait un sourire pour Halloween ?",
+        ['illustrator'] = '.DaraBesque',
+    },
+    ['potato_seed'] = {
+        ['name'] = 'potato_seed',
+        ['label'] = "Graine de pomme de terre",
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['useable'] = true,
+        ['description'] = "Le début d'une grande histoire de patate.",
+        ['illustrator'] = '.DaraBesque',
+    },
+    ['tomato_seed'] = {
+        ['name'] = 'tomato_seed',
+        ['label'] = "Graine de tomate",
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['useable'] = true,
+        ['description'] = "L'ingrédient des tomates les plus savoureuses.",
+        ['illustrator'] = '.DaraBesque',
+    },
+    ['corn_seed'] = {
+        ['name'] = 'corn_seed',
+        ['label'] = "Graine de maïs",
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['useable'] = true,
+        ['description'] = "De quoi faire pousser des épis de bonheur.",
+        ['illustrator'] = '.DaraBesque',
+    },
+    ['cabage_seed'] = {
+        ['name'] = 'cabage_seed',
+        ['label'] = "Graine de chou",
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['useable'] = true,
+        ['description'] = "Le secret d'une tête de chou croquante.",
+        ['illustrator'] = '.DaraBesque',
+    },
+    ['pumpkin_seed'] = {
+        ['name'] = 'pumpkin_seed',
+        ['label'] = "Graine de citrouille",
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['useable'] = true,
+        ['description'] = "Une future lanterne d'Halloween.",
+        ['illustrator'] = '.DaraBesque',
+    },
+    ['vegetable_palette'] = {
+        ['name'] = 'vegetable_palette',
+        ['label'] = "Palette de Légumes",
+        ['weight'] = 5000,
+        ['type'] = 'food',
+        ['durability'] = 7,
+        ['description'] = "Ils sont bien gros et bien mûrs ses légumes.",
+        ['illustrator'] = '.Sniteur',
+        ['resellPrice'] = 2000,
+        ['resellZone'] = 'Resell:FDF:Silo',
+        ['carrybox'] = 'prop_apple_box_01',
+    },
+    ['fruit_palette'] = {
+        ['name'] = 'fruit_palette',
+        ['label'] = "Palette de Fruits",
+        ['weight'] = 5000,
+        ['type'] = 'food',
+        ['durability'] = 7,
+        ['description'] = "Les Fruits les plus frais de votre région.",
+        ['illustrator'] = '.Sniteur',
+        ['resellPrice'] = 1000,
+        ['resellZone'] = 'Resell:FDF:Bell-Farm',
+        ['carrybox'] = 'prop_apple_box_01',
+    },
+    ['fruit_salad'] = {
+        ['name'] = 'fruit_salad',
+        ['label'] = "Salade de Fruit",
+        ['weight'] = 450,
+        ['useable'] = true,
+        ['type'] = 'food',
+        ['nutrition'] = {
+            ['hunger'] = 20,
+            ['thirst'] = 20,
+            ['fiber'] = 2,
+            ['lipid'] = 0,
+            ['sugar'] = 1,
+            ['protein'] = 2,
+            ['alcohol'] = 0,
+        },
+        ['durability'] = 14,
+        ['description'] = "Un jardin secret de saveurs dans chaque bouchée.",
+        ['illustrator'] = '.Sniteur',
+    },
+    ['vegetable_festival'] = {
+        ['name'] = 'vegetable_festival',
+        ['label'] = "La Fête des Légumes",
+        ['weight'] = 600,
+        ['useable'] = true,
+        ['type'] = 'food',
+        ['nutrition'] = {
+            ['hunger'] = 70,
+            ['thirst'] = 5,
+            ['fiber'] = 5,
+            ['lipid'] = 1.5,
+            ['sugar'] = 0,
+            ['protein'] = 2,
+            ['alcohol'] = 0,
+        },
+        ['durability'] = 14,
+        ['description'] = "Une célébration haute en couleurs pour les amoureux de légumes.",
+        ['illustrator'] = '.Sniteur',
+    },
+    ['fried_potatoes'] = {
+        ['name'] = 'fried_potatoes',
+        ['label'] = "Pommes de Terres Sautées",
+        ['weight'] = 450,
+        ['useable'] = true,
+        ['type'] = 'food',
+        ['nutrition'] = {
+            ['hunger'] = 35,
+            ['thirst'] = 0,
+            ['fiber'] = 2,
+            ['lipid'] = 1,
+            ['sugar'] = 0,
+            ['protein'] = 1,
+            ['alcohol'] = 0,
+        },
+        ['durability'] = 14,
+        ['description'] = "Croustillantes à l'extérieur, fondantes à l'intérieur.",
+        ['illustrator'] = '.Sniteur',
+    },
+    ['cabbage_salad'] = {
+        ['name'] = 'cabbage_salad',
+        ['label'] = "Salade de Choux",
+        ['weight'] = 500,
+        ['useable'] = true,
+        ['type'] = 'food',
+        ['nutrition'] = {
+            ['hunger'] = 35,
+            ['thirst'] = 0,
+            ['fiber'] = 2,
+            ['lipid'] = 0,
+            ['sugar'] = 0.5,
+            ['protein'] = 2,
+            ['alcohol'] = 0,
+        },
+        ['durability'] = 14,
+        ['description'] = "Un mélange de choux croquants pour une fraîcheur irrésistible.",
+        ['illustrator'] = '.Sniteur',
+    },
+    ['stuffed_tomatoes'] = {
+        ['name'] = 'stuffed_tomatoes',
+        ['label'] = "Tomates Farcies",
+        ['weight'] = 600,
+        ['useable'] = true,
+        ['type'] = 'food',
+        ['nutrition'] = {
+            ['hunger'] = 35,
+            ['thirst'] = 5,
+            ['fiber'] = 2,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 2,
+            ['alcohol'] = 0,
+        },
+        ['durability'] = 14,
+        ['description'] = "De belles tomates bien farcies comme il faut.",
+        ['illustrator'] = '.Sniteur',
+    },
+    ['creamed_corn'] = {
+        ['name'] = 'creamed_corn',
+        ['label'] = "Maïs à la crème",
+        ['weight'] = 600,
+        ['useable'] = true,
+        ['type'] = 'food',
+        ['nutrition'] = {
+            ['hunger'] = 35,
+            ['thirst'] = 0,
+            ['fiber'] = 2,
+            ['lipid'] = 1,
+            ['sugar'] = 0.5,
+            ['protein'] = 1,
+            ['alcohol'] = 0,
+        },
+        ['durability'] = 14,
+        ['description'] = "Le maïs le plus tendre, nappé d'une crème onctueuse.",
+        ['illustrator'] = '.Sniteur',
+    },
+    ['country_feast'] = {
+        ['name'] = 'country_feast',
+        ['label'] = "Le Festin Champêtre",
+        ['weight'] = 500,
+        ['useable'] = true,
+        ['type'] = 'food',
+        ['durability'] = 14,
+        ['nutrition'] = {
+            ['hunger'] = 50,
+            ['thirst'] = 5,
+            ['fiber'] = 3,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 3,
+            ['alcohol'] = 0,
+        },
+        ['description'] = "Chaque bouchée raconte une histoire de terroir.",
+        ['illustrator'] = '.Sniteur',
+    },
+    ['veggie_gathering'] = {
+        ['name'] = 'veggie_gathering',
+        ['label'] = "La Réunion Potagère",
+        ['weight'] = 600,
+        ['useable'] = true,
+        ['type'] = 'food',
+        ['nutrition'] = {
+            ['hunger'] = 50,
+            ['thirst'] = 0,
+            ['fiber'] = 3,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 2,
+            ['alcohol'] = 0,
+        },
+        ['durability'] = 14,
+        ['description'] = "Une réunion gourmande de légumes de saison.",
+        ['illustrator'] = '.Sniteur',
+    },
+    ['vegetable_dance'] = {
+        ['name'] = 'vegetable_dance',
+        ['label'] = "La Danse Végétarienne",
+        ['weight'] = 450,
+        ['useable'] = true,
+        ['type'] = 'food',
+        ['nutrition'] = {
+            ['hunger'] = 40,
+            ['thirst'] = 0,
+            ['fiber'] = 1.5,
+            ['lipid'] = 0,
+            ['sugar'] = 1,
+            ['protein'] = 1,
+            ['alcohol'] = 0,
+        },
+        ['durability'] = 14,
+        ['description'] = "Chaque bouchée est une pirouette de saveurs végétariennes.",
+        ['illustrator'] = '.Sniteur',
+    },
+    ['autumn_symphony'] = {
+        ['name'] = 'autumn_symphony',
+        ['label'] = "Symphonie de l'Automne",
+        ['weight'] = 450,
+        ['useable'] = true,
+        ['type'] = 'food',
+        ['nutrition'] = {
+            ['hunger'] = 50,
+            ['thirst'] = 0,
+            ['fiber'] = 3,
+            ['lipid'] = 0,
+            ['sugar'] = 1,
+            ['protein'] = 3,
+            ['alcohol'] = 0,
+        },
+        ['durability'] = 14,
+        ['description'] = "Une symphonie qui célèbre les couleurs et les saveurs de l'automne.",
+        ['illustrator'] = '.Sniteur',
+    },
+    ['popcorn'] = {
+        ['name'] = 'popcorn',
+        ['label'] = "Popcorn",
+        ['weight'] = 500,
+        ['useable'] = true,
+        ['type'] = 'food',
+        ['nutrition'] = {
+            ['hunger'] = 10,
+            ['thirst'] = 0,
+            ['fiber'] = 1,
+            ['lipid'] = 0,
+            ['sugar'] = 5,
+            ['protein'] = 1,
+            ['alcohol'] = 0,
+        },
+        ['durability'] = 14,
+        ['description'] = "Très peu de sucre... Très bon pour la santé... enfin surement",
+        ['illustrator'] = '.Sniteur',
+    },
+    ['smoothie_fruity'] = {
+        ['name'] = 'smoothie_fruity',
+        ['label'] = "Smoothie Fruité",
+        ['weight'] = 350,
+        ['useable'] = true,
+        ['type'] = 'drink',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 40,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 1,
+            ['protein'] = 1,
+            ['alcohol'] = 0,
+        },
+        ['durability'] = 14,
+        ['description'] = "Un tourbillon de fruits exotiques pour éveiller vos sens.",
+        ['illustrator'] = '.Sniteur',
+    },
+    ['pumpkin_potage'] = {
+        ['name'] = 'pumpkin_potage',
+        ['label'] = "Potage à la Citrouille",
+        ['weight'] = 500,
+        ['useable'] = true,
+        ['type'] = 'drink',
+        ['nutrition'] = {
+            ['hunger'] = 5,
+            ['thirst'] = 20,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 1,
+            ['alcohol'] = 0,
+        },
+        ['durability'] = 14,
+        ['description'] = "De quoi nous rappeler la soupe de nos grand-mères.",
+        ['illustrator'] = '.Sniteur',
+    },
+    ['apple_juice_drink'] = {
+        ['name'] = 'apple_juice_drink',
+        ['label'] = "Jus de Pomme",
+        ['weight'] = 350,
+        ['useable'] = true,
+        ['type'] = 'drink',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 30,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 1,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        ['durability'] = 14,
+        ['description'] = "Votre dose quotidienne de bonheur fruité.",
+        ['illustrator'] = '.Sniteur',
+    },
+    ['tomato_juice'] = {
+        ['name'] = 'tomato_juice',
+        ['label'] = "Jus de Tomate",
+        ['weight'] = 350,
+        ['useable'] = true,
+        ['type'] = 'drink',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 30,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 1,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        ['durability'] = 14,
+        ['description'] = "Un nectar rouge vif qui réveille vos papilles.",
+        ['illustrator'] = '.Sniteur',
+    },
+    ['orange_juice_drink'] = {
+        ['name'] = 'orange_juice_drink',
+        ['label'] = "Jus d'Orange",
+        ['weight'] = 300,
+        ['useable'] = true,
+        ['type'] = 'drink',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 30,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 1,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        ['durability'] = 14,
+        ['description'] = "La dose quotidienne de vitamine C !",
+        ['illustrator'] = '.Sniteur',
+    },
+    ['multifruit'] = {
+        ['name'] = 'multifruit',
+        ['label'] = "Multifruit",
+        ['weight'] = 300,
+        ['useable'] = true,
+        ['type'] = 'drink',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 70,
+            ['fiber'] = 2,
+            ['lipid'] = 0,
+            ['sugar'] = 1.5,
+            ['protein'] = 1,
+            ['alcohol'] = 0,
+        },
+        ['durability'] = 14,
+        ['description'] = "Une explosion de fruits ! ( ça n'explose pas réellement )",
+        ['illustrator'] = '.Sniteur',
+    },
+    ['pumpkin_lemonade'] = {
+        ['name'] = 'pumpkin_lemonade',
+        ['label'] = "Orangeade à la Citrouille",
+        ['weight'] = 400,
+        ['useable'] = true,
+        ['type'] = 'drink',
+        ['nutrition'] = {
+            ['hunger'] = 5,
+            ['thirst'] = 30,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 1,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        ['durability'] = 14,
+        ['description'] = "Une surprise acidulée, un délice automnal.",
+        ['illustrator'] = '.Sniteur',
+    },
+    ['tomato_tonic'] = {
+        ['name'] = 'tomato_tonic',
+        ['label'] = "Tomato-Tonic",
+        ['weight'] = 400,
+        ['useable'] = true,
+        ['type'] = 'drink',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 50,
+            ['fiber'] = 1,
+            ['lipid'] = 0,
+            ['sugar'] = 1,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        ['durability'] = 14,
+        ['description'] = "Un coup de pouce énergétique, un cocktail rafraîchissant.",
+        ['illustrator'] = '.Sniteur',
+    },
+    ['cabbage_chaos'] = {
+        ['name'] = 'cabbage_chaos',
+        ['label'] = "Choux Brouhaha",
+        ['weight'] = 250,
+        ['useable'] = true,
+        ['type'] = 'drink',
+        ['nutrition'] = {
+            ['hunger'] = 5,
+            ['thirst'] = 20,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 1,
+            ['alcohol'] = 0,
+        },
+        ['durability'] = 14,
+        ['description'] = "Un cocktail de choux qui secoue vos papilles.",
+        ['illustrator'] = '.Sniteur',
+    },
+    ['fresh_tomachou'] = {
+        ['name'] = 'fresh_tomachou',
+        ['label'] = "Tomachou Fraîcheur",
+        ['weight'] = 350,
+        ['useable'] = true,
+        ['type'] = 'drink',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 40,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 1,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        ['durability'] = 14,
+        ['description'] = "C'est vraiment bon du chou et de la tomate ?",
+        ['illustrator'] = '.Sniteur',
+    },
+    
+    --- DMC
+    ['repair_part_motor'] ={
+        ['name'] = 'repair_part_motor',
+        ['label'] = "Pièces de Réparation Moteur",
+        ['weight'] = 250,
+        ['useable'] = false,
+        ['type'] = 'item',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Sert à réparer un moteur.",
+        ['illustrator'] = '.GautSlayer'
+    },
+    ['repair_part_body'] ={
+        ['name'] = 'repair_part_body',
+        ['label'] = "Pièces de Réparation Carosserie",
+        ['weight'] = 250,
+        ['useable'] = false,
+        ['type'] = 'item',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Sert à réparer une carosserie.",
+        ['illustrator'] = '.Smogogo'
+    },
+    ['repair_part_fuel_tank'] ={
+        ['name'] = 'repair_part_fuel_tank',
+        ['label'] = "Pièces de Réparation Réservoir",
+        ['weight'] = 250,
+        ['useable'] = false,
+        ['type'] = 'item',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Sert à réparer un reservoir.",
+        ['illustrator'] = '.GautSlayer'
+    },
+    ['ls_custom_upgrade_part'] ={
+        ['name'] = 'ls_custom_upgrade_part',
+        ['label'] = "Pièces d’Améliorations Certifiées",
+        ['weight'] = 500,
+        ['useable'] = false,
+        ['type'] = 'item',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Pour un véhicule plus dur, meilleur, plus rapide, plus fort.",
+        ['illustrator'] = '.GautSlayer'
+    },
+    ['resell_box_coal'] ={
+        ['name'] = 'resell_box_coal',
+        ['label'] = "Caisse de Charbon",
+        ['weight'] = 10000,
+        ['useable'] = false,
+        ['type'] = 'item',
+        ['resellPrice'] = 500,
+        ['resellZone'] = 'Resell:LSPort:Dmc',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Mieux vaut le vendre que le brûler.",
+        ['illustrator'] = '.Kutz',
+        ['carrybox'] = 'gr_prop_gr_mill_crate_01a',
+    },
+    ['resell_box_iron'] ={
+        ['name'] = 'resell_box_iron',
+        ['label'] = "Caisse de Fer",
+        ['weight'] = 10000,
+        ['useable'] = false,
+        ['type'] = 'item',
+        ['resellPrice'] = 1000,
+        ['resellZone'] = 'Resell:LSPort:Dmc',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Attention à la rouille !",
+        ['illustrator'] = '.GautSlayer',
+        ['carrybox'] = 'gr_prop_gr_mill_crate_01a',
+    },
+    ['resell_box_aluminium'] ={
+        ['name'] = 'resell_box_aluminium',
+        ['label'] = "Caisse d'Aluminium",
+        ['weight'] = 10000,
+        ['useable'] = false,
+        ['type'] = 'item',
+        ['resellPrice'] = 1000,
+        ['resellZone'] = 'Resell:LSPort:Dmc',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Pour faire des canettes.",
+        ['illustrator'] = '.GautSlayer',
+        ['carrybox'] = 'gr_prop_gr_mill_crate_01a',
+    },
+    ['resell_box_steel'] ={
+        ['name'] = 'resell_box_steel',
+        ['label'] = "Caisse d'Acier",
+        ['weight'] = 10000,
+        ['useable'] = false,
+        ['type'] = 'item',
+        ['resellPrice'] = 1500,
+        ['resellZone'] = 'Resell:LSPort:Dmc',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Pour de grandes constructions.",
+        ['illustrator'] = '.Kutz',
+        ['carrybox'] = 'gr_prop_gr_mill_crate_01a',
+    },
+    ['raw_iron'] ={
+        ['name'] = 'raw_iron',
+        ['label'] = "Fer brut",
+        ['weight'] = 500,
+        ['useable'] = false,
+        ['type'] = 'metal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "A faire fondre pour de jolis lingots brillants.",
+        ['illustrator'] = '.Kutz'
+    },
+    ['raw_coal'] ={
+        ['name'] = 'raw_coal',
+        ['label'] = "Charbon brut",
+        ['weight'] = 150,
+        ['useable'] = false,
+        ['type'] = 'metal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Noir, sale et poussiéreux.",
+        ['illustrator'] = '.GautSlayer'
+    },
+    ['raw_aluminium'] ={
+        ['name'] = 'raw_aluminium',
+        ['label'] = "Aluminium brut",
+        ['weight'] = 500,
+        ['useable'] = false,
+        ['type'] = 'metal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Le futur, pour sûr !",
+        ['illustrator'] = '.GautSlayer'
+    },
+    ['iron_ingot'] ={
+        ['name'] = 'iron_ingot',
+        ['label'] = "Lingot de fer",
+        ['weight'] = 2000,
+        ['useable'] = false,
+        ['type'] = 'metal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Prêt pour la manufacture !",
+        ['illustrator'] = '.Kutz'
+    },
+    ['steel_ingot'] = {
+        ['name'] = 'steel_ingot',
+        ['label'] = "Lingot d'acier",
+        ['weight'] = 2000,
+        ['useable'] = false,
+        ['type'] = 'metal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Le meilleur du marché.",
+        ['illustrator'] = '.Kutz'
+    },
+    ['aluminium_ingot'] = {
+        ['name'] = 'aluminium_ingot',
+        ['label'] = "Lingot d'Aluminium",
+        ['weight'] = 2000,
+        ['useable'] = false,
+        ['type'] = 'metal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Ne pas mettre au micro-onde !",
+        ['illustrator'] = '.GautSlayer'
+    },
+    ['weapon_certificate'] = {
+        ['name'] = 'weapon_certificate',
+        ['label'] = "Certificat de confection d'arme",
+        ['weight'] = 50,
+        ['useable'] = false,
+        ['type'] = 'item',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Un certificat autorisant la création d'une arme.",
+        ['illustrator'] = '.Smogogo'
+    },
+    ['ammo_certificate'] = {
+        ['name'] = 'ammo_certificate',
+        ['label'] = "Certificat de confection de munitions",
+        ['weight'] = 50,
+        ['useable'] = false,
+        ['type'] = 'item',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Un certificat autorisant la création de munitions.",
+        ['illustrator'] = '.Smogogo'
+    },
+    ['utilitary_certificate'] = {
+        ['name'] = 'utilitary_certificate',
+        ['label'] = "Certificat de confection d'utilitaire",
+        ['weight'] = 50,
+        ['useable'] = false,
+        ['type'] = 'item',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Un certificat autorisant la création d'un utilitaire de police.",
+        ['illustrator'] = '.Smogogo'
+    },
+
+    --- Fishing Items
+    ['basic_rod'] = {
+        ['name'] = 'basic_rod',
+        ['label'] = "Canne à pêche basique",
+        ['weight'] = 1000,
+        ['useable'] = true,
+        ['type'] = 'fishing_rod',
+        ['shouldClose'] = false,
+        ['unique'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Un simple bâton de bois avec un bout de ficelle.",
+        ['illustrator'] = '.Aurukh'
+    },
+
+    ['prestige_rod'] = {
+        ['name'] = 'prestige_rod',
+        ['label'] = "Canne à pêche prestige",
+        ['weight'] = 1500,
+        ['useable'] = true,
+        ['type'] = 'fishing_rod',
+        ['shouldClose'] = false,
+        ['unique'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Le matériel du pêcheur professionnel.",
+        ['illustrator'] = '.Aurukh'
+    },
+    ['littoral_rod'] = {
+        ['name'] = 'littoral_rod',
+        ['label'] = "Canne à pêche \"Littoral\"",
+        ['weight'] = 1500,
+        ['useable'] = true,
+        ['type'] = 'fishing_rod',
+        ['shouldClose'] = false,
+        ['unique'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Qui n'a jamais collectionné les coquillages sur la plage ?",
+        ['illustrator'] = '.Aurukh'
+    },
+    ['canals_rod'] = {
+        ['name'] = 'canals_rod',
+        ['label'] = "Canne à pêche \"Canaux\"",
+        ['weight'] = 1500,
+        ['useable'] = true,
+        ['type'] = 'fishing_rod',
+        ['shouldClose'] = false,
+        ['unique'] = true,
+        ['combinable'] = nil,
+        ['description'] = "C'était certain qu'avec la pollution et tous les produits chimiques dans les canaux que la canne à pêche allait muter !",
+        ['illustrator'] = '.Aurukh'
+    },
+    ['river_rod'] = {
+        ['name'] = 'river_rod',
+        ['label'] = "Canne à pêche \"Rivière\"",
+        ['weight'] = 500,
+        ['useable'] = true,
+        ['type'] = 'fishing_rod',
+        ['shouldClose'] = false,
+        ['unique'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Salut vieille branche !",
+        ['illustrator'] = '.Aurukh'
+    },
+    ['little_lake_rod'] = {
+        ['name'] = 'little_lake_rod',
+        ['label'] = "Canne à pêche \"Petit Lac\"",
+        ['weight'] = 1500,
+        ['useable'] = true,
+        ['type'] = 'fishing_rod',
+        ['shouldClose'] = false,
+        ['unique'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Le roseau plie mais ne se romps pas",
+        ['illustrator'] = '.Aurukh'
+    },
+    ['big_lake_rod'] = {
+        ['name'] = 'big_lake_rod',
+        ['label'] = "Canne à pêche \"Grand Lac\"",
+        ['weight'] = 1500,
+        ['useable'] = true,
+        ['type'] = 'fishing_rod',
+        ['shouldClose'] = false,
+        ['unique'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Le sable, la forêt et la montagne",
+        ['illustrator'] = '.Aurukh'
+    },
+    ['north_sea_rod'] = {
+        ['name'] = 'north_sea_rod',
+        ['label'] = "Canne à pêche \"Mer du Nord\"",
+        ['weight'] = 1500,
+        ['useable'] = true,
+        ['type'] = 'fishing_rod',
+        ['shouldClose'] = false,
+        ['unique'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Vogue sur l'océan, moussaillon !",
+        ['illustrator'] = '.Aurukh'
+    },
+    ['south_sea_rod'] = {
+        ['name'] = 'south_sea_rod',
+        ['label'] = "Canne à pêche \"Mer du Sud\"",
+        ['weight'] = 1500,
+        ['useable'] = true,
+        ['type'] = 'fishing_rod',
+        ['shouldClose'] = false,
+        ['unique'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Avec un trident et un filet, quoi de mieux pour pécher ?",
+        ['illustrator'] = '.Aurukh'
+    },
+    ['ultim_rod'] = {
+        ['name'] = 'ultim_rod',
+        ['label'] = "Canne à pêche \"Ultime\"",
+        ['weight'] = 1500,
+        ['useable'] = true,
+        ['type'] = 'fishing_rod',
+        ['shouldClose'] = false,
+        ['unique'] = true,
+        ['combinable'] = nil,
+        ['description'] = "La vie aquatique dans toute sa splendeur",
+        ['illustrator'] = '.Aurukh'
+    },
+
+    ['juicy_bait'] = {
+        ['name'] = 'juicy_bait',
+        ['label'] = "Appât Juteux",
+        ['weight'] = 100,
+        ['useable'] = false,
+        ['type'] = 'fishing_bait',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Appât dégoulinant, les animaux marins se réveilleront peu importe l'heure pour venir déguster cette chose gluante.",
+        ['illustrator'] = '.Moustash'
+    },
+    ['tender_bait'] = {
+        ['name'] = 'tender_bait',
+        ['label'] = "Appât Tendre",
+        ['weight'] = 100,
+        ['useable'] = false,
+        ['type'] = 'fishing_bait',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Appât fait d'un met délicieux, peu importe le mauvais temps, les animaux marins se rueront vers lui.",
+        ['illustrator'] = '.Moustash'
+    },
+    ['furious_bait'] = {
+        ['name'] = 'furious_bait',
+        ['label'] = "Appât Furieux",
+        ['weight'] = 150,
+        ['useable'] = false,
+        ['type'] = 'fishing_bait',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Cet appat N.R.V. donnera un sale coup au moral de la prise, ce sera plus facile de la tirer de l'eau le moment venu",
+        ['illustrator'] = '.Moustash'
+    },
+    ['inshape_bait'] = {
+        ['name'] = 'inshape_bait',
+        ['label'] = "Appât Musclé",
+        ['weight'] = 250,
+        ['useable'] = false,
+        ['type'] = 'fishing_bait',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Cet appat musclé permettra d'aller rapidement au contact des animaux marin, la prise devrait arriver plus rapidement.",
+        ['illustrator'] = '.Moustash'
+    },
+    ['sozedex'] = {
+        ['name'] = 'sozedex',
+        ['label'] = "Sozedex",
+        ['weight'] = 600,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Indispensable à tout bon pêcheur, il est idéal pour noter vos exploits de pêche.",
+        ['illustrator'] = '.XLKa'
+    },
+
+    --- FISHING GARBAGES ---
+    ['old_shoes'] = {
+        ['name'] = 'old_shoes',
+        ['label'] = "Paire de chaussure pourrie",
+        ['weight'] = 400,
+        ['type'] = 'fishing_garbage',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Un coup de polish et elles sont niquel... Non ?",
+        ['illustrator'] = '.Poulpito'
+    },
+    ['disgusting_jar'] = {
+        ['name'] = 'disgusting_jar',
+        ['label'] = "Bocal répugnant",
+        ['weight'] = 150,
+        ['type'] = 'fishing_garbage',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Berk, un écosystème autonome s'est établit sur ce bocal.",
+        ['illustrator'] = '.Moustash'
+    },
+    ['disgusting_can'] = {
+        ['name'] = 'disgusting_can',
+        ['label'] = "Boîte de conserve dégoutante",
+        ['weight'] = 200,
+        ['type'] = 'fishing_garbage',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Miam miam le petit ragoût !",
+        ['illustrator'] = '.Moustash'
+    },
+    ['old_coffee_cup'] = {
+        ['name'] = 'old_coffee_cup',
+        ['label'] = "Gobelet en plastique dégoulinant",
+        ['weight'] = 200,
+        ['type'] = 'fishing_garbage',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Une représentation parfaite de la vie.",
+        ['illustrator'] = '.Poulpito'
+    },
+    ['used_junky_syringue'] = {
+        ['name'] = 'used_junky_syringue',
+        ['label'] = "Seringue de junky usagée",
+        ['weight'] = 100,
+        ['type'] = 'fishing_garbage',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Les ravages de VALORANT, encore une personne ayant trop joué.",
+        ['illustrator'] = '.Moustash'
+    },
+    ['lost_tire'] = {
+        ['name'] = 'lost_tire',
+        ['label'] = "Pneu perdu",
+        ['weight'] = 500,
+        ['type'] = 'fishing_garbage',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Il y autant d'habitants vivants sur ce pneu qu'une station orbitale de science-fiction dans l'espace.",
+        ['illustrator'] = '.Poulpito'
+    },
+
+    --- BADGES ---
+    ['badge_south_sea'] = {
+        ['name'] = 'badge_south_sea',
+        ['label'] = "Badge \"Mer du sud\"",
+        ['useable'] = false,
+        ['weight'] = 2000,
+        ['type'] = 'item',
+        ['description'] = "Prestige reçu à l'occasion de la complétion du Sozédex de la Mer du Sud.",
+        ['illustrator'] = '.Poulpito',
+    },
+    ['badge_north_sea'] = {
+        ['name'] = 'badge_north_sea',
+        ['label'] = "Badge \"Mer du nord\"",
+        ['useable'] = false,
+        ['weight'] = 2000,
+        ['type'] = 'item',
+        ['description'] = "Prestige reçu à l'occasion de la complétion du Sozédex de la Mer du Nord.",
+        ['illustrator'] = '.Poulpito',
+    },
+    ['badge_canals'] = {
+        ['name'] = 'badge_canals',
+        ['label'] = "Badge \"Canaux\"",
+        ['useable'] = false,
+        ['weight'] = 2000,
+        ['type'] = 'item',
+        ['description'] = "Prestige reçu à l'occasion de la complétion du Sozédex des Canaux.",
+        ['illustrator'] = '.Poulpito',
+    },
+    ['badge_littoral'] = {
+        ['name'] = 'badge_littoral',
+        ['label'] = "Badge \"Littoral\"",
+        ['useable'] = false,
+        ['weight'] = 2000,
+        ['type'] = 'item',
+        ['description'] = "Prestige reçu à l'occasion de la complétion du Sozédex du Littoral.",
+        ['illustrator'] = '.Poulpito',
+    },
+    ['badge_big_lake'] = {
+        ['name'] = 'badge_big_lake',
+        ['label'] = "Badge \"Grand Lac\"",
+        ['useable'] = false,
+        ['weight'] = 2000,
+        ['type'] = 'item',
+        ['description'] = "Prestige reçu à l'occasion de la complétion du Sozédex du Grand Lac.",
+        ['illustrator'] = '.Poulpito',
+    },
+    ['badge_little_lake'] = {
+        ['name'] = 'badge_little_lake',
+        ['label'] = "Badge \"Petit Lac\"",
+        ['useable'] = false,
+        ['weight'] = 2000,
+        ['type'] = 'item',
+        ['description'] = "Prestige reçu à l'occasion de la complétion du Sozédex des Petits Lacs.",
+        ['illustrator'] = '.Poulpito',
+    },
+    ['badge_river'] = {
+        ['name'] = 'badge_river',
+        ['label'] = "Badge \"Rivières\"",
+        ['useable'] = false,
+        ['weight'] = 2000,
+        ['type'] = 'item',
+        ['description'] = "Prestige reçu à l'occasion de la complétion du Sozédex des Rivières.",
+        ['illustrator'] = '.Poulpito',
+    },
+    --- FISHES ---
+    ['petite_grosse_baleine'] = {
+        ['name'] = 'petite_grosse_baleine',
+        ['label'] = "Petite grosse baleine",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Cette variété triviale de baleine est plus petite que ses cousines. Comme elle adore manger et qu’elle est toute ronde, les pécheurs ont pris l’habitude de l’appeler \"petite grosse\", ce qui a fini par devenir son nom officiel. Elle chante souvent, tantôt appelant un certain \"Jude\", tantôt fredonnant sur un air de « na na na », ce qui attire alors un banc de poissons autour d’elle.",
+        ['illustrator'] = '.Devychou',
+        ['fishing_area'] = { 'south_sea', 'north_sea', 'big_lake', ' little_lake' },
+        ['fishing_weather'] = { 'HALLOWEEN', 'OVERCAST', 'NEUTRAL' },
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 1000,
+        ['max_weight'] = 3000,
+        ['min_length'] = 50,
+        ['max_length'] = 250,
+        ['sozedex_id'] = 1,
+        ['price'] = 44
+    },
+    ['pfister_fish'] = {
+        ['name'] = 'pfister_fish',
+        ['label'] = "Pfister Fish",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Arc-en-ciel est le plus beau poisson de tous les océans. Ses écailles brillent et scintillent de toutes les couleurs de l'arc-en-ciel. Mais il est aussi très fier, et les autres petits poissons finissent par lui tourner le dos... Et s'il n'y avait de bonheur que dans le partage ?",
+        ['illustrator'] = '.OxmozCreeps',
+        ['fishing_area'] = { 'south_sea' },
+        ['fishing_weather'] = { 'CLEAR', 'CLEARING', 'EXTRASUNNY' },
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 300,
+        ['max_weight'] = 800,
+        ['min_length'] = 15,
+        ['max_length'] = 40,
+        ['sozedex_id'] = 2,
+        ['price'] = 21
+    },
+    ['barrycuda'] = {
+        ['name'] = 'barrycuda',
+        ['label'] = "Barrycuda",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Ayant beaucoup d'appétit et se guidant à la lumière du phare, il n'est pas rare de croiser les barrycuda en groupe prêt à défendre ses congénères. Rapide et furieux, on peux dire que tu a eu de la chance, ou du talent...",
+        ['illustrator'] = '.Mr_Gedehamsen',
+        ['fishing_area'] = { 'south_sea' },
+        ['fishing_weather'] = { 'CLEAR', 'CLEARING', 'EXTRASUNNY' },
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 2900,
+        ['max_weight'] = 3800,
+        ['min_length'] = 80,
+        ['max_length'] = 120,
+        ['sozedex_id'] = 3,
+        ['price'] = 76
+    },
+    ['angry_fish'] = {
+        ['name'] = 'angry_fish',
+        ['label'] = "Angry Fish",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Le Angry Fish est un poisson dangereux que l'on peut trouver autour de Cayo Perico à la surface de l'océan la nuit. Ses écailles rouges brillent à la lueur de la lune, faisant croire que sa queue prenne feu sous l'eau. Il est qualifié de dangereux car cette espèce ne se préoccupe guère des autres animaux croisant sa route excepté les requins et les humains. Il attaque ses proies généralement en grignotant la chaire comme un piranha. On raconte que sa chaire à une capacité, une fois consommé, de faire voir dans le noir. Cependant, soyez prudent, il peut aussi bien vous empoisonner si vous ne l'avez pas cuisiné correctement.",
+        ['illustrator'] = '.Baddy',
+        ['fishing_area'] = { 'south_sea' },
+        ['fishing_weather'] = { 'BLIZZARD', 'THUNDER' },
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 2100,
+        ['max_weight'] = 2500,
+        ['min_length'] = 60,
+        ['max_length'] = 120,
+        ['sozedex_id'] = 4,
+        ['price'] = 44
+    },
+    ['cristalfish'] = {
+        ['name'] = 'cristalfish',
+        ['label'] = "Cristalfish",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "La légende raconte que ce petit poisson est né dans la neige du Mont Chiliad. C'est une multitude de flocons réunis qui l'ont formé. Il a par la suite profité de la fonte des neiges pour descendre dans le lac de Sandy Shore puis la mer.",
+        ['illustrator'] = '.Ro0my_',
+        ['fishing_area'] = { 'big_lake', 'river', 'littoral' },
+        ['fishing_weather'] = { 'BLIZZARD', 'XMAS', 'SNOW', 'SNOWLIGHT' },
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 10,
+        ['max_weight'] = 30,
+        ['min_length'] = 5,
+        ['max_length'] = 12,
+        ['sozedex_id'] = 5,
+        ['price'] = 73
+    },
+    ['le_poulpe_thor'] = {
+        ['name'] = 'le_poulpe_thor',
+        ['label'] = "Poulpe Thor",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Une espèce de poulpe qui a évolué pour se défendre contre une autre espèce de poulpe. Ces poulpes ont développé un moyen de défense proche de celui de l'anguille électrique : l'extrémité de ses ventouses, souvent bleues, possède des cellules électrocytes qui sont responsables des décharges électriques, allant jusqu'à une tension de 400V, lorsqu'ils se sentent en danger. Cette espèce vit dans les grands espaces tel que les océans.",
+        ['illustrator'] = '.PoulpitorLeVrai',
+        ['fishing_area'] = { 'south_sea', 'north_sea', 'littoral' },
+        ['fishing_weather'] = { 'BLIZZARD', 'THUNDER'  },
+        ['fishing_period'] = {'night', 'evening'},
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 800,
+        ['max_weight'] = 3200,
+        ['min_length'] = 85,
+        ['max_length'] = 195,
+        ['sozedex_id'] = 6,
+        ['price'] = 40
+    },
+    ['glowriffy'] = {
+        ['name'] = 'glowriffy',
+        ['label'] = "GlowRiffy",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "GlowRiffy est une petite méduse lumineuse, que l'on trouve aux abords des épaves présentes le long des cotes de San Andreas. Elle peut émettre une lueur éblouissante ayant des vertus bienfaisantes pour l'homme, ce qui a attiré l'attention des scientifiques et pêcheurs. Elle est aujourd'hui considérée comme une espèce rare et protégée par les autorités locales.",
+        ['illustrator'] = '.Gw3n___',
+        ['fishing_area'] = { 'south_sea', 'north_sea', 'littoral' },
+        ['fishing_weather'] = { 'FOGGY', 'SMOG', 'RAIN' },
+        ['fishing_period'] = {'night', 'evening'},
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 500,
+        ['max_weight'] = 1500,
+        ['min_length'] = 20,
+        ['max_length'] = 45,
+        ['sozedex_id'] = 7,
+        ['price'] = 61
+    },
+    ['carpe_diam'] = {
+        ['name'] = 'carpe_diam',
+        ['label'] = "Carpe Diam",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Cette carpe utilise ses couleurs et ses paillettes pour vous hypnotiser et vous apaiser. Parfait lors d'une sortie pêche ou yoga.",
+        ['illustrator'] = '.Berson',
+        ['fishing_area'] = { 'big_lake', 'little_lake', 'river' },
+        ['fishing_weather'] = { 'CLEAR', 'CLEARING', 'EXTRASUNNY', 'FOGGY', 'SMOG' },
+        ['fishing_period'] = {'evening', 'afternoon'},
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 200,
+        ['max_weight'] = 800,
+        ['min_length'] = 70,
+        ['max_length'] = 90,
+        ['sozedex_id'] = 8,
+        ['price'] = 64
+    },
+    ['chibhippocampe'] = {
+        ['name'] = 'chibhippocampe',
+        ['label'] = "Chibhippocampe",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "On trouve cette petite créature cachée dans les rochers. Si vous écoutez attentivement, vous pourrez l'entendre chantonner.",
+        ['illustrator'] = '.Sm0g0go',
+        ['fishing_area'] = { 'big_lake', 'littoral', 'river' },
+        ['fishing_weather'] = { 'CLEAR', 'CLEARING', 'EXTRASUNNY', 'FOGGY', 'SMOG' },
+        ['fishing_period'] = {'morning', 'afternoon'},
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 40,
+        ['max_weight'] = 100,
+        ['min_length'] = 10,
+        ['max_length'] = 20,
+        ['sozedex_id'] = 9,
+        ['price'] = 37
+    },
+    ['stepafou_moustachou'] = {
+        ['name'] = 'stepafou_moustachou',
+        ['label'] = "Stepafou moustachou",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Poisson à poil long, une foi que l'on retire les poils, il n'y a plus grand chose à manger. Il est très moche pour faire peur aux prédateur mais il est très bon.",
+        ['illustrator'] = '.MAgnollo',
+        ['fishing_area'] = { 'north_sea', 'littoral', 'south_sea' },
+        ['fishing_weather'] = { 'CLOUDS', 'NEUTRAL' },
+        ['fishing_period'] = {'evening', 'afternoon'},
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 899,
+        ['max_weight'] = 2400,
+        ['min_length'] = 30,
+        ['max_length'] = 280,
+        ['sozedex_id'] = 10,
+        ['price'] = 23
+    },
+    ['graie_montas'] = {
+        ['name'] = 'graie_montas',
+        ['label'] = "Graie-Montas",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Le Graie-Montas est un type de raie bien spécial qui a pour particularité de faire \"ZAC\" lorsqu'elle remonte à la surface. Les habitants d'Alamo et de ces alentour on prit d'ailleurs l'habitude de l'appeler la Graie-monta ZAC, ça forme rappel également un verre de vin ! D'après une légende locale, sa consommation aurait déjà donné une sensation d'ébriété !",
+        ['illustrator'] = '.GTime',
+        ['fishing_area'] = { 'big_lake' },
+        ['fishing_weather'] = { 'CLEAR', 'CLEARING', 'EXTRASUNNY' },
+        ['fishing_period'] = {'evening', 'afternoon', 'night'},
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 407,
+        ['max_weight'] = 777,
+        ['min_length'] = 50,
+        ['max_length'] = 77,
+        ['sozedex_id'] = 11,
+        ['price'] = 41
+    },
+    ['carpotresor'] = {
+        ['name'] = 'carpotresor',
+        ['label'] = "Carpotrésor",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Qui y a t-il de mieux pour protéger son trésor que la carte bouge dans les rivières. Le célèbre Pirate Delmar l'avait compris, il inscrit sur sa carpe de compagnie le chemin vers son trésor familial. Un sortilège puissant rendait la carpe invulnérable et il fallait pour la faire sortir de l'eau attendre que le ciel soit agité.",
+        ['illustrator'] = '.octobaz',
+        ['fishing_area'] = { 'river' },
+        ['fishing_weather'] = { 'OVERCAST', 'CLOUDS', 'BLIZZARD', 'THUNDER' },
+        ['fishing_period'] = {'morning' },
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 200,
+        ['max_weight'] = 1000,
+        ['min_length'] = 21,
+        ['max_length'] = 29,
+        ['sozedex_id'] = 12,
+        ['price'] = 67
+    },
+    ['hypnoisson'] = {
+        ['name'] = 'hypnoisson',
+        ['label'] = "Hypnoisson",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "L'hypnoisson est un poisson nocturne de récif coralliens endémique à l’île de Cayo Perico . Avec ses écailles chatoyantes et son corps élégant, cet être aquatique peut influencer l'esprit de ses proies en émettant des ondes sonores spéciales. Une fois sous son emprise, les proies perdent leur volonté et sont captivées par la beauté de l'Hypnoisson qui en profite pour s'en délecter . Aucune influence n'a encore été détectée sur l'être humain , mais soyez prudents , qui sait ? Les seuls pêcheurs qui en aient vu étaient bien alcoolisés , coïncidence ?",
+        ['illustrator'] = '.RedKanyon',
+        ['fishing_area'] = { 'south_sea' },
+        ['fishing_weather'] = { 'CLEAR', 'CLEARING', 'EXTRASUNNY', 'FOGGY', 'SMOG' },
+        ['fishing_period'] = {'evening', 'night' },
+        ['fishman_status'] = 'alcool',
+        ['min_weight'] = 50,
+        ['max_weight'] = 250,
+        ['min_length'] = 6,
+        ['max_length'] = 20,
+        ['sozedex_id'] = 13,
+        ['price'] = 72
+    },
+    ['meduze_de_fe_de_la_morre_qui_tu'] = {
+        ['name'] = 'meduze_de_fe_de_la_morre_qui_tu',
+        ['label'] = "Méduze de fe de la morre qui tu",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Une espèce de méduse d'eau douce et nocturne, découverte par un enfant de 5 ans, elle est capable de générer une chaleur intense au point de former des flammes même sous l'eau, elle lui servent de moyen de défense en cas d'agression, de parade nuptiale pour trouver sa compagne et lui permettent aussi de se déplacer dans les climats les plus froids pour passer l'hiver même dans des lacs gelés !",
+        ['illustrator'] = '.Pastouke',
+        ['fishing_area'] = { 'big_lake' },
+        ['fishing_weather'] = { 'CLEAR', 'CLEARING', 'EXTRASUNNY', 'SNOW', 'SNOWLIGHT', 'XMAS', 'BLIZZARD' },
+        ['fishing_period'] = {'night' },
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 800,
+        ['max_weight'] = 1200,
+        ['min_length'] = 30,
+        ['max_length'] = 80,
+        ['sozedex_id'] = 14,
+        ['price'] = 56
+    },
+    ['marine'] = {
+        ['name'] = 'marine',
+        ['label'] = "Marine",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Poulpe de couleur violette. Le premier specimen a été découvert par des médecins du LSMC, dans le ventre d’un patient noyé dans la marina (d’où son nom). Particulièrement petite, elle se faufile partout. Elle est capable de se propulser rapidement grâce à un puissant jet d’eau, très pratique en cas de danger. Psssshhhiiiiit ! ",
+        ['illustrator'] = '.ShiroYuno',
+        ['fishing_area'] = { 'canals', 'south_sea' },
+        ['fishing_weather'] = { 'CLEAR', 'SNOW', 'SNOWLIGHT', 'XMAS', 'BLIZZARD' },
+        ['fishing_period'] = {'alltime' },
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 50,
+        ['max_weight'] = 500,
+        ['min_length'] = 1,
+        ['max_length'] = 10,
+        ['sozedex_id'] = 15,
+        ['price'] = 41
+    },
+    ['purple_omen'] = {
+        ['name'] = 'purple_omen',
+        ['label'] = "Purple Omen",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Emydocephalus Draconis, appelé Purple Omen, est un serpent marin vivant dans les eaux profondes. Lors des nuits orageuses, une lumière violette peut être visible au fond de l'eau, on raconte qu'apercevoir cette lumière présage un futur radieux, elle redonne espoirs aux marins perdus dans des tempêtes. C'est en réalité l'Omen qui chasse en émettant une lumière violette hypnotisant ses petites proies.",
+        ['illustrator'] = '.Crash',
+        ['fishing_area'] = { 'south_sea', 'north_sea' },
+        ['fishing_weather'] = { 'BLIZZARD', 'THUNDER' },
+        ['fishing_period'] = {'night'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 965,          -- poids minimal en grammes
+        ['max_weight'] = 4300,         -- poids maxmimal en grammes
+        ['min_length'] = 76,           -- taille minimale en cm
+        ['max_length'] = 183,          -- taille minimale en cm
+        ['sozedex_id'] = 16,
+        ['price'] = 42
+    },
+    ['bigornoob'] = {
+        ['name'] = 'bigornoob',
+        ['label'] = "Bigornoob",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Le bigornoob est un gastéropode marin, le plus consommé au monde. Reconnaissable à sa coquille qu'il porte sur son dos, il est délicieux une fois cuit. Son nom vient du fait qu'il débute dans la vie marine sans aucune information transmise par ses parents, il doit tout apprendre par lui même et celà peut être parfois compliqué.",
+        ['illustrator'] = '.PsyTeK',
+        ['fishing_area'] = { 'littoral', 'big_lake', 'river' },
+        ['fishing_weather'] = { 'FOGGY', 'SMOG', 'OVERCAST', 'CLOUDS' },
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 15,          -- poids minimal en grammes
+        ['max_weight'] = 20,         -- poids maxmimal en grammes
+        ['min_length'] = 1,           -- taille minimale en cm
+        ['max_length'] = 4,          -- taille minimale en cm
+        ['sozedex_id'] = 17,
+        ['price'] = 78
+    },
+    ['le_sunny'] = {
+        ['name'] = 'le_sunny',
+        ['label'] = "Sunny",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Le Sunny, qui tire son nom de sa couleur jaune extrêmement vive et de sa forme ronde finissant en pointe, est un corail que l'on retrouve proche des côtes, il peut mesurer jusqu'à 23 cm de diamètre sur 48 cm de haut, on le retrouve principalement dans des eaux peu profondes du a son besoin de lumière essentiel à sa survie. La fragilité de son squelette fait qu'il se retrouve souvent cassé et accroché aux hameçons des pêcheurs.",
+        ['illustrator'] = '.Itchinaru',
+        ['fishing_area'] = { 'littoral', 'south_sea' },
+        ['fishing_weather'] = { 'CLEAR', 'CLEARING', 'EXTRASUNNY' },
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 400,          -- poids minimal en grammes
+        ['max_weight'] = 800,         -- poids maxmimal en grammes
+        ['min_length'] = 31,           -- taille minimale en cm
+        ['max_length'] = 48,          -- taille minimale en cm
+        ['sozedex_id'] = 18,
+        ['price'] = 54
+    },
+    ['croaky_froggy'] = {
+        ['name'] = 'croaky_froggy',
+        ['label'] = "Croaky Froggy",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Avec sa peau verte vif, ses grands yeux brillants et ses pattes palmées, cette grenouille a l'air d'avoir sauté tout droit d'un conte de fées. En fixant ses yeux brillants, elle peut calmer les nerfs les plus tendus et apaiser les esprits les plus agités. C'est pourquoi elle est une compagnie si appréciée pour les moments de détente et de méditation.",
+        ['illustrator'] = '.Tommy',
+        ['fishing_area'] = { 'south_sea', 'little_lake', 'river' },
+        ['fishing_weather'] = { 'RAIN', 'BLIZZARD', 'THUNDER' },
+        ['fishing_period'] = {'evening', 'night' },
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 10,          -- poids minimal en grammes
+        ['max_weight'] = 30,         -- poids maxmimal en grammes
+        ['min_length'] = 3,           -- taille minimale en cm
+        ['max_length'] = 10,          -- taille minimale en cm
+        ['sozedex_id'] = 19,
+        ['price'] = 52
+    },
+    ['chaxo'] = {
+        ['name'] = 'chaxo',
+        ['label'] = "Chaxo",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Cette petite créature a beau être mignonne, attention à ne pas y laisser un doigt ! Le Chaxo passe son temps à l'abris des regards, sous des rochers car il n'aime pas être embêter. Il se nourrit de petits néons qui donnent cette couleur éclatante à sa petite crête au dessus de sa tête.",
+        ['illustrator'] = '.Anthinaé',
+        ['fishing_area'] = { 'littoral', 'big_lake', 'canals' },
+        ['fishing_weather'] = { 'FOGGY', 'SMOG', 'BLIZZARD', 'THUNDER' },
+        ['fishing_period'] = {'night'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 60,          -- poids minimal en grammes
+        ['max_weight'] = 150,         -- poids maxmimal en grammes
+        ['min_length'] = 10,           -- taille minimale en cm
+        ['max_length'] = 30,          -- taille minimale en cm
+        ['sozedex_id'] = 20,
+        ['price'] = 74
+    },
+    ['morpheus_somnolent'] = {
+        ['name'] = 'morpheus_somnolent',
+        ['label'] = "Morpheus Somnolent",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Le Morpheus Somnolent se reconnaît à son air perdu et sa couleur violette. Il bénéficie d'une formidable capacité d'adaptation lui permettant d'absorber les éléments autour de lui, même les plus toxiques, ce qui change aussi son apparence. Celui-là a du absorber une bonne quantité des déchets du port pour avoir autant de pustules !",
+        ['illustrator'] = '.JakeFreaks',
+        ['fishing_area'] = { 'littoral', 'canals' },
+        ['fishing_weather'] = { 'FOGGY', 'SMOG', 'OVERCAST', 'CLOUDS' },
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'drug',   -- drug, alcool, clean
+        ['min_weight'] = 600,          -- poids minimal en grammes
+        ['max_weight'] = 1200,         -- poids maxmimal en grammes
+        ['min_length'] = 25,           -- taille minimale en cm
+        ['max_length'] = 50,          -- taille minimale en cm
+        ['sozedex_id'] = 21,
+        ['price'] = 59
+    },
+    ['portinet'] = {
+        ['name'] = 'portinet',
+        ['label'] = "Portinet",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Le Portinet est un poisson de petite taille et craintif. Il adore se cacher dans des petits recoins (coraux, débris). Pour effrayer les prédateurs, il gruike et n'hésite pas à balancer des bulles d'eau avec son nez ressemblant à un groin de cochon. C'est un poisson qui se plaira parfaitement dans votre aquarium ! Essayer, c'est l'adopter !",
+        ['illustrator'] = '.Hendreil',
+        ['fishing_area'] = { 'littoral', 'north_sea', 'south_sea' },
+        ['fishing_weather'] = { 'CLEAR', 'CLEARING', 'EXTRASUNNY', 'FOGGY', 'SMOG' },
+        ['fishing_period'] = {'afternoon'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 750,          -- poids minimal en grammes
+        ['max_weight'] = 2200,         -- poids maxmimal en grammes
+        ['min_length'] = 90,           -- taille minimale en cm
+        ['max_length'] = 140,          -- taille minimale en cm
+        ['sozedex_id'] = 22,
+        ['price'] = 36
+    },
+    ['la_clebsouille'] = {
+        ['name'] = 'la_clebsouille',
+        ['label'] = "Clebsouille",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Doté d'un flair redoutable, spécifiquement envers les uniformes, le passe-temps favori de la Clebsouille consiste à aboyer sans réelle revendication. La légende raconte qu'elle fait son nid à partir de sous-vêtements d'agents des forces de l'ordre, nid pouvant d'ailleurs accueillir jusqu'à une vingtaine d'individu. Sa fertilité aurait pour origine l'amour des daronnes.",
+        ['illustrator'] = '.Tluap',
+        ['fishing_area'] = { 'canals', 'little_lake', 'river' },
+        ['fishing_weather'] = { 'FOGGY', 'SMOG', 'BLIZZARD', 'THUNDER' },
+        ['fishing_period'] = {'night'},
+        ['fishman_status'] = 'drug',   -- drug, alcool, clean
+        ['min_weight'] = 3000,          -- poids minimal en grammes
+        ['max_weight'] = 4000,         -- poids maxmimal en grammes
+        ['min_length'] = 60,           -- taille minimale en cm
+        ['max_length'] = 100,          -- taille minimale en cm
+        ['sozedex_id'] = 23,
+        ['price'] = 34
+    },
+    ['fichouette'] = {
+        ['name'] = 'fichouette',
+        ['label'] = "Fichouette",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "La Fichouette est une créature aquatique mystérieuse et envoûtante, dont les nageoires souples et agiles lui permettent de glisser avec aisance dans les eaux sombres. Ses grands yeux noirs perçants lui permettent de voir à travers les ténèbres les plus épaisses, tandis que son bec pointu et acéré, la rend redoutable pour les petites créatures aquatiques qu'elle chasse avec facilité. Elle est une véritable merveille de la nature, rappelant la beauté et la diversité du monde sous-marin.",
+        ['illustrator'] = '.Caracole',
+        ['fishing_area'] = { 'littoral', 'north_sea', 'south_sea' },
+        ['fishing_weather'] = { 'FOGGY', 'SMOG', 'OVERCAST', 'CLOUDS' },
+        ['fishing_period'] = {'evening', 'night'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 500,          -- poids minimal en grammes
+        ['max_weight'] = 1000,         -- poids maxmimal en grammes
+        ['min_length'] = 50,           -- taille minimale en cm
+        ['max_length'] = 100,          -- taille minimale en cm
+        ['sozedex_id'] = 24,
+        ['price'] = 30
+    },
+    ['merou_colerique_tachete'] = {
+        ['name'] = 'merou_colerique_tachete',
+        ['label'] = "Mérou Colérique Tacheté",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Le mérou colérique tacheté tient son nom de la description faite par les quelques pêcheurs qui ont pu l'apercevoir, décrivant un poisson très coloré mais au regard noir, d'où son nom. Cependant, la plupart de ceux qui l'ont vu étant dans un état second, l'existence de ce poisson fût longtemps reléguée au rang d'hallucination. Des recherches récentes ont pu prouver que ce poisson aux yeux particulier existe bel et bien.",
+        ['illustrator'] = '.KamiBaal',
+        ['fishing_area'] = { 'littoral', 'canals' },
+        ['fishing_weather'] = { 'FOGGY', 'SMOG'},
+        ['fishing_period'] = {'night', 'morning'},
+        ['fishman_status'] = 'drug',   -- drug, alcool, clean
+        ['min_weight'] = 100,          -- poids minimal en grammes
+        ['max_weight'] = 1000,         -- poids maxmimal en grammes
+        ['min_length'] = 13,           -- taille minimale en cm
+        ['max_length'] = 54,          -- taille minimale en cm
+        ['sozedex_id'] = 25,
+        ['price'] = 66
+    },
+    ['chromabranchus_virosa'] = {
+        ['name'] = 'chromabranchus_virosa',
+        ['label'] = "Chromabranchus Virosa",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Chaînon manquant entre l'amphibien et le mollusque, la Chromabranchus virosa communément appelée Santos-slug est une espèce endémique de San Andreas très connue à l'étranger. Elle doit sa notoriété au film d'animation \"Shroom & Toxin : Gateway to San-Atlantis\" par Fred's Pictures. Elle est aussi tristement célèbre pour le braconnage qu'elle subit en raison des propriétés hallucinogènes de son venin.Sa résistance aux polluants et son caractère docile en font bon un animal domestique si on sait la manipuler. Après une campagne d'élevage fondée par l’État depuis 2001 jusqu'à nos jours, l'espèce n'est plus en danger.",
+        ['illustrator'] = '.Darabesque',
+        ['fishing_area'] = { 'littoral', 'canals' },
+        ['fishing_weather'] = { 'RAIN', 'CLEAR', 'CLEARING', 'EXTRASUNNY', 'CLOUDS'},
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 100,          -- poids minimal en grammes
+        ['max_weight'] = 1500,         -- poids maxmimal en grammes
+        ['min_length'] = 7,           -- taille minimale en cm
+        ['max_length'] = 40,          -- taille minimale en cm
+        ['sozedex_id'] = 26,
+        ['price'] = 77
+    },
+    ['mossiferne'] = {
+        ['name'] = 'mossiferne',
+        ['label'] = "Mossiferne",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "La concentration importante de polluants chimiques dans certaines eaux chaudes a amené des micro-organismes à se développer et s'agglomérer pour former des êtres à part entière appelés Mossiferne. Ce sont des être-vivants hermaphrodites qui peuvent se reproduire de façon monoparentale, c'est à dire sans partenaire. Ils se nourrissent des divers polluants que l'ont peut retrouver dans les eaux chaudes près des côtes, là ou la pollution est la plus forte bien sûr.",
+        ['illustrator'] = '.XLKa',
+        ['fishing_area'] = { 'littoral', 'canals', 'south_sea' },
+        ['fishing_weather'] = { 'CLEAR', 'CLEARING', 'EXTRASUNNY'},
+        ['fishing_period'] = {'afternoon'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 50,          -- poids minimal en grammes
+        ['max_weight'] = 300,         -- poids maxmimal en grammes
+        ['min_length'] = 20,           -- taille minimale en cm
+        ['max_length'] = 90,          -- taille minimale en cm
+        ['sozedex_id'] = 27,
+        ['price'] = 76
+    },
+    ['figel'] = {
+        ['name'] = 'figel',
+        ['label'] = "Figel",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Ce poisson endémique de San Andreas a de nombreuses caractéristiques marquantes. Ses écailles, d'un violet vif , ainsi que le fait que c'est un des poissons les plus bruyants de son espèce. Cela vient de la taille de sa gueule la plus grande des espèces locales. Son nom viendrait du bruit qu'il fait quand il mange, on a l'impression qu'il l'épelle.",
+        ['illustrator'] = '.Burnthead',
+        ['fishing_area'] = { 'river'},
+        ['fishing_weather'] = { 'BLIZZARD', 'THUNDER' },
+        ['fishing_period'] = {'night'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 3500,          -- poids minimal en grammes
+        ['max_weight'] = 4800,         -- poids maxmimal en grammes
+        ['min_length'] = 250,           -- taille minimale en cm
+        ['max_length'] = 388,          -- taille minimale en cm
+        ['sozedex_id'] = 28,
+        ['price'] = 66
+    },
+    ['rosailee'] = {
+        ['name'] = 'rosailee',
+        ['label'] = "Rosailée",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "La Rosailée (Purpurascens Alatus) est un poisson volant qui se trouve principalement dans les zones tropicales. Ses écailles remarquables, mélange de noir et de rose, lui confèrent une allure unique. Ce qui rend ce poisson encore plus extraordinaire, c'est sa capacité d'envol digne d'un jet. Grâce à ses nageoires spéciales, elle peut s'élancer hors de l'eau, offrant un spectacle aérien fascinant.",
+        ['illustrator'] = '.Kutz',
+        ['fishing_area'] = { 'south_sea'},
+        ['fishing_weather'] = { 'FOGGY', 'SMOG', 'CLEAR', 'CLEARING', 'EXTRASUNNY' },
+        ['fishing_period'] = {'evening', 'night'},
+        ['fishman_status'] = 'alcool',   -- drug, alcool, clean
+        ['min_weight'] = 300,          -- poids minimal en grammes
+        ['max_weight'] = 600,         -- poids maxmimal en grammes
+        ['min_length'] = 30,           -- taille minimale en cm
+        ['max_length'] = 50,          -- taille minimale en cm
+        ['sozedex_id'] = 29,
+        ['price'] = 79
+    },
+    ['le_perlea'] = {
+        ['name'] = 'le_perlea',
+        ['label'] = "Perléa",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Le Perléa est un poisson aquatique coloré. Son nom provient de sa capacité à recevoir la lumière et crée un spectacle visuel éblouissant telle une perle. Le Perléa préfère les eaux calmes et claires où il peut nager gracieusement en groupe. Il est connu pour percevoir les émotions des autres animaux marins grâce à son extraordinaire sensibilité. Il est souvent considéré comme un bijou de la mer, capable de réconforter les autres créatures avec son aura.",
+        ['illustrator'] = '.Nils',
+        ['fishing_area'] = { 'little_lake', 'big_lake', 'river' },
+        ['fishing_weather'] = { 'CLEAR', 'CLEARING', 'EXTRASUNNY' },
+        ['fishing_period'] = {'morning', 'afternoon'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 250,          -- poids minimal en grammes
+        ['max_weight'] = 500,         -- poids maxmimal en grammes
+        ['min_length'] = 10,           -- taille minimale en cm
+        ['max_length'] = 25,          -- taille minimale en cm
+        ['sozedex_id'] = 30,
+        ['price'] = 79
+    },
+    ['sanajvit'] = {
+        ['name'] = 'sanajvit',
+        ['label'] = "Sanajvit",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Poisson endémique des mers de San Andreas, on raconte que la première fois qu'un ranger l'aurait aperçu, il se serait écrié: ça nage vite ! le baptisant au passage. Il est reconnaissable à son large aileron dorsal utile autant pour sa parade nuptiale que pour chasser en fonçant à plus de 130km/h sur ses proies pour les assommer d'un coup de tête.",
+        ['illustrator'] = '.Danacol',
+        ['fishing_area'] = { 'south_sea', 'north_sea' },
+        ['fishing_weather'] = { 'CLEARING', 'CLEAR','EXTRASUNNY' },
+        ['fishing_period'] = { 'evening','night' },
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 1000,          -- poids minimal en grammes
+        ['max_weight'] = 2700,         -- poids maxmimal en grammes
+        ['min_length'] = 33,           -- taille minimale en cm
+        ['max_length'] = 38,          -- taille minimale en cm
+        ['sozedex_id'] = 31,
+        ['price'] = 71
+    },
+    ['simone'] = {
+        ['name'] = 'simone',
+        ['label'] = "Simone",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Simone l'anémone de mer est rivée à son rocher depuis bien trop longtemps et rêve d'évasion et de voyage dans cet océan infini qui réserve tant de surprises.",
+        ['illustrator'] = '.Nina_lana',
+        ['fishing_area'] = { 'south_sea' },
+        ['fishing_weather'] = { 'CLEARING', 'CLEAR', 'EXTRASUNNY', 'RAIN', 'OVERCAST', 'CLOUDS' },
+        ['fishing_period'] = { 'alltime' },
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 50,          -- poids minimal en grammes
+        ['max_weight'] = 150,         -- poids maxmimal en grammes
+        ['min_length'] = 5,           -- taille minimale en cm
+        ['max_length'] = 10,          -- taille minimale en cm
+        ['sozedex_id'] = 32,
+        ['price'] = 51
+    },
+    ['axowin_dragonnet_splendide'] = {
+        ['name'] = 'axowin_dragonnet_splendide',
+        ['label'] = "Axowin Dragonnet Splendide",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Poisson faisant le chaînon manquant entre les poissons et les reptiles aux couleurs riches à dominantes de bleu et violet. C'est un animal nocturne, constamment sur le qui vive et dormant peu. Vit en groupe et protecteur de ses congénères et petits. Attiré par les coraux de couleurs vives pour se camoufler avec ses propres couleurs, et vivant dans les petits fonds marins. Grâce à ses petites pattes, il peut facilement se mouvoir sur les récifs et se nourrir des petits crustacés passant à sa portée. Il réagit aux ondes produites par des bruits de sirène en se cachant, curieux, il finit par regarder d'où ça vient, où ça va et si c'est pour lui.",
+        ['illustrator'] = '.Mad_max17',
+        ['fishing_area'] = { 'south_sea', 'north_sea', 'littoral' },
+        ['fishing_weather'] = { 'CLEARING', 'CLEAR', 'EXTRASUNNY', 'RAIN' },
+        ['fishing_period'] = { 'alltime' },
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 150,          -- poids minimal en grammes
+        ['max_weight'] = 250,         -- poids maxmimal en grammes
+        ['min_length'] = 10,           -- taille minimale en cm
+        ['max_length'] = 25,          -- taille minimale en cm
+        ['sozedex_id'] = 33,
+        ['price'] = 67
+    },
+    ['fire_plouf'] = {
+        ['name'] = 'fire_plouf',
+        ['label'] = "Fire-Plouf",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Le Fire-Plouf est un petit poisson d'eau douce insectivor endémique de l'État de San Andreas. Nocturne par nature, il tire avantage de ses couleurs et de sa bioluminescence flamboyante pour leurrer ses proies. Grâce à sa puissante queue, il est capable de se projeter hors de l'eau pour gober son repas, brisant dans sa chute le silence de la nuit d'un magnifique Plouf. Ce mode de vie le rend également cible de choix des oiseaux.",
+        ['illustrator'] = '.GautSlayer',
+        ['fishing_area'] = { 'big_lake', 'river', 'little_lake' },
+        ['fishing_weather'] = { 'FOGGY', 'SMOG', 'OVERCAST', 'CLOUDS' },
+        ['fishing_period'] = { 'evening', 'night' },
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 50,          -- poids minimal en grammes
+        ['max_weight'] = 200,         -- poids maxmimal en grammes
+        ['min_length'] = 8,           -- taille minimale en cm
+        ['max_length'] = 12,          -- taille minimale en cm
+        ['sozedex_id'] = 34,
+        ['price'] = 35
+    },
+    ['aquatic_wood_runner'] = {
+        ['name'] = 'aquatic_wood_runner',
+        ['label'] = "Aquatic Wood-Runner",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Espèce originaire des Grands Lacs d'Amérique du Nord. Surnommé le Runner du Michigan, son petit physique lui permet d'être vif et très rapide. Possédant une excellente endurance, il est un symbole du sportif par excellence. Péché dès le XVIIIe siècle, mais extrêmement difficile à capturer à cause de sa rapidité, il est l'une des spécialités de la région avec une cuisson fumée au bois de sapin.",
+        ['illustrator'] = '.Aurukh',
+        ['fishing_area'] = { 'river', 'big_lake' },
+        ['fishing_weather'] = { 'FOGGY', 'SMOG' },
+        ['fishing_period'] = { 'night' },
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 100,          -- poids minimal en grammes
+        ['max_weight'] = 200,         -- poids maxmimal en grammes
+        ['min_length'] = 5,           -- taille minimale en cm
+        ['max_length'] = 10,          -- taille minimale en cm
+        ['sozedex_id'] = 35,
+        ['price'] = 36
+    },
+    ['squalopoisson'] = {
+        ['name'] = 'squalopoisson',
+        ['label'] = "Squalopoisson",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Le Squalopoisson, il tire son nom du Squalus, un requin vivant en eau profonde. Un poisson redoutable doté d'une apparence féroce et d'une nage rapide, sa particularité réside dans le fait qu'il préfère vivre principalement dans les eaux troubles.",
+        ['illustrator'] = '.Eadsword',
+        ['fishing_area'] = { 'river', 'big_lake', 'south_sea' },
+        ['fishing_weather'] = { 'RAIN' },
+        ['fishing_period'] = { 'alltime' },
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 500,          -- poids minimal en grammes
+        ['max_weight'] = 900,         -- poids maxmimal en grammes
+        ['min_length'] = 30,           -- taille minimale en cm
+        ['max_length'] = 50,          -- taille minimale en cm
+        ['sozedex_id'] = 36,
+        ['price'] = 59
+    },
+    ['rastortue'] = {
+        ['name'] = 'rastortue',
+        ['label'] = "Rastortue",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Cette espèce de tortue ne pourrait être aperçue que par les pêcheurs les plus attentifs. Ses cheveux peuvent varier de couleur en fonction du milieu dans lequel il est pêché.",
+        ['illustrator'] = '.Zack_93',
+        ['fishing_area'] = { 'river', 'littoral' },
+        ['fishing_weather'] = { 'CLEAR', 'CLEARING', 'EXTRASUNNY', 'RAIN' },
+        ['fishing_period'] = { 'evening' },
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 800,          -- poids minimal en grammes
+        ['max_weight'] = 1500,         -- poids maxmimal en grammes
+        ['min_length'] = 40,           -- taille minimale en cm
+        ['max_length'] = 55,          -- taille minimale en cm
+        ['sozedex_id'] = 37,
+        ['price'] = 35
+    },
+    ['voile_souvenir'] = {
+        ['name'] = 'voile_souvenir',
+        ['label'] = "Voile Souvenir",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Le voile souvenir ou velum memoria est un poisson blanc avec une touche de couleur dont la teinte et l'emplacement dépendent des individus, malgré ses airs fantomatiques, c'est un poisson calme et pacifique. La légende raconte que les personnes qui fixent trop longtemps les ondulations envoutantes de ses voilages se voient replongés dans de lointains souvenirs...",
+        ['illustrator'] = '.Nahora',
+        ['fishing_area'] = { 'river', 'little_lake', 'canals' },
+        ['fishing_weather'] = { 'SNOW', 'SNOWLIGHT', 'XMAS', 'BLIZZARD', 'FOGGY', 'SMOG' },
+        ['fishing_period'] = { 'alltime' },
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 100,          -- poids minimal en grammes
+        ['max_weight'] = 400,         -- poids maxmimal en grammes
+        ['min_length'] = 10,           -- taille minimale en cm
+        ['max_length'] = 40,          -- taille minimale en cm
+        ['sozedex_id'] = 38,
+        ['price'] = 80
+    },
+    ['sandre_florale'] = {
+        ['name'] = 'sandre_florale',
+        ['label'] = "Sandre Florale",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Ce carnassier se distingue par sa magnifique petite fleur blanche qui orne sa tête. Mais ne vous y trompez pas, derrière cette beauté se cache un redoutable prédateur connu pour sa voracité...",
+        ['illustrator'] = '.Sniteur',
+        ['fishing_area'] = { 'river', 'big_lake', 'canals' },
+        ['fishing_weather'] = { 'RAIN', 'OVERCAST', 'CLOUDS' },
+        ['fishing_period'] = { 'evening' },
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 2500,          -- poids minimal en grammes
+        ['max_weight'] = 4000,         -- poids maxmimal en grammes
+        ['min_length'] = 200,           -- taille minimale en cm
+        ['max_length'] = 350,          -- taille minimale en cm
+        ['sozedex_id'] = 39,
+        ['price'] = 38
+    },
+    ['pinky_punky_fish'] = {
+        ['name'] = 'pinky_punky_fish',
+        ['label'] = "Pinky Punky Fish",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Ce poisson est tellement bizarre et psychédélique que l'on se dit toujours en le voyant, est-ce que je viens vraiment de pécher ça ? ou j'ai halluciné...",
+        ['illustrator'] = '.Beer',
+        ['fishing_area'] = { 'river', 'big_lake', 'south_sea' },
+        ['fishing_weather'] = { 'CLEAR', 'CLEARING', 'EXTRASUNNY', 'BLIZZARD', 'THUNDER' },
+        ['fishing_period'] = { 'alltime' },
+        ['fishman_status'] = 'drug',   -- drug, alcool, clean
+        ['min_weight'] = 1000,          -- poids minimal en grammes
+        ['max_weight'] = 2000,         -- poids maxmimal en grammes
+        ['min_length'] = 51,           -- taille minimale en cm
+        ['max_length'] = 151,          -- taille minimale en cm
+        ['sozedex_id'] = 40,
+        ['price'] = 30
+    },
+    ['electropoulpe'] = {
+        ['name'] = 'electropoulpe',
+        ['label'] = "Eléctropoulpe",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Chargé en électricité, il faut prendre ses précautions lorsqu'on attrape un éléctropoulpe ! Avec son regard presque toujours froncé, il n'hésitera pas à vous électriser si vous le chatouillez trop! Cependant, si vous arrivez à le dompter, sa viande est succulente avec un bon vin blanc!",
+        ['illustrator'] = '.TheSeds',
+        ['fishing_area'] = { 'littoral', 'south_sea', 'north_sea' },
+        ['fishing_weather'] = { 'RAIN', 'BLIZZARD', 'THUNDER' },
+        ['fishing_period'] = { 'alltime' },
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 1500,          -- poids minimal en grammes
+        ['max_weight'] = 2500,         -- poids maxmimal en grammes
+        ['min_length'] = 175,           -- taille minimale en cm
+        ['max_length'] = 230,          -- taille minimale en cm
+        ['sozedex_id'] = 41,
+        ['price'] = 27
+    },
+    ['verdipoulpe'] = {
+        ['name'] = 'verdipoulpe',
+        ['label'] = "Verdipoulpo",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "On raconte que ceux qui avaient la chance de rencontrer un Verdipoulpo pouvaient ressentir une profonde joie et un apaisement intérieur. Ils sont connus pour se rassembler en communautés chaleureuses et solidaires. Ils se déplaçaient toujours en groupe, nageant en harmonie les uns avec les autres.",
+        ['illustrator'] = '.Nooby',
+        ['fishing_area'] = { 'littoral', 'north_sea', 'south_sea' },
+        ['fishing_weather'] = { 'CLEAR', 'CLEARING', 'EXTRASUNNY', 'BLIZZARD', 'THUNDER' },
+        ['fishing_period'] = { 'morning', 'afternoon' },
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 100,          -- poids minimal en grammes
+        ['max_weight'] = 200,         -- poids maxmimal en grammes
+        ['min_length'] = 30,           -- taille minimale en cm
+        ['max_length'] = 50,          -- taille minimale en cm
+        ['sozedex_id'] = 42,
+        ['price'] = 36
+    },
+    ['pilulieu'] = {
+        ['name'] = 'pilulieu',
+        ['label'] = "Pilulieu",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Ce poisson discret n'est semble-t-il trouvable qu'à proximité de lieux médicaux. Nous ignorons s'il a servi à des expériences, les pilules Humam Labs sont là complètement par hasard.",
+        ['illustrator'] = '.UnclePeps_',
+        ['fishing_area'] = { 'canals', 'south_sea' },
+        ['fishing_weather'] = { 'FOGGY', 'SMOG', 'RAIN' },
+        ['fishing_period'] = { 'night', 'morning' },
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 150,          -- poids minimal en grammes
+        ['max_weight'] = 250,         -- poids maxmimal en grammes
+        ['min_length'] = 20,           -- taille minimale en cm
+        ['max_length'] = 30,          -- taille minimale en cm
+        ['sozedex_id'] = 43,
+        ['price'] = 57
+    },
+    ['orions_star'] = {
+        ['name'] = 'orions_star',
+        ['label'] = "Orion's star",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "La légende raconte qu'il serait d'origine de la constellation d'Orion. Une autre légende raconte que l'offrir un soir très étoilés à une personne permettrait de transporter les étoiles qu'il a sur ces écailles dans les yeux du receveur.",
+        ['illustrator'] = '.Ouragan',
+        ['fishing_area'] = { 'river', 'big_lake', 'south_sea' },
+        ['fishing_weather'] = { 'CLEAR', 'CLEARING', 'EXTRASUNNY' },
+        ['fishing_period'] = { 'night' },
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 100,          -- poids minimal en grammes
+        ['max_weight'] = 200,         -- poids maxmimal en grammes
+        ['min_length'] = 10,           -- taille minimale en cm
+        ['max_length'] = 20,          -- taille minimale en cm
+        ['sozedex_id'] = 44,
+        ['price'] = 43
+    },
+    ['globenciel'] = {
+        ['name'] = 'globenciel',
+        ['label'] = "Globenciel",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Parait-il que les rayons du soleil se reflétant sur l'eau font remonter du fond de l'océan cette merveilleuse petite créature. Beaucoup trop adorable pour être pêchée, non ?",
+        ['illustrator'] = '.Typhaine_',
+        ['fishing_area'] = { 'river', 'littoral' },
+        ['fishing_weather'] = { 'CLEAR', 'CLEARING', 'EXTRASUNNY', 'RAIN' },
+        ['fishing_period'] = { 'afternoon' },
+        ['fishman_status'] = 'alcool',   -- drug, alcool, clean
+        ['min_weight'] = 200,          -- poids minimal en grammes
+        ['max_weight'] = 500,         -- poids maxmimal en grammes
+        ['min_length'] = 7,           -- taille minimale en cm
+        ['max_length'] = 12,          -- taille minimale en cm
+        ['sozedex_id'] = 45,
+        ['price'] = 72
+    },
+    ['poissoncisson'] = {
+        ['name'] = 'poissoncisson',
+        ['label'] = "Poissoncisson",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Il aime le soleil et bien cuisiné Il a en plus de la couleur le goût du saucisson ",
+        ['illustrator'] = '.Blacksad',
+        ['fishing_area'] = { 'canals', 'river' },
+        ['fishing_weather'] = { 'EXTRASUNNY', 'CLEAR', 'CLEARING' },
+        ['fishing_period'] = {'afternoon'},
+        ['fishman_status'] = 'alcool',   -- drug, alcool, clean
+        ['min_weight'] = 500,          -- poids minimal en grammes
+        ['max_weight'] = 1000,         -- poids maxmimal en grammes
+        ['min_length'] = 20,           -- taille minimale en cm
+        ['max_length'] = 30,          -- taille minimale en cm
+        ['sozedex_id'] = 46,
+        ['price'] = 45
+    },
+    ['le_pipoulpe'] = {
+        ['name'] = 'le_pipoulpe',
+        ['label'] = "Pipoulpe",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Le Pipoulpe est un poulpe farceur, le pôtit clown toujours à faire des blagues aux autres individus de son espèce ! Cependant, c'est un prédateur féroce. Il attire ses proies grâce à ses pôtits yeux, ces dernières sont comme ensorcelées en croisant son regard. Il chasse le matin et est donc les plus vulnérable à ce moment-là. Le reste du temps il joue ou se repose (une vie de rêve...) !",
+        ['illustrator'] = '.Matthelot',
+        ['fishing_area'] = { 'river', 'littoral' },
+        ['fishing_weather'] = { 'EXTRASUNNY', 'CLEAR', 'CLEARING', 'FOGGY', 'SMOG' },
+        ['fishing_period'] = { 'morning'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 300,          -- poids minimal en grammes
+        ['max_weight'] = 600,         -- poids maxmimal en grammes
+        ['min_length'] = 10,           -- taille minimale en cm
+        ['max_length'] = 15,          -- taille minimale en cm
+        ['sozedex_id'] = 47,
+        ['price'] = 65
+    },
+    ['luminosa'] = {
+        ['name'] = 'luminosa',
+        ['label'] = "Luminosa",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "C'est un poisson qui présente des excroissances lumineuses sur sa tête, ainsi que des reflets brillants sur ses flancs. Ces caractéristiques ont pour objectif d'aider les autres individus de son espèce à le localiser plus facilement dans l'obscurité. En terme de comportement, ce poisson est sociable et aime se vivre en petits groupes. Il est souvent vu nageant autour des coraux, cherchant de la nourriture et interagissant avec les autres membres de son espèce. La légende raconte que si quelqu'un lui murmure miaou, il répondra par un maouuu.",
+        ['illustrator'] = '.Mimosa_d_hiver',
+        ['fishing_area'] = { 'littoral' },
+        ['fishing_weather'] = { 'OVERCAST', 'CLOUDS', 'RAIN' },
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 5,          -- poids minimal en grammes
+        ['max_weight'] = 5,         -- poids maxmimal en grammes
+        ['min_length'] = 9,           -- taille minimale en cm
+        ['max_length'] = 9,          -- taille minimale en cm
+        ['sozedex_id'] = 48,
+        ['price'] = 60
+    },
+	['poulamar'] = {
+        ['name'] = 'poulamar',
+        ['label'] = "Poulamar",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Le Poulamar est un adorable animal marin rigolo, mélangeant un poulpe et un lamantin. Avec ses couleurs vives, ses tentacules en mouvement constant et ses nageoires ressemblant à des ailes, il charme tout le monde avec sa démarche maladroite et ses facéties joyeuses. Un compagnon marin amical et joueur à découvrir !",
+        ['illustrator'] = '.PiRDub',
+        ['fishing_area'] = { 'canals', 'river' },
+        ['fishing_weather'] = { 'FOGGY', 'SMOG', 'RAIN' },
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 500,          -- poids minimal en grammes
+        ['max_weight'] = 1000,         -- poids maxmimal en grammes
+        ['min_length'] = 300,           -- taille minimale en cm
+        ['max_length'] = 300,          -- taille minimale en cm
+        ['sozedex_id'] = 49,
+        ['price'] = 52
+    },
+    ['electraie'] = {
+        ['name'] = 'electraie',
+        ['label'] = "Électraie",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "La raie (Dasyatis sp.), majestueuse créature marine, glisse gracieusement dans les eaux cristallines. Conduisant l'électricité comme le métal, elle éblouit par sa capacité unique à générer des courants électriques. Sa silhouette élancée et ses motifs captivent le regard. Un chef-d'œuvre vivant de l'océan.",
+        ['illustrator'] = '.Dave Creach',
+        ['fishing_area'] = { 'canals', 'river' },
+        ['fishing_weather'] = { 'FOGGY', 'SMOG', 'BLIZZARD', 'THUNDER' },
+        ['fishing_period'] = {'night'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 2600,          -- poids minimal en grammes
+        ['max_weight'] = 3800,         -- poids maxmimal en grammes
+        ['min_length'] = 40,           -- taille minimale en cm
+        ['max_length'] = 70,          -- taille minimale en cm
+        ['sozedex_id'] = 50,
+        ['price'] = 25
+    },
+    ['bolingbroke_fish'] = {
+        ['name'] = 'bolingbroke_fish',
+        ['label'] = "Bolingbroke Fish",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Poisson côtier, il affectionne les baies et les criques chaudes. Ses écailles orangées se parent de noir en fonction de la qualité (ou pollution) du plancton, ce qui peut le rendre impropre à la consommation. Il tient son nom de sa vivacité... Poisson très vif, il ne tiendra pas en place plus de 3 minutes et tentera de s'échapper au plus vite. ",
+        ['illustrator'] = '.Dwerimeth',
+        ['fishing_area'] = { 'littoral', 'south_sea' },
+        ['fishing_weather'] = { 'SUNNY', 'EXTRASUNNY', 'CLEAR', 'CLEARING' },
+        ['fishing_period'] = {'afternoon'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 1000,          -- poids minimal en grammes
+        ['max_weight'] = 3000,         -- poids maxmimal en grammes
+        ['min_length'] = 15,           -- taille minimale en cm
+        ['max_length'] = 40,          -- taille minimale en cm
+        ['sozedex_id'] = 51,
+        ['price'] = 74
+    },
+    ['nebulith'] = {
+        ['name'] = 'nebulith',
+        ['label'] = "Nebulith",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Cette merveille aquatique insaisissable, possède une lueur étrange et un comportement évasif, ce qui en fait un véritable défi à capturer. La légende veut que le Nébulith, né de la poussière d'étoiles et des eaux éclairées par la lune, accorde une fortune inimaginable à ceux qui sont assez habiles pour capturer sa forme insaisissable.",
+        ['illustrator'] = '.Noxyss',
+        ['fishing_area'] = { 'canals', 'river' },
+        ['fishing_weather'] = { 'BLIZZARD', 'THUNDER' },
+        ['fishing_period'] = {'evening','night'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 3000,          -- poids minimal en grammes
+        ['max_weight'] = 3000,         -- poids maxmimal en grammes
+        ['min_length'] = 60,           -- taille minimale en cm
+        ['max_length'] = 60,          -- taille minimale en cm
+        ['sozedex_id'] = 52,
+        ['price'] = 69
+    },
+    ['mariusson'] = {
+        ['name'] = 'mariusson',
+        ['label'] = "Mariusson",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Le mariusson est un poisson qui tire son nom du domaine viticole de l’île d’où il est originaire. Simple poisson clown de par ses ancêtres, on raconte qu’il aurait goûté au délice des grappes du domaine perdues dans les eaux alentours du vignoble. Ses écailles en forme de grappes étoffent cette légende.",
+        ['illustrator'] = '.Floreil',
+        ['fishing_area'] = { 'river', 'littoral' },
+        ['fishing_weather'] = { 'EXTRASUNNY', 'CLEAR', 'CLEARING', 'CLOUDS', 'OVERCAST' },
+        ['fishing_period'] = {'afternoon'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 250,          -- poids minimal en grammes
+        ['max_weight'] = 250,         -- poids maxmimal en grammes
+        ['min_length'] = 12,           -- taille minimale en cm
+        ['max_length'] = 12,          -- taille minimale en cm
+        ['sozedex_id'] = 53,
+        ['price'] = 76
+    },
+    ['dobbry_rok'] = {
+        ['name'] = 'dobbry_rok',
+        ['label'] = "Dobbry Rok",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Dans les eaux cristallines de Cayo Perico, vivait un poisson aux couleurs chatoyantes nommé Dobbry rok. Son nom, signifiant \"Bonne Année\" dans la langue des créatures marines, lui avait été donné en raison de son rôle spécial dans le cycle de la vie sous-marine.",
+        ['illustrator'] = '.D3D3_59',
+        ['fishing_area'] = { 'south_sea' },
+        ['fishing_weather'] = { 'FOGGY', 'EXTRASUNNY', 'CLEAR', 'CLEARING', 'SMOG' },
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'alcool',   -- drug, alcool, clean
+        ['min_weight'] = 1000,          -- poids minimal en grammes
+        ['max_weight'] = 2500,         -- poids maxmimal en grammes
+        ['min_length'] = 17,           -- taille minimale en cm
+        ['max_length'] = 26,          -- taille minimale en cm
+        ['sozedex_id'] = 54,
+        ['price'] = 62
+    },
+    ['ablyssus'] = {
+        ['name'] = 'ablyssus',
+        ['label'] = "Ablyssus",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Récit d'un pirate - Ablyssus. Non loin d'une île, j'eus une vision. Submergé par les flots furieux, mes sens troublés d'ivresse, je vis une scène hors du temps. D'une main je la capturai avant qu'elle ne retourne aux abysses. Tel un spectre, elle surgit des profondeurs. Son corps aux yeux d'émeraude se fond dans la nuit, seule sa queue, telle une lanterne ensorcelée, attire ses proies vers les abîmes où elle se repaît de leur présence. Seuls, les plus téméraires peuvent espérer un jour la croiser en mer...",
+        ['illustrator'] = '.ΩmegA',
+        ['fishing_area'] = { 'south_sea' },
+        ['fishing_weather'] = { 'BLIZZARD', 'THUNDER' },
+        ['fishing_period'] = {'night'},
+        ['fishman_status'] = 'alcool',   -- drug, alcool, clean
+        ['min_weight'] = 113,          -- poids minimal en grammes
+        ['max_weight'] = 633,         -- poids maxmimal en grammes
+        ['min_length'] = 17,           -- taille minimale en cm
+        ['max_length'] = 66,          -- taille minimale en cm
+        ['sozedex_id'] = 55,
+        ['price'] = 58
+    },
+    ['zirvine_dracopis'] = {
+        ['name'] = 'zirvine_dracopis',
+        ['label'] = "Zirvine Dracopis",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Le Zirvine Dracopis est un poisson aussi rare que fascinant. Avec son apparence de tétard et de petit dragon, cette créature semble tout droit sortie d'un conte de fées. Ne vous fiez pas à son adorable apparence, le Zirvine est avant tout un poisson qui tentera de prendre tout ce qui brille mais aussi de défendre avec ses petites griffes acérées s'il se sent en danger. Il peut se contenter de petites choses et faire le tour d'un bocal tout en étant impressionné, comme si c'était génial.",
+        ['illustrator'] = '.mcfloy',
+        ['fishing_area'] = { 'river' },
+        ['fishing_weather'] = { 'FOGGY', 'SMOG' },
+        ['fishing_period'] = {'morning'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 620,          -- poids minimal en grammes
+        ['max_weight'] = 850,         -- poids maxmimal en grammes
+        ['min_length'] = 38,           -- taille minimale en cm
+        ['max_length'] = 45,          -- taille minimale en cm
+        ['sozedex_id'] = 56,
+        ['price'] = 33
+    },
+    ['gobie_vaseux'] = {
+        ['name'] = 'gobie_vaseux',
+        ['label'] = "Gobie Vaseux",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Le Gobie Vaseux est une mutation, l'eau du lac qui se déverse vers la mer en formant des marécages, a drainé ces poissons et des polluants présents dans le lac jusqu'ici, ou le Gobie à petit à petit évolué, finissant, au fil des générations, par devenir amphibie.Il se déplace très peu, la vase le recouvrant lui permettant de se camoufler et de chasser les insectes qui viennent jusqu'à lui, attirés par sa forte odeur.",
+        ['illustrator'] = '.Neochrom',
+        ['fishing_area'] = { 'river' },
+        ['fishing_weather'] = { 'FOGGY', 'RAIN', 'SMOG' },
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 100,          -- poids minimal en grammes
+        ['max_weight'] = 350,         -- poids maxmimal en grammes
+        ['min_length'] = 5,           -- taille minimale en cm
+        ['max_length'] = 20,          -- taille minimale en cm
+        ['sozedex_id'] = 57,
+        ['price'] = 41
+    },
+    ['trashark'] = {
+        ['name'] = 'trashark',
+        ['label'] = "TraShark",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Un requin très opportuniste qui se nourrit de tout ce qui passe devant son nez et qui est en état de décomposition : détritus, poissons morts, morceaux de cadavres putréfiés, etc. Il aime vivre dans les ports ou près des usines, où il trouve la majeure partie de sa nourriture. Il refuse catégoriquement de toucher tout poisson complètement sain et propre.",
+        ['illustrator'] = ". L'Atelier d'Adrien",
+        ['fishing_area'] = { 'canals', 'south_sea' },
+        ['fishing_weather'] = { 'CLOUDS', 'RAIN', 'OVERCAST' },
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 4000,          -- poids minimal en grammes
+        ['max_weight'] = 5000,         -- poids maxmimal en grammes
+        ['min_length'] = 250,           -- taille minimale en cm
+        ['max_length'] = 350,          -- taille minimale en cm
+        ['sozedex_id'] = 58,
+        ['price'] = 29
+    },
+    ['akumaaaa'] = {
+        ['name'] = 'akumaaaa',
+        ['label'] = "AKUMAAAA",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "AKUMAAAA est un prédateur marin de la famille des Serranidae aussi appelé le \"Démon des profondeur\". Il peut mesurer entre 30 et 150cm. Prédateur aguerri, l'AKUMAAAA se nourrit tout ce qui osent s'aventurer sur son territoire. Sa robe noire lui permet de se camoufler et seules ses nageoires restent visible afin d'attirer ses proies. Poisson sans merci, il se sert de sa vitesse et de sa mâchoire pour s'attaquer directement à la tête de ses proies. Dans de rares cas, l'AKUMAAAA se sert de sa nageoire arrière comme d'un marteau pour les assomer.",
+        ['illustrator'] = '.Vinsm0ke',
+        ['fishing_area'] = { 'littoral', 'south_sea', 'north_sea' },
+        ['fishing_weather'] = { 'FOGGY', 'SMOG', 'RAIN' },
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 288,          -- poids minimal en grammes
+        ['max_weight'] = 5000,         -- poids maxmimal en grammes
+        ['min_length'] = 30,           -- taille minimale en cm
+        ['max_length'] = 150,          -- taille minimale en cm
+        ['sozedex_id'] = 59,
+        ['price'] = 20
+    },
+    ['lantrole'] = {
+        ['name'] = 'lantrole',
+        ['label'] = "Lantrole",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Le Lantrole est un poisson bien mignon. Ce poisson se nourrit principalement de pétrole brut, ce qui le rend indispensable pour nettoyer nos océans/mers. Le pétrole qu'il digère, il s'en sert pour s'éclairer la nuit mais rien n'empêche de le croiser en pleine journée. ",
+        ['illustrator'] = '.Dar4k',
+        ['fishing_area'] = { 'littoral', 'south_sea' },
+        ['fishing_weather'] = { 'EXTRASUNNY', 'CLEAR', 'CLEARING', 'BLIZZARD', 'THUNDER' },
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 1700,          -- poids minimal en grammes
+        ['max_weight'] = 2300,         -- poids maxmimal en grammes
+        ['min_length'] = 20,           -- taille minimale en cm
+        ['max_length'] = 30,          -- taille minimale en cm
+        ['sozedex_id'] = 60,
+        ['price'] = 80
+    },
+    ['la_crevette_arc_en_ciel'] = {
+        ['name'] = 'la_crevette_arc_en_ciel',
+        ['label'] = "Crevette Arc-en-ciel",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "La crevette arc-en-ciel se nourrit de petits planctons et ingère des morceaux de roches par la même occasion. Elle s'est adaptée pour les digérer mais certains sédiments restent dans son corps transparent, ce qui a l'effet d'un prisme sur la lumière, et qui lui donne ses couleurs.",
+        ['illustrator'] = '.Poulpitor',
+        ['fishing_area'] = {'river'},
+        ['fishing_weather'] = {'CLEAR','CLEARING','EXTRASUNNY','RAIN'},
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 10,         -- poids minimal en grammes
+        ['max_weight'] = 40,         -- poids maxmimal en grammes
+        ['min_length'] = 1,          -- taille minimale en cm
+        ['max_length'] = 8,          -- taille minimale en cm
+        ['sozedex_id'] = 61,
+        ['price'] = 68
+    },
+    ['acuattus'] = {
+        ['name'] = 'acuattus',
+        ['label'] = "Acuattus",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Cet animal est la succession de mutations génétiques qui ont eu lieu il y a longtemps. La légende raconte que lors d'un voyage espagnol en 1499, les espagnols ont apporté un chat pour chasser les rongeurs. Malheureusement, une tempête a eu lieu, entrainant la destruction du navire. Le chat tombé dans l'eau en plein océan a dû s'adapter pour survivre.",
+        ['illustrator'] = '.katascient',
+        ['fishing_area'] = {'north_sea', 'south_sea'},
+        ['fishing_weather'] = {'CLOUDS','FOGGY','SMOG','OVERCAST'},
+        ['fishing_period'] = {'night'},
+        ['fishman_status'] = 'alcool',
+        ['min_weight'] = 700,          -- poids minimal en grammes
+        ['max_weight'] = 1500,         -- poids maxmimal en grammes
+        ['min_length'] = 50,           -- taille minimale en cm
+        ['max_length'] = 1000,          -- taille minimale en cm
+        ['sozedex_id'] = 62,
+        ['price'] = 71
+    },
+    ['crabantine'] = {
+        ['name'] = 'crabantine',
+        ['label'] = "Crabantine",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Le Crabantine est une espèce de crabe unique au plan de symétrie horizontal. Une part significative de la communauté scientifique s'accorde à dire que l'espèce a atteint une étape avancée au-delà de la carcinisation : la baguettisation. Très prisé en gastronomie, sa chaire a un léger arrière-gout de chocolat.",
+        ['illustrator'] = '.Darabesque',
+        ['fishing_area'] = {'littoral','canals'},
+        ['fishing_weather'] = { 'CLEAR','CLEARING','EXTRASUNNY'},
+        ['fishing_period'] = {'morning', 'night'},
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 250,          -- poids minimal en grammes
+        ['max_weight'] = 700,         -- poids maxmimal en grammes
+        ['min_length'] = 40,           -- taille minimale en cm
+        ['max_length'] = 75,          -- taille minimale en cm
+        ['sozedex_id'] = 63,
+        ['price'] = 70
+    },
+    ['blobo_acanthus'] = {
+        ['name'] = 'blobo_acanthus',
+        ['label'] = "Blobo Acanthus",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Contrairement aux apparences, les analyses ADN montrent que le Blobo Acanthus est plus proche du poisson que du crapaud. L'animal a évolué dans les fonds marins près des failles volcaniques mais l'augmentation de la température des océans lui a permis d'étendre sa niche écologique jusqu'aux côtes de San Andreas",
+        ['illustrator'] = '.Darabesque',
+        ['fishing_area'] = {'south_sea'},
+        ['fishing_weather'] = {'FOGGY', 'SMOG', 'RAIN'},
+        ['fishing_period'] = {'night','morning',},
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 100,          -- poids minimal en grammes
+        ['max_weight'] = 1000,         -- poids maxmimal en grammes
+        ['min_length'] = 8,           -- taille minimale en cm
+        ['max_length'] = 30,          -- taille minimale en cm
+        ['sozedex_id'] = 64,
+        ['price'] = 70
+    },
+    ['fausse_meduse_haploida'] = {
+        ['name'] = 'fausse_meduse_haploida',
+        ['label'] = "Fausse Méduse Haploida",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Cette petite créature n'est pas un organisme diploïde à part entière, c'est en réalité un organe reproducteur indépendant et mobile du Corail Andreasien. Ce gamétophyte habilement camouflé en méduse disperse des gamètes mâle ou femelle dans l'océan, perpétrant ainsi l'espèce. La nature n'est-elle pas magnifique ?",
+        ['illustrator'] = '.Darabesque',
+        ['fishing_area'] = {'littoral', 'south_sea', 'north_sea'},
+        ['fishing_weather'] = {'RAIN', 'OVERCAST'},
+        ['fishing_period'] = {'morning', 'afternoon'},
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 5,          -- poids minimal en grammes
+        ['max_weight'] = 20,         -- poids maxmimal en grammes
+        ['min_length'] = 6,           -- taille minimale en cm
+        ['max_length'] = 15,          -- taille minimale en cm
+        ['sozedex_id'] = 65,
+        ['price'] = 44
+    },
+    ['bi_queue'] = {
+        ['name'] = 'bi_queue',
+        ['label'] = "Bi Queue",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "On suspecte que l'ancêtre du Bi-Queue était un individu ayant absorbé son jumeau dans l’œuf à un stade de développement avancé. Il aurait réussi à survivre jusqu'à l’âge adulte et à passer ce trait à sa descendance. Contrairement à ce qu'on pourrait croire, il ne nage pas deux fois plus vite que les autres poissons de sa taille.",
+        ['illustrator'] = '.Darabesque',
+        ['fishing_area'] = { 'little_lake', 'big_lake',},
+        ['fishing_weather'] = {'BLIZZARD', 'THUNDER', 'RAIN'},
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 500,          -- poids minimal en grammes
+        ['max_weight'] = 2000,         -- poids maxmimal en grammes
+        ['min_length'] = 20,           -- taille minimale en cm
+        ['max_length'] = 80,          -- taille minimale en cm
+        ['sozedex_id'] = 66,
+        ['price'] = 52
+    },
+    ['reggaeToad'] = {
+        ['name'] = 'reggaeToad',
+        ['label'] = "ReggaeToad",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "ReggaeToad était une petite grenouille unique, pleine de joie, c'est une star du reggae ! Tout en étant célèbre, elle a su rester humble et généreuse. Elle partage son talent avec d'autres musiciens en herbe, les encourageant à exprimer leur créativité. Elle organisait des jam sessions dans les marais, où tout le monde venait créer une harmonie collective. ReggaeToad est plus qu'une simple grenouille rasta, elle représente la puissance de la musique pour transcender les différences et créer une véritable communauté. Sa voix unique résonnait dans les cœurs de ceux qui l'écoutaient, apportant la joie et l'esprit du reggae partout où elle allait !",
+        ['illustrator'] = '.Nooby',
+        ['fishing_area'] = {'big_lake', 'little_lake', 'south_sea'},
+        ['fishing_weather'] = { 'RAIN', 'THUNDER'},
+        ['fishing_period'] = {'night'},
+        ['fishman_status'] = 'drug',
+        ['min_weight'] = 200,          -- poids minimal en grammes
+        ['max_weight'] = 300,         -- poids maxmimal en grammes
+        ['min_length'] = 30,           -- taille minimale en cm
+        ['max_length'] = 50,          -- taille minimale en cm
+        ['sozedex_id'] = 67,
+        ['price'] = 57
+    },
+    ['hippocon'] = {
+        ['name'] = 'hippocon',
+        ['label'] = "Hippoçon",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Un petit hippocampe qui se déplace en s'accrochant aux brindilles, algues et autres fins objets. Ressemblant à un hameçon il trompe ses proies avec sa pointe et ses filaments paralysants. La dose n'est pas mortelle pour l'homme mais vous la sentirez bien passer, alors attention à vous si vous le retrouvez accroché à votre ligne !",
+        ['illustrator'] = '.minegg',
+        ['fishing_area'] = {'south_sea'},
+        ['fishing_weather'] = {'OVERCAST', 'CLOUDS', 'SNOW'},
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 10,          -- poids minimal en grammes
+        ['max_weight'] = 15,         -- poids maxmimal en grammes
+        ['min_length'] = 7,           -- taille minimale en cm
+        ['max_length'] = 15,          -- taille minimale en cm
+        ['sozedex_id'] = 68,
+        ['price'] = 64
+    },
+    ['piranha_clown'] = {
+        ['name'] = 'piranha_clown',
+        ['label'] = "Piranha-Clown",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Il doit son nom à sa tête souriante et à sa bouille joyeuse. Méfiez-vous cependant, tout comme son cousin d’Amérique du Sud, le piranha-clown est carnivore et vit en banc comptant jusqu'à une cinquantaine d'individus. On dit qu'ils peuvent dévorer un taureau en moins de 400 secondes [citation nécessaire].",
+        ['illustrator'] = '.Darabesque',
+        ['fishing_area'] = {'river', 'little_lake'},
+        ['fishing_weather'] = {'CLEAR', 'CLEARING', 'EXTRASUNNY', 'RAIN'},
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 1200,          -- poids minimal en grammes
+        ['max_weight'] = 2300,         -- poids maxmimal en grammes
+        ['min_length'] = 45,           -- taille minimale en cm
+        ['max_length'] = 70,          -- taille minimale en cm
+        ['sozedex_id'] = 69,
+        ['price'] = 69
+    },
+    ['coelacant'] = {
+        ['name'] = 'coelacant',
+        ['label'] = "Cœlacan't",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Ce poisson à l'air naturellement défaitiste est souvent qualifié de fossile-vivant car son espèce a peu évolué. La légende raconte qu'il porte malheur et que ceux qui le pêchent échouent dans tout ce qu'ils entreprennent ce jour là. C'était la mascotte officielle de l'équipe de curling de Sandy-Shore avant sa dissolution suite à une série d'accidents.",
+        ['illustrator'] = '.Darabesque',
+        ['fishing_area'] = {'littoral', 'big_lake'},
+        ['fishing_weather'] = {'RAIN', 'BLIZZARD', 'THUNDER'},
+        ['fishing_period'] = {'night', 'morning'},
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 300,          -- poids minimal en grammes
+        ['max_weight'] = 2000,         -- poids maxmimal en grammes
+        ['min_length'] = 15,           -- taille minimale en cm
+        ['max_length'] = 45,          -- taille minimale en cm
+        ['sozedex_id'] = 70,
+        ['price'] = 70
+    },
+    ['flannochet_zebre'] = {
+        ['name'] = 'flannochet_zebre',
+        ['label'] = "Flannochet zébré",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Ce poisson vit en symbiose avec les coraux qui poussent sur sa nageoire dorsale. Les structures coraliennes le ralentissent, ce qui diminue l'espérance de vie des individus âgés. Mais cela lui permet également de se camoufler plus facilement et d'absorber passivement des nutriments de l'eau pour se nourrir.",
+        ['illustrator'] = '.Darabesque',
+        ['fishing_area'] = {'littoral', 'canals', 'south_sea'},
+        ['fishing_weather'] = {'FOGGY', 'SMOG','OVERCAST', 'CLOUDS'},
+        ['fishing_period'] = {'afternoon', 'evening'},
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 2500,          -- poids minimal en grammes
+        ['max_weight'] = 3000,         -- poids maxmimal en grammes
+        ['min_length'] = 45,           -- taille minimale en cm
+        ['max_length'] = 72,          -- taille minimale en cm
+        ['sozedex_id'] = 71,
+        ['price'] = 31
+    },
+    ['baleine_iris'] = {
+        ['name'] = 'baleine_iris',
+        ['label'] = "Baleine iris",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Balaenidae Iris. La baleine Iris est une petite baleine extrêmement rare vivant dans les eaux profondes, elle ne remonte à la surface qu’une à deux fois par mois. Son régime d’omnivore lui permet un apport nutritionnel hors du commun. Elle se nourrit d’espèces ayant des caractéristique similaire qui sont très colorées, ce qui lui donne cette peau arc en ciel parsemée d'étoiles.",
+        ['illustrator'] = '.Crash',
+        ['fishing_area'] = {'south_sea'},
+        ['fishing_weather'] = {'CLEAR', 'CLEARING', 'EXTRASUNNY', 'FOGGY', 'SMOG'},
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 3000,          -- poids minimal en grammes
+        ['max_weight'] = 5000,         -- poids maxmimal en grammes
+        ['min_length'] = 320,           -- taille minimale en cm
+        ['max_length'] = 400,          -- taille minimale en cm
+        ['sozedex_id'] = 72,
+        ['price'] = 46
+    },
+    ['crabe_rubis'] = {
+        ['name'] = 'crabe_rubis',
+        ['label'] = "Crabe rubis",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Brachyura rubeus, Le crabe rubis vis proche des côtes, il se nourrit des algues arpentant les récifs peu profonds, ces derniers étant riches en minéraux sa carapace s'est peu à peu transformé en une carapace aussi solide que de la pierre et d’un rouge flamboyant. Ses pinces se sont transformées en griffe lui permettant de plus facilement de gratter les algues collées aux roches afin de s’y nourrir.",
+        ['illustrator'] = '.Crash',
+        ['fishing_area'] = {'littoral', 'south_sea'},
+        ['fishing_weather'] = {'CLOUDS', 'OVERCAST', 'RAIN', 'THUNDER'},
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 80,          -- poids minimal en grammes
+        ['max_weight'] = 320,         -- poids maxmimal en grammes
+        ['min_length'] = 8,           -- taille minimale en cm
+        ['max_length'] = 15,          -- taille minimale en cm
+        ['sozedex_id'] = 73,
+        ['price'] = 43
+    },
+    ['carpe_emeraude'] = {
+        ['name'] = 'carpe_emeraude',
+        ['label'] = "Carpe émeraude",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Cyprinus smaragdus, La carpe émeraude est une espèce très commune. Bien qu'étant des poissons d’eau douce certains spécimens ont réussi à atteindre la mer et s'y sont adaptés aujourd’hui il est possible d’en trouver dans l'eau douce comme dans l’eau de mer, elle ne supporte cependant pas la forte pression des fonds marins et se fait dévorer par le moindre prédateur qui passe.",
+        ['illustrator'] = '.Crash',
+        ['fishing_area'] = {'littoral', 'big_lake', 'litte_lake'},
+        ['fishing_weather'] = { 'CLOUDS', 'OVERCAST', 'RAIN' },
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 100,          -- poids minimal en grammes
+        ['max_weight'] = 400,         -- poids maxmimal en grammes
+        ['min_length'] = 15,           -- taille minimale en cm
+        ['max_length'] = 35,          -- taille minimale en cm
+        ['sozedex_id'] = 74,
+        ['price'] = 55
+    },
+    ['calmar_amethyste'] = {
+        ['name'] = 'calmar_amethyste',
+        ['label'] = "Calmar améthyste",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Myopsida amethustos. Le calmar améthyste, bien que le terme améthyste signifie “qui n'est pas ivre” en grec ancien, ce calmar est fortement attiré par les effluves d’alcool, apparaissent autour des bateaux de marins profitant d’une bonne bouteille il se retrouve facilement pris dans les filets, mais son corps visqueux lui permet de s’en dépêtrer relativement facilement.",
+        ['illustrator'] = '.Crash',
+        ['fishing_area'] = {'littoral','south_sea','north_sea'},
+        ['fishing_weather'] = { 'SUNNY', 'EXTRASUNNY', 'CLEAR' },
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'alcool',   -- drug, alcool, clean
+        ['min_weight'] = 5,          -- poids minimal en grammes
+        ['max_weight'] = 20,         -- poids maxmimal en grammes
+        ['min_length'] = 5,           -- taille minimale en cm
+        ['max_length'] = 10,          -- taille minimale en cm
+        ['sozedex_id'] = 75,
+        ['price'] = 80
+    },
+    ['meduse_ambre'] = {
+        ['name'] = 'meduse_ambre',
+        ['label'] = "Méduse ambre",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Scyphozoa élektron. La méduse ambre vit là où elle peut, aussi bien dans l'océan que dans les villes là où le courant l’emporte. Lorsque le soleil est au plus haut, ses rayons se reflètent sur l’ombrelle de la méduse, créant ainsi une magnifique lumière orangée et hypnotisante. Attention toutefois à ses piqûres, sans gants vous risquez d’en baver pour les 3 prochaines heures.",
+        ['illustrator'] = '.Crash',
+        ['fishing_area'] = {'littoral','canals','south_sea'},
+        ['fishing_weather'] = { 'EXTRASUNNY', 'CLEAR', 'CLEARING' },
+        ['fishing_period'] = {'afternoon'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 1,          -- poids minimal en grammes
+        ['max_weight'] = 15,         -- poids maxmimal en grammes
+        ['min_length'] = 10,           -- taille minimale en cm
+        ['max_length'] = 25,          -- taille minimale en cm
+        ['sozedex_id'] = 76,
+        ['price'] = 67
+    },
+    ['etoile_diamant'] = {
+        ['name'] = 'etoile_diamant',
+        ['label'] = "Etoile diamant",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Asterias adamas, L’étoile diamant se nourrit de minéraux trouvés dans les fonds marins. Ressemblant à un assortiment de diamant et héritant de la dureté de ces derniers. Cette étoile n’a que peu de prédateurs, sa pêche intensive a drastiquement réduit sa population, en trouver de nos jours relève d’une chance prodigieuse.",
+        ['illustrator'] = '.Crash',
+        ['fishing_area'] = {'littoral','south_sea', 'north_sea'},
+        ['fishing_weather'] = { 'CLEAR', 'CLEARING', 'CLOUDS' },
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 900,          -- poids minimal en grammes
+        ['max_weight'] = 2200,         -- poids maxmimal en grammes
+        ['min_length'] = 10,           -- taille minimale en cm
+        ['max_length'] = 29,          -- taille minimale en cm
+        ['sozedex_id'] = 77,
+        ['price'] = 28
+    },
+    ['tortue_saphir'] = {
+        ['name'] = 'tortue_saphir',
+        ['label'] = "Tortue saphir",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Emydidae sapphirus. La tortue saphir est à la fois d’eau douce salée. On la trouve dans les zones marécageuses proches de plages afin d’y pondre le temps venue. Elles grandissent dans l'océan en se nourrissant de certaines plantes sous-marines riches en minéraux, ce qui lui donne cette carapace cristalline. Elle est néanmoins braconnée pour dernière qui est un objet de luxe très prisé.",
+        ['illustrator'] = '.Crash',
+        ['fishing_area'] = {'river'},
+        ['fishing_weather'] = {  'FOGGY', 'RAIN', 'SMOG' },
+        ['fishing_period'] = {'evening'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 500,          -- poids minimal en grammes
+        ['max_weight'] = 3000,         -- poids maxmimal en grammes
+        ['min_length'] = 15,           -- taille minimale en cm
+        ['max_length'] = 35,          -- taille minimale en cm
+        ['sozedex_id'] = 78,
+        ['price'] = 77
+    },
+    ['twinfish'] = {
+        ['name'] = 'twinfish',
+        ['label'] = "Twinfish",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Le Twinfish, une espèce rare de poisson siamois, est constitué d'un seul et même individu. Il arrive parfois qu'il reste sur place pendant des heures, chaque tête voulant aller dans une direction différente. Parvenir à le pêcher permet donc de réaliser deux exploits en un seul acte.",
+        ['illustrator'] = ". L'Atelier d'Adrien",
+        ['fishing_area'] = {'big_lake','little_lake','canals'},
+        ['fishing_weather'] = {'RAIN', 'SNOW', 'SNOWLIGHT' },
+        ['fishing_period'] = {'evening'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 1111,          -- poids minimal en grammes
+        ['max_weight'] = 2222,         -- poids maxmimal en grammes
+        ['min_length'] = 22,           -- taille minimale en cm
+        ['max_length'] = 44,          -- taille minimale en cm
+        ['sozedex_id'] = 79,
+        ['price'] = 67
+    },
+    ['happygloby'] = {
+        ['name'] = 'happygloby',
+        ['label'] = "HappyGloby",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "L'HappyGloby est un poisson très heureux, trop heureux en réalité. Ce phénomène est lié aux eaux qu'il fréquente, notamment celles proches d'usines chimiques ou d'industries. Il a une certaine tendance à apprécier les résidus chimiques rejetés dans l'eau, ce qui le rend très heureux.",
+        ['illustrator'] = ". L'Atelier d'Adrien",
+        ['fishing_area'] = {'south_sea'},
+        ['fishing_weather'] = { 'EXTRASUNNY', 'CLEAR', 'SUNNY', 'CLEARING' },
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'drug',   -- drug, alcool, clean
+        ['min_weight'] = 500,          -- poids minimal en grammes
+        ['max_weight'] = 800,         -- poids maxmimal en grammes
+        ['min_length'] = 15,           -- taille minimale en cm
+        ['max_length'] = 25,          -- taille minimale en cm
+        ['sozedex_id'] = 80,
+        ['price'] = 26
+    },
+    ['toxiglue'] = {
+        ['name'] = 'toxiglue',
+        ['label'] = "Toxiglue",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Le Toxiglue est un concombre de mer rose très gluant et collant qui est toxique pour tout les animaux marins. Il n'y a aucun risque pour l'homme, à moins d'en consommer en forte dose. Dans ce cas, il aura des effets hallucinogènes puissants et peut créer une dépendance.",
+        ['illustrator'] = ". L'Atelier d'Adrien",
+        ['fishing_area'] = {'south_sea','littoral','canals'},
+        ['fishing_weather'] = { 'OVERCAST', 'RAIN', 'THUNDER'},
+        ['fishing_period'] = {'evening','morning','afternoon'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 400,          -- poids minimal en grammes
+        ['max_weight'] = 700,         -- poids maxmimal en grammes
+        ['min_length'] = 10,           -- taille minimale en cm
+        ['max_length'] = 30,          -- taille minimale en cm
+        ['sozedex_id'] = 81,
+        ['price'] = 52
+    },
+    ['octoleon'] = {
+        ['name'] = 'octoleon',
+        ['label'] = "Octoleon",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = " L'Octoleon viens des grande profondeur de l'océan, ou la pression est importante, sont corp visqueux et translucide, lui permet de survivre a un telle environnement.",
+        ['illustrator'] = ". L'Atelier d'Adrien",
+        ['fishing_area'] = {'south_sea','north_sea'},
+        ['fishing_weather'] = { 'NEUTRAL', 'RAIN', 'SMOG'},
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 2500,          -- poids minimal en grammes
+        ['max_weight'] = 3500,         -- poids maxmimal en grammes
+        ['min_length'] = 60,           -- taille minimale en cm
+        ['max_length'] = 120,          -- taille minimale en cm
+        ['sozedex_id'] = 82,
+        ['price'] = 56
+    },
+    ['cryscrab'] = {
+        ['name'] = 'cryscrab',
+        ['label'] = "CrysCrab",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Un crabe des grandes profondeurs marines, sa carapace est gluante et visqueuse, ce qui lui permet de survivre à la pression importante des fonds marins. Il est charognard et se nourrit de tout ce qu'il trouve. Son aspect le rend plutôt indigeste pour la plupart des autres animaux, excepté l'Octoleon qui apprécie le chasser et le manger.",
+        ['illustrator'] = ". L'Atelier d'Adrien",
+        ['fishing_area'] = {'south_sea','north_sea'},
+        ['fishing_weather'] = { 'BLIZZARD', 'THUNDER', 'EXTRASUNNY'},
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 300,          -- poids minimal en grammes
+        ['max_weight'] = 600,         -- poids maxmimal en grammes
+        ['min_length'] = 15,           -- taille minimale en cm
+        ['max_length'] = 25,          -- taille minimale en cm
+        ['sozedex_id'] = 83,
+        ['price'] = 79
+    },
+    ['rainbowfish'] = {
+        ['name'] = 'rainbowfish',
+        ['label'] = "Rainbowfish",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Un petit poisson des eaux tropicales, sa couleur est un camouflage qui lui permet d'être moins visible dans les eaux azurées frappées par le soleil. La nuit et les temps couverts sont trop dangereux pour lui, il se cache donc dans les coraux qu'il ne quitte pas.",
+        ['illustrator'] = ".L'Atelier d'Adrien",
+        ['fishing_area'] = {'south_sea'},
+        ['fishing_weather'] =  { 'EXTRASUNNY', 'CLEAR', 'SUNNY', 'CLEARING' },
+        ['fishing_period'] = {'morning','afternoon'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 200,          -- poids minimal en grammes
+        ['max_weight'] = 400,         -- poids maxmimal en grammes
+        ['min_length'] = 10,           -- taille minimale en cm
+        ['max_length'] = 15,          -- taille minimale en cm
+        ['sozedex_id'] = 84,
+        ['price'] = 42
+    },
+    ['lumiscale'] = {
+        ['name'] = 'lumiscale',
+        ['label'] = "Lumiscale",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Le Lumiscale est une variété de carpe koï, un poisson populaire dans le monde pour sa beauté et son allure majestueuse. Il est apprécié pour sa robe unique colorée noir et jaune. Il tient son nom de ces superbe écailles jaune vif qui contrastent magnifiquement avec son fond sombre. Elles reflètent même la lumière de la lune leur donnant l'impression de briller dans la nuit. Ces écailles sont réparties de manière irrégulière sur le corps du poisson, créant un motif vibrant et saisissant. En plus de son esthétique remarquable, le Lumiscale est également apprécié pour son tempérament docile, ce qui en fait un poisson idéal pour les amateurs de pêche.",
+        ['illustrator'] = '.itchinaru',
+        ['fishing_area'] = {'big_lake','little_lake'},
+        ['fishing_weather'] =  { 'CLEAR', 'CLEARING', 'EXTRASUNNY', 'OVERCAST', 'CLOUDS' },
+        ['fishing_period'] = {'evening','night'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 800,          -- poids minimal en grammes
+        ['max_weight'] = 1200,         -- poids maxmimal en grammes
+        ['min_length'] = 40,           -- taille minimale en cm
+        ['max_length'] = 60,          -- taille minimale en cm
+        ['sozedex_id'] = 85,
+        ['price'] = 55
+    },
+    ['athenais_la_meduse_papillon'] = {
+        ['name'] = 'athenais_la_meduse_papillon',
+        ['label'] = "Athénaïs, la méduse papillon",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Contrairement aux autres espèces de méduses qui utilisent leurs ombrelles en forme de cloche pour avancer, l'espèce Athénaïs possède deux ombrelles externes lui permettant de se déplacer plus précisément. D'ailleurs elles se déplacent le plus souvent en groupe et possèdent un organe lumineux dans son globe supérieur lui permettant de repérer ses congénères de jour comme de nuit.",
+        ['illustrator'] = '.Pastouke',
+        ['fishing_area'] = {'littoral','south_sea','north_sea'},
+        ['fishing_weather'] =  {'OVERCAST', 'SNOW', 'SNOWLIGHT', 'XMAS', 'BLIZZARD'},
+        ['fishing_period'] = {'night'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 1000,          -- poids minimal en grammes
+        ['max_weight'] = 2000,         -- poids maxmimal en grammes
+        ['min_length'] = 200,           -- taille minimale en cm
+        ['max_length'] = 300,          -- taille minimale en cm
+        ['sozedex_id'] = 86,
+        ['price'] = 31
+    },
+    ['uhane'] = {
+        ['name'] = 'uhane',
+        ['label'] = "Uhane",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Une crevette carnivore vivant dans les abysses, il se déplace sur le sol grâce a de petites pates, il possède un point phosphorescent qui alterne entre une couleur bleu et rouge lorsqu'il chasse et attrape ces proies avec des membres semblable a des filaments",
+        ['illustrator'] = '.Pastouke',
+        ['fishing_area'] = {'south_sea','north_sea'},
+        ['fishing_weather'] =  {'OVERCAST', 'RAIN', 'THUNDER'},
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 300,          -- poids minimal en grammes
+        ['max_weight'] = 500,         -- poids maxmimal en grammes
+        ['min_length'] = 10,           -- taille minimale en cm
+        ['max_length'] = 20,          -- taille minimale en cm
+        ['sozedex_id'] = 87,
+        ['price'] = 21
+    },
+    ['rubis_des_mers'] = {
+        ['name'] = 'rubis_des_mers',
+        ['label'] = "Rubis des Mers",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Revêtu d'un manteau immaculé, dévoile quelques tâches rouges qui semblent refléter son humeur bougonne. Son regard perçant et ses lèvres pincées révèlent une personnalité facétieuse et un brin acariâtre. Malgré son apparence dédaigneuse, il nage avec une certaine élégance, défiant les courants avec une détermination inébranlable. Ce râleur des profondeurs marines semble défier le monde qui l'entoure, mais il attire aussi une certaine curiosité avec sa nature contradictoire.",
+        ['illustrator'] = '.Dave Creach',
+        ['fishing_area'] = {'south_sea','canals'},
+        ['fishing_weather'] =  { 'FOGGY', 'SMOG', 'RAIN'},
+        ['fishing_period'] = {'morning'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 1200,          -- poids minimal en grammes
+        ['max_weight'] = 2500,         -- poids maxmimal en grammes
+        ['min_length'] = 25,           -- taille minimale en cm
+        ['max_length'] = 42,          -- taille minimale en cm
+        ['sozedex_id'] = 88,
+        ['price'] = 79
+    },
+    ['lumeine'] = {
+        ['name'] = 'lumeine',
+        ['label'] = "Luméine",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "La dorade blanche, telle une éclatante illusion, est connue pour aveugler les pêcheurs de par sa beauté éblouissante. Son corps lisse est recouvert d'écailles nacrées qui reflètent la lumière d'une manière hypnotique. Ses yeux scintillants semblent cacher des secrets anciens. Avec ses nageoires délicates et sa silhouette gracieuse, elle glisse silencieusement dans les eaux cristallines, déconcertant les pêcheurs par sa rapidité et sa ruse.",
+        ['illustrator'] = '.Dave Creach',
+        ['fishing_area'] = {'littoral'},
+        ['fishing_weather'] =  { 'CLEAR', 'CLEARING', 'EXTRASUNNY', 'SNOW', 'SNOWLIGHT', 'XMAS', 'BLIZZARD'},
+        ['fishing_period'] = {'afternoon'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 2500,          -- poids minimal en grammes
+        ['max_weight'] = 4000,         -- poids maxmimal en grammes
+        ['min_length'] = 35,           -- taille minimale en cm
+        ['max_length'] = 46,          -- taille minimale en cm
+        ['sozedex_id'] = 89,
+        ['price'] = 20
+    },
+    ['discoelacanthe'] = {
+        ['name'] = 'discoelacanthe',
+        ['label'] = "Discœlacanthe",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Le discœlacanthe est un poisson de mer d'origine préhistorique que l'on trouve principalement le long des plages des zones à forte densité de constructions. Espèce totalement nocturne, elle s'est adaptée à son environnement et ses couleurs flamboyantes feraient écho aux reflets chamarrés émanant des bars, clubs et autres lieux de fête situés en bordure de mer.",
+        ['illustrator'] = '.Kutz',
+        ['fishing_area'] = {'littoral','canals'},
+        ['fishing_weather'] =  { 'CLEAR', 'CLEARING', 'EXTRASUNNY' },
+        ['fishing_period'] = {'morning'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 3000,          -- poids minimal en grammes
+        ['max_weight'] = 5000,         -- poids maxmimal en grammes
+        ['min_length'] = 100,           -- taille minimale en cm
+        ['max_length'] = 200,          -- taille minimale en cm
+        ['sozedex_id'] = 90,
+        ['price'] = 69
+    },
+    ['cochon_de_mer'] = {
+        ['name'] = 'cochon_de_mer',
+        ['label'] = "Cochon de mer",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Cette paisible créature des eaux du Lac d'Alamo est issu de l'amour interdit d'un petit poisson et d'un sublime cochon, au bord d'un ponton de la pêcherie Millar.",
+        ['illustrator'] = '.UnclePeps',
+        ['fishing_area'] = { 'big_lake' },
+        ['fishing_weather'] = { 'RAIN', 'EXTRASUNNY', 'CLEAR', 'CLEARING' },
+        ['fishing_period'] = {'evening', },
+        ['fishman_status'] = 'alcool',
+        ['min_weight'] = 750,
+        ['max_weight'] = 1200,
+        ['min_length'] = 50,
+        ['max_length'] = 80,
+        ['sozedex_id'] = 91,
+        ['price'] = 48
+    },
+    ['zeponge_de_mer'] = {
+        ['name'] = 'zeponge_de_mer',
+        ['label'] = "Zéponge de mer",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "La Zéponge de mer est le joyau des océans. On la retrouve abondamment le long des côtes, offrant une vue saisissante aux profanes. En effet, son apparence unique en forme de Z lui confère une présence remarquée dans les fonds marins. Cette éponge exotique capture l'imagination avec sa couleur d'un vert éclatant, ajoutant une touche de beauté tropicale à tout l'écosystème marin.",
+        ['illustrator'] = '.Kutz',
+        ['fishing_area'] = { 'littoral', 'south_sea' },
+        ['fishing_weather'] = { 'RAIN', 'OVERCAST', 'CLOUDS' },
+        ['fishing_period'] = {'evening','night','morning','afternoon' },
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 100,
+        ['max_weight'] = 300,
+        ['min_length'] = 20,
+        ['max_length'] = 50,
+        ['sozedex_id'] = 92,
+        ['price'] = 36
+    },
+    ['goldecrevisse'] = {
+        ['name'] = 'goldecrevisse',
+        ['label'] = "Goldécrevisse",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Cette écrevisse se cache dans les rochers et sort au crépuscule. A force de voler des objets brillants abandonnés par les plaisanciers sur la plage, des particules d'or se sont fixées sur sa carapace, la rendant brillante et facilement repérable de nuit.",
+        ['illustrator'] = '.Smogogo',
+        ['fishing_area'] = { 'littoral' },
+        ['fishing_weather'] = { 'RAIN', 'OVERCAST', 'CLOUDS' },
+        ['fishing_period'] = {'night','evening' },
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 70,
+        ['max_weight'] = 150,
+        ['min_length'] = 10,
+        ['max_length'] = 16,
+        ['sozedex_id'] = 93,
+        ['price'] = 63
+    },
+    ['etoile_de_merdeeeee_aie_elle_ma_mordu'] = {
+        ['name'] = 'etoile_de_merdeeeee_aie_elle_ma_mordu',
+        ['label'] = "Etoile de merDEEEEE AIE ELLE MA MORDU",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "ATTENTION A VOS DOIGTS ! Cette espèce d'étoiles de mer est carnivore, elle risque de vous morde, elle lui arrive même d'être cannibale et mangé ces propres enfants ! Son nom vient du fait que le chercheur qui était entrain de nommer cette espèce c'est fait mordre",
+        ['illustrator'] = '.Pastouke',
+        ['fishing_area'] = { 'little_lake', 'river' },
+        ['fishing_weather'] = { 'RAIN', 'EXTRASUNNY', 'CLEAR', 'CLEARING' },
+        ['fishing_period'] = {'evening','night','morning','afternoon' },
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 500,
+        ['max_weight'] = 1000,
+        ['min_length'] = 30,
+        ['max_length'] = 50,
+        ['sozedex_id'] = 94,
+        ['price'] = 31
+    },
+    ['exocet_bleu'] = {
+        ['name'] = 'exocet_bleu',
+        ['label'] = "Exocet bleu",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "L'exocet bleu est un poisson volant capable d'émettre des sons allant jusqu'à 180dB pour les individus adultes. Hormis cette stratégie de défense étrange et désagréable, son seul autre caractère notable est qu'il sent vraiment très mauvais.",
+        ['illustrator'] = '.DaraBesque',
+        ['fishing_area'] = { 'south_sea', 'littoral' },
+        ['fishing_weather'] = { 'CLEAR', 'CLEARING', 'EXTRASUNNY', 'OVERCAST', 'CLOUDS' },
+        ['fishing_period'] = {'evening','night','morning','afternoon' },
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 10,
+        ['max_weight'] = 100,
+        ['min_length'] = 3,
+        ['max_length'] = 10,
+        ['sozedex_id'] = 95,
+        ['price'] = 42
+    },
+    ['poulpitrol'] = {
+        ['name'] = 'poulpitrol',
+        ['label'] = "Poulpitrol",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Méfiez vous de ses yeux, Tentacules et ventouses vous feront plonger, dans le Pétrole vous succomberez",
+        ['illustrator'] = '.Hydre Funky',
+        ['fishing_area'] = { 'littoral', 'big_lake' },
+        ['fishing_weather'] = { 'FOGGY', 'SMOG', 'OVERCAST', 'CLOUDS' },
+        ['fishing_period'] = {'night' },
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 2000,
+        ['max_weight'] = 3000,
+        ['min_length'] = 40,
+        ['max_length'] = 130,
+        ['sozedex_id'] = 96,
+        ['price'] = 78
+    },
+    ['nimo'] = {
+        ['name'] = 'nimo',
+        ['label'] = "Nimo",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Le Nimo, poisson petit et discret, est en réalité un poisson mangeant tout sur son passage. Plante, autres poissons, ou même vos doigts de pied si vous avez le malheur de vous approcher de son territoire. Penser également à mettre des gants si vous tentez de partir à la pêche de ce dernier..",
+        ['illustrator'] = '.DreamXZE',
+        ['fishing_area'] = { 'big_lake', 'little_lake', 'river' },
+        ['fishing_weather'] = { 'CLEAR', 'CLEARING', 'EXTRASUNNY', 'OVERCAST', 'CLOUDS' },
+        ['fishing_period'] = {'evening','night','morning','afternoon' },
+        ['fishman_status'] = 'alcool',
+        ['min_weight'] = 500,
+        ['max_weight'] = 1000,
+        ['min_length'] = 50,
+        ['max_length'] = 75,
+        ['sozedex_id'] = 97,
+        ['price'] = 78
+    },
+    ['tetrotox'] = {
+        ['name'] = 'tetrotox',
+        ['label'] = "Tétrotox",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "C'est un poisson unique en son genre. D'un rouge éclatant agrémenté de délicates marques blanches, il charme les regards. Cependant, sa naïveté est aussi sa menace. Toxique au toucher, ce poisson simplet se gonfle d'effroi, révélant une allure cocasse. Un mélange de beauté et de maladresse, qui dépeint la fragilité de la nature.",
+        ['illustrator'] = '.Dave Creach',
+        ['fishing_area'] = { 'littoral', 'south_sea' },
+        ['fishing_weather'] = { 'SNOW', 'SNOWLIGHT', 'XMAS', 'BLIZZARD', 'RAIN' },
+        ['fishing_period'] = {'evening' },
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 1000,
+        ['max_weight'] = 2000,
+        ['min_length'] = 20,
+        ['max_length'] = 40,
+        ['sozedex_id'] = 98,
+        ['price'] = 27
+    },
+    ['lapollo'] = {
+        ['name'] = 'lapollo',
+        ['label'] = "Lapollo",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Des rumeurs semblent indiquer que Kubrick se serait inspiré de la peau des Lapollo pour les décors de l'alunissage, toutefois aucune source n'a confirmé ce fait. Notre seule certitude est que cette créature ne peut être pêché qu'une fois la nuit tombée, lorsque la lune vient se refléter sur les eaux. ",
+        ['illustrator'] = '.kaemy',
+        ['fishing_area'] = { 'north_sea', 'south_sea' },
+        ['fishing_weather'] = { 'CLEAR', 'CLEARING', 'EXTRASUNNY' },
+        ['fishing_period'] = {'night' },
+        ['fishman_status'] = 'drug',
+        ['min_weight'] = 400,
+        ['max_weight'] = 2500,
+        ['min_length'] = 80,
+        ['max_length'] = 200,
+        ['sozedex_id'] = 99,
+        ['price'] = 29
+    },
+    ['kronk_terreur'] = {
+        ['name'] = 'kronk_terreur',
+        ['label'] = "Kronk, la terreur",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Wannabe terreur des mers qui ne fait peur qu'à lui-même. Ca ira peut-être mieux quand toutes ses dents auront poussé !",
+        ['illustrator'] = '.Fowlerz',
+        ['fishing_area'] = { 'littoral', 'canals', 'river' },
+        ['fishing_weather'] = { 'FOGGY', 'SMOG', 'RAIN' },
+        ['fishing_period'] = {'night','evening' },
+        ['fishman_status'] = 'drug',
+        ['min_weight'] = 100,
+        ['max_weight'] = 500,
+        ['min_length'] = 10,
+        ['max_length'] = 20,
+        ['sozedex_id'] = 100,
+        ['price'] = 41
+    },
+    ['poulpe_eclair'] = {
+        ['name'] = 'poulpe_eclair',
+        ['label'] = "Poulpe eclair",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Histioteuthis micare. Le poulpe éclair peut émettre des décharges de plus de 800 volts, mais cela le fatigue énormément, c'est pour cela qu'il régule sa tension selon la proie qu'il chasse pour limiter son épuisement. Extrêmement furtif, il est capable d'éblouir ses prédateurs grâce à la lumière qu’il produit mais aussi de s'éteindre pour se cacher.",
+        ['illustrator'] = '.Crash',
+        ['fishing_area'] = { 'littoral' },
+        ['fishing_weather'] = { 'FOGGY', 'SMOG' },
+        ['fishing_period'] = {'night' },
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 50,
+        ['max_weight'] = 150,
+        ['min_length'] = 20,
+        ['max_length'] = 100,
+        ['sozedex_id'] = 101,
+        ['price'] = 21
+    },
+    ['lotushell'] = {
+        ['name'] = 'lotushell',
+        ['label'] = "Lotushell",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Emydidae lotus, La Lotushelle est exclusivement d’eau douce, la fleur sur son dos est un parasite avec lequel elle vit en symbiose, lui apportant l'énergie émise par le soleil. Elle se nourrit d’algue formée sur les bords d'étang où elle vit, la fleur lui permet de flotter à la surface, se fondant ainsi avec les lotus et autres fleurs environnantes",
+        ['illustrator'] = '.Crash',
+        ['fishing_area'] = { 'little_lake' },
+        ['fishing_weather'] = { 'CLEAR', 'CLEARING', 'EXTRASUNNY', 'RAIN' },
+        ['fishing_period'] = {'evening','night','morning','afternoon' },
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 650,
+        ['max_weight'] = 1250,
+        ['min_length'] = 13,
+        ['max_length'] = 36,
+        ['sozedex_id'] = 102,
+        ['price'] = 66
+    },
+    ['icecrevisse'] = {
+        ['name'] = 'icecrevisse',
+        ['label'] = "Icecrevisse",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Nix Astacoidea. L’icecrevisse est très commune dans les étendues d’eau douce, elle ne se montre qu’en hiver, ou elle se nourrit abondamment afin d’hiberner pour les 9 prochains mois. Son corps a besoin d’une température inférieure à 10 degrés, lorsque le temps se réchauffe, elle s’enterre sous l’eau ou la fraîcheur lui garantit de survivre.",
+        ['illustrator'] = '.Crash',
+        ['fishing_area'] = { 'little_lake' },
+        ['fishing_weather'] = { 'SNOW', 'SNOWLIGHT', 'XMAS', 'BLIZZARD' },
+        ['fishing_period'] = {'evening','night','morning' },
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 40,
+        ['max_weight'] = 90,
+        ['min_length'] = 8,
+        ['max_length'] = 18,
+        ['sozedex_id'] = 103,
+        ['price'] = 37
+    },
+    ['frostoad'] = {
+        ['name'] = 'frostoad',
+        ['label'] = "Frostoad",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Nix Alytes Le Frostoad est un crapaud vivant dans les marécages, il passe son hiver à chasser différents insectes volants, puis le reste de l’année il hiberne en ne sortant qu'à des moments de grand froid afin de refaire ses réserves de graisse. Il est relativement commun mais est difficile à apercevoir car aime se cacher dans la neige, ce qui lui permet d'éviter ses prédateurs.",
+        ['illustrator'] = '.Crash',
+        ['fishing_area'] = { 'river' },
+        ['fishing_weather'] = { 'SNOW', 'SNOWLIGHT', 'XMAS', 'BLIZZARD' },
+        ['fishing_period'] = {'evening','night','morning','afternoon' },
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 123,
+        ['max_weight'] = 321,
+        ['min_length'] = 9,
+        ['max_length'] = 16,
+        ['sozedex_id'] = 104,
+        ['price'] = 67
+    },
+    ['carpxolotl'] = {
+        ['name'] = 'carpxolotl',
+        ['label'] = "Carpxolotl",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Ambystoma Cyprinidae. La Carpxolotl est l’évolution d’un axolotl s’étant nourrie sur plusieurs générations des poissons de son habitat naturel. Étant doué de capacité de régénération et d’adaptation hors du commun, ce petit être a réussi à se faire une place de choix dans la chaîne alimentaire de la faune. les eaux douces regorgent de ce dernier, qui ne chasse que de nuit et dort le jour.",
+        ['illustrator'] = '.Crash',
+        ['fishing_area'] = { 'river', 'little_lake' },
+        ['fishing_weather'] = { 'FOGGY', 'SMOG', 'OVERCAST', 'CLOUDS' },
+        ['fishing_period'] = {'evening','night' },
+        ['fishman_status'] = 'clean',
+        ['min_weight'] = 20,
+        ['max_weight'] = 60,
+        ['min_length'] = 7,
+        ['max_length'] = 13,
+        ['sozedex_id'] = 105,
+        ['price'] = 46
+    },
+    ['clearcrab'] = {
+        ['name'] = 'clearcrab',
+        ['label'] = "Clearcrab",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Limnopilos crystallinus, le Clearcrab vit dans les eaux douces non pollué, il nettoie les poissons grâce à la douceur et précision de ses pinces puis se sert de deux orifices au niveau de sa tête pour projeter de l’eau et ainsi se débarrasser des résidus restants. Il n'est pas rare de voir des groupes traverser la forêt pour trouver un nouveau point d’eau plus sain.",
+        ['illustrator'] = '.Crash',
+        ['fishing_area'] = {'little_lake', 'river'},
+        ['fishing_weather'] = { 'EXTRASUNNY', 'CLEAR', 'CLEARING', 'FOGGY', 'SMOG', 'OVERCAST', 'CLOUDS'},
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 200,          -- poids minimal en grammes
+        ['max_weight'] = 600,         -- poids maxmimal en grammes
+        ['min_length'] = 21,           -- taille minimale en cm
+        ['max_length'] = 38,          -- taille minimale en cm
+        ['sozedex_id'] = 106,
+        ['price'] = 34
+    },
+    ['wooden_flight'] = {
+        ['name'] = 'wooden_flight',
+        ['label'] = "Wooden Flight",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Le wooden flight est un poisson composé uniquement de branches vivant dans les eaux du Nord de la ville proche de la zone de coupe de Paleto, au fur et à mesures des années à force de voir des bûcherons essayer de s’envoler en bougeant leurs bras il a finit par développer des nageoires assez puissantes qui lui permet s’envoler quelques secondes. Ils se baladent en bande et n’hésite pas a troll tous les bûcherons qu’ils voient en leur montrant qu’ils savent voler.",
+        ['illustrator'] = '.Naylec_',
+        ['fishing_area'] = {'big_lake', 'river'},
+        ['fishing_weather'] = {'CLEAR', 'CLEARING', 'CLOUDS', 'OVERCAST'},
+        ['fishing_period'] = {'evening'},
+        ['fishman_status'] = 'alcool',   -- drug, alcool, clean
+        ['min_weight'] = 1250,          -- poids minimal en grammes
+        ['max_weight'] = 1500,         -- poids maxmimal en grammes
+        ['min_length'] = 28,           -- taille minimale en cm
+        ['max_length'] = 35,          -- taille minimale en cm
+        ['sozedex_id'] = 107,
+        ['price'] = 61
+    },
+    ['horaine_argentee'] = {
+        ['name'] = 'horaine_argentee',
+        ['label'] = "Horaine Argentée",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Ce poisson absorbe de grandes quantités de métaux lourd, le rendant impropre à la consommation. Ses écailles sont si réfléchissantes qu'elles feraient un bon miroir. C'est d'ailleurs grâce à sa peau brillante qu'il échappe aux mouettes en les aveuglant.",
+        ['illustrator'] = '.Darabesque',
+        ['fishing_area'] = {'big_lake', 'river'},
+        ['fishing_weather'] = {'CLEAR', 'CLEARING', 'EXTRASUNNY'},
+        ['fishing_period'] = {'morning', 'afternoon'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 500,          -- poids minimal en grammes
+        ['max_weight'] = 800,         -- poids maxmimal en grammes
+        ['min_length'] = 18,           -- taille minimale en cm
+        ['max_length'] = 28,          -- taille minimale en cm
+        ['sozedex_id'] = 108,
+        ['price'] = 49
+    },
+    ['doradonut'] = {
+        ['name'] = 'doradonut',
+        ['label'] = "Doradonut",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Un petit poisson à la chair irrésistible, moelleux mais un peu gras.",
+        ['illustrator'] = '.Nina_lala',
+        ['fishing_area'] = {'littoral'},
+        ['fishing_weather'] = {'CLEAR', 'CLEARING', 'EXTRASUNNY', 'SNOW', 'SNOWLIGHT', 'THUNDER', 'XMAS'},
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 25,          -- poids minimal en grammes
+        ['max_weight'] = 50,         -- poids maxmimal en grammes
+        ['min_length'] = 8,           -- taille minimale en cm
+        ['max_length'] = 10,          -- taille minimale en cm
+        ['sozedex_id'] = 109,
+        ['price'] = 44
+    },
+    ['oursin_kipik'] = {
+        ['name'] = 'oursin_kipik',
+        ['label'] = "Oursin Kipik",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Un petit oursin mignon mais attention, ça pique!",
+        ['illustrator'] = '.Nina_lala',
+        ['fishing_area'] = {'littoral', 'south_sea'},
+        ['fishing_weather'] = {'CLEAR', 'CLEARING', 'EXTRASUNNY'},
+        ['fishing_period'] = {'morning'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 20,          -- poids minimal en grammes
+        ['max_weight'] = 100,         -- poids maxmimal en grammes
+        ['min_length'] = 5,           -- taille minimale en cm
+        ['max_length'] = 10,          -- taille minimale en cm
+        ['sozedex_id'] = 110,
+        ['price'] = 40
+    },
+    ['silver_moula'] = {
+        ['name'] = 'silver_moula',
+        ['label'] = "Silver Moula",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Cette moule argenté est relativement rare mais brille de mille feux!",
+        ['illustrator'] = '.Nina_lala',
+        ['fishing_area'] = {'littoral', 'south_sea'},
+        ['fishing_weather'] = {'CLEAR', 'CLEARING', 'EXTRASUNNY'},
+        ['fishing_period'] = {'morning'},
+        ['fishman_status'] = 'drug',   -- drug, alcool, clean
+        ['min_weight'] = 8,          -- poids minimal en grammes
+        ['max_weight'] = 10,         -- poids maxmimal en grammes
+        ['min_length'] = 4,           -- taille minimale en cm
+        ['max_length'] = 5,          -- taille minimale en cm
+        ['sozedex_id'] = 111,
+        ['price'] = 68
+    },
+    ['golden_huitre'] = {
+        ['name'] = 'golden_huitre',
+        ['label'] = "Golden Huître",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Cette huître extrêmement rare vous procurera une sensation de richesse, juste la sensation...",
+        ['illustrator'] = '.Nina_lala',
+        ['fishing_area'] = {'littoral'},
+        ['fishing_weather'] = {'CLEAR', 'CLEARING', 'EXTRASUNNY', 'FOGGY', 'HALLOWEEN', 'NEUTRAL', 'OVERCAST', 'RAIN'},
+        ['fishing_period'] = {'afternoon'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 125,          -- poids minimal en grammes
+        ['max_weight'] = 150,         -- poids maxmimal en grammes
+        ['min_length'] = 12,           -- taille minimale en cm
+        ['max_length'] = 15,          -- taille minimale en cm
+        ['sozedex_id'] = 112,
+        ['price'] = 73
+    },
+    ['crevette_alecto'] = {
+        ['name'] = 'crevette_alecto',
+        ['label'] = "Crevette Alecto",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "La crevette Alecto se regroupe souvent avec les espèces de types Mégèrienne et Tisiphonia afin de comploter contre la population sous marine.",
+        ['illustrator'] = '.Nina_lala',
+        ['fishing_area'] = {'south_sea'},
+        ['fishing_weather'] = {'CLEAR', 'CLEARING', 'EXTRASUNNY'},
+        ['fishing_period'] = {'morning', 'afternoon'},
+        ['fishman_status'] = 'drug',   -- drug, alcool, clean
+        ['min_weight'] = 2,          -- poids minimal en grammes
+        ['max_weight'] = 5,         -- poids maxmimal en grammes
+        ['min_length'] = 2,           -- taille minimale en cm
+        ['max_length'] = 3,          -- taille minimale en cm
+        ['sozedex_id'] = 113,
+        ['price'] = 51
+    },
+    ['limasse'] = {
+        ['name'] = 'limasse',
+        ['label'] = "Limasse",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "La Limasse sous espèce de la limace de mer, parcourt les fonds marins en répandant de la joie et de la bonne humeur à toutes les espèces présentes. On dit que la manger pourrait ramener l'être aimé.",
+        ['illustrator'] = '.Nina_lala',
+        ['fishing_area'] = {'littoral', 'south_sea'},
+        ['fishing_weather'] = {'CLEAR', 'CLEARING', 'EXTRASUNNY', 'FOGGY', 'HALLOWEEN', 'RAIN', 'SMOG'},
+        ['fishing_period'] = {'morning', 'evening'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 5,          -- poids minimal en grammes
+        ['max_weight'] = 20,         -- poids maxmimal en grammes
+        ['min_length'] = 4,           -- taille minimale en cm
+        ['max_length'] = 7,          -- taille minimale en cm
+        ['sozedex_id'] = 114,
+        ['price'] = 80
+    },
+    ['poimousse'] = {
+        ['name'] = 'poimousse',
+        ['label'] = "Poimousse",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Ce poisson à l'air d'être resté très longtemps dans ces eaux poisseuses, au point qu'il a fusionné avec.",
+        ['illustrator'] = '._erka',
+        ['fishing_area'] = {'river', 'canals'},
+        ['fishing_weather'] = {'FOGGY', 'HALLOWEEN', 'NEUTRAL', 'OVERCAST', 'RAIN', 'SMOG'},
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 1000,          -- poids minimal en grammes
+        ['max_weight'] = 2000,         -- poids maxmimal en grammes
+        ['min_length'] = 30,           -- taille minimale en cm
+        ['max_length'] = 60,          -- taille minimale en cm
+        ['sozedex_id'] = 115,
+        ['price'] = 77
+    },
+    ['goofysh'] = {
+        ['name'] = 'goofysh',
+        ['label'] = "Goofysh",
+        ['useable'] = false,
+        ['weight'] = 200,
+        ['type'] = 'fish',
+        ['description'] = "Les goofyshs sont des créatures aux grands yeux et aux couleurs vives dont la forme varie un peu d'un individus à l'autre. Ils sont très joueurs et amicaux mais aussi un peu stupides et maladroits, c'est ainsi que leur évolution les a fait devenir visqueux et mous, caractéristiques leurs permettant de mieux échapper à leurs prédateurs ou leur dangerosité envers eux même. Il est assez facile d'en observer des groupes s'amuser dans des coraux aussi colorés qu'eux.",
+        ['illustrator'] = '.Nahora',
+        ['fishing_area'] = {'littoral', 'south_sea'},
+        ['fishing_weather'] = {'CLEAR', 'CLEARING', 'EXTRASUNNY', 'OVERCAST', 'CLOUDS'},
+        ['fishing_period'] = {'alltime'},
+        ['fishman_status'] = 'clean',   -- drug, alcool, clean
+        ['min_weight'] = 50,          -- poids minimal en grammes
+        ['max_weight'] = 100,         -- poids maxmimal en grammes
+        ['min_length'] = 10,           -- taille minimale en cm
+        ['max_length'] = 20,          -- taille minimale en cm
+        ['sozedex_id'] = 116,
+        ['price'] = 22
+    },
+    ['soz_hammer'] = {
+        ['name'] = 'soz_hammer',
+        ['label'] = "Le Marteau",
+        ['weight'] = 1000,
+        ['useable'] = true,
+        ['type'] = 'item',
+        ['shouldClose'] = true,
+        ['unique'] = true,
+        ['combinable'] = nil,
+        ['giveable'] = false,
+        ['description'] = "Il en émane une puissance incommensurable. Il est dit que celui qui le possède peut façon le monde à sa guise. Vous ne vous sentez pas de le donner à quiconque.",
+        ['illustrator'] = '.'
     }
 }

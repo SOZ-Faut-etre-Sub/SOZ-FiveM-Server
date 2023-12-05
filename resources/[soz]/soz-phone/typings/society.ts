@@ -2,8 +2,11 @@ export interface PreDBSociety {
     number: string;
     anonymous: boolean;
     message: string;
+    htmlMessage?: string;
     position: boolean;
+    info?: { type?: string; serviceNumber?: string; notificationId: number };
     pedPosition?: string;
+    overrideIdentifier?: string;
 }
 
 export interface DBSocietyUpdate {
@@ -26,6 +29,7 @@ export interface SocietyMessage {
     conversation_id: string;
     source_phone: string;
     message: string;
+    htmlMessage?: string;
     position: string;
     isTaken: boolean;
     takenBy: string | null;
@@ -34,6 +38,11 @@ export interface SocietyMessage {
     createdAt: number;
     updatedAt: number;
     muted?: boolean;
+    info?: {
+        type?: string;
+        serviceNumber?: string;
+        duration?: number;
+    };
 }
 
 export enum SocietiesDatabaseLimits {
@@ -42,11 +51,13 @@ export enum SocietiesDatabaseLimits {
 
 export enum SocietyEvents {
     UPDATE_SOCIETY_MESSAGE = 'phone:updateSocietyMessage',
+    UPDATE_SOCIETY_MESSAGE_SUCCESS = 'phone:updateSocietyMessageSuccess',
     SEND_SOCIETY_MESSAGE = 'phone:sendSocietyMessage',
     FETCH_SOCIETY_MESSAGES = 'phone:fetchSocietyMessage',
     RESET_SOCIETY_MESSAGES = 'phone:resetSocietyMessage',
     SEND_SOCIETY_MESSAGE_SUCCESS = 'phone:sendSocietyMessageSuccess',
     CREATE_MESSAGE_BROADCAST = 'phone:createSocietyMessagesBroadcast',
+    SEND_CLIENT_POLICE_NOTIFICATION = 'phone:sendClientPoliceNotification',
 }
 
 type SocietyNumber = {
@@ -63,14 +74,20 @@ export const SocietyNumberList: SocietyNumber = {
     lsmc: '555-LSMC',
     bcso: '555-BCSO',
     news: '555-NEWS',
+    'you-news': '555-YOUN',
     garbage: '555-BLUEBIRD',
     taxi: '555-CARLJR',
     food: '555-MARIUS',
     oil: '555-MTP',
     'cash-transfer': '555-STONK',
-    bennys: '555-BENNYS',
+    bennys: '555-NEWGAHRAY',
     upw: '555-UPW',
     pawl: '555-PAWL',
     baun: '555-BAUN',
     ffs: '555-FFS',
+    mdr: '555-MDR',
+    sasp: '555-SASP',
+    fdf: '555-FDF',
+    gouv: '555-GOUV',
+    dmc: '555-DMC',
 };

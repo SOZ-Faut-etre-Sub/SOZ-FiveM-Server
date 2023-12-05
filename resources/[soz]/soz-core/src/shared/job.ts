@@ -1,9 +1,7 @@
-import { ZoneOptions } from '../client/target/target.factory';
 import { ClientEvent } from './event';
 
 export enum JobType {
     Unemployed = 'unemployed',
-    FBI = 'fbi',
     Adsl = 'adsl',
     Delivery = 'delivery',
     Religious = 'religious',
@@ -14,26 +12,116 @@ export enum JobType {
     Taxi = 'taxi',
     Food = 'food',
     News = 'news',
+    YouNews = 'you-news',
     Garbage = 'garbage',
     Oil = 'oil',
     CashTransfer = 'cash-transfer',
     Bennys = 'bennys',
     Upw = 'upw',
     Pawl = 'pawl',
-    Baun = 'baun',
     Ffs = 'ffs',
+    Baun = 'baun',
+    FBI = 'fbi',
+    MDR = 'mdr',
+    Gouv = 'gouv',
+    FDF = 'fdf',
+    SASP = 'sasp',
+    DMC = 'dmc',
 }
+
+export const BASE_FDO = [JobType.LSPD, JobType.BCSO];
+export const FDO = [JobType.FBI, JobType.LSPD, JobType.BCSO, JobType.SASP];
+export const FDO_NO_FBI = [JobType.LSPD, JobType.BCSO, JobType.SASP];
+
+export enum JobPermission {
+    Enrollment = 'enrollment',
+    ManageGrade = 'manage-grade',
+    SocietyDealershipVehicle = 'society-dealership-vehicle',
+    SocietyPrivateStorage = 'society-private-storage',
+    SocietyMoneyStorage = 'society-money-storage',
+    SocietyShop = 'society-shop',
+    SocietyBankAccount = 'society-bank-account',
+    SocietyBankInvoices = 'society-bank-invoices',
+    SocietyTakeOutPound = 'society-take-out-pound',
+    SocietyPublicGarage = 'society-public-garage',
+    SocietyPrivateGarage = 'society-private-garage',
+    SocietyPublicPort = 'society-public-port',
+    SocietyPrivatePort = 'society-private-port',
+    SocietyViewCompanyPanel = 'society-view-company-panel',
+    NewsManageArticle = 'manage-article',
+    NewsManageBillboards = 'manage-billboards',
+    CashTransfer_CollectBags = 'collect-bags',
+    CashTransfer_CollectSecure = 'collect-secure',
+    CashTransfer_ResaleBags = 'resale-bags',
+    CashTransfer_FillIn = 'fill-in',
+    Food_Harvest = 'harvest',
+    Food_Craft = 'craft',
+    FuelerChangePrice = 'fueler-change-price',
+    CriminalRecord = 'criminal-record',
+    VehicleRegistrar = 'vehicle-registrar',
+    Investigation = 'investigation',
+    ManageInvestigation = 'investigation-manage',
+    InvestigationLawyer = 'investigation-lawyer',
+    ManageCertification = 'certification-manage',
+    AssignCertification = 'certification-agent',
+    ManageRoster = 'roster-manage',
+    BaunHarvest = 'harvest',
+    BaunRestock = 'restock',
+    BaunCraft = 'craft',
+    FfsHarvest = 'harvest',
+    FfsRestock = 'restock',
+    FfsCraft = 'craft',
+    BennysEstimate = 'estimate',
+    BennysResell = 'resell',
+    BennysOrder = 'order',
+    MdrViewOtherJobs = 'view-other-jobs',
+    MdrViewCitizenData = 'view-citizen-data',
+    MdrMarkedMoneyCleaning = 'marked-money-cleaning',
+    UpwOrder = 'order',
+    UpwChangePrice = 'upw-change-price',
+    FDOFedPound = 'fdo-fed-pound',
+    OnDutyView = 'view-employe-on-duty',
+}
+
+export const JobLabel: Record<JobType, string> = {
+    [JobType.Unemployed]: 'Sans emploi',
+    [JobType.Adsl]: 'ADSL',
+    [JobType.Delivery]: 'Fougère Prime',
+    [JobType.Religious]: 'InfoChat',
+    [JobType.Scrapper]: 'OldMetal',
+    [JobType.LSPD]: 'Los Santos Police Department',
+    [JobType.BCSO]: 'Blaine County Sheriff Office',
+    [JobType.LSMC]: 'Los Santos Medical Center',
+    [JobType.Taxi]: 'Carl Jr Services',
+    [JobType.Food]: 'Château Marius',
+    [JobType.News]: 'Twitch News',
+    [JobType.YouNews]: 'You News',
+    [JobType.Garbage]: 'BlueBird',
+    [JobType.Oil]: 'Michel Transport Petrol',
+    [JobType.CashTransfer]: 'STONK Security',
+    [JobType.Bennys]: 'New Gahray',
+    [JobType.Upw]: 'Unexpected Power & Water',
+    [JobType.Pawl]: 'Pipe And Wooden Leg',
+    [JobType.Ffs]: 'Fight For Style',
+    [JobType.Baun]: 'Bahama Unicorn',
+    [JobType.FBI]: 'Federal Bureau of Investigation',
+    [JobType.MDR]: 'Mandatory',
+    [JobType.Gouv]: 'Gouvernement',
+    [JobType.FDF]: 'Ferme de Fou',
+    [JobType.SASP]: 'San Andreas State Police',
+    [JobType.DMC]: 'DeMetal Company',
+};
+
+export type JobPermissionData = {
+    label: string;
+};
 
 export type Job = {
     // Must use the getJobs method to generate the id from the object.
     id: JobType;
     grades: JobGrade[];
     label: string;
-    permissions: {
-        [key: string]: {
-            label: string;
-        };
-    };
+    permissions: Partial<Record<JobPermission, JobPermissionData>>;
     platePrefix?: string;
     // TODO: Complete when necessary
     temporary?: any;
@@ -41,6 +129,7 @@ export type Job = {
     canInvoice?: boolean;
     menuCallback?: ClientEvent;
     resell?: any;
+    phone?: string;
 };
 
 export type JobGrade = {
@@ -51,68 +140,12 @@ export type JobGrade = {
     salary: number;
     owner: number;
     is_default: boolean;
-    permissions: string[];
+    permissions: JobPermission[];
 };
 
-export const JobCloakrooms: Partial<Record<JobType, ZoneOptions[]>> = {
-    [JobType.Baun]: [
-        {
-            center: [106.36, -1299.08, 28.77],
-            length: 0.4,
-            width: 2.3,
-            minZ: 27.82,
-            maxZ: 30.27,
-            heading: 30,
-            data: {
-                id: 'jobs:baun:cloakroom:unicorn_1',
-                event: 'jobs:client:baun:OpenCloakroomMenu', // Tech debt as it's not homogeneous
-                job: JobType.Baun,
-                storage: 'baun_unicorn_cloakroom_1',
-            },
-        },
-        {
-            center: [109.05, -1304.24, 28.77],
-            length: 2.25,
-            width: 0.4,
-            minZ: 27.87,
-            maxZ: 30.27,
-            heading: 30,
-            data: {
-                id: 'jobs:baun:cloakroom:unicorn_2',
-                event: 'jobs:client:baun:OpenCloakroomMenu', // Tech debt as it's not homogeneous
-                job: JobType.Baun,
-                storage: 'baun_unicorn_cloakroom_2',
-            },
-        },
-        {
-            center: [-1381.38, -602.26, 30.32],
-            length: 2.0,
-            width: 6.4,
-            minZ: 29.92,
-            maxZ: 31.92,
-            heading: 303,
-            data: {
-                id: 'jobs:baun:cloakroom:bahama_1',
-                event: 'jobs:client:baun:OpenCloakroomMenu', // Tech debt as it's not homogeneous
-                job: JobType.Baun,
-                storage: 'baun_bahama_cloakroom_1',
-            },
-        },
-    ],
-    [JobType.Ffs]: [
-        {
-            center: [706.41, -959.03, 30.4],
-            length: 0.5,
-            width: 4.25,
-            minZ: 29.4,
-            maxZ: 31.6,
-            heading: 0,
-            data: {
-                id: 'jobs:ffs:cloakroom',
-                event: 'jobs:client:ffs:OpenCloakroomMenu', // Tech debt as it's not homogeneous
-                job: JobType.Ffs,
-                storage: 'ffs_cloakroom',
-            },
-        },
-    ],
+export type JobCloakroomZoneData = {
+    id: string;
+    event: string;
+    job: JobType;
+    storage: string;
 };

@@ -1,12 +1,11 @@
-import { OnNuiEvent } from '../../core/decorators/event';
+import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
-import { HEALTH_OPTIONS, MOVEMENT_OPTIONS, VOCAL_OPTIONS } from '../../nui/components/Admin/PlayerSubMenu';
-import { AdminPlayer } from '../../shared/admin/admin';
-import { NuiEvent, ServerEvent } from '../../shared/event';
+import { AdminPlayer, HEALTH_OPTIONS, MOVEMENT_OPTIONS, VOCAL_OPTIONS } from '../../shared/admin/admin';
+import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { Err, Ok } from '../../shared/result';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
@@ -27,7 +26,9 @@ export class AdminMenuPlayerProvider {
     private inputService: InputService;
 
     private async getPlayers(): Promise<AdminPlayer[]> {
-        return (await emitRpc<AdminPlayer[]>(RpcEvent.ADMIN_GET_PLAYERS)).sort((a, b) => a.name.localeCompare(b.name));
+        return (await emitRpc<AdminPlayer[]>(RpcServerEvent.ADMIN_GET_PLAYERS)).sort((a, b) =>
+            a.name.localeCompare(b.name)
+        );
     }
 
     @OnNuiEvent(NuiEvent.AdminGetPlayers)
@@ -50,7 +51,12 @@ export class AdminMenuPlayerProvider {
                 if (!value || value === '') {
                     return Ok(true);
                 }
-                const player = players.find(p => p.name.toLowerCase().includes(value.toLowerCase()));
+                const player = players.find(p => {
+                    return (
+                        p.name.toLowerCase().includes(value.toLowerCase()) ||
+                        p.rpFullName.toLowerCase().includes(value.toLowerCase())
+                    );
+                });
                 if (!player) {
                     return Err('Aucun joueur trouvé.');
                 }
@@ -60,10 +66,9 @@ export class AdminMenuPlayerProvider {
         this.nuiDispatch.dispatch('admin_player_submenu', 'SetSearchFilter', player || '');
     }
 
-    @OnNuiEvent(NuiEvent.AdminMenuPlayerSpectate)
-    public async spectate(player: AdminPlayer): Promise<void> {
-        TriggerServerEvent(ServerEvent.ADMIN_SPECTATE, player);
-        this.notifier.notify(`Vous êtes maintenant en mode spectateur sur ~g~${player.name}.`, 'info');
+    @OnEvent(ClientEvent.ADMIN_KILL_PLAYER)
+    public async killPlayer(): Promise<void> {
+        SetEntityHealth(PlayerPedId(), 0);
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleHealthOption)
@@ -71,8 +76,13 @@ export class AdminMenuPlayerProvider {
         if (!ALLOWED_HEALTH_OPTIONS.includes(action)) {
             return;
         }
-        const event: ServerEvent = action === 'kill' ? ServerEvent.ADMIN_KILL : ServerEvent.ADMIN_REVIVE;
-        TriggerServerEvent(event, player);
+
+        if (action === 'kill') {
+            TriggerServerEvent(ServerEvent.ADMIN_KILL_PLAYER, player);
+        } else {
+            TriggerServerEvent(ServerEvent.LSMC_REVIVE, player.id, true, false, false);
+        }
+
         this.notifier.notify(`Le joueur ~g~${player.name}~s~ a été ~r~${action}.`, 'info');
     }
 
@@ -81,7 +91,8 @@ export class AdminMenuPlayerProvider {
         if (!ALLOWED_MOVEMENT_OPTIONS.includes(action)) {
             return;
         }
-        const event: ServerEvent = action === 'freeze' ? ServerEvent.ADMIN_FREEZE : ServerEvent.ADMIN_UNFREEZE;
+        const event: ServerEvent =
+            action === 'freeze' ? ServerEvent.ADMIN_FREEZE_PLAYER : ServerEvent.ADMIN_UNFREEZE_PLAYER;
         TriggerServerEvent(event, player);
         this.notifier.notify(`Le joueur ~g~${player.name}~s~ est maintenant ~r~${action}.`, 'info');
     }
@@ -92,7 +103,7 @@ export class AdminMenuPlayerProvider {
             return;
         }
         if (action === 'status') {
-            const isMuted = await emitRpc<boolean>(RpcEvent.VOIP_IS_MUTED, player.id);
+            const isMuted = await emitRpc<boolean>(RpcServerEvent.VOIP_IS_MUTED, player.id);
 
             if (isMuted) {
                 this.notifier.notify(`Le joueur est ~r~muté.`, 'info');
@@ -121,13 +132,24 @@ export class AdminMenuPlayerProvider {
 
     @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleEffectsOption)
     public async handleEffectsOption({ action, player }: { action: string; player: AdminPlayer }): Promise<void> {
-        TriggerServerEvent(`admin:server:effect:${action}`, player.id);
+        if (action === 'normal') {
+            TriggerServerEvent(ServerEvent.ADMIN_RESET_EFFECT, player);
+        }
+
+        if (action === 'alcohol') {
+            TriggerServerEvent(ServerEvent.ADMIN_SET_ALCOHOL_EFFECT, player);
+        }
+
+        if (action === 'drug') {
+            TriggerServerEvent(ServerEvent.ADMIN_SET_DRUG_EFFECT, player);
+        }
+
         this.notifier.notify(`L'effet ~g~${action}~s~ a été appliqué sur le joueur ~g~${player.name}~s~.`, 'info');
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleDiseaseOption)
     public async handleDiseaseOption({ action, player }: { action: string; player: AdminPlayer }): Promise<void> {
-        TriggerServerEvent(`admin:server:disease:${action}`, player.id);
+        TriggerServerEvent(ServerEvent.ADMIN_SET_DISEASE, player, action);
         this.notifier.notify(`La maladie ~g~${action}~s~ a été appliquée sur le joueur ~g~${player.name}~s~.`, 'info');
     }
 
@@ -135,6 +157,24 @@ export class AdminMenuPlayerProvider {
     public async handleResetSkin(player: AdminPlayer): Promise<void> {
         TriggerServerEvent(ServerEvent.ADMIN_RESET_SKIN, player.id);
         this.notifier.notify(`Le skin du joueur ~g~${player.name}~s~ a été réinitialisé.`, 'info');
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleResetHalloween)
+    public async handleResetHalloween({
+        player,
+        year,
+        scenario,
+    }: {
+        player: AdminPlayer;
+        year: '2022';
+        scenario: 'scenario1' | 'scenario2' | 'scenario3' | 'scenario4';
+    }): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_RESET_HALLOWEEN, player.id, year, scenario);
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleOpenGunSmith)
+    public async handleOpenGunSmith(): Promise<void> {
+        emit(ClientEvent.WEAPON_OPEN_GUNSMITH);
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleSetAttribute)
@@ -153,7 +193,7 @@ export class AdminMenuPlayerProvider {
                 this.notifier.notify(`La force du joueur ~g~${player.name}~s~ a été modifiée.`, 'info');
                 break;
             case 'stamina':
-                TriggerServerEvent(ServerEvent.ADMIN_SET_STAMINA, player, value === 'min' ? 0 : 150);
+                TriggerServerEvent(ServerEvent.ADMIN_SET_STAMINA, player, value === 'min' ? 60 : 150);
                 this.notifier.notify(`L'endurance du joueur ~g~${player.name}~s~ a été modifiée.`, 'info');
                 break;
             case 'stress':
@@ -171,5 +211,67 @@ export class AdminMenuPlayerProvider {
                 this.notifier.notify(`Les attributs du joueur ~g~${player.name}~s~ ont été modifiés.`, 'info');
                 break;
         }
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleInjuriesUpdate)
+    public async updateInjuriesCount({ player, value }: { player: AdminPlayer; value: number }): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_SET_INJURIES_COUNT, player.id, value);
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleSetReputation)
+    public async handleGiveReputation(player: AdminPlayer): Promise<void> {
+        const current = await emitRpc<number>(RpcServerEvent.ADMIN_GET_REPUTATION, player.id);
+        const value = await this.inputService.askInput(
+            {
+                title: `Changer la Réputation (actuelle ${current})`,
+                defaultValue: '',
+                maxCharacters: 7,
+            },
+            value => {
+                if (!value) {
+                    return Ok(true);
+                }
+                const int = parseInt(value);
+                if (isNaN(int) || int < 0) {
+                    return Err('Valeur incorrecte');
+                }
+                return Ok(true);
+            }
+        );
+
+        if (!value) {
+            return;
+        }
+
+        TriggerServerEvent(ServerEvent.ADMIN_SET_REPUTATION, player.id, value);
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleResetCrimi)
+    public async handleResetCrimi(player: AdminPlayer): Promise<void> {
+        const value = await this.inputService.askInput(
+            {
+                title: `Entrer 'OUI' pour confirmer le Reset Criminalité de ce personnage`,
+                defaultValue: '',
+                maxCharacters: 7,
+            },
+            () => {
+                return Ok(true);
+            }
+        );
+
+        if (value === 'OUI') {
+            TriggerServerEvent(ServerEvent.ADMIN_RESET_CRIMI, player.id);
+        }
+        return;
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleResetClientState)
+    public async handleResetClientState(player: AdminPlayer): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_RESET_CLIENT_STATE, player.id);
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerSearch)
+    public async handleResePlayerSearch(player: AdminPlayer): Promise<void> {
+        TriggerServerEvent('inventory:server:openInventory', 'player', player.id);
     }
 }

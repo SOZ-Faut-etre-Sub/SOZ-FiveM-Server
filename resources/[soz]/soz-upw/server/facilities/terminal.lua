@@ -5,13 +5,6 @@ function Terminal:new(identifier, options)
 
     self.fields_to_save = {"type", "scope", "job", "capacity", "maxCapacity", "zone"}
 
-    if self.scope == "default" then
-        self.prop = "soz_prop_elec01"
-    elseif self.scope == "entreprise" then
-        self.prop = "soz_prop_elec02"
-    end
-    self:placeProp()
-
     setmetatable(self, {__index = Terminal})
 
     return self
@@ -57,4 +50,8 @@ function Terminal:Consume(energy)
     end
 
     return self.capacity
+end
+
+function Terminal:ConsumeRatio(ratio)
+    self:Consume(math.floor(ratio * self.capacity))
 end

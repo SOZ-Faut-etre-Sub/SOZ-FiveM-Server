@@ -52,7 +52,7 @@ export const SettingItemSlider = ({ iconStart, iconEnd, value, onCommit }: ISett
                 onChange={onCommit}
                 className={cn('w-full mx-2 h-1.5 appearance-none bg-opacity-20 rounded-full cursor-pointer', {
                     'bg-white': config.theme.value === 'dark',
-                    'bg-gray-700': config.theme.value === 'light',
+                    'bg-ios-700': config.theme.value === 'light',
                 })}
             />
             <div className="text-gray-300 w-6 h-6">{iconEnd}</div>

@@ -1,7 +1,7 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import { SozRole } from '../../../core/permissions';
-import { AdminPlayer } from '../../../shared/admin/admin';
+import { AdminPlayer, HEALTH_OPTIONS, MOVEMENT_OPTIONS, VOCAL_OPTIONS } from '../../../shared/admin/admin';
 import { NuiEvent } from '../../../shared/event';
 import { isOk, Result } from '../../../shared/result';
 import { fetchNui } from '../../fetch';
@@ -26,22 +26,6 @@ export interface NuiAdminPlayerSubMenuMethodMap {
     SetSearchFilter: string;
 }
 
-export const HEALTH_OPTIONS = [
-    { label: 'Tuer', value: 'kill' },
-    { label: 'Réanimer', value: 'revive' },
-];
-
-export const MOVEMENT_OPTIONS = [
-    { label: 'Bloquer', value: 'freeze' },
-    { label: 'Débloquer', value: 'unfreeze' },
-];
-
-export const VOCAL_OPTIONS = [
-    { label: 'Status', value: 'status' },
-    { label: 'Muter', value: 'mute' },
-    { label: 'Démuter', value: 'unmute' },
-];
-
 export const TELEPORT_OPTIONS = [
     { label: 'Vers le joueur', value: 'goto' },
     { label: 'Du joueur à moi', value: 'bring' },
@@ -60,6 +44,13 @@ export const DISEASE_OPTIONS = [
     { label: 'Rougeur', value: 'rougeur' },
     { label: 'Mal au dos', value: 'backpain' },
     { label: 'Soigner', value: false },
+];
+
+const SCENARIO_OPTIONS = [
+    { label: 'Scenario 1', value: 'scenario1' },
+    { label: 'Scenario 2', value: 'scenario2' },
+    { label: 'Scenario 3', value: 'scenario3' },
+    { label: 'Scenario 4', value: 'scenario4' },
 ];
 
 export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, permission }) => {
@@ -99,15 +90,19 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                         🔎 Rechercher un joueur: {searchFilter}
                     </MenuItemButton>
                     {players
-                        .filter(player =>
-                            searchFilter !== '' ? player.name.toLowerCase().includes(searchFilter.toLowerCase()) : true
-                        )
-                        .map(player => (
-                            <MenuItemSubMenuLink
-                                id={'player_' + player.citizenId}
-                                key={'player_link_' + player.citizenId}
-                            >
-                                [{player.id}] {player.name}
+                        .filter(player => {
+                            if (searchFilter === '') {
+                                return true;
+                            }
+                            const search = searchFilter.toLowerCase();
+                            return (
+                                player.name.toLowerCase().includes(search) ||
+                                player.rpFullName.toLowerCase().includes(search)
+                            );
+                        })
+                        .map((player, i) => (
+                            <MenuItemSubMenuLink id={'player_' + player.citizenId} key={i}>
+                                [{player.id}] {player.rpFullName} | {player.name}
                             </MenuItemSubMenuLink>
                         ))}
                 </MenuContent>
@@ -222,6 +217,22 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                         >
                             Réinitialiser le skin du joueur
                         </MenuItemButton>
+                        <MenuItemButton
+                            disabled={!isAdminOrStaff}
+                            onConfirm={async () => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerSearch, player);
+                            }}
+                        >
+                            Fouiller
+                        </MenuItemButton>
+                        <MenuItemButton
+                            disabled={!isAdminOrStaff}
+                            onConfirm={async () => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerHandleOpenGunSmith, player);
+                            }}
+                        >
+                            Ouvrir le GunSmith
+                        </MenuItemButton>
                         <MenuItemText>
                             <b>Hygiène de vie</b>
                         </MenuItemText>
@@ -290,6 +301,64 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                             <MenuItemSelectOption key={'aio_min_option'}>Min</MenuItemSelectOption>
                             <MenuItemSelectOption key={'aio_max_option'}>Max</MenuItemSelectOption>
                         </MenuItemSelect>
+                        <MenuItemSelect
+                            title={`Blessure`}
+                            value={player.injuries || 0}
+                            onConfirm={async index => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerHandleInjuriesUpdate, {
+                                    player,
+                                    value: index,
+                                });
+                                player.injuries = index;
+                            }}
+                        >
+                            {Array(13)
+                                .fill(0)
+                                .map((_, index) => (
+                                    <MenuItemSelectOption value={index} key={`injuries_${index}`}>
+                                        {index}
+                                    </MenuItemSelectOption>
+                                ))}
+                        </MenuItemSelect>
+                        <MenuItemSelect
+                            title={'Réinitialiser la progression Halloween 2022'}
+                            onConfirm={async selectedIndex => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerHandleResetHalloween, {
+                                    player,
+                                    year: '2022',
+                                    scenario: SCENARIO_OPTIONS[selectedIndex].value,
+                                });
+                            }}
+                        >
+                            {SCENARIO_OPTIONS.map(option => (
+                                <MenuItemSelectOption key={'scenario_option_' + option.value}>
+                                    {option.label}
+                                </MenuItemSelectOption>
+                            ))}
+                        </MenuItemSelect>
+                        <MenuItemButton
+                            disabled={!isAdminOrStaff}
+                            onConfirm={async () => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerHandleSetReputation, player);
+                            }}
+                        >
+                            Changer la réputation
+                        </MenuItemButton>
+                        <MenuItemButton
+                            disabled={!isAdminOrStaff}
+                            onConfirm={async () => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerHandleResetCrimi, player);
+                            }}
+                        >
+                            Reset Criminalité
+                        </MenuItemButton>
+                        <MenuItemButton
+                            onConfirm={async () => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerHandleResetClientState, player);
+                            }}
+                        >
+                            Reset Client State
+                        </MenuItemButton>
                     </MenuContent>
                 </SubMenu>
             ))}

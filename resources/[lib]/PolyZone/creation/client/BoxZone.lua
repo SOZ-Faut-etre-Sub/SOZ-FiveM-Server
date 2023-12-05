@@ -115,7 +115,7 @@ local function EndZone()
         return
     end
 
-  TempZone = {name=createdZone.name, center=createdZone.center, length=createdZone.length, width=createdZone.width, heading=createdZone.offsetRot, minZ=createdZone.minZ, maxZ=createdZone.maxZ}
+  TempZone = {name=createdZone.name, center= { x = createdZone.center.x, y = createdZone.center.y, z= createdZone.center.z }, length=createdZone.length, width=createdZone.width, heading=createdZone.offsetRot, minZ=createdZone.minZ, maxZ=createdZone.maxZ}
   lastCreatedZoneType = createdZoneType
   lastCreatedZone = createdZone
 

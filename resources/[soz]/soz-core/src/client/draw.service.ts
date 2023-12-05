@@ -1,31 +1,74 @@
 import { Injectable } from '../core/decorators/injectable';
-import { Vector3 } from '../shared/polyzone/vector';
+import { RGBAColor } from '../shared/color';
+import { Font } from '../shared/hud';
+import { Vector2, Vector3 } from '../shared/polyzone/vector';
+
+type Style = {
+    font: Font;
+    size: number;
+    color: RGBAColor;
+    shadow: {
+        distance: number;
+        color: RGBAColor;
+    };
+    border: {
+        size: number;
+        color: RGBAColor;
+    } | null;
+    centered: boolean;
+    outline: boolean;
+};
 
 @Injectable()
 export class DrawService {
-    public drawText(
-        x: number,
-        y: number,
-        width: number,
-        height: number,
-        scale: number,
-        r: number,
-        g: number,
-        b: number,
-        a: number,
-        text: string
-    ): void {
-        SetTextFont(4);
-        SetTextProportional(false);
-        SetTextScale(scale, scale);
-        SetTextColour(r, g, b, a);
-        SetTextDropshadow(0, 0, 0, 0, 255);
-        SetTextEdge(2, 0, 0, 0, 255);
-        SetTextDropShadow();
-        SetTextOutline();
+    public drawText(text: string, position: Vector2, style: Partial<Style> = {}) {
+        const computedStyle = {
+            font: Font.ChaletLondon,
+            size: 1.0,
+            color: [255, 255, 255, 255],
+            shadow: {
+                distance: 0,
+                color: [0, 0, 0, 255],
+            },
+            border: null,
+            centered: false,
+            outline: false,
+            ...style,
+        };
+
+        SetTextFont(computedStyle.font);
+        SetTextScale(0.0, computedStyle.size);
+        SetTextProportional(true);
+        SetTextColour(computedStyle.color[0], computedStyle.color[1], computedStyle.color[2], computedStyle.color[3]);
+        SetTextDropshadow(
+            computedStyle.shadow.distance,
+            computedStyle.shadow.color[0],
+            computedStyle.shadow.color[1],
+            computedStyle.shadow.color[2],
+            computedStyle.shadow.color[3]
+        );
+
+        if (computedStyle.border) {
+            SetTextEdge(
+                computedStyle.border.size,
+                computedStyle.border.color[0],
+                computedStyle.border.color[1],
+                computedStyle.border.color[2],
+                computedStyle.border.color[3]
+            );
+        }
+
+        if (computedStyle.centered) {
+            SetTextCentre(true);
+        }
+
+        if (computedStyle.outline) {
+            SetTextOutline();
+        }
+
         SetTextEntry('STRING');
         AddTextComponentString(text);
-        DrawText(x - width / 2, y - height / 2 + 0.005);
+        DrawText(position[0], position[1]);
     }
 
     public drawText3d(position: Vector3, text: string) {

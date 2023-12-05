@@ -1,21 +1,42 @@
 import { AppContent } from '@ui/components/AppContent';
 import { AppWrapper } from '@ui/components/AppWrapper';
 import { FullPageWithHeader } from '@ui/layout/FullPageWithHeader';
-import React from 'react';
+import React, { memo, useEffect } from 'react';
 
+import { useRingtoneSound } from '../../sound/hooks/useRingtoneSound';
 import { useCall } from '../hooks/useCall';
+import { useDialingSound } from '../hooks/useDialingSound';
 import CallContactContainer from './CallContactContainer';
 import { CallControls } from './CallControls';
 import { CallTimer } from './CallTimer';
 import RingingText from './RingingText';
 
-export const CallModal: React.FC = () => {
+export const CallModal = memo(() => {
     const { call } = useCall();
+    const { play, stop } = useRingtoneSound();
+    const { startDialTone, endDialTone } = useDialingSound();
+
+    useEffect(() => {
+        if (!call) return;
+
+        if (!call.is_accepted) {
+            if (call.isTransmitter) {
+                startDialTone();
+            } else {
+                play();
+            }
+        }
+
+        return () => {
+            endDialTone();
+            stop();
+        };
+    }, [call, play, stop, startDialTone, endDialTone]);
 
     if (!call) return null;
 
     return (
-        <FullPageWithHeader className="bg-black bg-opacity-30 backdrop-blur">
+        <FullPageWithHeader className="bg-ios-800 bg-opacity-80">
             <AppWrapper>
                 <AppContent>
                     <CallContactContainer />
@@ -25,4 +46,4 @@ export const CallModal: React.FC = () => {
             </AppWrapper>
         </FullPageWithHeader>
     );
-};
+});

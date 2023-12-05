@@ -1,15 +1,22 @@
 local voiceProximity = 2
-local muted = false
 
 local function SetVoiceProximity(proximity)
     local proximityConfig = Config.voiceRanges[proximity]
 
     ProximityModuleInstance:updateRange(proximityConfig.range)
     voiceProximity = proximity
-    TriggerEvent("hud:client:UpdateVoiceMode", voiceProximity - 1)
+    if not muted then
+        TriggerEvent("soz-core:client:voip:update-mode", voiceProximity - 1)
+    end
 end
 
 local function MutePlayer(state)
+    local playerState = exports["soz-core"]:GetPlayerState()
+
+    if playerState.isInHub then
+        return
+    end
+
     if state and type(state) == "boolean" then
         muted = state
     else
@@ -21,7 +28,7 @@ local function MutePlayer(state)
     if not muted then
         SetVoiceProximity(voiceProximity)
     else
-        TriggerEvent("hud:client:UpdateVoiceMode", -1)
+        TriggerEvent("soz-core:client:voip:update-mode", -1)
     end
 end
 
@@ -41,9 +48,10 @@ local function ProximityVoiceDecrease()
     SetVoiceProximity(voiceProximity - 1)
 end
 
-local function SetPlayerMegaphoneInUse(state)
+local function SetPlayerMegaphoneInUse(state, range)
     if state then
-        ProximityModuleInstance:updateRange(Config.megaphoneRange)
+        ProximityModuleInstance:updateRange(range or Config.megaphoneRange)
+        TriggerEvent("soz-core:client:voip:update-mode", 10)
     else
         SetVoiceProximity(voiceProximity)
     end
@@ -52,6 +60,7 @@ end
 local function SetPlayerMicrophoneInUse(state)
     if state then
         ProximityModuleInstance:updateRange(Config.microphoneRange)
+        TriggerEvent("soz-core:client:voip:update-mode", 9)
     else
         SetVoiceProximity(voiceProximity)
     end

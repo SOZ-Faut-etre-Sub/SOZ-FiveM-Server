@@ -1,33 +1,38 @@
-import { Injectable } from '../decorators/injectable';
+import { Inject, Injectable } from '../decorators/injectable';
 import { getMethodMetadata } from '../decorators/reflect';
-import { TickMetadataKey } from '../decorators/tick';
+import { TickMetadata, TickMetadataKey } from '../decorators/tick';
+import { MiddlewareTickFactory } from '../middleware/middleware';
 import { wait } from '../utils';
 
 @Injectable()
 export class TickLoader {
     private ticks = [];
 
+    @Inject('MiddlewareTickFactory')
+    private middlewareFactory: MiddlewareTickFactory;
+
     public load(provider): void {
-        const tickMethodList = getMethodMetadata<number>(TickMetadataKey, provider);
+        const tickMethodList = getMethodMetadata<TickMetadata>(TickMetadataKey, provider);
 
         for (const methodName of Object.keys(tickMethodList)) {
-            const interval = tickMethodList[methodName];
+            const metadata = tickMethodList[methodName];
             const method = provider[methodName].bind(provider);
+            const methodWithMiddleware = this.middlewareFactory.create(metadata, method);
 
             const tick = setTick(async () => {
                 try {
-                    const result = await method();
+                    const result = await methodWithMiddleware();
 
                     if (result === false) {
                         clearTick(tick);
                         return;
                     }
-
-                    if (interval > 0) {
-                        await wait(interval);
-                    }
                 } catch (error) {
-                    console.error(`Error in ${provider.toString()}:${methodName}`, error);
+                    /* empty */
+                }
+
+                if (metadata.interval > 0) {
+                    await wait(metadata.interval);
                 }
             });
 

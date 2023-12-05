@@ -4,7 +4,13 @@ lua54 "yes"
 
 shared_scripts {"shared/*.lua", "config.lua", "storages/*.lua"}
 
-client_scripts {"client/main.lua", "client/player.lua", "client/keys.lua", "client/bin.lua"}
+client_scripts {
+    "client/main.lua",
+    "client/player.lua",
+    "client/keys.lua",
+    "client/forceconsume.lua",
+    "client/cl_controls.lua",
+}
 
 server_scripts {
     "@oxmysql/lib/MySQL.lua",
@@ -17,6 +23,6 @@ server_scripts {
 }
 
 ui_page("html/index.html")
-files {"html/index.html", "html/assets/*"}
+files {"html/index.html", "html/**/*"}
 
-dependencies {"oxmysql", "qb-core", "qb-weapons", "soz-hud", "menuv", "qb-target"}
+dependencies {"oxmysql", "qb-core", "menuv", "qb-target"}

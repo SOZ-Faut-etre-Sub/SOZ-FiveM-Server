@@ -9,7 +9,7 @@ import { useNotes } from '../../hooks/app/useNotes';
 import { useConfig } from '../../hooks/usePhone';
 import { AppContent } from '../../ui/components/AppContent';
 import { useBackground } from '../../ui/hooks/useBackground';
-import { FullPageWithHeaderWithNavBar } from '../../ui/layout/FullPageWithHeaderWithNavBar';
+import { FullPage } from '../../ui/layout/FullPage';
 import { NoteForm } from './pages/NoteForm';
 import NoteList from './pages/NoteList';
 
@@ -28,7 +28,7 @@ export const NotesApp: React.FC = () => {
     };
 
     return (
-        <FullPageWithHeaderWithNavBar className={backgroundClass}>
+        <FullPage className={backgroundClass}>
             <Transition
                 appear={true}
                 show={true}
@@ -73,6 +73,6 @@ export const NotesApp: React.FC = () => {
                     </div>
                 </Transition>
             </AppContent>
-        </FullPageWithHeaderWithNavBar>
+        </FullPage>
     );
 };

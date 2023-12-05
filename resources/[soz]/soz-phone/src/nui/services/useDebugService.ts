@@ -1,7 +1,6 @@
-import dayjs from 'dayjs';
+import { format } from 'date-fns';
 import { useEffect } from 'react';
 
-import { BankEvents } from '../../../typings/app/bank';
 import { PhoneEvents } from '../../../typings/phone';
 import { SettingsEvents } from '../../../typings/settings';
 import InjectDebugData from '../os/debug/InjectDebugData';
@@ -22,7 +21,7 @@ export const useDebugService = () => {
             {
                 app: 'PHONE',
                 method: PhoneEvents.SET_TIME,
-                data: dayjs().format('hh:mm'),
+                data: format(new Date(), 'HH:mm'),
             },
             {
                 app: 'SIMCARD',
@@ -36,17 +35,17 @@ export const useDebugService = () => {
             },
             {
                 app: 'AVATAR',
-                method: SettingsEvents.SET_AVATAR,
+                method: SettingsEvents.GET_AVATAR,
                 data: 'https://beta.iodine.gg/teUcY.jpeg',
             },
             /*{
                 app: 'CALL',
                 method: CallEvents.SET_CALLER,
                 data: {
-                    accepted: true,
-                    isTransmitter: false,
-                    transmitter: '603-275-8373',
-                    receiver: '603-275-4747',
+                    is_accepted: true,
+                    isTransmitter: true,
+                    transmitter: '111-1134',
+                    receiver: '603-275-8373',
                     active: true,
                 },
             },

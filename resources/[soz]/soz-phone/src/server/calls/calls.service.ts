@@ -8,6 +8,7 @@ import {
     CallHistoryItem,
     EndCallDTO,
     InitializeCallDTO,
+    MuteCallDTO,
 } from '../../../typings/call';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import PlayerService from '../players/player.service';
@@ -45,7 +46,7 @@ class CallsService {
         // number
         if (!receiverIdentifier) {
             return resp({
-                status: 'ok',
+                status: 'error',
                 data: {
                     transmitter: transmitterNumber,
                     isTransmitter: true,
@@ -56,37 +57,19 @@ class CallsService {
             });
         }
 
-        const startCallTimeUnix = Math.floor(new Date().getTime() / 1000);
         const callIdentifier = uuidv4();
 
         // Will be null if the player is offline
         const receivingPlayer = PlayerService.getPlayerFromIdentifier(receiverIdentifier);
-
-        // Now if the player is offline, we send the same resp
-        // as before
-        if (!receivingPlayer) {
-            return resp({
-                status: 'ok',
-                data: {
-                    is_accepted: false,
-                    transmitter: transmitterNumber,
-                    isTransmitter: true,
-                    receiver: reqObj.data.receiverNumber,
-                    isUnavailable: true,
-                },
-            });
-        }
-
-        callLogger.debug(`Receiving Identifier: ${receiverIdentifier}`);
-        callLogger.debug(`Receiving source: ${receivingPlayer.source} `);
 
         const callObj: ActiveCallRaw = {
             identifier: callIdentifier,
             transmitter: transmitterNumber,
             transmitterSource: transmittingPlayer.source,
             receiver: reqObj.data.receiverNumber,
-            receiverSource: receivingPlayer.source,
-            start: startCallTimeUnix.toString(),
+            receiverSource: receivingPlayer?.source || 0,
+            start: new Date().getTime() / 1000,
+            end: new Date().getTime() / 1000,
             is_accepted: false,
         };
 
@@ -100,6 +83,28 @@ class CallsService {
                 `Unable to save call object for transmitter number ${transmitterNumber}. Error: ${e.toString()}`
             );
             resp({ status: 'error', errorMsg: 'DATABASE_ERROR' });
+        }
+
+        // Now if the player is offline, we send the same resp
+        // as before
+        if (!receivingPlayer) {
+            emitNet(CallEvents.ADD_CALL, reqObj.source, {
+                is_accepted: false,
+                transmitter: transmitterNumber,
+                receiver: reqObj.data.receiverNumber,
+                isTransmitter: true,
+            });
+
+            return resp({
+                status: 'ok',
+                data: {
+                    is_accepted: false,
+                    transmitter: transmitterNumber,
+                    isTransmitter: true,
+                    receiver: reqObj.data.receiverNumber,
+                    isUnavailable: true,
+                },
+            });
         }
 
         // At this point we return back to the client that the player contacted
@@ -152,18 +157,20 @@ class CallsService {
         callLogger.debug(`Call with key ${transmitterNumber} was updated to be accepted`);
 
         // player who is being called
-        emitNetTyped<ActiveCall>(
-            CallEvents.WAS_ACCEPTED,
-            {
-                is_accepted: true,
-                transmitter: transmitterNumber,
-                receiver: targetCallItem.receiver,
-                isTransmitter: false,
-                channelId,
-                startedAt: new Date().getTime() / 1000,
-            },
-            targetCallItem.receiverSource
-        );
+        if (targetCallItem.receiverSource !== 0) {
+            emitNetTyped<ActiveCall>(
+                CallEvents.WAS_ACCEPTED,
+                {
+                    is_accepted: true,
+                    transmitter: transmitterNumber,
+                    receiver: targetCallItem.receiver,
+                    isTransmitter: false,
+                    channelId,
+                    startedAt: new Date().getTime() / 1000,
+                },
+                targetCallItem.receiverSource
+            );
+        }
 
         mainLogger.debug(targetCallItem);
 
@@ -200,6 +207,16 @@ class CallsService {
         });
     }
 
+    async handleMuteCall(src: number, data: MuteCallDTO): Promise<void> {
+        const targetCallItem = this.callMap.get(data.transmitterNumber);
+
+        emitNet(
+            'voip:client:call:setMute',
+            data.isTransmitter ? targetCallItem.receiverSource : targetCallItem.transmitterSource,
+            data.muted
+        );
+    }
+
     async handleFetchCalls(reqObj: PromiseRequest<void>, resp: PromiseEventResp<CallHistoryItem[]>): Promise<void> {
         const player = PlayerService.getPlayer(reqObj.source);
         const srcPlayerNumber = player.getPhoneNumber();
@@ -217,7 +234,9 @@ class CallsService {
         const currentCall = this.callMap.get(transmitterNumber);
 
         if (!currentCall) {
-            callLogger.error(`Call with transmitter number ${transmitterNumber} does not exist in current calls map!`);
+            callLogger.error(
+                `Call with transmitter number ${transmitterNumber} does not exist in current calls map! (reject call)`
+            );
             return;
         }
 
@@ -232,25 +251,40 @@ class CallsService {
         this.callMap.delete(transmitterNumber);
     }
 
+    isPlayerAlreadyInCall(phone: string): boolean {
+        return (
+            this.callMap.find(call => (call.transmitter === phone || call.receiver === phone) && call.is_accepted) !==
+            undefined
+        );
+    }
+
     async handleEndCall(reqObj: PromiseRequest<EndCallDTO>, resp: PromiseEventResp<void>) {
         const transmitterNumber = reqObj.data.transmitterNumber;
         const currentCall = this.callMap.get(transmitterNumber);
-        const targetCall = this.callMap.get(currentCall?.receiver);
+        const transmitterCall = this.callMap.get(currentCall?.transmitter);
 
         if (!currentCall) {
-            callLogger.error(`Call with transmitter number ${transmitterNumber} does not exist in current calls map!`);
+            callLogger.error(
+                `Call with transmitter number ${transmitterNumber} does not exist in current calls map! (end call)`
+            );
             return resp({ status: 'error', errorMsg: 'DOES_NOT_EXIST' });
-        }
-
-        if (targetCall && targetCall.is_accepted) {
-            return resp({ status: 'ok' });
         }
 
         // Just in case currentCall for some reason at this point is falsy
         // lets protect against that
         if (currentCall) {
-            emitNet(CallEvents.WAS_ENDED, currentCall.receiverSource);
-            emitNet(CallEvents.WAS_ENDED, currentCall.transmitterSource);
+            if (currentCall.transmitterSource !== null) {
+                emitNet(CallEvents.WAS_ENDED, currentCall.transmitterSource);
+            }
+
+            if (
+                currentCall.receiverSource !== null &&
+                currentCall.receiverSource !== 0 &&
+                currentCall?.identifier === transmitterCall?.identifier &&
+                (currentCall?.is_accepted || !this.isPlayerAlreadyInCall(transmitterCall?.receiver))
+            ) {
+                emitNet(CallEvents.WAS_ENDED, currentCall.receiverSource);
+            }
         }
         // player who is calling (transmitter)
         resp({ status: 'ok' });

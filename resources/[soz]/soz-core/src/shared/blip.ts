@@ -3,7 +3,7 @@ export interface Blip {
     range?: boolean;
     color?: number;
     alpha?: number;
-    display?: boolean;
+    display?: number;
     playername?: string;
     showcone?: boolean;
     heading?: number;
@@ -14,6 +14,7 @@ export interface Blip {
     friendly?: boolean;
     routeColor?: number;
     scale?: number;
+    route?: boolean;
     name: string;
     coords: { x: number; y: number; z?: number };
 }

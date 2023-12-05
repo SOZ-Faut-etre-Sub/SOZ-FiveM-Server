@@ -3,135 +3,7 @@ BaunConfig = {}
 BaunConfig.Blips = {
     {Id = "jobs:baun:bahama", Name = "Bahama Unicorn", Icon = 806, Coords = vector2(-1393.49, -598.06), Scale = 1.2},
     {Id = "jobs:baun:unicorn", Name = "Bahama Unicorn", Icon = 806, Coords = vector2(127.57, -1288.96), Scale = 1.2},
-}
-
-BaunConfig.Cloakroom = {
-    Clothes = {
-        [GetHashKey("mp_m_freemode_01")] = {
-            ["Tenue de travail"] = {
-                Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [3] = {Drawable = 61, Texture = 0, Palette = 0},
-                    [4] = {Drawable = 1, Texture = 1, Palette = 0},
-                    [6] = {Drawable = 4, Texture = 4, Palette = 0},
-                    [7] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [8] = {Drawable = 23, Texture = 1, Palette = 0},
-                    [9] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [10] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [11] = {Drawable = 230, Texture = 7, Palette = 0},
-                },
-                Props = {[0] = {Drawable = 58, Texture = 2, Palette = 0}},
-            },
-            ["Tenue de service"] = {
-                Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [3] = {Drawable = 11, Texture = 0, Palette = 0},
-                    [4] = {Drawable = 35, Texture = 0, Palette = 0},
-                    [6] = {Drawable = 21, Texture = 0, Palette = 0},
-                    [7] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [8] = {Drawable = 93, Texture = 1, Palette = 0},
-                    [9] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [10] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [11] = {Drawable = 11, Texture = 14, Palette = 0},
-                },
-                Props = {},
-            },
-            ["Tenue de la direction"] = {
-                Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [3] = {Drawable = 1, Texture = 0, Palette = 0},
-                    [4] = {Drawable = 25, Texture = 2, Palette = 0},
-                    [6] = {Drawable = 21, Texture = 0, Palette = 0},
-                    [7] = {Drawable = 24, Texture = 2, Palette = 0},
-                    [8] = {Drawable = 26, Texture = 3, Palette = 0},
-                    [9] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [10] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [11] = {Drawable = 4, Texture = 2, Palette = 0},
-                },
-                Props = {},
-            },
-            ["Tenue de patron"] = {
-                Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [3] = {Drawable = 83, Texture = 0, Palette = 0},
-                    [4] = {Drawable = 143, Texture = 8, Palette = 0},
-                    [6] = {Drawable = 18, Texture = 0, Palette = 0},
-                    [7] = {Drawable = 143, Texture = 2, Palette = 0},
-                    [8] = {Drawable = 15, Texture = 20, Palette = 0},
-                    [9] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [10] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [11] = {Drawable = 70, Texture = 5, Palette = 0},
-                },
-                Props = {
-                    [0] = {Drawable = 25, Texture = 2, Palette = 0},
-                    [1] = {Drawable = 12, Texture = 0, Palette = 0},
-                },
-            },
-        },
-        [GetHashKey("mp_f_freemode_01")] = {
-            ["Tenue de travail"] = {
-                Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [3] = {Drawable = 19, Texture = 0, Palette = 0},
-                    [4] = {Drawable = 4, Texture = 0, Palette = 0},
-                    [6] = {Drawable = 3, Texture = 2, Palette = 0},
-                    [7] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [8] = {Drawable = 52, Texture = 1, Palette = 0},
-                    [9] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [10] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [11] = {Drawable = 240, Texture = 7, Palette = 0},
-                },
-                Props = {[0] = {Drawable = 58, Texture = 2, Palette = 0}},
-            },
-            ["Tenue de service"] = {
-                Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [3] = {Drawable = 4, Texture = 0, Palette = 0},
-                    [4] = {Drawable = 6, Texture = 0, Palette = 0},
-                    [6] = {Drawable = 42, Texture = 2, Palette = 0},
-                    [7] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [8] = {Drawable = 15, Texture = 0, Palette = 0},
-                    [9] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [10] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [11] = {Drawable = 26, Texture = 2, Palette = 0},
-                },
-                Props = {[0] = {Drawable = 120, Texture = 0, Palette = 0}},
-            },
-            ["Tenue de la direction"] = {
-                Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [3] = {Drawable = 7, Texture = 0, Palette = 0},
-                    [4] = {Drawable = 76, Texture = 0, Palette = 0},
-                    [6] = {Drawable = 20, Texture = 2, Palette = 0},
-                    [7] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [8] = {Drawable = 25, Texture = 4, Palette = 0},
-                    [9] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [10] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [11] = {Drawable = 25, Texture = 7, Palette = 0},
-                },
-                Props = {[0] = {Drawable = 120, Texture = 0, Palette = 0}},
-            },
-            ["Tenue de patron"] = {
-                Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [3] = {Drawable = 12, Texture = 0, Palette = 0},
-                    [4] = {Drawable = 15, Texture = 0, Palette = 0},
-                    [6] = {Drawable = 42, Texture = 2, Palette = 0},
-                    [7] = {Drawable = 64, Texture = 0, Palette = 0},
-                    [8] = {Drawable = 15, Texture = 0, Palette = 0},
-                    [9] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [10] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [11] = {Drawable = 415, Texture = 0, Palette = 0},
-                },
-                Props = {
-                    [0] = {Drawable = 61, Texture = 2, Palette = 0},
-                    [1] = {Drawable = 11, Texture = 4, Palette = 0},
-                    [6] = {Drawable = 19, Texture = 4, Palette = 0},
-                    [7] = {Drawable = 16, Texture = 0, Palette = 0},
-                },
-            },
-        },
-    },
+    {Id = "jobs:baun:yellowjack", Name = "Bahama Unicorn", Icon = 806, Coords = vector2(1987.18, 3049.03), Scale = 1.2},
 }
 
 BaunConfig.HarvestZones = {
@@ -151,9 +23,9 @@ BaunConfig.HarvestZones = {
         zones = {
             {
                 ped = {model = "a_m_m_prolhost_01", coords = vector4(868.5, -1625.73, 30.25, 141.6)},
-                center = vector3(869.25, -1629.26, 30.21),
-                length = 2.6,
-                width = 0.1,
+                center = vector3(868.5, -1625.73, 30.25),
+                length = 0.8,
+                width = 0.8,
                 options = {name = "baun:harvest:flavor:1", heading = 0, minZ = 29.46, maxZ = 31.66},
             },
         },
@@ -163,10 +35,22 @@ BaunConfig.HarvestZones = {
         zones = {
             {
                 ped = {model = "a_f_y_business_02", coords = vector4(45.3, -1750.68, 29.64, 26.92)},
-                center = vector3(29.91, -1770.79, 29.57),
-                length = 4,
-                width = 0.1,
-                options = {name = "baun:harvest:furniture:1", heading = 320, minZ = 28.57, maxZ = 32.17},
+                center = vector3(45.31, -1750.79, 29.58),
+                length = 0.8,
+                width = 0.8,
+                options = {name = "baun:harvest:furniture:1", heading = 320, minZ = 28.58, maxZ = 30.58},
+            },
+        },
+    },
+    {
+        item = "snack_crate",
+        zones = {
+            {
+                ped = {model = "a_f_y_business_01", coords = vector4(-753.54, -2571.96, 13.83, 236.79)},
+                center = vector3(-753.60, -2571.93, 13.90),
+                length = 0.8,
+                width = 0.8,
+                options = {name = "baun:harvest:snack:1", heading = 320, minZ = 13.90, maxZ = 16},
             },
         },
     },
@@ -193,9 +77,13 @@ BaunConfig.Restock = {
     },
     ["furniture_crate"] = {
         {itemId = "straw", quantity = 10},
-        {itemId = "ice_cube", quantity = 35},
         {itemId = "fruit_slice", quantity = 12},
         {itemId = "tumbler", quantity = 10},
+    },
+    ["snack_crate"] = {
+        {itemId = "tapas", quantity = 10},
+        {itemId = "peanuts", quantity = 10},
+        {itemId = "olives", quantity = 10},
     },
 }
 

@@ -18,6 +18,17 @@ export class CommandLoader {
             const commandMetadata = commandMethodList[methodName];
             const method = provider[methodName].bind(provider);
             const commandMethod = (source: number, args: string[]): void => {
+                if (SOZ_CORE_IS_CLIENT) {
+                    if (
+                        commandMetadata.keys &&
+                        commandMetadata.keys.length > 0 &&
+                        !commandMetadata.passthroughNuiFocus &&
+                        IsNuiFocused()
+                    ) {
+                        return;
+                    }
+                }
+
                 method(source, ...args);
             };
 
@@ -38,7 +49,13 @@ export class CommandLoader {
             this.commands.push(commandMetadata);
 
             if (commandMetadata.role !== null) {
-                this.permissions.allowCommandForRole(commandMetadata.name, commandMetadata.role);
+                if (Array.isArray(commandMetadata.role)) {
+                    for (const role of commandMetadata.role) {
+                        this.permissions.allowCommandForRole(commandMetadata.name, role);
+                    }
+                } else {
+                    this.permissions.allowCommandForRole(commandMetadata.name, commandMetadata.role);
+                }
             }
         }
     }

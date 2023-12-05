@@ -43,39 +43,43 @@ RegisterNetEvent("voip:client:call:end", function()
     CallModuleInstance:stopCall()
 end)
 
+RegisterNetEvent("voip:client:call:setMute", function(state)
+    CallModuleInstance:setMutePlayer(source, state)
+end)
+
 RegisterNetEvent("voip:client:radio:transmission:start", function(frequency, serverId, coords, kind)
     if PrimaryLongRadioModuleInstance:onTransmissionStarted(frequency, serverId, coords, kind) then
-        PlayRemoteRadioClick(kind, true, Config.volumeRadioPrimaryLong)
+        PlayRemoteRadioClick(kind, true, Config.volumeRadioSoundClick)
     end
 
     if SecondaryLongRadioModuleInstance:onTransmissionStarted(frequency, serverId, coords, kind) then
-        PlayRemoteRadioClick(kind, true, Config.volumeRadioSecondaryLong)
+        PlayRemoteRadioClick(kind, true, Config.volumeRadioSoundClick)
     end
 
     if PrimaryShortRadioModuleInstance:onTransmissionStarted(frequency, serverId, coords, kind) then
-        PlayRemoteRadioClick(kind, true, Config.volumeRadioPrimaryShort)
+        PlayRemoteRadioClick(kind, true, Config.volumeRadioSoundClick)
     end
 
     if SecondaryShortRadioModuleInstance:onTransmissionStarted(frequency, serverId, coords, kind) then
-        PlayRemoteRadioClick(kind, true, Config.volumeRadioSecondaryShort)
+        PlayRemoteRadioClick(kind, true, Config.volumeRadioSoundClick)
     end
 end)
 
 RegisterNetEvent("voip:client:radio:transmission:stop", function(frequency, serverId, kind)
     if PrimaryLongRadioModuleInstance:onTransmissionStopped(frequency, serverId) then
-        PlayRemoteRadioClick(kind, false, Config.volumeRadioPrimaryLong)
+        PlayRemoteRadioClick(kind, false, Config.volumeRadioSoundClick)
     end
 
     if SecondaryLongRadioModuleInstance:onTransmissionStopped(frequency, serverId) then
-        PlayRemoteRadioClick(kind, false, Config.volumeRadioSecondaryLong)
+        PlayRemoteRadioClick(kind, false, Config.volumeRadioSoundClick)
     end
 
     if PrimaryShortRadioModuleInstance:onTransmissionStopped(frequency, serverId) then
-        PlayRemoteRadioClick(kind, false, Config.volumeRadioPrimaryShort)
+        PlayRemoteRadioClick(kind, false, Config.volumeRadioSoundClick)
     end
 
     if SecondaryShortRadioModuleInstance:onTransmissionStopped(frequency, serverId) then
-        PlayRemoteRadioClick(kind, false, Config.volumeRadioSecondaryShort)
+        PlayRemoteRadioClick(kind, false, Config.volumeRadioSoundClick)
     end
 end)
 
@@ -148,9 +152,19 @@ RegisterNetEvent("voip:client:radio:set-balance", function(kind, instance, ear)
     end
 end)
 
+RegisterNetEvent("ems:client:onDeath", function()
+    IsTalkingOnRadio = false
+    PrimaryLongRadioModuleInstance:stopTransmission()
+    SecondaryLongRadioModuleInstance:stopTransmission()
+    PrimaryShortRadioModuleInstance:stopTransmission()
+    SecondaryShortRadioModuleInstance:stopTransmission()
+end)
+
 local function CreateTransmissionToggle(command, context, volumeKey, module)
     RegisterCommand("+" .. command, function()
-        if module:startTransmission() then
+        local playerState = exports["soz-core"]:GetPlayerState()
+
+        if not playerState.isDead and not playerState.isInHub and not playerState.carryBox and module:startTransmission() then
             StartRadioAnimationTask()
             PlayLocalRadioClick(context, true, Config[volumeKey])
         end

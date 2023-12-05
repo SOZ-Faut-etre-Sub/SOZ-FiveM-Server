@@ -2,6 +2,7 @@ import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
+import { JobPermission } from '../../../shared/job';
 import { BennysConfig } from '../../../shared/job/bennys';
 import { BoxZone } from '../../../shared/polyzone/box.zone';
 import { Vector3 } from '../../../shared/polyzone/vector';
@@ -10,6 +11,7 @@ import { InputService } from '../../nui/input.service';
 import { PlayerService } from '../../player/player.service';
 import { Qbcore } from '../../qbcore';
 import { TargetFactory } from '../../target/target.factory';
+import { VehicleModificationService } from '../../vehicle/vehicle.modification.service';
 
 @Provider()
 export class BennysResellProvider {
@@ -25,18 +27,27 @@ export class BennysResellProvider {
     @Inject(Qbcore)
     private QBCore: Qbcore;
 
+    @Inject(VehicleModificationService)
+    private vehicleModificationService: VehicleModificationService;
+
     @Once(OnceStep.Start)
     public onStart() {
-        const resellZone = BennysConfig.Resell.zone;
-        const zone: BoxZone = new BoxZone(resellZone.center, resellZone.length, resellZone.width, {
-            maxZ: resellZone.maxZ,
-            minZ: resellZone.minZ,
-            heading: resellZone.heading,
-        });
+        const resellZones = BennysConfig.Resell;
 
+        resellZones.map(resellZone => {
+            const zone: BoxZone = new BoxZone(resellZone.zone.center, resellZone.zone.length, resellZone.zone.width, {
+                maxZ: resellZone.zone.maxZ,
+                minZ: resellZone.zone.minZ,
+                heading: resellZone.zone.heading,
+            });
+            this.createZone(zone, resellZone.types, resellZone.label);
+        });
+    }
+
+    public createZone(zone, allowedTypes: Array<number>, label) {
         this.targetFactory.createForAllVehicle([
             {
-                label: 'Vendre',
+                label: label,
                 icon: 'c:/mechanic/resell.png',
                 job: 'bennys',
                 blackoutGlobal: true,
@@ -44,16 +55,17 @@ export class BennysResellProvider {
                 canInteract: entity => {
                     const coords = GetEntityCoords(entity, false);
                     const point: Vector3 = [coords[0], coords[1], coords[2]];
+                    const vehicleType = GetVehicleClass(entity);
                     return (
                         this.playerService.isOnDuty() &&
-                        this.QBCore.hasJobPermission('bennys', 'resell') &&
-                        zone.isPointInside(point)
+                        this.QBCore.hasJobPermission('bennys', JobPermission.BennysResell) &&
+                        zone.isPointInside(point) &&
+                        allowedTypes.includes(vehicleType)
                     );
                 },
                 action: async entity => {
                     const displayName = GetDisplayNameFromVehicleModel(GetEntityModel(entity));
                     const label = GetLabelText(displayName).toLowerCase();
-
                     const value = await this.inputService.askInput(
                         {
                             title: 'Veuillez confirmer le modèle suivant: ' + label,
@@ -75,11 +87,12 @@ export class BennysResellProvider {
                         return;
                     }
 
-                    const properties = this.QBCore.getVehicleProperties(entity);
+                    const configuration = this.vehicleModificationService.getVehicleConfiguration(entity);
+
                     TriggerServerEvent(
                         ServerEvent.BENNYS_SELL_VEHICLE,
                         NetworkGetNetworkIdFromEntity(entity),
-                        properties
+                        configuration
                     );
                 },
             },

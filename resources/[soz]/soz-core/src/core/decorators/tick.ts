@@ -13,8 +13,23 @@ export enum TickInterval {
     EVERY_HOUR = 3600000,
 }
 
-export const Tick = (interval = 0): MethodDecorator => {
+export type TickMetadata = {
+    interval: number;
+    name: string;
+    context: boolean;
+};
+
+export const Tick = (interval = 0, name?: string, context = false): MethodDecorator => {
     return (target, propertyKey) => {
-        setMethodMetadata(TickMetadataKey, interval, target, propertyKey);
+        setMethodMetadata(
+            TickMetadataKey,
+            {
+                interval,
+                name: name || propertyKey.toString(),
+                context,
+            },
+            target,
+            propertyKey
+        );
     };
 };

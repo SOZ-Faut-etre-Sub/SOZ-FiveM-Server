@@ -1,6 +1,6 @@
 import { PlusIcon } from '@heroicons/react/outline';
 import { AppContent } from '@ui/components/AppContent';
-import { SearchField } from '@ui/old_components/SearchField';
+import { SearchField } from '@ui/components/SearchField';
 import cn from 'classnames';
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -25,16 +25,16 @@ export const Conversations = (): any => {
     const messages = useSelector((state: RootState) => state.simCard.messages);
     const [searchValue, setSearchValue] = useState<string>('');
 
+    const { getDisplayByNumber, getPictureByNumber } = useContact();
+
     const filteredConversations = useMemo(() => {
         const regExp = new RegExp(searchValue.replace(/[^a-zA-Z\d]/g, ''), 'gi');
 
         return conversations
             .filter(c => c.masked === false)
             .filter(c => messages.some(m => m.conversation_id === c.conversation_id))
-            .filter(c => c?.display?.match(regExp) || c?.phoneNumber?.match(regExp) || '');
+            .filter(c => getDisplayByNumber(c?.phoneNumber)?.match(regExp) || c?.phoneNumber?.match(regExp) || '');
     }, [conversations, searchValue]);
-
-    const { getDisplayByNumber, getPictureByNumber } = useContact();
 
     return (
         <>
@@ -69,13 +69,13 @@ export const Conversations = (): any => {
                                     to={`/messages/${conversation.conversation_id}`}
                                     key={conversation.conversation_id}
                                     className={cn('w-full cursor-pointer', {
-                                        'bg-black': config.theme.value === 'dark',
+                                        'bg-ios-800': config.theme.value === 'dark',
                                         'bg-ios-50': config.theme.value === 'light',
                                     })}
                                 >
                                     <div
                                         className={cn('relative px-3 py-2 flex items-center space-x-3', {
-                                            'hover:bg-gray-900': config.theme.value === 'dark',
+                                            'hover:bg-ios-600': config.theme.value === 'dark',
                                             'hover:bg-gray-200': config.theme.value === 'light',
                                         })}
                                     >

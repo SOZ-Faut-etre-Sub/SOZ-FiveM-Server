@@ -14,11 +14,19 @@ export interface IPhoneSettings {
     frame: SettingOption;
     theme: SettingOption;
     zoom: SettingOption;
+    textZoom: SettingOption;
     streamerMode: boolean;
     ringtone: SettingOption;
     ringtoneVol: number;
     notiSound: SettingOption;
     notiSoundVol: number;
+    societyNotification: SettingOption;
+    societyNotificationVol: number;
+    handsFree: boolean;
+    planeMode: boolean;
+    dynamicAlert: boolean;
+    dynamicAlertVol: number;
+    dynamicAlertDuration: SettingOption;
 }
 
 export const useSettingsAPI = () => {
@@ -38,7 +46,7 @@ export const useSettingsAPI = () => {
                     });
                 }
 
-                store.dispatch.simCard.SET_AVATAR(url);
+                store.dispatch.avatar.setAvatar(url);
                 addAlert({
                     message: t('SETTINGS.FEEDBACK.UPDATE_SUCCESS'),
                     type: 'success',

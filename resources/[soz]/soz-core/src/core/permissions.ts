@@ -1,6 +1,6 @@
 import { Injectable } from './decorators/injectable';
 
-export type SozRole = 'admin' | 'staff' | 'helper' | 'user';
+export type SozRole = 'admin' | 'staff' | 'gamemaster' | 'helper' | 'user';
 
 @Injectable()
 export class Permissions {

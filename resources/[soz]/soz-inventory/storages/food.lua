@@ -1,36 +1,3 @@
-local function getCloakroomTargetOptions(job, storage)
-    return {
-        {
-            color = job,
-            type = "client",
-            label = "Se changer",
-            icon = "c:jobs/habiller.png",
-            storage = storage,
-            job = job,
-            canInteract = function()
-                return PlayerData.job.onduty
-            end,
-            action = function()
-                TriggerEvent("soz-jobs:client:try-open-cloakroom", storage, "jobs:client:" .. job .. ":OpenCloakroomMenu")
-            end,
-        },
-        {
-            color = job,
-            type = "client",
-            label = "Vérifier le stock",
-            icon = "c:jobs/check-stock.png",
-            storage = storage,
-            job = job,
-            canInteract = function()
-                return PlayerData.job.onduty
-            end,
-            action = function()
-                TriggerEvent("soz-jobs:client:check-cloakroom-storage", storage)
-            end,
-        },
-    }
-end
-
 Config.Storages["food_fridge"] = {
     label = "Frigo Château Marius",
     type = "fridge",
@@ -39,6 +6,36 @@ Config.Storages["food_fridge"] = {
     size = vector2(0.5, 1.5),
     offsetUpZ = 2.0,
     heading = 251.1,
+}
+
+Config.Storages["food_fridge2"] = {
+    label = "Frigo Château Marius",
+    type = "fridge",
+    owner = "food",
+    position = vector3(-1927.72, 2042.20, 140.73),
+    size = vector2(1.0, 3.4),
+    offsetUpZ = 2.0,
+    heading = 257.32,
+}
+
+Config.Storages["food_fridge3"] = {
+    label = "Frigo Château Marius",
+    type = "fridge",
+    owner = "food",
+    position = vector3(-1926.27, 2048.37, 140.73),
+    size = vector2(1.0, 3.6),
+    offsetUpZ = 2.0,
+    heading = 256.38,
+}
+
+Config.Storages["food_fridge4"] = {
+    label = "Frigo Château Marius",
+    type = "fridge",
+    owner = "food",
+    position = vector3(-1924.85, 2054.54, 140.73),
+    size = vector2(1.5, 3.4),
+    offsetUpZ = 2.0,
+    heading = 256.22,
 }
 
 Config.Storages["food_storage"] = {

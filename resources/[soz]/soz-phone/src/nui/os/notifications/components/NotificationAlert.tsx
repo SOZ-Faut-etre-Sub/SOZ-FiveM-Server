@@ -2,15 +2,17 @@ import { Transition } from '@headlessui/react';
 import Alert from '@ui/old_components/Alert';
 import React from 'react';
 
+import { useEmergency } from '../../../../nui/hooks/useEmergency';
 import { useNotifications } from '../hooks/useNotifications';
 
 export const NotificationAlert = () => {
     const { currentAlert } = useNotifications();
+    const emergency = useEmergency();
 
     // TODO: improve notification hook
     const isPosition = /vec2\((-?[\d.]+),(-?[\d.]+)\)/g.test(currentAlert?.content.toString());
 
-    if (!currentAlert) {
+    if (!currentAlert || emergency) {
         return null;
     }
 
@@ -26,7 +28,7 @@ export const NotificationAlert = () => {
             leaveFrom="translate-y-0"
             leaveTo="-translate-y-full"
         >
-            <Alert onClick={e => currentAlert?.onClickAlert(e)} icon={currentAlert?.icon || undefined}>
+            <Alert onClick={e => currentAlert?.onClickAlert(e)} icon={currentAlert?.notificationIcon || undefined}>
                 {isPosition ? 'Destination' : currentAlert?.content}
             </Alert>
         </Transition>

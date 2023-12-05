@@ -3,32 +3,27 @@ import { AppContent } from '@ui/components/AppContent';
 import { AppTitle } from '@ui/components/AppTitle';
 import { Button } from '@ui/old_components/Button';
 import cn from 'classnames';
-import React, { useEffect, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { useContact } from '../../../hooks/useContact';
 import { useConfig } from '../../../hooks/usePhone';
-import { RootState } from '../../../store';
 import { ContactPicture } from '../../../ui/components/ContactPicture';
+import { SearchField } from '../../../ui/old_components/SearchField';
 import { useMessageAPI } from '../hooks/useMessageAPI';
 
 export const NewConversation = () => {
+    const [t] = useTranslation();
     const { phoneNumber } = useParams<{ phoneNumber?: string }>();
     const navigate = useNavigate();
     const config = useConfig();
 
-    const contacts = useSelector((state: RootState) => state.simCard.contacts);
+    const { getFilteredContacts } = useContact();
+    const [searchValue, setSearchValue] = useState<string>('');
     const filteredContacts = useMemo(() => {
-        const list = [];
-        contacts.forEach(contact => {
-            if (list[contact.display[0]] === undefined) {
-                list[contact.display[0]] = [];
-            }
-            list[contact.display[0]].push(contact);
-        });
-
-        return list;
-    }, [contacts]);
+        return getFilteredContacts(searchValue);
+    }, [getFilteredContacts, searchValue]);
 
     const { addConversation } = useMessageAPI();
 
@@ -50,6 +45,11 @@ export const NewConversation = () => {
                 </Button>
             </AppTitle>
             <AppContent>
+                <SearchField
+                    placeholder={t('CONTACTS.PLACEHOLDER_SEARCH_CONTACTS')}
+                    onChange={e => setSearchValue(e.target.value)}
+                    value={searchValue}
+                />
                 <nav className="h-[740px] pb-10 overflow-y-auto" aria-label="Directory">
                     {Object.keys(filteredContacts)
                         .sort()
@@ -57,7 +57,7 @@ export const NewConversation = () => {
                             <div key={letter} className="relative">
                                 <div
                                     className={cn('sticky top-0 pt-4 px-6 py-1 text-sm font-medium', {
-                                        'bg-black text-gray-400': config.theme.value === 'dark',
+                                        'bg-ios-800 text-gray-400': config.theme.value === 'dark',
                                         'bg-ios-50 text-gray-600': config.theme.value === 'light',
                                     })}
                                 >
@@ -73,14 +73,14 @@ export const NewConversation = () => {
                                         <li
                                             key={contact.id}
                                             className={cn('w-full cursor-pointer', {
-                                                'bg-black': config.theme.value === 'dark',
+                                                'bg-ios-800': config.theme.value === 'dark',
                                                 'bg-ios-50': config.theme.value === 'light',
                                             })}
                                             onClick={() => addConversation(contact.number)}
                                         >
                                             <div
                                                 className={cn('relative px-6 py-2 flex items-center space-x-3', {
-                                                    'hover:bg-gray-900': config.theme.value === 'dark',
+                                                    'hover:bg-ios-600': config.theme.value === 'dark',
                                                     'hover:bg-gray-200': config.theme.value === 'light',
                                                 })}
                                             >

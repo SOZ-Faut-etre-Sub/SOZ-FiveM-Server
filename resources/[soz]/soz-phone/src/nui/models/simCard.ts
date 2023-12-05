@@ -15,7 +15,6 @@ export const simCard = createModel<RootModel>()({
     state: {
         number: null,
         societyNumber: null,
-        avatar: null,
         call: null as ActiveCall,
         callHistory: [] as CallHistoryItem[],
         contacts: [] as Contact[],
@@ -29,11 +28,15 @@ export const simCard = createModel<RootModel>()({
         SET_SOCIETY_NUMBER: (state, payload) => {
             return { ...state, societyNumber: payload };
         },
-        SET_AVATAR: (state, payload) => {
-            return { ...state, avatar: payload };
-        },
         SET_CALL(state, payload: ActiveCall) {
             return { ...state, call: payload };
+        },
+        SET_CALL_MUTE(state, payload: boolean) {
+            if (!state.call) {
+                return state;
+            }
+
+            return { ...state, call: { ...state.call, muted: payload } };
         },
         SET_CALL_HISTORY(state, payload: CallHistoryItem[]) {
             return { ...state, callHistory: payload };
@@ -67,11 +70,11 @@ export const simCard = createModel<RootModel>()({
                 return state;
             }
 
-            return { ...state, conversations: [payload, ...state.conversations] };
+            return { ...state, conversations: [{ ...payload, unread: 1 }, ...state.conversations] };
         },
         UPDATE_CONVERSATION(state, payload: MessageConversation) {
             if (!state.conversations.find(conversation => conversation.conversation_id === payload.conversation_id)) {
-                return { ...state, conversations: [payload, ...state.conversations] };
+                return { ...state, conversations: [{ ...payload, unread: 1 }, ...state.conversations] };
             }
 
             return {
@@ -120,6 +123,9 @@ export const simCard = createModel<RootModel>()({
         async setCall(payload: ActiveCall) {
             dispatch.simCard.SET_CALL(payload);
         },
+        async setCallMute(payload: boolean) {
+            dispatch.simCard.SET_CALL_MUTE(payload);
+        },
         async setCallHistory(payload: CallHistoryItem[]) {
             dispatch.simCard.SET_CALL_HISTORY(payload);
         },
@@ -162,50 +168,63 @@ export const simCard = createModel<RootModel>()({
                 CallEvents.FETCH_CALLS,
                 undefined,
                 buildRespObj(MockHistoryData)
-            ).then(calls => {
-                dispatch.simCard.SET_CALL_HISTORY(calls.data || []);
-            });
+            )
+                .then(calls => {
+                    dispatch.simCard.SET_CALL_HISTORY(calls.data || []);
+                })
+                .catch(() => console.error('Failed to fetch call history'));
         },
         async loadContacts() {
             fetchNui<ServerPromiseResp<Contact[]>>(
                 ContactEvents.GET_CONTACTS,
                 undefined,
                 buildRespObj(BrowserContactsState)
-            ).then(calls => {
-                dispatch.simCard.SET_CONTACT(calls.data || []);
-            });
+            )
+                .then(calls => {
+                    dispatch.simCard.SET_CONTACT(calls.data || []);
+                })
+                .catch(() => console.error('Failed to fetch contacts'));
         },
-        async loadConversations() {
+        async loadConversations(callback) {
             fetchNui<ServerPromiseResp<MessageConversation[]>>(
                 MessageEvents.FETCH_MESSAGE_CONVERSATIONS,
                 undefined,
                 buildRespObj(MockMessageConversations)
-            ).then(conversations => {
-                dispatch.simCard.SET_CONVERSATIONS(conversations.data || []);
-            });
+            )
+                .then(conversations => {
+                    dispatch.simCard.SET_CONVERSATIONS(conversations.data || []);
+                    callback(conversations.data || []);
+                })
+                .catch(() => console.error('Failed to fetch conversations'));
         },
         async setConversationArchived(conversation_id) {
             fetchNui<ServerPromiseResp<any>>(MessageEvents.SET_CONVERSATION_ARCHIVED, {
                 conversation_id: conversation_id,
-            }).then(() => {
-                dispatch.simCard.SET_CONVERSATION_AS_ARCHIVED(conversation_id);
-            });
+            })
+                .then(() => {
+                    dispatch.simCard.SET_CONVERSATION_AS_ARCHIVED(conversation_id);
+                })
+                .catch(() => console.error('Failed to archive conversation'));
         },
         async setConversationAsRead(conversation_id) {
             fetchNui<ServerPromiseResp<any>>(MessageEvents.SET_MESSAGE_READ, {
                 conversation_id: conversation_id,
-            }).then(() => {
-                dispatch.simCard.SET_CONVERSATION_AS_READ(conversation_id);
-            });
+            })
+                .then(() => {
+                    dispatch.simCard.SET_CONVERSATION_AS_READ(conversation_id);
+                })
+                .catch(() => console.error('Failed to set conversation as read'));
         },
         async loadMessages() {
             fetchNui<ServerPromiseResp<Message[]>>(
                 MessageEvents.FETCH_MESSAGES,
                 undefined,
                 buildRespObj(MockConversationMessages)
-            ).then(messages => {
-                dispatch.simCard.SET_MESSAGES(messages.data || []);
-            });
+            )
+                .then(messages => {
+                    dispatch.simCard.SET_MESSAGES(messages.data || []);
+                })
+                .catch(() => console.error('Failed to fetch messages'));
         },
     }),
 });

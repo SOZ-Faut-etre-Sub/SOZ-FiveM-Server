@@ -6,5 +6,5 @@ export interface NuiInputMethodMap {
 export type AskInput = {
     title: string;
     defaultValue: string;
-    maxCharacters: number;
+    maxCharacters?: number;
 };

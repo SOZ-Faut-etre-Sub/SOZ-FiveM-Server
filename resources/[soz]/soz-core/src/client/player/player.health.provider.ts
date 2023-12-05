@@ -1,15 +1,19 @@
-import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
+import { wait } from '@public/core/utils';
+
+import { On, Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { emitRpc } from '../../core/rpc';
+import { AnimationStopReason } from '../../shared/animation';
 import { Component, WardrobeConfig } from '../../shared/cloth';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
+import { Control } from '../../shared/input';
 import { PlayerData, PlayerServerState, PlayerServerStateExercise } from '../../shared/player';
 import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { getRandomInt, getRandomItem } from '../../shared/random';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { AnimationService } from '../animation/animation.service';
 import { BlipFactory } from '../blip';
 import { Notifier } from '../notifier';
@@ -192,7 +196,6 @@ const GymWardrobeConfig: WardrobeConfig = {
     [GetHashKey('mp_m_freemode_01')]: {
         'Homme natation': {
             Components: {
-                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Torso]: { Drawable: 15, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 16, Texture: 0, Palette: 0 },
                 [Component.Shoes]: { Drawable: 34, Texture: 0, Palette: 0 },
@@ -206,7 +209,6 @@ const GymWardrobeConfig: WardrobeConfig = {
         },
         'Homme sport': {
             Components: {
-                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Torso]: { Drawable: 5, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 12, Texture: 0, Palette: 0 },
                 [Component.Shoes]: { Drawable: 31, Texture: 0, Palette: 3 },
@@ -222,7 +224,6 @@ const GymWardrobeConfig: WardrobeConfig = {
     [GetHashKey('mp_f_freemode_01')]: {
         'Femme natation': {
             Components: {
-                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Torso]: { Drawable: 15, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 17, Texture: 9, Palette: 0 },
                 [Component.Shoes]: { Drawable: 35, Texture: 0, Palette: 0 },
@@ -236,7 +237,6 @@ const GymWardrobeConfig: WardrobeConfig = {
         },
         'Femme sport': {
             Components: {
-                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Torso]: { Drawable: 15, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 10, Texture: 0, Palette: 0 },
                 [Component.Shoes]: { Drawable: 81, Texture: 0, Palette: 0 },
@@ -281,6 +281,18 @@ export class PlayerHealthProvider {
 
     private lastRunPosition = null;
 
+    private unlimitedSprint = false;
+
+    private disableSprint = false;
+
+    @Tick(50)
+    private async updateNuiHealth(): Promise<void> {
+        const health = GetEntityHealth(PlayerPedId());
+        const armor = GetPedArmour(PlayerPedId());
+
+        this.nuiDispatch.dispatch('player', 'UpdatePlayerStats', [health, armor]);
+    }
+
     @Tick(TickInterval.EVERY_MINUTE)
     private async nutritionLoop(): Promise<void> {
         if (this.playerService.isLoggedIn()) {
@@ -288,8 +300,28 @@ export class PlayerHealthProvider {
         }
     }
 
+    @Tick(TickInterval.EVERY_SECOND)
+    private async updateArmorMetadata(): Promise<void> {
+        const player = this.playerService.getPlayer();
+        if (!player) {
+            return;
+        }
+
+        const metadataArmor = player.metadata.armor;
+
+        if (metadataArmor.hidden) {
+            return;
+        }
+
+        const armor = GetPedArmour(PlayerPedId());
+        if (armor != metadataArmor.current) {
+            metadataArmor.current = armor;
+            TriggerServerEvent(ServerEvent.QBCORE_SET_METADATA, 'armor', metadataArmor);
+        }
+    }
+
     private async doStrengthExercise(type: keyof PlayerServerStateExercise) {
-        const playerState = await emitRpc<PlayerServerState>(RpcEvent.PLAYER_GET_SERVER_STATE);
+        const playerState = await emitRpc<PlayerServerState>(RpcServerEvent.PLAYER_GET_SERVER_STATE);
 
         if (playerState.exercise.completed === 0) {
             this.notifier.notify(
@@ -329,147 +361,140 @@ export class PlayerHealthProvider {
         return true;
     }
 
-    @OnEvent(ClientEvent.PLAYER_HEALTH_DO_PUSH_UP)
-    public async doPushUps(): Promise<void> {
-        if (!this.canDoExercise()) {
-            return;
-        }
-
-        const animationPromise = this.animationService.playAnimation({
-            enter: {
-                dictionary: 'amb@world_human_push_ups@male@enter',
-                name: 'enter',
-                duration: 3050,
-                options: {
-                    enablePlayerControl: false,
-                },
-            },
-            base: {
-                dictionary: 'amb@world_human_push_ups@male@base',
-                name: 'base',
-                options: {
-                    enablePlayerControl: false,
-                    repeat: true,
-                },
-            },
-            exit: {
-                dictionary: 'amb@world_human_push_ups@male@exit',
-                name: 'exit',
-                duration: 3050,
-                options: {
-                    enablePlayerControl: false,
-                },
-            },
-        });
-
-        const { completed } = await this.progressService.progress('Pompes', 'Vous faites des pompes...', EXERCISE_TIME);
-
-        if (completed) {
-            await this.doStrengthExercise('pushUp');
-        }
-
-        this.animationService.stop();
-
-        await animationPromise;
-    }
-
-    @OnEvent(ClientEvent.PLAYER_HEALTH_DO_SIT_UP)
-    public async doSitUps(): Promise<void> {
-        if (!this.canDoExercise()) {
-            return;
-        }
-
-        const animationPromise = this.animationService.playAnimation({
-            enter: {
-                dictionary: 'amb@world_human_sit_ups@male@enter',
-                name: 'enter',
-                duration: 3050,
-                options: {
-                    enablePlayerControl: false,
-                },
-            },
-            base: {
-                dictionary: 'amb@world_human_sit_ups@male@base',
-                name: 'base',
-                options: {
-                    enablePlayerControl: false,
-                    repeat: true,
-                },
-            },
-            exit: {
-                dictionary: 'amb@world_human_sit_ups@male@exit',
-                name: 'exit',
-                duration: 3050,
-                options: {
-                    enablePlayerControl: false,
-                },
-            },
-        });
-
-        const { completed } = await this.progressService.progress(
-            'Abdominaux',
-            'Vous faites des abdos...',
-            EXERCISE_TIME
-        );
-
-        if (completed) {
-            await this.doStrengthExercise('sitUp');
-        }
-
-        this.animationService.stop();
-
-        await animationPromise;
-    }
-
     @OnEvent(ClientEvent.PLAYER_HEALTH_DO_FREE_WEIGHT)
     public async doFreeWeight(): Promise<void> {
         if (!this.canDoExercise()) {
             return;
         }
 
+        await wait(1);
+
+        let progressEnd = false;
+        this.animationService
+            .playScenario({
+                name: 'world_human_muscle_free_weights',
+            })
+            .then(cancelled => {
+                if (cancelled !== AnimationStopReason.Finished && !progressEnd) {
+                    this.progressService.cancel();
+                }
+            });
         const { completed } = await this.progressService.progress(
             'Haltères',
             'Vous faites des haltères...',
-            EXERCISE_TIME,
-            {
-                task: 'world_human_muscle_free_weights',
-                options: {
-                    cancellable: true,
-                    enablePlayerControl: false,
-                    repeat: true,
-                },
-            }
+            EXERCISE_TIME
         );
+        progressEnd = true;
 
         if (completed) {
             await this.doStrengthExercise('freeWeight');
         }
+
+        this.animationService.stop();
+    }
+
+    @OnEvent(ClientEvent.PLAYER_HEALTH_DO_PUSH_UP)
+    public async doPushUps(): Promise<void> {
+        await this.doSports('amb@world_human_push_ups@male@', 'pushUp', 'Vous faites des pompes...', 3800, 5166);
+    }
+
+    @OnEvent(ClientEvent.PLAYER_HEALTH_DO_SIT_UP)
+    public async doSitUps(): Promise<void> {
+        await this.doSports('amb@world_human_sit_ups@male@', 'sitUp', 'Vous faites des abdos...', 4000, 5000);
     }
 
     private async doChinUps(coords: Vector4): Promise<void> {
+        await this.animationService.walkToCoords(coords, 2000);
+
+        await this.doSports(
+            'amb@prop_human_muscle_chin_ups@male@',
+            'chinUp',
+            'Vous faites des tractions...',
+            2800,
+            2100
+        );
+    }
+
+    private async doSports(
+        dict: string,
+        type: keyof PlayerServerStateExercise,
+        message: string,
+        enterduration: number,
+        exitduration: number
+    ): Promise<void> {
         if (!this.canDoExercise()) {
             return;
         }
 
-        await this.animationService.walkToCoords(coords, 2000);
+        ClearPedTasksImmediately(PlayerPedId());
+        await wait(1);
 
-        const { completed } = await this.progressService.progress(
-            'Tractions',
-            'Vous faites des tractions...',
-            EXERCISE_TIME,
-            {
-                task: 'prop_human_muscle_chin_ups',
+        let progressEnd = false;
+        const animationPromise = this.animationService.playAnimation({
+            enter: enterduration
+                ? {
+                      dictionary: dict + 'enter',
+                      name: 'enter',
+                      duration: enterduration,
+                      options: {
+                          enablePlayerControl: false,
+                      },
+                  }
+                : null,
+            base: {
+                dictionary: dict + 'base',
+                name: 'base',
                 options: {
-                    cancellable: true,
                     enablePlayerControl: false,
                     repeat: true,
                 },
+            },
+            exit: exitduration
+                ? {
+                      dictionary: dict + 'exit',
+                      name: 'exit',
+                      duration: exitduration,
+                      options: {
+                          enablePlayerControl: false,
+                      },
+                  }
+                : null,
+        });
+        animationPromise.then(cancelled => {
+            if (cancelled !== AnimationStopReason.Finished && !progressEnd) {
+                this.progressService.cancel();
             }
-        );
+        });
+
+        const { completed } = await this.progressService.progress(type, message, EXERCISE_TIME);
+        progressEnd = true;
 
         if (completed) {
-            this.doStrengthExercise('chinUp');
+            this.doStrengthExercise(type);
         }
+
+        animationPromise.cancel(AnimationStopReason.Canceled);
+
+        await animationPromise;
+    }
+
+    @OnEvent(ClientEvent.PLAYER_SET_UNLIMITED_SPRINT)
+    public setUnlimitedSprint(value: boolean): void {
+        this.unlimitedSprint = value;
+    }
+
+    @OnEvent(ClientEvent.PLAYER_DISABLE_SPRINT)
+    public setDisabledSprint(value: boolean): void {
+        this.disableSprint = value;
+    }
+
+    @Tick(TickInterval.EVERY_FRAME)
+    async disableSprintLoop(): Promise<void> {
+        if (!this.disableSprint) {
+            return;
+        }
+
+        DisableControlAction(0, Control.Sprint, true); // disable sprint
     }
 
     @Tick(TickInterval.EVERY_SECOND)
@@ -484,12 +509,20 @@ export class PlayerHealthProvider {
             return;
         }
 
-        if (player.metadata.isdead || player.metadata.disease !== false) {
+        if (player.metadata.isdead || player.metadata.disease) {
             return;
         }
 
         const playerPed = PlayerPedId();
         const currentVehicle = GetVehiclePedIsIn(playerPed, false);
+
+        const IsInVehicleNotABike =
+            IsPedInAnyVehicle(playerPed, false) && !IsThisModelABicycle(GetEntityModel(currentVehicle));
+
+        if (IsInVehicleNotABike) {
+            return;
+        }
+
         const isRunning = IsPedRunning(playerPed) || IsPedSprinting(playerPed);
         const isSwimming = IsPedSwimming(playerPed);
         const isInBicycle = currentVehicle && IsThisModelABicycle(GetEntityModel(currentVehicle));
@@ -509,26 +542,25 @@ export class PlayerHealthProvider {
         } else {
             this.lastRunPosition = null;
         }
-    }
 
-    @OnEvent(ClientEvent.PLAYER_REQUEST_HEALTH_BOOK)
-    async requestHealthBook(target: number, action: 'see' | 'show'): Promise<void> {
-        if (action === 'show') {
-            TriggerServerEvent(ServerEvent.PLAYER_SHOW_HEALTH_BOOK, target);
+        const playerId = PlayerId();
+        const stamina = GetPlayerStamina(playerId);
 
-            return;
+        if (this.unlimitedSprint && stamina < 100) {
+            RestorePlayerStamina(playerId, 1.0);
+        } else if (player.metadata.max_stamina >= 100.0) {
+            if (stamina >= 100 && stamina < player.metadata.max_stamina && !IsPedSprinting(playerPed)) {
+                const deltastam = isRunning ? 1.0 : 3.33;
+                const newstamina = Math.min(player.metadata.max_stamina, stamina + deltastam);
+                SetPlayerMaxStamina(playerId, newstamina);
+                RestorePlayerStamina(playerId, 1.0);
+                SetPlayerMaxStamina(playerId, 100.0);
+            }
+        } else {
+            if (stamina > player.metadata.max_stamina && IsPedSprinting(playerPed)) {
+                SetPlayerStamina(playerId, stamina - (100 - player.metadata.max_stamina));
+            }
         }
-
-        const targetPlayer = await emitRpc<PlayerData | null>(RpcEvent.PLAYER_GET_HEALTH_BOOK, target);
-
-        if (null !== targetPlayer) {
-            this.nuiDispatch.dispatch('health_book', 'ShowHealthBook', targetPlayer);
-        }
-    }
-
-    @OnEvent(ClientEvent.IDENTITY_HIDE)
-    async identityHide(): Promise<void> {
-        this.nuiDispatch.dispatch('health_book', 'HideHealthBook');
     }
 
     @Once()
@@ -541,6 +573,7 @@ export class PlayerHealthProvider {
             this.targetFactory.createForBoxZone(name, zone, [
                 {
                     label: 'Faire des tractions',
+                    icon: 'c:/sport/traction.png',
                     canInteract: () => true,
                     action: () => {
                         this.doChinUps(coords);
@@ -553,6 +586,7 @@ export class PlayerHealthProvider {
             this.targetFactory.createForBoxZone(name, zone, [
                 {
                     label: 'Faire des haltères',
+                    icon: 'c:/sport/halteres.png',
                     canInteract: () => true,
                     action: () => {
                         this.doFreeWeight();
@@ -563,12 +597,10 @@ export class PlayerHealthProvider {
     }
 
     @Once(OnceStep.PlayerLoaded)
-    async onPlayerLoaded(player: PlayerData): Promise<void> {
+    async setupPlayerBodySummer(): Promise<void> {
         if (!isFeatureEnabled(Feature.MyBodySummer)) {
             return;
         }
-
-        SetPlayerMaxStamina(PlayerId(), player.metadata.max_stamina);
 
         this.blipFactory.create('outdoorSport1', {
             name: 'Zone de sport',
@@ -627,7 +659,7 @@ export class PlayerHealthProvider {
                     const randomSwimTexture = getRandomInt(0, 11);
 
                     femaleWardrobe['Femme natation'].Components[Component.Legs].Texture = randomSwimTexture;
-                    femaleWardrobe['Femme natation'].Components[Component.Torso].Texture = randomSwimTexture;
+                    femaleWardrobe['Femme natation'].Components[Component.Tops].Texture = randomSwimTexture;
                     femaleWardrobe['Femme sport'].Components[Component.Legs].Texture = getRandomInt(0, 2);
                     femaleWardrobe['Femme sport'].Components[Component.Shoes].Texture = getRandomInt(0, 3);
                     femaleWardrobe['Femme sport'].Components[Component.Tops].Texture = getRandomInt(0, 11);
@@ -638,7 +670,7 @@ export class PlayerHealthProvider {
                         return;
                     }
 
-                    await this.progressService.progress(
+                    const { completed } = await this.progressService.progress(
                         'switch_clothes',
                         "Changement d'habits...",
                         5000,
@@ -655,6 +687,10 @@ export class PlayerHealthProvider {
                             disableMovement: true,
                         }
                     );
+
+                    if (!completed) {
+                        return;
+                    }
 
                     if (outfitSelection.outfit) {
                         TriggerServerEvent('soz-character:server:SetPlayerJobClothes', outfitSelection.outfit);
@@ -706,6 +742,7 @@ export class PlayerHealthProvider {
                 options: [
                     {
                         label: 'Prendre un abonnement.',
+                        icon: 'c:/sport/abonnement.png',
                         canInteract: () => {
                             const player = this.playerService.getPlayer();
 
@@ -721,6 +758,7 @@ export class PlayerHealthProvider {
                     },
                     {
                         label: 'Renouveler son abonnement.',
+                        icon: 'c:/sport/renouvellement.png',
                         canInteract: () => {
                             const player = this.playerService.getPlayer();
 
@@ -744,5 +782,15 @@ export class PlayerHealthProvider {
                 ],
             },
         });
+    }
+
+    @On('QBCore:Player:SetPlayerData')
+    public async updateMaxHealth(playerData: PlayerData): Promise<void> {
+        const playerPed = PlayerPedId();
+        SetPedMaxHealth(playerPed, playerData.metadata.max_health);
+
+        if (GetEntityHealth(playerPed) > playerData.metadata.max_health) {
+            SetEntityHealth(playerPed, playerData.metadata.max_health);
+        }
     }
 }

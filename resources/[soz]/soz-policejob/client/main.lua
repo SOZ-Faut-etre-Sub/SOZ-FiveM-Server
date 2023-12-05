@@ -16,27 +16,13 @@ RegisterNetEvent("QBCore:Client:OnJobUpdate", function(JobInfo)
     PlayerData.job = JobInfo
 end)
 
-RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
-    PlayerData.job.onduty = duty
-    if not PlayerData.job.onduty then
-        for radarID, radar in pairs(Config.Radars) do
-            if radar.station == PlayerData.job.id then
-                local blip = QBCore.Functions.GetBlip("police_radar_" .. radarID)
-                if blip ~= nil then
-                    QBCore.Functions.RemoveBlip("police_radar_" .. radarID)
-                end
-            end
-        end
-    end
-end)
-
 --- Events
 AddEventHandler("police:cloakroom:openStash", function()
     TriggerServerEvent("inventory:server:openInventory", "stash", ("%s_%s"):format(PlayerData.job.id, PlayerData.citizenid))
 end)
 
 --- Blips
-CreateThread(function()
+RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     for id, station in pairs(Config.Locations["stations"]) do
         if not QBCore.Functions.GetBlip("police_" .. id) then
             QBCore.Functions.CreateBlip("police_" .. id, {

@@ -12,7 +12,7 @@ interface ISettingsParams {
 export default class ClientUtils {
     private _settings: ISettings;
     private _defaultSettings: ISettings = {
-        promiseTimeout: 15000,
+        promiseTimeout: 30000,
     };
 
     constructor(settings?: ISettingsParams) {

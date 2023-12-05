@@ -64,6 +64,13 @@ export class AnimationService {
     }
 
     private handleCallEndAnimation(playerPed: number) {
+        if (!global.isPhoneOpen) {
+            if (this.onCall) {
+                this.handleCloseAnimation(playerPed);
+            }
+            return;
+        }
+
         if (IsPedInAnyVehicle(playerPed, true)) {
             this.handleCallEndVehicleAnim(playerPed);
         } else {
@@ -71,27 +78,27 @@ export class AnimationService {
         }
     }
 
-    private handleCloseAnimation(playerPed: number) {
+    private async handleCloseAnimation(playerPed: number) {
         if (IsPedInAnyVehicle(playerPed, true)) {
-            this.handleCloseVehicleAnim(playerPed);
+            await this.handleCloseVehicleAnim(playerPed);
         } else {
-            this.handleCloseNormalAnim(playerPed);
+            await this.handleCloseNormalAnim(playerPed);
         }
     }
 
     async openPhone(): Promise<void> {
-        newPhoneProp();
         if (!this.onCall) {
+            newPhoneProp();
             this.handleOpenAnimation(PlayerPedId());
         }
         this.setPhoneState(AnimationState.PHONE_OPEN, true);
     }
 
     async closePhone(): Promise<void> {
-        removePhoneProp();
         this.setPhoneState(AnimationState.PHONE_OPEN, false);
         if (!this.onCall) {
-            this.handleCloseAnimation(PlayerPedId());
+            removePhoneProp();
+            await this.handleCloseAnimation(PlayerPedId());
         }
     }
 
@@ -106,7 +113,6 @@ export class AnimationService {
     }
 
     async openCamera() {
-        ClearPedTasks(PlayerPedId());
         this.setPhoneState(AnimationState.ON_CAMERA, true);
     }
 
@@ -128,7 +134,6 @@ export class AnimationService {
         await this.loadAnimDict(dict);
 
         if (!IsEntityPlayingAnim(playerPed, dict, anim, 3)) {
-            emit('inventory:client:StoreWeapon');
             TaskPlayAnim(playerPed, dict, anim, 7.0, -1, -1, 50, 0, false, false, false);
         }
     }
@@ -140,7 +145,6 @@ export class AnimationService {
         await this.loadAnimDict(dict);
 
         if (!IsEntityPlayingAnim(playerPed, dict, anim, 3)) {
-            emit('inventory:client:StoreWeapon');
             TaskPlayAnim(playerPed, dict, anim, 8.0, -1, -1, 50, 0, false, false, false);
         }
     }
@@ -149,6 +153,7 @@ export class AnimationService {
         const DICT = 'anim@cellphone@in_car@ps';
         StopAnimTask(playerPed, DICT, 'cellphone_text_in', 1.0); // Do both incase they were on the phone.
         StopAnimTask(playerPed, DICT, 'cellphone_call_to_text', 1.0);
+        StopAnimTask(playerPed, DICT, 'cellphone_call_listen_base', 1.0);
         removePhoneProp();
     }
 

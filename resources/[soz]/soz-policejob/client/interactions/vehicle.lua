@@ -14,7 +14,7 @@ RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
                 canInteract = function(player)
                     return PlayerData.job.onduty
                 end,
-                job = {["lspd"] = 0, ["bcso"] = 0},
+                job = {["lspd"] = 0, ["bcso"] = 0, ["sasp"] = 0},
                 blackoutGlobal = true,
                 blackoutJob = true,
             },
@@ -26,7 +26,7 @@ RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
                 canInteract = function(player)
                     return PlayerData.job.onduty
                 end,
-                job = {["lspd"] = 0, ["bcso"] = 0},
+                job = {["lspd"] = 0, ["bcso"] = 0, ["sasp"] = 0},
             },
             {
                 label = "Ouvrir",
@@ -36,7 +36,7 @@ RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
                 canInteract = function(player)
                     return PlayerData.job.onduty
                 end,
-                job = {["lspd"] = 0, ["bcso"] = 0},
+                job = {["lspd"] = 0, ["bcso"] = 0, ["sasp"] = 0},
             },
         },
         distance = 1.5,
@@ -52,10 +52,10 @@ RegisterNetEvent("police:client:getVehicleOwner", function(data)
         disableMouse = false,
         disableCombat = true,
     }, {task = "CODE_HUMAN_MEDIC_KNEEL"}, {}, {}, function()
-        local plate = QBCore.Functions.GetPlate(data.entity)
+        local plate = GetVehicleNumberPlateText(data.entity)
         local playerName = QBCore.Functions.TriggerRpc("police:server:getVehicleOwner", plate)
 
-        exports["soz-hud"]:DrawAdvancedNotification("San Andres", "Vérification de plaque", ("Propriétaire: ~b~%s"):format(playerName), "CHAR_DAVE")
+        exports["soz-core"]:DrawAdvancedNotification("San Andres", "Vérification de plaque", ("Propriétaire: ~b~%s"):format(playerName), "CHAR_DAVE")
     end)
 end)
 
@@ -67,7 +67,7 @@ RegisterNetEvent("police:client:SearchVehicle", function(data)
         disableMouse = false,
         disableCombat = true,
     }, {animDict = "amb@prop_human_bum_bin@idle_a", anim = "idle_a", flags = 16}, {}, {}, function()
-        local plate = QBCore.Functions.GetPlate(data.entity)
+        local plate = GetVehicleNumberPlateText(data.entity)
         local model = GetEntityModel(data.entity)
         local class = GetVehicleClass(data.entity)
 
@@ -83,14 +83,8 @@ RegisterNetEvent("police:client:LockPickVehicle", function(data)
         disableMouse = false,
         disableCombat = true,
     }, {task = "WORLD_HUMAN_WELDING"}, {}, {}, function()
-        while not NetworkHasControlOfEntity(data.entity) do
-            NetworkRequestControlOfEntity(data.entity)
-            Citizen.Wait(0)
-        end
-        SetVehicleDoorsLocked(data.entity, 1)
+        local networkId = NetworkGetNetworkIdFromEntity(data.entity)
 
-        local plate = QBCore.Functions.GetPlate(data.entity)
-        exports["soz-hud"]:DrawNotification("Porte ~g~ouverte~s~ !")
-        exports["soz-vehicle"]:SetLockPicked(plate)
+        TriggerServerEvent("soz-core:server:vehicle:force-open", networkId)
     end)
 end)

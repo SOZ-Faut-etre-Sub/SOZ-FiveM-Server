@@ -1,5 +1,3 @@
-shopMenu = MenuV:CreateMenu(nil, nil, "menu_shop_society", "soz", "job:shop:menu")
-
 function DisplayFieldHealth(newVisibility, field, health)
     if newVisibility then
         SendNUIMessage({
@@ -13,15 +11,18 @@ function DisplayFieldHealth(newVisibility, field, health)
 end
 
 local function getTitleAndAmountForInvoice()
-    local title = exports["soz-hud"]:Input("Titre", 200)
+    local title = exports["soz-core"]:Input("Titre", 200)
     if title == nil or title == "" then
-        exports["soz-hud"]:DrawNotification("Vous devez spécifier un titre", "error")
+        exports["soz-core"]:DrawNotification("Vous devez spécifier un titre", "error")
         return
     end
 
-    local amount = exports["soz-hud"]:Input("Montant", 10)
+    Citizen.Wait(100)
+
+    local amount = exports["soz-core"]:Input("Montant", 10)
+
     if amount == nil or tonumber(amount) == nil or tonumber(amount) <= 0 then
-        exports["soz-hud"]:DrawNotification("Vous devez spécifier un montant", "error")
+        exports["soz-core"]:DrawNotification("Vous devez spécifier un montant", "error")
         return
     end
 
@@ -48,24 +49,4 @@ RegisterNetEvent("jobs:client:InvoiceSociety", function(data)
     end
 
     TriggerServerEvent("banking:server:sendSocietyInvoice", GetPlayerServerId(player), title, tonumber(amount))
-end)
-
-RegisterNetEvent("jobs:client:bossShop", function(jobConfig)
-    if not SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.SocietyShop) then
-        return
-    end
-
-    shopMenu:ClearItems()
-    for itemID, item in pairs(_G[jobConfig].BossShop or {}) do
-        shopMenu:AddButton({
-            label = item.amount .. "x " .. QBCore.Shared.Items[item.name].label,
-            rightLabel = "$" .. item.price,
-            value = itemID,
-            select = function(btn)
-                TriggerServerEvent("jobs:shop:server:buy", btn.Value)
-            end,
-        })
-    end
-
-    shopMenu:Open()
 end)

@@ -3,15 +3,17 @@ local function OpenSocietyMenu()
         return
     end
 
-    if not SozJobCore.Jobs[PlayerData.job.id].menuCallback then
-        return
+    local event = "soz-core:client:job:open-menu"
+
+    if SozJobCore.Jobs[PlayerData.job.id].menuCallback then
+        event = SozJobCore.Jobs[PlayerData.job.id].menuCallback
     end
 
     if PlayerData.metadata["isdead"] then
         return
     end
 
-    TriggerEvent(SozJobCore.Jobs[PlayerData.job.id].menuCallback)
+    TriggerEvent(event, PlayerData.job.id)
 end
 
 RegisterKeyMapping("society-menu", "Ouvrir le menu entreprise", "keyboard", "F3")

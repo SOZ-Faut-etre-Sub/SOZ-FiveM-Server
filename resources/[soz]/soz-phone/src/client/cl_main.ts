@@ -1,14 +1,12 @@
 import { PlayerData } from 'qbcore.js';
 
 import config from '../../config.json';
+import { EmergencyEvents } from '../../typings/emergency';
 import { PhoneEvents } from '../../typings/phone';
-import { SettingsEvents } from '../../typings/settings';
-import { Delay } from '../utils/fivem';
 import { sendMessage } from '../utils/messages';
 import { animationService } from './animations/animation.controller';
 import { callService } from './calls/cl_calls.controller';
 import { RegisterNuiCB } from './cl_utils';
-import { ClUtils } from './client';
 import { removePhoneProp } from './functions';
 
 // All main globals that are set and used across files
@@ -16,13 +14,16 @@ global.isPhoneOpen = false;
 global.isPhoneDrowned = false;
 global.isPhoneDisabled = false;
 global.isPlayerLoaded = false;
+global.isPlayerHasItem = false;
+global.isBlackout = false;
 
 const exps = global.exports;
 
 /* Functions */
-
 function cityIsInBlackOut(): boolean {
-    return GlobalState.blackout || GlobalState.blackout_level >= 3;
+    const globalState = exps['soz-core'].GetGlobalState();
+
+    return globalState.blackout || globalState.blackoutLevel >= 3;
 }
 
 /* * * * * * * * * * * * *
@@ -41,14 +42,11 @@ onNet(PhoneEvents.SET_PLAYER_LOADED, (state: boolean) => {
 });
 
 RegisterKeyMapping(config.general.toggleCommand, 'Afficher le téléphone', 'keyboard', config.general.toggleKey);
-
-setTimeout(() => {
-    emit('chat:addSuggestion', `${config.general.toggleCommand}`, 'Toggle displaying your cellphone');
-}, 1000);
+RegisterCommand(config.general.toggleCommand, togglePhone, false);
+emit('chat:addSuggestion', `${config.general.toggleCommand}`, 'Toggle displaying your cellphone');
 
 const getCurrentGameTime = () => {
     let hour: string | number = GetClockHours();
-
     let minute: string | number = GetClockMinutes();
 
     // Format time if need be
@@ -67,9 +65,15 @@ const getCurrentGameTime = () => {
 export const showPhone = async (): Promise<void> => {
     global.isPhoneOpen = true;
     const time = getCurrentGameTime();
-    await animationService.openPhone(); // Animation starts before the phone is open
+    const state = exports['soz-core'].GetPlayerState();
+
+    if (!state.isDead) {
+        await animationService.openPhone(); // Animation starts before the phone is open
+    }
+
     emitNet(PhoneEvents.FETCH_CREDENTIALS);
     SetCursorLocation(0.9, 0.922); //Experimental
+    sendMessage('PHONE', EmergencyEvents.SET_EMERGENCY, state.isDead);
     sendMessage('PHONE', PhoneEvents.SET_VISIBILITY, true);
     sendMessage('PHONE', PhoneEvents.SET_TIME, time);
     SetNuiFocus(true, true);
@@ -80,7 +84,12 @@ export const showPhone = async (): Promise<void> => {
 export const hidePhone = async (): Promise<void> => {
     global.isPhoneOpen = false;
     sendMessage('PHONE', PhoneEvents.SET_VISIBILITY, false);
-    await animationService.closePhone();
+    const state = exports['soz-core'].GetPlayerState();
+
+    if (!state.isDead) {
+        await animationService.closePhone();
+    }
+
     SetNuiFocus(false, false);
     SetNuiFocusKeepInput(false);
     emit('phone:client:disableControlActions', false);
@@ -88,20 +97,27 @@ export const hidePhone = async (): Promise<void> => {
 
 /* * * * * * * * * * * * *
  *
- *  Register Command and Keybinding
+ *  Phone Availability Handling
  *
  * * * * * * * * * * * * */
-RegisterCommand(
-    config.general.toggleCommand,
-    async () => {
-        if (global.isPhoneDisabled) return;
-        if (cityIsInBlackOut()) return;
-        if (IsPedRagdoll(PlayerPedId())) return;
 
-        await togglePhone();
-    },
-    false
-);
+export const updateAvailability = async () => {
+    const state = exports['soz-core'].GetPlayerState();
+    const avail =
+        (!global.isPhoneDrowned && !global.isPhoneDisabled && global.isPlayerHasItem && !global.isBlackout) ||
+        !!state.isDead;
+    sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, avail);
+
+    if (!avail) {
+        if (global.isPhoneOpen) {
+            await hidePhone();
+        }
+        if (callService.isInCall()) {
+            callService.handleEndCall();
+            await animationService.endPhoneCall();
+        }
+    }
+};
 
 /* * * * * * * * * * * * *
  *
@@ -121,24 +137,35 @@ const checkExportCanOpen = async (): Promise<boolean> => {
 };
 
 async function togglePhone(): Promise<void> {
-    if (config.PhoneAsItem.enabled) {
-        const canAccess = await checkExportCanOpen();
-        if (!canAccess) {
-            exps['soz-hud'].DrawNotification("Vous n'avez pas de téléphone", 'error');
-            return;
+    const isEditorModeActive = exports['soz-core'].IsEditorModeActive();
+    if (isEditorModeActive) {
+        return;
+    }
+
+    if (global.isPhoneOpen) {
+        return await hidePhone();
+    }
+
+    const state = exports['soz-core'].GetPlayerState();
+
+    if (!state.isDead) {
+        if (global.isPhoneDrowned) return;
+        if (global.isPhoneDisabled) return;
+        if (cityIsInBlackOut()) return;
+
+        if (config.PhoneAsItem.enabled) {
+            const canAccess = await checkExportCanOpen();
+            if (!canAccess) {
+                return;
+            }
         }
     }
-    if (global.isPhoneOpen) return await hidePhone();
     await showPhone();
 }
 
 onNet(PhoneEvents.SEND_CREDENTIALS, (number: string, societyNumber: string | null) => {
     sendMessage('SIMCARD', PhoneEvents.SET_NUMBER, number);
     sendMessage('SOCIETY_SIMCARD', PhoneEvents.SET_SOCIETY_NUMBER, societyNumber);
-
-    ClUtils.emitNetPromise(SettingsEvents.SET_AVATAR).then(avatar => {
-        sendMessage('AVATAR', SettingsEvents.SET_AVATAR, avatar['data']);
-    });
 });
 
 on('onResourceStop', (resource: string) => {
@@ -155,18 +182,38 @@ on('onResourceStop', (resource: string) => {
 
 onNet('QBCore:Client:OnPlayerLoaded', async () => {
     sendMessage('PHONE', 'phoneRestart', {});
-    const canAccess = await checkExportCanOpen();
-    sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, canAccess);
+    updateAvailability();
+    const state = exports['soz-core'].GetPlayerState();
+
+    sendMessage('PHONE', EmergencyEvents.SET_EMERGENCY, state.isDead);
 });
 
 onNet('QBCore:Player:SetPlayerData', async (playerData: PlayerData) => {
     if (typeof playerData.items === 'object') playerData.items = Object.values(playerData.items);
-    const hasItem = playerData.items.find(item => item.name === 'phone');
-    sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, !!hasItem);
+    global.isPlayerHasItem = !!playerData.items.find(item => item.name === 'phone');
+
+    updateAvailability();
+    sendMessage('PHONE', EmergencyEvents.SET_EMERGENCY, playerData.metadata['isdead']);
 });
 
-// DO NOT CHANGE THIS EITHER, PLEASE - CHIP
-// ^ AND WHAT ARE YOU GOING TO DO HUH? - KIDZ
+onNet('ems:client:onDeath', () => {
+    callService.handleEndCall();
+    animationService.endPhoneCall();
+    hidePhone();
+
+    sendMessage('PHONE', EmergencyEvents.SET_EMERGENCY, true);
+    sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, true);
+});
+
+onNet('soz-core:lsmc:client:revive', async () => {
+    sendMessage('PHONE', EmergencyEvents.SET_EMERGENCY, false);
+    const canAccess = await checkExportCanOpen();
+    sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, canAccess);
+});
+
+onNet('soz-core:client:injury:death', async (raison: string) => {
+    sendMessage('PHONE', EmergencyEvents.SET_DEAD, raison);
+});
 
 /* * * * * * * * * * * * *
  *
@@ -175,47 +222,54 @@ onNet('QBCore:Player:SetPlayerData', async (playerData: PlayerData) => {
  * * * * * * * * * * * * */
 RegisterNuiCB<void>(PhoneEvents.CLOSE_PHONE, async (_, cb) => {
     await hidePhone();
-    cb();
+    cb({});
 });
 
-// NOTE: This probably has an edge case when phone is closed for some reason
-// and we need to toggle keep input off
 RegisterNuiCB<{ keepGameFocus: boolean }>(PhoneEvents.TOGGLE_KEYS, async ({ keepGameFocus }, cb) => {
-    // We will only
     if (global.isPhoneOpen) SetNuiFocusKeepInput(keepGameFocus);
     cb({});
 });
 
-setTick(async () => {
-    const ped = PlayerPedId();
-
-    const isSwimming = IsPedSwimming(ped);
-    if (isSwimming) {
-        global.isPhoneDisabled = true;
-        global.isPhoneDrowned = true;
-        if (global.isPhoneOpen) await hidePhone();
-        callService.handleEndCall();
-        sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, false);
-    } else if (!isSwimming && global.isPhoneDrowned) {
-        global.isPhoneDisabled = false;
-        global.isPhoneDrowned = false;
-        sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, true);
-    }
-
-    if (global.isPhoneOpen && cityIsInBlackOut()) {
-        await hidePhone();
-        callService.handleEndCall();
-    }
-    if (global.isPhoneOpen && IsPedRagdoll(ped)) {
-        await hidePhone();
-        callService.handleEndCall();
-    }
-
-    await Delay(1000);
+RegisterNuiCB<void>(EmergencyEvents.LSMC_CALL, async (_, cb) => {
+    TriggerEvent('soz-core:lsmc:client:call');
+    cb({});
 });
 
-// Will update the phone's time even while its open
-// setInterval(() => {
-//   const time = getCurrentGameTime()
-//   sendMessage('PHONE', 'setTime', time)
-// }, 2000);
+RegisterNuiCB<void>(EmergencyEvents.UHU_CALL, async (_, cb) => {
+    TriggerServerEvent('soz-core:lsmc:server:revive', null, true, true);
+    hidePhone();
+    cb({});
+});
+
+RegisterNuiCB<void>(PhoneEvents.PHONE_LOADED, async (_, cb) => {
+    updateAvailability();
+    cb({});
+});
+
+setInterval(async () => {
+    const ped = PlayerPedId();
+    const isSwimming = IsPedSwimming(ped);
+    if (isSwimming && !global.isPhoneDrowned) {
+        global.isPhoneDrowned = true;
+        updateAvailability();
+    } else if (!isSwimming && global.isPhoneDrowned) {
+        global.isPhoneDrowned = false;
+        updateAvailability();
+    }
+
+    if (global.isBlackout != cityIsInBlackOut()) {
+        global.isBlackout = cityIsInBlackOut();
+        updateAvailability();
+    }
+
+    if (exports['progressbar'].IsDoingAction()) {
+        if (global.isPhoneOpen) {
+            await hidePhone();
+        }
+    }
+}, 1000);
+
+setInterval(() => {
+    const time = getCurrentGameTime();
+    sendMessage('PHONE', PhoneEvents.SET_TIME, time);
+}, 2000);

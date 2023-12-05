@@ -1,5 +1,5 @@
 import { IAlertProps } from '../../../typings/alerts';
-import { ActiveCall, CallEvents, CallRejectReasons } from '../../../typings/call';
+import { ActiveCall, CallEvents } from '../../../typings/call';
 
 export class CallService {
     private currentCall: number;
@@ -16,6 +16,10 @@ export class CallService {
             method,
             data,
         });
+    }
+
+    hasAnActiveCall() {
+        return this.currentCallData !== null;
     }
 
     isInCall() {
@@ -41,7 +45,10 @@ export class CallService {
 
     handleStartCall(transmitter: string, receiver: string, isTransmitter: boolean, isUnavailable: boolean) {
         // If we're already in a call we want to automatically reject
-        if (this.isCallAccepted()) return emitNet(CallEvents.REJECTED, transmitter, CallRejectReasons.BUSY_LINE);
+        if (this.hasAnActiveCall() || this.isInCall()) {
+            //Currently we let the caller wait indefinitly, so no rejection send to caller
+            return;
+        }
 
         // We set -1 to notify that comminucation is about to be etablished. So i'll respond 'BUSY_LINE'
         this.currentCall = -1;

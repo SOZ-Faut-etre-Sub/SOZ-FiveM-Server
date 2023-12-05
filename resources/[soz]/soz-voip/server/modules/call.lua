@@ -1,13 +1,13 @@
 local CallState = CallStateManager:new()
 
-AddStateBagChangeHandler("blackout_level", "global", function(_, _, value, _, _)
-    if value > 2 then
-        CallState:DestroyAll()
-    end
+exports("StopAllPhoneCall", function()
+    CallState:DestroyAll()
 end)
 
 RegisterNetEvent("voip:server:call:start", function(caller, receiver)
-    if GlobalState.blackout_level > 2 then
+    local globalState = exports["soz-core"]:GetGlobalState()
+
+    if globalState.blackoutLevel > 2 then
         return
     end
 

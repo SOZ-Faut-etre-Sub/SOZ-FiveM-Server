@@ -74,7 +74,6 @@ function CharacterCreate(SpawnId, charInfo, character)
         SetEntityVisible(PlayerPedId(), true)
         SetNuiFocus(false, false)
 
-        TriggerServerEvent("QBCore:Server:OnPlayerLoaded")
         TriggerEvent("QBCore:Client:OnPlayerLoaded")
 
         ApplyPlayerBodySkin(PlayerId(), character.Skin)

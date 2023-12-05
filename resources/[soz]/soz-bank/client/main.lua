@@ -41,6 +41,50 @@ bankSociety:onPlayerInOut(function(isPointInside, point)
 end)
 
 CreateThread(function()
+    local bankActions = {
+        {
+            label = "Compte Personnel",
+            icon = "c:bank/compte_personal.png",
+            event = "banking:openBankScreen",
+            blackoutGlobal = true,
+        },
+        {
+            label = "Compte Société",
+            icon = "c:bank/compte_societe.png",
+            event = "banking:openSocietyBankScreen",
+            blackoutGlobal = true,
+            canInteract = function(entity, distance, data)
+                return PlayerData.job.onduty and SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.SocietyBankAccount) and
+                           isInsideEntrepriseBankZone
+            end,
+        },
+    }
+
+    for _, item in pairs({"small_moneybag", "medium_moneybag", "big_moneybag"}) do
+        table.insert(bankActions, {
+            label = "Remplir avec " .. QBCore.Shared.Items[item].label,
+            icon = "c:stonk/remplir.png",
+            blackoutGlobal = true,
+            blackoutJob = "cash-transfer",
+            canInteract = function()
+                if currentBank.bank and currentBank.type then
+                    local currentMoney = QBCore.Functions.TriggerRpc("banking:server:getBankMoney", currentBank.bank)
+                    if currentMoney < Config.BankAtmDefault[currentBank.type].maxMoney then
+                        return PlayerData.job.onduty
+                    end
+                    return false
+                end
+            end,
+            action = function()
+                local currentMoney = QBCore.Functions.TriggerRpc("banking:server:getBankMoney", currentBank.bank)
+                local maxMoney = Config.BankAtmDefault[currentBank.type].maxMoney
+
+                TriggerServerEvent("soz-core:server:job:stonk:fill-in", currentBank.bank, item, currentMoney, maxMoney)
+            end,
+            item = item,
+        })
+    end
+
     for bank, coords in pairs(Config.BankPedLocations) do
         if not QBCore.Functions.GetBlip("bank_" .. bank) then
             if bank == "pacific1" then
@@ -55,70 +99,48 @@ CreateThread(function()
                 QBCore.Functions.CreateBlip("bank_" .. bank, {name = "Banque", coords = coords, sprite = 108, color = 2})
             end
         end
+        local model = "ig_bankman"
         exports["qb-target"]:SpawnPed({
             {
-                model = "ig_bankman",
+                model = model,
                 coords = coords,
                 minusOne = true,
                 freeze = true,
                 invincible = true,
                 blockevents = true,
                 scenario = "WORLD_HUMAN_CLIPBOARD",
-                target = {
-                    options = {
-                        {
-                            label = "Compte Personnel",
-                            icon = "c:bank/compte_personal.png",
-                            event = "banking:openBankScreen",
-                            blackoutGlobal = true,
-                        },
-                        {
-                            label = "Compte Société",
-                            icon = "c:bank/compte_societe.png",
-                            event = "banking:openSocietyBankScreen",
-                            blackoutGlobal = true,
-                            canInteract = function(entity, distance, data)
-                                return SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.SocietyBankAccount) and
-                                           isInsideEntrepriseBankZone
-                            end,
-                        },
-                        {
-                            label = "Vendre",
-                            icon = "c:stonk/vendre.png",
-                            event = "soz-jobs:client:stonk-resale-bag",
-                            blackoutGlobal = true,
-                            blackoutJob = "cash-transfer",
-                            canInteract = function()
-                                return isInsideEntrepriseBankZone and exports["soz-jobs"]:CanBagsBeResold()
-                            end,
-                        },
-                        {
-                            label = "Remplir",
-                            icon = "c:stonk/remplir.png",
-                            event = "soz-jobs:client:stonk-fill-in",
-                            blackoutGlobal = true,
-                            blackoutJob = "cash-transfer",
-                            isBank = true,
-                            canInteract = function()
-                                local hasJobPermission = exports["soz-jobs"]:CanFillIn()
-                                if not hasJobPermission then
-                                    return false
-                                end
-
-                                if currentBank.bank and currentBank.type then
-                                    local currentMoney = QBCore.Functions.TriggerRpc("banking:server:getBankMoney", currentBank.bank)
-                                    if currentMoney < Config.BankAtmDefault[currentBank.type].maxMoney then
-                                        return true
-                                    end
-                                    return false
-                                end
-                            end,
-                        },
-                    },
-                    distance = 3.0,
-                },
+                target = {options = bankActions, distance = 3.0},
             },
         })
+    end
+
+    local function atmRefillAction(atmType, item)
+        return {
+            label = "Remplir avec " .. QBCore.Shared.Items[item].label,
+            icon = "c:stonk/remplir.png",
+            blackoutGlobal = true,
+            blackoutJob = "cash-transfer",
+            canInteract = function(entity)
+                if atmType ~= "ent" then
+                    return false
+                end
+
+                local currentMoney = QBCore.Functions.TriggerRpc("banking:server:getAtmMoney", atmType, GetEntityCoords(entity))
+                if currentMoney < Config.BankAtmDefault[atmType].maxMoney then
+                    return PlayerData.job.onduty
+                end
+
+                return false
+            end,
+            action = function(entity)
+                local currentMoney = QBCore.Functions.TriggerRpc("banking:server:getAtmMoney", atmType, GetEntityCoords(entity))
+                local atm = QBCore.Functions.TriggerRpc("banking:server:getAtmAccount", atmType, GetEntityCoords(entity))
+                local maxMoney = Config.BankAtmDefault[atmType].maxMoney
+
+                TriggerServerEvent("soz-core:server:job:stonk:fill-in", atm.account, item, currentMoney, maxMoney)
+            end,
+            item = item,
+        }
     end
 
     for model, atmType in pairs(Config.ATMModels) do
@@ -130,31 +152,16 @@ CreateThread(function()
                     label = "Compte Personnel",
                     atmType = atmType,
                 },
-                {
-                    label = "Remplir",
-                    icon = "c:stonk/remplir.png",
-                    event = "soz-jobs:client:stonk-fill-in",
-                    atmType = atmType,
-                    canInteract = function(entity)
-                        local hasJobPermission = exports["soz-jobs"]:CanFillIn()
-                        if not hasJobPermission then
-                            return false
-                        end
-
-                        local currentMoney = QBCore.Functions.TriggerRpc("banking:server:getAtmMoney", atmType, GetEntityCoords(entity))
-                        if currentMoney < Config.BankAtmDefault[atmType].maxMoney then
-                            return true
-                        end
-                        return false
-                    end,
-                },
+                atmRefillAction(atmType, "small_moneybag"),
+                atmRefillAction(atmType, "medium_moneybag"),
+                atmRefillAction(atmType, "big_moneybag"),
             },
             distance = 1.0,
         })
     end
-    for _, atmData in pairs(Config.AtmLocations) do
-        if Config.AtmPacks[atmData.accountId] == nil then
-            CreateAtmBlip(atmData.accountId, atmData.coords)
+    for id, atmData in pairs(Config.AtmLocations) do
+        if atmData.hideBlip ~= true then
+            CreateAtmBlip(id, atmData.coords)
         end
     end
 end)
@@ -166,7 +173,7 @@ function CreateAtmBlip(blipId, coords)
     QBCore.Functions.CreateBlip(blipId, {
         name = "ATM",
         coords = vector2(coords.x, coords.y),
-        sprite = 431,
+        sprite = 278,
         color = 60,
         alpha = 100,
     })
@@ -179,24 +186,24 @@ RegisterNetEvent("banking:client:displayAtmBlips", function(newAtmCoords)
 end)
 
 local function SafeStorageDeposit(money_type, safeStorage)
-    local amount = exports["soz-hud"]:Input("Quantité", 12)
+    local amount = exports["soz-core"]:Input("Quantité", 12)
 
     if amount and tonumber(amount) > 0 then
-        TriggerServerEvent("baking:server:SafeStorageDeposit", money_type, safeStorage, tonumber(amount))
+        TriggerServerEvent("banking:server:SafeStorageDeposit", money_type, safeStorage, tonumber(amount))
     end
 end
 
 local function SafeStorageDepositAll(money_type, safeStorage)
     if PlayerData.money[money_type] and PlayerData.money[money_type] > 0 then
-        TriggerServerEvent("baking:server:SafeStorageDeposit", money_type, safeStorage, PlayerData.money[money_type])
+        TriggerServerEvent("banking:server:SafeStorageDeposit", money_type, safeStorage, PlayerData.money[money_type])
     end
 end
 
 local function SafeStorageWithdraw(money_type, safeStorage)
-    local amount = exports["soz-hud"]:Input("Quantité", 12)
+    local amount = exports["soz-core"]:Input("Quantité", 12)
 
     if amount and tonumber(amount) > 0 then
-        TriggerServerEvent("baking:server:SafeStorageWithdraw", money_type, safeStorage, tonumber(amount))
+        TriggerServerEvent("banking:server:SafeStorageWithdraw", money_type, safeStorage, tonumber(amount))
     end
 end
 
@@ -251,11 +258,11 @@ local function OpenSafeStorageMenu(safeStorage, money, black_money)
     safeStorageMenu:Open()
 end
 
-local function OpenHouseSafeStorageMenu(safeStorage, money, black_money)
+local function OpenHouseSafeStorageMenu(safeStorage, money, black_money, maxSafeWeight)
     safeHouseStorageMenu:ClearItems()
 
     local markedMoneyMenu = MenuV:InheritMenu(safeHouseStorageMenu, {
-        subtitle = ("Gestion de l'argent marqué (%s$)"):format(black_money),
+        subtitle = ("Gestion de l'argent marqué ($%s)"):format(black_money),
     })
     local markedMoneyDeposit = markedMoneyMenu:AddButton({label = "Déposer"})
     local markedMoneyDepositAll = markedMoneyMenu:AddButton({label = "Tout déposer"})
@@ -277,7 +284,7 @@ local function OpenHouseSafeStorageMenu(safeStorage, money, black_money)
     safeHouseStorageMenu:AddButton({
         label = "Argent Marqué",
         value = markedMoneyMenu,
-        rightLabel = "~r~" .. black_money .. "$",
+        rightLabel = "~r~$" .. black_money .. "/$" .. maxSafeWeight,
     })
 
     safeHouseStorageMenu:Open()
@@ -313,18 +320,18 @@ RegisterNetEvent("banking:client:qTargetOpenSafe", function(data)
             if isAllowed then
                 OpenSafeStorageMenu(data.SafeId, money, black_money)
             else
-                exports["soz-hud"]:DrawNotification("Vous n'avez pas accès a ce coffre", "error")
+                exports["soz-core"]:DrawNotification("Vous n'avez pas accès à ce coffre", "error")
             end
         end, data.SafeId)
     end
 end)
 
 RegisterNetEvent("banking:client:openHouseSafe", function(houseid)
-    QBCore.Functions.TriggerCallback("banking:server:openHouseSafeStorage", function(isAllowed, money, black_money)
+    QBCore.Functions.TriggerCallback("banking:server:openHouseSafeStorage", function(isAllowed, money, black_money, max)
         if isAllowed then
-            OpenHouseSafeStorageMenu(houseid, money, black_money)
+            OpenHouseSafeStorageMenu(houseid, money, black_money, max)
         else
-            exports["soz-hud"]:DrawNotification("Vous n'avez pas accès a ce coffre", "error")
+            exports["soz-core"]:DrawNotification("Vous n'avez pas accès à ce coffre", "error")
         end
     end, houseid)
 end)

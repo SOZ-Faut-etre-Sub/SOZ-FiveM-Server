@@ -3,7 +3,9 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
 import { SewingRawMaterial } from '../../../shared/job/ffs';
-import { InventoryManager } from '../../item/inventory.manager';
+import { toVector3Object, Vector3 } from '../../../shared/polyzone/vector';
+import { InventoryManager } from '../../inventory/inventory.manager';
+import { Monitor } from '../../monitor/monitor';
 import { Notifier } from '../../notifier';
 import { ProgressService } from '../../player/progress.service';
 
@@ -17,6 +19,9 @@ export class FightForStyleHarvestProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(Monitor)
+    private monitor: Monitor;
 
     async doHarvest(source: number, label: string) {
         const { completed } = await this.progressService.progress(source, 'ffs_harvest', label, 5000, {
@@ -39,7 +44,7 @@ export class FightForStyleHarvestProvider {
         if (!this.inventoryManager.canCarryItem(source, SewingRawMaterial.COTTON_BALE, 1)) {
             this.notifier.notify(
                 source,
-                `Vous ne possédez suffisamment pas de place dans votre inventaire pour récolter.`
+                `Vous ne possédez pas suffisamment de place dans votre inventaire pour récolter.`
             );
             return;
         }
@@ -52,6 +57,19 @@ export class FightForStyleHarvestProvider {
                 this.notifier.notify(source, `Vous avez ~r~arrêté~s~ de récolter.`, 'error');
                 return;
             }
+
+            this.monitor.publish(
+                'job_ffs_harvest',
+                {
+                    item_id: SewingRawMaterial.COTTON_BALE,
+                    player_source: source,
+                },
+                {
+                    quantity: 1,
+                    position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+                }
+            );
+
             this.notifier.notify(source, `Vous avez récolté une balle de coton.`);
         }
         this.notifier.notify(source, 'Vous avez ~r~terminé~s~ de récolter.', 'success');

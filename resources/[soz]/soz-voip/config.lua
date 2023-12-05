@@ -4,11 +4,11 @@ Config = {}
 Config.debug = false
 
 --- Voice Proximity
-Config.whisperRange = 1.5
-Config.normalRange = 4.0
-Config.shoutRange = 7.5
-Config.megaphoneRange = 24.0
-Config.microphoneRange = 24.0
+Config.whisperRange = 2.0
+Config.normalRange = 4.5
+Config.shoutRange = 8.0
+Config.megaphoneRange = 38.0
+Config.microphoneRange = 38.0
 
 Config.voiceRanges = {
     [1] = {name = "whisper", range = Config.whisperRange},
@@ -33,6 +33,7 @@ Config.balances = {
 }
 
 --- Volume
+Config.volumeRadioSoundClick = 0.4
 Config.volumeRadioPrimaryShort = 1.0
 Config.volumeRadioPrimaryLong = 1.0
 Config.volumeRadioSecondaryShort = 1.0

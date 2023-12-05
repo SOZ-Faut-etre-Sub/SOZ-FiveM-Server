@@ -24,14 +24,14 @@ local function AddItem(source, item, itemCount)
     end
 
     local receivedItem = false
-    exports["soz-inventory"]:AddItem(source, item, count, nil, nil, function(success, reason)
+    exports["soz-inventory"]:AddItem(source, source, item, count, nil, nil, function(success, reason)
         if success then
             receivedItem = true
         else
             if reason == "invalid_weight" then
-                TriggerClientEvent("hud:client:DrawNotification", source, "Vos poches sont pleines...", "error")
+                TriggerClientEvent("soz-core:client:notification:draw", source, "Vos poches sont pleines...", "error")
             else
-                TriggerClientEvent("hud:client:DrawNotification", source,
+                TriggerClientEvent("soz-core:client:notification:draw", source,
                                    string.format("Vous n'avez pas récolté d'ingrédients'. Il y a eu une erreur : `%s`", reason), "error")
             end
         end
@@ -47,7 +47,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:food-collect-ingredients", func
 
     local field = Fields[fieldName]
     if field == nil then
-        TriggerClientEvent("hud:client:DrawNotification", source, "Il y a eu une erreur: invalid_field", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", source, "Il y a eu une erreur: invalid_field", "error")
     end
 
     local quantity, item, newHealth = field:Harvest()
@@ -134,13 +134,13 @@ QBCore.Functions.CreateCallback("soz-jobs:server:food-craft", function(source, c
         end
     end
 
-    exports["soz-inventory"]:AddItem(source, itemId, recipe.output or 1, nil, nil, function(success, reason)
+    exports["soz-inventory"]:AddItem(source, source, itemId, recipe.output or 1, nil, nil, function(success, reason)
         if not success then
             local message = "Vos poches sont pleines..."
             if reason ~= "invalid_weight" then
                 message = string.format("Il y a eu une erreur : `%s`", reason)
             end
-            TriggerClientEvent("hud:client:DrawNotification", source, message, "error")
+            TriggerClientEvent("soz-core:client:notification:draw", source, message, "error")
             cb(false)
             return
         else
@@ -162,12 +162,16 @@ RegisterNetEvent("jobs:server:food:hunting", function(huntId)
     local rewardSuccess = false
     local position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))
 
+    if not DoesEntityExist(NetworkGetEntityFromNetworkId(huntId)) then
+        return
+    end
+
     for item, reward in pairs(FoodConfig.HuntingReward) do
         local amount = math.random(reward.min, reward.max)
 
-        exports["soz-inventory"]:AddItem(Player.PlayerData.source, item, amount, nil, nil, function(success, reason)
+        exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, item, amount, nil, nil, function(success, reason)
             if success then
-                TriggerEvent("monitor:server:event", "job_cm_food_hunting", {
+                exports["soz-core"]:Event("job_cm_food_hunting", {
                     item_id = item,
                     player_source = Player.PlayerData.source,
                 }, {item_label = item.label, quantity = amount, position = position})
@@ -179,13 +183,13 @@ RegisterNetEvent("jobs:server:food:hunting", function(huntId)
 
     if rewardSuccess then
         DeleteEntity(NetworkGetEntityFromNetworkId(huntId))
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~r~terminé~s~ de dépecer.")
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez ~r~terminé~s~ de dépecer.")
     else
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vos poches sont pleines...", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vos poches sont pleines...", "error")
     end
 end)
 
-QBCore.Functions.CreateUseableItem("meal_box", function(source)
+QBCore.Functions.CreateUseableItem("meal_box", function(source, item)
     if exports["soz-inventory"]:CanCarryItems(source, {
         {name = "meal_box", amount = -1},
         {name = "vegan_meal", amount = 5},
@@ -193,12 +197,12 @@ QBCore.Functions.CreateUseableItem("meal_box", function(source)
         {name = "meat_festival", amount = 5},
         {name = "royal_vegetables", amount = 5},
     }) then
-        exports["soz-inventory"]:RemoveItem(source, "meal_box", 1, nil)
-        exports["soz-inventory"]:AddItem(source, "vegan_meal", 5, nil)
-        exports["soz-inventory"]:AddItem(source, "onigiri_assortment", 5, nil)
-        exports["soz-inventory"]:AddItem(source, "meat_festival", 5, nil)
-        exports["soz-inventory"]:AddItem(source, "royal_vegetables", 5, nil)
+        exports["soz-inventory"]:RemoveItem(source, "meal_box", 1, item.metadata, item.slot)
+        exports["soz-inventory"]:AddItem(source, source, "vegan_meal", 5, item.metadata)
+        exports["soz-inventory"]:AddItem(source, source, "onigiri_assortment", 5, item.metadata)
+        exports["soz-inventory"]:AddItem(source, source, "meat_festival", 5, item.metadata)
+        exports["soz-inventory"]:AddItem(source, source, "royal_vegetables", 5, item.metadata)
     else
-        TriggerClientEvent("hud:client:DrawNotification", source, "Vos poches sont trop pleines pour ouvrir la caisse.", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", source, "Vos poches sont trop pleines pour ouvrir la caisse.", "error")
     end
 end)

@@ -1,29 +1,30 @@
+import { Histogram } from 'prom-client';
+
 import { EventMetadata } from '../decorators/event';
 import { Injectable } from '../decorators/injectable';
 import { Middleware, MiddlewareFactory } from './middleware';
 
 @Injectable()
 export class MetricMiddlewareFactory implements MiddlewareFactory {
-    private callsNumber: Record<string, number> = {};
-    private executionTime: Record<string, number> = {};
+    private eventHistogram: Histogram<string>;
+
+    public constructor() {
+        this.eventHistogram = new Histogram({
+            name: 'soz_core_event',
+            help: 'Event execution histogram',
+            labelNames: ['event'],
+        });
+    }
 
     public create(event: EventMetadata, next: Middleware): Middleware {
-        if (this.callsNumber[event.name] === undefined) {
-            this.callsNumber[event.name] = 0;
-        }
-
-        if (this.executionTime[event.name] === undefined) {
-            this.executionTime[event.name] = 0;
-        }
-
         return async (...args): Promise<void> => {
-            this.callsNumber[event.name]++;
-            const start = Date.now();
+            const end = this.eventHistogram.startTimer({
+                event: event.name,
+            });
 
             const result = await next(...args);
 
-            const duration = Date.now() - start;
-            this.executionTime[event.name] += duration;
+            end();
 
             return result;
         };

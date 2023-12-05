@@ -14,10 +14,10 @@ import {
 
 export type DeveloperSubMenuProps = {
     banner: string;
-    updateState: (namespace: 'developer', key: keyof DeveloperSubMenuProps['state'], value: any) => void;
     state: {
         noClip: boolean;
         displayCoords: boolean;
+        displayMileage: boolean;
     };
 };
 
@@ -26,15 +26,20 @@ const coordOptions = [
     { label: 'Vector 4', value: 'coords4' },
 ];
 
-export const DeveloperSubMenu: FunctionComponent<DeveloperSubMenuProps> = ({ banner, state, updateState }) => {
+const notificationTypeOptions = [
+    { label: 'Basic', value: 'basic' },
+    { label: 'Advanced', value: 'advanced' },
+    { label: 'Police', value: 'police' },
+];
+
+export const DeveloperSubMenu: FunctionComponent<DeveloperSubMenuProps> = ({ banner, state }) => {
     return (
         <SubMenu id="developer">
             <MenuTitle banner={banner}>Si véloces ces développeurs</MenuTitle>
             <MenuContent>
                 <MenuItemCheckbox
                     checked={state.noClip}
-                    onChange={async value => {
-                        updateState('developer', 'noClip', value);
+                    onChange={async () => {
                         await fetchNui(NuiEvent.AdminToggleNoClip);
                     }}
                 >
@@ -43,11 +48,18 @@ export const DeveloperSubMenu: FunctionComponent<DeveloperSubMenuProps> = ({ ban
                 <MenuItemCheckbox
                     checked={state.displayCoords}
                     onChange={async value => {
-                        updateState('developer', 'displayCoords', value);
                         await fetchNui(NuiEvent.AdminToggleShowCoordinates, value);
                     }}
                 >
                     Afficher les coordonnées
+                </MenuItemCheckbox>
+                <MenuItemCheckbox
+                    checked={state.displayMileage}
+                    onChange={async value => {
+                        await fetchNui(NuiEvent.AdminToggleShowMileage, value);
+                    }}
+                >
+                    Afficher le kilométrage
                 </MenuItemCheckbox>
                 <MenuItemSelect
                     title="📋 Copier les coords"
@@ -66,12 +78,31 @@ export const DeveloperSubMenu: FunctionComponent<DeveloperSubMenuProps> = ({ ban
                 >
                     🧑 Changer de joueur
                 </MenuItemButton>
+                <MenuItemSelect
+                    title="Déclencher une notification"
+                    onConfirm={async selectedIndex => {
+                        await fetchNui(NuiEvent.AdminTriggerNotification, notificationTypeOptions[selectedIndex].value);
+                    }}
+                >
+                    {notificationTypeOptions.map(option => (
+                        <MenuItemSelectOption key={'trigger_notification_' + option.value}>
+                            {option.label}
+                        </MenuItemSelectOption>
+                    ))}
+                </MenuItemSelect>
                 <MenuItemButton
                     onConfirm={async () => {
                         await fetchNui(NuiEvent.AdminResetHealthData);
                     }}
                 >
                     Redonner la faim/soif
+                </MenuItemButton>
+                <MenuItemButton
+                    onConfirm={async () => {
+                        await fetchNui(NuiEvent.AdminCreateZone);
+                    }}
+                >
+                    Créer une zone
                 </MenuItemButton>
             </MenuContent>
         </SubMenu>

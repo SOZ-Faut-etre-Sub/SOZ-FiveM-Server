@@ -1,15 +1,18 @@
 import { Menu, Transition } from '@headlessui/react';
-import { ChevronLeftIcon, DotsCircleHorizontalIcon, SaveIcon, TrashIcon } from '@heroicons/react/outline';
+import { CheckIcon, ChevronLeftIcon, TrashIcon } from '@heroicons/react/outline';
 import { AppContent } from '@ui/components/AppContent';
 import { AppTitle } from '@ui/components/AppTitle';
 import { Button } from '@ui/old_components/Button';
 import { TextareaField, TextField } from '@ui/old_components/Input';
+import cn from 'classnames';
 import React, { useLayoutEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { useNotes } from '../../../hooks/app/useNotes';
+import { useConfig } from '../../../hooks/usePhone';
+import { SaveIcon } from '../../../ui/assets/save';
 import { useNotesAPI } from '../hooks/useNotesAPI';
 
 interface IFormInputs {
@@ -20,6 +23,8 @@ interface IFormInputs {
 export const NoteForm: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
+
+    const config = useConfig();
 
     const { getNote } = useNotes();
     const note = getNote(parseInt(id));
@@ -64,41 +69,45 @@ export const NoteForm: React.FC = () => {
     };
 
     const NoteActions = (
-        <Menu as="div" className="relative inline-block text-left">
-            <Menu.Button>
-                <DotsCircleHorizontalIcon className="h-6 w-6" />
-            </Menu.Button>
-            <Transition
-                enter="transition duration-100 ease-out"
-                enterFrom="transform scale-95 opacity-0"
-                enterTo="transform scale-100 opacity-100"
-                leave="transition duration-75 ease-out"
-                leaveFrom="transform scale-100 opacity-100"
-                leaveTo="transform scale-95 opacity-0"
+        <div className="flex">
+            {!isNewNote && (
+                <Menu>
+                    <Menu.Button className="flex items-center w-full text-red-400 py-2 hover:text-red-500">
+                        <TrashIcon className="mr-2 h-5 w-5" />
+                    </Menu.Button>
+                    <Transition
+                        enter="transition duration-100 ease-out"
+                        enterFrom="transform scale-95 opacity-0"
+                        enterTo="transform scale-100 opacity-100"
+                        leave="transition duration-75 ease-out"
+                        leaveFrom="transform scale-100 opacity-100"
+                        leaveTo="transform scale-95 opacity-0"
+                        className="absolute z-50 right-0 w-56"
+                    >
+                        <Menu.Items className="mt-2 origin-top-right bg-ios-800 bg-opacity-70 divide-y divide-gray-600 divide-opacity-50 rounded-md shadow-lg focus:outline-none">
+                            <Menu.Item>
+                                <Button
+                                    className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
+                                    onClick={handleDeleteNote}
+                                >
+                                    <CheckIcon className="mx-3 h-5 w-5" /> Supprimer
+                                </Button>
+                            </Menu.Item>
+                        </Menu.Items>
+                    </Transition>
+                </Menu>
+            )}
+            <Button
+                className={cn('flex items-center w-full py-2', {
+                    'text-ios-100 hover:text-ios-200': config.theme.value === 'dark',
+                    'text-ios-700 hover:text-ios-600': config.theme.value === 'light',
+                })}
+                disabled={watch('title')?.length <= 0}
+                onClick={isNewNote ? handleNewNote : handleUpdateNote}
             >
-                <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right bg-black bg-opacity-70 divide-y divide-gray-600 divide-opacity-50 rounded-md shadow-lg focus:outline-none">
-                    <Menu.Item>
-                        <Button
-                            className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
-                            disabled={watch('title')?.length <= 0}
-                            onClick={isNewNote ? handleNewNote : handleUpdateNote}
-                        >
-                            <SaveIcon className="mx-3 h-5 w-5" /> Sauvegarder
-                        </Button>
-                    </Menu.Item>
-                    {!isNewNote && (
-                        <Menu.Item>
-                            <Button
-                                className="flex items-center w-full text-red-400 px-2 py-2 hover:text-red-500"
-                                onClick={handleDeleteNote}
-                            >
-                                <TrashIcon className="mx-3 h-5 w-5" /> Supprimer
-                            </Button>
-                        </Menu.Item>
-                    )}
-                </Menu.Items>
-            </Transition>
-        </Menu>
+                <SaveIcon className="ml-2 h-5 w-5" />
+            </Button>
+        </div>
     );
 
     return (

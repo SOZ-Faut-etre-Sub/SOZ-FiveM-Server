@@ -19,7 +19,7 @@ function SynchroniseJob()
     if jobGrades then
         for _, jobGrade in ipairs(jobGrades) do
             if not SozJobCore.Jobs[jobGrade.jobId] then
-                exports["soz-monitor"]:Log("ERROR", ("Job %s (grade %s) is not present in SozJobCore !"):format(jobGrade.jobId, jobGrade.name))
+                exports["soz-core"]:Log("ERROR", ("Job %s (grade %s) is not present in SozJobCore !"):format(jobGrade.jobId, jobGrade.name))
                 goto continue
             end
 
@@ -34,7 +34,7 @@ function SynchroniseJob()
         SozJobCore.Jobs[jobId].grades = tmpGrades[jobId]
     end
 
-    TriggerClientEvent("soz-jobs:Client:OnJobSync", -1, SozJobCore.Jobs)
+    TriggerLatentClientEvent("soz-jobs:Client:OnJobSync", 16384, -1, SozJobCore.Jobs)
 end
 
 function CheckPlayerJobPermission(player, targetJobId, permission)

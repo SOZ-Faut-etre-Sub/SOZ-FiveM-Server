@@ -23,12 +23,21 @@ export const useSimCardService = () => {
 
     useEffect(() => {
         store.dispatch.simCard.loadCallHistory();
+        store.dispatch.avatar.loadAvatar();
     }, []);
 
     useNuiEvent('DIALER', CallEvents.ADD_CALL, store.dispatch.simCard.loadCallHistory);
     useNuiEvent('DIALER', CallEvents.UPDATE_CALL, store.dispatch.simCard.loadCallHistory);
 
-    useNuiEvent('SIMCARD', PhoneEvents.SET_NUMBER, store.dispatch.simCard.SET_NUMBER);
-    useNuiEvent('SOCIETY_SIMCARD', PhoneEvents.SET_SOCIETY_NUMBER, store.dispatch.simCard.SET_SOCIETY_NUMBER);
-    useNuiEvent('AVATAR', SettingsEvents.SET_AVATAR, store.dispatch.simCard.SET_AVATAR);
+    useNuiEvent('SIMCARD', PhoneEvents.SET_NUMBER, number => {
+        if (store.getState().simCard.number !== number) {
+            store.dispatch.simCard.SET_NUMBER(number);
+        }
+    });
+    useNuiEvent('SOCIETY_SIMCARD', PhoneEvents.SET_SOCIETY_NUMBER, number => {
+        if (store.getState().simCard.societyNumber !== number) {
+            store.dispatch.simCard.SET_SOCIETY_NUMBER(number);
+        }
+    });
+    useNuiEvent('AVATAR', SettingsEvents.UPDATE_PICTURE, store.dispatch.avatar.setAvatar);
 };

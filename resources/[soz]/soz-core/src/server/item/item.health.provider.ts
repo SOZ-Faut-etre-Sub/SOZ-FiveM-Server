@@ -1,13 +1,13 @@
 import { Once, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { ServerEvent } from '../../shared/event';
+import { ClientEvent, ServerEvent } from '../../shared/event';
 import { CommonItem, InventoryItem } from '../../shared/item';
+import { InventoryManager } from '../inventory/inventory.manager';
 import { Notifier } from '../notifier';
 import { PlayerDiseaseProvider } from '../player/player.disease.provider';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../player/progress.service';
-import { InventoryManager } from './inventory.manager';
 import { ItemService } from './item.service';
 
 @Provider()
@@ -68,7 +68,7 @@ export class ItemHealthProvider {
         if (!success) {
             this.notifier.notify(source, 'Impossible de remplir la fiole: ' + reason, 'error');
         } else {
-            this.notifier.notify(source, "Fiole rempli jusqu'à la dernière goutte", 'success');
+            this.notifier.notify(source, "Fiole remplie jusqu'à la dernière goutte", 'success');
         }
     }
 
@@ -140,7 +140,7 @@ export class ItemHealthProvider {
         if (!success) {
             this.notifier.notify(source, 'Impossible de remplir la fiole: ' + reason, 'error');
         } else {
-            this.notifier.notify(source, "Fiole rempli jusqu'à la dernière goutte", 'success');
+            this.notifier.notify(source, "Fiole remplie jusqu'à la dernière goutte", 'success');
         }
     }
 
@@ -165,7 +165,7 @@ export class ItemHealthProvider {
 
         if (player.metadata.disease === 'dyspepsie') {
             this.diseaseService.setPlayerDisease(source, false);
-            this.notifier.notify(source, 'Vous vous sentez moins balonner.', 'success');
+            this.notifier.notify(source, 'Vous vous sentez moins ballonné.', 'success');
         } else {
             this.notifier.notify(
                 source,
@@ -175,10 +175,33 @@ export class ItemHealthProvider {
         }
     }
 
+    public useHorrificLollipop(source: number, item: CommonItem, inventoryItem: InventoryItem) {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        if (
+            !this.inventoryManager.removeItemFromInventory(
+                source,
+                item.name,
+                1,
+                inventoryItem.metadata,
+                inventoryItem.slot
+            )
+        ) {
+            return;
+        }
+
+        TriggerClientEvent(ClientEvent.LSMC_HALLOWEEN_HORRIFIC_LOLLIPOP, source);
+    }
+
     @Once()
     public onStart() {
         this.item.setItemUseCallback('flask_pee_empty', this.useFlaskPee.bind(this));
         this.item.setItemUseCallback('antidepressant', this.useAntidepressant.bind(this));
         this.item.setItemUseCallback('antiacide', this.useAntiacide.bind(this));
+        this.item.setItemUseCallback('horrific_lollipop', this.useHorrificLollipop.bind(this));
     }
 }

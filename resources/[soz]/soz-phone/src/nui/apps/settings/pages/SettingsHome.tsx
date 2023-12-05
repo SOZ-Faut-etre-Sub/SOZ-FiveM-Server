@@ -1,7 +1,9 @@
+import { ChatAltIcon, PaperAirplaneIcon } from '@heroicons/react/outline';
 import {
     AdjustmentsIcon,
     BellIcon,
     ChevronRightIcon,
+    DeviceMobileIcon,
     EyeOffIcon,
     PencilIcon,
     PhoneIcon,
@@ -20,14 +22,14 @@ import { useQueryParams } from '../../../common/hooks/useQueryParams';
 import { deleteQueryFromLocation } from '../../../common/utils/deleteQueryFromLocation';
 import { usePhoneConfig } from '../../../config/hooks/usePhoneConfig';
 import { useConfig } from '../../../hooks/usePhone';
-import { useAvatar, usePhoneNumber } from '../../../hooks/useSimCard';
+import { useAvatar, usePhoneNumber, usePhoneSocietyNumber } from '../../../hooks/useSimCard';
 import { useApp } from '../../../os/apps/hooks/useApps';
 import { useSnackbar } from '../../../os/snackbar/hooks/useSnackbar';
 import { store } from '../../../store';
 import { AppContent } from '../../../ui/components/AppContent';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { ContactPicture } from '../../../ui/components/ContactPicture';
-import { MapSettingItem, SettingOption, useContextMenu } from '../../../ui/hooks/useContextMenu';
+import { MapAudioSettingItem, MapSettingItem, SettingOption, useContextMenu } from '../../../ui/hooks/useContextMenu';
 import { Button } from '../../../ui/old_components/Button';
 import { IContextMenuOption } from '../../../ui/old_components/ContextMenu';
 import { List } from '../../../ui/old_components/List';
@@ -39,6 +41,7 @@ export const SettingsHome = () => {
     const settingsApp = useApp('settings');
     const { pathname, search } = useLocation();
     const navigate = useNavigate();
+    const societyNumber = usePhoneSocietyNumber();
 
     const phoneConfig = usePhoneConfig();
     const myNumber = usePhoneNumber();
@@ -50,6 +53,10 @@ export const SettingsHome = () => {
     const { updateProfilePicture } = useSettingsAPI();
 
     const [openMenu, closeMenu, ContextMenu, isMenuOpen] = useContextMenu();
+
+    const canShowDynamicAlerts = (): boolean => {
+        return ['555-LSPD', '555-BCSO', '555-SASP', '555-FBI'].some(allowedNumber => allowedNumber === societyNumber);
+    };
 
     const handleSettingChange = (key: string | number, value: any) => {
         if (key === 'zoom') {
@@ -64,20 +71,36 @@ export const SettingsHome = () => {
 
         store.dispatch.phone.updateConfig({ ...config, [key]: value });
     };
-    // const frames = phoneConfig.frames.map(
-    //     MapSettingItem(config.frame, (val: SettingOption) => handleSettingChange('frame', val)),
-    // );
     const themes = phoneConfig.themes.map(
         MapSettingItem(config.theme, (val: SettingOption) => handleSettingChange('theme', val))
+    );
+    const dynamicAlertDurationOptions = phoneConfig.dynamicAlertDurationOptions.map(
+        MapSettingItem(config.dynamicAlertDuration, (val: SettingOption) =>
+            handleSettingChange('dynamicAlertDuration', val)
+        )
     );
     const zoomOptions = phoneConfig.zoomOptions.map(
         MapSettingItem(config.zoom, (val: SettingOption) => handleSettingChange('zoom', val))
     );
+    const textZoomOptions = phoneConfig.textZoomOptions.map(
+        MapSettingItem(config.textZoom, (val: SettingOption) => handleSettingChange('textZoom', val))
+    );
     const ringtones = phoneConfig.ringtones.map(
-        MapSettingItem(config.ringtone, (val: SettingOption) => handleSettingChange('ringtone', val))
+        MapAudioSettingItem(config.ringtone, (val: SettingOption) => handleSettingChange('ringtone', val), 'ringtones')
     );
     const notifications = phoneConfig.notiSounds.map(
-        MapSettingItem(config.notiSound, (val: SettingOption) => handleSettingChange('notiSound', val))
+        MapAudioSettingItem(
+            config.notiSound,
+            (val: SettingOption) => handleSettingChange('notiSound', val),
+            'notifications'
+        )
+    );
+    const societyNotifications = phoneConfig.notiSounds.map(
+        MapAudioSettingItem(
+            config.notiSound,
+            (val: SettingOption) => handleSettingChange('societyNotification', val),
+            'notifications'
+        )
     );
 
     const handleResetOptions = () => {
@@ -139,7 +162,49 @@ export const SettingsHome = () => {
                         icon={<PhoneIcon />}
                         color="bg-[#65C466]"
                     />
+                    <SettingSwitch
+                        label={t('SETTINGS.OPTIONS.HAND_FREE')}
+                        icon={<DeviceMobileIcon />}
+                        color="bg-[#ac5de8]"
+                        value={config.handsFree}
+                        onClick={curr => handleSettingChange('handsFree', !curr)}
+                    />
+                    <SettingSwitch
+                        label={t('SETTINGS.OPTIONS.PLANE_MODE')}
+                        icon={<PaperAirplaneIcon />}
+                        color="bg-[#FF6633]"
+                        value={config.planeMode}
+                        onClick={curr => handleSettingChange('planeMode', !curr)}
+                    />
                 </List>
+                {canShowDynamicAlerts() && (
+                    <>
+                        <List>
+                            <SettingSwitch
+                                label={t('SETTINGS.OPTIONS.DYNAMIC_ALERTS')}
+                                icon={<BellIcon />}
+                                color="bg-orange-500"
+                                value={config.dynamicAlert}
+                                onClick={curr => handleSettingChange('dynamicAlert', !curr)}
+                            />
+                            <SettingItem
+                                label={t('SETTINGS.OPTIONS.DYNAMIC_ALERTS_DURATION')}
+                                value={config.dynamicAlertDuration.label}
+                                options={dynamicAlertDurationOptions}
+                                onClick={openMenu}
+                                icon={<AdjustmentsIcon />}
+                                color="bg-[#5756CE]"
+                            />
+                            <SettingItemSlider
+                                label={t('SETTINGS.OPTIONS.DYNAMIC_ALERTS_VOLUME')}
+                                iconStart={<VolumeOffIcon />}
+                                iconEnd={<VolumeUpIcon />}
+                                value={config.dynamicAlertVol}
+                                onCommit={e => handleSettingChange('dynamicAlertVol', parseInt(e.target.value))}
+                            />
+                        </List>
+                    </>
+                )}
                 <List>
                     <SettingItem
                         label={t('SETTINGS.OPTIONS.RINGTONE')}
@@ -176,6 +241,23 @@ export const SettingsHome = () => {
                 </List>
                 <List>
                     <SettingItem
+                        label={t('SETTINGS.OPTIONS.SOCIETY_NOTIFICATION')}
+                        value={config.societyNotification.label}
+                        options={societyNotifications}
+                        onClick={openMenu}
+                        icon={<BellIcon />}
+                        color="bg-[#3d71ea]"
+                    />
+                    <SettingItemSlider
+                        label={t('SETTINGS.OPTIONS.NOTIFICATION_VOLUME')}
+                        iconStart={<VolumeOffIcon />}
+                        iconEnd={<VolumeUpIcon />}
+                        value={config.societyNotificationVol}
+                        onCommit={e => handleSettingChange('societyNotificationVol', parseInt(e.target.value))}
+                    />
+                </List>
+                <List>
+                    <SettingItem
                         label={t('SETTINGS.OPTIONS.THEME')}
                         value={config.theme.label}
                         options={themes}
@@ -198,6 +280,15 @@ export const SettingsHome = () => {
                         options={zoomOptions}
                         onClick={openMenu}
                         icon={<AdjustmentsIcon />}
+                        color="bg-[#5756CE]"
+                    />
+
+                    <SettingItem
+                        label={t('SETTINGS.OPTIONS.TEXT_ZOOM')}
+                        value={config.textZoom.label}
+                        options={textZoomOptions}
+                        onClick={openMenu}
+                        icon={<ChatAltIcon />}
                         color="bg-[#5756CE]"
                     />
                 </List>

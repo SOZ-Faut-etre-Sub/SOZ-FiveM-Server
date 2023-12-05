@@ -2,7 +2,7 @@ import { PhoneEvents } from '../../typings/phone';
 import { sendMessage } from '../utils/messages';
 import { animationService } from './animations/animation.controller';
 import { callService, initializeCallHandler } from './calls/cl_calls.controller';
-import { hidePhone, showPhone } from './cl_main';
+import { hidePhone, showPhone, updateAvailability } from './cl_main';
 import { verifyExportArgType } from './cl_utils';
 
 const exps = global.exports;
@@ -26,7 +26,7 @@ exps('setPhoneVisible', async (bool: boolean | number) => {
     const coercedType = !!bool;
 
     if (coercedType) await showPhone();
-    else await hidePhone();
+    else if (isPhoneOpen) await hidePhone();
 });
 
 // Getter equivalent of above
@@ -42,6 +42,7 @@ exps('setPhoneDisabled', (bool: boolean | number) => {
     verifyExportArgType('setPhoneVisible', bool, ['boolean', 'number']);
     const coercedType = !!bool;
     global.isPhoneDisabled = coercedType;
+    updateAvailability();
 });
 
 exps('isPhoneDisabled', () => global.isPhoneDisabled);

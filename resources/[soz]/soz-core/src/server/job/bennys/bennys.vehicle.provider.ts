@@ -1,0 +1,297 @@
+import { InventoryManager } from '@public/server/inventory/inventory.manager';
+
+import { OnEvent } from '../../../core/decorators/event';
+import { Inject } from '../../../core/decorators/injectable';
+import { Provider } from '../../../core/decorators/provider';
+import { ServerEvent } from '../../../shared/event';
+import { toVector3Object, Vector3 } from '../../../shared/polyzone/vector';
+import { ProgressAnimation, ProgressOptions } from '../../../shared/progress';
+import { Monitor } from '../../monitor/monitor';
+import { Notifier } from '../../notifier';
+import { PlayerService } from '../../player/player.service';
+import { ProgressService } from '../../player/progress.service';
+import { VehicleService } from '../../vehicle/vehicle.service';
+import { VehicleStateService } from '../../vehicle/vehicle.state.service';
+
+@Provider()
+export class BennysVehicleProvider {
+    @Inject(PlayerService)
+    private playerService: PlayerService;
+
+    @Inject(ProgressService)
+    private progressService: ProgressService;
+
+    @Inject(VehicleService)
+    private vehicleService: VehicleService;
+
+    @Inject(VehicleStateService)
+    private vehicleStateService: VehicleStateService;
+
+    @Inject(Notifier)
+    private notifier: Notifier;
+
+    @Inject(Monitor)
+    private monitor: Monitor;
+
+    @Inject(InventoryManager)
+    private inventoryManager: InventoryManager;
+
+    @OnEvent(ServerEvent.BENNYS_REPAIR_VEHICLE_ENGINE)
+    public async onRepairVehicleEngine(source: number, vehicleNetworkId: number) {
+        if (!this.inventoryManager.hasEnoughItem(source, 'repair_part_motor', 1)) {
+            this.notifier.error(source, `Vous n'avez pas de pièce de réparation moteur.`);
+
+            return;
+        }
+
+        const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
+        const damageDiff = 1000 - state.condition.engineHealth;
+        const repairTime = (damageDiff * 30000) / 1000 + 10000; // Between 10s and 40s
+
+        if (!(await this.doRepairVehicle(source, repairTime))) {
+            return;
+        }
+
+        this.inventoryManager.removeItemFromInventory(source, 'repair_part_motor', 1);
+
+        this.notifier.notify(source, `Le moteur a été réparé.`);
+
+        this.vehicleStateService.updateVehicleCondition(vehicleNetworkId, {
+            engineHealth: 1000,
+        });
+
+        this.monitor.publish(
+            'job_bennys_repair_vehicle',
+            {
+                player_source: source,
+                repair_type: 'engine',
+            },
+            {
+                vehicle_plate: state.volatile.plate,
+                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+            }
+        );
+    }
+
+    @OnEvent(ServerEvent.BENNYS_REPAIR_VEHICLE_BODY)
+    public async onRepairVehicleEngineBody(source: number, vehicleNetworkId: number) {
+        if (!this.inventoryManager.hasEnoughItem(source, 'repair_part_body', 1)) {
+            this.notifier.error(source, `Vous n'avez pas de pièce de réparation carosserie.`);
+
+            return;
+        }
+
+        const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
+        const damageDiff = 1000 - state.condition.bodyHealth;
+        const repairTime = (damageDiff * 30000) / 1000 + 10000; // Between 10s and 40s
+
+        if (!(await this.doRepairVehicle(source, repairTime))) {
+            return;
+        }
+
+        this.inventoryManager.removeItemFromInventory(source, 'repair_part_body', 1);
+
+        this.notifier.notify(source, `La carrosserie a été réparée.`);
+
+        this.vehicleStateService.updateVehicleCondition(vehicleNetworkId, {
+            bodyHealth: 1000,
+            doorStatus: {},
+            windowStatus: {},
+            dirtLevel: 0,
+        });
+
+        this.monitor.publish(
+            'job_bennys_repair_vehicle',
+            {
+                player_source: source,
+                repair_type: 'body',
+            },
+            {
+                vehicle_plate: state.volatile.plate,
+                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+            }
+        );
+    }
+
+    @OnEvent(ServerEvent.BENNYS_REPAIR_VEHICLE_TANK)
+    public async onRepairVehicleEngineTank(source: number, vehicleNetworkId: number) {
+        if (!this.inventoryManager.hasEnoughItem(source, 'repair_part_fuel_tank', 1)) {
+            this.notifier.error(source, `Vous n'avez pas de pièce de réparation réservoir.`);
+
+            return;
+        }
+
+        const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
+        const damageDiff = 1000 - state.condition.tankHealth;
+        const repairTime = (damageDiff * 30000) / 1000 + 10000; // Between 10s and 40s
+
+        if (!(await this.doRepairVehicle(source, repairTime))) {
+            return;
+        }
+
+        this.inventoryManager.removeItemFromInventory(source, 'repair_part_fuel_tank', 1);
+
+        this.notifier.notify(source, `Le réservoir d'essence a été réparé.`);
+
+        this.vehicleStateService.updateVehicleCondition(vehicleNetworkId, {
+            tankHealth: 1000,
+        });
+
+        this.monitor.publish(
+            'job_bennys_repair_vehicle',
+            {
+                player_source: source,
+                repair_type: 'tank',
+            },
+            {
+                vehicle_plate: state.volatile.plate,
+                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+            }
+        );
+    }
+
+    @OnEvent(ServerEvent.BENNYS_REPAIR_VEHICLE_WHEEL)
+    public async onRepairVehicleEngineWheel(source: number, vehicleNetworkId: number) {
+        const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
+        let repairTime = 10000;
+
+        for (const wheelIndexStr of Object.keys(state.condition.tireHealth)) {
+            const wheelIndex = parseInt(wheelIndexStr);
+
+            if (
+                state.condition.tireBurstCompletely[wheelIndex] ||
+                state.condition.tireBurstState[wheelIndex] ||
+                state.condition.tireHealth[wheelIndex] <= 950
+            ) {
+                repairTime += 10000;
+            }
+        }
+
+        if (
+            !(await this.doRepairVehicle(
+                source,
+                repairTime,
+                {
+                    dictionary: 'amb@world_human_vehicle_mechanic@male@base',
+                    name: 'base',
+                    options: {
+                        repeat: true,
+                    },
+                },
+                {
+                    headingEntity: {
+                        entity: vehicleNetworkId,
+                        heading: 180,
+                    },
+                }
+            ))
+        ) {
+            return;
+        }
+
+        this.notifier.notify(source, `Les roues ont été réparées.`);
+
+        this.vehicleStateService.updateVehicleCondition(vehicleNetworkId, {
+            tireTemporaryRepairDistance: {},
+            tireHealth: {},
+            tireBurstCompletely: {},
+            tireBurstState: {},
+        });
+
+        this.monitor.publish(
+            'job_bennys_repair_vehicle',
+            {
+                player_source: source,
+                repair_type: 'wheel',
+            },
+            {
+                vehicle_plate: state.volatile.plate,
+                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+            }
+        );
+    }
+
+    private async doRepairVehicle(
+        source: number,
+        repairTime: number,
+        animation: ProgressAnimation = null,
+        options: Partial<ProgressOptions> = null
+    ) {
+        if (!animation) {
+            animation = {
+                name: 'car_bomb_mechanic',
+                dictionary: 'mp_car_bomb',
+                options: {
+                    onlyUpperBody: true,
+                    repeat: true,
+                },
+            };
+        }
+
+        const { completed } = await this.progressService.progress(
+            source,
+            'repairing_vehicle',
+            'Réparation du véhicule...',
+            repairTime,
+            animation,
+            {
+                disableMovement: true,
+                disableCarMovement: true,
+                disableMouse: false,
+                disableCombat: true,
+                ...options,
+            }
+        );
+
+        if (!completed) {
+            this.notifier.notify(source, 'Vous avez interrompu la réparation du véhicule.');
+
+            return false;
+        }
+
+        return true;
+    }
+
+    @OnEvent(ServerEvent.BENNYS_WASH_VEHICLE)
+    public async onWashVehicle(source: number, vehicleNetworkId: number) {
+        const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
+        const { completed } = await this.progressService.progress(
+            source,
+            'cleaning_vehicle',
+            'Nettoyage du véhicule...',
+            5000,
+            {
+                task: 'WORLD_HUMAN_MAID_CLEAN',
+            },
+            {
+                disableMovement: true,
+                disableCarMovement: true,
+                disableMouse: false,
+                disableCombat: true,
+            }
+        );
+
+        if (!completed) {
+            this.notifier.notify(source, 'Vous avez interrompu le lavage du véhicule.');
+
+            return;
+        }
+
+        this.notifier.notify(source, `Le véhicule est bien lavé.`);
+
+        this.vehicleStateService.updateVehicleCondition(vehicleNetworkId, {
+            dirtLevel: 0,
+        });
+
+        this.monitor.publish(
+            'job_bennys_clean_vehicle',
+            {
+                player_source: source,
+            },
+            {
+                vehicle_plate: state.volatile.plate,
+                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+            }
+        );
+    }
+}

@@ -11,6 +11,7 @@ local function contains(tbl, value)
     else
         local matched_values = 0
         local values = 0
+
         for _, v1 in pairs(value) do
             values = values + 1
 
@@ -24,7 +25,7 @@ local function contains(tbl, value)
                 end
             end
         end
-        if matched_values == values then
+        if matched_values >= values then
             return true
         end
     end
@@ -68,5 +69,13 @@ local function table_deepclone(tbl)
     return tbl
 end
 table.deepclone = table_deepclone
+
+table.length = function(tbl)
+    local count = 0
+    for _ in pairs(tbl) do
+        count = count + 1
+    end
+    return count
+end
 
 return table

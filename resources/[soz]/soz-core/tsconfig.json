@@ -6,11 +6,23 @@
         "module": "CommonJS",
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
+        "resolveJsonModule": true,
         "jsx": "react-jsx",
         "skipLibCheck": true,
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": ".",
+        "paths": {
+            "@public/*": ["src/*"],
+            "@private/*": ["../../../../private/soz-core-src/*", "private/*"],
+            "@core/*": ["src/core/*"],
+        }
     },
     "include": [
-        "src/**/*"
+        "src/**/*",
+        "../../../../private/soz-core-src/**/*",
+        "private/**/*",
     ],
+    "ts-node": {
+        "swc": true
+    }
 }

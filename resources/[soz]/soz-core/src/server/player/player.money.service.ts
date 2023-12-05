@@ -6,7 +6,42 @@ export class PlayerMoneyService {
     @Inject(QBCore)
     private QBCore: QBCore;
 
-    public remove(source: number, money: number): boolean {
-        return this.QBCore.getPlayer(source).Functions.RemoveMoney('money', money);
+    public add(source: number, money: number, type: 'money' | 'marked_money' = 'money'): boolean {
+        if (isNaN(money)) {
+            return;
+        }
+        return this.QBCore.getPlayer(source).Functions.AddMoney(type, money);
+    }
+
+    public remove(source: number, money: number, type: 'money' | 'marked_money' = 'money'): boolean {
+        if (isNaN(money)) {
+            return;
+        }
+        return this.QBCore.getPlayer(source).Functions.RemoveMoney(type, money);
+    }
+
+    public get(source: number, type: 'money' | 'marked_money' = 'money'): number {
+        return this.QBCore.getPlayer(source).Functions.GetMoney(type);
+    }
+
+    public async transfer(
+        sourceAccount: string,
+        targetAccount: string,
+        amount: number,
+        timeout = 10000
+    ): Promise<boolean> {
+        const promise = new Promise<boolean>(resolve => {
+            TriggerEvent('banking:server:TransferMoney', sourceAccount, targetAccount, amount, (success: boolean) => {
+                resolve(success);
+            });
+        });
+
+        const timeoutPromise = new Promise<never>((_, reject) => {
+            setTimeout(() => {
+                reject(new Error('Promise timed out'));
+            }, timeout);
+        });
+
+        return Promise.race([promise, timeoutPromise]);
     }
 }

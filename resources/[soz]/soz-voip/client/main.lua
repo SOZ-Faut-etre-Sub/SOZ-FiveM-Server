@@ -1,4 +1,5 @@
 local voiceTarget = 1
+muted = false
 
 -- Call module
 CallModuleInstance = ModuleCall:new(Config.volumeCall)
@@ -131,7 +132,11 @@ local function GetFilterForPlayer(player)
         return "radio"
     end
 
-    return nil
+    if contains(player.context, "megaphone") then
+        return "megaphone"
+    end
+
+    return nil;
 end
 
 local function ApplyFilters(players)
@@ -150,7 +155,6 @@ local function ApplyFilters(players)
     for _, player in pairs(players) do
         if player.transmitting then
             local filterType = GetFilterForPlayer(player)
-
             if filterType == nil then
                 FilterRegistryInstance:remove(player.serverId)
             else
@@ -207,7 +211,8 @@ Citizen.CreateThread(function()
                 state.players[("player_%d"):format(data.serverId)] = {
                     serverId = data.serverId,
                     volume = -1.0,
-                    context = {"proximity"},
+                    context = {data.context},
+                    transmitting = data.transmitting,
                 }
             end
 
@@ -235,7 +240,9 @@ RegisterNetEvent("voip:client:reset", function()
     restarting = true
     Citizen.Wait(200)
 
-    exports["soz-hud"]:DrawNotification("Arret de la voip...", "info")
+    TriggerServerEvent("soz-core:server:monitor:add-event", "voip_restart", {}, {}, true)
+
+    exports["soz-core"]:DrawNotification("Arret de la voip...", "info")
 
     -- Clear last state
     lastState = {}
@@ -263,5 +270,28 @@ RegisterNetEvent("voip:client:reset", function()
 
     -- Allow voice loop to reinit state
     restarting = false
-    exports["soz-hud"]:DrawNotification("Voip réactivée.", "info")
+    exports["soz-core"]:DrawNotification("Voip réactivée.", "info")
+end)
+
+Citizen.CreateThread(function()
+    RequestAnimDict("facials@gen_female@base")
+    RequestAnimDict("mp_facial")
+
+    local talkingPlayers = {}
+    while true do
+        Citizen.Wait(300)
+        local player = PlayerId()
+
+        for k, v in pairs(GetActivePlayers()) do
+            local boolTalking = NetworkIsPlayerTalking(v) and (player ~= v or not muted)
+            if boolTalking then
+                PlayFacialAnim(GetPlayerPed(v), "mic_chatter", "mp_facial")
+                talkingPlayers[v] = true
+            elseif not boolTalking and talkingPlayers[v] then
+                -- shortest facial anim to stop mic_chatter animtation
+                PlayFacialAnim(GetPlayerPed(v), "dead_1", "facials@gen_female@base")
+                talkingPlayers[v] = nil
+            end
+        end
+    end
 end)

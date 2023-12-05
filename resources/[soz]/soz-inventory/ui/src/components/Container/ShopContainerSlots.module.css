@@ -1,0 +1,46 @@
+.Wrapper {
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: grid;
+    gap: 0.5rem;
+    background: rgba(0, 0, 0, .6);
+    padding: .5rem;
+    max-height: 50vh;
+    border-bottom-left-radius: .5rem;
+    border-bottom-right-radius: .5rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    pointer-events: all;
+}
+
+.Wrapper > * {
+    width: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 0.25rem;
+    box-sizing: border-box;
+}
+
+.Description {
+    padding: .5rem;
+    color: #fefefe;
+    font-size: 0.9rem;
+    left: 37vh;
+    top: 4rem;
+    min-width: 20rem;
+    max-width: 20rem;
+    position: absolute;
+    border-radius: .5rem;
+    background: rgba(0, 0, 0, .6);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.Description > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.Description > div small {
+    font-weight: lighter;
+    font-size: 0.7rem;
+}

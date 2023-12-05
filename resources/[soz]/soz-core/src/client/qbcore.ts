@@ -1,7 +1,7 @@
 import { Injectable } from '../core/decorators/injectable';
 import { Blip } from '../shared/blip';
 import { Item } from '../shared/item';
-import { Job, JobType } from '../shared/job';
+import { Job, JobPermission, JobType } from '../shared/job';
 import { PlayerData } from '../shared/player';
 
 @Injectable()
@@ -22,6 +22,10 @@ export class Qbcore {
         return this.QBCore.Functions.GetClosestPlayer();
     }
 
+    public getItems(): Item[] {
+        return Object.values(this.QBCore.Shared.Items);
+    }
+
     public getItem<T extends Item = Item>(name: string): T | null {
         return (this.QBCore.Shared.Items[name] as T) || null;
     }
@@ -38,6 +42,10 @@ export class Qbcore {
         this.QBCore.Functions.RemoveBlip(id);
     }
 
+    public hasBlip(id: string): boolean {
+        return !!this.QBCore.Functions.GetBlip(id);
+    }
+
     public getJobs(): Job[] {
         const jobs = this.SozJobCore.Jobs as { [key in JobType]: Job };
         if (!jobs) {
@@ -49,12 +57,7 @@ export class Qbcore {
     }
 
     // Temporary method that would be moved
-    public hasJobPermission(job: string, permission: string): boolean {
+    public hasJobPermission(job: string, permission: JobPermission): boolean {
         return this.SozJobCore.Functions.HasPermission(job, permission);
-    }
-
-    // Temporary method that would be moved
-    public getVehicleProperties(vehicle: number): any {
-        return this.QBCore.Functions.GetVehicleProperties(vehicle);
     }
 }

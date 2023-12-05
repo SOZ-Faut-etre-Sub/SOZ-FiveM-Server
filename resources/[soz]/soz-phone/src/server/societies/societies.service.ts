@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import {
     DBSocietyUpdate,
     PreDBSociety,
@@ -12,24 +14,34 @@ import { societiesLogger } from './societies.utils';
 
 class _SocietyService {
     private readonly contactsDB: _SocietiesDB;
+    private readonly qbCore: any;
+    private policeMessageCount: number;
 
     constructor() {
         this.contactsDB = SocietiesDb;
         societiesLogger.debug('Societies service started');
+        this.qbCore = global.exports['qb-core'].GetCoreObject();
+        this.policeMessageCount = 0;
     }
 
     createMessageBroadcastEvent(player: number, messageId: number, sourcePhone: string, data: PreDBSociety): void {
-        emitNet(SocietyEvents.CREATE_MESSAGE_BROADCAST, player, {
+        const qbCorePlayer = this.qbCore.Functions.GetPlayer(player);
+
+        const messageData = {
             id: messageId,
             conversation_id: data.number,
             source_phone: sourcePhone.includes('#') ? '' : sourcePhone,
             message: data.message,
+            htmlMessage: data.htmlMessage,
             position: data.pedPosition,
             isTaken: false,
             isDone: false,
-            muted: !Player(player).state.onDuty,
+            muted: !qbCorePlayer.PlayerData.job.onduty,
             createdAt: new Date().getTime(),
-        });
+            info: { ...data.info, notificationId: this.policeMessageCount, serviceNumber: data.number },
+        };
+
+        emitNet(SocietyEvents.CREATE_MESSAGE_BROADCAST, player, messageData);
     }
 
     replaceSocietyPhoneNumber(data: PreDBSociety, phoneSocietyNumber: string): PreDBSociety {
@@ -47,9 +59,18 @@ class _SocietyService {
         reqObj: PromiseRequest<PreDBSociety>,
         resp: PromiseEventResp<number>
     ): Promise<void> {
-        const player = PlayerService.getPlayer(reqObj.source);
+        let username: string = null;
+        let identifier: string = null;
+        if (reqObj.data.overrideIdentifier) {
+            username = reqObj.data.overrideIdentifier;
+            identifier = reqObj.data.overrideIdentifier;
+        } else {
+            const player = PlayerService.getPlayer(reqObj.source);
+            username = player?.username;
+            identifier = player.getPhoneNumber();
+        }
+
         const originalMessageNumber = reqObj.data.number;
-        let identifier = player.getPhoneNumber();
 
         if (reqObj.data.position) {
             const ped = GetPlayerPed(reqObj.source.toString());
@@ -62,18 +83,31 @@ class _SocietyService {
             identifier = `#${identifier}`;
         }
 
-        if (reqObj.data.number === '555-FBI') {
-            await global.exports['soz-utils'].SendHTTPRequest('discord_webhook_fbi', {
-                title: 'Federal Bureau of Investigation',
-                content: `**Nouveau message reçu : ** \`${player.getPhoneNumber()} - ${player.username}\` \`\`\`${
-                    reqObj.data.message
-                }\`\`\` `,
-            });
+        if (reqObj.data.number === '555-FBI' && username) {
+            const url = GetConvar('soz_api_endpoint', 'https://api.soz.zerator.com') + '/discord/send-fbi';
+            await axios.post(
+                url,
+                {
+                    phone: identifier,
+                    username: username,
+                    data: reqObj.data.message,
+                },
+                {
+                    auth: {
+                        username: GetConvar('soz_api_username', 'admin'),
+                        password: GetConvar('soz_api_password', 'admin'),
+                    },
+                }
+            );
         }
 
         try {
             const contact = await this.contactsDB.addSociety(identifier, reqObj.data);
             resp({ status: 'ok', data: contact });
+
+            if (['555-LSPD', '555-BCSO', '555-SASP', '555-POLICE'].includes(reqObj.data.number)) {
+                this.policeMessageCount++;
+            }
 
             const players = await PlayerService.getPlayersFromSocietyNumber(reqObj.data.number);
             players.forEach(player => {
@@ -101,6 +135,8 @@ class _SocietyService {
                     ),
                 };
 
+                this.policeMessageCount++;
+
                 [lspd, bcso]
                     .reduce((acc, val) => acc.concat(val), [])
                     .forEach(player => {
@@ -108,7 +144,10 @@ class _SocietyService {
                             player.source,
                             message[player.getSocietyPhoneNumber()],
                             identifier,
-                            this.addTagForSocietyMessage(reqObj.data, originalMessageNumber)
+                            this.replaceSocietyPhoneNumber(
+                                this.addTagForSocietyMessage(reqObj.data, originalMessageNumber),
+                                player.getSocietyPhoneNumber()
+                            )
                         );
                     });
             }
@@ -116,6 +155,7 @@ class _SocietyService {
             if (reqObj.data.number === '555-POLICE') {
                 const lspd = await PlayerService.getPlayersFromSocietyNumber('555-LSPD');
                 const bcso = await PlayerService.getPlayersFromSocietyNumber('555-BCSO');
+                const sasp = await PlayerService.getPlayersFromSocietyNumber('555-SASP');
                 const fbi = await PlayerService.getPlayersFromSocietyNumber('555-FBI');
 
                 const message: SocietyInsertDTO = {
@@ -133,6 +173,13 @@ class _SocietyService {
                             '555-BCSO'
                         )
                     ),
+                    '555-SASP': await this.contactsDB.addSociety(
+                        identifier,
+                        this.replaceSocietyPhoneNumber(
+                            this.addTagForSocietyMessage(reqObj.data, originalMessageNumber),
+                            '555-SASP'
+                        )
+                    ),
                     '555-FBI': await this.contactsDB.addSociety(
                         identifier,
                         this.replaceSocietyPhoneNumber(
@@ -142,19 +189,20 @@ class _SocietyService {
                     ),
                 };
 
-                [lspd, bcso, fbi]
+                [lspd, bcso, fbi, sasp]
                     .reduce((acc, val) => acc.concat(val), [])
                     .forEach(player => {
+                        const data = this.addTagForSocietyMessage(reqObj.data, originalMessageNumber);
                         this.createMessageBroadcastEvent(
                             player.source,
                             message[player.getSocietyPhoneNumber()],
                             identifier,
-                            this.addTagForSocietyMessage(reqObj.data, originalMessageNumber)
+                            data
                         );
                     });
             }
         } catch (e) {
-            societiesLogger.error(`Error in handleAddSociety, ${e.toString()}`);
+            societiesLogger.error(`Error in handleSendSocietyMessage, ${e.toString()}`);
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
         }
     }
@@ -173,28 +221,31 @@ class _SocietyService {
             resp({ status: 'ok', data: message });
 
             const societyMessage = await this.contactsDB.getMessage(reqObj.data.id);
-            if (societyMessage[0]) {
-                const player = await PlayerService.getPlayersFromNumber(
-                    societyMessage[0].source_phone.replace('#', '')
-                );
+            if (societyMessage) {
+                const player = await PlayerService.getPlayersFromNumber(societyMessage.source_phone.replace('#', ''));
                 if (player) {
-                    if (reqObj.data.take && !reqObj.data.done) {
+                    if (societyMessage.isTaken && !societyMessage.isDone) {
                         emitNet(
-                            'hud:client:DrawNotification',
+                            'soz-core:client:notification:draw',
                             player.source,
-                            "Votre ~b~appel~s~ vient d'être pris !",
-                            'info'
+                            `Votre ~b~appel~s~ au ${societyMessage.conversation_id} vient d'être pris !`,
+                            'info',
+                            10000
                         );
                     }
                 }
             }
 
+            if (societyMessage.source_phone.includes('#')) {
+                societyMessage.source_phone = '';
+            }
+
             const players = await PlayerService.getPlayersFromSocietyNumber(identifier);
             players.forEach(player => {
-                emitNet(SocietyEvents.RESET_SOCIETY_MESSAGES, player.source, null);
+                emitNet(SocietyEvents.UPDATE_SOCIETY_MESSAGE_SUCCESS, player.source, societyMessage);
             });
         } catch (e) {
-            societiesLogger.error(`Error in handleAddSociety, ${e.toString()}`);
+            societiesLogger.error(`Error in updateSocietyMessage, ${e.toString()}`);
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
         }
     }
@@ -216,7 +267,7 @@ class _SocietyService {
                 })),
             });
         } catch (e) {
-            societiesLogger.error(`Error in handleAddSociety, ${e.toString()}`);
+            societiesLogger.error(`Error in fetchSocietyMessages, ${e.toString()}`);
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
         }
     }
