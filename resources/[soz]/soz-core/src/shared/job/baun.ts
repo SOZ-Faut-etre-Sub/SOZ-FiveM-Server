@@ -378,7 +378,7 @@ export const BaunCraftsLists: Record<string, CraftCategory> = {
 export const BaunConfig = {
     Resell: {
         duration: 2000,
-        reward: 1000,
+        reward: 2000,
     },
     DURATIONS: {
         RESTOCKING: 4000,

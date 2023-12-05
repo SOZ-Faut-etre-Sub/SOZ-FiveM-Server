@@ -23,6 +23,7 @@ import {
 import { AnimationService } from '../animation/animation.service';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
+import { VehicleRepository } from '../repository/vehicle.repository';
 import { SoundService } from '../sound.service';
 import { VehicleSeatbeltProvider } from './vehicle.seatbelt.provider';
 import { VehicleService } from './vehicle.service';
@@ -162,6 +163,9 @@ export class VehicleLockProvider {
 
     @Inject(VehicleService)
     private vehicleService: VehicleService;
+
+    @Inject(VehicleRepository)
+    private vehicleRepository: VehicleRepository;
 
     @Inject(Notifier)
     private notifier: Notifier;
@@ -640,13 +644,14 @@ export class VehicleLockProvider {
     }
 
     @OnEvent(ClientEvent.VEHICLE_LOCKPICK)
-    public onLockpick(type: string) {
+    public onLockpick(type: string, model: number) {
         const coords = GetEntityCoords(PlayerPedId());
         const zoneID = GetNameOfZone(coords[0], coords[1], coords[2]);
         if (zoneID == 'ISHEIST') {
             return;
         }
         const zone = GetLabelText(zoneID);
+        const modelInfo = this.vehicleRepository.getByModelHash(model);
 
         const messages = [...LockPickAlertMessage.all, ...LockPickAlertMessage[type]];
 
@@ -655,8 +660,10 @@ export class VehicleLockProvider {
         TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
             anonymous: true,
             number: '555-POLICE',
-            message: message.replace('${0}', zone),
-            htmlMessage: message.replace('${0}', `<span {class}>${zone}</span>`),
+            message: message.replace('${0}', zone).replace('${1}', modelInfo.name),
+            htmlMessage: message
+                .replace('${0}', `<span {class}>${zone}</span>`)
+                .replace('${1}', `<span {class}>${modelInfo.name}</span>`),
             position: true,
             info: { type: 'auto-theft' },
             overrideIdentifier: 'System',

@@ -409,6 +409,9 @@ RegisterNetEvent("jobs:client:food:hunting", function(data)
     }, {}, {}, {}, function() -- Done
         if hasKnife then
             if DoesEntityExist(data.entity) then
+                local coords = GetEntityCoords(ped);
+                local zoneId = GetNameOfZone(coords);
+                TriggerServerEvent("soz-core:client:food:hunt", zoneId);
                 TriggerServerEvent("jobs:server:food:hunting", NetworkGetNetworkIdFromEntity(data.entity))
             end
         else
