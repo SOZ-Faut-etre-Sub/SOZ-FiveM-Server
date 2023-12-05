@@ -1,5 +1,19 @@
 ModuleProximityCulling = {}
 
+local megaphoneUsers = {}
+
+Citizen.CreateThread(function()
+    local players = exports["soz-core"]:GetPlayersMegaphoneInUse()
+
+    for _, serverId in pairs(players) do
+        megaphoneUsers[serverId] = true
+    end
+end)
+
+RegisterNetEvent("soz-core:client:voip:set-megaphone", function(playerServerId, value)
+    megaphoneUsers[playerServerId] = value
+end)
+
 function ModuleProximityCulling:new(range)
     self.__index = self
     return setmetatable({range = range, serverId = nil}, self)
@@ -19,14 +33,25 @@ function ModuleProximityCulling:getSpeakers()
     local players = GetActivePlayers()
     local speakers = {}
 
+    local localPlayerCoords = GetEntityCoords(PlayerPedId())
     for _, player in pairs(players) do
         local serverId = GetPlayerServerId(player)
 
         if self.serverId ~= serverId then
-            local distance = #(GetEntityCoords(PlayerPedId()) - GetEntityCoords(GetPlayerPed(player)))
+            local playerPed = GetPlayerPed(player)
+            local distance = #(localPlayerCoords - GetEntityCoords(playerPed))
+
+            local context = "proximity"
+            if megaphoneUsers[serverId] then
+                context = "megaphone"
+            end
 
             if distance < 50 then
-                speakers[(("player_%d"):format(serverId))] = {serverId = serverId, transmitting = true}
+                speakers[(("player_%d"):format(serverId))] = {
+                    serverId = serverId,
+                    transmitting = true,
+                    context = context,
+                }
             end
         end
     end

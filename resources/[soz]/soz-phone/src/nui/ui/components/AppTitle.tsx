@@ -9,11 +9,12 @@ import { useConfig } from '../../hooks/usePhone';
 interface AppTitleProps extends HTMLAttributes<HTMLDivElement> {
     app?: IApp;
     title?: string;
+    subtitle?: string;
     action?: JSX.Element;
     isBigHeader?: boolean;
 }
 
-export const AppTitle: React.FC<AppTitleProps> = ({ app, title, isBigHeader, action, children }) => {
+export const AppTitle: React.FC<AppTitleProps> = ({ app, title, subtitle, isBigHeader, action, children }) => {
     const [t] = useTranslation();
     const config = useConfig();
     const { pathname } = useLocation();
@@ -21,7 +22,7 @@ export const AppTitle: React.FC<AppTitleProps> = ({ app, title, isBigHeader, act
     return (
         <div
             className={cn('px-5 transition-all duration-300 ease-in-out pb-2', {
-                'bg-black': config.theme.value === 'dark' || pathname.includes('/camera'),
+                'bg-ios-800': config.theme.value === 'dark' || pathname.includes('/camera'),
                 'bg-ios-50': config.theme.value === 'light' && !pathname.includes('/camera'),
             })}
         >
@@ -32,18 +33,21 @@ export const AppTitle: React.FC<AppTitleProps> = ({ app, title, isBigHeader, act
                     'pt-8 text-3xl': isBigHeader,
                     'pt-3 text-2xl': !isBigHeader,
                     'text-xl': children,
+                    'grid-rows-2': subtitle != null,
+                    'grid-rows-1': subtitle == null,
                 })}
             >
                 {children && <div className="flex items-center text-[#347DD9]">{children}</div>}
                 <div
                     className={cn('truncate', {
                         'col-span-4 text-left': !children && !action,
-                        'col-span-2 text-center': children && action,
+                        'col-span-2 text-center': children,
                     })}
                 >
                     {title ? title : t(app.nameLocale)}
                 </div>
                 {action && <div className="justify-self-end text-[#347DD9] font-normal text-base">{action}</div>}
+                {subtitle != null && <div className={cn('truncate text-center text-sm col-span-4')}>{subtitle}</div>}
             </h2>
         </div>
     );

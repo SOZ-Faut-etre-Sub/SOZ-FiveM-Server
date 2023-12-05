@@ -1,6 +1,7 @@
-function NotifyPaycheck(playerID)
-    TriggerClientEvent("hud:client:DrawAdvancedNotification", playerID, "Maze Banque", "Mouvement bancaire",
-                       "Un versement vient d'être réalisé sur votre compte", "CHAR_BANK_MAZE")
+function NotifyPaycheck(playerID, isOnDuty, amount)
+    TriggerClientEvent("soz-core:client:notification:draw-advanced", playerID, "Maze Banque", "Mouvement bancaire", "Votre salaire ~g~" ..
+                           (isOnDuty and "en service" or "hors-service") .. "~s~ de ~g~" .. amount .. "$~s~ vient d'être versé sur votre compte",
+                       "CHAR_BANK_MAZE")
 end
 
 function PaycheckLoop()
@@ -14,21 +15,21 @@ function PaycheckLoop()
         if Player.PlayerData.metadata["injail"] == 0 and Player.PlayerData.job and payment > 0 then
             if Player.PlayerData.job.id == SozJobCore.JobType.Unemployed then
                 Account.AddMoney(Player.PlayerData.charinfo.account, payment)
-                NotifyPaycheck(Player.PlayerData.source)
+                NotifyPaycheck(Player.PlayerData.source, Player.PlayerData.job.onduty, payment)
 
-                TriggerEvent("monitor:server:event", "paycheck", {player_source = Player.PlayerData.source}, {
+                exports["soz-core"]:Event("paycheck", {player_source = Player.PlayerData.source}, {
                     amount = tonumber(payment),
                 })
             else
                 if not Player.PlayerData.job.onduty then
-                    payment = math.ceil(payment / 2)
+                    payment = math.ceil(payment * 30 / 100)
                 end
 
                 Account.TransfertMoney(Player.PlayerData.job.id, Player.PlayerData.charinfo.account, payment, function(success, reason)
                     if success then
-                        NotifyPaycheck(Player.PlayerData.source)
+                        NotifyPaycheck(Player.PlayerData.source, Player.PlayerData.job.onduty, payment)
 
-                        TriggerEvent("monitor:server:event", "paycheck", {player_source = Player.PlayerData.source}, {
+                        exports["soz-core"]:Event("paycheck", {player_source = Player.PlayerData.source}, {
                             amount = tonumber(payment),
                         })
                     else

@@ -1,9 +1,10 @@
-import { BankService } from '../../../client/bank/bank.service';
 import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
 import { isErr, isOk } from '../../../shared/result';
+import { VehicleConfiguration } from '../../../shared/vehicle/modification';
+import { BankService } from '../../bank/bank.service';
 import { PrismaService } from '../../database/prisma.service';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
@@ -27,7 +28,7 @@ export class BennysResellProvider {
     private estimationService: EstimationService;
 
     @OnEvent(ServerEvent.BENNYS_SELL_VEHICLE)
-    public async onSellVehicle(source: number, networkId: number, properties: any) {
+    public async onSellVehicle(source: number, networkId: number, configuration: VehicleConfiguration) {
         const entity = NetworkGetEntityFromNetworkId(networkId);
         const hash = GetEntityModel(entity);
         const plate = GetVehicleNumberPlateText(entity).trim();
@@ -37,7 +38,7 @@ export class BennysResellProvider {
             return;
         }
 
-        const vehicle = await this.prismaService.vehicles.findFirst({
+        const vehicle = await this.prismaService.vehicle.findFirst({
             where: {
                 hash: hash,
             },
@@ -48,7 +49,7 @@ export class BennysResellProvider {
             return;
         }
 
-        const playerVehicle = await this.prismaService.player_vehicles.findFirst({
+        const playerVehicle = await this.prismaService.playerVehicle.findFirst({
             where: {
                 plate: plate,
             },
@@ -58,19 +59,23 @@ export class BennysResellProvider {
             return;
         }
 
-        const result = await this.estimationService.estimateVehicle(source, networkId, properties);
+        const result = await this.estimationService.estimateVehicle(source, networkId, configuration);
+
         if (isErr(result)) {
             this.notifier.notify(source, result.err, 'error');
             return;
         }
 
         const sellPrice = result.ok / 2;
+        const gainPrice = result.ok * 0.1;
 
         const cashTransferResult = await this.bankService.transferCashMoney('bennys_reseller', source, sellPrice);
-        if (isOk(cashTransferResult)) {
+        const bennysGain = await this.bankService.transferBankMoney('bennys_reseller', 'safe_bennys', gainPrice);
+
+        if (isOk(cashTransferResult) && isOk(bennysGain)) {
             this.notifier.notify(source, `Vous avez vendu ce véhicule pour ~g~$${sellPrice.toLocaleString()}~s~.`);
             DeleteEntity(entity);
-            await this.prismaService.player_vehicles.delete({
+            await this.prismaService.playerVehicle.delete({
                 where: {
                     plate: plate,
                 },
@@ -83,6 +88,7 @@ export class BennysResellProvider {
                     item_id: vehicle.model,
                 },
             });
+
             if (player_purchase) {
                 await this.prismaService.player_purchases.delete({
                     where: {
@@ -90,7 +96,8 @@ export class BennysResellProvider {
                     },
                 });
             }
-            await this.prismaService.concess_storage.update({
+
+            await this.prismaService.vehicle.update({
                 where: {
                     model: vehicle.model,
                 },

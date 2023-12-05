@@ -16,7 +16,6 @@ import {
 
 export type SkinSubMenuProps = {
     banner: string;
-    updateState: (namespace: 'skin', key: keyof SkinSubMenuProps['state'], value: any) => void;
     state: {
         clothConfig: Outfit;
         maxOptions: {
@@ -64,14 +63,14 @@ const TRANSLATED_INDEXES: Record<string, string> = {
     BodyArmor: 'Armure',
     Decals: 'Décalques',
     Tops: 'Hauts',
-    Hats: 'Chapeaux',
+    Hat: 'Chapeau',
     Glasses: 'Lunettes',
     Ear: 'Accessoires oreilles',
     LeftHand: 'Bras gauche',
     RightHand: 'Bras droit',
 };
 
-export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, updateState, state }) => {
+export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, state }) => {
     const [currentDrawable, setCurrentDrawable] = useState<number>(0);
 
     useNuiEvent(
@@ -116,8 +115,6 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, updat
                 component.Texture = value;
                 break;
         }
-
-        updateState('skin', 'clothConfig', state.clothConfig);
 
         await fetchNui(NuiEvent.AdminMenuSkinChangeComponent, {
             componentIndex,
@@ -170,7 +167,7 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, updat
                         Changer l'apparence du personnage
                     </MenuItemButton>
                     <MenuItemSelect
-                        title={`Liste d'apparence prédéfini`}
+                        title={`Liste d'apparences prédéfinies`}
                         onConfirm={async selectedIndex => {
                             const value = SKIN_OPTIONS[selectedIndex].value;
                             await fetchNui(NuiEvent.AdminMenuSkinChangeAppearance, value);
@@ -253,7 +250,7 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, updat
                             )
                                 .fill(0)
                                 .map((_, index) => (
-                                    <MenuItemSelectOption key={`${componentIndex}_drawable_${index}`}>
+                                    <MenuItemSelectOption value={index} key={`${componentIndex}_drawable_${index}`}>
                                         {index}
                                     </MenuItemSelectOption>
                                 ))}
@@ -268,7 +265,7 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, updat
                             {Array(26)
                                 .fill(0)
                                 .map((_, index) => (
-                                    <MenuItemSelectOption key={`${componentIndex}_texture_${index}`}>
+                                    <MenuItemSelectOption value={index} key={`${componentIndex}_texture_${index}`}>
                                         {index}
                                     </MenuItemSelectOption>
                                 ))}
@@ -301,7 +298,7 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, updat
                                 .fill(0)
                                 .fill(0)
                                 .map((_, index) => (
-                                    <MenuItemSelectOption key={`${propIndex}_drawable_${index}`}>
+                                    <MenuItemSelectOption value={index} key={`${propIndex}_drawable_${index}`}>
                                         {index}
                                     </MenuItemSelectOption>
                                 ))}
@@ -316,7 +313,7 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, updat
                             {Array(26)
                                 .fill(0)
                                 .map((_, index) => (
-                                    <MenuItemSelectOption key={`${propIndex}_texture_${index}`}>
+                                    <MenuItemSelectOption value={index} key={`${propIndex}_texture_${index}`}>
                                         {index}
                                     </MenuItemSelectOption>
                                 ))}

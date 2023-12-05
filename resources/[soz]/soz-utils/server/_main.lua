@@ -2,7 +2,7 @@ QBCore = exports["qb-core"]:GetCoreObject()
 
 QBCore.Commands.Add("id", "Check Your ID #", {}, false, function(source, args)
     local src = source
-    TriggerClientEvent("hud:client:DrawNotification", src, "ID: " .. src)
+    TriggerClientEvent("soz-core:client:notification:draw", src, "ID: " .. src)
 end)
 
 QBCore.Functions.CreateCallback("smallresources:server:GetCurrentPlayers", function(source, cb)
@@ -40,8 +40,8 @@ RegisterNetEvent("core:server:zoneIntrusion", function(zone)
         print(("[SOZ REPORTER] Intrusion de %s dans la zone: %s"):format(Player.Functions.GetName(), zone))
     end
 
-    TriggerEvent("monitor:server:event", "zone_intrusion", {player_source = Player.PlayerData.source, zone = zone},
-                 {position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))})
+    exports["soz-core"]:Event("zone_intrusion", {player_source = Player.PlayerData.source, zone = zone},
+                              {position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))})
 end)
 
 exports("SendHTTPRequest", function(convar, data)

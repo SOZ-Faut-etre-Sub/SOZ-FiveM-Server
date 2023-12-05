@@ -3,7 +3,7 @@ import React from 'react';
 
 import { useConfig } from '../../hooks/usePhone';
 
-export const ListItem = ({ ...props }) => {
+export const ListItem = ({ children, ...props }) => {
     const config = useConfig();
 
     return (
@@ -15,7 +15,7 @@ export const ListItem = ({ ...props }) => {
             })}
             {...props}
         >
-            {props.children}
+            {children}
         </li>
     );
 };

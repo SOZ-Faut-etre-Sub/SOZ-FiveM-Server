@@ -6,38 +6,24 @@ import { useCall } from '@os/call/hooks/useCall';
 import { AppContent } from '@ui/components/AppContent';
 import { Button } from '@ui/old_components/Button';
 import cn from 'classnames';
-import React, { useMemo, useState } from 'react';
+import React, { FunctionComponent, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import { useContact } from '../../../hooks/useContact';
 import { useConfig } from '../../../hooks/usePhone';
-import { RootState } from '../../../store';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { ContactPicture } from '../../../ui/components/ContactPicture';
-import { SearchField } from '../../../ui/old_components/SearchField';
+import { SearchField } from '../../../ui/components/SearchField';
 
-export const ContactList: React.FC = () => {
+export const ContactList: FunctionComponent<{ skipTitle?: boolean }> = ({ skipTitle = false }) => {
     const contactsApp = useApp('contacts');
 
+    const { getFilteredContacts } = useContact();
     const [searchValue, setSearchValue] = useState<string>('');
-    const contacts = useSelector((state: RootState) => state.simCard.contacts);
     const filteredContacts = useMemo(() => {
-        const list = [];
-        const regExp = new RegExp(searchValue.replace(/[^a-zA-Z\d]/g, ''), 'gi');
-
-        contacts
-            .filter(contact => contact?.display?.match(regExp) || contact.number.match(regExp))
-            .forEach(contact => {
-                const letter = (contact.display ? contact.display[0] : '#').toUpperCase();
-                if (list[letter] === undefined) {
-                    list[letter] = [];
-                }
-                list[letter].push(contact);
-            });
-
-        return list;
-    }, [contacts, searchValue]);
+        return getFilteredContacts(searchValue);
+    }, [getFilteredContacts, searchValue]);
 
     const [t] = useTranslation();
     const navigate = useNavigate();
@@ -60,16 +46,18 @@ export const ContactList: React.FC = () => {
 
     return (
         <>
-            <AppTitle
-                app={contactsApp}
-                action={
-                    !pathname.match(pathTemplate) && (
-                        <PlusIcon className="h-6 w-6 cursor-pointer" onClick={() => navigate('/contacts/-1')} />
-                    )
-                }
-            >
-                <div />
-            </AppTitle>
+            {!skipTitle && (
+                <AppTitle
+                    app={contactsApp}
+                    action={
+                        !pathname.match(pathTemplate) && (
+                            <PlusIcon className="h-6 w-6 cursor-pointer" onClick={() => navigate('/contacts/-1')} />
+                        )
+                    }
+                >
+                    <div />
+                </AppTitle>
+            )}
             <AppContent aria-label="Directory">
                 <SearchField
                     placeholder={t('CONTACTS.PLACEHOLDER_SEARCH_CONTACTS')}
@@ -82,7 +70,7 @@ export const ContactList: React.FC = () => {
                         <div key={letter} className="relative">
                             <div
                                 className={cn('sticky top-0 pt-4 px-6 py-1 text-sm font-medium', {
-                                    'bg-black text-gray-400': config.theme.value === 'dark',
+                                    'bg-ios-800 text-gray-400': config.theme.value === 'dark',
                                     'bg-ios-50 text-gray-600': config.theme.value === 'light',
                                 })}
                             >
@@ -101,14 +89,14 @@ export const ContactList: React.FC = () => {
                                             key={contact.id}
                                             as="li"
                                             className={cn('w-full cursor-pointer', {
-                                                'bg-black': config.theme.value === 'dark',
+                                                'bg-ios-800': config.theme.value === 'dark',
                                                 'bg-ios-50': config.theme.value === 'light',
                                             })}
                                         >
                                             <Menu.Button className="w-full">
                                                 <div
                                                     className={cn('relative px-6 py-2 flex items-center space-x-3', {
-                                                        'hover:bg-gray-900': config.theme.value === 'dark',
+                                                        'hover:bg-ios-600': config.theme.value === 'dark',
                                                         'hover:bg-gray-200': config.theme.value === 'light',
                                                     })}
                                                 >
@@ -118,7 +106,7 @@ export const ContactList: React.FC = () => {
                                                     <div className="flex-1 min-w-0 cursor-pointer">
                                                         <span className="absolute inset-0" aria-hidden="true" />
                                                         <p
-                                                            className={cn('text-left text-sm font-medium', {
+                                                            className={cn('text-left text-sm font-medium truncate', {
                                                                 'text-gray-100': config.theme.value === 'dark',
                                                                 'text-gray-600': config.theme.value === 'light',
                                                             })}
@@ -137,7 +125,7 @@ export const ContactList: React.FC = () => {
                                                 leaveTo="transform scale-95 opacity-0"
                                                 className="absolute z-50 right-0 w-56"
                                             >
-                                                <Menu.Items className="mt-2 origin-top-right bg-black bg-opacity-70 divide-y divide-gray-600 divide-opacity-50 rounded-md shadow-lg focus:outline-none">
+                                                <Menu.Items className="mt-2 origin-top-right bg-ios-800 bg-opacity-70 divide-y divide-gray-600 divide-opacity-50 rounded-md shadow-lg focus:outline-none">
                                                     <Menu.Item>
                                                         <Button
                                                             className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"

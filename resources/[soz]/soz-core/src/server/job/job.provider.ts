@@ -1,23 +1,28 @@
-import { Qbcore } from '../../client/qbcore';
-import { OnEvent } from '../../core/decorators/event';
+import { OnEvent } from '@public/core/decorators/event';
+import { ServerEvent } from '@public/shared/event';
+import { JobType } from '@public/shared/job';
+
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
-import { ServerEvent } from '../../shared/event';
 import { Job } from '../../shared/job';
-import { RpcEvent } from '../../shared/rpc';
+import { toVector3Object, Vector3 } from '../../shared/polyzone/vector';
+import { RpcServerEvent } from '../../shared/rpc';
 import { PrismaService } from '../database/prisma.service';
-import { InventoryManager } from '../item/inventory.manager';
+import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
+import { JobService } from '../job.service';
+import { Monitor } from '../monitor/monitor';
+import { Notifier } from '../notifier';
+import { PlayerMoneyService } from '../player/player.money.service';
 import { PlayerService } from '../player/player.service';
-
 @Provider()
 export class JobProvider {
     @Inject(PrismaService)
     private prismaService: PrismaService;
 
-    @Inject(Qbcore)
-    private QBCore: Qbcore;
+    @Inject(JobService)
+    private jobService: JobService;
 
     @Inject(ItemService)
     private itemService: ItemService;
@@ -28,9 +33,18 @@ export class JobProvider {
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
 
-    @Rpc(RpcEvent.JOB_GET_JOBS)
+    @Inject(PlayerMoneyService)
+    private playerMoneyService: PlayerMoneyService;
+
+    @Inject(Notifier)
+    private notifier: Notifier;
+
+    @Inject(Monitor)
+    private monitor: Monitor;
+
+    @Rpc(RpcServerEvent.JOB_GET_JOBS)
     public async getJobs(): Promise<Job[]> {
-        const jobs = this.QBCore.getJobs();
+        const jobs = this.jobService.getJobs();
 
         const grades = await this.prismaService.job_grades.findMany({
             orderBy: {
@@ -38,34 +52,63 @@ export class JobProvider {
             },
         });
 
-        grades
-            .filter(grade => grade.owner > 0)
-            .forEach(grade => {
-                const job = jobs.find(j => j.id === grade.jobId);
-                if (job) {
-                    if (typeof job.grades === 'object') {
-                        job.grades = Object.values(job.grades);
-                    }
-                    if (!job.grades.find(g => g.id === grade.id)) {
-                        job.grades.push({
-                            id: grade.id,
-                            jobId: grade.jobId,
-                            salary: grade.salary,
-                            name: grade.name,
-                            is_default: grade.is_default === 1,
-                            owner: grade.owner,
-                            permissions: JSON.parse(grade.permissions),
-                            weight: grade.weight,
-                        });
-                    }
-                }
+        for (const job of Object.values(jobs)) {
+            job.grades = [];
+        }
+
+        for (const grade of grades) {
+            const job = jobs[grade.jobId];
+
+            if (job) {
+                job.grades.push({
+                    id: grade.id,
+                    jobId: grade.jobId,
+                    salary: grade.salary,
+                    name: grade.name,
+                    is_default: grade.is_default === 1,
+                    owner: grade.owner,
+                    permissions: JSON.parse(grade.permissions),
+                    weight: grade.weight,
+                });
+                job.id = grade.jobId;
+            }
+        }
+
+        return Object.values(jobs).map(job => {
+            if (job.grades.length > 0) {
+                return job;
+            }
+
+            job.grades.push({
+                id: 0,
+                jobId: job.id,
+                salary: 0,
+                name: 'Défaut',
+                is_default: true,
+                owner: 1,
+                permissions: [],
+                weight: 0,
             });
 
-        return jobs.filter(job => job.grades.length > 0);
+            return job;
+        });
     }
 
-    @OnEvent(ServerEvent.JOBS_USE_WORK_CLOTHES)
+    @Rpc(RpcServerEvent.JOBS_USE_WORK_CLOTHES)
     public async useWorkClothes(source: number, storageId: string) {
-        this.inventoryManager.removeItemFromInventory(storageId, 'work_clothes', 1);
+        return this.inventoryManager.removeItemFromInventory(storageId, 'work_clothes', 1);
+    }
+
+    @OnEvent(ServerEvent.QBCORE_SET_DUTY, false)
+    public onToggleDuty(jobid: JobType, onDuty: boolean, source: number) {
+        this.monitor.publish(
+            onDuty ? 'job_onduty' : 'job_offduty',
+            {
+                player_source: source,
+            },
+            {
+                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+            }
+        );
     }
 }

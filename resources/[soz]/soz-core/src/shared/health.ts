@@ -7,6 +7,10 @@ export enum LabelStrategy {
 }
 
 export const stressLevelToLabel = (level: number | null): string => {
+    if (level === null) {
+        return 'N/A';
+    }
+
     if (level < 40) {
         return 'bon';
     }

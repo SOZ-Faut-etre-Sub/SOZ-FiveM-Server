@@ -3,8 +3,9 @@ PoliceJob.Animations = {}
 RegisterNetEvent("police:client:HandCuffAnimation", function()
     local ped = PlayerPedId()
     local lib = "mp_arrest_paired"
+    local playerState = exports["soz-core"]:GetPlayerState()
 
-    TriggerServerEvent("InteractSound_SV:PlayOnSource", LocalPlayer.state.isHandcuffed and "Cuff" or "Uncuff", 0.2)
+    TriggerServerEvent("InteractSound_SV:PlayOnSource", playerState.isHandcuffed and "Cuff" or "Uncuff", 0.2)
     QBCore.Functions.RequestAnimDict(lib)
 
     Wait(100)
@@ -23,12 +24,23 @@ RegisterNetEvent("police:client:UnCuffAnimation", function()
     TaskPlayAnim(ped, lib, "a_uncuff", 8.0, -8.0, 3000, 48, 0, 0, 0, 0)
 end)
 
-RegisterNetEvent("police:client:RedCall", function()
-    local ped = PlayerPedId()
-    local lib = "oddjobs@assassinate@guard"
-
-    QBCore.Functions.RequestAnimDict(lib)
-    TaskPlayAnim(ped, lib, "unarmed_earpiece_a", 8.0, -8.0, 6000, 48, 0, 1, 1, 1)
+RegisterNetEvent("police:client:RedCall", function(societyNumber, msg, htmlMsg)
+    QBCore.Functions.Progressbar("job:police:red-call", "Code rouge en cours ...", 5000, true, true,
+                                 {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {animDict = "oddjobs@assassinate@guard", anim = "unarmed_earpiece_a", flags = 48}, {}, {}, function() -- Done
+        TriggerServerEvent("phone:sendSocietyMessage", "phone:sendSocietyMessage:" .. QBCore.Shared.UuidV4(), {
+            anonymous = false,
+            number = societyNumber,
+            message = msg,
+            htmlMessage = htmlMsg,
+            info = {type = "red-alert"},
+            position = true,
+        })
+    end)
 end)
 
 PoliceJob.Animations.GetCuffed = function(playerId)
@@ -52,11 +64,14 @@ CreateThread(function()
     while true do
         Wait(1)
 
-        if LocalPlayer.state.isLoggedIn then
-            if LocalPlayer.state.isEscorted or PlayerData.metadata["ishandcuffed"] then
+        if PlayerData and PlayerData.metadata then
+            local playerState = exports["soz-core"]:GetPlayerState()
+
+            if playerState.isEscorted or PlayerData.metadata["ishandcuffed"] then
                 DisableAllControlActions(0)
 
                 --- Camera
+                EnableControlAction(0, 0, true)
                 EnableControlAction(0, 1, true)
                 EnableControlAction(0, 2, true)
 
@@ -81,7 +96,7 @@ CreateThread(function()
                 end
             end
 
-            if not PlayerData.metadata["ishandcuffed"] and not LocalPlayer.state.isEscorted then
+            if not PlayerData.metadata["ishandcuffed"] and not playerState.isEscorted then
                 Wait(2000)
             end
         end

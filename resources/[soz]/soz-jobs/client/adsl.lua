@@ -92,20 +92,7 @@ AddEventHandler("jobs:adsl:fix", function()
 end)
 
 local function SpawnVehicule()
-    local ModelHash = "utillitruck3"
-    local model = GetHashKey(ModelHash)
-    if not IsModelInCdimage(model) then
-        return
-    end
-    RequestModel(model)
-    while not HasModelLoaded(model) do
-        Citizen.Wait(10)
-    end
-    adsl_vehicule = CreateVehicle(model, SozJobCore.adsl_vehicule.x, SozJobCore.adsl_vehicule.y, SozJobCore.adsl_vehicule.z, SozJobCore.adsl_vehicule.w, true,
-                                  false)
-    SetModelAsNoLongerNeeded(model)
-    VehPlate = QBCore.Functions.GetPlate(adsl_vehicule)
-    TriggerServerEvent("vehiclekeys:server:SetVehicleOwner", VehPlate)
+
 end
 
 RegisterNetEvent("jobs:adsl:begin")
@@ -117,17 +104,35 @@ end)
 
 RegisterNetEvent("jobs:adsl:tenue")
 AddEventHandler("jobs:adsl:tenue", function()
-    TriggerServerEvent("job:anounce", "Sortez le véhicule")
-    JobOutfit = true
+    QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
+        disableMovement = true,
+        disableCombat = true,
+    }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
+        TriggerServerEvent("soz-character:server:SetPlayerJobClothes", SozJobCore.adsl_clothes[PlayerData.skin.Model.Hash])
+        TriggerServerEvent("job:anounce", "Sortez le véhicule")
+        JobOutfit = true
+    end)
 end)
 
 RegisterNetEvent("jobs:adsl:vehicle")
 AddEventHandler("jobs:adsl:vehicle", function()
     TriggerServerEvent("job:anounce", "Montez dans le véhicule de service")
-    SpawnVehicule()
+    TriggerServerEvent("soz-core:server:vehicle:free-job-spawn", "utillitruck3",
+                       {
+        SozJobCore.adsl_vehicule.x,
+        SozJobCore.adsl_vehicule.y,
+        SozJobCore.adsl_vehicule.z,
+        SozJobCore.adsl_vehicule.w,
+    }, "jobs:adsl:vehicle-spawn")
+end)
+
+RegisterNetEvent("jobs:adsl:vehicle-spawn")
+AddEventHandler("jobs:adsl:vehicle-spawn", function(vehicleNetId)
+    adsl_vehicule = NetworkGetEntityFromNetworkId(vehicleNetId)
+
     JobVehicle = true
     createblip("Véhicule", "Montez dans le véhicule", 225, SozJobCore.adsl_vehicule)
-    local player = GetPlayerPed(-1)
+    local player = PlayerPedId()
     while InVehicle == false do
         Citizen.Wait(100)
         if IsPedInVehicle(player, adsl_vehicule, true) == 1 then
@@ -178,19 +183,18 @@ AddEventHandler("jobs:adsl:start", function()
     DrawDistance = 100
     while DrawDistance >= 50 do
         Citizen.Wait(1000)
-        local player = GetPlayerPed(-1)
+        local player = PlayerPedId()
         local CoordPlayer = GetEntityCoords(player)
         DrawDistance = GetDistanceBetweenCoords(CoordPlayer.x, CoordPlayer.y, CoordPlayer.z, ObjectifCoord.x, ObjectifCoord.y, ObjectifCoord.z)
     end
     DrawInteractionMarker(ObjectifCoord, true)
 end)
 
-RegisterNetEvent("jobs:adsl:end")
-AddEventHandler("jobs:adsl:end", function()
+local function close()
     TriggerServerEvent("job:set:unemployed")
     local money = SozJobCore.adsl_payout * payout_counter
     TriggerServerEvent("job:payout", money)
-    QBCore.Functions.DeleteVehicle(adsl_vehicule)
+    DeleteVehicule(adsl_vehicule)
     exports["qb-target"]:RemoveZone("adsl_zone")
     destroyblip(job_blip)
     OnJob = false
@@ -199,4 +203,19 @@ AddEventHandler("jobs:adsl:end", function()
     JobCounter = 0
     payout_counter = 0
     DrawDistance = 0
+end
+
+RegisterNetEvent("jobs:adsl:end")
+AddEventHandler("jobs:adsl:end", function()
+    if JobOutfit then
+        QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
+            disableMovement = true,
+            disableCombat = true,
+        }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
+            TriggerServerEvent("soz-character:server:SetPlayerJobClothes", nil)
+            close()
+        end)
+    else
+        close()
+    end
 end)

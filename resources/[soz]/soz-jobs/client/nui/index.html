@@ -49,6 +49,7 @@
             chasselas: ["#91873A", "#CCBE56", "#D9D06F", "#AB9D4F"],
             centennial: ["#708736", "#B1CC66", "#C1D98D", "#95AB4F"],
             petrol: ["#3B88C3", "#269", "#99AAB5"],
+            disable: ["#505050", "#505050", "#505050"],
         };
 
         function setVisible(newValue) {
@@ -86,7 +87,7 @@
 
             const icons = healthString
                 .split("")
-                .map(char => char === "0" ? "✖️" : ICON_TYPE[fieldType](COLORSETS[fieldType]));
+                .map(char => char === "0" ? ICON_TYPE[fieldType](COLORSETS["disable"]) : ICON_TYPE[fieldType](COLORSETS[fieldType]));
 
             el.innerHTML = icons.join("");
             setVisible(true);

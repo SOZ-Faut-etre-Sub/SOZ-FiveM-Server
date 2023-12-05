@@ -44,4 +44,6 @@ Locations["binco"] = {
                          {name = "binco6", heading = 90, minZ = 37.22, maxZ = 40.22, debugPoly = LocationDebugPoly}),
     [7] = BoxZone:Create(vector3(-1102.01, 2709.77, 19.11), 14.6, 13.2,
                          {name = "binco7", heading = 132, minZ = 18.11, maxZ = 21.11, debugPoly = LocationDebugPoly}),
+    [8] = BoxZone:Create(vector3(5001.54, -5120.84, 2.61), 15.00, 13.60,
+                         {name = "binco8", heading = 340, minZ = 1.61, maxZ = 4.61, debugPoly = LocationDebugPoly}),
 }

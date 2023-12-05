@@ -53,7 +53,7 @@ QBCore.Commands.Add('tp', 'TP To Player or Coords (Admin Only)', { { name = 'id/
             local coords = GetEntityCoords(target)
             TriggerClientEvent('QBCore:Command:TeleportToPlayer', src, coords)
         else
-            TriggerClientEvent('hud:client:DrawNotification', src, 'Joueur non trouvé', "error")
+            TriggerClientEvent('soz-core:client:notification:draw', src, 'Joueur non trouvé', "error")
         end
     else
         if args[1] and args[2] and args[3] then
@@ -63,18 +63,18 @@ QBCore.Commands.Add('tp', 'TP To Player or Coords (Admin Only)', { { name = 'id/
             if (x ~= 0) and (y ~= 0) and (z ~= 0) then
                 TriggerClientEvent('QBCore:Command:TeleportToCoords', src, x, y, z)
             else
-                TriggerClientEvent('hud:client:DrawNotification', src, 'Format non valide', "error")
+                TriggerClientEvent('soz-core:client:notification:draw', src, 'Format non valide', "error")
             end
         else
-            TriggerClientEvent('hud:client:DrawNotification', src, 'Format non valide', "error")
+            TriggerClientEvent('soz-core:client:notification:draw', src, 'Format non valide', "error")
         end
     end
-end, 'admin')
+end, 'helper')
 
 QBCore.Commands.Add('tpm', 'TP To Marker (Admin Only)', {}, false, function(source)
     local src = source
     TriggerClientEvent('QBCore:Command:GoToMarker', src)
-end, 'admin')
+end, 'helper')
 
 
 QBCore.Commands.Add('togglepvp', 'Toggle PVP on the server (Admin Only)', {}, false, function(source)
@@ -84,23 +84,6 @@ QBCore.Commands.Add('togglepvp', 'Toggle PVP on the server (Admin Only)', {}, fa
     TriggerClientEvent('QBCore:Client:PvpHasToggled', -1, QBConfig.Server.pvp)
 end, 'admin')
 
--- Vehicle
-
-QBCore.Commands.Add('car', 'Spawn Vehicle (Admin Only)', { { name = 'model', help = 'Model name of the vehicle' } }, true, function(source, args)
-    local src = source
-    TriggerClientEvent('QBCore:Command:SpawnVehicle', src, args[1])
-end, 'staff')
-
-QBCore.Commands.Add('var', 'Vehicle variation (Admin Only)', { { name = 'id', help = 'vehicle livery' } }, true, function(source, args)
-    local src = source
-    TriggerClientEvent('QBCore:Command:VehicleVariation', src, args[1])
-end, 'staff')
-
-QBCore.Commands.Add('dv', 'Delete Vehicle (Admin Only)', {}, false, function(source)
-    local src = source
-    TriggerClientEvent('QBCore:Command:DeleteVehicle', src)
-end, 'staff')
-
 -- Money
 
 QBCore.Commands.Add('givemoney', 'Give A Player Money (Admin Only)', { { name = 'id', help = 'Player ID' }, { name = 'moneytype', help = 'Type of money (money, marked_money)' }, { name = 'amount', help = 'Amount of money' } }, true, function(source, args)
@@ -109,7 +92,7 @@ QBCore.Commands.Add('givemoney', 'Give A Player Money (Admin Only)', { { name = 
     if Player then
         Player.Functions.AddMoney(tostring(args[2]), tonumber(args[3]))
     else
-        TriggerClientEvent('hud:client:DrawNotification', src, 'Joueur non trouvé', "error")
+        TriggerClientEvent('soz-core:client:notification:draw', src, 'Joueur non trouvé', "error")
     end
 end, 'admin')
 
@@ -119,7 +102,7 @@ QBCore.Commands.Add('setmoney', 'Set Players Money Amount (Admin Only)', { { nam
     if Player then
         Player.Functions.SetMoney(tostring(args[2]), tonumber(args[3]))
     else
-        TriggerClientEvent('hud:client:DrawNotification', src, 'Joueur non trouvé', "error")
+        TriggerClientEvent('soz-core:client:notification:draw', src, 'Joueur non trouvé', "error")
     end
 end, 'admin')
 
@@ -128,7 +111,7 @@ end, 'admin')
 QBCore.Commands.Add('job', 'Check Your Job', {}, false, function(source)
     local src = source
     local PlayerJob = QBCore.Functions.GetPlayer(src).PlayerData.job
-    TriggerClientEvent('hud:client:DrawNotification', src, string.format('[Job]: %s [Grade]: %s [On Duty]: %s', PlayerJob.id, PlayerJob.grade, PlayerJob.onduty))
+    TriggerClientEvent('soz-core:client:notification:draw', src, string.format('[Job]: %s [Grade]: %s [On Duty]: %s', PlayerJob.id, PlayerJob.grade, PlayerJob.onduty))
 end, 'user')
 
 QBCore.Commands.Add('setjob', 'Set A Players Job (Admin Only)', { { name = 'id', help = 'Player ID' }, { name = 'job', help = 'Job name' }, { name = 'grade', help = 'Grade' } }, true, function(source, args)
@@ -137,7 +120,7 @@ QBCore.Commands.Add('setjob', 'Set A Players Job (Admin Only)', { { name = 'id',
     if Player then
         Player.Functions.SetJob(tostring(args[2]), tostring(args[3]))
     else
-        TriggerClientEvent('hud:client:DrawNotification', src, 'Joueur non trouvé', "error")
+        TriggerClientEvent('soz-core:client:notification:draw', src, 'Joueur non trouvé', "error")
     end
 end, 'admin')
 
@@ -146,7 +129,7 @@ end, 'admin')
 QBCore.Commands.Add('gang', 'Check Your Gang', {}, false, function(source)
     local src = source
     local PlayerGang = QBCore.Functions.GetPlayer(source).PlayerData.gang
-    TriggerClientEvent('hud:client:DrawNotification', src, string.format('[Gang]: %s [Grade]: %s', PlayerGang.label, PlayerGang.grade.name))
+    TriggerClientEvent('soz-core:client:notification:draw', src, string.format('[Gang]: %s [Grade]: %s', PlayerGang.label, PlayerGang.grade.name))
 end, 'user')
 
 QBCore.Commands.Add('setgang', 'Set A Players Gang (Admin Only)', { { name = 'id', help = 'Player ID' }, { name = 'gang', help = 'Name of a gang' }, { name = 'grade', help = 'Grade' } }, true, function(source, args)
@@ -155,7 +138,7 @@ QBCore.Commands.Add('setgang', 'Set A Players Gang (Admin Only)', { { name = 'id
     if Player then
         Player.Functions.SetGang(tostring(args[2]), tonumber(args[3]))
     else
-        TriggerClientEvent('hud:client:DrawNotification', src, 'Joueur non trouvé', "error")
+        TriggerClientEvent('soz-core:client:notification:draw', src, 'Joueur non trouvé', "error")
     end
 end, 'admin')
 

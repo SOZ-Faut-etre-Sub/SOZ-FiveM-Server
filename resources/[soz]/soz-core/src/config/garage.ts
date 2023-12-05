@@ -1,0 +1,2494 @@
+import { JobType } from '../shared/job';
+import { BoxZone } from '../shared/polyzone/box.zone';
+import { Garage, GarageCategory, GarageType, PlaceCapacity } from '../shared/vehicle/garage';
+
+export const GarageList: Record<string, Omit<Garage, 'id'>> = {
+    motel: {
+        name: 'Motel Parking',
+        legacyId: 'motelgarage',
+        type: GarageType.Private,
+        category: GarageCategory.Car,
+        zone: new BoxZone([279.6615905761719, -348.95648193359375, 44.939395904541016], 0.8, 1, {
+            heading: 340,
+            minZ: 43.939395904541016,
+            maxZ: 46.939395904541016,
+        }),
+        parkingPlaces: [
+            new BoxZone([298.83, -333.19, 44.92], 6, 4, {
+                heading: 70,
+                minZ: 43.92,
+                maxZ: 47.92,
+            }),
+            new BoxZone([295.41, -342.99, 44.92], 6, 4, {
+                heading: 70,
+                minZ: 43.92,
+                maxZ: 47.92,
+            }),
+            new BoxZone([266.27, -332.19, 44.92], 6, 4, {
+                heading: 70,
+                minZ: 43.92,
+                maxZ: 47.92,
+            }),
+            new BoxZone([269.85, -322.48, 44.92], 6, 4, {
+                heading: 70,
+                minZ: 43.92,
+                maxZ: 47.92,
+            }),
+            new BoxZone([282.91, -323.71, 44.92], 6, 4, {
+                heading: 70,
+                minZ: 43.92,
+                maxZ: 47.92,
+            }),
+            new BoxZone([285.78, -335.88, 44.92], 6, 4, {
+                heading: 70,
+                minZ: 43.92,
+                maxZ: 47.92,
+            }),
+        ],
+    },
+    multicolor_parking: {
+        name: 'Multicolor Parking',
+        legacyId: 'spanishave',
+        type: GarageType.Private,
+        category: GarageCategory.Car,
+        zone: new BoxZone([-1180.13232421875, -724.5946655273438, 20.72418212890625], 0.8, 1, {
+            heading: 40,
+            minZ: 19.72418212890625,
+            maxZ: 22.72418212890625,
+        }),
+        parkingPlaces: [
+            new BoxZone([-1202.06, -729.73, 21.16], 6, 4, {
+                heading: 310,
+                minZ: 20.16,
+                maxZ: 24.16,
+            }),
+            new BoxZone([-1186.35, -742.68, 20.1], 6, 4, {
+                heading: 310,
+                minZ: 19.1,
+                maxZ: 23.1,
+            }),
+            new BoxZone([-1141.51, -740.48, 20.11], 6, 4, {
+                heading: 290,
+                minZ: 19.11,
+                maxZ: 23.11,
+            }),
+            new BoxZone([-1143.48, -748.56, 19.2], 6, 4, {
+                heading: 290,
+                minZ: 18.2,
+                maxZ: 22.2,
+            }),
+            new BoxZone([-1131.74, -752.44, 19.58], 6, 4, {
+                heading: 290,
+                minZ: 18.58,
+                maxZ: 22.58,
+            }),
+            new BoxZone([-1131.07, -763.37, 18.57], 6, 4, {
+                heading: 290,
+                minZ: 17.57,
+                maxZ: 21.57,
+            }),
+        ],
+    },
+    great_ocean: {
+        name: 'Great Ocean Parking',
+        legacyId: 'greatoceanp',
+        type: GarageType.Private,
+        category: GarageCategory.Car,
+        zone: new BoxZone([1466.4776611328125, 6547.7509765625, 14.575380325317383], 1, 0.8, {
+            heading: 0,
+            minZ: 13.575380325317383,
+            maxZ: 16.575380325317383,
+        }),
+        parkingPlaces: [
+            new BoxZone([1459.62, 6560.63, 13.42], 6, 4, {
+                heading: 275,
+                minZ: 11.42,
+                maxZ: 16.42,
+            }),
+            new BoxZone([1458.36, 6571.11, 13.52], 6, 4, {
+                heading: 275,
+                minZ: 11.52,
+                maxZ: 16.52,
+            }),
+            new BoxZone([1456.24, 6581.96, 12.63], 6, 4, {
+                heading: 310,
+                minZ: 10.63,
+                maxZ: 15.63,
+            }),
+            new BoxZone([1446.12, 6589.4, 12.73], 6, 4, {
+                heading: 350,
+                minZ: 10.73,
+                maxZ: 15.73,
+            }),
+            new BoxZone([1382.51, 6587.28, 13.21], 6, 4, {
+                heading: 35,
+                minZ: 10.21,
+                maxZ: 16.21,
+            }),
+            new BoxZone([1374.48, 6580.13, 13.08], 6, 4, {
+                heading: 65,
+                minZ: 10.08,
+                maxZ: 16.08,
+            }),
+            new BoxZone([1371.12, 6558.75, 14.47], 6, 4, {
+                heading: 275,
+                minZ: 11.47,
+                maxZ: 17.47,
+            }),
+            new BoxZone([1415.42, 6593.6, 13.19], 6, 4, {
+                heading: 0,
+                minZ: 11.19,
+                maxZ: 16.19,
+            }),
+        ],
+    },
+    sandy_shore: {
+        name: 'Sandy Shores Parking',
+        legacyId: 'sandyshores',
+        type: GarageType.Private,
+        category: GarageCategory.Car,
+        zone: new BoxZone([1508.1689453125, 3764.2041015625, 33.99585723876953], 0.8, 1, {
+            heading: 20,
+            minZ: 32.99585723876953,
+            maxZ: 35.99585723876953,
+        }),
+        parkingPlaces: [
+            new BoxZone([1542.85, 3780.37, 34.05], 6, 4, {
+                heading: 30,
+                minZ: 33.05,
+                maxZ: 37.05,
+            }),
+            new BoxZone([1523.44, 3767.25, 34.05], 6, 4, {
+                heading: 45,
+                minZ: 33.05,
+                maxZ: 37.05,
+            }),
+            new BoxZone([1516.91, 3763.2, 34.05], 6, 4, {
+                heading: 15,
+                minZ: 33.05,
+                maxZ: 37.05,
+            }),
+            new BoxZone([1497.69, 3760.17, 33.91], 6, 4, {
+                heading: 35,
+                minZ: 32.91,
+                maxZ: 36.91,
+            }),
+            new BoxZone([1484.04, 3751.61, 33.77], 6, 4, {
+                heading: 30,
+                minZ: 32.77,
+                maxZ: 36.77,
+            }),
+            new BoxZone([1458.49, 3737.92, 33.52], 6, 4, {
+                heading: 30,
+                minZ: 32.52,
+                maxZ: 36.52,
+            }),
+            new BoxZone([1446.82, 3732.24, 33.44], 6, 4, {
+                heading: 20,
+                minZ: 32.44,
+                maxZ: 36.44,
+            }),
+            new BoxZone([1549.85, 3784.22, 34.12], 6, 4, {
+                heading: 30,
+                minZ: 33.12,
+                maxZ: 37.12,
+            }),
+        ],
+    },
+    airport_private: {
+        name: 'Airport Private Parking',
+        legacyId: 'airportprivate',
+        type: GarageType.Private,
+        category: GarageCategory.Car,
+        zone: new BoxZone([-985.0497436523438, -2690.776123046875, 13.830677032470703], 1.2, 1.4, {
+            heading: 15,
+            minZ: 12.830677032470703,
+            maxZ: 15.830677032470703,
+        }),
+        parkingPlaces: [
+            new BoxZone([-989.38, -2706.55, 13.83], 6, 4, {
+                heading: 330,
+                minZ: 12.83,
+                maxZ: 16.83,
+            }),
+            new BoxZone([-960.53, -2709.54, 13.83], 6, 4, {
+                heading: 10,
+                minZ: 12.83,
+                maxZ: 16.83,
+            }),
+            new BoxZone([-976.07, -2691.2, 13.85], 6, 4, {
+                heading: 330,
+                minZ: 12.85,
+                maxZ: 16.85,
+            }),
+            new BoxZone([-970.34, -2694.46, 13.85], 6, 4, {
+                heading: 330,
+                minZ: 12.85,
+                maxZ: 16.85,
+            }),
+            new BoxZone([-961.64, -2699.48, 13.83], 6, 4, {
+                heading: 330,
+                minZ: 12.83,
+                maxZ: 16.83,
+            }),
+            new BoxZone([-976.82, -2710.44, 13.87], 6, 4, {
+                heading: 350,
+                minZ: 12.87,
+                maxZ: 16.87,
+            }),
+        ],
+    },
+    airport_public_air: {
+        name: 'Airport Public Air Parking',
+        legacyId: 'airport_air',
+        type: GarageType.Public,
+        category: GarageCategory.Air,
+        zone: new BoxZone([-1160.5179443359375, -2854.087646484375, 13.946089744567871], 1, 0.8, {
+            heading: 330,
+            minZ: 12.946089744567871,
+            maxZ: 15.946089744567871,
+        }),
+        parkingPlaces: [
+            new BoxZone([-1178.3, -2845.74, 13.95], 14.0, 13.8, {
+                heading: 330,
+                minZ: 12.95,
+                maxZ: 23.95,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([-1145.94, -2864.44, 13.95], 13.8, 13.8, {
+                heading: 330,
+                minZ: 12.95,
+                maxZ: 23.95,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([-1112.61, -2883.89, 13.95], 13.8, 13.8, {
+                heading: 330,
+                minZ: 12.95,
+                maxZ: 23.95,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
+    chumash: {
+        name: 'Chumash Parking',
+        legacyId: 'chumashp',
+        type: GarageType.Private,
+        category: GarageCategory.Car,
+        zone: new BoxZone([-3132.887451171875, 1105.3194580078125, 20.640737533569336], 1, 0.8, {
+            heading: 355,
+            minZ: 19.640737533569336,
+            maxZ: 22.640737533569336,
+        }),
+        parkingPlaces: [
+            new BoxZone([-3164.37, 1067.13, 20.68], 6, 4, {
+                heading: 280,
+                minZ: 19.67,
+                maxZ: 23.67,
+            }),
+            new BoxZone([-3139.69, 1078.75, 20.67], 6, 4, {
+                heading: 80,
+                minZ: 19.67,
+                maxZ: 23.67,
+            }),
+            new BoxZone([-3152.04, 1092.59, 20.7], 6, 4, {
+                heading: 280,
+                minZ: 19.7,
+                maxZ: 23.7,
+            }),
+            new BoxZone([-3137.17, 1094.5, 20.69], 6, 4, {
+                heading: 80,
+                minZ: 19.69,
+                maxZ: 23.69,
+            }),
+            new BoxZone([-3141.37, 1117.16, 20.69], 6, 4, {
+                heading: 280,
+                minZ: 19.69,
+                maxZ: 23.69,
+            }),
+            new BoxZone([-3158.21, 1081.02, 20.69], 6, 4, {
+                heading: 280,
+                minZ: 19.67,
+                maxZ: 23.67,
+            }),
+        ],
+    },
+    stadium: {
+        name: 'Stadium Parking',
+        legacyId: 'stadiump',
+        type: GarageType.Private,
+        category: GarageCategory.Car,
+        zone: new BoxZone([-75.52303314208984, -2006.92431640625, 18.016948699951172], 1.2, 1, {
+            heading: 350,
+            minZ: 17.016948699951172,
+            maxZ: 20.016948699951172,
+        }),
+        parkingPlaces: [
+            new BoxZone([-93.46, -2009.54, 18.02], 6, 4, {
+                heading: 355,
+                minZ: 17.02,
+                maxZ: 21.02,
+            }),
+            new BoxZone([-97.17, -1986.03, 18.02], 6, 4, {
+                heading: 355,
+                minZ: 17.02,
+                maxZ: 21.02,
+            }),
+            new BoxZone([-77.06, -2028.21, 18.02], 6, 4, {
+                heading: 350,
+                minZ: 17.02,
+                maxZ: 21.02,
+            }),
+            new BoxZone([-67.19, -2008.96, 18.02], 6, 4, {
+                heading: 20,
+                minZ: 17.02,
+                maxZ: 21.02,
+            }),
+            new BoxZone([-50.57, -2001.02, 18.02], 6, 4, {
+                heading: 290,
+                minZ: 17.02,
+                maxZ: 21.02,
+            }),
+            new BoxZone([-88.86, -2003.37, 18.02], 6, 4, {
+                heading: 355,
+                minZ: 17.02,
+                maxZ: 21.02,
+            }),
+        ],
+    },
+    diamond: {
+        name: 'Diamond Parking',
+        legacyId: 'diamondp',
+        type: GarageType.Private,
+        category: GarageCategory.Car,
+        zone: new BoxZone([889.802490234375, -0.5692340731620789, 78.76500701904297], 0.8, 1, {
+            heading: 25,
+            minZ: 77.76500701904297,
+            maxZ: 80.76500701904297,
+        }),
+        parkingPlaces: [
+            new BoxZone([872.32, 9.04, 78.76], 6, 4, {
+                heading: 330,
+                minZ: 77.76,
+                maxZ: 81.76,
+            }),
+            new BoxZone([878.32, 5.4, 78.76], 6, 4, {
+                heading: 330,
+                minZ: 77.76,
+                maxZ: 81.76,
+            }),
+            new BoxZone([879.48, -21.8, 78.76], 6, 4, {
+                heading: 60,
+                minZ: 77.76,
+                maxZ: 81.76,
+            }),
+            new BoxZone([862.64, -23.5, 78.76], 6, 4, {
+                heading: 60,
+                minZ: 77.76,
+                maxZ: 81.76,
+            }),
+            new BoxZone([884.68, -53.54, 78.76], 6, 4, {
+                heading: 60,
+                minZ: 77.76,
+                maxZ: 81.76,
+            }),
+            new BoxZone([906.19, -34.53, 78.76], 6, 4, {
+                heading: 55,
+                minZ: 77.76,
+                maxZ: 81.76,
+            }),
+            new BoxZone([882.4, -31.85, 78.76], 6, 4, {
+                heading: 60,
+                minZ: 77.76,
+                maxZ: 81.76,
+            }),
+            new BoxZone([852.19, -25.13, 78.76], 6, 4, {
+                heading: 60,
+                minZ: 77.76,
+                maxZ: 81.76,
+            }),
+        ],
+    },
+    laguna: {
+        name: 'Laguna Parking',
+        legacyId: 'lagunapi',
+        type: GarageType.Private,
+        category: GarageCategory.Car,
+        zone: new BoxZone([363.34515380859375, 296.7437744140625, 103.4406509399414], 1, 0.8, {
+            heading: 340,
+            minZ: 102.4406509399414,
+            maxZ: 105.4406509399414,
+        }),
+        parkingPlaces: [
+            new BoxZone([382.73, 292.21, 103.09], 6, 4, {
+                heading: 345,
+                minZ: 102.09,
+                maxZ: 106.09,
+            }),
+            new BoxZone([391.74, 280.71, 103.0], 6, 4, {
+                heading: 70,
+                minZ: 102.0,
+                maxZ: 106.0,
+            }),
+            new BoxZone([374.87, 283.68, 103.19], 6, 4, {
+                heading: 340,
+                minZ: 102.0,
+                maxZ: 106.0,
+            }),
+            new BoxZone([375.86, 274.4, 103.06], 6, 4, {
+                heading: 340,
+                minZ: 102.0,
+                maxZ: 106.0,
+            }),
+            new BoxZone([363.89, 270.1, 103.19], 6, 4, {
+                heading: 340,
+                minZ: 102.0,
+                maxZ: 106.0,
+            }),
+            new BoxZone([358.75, 286.18, 103.37], 6, 4, {
+                heading: 70,
+                minZ: 102.0,
+                maxZ: 106.0,
+            }),
+        ],
+    },
+    beach: {
+        name: 'Beach Parking',
+        legacyId: 'beachp',
+        type: GarageType.Private,
+        category: GarageCategory.Car,
+        zone: new BoxZone([-1176.115478515625, -1503.5909423828125, 4.379672050476074], 0.8, 1, {
+            heading: 35,
+            minZ: 3.379672050476074,
+            maxZ: 6.379672050476074,
+        }),
+        parkingPlaces: [
+            new BoxZone([-1177.07, -1491.71, 4.38], 6, 3, {
+                heading: 305,
+                minZ: 3.5,
+                maxZ: 7.5,
+            }),
+            new BoxZone([-1196.37, -1497.11, 4.38], 5.8, 3, {
+                heading: 305,
+                minZ: 3.5,
+                maxZ: 7.5,
+            }),
+            new BoxZone([-1191.87, -1470.34, 4.38], 6, 3, {
+                heading: 305,
+                minZ: 3.5,
+                maxZ: 7.5,
+            }),
+            new BoxZone([-1182.27, -1483.97, 4.38], 6, 3, {
+                heading: 305,
+                minZ: 3.5,
+                maxZ: 7.5,
+            }),
+            new BoxZone([-1184.78, -1492.95, 4.38], 6, 3, {
+                heading: 305,
+                minZ: 3.5,
+                maxZ: 7.5,
+            }),
+            new BoxZone([-1192.01, -1482.64, 4.38], 6, 3, {
+                heading: 305,
+                minZ: 3.5,
+                maxZ: 7.5,
+            }),
+        ],
+    },
+    the_motor_hotel: {
+        name: 'The Motor Hotel Parking',
+        legacyId: 'themotorhotel',
+        type: GarageType.Private,
+        category: GarageCategory.Car,
+        zone: new BoxZone([1134.453857421875, 2664.171142578125, 38.00752639770508], 1, 0.8, {
+            heading: 0,
+            minZ: 37.00752639770508,
+            maxZ: 40.00752639770508,
+        }),
+        parkingPlaces: [
+            new BoxZone([1135.32, 2647.61, 38.0], 6, 4, {
+                heading: 0,
+                minZ: 37.0,
+                maxZ: 41.0,
+            }),
+            new BoxZone([1127.67, 2647.67, 38.0], 6, 4, {
+                heading: 0,
+                minZ: 37.0,
+                maxZ: 41.0,
+            }),
+            new BoxZone([1120.49, 2647.63, 38.0], 6, 4, {
+                heading: 0,
+                minZ: 37.0,
+                maxZ: 41.0,
+            }),
+            new BoxZone([1112.09, 2654.12, 38.0], 6, 4, {
+                heading: 90,
+                minZ: 37.0,
+                maxZ: 41.0,
+            }),
+            new BoxZone([1105.58, 2663.18, 38.17], 6, 4, {
+                heading: 0,
+                minZ: 37.0,
+                maxZ: 41.0,
+            }),
+            new BoxZone([1098.11, 2663.28, 38.06], 6, 4, {
+                heading: 0,
+                minZ: 37.0,
+                maxZ: 41.0,
+            }),
+        ],
+    },
+    marina_drive: {
+        name: 'Marina Drive Parking',
+        legacyId: 'marinadrive',
+        type: GarageType.Private,
+        category: GarageCategory.Car,
+        zone: new BoxZone([953.9990234375, 3608.52490234375, 32.83208465576172], 1, 0.8, {
+            heading: 0,
+            minZ: 31.83208465576172,
+            maxZ: 34.83208465576172,
+        }),
+        parkingPlaces: [
+            new BoxZone([951.33, 3622.81, 32.44], 6, 4, {
+                heading: 90,
+                minZ: 31.44,
+                maxZ: 35.44,
+            }),
+            new BoxZone([951.31, 3619.1, 32.54], 6, 4, {
+                heading: 90,
+                minZ: 31.5,
+                maxZ: 35.5,
+            }),
+            new BoxZone([951.56, 3615.45, 32.6], 6, 4, {
+                heading: 90,
+                minZ: 31.6,
+                maxZ: 35.6,
+            }),
+        ],
+    },
+    shambles: {
+        name: 'Shambles Parking',
+        legacyId: 'shambles',
+        type: GarageType.Private,
+        category: GarageCategory.Car,
+        zone: new BoxZone([999.439270019531, -2362.814453125, 30.509550094604492], 1, 1, {
+            heading: 355,
+            minZ: 29.509550094604492,
+            maxZ: 32.50955009460449,
+        }),
+        parkingPlaces: [
+            new BoxZone([1002.62, -2319.83, 30.51], 6, 3, {
+                heading: 265,
+                minZ: 29.51,
+                maxZ: 33.51,
+            }),
+            new BoxZone([1000.92, -2332.31, 30.51], 6, 3, {
+                heading: 265,
+                minZ: 29.51,
+                maxZ: 33.51,
+            }),
+            new BoxZone([1000.07, -2350.93, 30.51], 5.8, 3, {
+                heading: 85,
+                minZ: 29.51,
+                maxZ: 33.51,
+            }),
+            new BoxZone([1027.69, -2322.57, 30.51], 6, 3, {
+                heading: 265,
+                minZ: 29.51,
+                maxZ: 33.51,
+            }),
+            new BoxZone([1025.61, -2347.78, 30.51], 6, 3, {
+                heading: 85,
+                minZ: 29.51,
+                maxZ: 33.51,
+            }),
+            new BoxZone([1026.17, -2336.52, 30.51], 6, 3, {
+                heading: 85,
+                minZ: 29.51,
+                maxZ: 33.51,
+            }),
+            new BoxZone([1003.86, -2305.89, 30.51], 6, 3, {
+                heading: 265,
+                minZ: 29.51,
+                maxZ: 33.51,
+            }),
+            new BoxZone([1028.36, -2312.23, 30.51], 6, 3, {
+                heading: 265,
+                minZ: 29.51,
+                maxZ: 33.51,
+            }),
+        ],
+    },
+    pillbox: {
+        name: 'Pillbox Garage Parking',
+        legacyId: 'pillboxgarage',
+        type: GarageType.Private,
+        category: GarageCategory.Car,
+        zone: new BoxZone([214.87327575683594, -806.9600830078125, 30.8114013671875], 0.8, 1, {
+            heading: 340,
+            minZ: 29.8114013671875,
+            maxZ: 32.8114013671875,
+        }),
+        parkingPlaces: [
+            new BoxZone([209.89, -791.11, 30.88], 6, 3, {
+                heading: 250,
+                minZ: 29.0,
+                maxZ: 33.0,
+            }),
+            new BoxZone([215.52, -776.01, 30.8], 6, 3, {
+                heading: 250,
+                minZ: 29.0,
+                maxZ: 33.0,
+            }),
+            new BoxZone([222.04, -786.87, 30.81], 6, 3, {
+                heading: 250,
+                minZ: 29.0,
+                maxZ: 33.0,
+            }),
+            new BoxZone([217.25, -799.32, 30.84], 6, 3, {
+                heading: 70,
+                minZ: 29.0,
+                maxZ: 33.0,
+            }),
+            new BoxZone([232.82, -773.78, 30.67], 6, 3, {
+                heading: 70,
+                minZ: 29.0,
+                maxZ: 33.0,
+            }),
+            new BoxZone([241.46, -782.54, 30.68], 6, 3, {
+                heading: 70,
+                minZ: 29.0,
+                maxZ: 33.0,
+            }),
+            new BoxZone([241.46, -782.54, 30.68], 6, 3, {
+                heading: 70,
+                minZ: 29.0,
+                maxZ: 33.0,
+            }),
+            new BoxZone([234.97, -800.2, 30.61], 6, 3, {
+                heading: 250,
+                minZ: 29.0,
+                maxZ: 33.0,
+            }),
+        ],
+    },
+    airport_public: {
+        name: 'Airport Public Parking',
+        legacyId: 'airportpublic',
+        type: GarageType.Public,
+        category: GarageCategory.Car,
+        zone: new BoxZone([-612.579833984375, -2235.7978515625, 6.004300594329834], 0.8, 1, {
+            heading: 50,
+            minZ: 5.004300594329834,
+            maxZ: 8.004300594329834,
+        }),
+        parkingPlaces: [
+            new BoxZone([-604.14, -2220.94, 6.0], 8, 4, {
+                heading: 185,
+                minZ: 5.0,
+                maxZ: 9.0,
+            }),
+            new BoxZone([-623.71, -2204.67, 6.0], 8, 4, {
+                heading: 185,
+                minZ: 5.0,
+                maxZ: 9.0,
+            }),
+            new BoxZone([-643.02, -2188.49, 5.99], 8, 4, {
+                heading: 185,
+                minZ: 4.99,
+                maxZ: 8.99,
+            }),
+            new BoxZone([-649.01, -2173.48, 5.99], 8, 4, {
+                heading: 185,
+                minZ: 4.99,
+                maxZ: 8.99,
+            }),
+            new BoxZone([-595.38, -2201.37, 5.99], 8, 4, {
+                heading: 185,
+                minZ: 4.99,
+                maxZ: 8.99,
+            }),
+            new BoxZone([-635.07, -2157.95, 5.99], 8, 4, {
+                heading: 185,
+                minZ: 4.99,
+                maxZ: 8.99,
+            }),
+            new BoxZone([-593.41, -2167.22, 5.99], 8, 4, {
+                heading: 185,
+                minZ: 4.99,
+                maxZ: 8.99,
+            }),
+            new BoxZone([-577.67, -2190.13, 5.99], 8, 4, {
+                heading: 185,
+                minZ: 4.99,
+                maxZ: 8.99,
+            }),
+            new BoxZone([-606.81, -2165.66, 5.99], 8, 4, {
+                heading: 185,
+                minZ: 4.99,
+                maxZ: 8.99,
+            }),
+            new BoxZone([-619.56, -2180.8, 5.99], 8, 4, {
+                heading: 185,
+                minZ: 4.99,
+                maxZ: 8.99,
+            }),
+            new BoxZone([-644.74, -2217.8, 6.0], 1.0, 1.0, {
+                heading: 49.0,
+                minZ: 5,
+                maxZ: 6.002,
+                data: {
+                    capacity: [PlaceCapacity.Large, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([-641.07, -2212.31, 6.0], 1.0, 1.0, {
+                heading: 49.0,
+                minZ: 5.0,
+                maxZ: 8.0,
+                data: {
+                    capacity: [PlaceCapacity.Large, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([-634.45, -2209.31, 6.0], 1.0, 1.0, {
+                heading: 49.0,
+                minZ: 5.0,
+                maxZ: 8.0,
+                data: {
+                    capacity: [PlaceCapacity.Large, PlaceCapacity.Medium],
+                },
+            }),
+        ],
+        transferList: ['cayo'],
+    },
+    bell_farms: {
+        name: 'Bell Farms Parking',
+        legacyId: 'haanparking',
+        type: GarageType.Public,
+        category: GarageCategory.Car,
+        zone: new BoxZone([88.14032745361328, 6390.654296875, 31.225772857666016], 1, 0.8, {
+            heading: 314,
+            minZ: 30.225772857666016,
+            maxZ: 33.225772857666016,
+        }),
+        parkingPlaces: [
+            new BoxZone([78.24, 6398.73, 31.23], 6, 4, {
+                heading: 315,
+                minZ: 30.23,
+                maxZ: 34.23,
+            }),
+            new BoxZone([72.49, 6404.33, 31.23], 6, 4, {
+                heading: 315,
+                minZ: 30.23,
+                maxZ: 34.23,
+            }),
+            new BoxZone([59.16, 6400.94, 31.23], 6, 4, {
+                heading: 35,
+                minZ: 30.23,
+                maxZ: 34.23,
+            }),
+            new BoxZone([59.16, 6400.94, 31.23], 6, 4, {
+                heading: 35,
+                minZ: 30.23,
+                maxZ: 34.23,
+            }),
+            new BoxZone([94.84, 6372.93, 31.23], 6, 4, {
+                heading: 15,
+                minZ: 30.23,
+                maxZ: 34.23,
+            }),
+            new BoxZone([48.64, 6362.48, 31.24], 6, 4, {
+                heading: 35,
+                minZ: 30.24,
+                maxZ: 34.24,
+            }),
+            new BoxZone([24.84, 6367.01, 31.23], 6, 4, {
+                heading: 35,
+                minZ: 30.23,
+                maxZ: 34.23,
+            }),
+            new BoxZone([27.97, 6331.08, 31.23], 6, 4, {
+                heading: 20,
+                minZ: 30.23,
+                maxZ: 34.23,
+            }),
+            new BoxZone([73.78, 6362.8, 31.23], 8, 4, {
+                heading: 35,
+                minZ: 30.23,
+                maxZ: 34.23,
+            }),
+            new BoxZone([42.51, 6385.19, 31.23], 6, 4, {
+                heading: 35,
+                minZ: 30.23,
+                maxZ: 34.23,
+            }),
+        ],
+        transferList: ['cayo'],
+    },
+    marina_drive_air: {
+        name: 'Marina Drive Air Parking',
+        legacyId: 'marina_air',
+        type: GarageType.Public,
+        category: GarageCategory.Air,
+        zone: new BoxZone([-727.0758666992188, -1493.579345703125, 5.000543117523193], 1, 0.8, {
+            heading: 336,
+            minZ: 4.000543117523193,
+            maxZ: 7.000543117523193,
+        }),
+        parkingPlaces: [
+            new BoxZone([-724.67, -1444.06, 5.0], 15.2, 15.2, {
+                heading: 140,
+                minZ: 4.0,
+                maxZ: 15.0,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([-745.47, -1468.82, 5.0], 15.2, 15.2, {
+                heading: 320,
+                minZ: 4.0,
+                maxZ: 15.0,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([-746.75, -1432.73, 5.0], 19.2, 17.6, {
+                heading: 230,
+                minZ: 4.0,
+                maxZ: 15.0,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([-763.48, -1453.35, 5.0], 19.2, 17.6, {
+                heading: 230,
+                minZ: 4.0,
+                maxZ: 15.0,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([-721.41, -1473.46, 5.0], 19.2, 17.6, {
+                heading: 50,
+                minZ: 4.0,
+                maxZ: 15.0,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([-699.93, -1447.88, 5.0], 19.2, 17.6, {
+                heading: 50,
+                minZ: 4.0,
+                maxZ: 15.0,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
+    sandy_shores_air: {
+        name: 'Sandy Shores Air Parking',
+        legacyId: 'sandy_air',
+        type: GarageType.Public,
+        category: GarageCategory.Air,
+        zone: new BoxZone([1758.961181640625, 3230.338134765625, 42.231048583984375], 0.8, 1, {
+            heading: 339,
+            minZ: 41.231048583984375,
+            maxZ: 44.231048583984375,
+        }),
+        parkingPlaces: [
+            new BoxZone([1770.23, 3239.53, 42.06], 11.6, 12.0, {
+                heading: 15,
+                minZ: 41.06,
+                maxZ: 52.06,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
+    pound_paleto: {
+        name: 'Fourrière',
+        type: GarageType.Depot,
+        category: GarageCategory.All,
+        zone: new BoxZone([-217.29, 6215.21, 30.49], 1.0, 1.0, {
+            heading: 45.0,
+            minZ: 29.49,
+            maxZ: 31.492,
+        }),
+        parkingPlaces: [
+            new BoxZone([-207.12, 6218.89, 31.49], 1.0, 1.0, {
+                heading: 225.0,
+                minZ: 30.49,
+                maxZ: 31.492,
+            }),
+            new BoxZone([-205.35, 6222.03, 31.49], 1.0, 1.0, {
+                heading: 225.0,
+                minZ: 30.49,
+                maxZ: 31.492,
+            }),
+            new BoxZone([-203.09, 6224.81, 31.49], 1.0, 1.0, {
+                heading: 225.0,
+                minZ: 30.49,
+                maxZ: 31.492,
+            }),
+            new BoxZone([-195.7, 6218.94, 31.49], 1.0, 1.0, {
+                heading: 135.0,
+                minZ: 30.49,
+                maxZ: 31.492,
+                data: {
+                    capacity: [PlaceCapacity.Large, PlaceCapacity.Medium],
+                },
+            }),
+        ],
+    },
+    pound: {
+        name: 'Fourrière',
+        legacyId: 'fourriere',
+        type: GarageType.Depot,
+        category: GarageCategory.All,
+        zone: new BoxZone([403.12, -1625.36, 28.29], 1, 1, {
+            heading: 51,
+            minZ: 27.29,
+            maxZ: 31.29,
+        }),
+        parkingPlaces: [
+            new BoxZone([397.43, -1642.97, 29.29], 7, 3, {
+                heading: 320,
+                minZ: 28.29,
+                maxZ: 31.29,
+            }),
+            new BoxZone([399.41, -1645.39, 29.29], 7.0, 2.8, {
+                heading: 320.0,
+                minZ: 28.29,
+                maxZ: 29.292,
+            }),
+            new BoxZone([401.85, -1647.56, 29.29], 6.2, 3.2, {
+                heading: 320.0,
+                minZ: 28.29,
+                maxZ: 29.292,
+            }),
+            new BoxZone([403.85, -1649.97, 29.29], 6.2, 2.6, {
+                heading: 320.0,
+                minZ: 28.29,
+                maxZ: 29.292,
+            }),
+            new BoxZone([420.01, -1638.96, 29.29], 1.6, 1.0, {
+                heading: 88.0,
+                minZ: 28.29,
+                maxZ: 29.292,
+            }),
+            new BoxZone([408.78, -1653.71, 29.29], 1.0, 1.0, {
+                heading: 321.0,
+                minZ: 28.29,
+                maxZ: 29.292,
+            }),
+            new BoxZone([408.99, -1639.23, 29.29], 1.0, 1.0, {
+                heading: 230.0,
+                minZ: 28.29,
+                maxZ: 29.292,
+                data: {
+                    capacity: [PlaceCapacity.Large, PlaceCapacity.Medium],
+                },
+            }),
+        ],
+    },
+    lspd: {
+        name: 'LSPD Parking',
+        type: GarageType.Job,
+        job: JobType.LSPD,
+        category: GarageCategory.Car,
+        zone: new BoxZone([598.88, 5.57, 69.61], 1.0, 1.0, {
+            heading: 341.51,
+            minZ: 68.61,
+            maxZ: 72.61,
+        }),
+        parkingPlaces: [
+            new BoxZone([594.66, 3.26, 70.63], 6.8, 4.0, {
+                heading: 350,
+                minZ: 69.63,
+                maxZ: 73.2,
+            }),
+            new BoxZone([590.52, 3.89, 70.63], 6.8, 4.0, {
+                heading: 350,
+                minZ: 69.63,
+                maxZ: 73.2,
+            }),
+            new BoxZone([592.1, -11.17, 70.63], 6.2, 4.0, {
+                heading: 350,
+                minZ: 69.63,
+                maxZ: 73.2,
+            }),
+            new BoxZone([588.03, -10.44, 70.63], 6.2, 4.0, {
+                heading: 350,
+                minZ: 69.63,
+                maxZ: 73.2,
+            }),
+            new BoxZone([590.84, -18.21, 70.63], 6.2, 4.0, {
+                heading: 350,
+                minZ: 69.63,
+                maxZ: 73.2,
+            }),
+            new BoxZone([586.73, -17.49, 70.63], 6.2, 4.0, {
+                heading: 350,
+                minZ: 69.63,
+                maxZ: 73.2,
+            }),
+            new BoxZone([588.97, -31.28, 70.63], 6.2, 4.0, {
+                heading: 350,
+                minZ: 69.63,
+                maxZ: 73.2,
+            }),
+            new BoxZone([584.88, -30.67, 70.63], 6.2, 4.0, {
+                heading: 350,
+                minZ: 69.63,
+                maxZ: 73.2,
+            }),
+        ],
+    },
+    lspd_air: {
+        name: 'LSPD Air Parking',
+        type: GarageType.Job,
+        job: JobType.LSPD,
+        category: GarageCategory.Air,
+        zone: new BoxZone([585.1, 2.81, 102.23], 1.0, 1.0, {
+            heading: 211.84,
+            minZ: 101.23,
+            maxZ: 104.23,
+        }),
+        parkingPlaces: [
+            new BoxZone([579.96, 12.19, 103.23], 11.0, 10.6, {
+                heading: 0,
+                minZ: 102.23,
+                maxZ: 106.23,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
+    lsmc: {
+        name: 'LSMC Parking',
+        type: GarageType.Job,
+        job: JobType.LSMC,
+        category: GarageCategory.Car,
+        zone: new BoxZone([412.22, -1416.05, 28.38], 1.0, 1.0, {
+            heading: 323.72,
+            minZ: 27.38,
+            maxZ: 30.38,
+        }),
+        parkingPlaces: [
+            new BoxZone([404.68, -1438.12, 29.43], 9.2, 3.4, {
+                heading: 30,
+                minZ: 28.33,
+                maxZ: 32.53,
+                data: { capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large] },
+            }),
+            new BoxZone([408.44, -1435.93, 29.44], 9.2, 3.4, {
+                heading: 30,
+                minZ: 28.21,
+                maxZ: 32.53,
+                data: { capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large] },
+            }),
+            new BoxZone([412.23, -1433.73, 29.44], 9.2, 3.4, {
+                heading: 30,
+                minZ: 28.21,
+                maxZ: 32.53,
+                data: { capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large] },
+            }),
+            new BoxZone([415.73, -1431.74, 29.44], 9.2, 3.4, {
+                heading: 30,
+                minZ: 28.21,
+                maxZ: 32.53,
+                data: { capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large] },
+            }),
+            new BoxZone([399.06, -1429.48, 29.44], 9.2, 3.4, {
+                heading: 50,
+                minZ: 28.21,
+                maxZ: 32.53,
+                data: { capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large] },
+            }),
+            new BoxZone([401.59, -1426.42, 29.44], 9.2, 3.4, {
+                heading: 50,
+                minZ: 28.21,
+                maxZ: 32.53,
+                data: { capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large] },
+            }),
+            new BoxZone([404.3, -1423.21, 29.44], 9.2, 3.4, {
+                heading: 50,
+                minZ: 28.21,
+                maxZ: 32.53,
+                data: { capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large] },
+            }),
+        ],
+    },
+    lsmc_air: {
+        name: 'LSMC Air Parking',
+        type: GarageType.Job,
+        job: JobType.LSMC,
+        category: GarageCategory.Air,
+        zone: new BoxZone([311.98, -1451.68, 45.51], 1.0, 1.0, {
+            heading: 319.69,
+            minZ: 44.51,
+            maxZ: 48.51,
+        }),
+        parkingPlaces: [
+            new BoxZone([313.29, -1464.94, 46.51], 10.8, 10.8, {
+                heading: 320,
+                minZ: 45.51,
+                maxZ: 49.51,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([299.61, -1453.48, 46.51], 10.8, 10.4, {
+                heading: 50,
+                minZ: 45.51,
+                maxZ: 49.51,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
+    bcso: {
+        name: 'BCSO Parking',
+        type: GarageType.Job,
+        job: JobType.BCSO,
+        category: GarageCategory.Car,
+        zone: new BoxZone([1863.03, 3692.57, 33.27], 1.0, 1.0, {
+            heading: 120.0,
+            minZ: 32.83,
+            maxZ: 35.83,
+        }),
+        parkingPlaces: [
+            new BoxZone([1879.49, 3697.0, 33.35], 6.0, 3.2, {
+                heading: 299.0,
+                minZ: 32.25,
+                maxZ: 34.25,
+            }),
+            new BoxZone([1877.25, 3701.0, 33.35], 6.0, 3.2, {
+                heading: 299.0,
+                minZ: 32.25,
+                maxZ: 34.25,
+            }),
+            new BoxZone([1875.0, 3705.0, 33.35], 6.0, 3.2, {
+                heading: 299.0,
+                minZ: 32.25,
+                maxZ: 34.25,
+            }),
+
+            new BoxZone([1867.12, 3693.23, 33.71], 6.0, 3.0, {
+                heading: 210.0,
+                minZ: 32.73,
+                maxZ: 35.73,
+            }),
+            new BoxZone([1863.21, 3699.52, 33.66], 6.0, 3.0, {
+                heading: 210.0,
+                minZ: 32.6,
+                maxZ: 35.6,
+            }),
+            new BoxZone([1860.17, 3705.15, 33.47], 6.0, 3.0, {
+                heading: 30.0,
+                minZ: 32.47,
+                maxZ: 35.47,
+            }),
+
+            new BoxZone([1874.04, 3700.87, 33.33], 6.0, 3.0, {
+                heading: 120.0,
+                minZ: 32.47,
+                maxZ: 35.47,
+                data: {
+                    capacity: [PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
+    bcso_air: {
+        name: 'BCSO Air Parking',
+        type: GarageType.Job,
+        job: JobType.BCSO,
+        category: GarageCategory.Air,
+        zone: new BoxZone([1814.08, 3724.05, 32.67], 1.0, 1.0, {
+            heading: 26.91,
+            minZ: 31.67,
+            maxZ: 34.67,
+        }),
+        parkingPlaces: [
+            new BoxZone([1802.57, 3719.3, 35.65], 10.6, 10.6, {
+                heading: 0,
+                minZ: 34.65,
+                maxZ: 38.65,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
+    bennys: {
+        name: 'New Gahray Parking - Ville',
+        type: GarageType.Job,
+        job: JobType.Bennys,
+        category: GarageCategory.Car,
+        allowTrailers: true,
+        zone: new BoxZone([-172.5, -1295.65, 30.13], 1.0, 1.0, {
+            heading: 0.0,
+            minZ: 29.13,
+            maxZ: 32.13,
+        }),
+        parkingPlaces: [
+            new BoxZone([-163.52, -1299.59, 31.22], 12, 4, {
+                heading: 90,
+                minZ: 30.22,
+                maxZ: 34.22,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([-163.44, -1305.2, 31.3], 12, 4, {
+                heading: 90,
+                minZ: 30.3,
+                maxZ: 34.3,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
+    bennys_north: {
+        name: 'New Gahray Parking - Sandy Shores',
+        type: GarageType.Job,
+        job: JobType.Bennys,
+        category: GarageCategory.Car,
+        allowTrailers: true,
+        zone: new BoxZone([1881.42, 3083.29, 45.91], 1.0, 1.0, {
+            heading: 240.0,
+            minZ: 44.91,
+            maxZ: 48.912,
+        }),
+        parkingPlaces: [
+            new BoxZone([1878.49, 3091.52, 46.9], 1.0, 1.0, {
+                heading: 60.0,
+                minZ: 45.9,
+                maxZ: 48.902,
+            }),
+            new BoxZone([1879.6, 3094.81, 46.86], 1.0, 1.0, {
+                heading: 60.0,
+                minZ: 45.86,
+                maxZ: 48.862,
+            }),
+            new BoxZone([1876.27, 3088.79, 46.91], 1.0, 1.0, {
+                heading: 60.0,
+                minZ: 45.91,
+                maxZ: 48.912,
+            }),
+            new BoxZone([1877.29, 3068.94, 46.92], 1.0, 1.0, {
+                heading: 242.0,
+                minZ: 45.92,
+                maxZ: 48.922,
+                data: {
+                    capacity: [PlaceCapacity.Large, PlaceCapacity.Medium],
+                },
+            }),
+        ],
+    },
+    bennys_luxury: {
+        name: 'Bennys - Concessionnaire',
+        type: GarageType.JobLuxury,
+        job: JobType.Bennys,
+        category: GarageCategory.Car,
+        zone: new BoxZone([-178.45, -1312.36, 30.3], 1.0, 1.0, {
+            heading: 271.79,
+            minZ: 29.3,
+            maxZ: 32.3,
+        }),
+        parkingPlaces: [
+            new BoxZone([-182.37, -1316.29, 31.3], 8.0, 3.8, {
+                heading: 0,
+                minZ: 30.3,
+                maxZ: 33.3,
+            }),
+        ],
+    },
+    bennys_air: {
+        name: 'Bennys Air Parking',
+        type: GarageType.Job,
+        job: JobType.Bennys,
+        category: GarageCategory.Air,
+        zone: new BoxZone([-147.64, -1282.43, 46.9], 1.0, 1.0, {
+            heading: 356.22,
+            minZ: 45.9,
+            maxZ: 48.9,
+        }),
+        parkingPlaces: [
+            new BoxZone([-145.89, -1272.41, 49.57], 14.8, 14.4, {
+                heading: 0,
+                minZ: 48.57,
+                maxZ: 54.57,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
+    stonk: {
+        name: 'STONK Parking',
+        type: GarageType.Job,
+        job: JobType.CashTransfer,
+        category: GarageCategory.Car,
+        zone: new BoxZone([-6.51, -662.66, 32.48], 1.0, 1.0, {
+            heading: 185,
+            minZ: 31.48,
+            maxZ: 34.48,
+        }),
+        parkingPlaces: [
+            new BoxZone([-4.85, -670.38, 31.94], 12, 6, {
+                heading: 186.13,
+                minZ: 30.94,
+                maxZ: 34.94,
+            }),
+            new BoxZone([3.07, -670.67, 31.94], 12, 6, {
+                heading: 186.13,
+                minZ: 30.94,
+                maxZ: 34.94,
+            }),
+            new BoxZone([-19.4, -671.67, 31.94], 12, 6, {
+                heading: 184.81,
+                minZ: 30.94,
+                maxZ: 34.94,
+            }),
+        ],
+    },
+    garbage: {
+        name: 'Bluebird Parking',
+        type: GarageType.Job,
+        job: JobType.Garbage,
+        category: GarageCategory.Car,
+        zone: new BoxZone([-589.74, -1568.28, 25.75], 1.0, 1.0, {
+            heading: 318.84,
+            minZ: 24.75,
+            maxZ: 27.75,
+        }),
+        parkingPlaces: [
+            new BoxZone([-594.71, -1574.21, 26.75], 12.0, 5.0, {
+                heading: 355,
+                minZ: 25.75,
+                maxZ: 29.75,
+            }),
+            new BoxZone([-600.98, -1574.03, 26.75], 12.0, 5.0, {
+                heading: 355,
+                minZ: 25.75,
+                maxZ: 29.75,
+            }),
+        ],
+    },
+    food: {
+        name: 'Chateau Marius Parking',
+        type: GarageType.Job,
+        job: JobType.Food,
+        category: GarageCategory.Car,
+        zone: new BoxZone([-1923.05, 2060.66, 139.83], 1.0, 1.0, {
+            heading: 77,
+            minZ: 138.83,
+            maxZ: 142.83,
+        }),
+        parkingPlaces: [
+            new BoxZone([-1920.27, 2048.6, 140.64], 8, 4, {
+                heading: 257.89,
+                minZ: 139.64,
+                maxZ: 143.64,
+            }),
+            new BoxZone([-1919.23, 2052.68, 140.64], 8, 4, {
+                heading: 257.89,
+                minZ: 139.64,
+                maxZ: 143.64,
+            }),
+            new BoxZone([-1923.05, 2036.34, 140.64], 8, 4, {
+                heading: 257.89,
+                minZ: 139.64,
+                maxZ: 143.64,
+            }),
+        ],
+    },
+    news: {
+        name: 'Twitch News Parking',
+        type: GarageType.Job,
+        job: JobType.News,
+        category: GarageCategory.Car,
+        zone: new BoxZone([-539.4, -877.38, 24.24], 1.0, 1.0, {
+            heading: 353.76,
+            minZ: 23.24,
+            maxZ: 26.24,
+        }),
+        parkingPlaces: [
+            new BoxZone([-532.88, -881.37, 25.31], 8.4, 4.2, { heading: 0, minZ: 24.29, maxZ: 27.29 }),
+            new BoxZone([-543.81, -881.39, 25.24], 8.2, 4.0, { heading: 0, minZ: 24.29, maxZ: 27.29 }),
+        ],
+    },
+    news_air: {
+        name: 'Twitch News Air Parking',
+        type: GarageType.Job,
+        job: JobType.News,
+        category: GarageCategory.Air,
+        zone: new BoxZone([-592.72, -928.48, 35.83], 1.0, 1.0, {
+            heading: 93.08,
+            minZ: 34.83,
+            maxZ: 38.83,
+        }),
+        parkingPlaces: [
+            new BoxZone([-583.27, -930.71, 36.83], 10.2, 10, {
+                heading: 0,
+                minZ: 35.83,
+                maxZ: 39.83,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
+    you_news: {
+        name: 'You News Parking',
+        type: GarageType.Job,
+        job: JobType.YouNews,
+        category: GarageCategory.Car,
+        zone: new BoxZone([-1043.74, -221.81, 36.88], 1.0, 1.0, {
+            heading: 244.07,
+            minZ: 35.88,
+            maxZ: 38.88,
+        }),
+        parkingPlaces: [
+            new BoxZone([-1057.99, -224.41, 38.13], 8.4, 4.2, { heading: 228.64, minZ: 37.13, maxZ: 40.13 }),
+            new BoxZone([-1065.08, -229.31, 38.19], 8.2, 4.0, { heading: 60.05, minZ: 37.13, maxZ: 40.13 }),
+        ],
+    },
+    you_news_air: {
+        name: 'You News Air Parking',
+        type: GarageType.Job,
+        job: JobType.YouNews,
+        category: GarageCategory.Air,
+        zone: new BoxZone([-1063.46, -238.52, 53.0], 1.0, 1.0, {
+            heading: 22.96,
+            minZ: 52.0,
+            maxZ: 55.0,
+        }),
+        parkingPlaces: [
+            new BoxZone([-1052.29, -236.13, 54.38], 10.6, 11.2, {
+                heading: -64.18,
+                minZ: 53.38,
+                maxZ: 56.38,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
+    mtp: {
+        name: 'Michel Transport Petrol Parking',
+        type: GarageType.Job,
+        job: JobType.Oil,
+        category: GarageCategory.Car,
+        allowTrailers: true,
+        zone: new BoxZone([-260.06, 6071.11, 30.35], 1.0, 1.0, {
+            heading: 135.0,
+            minZ: 30.35,
+            maxZ: 33.35,
+        }),
+        parkingPlaces: [
+            new BoxZone([-267.65, 6071.77, 31.42], 10.4, 3.4, {
+                heading: 45.0,
+                minZ: 30.42,
+                maxZ: 33.42,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([-257.71, 6061.84, 31.35], 13.4, 3.6, {
+                heading: 46.0,
+                minZ: 30.35,
+                maxZ: 33.35,
+                data: {
+                    capacity: [PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
+    taxi: {
+        name: 'Carl Jr Services Parking',
+        type: GarageType.Job,
+        job: JobType.Taxi,
+        category: GarageCategory.Car,
+        zone: new BoxZone([904.43, -168.09, 73.09], 1.0, 1.0, {
+            heading: 61.18,
+            minZ: 72.09,
+            maxZ: 74.09,
+        }),
+        parkingPlaces: [
+            new BoxZone([920.78, -163.29, 74.86], 4.8, 2.2, {
+                heading: 101.0,
+                minZ: 73.76,
+                maxZ: 76.76,
+            }),
+            new BoxZone([918.31, -166.81, 74.63], 4.8, 2.2, {
+                heading: 101.0,
+                minZ: 73.76,
+                maxZ: 76.76,
+            }),
+            new BoxZone([915.97, -170.38, 74.4], 4.8, 2.2, {
+                heading: 101.0,
+                minZ: 73.76,
+                maxZ: 76.76,
+            }),
+            new BoxZone([908.17, -182.93, 74.57], 2.6, 6.0, {
+                heading: 60,
+                minZ: 73.07,
+                maxZ: 74.07,
+            }),
+            new BoxZone([905.94, -185.6, 74.01], 2.6, 6.0, {
+                heading: 60,
+                minZ: 73.07,
+                maxZ: 74.07,
+            }),
+            new BoxZone([904.43, -188.19, 73.81], 2.6, 6.0, {
+                heading: 60,
+                minZ: 73.07,
+                maxZ: 74.07,
+            }),
+            new BoxZone([902.66, -191.23, 73.79], 2.6, 6.0, {
+                heading: 60,
+                minZ: 73.07,
+                maxZ: 74.07,
+            }),
+
+            new BoxZone([908.74, -176.58, 74.83], 10.4, 3.4, {
+                heading: 230.0,
+                minZ: 73.23,
+                maxZ: 74.23,
+                data: {
+                    capacity: [PlaceCapacity.Large, PlaceCapacity.Medium],
+                },
+            }),
+        ],
+    },
+    taxi_air: {
+        name: 'Carl Jr Services Air Parking',
+        type: GarageType.Job,
+        job: JobType.Taxi,
+        category: GarageCategory.Air,
+        zone: new BoxZone([879.44, -151.68, 77.33], 1.0, 1.0, {
+            heading: 90.27,
+            minZ: 76.33,
+            maxZ: 79.33,
+        }),
+        parkingPlaces: [
+            new BoxZone([872.11, -144.57, 79.69], 13.6, 13.8, {
+                heading: 329,
+                minZ: 77.966094970704,
+                maxZ: 89.69627380371,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
+    pawl: {
+        name: 'Pipe and Wooden Legs Parking',
+        type: GarageType.Job,
+        job: JobType.Pawl,
+        category: GarageCategory.Car,
+        allowTrailers: true,
+        zone: new BoxZone([-605.01, 5289.27, 69.46], 1.0, 1.0, {
+            heading: 136.16,
+            minZ: 68.46,
+            maxZ: 72.46,
+        }),
+        parkingPlaces: [
+            new BoxZone([-598.99, 5295.01, 70.21], 17.2, 5.0, {
+                heading: 277,
+                minZ: 69.19,
+                maxZ: 72.19,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([-599.1, 5300.08, 70.21], 17.2, 5.0, {
+                heading: 276,
+                minZ: 69.19,
+                maxZ: 72.19,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([-600.02, 5305.58, 70.21], 17.2, 5.0, {
+                heading: 274,
+                minZ: 69.19,
+                maxZ: 72.19,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
+    upw: {
+        name: 'Unexpected Power and Water Parking',
+        type: GarageType.Job,
+        job: JobType.Upw,
+        category: GarageCategory.Car,
+        zone: new BoxZone([585.89, 2835.33, 41.16], 1.0, 1.0, {
+            heading: 3.67,
+            minZ: 40.16,
+            maxZ: 44.16,
+        }),
+        parkingPlaces: [
+            new BoxZone([580.15, 2827.72, 42.05], 12.2, 4, {
+                heading: 274,
+                minZ: 41.22,
+                maxZ: 45.22,
+            }),
+            new BoxZone([566.95, 2827.27, 42.19], 12.2, 4, {
+                heading: 274,
+                minZ: 41.19,
+                maxZ: 45.19,
+            }),
+            new BoxZone([552.81, 2825.97, 42.08], 12.2, 4, {
+                heading: 274,
+                minZ: 41,
+                maxZ: 45,
+            }),
+            new BoxZone([581.35, 2818.73, 42.13], 12.2, 4, {
+                heading: 274,
+                minZ: 41,
+                maxZ: 45,
+            }),
+            new BoxZone([567.37, 2817.81, 42.15], 12.2, 4, {
+                heading: 274,
+                minZ: 41,
+                maxZ: 45,
+            }),
+            new BoxZone([553.78, 2816.89, 42.33], 12.2, 4, {
+                heading: 274,
+                minZ: 41,
+                maxZ: 45,
+            }),
+            new BoxZone([581.66, 2812.22, 42.23], 12.2, 4, {
+                heading: 274,
+                minZ: 41,
+                maxZ: 45,
+            }),
+            new BoxZone([568.21, 2811.46, 42.04], 12.2, 4, {
+                heading: 274,
+                minZ: 41,
+                maxZ: 45,
+            }),
+            new BoxZone([554.1, 2810.54, 42.33], 12.2, 4, {
+                heading: 274,
+                minZ: 41,
+                maxZ: 45,
+            }),
+            new BoxZone([581.39, 2802.48, 42.12], 12.2, 4, {
+                heading: 274,
+                minZ: 41,
+                maxZ: 45,
+            }),
+            new BoxZone([567.78, 2801.79, 42.26], 12.2, 4, {
+                heading: 274,
+                minZ: 41,
+                maxZ: 45,
+            }),
+            new BoxZone([553.79, 2800.9, 42.31], 12.2, 4, {
+                heading: 274,
+                minZ: 41,
+                maxZ: 45,
+            }),
+        ],
+    },
+    upw_air: {
+        name: 'Unexpected Power and Water Air Parking',
+        type: GarageType.Job,
+        job: JobType.Upw,
+        category: GarageCategory.Air,
+        zone: new BoxZone([619.57, 2803.31, 64.75], 1.0, 1.0, {
+            heading: 277.75,
+            minZ: 64.75,
+            maxZ: 66.75,
+        }),
+        parkingPlaces: [
+            new BoxZone([629.88, 2801.22, 67.53], 10.8, 6.4, {
+                heading: 94.54,
+                minZ: 66.53,
+                maxZ: 68.53,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
+    baun_bahama: {
+        name: 'Bahama Mamas Parking',
+        type: GarageType.Job,
+        job: JobType.Baun,
+        category: GarageCategory.Car,
+        zone: new BoxZone([-1391.21, -643.47, 27.67], 1.0, 1.0, {
+            heading: 295.25,
+            minZ: 26.67,
+            maxZ: 29.67,
+        }),
+        parkingPlaces: [
+            new BoxZone([-1395.8, -654.34, 28.67], 6.0, 3.2, {
+                heading: 37,
+                minZ: 27.67,
+                maxZ: 31.67,
+            }),
+            new BoxZone([-1392.93, -652.27, 28.67], 6.0, 3.2, {
+                heading: 37,
+                minZ: 27.67,
+                maxZ: 31.67,
+            }),
+            new BoxZone([-1415.29, -645.88, 28.67], 1.0, 1.0, {
+                heading: 125.0,
+                minZ: 27.67,
+                maxZ: 30.672,
+                data: {
+                    capacity: [PlaceCapacity.Large, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([-1415.16, -630.19, 28.67], 7.0, 3.0, {
+                heading: 212.0,
+                minZ: 27.67,
+                maxZ: 30.672,
+            }),
+            new BoxZone([-1425.1, -635.61, 28.67], 6.2, 3.2, {
+                heading: 213.0,
+                minZ: 27.67,
+                maxZ: 30.672,
+            }),
+        ],
+    },
+    baun_unicorn: {
+        name: 'Unicorn Parking',
+        type: GarageType.Job,
+        job: JobType.Baun,
+        category: GarageCategory.Car,
+        zone: new BoxZone([148.33, -1289.93, 28.18], 1.0, 1.0, {
+            heading: 120,
+            minZ: 27.18,
+            maxZ: 31.18,
+        }),
+        parkingPlaces: [
+            new BoxZone([145.19, -1287.47, 29.07], 5.0, 2.8, {
+                heading: 299,
+                minZ: 28.07,
+                maxZ: 31.17,
+                data: {
+                    capacity: [1, 2],
+                },
+            }),
+            new BoxZone([143.62, -1285.15, 29.13], 5, 2.8, {
+                heading: 299,
+                minZ: 28.07,
+                maxZ: 31.17,
+                data: {
+                    capacity: [1, 2],
+                },
+            }),
+            new BoxZone([142.29, -1282.61, 29.29], 5, 2.8, {
+                heading: 300,
+                minZ: 28.17,
+                maxZ: 31.17,
+                data: {
+                    capacity: [1, 2],
+                },
+            }),
+            new BoxZone([140.94, -1280.0, 29.33], 5, 2.8, {
+                heading: 300,
+                minZ: 28.17,
+                maxZ: 31.17,
+                data: {
+                    capacity: [1, 2],
+                },
+            }),
+            new BoxZone([138.2, -1275.29, 29.21], 5, 2.8, {
+                heading: 302,
+                minZ: 28.17,
+                maxZ: 31.17,
+                data: {
+                    capacity: [1, 2],
+                },
+            }),
+            new BoxZone([147.05, -1279.35, 29.15], 8.8, 4.4, {
+                heading: 29,
+                minZ: 28.15,
+                maxZ: 31.15,
+                data: {
+                    capacity: [3],
+                },
+            }),
+        ],
+    },
+    fbi: {
+        name: 'FBI Parking',
+        type: GarageType.Job,
+        job: JobType.FBI,
+        category: GarageCategory.Car,
+        zone: new BoxZone([158.72, -706.1, 32.13], 1.0, 1.0, {
+            heading: 160.37,
+            minZ: 31.13,
+            maxZ: 34.13,
+        }),
+        parkingPlaces: [
+            new BoxZone([174.53, -709.93, 33.13], 5.8, 3.4, {
+                heading: 70,
+                minZ: 32.13,
+                maxZ: 35.13,
+            }),
+            new BoxZone([175.7, -706.48, 33.13], 5.8, 3.4, {
+                heading: 70,
+                minZ: 32.13,
+                maxZ: 35.13,
+            }),
+            new BoxZone([178.53, -698.87, 33.13], 5.8, 3.4, {
+                heading: 70,
+                minZ: 32.13,
+                maxZ: 35.13,
+            }),
+            new BoxZone([179.84, -695.21, 33.13], 5.8, 3.4, {
+                heading: 70,
+                minZ: 32.13,
+                maxZ: 35.13,
+            }),
+            new BoxZone([163.5, -683.73, 33.13], 5.8, 3.4, {
+                heading: 340,
+                minZ: 32.13,
+                maxZ: 35.13,
+            }),
+            new BoxZone([148.28, -687.68, 33.13], 5.8, 3.4, {
+                heading: 70,
+                minZ: 32.13,
+                maxZ: 35.13,
+            }),
+        ],
+    },
+    ffs: {
+        name: 'Fight for Style Parking',
+        type: GarageType.Job,
+        job: JobType.Ffs,
+        category: GarageCategory.Car,
+        zone: new BoxZone([750.75, -974.89, 23.83], 1.0, 1.0, {
+            heading: 90,
+            minZ: 22.83,
+            maxZ: 26.83,
+        }),
+        parkingPlaces: [
+            new BoxZone([745.0, -966.3, 24.87], 10.0, 5.2, {
+                heading: 270,
+                minZ: 23.87,
+                maxZ: 27.87,
+            }),
+            new BoxZone([744.95, -960.56, 24.86], 10.0, 5.2, {
+                heading: 270,
+                minZ: 23.86,
+                maxZ: 27.86,
+            }),
+        ],
+    },
+    mdr: {
+        name: 'Mandatory Parking',
+        type: GarageType.Job,
+        job: JobType.MDR,
+        category: GarageCategory.Car,
+        zone: new BoxZone([-568.26, -171.6, 37.2], 1.0, 1.0, {
+            heading: 109.72,
+            minZ: 37.02,
+            maxZ: 40.02,
+        }),
+        parkingPlaces: [
+            new BoxZone([-580.87, -171.81, 38.1], 6.8, 4.0, {
+                heading: 110.0,
+                minZ: 37.1,
+                maxZ: 40.1,
+            }),
+            new BoxZone([-575.53, -169.34, 37.87], 6.8, 4.0, {
+                heading: 110.0,
+                minZ: 36.87,
+                maxZ: 39.87,
+            }),
+            new BoxZone([-570.28, -167.43, 37.95], 6.8, 4.0, {
+                heading: 110.0,
+                minZ: 36.95,
+                maxZ: 39.95,
+            }),
+            new BoxZone([-564.56, -165.17, 37.97], 6.8, 4.0, {
+                heading: 110.0,
+                minZ: 36.97,
+                maxZ: 39.97,
+            }),
+            new BoxZone([-557.93, -162.49, 38.17], 6.8, 4.0, {
+                heading: 110.0,
+                minZ: 36.97,
+                maxZ: 39.97,
+            }),
+            new BoxZone([-552.0, -159.97, 38.16], 6.8, 4.0, {
+                heading: 110.0,
+                minZ: 37.16,
+                maxZ: 40.16,
+            }),
+        ],
+    },
+    mdr_air: {
+        name: 'Mandatory Air Parking',
+        type: GarageType.Job,
+        job: JobType.MDR,
+        category: GarageCategory.Air,
+        zone: new BoxZone([-549.69, -246.95, 35.6], 1.0, 1.0, {
+            heading: 209.86,
+            minZ: 35.6,
+            maxZ: 38.6,
+        }),
+        parkingPlaces: [
+            new BoxZone([-543.34, -254.8, 36.25], 6.8, 4.0, {
+                heading: 27.32,
+                minZ: 37.1,
+                maxZ: 40.1,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
+    docks_boat: {
+        name: 'Port des docks',
+        type: GarageType.Public,
+        category: GarageCategory.Sea,
+        zone: new BoxZone([11.4, -2801.96, 1.53], 2.0, 2.0, {
+            heading: 180,
+            minZ: 1.0,
+            maxZ: 3.0,
+        }),
+        parkingPlaces: [
+            new BoxZone([6.64, -2767.71, 1.0], 4.0, 2.8, {
+                heading: 175.66,
+                minZ: 0.0,
+                maxZ: 2.0,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([6.2, -2785.6, 1.0], 15, 7.2, {
+                heading: 180.79,
+                minZ: 0.0,
+                maxZ: 2.0,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([13.49, -2805.52, 1.0, 90.25], 15, 7.2, {
+                heading: 20,
+                minZ: 0.0,
+                maxZ: 2.0,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([-5.01, -2778.34, 2.45], 17.2, 8.0, {
+                heading: 174.22,
+                minZ: 1.45,
+                maxZ: 3.45,
+                data: {
+                    capacity: [PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
+    paleto_boat: {
+        name: 'Port de Paleto',
+        type: GarageType.Public,
+        category: GarageCategory.Sea,
+        zone: new BoxZone([-1604.67, 5256.23, 1.09], 1.0, 1.0, {
+            heading: 204.64,
+            minZ: 1.09,
+            maxZ: 3.09,
+        }),
+        parkingPlaces: [
+            new BoxZone([-1600.13, 5251.14, 1.0], 4.0, 2.8, {
+                heading: 206.7,
+                minZ: 0.0,
+                maxZ: 2.0,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([-1603.82, 5262.27, 1.0], 15, 7.2, {
+                heading: 16.98,
+                minZ: 0.0,
+                maxZ: 2.0,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([-1598.75, 5261.3, 2.09], 15.0, 7.4, {
+                heading: 25.34,
+                minZ: 1.09,
+                maxZ: 3.09,
+                data: {
+                    capacity: [PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
+    catfish_boat: {
+        name: 'Port Catfish',
+        type: GarageType.Private,
+        category: GarageCategory.Sea,
+        zone: new BoxZone([3860.63, 4464.8, 1.72], 2.0, 2.0, {
+            heading: 359.72,
+            minZ: 1.72,
+            maxZ: 3.72,
+        }),
+        parkingPlaces: [
+            new BoxZone([3861.84, 4468.79, 1.0], 4.0, 2.8, {
+                heading: 266,
+                minZ: 0.0,
+                maxZ: 2.0,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([3851.86, 4467.84, 1.0], 15, 7.2, {
+                heading: 267,
+                minZ: 0.0,
+                maxZ: 2.0,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([3854.24, 4455.14, 1.0], 15, 7.2, {
+                heading: 281,
+                minZ: 0.0,
+                maxZ: 2.0,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([3873.66, 4462.95, 2.72], 11.8, 7.0, {
+                heading: -2.84,
+                minZ: 1.72,
+                maxZ: 3.72,
+                data: {
+                    capacity: [PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
+    marina_boat: {
+        name: 'Port de la marina',
+        type: GarageType.Private,
+        category: GarageCategory.Sea,
+        zone: new BoxZone([-865.03, -1324.79, 0.61], 2.0, 2.0, {
+            heading: 110,
+            minZ: 0.61,
+            maxZ: 2.61,
+        }),
+        parkingPlaces: [
+            new BoxZone([-858.23, -1327.47, 1.61], 7.6, 3.2, {
+                heading: 110,
+                minZ: 0.61,
+                maxZ: 2.61,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([-851.49, -1333.47, 1.61], 5.0, 3.0, {
+                heading: 110,
+                minZ: 0.61,
+                maxZ: 2.61,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([-847.74, -1341.81, 1.61], 4.8, 2.2, {
+                heading: 110,
+                minZ: 0.61,
+                maxZ: 2.61,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([-881.7, -1333.99, 1.61], 13.2, 5.4, {
+                heading: 290.84,
+                minZ: 0.61,
+                maxZ: 2.61,
+                data: {
+                    capacity: [PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
+    millars_boat: {
+        name: 'Port Millars',
+        type: GarageType.Private,
+        category: GarageCategory.Sea,
+        zone: new BoxZone([1304.67, 4229.28, 32.91], 1.0, 1.0, {
+            heading: 260.28,
+            minZ: 32.91,
+            maxZ: 34.91,
+        }),
+        parkingPlaces: [
+            new BoxZone([1311.12, 4226.4, 32.92], 6.6, 2.4, {
+                heading: 80,
+                minZ: 31.92,
+                maxZ: 33.92,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([1330.73, 4223.11, 32.92], 5.2, 2.2, {
+                heading: 80,
+                minZ: 31.92,
+                maxZ: 33.92,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([1324.44, 4232.46, 32.92], 6.6, 2.4, {
+                heading: 80,
+                minZ: 31.92,
+                maxZ: 33.92,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([1298.1, 4208.28, 33.91], 9.8, 4.8, {
+                heading: 258.01,
+                minZ: 32.91,
+                maxZ: 34.91,
+                data: {
+                    capacity: [PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
+    cayo: {
+        name: 'Cayo Perico Parking',
+        legacyId: 'cayo',
+        type: GarageType.Public,
+        category: GarageCategory.All,
+        zone: new BoxZone([4461.58, -4469.03, 4.24], 0.7, 1.0, {
+            heading: 290.0,
+            minZ: 3.24,
+            maxZ: 6.24,
+        }),
+        parkingPlaces: [
+            // Air
+            new BoxZone([4470.46, -4461.85, 4.23], 15.8, 15.8, {
+                heading: 20.0,
+                minZ: 3.23,
+                maxZ: 6.23,
+                data: {
+                    capacity: [PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([4487.8, -4455.43, 4.22], 15.8, 15.8, {
+                heading: 20.0,
+                minZ: 3.22,
+                maxZ: 6.22,
+                data: {
+                    capacity: [PlaceCapacity.Large],
+                },
+            }),
+            // Car
+            new BoxZone([4506.77, -4468.29, 4.19], 3.4, 9.2, {
+                heading: 200.0,
+                minZ: 3.19,
+                maxZ: 6.19,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([4509.83, -4466.26, 4.21], 3.4, 9.2, {
+                heading: 200.0,
+                minZ: 3.21,
+                maxZ: 6.21,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([4512.98, -4464.79, 4.21], 3.4, 9.2, {
+                heading: 200.0,
+                minZ: 3.21,
+                maxZ: 6.21,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([4516.57, -4463.56, 4.21], 3.4, 9.2, {
+                heading: 200.0,
+                minZ: 3.21,
+                maxZ: 6.21,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+
+            new BoxZone([4460.9, -4480.77, 4.21], 3.4, 9.2, {
+                heading: 200.0,
+                minZ: 3.21,
+                maxZ: 6.21,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([4454.84, -4483.18, 4.21], 3.4, 9.2, {
+                heading: 200.0,
+                minZ: 3.21,
+                maxZ: 6.21,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([4450.79, -4484.52, 4.21], 3.4, 9.2, {
+                heading: 200.0,
+                minZ: 3.21,
+                maxZ: 6.21,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([4446.19, -4486.15, 4.21], 3.4, 9.2, {
+                heading: 200.0,
+                minZ: 3.21,
+                maxZ: 6.21,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([4442.47, -4487.54, 4.21], 3.4, 9.2, {
+                heading: 200.0,
+                minZ: 3.21,
+                maxZ: 6.21,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([4439.06, -4488.85, 4.21], 3.4, 9.2, {
+                heading: 200.0,
+                minZ: 3.21,
+                maxZ: 6.21,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+        ],
+        transferList: ['airport_public', 'bell_farms'],
+    },
+    cayo_boat: {
+        name: 'Port Cayo',
+        type: GarageType.Public,
+        category: GarageCategory.Sea,
+        zone: new BoxZone([4930.15, -5146.44, 1.46], 1.0, 1.0, {
+            heading: 64.91,
+            minZ: 1.46,
+            maxZ: 3.46,
+        }),
+        parkingPlaces: [
+            new BoxZone([4933.47, -5151.1, 2.46], 6.6, 2.4, {
+                heading: 64.07,
+                minZ: 1.46,
+                maxZ: 3.46,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([4935.34, -5144.98, 2.47], 5.0, 2.2, {
+                heading: 65.45,
+                minZ: 1.47,
+                maxZ: 3.47,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([4940.53, -5120.94, 2.73], 9.0, 4.2, {
+                heading: 63.32,
+                minZ: 1.73,
+                maxZ: 3.73,
+                data: {
+                    capacity: [PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
+    sasp: {
+        name: 'San Andreas State Police Parking',
+        type: GarageType.Job,
+        job: JobType.SASP,
+        category: GarageCategory.Car,
+        zone: new BoxZone([-464.16, -609.59, 30.22], 1.0, 1.0, {
+            heading: 0.0,
+            minZ: 30.22,
+            maxZ: 32.32,
+        }),
+        parkingPlaces: [
+            new BoxZone([-471.16, -613.18, 31.17], 6.8, 4.0, {
+                heading: 180.0,
+                minZ: 31.17,
+                maxZ: 33.17,
+            }),
+            new BoxZone([-467.63, -612.91, 31.17], 6.8, 4.0, {
+                heading: 180.0,
+                minZ: 31.17,
+                maxZ: 33.17,
+            }),
+            new BoxZone([-464.23, -613.32, 31.17], 6.8, 4.0, {
+                heading: 180.0,
+                minZ: 31.17,
+                maxZ: 33.17,
+            }),
+            new BoxZone([-460.72, -612.97, 31.17], 6.8, 4.0, {
+                heading: 180.0,
+                minZ: 31.17,
+                maxZ: 33.17,
+            }),
+            new BoxZone([-457.04, -613.3, 31.17], 6.8, 4.0, {
+                heading: 180.0,
+                minZ: 31.17,
+                maxZ: 33.17,
+            }),
+        ],
+    },
+    fdf: {
+        name: 'Ferme de Fou Parking',
+        type: GarageType.Job,
+        job: JobType.FDF,
+        category: GarageCategory.Car,
+        allowTrailers: true,
+        zone: new BoxZone([2500.78, 4966.17, 43.57], 1.0, 1.0, {
+            heading: 147.74,
+            minZ: 43.57,
+            maxZ: 44.87,
+        }),
+        parkingPlaces: [
+            new BoxZone([2501.12, 4951.41, 44.45], 6.8, 4.0, {
+                heading: 320.04,
+                minZ: 44.52,
+                maxZ: 46.52,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([2498.71, 4983.14, 44.52], 12.2, 3.8, {
+                heading: 218.72,
+                minZ: 43.52,
+                maxZ: 45.52,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([2513.6, 4954.82, 44.55], 9.0, 3.4, {
+                heading: 39.04,
+                minZ: 43.55,
+                maxZ: 45.55,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([2528.25, 4963.21, 44.35], 6.8, 4.0, {
+                heading: 38.48,
+                minZ: 44.52,
+                maxZ: 46.52,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([2529.69, 4974.13, 44.91], 6.8, 4.0, {
+                heading: 121.77,
+                minZ: 44.52,
+                maxZ: 46.52,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
+    gouv: {
+        name: 'Gouvernement Parking',
+        type: GarageType.Job,
+        job: JobType.Gouv,
+        category: GarageCategory.Car,
+        zone: new BoxZone([-464.17, -628.78, 30.22], 1.0, 1.0, {
+            heading: 180.0,
+            minZ: 30.22,
+            maxZ: 32.32,
+        }),
+        parkingPlaces: [
+            new BoxZone([-470.9, -624.88, 31.17], 6.8, 4.0, {
+                heading: 0.0,
+                minZ: 31.17,
+                maxZ: 33.17,
+            }),
+            new BoxZone([-467.28, -625.06, 31.17], 6.8, 4.0, {
+                heading: 0.0,
+                minZ: 31.17,
+                maxZ: 33.17,
+            }),
+            new BoxZone([-463.84, -624.23, 31.17], 6.8, 4.0, {
+                heading: 0.0,
+                minZ: 31.17,
+                maxZ: 33.17,
+            }),
+            new BoxZone([-460.52, -624.8, 31.17], 6.8, 4.0, {
+                heading: 0.0,
+                minZ: 31.17,
+                maxZ: 33.17,
+            }),
+            new BoxZone([-456.88, -625.01, 31.17], 6.8, 4.0, {
+                heading: 0.0,
+                minZ: 31.17,
+                maxZ: 33.17,
+            }),
+        ],
+    },
+    dmc: {
+        name: 'DeMetal Company Parking',
+        type: GarageType.Job,
+        job: JobType.DMC,
+        category: GarageCategory.Car,
+        // Position of the garage
+        zone: new BoxZone([1057.85, -1958.45, 30.01], 1.0, 1.0, {
+            heading: 90.01,
+            minZ: 30.01,
+            maxZ: 32.01,
+        }),
+
+        parkingPlaces: [
+            new BoxZone([1073.8, -1949.57, 31.03], 9.4, 4.8, {
+                heading: 142.44,
+                minZ: 30.03,
+                maxZ: 32.23,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+                debugPoly: true,
+            }),
+            new BoxZone([1057.94, -1972.02, 31.01], 11.4, 4.8, {
+                heading: 323.98,
+                minZ: 30.01,
+                maxZ: 32.01,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+                debugPoly: true,
+            }),
+            new BoxZone([1062.71, -1977.14, 31.02], 9.8, 5.2, {
+                heading: 325.17,
+                minZ: 30.02,
+                maxZ: 32.02,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+                debugPoly: true,
+            }),
+        ],
+    },
+};

@@ -1,0 +1,22 @@
+UPDATE shop_content SET label = 'Loup-garou brun' WHERE label = '59-0';
+UPDATE shop_content SET label = 'Loup-garou brun foncé' WHERE label = '79-0';
+UPDATE shop_content SET label = 'Loup-garou blond' WHERE label = '79-1';
+UPDATE shop_content SET label = 'Loup-garou blanc' WHERE label = '79-2';
+UPDATE shop_content SET label = 'Loup-garou Casquette LS noire' WHERE label = '80-0';
+UPDATE shop_content SET label = 'Loup-garou Casquette LS rouge' WHERE label = '80-1';
+UPDATE shop_content SET label = 'Loup-garou Casquette LS blanche' WHERE label = '80-2';
+UPDATE shop_content SET label = 'Loup-garou Visière rouge' WHERE label = '81-0';
+UPDATE shop_content SET label = 'Loup-garou Visière LS' WHERE label = '81-1';
+UPDATE shop_content SET label = 'Loup-garou Visière dorée' WHERE label = '81-2';
+UPDATE shop_content SET label = 'Loup-garou Bandeau blanc' WHERE label = '82-0';
+UPDATE shop_content SET label = 'Loup-garou Bandeau tricolore' WHERE label = '82-1';
+UPDATE shop_content SET label = 'Loup-garou Bandeau bleu' WHERE label = '82-2';
+UPDATE shop_content SET label = 'Loup-garou brun de Noël' WHERE label = '83-0';
+UPDATE shop_content SET label = 'Loup-garou brun foncé de Noël' WHERE label = '83-1';
+UPDATE shop_content SET label = 'Loup-garou blond de Noël' WHERE label = '83-2';
+
+UPDATE shop_content SET category_id = 39 WHERE shop_id = 4 AND label = 'Bas';
+UPDATE shop_content SET category_id = 39 WHERE shop_id = 4 AND label LIKE 'Cagoule%';
+UPDATE shop_content SET category_id = 39 WHERE shop_id = 4 AND label LIKE 'Cag.%';
+UPDATE shop_content SET category_id = 39 WHERE shop_id = 4 AND label LIKE 'Laine%';
+UPDATE shop_content SET category_id = 39 WHERE shop_id = 4 AND label LIKE 'Miteuse%';

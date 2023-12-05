@@ -31,10 +31,42 @@ export const useContact = () => {
         [contacts]
     );
 
+    const getFilteredContacts = useCallback(
+        search => {
+            const list = [];
+
+            contacts
+                .filter(
+                    contact =>
+                        contact?.display?.toLowerCase().includes(search.toLowerCase()) ||
+                        contact.number.includes(search)
+                )
+                .forEach(contact => {
+                    const letter = (contact.display ? contact.display[0] : '#').toUpperCase();
+                    if (list[letter] === undefined) {
+                        list[letter] = [];
+                    }
+                    list[letter].push(contact);
+                });
+
+            return list;
+        },
+        [contacts]
+    );
+
+    const getIdByNumber = useCallback(
+        (number: string) => {
+            return contacts.find(contact => contact.number === number)?.id;
+        },
+        [contacts]
+    );
+
     return {
         getDisplayByNumber,
         getPictureByNumber,
         getContacts,
         getContact,
+        getFilteredContacts,
+        getIdByNumber,
     };
 };

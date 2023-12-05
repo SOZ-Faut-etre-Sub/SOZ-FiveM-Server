@@ -6,6 +6,7 @@ export interface ActiveCall {
     channelId?: number;
     isUnavailable?: boolean;
     startedAt?: number;
+    muted?: boolean;
 }
 
 export interface InitializeCallDTO {
@@ -28,6 +29,12 @@ export interface TransmitterNumDTO {
     transmitterNumber: string;
 }
 
+export interface MuteCallDTO {
+    transmitterNumber: string;
+    isTransmitter: boolean;
+    muted: boolean;
+}
+
 export interface CallWasAcceptedEvent {
     channelId: number;
     currentCall: CallHistoryItem;
@@ -40,7 +47,8 @@ export interface ActiveCallRaw {
     transmitterSource: number;
     receiver: string;
     receiverSource: number;
-    start: string;
+    start: number;
+    end?: number;
     is_accepted: boolean;
 }
 
@@ -51,7 +59,7 @@ export interface CallHistoryItem {
     transmitterSource?: number;
     receiver: string;
     receiverSource?: number;
-    start: string;
+    start: number;
     end?: number;
     is_accepted: boolean;
 }
@@ -76,4 +84,5 @@ export enum CallEvents {
     FETCH_CALLS = 'phone:dialer:fetchCalls',
     ADD_CALL = 'phone:dialer:addCall',
     UPDATE_CALL = 'phone:dialer:updateCall',
+    MUTE_PLAYER_CALL = 'phone:mutePlayer',
 }

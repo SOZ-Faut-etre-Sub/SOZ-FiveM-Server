@@ -31,24 +31,12 @@ export class ItemService {
         return false;
     }
 
-    public canPlayerUseItem(source: number, notify: boolean): boolean {
-        if (this.playerService.getPlayerWeapon(source) !== null) {
-            if (notify) {
-                this.notifier.notify(source, 'Votre main est déjà occupée à porter une arme.', 'error');
-            }
-
-            return false;
-        }
-
-        return true;
-    }
-
     public setItemUseCallback<T extends Item = Item>(
         itemId: string,
         callback: (player: number, item: T, inventoryItem: InventoryItem) => void
     ) {
         this.qbcore.createUseableItem(itemId, (player: number, item: any) => {
-            callback(player, this.qbcore.getItem<T>(itemId), item as InventoryItem);
+            return callback(player, this.qbcore.getItem<T>(itemId), item as InventoryItem);
         });
     }
 }

@@ -78,6 +78,9 @@ body {
 .target-item.news {
   --item-color: 264;
 }
+.target-item.you-news {
+  --item-color: 10;
+}
 .target-item.taxi {
   --item-color: 60;
 }
@@ -99,6 +102,13 @@ body {
 .target-item.pawl {
   --item-color: 15;
 }
+.target-item.crimi {
+  --item-color: 0;
+}
+.target-item.dmc {
+  --item-color: 180;
+}
+
 
 .target-item .tooltip {
   position: absolute;

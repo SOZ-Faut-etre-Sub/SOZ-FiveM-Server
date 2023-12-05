@@ -1,9 +1,12 @@
 import { Transition } from '@headlessui/react';
 import { ChevronLeftIcon } from '@heroicons/react/outline';
-import { ArchiveIcon, PhoneIcon, UserAddIcon } from '@heroicons/react/solid';
+import { ArchiveIcon, PencilAltIcon, PhoneIcon, UserAddIcon } from '@heroicons/react/solid';
 import { AppTitle } from '@ui/components/AppTitle';
 import { AppWrapper } from '@ui/components/AppWrapper';
 import { Button } from '@ui/old_components/Button';
+import cn from 'classnames';
+import { format } from 'date-fns';
+import { fr } from 'date-fns/locale';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -11,16 +14,21 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { useQueryParams } from '../../../common/hooks/useQueryParams';
 import { useContact } from '../../../hooks/useContact';
+import { useConfig } from '../../../hooks/usePhone';
 import { useCall } from '../../../os/call/hooks/useCall';
 import { useSnackbar } from '../../../os/snackbar/hooks/useSnackbar';
 import { RootState, store } from '../../../store';
 import { AppContent } from '../../../ui/components/AppContent';
+import { useBackground } from '../../../ui/hooks/useBackground';
 import MessageInput from '../components/form/MessageInput';
 import { MessageBubble } from '../components/modal/MessageBubble';
 import { MessageImageModal } from '../components/modal/MessageImageModal';
 import { useMessageNotifications } from '../hooks/useMessageNotifications';
 
 export const Messages = () => {
+    const config = useConfig();
+    const backgroundClass = useBackground();
+
     const navigate = useNavigate();
     const { groupId } = useParams<{ groupId: string }>();
 
@@ -50,14 +58,32 @@ export const Messages = () => {
 
     const messages = useSelector((state: RootState) => state.simCard.messages);
     const filteredMessages = useMemo(() => {
-        return messages.filter(conversation => conversation.conversation_id === groupId).sort((a, b) => b.id - a.id);
+        const messagesByDate = [];
+        messages
+            .filter(conversation => conversation.conversation_id === groupId)
+            .sort((a, b) => b.id - a.id)
+            .forEach(message => {
+                const date = format(new Date(message.createdAt), 'PP', {
+                    locale: fr,
+                });
+
+                if (messagesByDate[date] === undefined) {
+                    messagesByDate[date] = [];
+                }
+                messagesByDate[date].push(message);
+            });
+        return messagesByDate;
     }, [messages, groupId]);
 
-    const { getDisplayByNumber } = useContact();
+    const { getDisplayByNumber, getIdByNumber } = useContact();
     const { initializeCall } = useCall();
 
     const handleAddContact = number => {
         return navigate(`/contacts/-1/?addNumber=${number}`);
+    };
+
+    const openContactInfo = (phoneNumber: string) => {
+        navigate(`/contacts/${getIdByNumber(phoneNumber)}`);
     };
 
     const handleArchiveConversation = conversation_id => {
@@ -91,17 +117,32 @@ export const Messages = () => {
             <AppWrapper>
                 <AppTitle
                     title={getDisplayByNumber(conversation.phoneNumber) || conversation.phoneNumber}
+                    subtitle={
+                        getDisplayByNumber(conversation.phoneNumber) !== conversation.phoneNumber
+                            ? conversation.phoneNumber
+                            : ''
+                    }
                     action={
-                        <div className="flex">
+                        <div className="flex gap-2.5">
                             <ArchiveIcon
                                 className="h-6 w-6 cursor-pointer"
                                 onClick={() => handleArchiveConversation(conversation.conversation_id)}
                             />
                             {getDisplayByNumber(conversation.phoneNumber) === conversation.phoneNumber && (
-                                <Button className="mx-3">
+                                <Button>
                                     <UserAddIcon
                                         className="h-6 w-6 cursor-pointer"
                                         onClick={() => handleAddContact(conversation.phoneNumber)}
+                                    />
+                                </Button>
+                            )}
+                            {getDisplayByNumber(conversation.phoneNumber) !== conversation.phoneNumber && (
+                                <Button>
+                                    <PencilAltIcon
+                                        className="h-6 w-6 cursor-pointer"
+                                        onClick={async () => {
+                                            await openContactInfo(conversation.phoneNumber);
+                                        }}
                                     />
                                 </Button>
                             )}
@@ -116,7 +157,7 @@ export const Messages = () => {
                         <ChevronLeftIcon className="h-5 w-5" /> Fermer
                     </Link>
                 </AppTitle>
-                <AppContent className="mt-8 mb-4 h-[800px] overflow-scroll">
+                <AppContent className="mt-2 mb-4 h-[800px] overflow-scroll">
                     <div style={{ flex: 1, display: 'flex', overflowY: 'auto' }}>
                         <div
                             style={{
@@ -126,9 +167,34 @@ export const Messages = () => {
                                 width: '100%',
                             }}
                         >
-                            <div id="scrollableDiv" className="flex flex-col-reverse h-[675px] overflow-auto">
-                                {filteredMessages.map(message => (
-                                    <MessageBubble key={message.id} message={message} />
+                            <div id="scrollableDiv" className="flex flex-col-reverse h-[650px] overflow-auto">
+                                {Object.keys(filteredMessages).map((date, id) => (
+                                    <React.Fragment key={id}>
+                                        {filteredMessages[date].map(message => (
+                                            <MessageBubble key={message.id} message={message} />
+                                        ))}
+
+                                        <div key={date} className="relative">
+                                            <div className="absolute inset-0 px-10 flex items-center">
+                                                <div
+                                                    className={cn('w-full border-t', {
+                                                        'border-gray-300': config.theme.value === 'light',
+                                                        'border-gray-600': config.theme.value === 'dark',
+                                                    })}
+                                                />
+                                            </div>
+                                            <div className="relative flex justify-center">
+                                                <span
+                                                    className={cn('px-2 text-xs', backgroundClass, {
+                                                        'text-gray-400': config.theme.value === 'dark',
+                                                        'text-gray-500': config.theme.value === 'light',
+                                                    })}
+                                                >
+                                                    {date}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </React.Fragment>
                                 ))}
                             </div>
                         </div>

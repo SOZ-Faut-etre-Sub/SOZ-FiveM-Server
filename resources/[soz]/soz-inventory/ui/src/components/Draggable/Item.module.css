@@ -1,0 +1,136 @@
+.Card {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fafafa;
+    pointer-events: all;
+    border-radius: 0.25rem;
+}
+
+.Card > img {
+    border-radius: 0.25rem;
+    pointer-events: none;
+    aspect-ratio: 1/1;
+}
+
+.Card:hover {
+    position: relative;
+    background: rgba(20, 161, 63, 0.05);
+    border: 1px solid rgba(20, 161, 63, 0.1);
+    z-index: 100;
+}
+
+.Disabled {
+    filter: grayscale(100%);
+    opacity: 0.7;
+}
+
+.Money {
+    color: #fafafa;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.025);
+}
+
+.Icon {
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
+    object-fit: contain;
+}
+
+
+.Amount {
+    position: absolute;
+    bottom: 0.25rem;
+    right: 0.25rem;
+    font-size: 0.75rem;
+    color: #ffffff;
+    z-index: 100;
+    text-shadow: black 5px 0 10px;
+    pointer-events: none;
+}
+
+.Shortcut {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0.25rem;
+    right: 0.25rem;
+    color: #ffffff;
+    z-index: 100;
+    pointer-events: none;
+    border: 1px solid rgba(136, 189, 255, 0.2);
+    background: rgba(136, 189, 255, 0.3);
+    padding: 0 0.2rem;
+    border-radius: 0.25rem;
+    font-size: 0.65rem;
+    text-shadow: rgba(0, 0, 0, 0.5) 0 1px 1px;
+}
+
+.Key {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0.25rem;
+    right: 0.25rem;
+    color: #ffffff;
+    z-index: 100;
+    pointer-events: none;
+    border: 1px solid rgba(52, 52, 52, 0.2);
+    background: rgba(52, 52, 52, 0.5);
+    padding: 0 0.2rem;
+    border-radius: 0.25rem;
+    font-size: 0.60rem;
+    text-shadow: rgba(0, 0, 0, 0.5) 0 1px 1px;
+    text-align: center;
+}
+
+.ContextMenu {
+    position: absolute;
+    height: auto;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+}
+
+.OptionsList {
+    background: rgba(0, 0, 0, .6);
+    padding: .5rem;
+    min-width: 10rem;
+    border-radius: .3rem;
+    box-shadow: 0 0 .3rem rgba(0, 0, 0, .6);
+}
+
+.OptionListItem {
+    padding: .5rem;
+    border-radius: .3rem;
+    list-style-type: none;
+    cursor: pointer;
+    pointer-events: all;
+}
+
+.OptionListItem:hover {
+    background: rgba(255, 255, 255, .15);
+}
+
+.OptionListOption {
+    display: inline-flex;
+    justify-content: center;
+    background: rgba(255, 255, 255, .1);
+    margin: 0 0.15rem;
+    padding: 0.1rem;
+    border-radius: 4px;
+    width: 15px;
+    font-variant-numeric: tabular-nums;
+    pointer-events: all;
+}
+
+.OptionListOption:hover {
+    background: rgba(255, 255, 255, .2);
+}

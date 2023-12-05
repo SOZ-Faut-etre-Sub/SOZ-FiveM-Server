@@ -1,9 +1,10 @@
 import { OnNuiEvent } from '../../core/decorators/event';
+import { Exportable } from '../../core/decorators/exports';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { NuiEvent } from '../../shared/event';
 import { AskInput } from '../../shared/nui/input';
-import { isErr, Ok, Result } from '../../shared/result';
+import { Err, isErr, Ok, Result } from '../../shared/result';
 import { NuiDispatch } from './nui.dispatch';
 
 type ValidateInput = (input: string) => Result<any, string>;
@@ -34,9 +35,41 @@ export class InputService {
         return value;
     }
 
+    public async askConfirm(title: string): Promise<boolean> {
+        const confirmText = await this.askInput(
+            {
+                title,
+                defaultValue: '',
+                maxCharacters: 3,
+            },
+            input => {
+                if (input && (input.toLowerCase() === 'oui' || input.toLowerCase() === 'non')) {
+                    return Ok(null);
+                }
+
+                return Err('Vous devez écrire "oui" ou "non" pour confirmer');
+            }
+        );
+
+        if (!confirmText) {
+            return false;
+        }
+
+        return confirmText.toLowerCase() === 'oui';
+    }
+
+    @Exportable('Input')
+    public async askInputLegacy(title: string, maxCharacters: number, defaultValue: string): Promise<string> {
+        return this.askInput({
+            title,
+            maxCharacters,
+            defaultValue,
+        });
+    }
+
     @OnNuiEvent(NuiEvent.InputCancel)
     public async cancelInput(): Promise<void> {
-        if (this.currentInputValidate) {
+        if (this.currentInputResolve) {
             this.currentInputResolve(null);
         }
 
@@ -46,10 +79,6 @@ export class InputService {
 
     @OnNuiEvent(NuiEvent.InputSet)
     public async onInput(input: string): Promise<Result<any, string>> {
-        if (!this.currentInputValidate) {
-            return Ok(null);
-        }
-
         if (this.currentInputValidate) {
             const result = this.currentInputValidate(input);
 

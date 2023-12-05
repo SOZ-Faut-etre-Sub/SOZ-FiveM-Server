@@ -1,70 +1,218 @@
-import { Point2D, Point3D } from './vector';
+import { RGBAColor, RGBColor } from '@public/shared/color';
 
-type BoxZoneOptions = {
+import { PolygonZone, PolygonZoneOptions } from './polygon.zone';
+import { Point3D, rotatePoint, Vector2, Vector3, Vector4 } from './vector';
+
+type BoxZoneOptions<T> = PolygonZoneOptions<T> & {
+    heading?: number;
+    debugPoly?: boolean;
+};
+
+export type Zone<T = never> = {
+    center: Vector3 | Vector4;
+    length?: number;
+    width?: number;
+    heading?: number;
     minZ?: number;
     maxZ?: number;
-    heading?: number;
-    data?: any;
+    debugPoly?: boolean;
+    data?: T;
 };
 
-const rotatePoint = (center: Point2D | Point3D, point: Point2D | Point3D, angleInRad: number): Point2D => {
-    const cos = Math.cos(angleInRad);
-    const sin = Math.sin(angleInRad);
-
-    const x = point[0] - center[0];
-    const y = point[1] - center[1];
-
-    const newX = x * cos - y * sin;
-    const newY = x * sin + y * cos;
-
-    return [newX + center[0], newY + center[1]];
+export type LegacyHousingZone = {
+    x: number;
+    y: number;
+    z: number;
+    sx: number;
+    sy: number;
+    heading: number;
+    minZ?: number;
+    maxZ?: number;
 };
 
-export class BoxZone {
-    private readonly center: Point3D;
-    private readonly length: number;
-    private readonly width: number;
-    private readonly minZ: number;
-    private readonly maxZ: number;
-    private readonly heading: number;
-    private readonly min: Readonly<Point3D>;
-    private readonly max: Readonly<Point3D>;
+export enum ZoneType {
+    NoStress = 'NoStress',
+}
 
-    public constructor(center: Point3D, length: number, width: number, options?: BoxZoneOptions) {
+export type ZoneTyped = Zone<{
+    id: number;
+    type: ZoneType;
+    name: string;
+}>;
+
+export const createZoneFromLegacyData = (data: LegacyHousingZone): Zone | null => {
+    if (data === null) {
+        return null;
+    }
+
+    return {
+        center: [data.x, data.y, data.z],
+        length: data.sx,
+        width: data.sy,
+        heading: data.heading,
+        minZ: data.minZ,
+        maxZ: data.maxZ,
+    };
+};
+
+export const zoneToLegacyData = (zone: Zone): LegacyHousingZone => {
+    return {
+        x: zone.center[0],
+        y: zone.center[1],
+        z: zone.center[2],
+        sx: zone.length,
+        sy: zone.width,
+        heading: zone.heading,
+        minZ: zone.minZ,
+        maxZ: zone.maxZ,
+    };
+};
+
+export type NamedZone<T = never> = Zone<T> & {
+    name: string;
+};
+
+export class BoxZone<T = never> extends PolygonZone<T> {
+    public readonly center: Point3D | Vector4;
+    public readonly length: number;
+    public readonly width: number;
+    public readonly heading: number;
+    public readonly debugPoly: boolean;
+
+    public static fromZone<T>(zone: Zone<T>): BoxZone<T> {
+        return new BoxZone(zone.center, zone.length || 1, zone.width || 1, {
+            minZ: zone.minZ,
+            maxZ: zone.maxZ,
+            data: zone.data,
+            heading: zone.heading,
+        });
+    }
+
+    public static default<T>(
+        center: Point3D | Vector4,
+        length = 1,
+        width = 1,
+        options?: BoxZoneOptions<T>
+    ): BoxZone<T> {
+        return new BoxZone(center, length, width, {
+            minZ: center[2] - 1,
+            maxZ: center[2] + 2,
+            heading: center[3] || 0,
+            ...options,
+        });
+    }
+
+    public constructor(center: Point3D | Vector4, length: number, width: number, options?: BoxZoneOptions<T>) {
+        const points: Vector2[] = [];
+        const heading = options?.heading || 0;
+        const angleInRad = (heading * Math.PI) / 180;
+
+        points.push(rotatePoint(center, [center[0] - width / 2, center[1] - length / 2], angleInRad));
+        points.push(rotatePoint(center, [center[0] - width / 2, center[1] + length / 2], angleInRad));
+        points.push(rotatePoint(center, [center[0] + width / 2, center[1] + length / 2], angleInRad));
+        points.push(rotatePoint(center, [center[0] + width / 2, center[1] - length / 2], angleInRad));
+        points.push(rotatePoint(center, [center[0] - width / 2, center[1] - length / 2], angleInRad));
+
+        super(points, options);
+
         this.center = center;
         this.length = length;
         this.width = width;
-        this.minZ = options?.minZ || center[2] - 1;
-        this.maxZ = options?.maxZ || center[2] + 2;
-        this.heading = ((options?.heading || 0) * Math.PI) / 180;
-
-        const min = [center[0] - width / 2, center[1] - length / 2] as Point2D;
-        const max = [center[0] + width / 2, center[1] + length / 2] as Point2D;
-
-        this.min = [min[0], min[1], center[2] - this.minZ];
-        this.max = [max[0], max[1], center[2] + this.maxZ];
+        this.heading = heading;
+        this.debugPoly = options?.debugPoly;
     }
 
-    public isPointInside(point: Point3D): boolean {
-        if (this.heading !== 0) {
-            const rotatedPoint = rotatePoint(this.center, point, -this.heading);
+    public draw(wallColor: RGBAColor | RGBColor, alpha?: number, text?: string) {
+        super.draw(wallColor, alpha);
 
-            point = [rotatedPoint[0], rotatedPoint[1], point[2]];
-        }
+        const angleInRad = (this.heading * Math.PI) / 180;
 
-        return (
-            point[0] >= this.min[0] &&
-            point[0] <= this.max[0] &&
-            point[1] >= this.min[1] &&
-            point[1] <= this.max[1] &&
-            point[2] >= this.min[2] &&
-            point[2] <= this.max[2]
+        const a = rotatePoint(
+            this.center,
+            [this.center[0] + this.width / 2, this.center[1] - this.length / 2],
+            angleInRad
+        ) as Vector2;
+        const b = rotatePoint(
+            this.center,
+            [this.center[0] - this.width / 2, this.center[1] - this.length / 2],
+            angleInRad
+        ) as Vector2;
+
+        const collisionPosition = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+
+        DrawLine(
+            this.center[0],
+            this.center[1],
+            this.center[2],
+            collisionPosition[0],
+            collisionPosition[1],
+            this.maxZ,
+            255,
+            0,
+            0,
+            255
         );
+        DrawLine(
+            this.center[0],
+            this.center[1],
+            this.center[2],
+            collisionPosition[0],
+            collisionPosition[1],
+            this.minZ,
+            255,
+            0,
+            0,
+            255
+        );
+        DrawLine(
+            collisionPosition[0],
+            collisionPosition[1],
+            this.maxZ,
+            collisionPosition[0],
+            collisionPosition[1],
+            this.minZ,
+            255,
+            0,
+            0,
+            255
+        );
+
+        if (text) {
+            const [onScreen, _x, _y] = World3dToScreen2d(this.center[0], this.center[1], this.center[2]);
+
+            if (onScreen) {
+                SetTextScale(0.35, 0.35);
+                SetTextFont(4);
+                SetTextProportional(true);
+                SetTextColour(255, 255, 255, 255);
+                SetTextEntry('STRING');
+                SetTextCentre(true);
+                AddTextComponentString(text);
+                DrawText(_x, _y);
+            }
+        }
     }
 
-    public draw() {
-        DrawBox(this.min[0], this.min[1], this.min[2], this.max[0], this.max[1], this.max[2], 0, 255, 0, 80);
-        DrawLine(this.min[0], this.min[1], this.min[2], this.min[0], this.min[1], this.max[2], 255, 0, 255, 255);
-        DrawLine(this.max[0], this.max[1], this.min[2], this.max[0], this.max[1], this.max[2], 255, 0, 255, 255);
+    public toZone(): Zone<T> {
+        return {
+            center: this.center,
+            length: this.length,
+            width: this.width,
+            heading: this.heading,
+            minZ: this.minZ,
+            maxZ: this.maxZ,
+            debugPoly: this.debugPoly,
+            data: this.data,
+        };
     }
 }
+
+export const zoneToString = (zone: Zone<any>): string => {
+    return `{"center": [${zone.center[0].toFixed(2)}, ${zone.center[1].toFixed(2)}, ${zone.center[2].toFixed(
+        2
+    )}], "heading": ${zone.heading.toFixed(2)}, "length": ${(zone.length || 1.0).toFixed(2)}, "maxZ": ${(
+        zone.maxZ || zone.center[2] + 2.0
+    ).toFixed(2)}, "minZ": ${(zone.minZ || zone.center[2] - 1.0).toFixed(2)}, "width": ${(zone.width || 1.0).toFixed(
+        2
+    )}}`;
+};

@@ -4,7 +4,7 @@ AddEventHandler('playerDropped', function()
     local src = source
     if QBCore.Players[src] then
         local Player = QBCore.Players[src]
-        exports['soz-monitor']:Event('player_disconnect', { player_source = src }, {})
+        exports['soz-core']:Event('player_disconnect', { player_source = src }, {})
         Player.Functions.Save()
         _G.Player_Buckets[Player.PlayerData.license] = nil
         TriggerEvent('inventory:DropPlayerInventory', src)
@@ -28,7 +28,7 @@ AddEventHandler('chatMessage', function(source, n, message)
                 table.remove(args, 1)
                 if isGod or hasPerm or isPrincipal then
                     if (QBCore.Commands.List[command].argsrequired and #QBCore.Commands.List[command].arguments ~= 0 and args[#QBCore.Commands.List[command].arguments] == nil) then
-                        TriggerClientEvent('hud:client:DrawNotification', src, 'Il vous manque des paramètres !', "error")
+                        TriggerClientEvent('soz-core:client:notification:draw', src, 'Il vous manque des paramètres !', "error")
                     else
                         QBCore.Commands.List[command].callback(src, args)
                     end
@@ -40,32 +40,10 @@ end)
 
 -- Player Connecting
 
-local function GetUserAccount(steam)
-    local p = promise.new()
-    local resolved = false
-
-    MySQL.single("SELECT a.* FROM soz_api.accounts a LEFT JOIN soz_api.account_identities ai ON a.id = ai.accountId WHERE a.whitelistStatus = 'ACCEPTED' AND ai.identityType = 'STEAM' AND ai.identityId = ? LIMIT 1", {steam}, function(result)
-        if resolved then
-            return
-        end
-
-        p:resolve(result)
-        resolved = true
-    end)
-
-    Citizen.SetTimeout(1000, function()
-        resolved = true
-
-        p:reject('timeout check last mysql error')
-    end)
-
-    return Citizen.Await(p)
-end
-
 local function OnPlayerConnecting(name, setKickReason, deferrals)
-    -- @TODO we will validate in another way using steam and a specific queue system, bypass this code ATM
     deferrals.defer()
-    local steam = QBCore.Functions.GetSozIdentifier(source)
+    local src = source
+    local steam = QBCore.Functions.GetSozIdentifier(src)
 
     Wait(0)
 
@@ -73,7 +51,7 @@ local function OnPlayerConnecting(name, setKickReason, deferrals)
     local defaultAnonymousRole = GetConvar("soz_anonymous_default_role", "user")
 
     if not steam then
-        exports["soz-monitor"]:Log("ERROR", name .. ": error finding steam id for this user.", {
+        exports["soz-core"]:Log("ERROR", name .. ": error finding steam id for this user.", {
             event = "playerConnecting"
         })
 
@@ -84,16 +62,10 @@ local function OnPlayerConnecting(name, setKickReason, deferrals)
         end
     end
 
-    local status, result = pcall(function()
-        return GetUserAccount(steam)
-    end)
+    local useTestMode = GetConvar("soz_enable_test_auth", "false") == "true"
+    local account = QBCore.Functions.GetUserAccount(src, useTestMode)
 
-    if not status or not result then
-        exports["soz-monitor"]:Log("ERROR", name .. ": cannot find account for this user: '" .. json.encode(result) .. "'", {
-            steam = steam,
-            event = "playerConnecting"
-        })
-
+    if not account then
         if not allowAnonymous then
             deferrals.done('Impossible de recupérer un compte soz valide, veuillez vous rapprocher auprès d\'un administrateur, identifiant steam : ' .. tostring(steam))
 
@@ -101,8 +73,10 @@ local function OnPlayerConnecting(name, setKickReason, deferrals)
         end
 
         QBCore.Functions.SetPermission(steam, defaultAnonymousRole)
+    elseif useTestMode then
+        QBCore.Functions.SetPermission(steam, 'admin')
     else
-        QBCore.Functions.SetPermission(steam, result.role or 'user')
+        QBCore.Functions.SetPermission(steam, account.role or 'user')
     end
 
     deferrals.done()
@@ -163,7 +137,6 @@ RegisterNetEvent('QBCore:Server:SetMetaData', function(meta, data)
     if Player then
         Player.Functions.SetMetaData(meta, data)
     end
-    TriggerClientEvent('hud:client:UpdateNeeds', src, Player.PlayerData.metadata['hunger'], Player.PlayerData.metadata['thirst'], Player.PlayerData.metadata['alcohol'], Player.PlayerData.metadata['drug'])
 end)
 
 RegisterNetEvent('QBCore:ToggleDuty', function()
@@ -172,25 +145,32 @@ RegisterNetEvent('QBCore:ToggleDuty', function()
     local itt = player.PlayerData.metadata["itt"]
 
     if itt then
-        TriggerClientEvent('hud:client:DrawNotification', src, 'Vous êtes en interdiction de travail temporaire', "info")
+        TriggerClientEvent('soz-core:client:notification:draw', src, 'Vous êtes en interdiction de travail temporaire', "info")
         return
     end
 
     if player.PlayerData.job.onduty then
         player.Functions.SetJobDuty(false)
-        TriggerClientEvent('hud:client:DrawNotification', src, 'Vous êtes hors service', "info")
+        TriggerClientEvent('soz-core:client:notification:draw', src, 'Vous êtes hors service', "info")
     else
         player.Functions.SetJobDuty(true)
-        TriggerClientEvent('hud:client:DrawNotification', src, 'Vous êtes en service', "info")
+        TriggerClientEvent('soz-core:client:notification:draw', src, 'Vous êtes en service', "info")
     end
-    Player(player.PlayerData.source).state.onDuty = player.PlayerData.job.onduty
     TriggerClientEvent('QBCore:Client:SetDuty', src, player.PlayerData.job.onduty)
+    TriggerEvent('QBCore:Server:SetDuty', player.PlayerData.job.id, player.PlayerData.job.onduty, src)
+end)
+
+RegisterNetEvent('QBCore:GetEmployOnDuty', function()
+    local player = QBCore.Functions.GetPlayer(source)
+    local player_names = QBCore.Functions.GetPlayerNamesOnDuty(player.PlayerData.job.id)
+    
+    TriggerClientEvent('soz-job:client:OpenOnDutyMenu', source, player_names, player.PlayerData.job.id)
 end)
 
 -- Items
 RegisterNetEvent('QBCore:Server:RemoveItem', function(itemName, amount, slot)
     local Player = QBCore.Functions.GetPlayer(source)
-    exports['soz-monitor']:Log('FATAL', 'DEPRECATED use of QBCore:Server:RemoveItem ! item: '.. itemName, Player)
+    exports['soz-core']:Log('ERROR', 'DEPRECATED use of QBCore:Server:RemoveItem ! item: '.. itemName, Player)
     exports['soz-inventory']:RemoveItem(Player.PlayerData.source, itemName, amount, false, slot)
 end)
 
@@ -206,7 +186,7 @@ RegisterNetEvent('QBCore:CallCommand', function(command, args)
             local isPrincipal = IsPlayerAceAllowed(src, 'command')
             if (QBCore.Commands.List[command].permission == Player.PlayerData.job.id) or isGod or hasPerm or isPrincipal then
                 if (QBCore.Commands.List[command].argsrequired and #QBCore.Commands.List[command].arguments ~= 0 and args[#QBCore.Commands.List[command].arguments] == nil) then
-                    TriggerClientEvent('hud:client:DrawNotification', src, 'Il vous manque des paramètres !', "error")
+                    TriggerClientEvent('soz-core:client:notification:draw', src, 'Il vous manque des paramètres !', "error")
                 else
                     QBCore.Commands.List[command].callback(src, args)
                 end

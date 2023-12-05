@@ -24,7 +24,7 @@ end
 
 --- Other functions
 Housing.Functions.IsInsideApartment = function()
-    return PlayerData.metadata["inside"].apartment ~= false
+    return PlayerData and PlayerData.metadata["inside"].apartment ~= false
 end
 
 Housing.Functions.GenerateMenu = function(cb)
@@ -43,7 +43,7 @@ Housing.Functions.GenerateMenu = function(cb)
     end
 end
 
-Housing.Functions.Teleport = function(title, coords)
+Housing.Functions.Teleport = function(title, coords, propertyId, apartmentId)
     QBCore.Functions.Progressbar("housing_action", title, 1000, false, false,
                                  {
         disableMovement = true,
@@ -56,10 +56,13 @@ Housing.Functions.Teleport = function(title, coords)
         DoScreenFadeOut(500)
         Citizen.Wait(500)
 
+        local exitcoords = GetEntityCoords(ped)
+        local heading = GetEntityHeading(ped)
         SetPedCoordsKeepVehicle(ped, coords.x, coords.y, coords.z)
         SetEntityHeading(ped, coords.w or 0)
 
         DoScreenFadeIn(500)
+        TriggerServerEvent("housing:server:CompleteSetPlayerInApartment", propertyId, apartmentId, exitcoords, heading)
     end)
 end
 
@@ -74,6 +77,6 @@ Housing.Functions.TargetInteraction = function(name, config, interactions)
         heading = config.heading,
         minZ = config.minZ,
         maxZ = config.maxZ,
-        debugPoly = Config.Debug,
+        debugPoly = false,
     }, {options = interactions, distance = 2.5})
 end

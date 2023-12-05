@@ -103,9 +103,8 @@ class _PlayerService {
      */
     async handleNewPlayerJoined(player: any) {
         const username = `${player.PlayerData.charinfo.firstname} ${player.PlayerData.charinfo.lastname}`;
-        playerLogger.info(`Started loading for ${username} (${player.PlayerData.source})`);
-        // Ensure phone number exists or generate
 
+        // Ensure phone number exists or generate
         const newPlayer = new Player({
             identifier: player.PlayerData.citizenid,
             source: player.PlayerData.source,
@@ -116,7 +115,6 @@ class _PlayerService {
         this.addPlayerToMaps(player.PlayerData.source, newPlayer);
         await this.handlePlayerJobUpdate(player.PlayerData.source, player.PlayerData.job);
 
-        playerLogger.info('Player Loaded!');
         playerLogger.debug(newPlayer);
 
         // This is a stupid hack for development reloading
@@ -240,7 +238,6 @@ class _PlayerService {
     async handleUnloadPlayerEvent(src: number) {
         this.deletePlayerFromMaps(src);
         emitNet(PhoneEvents.SET_PLAYER_LOADED, src, false);
-        playerLogger.info(`Unloaded Player, source: (${src})`);
     }
 }
 

@@ -1,51 +1,3 @@
-local PlayWalking = function(animation)
-    RequestAnimSet(animation)
-    while not HasAnimSetLoaded(animation) do
-        Wait(1)
-    end
-
-    SetPedMovementClipset(PlayerPedId(), animation, 1)
-    RemoveAnimSet(animation)
-end
-
---- Effects
-RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
-    if PlayerData.metadata["drug"] > 0 and not AnimpostfxIsRunning("DrugsMichaelAliensFight") then
-        AnimpostfxPlay("DrugsMichaelAliensFightIn", 0, false)
-        AnimpostfxPlay("DrugsMichaelAliensFight", 0, true)
-    elseif PlayerData.metadata["drug"] <= 0 and AnimpostfxIsRunning("DrugsMichaelAliensFight") then
-        AnimpostfxStopAndDoUnk("DrugsMichaelAliensFight")
-        AnimpostfxStopAndDoUnk("DrugsMichaelAliensFightIn")
-    end
-
-    if PlayerData.metadata["alcohol"] > 0 and not AnimpostfxIsRunning("DrugsTrevorClownsFight") then
-        AnimpostfxPlay("DrugsTrevorClownsFightIn", 0, false)
-        AnimpostfxPlay("DrugsTrevorClownsFight", 0, true)
-    elseif PlayerData.metadata["alcohol"] <= 0 and AnimpostfxIsRunning("DrugsTrevorClownsFight") then
-        AnimpostfxStopAndDoUnk("DrugsTrevorClownsFight")
-        AnimpostfxStopAndDoUnk("DrugsTrevorClownsFightIn")
-    end
-
-    if PlayerData.metadata["alcohol"] > 80 or PlayerData.metadata["drug"] > 80 then
-        ShakeGameplayCam("DRUNK_SHAKE", 1.0)
-        SetPedIsDrunk(PlayerPedId(), true)
-        PlayWalking("move_m@drunk@verydrunk")
-    elseif PlayerData.metadata["alcohol"] > 40 or PlayerData.metadata["drug"] > 40 then
-        ShakeGameplayCam("DRUNK_SHAKE", 0.5)
-        SetPedIsDrunk(PlayerPedId(), true)
-        PlayWalking("move_m@drunk@moderatedrunk")
-    elseif PlayerData.metadata["alcohol"] > 0 or PlayerData.metadata["drug"] > 0 then
-        ShakeGameplayCam("DRUNK_SHAKE", 0.0)
-        SetPedIsDrunk(PlayerPedId(), false)
-        PlayWalking("move_m@drunk@slightlydrunk")
-    else
-        ResetPedMovementClipset(PlayerPedId())
-        ShakeGameplayCam("DRUNK_SHAKE", 0.0)
-        SetPedIsDrunk(PlayerPedId(), false)
-        TriggerEvent("personal:client:ApplyWalkStyle")
-    end
-end)
-
 --- Drugs
 RegisterNetEvent("consumables:client:UseJoint", function()
     local animDict, anim, task
@@ -142,7 +94,7 @@ RegisterNetEvent("scuba:client:Toggle", function(scuba)
             disableCombat = true,
         }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
             SetEnableScuba(PlayerPedId(), true)
-            SetPedMaxTimeUnderwater(PlayerPedId(), 1500.00)
+            SetPedMaxTimeUnderwater(PlayerPedId(), 86400.00)
             TriggerServerEvent("soz-character:server:SetPlayerJobClothes", skin[PlayerData.skin.Model.Hash], false)
         end)
     else
@@ -156,3 +108,13 @@ RegisterNetEvent("scuba:client:Toggle", function(scuba)
         end)
     end
 end)
+
+RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
+    PlayerData = QBCore.Functions.GetPlayerData()
+    if PlayerData.metadata.scuba then
+        local ped = PlayerPedId()
+        SetEnableScuba(ped, true)
+        SetPedMaxTimeUnderwater(ped, 86400.00)
+    end
+end)
+

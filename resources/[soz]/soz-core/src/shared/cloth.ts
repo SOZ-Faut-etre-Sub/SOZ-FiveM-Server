@@ -1,5 +1,4 @@
 export enum Component {
-    Head = 0,
     Mask = 1,
     Hair = 2,
     Torso = 3,
@@ -14,7 +13,7 @@ export enum Component {
 }
 
 export enum Prop {
-    Head = 0,
+    Hat = 0,
     Glasses = 1,
     Ear = 2,
     LeftHand = 6,
@@ -24,14 +23,23 @@ export enum Prop {
 
 export type OutfitItem = {
     Index?: number;
-    Drawable: number;
-    Texture: number;
-    Palette: number;
+    Drawable?: number;
+    Texture?: number;
+    Palette?: number;
+    Clear?: boolean;
+};
+
+export type GlovesItem = {
+    id: number;
+    correspondingDrawables: Record<number, number>;
+    texture: number;
 };
 
 export type Outfit = {
     Components: Partial<Record<Component, OutfitItem>>;
     Props: Partial<Record<Prop, OutfitItem>>;
+    GlovesID?: number;
+    TopID?: number;
 };
 
 export type ClothConfig = {
@@ -55,6 +63,7 @@ export type ClothConfig = {
         HideBag: boolean;
         HidePants: boolean;
         HideShoes: boolean;
+        HideGloves: boolean;
     };
 };
 
@@ -64,7 +73,50 @@ export type Wardrobe = Record<string, Outfit>;
 export type WardrobeMenuData = {
     wardrobe: Wardrobe;
     allowNullLabel?: string;
+    allowCustom?: string;
+};
+
+export const WardRobeElements = {
+    [0]: { label: 'Casque', propId: ['Helmet'] },
+    [1]: { label: 'Chapeau', propId: [0] },
+    [2]: { label: 'Masque', componentId: [1] },
+    [3]: { label: 'Haut', componentId: [3, 5, 7, 8, 9, 10, 11] },
+    [4]: { label: 'Bas', componentId: [4, 6] },
 };
 
 // A list of wardrobe indexed by model hash
 export type WardrobeConfig = Record<number, Wardrobe>;
+
+export const KeepHairWithMask = {
+    [105]: true,
+    [107]: true,
+    [108]: true,
+    [111]: true,
+    [116]: true,
+    [120]: true,
+    [121]: true,
+    [124]: true,
+    [127]: true,
+    [128]: true,
+    [133]: true,
+    [148]: true,
+    [160]: true,
+    [161]: true,
+    [164]: true,
+    [165]: true,
+    [166]: true,
+    [168]: true,
+    [169]: true,
+    [175]: true,
+    [179]: true,
+    [183]: true,
+    [186]: true,
+    [187]: true,
+    [198]: true,
+    [199]: true,
+    [201]: true,
+    [202]: true,
+    [204]: true,
+    [206]: true,
+    [207]: true,
+};

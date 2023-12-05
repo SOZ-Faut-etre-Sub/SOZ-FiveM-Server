@@ -4,13 +4,14 @@ import cn from 'classnames';
 import React, { Fragment } from 'react';
 import { createPortal } from 'react-dom';
 
-import { useConfig } from '../../../../hooks/usePhone';
+import { useConfig, useVisibility } from '../../../../hooks/usePhone';
 
 export function PictureModal({ open, setOpen, children }) {
     const config = useConfig();
+    const { visibility } = useVisibility();
 
     return createPortal(
-        <Transition.Root show={open} as={Fragment}>
+        <Transition.Root show={open && visibility} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={setOpen}>
                 <Transition.Child
                     as={Fragment}
@@ -39,7 +40,7 @@ export function PictureModal({ open, setOpen, children }) {
                                 className={cn(
                                     'relative transform overflow-hidden rounded-lg px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 w-full max-w-[90%] sm:p-6',
                                     {
-                                        'bg-black': config.theme.value === 'dark',
+                                        'bg-ios-800': config.theme.value === 'dark',
                                         'bg-ios-50': config.theme.value === 'light',
                                     }
                                 )}
@@ -50,7 +51,7 @@ export function PictureModal({ open, setOpen, children }) {
                                         className={cn(
                                             'rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2',
                                             {
-                                                'bg-black': config.theme.value === 'dark',
+                                                'bg-ios-800': config.theme.value === 'dark',
                                                 'bg-ios-50': config.theme.value === 'light',
                                             }
                                         )}

@@ -3,22 +3,42 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { wait } from '../../core/utils';
 import { NuiEvent, ServerEvent } from '../../shared/event';
+import { HudMinimapProvider } from '../hud/hud.minimap.provider';
 import { Notifier } from '../notifier';
+import { InputService } from '../nui/input.service';
+import { NuiMenu } from '../nui/nui.menu';
+import { PlayerService } from '../player/player.service';
+import { VehiclePoliceLocator } from '../vehicle/vehicle.police.locator.provider';
 
 @Provider()
 export class AdminMenuGameMasterProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
+    @Inject(InputService)
+    private inputService: InputService;
+
+    @Inject(NuiMenu)
+    private nuiMenu: NuiMenu;
+
+    @Inject(HudMinimapProvider)
+    private hudMinimapProvider: HudMinimapProvider;
+
+    @Inject(VehiclePoliceLocator)
+    private vehiclePoliceLocator: VehiclePoliceLocator;
+
+    @Inject(PlayerService)
+    private playerService: PlayerService;
+
     @OnNuiEvent(NuiEvent.AdminGiveMoney)
     public async giveMoney(amount: number): Promise<void> {
-        TriggerServerEvent(ServerEvent.ADMIN_GIVE_MONEY, 'money', amount);
+        TriggerServerEvent(ServerEvent.ADMIN_ADD_MONEY, 'money', amount);
         this.notifier.notify(`Vous vous êtes donné ${amount}$ en argent propre.`, 'success');
     }
 
     @OnNuiEvent(NuiEvent.AdminGiveMarkedMoney)
     public async giveMarkedMoney(amount: number): Promise<void> {
-        TriggerServerEvent(ServerEvent.ADMIN_GIVE_MONEY, 'marked', amount);
+        TriggerServerEvent(ServerEvent.ADMIN_ADD_MONEY, 'marked_money', amount);
         this.notifier.notify(`Vous vous êtes donné ${amount}$ en argent sale.`, 'success');
     }
 
@@ -44,12 +64,12 @@ export class AdminMenuGameMasterProvider {
 
     @OnNuiEvent(NuiEvent.AdminGiveLicence)
     public async giveLicence(licence: string): Promise<void> {
-        TriggerServerEvent(ServerEvent.ADMIN_GIVE_LICENCE, licence);
+        TriggerServerEvent(ServerEvent.ADMIN_ADD_LICENSE, licence);
     }
 
     @OnNuiEvent(NuiEvent.AdminToggleMoneyCase)
     public async toggleDisableMoneyCase(value: boolean): Promise<void> {
-        LocalPlayer.state.set('adminDisableMoneyCase', !value, false);
+        await this.playerService.updateState({ disableMoneyCase: !value });
     }
 
     @OnNuiEvent(NuiEvent.AdminSetVisible)
@@ -85,7 +105,8 @@ export class AdminMenuGameMasterProvider {
 
     @OnNuiEvent(NuiEvent.AdminSetGodMode)
     public async setGodMode(value: boolean): Promise<void> {
-        TriggerServerEvent(ServerEvent.ADMIN_GOD_MODE, value);
+        TriggerServerEvent(ServerEvent.ADMIN_SET_GOD_MODE, value);
+
         if (value) {
             TriggerServerEvent(ServerEvent.LSMC_SET_CURRENT_DISEASE, 'false', GetPlayerServerId(PlayerId()));
         }
@@ -93,6 +114,16 @@ export class AdminMenuGameMasterProvider {
 
     @OnNuiEvent(NuiEvent.AdminMenuGameMasterUncuff)
     public async unCuff(): Promise<void> {
-        TriggerServerEvent(ServerEvent.ADMIN_UNCUFF);
+        TriggerServerEvent(ServerEvent.ADMIN_UNCUFF_PLAYER);
+    }
+
+    @OnNuiEvent(NuiEvent.AdminSetAdminGPS)
+    public async setAdminGPS(value: boolean): Promise<void> {
+        this.hudMinimapProvider.hasAdminGps = value;
+    }
+
+    @OnNuiEvent(NuiEvent.AdminSetPoliceLocator)
+    public async setAdminPoliceLocator(value: boolean): Promise<void> {
+        this.vehiclePoliceLocator.setAdminEnabled(value);
     }
 }

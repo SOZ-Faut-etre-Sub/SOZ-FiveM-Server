@@ -1,18 +1,17 @@
-import { Once } from '../../core/decorators/event';
+import { Once, OnEvent } from '../../core/decorators/event';
 import { Provider } from '../../core/decorators/provider';
-import { StateBagHandler } from '../../core/decorators/state';
+import { ClientEvent } from '../../shared/event';
 import { Time } from '../../shared/weather';
 
 @Provider()
 export class TimeProvider {
-    @StateBagHandler('time', 'global')
-    async onTimeChange(_name, _key, time: Time) {
+    @OnEvent(ClientEvent.STATE_UPDATE_TIME)
+    async onTimeChange(time: Time) {
         NetworkOverrideClockTime(time.hour, time.minute, time.second);
     }
 
     @Once()
     onStart(): void {
-        NetworkOverrideClockTime(GlobalState.time.hour, GlobalState.time.minute, GlobalState.time.second);
         SetMillisecondsPerGameMinute(2000);
     }
 }

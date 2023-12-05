@@ -5,7 +5,7 @@ export const MockSocietyMessages: SocietyMessage[] = [
         id: 1,
         conversation_id: '555-LSPD',
         source_phone: '603-275-8373',
-        message: 'Lorem ipsum dolor sit amet, conse ctetur adip iscing elit.',
+        message: 'Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
         position: '{"x":205.12088012695312,"y":1160.4395751953125,"z":226.99560546875}',
         isTaken: false,
         takenBy: null,

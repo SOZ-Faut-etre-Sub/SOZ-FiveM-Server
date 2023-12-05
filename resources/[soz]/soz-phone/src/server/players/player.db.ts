@@ -3,7 +3,8 @@ export class PlayerRepo {
         const result = await exports.oxmysql.single_async(`SELECT citizenid FROM player WHERE charinfo LIKE ?`, [
             '%' + phoneNumber + '%',
         ]);
-        return result['citizenid'] || null;
+
+        return result?.citizenid || null;
     }
 }
 

@@ -9,12 +9,17 @@ export interface TwitchNewsMessage {
         | 'lspd'
         | 'lspd:end'
         | 'bcso'
-        | 'bcso:end';
+        | 'bcso:end'
+        | 'sasp'
+        | 'sasp:end'
+        | 'gouv'
+        | 'gouv:end';
     reporter?: string;
     reporterId?: string;
     image?: string;
     message: string;
     createdAt?: string;
+    job: string;
 }
 
 export enum SocietiesDatabaseLimits {
@@ -23,6 +28,7 @@ export enum SocietiesDatabaseLimits {
 
 export enum TwitchNewsEvents {
     FETCH_NEWS = 'phone:app:news:fetchNews',
+    RELOAD_NEWS = 'phone:app:news:reloadNews',
     CREATE_NEWS_BROADCAST = 'phone:app:news:createNewsBroadcast',
-    API_NEWS_BROADCAST = 'soz-api:server:AddFlashNews',
+    API_NEWS_BROADCAST = 'soz-core:server:news:add-flash',
 }

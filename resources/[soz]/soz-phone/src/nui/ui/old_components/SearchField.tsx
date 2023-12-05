@@ -24,7 +24,7 @@ export const SearchField: React.FC<SearchFieldProps> = ({ value, onChange, place
         <div className="rounded-lg mx-3 py-2">
             <div
                 className={cn('flex items-center rounded-lg', {
-                    'bg-[#1C1C1E]': config.theme.value === 'dark',
+                    'bg-ios-700': config.theme.value === 'dark',
                     'bg-gray-300': config.theme.value === 'light',
                 })}
             >
@@ -34,7 +34,7 @@ export const SearchField: React.FC<SearchFieldProps> = ({ value, onChange, place
                     onChange={onChange}
                     placeholder={placeholder}
                     className={cn({
-                        'bg-[#1C1C1E]': config.theme.value === 'dark',
+                        'bg-ios-700': config.theme.value === 'dark',
                         'bg-gray-300': config.theme.value === 'light',
                     })}
                 />

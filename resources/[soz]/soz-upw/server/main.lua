@@ -84,6 +84,8 @@ MySQL.ready(function()
     StartProductionLoop()
     StartConsumptionLoop()
     StartSaveLoop()
+
+    TriggerEvent("soz-upw:server:onPollutionManagerReady")
 end)
 
 --
@@ -124,7 +126,9 @@ RegisterNetEvent("soz-upw:server:AddFacility", function(model, coords, scope, jo
 
     if scope and scope == "entreprise" then
         if job == nil then
-            TriggerClientEvent("hud:client:DrawNotification", source, "Pas d'entreprise sélectionnée", "error")
+            TriggerClientEvent("soz-core:client:notification:draw", source, "Pas d'entreprise sélectionnée", "error")
+
+            return
         end
     end
 
@@ -179,35 +183,30 @@ end
 --
 -- METRICS
 --
-exports("GetUpwMetrics", function()
-    local metrics = {}
-    if Pm == {} then
-        return metrics
+exports("GetMetrics", function()
+    if Pm == nil or #Pm == 0 then
+        return {}
     end
 
-    -- Pollution Level
-    metrics["pollution_level"] = {{identifier = Pm.identifier, value = Pm:GetPollutionLevel()}}
-    metrics["pollution_percent"] = {{identifier = Pm.identifier, value = Pm:GetPollutionPercent()}}
-
-    -- Blackout Level
-    metrics["blackout_level"] = {{identifier = "blackout", value = GetBlackoutLevel()}}
-    metrics["blackout_percent"] = {{identifier = "blackout", value = GetBlackoutPercent()}}
+    local metrics = {
+        pollution_level = Pm:GetPollutionLevel(),
+        pollution_percent = Pm:GetPollutionPercent(),
+        blackout_level = GetBlackoutLevel(),
+        blackout_percent = GetBlackoutPercent(),
+        facilities = {},
+    }
 
     -- Facilities
     for type_, data in pairs(facilities) do
         for identifier, facility in pairs(data.arr) do
-            local metric = {["identifier"] = identifier, value = facility.capacity}
+            local metric = {["identifier"] = identifier, value = facility.capacity, type = type_}
 
             if type_ == "terminal" then
                 metric.scope = facility.scope
                 metric.job = facility.job or nil
             end
 
-            if type(metrics[type_]) == "table" then
-                table.insert(metrics[type_], metric)
-            else
-                metrics[type_] = {metric}
-            end
+            table.insert(metrics.facilities, metric)
         end
     end
 

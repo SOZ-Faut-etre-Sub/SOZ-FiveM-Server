@@ -1,0 +1,22 @@
+name: "Check Lua Code Style"
+
+on:
+    pull_request: ~
+
+jobs:
+    check-lua:
+        runs-on: ubuntu-latest
+        container:
+            image: "ghcr.io/soz-faut-etre-sub/lua-formatter:latest"
+            credentials:
+                username: ${{ github.actor }}
+                password: ${{ secrets.github_token }}
+        steps:
+            - uses: actions/checkout@v3
+            - name: "check-lua-code-style"
+              shell: bash
+              run: |
+                  lua-format -i `find 'resources/[soz]' -name '*.lua'`
+                  git config --global --add safe.directory `pwd`
+                  git diff --exit-code
+

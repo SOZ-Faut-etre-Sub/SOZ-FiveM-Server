@@ -2,7 +2,7 @@
 CreateThread(function()
     while true do
         -- This is the Application ID (Replace this with you own)
-        SetDiscordAppId(926572229557383208)
+        SetDiscordAppId(958495562645270608)
 
         -- Here you will have to put the image name for the "large" icon.
         SetDiscordRichPresenceAsset("soz")
@@ -20,15 +20,15 @@ CreateThread(function()
 
         QBCore.Functions.TriggerCallback("smallresources:server:GetCurrentPlayers", function(result)
             -- SetRichPresence(result[1] .. "/" .. result[2])
-            SetRichPresence(result[1] .. "/150")
+            SetRichPresence(result[1] .. "/350")
         end)
 
         -- (26-02-2021) New Native:
 
-        --[[ 
+        --[[
             Here you can add buttons that will display in your Discord Status,
-            First paramater is the button index (0 or 1), second is the title and 
-            last is the url (this has to start with "fivem://connect/" or "https://") 
+            First paramater is the button index (0 or 1), second is the title and
+            last is the url (this has to start with "fivem://connect/" or "https://")
         ]] --
 
         SetDiscordRichPresenceAction(0, "Rejoindre SOZ", "https://discord.gg/soz-pas-soz")

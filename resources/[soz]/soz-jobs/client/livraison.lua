@@ -92,23 +92,6 @@ AddEventHandler("jobs:livraison:fix", function()
     end)
 end)
 
-local function SpawnVehicule()
-    local ModelHash = "faggio3"
-    local model = GetHashKey(ModelHash)
-    if not IsModelInCdimage(model) then
-        return
-    end
-    RequestModel(model)
-    while not HasModelLoaded(model) do
-        Citizen.Wait(10)
-    end
-    livraison_vehicule = CreateVehicle(model, SozJobCore.livraison_vehicule.x, SozJobCore.livraison_vehicule.y, SozJobCore.livraison_vehicule.z,
-                                       SozJobCore.livraison_vehicule.w, true, false)
-    SetModelAsNoLongerNeeded(model)
-    VehPlate = QBCore.Functions.GetPlate(livraison_vehicule)
-    TriggerServerEvent("vehiclekeys:server:SetVehicleOwner", VehPlate)
-end
-
 RegisterNetEvent("jobs:livraison:begin")
 AddEventHandler("jobs:livraison:begin", function()
     TriggerServerEvent("job:anounce", "Prenez la tenue")
@@ -118,17 +101,33 @@ end)
 
 RegisterNetEvent("jobs:livraison:tenue")
 AddEventHandler("jobs:livraison:tenue", function()
-    TriggerServerEvent("job:anounce", "Sortez le véhicule de service")
-    JobOutfit = true
+    QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
+        disableMovement = true,
+        disableCombat = true,
+    }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
+        TriggerServerEvent("soz-character:server:SetPlayerJobClothes", SozJobCore.livraison_clothes[PlayerData.skin.Model.Hash])
+        TriggerServerEvent("job:anounce", "Sortez le véhicule de service")
+        JobOutfit = true
+    end)
 end)
 
 RegisterNetEvent("jobs:livraison:vehicle")
 AddEventHandler("jobs:livraison:vehicle", function()
     TriggerServerEvent("job:anounce", "Enfourchez votre scooter de service")
-    SpawnVehicule()
+    TriggerServerEvent("soz-core:server:vehicle:free-job-spawn", "faggio3", {
+        SozJobCore.livraison_vehicule.x,
+        SozJobCore.livraison_vehicule.y,
+        SozJobCore.livraison_vehicule.z,
+        SozJobCore.livraison_vehicule.w,
+    }, "jobs:livraison:vehicle-spawn")
+end)
+
+RegisterNetEvent("jobs:livraison:vehicle-spawn")
+AddEventHandler("jobs:livraison:vehicle-spawn", function(vehicleNetId)
+    livraison_vehicule = NetworkGetEntityFromNetworkId(vehicleNetId)
     JobVehicle = true
     createblip("Véhicule", "Scooter de sevrice", 225, SozJobCore.livraison_vehicule)
-    local player = GetPlayerPed(-1)
+    local player = PlayerPedId()
     while InVehicle == false do
         Citizen.Wait(100)
         if IsPedInVehicle(player, livraison_vehicule, true) == 1 then
@@ -181,19 +180,18 @@ AddEventHandler("jobs:livraison:start", function()
     DrawDistance = 100
     while DrawDistance >= 50 do
         Citizen.Wait(1000)
-        local player = GetPlayerPed(-1)
+        local player = PlayerPedId()
         local CoordPlayer = GetEntityCoords(player)
         DrawDistance = GetDistanceBetweenCoords(CoordPlayer.x, CoordPlayer.y, CoordPlayer.z, ObjectifCoord.x, ObjectifCoord.y, ObjectifCoord.z)
     end
     DrawInteractionMarker(ObjectifCoord, true)
 end)
 
-RegisterNetEvent("jobs:livraison:end")
-AddEventHandler("jobs:livraison:end", function()
+local function close()
     TriggerServerEvent("job:set:unemployed")
     local money = SozJobCore.livraison_payout * payout_counter
     TriggerServerEvent("job:payout", money)
-    QBCore.Functions.DeleteVehicle(livraison_vehicule)
+    DeleteVehicule(livraison_vehicule)
     exports["qb-target"]:RemoveZone("livraison_zone")
     destroyblip(job_blip)
     OnJob = false
@@ -202,4 +200,19 @@ AddEventHandler("jobs:livraison:end", function()
     JobCounter = 0
     payout_counter = 0
     DrawDistance = 0
+end
+
+RegisterNetEvent("jobs:livraison:end")
+AddEventHandler("jobs:livraison:end", function()
+    if JobOutfit then
+        QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
+            disableMovement = true,
+            disableCombat = true,
+        }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
+            TriggerServerEvent("soz-character:server:SetPlayerJobClothes", nil)
+            close()
+        end)
+    else
+        close()
+    end
 end)

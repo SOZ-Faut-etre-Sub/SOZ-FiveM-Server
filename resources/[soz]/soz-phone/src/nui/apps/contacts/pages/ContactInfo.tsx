@@ -11,11 +11,10 @@ import { AppTitle } from '@ui/components/AppTitle';
 import { AppWrapper } from '@ui/components/AppWrapper';
 import { ActionButton } from '@ui/old_components/ActionButton';
 import { Button } from '@ui/old_components/Button';
-import { TextField } from '@ui/old_components/Input';
+import { NumberField, TextField } from '@ui/old_components/Input';
 import cn from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import NumberFormat from 'react-number-format';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useContact } from '../../../hooks/useContact';
@@ -139,7 +138,7 @@ const ContactsInfoPage: React.FC = () => {
                                     className={cn(
                                         'flex flex-col justify-center items-center text-red-500 rounded-xl p-3 cursor-pointer',
                                         {
-                                            'bg-[#1C1C1E]': config.theme.value === 'dark',
+                                            'bg-ios-700': config.theme.value === 'dark',
                                             'bg-white': config.theme.value === 'light',
                                         }
                                     )}
@@ -159,7 +158,7 @@ const ContactsInfoPage: React.FC = () => {
                     <div className="mt-6">
                         <div
                             className={cn('rounded-lg my-2', {
-                                'bg-[#1C1C1E]': config.theme.value === 'dark',
+                                'bg-ios-700': config.theme.value === 'dark',
                                 'bg-ios-50': config.theme.value === 'light',
                             })}
                         >
@@ -172,16 +171,12 @@ const ContactsInfoPage: React.FC = () => {
                         </div>
                         <div
                             className={cn('rounded-lg my-2', {
-                                'bg-[#1C1C1E]': config.theme.value === 'dark',
+                                'bg-ios-700': config.theme.value === 'dark',
                                 'bg-ios-50': config.theme.value === 'light',
                             })}
                         >
                             <p className="text-sm text-[#347DD9] pl-5 pt-2">{t('CONTACTS.FORM_NUMBER')}</p>
-                            <NumberFormat
-                                className={cn('w-full rounded-lg py-1 px-3 focus:bg-opacity-70 focus:outline-none', {
-                                    'bg-[#1C1C1E] text-white': config.theme.value === 'dark',
-                                    'bg-gray-300 text-black': config.theme.value === 'light',
-                                })}
+                            <NumberField
                                 format="###-####"
                                 defaultValue="555-"
                                 value={number}

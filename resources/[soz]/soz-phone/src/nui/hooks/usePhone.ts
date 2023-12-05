@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import { useNotifications } from '../os/notifications/hooks/useNotifications';
 import { DEFAULT_ALERT_HIDE_TIME } from '../os/notifications/notifications.constants';
 import { RootState } from '../store';
 
@@ -11,36 +12,38 @@ export const useConfig = () => {
 };
 
 export const useVisibility = () => {
-    const state = useSelector((state: RootState) => state.phone);
-    //const { currentAlert } = useNotifications();
+    const visible = useSelector((state: RootState) => state.visibility);
+    const emergency = useSelector((state: RootState) => state.emergency.emergency);
+    const available = useSelector((state: RootState) => state.phone.available);
+    const { currentAlert } = useNotifications();
     const [notifVisibility, setNotifVisibility] = useState<boolean>(false);
 
     const notificationTimer = useRef<NodeJS.Timeout>();
 
     useEffect(() => {
-        if (state.visible) {
+        if (visible || emergency) {
             setNotifVisibility(false);
         }
-    }, [state.visible]);
+    }, [visible, emergency]);
 
     useEffect(() => {
-        if (state.available && !state.visible /*&& currentAlert*/) {
+        if (available && !visible && currentAlert && !emergency) {
             setNotifVisibility(true);
             if (notificationTimer.current) {
                 clearTimeout(notificationTimer.current);
                 notificationTimer.current = undefined;
             }
-            /*if (currentAlert?.keepWhenPhoneClosed) {
+            if (currentAlert?.keepWhenPhoneClosed) {
                 return;
-            }*/
+            }
             notificationTimer.current = setTimeout(() => {
                 setNotifVisibility(false);
             }, DEFAULT_ALERT_HIDE_TIME);
         }
-    }, [/*currentAlert, */ state.visible]);
+    }, [currentAlert, visible, emergency]);
 
     return {
-        visibility: state.visible,
+        visibility: visible,
         notifVisibility: notifVisibility,
     };
 };
@@ -51,11 +54,15 @@ export const useAvailability = () => {
 };
 
 export const useTime = () => {
-    const state = useSelector((state: RootState) => state.phone);
-    return state.time;
+    return useSelector((state: RootState) => state.time);
 };
 
 export const useCallModal = () => {
     const state = useSelector((state: RootState) => state.phone);
     return state.callModal;
+};
+
+export const useCitizenID = () => {
+    const state = useSelector((state: RootState) => state.phone);
+    return state.citizenID;
 };

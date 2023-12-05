@@ -1,4 +1,5 @@
-import { MutableRefObject, useCallback, useEffect, useRef, useState } from 'react';
+import { Control } from '@public/shared/input';
+import { DependencyList, MutableRefObject, useCallback, useEffect, useRef, useState } from 'react';
 
 import { uuidv4 } from '../../core/utils';
 import { NuiEvent } from '../../shared/event';
@@ -27,6 +28,7 @@ function addEventListener<T extends EventTarget, E extends Event>(
  * @param app {string} The app name which the client will emit to
  * @param method {string} The specific `method` field that should be listened for.
  * @param handler {function} The callback function that will handle data received from the client
+ * @param extraDeps
  * @returns {void} void
  * @example
  * const [dataState, setDataState] = useState<boolean>();
@@ -35,14 +37,16 @@ function addEventListener<T extends EventTarget, E extends Event>(
 export const useNuiEvent = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(
     app: App,
     method: Method,
-    handler: (r: NuiMethodMap[App][Method]) => void
+    handler: (r: NuiMethodMap[App][Method]) => void,
+    extraDeps?: DependencyList
 ): void => {
     const savedHandler: MutableRefObject<(r: NuiMethodMap[App][Method]) => void> = useRef();
+    const deps = [handler, ...(extraDeps || [])];
 
     // When handler value changes set mutable ref to handler val
     useEffect(() => {
         savedHandler.current = handler;
-    }, [handler]);
+    }, deps);
 
     useEffect(() => {
         const eventName = eventNameFactory(app, method);
@@ -71,6 +75,14 @@ export const useInputNuiEvent = <M extends keyof NuiMethodMap['input']>(
     handler: (r: NuiMethodMap['input'][M]) => void
 ) => {
     return useNuiEvent('input', method, handler);
+};
+
+export const useAudioNuiEvent = <M extends keyof NuiMethodMap['audio']>(
+    method: M,
+    handler: (r: NuiMethodMap['audio'][M]) => void,
+    extraDeps?: DependencyList
+) => {
+    return useNuiEvent('audio', method, handler, extraDeps);
 };
 
 type UseNuiResponse<I, R> = [UseNuiFetch<I, R>, { loading: boolean; data: R | null; error: any }];
@@ -114,8 +126,17 @@ export const useNuiFetch = <I, R>(event: NuiEvent): UseNuiResponse<I, R> => {
  * Allow a component to self register it's nui focus
  * @param keyboard {boolean} if keyboard should be focus
  * @param cursor {boolean} if cursor should be focus
+ * @param keepInput {boolean} if input should be forwarded to game
+ * @param disableKeepInputControls {boolean} Game inputs to disable
+ * @param disableAllControls {boolean} if Game inputs must be disable excpt push to talk
  */
-export const useNuiFocus = (keyboard: boolean, cursor: boolean) => {
+export const useNuiFocus = (
+    keyboard: boolean,
+    cursor: boolean,
+    keepInput: boolean,
+    disableKeepInputControls: Control[] = [],
+    disableAllControls = false
+) => {
     useEffect(() => {
         const id = uuidv4();
 
@@ -124,6 +145,9 @@ export const useNuiFocus = (keyboard: boolean, cursor: boolean) => {
             focus: {
                 keyboard,
                 cursor,
+                keepInput,
+                disableKeepInputControls,
+                disableAllControls,
             },
         });
 
@@ -132,5 +156,5 @@ export const useNuiFocus = (keyboard: boolean, cursor: boolean) => {
                 id,
             });
         };
-    }, [keyboard, cursor]);
+    }, [keyboard, cursor, keepInput]);
 };

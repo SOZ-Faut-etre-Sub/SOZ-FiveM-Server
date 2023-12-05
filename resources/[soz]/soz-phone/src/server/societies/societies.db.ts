@@ -17,8 +17,8 @@ export class _SocietiesDB {
         );
     }
 
-    async getMessage(id: number): Promise<SocietyMessage[]> {
-        return await exports.oxmysql.query_async(
+    async getMessage(id: number): Promise<SocietyMessage> {
+        return await exports.oxmysql.single_async(
             `SELECT *, unix_timestamp(createdAt)*1000 as createdAt, unix_timestamp(updatedAt)*1000 as updatedAt FROM phone_society_messages WHERE id = ?`,
             [id]
         );

@@ -1,0 +1,41 @@
+name: "Automatic review"
+
+on:
+    pull_request: ~
+
+jobs:
+    suggest-lua:
+        runs-on: ubuntu-latest
+        name: runner / lua formatter
+        container:
+            image: "ghcr.io/soz-faut-etre-sub/lua-formatter:latest"
+            credentials:
+                username: ${{ github.actor }}
+                password: ${{ secrets.github_token }}
+        steps:
+            - uses: actions/checkout@v3
+            - name: "check-lua-code-style"
+              shell: bash
+              run: |
+                  lua-format -i `find 'resources/[soz]' -name '*.lua'`
+                  git config --global --add safe.directory `pwd`
+            - uses: reviewdog/action-suggester@v1
+              with:
+                  tool_name: lua-format
+
+    eslint:
+        runs-on: ubuntu-latest
+        name: runner / eslint
+        strategy:
+            matrix:
+                resource: ["soz-core", "soz-phone"]
+
+        steps:
+            - uses: actions/checkout@v3
+            - run: yarn install
+              working-directory: "resources/[soz]/${{ matrix.resource }}"
+            - uses: reviewdog/action-eslint@v1
+              with:
+                  reporter: github-pr-review
+                  eslint_flags: 'src/'
+                  workdir: "resources/[soz]/${{ matrix.resource }}"

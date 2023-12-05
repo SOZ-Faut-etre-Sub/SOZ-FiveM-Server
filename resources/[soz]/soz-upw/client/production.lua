@@ -3,6 +3,7 @@ function CreateEnergyZone(identifier, data)
         {
             label = "Collecter l'énergie",
             event = "soz-upw:client:HarvestLoop",
+            icon = "c:upw/collecter.png",
             identifier = identifier,
             harvest = "energy",
             canInteract = function()
@@ -11,9 +12,10 @@ function CreateEnergyZone(identifier, data)
         },
         {
             label = "Taux de pollution",
+            icon = "c:upw/pollution.png",
             action = function()
                 local pollution = QBCore.Functions.TriggerRpc("soz-upw:server:GetPollutionPercent", true)
-                exports["soz-hud"]:DrawNotification("Niveau de pollution : " .. pollution, "info")
+                exports["soz-core"]:DrawNotification("Niveau de pollution : " .. pollution, "info")
             end,
             canInteract = function()
                 return OnDuty()
@@ -29,6 +31,7 @@ function CreateWasteZone(identifier, data)
         {
             label = "Collecter les déchets",
             event = "soz-upw:client:HarvestLoop",
+            icon = "c:upw/recyclage.png",
             identifier = identifier,
             harvest = "waste",
             canInteract = function()
@@ -78,9 +81,9 @@ local function Harvest(identifier, harvest)
         local harvested, message = table.unpack(result)
 
         if harvested then
-            exports["soz-hud"]:DrawNotification(message, "success")
+            exports["soz-core"]:DrawNotification(message, "success")
         else
-            exports["soz-hud"]:DrawNotification("Il y a eu une erreur : " .. message, "error")
+            exports["soz-core"]:DrawNotification("Il y a eu une erreur : " .. message, "error")
         end
 
         return harvested
@@ -102,7 +105,7 @@ local function HarvestLoop(data)
             HarvestLoop(data)
         end
     else
-        exports["soz-hud"]:DrawNotification(reason, "error")
+        exports["soz-core"]:DrawNotification(reason, "error")
     end
 end
 AddEventHandler("soz-upw:client:HarvestLoop", HarvestLoop)

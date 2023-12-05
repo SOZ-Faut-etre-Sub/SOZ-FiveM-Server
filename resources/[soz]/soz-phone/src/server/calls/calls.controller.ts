@@ -4,6 +4,7 @@ import {
     CallHistoryItem,
     EndCallDTO,
     InitializeCallDTO,
+    MuteCallDTO,
     TransmitterNumDTO,
 } from '../../../typings/call';
 import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
@@ -38,6 +39,13 @@ onNetPromise<EndCallDTO, void>(CallEvents.END_CALL, (reqObj, resp) => {
     CallService.handleEndCall(reqObj, resp).catch(e => {
         callLogger.error(`Error occured in end call event (${reqObj.data.transmitterNumber}), Error:  ${e.message}`);
         resp({ status: 'error', errorMsg: 'SERVER_ERROR' });
+    });
+});
+
+onNetTyped<MuteCallDTO>(CallEvents.MUTE_PLAYER_CALL, data => {
+    const src = getSource();
+    CallService.handleMuteCall(src, data).catch(e => {
+        callLogger.error(`Error occured in mute call event (${data.transmitterNumber}), Error:  ${e.message}`);
     });
 });
 

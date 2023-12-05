@@ -15,33 +15,56 @@ Config.StorageCapacity = {
     ["storage_tank"] = {slot = 10, weight = 10000000},
     ["cloakroom"] = {slot = 10, weight = 1000000},
     --- houses
-    ["house_stash"] = {slot = 10, weight = 100000},
+    ["house_stash"] = {
+        [-2] = {slot = 10, weight = 1000000000}, -- for GM House
+        [0] = {slot = 10, weight = 200000},
+        [1] = {slot = 10, weight = 400000},
+        [2] = {slot = 10, weight = 600000},
+        [3] = {slot = 10, weight = 800000},
+        [4] = {slot = 10, weight = 1000000},
+    },
     ["house_fridge"] = {slot = 10, weight = 100000},
     --- Jobs PAWL
-    ["log_storage"] = {slot = 10, weight = 20000000},
-    ["plank_storage"] = {slot = 10, weight = 1000000},
-    ["sawdust_storage"] = {slot = 10, weight = 1000000},
+    ["log_storage"] = {slot = 10, weight = 40000000},
+    ["plank_storage"] = {slot = 10, weight = 2000000},
+    ["sawdust_storage"] = {slot = 10, weight = 2000000},
     ["log_processing"] = {slot = 10, weight = 400000},
     --- Jobs UPW
-    ["inverter"] = {slot = 100, weight = 1200000},
+    ["inverter"] = {slot = 100, weight = 2000000},
     --- Jobs BAUN
     ["flavor_storage"] = {slot = 100, weight = 400000},
     ["liquor_storage"] = {slot = 100, weight = 600000},
     ["furniture_storage"] = {slot = 100, weight = 200000},
+    ["snack_storage"] = {slot = 100, weight = 200000},
     --- Jobs BlueBird
-    ["recycler_processing"] = {slot = 100, weight = 400000},
+    ["recycler_processing"] = {slot = 100, weight = 800000},
+    --- Zkea
+    ["cabinet_storage"] = {slot = 1, weight = 1600000}, -- 400 cabinet_zkea maximum
+    --- Smuggling Box
+    ["smuggling_box"] = {slot = 100, weight = 250000},
+    --- Jobs DMC
+    ["metal_converter"] = {slot = 100, weight = 500000},
+    ["metal_incinerator"] = {slot = 100, weight = 500000},
+    ["metal_storage"] = {slot = 100, weight = 10000000},
+    --- LS Custom
+    ["ls_custom_storage"] = {slot = 1, weight = 800000}, -- 400 ls_custom_upgrade_part maximum
 }
 
 Config.ErrorMessage = {
     ["invalid_amount"] = "La quantité à transférer est invalide !",
-    ["invalid_item"] = "L'objet a transférer est invalide !",
+    ["invalid_item"] = "L'objet à transférer est invalide !",
     ["invalid_inventory"] = "L'inventaire n'est pas disponible !",
-    ["invalid_quantity"] = "La quantité indiqué n'est pas valide",
+    ["invalid_quantity"] = "La quantité indiquée n'est pas valide",
     ["nonexistent_item"] = "L'objet à transférer est invalide !",
     ["inventory_full"] = "L'inventaire n'a plus de place !",
-    ["not_allowed_item"] = "L'objet ne peut aller dans ce stockage !",
+    ["not_allowed_item"] = "L'objet ne peut pas aller dans ce stockage !",
     ["get_not_allowed"] = "Ce stockage ne peut pas vous donner cet objet !",
     ["put_not_allowed"] = "Ce stockage ne peut pas accepter votre objet !",
+    ["invalid_alreadyhaveone"] = "Vous avez déjà un tel object sur vous !",
 }
+
+Config.crateMaxWeight = 12000
+
+Config.crateTypeAllowed = {"food", "liquor", "drink", "cocktail"}
 
 Config.Storages = {}

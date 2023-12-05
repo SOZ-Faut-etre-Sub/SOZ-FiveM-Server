@@ -10,6 +10,20 @@ export class NuiMenuProvider {
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
 
+    @Command('soz_menu_toggle_focus', {
+        description: 'Active ou désactive la souris dans le menu',
+        passthroughNuiFocus: true,
+        keys: [
+            {
+                mapper: 'keyboard',
+                key: 'RCONTROL',
+            },
+        ],
+    })
+    onMenuFocus(): void {
+        this.nuiDispatch.dispatch('menu', 'ToggleFocus'); //
+    }
+
     @Command('soz_menu_up', {
         description: 'Haut dans un menu',
         keys: [
@@ -98,11 +112,24 @@ export class NuiMenuProvider {
         ],
     })
     onMenuClose(): void {
-        this.nuiDispatch.dispatch('menu', 'CloseMenu');
+        this.nuiDispatch.dispatch('menu', 'CloseMenu', false);
+    }
+
+    @Command('soz_menu_reset', {
+        description: 'Reset une option du menu',
+        keys: [
+            {
+                mapper: 'keyboard',
+                key: 'R',
+            },
+        ],
+    })
+    onMenuReset(): void {
+        this.nuiDispatch.dispatch('menu', 'ResetMenu');
     }
 
     @OnNuiEvent(NuiEvent.MenuClosed)
-    public async onMenuClosed() {
-        this.nuiDispatch.setMenuOpen(false);
+    public async onMenuClosed({ nextMenu }) {
+        this.nuiDispatch.setMenuOpen(nextMenu || null);
     }
 }

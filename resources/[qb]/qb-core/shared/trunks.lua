@@ -24,6 +24,7 @@ QBShared.Trunks = {
     [19] = { slot = 10, weight = 0 }, -- Military
     [20] = { slot = 10, weight = 0 }, -- Commercial
     [21] = { slot = 10, weight = 0 }, -- Trains
+    [22] = { slot = 10, weight = 20000 }, -- Quads
 
     --- Override for specific vehicle
 
@@ -36,12 +37,20 @@ QBShared.Trunks = {
     [GetHashKey('police6')] = { slot = 5, weight = 80000 },
     [GetHashKey('policeb2')] = { slot = 5, weight = 30000 },
     [GetHashKey('polmav')] = { slot = 5, weight = 200000 },
+    [GetHashKey('lspdbana1')] = { slot = 5, weight = 80000 },
+    [GetHashKey('lspdbana2')] = { slot = 5, weight = 80000 },
+    [GetHashKey('lspdgallardo')] = { slot = 5, weight = 40000 },
 
     --- BCSO
     [GetHashKey('sheriff3')] = { slot = 5, weight = 60000 },
     [GetHashKey('sheriff4')] = { slot = 5, weight = 80000 },
     [GetHashKey('sheriffb')] = { slot = 5, weight = 30000 },
     [GetHashKey('maverick2')] = { slot = 5, weight = 200000 },
+    [GetHashKey('sheriffdodge')] = { slot = 5, weight = 60000 },
+    [GetHashKey('sheriffcara')] = { slot = 15, weight = 100000 },
+    [GetHashKey('bcsobana1')] = { slot = 5, weight = 80000 },
+    [GetHashKey('bcsobana2')] = { slot = 5, weight = 80000 },
+    [GetHashKey('bcsoc7')] = { slot = 5, weight = 40000 },
 
     --- LSMC
     [GetHashKey('ambulance')] = { slot = 5, weight = 100000 },
@@ -50,7 +59,7 @@ QBShared.Trunks = {
     [GetHashKey('polmav')] = { slot = 5, weight = 200000 },
 
     -- STONKS
-    [GetHashKey('stockade')] = { slot = 10, weight = 200000 },
+    [GetHashKey('stockade')] = { slot = 10, weight = 600000 },
     [GetHashKey('baller8')] = { slot = 10, weight = 80000 },
 
     -- Twitch News
@@ -63,10 +72,10 @@ QBShared.Trunks = {
 
     -- Michel Transport Petrol
     [GetHashKey('packer2')] = { slot = 5, weight = 40000 },
-    [GetHashKey('tanker')] = { slot = 5, weight = 550000 },
+    [GetHashKey('tanker')] = { slot = 5, weight = 825000 },
     [GetHashKey('utillitruck4')] = { slot = 5, weight = 100000 },
 
-    -- CarlJr Service
+    -- CarlJr Services
     [GetHashKey('dynasty2')] = { slot = 10, weight = 40000 },
 
     -- Benny's
@@ -74,7 +83,7 @@ QBShared.Trunks = {
     [GetHashKey('burito6')] = { slot = 10, weight = 100000 },
 
     -- BlueBird
-    [GetHashKey('trash')] = { slot = 10, weight = 200000 },
+    [GetHashKey('trash')] = { slot = 10, weight = 400000 },
 
     -- Pole Emploi
     [GetHashKey('scrap')] = { slot = 10, weight = 100000 },
@@ -83,7 +92,7 @@ QBShared.Trunks = {
 
     -- Pawl
     [GetHashKey('hauler1')] = { slot = 10, weight = 40000 },
-    [GetHashKey('sadler1')] = { slot = 10, weight = 80000 },
+    [GetHashKey('sadler1')] = { slot = 10, weight = 200000 },
     [GetHashKey('trailerlogs')] = { slot = 10, weight = 200000 },
 
     -- UPW
@@ -91,8 +100,38 @@ QBShared.Trunks = {
     [GetHashKey('brickade1')] = { slot = 10, weight = 100000 },
 
     -- BAUN
-    [GetHashKey('youga3')] = { slot = 10, weight = 40000 },
+    [GetHashKey('youga3')] = { slot = 10, weight = 200000 },
 
     -- FFS
     [GetHashKey('rumpo4')] = { slot = 10, weight = 200000 },
+
+    -- DMC
+    [GetHashKey('tiptruck2')] = { slot = 10, weight = 200000 },
+    [GetHashKey('rubble')] = { slot = 10, weight = 200000 },
+    
+    -- Army
+    [GetHashKey('barracks')] = { slot = 50, weight = 1000000 },
+    [GetHashKey('dinghy5')] = { slot = 50, weight = 200000 },
+
+    -- Quads
+    [GetHashKey('blazer')] = { slot = 50, weight = 20000 },
+    [GetHashKey('blazer3')] = { slot = 50, weight = 20000 },
+    [GetHashKey('blazer4')] = { slot = 50, weight = 20000 },
+
+    -- Boats
+    [GetHashKey('seashark')] = { slot = 50, weight = 20000 },
+    [GetHashKey('suntrap')] = { slot = 50, weight = 40000 },
+    [GetHashKey('tropic')] = { slot = 50, weight = 40000 },
+    [GetHashKey('tropic2')] = { slot = 50, weight = 40000 },
+    [GetHashKey('tropic3')] = { slot = 50, weight = 40000 },
+    [GetHashKey('dinghy')] = { slot = 50, weight = 40000 },
+    [GetHashKey('squalo')] = { slot = 50, weight = 80000 },
+    [GetHashKey('jetmax')] = { slot = 50, weight = 80000 },
+    [GetHashKey('speeder')] = { slot = 50, weight = 80000 },
+    [GetHashKey('speeder2')] = { slot = 50, weight = 80000 },
+
+    -- FDF
+    [GetHashKey('benson')] = { slot = 50, weight = 250000 },
+    [GetHashKey('tractor2')] = { slot = 50, weight = 20000 },
+    [GetHashKey('graintrailer')] = { slot = 50, weight = 100000 },
 }

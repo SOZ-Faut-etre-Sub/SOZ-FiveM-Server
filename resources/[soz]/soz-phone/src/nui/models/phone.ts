@@ -1,40 +1,37 @@
 import { createModel } from '@rematch/core';
 
+import { ServerPromiseResp } from '../../../typings/common';
+import { PhoneEvents } from '../../../typings/phone';
 import { IPhoneSettings } from '../apps/settings/hooks/useSettings';
 import config from '../config/default.json';
+import { fetchNui } from '../utils/fetchNui';
+import { buildRespObj } from '../utils/misc';
 import { RootModel } from '.';
 
 export const phone = createModel<RootModel>()({
     state: {
-        available: false,
-        visible: false,
+        available: true,
         config: config.defaultSettings as IPhoneSettings,
-        time: null,
         callModal: false,
+        citizenID: null,
     },
     reducers: {
         SET_AVAILABILITY(state, payload: boolean) {
             return { ...state, available: payload };
         },
-        SET_VISIBILITY(state, payload: boolean) {
-            return { ...state, visible: payload };
-        },
         SET_CONFIG(state, payload: IPhoneSettings) {
             return { ...state, config: payload };
         },
-        SET_TIME(state, payload: string) {
-            return { ...state, time: payload };
-        },
         SET_CALL_MODAL(state, payload: boolean) {
             return { ...state, callModal: payload };
+        },
+        SET_CITIZEN_ID(state, payload: string) {
+            return { ...state, citizenID: payload };
         },
     },
     effects: dispatch => ({
         async setAvailability(payload: boolean) {
             dispatch.phone.SET_AVAILABILITY(payload);
-        },
-        async setVisibility(payload: boolean) {
-            dispatch.phone.SET_VISIBILITY(payload);
         },
         async setConfig(payload: IPhoneSettings) {
             dispatch.phone.SET_CONFIG(payload);
@@ -42,9 +39,6 @@ export const phone = createModel<RootModel>()({
         async updateConfig(payload: IPhoneSettings) {
             localStorage.setItem('soz_settings', JSON.stringify(payload));
             dispatch.phone.SET_CONFIG(payload);
-        },
-        async setTime(payload: string) {
-            dispatch.phone.SET_TIME(payload);
         },
         async setCallModal(payload: boolean) {
             dispatch.phone.SET_CALL_MODAL(payload);
@@ -54,10 +48,17 @@ export const phone = createModel<RootModel>()({
             let phoneConfig = config.defaultSettings;
             const saved = localStorage.getItem('soz_settings');
             if (saved) {
-                phoneConfig = JSON.parse(saved);
+                phoneConfig = { ...phoneConfig, ...JSON.parse(saved) };
             }
 
             dispatch.phone.SET_CONFIG(phoneConfig);
+        },
+        async loadCitizenID() {
+            fetchNui<ServerPromiseResp<string>>(PhoneEvents.SET_CITIZEN_ID, undefined, buildRespObj('1'))
+                .then(citizenid => {
+                    dispatch.phone.SET_CITIZEN_ID(citizenid.data || '');
+                })
+                .catch(() => console.error('Failed to fetch citizenid'));
         },
     }),
 });

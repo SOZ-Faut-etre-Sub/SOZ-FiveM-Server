@@ -6,6 +6,7 @@ export const MockTwitchNewsMessages: TwitchNewsMessage[] = [
         type: 'annonce',
         message: 'Lorem ipsum dolor sit amet, conse ctetur adip iscing elit.',
         createdAt: '2022-01-14T09:58:18.000Z',
+        job: 'news',
     },
     {
         id: 2,
@@ -13,12 +14,14 @@ export const MockTwitchNewsMessages: TwitchNewsMessage[] = [
         image: 'https://placekitten.com/1920/1080',
         message: 'Lorem ipsum dolor sit amet, conse ctetur adip iscing elit.',
         createdAt: '2022-01-14T09:58:18.000Z',
+        job: 'you-news',
     },
     {
         id: 3,
         type: 'publicité',
         message: 'Lorem ipsum dolor sit amet, conse ctetur adip iscing elit.',
         createdAt: '2022-01-14T09:58:18.000Z',
+        job: 'news',
     },
     {
         id: 4,
@@ -26,6 +29,7 @@ export const MockTwitchNewsMessages: TwitchNewsMessage[] = [
         image: 'https://placekitten.com/1920/1080',
         message: 'Lorem ipsum dolor sit amet, conse ctetur adip iscing elit.',
         createdAt: '2022-01-14T09:58:18.000Z',
+        job: 'news',
     },
     {
         id: 5,
@@ -33,29 +37,34 @@ export const MockTwitchNewsMessages: TwitchNewsMessage[] = [
         image: 'https://placekitten.com/1920/1080',
         message: 'Lorem ipsum dolor sit amet, conse ctetur adip iscing elit.',
         createdAt: '2022-01-14T09:58:18.000Z',
+        job: 'news',
     },
     {
         id: 6,
         type: 'lspd',
         message: 'Jean test',
         createdAt: '2022-01-14T09:58:18.000Z',
+        job: 'lspd',
     },
     {
         id: 7,
         type: 'bcso',
         message: 'Jean test',
         createdAt: '2022-01-14T09:58:18.000Z',
+        job: 'bcso',
     },
     {
         id: 8,
         type: 'lspd:end',
         message: 'Jean test',
         createdAt: '2022-01-14T09:58:18.000Z',
+        job: 'lspd',
     },
     {
         id: 9,
         type: 'bcso:end',
         message: 'Jean test',
         createdAt: '2022-01-14T09:58:18.000Z',
+        job: 'bcso',
     },
 ];

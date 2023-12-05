@@ -23,4 +23,24 @@ export const unloadContainer = (): void => {
     Reflect.deleteMetadata(ContainerMetadata, global);
 };
 
+export const setService = (name: string, serviceIdentifier: any): void => {
+    const container = getContainer();
+
+    if (container.isBound(name)) {
+        container.unbind(name);
+    }
+
+    container.bind(name).toConstantValue(container.get(serviceIdentifier));
+};
+
+export const setServiceInstance = (name: string, serviceInstance: any): void => {
+    const container = getContainer();
+
+    if (container.isBound(name)) {
+        container.unbind(name);
+    }
+
+    container.bind(name).toConstantValue(serviceInstance);
+};
+
 export const Container: ContainerInversify = getContainer();

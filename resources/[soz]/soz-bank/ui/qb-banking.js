@@ -4,26 +4,26 @@ const Config = {
 
 const playerAccountReg = /^[0-9]{3}Z[0-9]{4}T[0-9]{3}$/
 
+let isATM = false;
+let atmType = null;
+let atmName = null;
 let bankAtmAccount
 let widthdrawTimeout
 
 window.addEventListener("message", function (event) {
     if(event.data.status === "openbank") {
-        $("#currentStatement").DataTable().destroy();
         $("#accountNumber").html(event.data.information.accountinfo);
 
         $("#bankingHome-tab").addClass('active');
         $("#bankingWithdraw-tab").removeClass('active');
         $("#bankingDeposit-tab").removeClass('active');
         $("#bankingTransfer-tab").removeClass('active');
-        $("#bankingStatement-tab").removeClass('active');
         $("#bankingActions-tab").removeClass('active');
         $("#bankingOffShore-tab").removeClass('active');
         $("#bankingHome").addClass('active').addClass('show');
         $("#bankingWithdraw").removeClass('active').removeClass('show');
         $("#bankingDeposit").removeClass('active').removeClass('show');
         $("#bankingTransfer").removeClass('active').removeClass('show');
-        $("#bankingStatement").removeClass('active').removeClass('show');
         $("#bankingActions").removeClass('active').removeClass('show');
         $("#bankingOffShore").removeClass('active').removeClass('show');
 
@@ -50,16 +50,22 @@ window.addEventListener("message", function (event) {
 
         if (event.data.isATM) {
             $("#bankingTransfer-tab").css({"display":"none"});
+            $("#bankingDeposit-tab").css({"display":"none"});
+            $("#bankingDeposit-buttons").css({"display":"none"});
         } else {
             $("#bankingTransfer-tab").css({"display":"block"});
+            $("#bankingDeposit-tab").css({"display":"block"});
+            $("#bankingDeposit-buttons").css({"display":"flex"});
         }
+        isATM = event.data.isATM;
+        atmType = event.data.atmType;
+        atmName = event.data.atmName;
 
         if (event.data.bankAtmAccount) {
             bankAtmAccount = event.data.bankAtmAccount;
         }
 
     } else if (event.data.status === "closebank") {
-        $("#currentStatement").DataTable().destroy();
         $("#successRow").css({"display":"none"});
         $("#successMessage").html('');
         $("#bankingContainer").css({"display":"none"});
@@ -98,40 +104,6 @@ function populateBanking(data) {
     $("#currentCashBalance1").html(data.money);
     $("#currentBalance2").html(data.bankbalance);
     $("#currentCashBalance2").html(data.money);
-    $("#currentStatementContents").html('');
-
-    if(data.statement !== undefined) {
-        data.statement.sort(dynamicSort("date"));
-        $.each(data.statement, function (index, statement) {
-        if(statement.deposited == null && statement.deposited == undefined) {
-            deposit = "0"
-        } else {
-            deposit = statement.deposited
-        }
-        if(statement.withdraw == null && statement.withdraw == undefined) {
-            withdraw = "0"
-        } else {
-            withdraw = statement.withdraw
-        }
-        if (statement.balance == 0) {
-            balance = '<span class="text-dark">$' + statement.balance + '</span>';
-        } else if (statement.balance > 0) {
-            balance = '<span class="text-success">$' + statement.balance + '</span>';
-        } else {
-            balance = '<span class="text-danger">$' + statement.balance + '</span>';
-        }
-        $("#currentStatementContents").append('<tr class="statement"><td><small>' + statement.date + '</small></td><td><small>' + statement.type + '</small></td><td class="text-center text-danger"><small>$' + withdraw + '</small></td><td class="text-center text-success"><small>$' + deposit + '</small></td><td class="text-center"><small>' + balance + '</small></td></tr>');
-
-    });
-
-    $(document).ready(function() {
-        $('#currentStatement').DataTable({
-            "order": [[ 0, "desc" ]],
-            "pagingType": "simple",
-            "lengthMenu": [[20, 35, 50, -1], [20, 35, 50, "All"]]
-        });
-    } );
-    }
 }
 
 function closeBanking() {
@@ -152,6 +124,9 @@ $(function() {
             $("#withdrawError").css({"display":"none"});
             $("#withdrawErrorMsg").html('');
             $.post('https://soz-bank/doWithdraw', JSON.stringify({
+                isATM: isATM,
+                atmType: atmType,
+                atmName: atmName,
                 account: $("#accountNumber").text(),
                 amount: parseInt(amount),
                 bankAtmAccount,
@@ -175,6 +150,9 @@ $(function() {
         var amount = $(this).attr('data-amount');
         if(amount > 0) {
             $.post('https://soz-bank/doWithdraw', JSON.stringify({
+                isATM: isATM,
+                atmType: atmType,
+                atmName: atmName,
                 account: $("#accountNumber").text(),
                 amount: parseInt(amount),
                 bankAtmAccount,
@@ -189,6 +167,9 @@ $(function() {
             $("#depositError").css({"display":"none"});
             $("#depositErrorMsg").html('');
             $.post('https://soz-bank/doDeposit', JSON.stringify({
+                isATM: isATM,
+                atmType: atmType,
+                atmName: atmName,
                 account: $("#accountNumber").text(),
                 amount: parseInt(amount),
             }));
@@ -204,6 +185,9 @@ $(function() {
         var amount = $(this).attr('data-amount');
         if(amount > 0) {
             $.post('https://soz-bank/doDeposit', JSON.stringify({
+                isATM: isATM,
+                atmType: atmType,
+                atmName: atmName,
                 account: $("#accountNumber").text(),
                 amount: parseInt(amount),
             }));

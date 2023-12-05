@@ -22,7 +22,7 @@ local function GetZoneConfig(zone)
             {create = CreateWasteZone, zone = "zones.wasteZone"},
         },
         ["inverter"] = {create = CreateInverterZone, zone = "zone"},
-        ["terminal"] = {create = CreateTerminalZone, zone = "zone"},
+        ["terminal"] = {create = CreateTerminalZone, zone = "zone", createTarget = CreateTerminalTarget},
     }
 
     if config[zone] == nil then
@@ -60,13 +60,6 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
             scale = Config.Blip.station.Scale,
         })
     end
-
-    exports["qb-target"]:AddBoxZone("upw:duty", vector3(582.72, 2756.97, 41.86), 0.4, 0.3, {
-        name = "upw:duty",
-        heading = 4,
-        minZ = 42.10,
-        maxZ = 42.60,
-    }, {options = SozJobCore.Functions.GetDutyActions("upw"), distance = 2.5})
 end)
 
 Citizen.CreateThread(function()
@@ -79,12 +72,10 @@ Citizen.CreateThread(function()
         end
     end
 
+    local types = {"plant", "inverter", "terminal"}
+
     -- Fetch facilities from database
-    local facilities = QBCore.Functions.TriggerRpc("soz-upw:server:GetFacilitiesFromDb", {
-        "plant",
-        "inverter",
-        "terminal",
-    })
+    local facilities = QBCore.Functions.TriggerRpc("soz-upw:server:GetFacilitiesFromDb", types)
 
     for _, facility in ipairs(facilities) do
         local conf = GetZoneConfig(facility.type)
@@ -141,6 +132,13 @@ Citizen.CreateThread(function()
         QBCore.Functions.HideBlip(blip_id, true)
     end
 
+    for _, type in ipairs(types) do
+        local conf = GetZoneConfig(type)
+        if conf.createTarget then
+            conf.createTarget()
+        end
+    end
+
     -- Resale zone
     CreateResaleZone(Config.Upw.Resale.Zone)
     if not QBCore.Functions.GetBlip("job_upw_resell") then
@@ -153,6 +151,8 @@ Citizen.CreateThread(function()
         })
         QBCore.Functions.HideBlip("job_upw_resell", true)
     end
+
+    TriggerEvent("upw:init:end")
 end)
 
 function CreateZone(identifier, zoneType, data)
@@ -175,7 +175,7 @@ RegisterNetEvent("soz-upw:client:CreateZone", function(identifier, zoneType, zon
     if conf.create then
         conf.create(identifier, zone, data)
     else
-        exports["soz-hud"]:DrawNotification("Erreur lors de la création de la zone", "error")
+        exports["soz-core"]:DrawNotification("Erreur lors de la création de la zone", "error")
     end
 end)
 

@@ -1,6 +1,14 @@
 Housing.Functions.Components.SetupEntryInteraction = function(propertyId, property)
     local entryZone = property:GetEntryZone()
     local zoneName = "property_" .. propertyId .. "_entry"
+    local extralabel = ""
+    if not property:IsBuilding() then
+        local aparts = property:GetApartments()
+        for _, apart in pairs(aparts) do
+            extralabel = " (" .. apart:GetLabel() .. ")"
+            break
+        end
+    end
 
     Housing.Functions.TargetInteraction(zoneName, entryZone, {
         {
@@ -37,7 +45,7 @@ Housing.Functions.Components.SetupEntryInteraction = function(propertyId, proper
             end,
         },
         {
-            label = "Sonner",
+            label = "Sonner" .. extralabel,
             icon = "c:housing/bell.png",
             canInteract = function()
                 return property:HasRentedApartment() and property:HasRentedApartmentsBesidesForCitizenId(PlayerData.citizenid) and
@@ -61,7 +69,7 @@ Housing.Functions.Components.SetupEntryInteraction = function(propertyId, proper
             label = "Garage",
             icon = "c:housing/garage.png",
             canInteract = function()
-                return property:HasGarage() and property:HasRentedApartmentForCitizenId(PlayerData.citizenid) and not Housing.Functions.IsInsideApartment()
+                return property:HasGarageForCitizenId(PlayerData.citizenid) and not Housing.Functions.IsInsideApartment()
             end,
             action = function()
                 TriggerEvent("housing:client:ShowGarageMenu", propertyId)

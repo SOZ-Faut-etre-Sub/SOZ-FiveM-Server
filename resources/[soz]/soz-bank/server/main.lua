@@ -85,6 +85,13 @@ QBCore.Functions.CreateCallback("banking:server:TransferMoney", function(source,
         if amount <= CurrentMoney then
             if Player.Functions.RemoveMoney("money", amount) then
                 Account.AddMoney(accountTarget, amount)
+
+                exports["soz-core"]:Event("transfer_money", {
+                    player_source = source,
+                    accountSource = accountSource,
+                    accountTarget = accountTarget,
+                }, {money = amount})
+
                 cb(true)
                 return
             end
@@ -94,6 +101,13 @@ QBCore.Functions.CreateCallback("banking:server:TransferMoney", function(source,
         if amount <= AccountMoney then
             if Player.Functions.AddMoney("money", amount) then
                 Account.RemoveMoney(accountSource, amount)
+
+                exports["soz-core"]:Event("transfer_money", {
+                    player_source = source,
+                    accountSource = accountSource,
+                    accountTarget = accountTarget,
+                }, {money = amount})
+
                 cb(true)
                 return
             end
@@ -103,14 +117,20 @@ QBCore.Functions.CreateCallback("banking:server:TransferMoney", function(source,
             if success and sendNotificationToTarget then
                 local Target = QBCore.Functions.GetPlayerByBankAccount(accountTarget)
 
+                local Source = QBCore.Functions.GetPlayerByBankAccount(accountSource)
+                local origin = Source and (Source.PlayerData.charinfo.firstname .. " " .. Source.PlayerData.charinfo.lastname) or
+                                   SozJobCore.Jobs[accountSource].label
+
                 if Target then
-                    TriggerClientEvent("hud:client:DrawAdvancedNotification", Target.PlayerData.source, "Maze Banque", "Mouvement bancaire",
-                                       "Un versement vient d'être réalisé sur votre compte", "CHAR_BANK_MAZE")
+                    TriggerClientEvent("soz-core:client:notification:draw-advanced", Target.PlayerData.source, "Maze Banque", "Mouvement bancaire",
+                                       "Un virement de ~g~" .. amount .. "$~s~ de ~g~" .. origin .. "~s~ vient d'être versé sur votre compte",
+                                       "CHAR_BANK_MAZE")
                 end
             end
 
             cb(success, reason)
         end)
+        return
     end
 
     cb(false, "unknown")
@@ -124,7 +144,7 @@ RegisterNetEvent("banking:server:TransferMoney", function(accountSource, account
     end)
 end)
 
-RegisterNetEvent("baking:server:SafeStorageDeposit", function(money_type, safeStorage, amount)
+RegisterNetEvent("banking:server:SafeStorageDeposit", function(money_type, safeStorage, amount)
     local Player = QBCore.Functions.GetPlayer(source)
     local CurrentMoney = Player.Functions.GetMoney(money_type)
     amount = tonumber(amount)
@@ -132,15 +152,31 @@ RegisterNetEvent("baking:server:SafeStorageDeposit", function(money_type, safeSt
     if money_type == "money" or money_type == "marked_money" then
         if amount <= CurrentMoney then
             if Player.Functions.RemoveMoney(money_type, amount) then
-                Account.AddMoney(safeStorage, amount, money_type)
+                local added = Account.AddMoney(safeStorage, amount, money_type)
+                if added ~= false then
+                    exports["soz-core"]:Event("safe_deposit", {
+                        player_source = source,
+                        safeStorage = safeStorage,
+                        money_type = money_type,
+                    }, {money = amount})
+
+                    TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, ("Vous avez déposé ~g~$%s"):format(amount))
+                else
+                    Player.Functions.AddMoney(money_type, amount)
+                    TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Le coffre n'a plus de place", "error")
+                end
             end
         else
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
+            TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
         end
     end
 end)
 
-RegisterNetEvent("baking:server:SafeStorageWithdraw", function(money_type, safeStorage, amount)
+exports("AddMoney", function(safeStorage, amount, money_type, allowoverflow)
+    return Account.AddMoney(safeStorage, amount, money_type, allowoverflow)
+end)
+
+RegisterNetEvent("banking:server:SafeStorageWithdraw", function(money_type, safeStorage, amount)
     local Player = QBCore.Functions.GetPlayer(source)
     amount = tonumber(amount)
 
@@ -149,9 +185,17 @@ RegisterNetEvent("baking:server:SafeStorageWithdraw", function(money_type, safeS
         if amount <= CurrentMoney then
             if Player.Functions.AddMoney(money_type, amount) then
                 Account.RemoveMoney(safeStorage, amount, money_type)
+
+                exports["soz-core"]:Event("safe_withdraw", {
+                    player_source = source,
+                    safeStorage = safeStorage,
+                    money_type = money_type,
+                }, {money = amount})
+
+                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, ("Vous avez retiré ~g~$%s"):format(amount))
             end
         else
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
+            TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
         end
     end
 end)
@@ -159,7 +203,6 @@ end)
 -- Source: Bank Account
 -- Target: Player server id
 exports("TransferCashMoney", function(source, target, amount, cb)
-    print("Source: " .. source .. " Target: " .. target .. " Amount: " .. amount)
     local player = QBCore.Functions.GetPlayer(target)
     amount = tonumber(amount)
     local money_type = "money"
@@ -173,7 +216,7 @@ exports("TransferCashMoney", function(source, target, amount, cb)
             cb(false, "could_not_add_money")
         end
     else
-        TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
         cb(false, "insufficient_funds")
     end
 end)
@@ -188,6 +231,13 @@ QBCore.Functions.CreateCallback("banking:server:openSafeStorage", function(sourc
     end
 end)
 QBCore.Functions.CreateCallback("banking:server:openHouseSafeStorage", function(source, cb, safeStorage)
+    local player = QBCore.Functions.GetPlayer(source)
+    if not player then
+        return
+    end
+
+    local inside = player.PlayerData.metadata.inside
+    local apartmentTier = exports["soz-housing"]:GetApartmentTier(inside.property, inside.apartment)
     local account = Account(safeStorage)
 
     if account == nil then
@@ -195,7 +245,8 @@ QBCore.Functions.CreateCallback("banking:server:openHouseSafeStorage", function(
     end
 
     if Account.AccessGranted(account, source) then
-        cb(true, account.money, account.marked_money)
+        account.max = Config.HouseSafeTiers[apartmentTier]
+        cb(true, account.money, account.marked_money, account.max)
     else
         cb(false)
     end

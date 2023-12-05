@@ -31,33 +31,36 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(data)
     end
 end)
 
---- Main Functions
-RegisterNetEvent("housing:client:Teleport", function(coords)
-    Housing.Functions.Teleport("Ouvre la porte", coords)
-
-    Citizen.CreateThread(function()
-        Citizen.Wait(2000)
-
-        while Housing.Functions.IsInsideApartment do
+--- Utils Functions
+Citizen.CreateThread(function()
+    Citizen.Wait(2000)
+    while true do
+        if Housing.Functions.IsInsideApartment() then
             local propertyId = PlayerData.metadata["inside"].property
             local interiorId = GetInteriorFromEntity(PlayerPedId())
 
-            if interiorId ~= 0 and propertyId then
+            if interiorId ~= 0 and propertyId and Properties[propertyId] then
                 for _, hash in pairs(Properties[propertyId]:GetExteriorCulling() or {}) do
                     EnableExteriorCullModelThisFrame(hash)
                 end
             end
 
-            Citizen.Wait(0)
         end
-    end)
+        Citizen.Wait(0)
+    end
+end)
+
+--- Main Functions
+RegisterNetEvent("housing:client:Teleport", function(coords, propertyId, apartmentId)
+    Housing.Functions.Teleport("Ouvre la porte", coords, propertyId, apartmentId)
 end)
 
 RegisterNetEvent("housing:client:UpdateApartment", function(propertyId, apartmentId, data)
     local property = Properties[propertyId]
     if property then
         local newApartment = Apartment:new(data.identifier, data.label, data.owner, data.roommate, data.price, data.inside_coord, data.exit_zone,
-                                           data.fridge_zone, data.stash_zone, data.closet_zone, data.money_zone, data.temporary_access)
+                                           data.fridge_zone, data.stash_zone, data.closet_zone, data.money_zone, data.tier, data.has_parking_place,
+                                           data.temporary_access)
         property:UpdateApartment(apartmentId, newApartment)
 
         Housing.Functions.SetupBlips(Properties[propertyId])
@@ -66,8 +69,6 @@ RegisterNetEvent("housing:client:UpdateApartment", function(propertyId, apartmen
         Housing.Functions.Components.SetupFridgeInteraction(propertyId, apartmentId, newApartment)
         Housing.Functions.Components.SetupStashInteraction(propertyId, apartmentId, newApartment)
         Housing.Functions.Components.SetupMoneyInteraction(propertyId, apartmentId, newApartment)
-
-        TriggerEvent("soz-garage:client:GenerateHousingZoneAndPlace")
     end
 end)
 
@@ -80,7 +81,8 @@ RegisterNetEvent("housing:client:SyncProperties", function()
             Properties[propertyId]:AddApartment(apartmentId,
                                                 Apartment:new(apartment.identifier, apartment.label, apartment.owner, apartment.roommate, apartment.price,
                                                               apartment.inside_coord, apartment.exit_zone, apartment.fridge_zone, apartment.stash_zone,
-                                                              apartment.closet_zone, apartment.money_zone, apartment.temporary_access))
+                                                              apartment.closet_zone, apartment.money_zone, apartment.tier, apartment.has_parking_place,
+                                                              apartment.temporary_access))
 
             local apartmentData = Properties[propertyId]:GetApartment(apartmentId)
             Housing.Functions.Components.SetupExitInteraction(propertyId, apartmentId, apartmentData)
@@ -92,7 +94,6 @@ RegisterNetEvent("housing:client:SyncProperties", function()
 
         Housing.Functions.SetupBlips(Properties[propertyId])
         Housing.Functions.Components.SetupEntryInteraction(propertyId, Properties[propertyId])
-        TriggerEvent("soz-garage:client:GenerateHousingZoneAndPlace")
     end
 end)
 
@@ -103,7 +104,6 @@ RegisterNetEvent("housing:client:UpdatePropertyZone", function(propertyId, zone_
 
         Housing.Functions.SetupBlips(property)
         Housing.Functions.Components.SetupEntryInteraction(propertyId, Properties[propertyId])
-        TriggerEvent("soz-garage:client:GenerateHousingZoneAndPlace")
     end
 end)
 
@@ -154,6 +154,5 @@ AddEventHandler("onResourceStart", function(resource)
         Citizen.Wait(3000)
 
         TriggerEvent("housing:client:SyncProperties")
-        TriggerEvent("soz-garage:client:GenerateHousingZoneAndPlace")
     end
 end)

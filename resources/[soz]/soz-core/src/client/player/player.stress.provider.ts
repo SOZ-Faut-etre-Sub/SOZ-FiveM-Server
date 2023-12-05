@@ -1,16 +1,23 @@
+import { VehicleMidDamageThreshold } from '@public/shared/vehicle/vehicle';
+
 import { On, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
+import { AnimationStopReason } from '../../shared/animation';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { Item } from '../../shared/item';
 import { PlayerData } from '../../shared/player';
+import { BoxZone, ZoneType } from '../../shared/polyzone/box.zone';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
+import { AnimationService } from '../animation/animation.service';
 import { Notifier } from '../notifier';
 import { ProgressService } from '../progress.service';
+import { ZoneRepository } from '../repository/zone.repository';
 import { PlayerService } from './player.service';
+import { PlayerWalkstyleProvider } from './player.walkstyle.provider';
 
 enum StressLooseType {
     VehicleAbove160,
@@ -62,6 +69,15 @@ export class PlayerStressProvider {
     @Inject(ProgressService)
     private progressService: ProgressService;
 
+    @Inject(PlayerWalkstyleProvider)
+    private playerWalkstyleProvider: PlayerWalkstyleProvider;
+
+    @Inject(AnimationService)
+    private animationService: AnimationService;
+
+    @Inject(ZoneRepository)
+    private zoneRepository: ZoneRepository;
+
     private isStressUpdated = false;
     private wasDead = false;
     private wasHandcuff = false;
@@ -82,11 +98,25 @@ export class PlayerStressProvider {
         [StressLooseType.DrinkAlcohol]: null,
     };
 
-    private updateStress(type: StressLooseType): void {
+    private updateStress(type: StressLooseType, checkZonePosition: Vector3 = null): void {
         const lastUsedAt = this.lastStressTypeUsedAt[type];
 
         if (lastUsedAt !== null && GetGameTimer() - lastUsedAt < IntervalByStressLooseType[type] * 60 * 1000) {
             return;
+        }
+
+        if (checkZonePosition !== null) {
+            for (const zone of this.zoneRepository.get()) {
+                if (zone.data.type !== ZoneType.NoStress) {
+                    continue;
+                }
+
+                const boxZone = BoxZone.fromZone(zone);
+
+                if (boxZone.isPointInside(checkZonePosition)) {
+                    return;
+                }
+            }
         }
 
         const stressPoints = PointsByStressLooseType[type];
@@ -127,7 +157,13 @@ export class PlayerStressProvider {
 
     @On('CEventShockingGunshotFired', false)
     public onCEventShockingGunshotFired(entities, eventEntity): void {
-        this.onStressfulGameEvent(StressLooseType.ShootingNearby, entities, eventEntity, 40.0, false);
+        const player = PlayerPedId();
+        const coords = GetEntityCoords(player);
+        const zoneID = GetNameOfZone(coords[0], coords[1], coords[2]);
+
+        if ('ARMYB' != zoneID) {
+            this.onStressfulGameEvent(StressLooseType.ShootingNearby, entities, eventEntity, 40.0, false);
+        }
     }
 
     @On('CEventShockingInjuredPed', false)
@@ -154,16 +190,14 @@ export class PlayerStressProvider {
             return;
         }
 
-        const distance = getDistance(
-            GetEntityCoords(eventEntity) as Vector3,
-            GetEntityCoords(PlayerPedId()) as Vector3
-        );
+        const playerPosition = GetEntityCoords(PlayerPedId()) as Vector3;
+        const distance = getDistance(GetEntityCoords(eventEntity) as Vector3, playerPosition);
 
         if (distance > trigger_distance) {
             return;
         }
 
-        this.updateStress(type);
+        this.updateStress(type, playerPosition);
     }
 
     @Tick(TickInterval.EVERY_SECOND)
@@ -208,7 +242,10 @@ export class PlayerStressProvider {
             if (this.previousVehicleHealth === null) {
                 this.previousVehicleHealth = engineHealth;
             } else if (this.previousVehicleHealth !== engineHealth) {
-                if (this.previousVehicleHealth >= 800 && engineHealth < 800) {
+                if (
+                    this.previousVehicleHealth >= VehicleMidDamageThreshold &&
+                    engineHealth < VehicleMidDamageThreshold
+                ) {
                     this.updateStress(StressLooseType.VehicleYellowEngine);
                 }
 
@@ -233,10 +270,25 @@ export class PlayerStressProvider {
 
     @OnEvent(ClientEvent.PLAYER_HEALTH_DO_YOGA)
     async doYoga(): Promise<void> {
-        const { completed } = await this.progressService.progress('Yoga', 'Vous vous relaxez...', 30000, {
-            dictionary: 'timetable@amanda@ig_4',
-            name: 'ig_4_idle',
-        });
+        this.animationService
+            .playAnimation({
+                base: {
+                    dictionary: 'timetable@amanda@ig_4',
+                    name: 'ig_4_idle',
+                    options: {
+                        enablePlayerControl: false,
+                        repeat: true,
+                    },
+                },
+            })
+            .then(cancelled => {
+                if (cancelled !== AnimationStopReason.Finished) {
+                    this.progressService.cancel();
+                }
+            });
+
+        const { completed } = await this.progressService.progress('Yoga', 'Vous vous relaxez...', 30000);
+        this.animationService.stop();
 
         if (!completed) {
             return;
@@ -247,16 +299,12 @@ export class PlayerStressProvider {
 
     @Tick(TickInterval.EVERY_FRAME)
     async onEachFrame(): Promise<void> {
-        const playerPed = PlayerPedId();
-
         if (this.slowMode) {
-            RequestAnimSet('move_m@casual@a');
-            SetPedMovementClipset(playerPed, 'move_m@casual@a', 0.0);
+            DisableControlAction(0, 21, true); // disable sprint
+            DisableControlAction(0, 22, true); // disable jump
         }
 
         if (this.invalidMode) {
-            DisableControlAction(0, 21, true); // disable sprint
-            DisableControlAction(0, 22, true); // disable jump
             DisableControlAction(0, 24, true); // Attack
             DisableControlAction(0, 25, true); // Aim
             DisableControlAction(2, 36, true); // Disable going stealth
@@ -283,6 +331,8 @@ export class PlayerStressProvider {
         }
 
         this.slowMode = player.metadata.stress_level > 60;
+        await this.playerWalkstyleProvider.updateWalkStyle('stress', this.slowMode ? 'move_m@casual@a' : null);
+
         this.invalidMode = player.metadata.stress_level > 80;
     }
 
@@ -308,7 +358,9 @@ export class PlayerStressProvider {
             TriggerScreenblurFadeOut(500);
         };
 
-        blurAction();
+        if (GetScreenblurFadeCurrentTime() == 0) {
+            blurAction();
+        }
 
         if (player.metadata.stress_level <= 60) {
             await wait(1000 * 60 * 5);

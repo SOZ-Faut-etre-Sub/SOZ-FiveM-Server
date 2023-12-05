@@ -88,7 +88,7 @@ CreateThread(function()
                         return false
                     end
 
-                    local playerPosition = GetEntityCoords(GetPlayerPed(-1))
+                    local playerPosition = GetEntityCoords(PlayerPedId())
                     local targetPosition = GetEntityCoords(entity)
                     for _, bossZone in pairs(bossZones[PlayerData.job.id] or {}) do
                         if bossZone ~= nil and (bossZone:isPointInside(playerPosition) and bossZone:isPointInside(targetPosition)) then
@@ -116,7 +116,7 @@ CreateThread(function()
                         return false
                     end
 
-                    local playerPosition = GetEntityCoords(GetPlayerPed(-1))
+                    local playerPosition = GetEntityCoords(PlayerPedId())
                     local targetPosition = GetEntityCoords(entity)
                     for _, bossZone in pairs(bossZones[PlayerData.job.id] or {}) do
                         if bossZone ~= nil and (bossZone:isPointInside(playerPosition) and bossZone:isPointInside(targetPosition)) then
@@ -145,7 +145,7 @@ CreateThread(function()
                         return false
                     end
 
-                    local playerPosition = GetEntityCoords(GetPlayerPed(-1))
+                    local playerPosition = GetEntityCoords(PlayerPedId())
                     local targetPosition = GetEntityCoords(entity)
                     for _, bossZone in pairs(bossZones[PlayerData.job.id] or {}) do
                         if bossZone ~= nil and (bossZone:isPointInside(playerPosition) and bossZone:isPointInside(targetPosition)) then
@@ -184,8 +184,15 @@ CreateThread(function()
                         color = jobId,
                         icon = "c:jobs/facture.png",
                         event = "jobs:client:InvoiceSociety",
-                        canInteract = function()
-                            return PlayerData.job.onduty and SozJobCore.Functions.HasPermission(jobId, SozJobCore.JobPermission.SocietyBankInvoices)
+                        canInteract = function(entity)
+                            if not PlayerData.job.onduty or not SozJobCore.Functions.HasPermission(jobId, SozJobCore.JobPermission.SocietyBankInvoices) then
+                                return false
+                            end
+
+                            local targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
+                            local targetJob = QBCore.Functions.TriggerRpc("soz-jobs:GetPlayerJob", targetSource)
+
+                            return SozJobCore.Jobs[targetJob.id].canReceiveSocietyInvoice
                         end,
                         job = jobId,
                         blackoutGlobal = true,

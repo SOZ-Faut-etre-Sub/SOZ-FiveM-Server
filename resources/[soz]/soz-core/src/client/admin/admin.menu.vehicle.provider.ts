@@ -4,27 +4,32 @@ import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
 import { NuiEvent, ServerEvent } from '../../shared/event';
 import { Err, Ok } from '../../shared/result';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { groupBy } from '../../shared/utils/array';
+import { VehicleConfiguration, VehicleModType } from '../../shared/vehicle/modification';
 import { Vehicle, VehicleCategory } from '../../shared/vehicle/vehicle';
 import { InputService } from '../nui/input.service';
-import { NuiDispatch } from '../nui/nui.dispatch';
-import { VehicleService } from '../vehicle/vehicle.service';
+import { VehicleDamageProvider } from '../vehicle/vehicle.damage.provider';
+import { VehicleModificationService } from '../vehicle/vehicle.modification.service';
+import { VehicleStateService } from '../vehicle/vehicle.state.service';
 
 @Provider()
 export class AdminMenuVehicleProvider {
-    @Inject(NuiDispatch)
-    private nuiDispatch: NuiDispatch;
-
     @Inject(InputService)
     private inputService: InputService;
 
-    @Inject(VehicleService)
-    private vehicleService: VehicleService;
+    @Inject(VehicleStateService)
+    private vehicleStateService: VehicleStateService;
+
+    @Inject(VehicleModificationService)
+    private vehicleModificationService: VehicleModificationService;
+
+    @Inject(VehicleDamageProvider)
+    private vehicleDamageProvider: VehicleDamageProvider;
 
     @OnNuiEvent(NuiEvent.AdminGetVehicles)
     public async getVehicles() {
-        const vehicles = await emitRpc<any[]>(RpcEvent.ADMIN_GET_VEHICLES);
+        const vehicles = await emitRpc<any[]>(RpcServerEvent.ADMIN_GET_VEHICLES);
 
         let catalog: Record<keyof VehicleCategory, Vehicle[]> = groupBy(vehicles, v => v.category);
 
@@ -53,7 +58,7 @@ export class AdminMenuVehicleProvider {
                 }
             ));
         if (input !== null) {
-            TriggerServerEvent(ServerEvent.QBCORE_CALL_COMMAND, 'car', [input]);
+            TriggerServerEvent(ServerEvent.ADMIN_VEHICLE_SPAWN, input);
         }
         return Ok(true);
     }
@@ -62,10 +67,13 @@ export class AdminMenuVehicleProvider {
     public async onAdminMenuVehicleRepair() {
         const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
         if (vehicle) {
-            SetVehicleFixed(vehicle);
-            SetVehicleBodyHealth(vehicle, 1000);
-            SetVehicleEngineHealth(vehicle, 1000);
-            SetVehicleDeformationFixed(vehicle);
+            this.vehicleStateService.updateVehicleCondition(vehicle, {
+                bodyHealth: 1000,
+                engineHealth: 1000,
+                tankHealth: 1000,
+                windowStatus: {},
+                doorStatus: {},
+            });
         }
         return Ok(true);
     }
@@ -74,8 +82,9 @@ export class AdminMenuVehicleProvider {
     public async onAdminMenuVehicleClean() {
         const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
         if (vehicle) {
-            SetVehicleDirtLevel(vehicle, 0.1);
-            WashDecalsFromVehicle(vehicle, 1.0);
+            this.vehicleStateService.updateVehicleCondition(vehicle, {
+                dirtLevel: 0.0,
+            });
         }
         return Ok(true);
     }
@@ -83,37 +92,62 @@ export class AdminMenuVehicleProvider {
     @OnNuiEvent(NuiEvent.AdminMenuVehicleRefill)
     public async onAdminMenuVehicleRefill() {
         const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
+
         if (vehicle) {
-            exports['soz-vehicle'].SetFuel(vehicle, 100.0);
+            this.vehicleStateService.updateVehicleCondition(vehicle, {
+                fuelLevel: 100.0,
+            });
         }
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuVehicleSave)
     public async onAdminMenuVehicleSave() {
         const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
-        const mods = this.vehicleService.getVehicleProperties(vehicle);
+        const configuration = this.vehicleModificationService.getVehicleConfiguration(vehicle);
         const vehicleModel = GetEntityModel(vehicle);
-        const vehicleName = GetDisplayNameFromVehicleModel(vehicleModel);
+        const vehicleName = GetDisplayNameFromVehicleModel(vehicleModel).toLowerCase();
+        const vehicleClass = GetVehicleClass(vehicle);
 
-        TriggerServerEvent(ServerEvent.ADMIN_ADD_VEHICLE, vehicleModel, vehicleName, mods);
+        TriggerServerEvent(ServerEvent.ADMIN_ADD_VEHICLE, vehicleModel, vehicleName, vehicleClass, configuration);
         return Ok(true);
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuVehicleSetFBIConfig)
     public async onAdminMenuVehicleSetFBIConfig() {
         const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
+
         if (vehicle) {
-            SetVehicleModKit(vehicle, 0);
+            const configuration = this.vehicleModificationService.getVehicleConfiguration(vehicle);
+            const fbiConfiguration: VehicleConfiguration = {
+                ...configuration,
+                color: {
+                    primary: 12,
+                    secondary: 12,
+                    pearlescent: 12,
+                    rim: 12,
+                },
+                windowTint: 1,
+                modification: {
+                    turbo: true,
+                    engine: GetNumVehicleMods(vehicle, VehicleModType.Engine) - 1,
+                    brakes: GetNumVehicleMods(vehicle, VehicleModType.Brakes) - 1,
+                    transmission: GetNumVehicleMods(vehicle, VehicleModType.Transmission) - 1,
+                    suspension: GetNumVehicleMods(vehicle, VehicleModType.Suspension) - 1,
+                    armor: GetNumVehicleMods(vehicle, VehicleModType.Armor) - 1,
+                },
+            };
 
-            [11, 12, 13, 15, 16].forEach(modCategory => {
-                SetVehicleMod(vehicle, modCategory, GetNumVehicleMods(vehicle, modCategory) - 1, false);
-            });
+            const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
+            const newVehicleConfiguration = await emitRpc<VehicleConfiguration>(
+                RpcServerEvent.VEHICLE_CUSTOM_SET_MODS,
+                vehicleNetworkId,
+                fbiConfiguration,
+                configuration
+            );
 
-            ToggleVehicleMod(vehicle, 18, true);
-            SetVehicleColours(vehicle, 12, 12);
-            SetVehicleExtraColours(vehicle, 12, 12);
-            SetVehicleWindowTint(vehicle, 1);
+            this.vehicleModificationService.applyVehicleConfiguration(vehicle, newVehicleConfiguration);
         }
+
         return Ok(true);
     }
 
@@ -147,6 +181,11 @@ export class AdminMenuVehicleProvider {
 
     @OnNuiEvent(NuiEvent.AdminMenuVehicleDelete)
     public async onAdminMenuVehicleDelete() {
-        TriggerServerEvent(ServerEvent.QBCORE_CALL_COMMAND, 'dv');
+        TriggerServerEvent(ServerEvent.ADMIN_VEHICLE_DELETE);
+    }
+
+    @OnNuiEvent(NuiEvent.AdminToggleNoStall)
+    public async setNoStall(value: boolean): Promise<void> {
+        this.vehicleDamageProvider.setAdminNoStall(value);
     }
 }
