@@ -20,8 +20,8 @@ export class _MessagesDB {
         );
 
         await exports.oxmysql.update_async(
-            'UPDATE phone_messages_conversations SET masked = 0, updatedAt = current_timestamp(), unread = unread + 1 WHERE conversation_id = ?',
-            [conversationId]
+            'UPDATE phone_messages_conversations SET masked = 0, updatedAt = current_timestamp(), unread = unread + 1 WHERE conversation_id = ? AND participant_identifier = ?',
+            [conversationId, author]
         );
 
         return id;
@@ -36,25 +36,19 @@ export class _MessagesDB {
     async getMessageConversations(phoneNumber: string): Promise<UnformattedMessageConversation[]> {
         return await exports.oxmysql.query_async(
             `SELECT DISTINCT phone_messages_conversations.unread,
-                   phone_messages_conversations.conversation_id,
-                   phone_messages_conversations.masked,
-                   phone_messages_conversations.user_identifier,
-                   phone_messages_conversations.participant_identifier,
-                   phone_profile.avatar,
-                   JSON_VALUE(player.charinfo,'$.phone') AS phone_number,
-                   unix_timestamp(phone_messages_conversations.updatedAt)*1000 as updatedAt
-            FROM (SELECT conversation_id
-                  FROM phone_messages_conversations
-                  WHERE phone_messages_conversations.participant_identifier = ?) AS t
-                     LEFT OUTER JOIN phone_messages_conversations
-                                     ON phone_messages_conversations.conversation_id = t.conversation_id
-                     LEFT OUTER JOIN phone_profile
-                                     ON phone_profile.number = phone_messages_conversations.participant_identifier
-                     LEFT OUTER JOIN player
-                                     ON JSON_VALUE(player.charinfo,'$.phone') = phone_messages_conversations.participant_identifier
-            WHERE updatedAt >= DATE_SUB(NOW(), INTERVAL 14 DAY)
-            ORDER BY phone_messages_conversations.updatedAt DESC
-        `,
+                             phone_messages_conversations.conversation_id,
+                             phone_messages_conversations.masked,
+                             phone_messages_conversations.user_identifier,
+                             phone_messages_conversations.participant_identifier,
+                             phone_profile.avatar,
+                             unix_timestamp(phone_messages_conversations.updatedAt)*1000 as updatedAt
+             FROM (SELECT conversation_id FROM phone_messages_conversations WHERE phone_messages_conversations.participant_identifier = ?) AS t
+                      LEFT OUTER JOIN phone_messages_conversations
+                                      ON phone_messages_conversations.conversation_id = t.conversation_id
+                      LEFT OUTER JOIN phone_profile
+                                      ON phone_profile.number = phone_messages_conversations.participant_identifier
+             WHERE updatedAt >= DATE_SUB(NOW(), INTERVAL 14 DAY)
+             ORDER BY phone_messages_conversations.updatedAt DESC`,
             [phoneNumber]
         );
     }
@@ -64,9 +58,10 @@ export class _MessagesDB {
             `SELECT DISTINCT phone_messages.id,
                               phone_messages.conversation_id,
                               phone_messages.message,
-                              phone_messages.author
+                              phone_messages.author,
+                              phone_messages.createdAt
                        FROM phone_messages
-                                INNER JOIN phone_messages_conversations ON phone_messages.conversation_id = phone_messages_conversations.conversation_id
+                                LEFT JOIN phone_messages_conversations ON phone_messages.conversation_id = phone_messages_conversations.conversation_id
                        WHERE phone_messages_conversations.participant_identifier = ? AND phone_messages.updatedAt >= DATE_SUB(NOW(), INTERVAL 14 DAY)
                        ORDER BY id DESC`,
             [phoneNumber]
@@ -88,6 +83,17 @@ export class _MessagesDB {
         await exports.oxmysql.insert_async(
             'INSERT INTO phone_messages_conversations (user_identifier, conversation_id, participant_identifier) VALUES (?, ?, ?)',
             [userIdentifier, conversationId, participantIdentifier]
+        );
+    }
+
+    /**
+     * Update a message group date
+     * @param conversationId - the unique group ID this corresponds to
+     */
+    async updateMessageGroupDate(conversationId: string): Promise<void> {
+        await exports.oxmysql.insert_async(
+            'UPDATE phone_messages_conversations SET updatedAt = current_timestamp() WHERE conversation_id = ?',
+            [conversationId]
         );
     }
 
@@ -133,14 +139,14 @@ export class _MessagesDB {
      */
     async setMessageRead(conversation_id: string, identifier: string) {
         await exports.oxmysql.query_async(
-            `UPDATE phone_messages_conversations SET unread = 0 WHERE conversation_id = ? AND user_identifier = ?`,
+            `UPDATE phone_messages_conversations SET unread = 0 WHERE conversation_id = ? AND NOT participant_identifier = ?`,
             [conversation_id, identifier]
         );
     }
 
     async setMessageArchived(conversation_id: string, identifier: string) {
         await exports.oxmysql.query_async(
-            `UPDATE phone_messages_conversations SET masked = 1 WHERE conversation_id = ? AND user_identifier = ?`,
+            `UPDATE phone_messages_conversations SET masked = 1 WHERE conversation_id = ? AND participant_identifier = ?`,
             [conversation_id, identifier]
         );
     }

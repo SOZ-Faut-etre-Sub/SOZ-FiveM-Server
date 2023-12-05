@@ -3,7 +3,7 @@ export interface Blip {
     range?: boolean;
     color?: number;
     alpha?: number;
-    display?: boolean;
+    display?: number;
     playername?: string;
     showcone?: boolean;
     heading?: number;

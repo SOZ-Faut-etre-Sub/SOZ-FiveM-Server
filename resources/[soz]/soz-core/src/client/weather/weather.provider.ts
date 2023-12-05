@@ -1,19 +1,21 @@
 import { Once } from '../../core/decorators/event';
+import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { StateBagHandler } from '../../core/decorators/state';
 import { Weather } from '../../shared/weather';
+import { StateSelector, Store } from '../store/store';
 
 @Provider()
 export class WeatherProvider {
-    @StateBagHandler('weather', 'global')
-    async onWeatherChange(_name, _key, weather: Weather) {
-        SetWeatherOwnedByNetwork(false);
+    @Inject('Store')
+    private store: Store;
+
+    @StateSelector(state => state.global.weather)
+    async onWeatherChange(weather: Weather) {
         SetWeatherTypeOvertimePersist(weather, 60.0);
     }
 
     @Once()
     onStart(): void {
         SetWeatherOwnedByNetwork(false);
-        SetWeatherTypeOvertimePersist(GlobalState.weather, 60.0);
     }
 }

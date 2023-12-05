@@ -17,7 +17,7 @@ export const SocietyContactsState: Society[] = [
         id: 3,
         display: 'LSMC',
         number: '555-LSMC',
-        avatar: 'media/society_icon/lsms.webp',
+        avatar: 'media/society_icon/lsmc.webp',
     },
     {
         id: 4,
@@ -39,7 +39,7 @@ export const SocietyContactsState: Society[] = [
     },
     {
         id: 7,
-        display: 'Carl Jr Service',
+        display: 'Carl Jr Services',
         number: '555-CARLJR',
         avatar: 'media/society_icon/taxi.webp',
     },
@@ -57,15 +57,15 @@ export const SocietyContactsState: Society[] = [
     },
     {
         id: 10,
-        display: 'STONK Depository',
+        display: 'STONK Security',
         number: '555-STONK',
         avatar: 'media/society_icon/cash-transfer.webp',
     },
     {
         id: 11,
-        display: "Benny's",
-        number: '555-BENNYS',
-        avatar: 'media/society_icon/bennys.webp',
+        display: 'New Gahray',
+        number: '555-NEWGAHRAY',
+        avatar: 'media/society_icon/newgahray.webp',
     },
     {
         id: 12,
@@ -90,5 +90,29 @@ export const SocietyContactsState: Society[] = [
         display: 'Fight For Style',
         number: '555-FFS',
         avatar: 'media/society_icon/ffs.webp',
+    },
+    {
+        id: 16,
+        display: 'Mandatory',
+        number: '555-MDR',
+        avatar: 'media/society_icon/mdr.webp',
+    },
+    {
+        id: 17,
+        display: "Force de l'ordre",
+        number: '555-POLICE',
+        avatar: 'media/society_icon/fdo.webp',
+    },
+    {
+        id: 18,
+        display: 'SASP',
+        number: '555-SASP',
+        avatar: 'media/society_icon/sasp.webp',
+    },
+    {
+        id: 19,
+        display: 'Gouvernement',
+        number: '555-GOUV',
+        avatar: 'media/society_icon/gouv.webp',
     },
 ];

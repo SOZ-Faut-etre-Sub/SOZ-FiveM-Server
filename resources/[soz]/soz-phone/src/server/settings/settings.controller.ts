@@ -10,7 +10,7 @@ onNetPromise<PreDBSettings, number>(SettingsEvents.UPDATE_PICTURE, (reqObj, resp
     });
 });
 
-onNetPromise<void, string>(SettingsEvents.SET_AVATAR, (reqObj, resp) => {
+onNetPromise<void, string>(SettingsEvents.GET_AVATAR, (reqObj, resp) => {
     SettingsService.getProfilePicture(reqObj, resp).catch(e => {
         settingsLogger.error(`Error occured in fetch contacts event (${reqObj.source}), Error:  ${e.message}`);
         resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });

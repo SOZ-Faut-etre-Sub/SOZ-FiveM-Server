@@ -3,6 +3,7 @@ export interface Message {
     message: string;
     conversation_id?: string;
     author: string;
+    createdAt: number;
 }
 
 export interface PreDBMessage {
@@ -29,7 +30,6 @@ export interface UnformattedMessageConversation {
     conversation_id: string;
     user_identifier: string;
     participant_identifier: string;
-    phone_number: string;
     avatar?: string;
     display?: string;
     updatedAt: number;
@@ -100,5 +100,6 @@ export enum MessageEvents {
     GET_POSITION = 'phone:getCurrentPosition',
     GET_DESTINATION = 'phone:getCurrentDestination',
     SET_WAYPOINT = 'phone:setWaypoint',
+    DELETE_WAYPOINT = 'phone:deleteWaypoint',
     SET_CONVERSATION_ARCHIVED = 'phone:setConversationArchived',
 }

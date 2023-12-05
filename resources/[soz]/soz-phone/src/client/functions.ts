@@ -25,6 +25,7 @@ export const newPhoneProp = async () => {
         const [x, y, z] = GetEntityCoords(playerPed, true);
         prop = CreateObject(GetHashKey(phoneModel), x, y, z + 0.2, true, true, true);
         SetNetworkIdCanMigrate(ObjToNet(prop), false);
+        SetEntityCollision(prop, false, true);
         const boneIndex = GetPedBoneIndex(playerPed, 28422);
         AttachEntityToEntity(
             prop,

@@ -1,11 +1,15 @@
-import { Once } from '../../core/decorators/event';
-import { Inject } from '../../core/decorators/injectable';
-import { Provider } from '../../core/decorators/provider';
+import { Once } from '@core/decorators/event';
+import { Inject } from '@core/decorators/injectable';
+import { Provider } from '@core/decorators/provider';
+import { ClientEvent } from '@public/shared/event';
+
 import { Feature, isFeatureEnabled } from '../../shared/features';
-import { CocktailItem, DrinkItem, FoodItem, InventoryItem, LiquorItem } from '../../shared/item';
+import { CocktailItem, DrinkItem, FoodItem, InventoryItem, Item, LiquorItem } from '../../shared/item';
+import { PlayerMetadata } from '../../shared/player';
+import { InventoryManager } from '../inventory/inventory.manager';
+import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../player/progress.service';
-import { InventoryManager } from './inventory.manager';
 import { ItemService } from './item.service';
 
 const INTOXICATED_MALUS = -5;
@@ -25,6 +29,9 @@ export class ItemNutritionProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
+    @Inject(Notifier)
+    private notifier: Notifier;
+
     private lastItemEatByPlayer: Record<string, string> = {};
 
     private async useFoodOrDrink(
@@ -35,10 +42,6 @@ export class ItemNutritionProvider {
         const player = this.playerService.getPlayer(source);
 
         if (!player) {
-            return;
-        }
-
-        if (!this.item.canPlayerUseItem(source, true)) {
             return;
         }
 
@@ -56,7 +59,8 @@ export class ItemNutritionProvider {
 
         const name = item.type === 'food' ? 'eat_something' : 'drink_something';
         const prop =
-            item.type === 'food'
+            item.prop ||
+            (item.type === 'food'
                 ? item.name === 'zevent2022_popcorn'
                     ? {
                           model: 'xs_prop_trinket_cup_01a',
@@ -73,7 +77,7 @@ export class ItemNutritionProvider {
                       model: 'ba_prop_club_water_bottle',
                       bone: 28422,
                       coords: { x: 0.01, y: -0.01, z: -0.06 },
-                  };
+                  });
         const animation =
             item.animation ||
             (item.type === 'food'
@@ -88,9 +92,14 @@ export class ItemNutritionProvider {
                       flags: 49,
                   });
 
-        const { progress } = await this.progressService.progress(source, name, '', 5000, animation, {
+        const { completed, progress } = await this.progressService.progress(source, name, '', 5000, animation, {
             firstProp: prop,
+            allowExistingAnimation: true,
         });
+
+        if (completed) {
+            TriggerClientEvent(ClientEvent.ITEM_USE, source, item.name, item);
+        }
 
         let dyspepsiaLuck = 0.5;
 
@@ -122,9 +131,10 @@ export class ItemNutritionProvider {
             alcohol = 0 - item.nutrition.thirst * progress * 0.2;
         }
 
-        this.playerService.incrementMetadata(source, 'hunger', hunger, 0, 100);
-        this.playerService.incrementMetadata(source, 'thirst', thirst, 0, 100);
-        this.playerService.incrementMetadata(source, 'alcohol', alcohol, 0, 100);
+        const datas: Partial<PlayerMetadata> = {};
+        datas.hunger = this.playerService.getIncrementedMetadata(player, 'hunger', hunger, 0, 100);
+        datas.thirst = this.playerService.getIncrementedMetadata(player, 'thirst', thirst, 0, 100);
+        datas.alcohol = this.playerService.getIncrementedMetadata(player, 'alcohol', alcohol, 0, 100);
 
         if (isFeatureEnabled(Feature.MyBodySummer)) {
             const fiber = dyspepsia || intoxicated ? DYSPEPSIA_NUTRITION_MALUS : item.nutrition.fiber * progress;
@@ -132,40 +142,53 @@ export class ItemNutritionProvider {
             const protein = dyspepsia || intoxicated ? DYSPEPSIA_NUTRITION_MALUS : item.nutrition.protein * progress;
             const lipid = dyspepsia || intoxicated ? DYSPEPSIA_NUTRITION_MALUS : item.nutrition.lipid * progress;
 
-            this.playerService.incrementMetadata(source, 'fiber', fiber, 0, 25);
-            this.playerService.incrementMetadata(source, 'sugar', sugar, 0, 25);
-            this.playerService.incrementMetadata(source, 'protein', protein, 0, 25);
-            this.playerService.incrementMetadata(source, 'lipid', lipid, 0, 25);
-            const newHealthLevel = this.playerService.incrementMetadata(
-                source,
+            datas.fiber = this.playerService.getIncrementedMetadata(player, 'fiber', fiber, 0, 25);
+            datas.sugar = this.playerService.getIncrementedMetadata(player, 'sugar', sugar, 0, 25);
+            datas.protein = this.playerService.getIncrementedMetadata(player, 'protein', protein, 0, 25);
+            datas.lipid = this.playerService.getIncrementedMetadata(player, 'lipid', lipid, 0, 25);
+            datas.health_level = this.playerService.getIncrementedMetadata(
+                player,
                 'health_level',
                 fiber + sugar + protein + lipid,
                 0,
                 100
             );
 
-            if (newHealthLevel !== null) {
+            if (datas.health_level !== null) {
                 let maxHealth = 200;
 
-                if (newHealthLevel < 20) {
-                    maxHealth = 120;
-                } else if (newHealthLevel < 40) {
+                if (datas.health_level < 20) {
                     maxHealth = 160;
+                } else if (datas.health_level < 40) {
+                    maxHealth = 180;
                 }
 
-                this.playerService.setPlayerMetadata(source, 'max_health', maxHealth);
+                datas.max_health = maxHealth;
             }
         }
 
+        this.playerService.setPlayerMetaDatas(source, datas);
+
         if (intoxicated) {
             this.playerService.setPlayerDisease(source, 'intoxication');
-        }
-
-        if (dyspepsia) {
+        } else if (dyspepsia) {
             this.playerService.setPlayerDisease(source, 'dyspepsie');
         }
 
         this.lastItemEatByPlayer[player.citizenid] = item.name;
+    }
+
+    private useLunchbox(source: number, item: Item, itemInv: InventoryItem) {
+        this.inventoryManager.removeItemFromInventory(source, item.name, 1, itemInv.metadata, itemInv.slot);
+        itemInv.metadata.crateElements.map(meal => {
+            this.inventoryManager.addItemToInventory(source, meal.name, meal.amount, { ...meal.metadata });
+        });
+        let notificationLunchboxLabel = item.label;
+        if (itemInv.metadata.label) {
+            notificationLunchboxLabel = item.label + ' "' + itemInv.metadata.label + '"';
+        }
+
+        this.notifier.notify(source, 'Vous avez ouvert votre ~g~' + notificationLunchboxLabel + '~s~ !', 'success');
     }
 
     @Once()
@@ -193,5 +216,7 @@ export class ItemNutritionProvider {
         for (const liquorId of Object.keys(liquors)) {
             this.item.setItemUseCallback<LiquorItem>(liquorId, this.useFoodOrDrink.bind(this));
         }
+
+        this.item.setItemUseCallback('lunchbox', this.useLunchbox.bind(this));
     }
 }

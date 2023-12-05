@@ -2,7 +2,7 @@ import { SOZ_CORE_IS_CLIENT } from '../../globals';
 import { EventMetadata, EventMetadataKey, GameEventMetadataKey, NuiEventMetadataKey } from '../decorators/event';
 import { Inject, Injectable } from '../decorators/injectable';
 import { getMethodMetadata } from '../decorators/reflect';
-import { ChaineMiddlewareFactory } from '../middleware/middleware';
+import { MiddlewareFactory } from '../middleware/middleware';
 
 type GameEventCallback = (...args: any[]) => void;
 
@@ -14,8 +14,8 @@ export class EventLoader {
 
     private gameEvents: Record<string, GameEventCallback[]> = {};
 
-    @Inject(ChaineMiddlewareFactory)
-    private middlewareFactory: ChaineMiddlewareFactory;
+    @Inject('MiddlewareFactory')
+    private middlewareFactory: MiddlewareFactory;
 
     public constructor() {
         if (SOZ_CORE_IS_CLIENT) {

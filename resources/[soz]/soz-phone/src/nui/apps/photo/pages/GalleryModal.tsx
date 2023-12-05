@@ -56,7 +56,7 @@ export const GalleryModal = () => {
             />
             <div
                 className={cn('grid grid-cols-4 content-start h-16', {
-                    'bg-[#1C1C1E] text-white': config.theme.value === 'dark',
+                    'bg-ios-700 text-white': config.theme.value === 'dark',
                     'bg-ios-50 text-black': config.theme.value === 'light',
                 })}
             >

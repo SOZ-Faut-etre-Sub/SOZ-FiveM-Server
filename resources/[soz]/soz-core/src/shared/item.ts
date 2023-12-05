@@ -1,3 +1,10 @@
+import { DrugContractInfo } from '@private/shared/drugs';
+import { MissiveType } from '@private/shared/missive';
+
+import { FakeId } from './player';
+import { WeaponComponentType } from './weapons/attachment';
+import { WeaponMk2TintColor, WeaponTintColor } from './weapons/tint';
+
 export type ItemType =
     | 'item'
     | 'weapon'
@@ -16,6 +23,8 @@ export type ItemType =
     | 'flavor'
     | 'furniture'
     | 'liquor'
+    | 'fish'
+    | 'fishing_garbage'
     | 'outfit';
 
 type BaseItem = {
@@ -26,6 +35,7 @@ type BaseItem = {
     description: string;
     unique: boolean;
     useable: boolean;
+    carrybox: string;
 };
 
 export type Nutrition = {
@@ -37,6 +47,8 @@ export type Nutrition = {
     lipid: number;
     sugar: number;
     protein: number;
+    drug: number;
+    stress: number;
 };
 
 export type WeaponItem = BaseItem & {
@@ -44,10 +56,6 @@ export type WeaponItem = BaseItem & {
 };
 
 export type AmmoItem = BaseItem & {
-    type: 'item';
-};
-
-export type DrugItem = BaseItem & {
     type: 'item';
 };
 
@@ -92,6 +100,25 @@ export type LiquorItem = BaseItem & {
     type: 'liquor';
     nutrition: Nutrition;
     animation?: AnimationItem;
+    prop?: PropItem;
+};
+
+export type FishItem = BaseItem & {
+    type: 'fish';
+    fishing_area: Array<string>;
+    fishing_weather: Array<string>;
+    fishing_period: Array<string>;
+    min_weight: number;
+    max_weight: number;
+    min_length: number;
+    max_length: number;
+    sozedex_id: number;
+    fishman_status: string;
+    price: number;
+};
+
+export type FishingGarbageItem = BaseItem & {
+    type: 'fishing_garbage';
 };
 
 // Fight For Style
@@ -117,28 +144,74 @@ type AnimationItem = {
     flags: number;
 };
 
+type PropItem = {
+    model: string;
+    bone: number;
+    coords: { x: number; y: number; z: number };
+    rotation?: { x: number; y: number; z: number };
+};
+
 export type FoodItem = BaseItem & {
     type: 'food';
     nutrition: Nutrition;
     animation?: AnimationItem;
+    prop?: PropItem;
 };
 
 export type DrinkItem = BaseItem & {
     type: 'drink';
     nutrition: Nutrition;
     animation?: AnimationItem;
+    prop?: PropItem;
 };
 
 export type CocktailItem = BaseItem & {
     type: 'cocktail';
     nutrition: Nutrition;
     animation?: AnimationItem;
+    prop?: PropItem;
+};
+
+export type DrugItem = BaseItem & {
+    type: 'drug';
+    nutrition: Nutrition;
+};
+
+export type MealMetadata = {
+    name: string;
+    metadata: InventoryItemMetadata;
+    amount: number;
+    label: string;
 };
 
 export type InventoryItemMetadata = {
+    label?: string;
+    type?: string;
     expiration?: string;
-    serial?: string;
     player?: number;
+    // Weapom
+    serial?: string;
+    health?: number;
+    maxHealth?: number;
+    ammo?: number;
+    tint?: WeaponTintColor | WeaponMk2TintColor;
+    missiveType?: MissiveType;
+    missiveChoice1?: number;
+    missiveChoice2?: number;
+    missiveChoice3?: number;
+    attachments?: Record<WeaponComponentType, string | null>;
+    tier?: number;
+    crafted?: boolean;
+    id?: string;
+    model?: string;
+    crateElements?: MealMetadata[];
+    // Fishing
+    weight?: number;
+    length?: number;
+    bait?: any;
+    fuel?: number;
+    drugContract?: DrugContractInfo;
+    fakeIdData?: FakeId;
 };
 
 export type InventoryItem = {
@@ -174,4 +247,6 @@ export type Item =
     | SewingRawMaterialItem
     | FabricItem
     | GarmentItem
-    | OutfitItem;
+    | OutfitItem
+    | FishItem
+    | FishingGarbageItem;

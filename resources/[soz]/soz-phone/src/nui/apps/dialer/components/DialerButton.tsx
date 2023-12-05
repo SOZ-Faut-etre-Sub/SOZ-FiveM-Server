@@ -20,7 +20,7 @@ export const DialerButton: React.FC<ButtonItemProps> = memo(({ label, type, onCl
                 'flex justify-center items-center w-20 aspect-square m-2 rounded-full cursor-pointer',
                 className,
                 {
-                    'bg-[#333333] hover:bg-[#444444]': config.theme.value === 'dark',
+                    'bg-ios-700 hover:bg-ios-600': config.theme.value === 'dark',
                     'bg-white hover:bg-[#E5E5E5] text-gray-700': config.theme.value === 'light',
                 }
             )}

@@ -61,7 +61,7 @@ Housing.Functions.Components.SetupEntryInteraction = function(propertyId, proper
             label = "Garage",
             icon = "c:housing/garage.png",
             canInteract = function()
-                return property:HasGarage() and property:HasRentedApartmentForCitizenId(PlayerData.citizenid) and not Housing.Functions.IsInsideApartment()
+                return property:HasGarageForCitizenId(PlayerData.citizenid) and not Housing.Functions.IsInsideApartment()
             end,
             action = function()
                 TriggerEvent("housing:client:ShowGarageMenu", propertyId)

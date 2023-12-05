@@ -43,22 +43,13 @@ CreateThread(function()
         },
         distance = 2.5,
     })
-
-    exports["qb-target"]:AddBoxZone("news:shop", vector3(-567.59, -922.01, 28.82), 0.4, 2.8, {
-        name = "news:shop",
-        heading = 0,
-        minZ = 27.82,
-        maxZ = 30.82,
-    }, {options = SozJobCore.Functions.GetBossShopActions("news", "news:client:bossShop"), distance = 2.5})
-end)
-
---- Events
-RegisterNetEvent("jobs:client:news:OpenCloakroomMenu", function(storageId)
-    SozJobCore.Functions.OpenCloakroomMenu(societyMenu, NewsConfig.Cloakroom, storageId)
 end)
 
 RegisterNetEvent("jobs:client:news:SellNewspaper", function()
     if QBCore.Functions.GetBlip("jobs:news:sell") ~= false then
+        QBCore.Functions.RemoveBlip("jobs:news:sell")
+        exports["qb-target"]:RemoveZone("jobs:news:sell")
+        exports["soz-core"]:DrawNotification("Tu as annulé la livraison.", "info")
         return
     end
 
@@ -88,13 +79,22 @@ RegisterNetEvent("jobs:client:news:SellNewspaper", function()
 
     QBCore.Functions.CreateBlip("jobs:news:sell", {name = "Point de livraison", coords = delivery, route = true})
 
-    exports["soz-hud"]:DrawNotification("Une station a besoin de journaux. Sa position est sur ton ~y~GPS", "info")
+    exports["soz-core"]:DrawNotification("Une station a besoin de journaux. Sa position est sur ton ~y~GPS", "info")
 end)
 
 RegisterNetEvent("jobs:client:news:newspaperSold", function()
-    TriggerServerEvent("jobs:server:news:newspaperSold")
-    exports["qb-target"]:RemoveZone("jobs:news:sell")
-    QBCore.Functions.RemoveBlip("jobs:news:sell")
+    QBCore.Functions.Progressbar("sellNewspaper", "Vente de journaux", 2000, false, false,
+                                 {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {animDict = "anim@narcotics@trash", anim = "drop_front", flags = 16}, {}, {}, function()
+        StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
+        TriggerServerEvent("jobs:server:news:newspaperSold")
+        exports["qb-target"]:RemoveZone("jobs:news:sell")
+        QBCore.Functions.RemoveBlip("jobs:news:sell")
+    end)
 end)
 
 RegisterNetEvent("jobs:client:news:farmNewspaper", function()
@@ -125,12 +125,12 @@ RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
             {label = "Breaking News", value = "breaking-news"},
             {label = "Publicité", value = "publicité"},
             {label = "Fait Divers", value = "fait-divers"},
-            {label = "Info Traffic", value = "info-traffic"},
+            {label = "Info Trafic", value = "info-traffic"},
         },
         select = function(_, value)
-            local message = exports["soz-hud"]:Input("Message de la communication", 512)
+            local message = exports["soz-core"]:Input("Message de la communication", 235)
             if message == nil or message == "" then
-                exports["soz-hud"]:DrawNotification("Vous devez spécifier un message", "error")
+                exports["soz-core"]:DrawNotification("Vous devez spécifier un message", "error")
                 return
             end
 
@@ -141,7 +141,7 @@ RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
                 reporterId = PlayerData.citizenid,
             })
 
-            TriggerServerEvent("monitor:server:event", "job_news_create_flash", {flash_type = value},
+            TriggerServerEvent("soz-core:server:monitor:add-event", "job_news_create_flash", {flash_type = value},
                                {message = message, position = GetEntityCoords(PlayerPedId())}, true)
         end,
     })
@@ -176,26 +176,6 @@ RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
     })
 
     societyMenu:Open()
-end)
-
-RegisterNetEvent("news:client:bossShop", function()
-    if not SozJobCore.Functions.HasPermission("news", SozJobCore.JobPermission.SocietyShop) then
-        return
-    end
-
-    shopMenu:ClearItems()
-    for itemID, item in pairs(NewsConfig.BossShop) do
-        shopMenu:AddButton({
-            label = item.amount .. "x " .. QBCore.Shared.Items[item.name].label,
-            rightLabel = "$" .. item.price,
-            value = itemID,
-            select = function(btn)
-                TriggerServerEvent("jobs:shop:server:buy", btn.Value)
-            end,
-        })
-    end
-
-    shopMenu:Open()
 end)
 
 --- Threads

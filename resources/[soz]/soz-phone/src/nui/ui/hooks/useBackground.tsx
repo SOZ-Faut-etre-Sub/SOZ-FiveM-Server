@@ -10,7 +10,7 @@ export const useBackground = (): string => {
         return 'bg-black';
     }
     if (pathname !== '/') {
-        return config.theme.value === 'dark' ? 'bg-black' : 'bg-ios-50';
+        return config.theme.value === 'dark' ? 'bg-ios-800' : 'bg-ios-50';
     }
     return '';
 };

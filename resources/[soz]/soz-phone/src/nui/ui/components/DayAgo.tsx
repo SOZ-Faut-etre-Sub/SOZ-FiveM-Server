@@ -1,23 +1,33 @@
-import 'dayjs/locale/fr';
-
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
+import { formatDistance } from 'date-fns';
+import { fr } from 'date-fns/locale';
 import { FunctionComponent, useState } from 'react';
 
 import useInterval from '../../hooks/useInterval';
-
-dayjs.extend(relativeTime);
 
 type Props = {
     timestamp: string | number;
 };
 
 export const DayAgo: FunctionComponent<Props> = ({ timestamp }) => {
-    const [currentDate, setCurrentDate] = useState<number>(new Date().getTime());
+    const [currentDate, setCurrentDate] = useState<Date>(new Date());
 
     useInterval(() => {
-        setCurrentDate(new Date().getTime());
+        setCurrentDate(new Date());
     }, 1000);
 
-    return <>{dayjs(timestamp).locale('fr').from(currentDate, true)}</>;
+    let date;
+
+    try {
+        date = new Date(timestamp);
+    } catch (e) {
+        date = new Date();
+    }
+
+    return (
+        <>
+            {formatDistance(currentDate, date, {
+                locale: fr,
+            })}
+        </>
+    );
 };

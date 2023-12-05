@@ -127,6 +127,7 @@ local function CheckEntity(hit, datatable, entity, distance)
 					icon = data.icon,
 					label = data.label,
 					color = data.color,
+					slot = slot
 				}
 				sendDistance[data.distance] = true
 			else sendDistance[data.distance] = false end
@@ -185,7 +186,7 @@ end
 exports('CheckBones', CheckBones)
 
 local function EnableTarget()
-	if not AllowTarget or success or (not Config.Standalone and not LocalPlayer.state['isLoggedIn']) or IsNuiFocused() or (Config.DisableInVehicle and IsPedInAnyVehicle(playerPed or PlayerPedId(), false)) then return end
+	if not AllowTarget or success or IsNuiFocused() or (Config.DisableInVehicle and IsPedInAnyVehicle(playerPed or PlayerPedId(), false)) then return end
 	if not CheckOptions then CheckOptions = _ENV.CheckOptions end
 	if not targetActive and CheckOptions then
 		targetActive = true
@@ -236,7 +237,15 @@ local function EnableTarget()
 					-- Player and Ped targets
 					if entityType == 1 then
 						local data = Models[GetEntityModel(entity)]
-						if IsPedAPlayer(entity) then data = Players end
+						if IsPedAPlayer(entity) then
+							local playerState = exports["soz-core"]:GetPlayerState()
+
+							if playerState.isInHub then
+								data = nil
+							else
+								data = Players
+							end
+						end
 						if data ~= nil then
 							CheckEntity(hit, data, entity, distance)
 						end
@@ -259,6 +268,7 @@ local function EnableTarget()
 											icon = data.icon,
 											label = data.label,
 											color = data.color,
+											slot = slot
 										}
 										sendDistance[data.distance] = true
 									else sendDistance[data.distance] = false end
@@ -344,6 +354,7 @@ local function EnableTarget()
 									icon = data.icon,
 									label = data.label,
 									color = data.color,
+									slot = slot
 								}
 							end
 						end
@@ -652,7 +663,8 @@ local function AddGlobalPlayer(parameters)
 	local distance, options = parameters.distance or Config.MaxDistance, parameters.options
 	for k, v in pairs(options) do
 		if not v.distance or v.distance > distance then v.distance = distance end
-		Players[#Players+1] = v
+		local key = v.label .. (v.job or "") .. (v.color or "")
+		Players[key] = v
 	end
 end
 
@@ -782,6 +794,12 @@ local function SpawnPed(data)
 					spawnedped = CreatePed(0, v.model, v.coords.x, v.coords.y, v.coords.z, v.coords.w or 0.0, v.networked or false, true)
 				end
 
+				if v.components then
+					for componentId, component in pairs(v.components) do
+						SetPedComponentVariation(spawnedped, tonumber(componentId), component[1], component[2] or 0, component[3] or 0);
+					end
+				end
+
 				if v.freeze then
 					FreezeEntityPosition(spawnedped, true)
 				end
@@ -842,6 +860,12 @@ local function SpawnPed(data)
 				spawnedped = CreatePed(0, data.model, data.coords.x, data.coords.y, data.coords.z, data.coords.w, data.networked or false, true)
 			end
 
+			if data.components then
+				for componentId, component in pairs(data.components) do
+					SetPedComponentVariation(spawnedped, tonumber(componentId), component[1], component[2] or 0, component[3] or 0);
+				end
+			end
+
 			if data.freeze then
 				FreezeEntityPosition(spawnedped, true)
 			end
@@ -882,6 +906,7 @@ local function SpawnPed(data)
 
 		Config.Peds[nextnumber] = data
 	end
+	return data
 end
 
 exports("SpawnPed", SpawnPed)
@@ -949,32 +974,34 @@ RegisterNUICallback('selectTarget', function(option, cb)
 	targetActive, success, hasFocus = false, false, false
 	if sendData then
 		local data = sendData[option]
-		table_wipe(sendData)
-		CreateThread(function()
-			Wait(0)
+		if data then
+			table_wipe(sendData)
+			CreateThread(function()
+				Wait(0)
 
-			if data.blackoutGlobal then
-				exports["soz-phone"]:stopPhoneCall()
-			end
-
-			if data.action then
-				data.action(data.entity)
-			elseif data.event then
-				if data.type == "client" then
-					TriggerEvent(data.event, data)
-				elseif data.type == "server" then
-					TriggerServerEvent(data.event, data)
-				elseif data.type == "command" then
-					ExecuteCommand(data.event)
-				elseif data.type == "qbcommand" then
-					TriggerServerEvent('QBCore:CallCommand', data.event, data)
-				else
-					TriggerEvent(data.event, data)
+				if data.blackoutGlobal then
+					exports["soz-phone"]:stopPhoneCall()
 				end
-			else
-				print("No trigger setup")
-			end
-		end)
+
+				if data.action then
+					data.action(data.entity)
+				elseif data.event then
+					if data.type == "client" then
+						TriggerEvent(data.event, data)
+					elseif data.type == "server" then
+						TriggerServerEvent(data.event, data)
+					elseif data.type == "command" then
+						ExecuteCommand(data.event)
+					elseif data.type == "qbcommand" then
+						TriggerServerEvent('QBCore:CallCommand', data.event, data)
+					else
+						TriggerEvent(data.event, data)
+					end
+				else
+					print("No trigger setup")
+				end
+			end)
+		end
 	end
 	cb('ok')
 end)

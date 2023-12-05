@@ -9,5 +9,7 @@ export class TargetProvider {
     private targetFactory: TargetFactory;
 
     @Once(OnceStep.Stop)
-    stop(): void {}
+    stop(): void {
+        this.targetFactory.unload();
+    }
 }

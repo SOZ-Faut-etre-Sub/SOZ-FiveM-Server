@@ -37,7 +37,7 @@ function SafeStorageAccount:AccessAllowed(owner, player)
     local Player = QBCore.Functions.GetPlayer(tonumber(player))
 
     if Player then
-        return SozJobCore.Functions.HasPermission(owner, Player.PlayerData.job.id, Player.PlayerData.job.grade, SozJobCore.JobPermission.SocietyPrivateStorage)
+        return SozJobCore.Functions.HasPermission(owner, Player.PlayerData.job.id, Player.PlayerData.job.grade, SozJobCore.JobPermission.SocietyMoneyStorage)
     else
         return false
     end

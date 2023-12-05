@@ -26,11 +26,11 @@ export const MenuDemo: FunctionComponent = () => {
                 <MenuContent>
                     <MenuItemButton>Button 1</MenuItemButton>
                     <MenuItemButton disabled>Button 2</MenuItemButton>
-                    <MenuItemSelect title="Test">
-                        <MenuItemSelectOption>Value A</MenuItemSelectOption>
-                        <MenuItemSelectOption>Value B</MenuItemSelectOption>
-                        <MenuItemSelectOption>Value C</MenuItemSelectOption>
-                        <MenuItemSelectOption>Value D</MenuItemSelectOption>
+                    <MenuItemSelect value="d" title="Test">
+                        <MenuItemSelectOption value="a">Value A</MenuItemSelectOption>
+                        <MenuItemSelectOption value="b">Value B</MenuItemSelectOption>
+                        <MenuItemSelectOption value="c">Value C</MenuItemSelectOption>
+                        <MenuItemSelectOption value="d">Value D</MenuItemSelectOption>
                     </MenuItemSelect>
                     <MenuItemText>Text 1</MenuItemText>
                     <MenuItemSubMenuLink id="submenu1">Submenu 1</MenuItemSubMenuLink>

@@ -23,6 +23,8 @@ CreateThread(function()
             DisableControlAction(0, 44, true) -- Cover
             DisableControlAction(0, 47, true) -- Detonate
             DisableControlAction(0, 55, true) -- Dive
+            DisableControlAction(0, 68, true) -- INPUT_VEH_AIM
+            DisableControlAction(0, 69, true) -- INPUT_VEH_ATTACK
             DisableControlAction(0, 75, true) -- Exit Vehicle
             DisableControlAction(0, 76, true) -- Vehicle Handbrake
             DisableControlAction(0, 81, true) -- Next Radio (Vehicle)
@@ -40,31 +42,6 @@ CreateThread(function()
             DisableControlAction(0, 245, true) -- Chat
         else
             Wait(100)
-        end
-    end
-end)
-
--- Handles pause menu state
-local cachedPauseStatus
-CreateThread(function()
-    while true do
-        Wait(500)
-
-        local isPauseOpen = IsPauseMenuActive() ~= false
-        local isPhoneVisible = exports["soz-phone"]:isPhoneVisible()
-        -- Pause opened and hasn't been handled yet
-        if isPauseOpen and not cachedPauseStatus then
-            exports["soz-phone"]:setPhoneDisabled(true)
-            cachedPauseStatus = true
-            -- Pause closed and hasn't been undisabled yet
-        elseif not isPauseOpen and cachedPauseStatus then
-            exports["soz-phone"]:setPhoneDisabled(false)
-            cachedPauseStatus = false
-        end
-
-        -- Handle if the phone is already visible and escape menu is opened
-        if isPauseOpen and isPhoneVisible then
-            exports["soz-phone"]:setPhoneVisible(false)
         end
     end
 end)

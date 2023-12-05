@@ -1,0 +1,1 @@
+UPDATE persistent_prop SET position='{"x":1851.59,"y":3708.61,"z":32.27,"w":114.77}' where id=101

@@ -1,8 +1,8 @@
-import { Once, OnEvent } from '../../core/decorators/event';
+import { Once } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { ClientEvent, ServerEvent } from '../../shared/event';
-import { InventoryManager } from '../item/inventory.manager';
+import { ClientEvent } from '../../shared/event';
+import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';

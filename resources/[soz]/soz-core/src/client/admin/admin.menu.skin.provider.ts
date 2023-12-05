@@ -2,7 +2,7 @@ import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Component, OutfitItem, Prop } from '../../shared/cloth';
-import { NuiEvent } from '../../shared/event';
+import { NuiEvent, ServerEvent } from '../../shared/event';
 import { Err, Ok } from '../../shared/result';
 import { ClipboardService } from '../clipboard.service';
 import { ClothingService } from '../clothing/clothing.service';
@@ -128,19 +128,21 @@ export class AdminMenuSkinProvider {
     @OnNuiEvent(NuiEvent.AdminMenuSkinCopy)
     public async onSkinCopy() {
         this.clipboard.copy(this.clothingService.getClothSet());
-        this.notifier.notify('Tenue copié dans le presse-papier');
+        this.notifier.notify('Tenue copiée dans le presse-papier');
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuSkinSave)
     public async onSkinSave() {
         const clothSet = this.clothingService.getClothSet();
 
-        const Components: OutfitItem[] = Object.entries(clothSet.Components)
-            .sort(([a], [b]) => Number(a) - Number(b))
-            .map(([componentIndex, component]) => ({
-                ...component,
-                component: componentIndex,
-            }));
+        const Components: Record<Component, OutfitItem> = Object.fromEntries(
+            Object.entries(clothSet.Components)
+                .sort(([a], [b]) => Number(a) - Number(b))
+                .map(
+                    ([componentIndex, component]) =>
+                        [componentIndex, { ...component, Index: Number(componentIndex) }] as [string, OutfitItem]
+                )
+        ) as Record<Component, OutfitItem>;
 
         const Props = Object.fromEntries(
             Object.entries(clothSet.Props)
@@ -148,6 +150,6 @@ export class AdminMenuSkinProvider {
                 .map(([propIndex, prop], index) => [propIndex, { ...prop, Index: index }] as [string, OutfitItem])
         ) as Record<Prop, OutfitItem>;
 
-        TriggerServerEvent('admin:skin:UpdateClothes', { Components, Props });
+        TriggerServerEvent(ServerEvent.ADMIN_SET_CLOTHES, { Components, Props });
     }
 }

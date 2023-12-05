@@ -3,7 +3,6 @@ import { getSoundSettings } from '@os/sound/utils/getSoundSettings';
 import React, { createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { useAvailability, useVisibility } from '../../../hooks/usePhone';
 import { RootState } from '../../../store';
 import { DEFAULT_ALERT_HIDE_TIME } from '../notifications.constants';
 
@@ -51,13 +50,11 @@ export const NotificationsContext = createContext<{
 }>(null);
 
 export function NotificationsProvider({ children }) {
-    const { visibility: isPhoneOpen } = useVisibility();
-    const isPhoneAvailable = useAvailability();
+    const isPhoneAvailable = useSelector((state: RootState) => state.phone.available);
+    const emergency = useSelector((state: RootState) => state.emergency);
 
     const settings = useSelector((state: RootState) => state.phone.config);
-
     const [barUncollapsed, setBarUncollapsed] = useState<boolean>(false);
-
     const [notifications, setNotifications] = useState<INotification[]>([]);
 
     const { mount, play } = useSoundProvider();
@@ -65,12 +62,6 @@ export function NotificationsProvider({ children }) {
     const alertTimeout = useRef<NodeJS.Timeout>();
     const [alerts, setAlerts] = useState<Array<[INotification, (n: INotification) => void, string | undefined]>>([]);
     const [currentAlert, setCurrentAlert] = useState<INotificationAlert>();
-
-    useEffect(() => {
-        if (isPhoneOpen && currentAlert && !currentAlert.keepWhenPhoneClosed) {
-            currentAlert.resolve();
-        }
-    }, [isPhoneOpen, currentAlert]);
 
     const updateNotification = useCallback((idx: number, value: INotification) => {
         setNotifications(all => {
@@ -134,7 +125,7 @@ export function NotificationsProvider({ children }) {
                     onCloseAlert: onExit(n.onClose),
                 });
 
-                if (isPhoneAvailable && n.sound && soundUrl) {
+                if (isPhoneAvailable && n.sound && soundUrl && !emergency.emergency) {
                     play(soundUrl);
                 }
 
@@ -149,7 +140,7 @@ export function NotificationsProvider({ children }) {
                 }, DEFAULT_ALERT_HIDE_TIME + 300);
             });
         },
-        [isPhoneAvailable, play]
+        [isPhoneAvailable, play, emergency]
     );
 
     const addNotificationAlert = (n: INotification, cb: (n: INotification) => void) => {
@@ -158,7 +149,11 @@ export function NotificationsProvider({ children }) {
         }
 
         if (n.sound) {
-            const { sound, volume } = getSoundSettings('notiSound', settings, n.app);
+            const { sound, volume } = getSoundSettings(
+                n.app === 'society-messages' ? 'societyNotification' : 'notiSound',
+                settings,
+                n.app
+            );
             mount(sound, volume, false).then(({ url }) => setAlerts(curr => [...curr, [n, cb, url]]));
             return;
         }

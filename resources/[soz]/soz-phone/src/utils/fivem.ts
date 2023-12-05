@@ -1,5 +1,6 @@
-// https://forum.cfx.re/t/typescript-vs-lua-questions/612483/11
-export const Delay = (ms: number): Promise<void> => new Promise(res => setTimeout(res, ms));
+export const Delay = (ms: number): Promise<boolean> => {
+    return new Promise(resolve => setTimeout(() => resolve(true), ms));
+};
 
 // Credits to d0p3t
 // https://github.com/d0p3t/fivem-js/blob/master/src/utils/UUIDV4.ts

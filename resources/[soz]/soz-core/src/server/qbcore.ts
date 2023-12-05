@@ -1,16 +1,22 @@
 import { Injectable } from '../core/decorators/injectable';
 import { SozRole } from '../core/permissions';
 import { Item, ItemType } from '../shared/item';
+import { JobPermission } from '../shared/job';
 import { QBCorePlayer } from '../shared/player';
 
 @Injectable()
 export class QBCore {
     private QBCore;
+    private SozJobCore;
 
     public constructor() {
         this.QBCore = exports['qb-core'].GetCoreObject();
+        this.SozJobCore = exports['soz-jobs'].GetCoreObject();
     }
 
+    public logout(source: number): void {
+        this.QBCore.Player.Logout(source);
+    }
     public createUseableItem(name, action: (player: number, item: any) => void) {
         this.QBCore.Functions.CreateUseableItem(name, action);
     }
@@ -37,6 +43,10 @@ export class QBCore {
         return filteredItems;
     }
 
+    public getPlayerByCitizenId(citizenId: string): QBCorePlayer | null {
+        return this.QBCore.Functions.GetPlayerByCitizenId(citizenId);
+    }
+
     public getPlayer(source: number): QBCorePlayer {
         return this.QBCore.Functions.GetPlayer(source);
     }
@@ -49,5 +59,17 @@ export class QBCore {
 
     public hasPermission(source: number, permission: SozRole): boolean {
         return this.QBCore.Functions.HasPermission(source, permission);
+    }
+
+    public getSteamIdentifier(source: number): string {
+        return this.QBCore.Functions.GetSozIdentifier(source);
+    }
+    public hasJobPermission(
+        job: string,
+        playerJobId: string,
+        playerJobGrade: number,
+        permission: JobPermission
+    ): boolean {
+        return this.SozJobCore.Functions.HasPermission(job, playerJobId, playerJobGrade, permission);
     }
 }

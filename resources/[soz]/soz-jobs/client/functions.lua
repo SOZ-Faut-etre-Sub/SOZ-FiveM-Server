@@ -26,6 +26,16 @@ SozJobCore.Functions.GetDutyActions = function(job)
             end,
             job = job,
         },
+        {
+            type = "server",
+            event = "QBCore:GetEmployOnDuty",
+            icon = "fas fa-users",
+            label = "Employé(e)s en service",
+            canInteract = function()
+                return PlayerData.job.onduty and SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.OnDutyView)
+            end,
+            job = job,
+        },
     }
 end
 
@@ -41,44 +51,6 @@ SozJobCore.Functions.GetBossShopActions = function(job, event)
             end,
         },
     }
-end
-
---- Cloakroom
-SozJobCore.Functions.OpenCloakroomMenu = function(menu, cloakroom, storageId)
-    menu:ClearItems()
-
-    menu:AddButton({
-        label = "Tenue civile",
-        value = nil,
-        select = function()
-            QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
-                disableMovement = true,
-                disableCombat = true,
-            }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
-                TriggerServerEvent("soz-character:server:SetPlayerJobClothes", nil)
-            end)
-        end,
-    })
-
-    for name, skin in pairs(cloakroom[PlayerData.skin.Model.Hash]) do
-        menu:AddButton({
-            label = name,
-            value = nil,
-            select = function()
-                QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
-                    disableMovement = true,
-                    disableCombat = true,
-                }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
-                    if storageId then
-                        TriggerServerEvent("soz-core:server:job:use-work-clothes", storageId)
-                    end
-                    TriggerServerEvent("soz-character:server:SetPlayerJobClothes", skin)
-                end)
-            end,
-        })
-    end
-
-    menu:Open()
 end
 
 function CheckJobPermission(targetJobId, jobId, gradeId, permission)

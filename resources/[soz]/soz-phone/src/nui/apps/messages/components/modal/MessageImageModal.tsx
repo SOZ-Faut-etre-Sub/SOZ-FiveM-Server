@@ -1,15 +1,14 @@
 import { deleteQueryFromLocation } from '@common/utils/deleteQueryFromLocation';
-import { Dialog, Transition } from '@headlessui/react';
+import { Transition } from '@headlessui/react';
 import { XIcon } from '@heroicons/react/outline';
 import { LocationMarkerIcon, PhotographIcon } from '@heroicons/react/solid';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { ServerPromiseResp } from '@typings/common';
 import { MessageEvents } from '@typings/messages';
 import { Button } from '@ui/old_components/Button';
-import { PictureResponsive } from '@ui/old_components/PictureResponsive';
 import { fetchNui } from '@utils/fetchNui';
 import qs from 'qs';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -27,12 +26,7 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
     const [t] = useTranslation();
     const { pathname, search } = useLocation();
     const { addAlert } = useSnackbar();
-    const [queryParamImagePreview, setQueryParamImagePreview] = useState(null);
     const { sendMessage } = useMessageAPI();
-    const removeQueryParamImage = useCallback(() => {
-        setQueryParamImagePreview(null);
-        navigate(deleteQueryFromLocation({ pathname, search }, 'image'), { replace: true });
-    }, [history, pathname, search]);
 
     const sendImageMessage = useCallback(
         m => {
@@ -42,17 +36,10 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
         [sendMessage, messageGroupId, onClose]
     );
 
-    const sendFromQueryParam = useCallback(
-        image => {
-            sendImageMessage(image);
-            removeQueryParamImage();
-        },
-        [removeQueryParamImage, sendImageMessage]
-    );
-
     useEffect(() => {
         if (!image) return;
-        setQueryParamImagePreview(image);
+        sendImageMessage(image);
+        navigate(deleteQueryFromLocation({ pathname, search }, 'image'), { replace: true });
     }, [image]);
 
     return (
@@ -66,7 +53,7 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
                 leaveFrom="transform scale-100 opacity-100"
                 leaveTo="transform scale-95 opacity-0"
             >
-                <ul className="absolute z-30 left-5 bottom-0 w-80 mt-2 origin-bottom-left bg-black bg-opacity-80 divide-y divide-gray-600 divide-opacity-50 rounded-md shadow-lg focus:outline-none">
+                <ul className="absolute z-30 left-5 bottom-0 w-80 mt-2 origin-bottom-left bg-ios-800 bg-opacity-80 divide-y divide-gray-600 divide-opacity-50 rounded-md shadow-lg focus:outline-none">
                     <li>
                         <Button
                             className="flex items-center w-full text-gray-300 px-2 py-2 hover:text-gray-400"
@@ -130,67 +117,6 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
                         </Button>
                     </li>
                 </ul>
-            </Transition>
-
-            <Transition appear show={queryParamImagePreview !== null}>
-                <Dialog as="div" className="fixed inset-0 z-10 overflow-y-auto" onClose={removeQueryParamImage}>
-                    <div className="min-h-screen px-4 text-center">
-                        <Transition.Child
-                            enter="ease-out duration-300"
-                            enterFrom="opacity-0"
-                            enterTo="opacity-100"
-                            leave="ease-in duration-200"
-                            leaveFrom="opacity-100"
-                            leaveTo="opacity-0"
-                        >
-                            <Dialog.Overlay className="fixed inset-0" />
-                        </Transition.Child>
-
-                        <span className="inline-block h-screen align-middle" aria-hidden="true">
-                            {' '}
-                            &#8203;{' '}
-                        </span>
-                        <Transition.Child
-                            enter="ease-out duration-300"
-                            enterFrom="opacity-0 scale-95"
-                            enterTo="opacity-100 scale-100"
-                            leave="ease-in duration-200"
-                            leaveFrom="opacity-100 scale-100"
-                            leaveTo="opacity-0 scale-95"
-                        >
-                            <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-                                <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
-                                    Do you want to share this image?
-                                </Dialog.Title>
-                                <div className="mt-2">
-                                    <p className="text-sm text-gray-500">
-                                        <PictureResponsive
-                                            src={queryParamImagePreview}
-                                            alt="Share gallery image preview"
-                                        />
-                                    </p>
-                                </div>
-
-                                <div className="mt-4">
-                                    <button
-                                        type="button"
-                                        className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                                        onClick={removeQueryParamImage}
-                                    >
-                                        Fermer
-                                    </button>
-                                    <button
-                                        type="button"
-                                        className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                                        onClick={() => sendFromQueryParam(queryParamImagePreview)}
-                                    >
-                                        Partager
-                                    </button>
-                                </div>
-                            </div>
-                        </Transition.Child>
-                    </div>
-                </Dialog>
             </Transition>
         </>
     );

@@ -1,11 +1,12 @@
-import { Once, OnNuiEvent } from '../../../core/decorators/event';
+import { On, Once, OnNuiEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
-import { NuiEvent, ServerEvent } from '../../../shared/event';
+import { ClientEvent, NuiEvent, ServerEvent } from '../../../shared/event';
 import { Feature, isFeatureEnabled } from '../../../shared/features';
 import { HealthBookLabel, HealthBookMinMax } from '../../../shared/health';
 import { MenuType } from '../../../shared/nui/menu';
 import { PlayerHealthBook } from '../../../shared/player';
+import { Vector3 } from '../../../shared/polyzone/vector';
 import { Err, Ok } from '../../../shared/result';
 import { InputService } from '../../nui/input.service';
 import { NuiDispatch } from '../../nui/nui.dispatch';
@@ -40,8 +41,20 @@ export class LSMCCheckHealthProvider {
         TriggerServerEvent(ServerEvent.LSMC_BLOOD_FILL_FLASK, target);
     }
 
-    public doHealthCheck(entity: number) {
+    public async doHealthCheck(entity: number) {
         const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
+        const { completed } = await this.progressService.progress(
+            'lsmc_health_check',
+            "Vous étudiez l'état de santé du patient...",
+            5000,
+            {
+                task: 'CODE_HUMAN_MEDIC_TEND_TO_DEAD',
+            }
+        );
+
+        if (!completed) {
+            return;
+        }
 
         TriggerServerEvent(ServerEvent.LSMC_HEALTH_CHECK, target);
     }
@@ -68,7 +81,7 @@ export class LSMCCheckHealthProvider {
                         `Valeur incorrecte, doit être entre ${HealthBookMinMax[field].min} et ${HealthBookMinMax[field].max}`
                     );
                 } else if (!HealthBookMinMax[field].max && number < HealthBookMinMax[field].min) {
-                    return Err(`Valeur incorrecte, doit être supérieur à ${HealthBookMinMax[field].min}`);
+                    return Err(`Valeur incorrecte, doit être supérieure à ${HealthBookMinMax[field].min}`);
                 }
 
                 return Ok(true);
@@ -82,6 +95,12 @@ export class LSMCCheckHealthProvider {
         TriggerServerEvent(ServerEvent.LSMC_SET_HEALTH_BOOK, source, field, Number(value));
 
         return Ok(true);
+    }
+
+    @On(ClientEvent.LSMC_HALLOWEEN_HORRIFIC_LOLLIPOP)
+    public async useHorrificLollipop() {
+        const ped = PlayerPedId();
+        SetEntityHealth(ped, GetEntityHealth(ped) + 20);
     }
 
     @Once()
@@ -119,7 +138,14 @@ export class LSMCCheckHealthProvider {
                 },
                 action: entity => {
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-                    this.nuiMenu.openMenu(MenuType.SetHealthState, target);
+                    this.nuiMenu.openMenu(MenuType.SetHealthState, target, {
+                        position: {
+                            position: () => {
+                                return GetEntityCoords(entity) as Vector3;
+                            },
+                            distance: 3,
+                        },
+                    });
                 },
             },
         ]);

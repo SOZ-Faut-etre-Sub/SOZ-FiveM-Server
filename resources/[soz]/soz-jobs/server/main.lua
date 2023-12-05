@@ -19,7 +19,7 @@ function SynchroniseJob()
     if jobGrades then
         for _, jobGrade in ipairs(jobGrades) do
             if not SozJobCore.Jobs[jobGrade.jobId] then
-                exports["soz-monitor"]:Log("ERROR", ("Job %s (grade %s) is not present in SozJobCore !"):format(jobGrade.jobId, jobGrade.name))
+                exports["soz-core"]:Log("ERROR", ("Job %s (grade %s) is not present in SozJobCore !"):format(jobGrade.jobId, jobGrade.name))
                 goto continue
             end
 

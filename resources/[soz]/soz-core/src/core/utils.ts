@@ -1,7 +1,11 @@
 import PCancelable from 'p-cancelable';
 
 export const wait = (ms: number): PCancelable<boolean> => {
-    return new PCancelable(resolve => setTimeout(() => resolve(true), ms));
+    return new PCancelable((resolve, r, onCancel) => {
+        onCancel.shouldReject = false;
+
+        setTimeout(() => resolve(true), ms);
+    });
 };
 
 export const waitUntil = (until: () => Promise<boolean>, timeout?: number): PCancelable<boolean> => {

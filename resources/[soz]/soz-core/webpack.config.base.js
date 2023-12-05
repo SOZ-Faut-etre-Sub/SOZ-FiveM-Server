@@ -2,6 +2,7 @@ const path = require('path');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const webpack = require('webpack');
+const fs = require('fs');
 
 const createConfig = (entry, isProduction, variables = {}, port = undefined, target = undefined) => {
     const plugins = [
@@ -12,12 +13,20 @@ const createConfig = (entry, isProduction, variables = {}, port = undefined, tar
         }),
     ];
 
-    if (!isProduction) {
+    if (!isProduction && target !== 'node') {
         plugins.push(new ReactRefreshWebpackPlugin());
     }
 
+    const privatePath = path.resolve(__dirname, '..', '..', '..', '..', 'private', 'soz-core-src');
+    const privateAlias = [];
+
+    if (fs.existsSync(privatePath)) {
+        privateAlias.push(privatePath + '/*');
+    } else {
+        privateAlias.push('private/*');
+    }
+
     return {
-        devtool: isProduction ? false : 'eval-cheap-source-map',
         target: target,
         entry,
         output: {
@@ -50,15 +59,33 @@ const createConfig = (entry, isProduction, variables = {}, port = undefined, tar
                                     tsx: true,
                                     decorators: true,
                                 },
-                                target: 'es2016',
+                                target: 'es2020',
                                 transform: {
                                     react: {
                                         runtime: 'automatic',
                                         development: !isProduction,
                                         refresh: !isProduction,
                                     },
+                                    optimizer: {
+                                        simplify: true,
+                                        globals: {
+                                            vars: {
+                                                ...variables,
+                                                SOZ_CORE_IS_PRODUCTION: JSON.stringify(isProduction),
+                                            },
+                                        },
+                                    },
+                                },
+                                keepClassNames: true,
+                                baseUrl: '.',
+                                paths: {
+                                    '@public/*': ['src/*'],
+                                    '@private/*': privateAlias,
+                                    '@core/*': ['src/core/*'],
                                 },
                             },
+                            sourceMaps: !isProduction,
+                            minify: isProduction,
                         },
                     },
                 },

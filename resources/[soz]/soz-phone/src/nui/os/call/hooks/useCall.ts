@@ -16,6 +16,7 @@ interface CallHook {
     acceptCall(): void;
     rejectCall(): void;
     endCall(): void;
+    muteCall(state: boolean): void;
     initializeCall(number: string): void;
 }
 
@@ -36,10 +37,14 @@ export const useCall = (): CallHook => {
                 return addAlert({ message: t('CALLS.FEEDBACK.ERROR_MYSELF'), type: 'error' });
             }
 
-            fetchNui<ServerPromiseResp>(CallEvents.INITIALIZE_CALL, {
+            fetchNui<ServerPromiseResp<{ isUnavailable: boolean }>>(CallEvents.INITIALIZE_CALL, {
                 receiverNumber: number,
             }).then(resp => {
                 if (resp.status === 'error') {
+                    if (resp.data?.isUnavailable) {
+                        return addAlert({ message: t('CALLS.FEEDBACK.UNAVAILABLE'), type: 'error' });
+                    }
+
                     addAlert({ message: t('CALLS.FEEDBACK.ERROR'), type: 'error' });
                     console.error(resp.errorMsg);
                 }
@@ -73,5 +78,16 @@ export const useCall = (): CallHook => {
         });
     }, [call, myPhoneNumber]);
 
-    return { call, acceptCall, rejectCall, endCall, initializeCall };
+    const muteCall = useCallback(
+        state => {
+            fetchNui(CallEvents.MUTE_PLAYER_CALL, {
+                transmitterNumber: call.transmitter,
+                isTransmitter: call.isTransmitter,
+                muted: state,
+            });
+        },
+        [call, myPhoneNumber]
+    );
+
+    return { call, acceptCall, rejectCall, endCall, muteCall, initializeCall };
 };

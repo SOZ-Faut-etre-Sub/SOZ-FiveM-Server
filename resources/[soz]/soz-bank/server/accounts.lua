@@ -24,14 +24,6 @@ MySQL.ready(function()
     local BankNotLoaded = table.clone(Config.BankPedLocations)
     local AtmNotLoaded = table.clone(Config.AtmLocations)
 
-    local weekday = os.date("%w")
-    local hour = os.date("%H")
-
-    if tonumber(weekday) == 1 and tonumber(hour) < 14 then
-        exports.oxmysql:update_async("UPDATE bank_accounts SET money = money + 400000 WHERE account_type = 'business' AND businessid IN ('lspd', 'bcso')")
-        exports.oxmysql:update_async("UPDATE bank_accounts SET money = money + 200000 WHERE account_type = 'business' AND businessid IN ('lsmc', 'bennys')")
-    end
-
     MySQL.query("SELECT * FROM bank_accounts", {}, function(result)
         if result then
             for _, v in pairs(result) do
@@ -81,14 +73,6 @@ MySQL.ready(function()
                 Account.Create(k, k, "bank-atm", "bank_" .. k, nil, nil, coords)
             end
         end
-
-        -- ATMs account
-        for _, atmData in pairs(AtmNotLoaded) do
-            local accId = atmData.accountId
-            if Config.AtmPacks[accId] == nil then
-                Account.Create(accId, accId, "bank-atm", accId, nil, nil, atmData.coords)
-            end
-        end
     end)
 
     for account, money in pairs(Config.FarmAccountMoney) do
@@ -123,6 +107,11 @@ function Account.Create(id, label, accountType, owner, money, marked_money, coor
         if string.find(self.id, "safe_") == nil then
             self.id = "safe_" .. self.id
         end
+        self.max = 900000
+    end
+
+    if self.type == "house_safe" then
+        self.max = Config.HouseSafeTiers[0]
     end
 
     Accounts[self.id] = self
@@ -134,14 +123,33 @@ function Account.Remove(acc)
     Accounts[acc.id] = nil
 end
 
-function Account.AddMoney(acc, money, money_type)
+function Account.GetMoney(acc, money_type)
     acc = Account(acc)
 
     if money_type == nil then
         money_type = "money"
     end
 
-    acc[money_type] = math.ceil(acc[money_type] + money - 0.5)
+    if acc == nil then
+        return 0
+    end
+
+    return acc[money_type]
+end
+
+function Account.AddMoney(acc, money, money_type, allowoverflow)
+    acc = Account(acc)
+
+    if money_type == nil then
+        money_type = "money"
+    end
+
+    local total = math.ceil(acc[money_type] + money - 0.5)
+    if not allowoverflow and (acc.type == "house_safe" or acc.type == "safestorages") and total > acc.max then
+        return false
+    end
+
+    acc[money_type] = total
     acc.changed = true
     return true
 end
@@ -162,6 +170,15 @@ function Account.RemoveMoney(acc, money, money_type)
     end
 end
 
+function Account.Clear(acc)
+    acc = Account(acc)
+
+    acc.money = 0
+    acc.marked_money = 0
+    acc.changed = true
+end
+exports("ClearAccount", Account.Clear)
+
 function Account.TransfertMoney(accSource, accTarget, money, cb)
     accSource = Account(accSource)
     accTarget = Account(accTarget)
@@ -171,11 +188,27 @@ function Account.TransfertMoney(accSource, accTarget, money, cb)
     if accSource then
         if accTarget then
             if money <= accSource.money then
+                if (accTarget.type == "house_safe" or accTarget.type == "safestorages") and accTarget.money + money > accTarget.max then
+                    success, reason = false, "transfert_failed"
+
+                    if cb then
+                        cb(success, reason)
+                    end
+                    return
+                end
+
                 if Account.RemoveMoney(accSource, money) and Account.AddMoney(accTarget, money) then
                     _G.AccountType[accSource.type]:save(accSource.id, accSource.owner, accSource.money, accSource.marked_money)
                     _G.AccountType[accTarget.type]:save(accTarget.id, accTarget.owner, accTarget.money, accTarget.marked_money)
 
                     success = true
+
+                    exports["soz-core"]:Event("transfer_money", {
+                        source_owner = accSource.owner,
+                        target_owner = accTarget.owner,
+                        source_id = accSource.id,
+                        target_id = accTarget.id,
+                    }, {money = money})
                 else
                     success, reason = false, "transfert_failed"
                 end
@@ -260,3 +293,34 @@ local function GetMetrics()
 end
 
 exports("GetMetrics", GetMetrics)
+
+--- Capacity
+local function GetAccountCapacity(account)
+    local acc = Account(account)
+    local capacity = 0
+
+    if not acc then
+        return -1
+    end
+
+    for k, v in pairs(Config.BankAtmDefault) do
+        if string.find(acc.id, k) then
+            capacity = v.maxMoney
+        end
+    end
+
+    for k, v in pairs(Config.AtmLocations) do
+        if acc.id == v.accountId then
+            local type = "small"
+            if string.sub(acc.id, 4, 7) == "big" then
+                type = "big"
+            end
+
+            capacity = capacity + Config.BankAtmDefault[type].maxMoney
+        end
+    end
+
+    return capacity
+end
+
+exports("GetAccountCapacity", GetAccountCapacity)

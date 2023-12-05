@@ -6,7 +6,7 @@ local function CreateBodyMenuItems(bodyMenu, playerId, skin)
         skin.FaceTrait.Ageing = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
-    CreateSliderList(bodyMenu, "Taches sur le visage", skin.FaceTrait.Blemish, Labels.Blemish, function(value)
+    CreateSliderList(bodyMenu, "Tâches sur le visage", skin.FaceTrait.Blemish, Labels.Blemish, function(value)
         skin.FaceTrait.Blemish = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
@@ -20,18 +20,34 @@ local function CreateBodyMenuItems(bodyMenu, playerId, skin)
     end)
 
     -- Front
-    bodyMenu:AddTitle({label = "Front"})
+    bodyMenu:AddTitle({label = "Menton"})
 
-    CreateRangeSizeItem(bodyMenu, "Largeur du front", skin.FaceTrait.ChimpBoneWidth, function(value)
+    CreateRangeSizeItem(bodyMenu, "Largeur du menton", skin.FaceTrait.ChimpBoneWidth or 0.0, function(value)
         skin.FaceTrait.ChimpBoneWidth = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
-    CreateRangeSizeItem(bodyMenu, "Taille du front", skin.FaceTrait.ChimpBoneLength, function(value)
+    CreateRangeSizeItem(bodyMenu, "Taille du menton", skin.FaceTrait.ChimpBoneLength or 0.0, function(value)
         skin.FaceTrait.ChimpBoneLength = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
-    CreateRangeSizeItem(bodyMenu, "Bas du front", skin.FaceTrait.ChimpBoneLower, function(value)
+    CreateRangeSizeItem(bodyMenu, "Bas du menton", skin.FaceTrait.ChimpBoneLower or 0.0, function(value)
         skin.FaceTrait.ChimpBoneLower = value
+        ApplyPlayerBodySkin(playerId, skin)
+    end)
+    CreateRangeSizeItem(bodyMenu, "Trou du menton", skin.FaceTrait.ChimpHole or 0.0, function(value)
+        skin.FaceTrait.ChimpHole = value
+        ApplyPlayerBodySkin(playerId, skin)
+    end)
+
+    -- Front
+    bodyMenu:AddTitle({label = "Front"})
+
+    CreateRangeSizeItem(bodyMenu, "Hauteur du Front", skin.FaceTrait.EyebrowHigh or 0.0, function(value)
+        skin.FaceTrait.EyebrowHigh = value
+        ApplyPlayerBodySkin(playerId, skin)
+    end)
+    CreateRangeSizeItem(bodyMenu, "Taille du Front", skin.FaceTrait.EyebrowForward or 0.0, function(value)
+        skin.FaceTrait.EyebrowForward = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
 
@@ -102,12 +118,12 @@ local function CreateBodyMenuItems(bodyMenu, playerId, skin)
     end)
 
     -- Machoire
-    bodyMenu:AddTitle({label = "Machoire"})
-    CreateRangeSizeItem(bodyMenu, "Largeur de la machoire", skin.FaceTrait.JawBoneWidth, function(value)
+    bodyMenu:AddTitle({label = "Mâchoire"})
+    CreateRangeSizeItem(bodyMenu, "Largeur de la mâchoire", skin.FaceTrait.JawBoneWidth, function(value)
         skin.FaceTrait.JawBoneWidth = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
-    CreateRangeSizeItem(bodyMenu, "Avancement de la machoire", skin.FaceTrait.JawBoneBackLength, function(value)
+    CreateRangeSizeItem(bodyMenu, "Avancement de la mâchoire", skin.FaceTrait.JawBoneBackLength, function(value)
         skin.FaceTrait.JawBoneBackLength = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
@@ -123,11 +139,11 @@ local function CreateBodyMenuItems(bodyMenu, playerId, skin)
     -- Corps
     bodyMenu:AddTitle({label = "Corps"})
 
-    CreateSliderList(bodyMenu, "Taches sur le corps", skin.FaceTrait.BodyBlemish, Labels.BodyBlemishes, function(value)
+    CreateSliderList(bodyMenu, "Tâches sur le corps", skin.FaceTrait.BodyBlemish, Labels.BodyBlemishes, function(value)
         skin.FaceTrait.BodyBlemish = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
-    CreateSliderList(bodyMenu, "Extra taches sur le corps", skin.FaceTrait.AddBodyBlemish, Labels.AddBodyBlemishes, function(value)
+    CreateSliderList(bodyMenu, "Extra tâches sur le corps", skin.FaceTrait.AddBodyBlemish, Labels.AddBodyBlemishes, function(value)
         skin.FaceTrait.AddBodyBlemish = value
         ApplyPlayerBodySkin(playerId, skin)
     end)

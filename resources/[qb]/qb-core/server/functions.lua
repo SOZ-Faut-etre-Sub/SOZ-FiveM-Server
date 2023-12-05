@@ -23,6 +23,12 @@ function QBCore.Functions.GetIdentifier(source, idtype)
 end
 
 function QBCore.Functions.GetSozIdentifier(source)
+    local forcedIdentifier = GetConvar('soz_force_player_identifier', '')
+
+    if forcedIdentifier ~= '' then
+        return forcedIdentifier
+    end
+
     if GetConvar("soz_disable_steam_credential", "false") == "true" then
         return QBCore.Functions.GetIdentifier(source, 'license')
     end
@@ -36,6 +42,54 @@ function QBCore.Functions.GetSozIdentifier(source)
     local steamHex = string.sub(steamId, string.len("steam:") + 1)
 
     return tostring(tonumber(steamHex, 16))
+end
+
+-- This is the default function for getting a player account, change this method to do your own auth system
+function QBCore.Functions.GetUserAccount(source, useTestMode)
+    local steam = QBCore.Functions.GetSozIdentifier(source)
+
+    local status, result = pcall(function()
+        local p = promise.new()
+        local resolved = false
+
+        if useTestMode then
+            MySQL.single("SELECT a.* FROM soz_api.accounts a LEFT JOIN soz_api.account_identities ai ON a.id = ai.accountId WHERE a.whitelistStatus = 'ACCEPTED' AND ai.identityType = 'STEAM' AND ai.identityId = ? AND (a.vip = 1 OR a.role IN ('ADMIN', 'STAFF', 'GAMEMASTER', 'HELPER')) LIMIT 1", {steam}, function(result)
+                if resolved then
+                    return
+                end
+
+                p:resolve(result)
+                resolved = true
+            end)
+        else
+            MySQL.single("SELECT a.* FROM soz_api.accounts a LEFT JOIN soz_api.account_identities ai ON a.id = ai.accountId WHERE a.whitelistStatus = 'ACCEPTED' AND ai.identityType = 'STEAM' AND ai.identityId = ? LIMIT 1", {steam}, function(result)
+                if resolved then
+                    return
+                end
+
+                p:resolve(result)
+                resolved = true
+            end)
+        end
+
+        Citizen.SetTimeout(1000, function()
+            resolved = true
+
+            p:reject('timeout check last mysql error')
+        end)
+
+        return Citizen.Await(p)
+    end)
+
+    if not status or not result then
+        exports["soz-core"]:Log("ERROR", "cannot find account for this user: '" .. json.encode(result) .. "'", {
+            steam = steam,
+        })
+
+        return nil
+    end
+
+    return result
 end
 
 function QBCore.Functions.GetSource(identifier)
@@ -116,6 +170,21 @@ function QBCore.Functions.GetPlayersOnDuty(job)
         end
     end
     return players, count
+end
+
+--- Gets a list of all on duty player names of a specified job
+function QBCore.Functions.GetPlayerNamesOnDuty(job)
+    local player_names = {}
+
+    for _, Player in pairs(QBCore.Players) do
+        if Player.PlayerData.job.id == job then
+            if Player.PlayerData.job.onduty then
+                player_names[#player_names + 1] = Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname
+            end
+        end
+    end
+
+    return player_names
 end
 
 -- Returns only the amount of players on duty for the specified job
@@ -240,7 +309,6 @@ end
 function QBCore.Functions.UseItem(source, item)
     local src = source
     QBCore.UseableItems[item.name](src, item)
-    TriggerClientEvent('soz-core:client:item:use', src, item.name, QBCore.Shared.Items[item.name])
 end
 
 -- Kick Player

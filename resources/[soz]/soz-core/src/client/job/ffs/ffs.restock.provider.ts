@@ -4,7 +4,7 @@ import { Provider } from '../../../core/decorators/provider';
 import { ClientEvent, ServerEvent } from '../../../shared/event';
 import { Garment, LuxuryGarment } from '../../../shared/job/ffs';
 import { ClothingBrand } from '../../../shared/shop';
-import { InventoryManager } from '../../item/inventory.manager';
+import { InventoryManager } from '../../inventory/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { PlayerService } from '../../player/player.service';
 import { TargetFactory, TargetOptions } from '../../target/target.factory';
@@ -61,12 +61,28 @@ export class FightForStyleRestockProvider {
                 };
             case ClothingBrand.SUBURBAN:
                 return {
-                    garments: Object.values(Garment),
+                    garments: [
+                        Garment.TOP,
+                        Garment.PANT,
+                        Garment.SHOES,
+                        Garment.UNDERWEAR,
+                        Garment.BAG,
+                        Garment.GLOVES,
+                        Garment.UNDERWEAR_TOP,
+                    ],
                     pedModel: 's_f_y_shop_mid',
                 };
             case ClothingBrand.BINCO:
                 return {
-                    garments: Object.values(Garment),
+                    garments: [
+                        Garment.TOP,
+                        Garment.PANT,
+                        Garment.SHOES,
+                        Garment.UNDERWEAR,
+                        Garment.BAG,
+                        Garment.GLOVES,
+                        Garment.UNDERWEAR_TOP,
+                    ],
                     pedModel: 's_f_y_shop_low',
                 };
         }

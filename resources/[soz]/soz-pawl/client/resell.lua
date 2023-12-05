@@ -31,14 +31,18 @@ Citizen.CreateThread(function()
     end)
 end)
 
+local function hasResellZoneAccess(group)
+    return group == "zkea" and PlayerData.job and PlayerData.job.id == "pawl" and PlayerData.job.onduty
+end
+
 RegisterNetEvent("locations:zone:enter", function(group, name)
-    if group == "zkea" and PlayerData.job and PlayerData.job.onduty then
+    if hasResellZoneAccess(group) then
         TriggerEvent("player/setCurrentResellZone", SozJobCore.Jobs[SozJobCore.JobType.Pawl].resell.secondary)
     end
 end)
 
 RegisterNetEvent("locations:zone:exit", function(group, name)
-    if group == "zkea" and PlayerData.job and PlayerData.job.onduty then
+    if hasResellZoneAccess(group) then
         TriggerEvent("player/setCurrentResellZone", nil)
     end
 end)

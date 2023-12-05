@@ -8,6 +8,14 @@ PhoneSubmix:setEffectParamFloat("freq_low", 100.0)
 PhoneSubmix:setEffectParamFloat("freq_hi", 6000.0)
 PhoneSubmix:setEffectParamFloat("fudge", 0.0)
 
+MegaphoneSubmix = FilterSubmix:new("megaphone", 1)
+MegaphoneSubmix:setEffectRadioFx()
+MegaphoneSubmix:setEffectParamInt("default", 1)
+MegaphoneSubmix:setEffectParamInt("enabled", 1)
+MegaphoneSubmix:setEffectParamFloat("freq_low", 200.0)
+MegaphoneSubmix:setEffectParamFloat("freq_hi", 4000.0)
+MegaphoneSubmix:setEffectParamFloat("fudge", 2.0)
+
 function FilterSubmixRegistry:new()
     self.__index = self
 
@@ -18,8 +26,8 @@ function FilterSubmixRegistry:new()
 
         submix:setEffectRadioFx()
         submix:setEffectParamInt("default", 1)
+        submix:setEffectParamInt("enabled", 1)
         submix:setEffectParamFloat("fudge", 4.0)
-        submix:setEffectParamInt("enabled", 0)
 
         return submix
     end, 7)
@@ -36,6 +44,10 @@ function FilterSubmixRegistry:new()
 
     registry:register("phone", function(serverId)
         return FilterPhoneSubmix:new(serverId, PhoneSubmix)
+    end)
+
+    registry:register("megaphone", function(serverId)
+        return FilterMegaphoneSubmix:new(serverId, MegaphoneSubmix)
     end)
 
     return setmetatable({registry = registry, radioPool = radioPool}, self)

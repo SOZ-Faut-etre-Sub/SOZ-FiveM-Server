@@ -54,13 +54,13 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:craft", function(source, c
         end
     end
 
-    exports["soz-inventory"]:AddItem(source, itemId, 1, nil, nil, function(success, reason)
+    exports["soz-inventory"]:AddItem(source, source, itemId, 1, nil, nil, function(success, reason)
         if not success then
             local message = "Vos poches sont pleines..."
             if reason ~= "invalid_weight" then
                 message = string.format("Il y a eu une erreur : `%s`", reason)
             end
-            TriggerClientEvent("hud:client:DrawNotification", source, message, "error")
+            TriggerClientEvent("soz-core:client:notification:draw", source, message, "error")
             cb(false)
             return
         else
@@ -90,7 +90,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:harvest", function(source,
         return
     end
 
-    exports["soz-inventory"]:AddItem(source, itemId, 1, nil, nil, function(success, reason)
+    exports["soz-inventory"]:AddItem(source, source, itemId, 1, nil, nil, function(success, reason)
         cb(success, reason)
     end)
 end)
@@ -117,9 +117,8 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:restock", function(source,
 
     for _, item in pairs(BaunConfig.Restock[itemId]) do
         if not cbCalled then
-            exports["soz-inventory"]:AddItem(storage, item.itemId, item.quantity, nil, nil, function(success, reason)
+            exports["soz-inventory"]:AddItem(source, storage, item.itemId, item.quantity, nil, nil, function(success, reason)
                 if not success and not cbCalled then
-                    print("Cannot add item: " .. json.encode(reason))
                     cbCalled = true
                     cb(success, reason)
                 end
@@ -142,7 +141,10 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:createCocktailBox", functi
             local amount = item.amount > cocktailsToRemove and cocktailsToRemove or item.amount
             cocktailsToRemove = cocktailsToRemove - amount
 
-            table.insert(playerCocktails, item)
+            local tempItem = item
+            tempItem.amount = amount
+
+            table.insert(playerCocktails, tempItem)
 
             if cocktailsToRemove == 0 then
                 break
@@ -150,7 +152,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:createCocktailBox", functi
         end
     end
     if cocktailsToRemove ~= 0 then
-        TriggerClientEvent("hud:client:DrawNotification", source, "Vous devez avoir au moins 10 cocktails pour créer une caisse.", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", source, "Vous devez avoir au moins 10 cocktails pour créer une caisse.", "error")
         cb(false)
         return
     end
@@ -163,7 +165,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:createCocktailBox", functi
     end
 
     if not exports["soz-inventory"]:CanCarryItems(source, checkList) then
-        TriggerClientEvent("hud:client:DrawNotification", source, "Vos poches sont pleines.", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", source, "Vos poches sont pleines.", "error")
         cb(false)
         return
     end
@@ -172,11 +174,11 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:createCocktailBox", functi
         player.Functions.RemoveItem(item.name, item.amount, nil, item.slot)
     end
 
-    exports["soz-inventory"]:AddItem(source, "cocktail_box", 1, nil, nil, function(success, reason)
+    exports["soz-inventory"]:AddItem(source, source, "cocktail_box", 1, nil, nil, function(success, reason)
         if not success then
-            TriggerClientEvent("hud:client:DrawNotification", source, "Vos poches sont pleines...", "error")
+            TriggerClientEvent("soz-core:client:notification:draw", source, "Vos poches sont pleines...", "error")
         else
-            TriggerClientEvent("hud:client:DrawNotification", source, "Vous avez créé un assortiment de cocktails.", "success")
+            TriggerClientEvent("soz-core:client:notification:draw", source, "Vous avez créé un assortiment de cocktails.", "success")
         end
         cb(success)
     end)

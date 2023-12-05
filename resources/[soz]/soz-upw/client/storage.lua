@@ -1,6 +1,14 @@
 RunInverterRefreshLoop = false
 
+local objectIdJobs = {}
+
 function CreateInverterZone(identifier, data)
+    exports["soz-core"]:CreateObject({
+        id = identifier,
+        position = {data.coords.x, data.coords.y, data.coords.z, data.heading},
+        model = GetHashKey("upwpile"),
+    });
+
     data.options = {
         {
             label = "Accéder à l'onduleur",
@@ -48,26 +56,80 @@ function CreateInverterZone(identifier, data)
     return CreateZone(identifier, "inverter", data)
 end
 
+local function getTerminalProp(scope)
+    if scope == "default" then
+        return "soz_prop_elec01"
+    elseif scope == "entreprise" then
+        return "soz_prop_elec02"
+    end
+end
+
+local function getTerminalTargetProp(scope)
+    if scope == "default" then
+        return {"soz_prop_elec01", "soz_prop_elec01_hs2"}
+    elseif scope == "entreprise" then
+        return {"soz_prop_elec02", "soz_prop_elec02_hs2"}
+    end
+end
+
 function CreateTerminalZone(identifier, data, facility)
-    data.options = {
+    local prop = getTerminalProp(facility.scope)
+
+    exports["soz-core"]:CreateObject({
+        id = identifier,
+        position = {data.coords.x, data.coords.y, data.coords.z, data.heading},
+        model = GetHashKey(prop),
+    });
+
+    objectIdJobs[identifier] = facility.job
+end
+
+function CreateTerminalTarget()
+    CreateTerminalTargetScope("default")
+    CreateTerminalTargetScope("entreprise")
+end
+
+function CreateTerminalTargetScope(scope)
+    local prop = getTerminalTargetProp(scope)
+    local options = {
         {
             label = "Déposer l'énergie",
-            event = "soz-upw:client:HarvestLoop",
-            identifier = identifier,
-            harvest = "terminal-in",
+            icon = "c:upw/deposer.png",
+            action = function(entity)
+                local objectId = exports["soz-core"]:GetObjectIdFromEntity(entity)
+
+                if not objectId then
+                    return
+                end
+
+                TriggerEvent("soz-upw:client:HarvestLoop", {identifier = objectId, harvest = "terminal-in"})
+            end,
             canInteract = function()
                 return OnDuty()
             end,
         },
         {
             label = "État d'énergie",
-            type = "server",
-            event = "soz-upw:server:FacilityCapacity",
-            identifier = identifier,
-            facility = "terminal",
-            canInteract = function()
-                if facility.scope == "entreprise" then
-                    return OnDutyUpwOrJob(facility.job)
+            icon = "c:fuel/battery.png",
+            action = function(entity)
+                local objectId = exports["soz-core"]:GetObjectIdFromEntity(entity)
+
+                if not objectId then
+                    return
+                end
+
+                TriggerServerEvent("soz-upw:server:FacilityCapacity", {identifier = objectId, facility = "terminal"})
+            end,
+            scope = scope,
+            canInteract = function(entity, distance, data)
+                local objectId = exports["soz-core"]:GetObjectIdFromEntity(entity)
+
+                if not objectId then
+                    return false
+                end
+
+                if data.scope == "entreprise" then
+                    return OnDutyUpwOrJob(objectIdJobs[objectId])
                 else
                     return OnDuty()
                 end
@@ -75,5 +137,5 @@ function CreateTerminalZone(identifier, data, facility)
         },
     }
 
-    return CreateZone(identifier, "terminal", data)
+    exports["qb-target"]:AddTargetModel(prop, {options = options, distance = 2})
 end

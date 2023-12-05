@@ -1,4 +1,3 @@
-import { BankService } from '../../../client/bank/bank.service';
 import { Exportable } from '../../../core/decorators/exports';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
@@ -6,7 +5,10 @@ import { Rpc } from '../../../core/decorators/rpc';
 import { Tick, TickInterval } from '../../../core/decorators/tick';
 import { uuidv4 } from '../../../core/utils';
 import { BennysConfig, BennysOrder } from '../../../shared/job/bennys';
-import { RpcEvent } from '../../../shared/rpc';
+import { isErr } from '../../../shared/result';
+import { RpcServerEvent } from '../../../shared/rpc';
+import { getDefaultVehicleCondition } from '../../../shared/vehicle/vehicle';
+import { BankService } from '../../bank/bank.service';
 import { PrismaService } from '../../database/prisma.service';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
@@ -30,7 +32,7 @@ export class BennysOrderProvider {
     private orderedVehicle = 0;
 
     // Tick every minute to check the orders to complete.
-    @Tick(TickInterval.EVERY_MINUTE)
+    @Tick(TickInterval.EVERY_MINUTE, 'bennys:orders:check')
     public async onTick() {
         for (const [uuid, bennyOrder] of this.ordersInProgress.entries()) {
             if (new Date(bennyOrder.orderDate).getTime() + 1000 * 60 * BennysConfig.Order.waitingTime < Date.now()) {
@@ -40,13 +42,12 @@ export class BennysOrderProvider {
         }
     }
 
-    @Rpc(RpcEvent.BENNYS_GET_ORDERS)
+    @Rpc(RpcServerEvent.BENNYS_GET_ORDERS)
     public getOrders(): BennysOrder[] {
-        console.log(Array.from(this.ordersInProgress.values()));
         return Array.from(this.ordersInProgress.values());
     }
 
-    @Rpc(RpcEvent.BENNYS_CANCEL_ORDER)
+    @Rpc(RpcServerEvent.BENNYS_CANCEL_ORDER)
     public async onCancelOrder(source: number, uuid: string) {
         const order = this.ordersInProgress.get(uuid);
         if (!order) {
@@ -57,9 +58,9 @@ export class BennysOrderProvider {
         this.notifier.notify(source, `Commande annulée.`);
     }
 
-    @Rpc(RpcEvent.BENNYS_ORDER_VEHICLE)
+    @Rpc(RpcServerEvent.BENNYS_ORDER_VEHICLE)
     public async onOrderVehicle(source: number, model: string) {
-        const vehicle = await this.prismaService.vehicles.findFirst({
+        const vehicle = await this.prismaService.vehicle.findFirst({
             where: {
                 model,
                 NOT: {
@@ -73,9 +74,9 @@ export class BennysOrderProvider {
             return;
         }
         const vehiclePrice = Math.ceil(vehicle.price * 0.01);
-        const [transferred] = await this.bankService.transferBankMoney('bennys', 'farm_bennys', vehiclePrice);
+        const transferred = await this.bankService.transferBankMoney('bennys', 'farm_bennys', vehiclePrice);
 
-        if (!transferred) {
+        if (isErr(transferred)) {
             this.notifier.notify(
                 source,
                 `Il faut ~r~${vehiclePrice.toLocaleString()}$~s~ sur le compte de l'entreprise.`
@@ -97,7 +98,7 @@ export class BennysOrderProvider {
 
     @Exportable('deleteTestVehicles')
     async deleteTestVehicles() {
-        await this.prismaService.player_vehicles.deleteMany({
+        await this.prismaService.playerVehicle.deleteMany({
             where: {
                 plate: {
                     contains: 'ESSAI',
@@ -107,7 +108,7 @@ export class BennysOrderProvider {
     }
 
     private async addVehicle(model: string) {
-        const vehicle = await this.prismaService.vehicles.findFirst({
+        const vehicle = await this.prismaService.vehicle.findFirst({
             where: {
                 model,
             },
@@ -118,13 +119,13 @@ export class BennysOrderProvider {
         } else if (vehicle.requiredLicence === 'boat') {
             category = 'boat';
         }
-        await this.prismaService.player_vehicles.create({
+        await this.prismaService.playerVehicle.create({
             data: {
                 vehicle: model,
                 hash: GetHashKey(model).toString(),
-                mods: JSON.stringify(BennysConfig.Mods.upgradedSimplifiedMods),
-                condition: '{}',
-                plate: 'ESSAI ' + (this.orderedVehicle + 1),
+                mods: JSON.stringify(BennysConfig.UpgradeConfiguration),
+                condition: JSON.stringify(getDefaultVehicleCondition()),
+                plate: 'ESSAI N' + (this.orderedVehicle + 1),
                 garage: 'bennys_luxury',
                 job: 'bennys',
                 category: category,

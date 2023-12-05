@@ -17,6 +17,11 @@ QBCore.Functions.CreateCallback("soz-upw:server:ResaleEnergy", function(source, 
             TriggerEvent("banking:server:TransferMoney", Config.Upw.Accounts.FarmAccount, Config.Upw.Accounts.SafeAccount,
                          Config.Upw.Resale.EnergyCellPrice[item.name] or 0)
 
+            TriggerEvent("soz-core:server:monitor:add-event", "job_upw_energy_resale", {
+                item_id = item.name,
+                player_citizen_id = Player.PlayerData.citizenid,
+            }, {item_label = item.label, quantity = 1, resale_price = Config.Upw.Resale.EnergyCellPrice[item.name] or 0}, true)
+
             cb({true, "Vous avez vendu ~g~1 " .. item.label})
             return
         else

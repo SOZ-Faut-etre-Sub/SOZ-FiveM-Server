@@ -1,38 +1,5 @@
-local function getCloakroomTargetOptions(job, storage)
-    return {
-        {
-            color = job,
-            type = "client",
-            label = "Se changer",
-            icon = "c:jobs/habiller.png",
-            storage = storage,
-            job = job,
-            canInteract = function()
-                return PlayerData.job.onduty
-            end,
-            action = function()
-                TriggerEvent("soz-jobs:client:try-open-cloakroom", storage, "jobs:client:" .. job .. ":OpenCloakroomMenu")
-            end,
-        },
-        {
-            color = job,
-            type = "client",
-            label = "Vérifier le stock",
-            icon = "c:jobs/check-stock.png",
-            storage = storage,
-            job = job,
-            canInteract = function()
-                return PlayerData.job.onduty
-            end,
-            action = function()
-                TriggerEvent("soz-jobs:client:check-cloakroom-storage", storage)
-            end,
-        },
-    }
-end
-
 Config.Storages["stonk_fridge"] = {
-    label = "Frigo STONK Depository",
+    label = "Frigo STONK Security",
     type = "fridge",
     owner = "cash-transfer",
     position = vector3(-10.0, -700.62, 46.25),
@@ -41,7 +8,7 @@ Config.Storages["stonk_fridge"] = {
 }
 
 Config.Storages["stonk_storage"] = {
-    label = "Stockage STONK Depository",
+    label = "Stockage STONK Security",
     type = "storage",
     owner = "cash-transfer",
     position = vector3(-6.17, -706.95, 40.72),
@@ -59,7 +26,7 @@ Config.Storages["stonk_boss_storage"] = {
 }
 
 Config.Storages["stonk_armory"] = {
-    label = "Armurerie STONK Depository",
+    label = "Armurerie STONK Security",
     type = "armory",
     owner = "cash-transfer",
     position = vector3(-17.64, -716.12, 46.02),
@@ -68,7 +35,7 @@ Config.Storages["stonk_armory"] = {
 }
 
 Config.Storages["stonk_ammo"] = {
-    label = "Munition STONK Depository",
+    label = "Munition STONK Security",
     type = "ammo",
     owner = "cash-transfer",
     position = vector3(-16.0, -714.38, 46.02),
@@ -77,7 +44,7 @@ Config.Storages["stonk_ammo"] = {
 }
 
 Config.Storages["stonk_cloakroom_1"] = {
-    label = "Vestiaire - STONK Depository",
+    label = "Vestiaire - STONK Security",
     type = "cloakroom",
     owner = "ffs",
     position = vector3(-24.1, -708.6, 46.0),
@@ -85,11 +52,11 @@ Config.Storages["stonk_cloakroom_1"] = {
     minZ = 45.0,
     maxZ = 47.2,
     heading = 295,
-    targetOptions = getCloakroomTargetOptions("stonk", "stonk_cloakroom_1"),
+    targetOptions = getCloakroomTargetOptions("cash-transfer", "stonk_cloakroom_1"),
 }
 
 Config.Storages["stonk_cloakroom_2"] = {
-    label = "Vestiaire - STONK Depository",
+    label = "Vestiaire - STONK Security",
     type = "cloakroom",
     owner = "ffs",
     position = vector3(-20.75, -706.325, 46.0),
@@ -97,5 +64,5 @@ Config.Storages["stonk_cloakroom_2"] = {
     minZ = 45.0,
     maxZ = 47.2,
     heading = 295,
-    targetOptions = getCloakroomTargetOptions("stonk", "stonk_cloakroom_2"),
+    targetOptions = getCloakroomTargetOptions("cash-transfer", "stonk_cloakroom_2"),
 }

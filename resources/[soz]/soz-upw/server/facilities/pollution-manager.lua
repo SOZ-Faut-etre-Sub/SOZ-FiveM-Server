@@ -9,8 +9,6 @@ function PollutionManager:new(identifier, options)
 
     setmetatable(self, {__index = PollutionManager})
 
-    TriggerEvent("soz-upw:server:onPollutionManagerReady")
-
     return self
 end
 

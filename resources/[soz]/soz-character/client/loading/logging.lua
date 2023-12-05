@@ -28,7 +28,6 @@ function StartGame()
 
     local playerPed = PlayerPedId()
 
-    SetPedMaxHealth(playerPed, 200)
     SetPedConfigFlag(playerPed, 35, false)
     SetPedSuffersCriticalHits(playerPed, false)
 end
@@ -57,6 +56,7 @@ function LogExistingPlayer(player, shutdownLoadingScreen)
     SetBlockingOfNonTemporaryEvents(playerPed, true)
 
     SetEntityHealth(playerPed, playerObject.PlayerData.metadata["health"])
+    SetPedMaxHealth(playerPed, playerObject.PlayerData.metadata["max_health"])
     SetPedArmour(playerPed, playerObject.PlayerData.metadata["armor"].current)
 
     while not HasCollisionLoadedAroundEntity(playerPed) do
@@ -78,6 +78,5 @@ function LogExistingPlayer(player, shutdownLoadingScreen)
     end
 
     -- Display ui and trigger last events
-    TriggerServerEvent("QBCore:Server:OnPlayerLoaded")
     TriggerEvent("QBCore:Client:OnPlayerLoaded")
 end

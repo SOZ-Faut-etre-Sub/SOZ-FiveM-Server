@@ -201,7 +201,9 @@ CreateThread(function()
 		end
 
 		BlackoutGlobalCheck = function()
-			if GlobalState.blackout_level > 3 then
+			local globalState = exports["soz-core"]:GetGlobalState()
+
+			if globalState.blackoutLevel > 3 then
 				return false
 			end
 
@@ -209,7 +211,8 @@ CreateThread(function()
 		end
 
 		BlackoutJobCheck = function()
-			local jobEnergy = GlobalState.job_energy[PlayerData.job.id] or 100;
+			local globalState = exports["soz-core"]:GetGlobalState()
+			local jobEnergy = globalState.jobEnergy[PlayerData.job.id] or 100;
 
 			if jobEnergy <= 1 then
 				return false
@@ -251,8 +254,10 @@ end)
 
 function CheckOptions(data, entity, distance)
 	if not GlobalCheck() then return false end
+	if exports["soz-core"]:GetPlayerState().isEscorted then return false end
 	if distance and data.distance and distance > data.distance then return false end
 	if data.job and not JobCheck(data.job) then return false end
+	if not data.allowVehicle and IsPedInAnyVehicle(PlayerPedId(), false) then return false end
 	if data.menu and SousMenu(data.menu) then return false end
 	if data.gang and not GangCheck(data.gang) then return false end
 	if data.item and ItemCount(data.item) < 1 then return false end

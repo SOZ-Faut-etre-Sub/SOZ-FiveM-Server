@@ -4,6 +4,7 @@ local JobVehicle = false
 local InVehicle = false
 local ObjectifCoord = {}
 local Counter = 0
+local JobDone = nil
 local harvestZone = nil
 local hasEnteredZoneOnce = false
 local PedCoord = {x = 479.17, y = -107.53, z = 63.16}
@@ -66,7 +67,6 @@ exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1
 RegisterNetEvent("jobs:metal:fix")
 AddEventHandler("jobs:metal:fix", function()
     DrawInteractionMarker(ObjectifCoord, false)
-    TriggerEvent("jobs:metal:start")
     QBCore.Functions.Progressbar("adsl_fix", "Vous cherchez de la ferraille...", 10000, false, false,
                                  {
         disableMovement = true,
@@ -77,25 +77,9 @@ AddEventHandler("jobs:metal:fix", function()
         TaskPlayAnim(PlayerPedId(), "random@domestic", "pickup_low", 8.0, -8.0, -1, 49, 0, 0, 0, 0)
         amount = math.random(1, 2)
         TriggerServerEvent("job:get:metal", amount)
+        TriggerEvent("jobs:metal:start")
     end)
 end)
-
-local function SpawnVehicule()
-    local ModelHash = "scrap"
-    local model = GetHashKey(ModelHash)
-    if not IsModelInCdimage(model) then
-        return
-    end
-    RequestModel(model)
-    while not HasModelLoaded(model) do
-        Citizen.Wait(10)
-    end
-    metal_vehicule = CreateVehicle(model, SozJobCore.metal_vehicule.x, SozJobCore.metal_vehicule.y, SozJobCore.metal_vehicule.z, SozJobCore.metal_vehicule.w,
-                                   true, false)
-    SetModelAsNoLongerNeeded(model)
-    VehPlate = QBCore.Functions.GetPlate(metal_vehicule)
-    TriggerServerEvent("vehiclekeys:server:SetVehicleOwner", VehPlate)
-end
 
 RegisterNetEvent("jobs:metal:vente")
 AddEventHandler("jobs:metal:vente", function()
@@ -106,7 +90,7 @@ AddEventHandler("jobs:metal:vente", function()
         end
     end
 
-    local sellamount = exports["soz-hud"]:Input(("Combien de ferrailles voulez-vous vendre ?"), 2, count)
+    local sellamount = exports["soz-core"]:Input(("Combien de ferrailles voulez-vous vendre ?"), 2, count)
     TriggerServerEvent("job:remove:metal", sellamount)
     Counter = 0
 end)
@@ -120,17 +104,34 @@ end)
 
 RegisterNetEvent("jobs:metal:tenue")
 AddEventHandler("jobs:metal:tenue", function()
-    TriggerServerEvent("job:anounce", "Sortez le véhicule")
-    JobOutfit = true
+    QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
+        disableMovement = true,
+        disableCombat = true,
+    }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
+        TriggerServerEvent("soz-character:server:SetPlayerJobClothes", SozJobCore.metal_clothes[PlayerData.skin.Model.Hash])
+        TriggerServerEvent("job:anounce", "Sortez le véhicule")
+        JobOutfit = true
+    end)
 end)
 
 RegisterNetEvent("jobs:metal:vehicle")
 AddEventHandler("jobs:metal:vehicle", function()
     TriggerServerEvent("job:anounce", "Montez dans le véhicule de service")
-    SpawnVehicule()
+    TriggerServerEvent("soz-core:server:vehicle:free-job-spawn", "scrap",
+                       {
+        SozJobCore.metal_vehicule.x,
+        SozJobCore.metal_vehicule.y,
+        SozJobCore.metal_vehicule.z,
+        SozJobCore.metal_vehicule.w,
+    }, "jobs:metal:vehicle-spawn")
+end)
+
+RegisterNetEvent("jobs:metal:vehicle-spawn")
+AddEventHandler("jobs:metal:vehicle-spawn", function(vehicleNetId)
+    metal_vehicule = NetworkGetEntityFromNetworkId(vehicleNetId)
     JobVehicle = true
     createblip("Véhicule", "Montez dans le véhicule", 225, SozJobCore.metal_vehicule)
-    local player = GetPlayerPed(-1)
+    local player = PlayerPedId()
     while InVehicle == false do
         Citizen.Wait(100)
         if IsPedInVehicle(player, metal_vehicule, true) == 1 then
@@ -143,10 +144,10 @@ end)
 
 local function random_coord()
     local result = SozJobCore.metal[math.random(#SozJobCore.metal)]
-    if result.x == JobDone then
-        random_coord()
+    while result.x == JobDone do
+        result = SozJobCore.metal[math.random(#SozJobCore.metal)]
     end
-    local JobDone = result.x
+    JobDone = result.x
     return result
 end
 
@@ -198,15 +199,15 @@ AddEventHandler("jobs:metal:start", function()
         options = {{type = "client", event = "jobs:metal:fix", icon = "c:pole/recolter.png", label = "Récolter"}},
         distance = 1.5,
     })
+    DrawInteractionMarker(ObjectifCoord, false)
     ObjectifCoord = coords
     DrawInteractionMarker(ObjectifCoord, true)
     Counter = Counter + 1
 end)
 
-RegisterNetEvent("jobs:metal:end")
-AddEventHandler("jobs:metal:end", function()
+local function close()
     TriggerServerEvent("job:set:unemployed")
-    QBCore.Functions.DeleteVehicle(metal_vehicule)
+    DeleteVehicule(metal_vehicule)
     exports["qb-target"]:RemoveZone("metal_zone")
     destroyblip(job_blip)
     SetGpsMultiRouteRender(false)
@@ -215,6 +216,23 @@ AddEventHandler("jobs:metal:end", function()
     JobVehicle = false
     Counter = 0
     hasEnteredZoneOnce = false
-    harvestZone:destroy()
-    harvestZone = nil
+    if harvestZone ~= nil then
+        harvestZone:destroy()
+        harvestZone = nil
+    end
+end
+
+RegisterNetEvent("jobs:metal:end")
+AddEventHandler("jobs:metal:end", function()
+    if JobOutfit then
+        QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
+            disableMovement = true,
+            disableCombat = true,
+        }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
+            TriggerServerEvent("soz-character:server:SetPlayerJobClothes", nil)
+            close()
+        end)
+    else
+        close()
+    end
 end)

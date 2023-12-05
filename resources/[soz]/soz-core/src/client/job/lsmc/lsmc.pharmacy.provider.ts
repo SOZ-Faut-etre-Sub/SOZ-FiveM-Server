@@ -1,7 +1,12 @@
+import { InventoryManager } from '@public/client/inventory/inventory.manager';
+import { ItemService } from '@public/client/item/item.service';
+import { PHARMACY_PRICES } from '@public/shared/job/lsmc';
+
 import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
+import { NuiMenu } from '../../nui/nui.menu';
 import { TargetFactory } from '../../target/target.factory';
 
 @Provider()
@@ -9,10 +14,39 @@ export class LSMCPharmacyProvider {
     @Inject(TargetFactory)
     private targetFactory: TargetFactory;
 
+    @Inject(NuiMenu)
+    private nuiMenu: NuiMenu;
+
+    @Inject(ItemService)
+    private itemService: ItemService;
+
+    @Inject(InventoryManager)
+    private inventoryManager: InventoryManager;
+
     @Once(OnceStep.PlayerLoaded)
-    public onPlayerLoaded() {
+    public setupPharmacy() {
+        const products = [
+            { name: 'tissue', price: PHARMACY_PRICES.tissue, amount: 2000 },
+            { name: 'antibiotic', price: PHARMACY_PRICES.antibiotic, amount: 2000 },
+            { name: 'pommade', price: PHARMACY_PRICES.pommade, amount: 2000 },
+            { name: 'painkiller', price: PHARMACY_PRICES.painkiller, amount: 2000 },
+            { name: 'antiacide', price: PHARMACY_PRICES.antiacide, amount: 2000 },
+            { name: 'health_book', price: PHARMACY_PRICES.health_book, amount: 2000 },
+        ];
+
+        const getLsmcShopProduct = products => {
+            const hydratedProducts = products.map((product, id) => ({
+                ...this.itemService.getItem(product.name),
+                ...product,
+                slot: id + 1,
+            }));
+
+            return hydratedProducts;
+        };
+
+        const model = 's_m_m_doctor_01';
         this.targetFactory.createForPed({
-            model: 's_m_m_doctor_01',
+            model: model,
             coords: { x: 356.64, y: -1419.74, z: 31.51, w: 57.62 },
             invincible: true,
             freeze: true,
@@ -24,38 +58,17 @@ export class LSMCPharmacyProvider {
             target: {
                 options: [
                     {
-                        label: 'Acheter un mouchoir',
-                        icon: 'c:/ems/tissue.png',
-                        action: () => {
-                            TriggerServerEvent(ServerEvent.LSMC_BUY_ITEM, 'tissue');
-                        },
-                    },
-                    {
-                        label: 'Acheter un antibiotique',
-                        icon: 'c:/ems/antibiotic.png',
-                        action: () => {
-                            TriggerServerEvent(ServerEvent.LSMC_BUY_ITEM, 'antibiotic');
-                        },
-                    },
-                    {
-                        label: 'Acheter une pommade',
-                        icon: 'c:/ems/ointment.png',
-                        action: () => {
-                            TriggerServerEvent(ServerEvent.LSMC_BUY_ITEM, 'pommade');
-                        },
-                    },
-                    {
-                        label: 'Acheter un antidouleur',
+                        label: 'Liste des médicaments',
                         icon: 'c:/ems/painkiller.png',
                         action: () => {
-                            TriggerServerEvent(ServerEvent.LSMC_BUY_ITEM, 'painkiller');
+                            this.inventoryManager.openShopInventory(getLsmcShopProduct(products), 'menu_shop_pharmacy');
                         },
                     },
                     {
                         label: 'Soins médicaux',
                         icon: 'c:/ems/heal.png',
                         action: () => {
-                            TriggerServerEvent(ServerEvent.LSMC_HEAL);
+                            TriggerServerEvent(ServerEvent.LSMC_NPC_HEAL);
                         },
                     },
                 ],

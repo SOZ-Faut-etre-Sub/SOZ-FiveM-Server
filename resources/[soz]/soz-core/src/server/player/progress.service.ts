@@ -32,11 +32,15 @@ export class ProgressService {
 
                 promiseReject('progress timeout after ' + duration * 2 + 'ms');
             }
-        }, duration * 2);
+        }, duration + 10000);
 
         TriggerClientEvent(ClientEvent.PROGRESS_START, player, id, name, label, duration, animation, options);
 
         return promise;
+    }
+
+    public async stopProgress(player: number): Promise<void> {
+        TriggerClientEvent(ClientEvent.PROGRESS_STOP, player);
     }
 
     @OnEvent(ServerEvent.PROGRESS_FINISH)

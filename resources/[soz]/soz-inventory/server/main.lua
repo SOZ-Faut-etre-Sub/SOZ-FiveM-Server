@@ -3,6 +3,7 @@ SozJobCore = exports["soz-jobs"]:GetCoreObject()
 
 local Inventory = {}
 local Inventories = {}
+local SyncInventory = true
 
 setmetatable(Inventory, {
     __call = function(self, arg)
@@ -21,6 +22,10 @@ setmetatable(Inventory, {
 
 MySQL.ready(function()
     local StorageNotLoaded = table.clone(Config.Storages)
+
+    -- delete inventory of non players cars to avoid having an NPC car with same plate retrieving an existing inventory
+    MySQL.query(
+        "DELETE FROM storages WHERE NAME IN (SELECT name FROM storages LEFT OUTER JOIN player_vehicles on storages.owner = player_vehicles.plate where storages.`type`='trunk' AND player_vehicles.citizenid IS NULL)")
 
     MySQL.query("SELECT * FROM storages", {}, function(result)
         if result then
@@ -94,7 +99,7 @@ function Inventory.Load(id, invType, owner)
         for _, v in pairs(result) do
             local item = QBCore.Shared.Items[v.name]
             if item then
-                local slotWeight = Inventory.SlotWeight(item, v)
+                local slotWeight = Inventory.GetItemWeight(item, v.metadata, v.amount)
                 weight = weight + slotWeight
                 returnData[v.slot] = {
                     name = item.name,
@@ -109,6 +114,7 @@ function Inventory.Load(id, invType, owner)
                     shouldClose = item.shouldClose,
                     slot = v.slot,
                     combinable = item.combinable,
+                    illustrator = item.illustrator,
                 }
             end
         end
@@ -146,10 +152,17 @@ function Inventory.CalculateWeight(items)
     for _, v in pairs(items) do
         local item = QBCore.Shared.Items[v.name]
         if item then
-            weight = weight + Inventory.SlotWeight(item, v)
+            weight = weight + Inventory.GetItemWeight(item, v.metadata, v.amount)
         end
     end
     return weight
+end
+
+function Inventory.CalculateAvailableWeight(inv)
+    inv = Inventory(inv)
+    local weight = Inventory.CalculateWeight(inv.items)
+    local maxWeight = inv.maxWeight
+    return maxWeight - weight
 end
 
 function Inventory.SetMaxWeight(inv, weight)
@@ -158,23 +171,41 @@ function Inventory.SetMaxWeight(inv, weight)
         inv.maxWeight = weight
     end
 end
+exports("CalculateWeight", Inventory.CalculateWeight)
 exports("SetMaxWeight", Inventory.SetMaxWeight)
 
-function Inventory.SlotWeight(item, slot)
-    local weight = item.weight * slot.amount
-    if not slot.metadata then
-        slot.metadata = {}
+function Inventory.SetHouseStashMaxWeightFromTier(inv, tier)
+    inv = Inventory("house_stash_" .. inv)
+    if inv then
+        inv.maxWeight = Config.StorageCapacity["house_stash"][tier].weight
     end
+end
+exports("SetHouseStashMaxWeightFromTier", Inventory.SetHouseStashMaxWeightFromTier)
+
+function Inventory.GetItemWeight(item, metadata, amount)
+    if metadata and metadata.weight then
+        item.weight = metadata.weight
+    end
+
+    if not amount then
+        amount = 1
+    end
+
+    local weight = item.weight * amount
+    if not metadata then
+        metadata = {}
+    end
+
     if item.ammoname then
-        local ammo = {
-            type = item.ammoname,
-            amount = slot.metadata.ammo,
-            weight = QBCore.Shared.Items[item.ammoname].weight,
-        }
+        local ammo = {type = item.ammoname, amount = metadata.ammo, weight = QBCore.Shared.Items[item.ammoname].weight}
 
         if ammo.amount then
             weight = weight + (ammo.weight * ammo.amount)
         end
+    end
+
+    if item.type == "crate" then
+        weight = item.weight + Inventory.getCrateWeight(metadata)
     end
 
     return weight
@@ -194,6 +225,27 @@ end
 RegisterNetEvent("inventory:server:CanSwapItem", Inventory.CanSwapItem)
 exports("CanSwapItem", Inventory.CanSwapItem)
 
+function Inventory.CanSwapItems(inv, outItems, inItems)
+    inv = Inventory(inv)
+
+    local inWeight = 0;
+    local outWeight = 0;
+
+    for _, v in pairs(outItems) do
+        local item = QBCore.Shared.Items[v.name]
+        outWeight = outWeight + Inventory.GetItemWeight(item, v.metadata, v.amount)
+    end
+
+    for _, v in pairs(inItems) do
+        local item = QBCore.Shared.Items[v.name]
+        inWeight = inWeight + Inventory.GetItemWeight(item, v.metadata, v.amount)
+    end
+
+    return inv.weight + inWeight - outWeight <= inv.maxWeight
+end
+RegisterNetEvent("inventory:server:CanSwapItems", Inventory.CanSwapItems)
+exports("CanSwapItems", Inventory.CanSwapItems)
+
 function Inventory.CanCarryItem(inv, item, amount, metadata)
     if type(item) ~= "table" then
         item = QBCore.Shared.Items[item]
@@ -208,13 +260,13 @@ function Inventory.CanCarryItem(inv, item, amount, metadata)
             if inv.type == "player" and item.limit and (totalAmount + amount) > item.limit then
                 return false
             end
-            if item.weight == 0 then
+            if Inventory.GetItemWeight(item, metadata, 1) == 0 then
                 return true
             end
             if amount == nil then
                 amount = 1
             end
-            local newWeight = inv.weight + (item.weight * amount)
+            local newWeight = inv.weight + Inventory.GetItemWeight(item, metadata, amount)
             return newWeight <= inv.maxWeight
         end
     end
@@ -236,7 +288,7 @@ function Inventory.CanCarryItems(inv, items, metadata)
                 if inv.type == "player" and item.limit and (totalAmount + v.amount) > item.limit then
                     return false
                 end
-                itemsTotalWeight = itemsTotalWeight + (item.weight * v.amount)
+                itemsTotalWeight = itemsTotalWeight + Inventory.GetItemWeight(item, metadata, v.amount)
             end
         end
 
@@ -261,8 +313,12 @@ function Inventory.FilterItems(inv, invType)
     if invType then
         if inv.items ~= nil then
             for _, v in pairs(inv.items) do
-                if _G.Container[invType]:ItemIsAllowed(v) then
-                    items[#items + 1] = v
+                local insertId = #items + 1
+                items[insertId] = table.deepclone(v)
+
+                if not _G.Container[invType]:ItemIsAllowed(v) or
+                    (invType == "player" and inv.type == "player" and QBCore.Shared.Items[v.name]["not_searchable"]) then
+                    items[insertId].disabled = true
                 end
             end
         end
@@ -326,7 +382,48 @@ QBCore.Functions.CreateCallback("inventory:server:GetInventoryItems", function(s
     cb(Inventory(source).items)
 end)
 
-function Inventory.AddItem(inv, item, amount, metadata, slot, cb)
+function Inventory.getCrateWeight(metadata)
+    local crateTotalWeight = 0
+    if not metadata or not metadata.crateElements then
+        return crateTotalWeight
+    end
+    for _, crateItem in pairs(metadata.crateElements) do
+        local item = QBCore.Shared.Items[crateItem.name]
+        crateTotalWeight = crateTotalWeight + Inventory.GetItemWeight(item, metadata, crateItem.amount)
+    end
+    return crateTotalWeight
+end
+
+function Inventory.handleLunchbox(source, inv, slotItem, metadata, amount, item, slotId)
+    local slot = -1
+
+    if slotItem.name == "empty_lunchbox" then
+        Inventory.RemoveItem(inv, slotItem.name, 1, nil, slotId)
+        local lunchboxItem = QBCore.Shared.Items["lunchbox"]
+        _, _, slot = Inventory.AddItem(source, inv, lunchboxItem, 1, {crateElements = {}})
+        slotItem = inv.items[slot]
+    end
+
+    local lunchboxTotalWeight = Inventory.getCrateWeight(slotItem.metadata)
+    table.insert(slotItem.metadata.crateElements, {
+        name = item.name,
+        label = item.label,
+        metadata = metadata,
+        amount = amount,
+        weight = Inventory.GetItemWeight(item, metadata, 1),
+    })
+
+    local notificationLunchboxLabel = tostring(slotItem.label)
+    if slotItem.metadata.label then
+        notificationLunchboxLabel = notificationLunchboxLabel .. " \"" .. slotItem.metadata.label .. "\""
+    end
+
+    TriggerClientEvent("soz-core:client:notification:draw", source,
+                       "Vous avez ajouté ~b~" .. item.label .. "~s~ dans ~g~" .. notificationLunchboxLabel .. "~s~ !", "success")
+    return slotItem.metadata, true, slot
+end
+
+function Inventory.AddItem(source, inv, item, amount, metadata, slot, cb)
     if type(inv) ~= "table" then
         inv = Inventory(inv)
     end
@@ -335,64 +432,144 @@ function Inventory.AddItem(inv, item, amount, metadata, slot, cb)
     end
     amount = math.floor(amount + 0.5)
     local success, reason = false, nil
-    if amount > 0 then
-        if item then
-            if inv then
-                metadata, amount = metadata or {}, amount
+    local existing = false
+    local weight = Inventory.GetItemWeight(item, metadata, amount)
 
-                if item.type == "weapon" and metadata.serial == nil then
-                    metadata.serial = tostring(QBCore.Shared.RandomInt(2) .. QBCore.Shared.RandomStr(3) .. QBCore.Shared.RandomInt(1) ..
-                                                   QBCore.Shared.RandomStr(2) .. QBCore.Shared.RandomInt(3) .. QBCore.Shared.RandomStr(4))
-                elseif item.expiresIn and metadata.expiration == nil then
-                    metadata.expiration = os.date("%Y-%m-%dT%H:%M:00Z", os.time() + (item.expiresIn * 60))
-                elseif item.durability and metadata.expiration == nil then
-                    metadata.expiration = os.date("%Y-%m-%d", os.time() + (item.durability * 60 * 60 * 24))
-                end
+    if amount <= 0 then
+        reason = "invalid_quantity"
+        goto endAddItem
+    end
 
-                if Inventory.CanCarryItem(inv, item, amount, metadata) then
-                    local existing = false
+    if not item then
+        reason = "invalid_item"
+        goto endAddItem
+    end
 
-                    if slot then
-                        local slotItem = inv.items[slot]
-                        if not slotItem or not item.unique and slotItem and slotItem.name == item.name and table.matches(slotItem.metadata, metadata) then
-                            existing = nil
-                        end
-                    end
+    if not inv then
+        reason = "invalid_inventory"
+        goto endAddItem
+    end
 
-                    if existing == false then
-                        local items, toSlot = inv.items, nil
-                        for i = 1, inv.slots do
-                            local slotItem = items[i]
-                            if not item.unique and slotItem ~= nil and slotItem.name == item.name and table.matches(slotItem.metadata, metadata) then
-                                toSlot, existing = i, true
-                                break
-                            elseif not toSlot and slotItem == nil then
-                                toSlot = i
-                            end
-                        end
-                        slot = toSlot
-                    end
+    metadata, amount = metadata or {}, amount
 
-                    Inventory.SetSlot(inv, item, amount, metadata, slot)
-                    inv.weight = inv.weight + item.weight * amount
-                    success = true
+    if item.type == "weapon" then
+        if metadata.serial == nil then
+            metadata.serial = tostring(QBCore.Shared.RandomInt(2) .. QBCore.Shared.RandomStr(3) .. QBCore.Shared.RandomInt(1) .. QBCore.Shared.RandomStr(2) ..
+                                           QBCore.Shared.RandomInt(3) .. QBCore.Shared.RandomStr(4))
+        end
+        if metadata.health == nil then
+            metadata.health = 2000
+        end
+        if metadata.maxHealth == nil then
+            metadata.maxHealth = 2000
+        end
+    elseif item.expiresIn and metadata.expiration == nil then
+        metadata.expiration = os.date("%Y-%m-%dT%H:%M:00Z", os.time() + (item.expiresIn * 60))
+    elseif item.durability and metadata.expiration == nil then
+        metadata.expiration = os.date("%Y-%m-%d", os.time() + (item.durability * 60 * 60 * 24))
+    end
 
-                    inv.changed = true
-                    _G.Container[inv.type]:SyncInventory(inv.id, inv.items)
+    if not Inventory.CanCarryItem(inv, item, amount, metadata) then
+        reason = "invalid_weight"
+        goto endAddItem
+    end
+
+    if item.onlyone and inv.type == "player" and Inventory.Search(inv, "amount", item.name) > 0 then
+        reason = "invalid_alreadyhaveone"
+        goto endAddItem
+    end
+    if slot then
+        local slotItem = inv.items[slot]
+        if not slotItem or not item.unique and slotItem and slotItem.name == item.name and table.matches(slotItem.metadata, metadata) then
+            existing = nil
+        elseif (table.contains(Config.crateTypeAllowed, item.type)) and slotItem and slotItem.type == "crate" then
+            if (Inventory.GetItemWeight(item, metadata, amount) + Inventory.getCrateWeight(slotItem.metadata)) < Config.crateMaxWeight then
+                metadata, success, slot = Inventory.handleLunchbox(source, inv, slotItem, metadata, amount, item, slot)
+                if success then
+                    item = QBCore.Shared.Items["lunchbox"]
+                    amount = 0
+                    existing = nil
                 else
-                    success, reason = false, "invalid_weight"
+                    goto endAddItem
                 end
             else
-                success, reason = false, "invalid_inventory"
+                TriggerClientEvent("soz-core:client:notification:draw", source, "Ça ne rentre pas !", "warning")
             end
-        else
-            success, reason = false, "invalid_item"
+        elseif item.type == "fishing_bait" and slotItem and slotItem.type == "fishing_rod" then
+            local metadata = {bait = item}
+            if slotItem.metadata.bait ~= item then
+                Inventory.SetMetadata(inv, slotItem.slot, metadata)
+                amount = amount - 1
+                weight = Inventory.GetItemWeight(item, metadata, amount)
+                TriggerClientEvent("soz-core:client:notification:draw", source,
+                                   "Vous avez attaché un ~b~" .. item.label .. "~s~ à vôtre ~g~" .. slotItem.label .. "~s~ !", "success")
+                if amount == 0 then
+                    success = true
+                    goto endAddItem
+                end
+            else
+                TriggerClientEvent("soz-core:client:notification:draw", source,
+                                   "Impossible d'attacher ~b~" .. item.label .. "~s~ à vôtre ~g~" .. slotItem.label .. "~s~ !", "error")
+            end
+        elseif item.name == "kerosene_jerrycan" and slotItem and slotItem.name == "chainsaw" then
+            local metadata = {fuel = 20}
+            if slotItem.metadata.fuel ~= 20 then
+                Inventory.SetMetadata(inv, slotItem.slot, metadata)
+                amount = amount - 1
+                weight = Inventory.GetItemWeight(item, metadata, amount)
+                TriggerClientEvent("soz-core:client:notification:draw", source,
+                                   "Vous avez rempli votre ~b~" .. slotItem.label .. "~s~ avec un  ~g~" .. item.label .. "~s~ !", "success")
+                if amount == 0 then
+                    success = true
+                    goto endAddItem
+                end
+            else
+                TriggerClientEvent("soz-core:client:notification:draw", source, "Le réservoir de ~b~" .. slotItem.label .. "~s~ est déjà plein !", "error")
+            end
+        elseif slotItem and slotItem.type == "drug_pot" then
+            local slotItemDef = QBCore.Shared.Items[slotItem.name]
+            if slotItemDef.drug_pot.ingredient == item.name and amount >= slotItemDef.drug_pot.nbIngredient and not exports["soz-utils"]:ItemIsExpired(slotItem) and
+                not exports["soz-utils"]:ItemIsExpired({metadata = metadata}) then
+                Inventory.RemoveItem(inv, slotItemDef.name, 1, nil, slotItem.slot)
+                Inventory.AddItem(source, inv, slotItemDef.drug_pot.target, 1)
+                amount = amount - slotItemDef.drug_pot.nbIngredient
+                weight = Inventory.GetItemWeight(item, metadata, amount)
+
+                if amount == 0 then
+                    success = true
+                    goto endAddItem
+                end
+
+            end
         end
-    else
-        success, reason = false, "invalid_quantity"
     end
+
+    if existing == false then
+        local items, toSlot = inv.items, nil
+        for i = 1, inv.slots do
+            local slotItem = items[i]
+            if not item.unique and slotItem ~= nil and slotItem.name == item.name and table.matches(slotItem.metadata, metadata) then
+                toSlot, existing = i, true
+                break
+            elseif not toSlot and slotItem == nil then
+                toSlot = i
+            end
+        end
+        slot = toSlot
+    end
+
+    inv.weight = inv.weight + weight
+    Inventory.SetSlot(inv, item, amount, metadata, slot)
+    success = true
+
+    inv.changed = true
+    _G.Container[inv.type]:SyncInventory(inv.id, inv.items)
+
+    ::endAddItem::
     if cb then
         cb(success, reason)
+    else
+        return success, reason, slot
     end
 end
 RegisterNetEvent("inventory:server:AddItem", Inventory.AddItem)
@@ -401,7 +578,6 @@ exports("AddItem", Inventory.AddItem)
 function Inventory.SetMetadata(inv, slot, metadata)
     inv = Inventory(inv)
     slot = type(slot) == "number" and (inv and inv.items[slot])
-
     if inv and slot then
         if inv then
             for k, v in pairs(metadata) do
@@ -414,24 +590,29 @@ end
 RegisterNetEvent("inventory:server:SetMetadata", Inventory.SetMetadata)
 exports("SetMetadata", Inventory.SetMetadata)
 
-function Inventory.RemoveItem(inv, item, amount, metadata, slot)
+function Inventory.RemoveItem(inv, item, amount, metadata, slot, allowMoreThanOwned)
     inv = Inventory(inv)
     if type(item) ~= "table" then
         item = QBCore.Shared.Items[item]
     end
     amount = math.floor(amount + 0.5)
     if item and amount > 0 then
-
         if metadata ~= nil then
             metadata = type(metadata) == "string" and {type = metadata} or metadata
         end
 
         local itemSlots, totalAmount = Inventory.GetItemSlots(inv, item, metadata)
         if amount > totalAmount then
+            if not allowMoreThanOwned then
+                return false
+            end
             amount = totalAmount
         end
         local removed, total, slots = 0, amount, {}
         if slot and itemSlots[slot] then
+            if itemSlots[slot] < amount then
+                return false
+            end
             removed = amount
             Inventory.SetSlot(inv, item, -amount, metadata, slot)
             slots[#slots + 1] = inv.items[slot] or slot
@@ -460,7 +641,7 @@ function Inventory.RemoveItem(inv, item, amount, metadata, slot)
             end
         end
 
-        inv.weight = inv.weight - item.weight * removed
+        inv.weight = inv.weight - Inventory.GetItemWeight(item, metadata, removed)
         if removed > 0 and inv.type == "player" then
             local array = table.create(#slots, 0)
 
@@ -475,13 +656,14 @@ function Inventory.RemoveItem(inv, item, amount, metadata, slot)
             inv.changed = true
             _G.Container[inv.type]:SyncInventory(inv.id, inv.items)
         end
+        return removed
     end
-    return inv.changed
+    return false
 end
 RegisterNetEvent("inventory:server:RemoveItem", Inventory.RemoveItem)
 exports("RemoveItem", Inventory.RemoveItem)
 
-function Inventory.TransfertItem(invSource, invTarget, item, amount, metadata, slot, cb)
+function Inventory.TransfertItem(source, invSource, invTarget, item, amount, metadata, slot, cb, targetSlot)
     local success, reason = false, nil
     if type(invSource) ~= "table" then
         invSource = Inventory(invSource)
@@ -492,6 +674,14 @@ function Inventory.TransfertItem(invSource, invTarget, item, amount, metadata, s
     if type(item) ~= "table" then
         item = QBCore.Shared.Items[item]
     end
+
+    if item["giveable"] == false then
+        if invSource.id ~= invTarget.id then
+            cb(false, "not_giveable")
+            return
+        end
+    end
+
     if not metadata then
         metadata = {}
     end
@@ -548,13 +738,23 @@ function Inventory.TransfertItem(invSource, invTarget, item, amount, metadata, s
         amount = totalAmount
     end
 
-    if not Inventory.CanCarryItem(invTarget, item, amount, metadata) then
-        cb(false, "inventory_full")
-        return
+    if invSource.id == invTarget.id then
+        if invSource.weight > invTarget.maxWeight then
+            cb(false, "inventory_full")
+            return
+        end
+    else
+        if not Inventory.CanCarryItem(invTarget, item, amount, metadata) then
+            cb(false, "inventory_full")
+            return
+        end
     end
 
     if Inventory.RemoveItem(invSource, item, amount, metadata, slot) then
-        Inventory.AddItem(invTarget, item, amount, metadata, false, function(s, r)
+        Inventory.AddItem(source, invTarget, item, amount, metadata, targetSlot, function(s, r)
+            if not s then
+                Inventory.AddItem(source, invSource, item, amount, metadata, slot)
+            end
             success, reason = s, r
         end)
 
@@ -562,15 +762,81 @@ function Inventory.TransfertItem(invSource, invTarget, item, amount, metadata, s
         _G.Container[invTarget.type]:SyncInventory(invTarget.id, invTarget.items)
     end
 
-    if invSource.type ~= "player" and #invSource.users > 1 then
+    if invSource.type ~= "player" and table.length(invSource.users) > 1 then
         for player, _ in pairs(invSource.users) do
             TriggerClientEvent("inventory:client:updateTargetStoragesState", player, invSource)
         end
     end
-    if invTarget.type ~= "player" and #invTarget.users > 1 then
+    if invTarget.type ~= "player" and table.length(invTarget.users) > 1 then
         for player, _ in pairs(invTarget.users) do
             TriggerClientEvent("inventory:client:updateTargetStoragesState", player, invTarget)
         end
+    end
+
+    cb(success, reason)
+end
+
+function Inventory.SortInventoryAZ(inv, cb)
+    local success, reason = false, nil
+    if type(inv) ~= "table" then
+        inv = Inventory(inv)
+    end
+
+    if not _G.Container[inv.type]:CanGetContentInInventory(item) then
+        cb(false, "get_not_allowed")
+        return
+    end
+
+    if not _G.Container[inv.type]:CanPutContentInInventory(item) then
+        cb(false, "put_not_allowed")
+        return
+    end
+
+    local inventorySorted = {}
+    local sorted = table.deepclone(inv.items)
+    for i = 1, 2 do
+        inventorySorted = {}
+
+        table.sort(sorted, function(a, b)
+            if a == nil or b == nil then
+                return false
+            end
+
+            if a.label == b.label then
+                return a.amount < b.amount
+            end
+
+            if a.label == b.label and a.amount == b.amount then
+                return table.matches(a.metadata, b.metadata)
+            end
+
+            return a.label < b.label
+        end)
+
+        for s, item in pairs(sorted) do
+            local slot = #inventorySorted + 1
+
+            inventorySorted[slot] = item
+            inventorySorted[slot].slot = slot
+        end
+
+        sorted = table.deepclone(inventorySorted)
+    end
+
+    if table.length(inventorySorted) > 0 then
+        inv.changed = true
+        inv.items = inventorySorted
+
+        _G.Container[inv.type]:SyncInventory(inv.id, inv.items)
+        success = true
+
+        if inv.type ~= "player" and table.length(inv.users) > 1 then
+            for player, _ in pairs(inv.users) do
+                TriggerClientEvent("inventory:client:updateTargetStoragesState", player, inv)
+            end
+        end
+    else
+        success = true
     end
 
     cb(success, reason)
@@ -679,15 +945,16 @@ function Inventory.SetSlot(inv, item, amount, metadata, slot)
             amount = newAmount,
             metadata = metadata or currentSlot.metadata,
             description = item.description,
-            weight = item.weight,
+            weight = Inventory.GetItemWeight(item, metadata, 1),
             type = item.type,
             unique = item.unique,
             useable = item.useable,
             shouldClose = item.shouldClose,
             slot = slot,
             combinable = item.combinable,
+            illustrator = item.illustrator,
         }
-        inv.items[slot].weight = Inventory.SlotWeight(item, inv.items[slot])
+        inv.items[slot].weight = Inventory.GetItemWeight(item, inv.items[slot].metadata, inv.items[slot].amount)
     end
     inv.changed = true
 end
@@ -733,7 +1000,9 @@ function GetOrCreateInventory(storageType, invID, ctx)
                 trunkConfig = QBCore.Shared.Trunks[ctx.model]
             end
 
-            if Entity(NetworkGetEntityFromNetworkId(ctx.entity)).state.isPlayerVehicle ~= true then
+            local vehicleState = exports["soz-core"]:GetVehicleState(nil, ctx.entity)
+
+            if vehicleState.isPlayerVehicle ~= true then
                 storageType = "temporary_trunk"
             end
 
@@ -749,7 +1018,14 @@ function GetOrCreateInventory(storageType, invID, ctx)
         targetInv = Inventory("house_stash_" .. invID)
 
         if targetInv == nil then
-            targetInv = Inventory.Create("house_stash_" .. invID, invID, storageType, storageConfig.slot, storageConfig.weight, invID)
+            local tier = 0
+            if ctx then
+                tier = ctx.apartmentTier
+            end
+            if invID == "villa_cayo" then
+                tier = -1
+            end
+            targetInv = Inventory.Create("house_stash_" .. invID, invID, storageType, storageConfig[tier].slot, storageConfig[tier].weight, invID)
         end
     elseif storageType == "house_fridge" then
         targetInv = Inventory("house_fridge_" .. invID)
@@ -785,18 +1061,39 @@ RegisterNetEvent("inventory:DropPlayerInventory", function(playerID --[[PlayerDa
     Inventory.Remove(playerID)
 end)
 
+function getBinItems()
+    return {
+        ["metalscrap"] = math.random(0, 100) >= 90 and math.random(0, 1) or 0,
+        ["aluminum"] = math.random(0, 100) >= 90 and math.random(0, 2) or 0,
+        ["rubber"] = math.random(0, 100) >= 90 and math.random(0, 2) or 0,
+        ["rolex"] = math.random(0, 100) >= 95 and 1 or 0,
+        ["diamond_ring"] = math.random(0, 100) >= 95 and 1 or 0,
+        ["goldchain"] = math.random(0, 100) >= 95 and 1 or 0,
+        ["garbagebag"] = math.random(5, 20),
+    }
+end
+
 --- Loops
 local function purgeBinLoop()
     for _, inv in pairs(Inventories) do
         if inv.datastore and inv.type == "bin" then
-            Inventory.Remove(inv)
+            local items = getBinItems()
+            for item, amount in pairs(items) do
+                for i = 1, amount do
+                    Inventory.AddItem(0, inv, item, 1)
+                end
+            end
         end
     end
 
-    SetTimeout(2 * 60 * 60 * 1000, purgeBinLoop)
+    SetTimeout(math.random(1 * 3600 * 1000, 3 * 3600 * 1000), purgeBinLoop)
 end
 
 local function saveInventories(loop)
+    if not SyncInventory then
+        return
+    end
+
     for _, inv in pairs(Inventories) do
         if not inv.datastore and inv.changed then
             if _G.Container[inv.type]:SaveInventory(inv.id, inv.owner, inv.items) then
@@ -830,6 +1127,10 @@ end)
 
 exports("saveInventories", saveInventories)
 
+exports("stopSyncInventories", function()
+    SyncInventory = false
+end)
+
 _G.Inventory = Inventory
 _G.Container = {}
 
@@ -853,3 +1154,14 @@ local function GetMetrics()
 end
 
 exports("GetMetrics", GetMetrics)
+
+local function clearByOwner(owner)
+    MySQL.query("UPDATE storages SET inventory = ? WHERE owner = ?", {"[]", owner})
+
+    for _, inv in pairs(Inventories) do
+        if (inv.owner == owner) then
+            Inventory.Clear(inv, false)
+        end
+    end
+end
+exports("ClearByOwner", clearByOwner)

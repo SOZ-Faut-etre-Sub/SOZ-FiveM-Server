@@ -29,7 +29,7 @@ RegisterNetEvent("jobs:server:news:newspaperSold", function()
     local playerNewspaper = exports["soz-inventory"]:GetItem(Player.PlayerData.source, "newspaper", nil, true)
 
     if playerNewspaper < 1 then
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous ~r~n'avez plus~s~ de journaux", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous ~r~n'avez plus~s~ de journaux", "error")
 
         return
     end
@@ -40,10 +40,10 @@ RegisterNetEvent("jobs:server:news:newspaperSold", function()
 
     TriggerEvent("banking:server:TransferMoney", "farm_news", "safe_news", newspaperAmount * NewsConfig.SellPrice)
     exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "newspaper", newspaperAmount)
-    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez vendu ~g~" .. newspaperAmount .. " journaux")
+    TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez vendu ~g~" .. newspaperAmount .. " journaux")
 
-    TriggerEvent("monitor:server:event", "job_news_sell_newspaper", {player_source = Player.PlayerData.source},
-                 {
+    exports["soz-core"]:Event("job_news_sell_newspaper", {player_source = Player.PlayerData.source},
+                              {
         quantity = tonumber(newspaperAmount),
         position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source)),
     })
@@ -53,14 +53,14 @@ RegisterNetEvent("jobs:server:news:newspaperFarm", function()
     local Player = QBCore.Functions.GetPlayer(source)
     local newspaperAmount = math.random(NewsConfig.SellAmount.min * NewsConfig.FarmMultiplier, NewsConfig.SellAmount.max * NewsConfig.FarmMultiplier)
 
-    exports["soz-inventory"]:AddItem(Player.PlayerData.source, "newspaper", newspaperAmount, nil, nil, function(success)
+    exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, "newspaper", newspaperAmount, nil, nil, function(success)
         if success then
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez récupéré ~g~" .. newspaperAmount .. " journaux")
+            TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez récupéré ~g~" .. newspaperAmount .. " journaux")
         end
     end)
 
-    TriggerEvent("monitor:server:event", "job_news_print_newspaper", {player_source = Player.PlayerData.source},
-                 {
+    exports["soz-core"]:Event("job_news_print_newspaper", {player_source = Player.PlayerData.source},
+                              {
         quantity = tonumber(newspaperAmount),
         position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source)),
     })

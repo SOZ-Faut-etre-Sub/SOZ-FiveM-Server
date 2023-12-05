@@ -1,15 +1,21 @@
 import { Command } from '../../core/decorators/command';
-import { OnNuiEvent } from '../../core/decorators/event';
+import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { SozRole } from '../../core/permissions';
 import { emitRpc } from '../../core/rpc';
-import { AdminMenuStateProps } from '../../nui/components/Admin/AdminMenu';
-import { NuiEvent } from '../../shared/event';
+import { ClientEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
-import { RpcEvent } from '../../shared/rpc';
+import { PlayerCharInfo } from '../../shared/player';
+import { RpcServerEvent } from '../../shared/rpc';
 import { ClothingService } from '../clothing/clothing.service';
+import { HudMinimapProvider } from '../hud/hud.minimap.provider';
 import { NuiMenu } from '../nui/nui.menu';
+import { PlayerService } from '../player/player.service';
+import { VehicleDamageProvider } from '../vehicle/vehicle.damage.provider';
+import { VehiclePoliceLocator } from '../vehicle/vehicle.police.locator.provider';
+import { AdminMenuDeveloperProvider } from './admin.menu.developer.provider';
+import { AdminMenuInteractiveProvider } from './admin.menu.interactive.provider';
 
 @Provider()
 export class AdminMenuProvider {
@@ -19,56 +25,84 @@ export class AdminMenuProvider {
     @Inject(ClothingService)
     private clothingService: ClothingService;
 
-    private menuState: AdminMenuStateProps['data']['state'] = {
-        gameMaster: {
-            godMode: false,
-            invisible: false,
-            moneyCase: true,
-        },
-        interactive: {
-            displayOwners: false,
-            displayPlayerNames: false,
-            displayPlayersOnMap: false,
-        },
-        job: {
-            currentJobIndex: undefined,
-            currentJobGradeIndex: undefined,
-            isOnDuty: false,
-        },
-        skin: {
-            clothConfig: undefined,
-            maxOptions: [],
-        },
-        developer: {
-            noClip: false,
-            displayCoords: false,
-        },
-    };
+    @Inject(AdminMenuInteractiveProvider)
+    private adminMenuInteractiveProvider: AdminMenuInteractiveProvider;
 
-    @OnNuiEvent(NuiEvent.AdminUpdateState)
-    public async updateState({ namespace, key, value }: { namespace: string; key: string; value: any }): Promise<void> {
-        this.menuState[namespace][key] = value;
-    }
+    @Inject(AdminMenuDeveloperProvider)
+    private adminMenuDeveloperProvider: AdminMenuDeveloperProvider;
 
-    @Command('admin')
-    public async openAdminMenu() {
-        const [isAllowed, permission] = await emitRpc<[boolean, string]>(RpcEvent.ADMIN_IS_ALLOWED);
+    @Inject(VehicleDamageProvider)
+    private vehicleDamageProvider: VehicleDamageProvider;
+
+    @Inject(HudMinimapProvider)
+    private hudMinimapProvider: HudMinimapProvider;
+
+    @Inject(PlayerService)
+    private playerService: PlayerService;
+
+    @Inject(VehiclePoliceLocator)
+    private vehiclePoliceLocator: VehiclePoliceLocator;
+
+    @OnEvent(ClientEvent.ADMIN_OPEN_MENU)
+    @Command('admin', {
+        keys: [
+            {
+                mapper: 'keyboard',
+                key: 'F9',
+            },
+        ],
+    })
+    public async openAdminMenu(subMenuId?: string): Promise<void> {
+        const [isAllowed, permission] = await emitRpc<[boolean, string]>(RpcServerEvent.ADMIN_IS_ALLOWED);
         if (!isAllowed) {
             return;
         }
-        if (this.nuiMenu.isOpen()) {
+
+        if (this.nuiMenu.getOpened() === MenuType.AdminMenu) {
             this.nuiMenu.closeMenu();
+
             return;
         }
 
         const banner = 'https://nui-img/soz/menu_admin_' + permission;
-        this.menuState.skin.clothConfig = this.clothingService.getClothSet();
-        this.menuState.skin.maxOptions = this.clothingService.getMaxOptions();
+        const ped = PlayerPedId();
+        const characters = await emitRpc<Record<string, PlayerCharInfo>>(RpcServerEvent.ADMIN_GET_CHARACTERS);
 
-        this.nuiMenu.openMenu<MenuType.AdminMenu>(MenuType.AdminMenu, {
-            banner,
-            permission: permission as SozRole,
-            state: this.menuState,
-        });
+        this.nuiMenu.openMenu<MenuType.AdminMenu>(
+            MenuType.AdminMenu,
+            {
+                banner,
+                characters,
+                permission: permission as SozRole,
+                state: {
+                    gameMaster: {
+                        invisible: !IsEntityVisible(ped),
+                        moneyCase: this.playerService.getState().disableMoneyCase,
+                        adminGPS: this.hudMinimapProvider.hasAdminGps,
+                        adminPoliceLocator: this.vehiclePoliceLocator.getAdminEnabled(),
+                    },
+                    interactive: {
+                        displayOwners: this.adminMenuInteractiveProvider.intervalHandlers.displayOwners !== null,
+                        displayPlayerNames:
+                            this.adminMenuInteractiveProvider.intervalHandlers.displayPlayerNames !== null,
+                        displayPlayersOnMap:
+                            this.adminMenuInteractiveProvider.intervalHandlers.displayPlayersOnMap !== null,
+                    },
+                    skin: {
+                        clothConfig: this.clothingService.getClothSet(),
+                        maxOptions: this.clothingService.getMaxOptions(),
+                    },
+                    developer: {
+                        noClip: this.adminMenuDeveloperProvider.isIsNoClipMode(),
+                        displayCoords: this.adminMenuDeveloperProvider.showCoordinates !== null,
+                        displayMileage: this.adminMenuDeveloperProvider.showMileage !== null,
+                    },
+                    vehicule: {
+                        noStall: this.vehicleDamageProvider.getAdminNoStall(),
+                    },
+                },
+            },
+            { subMenuId }
+        );
     }
 }

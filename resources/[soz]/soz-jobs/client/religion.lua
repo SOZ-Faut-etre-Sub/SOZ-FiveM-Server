@@ -9,10 +9,40 @@ local PrayersMax = 0
 local PrayersCount = 0
 local PrayersPed = {}
 
+Citizen.CreateThread(function()
+    QBCore.Functions.CreateBlip("infochat", {
+        name = "Eglise InfoChat",
+        coords = vector3(-766.98, -23.17, 41.08),
+        sprite = 739,
+        scale = 1.0,
+    })
+end)
+
 local function ResetPrayersState()
     PrayersMax = 0
     PrayersCount = 0
     PrayersPed = {}
+end
+
+local function SetNPCAnimation(npcPed, shouldIdle)
+    if shouldIdle then
+        local animDict = GetEntityModel(npcPed) == GetHashKey("mp_m_freemode_01") and "anim@heists@heist_corona@team_idles@male_c" or
+                             "anim@heists@heist_corona@team_idles@female_a"
+
+        while not HasAnimDictLoaded(animDict) do
+            RequestAnimDict(animDict)
+            Wait(100)
+        end
+
+        -- prevents ped from having walk anim while being frozen
+        ClearPedTasksImmediately(npcPed)
+        TaskPlayAnim(npcPed, animDict, "idle", 1.0, 1.0, -1, 1, 1, 0, 0, 0)
+    else
+        -- remove idle animation as ped should be able to move
+        ClearPedTasksImmediately(npcPed)
+    end
+
+    FreezeEntityPosition(npcPed, shouldIdle)
 end
 
 exports["qb-target"]:AddBoxZone("job religion", vector3(-766.24, -24.34, 41.07), 1, 1, {
@@ -76,14 +106,14 @@ exports["qb-target"]:AddBoxZone("job religion", vector3(-766.24, -24.34, 41.07),
 })
 
 RegisterNetEvent("jobs:religion:fix")
-AddEventHandler("jobs:religion:fix", function(ped)
+AddEventHandler("jobs:religion:fix", function(npcPed)
     for _, p in ipairs(PrayersPed) do
-        if p == ped then
-            exports["soz-hud"]:DrawNotification("Vous avez déjà parlé à cette personne", "warning")
+        if p == npcPed then
+            exports["soz-core"]:DrawNotification("Vous avez déjà parlé à cette personne", "warning")
             return
         end
     end
-    FreezeEntityPosition(ped, true)
+    SetNPCAnimation(npcPed, true)
     QBCore.Functions.Progressbar("religion_fix", "Vous balancez une info chat...", 10000, false, true,
                                  {
         disableMovement = true,
@@ -93,11 +123,11 @@ AddEventHandler("jobs:religion:fix", function(ped)
     }, {animDict = "timetable@amanda@ig_4", anim = "ig_4_base"}, {}, {}, function()
         payout_counter = payout_counter + 1
         PrayersCount = PrayersCount + 1
-        table.insert(PrayersPed, ped)
-        FreezeEntityPosition(ped, false)
+        table.insert(PrayersPed, npcPed)
+        SetNPCAnimation(npcPed, false)
         if PrayersCount >= PrayersMax then
-            exports["soz-hud"]:DrawNotification(string.format("Vous avez prêché %d infos chat dans cette zone", PrayersCount), "warning")
-            exports["soz-hud"]:DrawNotification("Retournez voir le prêtre", "info")
+            exports["soz-core"]:DrawNotification(string.format("Vous avez prêché %d infos chat dans cette zone", PrayersCount), "warning")
+            exports["soz-core"]:DrawNotification("Retournez voir le prêtre", "info")
             exports["qb-target"]:RemoveZone("religion_zone")
             destroyblip(job_blip)
             OnJob = false
@@ -105,23 +135,6 @@ AddEventHandler("jobs:religion:fix", function(ped)
         end
     end)
 end)
-
-local function SpawnVehicule()
-    local ModelHash = "fixter"
-    local model = GetHashKey(ModelHash)
-    if not IsModelInCdimage(model) then
-        return
-    end
-    RequestModel(model)
-    while not HasModelLoaded(model) do
-        Citizen.Wait(10)
-    end
-    religion_vehicule = CreateVehicle(model, SozJobCore.religion_vehicule.x, SozJobCore.religion_vehicule.y, SozJobCore.religion_vehicule.z,
-                                      SozJobCore.religion_vehicule.w, true, false)
-    SetModelAsNoLongerNeeded(model)
-    VehPlate = QBCore.Functions.GetPlate(religion_vehicule)
-    TriggerServerEvent("vehiclekeys:server:SetVehicleOwner", VehPlate)
-end
 
 RegisterNetEvent("jobs:religion:begin")
 AddEventHandler("jobs:religion:begin", function()
@@ -132,17 +145,33 @@ end)
 
 RegisterNetEvent("jobs:religion:tenue")
 AddEventHandler("jobs:religion:tenue", function()
-    TriggerServerEvent("job:anounce", "Sortez le véhicule de service")
-    JobOutfit = true
+    QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
+        disableMovement = true,
+        disableCombat = true,
+    }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
+        TriggerServerEvent("soz-character:server:SetPlayerJobClothes", SozJobCore.religion_clothes[PlayerData.skin.Model.Hash])
+        TriggerServerEvent("job:anounce", "Sortez le véhicule de service")
+        JobOutfit = true
+    end)
 end)
 
 RegisterNetEvent("jobs:religion:vehicle")
 AddEventHandler("jobs:religion:vehicle", function()
     TriggerServerEvent("job:anounce", "Enfourchez votre vélo de service")
-    SpawnVehicule()
+    TriggerServerEvent("soz-core:server:vehicle:free-job-spawn", "fixter", {
+        SozJobCore.religion_vehicule.x,
+        SozJobCore.religion_vehicule.y,
+        SozJobCore.religion_vehicule.z,
+        SozJobCore.religion_vehicule.w,
+    }, "jobs:religion:vehicle-spawn")
+end)
+
+RegisterNetEvent("jobs:religion:vehicle-spawn")
+AddEventHandler("jobs:religion:vehicle-spawn", function(vehicleNetId)
+    religion_vehicule = NetToVeh(vehicleNetId)
     JobVehicle = true
     createblip("Véhicule", "Vélo de service", 225, SozJobCore.religion_vehicule)
-    local player = GetPlayerPed(-1)
+    local player = PlayerPedId()
     while InVehicle == false do
         Citizen.Wait(100)
         if IsPedInVehicle(player, religion_vehicule, true) == 1 then
@@ -208,19 +237,18 @@ AddEventHandler("jobs:religion:start", function()
     DrawDistance = 100
     while DrawDistance >= 50 do
         Citizen.Wait(1000)
-        local player = GetPlayerPed(-1)
+        local player = PlayerPedId()
         local CoordPlayer = GetEntityCoords(player)
         DrawDistance = GetDistanceBetweenCoords(CoordPlayer.x, CoordPlayer.y, CoordPlayer.z, ObjectifCoord.x, ObjectifCoord.y, ObjectifCoord.z)
     end
     TriggerServerEvent("job:anounce", "Balancez vos infos chat aux passants")
 end)
 
-RegisterNetEvent("jobs:religion:end")
-AddEventHandler("jobs:religion:end", function()
+local function close()
     TriggerServerEvent("job:set:unemployed")
     local money = SozJobCore.religion_payout * payout_counter
     TriggerServerEvent("job:payout", money)
-    QBCore.Functions.DeleteVehicle(religion_vehicule)
+    DeleteVehicule(religion_vehicule)
     exports["qb-target"]:RemoveZone("adsl_zone")
     destroyblip(job_blip)
     if IsWaypointActive() then
@@ -231,4 +259,19 @@ AddEventHandler("jobs:religion:end", function()
     JobVehicle = false
     payout_counter = 0
     ResetPrayersState()
+end
+
+RegisterNetEvent("jobs:religion:end")
+AddEventHandler("jobs:religion:end", function()
+    if JobOutfit then
+        QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
+            disableMovement = true,
+            disableCombat = true,
+        }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
+            TriggerServerEvent("soz-character:server:SetPlayerJobClothes", nil)
+            close()
+        end)
+    else
+        close()
+    end
 end)

@@ -20,13 +20,6 @@ PoliceJob.Functions.GetCloakroomAction = function(job)
             label = "Ouvrir mon casier",
             job = job,
         },
-        {
-            targeticon = "fas fa-box",
-            icon = "fas fa-tshirt",
-            event = "police:client:OpenCloakroomMenu",
-            label = "Se changer",
-            job = job,
-        },
     }
 end
 
@@ -36,7 +29,7 @@ PoliceJob.Functions.GetCloakroomPrisonerAction = function()
         {
             targeticon = "fas fa-box",
             icon = "fas fa-tshirt",
-            event = "police:client:SetPrisonerClothes",
+            event = "soz-core:client:police:SetPrisonerClothes",
             label = "Se changer",
         },
     }
@@ -62,6 +55,16 @@ PoliceJob.Functions.GetDutyAction = function(job)
             label = "Fin de service",
             canInteract = function()
                 return PlayerData.job.onduty
+            end,
+            job = job,
+        },
+        {
+            type = "server",
+            event = "QBCore:GetEmployOnDuty",
+            icon = "fas fa-users",
+            label = "Employé(e)s en service",
+            canInteract = function()
+                return PlayerData.job.onduty and SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.OnDutyView)
             end,
             job = job,
         },

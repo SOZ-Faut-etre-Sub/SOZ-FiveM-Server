@@ -1,7 +1,22 @@
 --- @class Apartment
 Apartment = {}
 
-function Apartment:new(identifier, label, owner, roommate, price, inside_coord, exit_zone, fridge_zone, stash_zone, closet_zone, money_zone, temporary_access)
+function Apartment:new(
+    identifier,
+    label,
+    owner,
+    roommate,
+    price,
+    inside_coord,
+    exit_zone,
+    fridge_zone,
+    stash_zone,
+    closet_zone,
+    money_zone,
+    tier,
+    has_parking_place,
+    temporary_access
+)
     self.__index = self
 
     return setmetatable({
@@ -11,6 +26,8 @@ function Apartment:new(identifier, label, owner, roommate, price, inside_coord, 
         roommate = roommate,
         price = price,
         inside_coord = decode_json(inside_coord),
+        tier = tier or 0,
+        has_parking_place = has_parking_place,
         --- Zones
         exit_zone = decode_json(exit_zone),
         fridge_zone = decode_json(fridge_zone),
@@ -73,8 +90,17 @@ function Apartment:GetPrice()
     return self.price
 end
 
-function Apartment:GetResellPrice()
-    return self.price / 2
+function Apartment:GetResellPrice(isTrailer)
+    local resellPrice = self.price / 2
+    if isTrailer and self.has_parking_place == 1 then
+        -- 50% parking place (which is 50% trailer price)
+        resellPrice = resellPrice + resellPrice / 2
+    end
+    for i = 0, self.tier, 1 do
+        local tierPrice = self.price * Config.UpgradesPercent[i] / 100
+        resellPrice = resellPrice + tierPrice / 2
+    end
+    return resellPrice
 end
 
 function Apartment:GetZone(zone)
@@ -103,6 +129,14 @@ end
 
 function Apartment:GetMoneyCoord()
     return self.money_zone
+end
+
+function Apartment:GetTier()
+    return self.tier
+end
+
+function Apartment:HasParkingPlace()
+    return self.has_parking_place == 1
 end
 
 ---
@@ -142,4 +176,12 @@ function Apartment:SetZone(name, config)
     end
 
     self[name] = decode_json(config)
+end
+
+function Apartment:SetTier(tier)
+    self.tier = tier
+end
+
+function Apartment:SetParkingPlace(value)
+    self.has_parking_place = value
 end

@@ -4,8 +4,9 @@ import { setMethodMetadata } from './reflect';
 export type CommandMetadata = {
     name: string;
     description: string;
-    role: SozRole | null;
+    role: SozRole[] | SozRole | null;
     keys: CommandKey[];
+    passthroughNuiFocus: boolean;
 };
 
 export type CommandKey = {
@@ -24,6 +25,7 @@ export const Command = (name: string, options: Partial<Omit<CommandMetadata, 'na
                 description: options.description || null,
                 role: options.role || null,
                 keys: options.keys || [],
+                passthroughNuiFocus: options.passthroughNuiFocus || false,
             },
             target,
             propertyKey

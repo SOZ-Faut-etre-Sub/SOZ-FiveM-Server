@@ -9,7 +9,7 @@ RegisterNetEvent("soz-upw:server:FacilityCapacity", function(data)
 
     local facility = getter(data.identifier)
     if facility then
-        TriggerClientEvent("hud:client:DrawNotification", source,
+        TriggerClientEvent("soz-core:client:notification:draw", source,
                            string.format("État d'énergie : %s%%", math.floor(facility.capacity / facility.maxCapacity * 100)))
     end
 end)
@@ -32,7 +32,7 @@ local function GetTerminals(scope)
     local terminals = {}
 
     for identifier, terminal in pairs(Terminals) do
-        if terminal.scope == "default" then
+        if terminal.scope == scope then
             terminals[identifier] = terminal
         end
     end
@@ -63,16 +63,33 @@ local function GetTerminalCapacities(scope)
     return capacity, maxCapacity
 end
 
+local function GetWorkingTerminals(scope)
+    local count, total = 0, 0
+
+    for _, terminal in pairs(GetTerminals(scope)) do
+        if terminal.scope == scope then
+            local capacity = (terminal.capacity * 100) / terminal.maxCapacity
+
+            total = total + 1
+
+            if capacity >= 1 then
+                count = count + 1
+            end
+        end
+    end
+
+    return count, total
+end
+
 function GetBlackoutPercent()
-    local capacity, maxCapacity = GetTerminalCapacities("default")
-    local percent = math.ceil(capacity / maxCapacity * 100)
+    local count, total = GetWorkingTerminals("default")
+    local percent = math.ceil(count / total * 100)
 
     return percent
 end
 
 function GetBlackoutLevel()
-    local capacity, maxCapacity = GetTerminalCapacities("default")
-    local percent = math.ceil(capacity / maxCapacity * 100)
+    local percent = GetBlackoutPercent()
 
     if percent >= 100 then
         return QBCore.Shared.Blackout.Level.Zero
@@ -111,7 +128,6 @@ end)
 function StartConsumptionLoop()
     Citizen.CreateThread(function()
         consumptionLoopRunning = true
-        GlobalState.job_energy = GlobalState.job_energy or {}
 
         while consumptionLoopRunning do
             local connectedPlayers = QBCore.Functions.TriggerRpc("smallresources:server:GetCurrentPlayers")[1]
@@ -142,11 +158,14 @@ function StartConsumptionLoop()
             end
 
             local newBlackoutLevel = GetBlackoutLevel()
+            local globalState = exports["soz-core"]:GetGlobalState()
 
             -- Blackout level has changed
-            if not GlobalState.blackout_override and GlobalState.blackout_level ~= newBlackoutLevel then
-                GlobalState.blackout_level = newBlackoutLevel
+            if not globalState.blackoutOverride and globalState.blackoutLevel ~= newBlackoutLevel then
+                exports["soz-core"]:SetGlobalState({blackoutLevel = newBlackoutLevel})
             end
+
+            local energies = {}
 
             -- Handle job terminal consumption
             for jobId, v in pairs(SozJobCore.Jobs) do
@@ -160,13 +179,22 @@ function StartConsumptionLoop()
                         terminal:Consume(consumptionJobThisTick)
                     end
 
-                    GlobalState.job_energy[jobId] = terminal:GetEnergyPercent()
+                    energies[jobId] = terminal:GetEnergyPercent()
                 else
-                    GlobalState.job_energy[jobId] = 100
+                    energies[jobId] = 100
                 end
             end
+
+            exports["soz-core"]:SetJobEnergies(energies)
 
             Citizen.Wait(Config.Production.Tick)
         end
     end)
 end
+
+RegisterNetEvent("soz-upw:server:ConsumeTerminalRatio", function(id, value)
+    local terminal = GetTerminal(id);
+    if terminal then
+        terminal:ConsumeRatio(value)
+    end
+end)

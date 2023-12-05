@@ -11,13 +11,13 @@ RegisterNetEvent("police:server:CuffPlayer", function(targetId, isSoftcuff)
             exports["soz-inventory"]:RemoveItem(player.PlayerData.source, "handcuffs", 1)
             target.Functions.SetMetaData("ishandcuffed", true)
             target.Functions.UpdatePlayerData()
-            Player(target.PlayerData.source).state:set("ishandcuffed", true, true)
+            exports["soz-core"]:SetPlayerState(target.PlayerData.source, {isHandcuffed = true})
 
             TriggerClientEvent("police:client:HandCuffAnimation", player.PlayerData.source)
             TriggerClientEvent("police:client:GetCuffed", target.PlayerData.source, player.PlayerData.source, isSoftcuff)
             TriggerClientEvent("soz-talk:client:PowerOffRadio", target.PlayerData.source)
         else
-            TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "Vous n'avez pas de ~r~menotte", "error")
+            TriggerClientEvent("soz-core:client:notification:draw", player.PlayerData.source, "Vous n'avez pas de ~r~menottes", "error")
         end
     end
 end)
@@ -34,32 +34,31 @@ RegisterNetEvent("police:server:UnCuffPlayer", function(targetId)
             Wait(3000)
 
             target.Functions.SetMetaData("ishandcuffed", false)
-            Player(target.PlayerData.source).state:set("ishandcuffed", false, true)
+            exports["soz-core"]:SetPlayerState(target.PlayerData.source, {isHandcuffed = false})
             TriggerClientEvent("police:client:GetUnCuffed", target.PlayerData.source)
+            TriggerClientEvent("soz-talk:client:PowerOnradio", target.PlayerData.source)
         else
-            TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "Vous n'avez pas de ~r~clé de menotte", "error")
+            TriggerClientEvent("soz-core:client:notification:draw", player.PlayerData.source, "Vous n'avez pas de ~r~clé de menottes", "error")
         end
     end
 end)
 
 --- Escort
-RegisterNetEvent("police:server:EscortPlayer", function(playerId)
+RegisterNetEvent("police:server:EscortPlayer", function(playerId, crimi)
     local player = QBCore.Functions.GetPlayer(source)
     local target = QBCore.Functions.GetPlayer(playerId)
 
     if player and target and player ~= target then
-        for _, allowedJob in ipairs(Config.AllowedJobDragInteraction) do
-            if player.PlayerData.job.id == allowedJob then
-                Player(player.PlayerData.source).state:set("isEscorting", true, true)
-                Player(player.PlayerData.source).state:set("escorting", target.PlayerData.source, true)
-                Player(target.PlayerData.source).state:set("isEscorted", true, true)
+        exports["soz-core"]:SetPlayerState(target.PlayerData.source, {isEscorted = true})
+        exports["soz-core"]:SetPlayerState(player.PlayerData.source, {
+            isEscorting = true,
+            escorting = target.PlayerData.source,
+        })
 
-                TriggerClientEvent("police:client:SetEscorting", player.PlayerData.source)
-                TriggerClientEvent("police:client:GetEscorted", target.PlayerData.source, player.PlayerData.source)
+        TriggerClientEvent("police:client:SetEscorting", player.PlayerData.source, target.PlayerData.source, crimi)
+        TriggerClientEvent("police:client:GetEscorted", target.PlayerData.source, player.PlayerData.source, crimi)
 
-                return
-            end
-        end
+        return
     end
 end)
 
@@ -67,22 +66,17 @@ RegisterNetEvent("police:server:DeEscortPlayer", function(playerId)
     local player = QBCore.Functions.GetPlayer(source)
     local target = QBCore.Functions.GetPlayer(playerId)
 
-    local playerState = Player(player.PlayerData.source).state
-    local targetState = Player(target.PlayerData.source).state
+    local playerState = exports["soz-core"]:GetPlayerState(player.PlayerData.source);
+    local targetState = exports["soz-core"]:GetPlayerState(target.PlayerData.source);
 
     if player and target and player ~= target then
-        for _, allowedJob in ipairs(Config.AllowedJobDragInteraction) do
-            if player.PlayerData.job.id == allowedJob then
-                if playerState.isEscorting and playerState.escorting == target.PlayerData.source and targetState.isEscorted then
-                    Player(player.PlayerData.source).state:set("isEscorting", false, true)
-                    Player(player.PlayerData.source).state:set("escorting", nil, true)
-                    Player(target.PlayerData.source).state:set("isEscorted", false, true)
+        if playerState.isEscorting and playerState.escorting == target.PlayerData.source and targetState.isEscorted then
+            exports["soz-core"]:SetPlayerState(target.PlayerData.source, {isEscorted = false})
+            exports["soz-core"]:SetPlayerState(player.PlayerData.source, {isEscorting = false, escorting = 0})
 
-                    TriggerClientEvent("police:client:DeEscort", target.PlayerData.source)
+            TriggerClientEvent("police:client:DeEscort", target.PlayerData.source)
 
-                    return
-                end
-            end
+            return
         end
     end
 end)
@@ -111,24 +105,16 @@ RegisterNetEvent("police:server:RemovePoint", function(targetId, licenseType, po
         for _, allowedJob in ipairs(Config.AllowedJobInteraction) do
             if player.PlayerData.job.id == allowedJob then
                 local licenses = target.PlayerData.metadata["licences"]
+                -- Hide real value in case fake license
+                local realNewvValue = math.max(licenses[licenseType] - point, 0)
+                licenses[licenseType] = realNewvValue
 
-                if licenses[licenseType] >= point then
-                    licenses[licenseType] = licenses[licenseType] - point
+                TriggerClientEvent("soz-core:client:notification:draw", player.PlayerData.source,
+                                   "Vous avez retiré ~b~" .. point .. " point" .. (point > 1 and "s" or "") .. "~s~ sur le permis")
+                TriggerClientEvent("soz-core:client:notification:draw", target.PlayerData.source,
+                                   "~b~" .. point .. " point" .. (point > 1 and "s" or "") .. "~s~ ont été retirés de votre permis !", "info")
 
-                    if licenses[licenseType] >= 1 then
-                        TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source,
-                                           "Vous avez retiré ~b~" .. point .. " point" .. (point > 1 and "s" or "") .. "~s~ sur le permis")
-                        TriggerClientEvent("hud:client:DrawNotification", target.PlayerData.source,
-                                           "~b~" .. point .. " point" .. (point > 1 and "s" or "") .. "~s~ ont été retiré de votre permis !", "info")
-                    else
-                        TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "Vous avez retiré le permis")
-                        TriggerClientEvent("hud:client:DrawNotification", target.PlayerData.source, "Votre permis vous a été retiré !", "info")
-                    end
-
-                    target.Functions.SetMetaData("licences", licenses)
-                else
-                    TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "Il n'y a pas assez de point sur le permis", "error")
-                end
+                target.Functions.SetMetaData("licences", licenses)
 
                 return
             end
@@ -148,14 +134,14 @@ RegisterNetEvent("police:server:RemoveLicense", function(targetId, licenseType, 
                 if licenses[licenseType] then
                     licenses[licenseType] = false
 
-                    TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source,
+                    TriggerClientEvent("soz-core:client:notification:draw", player.PlayerData.source,
                                        "Vous avez retiré le permis: ~b~" .. Config.Licenses[licenseType].label)
-                    TriggerClientEvent("hud:client:DrawNotification", target.PlayerData.source,
+                    TriggerClientEvent("soz-core:client:notification:draw", target.PlayerData.source,
                                        "Votre permis ~b~" .. Config.Licenses[licenseType].label .. "~s~ vous a été retiré !", "info")
 
                     target.Functions.SetMetaData("licences", licenses)
                 else
-                    TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "Ce permis est déjà invalide", "error")
+                    TriggerClientEvent("soz-core:client:notification:draw", player.PlayerData.source, "Ce permis est déjà invalide", "error")
                 end
 
                 return
@@ -176,14 +162,14 @@ RegisterNetEvent("police:server:GiveLicense", function(targetId, licenseType)
                 if not licenses[licenseType] then
                     licenses[licenseType] = true
 
-                    TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source,
+                    TriggerClientEvent("soz-core:client:notification:draw", player.PlayerData.source,
                                        "Vous avez donné le permis: ~b~" .. Config.Licenses[licenseType].label)
-                    TriggerClientEvent("hud:client:DrawNotification", target.PlayerData.source,
+                    TriggerClientEvent("soz-core:client:notification:draw", target.PlayerData.source,
                                        "Vous avez reçu un nouveau permis : ~b~" .. Config.Licenses[licenseType].label .. "~s~ !", "info")
 
                     target.Functions.SetMetaData("licences", licenses)
                 else
-                    TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "Ce permis est déjà valide", "error")
+                    TriggerClientEvent("soz-core:client:notification:draw", player.PlayerData.source, "Ce permis est déjà valide", "error")
                 end
 
                 return
@@ -216,41 +202,9 @@ QBCore.Functions.CreateCallback("police:server:DeleteWantedPlayer", function(sou
                 cb(MySQL.execute.await("UPDATE `phone_twitch_news` SET type = @type WHERE id = @id",
                                        {["@id"] = id, ["@type"] = player.PlayerData.job.id .. ":end"}).changedRows >= 1)
 
+                TriggerClientEvent("phone:app:news:reloadNews", -1)
                 return
             end
         end
-    end
-end)
-
---- Other
-RegisterNetEvent("police:server:buy", function(weaponID)
-    local player = QBCore.Functions.GetPlayer(source)
-
-    if not Config.WeaponShop[player.PlayerData.job.id] then
-        return
-    end
-
-    local item = Config.WeaponShop[player.PlayerData.job.id][weaponID]
-
-    if player.Functions.RemoveMoney("money", item.price) then
-        TriggerEvent("monitor:server:event", "shop_buy", {player_source = player.PlayerData.source, shop_type = "job"},
-                     {item_name = item.name, amount = item.price})
-
-        exports["soz-inventory"]:AddItem(player.PlayerData.source, item.name, item.amount, item.metadata, nil, function(success, reason)
-            if success then
-                TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source,
-                                   ("Vous venez d'acheter ~b~%s %s~s~ pour ~g~$%s"):format(item.amount, QBCore.Shared.Items[item.name].label, item.price))
-            end
-        end)
-    else
-        TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
-    end
-end)
-
-AddEventHandler("entityCreating", function(handle)
-    local entityModel = GetEntityModel(handle)
-
-    if Config.RadarAllowedVehicle[entityModel] then
-        Entity(handle).state:set("isSirenMuted", false, true)
     end
 end)

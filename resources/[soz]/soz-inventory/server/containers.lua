@@ -8,7 +8,6 @@ local playerHaveJob = function(player, owner)
 end
 
 local playerHaveJobAndDuty = function(player, owner)
-    print("Check player have job and duty: ", player.PlayerData.job.id, owner, player.PlayerData.job.onduty)
     return player.PlayerData.job.id == owner and player.PlayerData.job.onduty
 end
 
@@ -41,7 +40,7 @@ Container["armory"] = InventoryContainer:new({
 
 Container["fridge"] = InventoryContainer:new({
     type = "fridge",
-    allowedTypes = {"food", "drink", "cocktail", "liquor"},
+    allowedTypes = {"food", "drink", "cocktail", "liquor", "crate", "drug"},
     inventoryPermissionCallback = playerHaveJobAndDuty,
 })
 
@@ -52,8 +51,13 @@ Container["trunk"] = InventoryContainer:new({
         "weapon_attachment",
         "weapon_ammo",
         "item",
+        "fishing_rod",
+        "fishing_garbage",
+        "fishing_bait",
+        "fish",
         "drug",
         "drink",
+        "cocktail",
         "food",
         "oil_and_item",
         "plank",
@@ -62,6 +66,9 @@ Container["trunk"] = InventoryContainer:new({
         "liquor",
         "furniture",
         "flavor",
+        "outfit",
+        "crate",
+        "drug_pot",
     },
 })
 
@@ -71,9 +78,14 @@ Container["temporary_trunk"] = InventoryDatastore:new({
         "weapon",
         "weapon_attachment",
         "weapon_ammo",
+        "fishing_rod",
+        "fishing_garbage",
+        "fishing_bait",
+        "fish",
         "item",
         "drug",
         "drink",
+        "cocktail",
         "food",
         "oil_and_item",
         "plank",
@@ -82,6 +94,9 @@ Container["temporary_trunk"] = InventoryDatastore:new({
         "liquor",
         "furniture",
         "flavor",
+        "outfit",
+        "crate",
+        "drug_pot",
     },
 })
 
@@ -92,6 +107,10 @@ Container["trash"] = InventoryContainer:new({
     type = "trunk",
     allowedTypes = {
         "item",
+        "fishing_rod",
+        "fishing_garbage",
+        "fishing_bait",
+        "fish",
         "drug",
         "food",
         "drink",
@@ -106,12 +125,15 @@ Container["trash"] = InventoryContainer:new({
         "flavor",
         "furniture",
         "liquor",
+        "outfit",
+        "crate",
+        "drug_pot",
     },
 })
 
 Container["storage"] = InventoryContainer:new({
     type = "storage",
-    allowedTypes = {"item", "drug", "oil_and_item"},
+    allowedTypes = {"item", "oil_and_item", "outfit", "crate", "drug_pot"},
     inventoryPermissionCallback = playerHaveJobAndDuty,
 })
 --- Todo: convert to storage type : storage
@@ -123,13 +145,13 @@ Container["storage_tank"] = InventoryContainer:new({
 --- Todo: convert to storage type : storage
 Container["seizure"] = InventoryContainer:new({
     type = "seizure",
-    allowedTypes = {"weapon", "weapon_attachment", "weapon_ammo", "drug", "item_illegal"},
+    allowedTypes = {"weapon", "weapon_attachment", "weapon_ammo", "drug", "item", "item_illegal", "drug_pot"},
     inventoryPermissionCallback = playerHaveJobAndDuty,
 })
 --- Todo: convert to storage type : storage
 Container["boss_storage"] = InventoryContainer:new({
     type = "boss_storage",
-    allowedTypes = {"weapon", "weapon_ammo", "item", "drug", "oil_and_item"},
+    allowedTypes = {"weapon", "weapon_ammo", "item", "oil_and_item"},
     inventoryPermissionCallback = function(player, owner)
         return SozJobCore.Functions.HasPermission(owner, player.PlayerData.job.id, player.PlayerData.job.grade, SozJobCore.JobPermission.SocietyPrivateStorage)
     end,
@@ -156,26 +178,54 @@ Container["stash"] = InventoryContainer:new({
 
 Container["bin"] = InventoryDatastore:new({
     type = "bin",
-    allowedTypes = {"item", "item_illegal"},
+    allowedTypes = {
+        "item",
+        "fishing_rod",
+        "fishing_garbage",
+        "fishing_bait",
+        "fish",
+        "drug",
+        "food",
+        "drink",
+        "cocktail",
+        "item_illegal",
+        "organ",
+        "oil",
+        "oil_and_item",
+        "log",
+        "sawdust",
+        "plank",
+        "flavor",
+        "furniture",
+        "liquor",
+        "outfit",
+        "crate",
+        "drug_pot",
+    },
     populateDatastoreCallback = function()
         local inventory = {}
-        local items = {
-            ["plastic"] = math.random(0, 100) >= 80 and math.random(0, 2) or 0,
-            ["metalscrap"] = math.random(0, 100) >= 80 and math.random(0, 1) or 0,
-            ["aluminum"] = math.random(0, 100) >= 80 and math.random(0, 2) or 0,
-            ["rubber"] = math.random(0, 100) >= 80 and math.random(0, 2) or 0,
-            ["electronickit"] = math.random(0, 100) >= 80 and 1 or 0,
-            ["rolex"] = math.random(0, 100) >= 90 and 1 or 0,
-            ["diamond_ring"] = math.random(0, 100) >= 90 and 1 or 0,
-            ["goldchain"] = math.random(0, 100) >= 90 and 1 or 0,
-            ["10kgoldchain"] = math.random(0, 100) >= 90 and 1 or 0,
-            ["goldbar"] = math.random(0, 100) >= 95 and 1 or 0,
-            ["garbagebag"] = math.random(5, 20),
-        }
+        local items = getBinItems()
 
+        local availableWeight = Config.StorageCapacity["bin"].weight
         for item, amount in pairs(items) do
             if amount > 0 then
-                inventory[#inventory + 1] = {slot = #inventory + 1, name = item, type = "item", amount = amount}
+                local itemsWeight = QBCore.Shared.Items[item].weight * amount
+
+                if availableWeight >= itemsWeight then
+                    inventory[#inventory + 1] = {slot = #inventory + 1, name = item, type = "item", amount = amount}
+                    availableWeight = availableWeight - QBCore.Shared.Items[item].weight * amount
+                else
+                    local maxAmount = math.floor(availableWeight / QBCore.Shared.Items[item].weight)
+                    if maxAmount > 0 then
+                        inventory[#inventory + 1] = {
+                            slot = #inventory + 1,
+                            name = item,
+                            type = "item",
+                            amount = maxAmount,
+                        }
+                        availableWeight = availableWeight - QBCore.Shared.Items[item].weight * maxAmount
+                    end
+                end
             end
         end
 
@@ -186,9 +236,28 @@ Container["bin"] = InventoryDatastore:new({
 --- Housing
 Container["house_stash"] = InventoryContainer:new({
     type = "stash",
-    allowedTypes = {"item", "item_illegal", "weapon", "weapon_ammo"},
+    allowedTypes = {
+        "item",
+        "item_illegal",
+        "weapon",
+        "weapon_ammo",
+        "furniture",
+        "outfit",
+        "log",
+        "oil_and_item",
+        "plank",
+        "sawdust",
+        "fishing_rod",
+        "fishing_garbage",
+        "fishing_bait",
+        "fish",
+        "drug_pot",
+    },
 })
-Container["house_fridge"] = InventoryContainer:new({type = "fridge", allowedTypes = {"food", "drink"}})
+Container["house_fridge"] = InventoryContainer:new({
+    type = "fridge",
+    allowedTypes = {"food", "drink", "cocktail", "liquor", "flavor", "crate", "drug"},
+})
 
 --- Jobs PAWL
 Container["log_storage"] = InventoryContainer:new({
@@ -213,6 +282,12 @@ Container["log_processing"] = InventoryContainer:new({
     inventoryGetContentCallback = function()
         return false
     end,
+})
+--- PAWL - ZKEA
+Container["cabinet_storage"] = InventoryContainer:new({
+    type = "cabinet_storage",
+    allowedTypes = {"item"},
+    inventoryPermissionCallback = playerHaveJobAndDuty,
 })
 
 --- Jobs UPW
@@ -260,6 +335,12 @@ Container["recycler_processing"] = InventoryContainer:new({
         "flavor",
         "furniture",
         "liquor",
+        "crate",
+        "fish",
+        "fishing_rod",
+        "fishing_garbage",
+        "fishing_bait",
+        "drug_pot",
     },
     inventoryPermissionCallback = playerHaveJobAndDuty,
     inventoryGetContentCallback = function()

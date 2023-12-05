@@ -50,11 +50,11 @@ CreateThread(function()
         maxZ = 141.25,
     }, {options = callSociety("555-MARIUS"), distance = 2.5})
 
-    exports["qb-target"]:AddBoxZone("bell:mtp", vector3(-245.88, 6072.43, 32.33), 0.25, 0.35, {
+    exports["qb-target"]:AddBoxZone("bell:mtp", vector3(-241.39, 6088.71, 31.39), 0.35, 0.25, {
         name = "bell:mtp",
-        heading = 76.0,
-        minZ = 32.3,
-        maxZ = 32.6,
+        heading = 315.0,
+        minZ = 30.39,
+        maxZ = 33.39,
     }, {options = callSociety("555-MTP"), distance = 2.5})
 
     exports["qb-target"]:AddBoxZone("bell:lsmc", vector3(358.71, -1415.06, 32.51), 0.6, 0.4, {
@@ -85,24 +85,45 @@ CreateThread(function()
         maxZ = 76.27,
     }, {options = callSociety("555-PAWL"), distance = 2.5})
 
-    exports["qb-target"]:AddBoxZone("bell:baun:bahama", vector3(-1393.46, -600.43, 30.32), 0.35, 0.25,
-                                    {name = "bell:baun:bahama", heading = 327, minZ = 30.32, maxZ = 30.47}, {
+    exports["qb-target"]:AddBoxZone("bell:baun:bahama", vector3(-1393.51, -600.42, 30.32), 0.35, 0.25,
+                                    {name = "bell:baun:bahama", heading = 120, minZ = 30.32, maxZ = 30.47}, {
         options = callSociety("555-BAUN"),
         distance = 2.5,
     })
 
     exports["qb-target"]:AddBoxZone("bell:baun:unicorn", vector3(130.04, -1287.28, 29.28), 0.25, 0.35,
-                                    {name = "bell:baun:unicorn", heading = 302, minZ = 29.28, maxZ = 29.43}, {
+                                    {name = "bell:baun:unicorn", heading = 325, minZ = 29.28, maxZ = 29.43}, {
         options = callSociety("555-BAUN"),
         distance = 2.5,
     })
 
     exports["qb-target"]:AddBoxZone("bell:ffs", vector3(719.65, -963.63, 30.38), 0.3, 0.2, {
         name = "bell:ffs",
-        heading = 74,
+        heading = 63,
         minZ = 30.4,
         maxZ = 30.5,
     }, {options = callSociety("555-FFS"), distance = 2.5})
+
+    exports["qb-target"]:AddBoxZone("bell:mdr", vector3(-555.79, -186.76, 38.26), 0.25, 0.35, {
+        name = "bell:mdr",
+        heading = 33,
+        minZ = 38.11,
+        maxZ = 38.42,
+    }, {options = callSociety("555-MDR"), distance = 2.5})
+
+    exports["qb-target"]:AddBoxZone("bell:carljr", vector3(903.72, -158.02, 74.17), 0.2, 0.4, {
+        name = "bell:carljr",
+        heading = 37,
+        minZ = 73.97,
+        maxZ = 74.37,
+    }, {options = callSociety("555-CARLJR"), distance = 2.5})
+
+    exports["qb-target"]:AddBoxZone("bell:gouv", vector3(-555.61, -602.12, 34.68), 0.4, 0.4, {
+        name = "bell:gouv",
+        heading = 80,
+        minZ = 34.38,
+        maxZ = 34.68,
+    }, {options = callSociety("555-GOUV"), distance = 2.5})
 end)
 
 RegisterNetEvent("jobs:client:callSociety", function(data)

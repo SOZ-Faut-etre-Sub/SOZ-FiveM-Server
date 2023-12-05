@@ -3,13 +3,13 @@ import React from 'react';
 
 import { useConfig } from '../../hooks/usePhone';
 
-export const List = ({ ...props }) => {
+export const List = ({ children }) => {
     const config = useConfig();
 
     return (
         <div
             className={cn('mx-2 my-4 shadow overflow-y-auto rounded-[.8rem]', {
-                'bg-[#1C1C1E]': config.theme.value === 'dark',
+                'bg-ios-700': config.theme.value === 'dark',
                 'bg-white': config.theme.value === 'light',
             })}
         >
@@ -19,7 +19,7 @@ export const List = ({ ...props }) => {
                     'divide-[#ECECED]': config.theme.value === 'light',
                 })}
             >
-                {props.children}
+                {children}
             </ul>
         </div>
     );

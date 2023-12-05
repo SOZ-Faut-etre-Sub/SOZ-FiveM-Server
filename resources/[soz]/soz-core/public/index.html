@@ -19,8 +19,27 @@
 
             window.addEventListener('message', (event) => {
                 if (event.data.type === 'soz-core-nui-load') {
-                    const url = event.data.mode === 'dev' ? 'http://localhost:9000/nui.js' : 'https://cfx-nui-soz-core/build/nui.js';
-                    loadNUIScript(url);
+                    const buildurl = 'https://cfx-nui-soz-core/build/nui.js';
+                    if (event.data.mode === 'dev') {
+                        const devdurl = 'http://localhost:9000/nui.js';
+                        const req = new XMLHttpRequest();
+                        req.open('GET', devdurl);
+                        req.onreadystatechange = () => {
+                            if (req.readyState === 4 && req.status === 200) {
+                                if (req.status === 200) {
+                                    loadNUIScript(devdurl);
+                                }
+                            }
+                        };
+                        req.onerror = () => {
+                            loadNUIScript(buildurl);
+                            console.warn('Core Fall back to build nui');
+                        };
+                        req.send();
+                    }
+                    else {
+                        loadNUIScript(buildurl);
+                    }
                 }
             });
 
@@ -30,11 +49,21 @@
             }, 5000);
         </script>
         <style>
-            html, body, #app {
-                height: 100%;
-                width: 100%;
-                margin: 0;
+            @import url('https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+            * {
+                user-select: none;
+            }
+
+            body {
+                overflow: hidden;
                 padding: 0;
+                margin: 0;
+            }
+
+            #app {
+                position: absolute;
+                inset: 0;
             }
         </style>
     </head>

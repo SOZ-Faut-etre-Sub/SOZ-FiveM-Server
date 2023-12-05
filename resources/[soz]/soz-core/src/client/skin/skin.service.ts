@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '../../core/decorators/injectable';
-import { ResourceLoader } from '../resources/resource.loader';
+import { ResourceLoader } from '../repository/resource.loader';
 
 @Injectable()
 export class SkinService {

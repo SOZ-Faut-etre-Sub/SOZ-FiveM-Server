@@ -1,6 +1,9 @@
-import { ZoneOptions } from '../../client/target/target.factory';
+import { Component, WardrobeConfig } from '../cloth';
+import { joaat } from '../joaat';
+import { NamedZone } from '../polyzone/box.zone';
+import { getDefaultVehicleConfiguration, VehicleConfiguration } from '../vehicle/modification';
 
-const orderZone: ZoneOptions & { name: string } = {
+const orderZone: NamedZone = {
     name: 'bennys_order',
     center: [-203.94, -1337.64, 34.89],
     length: 0.15,
@@ -11,15 +14,18 @@ const orderZone: ZoneOptions & { name: string } = {
     debugPoly: false,
 };
 
-const upgradedSimplifiedMods = {
-    modArmor: 4,
-    modBrakes: 2,
-    modEngine: 3,
-    modTransmission: 2,
-    modTurbo: 1,
+const defaultUpgradeConfiguration: VehicleConfiguration = {
+    ...getDefaultVehicleConfiguration(),
+    modification: {
+        armor: 4,
+        brakes: 2,
+        engine: 3,
+        transmission: 2,
+        turbo: true,
+    },
 };
 
-const resellZone: ZoneOptions & { name: string } = {
+const resellZone: NamedZone = {
     name: 'bennys_resell',
     center: [260.77, 2578.32, 45.1],
     length: 5.8,
@@ -33,9 +39,7 @@ export const BennysConfig = {
     Estimate: {
         duration: 5000,
     },
-    Mods: {
-        upgradedSimplifiedMods,
-    },
+    UpgradeConfiguration: defaultUpgradeConfiguration,
     Order: {
         zone: orderZone,
         waitingTime: 60, // In minutes
@@ -49,4 +53,115 @@ export type BennysOrder = {
     uuid: string;
     model: string;
     orderDate: string;
+};
+
+export const NewGarrayCloakroom: WardrobeConfig = {
+    [joaat('mp_m_freemode_01')]: {
+        ['Direction']: {
+            Components: {
+                [Component.Torso]: { Drawable: 19, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 98, Texture: 17, Palette: 0 },
+                [Component.Shoes]: { Drawable: 46, Texture: 3, Palette: 0 },
+                [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 351, Texture: 9, Palette: 0 },
+            },
+            Props: {},
+        },
+        ['Mécano']: {
+            Components: {
+                [Component.Torso]: { Drawable: 19, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 98, Texture: 3, Palette: 0 },
+                [Component.Shoes]: { Drawable: 46, Texture: 3, Palette: 0 },
+                [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 0, Texture: 2, Palette: 0 },
+            },
+            Props: {},
+        },
+        ['Apprenti']: {
+            Components: {
+                [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 39, Texture: 1, Palette: 0 },
+                [Component.Shoes]: { Drawable: 46, Texture: 3, Palette: 0 },
+                [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 66, Texture: 1, Palette: 0 },
+            },
+            Props: {},
+        },
+        ["Tenue d'hiver"]: {
+            Components: {
+                [Component.Torso]: { Drawable: 22, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 31, Texture: 2, Palette: 0 },
+                [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
+                [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 139, Texture: 3, Palette: 0 },
+            },
+            Props: {},
+        },
+    },
+    [joaat('mp_f_freemode_01')]: {
+        ['Direction']: {
+            Components: {
+                [Component.Torso]: { Drawable: 31, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 101, Texture: 17, Palette: 0 },
+                [Component.Shoes]: { Drawable: 47, Texture: 3, Palette: 0 },
+                [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 2, Texture: 0, Palette: 0 },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 377, Texture: 5, Palette: 0 },
+            },
+            Props: {},
+        },
+        ['Mécano']: {
+            Components: {
+                [Component.Torso]: { Drawable: 31, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 101, Texture: 3, Palette: 0 },
+                [Component.Shoes]: { Drawable: 47, Texture: 3, Palette: 0 },
+                [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0 },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 49, Texture: 1, Palette: 0 },
+            },
+            Props: {},
+        },
+        ['Apprenti']: {
+            Components: {
+                [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 39, Texture: 1, Palette: 0 },
+                [Component.Shoes]: { Drawable: 47, Texture: 3, Palette: 0 },
+                [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0 },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 60, Texture: 1, Palette: 0 },
+            },
+            Props: {},
+        },
+        ["Tenue d'hiver"]: {
+            Components: {
+                [Component.Torso]: { Drawable: 23, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 30, Texture: 2, Palette: 0 },
+                [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
+                [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 103, Texture: 3, Palette: 0 },
+            },
+            Props: {},
+        },
+    },
 };

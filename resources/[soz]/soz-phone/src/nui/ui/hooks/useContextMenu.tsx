@@ -26,6 +26,15 @@ export const MapSettingItem =
         label: item.label,
     });
 
+export const MapAudioSettingItem =
+    (current: SettingOption, onClick: (item: SettingOption) => void, preview: string) => (item: SettingOption) => ({
+        selected: current.value === item.value,
+        onClick: () => onClick(item),
+        soundPreview: preview,
+        key: item.value,
+        label: item.label,
+    });
+
 export const useContextMenu = (_options?: IContextMenuOption[]): UseContextMenu => {
     const [open, setOpen] = useState(false);
     const [options, setOptions] = useState(_options || []);

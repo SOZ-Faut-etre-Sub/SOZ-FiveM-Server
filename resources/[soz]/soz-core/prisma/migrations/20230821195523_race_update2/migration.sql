@@ -1,0 +1,1 @@
+ALTER TABLE `race` ADD COLUMN `garage` TEXT;

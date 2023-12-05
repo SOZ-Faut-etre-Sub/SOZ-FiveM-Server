@@ -1,18 +1,12 @@
 -- Player load and unload handling
 -- New method for checking if logged in across all scripts (optional)
--- if LocalPlayer.state['isLoggedIn'] then
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
     ShutdownLoadingScreenNui()
-    LocalPlayer.state:set('isLoggedIn', true, false)
     if QBConfig.Server.pvp then
         SetCanAttackFriendly(PlayerPedId(), true, false)
         NetworkSetFriendlyFireOption(true)
     end
     SetPlayerHealthRechargeMultiplier(PlayerId(), 0)
-end)
-
-RegisterNetEvent('QBCore:Client:OnPlayerUnload', function()
-    LocalPlayer.state:set('isLoggedIn', false, false)
 end)
 
 RegisterNetEvent('QBCore:Client:PvpHasToggled', function(pvp_state)
@@ -48,50 +42,6 @@ RegisterNetEvent('QBCore:Command:GoToMarker', function()
             end
 
             Wait(0)
-        end
-    end
-end)
-
--- Vehicle Commands
-
-RegisterNetEvent('QBCore:Command:SpawnVehicle', function(vehName)
-    local ped = PlayerPedId()
-    local hash = GetHashKey(vehName)
-    if not IsModelInCdimage(hash) then
-        return
-    end
-    RequestModel(hash)
-    while not HasModelLoaded(hash) do
-        Wait(10)
-    end
-    local vehicle = CreateVehicle(hash, GetEntityCoords(ped), GetEntityHeading(ped), true, false)
-    TaskWarpPedIntoVehicle(ped, vehicle, -1)
-    SetModelAsNoLongerNeeded(hash)
-    TriggerEvent("vehiclekeys:client:SetOwner", QBCore.Functions.GetPlate(vehicle))
-end)
-
-RegisterNetEvent('QBCore:Command:VehicleVariation', function(livery)
-    local ped = PlayerPedId()
-    local veh = GetVehiclePedIsUsing(ped)
-    if veh ~= 0 then
-        SetVehicleLivery(veh, tonumber(livery))
-    end
-end)
-
-RegisterNetEvent('QBCore:Command:DeleteVehicle', function()
-    local ped = PlayerPedId()
-    local veh = GetVehiclePedIsUsing(ped)
-    if veh ~= 0 then
-        SetEntityAsMissionEntity(veh, true, true)
-        DeleteVehicle(veh)
-    else
-        local pcoords = GetEntityCoords(ped)
-        local vehicles = GetGamePool('CVehicle')
-        for k, v in pairs(vehicles) do
-            if #(pcoords - GetEntityCoords(v)) <= 5.0 then
-                SetEntityAsMissionEntity(v, true, true)
-                DeleteVehicle(v)
-            end
         end
     end
 end)

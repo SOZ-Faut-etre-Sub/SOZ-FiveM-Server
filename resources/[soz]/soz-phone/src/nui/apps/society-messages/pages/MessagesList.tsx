@@ -1,7 +1,9 @@
 import { Menu, Transition } from '@headlessui/react';
+import { DuplicateIcon } from '@heroicons/react/outline';
 import { BookmarkIcon, ChatIcon, LocationMarkerIcon, PhoneIcon } from '@heroicons/react/solid';
 import { useCall } from '@os/call/hooks/useCall';
 import LogDebugEvent from '@os/debug/LogDebugEvents';
+import { setClipboard } from '@os/phone/hooks/useClipboard';
 import { ServerPromiseResp } from '@typings/common';
 import { MessageEvents } from '@typings/messages';
 import { SocietyEvents } from '@typings/society';
@@ -67,22 +69,41 @@ const MessagesList = (): any => {
                     <Menu
                         key={message.id}
                         as="li"
-                        className={cn('w-full rounded-md shadow', {
-                            'bg-gray-900': config.theme.value === 'dark',
+                        className={cn('w-full rounded-md shadow border-none', {
+                            'bg-ios-700': config.theme.value === 'dark',
                             'bg-white': config.theme.value === 'light',
                         })}
                     >
                         <Menu.Button className="w-full">
                             <div
-                                className={cn('relative px-6 py-2 flex items-center space-x-3', {
-                                    'hover:bg-gray-800': config.theme.value === 'dark',
+                                className={cn('relative px-6 py-2 flex items-center space-x-3 rounded-md', {
+                                    'hover:bg-ios-600': config.theme.value === 'dark',
                                     'hover:bg-gray-300': config.theme.value === 'light',
                                 })}
                             >
                                 <div className="flex-1 min-w-0 cursor-pointer">
                                     <span className="absolute inset-0" aria-hidden="true" />
                                     <p
-                                        className={cn('text-left text-sm font-medium', {
+                                        className={cn('text-left text-xs font-bold', {
+                                            'text-white': config.theme.value === 'dark',
+                                            'text-gray-500': config.theme.value === 'light',
+                                        })}
+                                    >
+                                        {!message.source_phone ? (
+                                            <span
+                                                className={cn('rounded-full px-3 py-0', {
+                                                    'bg-gray-200': config.theme.value === 'light',
+                                                    'bg-gray-600': config.theme.value === 'dark',
+                                                })}
+                                            >
+                                                Anonyme
+                                            </span>
+                                        ) : (
+                                            <span></span>
+                                        )}
+                                    </p>
+                                    <p
+                                        className={cn('text-left text-sm font-medium break-words', {
                                             'text-gray-100': config.theme.value === 'dark',
                                             'text-gray-700': config.theme.value === 'light',
                                         })}
@@ -113,7 +134,7 @@ const MessagesList = (): any => {
                             leaveTo="transform scale-95 opacity-0"
                             className="absolute z-30 right-0"
                         >
-                            <Menu.Items className="w-56 mt-2 origin-top-right bg-gray-900 divide-y divide-gray-600 divide-opacity-50 rounded-md shadow-lg focus:outline-none">
+                            <Menu.Items className="w-56 mt-2 origin-top-right bg-ios-600 divide-y divide-gray-600 divide-opacity-50 rounded-md shadow-lg focus:outline-none">
                                 {message.isTaken ? (
                                     !message.isDone && (
                                         <Button
@@ -137,7 +158,15 @@ const MessagesList = (): any => {
                                         className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
                                         onClick={() => setWaypoint(message.position)}
                                     >
-                                        <LocationMarkerIcon className="mx-3 h-5 w-5" /> Aller a la position
+                                        <LocationMarkerIcon className="mx-3 h-5 w-5" /> Aller à la position
+                                    </Button>
+                                )}
+                                {message.message && (
+                                    <Button
+                                        className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
+                                        onClick={() => setClipboard(message.message)}
+                                    >
+                                        <DuplicateIcon className="mx-3 h-5 w-5" /> Copier le texte{' '}
                                     </Button>
                                 )}
 

@@ -4,7 +4,7 @@ QBCore.Commands.Add("clearinv", "Clear Players Inventory (Admin Only)", {{name =
     if Player then
         Inventory.Clear(Player.PlayerData.source, false)
     else
-        TriggerClientEvent("hud:client:DrawNotification", source, "Joueur non trouvé", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", source, "Joueur non trouvé", "error")
     end
 end, "admin")
 
@@ -34,15 +34,15 @@ QBCore.Commands.Add("giveitem", "Give An Item", {
                     end
                 end
 
-                Inventory.AddItem(Player.PlayerData.source, itemData["name"], amount, metadata, false, function(success, reason)
+                Inventory.AddItem(Player.PlayerData.source, Player.PlayerData.source, itemData["name"], amount, metadata, false, function(success, reason)
                     if success then
-                        TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous avez donné ~o~%s ~b~%s", amount, itemData["label"]))
+                        TriggerClientEvent("soz-core:client:notification:draw", source, string.format("Vous avez donné ~o~%s ~b~%s", amount, itemData["label"]))
                     else
-                        TriggerClientEvent("hud:client:DrawNotification", source, "L'objet ne peut pas être donné: " .. reason, "error")
+                        TriggerClientEvent("soz-core:client:notification:draw", source, "L'objet ne peut pas être donné: " .. reason, "error")
                     end
                 end)
             else
-                TriggerClientEvent("hud:client:DrawNotification", source, "L'objet n'existe pas !", "error")
+                TriggerClientEvent("soz-core:client:notification:draw", source, "L'objet n'existe pas !", "error")
             end
         end
     end

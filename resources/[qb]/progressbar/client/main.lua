@@ -75,18 +75,20 @@ function Process(action, start, tick, finish)
             isAnim = false
             isProp = false
 
-            SendNUIMessage({
-                action = "progress",
-                duration = Action.duration,
-                label = Action.label
-            })
+            if not Action.disableNui then
+                SendNUIMessage({
+                    action = "progress",
+                    duration = Action.duration,
+                    label = Action.label
+                })
+            end
 
             CreateThread(function()
                 if start ~= nil then
                     start()
                 end
+                Wait(1)
                 while isDoingAction do
-                    Wait(1)
                     if tick ~= nil then
                         tick()
                     end
@@ -95,7 +97,7 @@ function Process(action, start, tick, finish)
                         BeginTextCommandDisplayHelp("STRING")
                         AddTextComponentSubstringPlayerName('Appuyez sur ~INPUT_FRONTEND_RRIGHT~ ou ~INPUT_CURSOR_CANCEL~ pour annuler')
                         EndTextCommandDisplayHelp(0, false, false, -1)
-                        if IsControlJustPressed(0, 194) or IsControlJustPressed(0, 238) or IsControlJustPressed(0, 73) then
+                        if IsControlJustPressed(0, 194) or IsControlJustPressed(0, 238) then
                             TriggerEvent("progressbar:client:cancel")
                         end
                     end
@@ -103,22 +105,29 @@ function Process(action, start, tick, finish)
                     if IsEntityDead(ped) and not Action.useWhileDead then
                         TriggerEvent("progressbar:client:cancel")
                     end
+                    Wait(1)
                 end
                 if finish ~= nil then
                     finish(wasCancelled)
                 end
             end)
         else
-            TriggerEvent("hud:client:DrawNotification", "Une action est déjà en cours !", "error")
+            TriggerEvent("soz-core:client:notification:draw", "Une action est déjà en cours !", "error")
         end
     else
-        TriggerEvent("hud:client:DrawNotification", "Vous ne pouvez réaliser cette action !", "error")
+        TriggerEvent("soz-core:client:notification:draw", "Vous ne pouvez réaliser cette action !", "error")
     end
 end
 
 function ActionStart()
     runProgThread = true
-    LocalPlayer.state:set("inv_busy", true, true) -- Busy
+    if not Action.no_inv_busy then
+        exports["soz-core"]:SetPlayerState({
+            isInventoryBusy = true,
+        })
+        exports["soz-phone"]:setPhoneVisible(false)
+        TriggerEvent("inventory:client:closeInventory")
+    end
     CreateThread(function()
         while runProgThread do
             if isDoingAction then
@@ -220,7 +229,9 @@ end
 function Cancel()
     isDoingAction = false
     wasCancelled = true
-    LocalPlayer.state:set("inv_busy", false, true) -- Not Busy
+    exports["soz-core"]:SetPlayerState({
+        isInventoryBusy = false,
+    })
     ActionCleanup()
 
     SendNUIMessage({
@@ -231,7 +242,9 @@ end
 function Finish()
     isDoingAction = false
     ActionCleanup()
-    LocalPlayer.state:set("inv_busy", false, true) -- Not Busy
+    exports["soz-core"]:SetPlayerState({
+        isInventoryBusy = false,
+    })
 end
 
 function ActionCleanup()
@@ -239,10 +252,11 @@ function ActionCleanup()
 
     if Action.animation ~= nil then
         if Action.animation.task ~= nil or (Action.animation.animDict ~= nil and Action.animation.anim ~= nil) then
-            ClearPedTasks(ped)
+            if Action.animation.animDict ~= "mp_player_inteat@burger" and Action.animation.animDict ~= "amb@world_human_drinking@coffee@male@idle_a" then
+                ClearPedTasks(ped)
+            end
             ClearPedSecondaryTask(ped)
             StopAnimTask(ped, Action.animDict, Action.anim, 1.0)
-            SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
         else
             ClearPedTasks(ped)
         end
@@ -254,10 +268,14 @@ function ActionCleanup()
     playerProps = {}
     playerHasProp = false
 
-    DetachEntity(NetToObj(prop_net), 1, 1)
-    DeleteEntity(NetToObj(prop_net))
-    DetachEntity(NetToObj(propTwo_net), 1, 1)
-    DeleteEntity(NetToObj(propTwo_net))
+    if prop_net and NetworkDoesNetworkIdExist(prop_net) then
+        DetachEntity(NetToObj(prop_net), 1, 1)
+        DeleteEntity(NetToObj(prop_net))
+    end
+    if propTwo_net and NetworkDoesNetworkIdExist(propTwo_net) then
+        DetachEntity(NetToObj(propTwo_net), 1, 1)
+        DeleteEntity(NetToObj(propTwo_net))
+    end
     prop_net = nil
     propTwo_net = nil
     runProgThread = false

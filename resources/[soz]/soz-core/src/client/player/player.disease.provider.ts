@@ -67,7 +67,6 @@ export class PlayerDiseaseProvider {
             });
 
             TriggerScreenblurFadeOut(100);
-            ClearPedTasks(PlayerPedId());
 
             await wait(1000 * 10);
         }
@@ -95,8 +94,6 @@ export class PlayerDiseaseProvider {
                 },
             });
 
-            ClearPedTasks(PlayerPedId());
-
             await wait(45 * 1000);
         }
     }
@@ -113,8 +110,6 @@ export class PlayerDiseaseProvider {
                     duration: 1500,
                 },
             });
-
-            ClearPedTasks(PlayerPedId());
 
             await wait(45 * 1000);
         }
@@ -162,7 +157,7 @@ export class PlayerDiseaseProvider {
 
         if (disease === 'dyspepsie') {
             this.notifier.notify(
-                "Tu as l'impression de mal digérer ! consulte un médecin au plus vite ou prend une gélule d'antiacide."
+                "Tu as l'impression de mal digérer ! Consulte un médecin au plus vite ou prend une gélule d'antiacide."
             );
             this.currentDiseaseLoop = this.dyspepsiaLoop();
         }
@@ -188,8 +183,8 @@ export class PlayerDiseaseProvider {
         }
     }
 
-    @Once(OnceStep.PlayerLoaded)
-    async onPlayerLoaded(player: PlayerData): Promise<void> {
+    @Once(OnceStep.PlayerLoaded, true)
+    async setupPlayerDisease(player: PlayerData): Promise<void> {
         if (player.metadata.disease) {
             this.applyCurrentDiseaseEffect(player.metadata.disease);
         }

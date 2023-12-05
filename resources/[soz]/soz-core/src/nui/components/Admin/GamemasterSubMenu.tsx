@@ -1,9 +1,11 @@
+import { PlayerCharInfo } from '@public/shared/player';
 import { FunctionComponent } from 'react';
 
 import { SozRole } from '../../../core/permissions';
 import { LICENCES, MONEY_OPTIONS } from '../../../shared/admin/admin';
 import { NuiEvent } from '../../../shared/event';
 import { fetchNui } from '../../fetch';
+import { usePlayer } from '../../hook/data';
 import {
     MenuContent,
     MenuItemButton,
@@ -17,21 +19,29 @@ import {
 export type GameMasterSubMenuProps = {
     banner: string;
     permission: SozRole;
-    updateState: (namespace: 'gameMaster', key: keyof GameMasterSubMenuProps['state'], value: any) => void;
+    characters: Record<string, PlayerCharInfo>;
     state: {
+        adminGPS: boolean;
         moneyCase: boolean;
         invisible: boolean;
-        godMode: boolean;
+        adminPoliceLocator: boolean;
     };
 };
 
 export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
+    characters,
     banner,
     permission,
     state,
-    updateState,
 }) => {
     const isAdmin = permission === 'admin';
+    const isAdminOrStaff = isAdmin || permission === 'staff';
+    const isAdminOrStaffOrGM = isAdminOrStaff || permission === 'gamemaster';
+    const player = usePlayer();
+
+    if (!player) {
+        return null;
+    }
 
     return (
         <SubMenu id="game_master">
@@ -81,7 +91,6 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
                     checked={state.moneyCase}
                     disabled={!isAdmin}
                     onChange={async value => {
-                        updateState('gameMaster', 'moneyCase', value);
                         await fetchNui(NuiEvent.AdminToggleMoneyCase, value);
                     }}
                 >
@@ -91,7 +100,6 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
                     checked={state.invisible}
                     disabled={!isAdmin}
                     onChange={async value => {
-                        updateState('gameMaster', 'invisible', value);
                         await fetchNui(NuiEvent.AdminSetVisible, !value);
                     }}
                 >
@@ -105,10 +113,9 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
                     🏎️ Auto-pilote
                 </MenuItemButton>
                 <MenuItemCheckbox
-                    checked={state.godMode}
+                    checked={player.metadata.godmode}
                     disabled={!isAdmin}
                     onChange={async value => {
-                        updateState('gameMaster', 'godMode', value);
                         await fetchNui(NuiEvent.AdminSetGodMode, value);
                     }}
                 >
@@ -121,6 +128,49 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
                 >
                     Se libérer des menottes
                 </MenuItemButton>
+                {Object.keys(characters).length > 0 && (
+                    <MenuItemSelect
+                        disabled={!isAdminOrStaffOrGM}
+                        onConfirm={async (index, value) => {
+                            await fetchNui(NuiEvent.AdminMenuGameMasterSwitchCharacter, value);
+                        }}
+                        title="Changer de personnage"
+                    >
+                        {Object.keys(characters).map(citizenId => (
+                            <MenuItemSelectOption key={citizenId} value={citizenId}>
+                                {characters[citizenId].firstname} {characters[citizenId].lastname}
+                            </MenuItemSelectOption>
+                        ))}
+                    </MenuItemSelect>
+                )}
+                <MenuItemButton
+                    disabled={!isAdminOrStaffOrGM}
+                    onConfirm={async () => {
+                        await fetchNui(NuiEvent.AdminMenuGameMasterCreateNewCharacter);
+                    }}
+                >
+                    Créer nouveau personnage
+                </MenuItemButton>
+                <MenuItemCheckbox
+                    checked={state.adminGPS}
+                    disabled={!isAdminOrStaffOrGM}
+                    onChange={async value => {
+                        state.adminGPS = value;
+                        await fetchNui(NuiEvent.AdminSetAdminGPS, value);
+                    }}
+                >
+                    🗺 GPS permanent
+                </MenuItemCheckbox>
+                <MenuItemCheckbox
+                    checked={state.adminPoliceLocator}
+                    disabled={!isAdminOrStaff}
+                    onChange={async value => {
+                        state.adminPoliceLocator = value;
+                        await fetchNui(NuiEvent.AdminSetPoliceLocator, value);
+                    }}
+                >
+                    🗺️ Affichage des patrouilles
+                </MenuItemCheckbox>
             </MenuContent>
         </SubMenu>
     );
