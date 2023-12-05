@@ -472,6 +472,9 @@ function Inventory.AddItem(source, inv, item, amount, metadata, slot, cb)
             metadata.serial = tostring(QBCore.Shared.RandomInt(2) .. QBCore.Shared.RandomStr(3) .. QBCore.Shared.RandomInt(1) .. QBCore.Shared.RandomStr(2) ..
                                            QBCore.Shared.RandomInt(3) .. QBCore.Shared.RandomStr(4))
         end
+        if metadata.tint == nil then
+            metadata.tint = 0
+        end
         if metadata.health == nil then
             metadata.health = 2000
         end
