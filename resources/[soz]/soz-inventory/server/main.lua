@@ -700,7 +700,7 @@ function Inventory.TransfertItem(source, invSource, invTarget, item, amount, met
     end
 
     if item["giveable"] == false then
-        if invSource.id ~= invTarget.id and not QBCore.Functions.HasPermission(src, "staff") then
+        if invSource.id ~= invTarget.id and not QBCore.Functions.HasPermission(source, "staff") then
             cb(false, "not_giveable")
             return
         end
