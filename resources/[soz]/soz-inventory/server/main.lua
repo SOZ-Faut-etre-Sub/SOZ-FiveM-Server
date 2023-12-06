@@ -472,6 +472,9 @@ function Inventory.AddItem(source, inv, item, amount, metadata, slot, cb)
             metadata.serial = tostring(QBCore.Shared.RandomInt(2) .. QBCore.Shared.RandomStr(3) .. QBCore.Shared.RandomInt(1) .. QBCore.Shared.RandomStr(2) ..
                                            QBCore.Shared.RandomInt(3) .. QBCore.Shared.RandomStr(4))
         end
+        if metadata.tint == nil then
+            metadata.tint = 0
+        end
         if metadata.health == nil then
             metadata.health = 2000
         end
@@ -697,7 +700,7 @@ function Inventory.TransfertItem(source, invSource, invTarget, item, amount, met
     end
 
     if item["giveable"] == false then
-        if invSource.id ~= invTarget.id and not QBCore.Functions.HasPermission(src, "staff") then
+        if invSource.id ~= invTarget.id and not QBCore.Functions.HasPermission(source, "staff") then
             cb(false, "not_giveable")
             return
         end

@@ -28,7 +28,7 @@ export const convertTypeToName = function (type) {
             return 'Publicité';
         case 'fait-divers':
             return 'Fait Divers';
-        case 'info-traffic':
+        case 'info-trafic':
             return 'Info Trafic';
     }
 };
