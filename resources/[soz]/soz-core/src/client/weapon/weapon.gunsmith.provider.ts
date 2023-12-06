@@ -197,7 +197,7 @@ export class WeaponGunsmithProvider {
             }
         }
 
-        if (tint !== weapon.metadata.tint) {
+        if (tint !== weapon.metadata.tint && (tint !== 0 || weapon.metadata.tint !== undefined)) {
             const applied = await emitRpc<boolean>(RpcServerEvent.WEAPON_SET_TINT, weapon.slot, tint);
             if (applied) {
                 this.notifier.notify(

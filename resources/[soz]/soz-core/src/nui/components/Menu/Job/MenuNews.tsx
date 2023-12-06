@@ -66,7 +66,7 @@ export const MenuNews: FunctionComponent<MenuNewsProps> = ({ data }) => {
                         <MenuItemSelectOption value="breaking-news">Breaking News</MenuItemSelectOption>
                         <MenuItemSelectOption value="publicité">Publicité</MenuItemSelectOption>
                         <MenuItemSelectOption value="fait-divers">Fait Divers</MenuItemSelectOption>
-                        <MenuItemSelectOption value="info-traffic">Info Trafic</MenuItemSelectOption>
+                        <MenuItemSelectOption value="info-trafic">Info Trafic</MenuItemSelectOption>
                     </MenuItemSelect>
                     <MenuItemSelect
                         title="Poser un objet"

@@ -71,6 +71,12 @@ RegisterNUICallback("player/giveItem", function(data, cb)
                 amount = exports["soz-core"]:Input("Quantité", 5, data.amount)
             end
 
+            if tonumber(amount, 10) == nil then
+                exports["soz-core"]:DrawNotification("Vous devez entrer un nombre entier", "error")
+                cb(true)
+                return
+            end
+
             if amount and tonumber(amount) > 0 then
                 TriggerServerEvent("inventory:server:GiveItem", GetPlayerServerId(player), data, tonumber(amount))
             end
