@@ -9,3 +9,5 @@ imgui.ini
 polyzone_created_zones.txt*
 node_modules
 .replxx_history
+
+run.bat
