@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
 import { ObjectProvider } from '@public/client/object/object.provider';
 import { RadarList } from '@public/config/radar';
-import { Radar } from '@public/shared/vehicle/radar';
+import { Radar, radarPrefix } from '@public/shared/vehicle/radar';
 
 @Injectable()
 export class RadarRepository {
@@ -33,6 +33,9 @@ export class RadarRepository {
     }
 
     public disable(id: string, duration: number) {
+        if (id.startsWith(radarPrefix)) {
+            id = id.replace(radarPrefix, '');
+        }
         const disableEndTime = Math.round(Date.now() / 1000 + duration);
         RadarList[id].disableTime = disableEndTime;
         SetResourceKvpInt('radar/disableEndTime/' + id, disableEndTime);
