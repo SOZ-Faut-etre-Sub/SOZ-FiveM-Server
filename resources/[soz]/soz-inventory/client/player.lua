@@ -69,7 +69,7 @@ RegisterNUICallback("player/giveItem", function(data, cb)
 
             if tonumber(amount) > 1 then
                 amount = tostring(exports["soz-core"]:Input("Quantité", 5, data.amount))
-                if tonumber(amount, 10) == nil then 
+                if tonumber(amount, 10) == nil then
                     exports["soz-core"]:DrawNotification("Vous devez entrer un nombre entier", "error")
                     cb(true)
                     return
