@@ -329,7 +329,9 @@ export class AnimationFactory {
                 }
             }
 
-            await wait(prop.fx.duration[index++ % prop.fx.duration.length]);
+            if (prop.fx.manualLoop && prop.fx.duration) {
+                await wait(prop.fx.duration[index++ % prop.fx.duration.length]);
+            }
         } while (prop.fx.manualLoop && DoesEntityExist(entity));
     }
 
