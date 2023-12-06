@@ -242,10 +242,15 @@ export class WeaponProvider {
 
                 const message = getRandomItem(GunShotMessage);
 
-                const alertMessage = `${zone}: ${message.replace('${0}', name)}`;
-                const htmlMessage = `${zone}: ${message.replace('${0}', nameHtml)}`;
-
-                TriggerServerEvent(ServerEvent.WEAPON_SHOOTING_ALERT, alertMessage, htmlMessage, zoneID);
+                TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
+                    anonymous: true,
+                    number: '555-POLICE',
+                    message: `${zone}: ${message.replace('${0}', name)}`,
+                    htmlMessage: `${zone}: ${message.replace('${0}', nameHtml)}`,
+                    position: true,
+                    info: { type: 'shooting' },
+                    overrideIdentifier: 'System',
+                });
             }
         }
         await this.weapon.recoil();
