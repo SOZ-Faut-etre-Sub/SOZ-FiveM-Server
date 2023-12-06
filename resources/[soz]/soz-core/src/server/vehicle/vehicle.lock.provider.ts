@@ -118,8 +118,8 @@ export class VehicleLockProvider {
         };
 
         const vehicleType = GetVehicleType(vehicleEntityId);
+        const model = GetEntityModel(vehicleEntityId);
         if (inventoryItem.name === 'lockpick' && inventoryItem.metadata?.type) {
-            const model = GetEntityModel(vehicleEntityId);
             if (GetHashKey(inventoryItem.metadata?.model) !== model) {
                 this.notifier.notify(source, 'Ce lockpick ne peux pas crocheter ce véhicule', 'error');
 
@@ -166,7 +166,7 @@ export class VehicleLockProvider {
         });
 
         if (Math.random() < LockPickAlertChance) {
-            TriggerClientEvent(ClientEvent.VEHICLE_LOCKPICK, source, 'lockpick');
+            TriggerClientEvent(ClientEvent.VEHICLE_LOCKPICK, source, 'lockpick', model);
         }
 
         const { completed } = await this.progressService.progress(

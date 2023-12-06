@@ -74,6 +74,7 @@ export enum ServerEvent {
     FOOD_RETRIEVE_ORDER = 'soz-core:server:job:food:retrieve-order',
     FOOD_RETRIEVE_STATE = 'soz-core:server:job:food:retrieve-state',
     FOOD_EASTER_HARVEST = 'soz-core:server:job:food:easter-harvest',
+    FOOD_HUNT = 'soz-core:client:food:hunt',
 
     FFS_HARVEST = 'soz-core:server:job:ffs:harvest',
     FFS_RESTOCK = 'soz-core:server:job:ffs:restock',

@@ -485,25 +485,25 @@ const getRewardFromDeliveredGarment = (garment: Garment | LuxuryGarment): number
         case Garment.PANT:
         case Garment.BAG:
         case Garment.MASK:
-            return 50;
+            return 100;
         case Garment.UNDERWEAR_TOP:
-            return 30;
+            return 60;
         case Garment.UNDERWEAR:
-            return 20;
+            return 40;
         case Garment.SHOES:
         case Garment.GLOVES:
-            return 40;
+            return 80;
         case LuxuryGarment.TOP:
         case LuxuryGarment.PANT:
         case LuxuryGarment.BAG:
-            return 100;
+            return 200;
         case LuxuryGarment.UNDERWEAR_TOP:
-            return 60;
+            return 120;
         case LuxuryGarment.UNDERWEAR:
-            return 40;
+            return 80;
         case LuxuryGarment.SHOES:
         case LuxuryGarment.GLOVES:
-            return 80;
+            return 160;
     }
 };
 
