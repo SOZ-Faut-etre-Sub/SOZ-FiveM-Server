@@ -3,6 +3,7 @@ import { Provider } from '@core/decorators/provider';
 import { uuidv4, wait } from '@core/utils';
 import { PlayerTalentService } from '@private/client/player/player.talent.service';
 import { AnimationService } from '@public/client/animation/animation.service';
+import { BlipFactory } from '@public/client/blip';
 import { Monitor } from '@public/client/monitor/monitor';
 import { Notifier } from '@public/client/notifier';
 import { InputService } from '@public/client/nui/input.service';
@@ -11,19 +12,28 @@ import { PhoneService } from '@public/client/phone/phone.service';
 import { PlayerInOutService } from '@public/client/player/player.inout.service';
 import { PlayerService } from '@public/client/player/player.service';
 import { PlayerWalkstyleProvider } from '@public/client/player/player.walkstyle.provider';
-import { ProgressService } from '@public/client/progress.service';
 import { SoundService } from '@public/client/sound.service';
 import { VehicleSeatbeltProvider } from '@public/client/vehicle/vehicle.seatbelt.provider';
 import { WeaponDrawingProvider } from '@public/client/weapon/weapon.drawing.provider';
 import { OnEvent } from '@public/core/decorators/event';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
+import { emitRpc } from '@public/core/rpc';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
-import { BedLocations, FailoverLocation, KillData, KillerVehData, PatientClothes } from '@public/shared/job/lsmc';
+import {
+    BedLocations,
+    FailoverLocationName,
+    getBedName,
+    KillData,
+    KillerVehData,
+    PatientClothes,
+} from '@public/shared/job/lsmc';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { rad } from '@public/shared/polyzone/vector';
 import { Ok } from '@public/shared/result';
+import { RpcServerEvent } from '@public/shared/rpc';
 
 import { Animation } from '../../../shared/animation';
+import { PlayerZombieProvider } from '../../player/player.zombie.provider';
 import { VoipService } from '../../voip/voip.service';
 
 const deathAnim: Animation = {
@@ -113,9 +123,6 @@ export class LSMCDeathProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @Inject(ProgressService)
-    private progressService: ProgressService;
-
     @Inject(PlayerInOutService)
     private playerInOutService: PlayerInOutService;
 
@@ -143,8 +150,15 @@ export class LSMCDeathProvider {
     @Inject(VoipService)
     public voipService: VoipService;
 
+    @Inject(PlayerZombieProvider)
+    public playerZombieProvider: PlayerZombieProvider;
+
+    @Inject(BlipFactory)
+    private blipFactory: BlipFactory;
+
     private IsDead = false;
     private hungerThristDeath = false;
+    private radioactiveBeerEffect = false;
 
     @Tick(10)
     public async deathLoop() {
@@ -173,11 +187,20 @@ export class LSMCDeathProvider {
         if (!this.IsDead) {
             this.IsDead = true;
 
-            TriggerScreenblurFadeIn(5);
-            StartScreenEffect('DeathFailOut', 0, true);
-
             this.nuiMenu.closeAll(false);
             this.voipService.mutePlayer(true);
+
+            // Skip death process if player is zombie
+            if (this.playerZombieProvider.isZombie() || this.playerZombieProvider.isTransforming()) {
+                await this.playerZombieProvider.handleOnDeath();
+
+                this.IsDead = false;
+
+                return;
+            }
+
+            TriggerScreenblurFadeIn(5);
+            StartScreenEffect('DeathFailOut', 0, true);
 
             const playerid = PlayerId();
             let [killer, killerweapon] = NetworkGetEntityKillerOfPlayer(playerid);
@@ -379,29 +402,9 @@ export class LSMCDeathProvider {
 
         if (uniteHUBed == -1) {
             ClearPedTasksImmediately(ped);
-            SetEntityCoords(
-                ped,
-                FailoverLocation[0],
-                FailoverLocation[1],
-                FailoverLocation[2],
-                false,
-                false,
-                false,
-                false
-            );
-            SetEntityHeading(ped, FailoverLocation[3]);
+            await emitRpc(RpcServerEvent.PLAYER_TELEPORT, FailoverLocationName);
         } else {
-            SetEntityCoords(
-                ped,
-                BedLocations[uniteHUBed][0],
-                BedLocations[uniteHUBed][1],
-                BedLocations[uniteHUBed][2] + 0.5,
-                false,
-                false,
-                false,
-                false
-            );
-            SetEntityHeading(ped, 320);
+            await emitRpc(RpcServerEvent.PLAYER_TELEPORT, getBedName(uniteHUBed));
 
             this.playerInOutService.add(
                 'UniteHU',
@@ -413,6 +416,8 @@ export class LSMCDeathProvider {
                     }
                 }
             );
+
+            await wait(2000);
 
             this.animationService.playAnimation(
                 {
@@ -472,17 +477,22 @@ export class LSMCDeathProvider {
 
     @OnEvent(ClientEvent.LSMC_CALL, false)
     public call() {
-        const ped = PlayerPedId();
-        const coords = GetEntityCoords(ped);
-        const street = GetStreetNameAtCoord(coords[0], coords[1], coords[2])[0];
-        const streetname = GetStreetNameFromHashKey(street);
+        const playerPed = PlayerPedId();
+        const coords = GetEntityCoords(playerPed);
+        const [street, street2] = GetStreetNameAtCoord(coords[0], coords[1], coords[2]);
+        const zoneID = GetNameOfZone(coords[0], coords[1], coords[2]);
+
+        const name = street
+            ? `${GetStreetNameFromHashKey(street)}${street2 ? ` et ${GetStreetNameFromHashKey(street2)}` : ''}`
+            : GetLabelText(zoneID);
 
         TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
             anonymous: true,
             number: '555-LSMC',
-            message: `Besoin d'aide vers ${streetname}`,
+            message: `Besoin d'aide vers ${name}`,
             position: true,
         });
+        TriggerServerEvent(ServerEvent.LSMC_NEW_URGENCY);
         this.notifier.notify('Vous avez appelé le ~g~LSMC~s~ !', 'info');
     }
 
@@ -493,6 +503,10 @@ export class LSMCDeathProvider {
         }
     }
 
+    public enableRadioactiveBeerEffect() {
+        this.radioactiveBeerEffect = true;
+    }
+
     @Tick(5000)
     public async hungerThirstCheckLoop() {
         const playerData = this.playerService.getPlayer();
@@ -501,14 +515,13 @@ export class LSMCDeathProvider {
             return;
         }
 
+        const ped = PlayerPedId();
         if (
             playerData.metadata.hunger <= 0 ||
             playerData.metadata.thirst <= 0 ||
             playerData.metadata.alcohol >= 100 ||
             playerData.metadata.drug >= 100
         ) {
-            const ped = PlayerPedId();
-
             if (GetEntityHealth(ped) > 0) {
                 ClearPedTasksImmediately(ped);
                 await this.animationService.playAnimation({
@@ -525,5 +538,35 @@ export class LSMCDeathProvider {
                 SetEntityHealth(ped, 0);
             }
         }
+
+        const health = GetEntityHealth(ped);
+        if (this.radioactiveBeerEffect && health > 0) {
+            const newHealth = health - 10;
+            if (newHealth < 100) {
+                this.hungerThristDeath = true;
+                this.radioactiveBeerEffect = false;
+            }
+            SetEntityHealth(ped, newHealth);
+        }
+    }
+
+    @OnEvent(ClientEvent.LSMC_NEW_URGENCY)
+    public async newUrgency(player: number, coords: number[]) {
+        this.blipFactory.create(`deathpoint_${player}`, {
+            name: 'Coma',
+            sprite: 153,
+            color: 1,
+            coords: {
+                x: coords[0],
+                y: coords[1],
+                z: coords[2],
+            },
+            scale: 1.5,
+        });
+    }
+
+    @OnEvent(ClientEvent.LSMC_END_URGENCY)
+    public async playerRevived(player: number) {
+        this.blipFactory.remove(`deathpoint_${player}`);
     }
 }

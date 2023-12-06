@@ -120,3 +120,9 @@ export const KeepHairWithMask = {
     [206]: true,
     [207]: true,
 };
+
+export type PlayerCloakroomItem = {
+    id: number;
+    name: string;
+    cloth: Outfit;
+};

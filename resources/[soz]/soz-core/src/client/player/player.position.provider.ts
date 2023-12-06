@@ -1,10 +1,12 @@
 import { OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
+import { emitRpc } from '@public/core/rpc';
+import { Vector4 } from '@public/shared/polyzone/vector';
+import { RpcServerEvent } from '@public/shared/rpc';
 
 import { Provider } from '../../core/decorators/provider';
 import { wait } from '../../core/utils';
 import { ClientEvent } from '../../shared/event';
-import { Vector4 } from '../../shared/polyzone/vector';
 import { WeaponDrawingProvider } from '../weapon/weapon.drawing.provider';
 
 @Provider()
@@ -15,17 +17,40 @@ export class PlayerPositionProvider {
     private weaponDrawingProvider: WeaponDrawingProvider;
 
     @OnEvent(ClientEvent.PLAYER_TELEPORT)
-    async onPlayerTeleport([x, y, z, w]: Vector4) {
-        await this.teleportPlayerToPosition([x, y, z, w]);
+    async onPlayerTeleport(zone: string) {
+        await this.teleportPlayerToPosition(zone);
     }
 
-    getPlayerPosition() {
-        return GetEntityCoords(PlayerPedId(), false);
-    }
-
-    async teleportPlayerToPosition([x, y, z, w]: Vector4) {
+    async teleportPlayerToPosition(target: string, cb?: () => void) {
         const playerPed = PlayerPedId();
 
+        DoScreenFadeOut(this.fadeDelay);
+        await wait(this.fadeDelay);
+        await this.weaponDrawingProvider.undrawWeapons();
+
+        FreezeEntityPosition(playerPed, true);
+
+        await emitRpc(RpcServerEvent.PLAYER_TELEPORT, target);
+
+        while (!HasCollisionLoadedAroundEntity(playerPed)) {
+            await wait(1);
+        }
+
+        await wait(1000);
+
+        FreezeEntityPosition(playerPed, false);
+
+        if (cb) {
+            await cb();
+        }
+
+        this.weaponDrawingProvider.drawWeapons();
+        DoScreenFadeIn(this.fadeDelay);
+        await wait(this.fadeDelay);
+    }
+
+    async teleportAdminToPosition([x, y, z, w]: Vector4) {
+        const playerPed = PlayerPedId();
         DoScreenFadeOut(this.fadeDelay);
         await wait(this.fadeDelay);
         await this.weaponDrawingProvider.undrawWeapons();

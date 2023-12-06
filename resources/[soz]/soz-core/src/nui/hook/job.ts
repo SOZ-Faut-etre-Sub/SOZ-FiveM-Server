@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react';
 
 import { NuiEvent } from '../../shared/event';
-import { Job } from '../../shared/job';
+import { JobGrade } from '../../shared/job';
 import { isOk, Result } from '../../shared/result';
 import { fetchNui } from '../fetch';
 
-export const useJobs = (): Job[] => {
-    const [jobs, setJobs] = useState<Job[]>([]);
+export const useJobGrades = (): JobGrade[] => {
+    const [jobGrades, setJobGrades] = useState<JobGrade[]>([]);
 
     useEffect(() => {
-        fetchNui<void, Result<Job[], never>>(NuiEvent.AdminGetJobs).then(result => {
+        fetchNui<void, Result<JobGrade[], never>>(NuiEvent.AdminGetJobGrades).then(result => {
             if (isOk(result)) {
-                setJobs(result.ok);
+                setJobGrades(result.ok);
             }
         });
     }, []);
 
-    return jobs;
+    return jobGrades;
 };

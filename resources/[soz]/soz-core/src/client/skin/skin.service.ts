@@ -12,10 +12,10 @@ export class SkinService {
         }
         SetEntityInvincible(PlayerPedId(), true);
 
-        await this.resourceLoader.loadModel(model);
-
-        SetPlayerModel(PlayerId(), model);
-        SetPedDefaultComponentVariation(PlayerPedId());
+        if (await this.resourceLoader.loadModel(model)) {
+            SetPlayerModel(PlayerId(), model);
+            SetPedDefaultComponentVariation(PlayerPedId());
+        }
 
         this.resourceLoader.unloadModel(model);
         SetEntityInvincible(PlayerPedId(), false);

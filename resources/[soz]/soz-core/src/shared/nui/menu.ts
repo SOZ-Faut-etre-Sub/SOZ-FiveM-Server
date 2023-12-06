@@ -1,13 +1,20 @@
+import { ApartmentMenuData } from '@public/shared/housing/housing';
 import { JobType } from '@public/shared/job';
-import { NuiJobEmployeeOnDuty } from '@public/shared/nui/job';
+import { NuiJobEmployeeOnDuty, PromoteMenuData } from '@public/shared/nui/job';
 import { PlayerPersonalMenuData } from '@public/shared/nui/player';
 
 import { AdminMenuStateProps } from '../../nui/components/Admin/AdminMenu';
-import { WardrobeMenuData } from '../cloth';
+import { PlayerCloakroomItem, WardrobeMenuData } from '../cloth';
 import { DrivingSchoolMenuData } from '../driving-school';
 import { FuelType } from '../fuel';
 import { AdminMapperMenuData, HousingUpgradesMenuData } from '../housing/menu';
 import { DmcJobMenuData } from '../job/dmc';
+import {
+    PoliceJobFineMenuData,
+    PoliceJobLicencesMenuData,
+    PoliceJobMenuData,
+    PoliceJobMoneycheckerMenuData,
+} from '../job/police';
 import { MenuUpwData, UpwOrderMenuData } from '../job/upw';
 import { Race } from '../race';
 import { BossShopMenu, ShopProduct } from '../shop';
@@ -89,6 +96,21 @@ export enum MenuType {
     GouvJobMenu = 'gouv_job',
     FDFJobMenu = 'fdf_job',
     DmcJobMenu = 'dmc_job',
+    PoliceJobMenu = 'police_job_menu',
+    PoliceJobLicences = 'police_job_licences',
+    PoliceJobMoneychecker = 'police_job_moneychecker',
+    PoliceJobFines = 'police_job_fines',
+    PitStopPriceMenu = 'pitstop_price',
+    Promote = 'promote',
+    HubEntryAdmin = 'hub_entry_admin',
+    HousingBuyMenu = 'housing_buy_menu',
+    HousingSellMenu = 'housing_sell_menu',
+    HousingVisitMenu = 'housing_visit_menu',
+    HousingBellMenu = 'housing_bell_menu',
+    HousingEnterMenu = 'housing_enter_menu',
+    HousingAddRoommateMenu = 'housing_add_roommate_menu',
+    HousingRemoveRoommateMenu = 'housing_remove_roommate_menu',
+    HousingCloakroomMenu = 'housing_cloakroom_menu',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {
@@ -135,4 +157,20 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.FDFJobMenu]: any;
     [MenuType.JobNews]: { job: JobType };
     [MenuType.DmcJobMenu]: DmcJobMenuData;
+    [MenuType.PoliceJobLicences]: PoliceJobLicencesMenuData;
+    [MenuType.PoliceJobMoneychecker]: PoliceJobMoneycheckerMenuData;
+    [MenuType.PoliceJobFines]: PoliceJobFineMenuData;
+    [MenuType.PoliceJobMenu]: PoliceJobMenuData;
+    [MenuType.PitStopPriceMenu]: never;
+    [MenuType.Promote]: PromoteMenuData;
+    [MenuType.HousingAddRoommateMenu]: ApartmentMenuData;
+    [MenuType.HousingBellMenu]: ApartmentMenuData;
+    [MenuType.HousingBuyMenu]: ApartmentMenuData;
+    [MenuType.HousingEnterMenu]: ApartmentMenuData;
+    [MenuType.HousingRemoveRoommateMenu]: ApartmentMenuData;
+    [MenuType.HousingSellMenu]: ApartmentMenuData;
+    [MenuType.HousingVisitMenu]: ApartmentMenuData;
+    [MenuType.HousingCloakroomMenu]: {
+        items: PlayerCloakroomItem[];
+    };
 }

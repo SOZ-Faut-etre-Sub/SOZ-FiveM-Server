@@ -166,7 +166,7 @@ export class AdminMenuPlayerProvider {
         scenario,
     }: {
         player: AdminPlayer;
-        year: '2022';
+        year: 'halloween2022' | 'halloween2023';
         scenario: 'scenario1' | 'scenario2' | 'scenario3' | 'scenario4';
     }): Promise<void> {
         TriggerServerEvent(ServerEvent.ADMIN_RESET_HALLOWEEN, player.id, year, scenario);
@@ -273,5 +273,21 @@ export class AdminMenuPlayerProvider {
     @OnNuiEvent(NuiEvent.AdminMenuPlayerSearch)
     public async handleResePlayerSearch(player: AdminPlayer): Promise<void> {
         TriggerServerEvent('inventory:server:openInventory', 'player', player.id);
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerSetSenateParty)
+    public async handlePlayerSetSenateParty({
+        player,
+        value,
+    }: {
+        player: AdminPlayer;
+        value: string | null;
+    }): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_PLAYER_SET_SENATE_PARTY, player.id, value);
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerSetZombie)
+    public async handlePlayerSetZombie({ player, value }: { player: AdminPlayer; value: boolean }): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_PLAYER_SET_ZOMBIE, player.id, value);
     }
 }

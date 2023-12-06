@@ -9405,11 +9405,25 @@ export const Animations: AnimationConfigList = [
                         },
                     },
                     {
-                        type: 'scenario',
+                        type: 'animation',
                         name: 'Regarder sa carte',
                         rightLabel: null,
                         icon: null,
-                        scenario: { name: 'WORLD_HUMAN_TOURIST_MAP' },
+                        animation: {
+                            base: {
+                                dictionary: 'amb@world_human_tourist_map@female@base',
+                                name: 'base',
+                                options: { repeat: true },
+                            },
+                            props: [
+                                {
+                                    model: 'p_tourist_map_01_s',
+                                    bone: 58867,
+                                    position: [0.15, 0.081, 0.05],
+                                    rotation: [120, 160, 30],
+                                },
+                            ],
+                        },
                     },
                     {
                         type: 'animation',
@@ -9720,6 +9734,46 @@ export const Animations: AnimationConfigList = [
                         scenario: { name: 'world_human_hammering' },
                     },
                 ],
+            },
+            {
+                type: 'animation',
+                name: 'Paparazzi',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    enter: {
+                        dictionary: 'amb@world_human_paparazzi@male@enter',
+                        name: 'enter',
+                    },
+                    base: {
+                        dictionary: 'amb@world_human_paparazzi@male@idle_a',
+                        name: 'idle_c',
+                        options: { repeat: true },
+                    },
+                    exit: {
+                        dictionary: 'amb@world_human_paparazzi@male@exit',
+                        name: 'exit',
+                    },
+                    props: [
+                        {
+                            model: 'prop_pap_camera_01',
+                            bone: 28422,
+                            position: [0.0, 0.0, 0.0],
+                            rotation: [0.0, 0.0, 0.0],
+                            fx: {
+                                dictionary: 'core',
+                                name: 'ent_anim_paparazzi_flash',
+                                position: [0.08, -0.08, 0.08],
+                                rotation: [0.0, 0.0, 0.0],
+                                scale: 1.0,
+                                duration: [400, 400, 5766],
+                                manualLoop: true,
+                                delay: 6200,
+                                net: true,
+                            },
+                        },
+                    ],
+                },
             },
         ],
     },

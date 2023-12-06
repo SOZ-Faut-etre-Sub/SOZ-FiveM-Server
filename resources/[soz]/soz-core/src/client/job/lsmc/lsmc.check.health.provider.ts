@@ -1,7 +1,9 @@
-import { On, Once, OnNuiEvent } from '../../../core/decorators/event';
+import { BoxZone } from '@public/shared/polyzone/box.zone';
+
+import { Once, OnNuiEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
-import { ClientEvent, NuiEvent, ServerEvent } from '../../../shared/event';
+import { NuiEvent, ServerEvent } from '../../../shared/event';
 import { Feature, isFeatureEnabled } from '../../../shared/features';
 import { HealthBookLabel, HealthBookMinMax } from '../../../shared/health';
 import { MenuType } from '../../../shared/nui/menu';
@@ -97,12 +99,6 @@ export class LSMCCheckHealthProvider {
         return Ok(true);
     }
 
-    @On(ClientEvent.LSMC_HALLOWEEN_HORRIFIC_LOLLIPOP)
-    public async useHorrificLollipop() {
-        const ped = PlayerPedId();
-        SetEntityHealth(ped, GetEntityHealth(ped) + 20);
-    }
-
     @Once()
     public onStart() {
         if (!isFeatureEnabled(Feature.MyBodySummer)) {
@@ -155,14 +151,11 @@ export class LSMCCheckHealthProvider {
 
         this.targetFactory.createForBoxZone(
             'lsmc_analyze',
-            {
-                center: [371.7, -1434.45, 32.51],
-                length: 1.8,
-                width: 0.8,
-                minZ: 31.51,
-                maxZ: 34.51,
-                heading: 320,
-            },
+            new BoxZone([373.02, -1416.34, 32.41], 0.8, 0.6, {
+                heading: 231.23,
+                minZ: 32.41,
+                maxZ: 32.86,
+            }),
             [
                 {
                     label: 'Analyse urinaire',

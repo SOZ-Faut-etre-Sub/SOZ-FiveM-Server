@@ -1,23 +1,34 @@
+import { BlipFactory } from '@public/client/blip';
+import { PedFactory } from '@public/client/factory/ped.factory';
 import { InventoryManager } from '@public/client/inventory/inventory.manager';
 import { NuiDispatch } from '@public/client/nui/nui.dispatch';
+import { NuiMenu } from '@public/client/nui/nui.menu';
 import { PlayerService } from '@public/client/player/player.service';
 import { ResourceLoader } from '@public/client/repository/resource.loader';
-import { On, OnEvent } from '@public/core/decorators/event';
+import { VehicleRadarProvider } from '@public/client/vehicle/vehicle.radar.provider';
+import { Once, OnceStep, OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
-import { emitRpc } from '@public/core/rpc';
 import { wait } from '@public/core/utils';
-import { ClientEvent, ServerEvent } from '@public/shared/event';
+import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import { FDO } from '@public/shared/job';
+import { MenuType } from '@public/shared/nui/menu';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { rad, Vector3 } from '@public/shared/polyzone/vector';
-import { RpcServerEvent } from '@public/shared/rpc';
 
 import { AnimationStopReason } from '../../../shared/animation';
 import { AnimationService } from '../../animation/animation.service';
 
 const WEAPON_DIGISCANNER = -38085395;
 const RadarRange = 40;
+const stations = {
+    LSPD: { label: 'Los Santos Police Department', blip: { sprite: 60 }, coords: [632.76, 7.31, 82.63] },
+    BCSO: {
+        label: "Blaine County Sheriff's Office",
+        blip: { sprite: 137 },
+        coords: [1856.15, 3681.68, 34.27],
+    },
+};
 
 @Provider()
 export class PoliceProvider {
@@ -36,9 +47,65 @@ export class PoliceProvider {
     @Inject(AnimationService)
     private animationService: AnimationService;
 
+    @Inject(VehicleRadarProvider)
+    private vehicleRadarProvider: VehicleRadarProvider;
+
+    @Inject(NuiMenu)
+    private nuiMenu: NuiMenu;
+
+    @Inject(BlipFactory)
+    private blipFactory: BlipFactory;
+
+    @Inject(PedFactory)
+    private pedFactory: PedFactory;
+
     private radarEnabled = false;
+    private displayRadar = false;
 
     private inTakeDown = false;
+
+    @Once(OnceStep.PlayerLoaded)
+    public async onStart() {
+        for (const [id, station] of Object.entries(stations)) {
+            if (!this.blipFactory.exist(`police_${id}`)) {
+                this.blipFactory.create(`police_${id}`, {
+                    name: station.label,
+                    coords: { x: station.coords[0], y: station.coords[1], z: station.coords[2] },
+                    sprite: station.blip.sprite,
+                });
+            }
+        }
+        await this.pedFactory.createPedOnGrid({
+            model: 's_m_y_sheriff_01',
+            coords: {
+                x: 1859.92,
+                y: 3690.31,
+                z: 34.27 - 1,
+                w: 54.28,
+            },
+            freeze: true,
+            invincible: true,
+            blockevents: true,
+        });
+        await this.pedFactory.createPedOnGrid({
+            model: 's_f_y_cop_01',
+            coords: {
+                x: 608.67,
+                y: -15.94,
+                z: 76.63 - 1,
+                w: 347.54,
+            },
+            freeze: true,
+            invincible: true,
+            blockevents: true,
+        });
+    }
+
+    @OnEvent(ClientEvent.POLICE_OPEN_STASH_CLOAKROOM, false)
+    public openStashCloakroom() {
+        const player = this.playerService.getPlayer();
+        TriggerServerEvent('inventory:server:openInventory', 'stash', `${player.job.id}_${player.citizenid}`);
+    }
 
     @OnEvent(ClientEvent.TAKE_DOWN)
     public async takeDown() {
@@ -203,22 +270,6 @@ export class PoliceProvider {
         }
     }
 
-    @On('police:client:breathanalyzer')
-    public async breathanalyzer(data) {
-        const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(data.entity));
-
-        const alcoolLevel = await emitRpc<number>(RpcServerEvent.POLICE_ALCOOLLEVEL, target);
-        this.dispatcher.dispatch('police', 'OpenBreathAnalyzer', alcoolLevel / 20);
-    }
-
-    @On('police:client:screening_test')
-    public async screeningTest(data) {
-        const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(data.entity));
-
-        const drugLevel = await emitRpc<number>(RpcServerEvent.POLICE_DRUGLEVEL, target);
-        this.dispatcher.dispatch('police', 'OpenScreeningTest', drugLevel > 0);
-    }
-
     @OnEvent(ClientEvent.POLICE_BREATHANALYZER_TARGET)
     public async breathanalyzerTarget() {
         const playerPed = PlayerPedId();
@@ -296,5 +347,26 @@ export class PoliceProvider {
         await wait(animDuration * 1000);
         TriggerServerEvent(ServerEvent.OBJECT_ATTACHED_UNREGISTER, ObjToNet(object));
         DeleteEntity(object);
+    }
+
+    @OnEvent(ClientEvent.JOBS_POLICE_OPEN_SOCIETY_MENU)
+    public onOpenSocietyMenu() {
+        if (this.nuiMenu.getOpened() === MenuType.PoliceJobMenu) {
+            this.nuiMenu.closeMenu();
+            return;
+        }
+
+        this.nuiMenu.openMenu(MenuType.PoliceJobMenu, {
+            onDuty: this.playerService.isOnDuty(),
+            job: this.playerService.getPlayer().job.id,
+            displayRadar: this.displayRadar,
+        });
+    }
+
+    @OnNuiEvent(NuiEvent.ToggleRadar)
+    public toogleRadar(value: boolean): Promise<void> {
+        this.displayRadar = value;
+        this.vehicleRadarProvider.toggleBlip(value);
+        return;
     }
 }

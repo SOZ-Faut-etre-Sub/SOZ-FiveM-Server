@@ -2,9 +2,8 @@
 local PollutionLevel = QBCore.Shared.Pollution.Level.Neutral
 
 Citizen.CreateThread(function()
+    Citizen.Wait(10 * 1000)
     PollutionLevel = QBCore.Functions.TriggerRpc("soz-upw:server:GetPollutionLevel")
-
-    Citizen.Wait(15 * 60 * 1000)
 end)
 
 RegisterNetEvent("soz-upw:client:onPollutionLevelChanged", function(newPollutionLevel)

@@ -97,7 +97,7 @@ local function SpawnFieldZones()
             debugPoly = false,
         })
         fieldZone:onPlayerInOut(function(isInside)
-            if isInside and PlayerData.job.id == SozJobCore.JobType.Oil and PlayerData.job.onduty then
+            if isInside and PlayerData.job.id == "oil" and PlayerData.job.onduty then
                 exports["qb-target"]:AddTargetModel({"p_oil_pjack_01_s", "p_oil_pjack_02_s", "p_oil_pjack_03_s"}, {
                     options = {
                         {
@@ -227,7 +227,7 @@ CreateThread(function()
                 icon = "c:fuel/remplir.png",
                 event = "soz-core:client:oil:update-station-price",
                 canInteract = function()
-                    return PlayerData.job.onduty and SozJobCore.Functions.HasPermission("oil", SozJobCore.JobPermission.Fueler.ChangePrice)
+                    return PlayerData.job.onduty and exports["soz-core"]:HasJobPermission("oil", "fueler-change-price")
                 end,
                 job = "oil",
             },
@@ -441,10 +441,10 @@ RegisterNetEvent("jobs:client:fueler:StartTankerRefill", function(data)
     while canFillTanker do
         Wait(500)
 
-        local success, _ = exports["soz-utils"]:Progressbar("fill", "Vous remplissez...", 24000, false, true, {
+        local success = exports["soz-core"]:ProgressSynchrone("fill", "Vous remplissez...", 24000, false, true, {
             disableMovement = true,
             disableCombat = true,
-        }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, {}, {})
+        }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, nil, nil)
 
         if success then
             local refillResponse = QBCore.Functions.TriggerRpc("jobs:server:fueler:refillTanker", Tanker.vehicle, currentField)
@@ -499,10 +499,10 @@ RegisterNetEvent("jobs:client:fueler:StartTankerRefining", function(data)
     while canRefiningTanker do
         Wait(500)
 
-        local success, _ = exports["soz-utils"]:Progressbar("fill", "Vous raffinez...", 20000, false, true, {
+        local success = exports["soz-core"]:ProgressSynchrone("fill", "Vous raffinez...", 20000, false, true, {
             disableMovement = true,
             disableCombat = true,
-        }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, {}, {})
+        }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, nil, nil)
 
         if success then
             TriggerServerEvent("jobs:server:fueler:refiningTanker", Tanker.vehicle)
@@ -636,10 +636,10 @@ RegisterNetEvent("jobs:client:fueler:StartTankerResell", function(data)
     while canResellTanker do
         Wait(500)
 
-        local success, _ = exports["soz-utils"]:Progressbar("resell", "Vous remplissez...", 3000, false, true, {
+        local success = exports["soz-core"]:ProgressSynchrone("resell", "Vous remplissez...", 3000, false, true, {
             disableMovement = true,
             disableCombat = true,
-        }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, {}, {})
+        }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, nil, nil)
 
         if success then
             QBCore.Functions.TriggerRpc("jobs:server:fueler:resellTanker", Tanker.vehicle)

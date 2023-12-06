@@ -1,6 +1,8 @@
 import { InventoryManager } from '@public/client/inventory/inventory.manager';
 import { ItemService } from '@public/client/item/item.service';
+import { Feature, isFeatureEnabled } from '@public/shared/features';
 import { PHARMACY_PRICES } from '@public/shared/job/lsmc';
+import { toVector4Object } from '@public/shared/polyzone/vector';
 
 import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
@@ -33,6 +35,9 @@ export class LSMCPharmacyProvider {
             { name: 'antiacide', price: PHARMACY_PRICES.antiacide, amount: 2000 },
             { name: 'health_book', price: PHARMACY_PRICES.health_book, amount: 2000 },
         ];
+        if (isFeatureEnabled(Feature.Halloween)) {
+            products.push({ name: 'horrific_lollipop', price: 15, amount: 2000 });
+        }
 
         const getLsmcShopProduct = products => {
             const hydratedProducts = products.map((product, id) => ({
@@ -47,7 +52,7 @@ export class LSMCPharmacyProvider {
         const model = 's_m_m_doctor_01';
         this.targetFactory.createForPed({
             model: model,
-            coords: { x: 356.64, y: -1419.74, z: 31.51, w: 57.62 },
+            coords: toVector4Object([371.75, -1397.15, 31.51, 56.43]),
             invincible: true,
             freeze: true,
             spawnNow: true,

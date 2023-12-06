@@ -36,7 +36,6 @@ export const Minimap: FunctionComponent = () => {
 
     const armorPercent = playerStats[1];
 
-    // console.log(JSON.stringify(minimap, null, 4));
     const top = (minimap.bottom - 0.003) * 100;
     const height = 100 - top;
     const left = (minimap.left + 0.004) * 100;

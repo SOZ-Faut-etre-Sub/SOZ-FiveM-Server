@@ -1,9 +1,16 @@
+import { Once } from '@public/core/decorators/event';
+import { PlayerPositionProvider } from '@public/server/player/player.position.provider';
+
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { Rpc } from '../../../core/decorators/rpc';
 import { Feature, isFeatureEnabled } from '../../../shared/features';
 import { RpcServerEvent } from '../../../shared/rpc';
-import { Halloween2022Scenario3 } from '../../../shared/story/halloween-2022/scenario3';
+import {
+    Halloween2022Scenario3,
+    Halloween2022Scenario3EnterBunker,
+    Halloween2022Scenario3ExitBunker,
+} from '../../../shared/story/halloween-2022/scenario3';
 import { Dialog, ScenarioState } from '../../../shared/story/story';
 import { InventoryManager } from '../../inventory/inventory.manager';
 import { Notifier } from '../../notifier';
@@ -21,6 +28,15 @@ export class Halloween2022Scenario3Provider {
 
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
+
+    @Inject(PlayerPositionProvider)
+    private playerPositionProvider: PlayerPositionProvider;
+
+    @Once()
+    public onStart() {
+        this.playerPositionProvider.registerZone(Halloween2022Scenario3EnterBunker, [894.74, -3245.37, -98.26, 91.46]);
+        this.playerPositionProvider.registerZone(Halloween2022Scenario3ExitBunker, [604.61, 5556.5, 716.76, 37.74]);
+    }
 
     @Rpc(RpcServerEvent.STORY_HALLOWEEN_SCENARIO3)
     public onScenario3(source: number): Dialog | null {

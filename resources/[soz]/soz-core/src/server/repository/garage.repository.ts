@@ -1,7 +1,7 @@
 import { GarageList } from '../../config/garage';
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { BoxZone } from '../../shared/polyzone/box.zone';
-import { Garage, GarageCategory, GarageType } from '../../shared/vehicle/garage';
+import { Garage, GarageCategory, GarageType, PlaceCapacity } from '../../shared/vehicle/garage';
 import { PrismaService } from '../database/prisma.service';
 import { RepositoryLegacy } from './repository';
 
@@ -43,7 +43,7 @@ export class GarageRepository extends RepositoryLegacy<Record<string, Garage>> {
                 id: `property_${houseProperty.identifier}`,
                 name: 'Garage personnel',
                 type: GarageType.House,
-                category: GarageCategory.Car,
+                category: GarageCategory.All,
                 zone: new BoxZone([entryZone.x, entryZone.y, entryZone.z], 8.0, 6.0, {
                     heading: entryZone.heading,
                     minZ: entryZone.minZ,
@@ -54,6 +54,9 @@ export class GarageRepository extends RepositoryLegacy<Record<string, Garage>> {
                         heading: garageZone.heading,
                         minZ: garageZone.minZ,
                         maxZ: garageZone.maxZ,
+                        data: {
+                            capacity: [PlaceCapacity.Large, PlaceCapacity.Medium, PlaceCapacity.Small],
+                        },
                     }),
                 ],
                 isTrailerGarage: houseProperty.identifier.includes('trailer'),

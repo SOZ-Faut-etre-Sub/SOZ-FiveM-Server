@@ -1,16 +1,20 @@
-import { BrandsConfig, ShopBrand, ShopsConfig } from '@public/config/shops';
+import { BrandConfig, BrandsConfig, ShopBrand, ShopsConfig } from '@public/config/shops';
 import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Exportable } from '@public/core/decorators/exports';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
-import { JobType } from '@public/shared/job';
+import { Feature, isFeatureEnabled } from '@public/shared/features';
+import { JobPermission, JobType } from '@public/shared/job';
+import { MenuType } from '@public/shared/nui/menu';
 import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 
 import { BlipFactory } from '../blip';
 import { PedFactory } from '../factory/ped.factory';
 import { InventoryManager } from '../inventory/inventory.manager';
-import { StonkCollectProvider } from '../job/stonk/stonk.collect.provider';
+import { JobService } from '../job/job.service';
+import { StonkCollectService } from '../job/stonk/stonk.collect.service';
+import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
 import { TargetFactory, TargetOptions } from '../target/target.factory';
 import { BarberShopProvider } from './barber.shop.provider';
@@ -42,8 +46,8 @@ export class ShopProvider {
     @Inject(ClothingShopProvider)
     private clothingShopProvider: ClothingShopProvider;
 
-    @Inject(StonkCollectProvider)
-    private stonkCollectProvider: StonkCollectProvider;
+    @Inject(StonkCollectService)
+    private stonkCollectService: StonkCollectService;
 
     @Inject(TattooShopProvider)
     private tattooShopProvider: TattooShopProvider;
@@ -59,6 +63,12 @@ export class ShopProvider {
 
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
+
+    @Inject(JobService)
+    private jobService: JobService;
+
+    @Inject(NuiMenu)
+    private nuiMenu: NuiMenu;
 
     private currentShop: string = null;
     private currentShopBrand: ShopBrand = null;
@@ -83,15 +93,19 @@ export class ShopProvider {
             icon: 'fas fa-store',
             event: 'soz-core:client:weapon:open-gunsmith',
             label: 'Accéder au GunSmith',
-            canInteract: () => {
-                return this.currentShop !== null && this.currentShopBrand === ShopBrand.Ammunation;
+            canInteract: entity => {
+                return (
+                    this.currentShop !== null &&
+                    this.currentShopBrand === ShopBrand.Ammunation &&
+                    !IsEntityPlayingAnim(entity, 'random@robbery', 'robbery_main_female', 3)
+                );
             },
         },
         {
             icon: 'c:stonk/collecter.png',
             label: 'Collecter',
             canInteract: () => {
-                return this.stonkCollectProvider.canBagsBeCollected(this.currentShopBrand);
+                return this.stonkCollectService.canBagsBeCollected(this.currentShopBrand);
             },
             blackoutGlobal: true,
             blackoutJob: JobType.CashTransfer,
@@ -101,7 +115,7 @@ export class ShopProvider {
         },
         {
             icon: 'fas fa-store',
-            label: 'Vérfier le stock',
+            label: 'Vérifier le stock',
             canInteract: () => {
                 return (
                     this.currentShop !== null &&
@@ -118,6 +132,21 @@ export class ShopProvider {
                         TriggerServerEvent(ServerEvent.LSC_CHECK_STOCK);
                         break;
                 }
+            },
+        },
+        {
+            icon: 'c:mechanic/reparer.png',
+            label: 'Prix Pit Stop',
+            canInteract: () => {
+                return (
+                    this.currentShop !== null &&
+                    this.currentShopBrand === ShopBrand.LsCustom &&
+                    this.jobService.hasPermission(JobType.Bennys, JobPermission.BennysPitStopPrice)
+                );
+            },
+            blackoutGlobal: true,
+            action: async () => {
+                this.nuiMenu.openMenu(MenuType.PitStopPriceMenu);
             },
         },
         {
@@ -170,7 +199,7 @@ export class ShopProvider {
             }
             if (brandConfig.pedModel) {
                 const pedId = await this.pedFactory.createPed({
-                    model: brandConfig.pedModel,
+                    model: this.getBrandPedModel(brandConfig),
                     coords: {
                         x: config.location[0],
                         y: config.location[1],
@@ -272,7 +301,10 @@ export class ShopProvider {
             BrandsConfig[this.currentShopBrand] &&
             BrandsConfig[this.currentShopBrand].pedModel
         ) {
-            this.targetFactory.createForModel(BrandsConfig[this.currentShopBrand].pedModel, this.shopActions);
+            this.targetFactory.createForModel(
+                this.getBrandPedModel(BrandsConfig[this.currentShopBrand]),
+                this.shopActions
+            );
         }
     }
 
@@ -282,7 +314,7 @@ export class ShopProvider {
             BrandsConfig[this.currentShopBrand] &&
             BrandsConfig[this.currentShopBrand].pedModel
         ) {
-            this.targetFactory.removeTargetModel([BrandsConfig[this.currentShopBrand].pedModel], []);
+            this.targetFactory.removeTargetModel([this.getBrandPedModel(BrandsConfig[this.currentShopBrand])], []);
         }
     }
 
@@ -297,7 +329,7 @@ export class ShopProvider {
             case ShopBrand.RobsliquorSouth:
             case ShopBrand.Ammunation:
             case ShopBrand.Zkea:
-                this.superetteShopProvider.openShop(this.currentShopBrand);
+                this.superetteShopProvider.openShop(this.currentShopBrand, this.currentShop);
                 break;
             case ShopBrand.Ponsonbys:
             case ShopBrand.Suburban:
@@ -316,6 +348,10 @@ export class ShopProvider {
             case ShopBrand.Barber:
                 this.barberShopProvider.openShop();
         }
+    }
+
+    public getBrandPedModel(brandConfig: BrandConfig) {
+        return isFeatureEnabled(Feature.Halloween) ? 'u_m_y_zombie_01' : brandConfig.pedModel;
     }
 
     @Exportable('GetCurrentShop')

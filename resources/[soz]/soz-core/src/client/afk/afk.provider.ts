@@ -1,3 +1,5 @@
+import { VehicleHelicoProvider } from '@private/client/vehicle/VehicleHelicoProvider';
+
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
@@ -6,6 +8,7 @@ import { AFKWordList } from '../../shared/afk';
 import { ServerEvent } from '../../shared/event';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { Ok } from '../../shared/result';
+import { ItemCameraProvider } from '../item/item.camera.provider';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { PhoneService } from '../phone/phone.service';
@@ -42,6 +45,12 @@ export class AfkProvider {
 
     @Inject(InputService)
     private inputService: InputService;
+
+    @Inject(ItemCameraProvider)
+    private itemCameraProvider: ItemCameraProvider;
+
+    @Inject(VehicleHelicoProvider)
+    private vehicleHelicoProvider: VehicleHelicoProvider;
 
     @Inject('Store')
     private store: Store;
@@ -127,7 +136,11 @@ export class AfkProvider {
 
         if (currentPosition.join() == this.previousPosition.join()) {
             if (this.afkTimer >= 0) {
-                if (!this.progressService.isDoingAction()) {
+                if (
+                    !this.progressService.isDoingAction() &&
+                    !this.itemCameraProvider.isCamActive() &&
+                    !this.vehicleHelicoProvider.isHelicam()
+                ) {
                     this.afkTimer--;
                 }
             } else {

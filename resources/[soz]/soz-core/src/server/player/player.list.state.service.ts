@@ -9,18 +9,21 @@ export class PlayerListStateService {
         dead: new Set<number>(),
         zipped: new Set<number>(),
         wearingPatientOutfit: new Set<number>(),
+        escorted: new Set<number>(),
     };
 
     public handlePlayer(player: PlayerData, playerState: PlayerClientState) {
         this.handle('dead', player.source, player.metadata.isdead);
         this.handle('zipped', player.source, playerState.isZipped);
         this.handle('wearingPatientOutfit', player.source, playerState.isWearingPatientOutfit);
+        this.handle('escorted', player.source, playerState.isEscorted);
     }
 
     public removePlayer(player: number) {
         this.handle('dead', player, false);
         this.handle('zipped', player, false);
         this.handle('wearingPatientOutfit', player, false);
+        this.handle('escorted', player, false);
     }
 
     private handle(key: PlayerListStateKey, player: number, status: boolean) {
@@ -46,6 +49,7 @@ export class PlayerListStateService {
             dead: [],
             zipped: [],
             wearingPatientOutfit: [],
+            escorted: [],
         };
 
         for (const key in this.lists) {

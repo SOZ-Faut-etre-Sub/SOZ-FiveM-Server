@@ -128,7 +128,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:food-craft", function(source, c
             return
         end
         local ingItem = exports["soz-inventory"]:GetItem(source, ingId, nil)
-        if ingItem.amount < count or exports["soz-utils"]:ItemIsExpired(ingItem) then
+        if ingItem.amount < count or exports["soz-core"]:ItemIsExpired(ingItem) then
             cb(false, "invalid_ingredient")
             return
         end
@@ -171,9 +171,11 @@ RegisterNetEvent("jobs:server:food:hunting", function(huntId)
 
         exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, item, amount, nil, nil, function(success, reason)
             if success then
-                exports["soz-core"]:Event("job_cm_food_hunting", {
+                exports["soz-core"]:Event("job_cm_food_hunting",
+                                          {
                     item_id = item,
                     player_source = Player.PlayerData.source,
+                    on_duty = Player.PlayerData.job.onduty,
                 }, {item_label = item.label, quantity = amount, position = position})
 
                 rewardSuccess = true

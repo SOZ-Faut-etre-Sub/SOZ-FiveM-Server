@@ -133,7 +133,7 @@ const MenuVehicleList: FunctionComponent<MenuVehicleListProps> = ({ vehicles, on
 
                 let description = `Acheter ${vehicle.name}`;
 
-                if (vehicle.stock === 0) {
+                if (vehicle.stock <= 0) {
                     description = `❌ HORS STOCK de ${vehicle.name}`;
                 } else if (vehicle.stock < vehicle.maxStock / 2) {
                     description = `⚠ Stock limité de ${vehicle.name}`;
@@ -144,7 +144,7 @@ const MenuVehicleList: FunctionComponent<MenuVehicleListProps> = ({ vehicles, on
                         key={index}
                         onSelected={() => onChange(vehicle)}
                         onConfirm={() => onConfirm(vehicle)}
-                        disabled={vehicle.stock === 0}
+                        disabled={vehicle.stock <= 0}
                         selectable={true}
                         description={description}
                     >

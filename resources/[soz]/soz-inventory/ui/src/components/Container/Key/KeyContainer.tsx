@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { InventoryItem } from '../../../types/inventory';
+import { InventoryItem, InventoryItemMetadata } from '../../../types/inventory';
 import { ContainerWrapper } from '../ContainerWrapper';
 import style from './KeyContainer.module.css';
 import { ContainerSlots } from '../ContainerSlots';
-import playerBanner from '/banner/player.jpg'
+import keychainBanner from '/banner/keychain_banner.png'
 import { closeNUI } from '../../../hooks/nui';
 import { clsx } from 'clsx';
 import { DndContext, rectIntersection } from '@dnd-kit/core';
@@ -19,6 +19,7 @@ export const KeyContainer = () => {
         setPlayerInventory(null);
     }, [setDisplay, setPlayerInventory]);
 
+
     const transfertItem = useCallback((event: any) => {
         if (!event.active.data.current) return;
 
@@ -28,9 +29,30 @@ export const KeyContainer = () => {
                 'Content-Type': 'application/json; charset=UTF-8',
             },
             body: JSON.stringify(event.active.data.current.item)
-        }).then(() => {
-            closeNUI(() => closeMenu());
-        });
+        }).then()
+    }, [closeMenu]);
+
+
+    const giveAllVehicleKeysToTarget = useCallback((keys: any) => {
+
+        fetch(`https://soz-inventory/player/giveAllVehicleKeysToTarget`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: JSON.stringify(keys)
+        }).then()
+    }, [closeMenu]);
+
+    const giveAllAppartmentKeysToTarget = useCallback((keys: any) => {
+
+        fetch(`https://soz-inventory/player/giveAllAppartmentKeysToTarget`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: JSON.stringify(keys)
+        }).then()
     }, [closeMenu]);
 
     const onMessageReceived = useCallback((event: MessageEvent) => {
@@ -39,16 +61,10 @@ export const KeyContainer = () => {
 
             setPlayerInventory(event.data.keys.filter((i: InventoryItem) => i !== null).map((item: InventoryItem) => ({ ...item, id: `key_${item.slot}` })));
             setDisplay(true);
-        } else if (event.data.action === 'openShop' || event.data.action === 'openInventory' || event.data.action === 'openPlayerInventory') {
+        } else if (event.data.action === 'openShop' || event.data.action === 'openInventory' || event.data.action === 'openPlayerInventory' || event.data.action === 'openPlayerWalletInventory') {
             closeMenu();
         }
     }, [setDisplay, setPlayerInventory]);
-
-    const onKeyDownReceived = useCallback((event: KeyboardEvent) => {
-        if (display && !event.repeat && event.key === 'Escape') {
-            closeNUI(() => closeMenu());
-        }
-    }, [display, closeMenu])
 
     const onClickReceived = useCallback((event: MouseEvent) => {
         if (display && menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -56,6 +72,15 @@ export const KeyContainer = () => {
             closeNUI(() => closeMenu());
         }
     }, [menuRef, display, closeMenu])
+
+    const onKeyDownReceived = useCallback(
+        (event: KeyboardEvent) => {
+            if (display && !event.repeat && (event.key === "Escape" || event.key === "F2")) {
+                closeNUI(() => closeMenu());
+            }
+        },
+        [display, closeMenu]
+    );
 
     useEffect(() => {
         window.addEventListener("contextmenu", onClickReceived);
@@ -92,8 +117,10 @@ export const KeyContainer = () => {
                     <div className={clsx(style.Wrapper)}>
                         <ContainerWrapper
                             display={true}
-                            banner={playerBanner}
+                            banner={keychainBanner}
                             maxWeight={-1}
+                            giveAllAppartmentKeysCallback={() => giveAllAppartmentKeysToTarget(playerInventory.map((item, i) => ({ ...item, id: i, slot: i + 1, type: 'key' })))}
+                            giveAllVehicleKeysCallback={() => giveAllVehicleKeysToTarget(playerInventory.map((item, i) => ({ ...item, id: i, slot: i + 1, type: 'key' })))}
                         >
                             <ContainerSlots
                                 id="player"

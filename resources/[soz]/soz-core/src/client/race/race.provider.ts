@@ -7,6 +7,8 @@ import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { CylinderZone } from '@public/shared/polyzone/cylinder.zone';
 import {
     getDurationStr,
+    getRacePNJPosID,
+    getRacePosID,
     Race,
     RaceCheckpointMenuOptions,
     RaceLaunchMenuOptions,
@@ -473,7 +475,7 @@ export class RaceProvider {
             case RaceCheckpointMenuOptions.goto:
                 {
                     const race = this.raceRepository.find(raceId);
-                    this.playerPositionProvider.teleportPlayerToPosition(race.checkpoints[index]);
+                    this.playerPositionProvider.teleportAdminToPosition(race.checkpoints[index]);
                 }
                 return;
         }
@@ -490,7 +492,7 @@ export class RaceProvider {
     @OnNuiEvent(NuiEvent.RaceTPStart)
     public async onRaceTPStart(raceId: number) {
         const race = this.raceRepository.find(raceId);
-        this.playerPositionProvider.teleportPlayerToPosition(race.start);
+        this.playerPositionProvider.teleportAdminToPosition(race.start);
     }
 
     @OnNuiEvent(NuiEvent.RaceCurrrent)
@@ -520,8 +522,6 @@ export class RaceProvider {
         }
 
         const ped = PlayerPedId();
-        const coords = GetEntityCoords(ped);
-        const heading = GetEntityHeading(ped);
 
         const [bestRun, bestSplits] = await emitRpc<[number[], number[]]>(RpcServerEvent.RACE_GET_SPLITS, race.id);
 
@@ -538,55 +538,55 @@ export class RaceProvider {
 
         let vehicle = null;
         if (race.carModel != 'ped') {
-            await this.resourceLoader.loadModel(hash);
+            if (await this.resourceLoader.loadModel(hash)) {
+                vehicle = CreateVehicle(hash, race.start[0], race.start[1], race.start[2], race.start[3], false, false);
+                SetVehRadioStation(vehicle, 'OFF');
+                this.vehicleStateService.setVehicleState(
+                    vehicle,
+                    {
+                        ...getDefaultVehicleVolatileState(),
+                    },
+                    true
+                );
 
-            vehicle = CreateVehicle(hash, race.start[0], race.start[1], race.start[2], race.start[3], false, false);
-            SetVehRadioStation(vehicle, 'OFF');
-            this.vehicleStateService.setVehicleState(
-                vehicle,
-                {
-                    ...getDefaultVehicleVolatileState(),
-                },
-                true
-            );
+                if (race.vehicleConfiguration) {
+                    this.vehicleService.applyVehicleConfiguration(vehicle, race.vehicleConfiguration);
+                } else {
+                    SetVehicleModKit(vehicle, 0);
+                    ToggleVehicleMod(vehicle, VehicleModType.Turbo, true);
+                    SetVehicleMod(
+                        vehicle,
+                        VehicleModType.Engine,
+                        GetNumVehicleMods(vehicle, VehicleModType.Engine) - 1,
+                        false
+                    );
+                    SetVehicleMod(
+                        vehicle,
+                        VehicleModType.Brakes,
+                        GetNumVehicleMods(vehicle, VehicleModType.Brakes) - 1,
+                        false
+                    );
+                    SetVehicleMod(
+                        vehicle,
+                        VehicleModType.Transmission,
+                        GetNumVehicleMods(vehicle, VehicleModType.Transmission) - 1,
+                        false
+                    );
+                    SetVehicleColours(
+                        vehicle,
+                        getRandomInt(0, VehicleColor.BrushedGold),
+                        getRandomInt(0, VehicleColor.BrushedGold)
+                    );
+                }
 
-            if (race.vehicleConfiguration) {
-                this.vehicleService.applyVehicleConfiguration(vehicle, race.vehicleConfiguration);
-            } else {
-                SetVehicleModKit(vehicle, 0);
-                ToggleVehicleMod(vehicle, VehicleModType.Turbo, true);
-                SetVehicleMod(
-                    vehicle,
-                    VehicleModType.Engine,
-                    GetNumVehicleMods(vehicle, VehicleModType.Engine) - 1,
-                    false
-                );
-                SetVehicleMod(
-                    vehicle,
-                    VehicleModType.Brakes,
-                    GetNumVehicleMods(vehicle, VehicleModType.Brakes) - 1,
-                    false
-                );
-                SetVehicleMod(
-                    vehicle,
-                    VehicleModType.Transmission,
-                    GetNumVehicleMods(vehicle, VehicleModType.Transmission) - 1,
-                    false
-                );
-                SetVehicleColours(
-                    vehicle,
-                    getRandomInt(0, VehicleColor.BrushedGold),
-                    getRandomInt(0, VehicleColor.BrushedGold)
+                await this.playerPositionProvider.teleportPlayerToPosition(getRacePosID(race), () =>
+                    TaskWarpPedIntoVehicle(ped, vehicle, -1)
                 );
             }
 
-            await wait(100);
-
-            TaskWarpPedIntoVehicle(ped, vehicle, -1);
-
             this.resourceLoader.unloadModel(hash);
         } else {
-            await this.playerPositionProvider.teleportPlayerToPosition(race.start);
+            await this.playerPositionProvider.teleportPlayerToPosition(getRacePosID(race));
         }
 
         await emitRpc(RpcServerEvent.RACE_SERVER_START);
@@ -607,7 +607,7 @@ export class RaceProvider {
             DeleteVehicle(vehicle);
         }
 
-        await this.playerPositionProvider.teleportPlayerToPosition([...coords, heading] as Vector4);
+        await this.playerPositionProvider.teleportPlayerToPosition(getRacePNJPosID(race));
 
         this.objectProvider.enable();
 

@@ -1,13 +1,14 @@
-import { Command } from '@public/core/decorators/command';
-
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { Property } from '../../shared/housing/housing';
 import { Zone, ZoneTyped } from '../../shared/polyzone/box.zone';
 import { RpcServerEvent } from '../../shared/rpc';
+import { HousingProvider } from '../housing/housing.provider';
+import { InventoryManager } from '../inventory/inventory.manager';
 import { PlayerService } from '../player/player.service';
 import { HousingRepository } from '../repository/housing.repository';
+import { SenateRepository } from '../repository/senate.repository';
 import { ZoneRepository } from '../repository/zone.repository';
 
 @Provider()
@@ -18,8 +19,17 @@ export class AdminMenuMapperProvider {
     @Inject(ZoneRepository)
     private zoneRepository: ZoneRepository;
 
+    @Inject(SenateRepository)
+    private senateRepository: SenateRepository;
+
+    @Inject(HousingProvider)
+    private housingProvider: HousingProvider;
+
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(InventoryManager)
+    private inventoryManager: InventoryManager;
 
     @Rpc(RpcServerEvent.ADMIN_MAPPER_SET_APARTMENT_PRICE)
     public async setApartmentPrice(source: number, apartmentId: number, price: number): Promise<Property[]> {
@@ -127,13 +137,85 @@ export class AdminMenuMapperProvider {
         return this.zoneRepository.get();
     }
 
-    @Command('housekey', { role: ['staff', 'admin'], description: '/housekey propertyname apartmentname' })
-    public housekey(source: number, propertyname: string, apartmentname: string) {
-        const player = this.playerService.getPlayer(source);
-        if (!player) {
-            return;
+    @Rpc(RpcServerEvent.ADMIN_MAPPER_SET_SENATE_PARTY)
+    public async setSenateParty(
+        source: number,
+        propertyId: number,
+        apartmentId: number,
+        senatePartyId: string | null
+    ): Promise<Property[]> {
+        const [property, apartment] = await this.housingRepository.getApartment(propertyId, apartmentId);
+
+        if (!property || !apartment) {
+            return this.housingRepository.get();
         }
 
-        TriggerEvent('housing:server:GiveAdminAccess', player.source, propertyname, apartmentname, player.citizenid);
+        if (!senatePartyId) {
+            await this.housingRepository.setSenateParty(apartmentId, null);
+            await this.housingProvider.clearApartment(property, apartment, false);
+
+            return this.housingRepository.get();
+        }
+
+        const senateParty = await this.senateRepository.find(senatePartyId);
+
+        if (!senateParty) {
+            return this.housingRepository.get();
+        }
+
+        await this.housingRepository.setSenateParty(apartmentId, senatePartyId);
+
+        return this.housingRepository.get();
+    }
+
+    @Rpc(RpcServerEvent.ADMIN_MAPPER_SET_OWNER)
+    public async setOwner(
+        source: number,
+        propertyId: number,
+        apartmentId: number,
+        citizenId: string
+    ): Promise<Property[]> {
+        const [property, apartment] = await this.housingRepository.getApartment(propertyId, apartmentId);
+
+        if (!property || !apartment) {
+            return this.housingRepository.get();
+        }
+
+        await this.housingRepository.setApartmentOwner(citizenId, apartmentId);
+
+        const connectedPlayer = this.playerService.getPlayerByCitizenId(citizenId);
+
+        if (connectedPlayer) {
+            this.playerService.setPlayerApartment(connectedPlayer.source, apartment, property);
+        }
+
+        return this.housingRepository.get();
+    }
+
+    @Rpc(RpcServerEvent.ADMIN_MAPPER_CLEAR_OWNER)
+    public async clearOwner(source: number, propertyId: number, apartmentId: number): Promise<Property[]> {
+        const [property, apartment] = await this.housingRepository.getApartment(propertyId, apartmentId);
+
+        if (!property || !apartment) {
+            return this.housingRepository.get();
+        }
+
+        await this.housingProvider.clearApartment(property, apartment, false);
+
+        return this.housingRepository.get();
+    }
+
+    @Rpc(RpcServerEvent.ADMIN_MAPPER_SET_APARTMENT_TIER)
+    public async setTier(source: number, propertyId: number, apartmentId: number, tier: number): Promise<Property[]> {
+        const [property, apartment] = await this.housingRepository.getApartment(propertyId, apartmentId);
+
+        if (!property || !apartment) {
+            return this.housingRepository.get();
+        }
+
+        this.inventoryManager.setHouseStashMaxWeightFromTier(apartment.identifier, tier);
+        await this.housingRepository.setApartmentTier(apartment.id, tier);
+
+        return this.housingRepository.get();
     }
 }

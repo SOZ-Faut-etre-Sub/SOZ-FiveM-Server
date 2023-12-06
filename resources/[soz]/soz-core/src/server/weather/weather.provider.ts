@@ -14,7 +14,7 @@ import { getRandomInt, getRandomKeyWeighted } from '../../shared/random';
 import { Forecast, ForecastWithTemperature, TemperatureRange, Time, Weather } from '../../shared/weather';
 import { Pollution } from '../pollution';
 import { Store } from '../store/store';
-import { Polluted, SpringAutumn } from './forecast';
+import { Halloween, Polluted, SpringAutumn } from './forecast';
 import { DayAutumnTemperature, ForecastAdderTemperatures, NightAutumnTemperature } from './temperature';
 
 const INCREMENT_SECOND = (3600 * 24) / (60 * 48);
@@ -38,13 +38,13 @@ export class WeatherProvider {
     private pollutionManagerReady = false;
 
     // See forecast.ts for the list of available forecasts
-    private forecast: Forecast = SpringAutumn;
+    private forecast: Forecast = isFeatureEnabled(Feature.Halloween) ? Halloween : SpringAutumn;
     // See temperature.ts for the list of available temperature ranges,
     // please ensure that the day and night temperature ranges are using the same season
     private dayTemperatureRange: TemperatureRange = DayAutumnTemperature;
     private nightTemperatureRange: TemperatureRange = NightAutumnTemperature;
 
-    private defaultWeather: Weather = isFeatureEnabled(Feature.Halloween) ? 'NEUTRAL' : 'OVERCAST';
+    private defaultWeather: Weather = isFeatureEnabled(Feature.Halloween) ? 'CLOUDS' : 'OVERCAST';
 
     private currentForecast: ForecastWithTemperature = {
         weather: this.defaultWeather,
@@ -79,8 +79,8 @@ export class WeatherProvider {
         }
 
         if (isFeatureEnabled(Feature.Halloween)) {
-            if (this.currentTime.hour >= 2 && this.currentTime.hour < 23) {
-                this.currentTime.hour = 23;
+            if (this.currentTime.hour >= 2 || this.currentTime.hour < 1) {
+                this.currentTime.hour = 1;
                 this.currentTime.minute = 0;
                 this.currentTime.second = 0;
             }
@@ -289,5 +289,28 @@ export class WeatherProvider {
     @On('soz-upw:server:onPollutionManagerReady', true)
     public onPollutionManagerReady() {
         this.pollutionManagerReady = true;
+    }
+
+    @Command('rain', { role: 'admin' })
+    setRain(source: number, rain: number): void {
+        this.store.dispatch.global.update({ rain: rain });
+    }
+
+    @Command('halloween', { role: 'admin' })
+    setTimecycleMod(source: number, value: string): void {
+        if (value) {
+            if (value == 'full') {
+                value = 'HalloweenFullRed';
+            } else if (value == 'light') {
+                value = 'HalloweenLightRed';
+            } else if (value == 'clear') {
+                value = 'HalloweenClearRed';
+            } else if (value == 'off') {
+                value = '';
+            } else {
+                this.logger.error('Invalid value ' + value + ', expect full or light or clear or off');
+            }
+        }
+        this.store.dispatch.global.update({ halloween: value });
     }
 }

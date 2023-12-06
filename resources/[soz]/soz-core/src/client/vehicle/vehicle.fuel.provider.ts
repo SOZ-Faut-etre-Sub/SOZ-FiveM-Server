@@ -10,7 +10,7 @@ import { FuelStation, FuelStationType, FuelType } from '../../shared/fuel';
 import { JobType } from '../../shared/job';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
-import { isVehicleModelElectric, VehicleClass, VehicleCondition } from '../../shared/vehicle/vehicle';
+import { isVehicleModelElectric, VehicleClass, VehicleCondition, VehicleSeat } from '../../shared/vehicle/vehicle';
 import { AnimationService } from '../animation/animation.service';
 import { BlipFactory } from '../blip';
 import { Notifier } from '../notifier';
@@ -19,18 +19,19 @@ import { ObjectProvider } from '../object/object.provider';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../progress.service';
 import { FuelStationRepository } from '../repository/fuel.station.repository';
+import { RopeService } from '../rope.service';
 import { SoundService } from '../sound.service';
 import { TargetFactory } from '../target/target.factory';
 import { VehicleService } from './vehicle.service';
 import { VehicleStateService } from './vehicle.state.service';
 
 type CurrentStationPistol = {
-    object: number;
-    rope: number;
     entity: number;
     station: string;
     filling: boolean;
 };
+
+const MAX_LENGTH_ROPE = 15.0;
 
 const VehicleClassFuelMultiplier: Partial<Record<VehicleClass, number>> = {
     [VehicleClass.Helicopters]: 6.33,
@@ -74,10 +75,14 @@ export class VehicleFuelProvider {
     @Inject(VehicleStateService)
     private vehicleStateService: VehicleStateService;
 
+    @Inject(RopeService)
+    private ropeService: RopeService;
+
     private currentStationPistol: CurrentStationPistol | null = null;
 
     private publicOilStationPrice = 0;
     private publicKeroseneStationPrice = 0;
+    private ready = false;
 
     @Once(OnceStep.RepositoriesLoaded)
     public async onRepositoryLoaded() {
@@ -111,7 +116,7 @@ export class VehicleFuelProvider {
                 station.objectId = await this.objectProvider.createObject({
                     model: station.model,
                     position: station.position,
-                    id: `fuel_station_${station.name}`,
+                    id: 'fuel_station_' + station.id,
                 });
             }
         }
@@ -378,6 +383,12 @@ export class VehicleFuelProvider {
                 },
             },
         ]);
+
+        this.ready = true;
+    }
+
+    public isReady() {
+        return this.ready;
     }
 
     private async fillVehicle(vehicle: number) {
@@ -434,7 +445,7 @@ export class VehicleFuelProvider {
             return;
         }
 
-        const driver = GetPedInVehicleSeat(vehicle, -1);
+        const driver = GetPedInVehicleSeat(vehicle, VehicleSeat.Driver);
 
         if (driver) {
             this.notifier.notify('Vous ne pouvez pas remplir un véhicule avec un conducteur au volant.', 'error');
@@ -517,11 +528,7 @@ export class VehicleFuelProvider {
             return;
         }
 
-        RopeUnloadTextures();
-        DeleteRope(this.currentStationPistol.rope);
-        SetEntityAsMissionEntity(this.currentStationPistol.object, true, true);
-        TriggerServerEvent(ServerEvent.OBJECT_ATTACHED_UNREGISTER, ObjToNet(this.currentStationPistol.object));
-        DeleteEntity(this.currentStationPistol.object);
+        this.ropeService.deleteRope();
 
         this.currentStationPistol = null;
 
@@ -554,110 +561,34 @@ export class VehicleFuelProvider {
 
         this.soundService.playAround('fuel/start_fuel', 5, 0.3);
 
-        const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
-        const object = CreateObject(
-            GetHashKey('prop_cs_fuel_nozle'),
-            position[0],
-            position[1],
-            position[2] - 1.0,
-            true,
-            true,
-            true
-        );
-
-        const netId = ObjToNet(object);
-        SetNetworkIdCanMigrate(netId, false);
-        TriggerServerEvent(ServerEvent.OBJECT_ATTACHED_REGISTER, netId);
-
-        AttachEntityToEntity(
-            object,
-            PlayerPedId(),
-            GetPedBoneIndex(PlayerPedId(), 26610),
-            0.04,
-            -0.04,
-            0.02,
-            305.0,
-            270.0,
-            -40.0,
-            true,
-            true,
-            false,
-            true,
-            0,
-            true
-        );
-        RopeLoadTextures();
-
-        const [rope] = AddRope(
-            position[0],
-            position[1],
-            position[2],
-            0.0,
-            0.0,
-            0.0,
-            15.0,
-            1,
-            10.0,
-            1.0,
-            0,
-            false,
-            true,
-            true,
-            1.0,
-            false,
-            0
-        );
+        const ropePosition = GetOffsetFromEntityInWorldCoords(entity, 0.0, 0.0, 1.0) as Vector3;
+        if (!this.ropeService.createNewRope(ropePosition, entity, 1, MAX_LENGTH_ROPE, 'prop_cs_fuel_nozle')) {
+            return;
+        }
 
         this.currentStationPistol = {
-            rope,
-            object,
             entity,
             station: station.name,
             filling: false,
         };
-
-        const ropePosition = GetOffsetFromEntityInWorldCoords(entity, 0.0, 0.0, 1.0) as Vector3;
-        AttachRopeToEntity(rope, entity, ropePosition[0], ropePosition[1], ropePosition[2], true);
-        ActivatePhysics(rope);
     }
 
     @Tick(TickInterval.EVERY_SECOND)
-    private async handleStationPistol() {
+    private async soundRefuelingTick() {
         if (!this.currentStationPistol) {
             return;
         }
 
-        if (this.currentStationPistol.filling) {
-            this.soundService.playAround('fuel/refueling', 5, 0.3);
+        if (!this.currentStationPistol.filling) {
+            return;
         }
 
-        const ropePosition = GetOffsetFromEntityInWorldCoords(
-            this.currentStationPistol.entity,
-            0.0,
-            0.0,
-            1.0
-        ) as Vector3;
-        const handPosition = GetWorldPositionOfEntityBone(
-            PlayerPedId(),
-            GetEntityBoneIndexByName(PlayerPedId(), 'BONETAG_L_FINGER2')
-        ) as Vector3;
+        if (this.ropeService.getRopeDistance() > MAX_LENGTH_ROPE) {
+            await this.disableStationPistol();
+            return;
+        }
 
-        AttachEntitiesToRope(
-            this.currentStationPistol.rope,
-            this.currentStationPistol.entity,
-            PlayerPedId(),
-            ropePosition[0],
-            ropePosition[1],
-            ropePosition[2],
-            handPosition[0],
-            handPosition[1],
-            handPosition[2],
-            10.0,
-            true,
-            true,
-            null,
-            'BONETAG_L_FINGER2'
-        );
+        this.soundService.playAround('fuel/refueling', 5, 0.3);
     }
 
     private async getStationFuelLevel(entity: number) {

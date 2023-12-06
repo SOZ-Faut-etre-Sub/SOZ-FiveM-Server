@@ -103,13 +103,13 @@ RegisterNetEvent("pawl:client:harvestTree", function(data)
     Wait(3000)
 
     exports["soz-core"]:DrawNotification("Vous êtes en train de ~g~couper l’arbre~s~.")
-    local success, _ = exports["soz-utils"]:Progressbar("harvest-tree", "Vous récoltez...", Config.Harvest.Duration, false, true,
-                                                        {disableMovement = true, disableCombat = true},
-                                                        {
+    local success = exports["soz-core"]:ProgressSynchrone("harvest-tree", "Vous récoltez...", Config.Harvest.Duration, false, true,
+                                                          {disableMovement = true, disableCombat = true},
+                                                          {
         animDict = "melee@large_wpn@streamed_core",
         anim = "plyr_rear_takedown_bat_r_facehit",
         flags = 17,
-    }, {}, {})
+    }, nil, nil)
 
     if success then
         local cutTree = QBCore.Functions.TriggerRpc("pawl:server:harvestTree", data.identifier, data.position)
@@ -149,8 +149,8 @@ RegisterNetEvent("pawl:client:fastHarvestTree", function(data)
     Wait(2000)
     exports["soz-core"]:DrawNotification("Vous êtes en train de ~g~tronçonner l'arbre~s~.")
     createChainsawThread()
-    local success, _ = exports["soz-utils"]:Progressbar("harvest-tree", "Vous tronçonnez...", Config.FastHarvest.Duration, false, true,
-                                                        {disableMovement = true, disableCombat = true}, {
+    local success = exports["soz-core"]:ProgressSynchrone("harvest-tree", "Vous tronçonnez...", Config.FastHarvest.Duration, false, true,
+                                                          {disableMovement = true, disableCombat = true}, {
         animDict = "anim@amb@business@cfm@cfm_cut_sheets@",
         anim = "load_and_tune_guilotine_v1_billcutter",
         flags = 17,
@@ -159,7 +159,7 @@ RegisterNetEvent("pawl:client:fastHarvestTree", function(data)
         model = "prop_tool_consaw",
         coords = {x = 0.12, y = 0.02, z = 0.0001},
         rotation = {x = 90.0, y = 180.0, z = -40.0},
-    }, {})
+    }, nil)
 
     if success then
         local cutTree = QBCore.Functions.TriggerRpc("pawl:server:harvestTree", data.identifier, data.position)
@@ -185,13 +185,13 @@ RegisterNetEvent("pawl:client:harvestTreeSap", function(data)
     Wait(3000)
 
     exports["soz-core"]:DrawNotification("Vous êtes en train de ~g~récolter de la sève~s~.")
-    local success, _ = exports["soz-utils"]:Progressbar("harvest-tree", "Vous récoltez...", Config.Harvest.SapDuration, false, true,
-                                                        {disableMovement = true, disableCombat = true},
-                                                        {
+    local success = exports["soz-core"]:ProgressSynchrone("harvest-tree", "Vous récoltez...", Config.Harvest.SapDuration, false, true,
+                                                          {disableMovement = true, disableCombat = true},
+                                                          {
         animDict = "melee@large_wpn@streamed_core",
         anim = "plyr_rear_takedown_bat_r_facehit",
         flags = 17,
-    }, {}, {})
+    }, nil, nil)
 
     if success then
         local sapTree = QBCore.Functions.TriggerRpc("pawl:server:harvestTreeSap", data.identifier, data.position)
@@ -222,7 +222,7 @@ RegisterNetEvent("pawl:client:syncField", function(identifier, data)
         field[k] = nil
     end
 
-    local currentTime = exports["soz-utils"]:GetTimestamp() / 1000
+    local currentTime = exports["soz-core"]:GetTimestamp() / 1000
 
     if data then
         for _, v in pairs(data) do

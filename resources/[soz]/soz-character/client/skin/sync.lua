@@ -37,6 +37,17 @@ RegisterNetEvent("soz-character:Client:ApplyCurrentSkin", function()
     ApplyPlayerBodySkin(PlayerId(), PlayerData.skin)
 end)
 
+-- Apply état du joueur (données persisté)
+RegisterNetEvent("soz-character:Client:ApplyCurrent", function()
+    ApplyPlayerBodySkin(PlayerId(), PlayerData.skin)
+    ApplyPlayerClothConfig(PlayerId(), PlayerData.cloth_config)
+
+    local playerState = exports["soz-core"]:GetPlayerState()
+    if playerState.isWearingPatientOutfit then
+        exports["soz-core"]:SetPlayerState({isWearingPatientOutfit = false})
+    end
+end)
+
 -- Mettre nue un personnage sans que ce soit persisté en bdd (pour les tatooes par exemple)
 RegisterNetEvent("soz-character:Client:SetTemporaryNaked", function()
     local tempClothConfig = Clone(PlayerData.cloth_config)

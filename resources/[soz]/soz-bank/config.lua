@@ -23,7 +23,7 @@ Config.ErrorMessage = {
 }
 
 Config.FarmAccountMoney = {
-    ["bank_refill"] = {money = 10000000, marked_money = 0},
+    ["bank_refill"] = {money = 100000000, marked_money = 0},
     ["bennys_reseller"] = {money = 100000000, marked_money = 0},
     ["farm_bennys"] = {money = 300000, marked_money = 0},
     ["farm_news"] = {money = 300000, marked_money = 0},
@@ -86,9 +86,11 @@ Config.SafeStorages = {
     ["safe_lsmc"] = {
         label = "Coffre LSMC",
         owner = "lsmc",
-        position = vector3(311.04, -1424.3, 32.51),
-        size = vec2(0.8, 1.95),
+        position = vector3(368.90, -1415.68, 38.19),
+        size = vec2(0.60, 0.70),
         heading = 320,
+        minZ = 37.04,
+        maxZ = 37.99,
     },
     ["safe_news"] = {
         label = "Coffre Twitch News",
@@ -370,3 +372,5 @@ Config.AtmLocations = {
     ["atm_big_1648623750"] = {accountId = "bank_pacific1", coords = {x = 265.2169, y = 210.9048}, hideBlip = true},
     ["atm_big_5274613"] = {accountId = "bank_pacific1", coords = {x = 264.8689, y = 209.9486}, hideBlip = true},
 }
+
+Config.SenatorPay = 400

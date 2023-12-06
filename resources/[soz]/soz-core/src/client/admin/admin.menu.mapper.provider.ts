@@ -13,7 +13,7 @@ import { Font } from '../../shared/hud';
 import { JobType } from '../../shared/job';
 import { MenuType } from '../../shared/nui/menu';
 import { BoxZone, Zone, ZoneType, ZoneTyped } from '../../shared/polyzone/box.zone';
-import { toVector4Object, Vector3, Vector4 } from '../../shared/polyzone/vector';
+import { toVector4Object, Vector3 } from '../../shared/polyzone/vector';
 import { Err, Ok } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
 import { DrawService } from '../draw.service';
@@ -23,6 +23,7 @@ import { NuiMenu } from '../nui/nui.menu';
 import { NuiObjectProvider } from '../nui/nui.object.provider';
 import { NuiZoneProvider } from '../nui/nui.zone.provider';
 import { HousingRepository } from '../repository/housing.repository';
+import { SenateRepository } from '../repository/senate.repository';
 import { ZoneRepository } from '../repository/zone.repository';
 
 type ZoneDrawn = {
@@ -68,6 +69,9 @@ export class AdminMenuMapperProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(SenateRepository)
+    private senateRepository: SenateRepository;
 
     private zonesDrawn: ZoneDrawn[] = [];
 
@@ -133,6 +137,7 @@ export class AdminMenuMapperProvider {
             properties: this.housingRepository.get(),
             showInterior: this.showInteriorData,
             zones: this.zoneRepository.get(),
+            parties: this.senateRepository.get(),
         });
     }
 
@@ -490,15 +495,14 @@ export class AdminMenuMapperProvider {
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuMapperTeleportToInsideCoords)
-    public async teleportToInsideCoords({ coords }: { coords: Vector4 | null }): Promise<void> {
-        if (null === coords) {
-            this.notifier.error("La zone d'apparition n'est pas définie");
-
-            return;
-        }
-
-        SetPedCoordsKeepVehicle(PlayerPedId(), coords[0], coords[1], coords[2]);
-        SetEntityHeading(PlayerPedId(), coords[3]);
+    public async teleportToInsideCoords({
+        apartmentId,
+        propertyId,
+    }: {
+        apartmentId: number;
+        propertyId: number;
+    }): Promise<void> {
+        TriggerServerEvent(ServerEvent.HOUSING_ENTER_APARTMENT, propertyId, apartmentId);
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuMapperSetInsideCoords)
@@ -650,5 +654,75 @@ export class AdminMenuMapperProvider {
         culling: number;
     }): Promise<Property[]> {
         return await emitRpc<Property[]>(RpcServerEvent.ADMIN_MAPPER_REMOVE_PROPERTY_CULLING, propertyId, culling);
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuMapperSetSenateParty)
+    public async setSenateParty({
+        propertyId,
+        apartmentId,
+        senatePartyId,
+    }: {
+        propertyId: number;
+        apartmentId: number;
+        senatePartyId: string;
+    }): Promise<Property[]> {
+        return await emitRpc<Property[]>(
+            RpcServerEvent.ADMIN_MAPPER_SET_SENATE_PARTY,
+            propertyId,
+            apartmentId,
+            senatePartyId
+        );
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuMapperSetOwner)
+    public async setOwner({
+        propertyId,
+        apartmentId,
+    }: {
+        propertyId: number;
+        apartmentId: number;
+    }): Promise<Property[]> {
+        const citizenId = await this.inputService.askInput(
+            {
+                title: 'Citizen ID',
+            },
+            value => {
+                if (!value) {
+                    return Err('Le Citizen ID ne peut pas être vide');
+                }
+
+                return Ok(value);
+            }
+        );
+
+        if (!citizenId) {
+            return this.housingRepository.get();
+        }
+
+        return await emitRpc<Property[]>(RpcServerEvent.ADMIN_MAPPER_SET_OWNER, propertyId, apartmentId, citizenId);
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuMapperClearOwner)
+    public async clearOwner({
+        propertyId,
+        apartmentId,
+    }: {
+        propertyId: number;
+        apartmentId: number;
+    }): Promise<Property[]> {
+        return await emitRpc<Property[]>(RpcServerEvent.ADMIN_MAPPER_CLEAR_OWNER, propertyId, apartmentId);
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuMapperSetApartmentTier)
+    public async setTier({
+        propertyId,
+        apartmentId,
+        tier,
+    }: {
+        propertyId: number;
+        apartmentId: number;
+        tier: number;
+    }): Promise<Property[]> {
+        return await emitRpc<Property[]>(RpcServerEvent.ADMIN_MAPPER_SET_APARTMENT_TIER, propertyId, apartmentId, tier);
     }
 }

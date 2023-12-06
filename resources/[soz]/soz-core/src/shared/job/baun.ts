@@ -1,5 +1,6 @@
 import { WardrobeConfig } from '../cloth';
 import { CraftCategory } from '../craft/craft';
+import { Feature } from '../features';
 import { NamedZone } from '../polyzone/box.zone';
 
 export const baunCraftZones: NamedZone[] = [
@@ -297,6 +298,77 @@ export const BaunCraftsLists: Record<string, CraftCategory> = {
                 amount: 4,
                 inputs: {
                     lemonade_bottle: { count: 1 },
+                },
+            },
+        },
+    },
+    Halloween: {
+        animation: {
+            dictionary: 'anim@amb@nightclub@mini@drinking@drinking_shots@ped_a@normal',
+            name: 'pour_one',
+            options: {
+                repeat: true,
+            },
+        },
+        feature: Feature.Halloween,
+        duration: 4000,
+        icon: '🎃',
+        event: 'job_baun_craft',
+        recipes: {
+            surprise_candie: {
+                amount: 1,
+                inputs: {
+                    vodka: { count: 1 },
+                    gin: { count: 1 },
+                    tequila: { count: 1 },
+                    whisky: { count: 1 },
+                    cognac: { count: 1 },
+                    rhum: { count: 1 },
+                },
+            },
+            horror_cauldron: {
+                amount: 1,
+                inputs: {
+                    vodka: { count: 1 },
+                    gin: { count: 1 },
+                    tequila: { count: 1 },
+                    whisky: { count: 1 },
+                    cognac: { count: 1 },
+                    rhum: { count: 1 },
+                },
+            },
+            halloween_radioactive_beer: {
+                amount: 1,
+                inputs: {
+                    vodka: { count: 1 },
+                    gin: { count: 1 },
+                    tequila: { count: 1 },
+                    whisky: { count: 1 },
+                    cognac: { count: 1 },
+                    rhum: { count: 1 },
+                    halloween_uranium_raw: { count: 1 },
+                },
+            },
+            halloween_bloody_mary: {
+                amount: 1,
+                inputs: {
+                    vodka: { count: 1 },
+                    gin: { count: 1 },
+                    tequila: { count: 1 },
+                    whisky: { count: 1 },
+                    cognac: { count: 1 },
+                    rhum: { count: 1 },
+                },
+            },
+            halloween_spectral_elixir: {
+                amount: 1,
+                inputs: {
+                    vodka: { count: 1 },
+                    gin: { count: 1 },
+                    tequila: { count: 1 },
+                    whisky: { count: 1 },
+                    cognac: { count: 1 },
+                    rhum: { count: 1 },
                 },
             },
         },

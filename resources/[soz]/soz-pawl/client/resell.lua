@@ -1,6 +1,6 @@
 -- Resell Port of Los Santos
 Citizen.CreateThread(function()
-    local resellOpt = SozJobCore.Jobs[SozJobCore.JobType.Pawl].resell.primary
+    local resellOpt = Config.Resell.primary
     local coords = resellOpt.coords
 
     exports["qb-target"]:SpawnPed({
@@ -37,7 +37,7 @@ end
 
 RegisterNetEvent("locations:zone:enter", function(group, name)
     if hasResellZoneAccess(group) then
-        TriggerEvent("player/setCurrentResellZone", SozJobCore.Jobs[SozJobCore.JobType.Pawl].resell.secondary)
+        TriggerEvent("player/setCurrentResellZone", Config.Resell.secondary)
     end
 end)
 

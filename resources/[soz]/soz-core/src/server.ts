@@ -10,10 +10,12 @@ import { ChainMiddlewareTickServerFactory } from './core/middleware/middleware.t
 import { AdminModule } from './server/admin/admin.module';
 import { AfkModule } from './server/afk/afk.module';
 import { ApiModule } from './server/api/api.module';
+import { BankModule } from './server/bank/bank.module';
 import { CraftModule } from './server/craft/craft.module';
 import { DatabaseModule } from './server/database/database.module';
 import { DrivingSchoolModule } from './server/driving-school/ds.module';
 import { FieldModule } from './server/farm/field.module';
+import { HousingModule } from './server/housing/housing.module';
 import { InventoryModule } from './server/inventory/inventory.module';
 import { ItemModule } from './server/item/item.module';
 import { BaunModule } from './server/job/baun/baun.module';
@@ -45,6 +47,7 @@ import { store } from './server/store/store';
 import { StoreModule } from './server/store/store.module';
 import { StoryModule } from './server/story/story.module';
 import { StreamModule } from './server/stream/stream.module';
+import { UtilsModule } from './server/utils/utils.module';
 import { VehicleModule } from './server/vehicle/vehicle.module';
 import { VoipModule } from './server/voip/voip.module';
 import { WeaponModule } from './server/weapon/weapon.module';
@@ -84,6 +87,7 @@ async function bootstrap() {
         RebootModule,
         StoryModule,
         AfkModule,
+        BankModule,
         OilModule,
         PawlModule,
         WeaponModule,
@@ -100,6 +104,8 @@ async function bootstrap() {
         FDFModule,
         NewsModule,
         DMCModule,
+        HousingModule,
+        UtilsModule,
         ...PrivateModules
     );
 

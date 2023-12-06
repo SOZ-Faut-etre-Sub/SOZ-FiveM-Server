@@ -8,6 +8,7 @@ import { PlayerService } from '@public/server/player/player.service';
 import { ProgressService } from '@public/server/player/progress.service';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { InventoryItem, Item } from '@public/shared/item';
+import { JobLabel } from '@public/shared/job';
 import { RpcServerEvent } from '@public/shared/rpc';
 
 import { PlayerStateService } from '../../player/player.state.service';
@@ -139,5 +140,21 @@ export class PoliceProvider {
         const targetPlayer = this.playerService.getPlayer(target);
         TriggerClientEvent(ClientEvent.POLICE_BREATHANALYZER_TARGET, targetPlayer.source);
         return targetPlayer.metadata.drug;
+    }
+
+    @Rpc(RpcServerEvent.POLICE_GET_MARKED_MONEY)
+    public async getMarkedMoney(source: number, target: number): Promise<number> {
+        const sourcePlayer = this.playerService.getPlayer(source);
+        const job = JobLabel[sourcePlayer.job.id];
+        const targetPlayer = this.playerService.getPlayer(target);
+        if (targetPlayer) {
+            TriggerClientEvent(
+                ClientEvent.NOTIFICATION_DRAW,
+                targetPlayer.source,
+                `Vous êtes en train d'être fouillé par le ${job}...`
+            );
+            return targetPlayer.money.marked_money;
+        }
+        return 0;
     }
 }

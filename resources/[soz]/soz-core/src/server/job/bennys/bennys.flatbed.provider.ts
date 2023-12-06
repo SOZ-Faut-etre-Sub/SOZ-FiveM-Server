@@ -1,3 +1,6 @@
+import { Notifier } from '@public/server/notifier';
+import { SoundService } from '@public/server/sound/sound.service';
+
 import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
@@ -8,6 +11,12 @@ import { VehicleStateService } from '../../vehicle/vehicle.state.service';
 export class BennysFlatbedProvider {
     @Inject(VehicleStateService)
     private vehicleStateService: VehicleStateService;
+
+    @Inject(SoundService)
+    private soundService: SoundService;
+
+    @Inject(Notifier)
+    private notifier: Notifier;
 
     @OnEvent(ServerEvent.BENNYS_FLATBED_ATTACH_VEHICLE)
     public setAttachedVehicle(source: number, flatbedNetworkId: number, attachedNetworkId: number) {
@@ -23,6 +32,12 @@ export class BennysFlatbedProvider {
 
     @OnEvent(ServerEvent.BENNYS_FLATBED_DETACH_VEHICLE)
     public detachVehicle(source: number, flatbedNetworkId: number) {
+        const flatbedState = this.vehicleStateService.getVehicleState(flatbedNetworkId);
+
+        if (!flatbedState.volatile.flatbedAttachedVehicle) {
+            return;
+        }
+
         this.vehicleStateService.updateVehicleVolatileState(
             flatbedNetworkId,
             {
@@ -31,6 +46,9 @@ export class BennysFlatbedProvider {
             null,
             true
         );
+
+        this.soundService.playAround(source, 'seatbelt/unbuckle', 5, 0.2);
+        this.notifier.notify(source, 'Le véhicule a été détaché du flatbed.');
     }
 
     @OnEvent(ServerEvent.BENNYS_FLATBED_ASK_DETACH_VEHICLE)
@@ -44,6 +62,14 @@ export class BennysFlatbedProvider {
         const attachedVehicle = NetworkGetEntityFromNetworkId(flatbedState.volatile.flatbedAttachedVehicle);
 
         if (!attachedVehicle) {
+            this.vehicleStateService.updateVehicleVolatileState(
+                flatbedNetworkId,
+                {
+                    flatbedAttachedVehicle: null,
+                },
+                null,
+                true
+            );
             return;
         }
 

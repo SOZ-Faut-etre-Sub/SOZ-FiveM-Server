@@ -33,11 +33,10 @@ end
 --- @param player any
 --- @return boolean
 function SafeStorageAccount:AccessAllowed(owner, player)
-    local SozJobCore = exports["soz-jobs"]:GetCoreObject()
     local Player = QBCore.Functions.GetPlayer(tonumber(player))
 
     if Player then
-        return SozJobCore.Functions.HasPermission(owner, Player.PlayerData.job.id, Player.PlayerData.job.grade, SozJobCore.JobPermission.SocietyMoneyStorage)
+        return exports["soz-core"]:HasJobPermission(owner, Player.PlayerData.job.id, Player.PlayerData.job.grade, "society-money-storage")
     else
         return false
     end

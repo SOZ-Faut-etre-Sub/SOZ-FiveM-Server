@@ -49,10 +49,13 @@ export class WeaponDrawingProvider {
             if (this.weaponAttached[weapon.model]) continue;
             this.weaponAttached[weapon.model] = -1;
 
-            await this.resourceLoader.loadModel(weapon.model);
+            if (!(await this.resourceLoader.loadModel(weapon.model))) {
+                continue;
+            }
 
             const object = CreateObject(weapon.model, 1, 1, 1, true, true, false);
             this.weaponAttached[weapon.model] = object;
+            this.resourceLoader.unloadModel(weapon.model);
 
             const netId = ObjToNet(object);
             SetEntityAsMissionEntity(object, true, true);
@@ -126,14 +129,12 @@ export class WeaponDrawingProvider {
         await this.refreshDrawWeapons();
     }
 
-    @OnEvent(ClientEvent.ADMIN_NOCLIP_ENABLED)
-    async undrawAdminWeapons() {
+    public async undrawAdminWeapons() {
         this.shouldAdminDrawWeapon = false;
         await this.undrawWeapon();
     }
 
-    @OnEvent(ClientEvent.ADMIN_NOCLIP_DISABLED)
-    async drawAdminWeapons() {
+    public async drawAdminWeapons() {
         this.shouldAdminDrawWeapon = true;
         await this.drawWeapon();
     }

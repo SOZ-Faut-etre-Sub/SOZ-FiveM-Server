@@ -1,19 +1,3 @@
-local function handleFish(inventory)
-    for _, value in ipairs(PlayerData.metadata.drugs_skills) do
-        -- 2 is Zoologiste
-        if value == 2 then
-            for _, value in pairs(inventory.items) do
-                if value.type == "fish" then
-                    value.useable = true
-                    value.usableLabel = "Ponctionner les toxines"
-                end
-            end
-        end
-    end
-
-    return inventory
-end
-
 RegisterKeyMapping("inventory", "Ouvrir l'inventaire", "keyboard", "F2")
 RegisterCommand("inventory", function()
     if PlayerData.metadata["isdead"] or PlayerData.metadata["inlaststand"] or PlayerData.metadata["ishandcuffed"] or IsPauseMenuActive() or IsNuiFocused() then
@@ -32,7 +16,7 @@ RegisterCommand("inventory", function()
                 return
             end
 
-            inventory = handleFish(inventory)
+            inventory = Handle.Functions.handleFish(inventory)
 
             SendNUIMessage({
                 action = "openPlayerInventory",
@@ -41,6 +25,7 @@ RegisterCommand("inventory", function()
                 playerShortcuts = PlayerData.metadata["shortcuts"] or {},
             })
             SetNuiFocus(true, true)
+            InventoryOpen = true
 
             --- Force player to stop using weapon if input is pressed while inventory is open
             SetNuiFocusKeepInput(true)
@@ -84,6 +69,12 @@ RegisterNUICallback("player/giveItem", function(data, cb)
 
             if amount > 1 then
                 amount = exports["soz-core"]:Input("Quantité", 5, data.amount)
+            end
+
+            if tonumber(amount, 10) == nil then
+                exports["soz-core"]:DrawNotification("Vous devez entrer un nombre entier", "error")
+                cb(true)
+                return
             end
 
             if amount and tonumber(amount) > 0 then

@@ -50,8 +50,8 @@
         "webpack-dev-server": "^4.9.2"
     },
     "dependencies": {
-        "@citizenfx/client": "^2.0.6378-1",
-        "@citizenfx/server": "^2.0.6378-1",
+        "@citizenfx/client": "^2.0.7114-1",
+        "@citizenfx/server": "^2.0.7114-1",
         "@egoist/router": "^1.2.3",
         "@headlessui/react": "^1.7.14",
         "@heroicons/react": "^1.0.6",
@@ -61,6 +61,7 @@
         "axios": "^1.2.1",
         "classnames": "^2.3.1",
         "date-fns": "^2.29.3",
+        "fast-json-patch": "^3.1.1",
         "inter-ui": "^3.19.3",
         "inversify": "^6.0.1",
         "p-cancelable": "^4.0.1",

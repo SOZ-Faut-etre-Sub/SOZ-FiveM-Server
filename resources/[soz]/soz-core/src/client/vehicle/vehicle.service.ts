@@ -6,7 +6,7 @@ import { ServerEvent } from '@public/shared/event';
 
 import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
-import { VehicleConfiguration, VehicleModification } from '../../shared/vehicle/modification';
+import { VehicleConfiguration } from '../../shared/vehicle/modification';
 import { VehicleCondition, VehicleVolatileState } from '../../shared/vehicle/vehicle';
 import { PlayerService } from '../player/player.service';
 import { Qbcore } from '../qbcore';
@@ -279,7 +279,11 @@ export class VehicleService {
         }
 
         if (!NetworkHasControlOfEntity(vehicle) || !NetworkHasControlOfNetworkId(vehicleNetworkId)) {
-            this.logger.error(`failed to get ownership of vehicle ${vehicle} / ${vehicleNetworkId} [${context}]`);
+            const owner = NetworkGetEntityOwner(vehicle);
+            const ownerServerID = GetPlayerServerId(owner);
+            this.logger.error(
+                `failed to get ownership of vehicle ${vehicle} / ${vehicleNetworkId} current owner ${owner}/${ownerServerID} [${context}]`
+            );
 
             return false;
         }
@@ -288,6 +292,57 @@ export class VehicleService {
         SetVehicleHasBeenOwnedByPlayer(vehicle, true);
 
         return true;
+    }
+
+    public getWindowExists(vehicle: number): boolean[] {
+        return [
+            GetEntityBoneIndexByName(vehicle, 'window_lf') !== -1,
+            GetEntityBoneIndexByName(vehicle, 'window_rf') !== -1,
+            GetEntityBoneIndexByName(vehicle, 'window_lr') !== -1,
+            GetEntityBoneIndexByName(vehicle, 'window_rr') !== -1,
+            GetEntityBoneIndexByName(vehicle, 'window_lm') !== -1,
+            GetEntityBoneIndexByName(vehicle, 'window_rm') !== -1,
+            GetEntityBoneIndexByName(vehicle, 'windscreen') !== -1,
+            GetEntityBoneIndexByName(vehicle, 'windscreen_r') !== -1,
+        ];
+    }
+
+    public getDoorExists(vehicle: number, condition: VehicleCondition): number[] {
+        const doorExist = [];
+
+        for (const index of Object.keys(condition.doorStatus)) {
+            if (GetIsDoorValid(vehicle, parseInt(index))) {
+                doorExist.push(index);
+            }
+        }
+
+        return doorExist;
+    }
+
+    public isInBadCondition(vehicle: number, condition: VehicleCondition): boolean {
+        if (condition.bodyHealth < 930) {
+            return true;
+        }
+
+        if (condition.tankHealth < 930) {
+            return true;
+        }
+
+        if (condition.engineHealth < 930) {
+            return true;
+        }
+
+        const doorExists = this.getDoorExists(vehicle, condition);
+
+        for (const doorStatus of Object.keys(condition.doorStatus)) {
+            const doorIndex = parseInt(doorStatus);
+
+            if (doorExists.includes(doorIndex) && condition.doorStatus[doorStatus]) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public async getVehicleConfiguration(vehicleEntityId: number): Promise<VehicleConfiguration> {
@@ -427,5 +482,37 @@ export class VehicleService {
         const backPosition = GetOffsetFromEntityInWorldCoords(vehicle, 0.0, -vehicleLength / 2, 0.0) as Vector3;
         const distance = getDistance(backPosition, playerPosition);
         return distance < 2.0;
+    }
+
+    public getPlayersInVehicle(vehicle: number): number[] {
+        const maxSeats = GetVehicleMaxNumberOfPassengers(vehicle);
+        const players = [];
+
+        for (let i = -1; i < maxSeats; i++) {
+            const ped = GetPedInVehicleSeat(vehicle, i);
+
+            if (ped && IsPedAPlayer(ped)) {
+                players.push(GetPlayerServerId(NetworkGetPlayerIndexFromPed(ped)));
+            }
+        }
+        return players;
+    }
+
+    public onBlur(duration: number) {
+        const blurAction = async () => {
+            SetGameplayCamShakeAmplitude(2.0);
+            TriggerScreenblurFadeIn(500);
+            await wait(duration);
+            TriggerScreenblurFadeOut(1000);
+            for (let u = 0; u < 100; u++) {
+                await wait(10);
+                SetGameplayCamShakeAmplitude((2.0 * (100 - u)) / 100);
+            }
+            SetGameplayCamShakeAmplitude(0.0);
+        };
+
+        if (GetScreenblurFadeCurrentTime() == 0) {
+            blurAction();
+        }
     }
 }

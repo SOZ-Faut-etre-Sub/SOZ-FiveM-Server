@@ -5,6 +5,7 @@ import { Once, OnceStep } from '../../core/decorators/event';
 import { Inject, MultiInject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
+import { Tick } from '../../core/decorators/tick';
 import { OnceLoader } from '../../core/loader/once.loader';
 import { ClientEvent } from '../../shared/event';
 import { RpcServerEvent } from '../../shared/rpc';
@@ -15,10 +16,10 @@ import { FuelStationRepository } from './fuel.station.repository';
 import { GarageRepository } from './garage.repository';
 import { GloveShopRepository } from './glove.shop.repository';
 import { HousingRepository } from './housing.repository';
-import { JobGradeRepository } from './job.grade.repository';
 import { ObjectRepository } from './object.repository';
 import { RaceRepository } from './race.repository';
 import { Repository, RepositoryLegacy } from './repository';
+import { TowRopeRepository } from './tow.rope.repository';
 import { UnderTypesShopRepository } from './under_types.shop.repository';
 import { UpwChargerRepository } from './upw.charger.repository';
 import { UpwStationRepository } from './upw.station.repository';
@@ -32,9 +33,6 @@ export class RepositoryProvider {
     @Inject(VehicleRepository)
     private vehicleRepository: VehicleRepository;
 
-    @Inject(JobGradeRepository)
-    private jobGradeRepository: JobGradeRepository;
-
     @Inject(FuelStationRepository)
     private fuelStationRepository: FuelStationRepository;
 
@@ -46,6 +44,9 @@ export class RepositoryProvider {
 
     @Inject(HousingRepository)
     private housingRepository: HousingRepository;
+
+    @Inject(TowRopeRepository)
+    private towRopeRepository: TowRopeRepository;
 
     @Inject(ObjectRepository)
     private objectRepository: ObjectRepository;
@@ -83,7 +84,6 @@ export class RepositoryProvider {
     public setup() {
         this.legacyRepositories['garage'] = this.garageRepository;
         this.legacyRepositories['vehicle'] = this.vehicleRepository;
-        this.legacyRepositories['jobGrade'] = this.jobGradeRepository;
         this.legacyRepositories['fuelStation'] = this.fuelStationRepository;
         this.legacyRepositories['upwCharger'] = this.upwChargerRepository;
         this.legacyRepositories['upwStation'] = this.upwStationRepository;
@@ -108,6 +108,17 @@ export class RepositoryProvider {
         }
 
         this.onceLoader.trigger(OnceStep.RepositoriesLoaded);
+    }
+
+    @Tick(500)
+    public synchronizeData() {
+        for (const repository of this.repositories) {
+            const patch = repository.observe();
+
+            if (patch && patch.length > 0) {
+                TriggerLatentClientEvent(ClientEvent.REPOSITORY_PATCH_DATA, -1, 16 * 1024, repository.type, patch);
+            }
+        }
     }
 
     @Rpc(RpcServerEvent.REPOSITORY_GET_DATA)

@@ -1,5 +1,15 @@
 Config = {}
 
+Config.Resell = {
+    primary = {
+        coords = vector4(-272.22, -2496.57, 7.3, 186.72), -- Must be vec4
+        ZoneName = "Resell:LSPort:Pawl",
+        SourceAccount = "farm_pawl",
+        TargetAccount = "safe_pawl",
+    },
+    secondary = {ZoneName = "Resell:Zkea", SourceAccount = "farm_pawl", TargetAccount = "safe_pawl"},
+}
+
 Config.Blip = {
     Name = "Pipe And Wooden Leg",
     Coords = vector2(-574.68, 5332.84),

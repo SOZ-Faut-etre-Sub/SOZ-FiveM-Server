@@ -1,14 +1,23 @@
+import { Exportable } from '@public/core/decorators/exports';
+import { InventoryItem } from '@public/shared/item';
+import { PlayerData } from '@public/shared/player';
+
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { AnimationService } from '../animation/animation.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
+import { PlayerService } from '../player/player.service';
 import { PlayerWalkstyleProvider } from '../player/player.walkstyle.provider';
+import { PlayerWardrobe } from '../player/player.wardrobe';
 import { ItemService } from './item.service';
 
 @Provider()
 export class ItemProvider {
+    @Inject(PlayerService)
+    public playerService: PlayerService;
+
     @Inject(ItemService)
     private item: ItemService;
 
@@ -21,6 +30,12 @@ export class ItemProvider {
     @Inject(PlayerWalkstyleProvider)
     private playerWalkstyleProvider: PlayerWalkstyleProvider;
 
+    @Inject(PlayerWardrobe)
+    public playerWardrobe: PlayerWardrobe;
+
+    @Inject(ItemService)
+    private itemService: ItemService;
+
     private hasWalkStick = {
         enable: false,
         object: null,
@@ -29,6 +44,15 @@ export class ItemProvider {
     @Once(OnceStep.NuiLoaded)
     async onStart(): Promise<void> {
         this.nuiDispatch.dispatch('item', 'SetItems', this.item.getItems());
+    }
+
+    @Once(OnceStep.PlayerLoaded)
+    public onPLayerLoaded(player: PlayerData) {
+        if (player.metadata?.scuba) {
+            const ped = PlayerPedId();
+            SetEnableScuba(ped, true);
+            SetPedMaxTimeUnderwater(ped, 86400.0);
+        }
     }
 
     @OnEvent(ClientEvent.ITEM_PROTEST_SIGN_TOGGLE)
@@ -121,5 +145,52 @@ export class ItemProvider {
         } else {
             await this.playerWalkstyleProvider.updateWalkStyle('item', null);
         }
+    }
+
+    @OnEvent(ClientEvent.ITEM_SCUBA_TOOGLE)
+    public async onScubaToogle(scuba: boolean) {
+        const player = this.playerService.getPlayer();
+
+        const skin = {
+            [GetHashKey('mp_m_freemode_01')]: {
+                Components: {
+                    [3]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [4]: { Drawable: 94, Texture: 0, Palette: 0 },
+                    [6]: { Drawable: 67, Texture: 0, Palette: 0 },
+                    [8]: { Drawable: 151, Texture: 0, Palette: 0 },
+                    [11]: { Drawable: 243, Texture: 0, Palette: 0 },
+                },
+                Props: {},
+            },
+            [GetHashKey('mp_f_freemode_01')]: {
+                Components: {
+                    [3]: { Drawable: 5, Texture: 0, Palette: 0 },
+                    [4]: { Drawable: 97, Texture: 0, Palette: 0 },
+                    [6]: { Drawable: 70, Texture: 0, Palette: 0 },
+                    [8]: { Drawable: 187, Texture: 0, Palette: 0 },
+                    [11]: { Drawable: 251, Texture: 0, Palette: 0 },
+                },
+                Props: {},
+            },
+        };
+
+        const { completed } = await this.playerWardrobe.waitProgress(false);
+        if (!completed) {
+            return;
+        }
+
+        if (scuba) {
+            SetEnableScuba(PlayerPedId(), true);
+            SetPedMaxTimeUnderwater(PlayerPedId(), 86400.0);
+        } else {
+            SetEnableScuba(PlayerPedId(), false);
+            SetPedMaxTimeUnderwater(PlayerPedId(), 15.0);
+        }
+        TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, scuba ? skin[player.skin.Model.Hash] : null, false);
+    }
+
+    @Exportable('ItemIsExpired')
+    public itemIsExpired(item: InventoryItem) {
+        return this.itemService.isExpired(item);
     }
 }

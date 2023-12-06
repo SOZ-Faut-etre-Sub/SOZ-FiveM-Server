@@ -11,7 +11,7 @@ import {
     PlayOptions,
     Scenario,
 } from '../../shared/animation';
-import { transformForwardPoint2D, Vector2, Vector3 } from '../../shared/polyzone/vector';
+import { getDistance, transformForwardPoint2D, Vector2, Vector3 } from '../../shared/polyzone/vector';
 import { WeaponName } from '../../shared/weapons/weapon';
 import { ResourceLoader } from '../repository/resource.loader';
 
@@ -20,6 +20,7 @@ const defaultPlayOptions: PlayOptions = {
     resetWeapon: false,
     clearTasksBefore: false,
     clearTasksAfter: false,
+    cancellable: true,
 };
 
 class AnimationCanceller {
@@ -49,11 +50,17 @@ export class AnimationRunner implements Promise<AnimationStopReason> {
 
     readonly id = AnimationRunner.seq++;
 
+    readonly cancellable: boolean;
+
     private readonly promise: Promise<AnimationStopReason>;
 
     private animationCanceller: AnimationCanceller;
 
-    constructor(innerPromise: Promise<AnimationStopReason>, animationCanceller: AnimationCanceller) {
+    constructor(
+        innerPromise: Promise<AnimationStopReason>,
+        animationCanceller: AnimationCanceller,
+        cancellable: boolean
+    ) {
         this.promise = new Promise((resolve, reject) => {
             innerPromise
                 .then(
@@ -64,6 +71,7 @@ export class AnimationRunner implements Promise<AnimationStopReason> {
         });
 
         this.animationCanceller = animationCanceller;
+        this.cancellable = cancellable;
     }
 
     public cancel(reason: AnimationStopReason = AnimationStopReason.Canceled): void {
@@ -187,7 +195,9 @@ export class AnimationFactory {
 
             if (animation.props) {
                 for (const prop of animation.props) {
-                    await this.resourceLoader.loadModel(prop.model);
+                    if (!(await this.resourceLoader.loadModel(prop.model))) {
+                        continue;
+                    }
 
                     const playerOffset = GetOffsetFromEntityInWorldCoords(ped, 0.0, 0.0, 0.0) as Vector3;
                     const propId = CreateObject(
@@ -199,6 +209,8 @@ export class AnimationFactory {
                         true,
                         false
                     );
+
+                    this.resourceLoader.unloadModel(prop.model);
 
                     SetEntityAsMissionEntity(propId, true, true);
                     const netId = ObjToNet(propId);
@@ -277,9 +289,13 @@ export class AnimationFactory {
     }
 
     private async fxLoop(entity: number, prop: AnimationProps) {
+        if (prop.fx.delay) {
+            await wait(prop.fx.delay);
+        }
+        let index = 0;
         do {
             UseParticleFxAsset(prop.fx.dictionary);
-            StartNetworkedParticleFxLoopedOnEntity(
+            StartParticleFxLoopedOnEntity(
                 prop.fx.name,
                 entity,
                 prop.fx.position[0],
@@ -294,7 +310,26 @@ export class AnimationFactory {
                 false
             );
 
-            await wait(prop.fx.duration);
+            if (prop.fx.net) {
+                const playerId = PlayerId();
+                const playerPedId = PlayerPedId();
+                const coords = GetEntityCoords(playerPedId) as Vector3;
+                const playersInrange = [];
+                for (const player of GetActivePlayers()) {
+                    if (playerId == player) {
+                        continue;
+                    }
+
+                    if (getDistance(coords, GetEntityCoords(GetPlayerPed(playerId)) as Vector3) < 100.0) {
+                        playersInrange.push(GetPlayerServerId(player));
+                    }
+                }
+                if (playersInrange.length) {
+                    TriggerServerEvent(ServerEvent.ANIMATION_FX, ObjToNet(entity), prop.fx, playersInrange);
+                }
+            }
+
+            await wait(prop.fx.duration[index++ % prop.fx.duration.length]);
         } while (prop.fx.manualLoop && DoesEntityExist(entity));
     }
 
@@ -450,7 +485,8 @@ export class AnimationFactory {
                     ClearPedSecondaryTask(playOptions.ped);
                 }
             }),
-            animationCanceller
+            animationCanceller,
+            playOptions.cancellable
         );
     }
 }

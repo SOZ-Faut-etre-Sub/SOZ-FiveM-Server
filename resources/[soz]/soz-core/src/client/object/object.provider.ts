@@ -7,6 +7,7 @@ import { ResourceLoader } from '@public/client/repository/resource.loader';
 import { Command } from '@public/core/decorators/command';
 import { Tick } from '@public/core/decorators/tick';
 import { wait } from '@public/core/utils';
+import { Feature, isFeatureEnabled } from '@public/shared/features';
 import { getChunkId, getGridChunks } from '@public/shared/grid';
 import { joaat } from '@public/shared/joaat';
 import { Vector3 } from '@public/shared/polyzone/vector';
@@ -23,6 +24,12 @@ type SpawnedObject = {
 
 const OBJECT_MODELS_NO_FREEZE = [joaat('prop_cardbordbox_03a')];
 
+const HalloweenMapping: Record<number, number> = {
+    [GetHashKey('soz_prop_bb_bin')]: GetHashKey('soz_hw_bin_1'),
+    [GetHashKey('soz_prop_bb_bin_hs2')]: GetHashKey('soz_hw_bin_2'),
+    [GetHashKey('soz_prop_bb_bin_hs3')]: GetHashKey('soz_hw_bin_3'),
+};
+
 @Provider()
 export class ObjectProvider {
     @Inject(ResourceLoader)
@@ -38,6 +45,7 @@ export class ObjectProvider {
     private currentChunks: number[] = [];
 
     private disabled = false;
+    private ready = false;
 
     public getLoadedObjectsCount(): number {
         return Object.keys(this.loadedObjects).length;
@@ -72,6 +80,11 @@ export class ObjectProvider {
         for (const object of objects) {
             await this.createObject(object);
         }
+        this.ready = true;
+    }
+
+    public isReady() {
+        return this.ready;
     }
 
     @OnEvent(ClientEvent.OBJECT_CREATE)
@@ -183,15 +196,22 @@ export class ObjectProvider {
             return;
         }
 
-        if (IsModelValid(object.model)) {
-            await this.resourceLoader.loadModel(object.model);
+        let model = object.model;
+        if (isFeatureEnabled(Feature.Halloween)) {
+            model = HalloweenMapping[model] || model;
+        }
+
+        if (IsModelValid(model)) {
+            if (!(await this.resourceLoader.loadModel(object.model))) {
+                return;
+            }
         } else {
-            console.log(`Model ${object.model} is not valid for ${object.id}`);
+            console.log(`Model ${model} is not valid for ${object.id}`);
             return;
         }
 
         let entity = CreateObjectNoOffset(
-            object.model,
+            model,
             object.position[0],
             object.position[1],
             object.position[2],
@@ -204,7 +224,7 @@ export class ObjectProvider {
             console.log('Failed to create prop, retrying', object.id);
             await wait(10);
             entity = CreateObjectNoOffset(
-                object.model,
+                model,
                 object.position[0],
                 object.position[1],
                 object.position[2],
@@ -215,9 +235,13 @@ export class ObjectProvider {
 
             if (!DoesEntityExist(entity)) {
                 console.log('Failed to create prop even after retry', object.id);
+                this.resourceLoader.unloadModel(model);
+
                 return;
             }
         }
+
+        this.resourceLoader.unloadModel(model);
 
         SetEntityHeading(entity, object.position[3]);
 
@@ -225,7 +249,7 @@ export class ObjectProvider {
             this.applyEntityMatrix(entity, object.matrix);
         }
 
-        if (!OBJECT_MODELS_NO_FREEZE.includes(object.model)) {
+        if (!OBJECT_MODELS_NO_FREEZE.includes(model)) {
             FreezeEntityPosition(entity, true);
         }
 
@@ -245,8 +269,6 @@ export class ObjectProvider {
             object,
         };
 
-        this.resourceLoader.unloadModel(object.model);
-
         await wait(0);
     }
 
@@ -255,13 +277,16 @@ export class ObjectProvider {
 
         if (object) {
             if (DoesEntityExist(object.entity)) {
-                if (GetEntityModel(object.entity) == object.object.model) {
+                let model = object.object.model;
+                if (isFeatureEnabled(Feature.Halloween)) {
+                    model = HalloweenMapping[model] || model;
+                }
+
+                if (GetEntityModel(object.entity) == model) {
                     DeleteEntity(object.entity);
                 } else {
                     this.notifier.error(
-                        `Attemp to delete an entity of wrong model ${GetEntityModel(object.entity)} expected ${
-                            object.object.model
-                        }`
+                        `Attemp to delete an entity of wrong model ${GetEntityModel(object.entity)} expected ${model}`
                     );
                 }
             } else {

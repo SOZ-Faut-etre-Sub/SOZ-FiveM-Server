@@ -7,7 +7,13 @@ import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { Permissions } from '../../core/permissions';
 import { ServerEvent } from '../../shared/event';
-import { PlayerClientState, PlayerData, PlayerListStateKey, PlayerServerState } from '../../shared/player';
+import {
+    PlayerClientState,
+    PlayerData,
+    PlayerLicenceType,
+    PlayerListStateKey,
+    PlayerServerState,
+} from '../../shared/player';
 import { RpcServerEvent } from '../../shared/rpc';
 import { PermissionService } from '../permission.service';
 import { QBCore } from '../qbcore';
@@ -51,9 +57,7 @@ export class PlayerProvider {
         });
         this.playerListStateService.handlePlayer(player, this.playerStateService.getClientState(player.source));
 
-        if (this.permissionService.isGameMaster(player.source)) {
-            TriggerEvent('housing:server:GiveAdminAccess', player.source, 'cayo_villa', 'villa_cayo', player.citizenid);
-        }
+        TriggerEvent(ServerEvent.PLAYER_LOADED, player.source, player);
     }
 
     @On('QBCore:Server:PlayerUpdate', false)
@@ -137,5 +141,10 @@ export class PlayerProvider {
         }
 
         return null;
+    }
+
+    @Rpc(RpcServerEvent.PLAYER_GET_LICENCES)
+    public async getLicences(source: number, target: number): Promise<Partial<Record<PlayerLicenceType, number>>> {
+        return this.serverStateService.getPlayer(target).metadata.licences;
     }
 }

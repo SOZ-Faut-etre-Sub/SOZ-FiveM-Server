@@ -147,10 +147,8 @@ RegisterServerEvent("inventory:server:GiveMoney", function(target, moneyType, am
         giveAnimation(Player.PlayerData.source)
         giveAnimation(Target.PlayerData.source)
 
-        exports["soz-core"]:Event("give_money", {player_source = source, target = target}, {
-            money = moneyTake,
-            marked_money = markedMoneyTake,
-        })
+        exports["soz-core"]:Event("give_money", {player_source = source, target = Target.PlayerData.citizenid},
+                                  {money = moneyTake, marked_money = markedMoneyTake})
     else
         TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous ne possédez pas l'argent requis pour le transfert", "error")
     end
@@ -170,7 +168,7 @@ RegisterServerEvent("inventory:server:ResellItem", function(item, amount, resell
         amount = item.amount
     end
 
-    if item.metadata.expiration ~= nil and exports["soz-utils"]:ItemIsExpired(item) then
+    if item.metadata.expiration ~= nil and exports["soz-core"]:ItemIsExpired(item) then
         TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous ne pouvez pas revendre des produits périmés", "error")
         return
     end
@@ -228,4 +226,9 @@ RegisterServerEvent("inventory:server:ResellItem", function(item, amount, resell
 
     TriggerEvent("banking:server:TransferMoney", resellZone.SourceAccount, resellZone.TargetAccount, math.ceil(price) * amount)
     TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, string.format("Vous avez vendu ~o~%s ~b~%s", amount, itemSpec.label))
+
+    TriggerEvent("soz-core:server:monitor:add-event", "job_resell", {
+        item_id = item.name,
+        player_source = Player.PlayerData.source,
+    }, {itemSpec = itemSpec.label, quantity = amount}, false)
 end)

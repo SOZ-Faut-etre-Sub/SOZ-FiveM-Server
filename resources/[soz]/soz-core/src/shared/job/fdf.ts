@@ -1,6 +1,6 @@
 import { WardrobeConfig } from '../cloth';
 import { CraftCategory } from '../craft/craft';
-import { Environment } from '../features';
+import { Environment, Feature } from '../features';
 import { joaat } from '../joaat';
 import { BoxZone, NamedZone } from '../polyzone/box.zone';
 import { PolygonZone } from '../polyzone/polygon.zone';
@@ -30,6 +30,17 @@ export enum FDFFieldBlips {
     field = 'field',
     greenhouse = 'greenhouse',
     resell = 'resell',
+}
+
+export enum FDFHarvestStatus {
+    INVENTORY_FULL = 'INVENTORY_FULL',
+    SUCCESS = 'SUCCESS',
+    CROP_NOT_READY = 'CROP_NOT_READY',
+    UNKNOW_CROP = 'UNKNOW_CROP',
+}
+export enum FDFPlowStatus {
+    WAITING = 'WAITING',
+    AVALAIBLE = 'AVALAIBLE',
 }
 
 export const FDFFieldMenu: Record<FDFFieldBlips, string> = {
@@ -413,7 +424,7 @@ export type FDFFieldsConfigType = {
     fields: Record<string, PolygonZone<Vector4>>;
     maxprop: number;
     speedLabel: string;
-    hillingText: string;
+    hillingLabel: string;
     progressText: string;
     hillingAnim: ProgressAnimation;
     hillLabel: string;
@@ -424,7 +435,7 @@ export const FDFFieldConfig: FDFFieldsConfigType = {
     maxprop: 120,
     speedLabel: 'Butter',
     hillLabel: 'Buttage effectué',
-    hillingText: 'Vous avez butté un plant, il sera récoltable un peu plus tôt.',
+    hillingLabel: 'butté',
     progressText: 'Buttage en cours...',
     hillingAnim: {
         task: 'WORLD_HUMAN_GARDENER_PLANT',
@@ -436,7 +447,7 @@ export const FDFGreenhouseConfig: FDFFieldsConfigType = {
     maxprop: 50,
     speedLabel: 'Répulser',
     hillLabel: 'Répulsion effectué',
-    hillingText: 'Vous avez répulsé un plant, il sera récoltable un peu plus tôt.',
+    hillingLabel: 'répulsé',
     progressText: 'Répulsion en cours...',
     hillingAnim: {
         dictionary: 'anim@amb@business@weed@weed_inspecting_lo_med_hi@',
@@ -572,6 +583,7 @@ export const FDFConfig = {
     waterDelay: 20 * 60000,
     waterDelayTst: 20000,
     hillDelay: 30 * 60000,
+    plowDelay: 3600 * 1000,
     hillDelayTst: 60000,
     waterGain: 10 * 60000,
     waterGainTst: 60 * 60000,
@@ -664,26 +676,33 @@ export const FDFCraftsLists: Record<string, CraftCategory> = {
         event: 'job_fdf_craft',
         recipes: {
             popcorn: {
-                amount: 4,
+                amount: 8,
                 inputs: {
                     corn: { count: 8 },
                 },
             },
             fruit_salad: {
-                amount: 4,
+                amount: 8,
                 inputs: {
                     apple: { count: 2 },
                     orange: { count: 2 },
                 },
             },
+            lemon_cheesecake: {
+                amount: 8,
+                inputs: {
+                    lemon: { count: 2 },
+                    milk: { count: 2 },
+                },
+            },
             creamed_corn: {
-                amount: 4,
+                amount: 8,
                 inputs: {
                     corn: { count: 2 },
                 },
             },
             vegetable_festival: {
-                amount: 4,
+                amount: 8,
                 inputs: {
                     potato: { count: 2 },
                     tomato: { count: 2 },
@@ -693,19 +712,19 @@ export const FDFCraftsLists: Record<string, CraftCategory> = {
                 },
             },
             cabbage_salad: {
-                amount: 4,
+                amount: 8,
                 inputs: {
                     cabage: { count: 1 },
                 },
             },
             stuffed_tomatoes: {
-                amount: 4,
+                amount: 8,
                 inputs: {
                     tomato: { count: 2 },
                 },
             },
             veggie_gathering: {
-                amount: 4,
+                amount: 8,
                 inputs: {
                     potato: { count: 2 },
                     cabage: { count: 1 },
@@ -713,7 +732,7 @@ export const FDFCraftsLists: Record<string, CraftCategory> = {
                 },
             },
             country_feast: {
-                amount: 4,
+                amount: 8,
                 inputs: {
                     pumpkin_fresh: { count: 1 },
                     cabage: { count: 1 },
@@ -722,20 +741,20 @@ export const FDFCraftsLists: Record<string, CraftCategory> = {
                 },
             },
             fried_potatoes: {
-                amount: 4,
+                amount: 8,
                 inputs: {
                     potato: { count: 2 },
                 },
             },
             vegetable_dance: {
-                amount: 4,
+                amount: 8,
                 inputs: {
                     potato: { count: 2 },
                     corn: { count: 2 },
                 },
             },
             autumn_symphony: {
-                amount: 4,
+                amount: 8,
                 inputs: {
                     potato: { count: 2 },
                     corn: { count: 1 },
@@ -750,38 +769,38 @@ export const FDFCraftsLists: Record<string, CraftCategory> = {
         event: 'job_fdf_craft',
         recipes: {
             pumpkin_potage: {
-                amount: 4,
+                amount: 8,
                 inputs: {
                     pumpkin_fresh: { count: 1 },
                 },
             },
             smoothie_fruity: {
-                amount: 4,
+                amount: 8,
                 inputs: {
                     apple: { count: 2 },
                     orange: { count: 2 },
                 },
             },
             apple_juice_drink: {
-                amount: 4,
+                amount: 8,
                 inputs: {
                     apple: { count: 2 },
                 },
             },
             tomato_juice: {
-                amount: 4,
+                amount: 8,
                 inputs: {
                     tomato: { count: 2 },
                 },
             },
             orange_juice_drink: {
-                amount: 4,
+                amount: 8,
                 inputs: {
                     orange: { count: 2 },
                 },
             },
             multifruit: {
-                amount: 4,
+                amount: 8,
                 inputs: {
                     orange: { count: 2 },
                     apple: { count: 2 },
@@ -790,36 +809,50 @@ export const FDFCraftsLists: Record<string, CraftCategory> = {
                 },
             },
             pumpkin_lemonade: {
-                amount: 4,
+                amount: 8,
                 inputs: {
                     orange: { count: 2 },
                     pumpkin_fresh: { count: 1 },
                 },
             },
             lemonade_bottle: {
-                amount: 4,
+                amount: 8,
                 inputs: {
                     lemon: { count: 2 },
                 },
             },
             tomato_tonic: {
-                amount: 4,
+                amount: 8,
                 inputs: {
                     apple: { count: 2 },
                     tomato: { count: 1 },
                 },
             },
             cabbage_chaos: {
-                amount: 4,
+                amount: 8,
                 inputs: {
                     cabage: { count: 1 },
                 },
             },
             fresh_tomachou: {
-                amount: 4,
+                amount: 8,
                 inputs: {
                     cabage: { count: 1 },
                     tomato: { count: 2 },
+                },
+            },
+        },
+    },
+    Halloween: {
+        duration: 6000,
+        event: 'job_fdf_craft',
+        feature: Feature.Halloween,
+        icon: '🎃',
+        recipes: {
+            pumpkin_soup: {
+                amount: 3,
+                inputs: {
+                    pumpkin_fresh: { count: 2 },
                 },
             },
         },
@@ -885,7 +918,6 @@ export const FDFCloakroom: WardrobeConfig = {
             },
             Props: {
                 [0]: { Drawable: 20, Texture: 0, Palette: 0 },
-                [1]: { Drawable: 5, Texture: 0, Palette: 0 },
             },
         },
         ['Stagiaire']: {
@@ -899,7 +931,6 @@ export const FDFCloakroom: WardrobeConfig = {
             },
             Props: {
                 [0]: { Drawable: 20, Texture: 0, Palette: 0 },
-                [1]: { Drawable: 5, Texture: 0, Palette: 0 },
             },
         },
     },

@@ -7,6 +7,7 @@ export class PlayerListStateService {
         dead: new Set<number>(),
         zipped: new Set<number>(),
         wearingPatientOutfit: new Set<number>(),
+        escorted: new Set<number>(),
     };
 
     public updateList(key: PlayerListStateKey, players: number[]) {
@@ -19,6 +20,10 @@ export class PlayerListStateService {
 
     public isZipped(player: number) {
         return this.lists.zipped.has(player);
+    }
+
+    public isEscorted(player: number) {
+        return this.lists.escorted.has(player);
     }
 
     public isWearingPatientOutfit(player: number) {

@@ -1,4 +1,5 @@
-import { add, differenceInDays } from 'date-fns';
+import { formatDuration } from '@public/shared/utils/timeformat';
+import { add } from 'date-fns';
 
 import { AuctionZones, DealershipConfigItem, DealershipType } from '../../config/dealership';
 import { GarageList } from '../../config/garage';
@@ -406,9 +407,10 @@ export class VehicleDealershipProvider {
                     days: dealership.daysBeforeNextPurchase,
                 });
 
-                if (nextPurchaseDate.getTime() > Date.now()) {
-                    const days = differenceInDays(nextPurchaseDate, new Date());
-                    this.notifier.notify(source, `Tu dois attendre ${days} jour(s) avant ton prochain achat.`, 'error');
+                const delta = nextPurchaseDate.getTime() - Date.now();
+                if (delta > 0) {
+                    const delay = formatDuration(delta);
+                    this.notifier.notify(source, `Tu dois attendre ${delay} avant ton prochain achat.`, 'error');
 
                     return false;
                 }

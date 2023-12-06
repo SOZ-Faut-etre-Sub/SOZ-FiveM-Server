@@ -1,5 +1,4 @@
 QBCore = exports["qb-core"]:GetCoreObject()
-SozJobCore = exports["soz-jobs"]:GetCoreObject()
 PlayerData = QBCore.Functions.GetPlayerData()
 local safeStorageMenu = MenuV:CreateMenu(nil, "", "menu_inv_safe", "soz", "safe-storage")
 local safeHouseStorageMenu = MenuV:CreateMenu(nil, "", "menu_inventory", "soz", "safe-house-storage")
@@ -54,8 +53,7 @@ CreateThread(function()
             event = "banking:openSocietyBankScreen",
             blackoutGlobal = true,
             canInteract = function(entity, distance, data)
-                return PlayerData.job.onduty and SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.SocietyBankAccount) and
-                           isInsideEntrepriseBankZone
+                return PlayerData.job.onduty and exports["soz-core"]:HasJobPermission(PlayerData.job.id, "society-bank-account") and isInsideEntrepriseBankZone
             end,
         },
     }

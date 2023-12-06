@@ -16,7 +16,7 @@ import { RpcServerEvent } from '../../shared/rpc';
 import { AuctionVehicle, ShowVehicle } from '../../shared/vehicle/auction';
 import { Vehicle, VehicleDealershipMenuData } from '../../shared/vehicle/vehicle';
 import { BlipFactory } from '../blip';
-import { JobPermissionService } from '../job/job.permission.service';
+import { JobService } from '../job/job.service';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
@@ -45,8 +45,8 @@ export class VehicleDealershipProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
-    @Inject(JobPermissionService)
-    private jobPermissionService: JobPermissionService;
+    @Inject(JobService)
+    private jobService: JobService;
 
     @Inject(InputService)
     private inputService: InputService;
@@ -187,7 +187,9 @@ export class VehicleDealershipProvider {
         );
 
         for (const [name, auction] of Object.entries(this.auctionVehicles)) {
-            await this.resourceLoader.loadModel(auction.vehicle.hash);
+            if (!(await this.resourceLoader.loadModel(auction.vehicle.hash))) {
+                continue;
+            }
 
             const createdVehicle = CreateVehicle(
                 auction.vehicle.hash,
@@ -204,6 +206,8 @@ export class VehicleDealershipProvider {
             FreezeEntityPosition(createdVehicle, true);
             SetVehicleNumberPlateText(createdVehicle, 'LUXURY');
 
+            this.resourceLoader.unloadModel(auction.vehicle.hash);
+
             this.targetFactory.createForBoxZone(`auction_${name}`, auction.windows, [
                 {
                     icon: 'c:dealership/bid.png',
@@ -217,7 +221,9 @@ export class VehicleDealershipProvider {
         }
 
         for (const [id, vehicle] of Object.entries(this.electricShowVehicles)) {
-            await this.resourceLoader.loadModel(GetHashKey(vehicle.model));
+            if (!(await this.resourceLoader.loadModel(GetHashKey(vehicle.model)))) {
+                continue;
+            }
 
             const createdVehicle = CreateVehicle(
                 GetHashKey(vehicle.model),
@@ -235,6 +241,8 @@ export class VehicleDealershipProvider {
             FreezeEntityPosition(createdVehicle, true);
             SetVehicleNumberPlateText(createdVehicle, 'ELEC');
             SetVehicleDoorsLocked(createdVehicle, 2);
+
+            this.resourceLoader.unloadModel(GetHashKey(vehicle.model));
         }
     }
 
@@ -299,7 +307,9 @@ export class VehicleDealershipProvider {
             return;
         }
 
-        await this.resourceLoader.loadModel(vehicle.hash);
+        if (!(await this.resourceLoader.loadModel(vehicle.hash))) {
+            return;
+        }
 
         if (this.lastVehicleShowroom) {
             this.resourceLoader.unloadModel(vehicle.hash);
@@ -324,6 +334,7 @@ export class VehicleDealershipProvider {
         SetVehicleNumberPlateText(vehicleEntity, 'SOZ');
 
         this.lastVehicleShowroom = vehicleEntity;
+        this.resourceLoader.unloadModel(vehicle.hash);
     }
 
     @OnNuiEvent<{ vehicle: Vehicle; dealershipId: string; dealership: DealershipConfigItem }>(
@@ -409,9 +420,16 @@ export class VehicleDealershipProvider {
         });
 
         if (vehicle) {
-            this.notifier.notify('Un véhicule est trop proche du showroom.', 'error');
+            const isVehicleNetwork = NetworkGetEntityIsNetworked(vehicle);
 
-            return;
+            if (isVehicleNetwork) {
+                this.notifier.notify('Un véhicule est trop proche du showroom.', 'error');
+
+                return;
+            }
+
+            SetEntityAsMissionEntity(vehicle, true, true);
+            DeleteVehicle(vehicle);
         }
 
         this.nuiMenu.openMenu(
@@ -475,7 +493,7 @@ export class VehicleDealershipProvider {
             return;
         }
 
-        if (!this.jobPermissionService.hasPermission(player.job.id, JobPermission.SocietyDealershipVehicle)) {
+        if (!this.jobService.hasPermission(player.job.id, JobPermission.SocietyDealershipVehicle)) {
             this.notifier.notify("Vous n'avez pas les droits d'accéder au concessionnaire.", 'error');
 
             return;

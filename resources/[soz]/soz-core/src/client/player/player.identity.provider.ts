@@ -48,10 +48,11 @@ export class PlayerIdentityProvider {
     }
 
     @OnEvent(ClientEvent.PLAYER_SHOW_IDENTITY)
-    public showIdentity(type: CardType, player: PlayerData) {
+    public showIdentity(type: CardType, player: PlayerData, iban?: string) {
         this.dispatcher.dispatch('card', 'addCard', {
             type,
             player,
+            iban,
         });
     }
 }

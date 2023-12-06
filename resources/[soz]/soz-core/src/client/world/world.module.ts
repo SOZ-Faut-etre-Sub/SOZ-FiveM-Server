@@ -1,6 +1,6 @@
 import { Module } from '../../core/decorators/module';
-import { CayoMapProvider } from './cayo.map.provider';
+import { BlipFactory } from '../blip';
 @Module({
-    providers: [CayoMapProvider],
+    providers: [BlipFactory],
 })
 export class WorldModule {}

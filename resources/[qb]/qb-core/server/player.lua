@@ -12,6 +12,7 @@ function QBCore.Player.Login(source, citizenid, newData)
             local license = QBCore.Functions.GetSozIdentifier(src)
             local PlayerData = exports.oxmysql:singleSync('SELECT * FROM player where citizenid = ?', { citizenid })
             local apartment = exports.oxmysql:singleSync('SELECT id,property_id,label,price,owner,tier,has_parking_place FROM housing_apartment where ? IN (owner, roommate)', { citizenid })
+            local partyMember = exports.oxmysql:singleSync('SELECT * FROM senate_party_member WHERE citizenId = ?', { citizenid })
             local role = GetConvar("soz_anonymous_default_role", "user")
             local useTestMode = GetConvar("soz_enable_test_auth", "false") == "true"
             local account = QBCore.Functions.GetUserAccount(src, useTestMode)
@@ -40,6 +41,12 @@ function QBCore.Player.Login(source, citizenid, newData)
                     PlayerData.apartment.price = apartment.price
                 else
                     PlayerData.apartment = nil
+                end
+
+                if partyMember then
+                    PlayerData.partyMember = partyMember
+                else
+                    PlayerData.partyMember = nil
                 end
 
                 if PlayerData.gang then
@@ -80,6 +87,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     if PlayerData.apartment then
         PlayerData.apartment.tier = PlayerData.apartment.tier or 0
     end
+    PlayerData.partyMember = PlayerData.partyMember or nil
     -- Charinfo
     PlayerData.charinfo = PlayerData.charinfo or {}
     PlayerData.charinfo.firstname = PlayerData.charinfo.firstname or 'Firstname'
@@ -179,6 +187,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.metadata['criminal_talents'] = PlayerData.metadata['criminal_talents'] or {}
     PlayerData.metadata['criminal_state'] = PlayerData.metadata['criminal_state'] or 0
     PlayerData.metadata['criminal_reputation'] = PlayerData.metadata['criminal_reputation'] or 0
+    PlayerData.metadata['criminal_lastaction'] = PlayerData.metadata['criminal_lastaction'] or 0
     PlayerData.metadata['drugs_skills'] = PlayerData.metadata['drugs_skills'] or {}
     PlayerData.metadata['drugs_heavy_contract_date'] = PlayerData.metadata['drugs_heavy_contract_date'] or 0
 
@@ -188,6 +197,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.metadata['mort'] = PlayerData.metadata['mort'] or ''
 
     PlayerData.metadata['rp_death'] = PlayerData.metadata['rp_death'] or false
+    PlayerData.metadata['is_senator'] = PlayerData.metadata['is_senator'] or false
 
     if not PlayerData.metadata.lastBidTime then
         PlayerData.metadata.canBid = true
@@ -575,6 +585,11 @@ function QBCore.Player.CreatePlayer(PlayerData)
             self.PlayerData.address = ""
         end
         self.PlayerData.apartment = apartment
+        self.Functions.UpdatePlayerData(true)
+    end
+
+    self.Functions.SetPartyMember = function(partyMember)
+        self.PlayerData.partyMember = partyMember
         self.Functions.UpdatePlayerData(true)
     end
 

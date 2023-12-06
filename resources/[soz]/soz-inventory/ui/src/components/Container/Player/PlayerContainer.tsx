@@ -4,7 +4,7 @@ import { InventoryItem, SozInventoryModel } from '../../../types/inventory';
 import { ContainerWrapper } from '../ContainerWrapper';
 import style from './PlayerContainer.module.css';
 import { ContainerSlots } from '../ContainerSlots';
-import playerBanner from '/banner/player.jpg'
+import inventoryBanner from '/banner/inventory_banner.png'
 import { closeNUI } from '../../../hooks/nui';
 import { clsx } from 'clsx';
 import { DndContext, rectIntersection } from '@dnd-kit/core';
@@ -73,7 +73,7 @@ export const PlayerContainer = () => {
                 }
             } else if (display && event.data.action === 'closeInventory') {
                 closeNUI(() => closeMenu());
-            } else if (event.data.action === 'openShop' || event.data.action === 'openInventory' || event.data.action === 'openPlayerKeyInventory') {
+            } else if (event.data.action === 'openShop' || event.data.action === 'openInventory' || event.data.action === 'openPlayerKeyInventory' || event.data.action === 'openPlayerWalletInventory') {
                 closeMenu();
             }
         },
@@ -95,9 +95,17 @@ export const PlayerContainer = () => {
 
 
         if (event.over !== null) { // Do a sort in inventory
-            if (event.active.id == 'player_drag_money_' || event.over.id == 'player_money') {
+
+            if (event.active.id == 'player_drag_keychain_' || 
+                event.over.id == 'player_keychain' ||
+                event.active.id == 'player_drag_wallet_' || 
+                event.over.id == 'player_wallet' || 
+                event.active.id == 'player_drag_money_' || 
+                event.over.id == 'player_money'
+                ) {
                 return;
             }
+
             fetch(`https://soz-inventory/sortItem`, {
                 method: "POST",
                 headers: {
@@ -191,7 +199,7 @@ export const PlayerContainer = () => {
             <div className={clsx(style.Wrapper)}>
                 <ContainerWrapper
                     display={true}
-                    banner={playerBanner}
+                    banner={inventoryBanner}
                     weight={playerInventory.weight}
                     maxWeight={playerInventory.maxWeight}
                     sortCallback={() => handleSortInventory(playerInventory.id, setPlayerInventory)}
@@ -200,6 +208,8 @@ export const PlayerContainer = () => {
                         id="player"
                         rows={inventoryRow}
                         money={playerMoney}
+                        wallet={1}
+                        keychain={1}
                         items={playerInventory.items.map((item, i) => ({ ...item, id: i, shortcut: itemShortcut(item) }))}
                         action={interactAction}
                     />

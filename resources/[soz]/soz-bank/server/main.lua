@@ -1,5 +1,4 @@
 QBCore = exports["qb-core"]:GetCoreObject()
-SozJobCore = exports["soz-jobs"]:GetCoreObject()
 
 QBCore.Functions.CreateCallback("banking:getBankingInformation", function(source, cb, account)
     local Player = QBCore.Functions.GetPlayer(source)
@@ -10,8 +9,7 @@ QBCore.Functions.CreateCallback("banking:getBankingInformation", function(source
         else
             if string.find(account, "%d%d%d%u%d%d%d%d%u%d%d%d") then
                 account = Account(account)
-            elseif SozJobCore.Functions.HasPermission(account, Player.PlayerData.job.id, Player.PlayerData.job.grade,
-                                                      SozJobCore.JobPermission.SocietyBankAccount) then
+            elseif exports["soz-core"]:HasJobPermission(account, Player.PlayerData.job.id, Player.PlayerData.job.grade, "society-bank-account") then
                 account = Account(account)
             else
                 cb(nil)
@@ -41,7 +39,7 @@ QBCore.Functions.CreateCallback("banking:server:createOffshoreAccount", function
     local Player = QBCore.Functions.GetPlayer(source)
     local offshore = Account("offshore_" .. account)
 
-    if SozJobCore.Functions.HasPermission(account, Player.PlayerData.job.id, Player.PlayerData.job.grade, SozJobCore.JobPermission.SocietyBankAccount) then
+    if exports["soz-core"]:HasJobPermission(account, Player.PlayerData.job.id, Player.PlayerData.job.grade, "society-bank-account") then
         if offshore == nil then
             Account.Create("offshore_" .. account, "Compte offshore " .. account, "offshore", "offshore_" .. account)
             cb(true)
@@ -60,7 +58,7 @@ QBCore.Functions.CreateCallback("banking:server:TransfertOffshoreMoney", functio
     local CurrentMoney = Player.Functions.GetMoney("marked_money")
     amount = tonumber(amount)
 
-    if SozJobCore.Functions.HasPermission(accountTarget, Player.PlayerData.job.id, Player.PlayerData.job.grade, SozJobCore.JobPermission.SocietyBankAccount) then
+    if exports["soz-core"]:HasJobPermission(accountTarget, Player.PlayerData.job.id, Player.PlayerData.job.grade, "society-bank-account") then
         if amount <= CurrentMoney then
             if Player.Functions.RemoveMoney("marked_money", amount) then
                 Account.AddMoney("offshore_" .. accountTarget, amount, "marked_money")
@@ -116,10 +114,10 @@ QBCore.Functions.CreateCallback("banking:server:TransferMoney", function(source,
         Account.TransfertMoney(accountSource, accountTarget, amount, function(success, reason)
             if success and sendNotificationToTarget then
                 local Target = QBCore.Functions.GetPlayerByBankAccount(accountTarget)
+                local SourceJob = exports["soz-core"]:GetJob(accountSource)
 
                 local Source = QBCore.Functions.GetPlayerByBankAccount(accountSource)
-                local origin = Source and (Source.PlayerData.charinfo.firstname .. " " .. Source.PlayerData.charinfo.lastname) or
-                                   SozJobCore.Jobs[accountSource].label
+                local origin = Source and (Source.PlayerData.charinfo.firstname .. " " .. Source.PlayerData.charinfo.lastname) or SourceJob.label
 
                 if Target then
                     TriggerClientEvent("soz-core:client:notification:draw-advanced", Target.PlayerData.source, "Maze Banque", "Mouvement bancaire",
@@ -237,7 +235,7 @@ QBCore.Functions.CreateCallback("banking:server:openHouseSafeStorage", function(
     end
 
     local inside = player.PlayerData.metadata.inside
-    local apartmentTier = exports["soz-housing"]:GetApartmentTier(inside.property, inside.apartment)
+    local apartmentTier = exports["soz-core"]:GetApartmentTier(inside.property, inside.apartment)
     local account = Account(safeStorage)
 
     if account == nil then

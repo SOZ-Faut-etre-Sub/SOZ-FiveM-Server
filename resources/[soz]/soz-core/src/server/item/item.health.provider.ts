@@ -1,7 +1,7 @@
 import { Once, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { ClientEvent, ServerEvent } from '../../shared/event';
+import { ServerEvent } from '../../shared/event';
 import { CommonItem, InventoryItem } from '../../shared/item';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { Notifier } from '../notifier';
@@ -175,33 +175,10 @@ export class ItemHealthProvider {
         }
     }
 
-    public useHorrificLollipop(source: number, item: CommonItem, inventoryItem: InventoryItem) {
-        const player = this.playerService.getPlayer(source);
-
-        if (!player) {
-            return;
-        }
-
-        if (
-            !this.inventoryManager.removeItemFromInventory(
-                source,
-                item.name,
-                1,
-                inventoryItem.metadata,
-                inventoryItem.slot
-            )
-        ) {
-            return;
-        }
-
-        TriggerClientEvent(ClientEvent.LSMC_HALLOWEEN_HORRIFIC_LOLLIPOP, source);
-    }
-
     @Once()
     public onStart() {
         this.item.setItemUseCallback('flask_pee_empty', this.useFlaskPee.bind(this));
         this.item.setItemUseCallback('antidepressant', this.useAntidepressant.bind(this));
         this.item.setItemUseCallback('antiacide', this.useAntiacide.bind(this));
-        this.item.setItemUseCallback('horrific_lollipop', this.useHorrificLollipop.bind(this));
     }
 }

@@ -14,36 +14,112 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
 
     public type = RepositoryType.Housing;
 
-    private serializeProperty(property: housing_property): Property {
-        return {
-            id: property.id,
-            identifier: property.identifier,
-            entryZone: createZoneFromLegacyData(JSON.parse(property.entry_zone)),
-            garageZone: createZoneFromLegacyData(JSON.parse(property.garage_zone)),
-            exteriorCulling: JSON.parse(property.exterior_culling),
-            apartments: [],
-        };
+    public async hasApartment(citizenId: string): Promise<boolean> {
+        const apartment = await this.prismaService.housing_apartment.count({
+            where: {
+                OR: [
+                    {
+                        owner: citizenId,
+                    },
+                    {
+                        roommate: citizenId,
+                    },
+                ],
+            },
+        });
+
+        return apartment > 0;
     }
 
-    private serializeApartment(apartment: housing_apartment): Apartment {
-        const insideCord = JSON.parse(apartment.inside_coord);
+    public async clearApartment(apartmentId: number): Promise<void> {
+        const apartment = await this.prismaService.housing_apartment.update({
+            where: {
+                id: apartmentId,
+            },
+            data: {
+                owner: null,
+                roommate: null,
+                tier: 0,
+                has_parking_place: 0,
+            },
+        });
 
-        return {
-            id: apartment.id,
-            identifier: apartment.identifier,
-            label: apartment.label,
-            price: apartment.price,
-            owner: apartment.owner,
-            roommate: apartment.roommate,
-            position: insideCord ? [insideCord.x, insideCord.y, insideCord.z, insideCord.w] : null,
-            exitZone: createZoneFromLegacyData(JSON.parse(apartment.exit_zone)),
-            fridgeZone: createZoneFromLegacyData(JSON.parse(apartment.fridge_zone)),
-            stashZone: createZoneFromLegacyData(JSON.parse(apartment.stash_zone)),
-            closetZone: createZoneFromLegacyData(JSON.parse(apartment.closet_zone)),
-            moneyZone: createZoneFromLegacyData(JSON.parse(apartment.money_zone)),
-            tier: apartment.tier,
-            hasParkingPlace: apartment.has_parking_place === 1,
-        };
+        const existingApartment = this.data[apartment.property_id].apartments.find(
+            apartment => apartment.id === apartmentId
+        );
+
+        if (existingApartment) {
+            existingApartment.owner = null;
+            existingApartment.roommate = null;
+            existingApartment.tier = 0;
+            existingApartment.hasParkingPlace = false;
+        }
+    }
+
+    public async setApartmentOwner(citizenId: string, apartmentId: number): Promise<void> {
+        const apartment = await this.prismaService.housing_apartment.update({
+            where: {
+                id: apartmentId,
+            },
+            data: {
+                owner: citizenId,
+            },
+        });
+
+        this.data[apartment.property_id].apartments.find(apartment => apartment.id === apartmentId).owner =
+            apartment.owner;
+    }
+
+    public async setApartmentRoommate(citizenId: string | null, apartmentId: number): Promise<void> {
+        const apartment = await this.prismaService.housing_apartment.update({
+            where: {
+                id: apartmentId,
+            },
+            data: {
+                roommate: citizenId,
+            },
+        });
+
+        this.data[apartment.property_id].apartments.find(apartment => apartment.id === apartmentId).roommate =
+            apartment.roommate;
+    }
+
+    public async getApartmentByIdentifier(identifier: string): Promise<Apartment | null> {
+        for (const property of await this.get()) {
+            const apartment = property.apartments.find(apartment => apartment.identifier === identifier);
+
+            if (apartment) {
+                return apartment;
+            }
+        }
+
+        return null;
+    }
+
+    public async getPropertyByIdentifier(identifier: string): Promise<Property | null> {
+        for (const property of await this.get()) {
+            if (property.identifier === identifier) {
+                return property;
+            }
+        }
+
+        return null;
+    }
+
+    public async getApartment(propertyId: number, apartmentId: number): Promise<[Property | null, Apartment | null]> {
+        const property = await this.find(propertyId);
+
+        if (!property) {
+            return [null, null];
+        }
+
+        const apartment = property.apartments.find(apartment => apartment.id === apartmentId);
+
+        if (!apartment) {
+            return [null, null];
+        }
+
+        return [property, apartment];
     }
 
     public async addPropertyExteriorCulling(propertyId: number, culling: number): Promise<void> {
@@ -63,7 +139,6 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
         });
 
         this.data[propertyId].exteriorCulling.push(culling);
-        this.sync(propertyId);
     }
 
     public async removePropertyExteriorCulling(propertyId: number, culling: number): Promise<void> {
@@ -85,10 +160,9 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
         });
 
         this.data[propertyId].exteriorCulling = exteriorCulling;
-        this.sync(propertyId);
     }
 
-    protected async load(): Promise<Record<string, Property>> {
+    protected async load(): Promise<Record<number, Property>> {
         const properties = await this.prismaService.housing_property.findMany();
         const appartments = await this.prismaService.housing_apartment.findMany();
 
@@ -115,7 +189,6 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
         });
 
         this.data[propertyId].apartments.push(this.serializeApartment(apartment));
-        this.sync(propertyId);
     }
 
     public async setApartmentPrice(apartmentId: number, price: number): Promise<void> {
@@ -130,8 +203,34 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
 
         this.data[apartment.property_id].apartments.find(apartment => apartment.id === apartmentId).price =
             apartment.price;
+    }
 
-        this.sync(apartment.property_id);
+    public async setApartmentTier(apartmentId: number, tier: number): Promise<void> {
+        const apartment = await this.prismaService.housing_apartment.update({
+            where: {
+                id: apartmentId,
+            },
+            data: {
+                tier,
+            },
+        });
+
+        this.data[apartment.property_id].apartments.find(apartment => apartment.id === apartmentId).tier =
+            apartment.tier;
+    }
+
+    public async setApartmentHasParking(apartmentId: number, hasParkingPlace: boolean): Promise<void> {
+        const apartment = await this.prismaService.housing_apartment.update({
+            where: {
+                id: apartmentId,
+            },
+            data: {
+                has_parking_place: hasParkingPlace ? 1 : 0,
+            },
+        });
+
+        this.data[apartment.property_id].apartments.find(apartment => apartment.id === apartmentId).hasParkingPlace =
+            apartment.has_parking_place === 1;
     }
 
     public async setApartmentName(apartmentId: number, name: string): Promise<void> {
@@ -146,8 +245,6 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
 
         this.data[apartment.property_id].apartments.find(apartment => apartment.id === apartmentId).label =
             apartment.label;
-
-        this.sync(apartment.property_id);
     }
 
     public async setApartmentIdentifier(apartmentId: number, identifier: string): Promise<void> {
@@ -162,8 +259,6 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
 
         this.data[apartment.property_id].apartments.find(apartment => apartment.id === apartmentId).identifier =
             apartment.identifier;
-
-        this.sync(apartment.property_id);
     }
 
     public async updateApartmentZone(
@@ -192,7 +287,6 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
                 zone.center[2],
                 zone.heading,
             ];
-            this.sync(apartment.property_id);
         } else {
             const zoneData = JSON.stringify(zoneToLegacyData(zone));
             const apartment = await this.prismaService.housing_apartment.update({
@@ -206,7 +300,6 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
 
             this.data[apartment.property_id].apartments.find(apartment => apartment.id === apartmentId)[`${type}Zone`] =
                 zone;
-            this.sync(apartment.property_id);
         }
     }
 
@@ -220,7 +313,6 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
         this.data[apartment.property_id].apartments = this.data[apartment.property_id].apartments.filter(
             apartment => apartment.id !== apartmentId
         );
-        this.sync(apartment.property_id);
     }
 
     public async addProperty(name: string): Promise<void> {
@@ -231,7 +323,6 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
         });
 
         this.data[property.id] = this.serializeProperty(property);
-        this.sync(property.id);
     }
 
     public async updatePropertyZone(propertyId: number, zone: Zone, type: 'entry' | 'garage') {
@@ -247,7 +338,6 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
         });
 
         this.data[propertyId][`${type}Zone`] = zone;
-        this.sync(propertyId);
     }
 
     public async removeProperty(propertyId: number): Promise<void> {
@@ -258,5 +348,53 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
         });
 
         await this.delete(propertyId);
+    }
+
+    public async setSenateParty(apartmentId: number, senatePartyId: string | null): Promise<void> {
+        const apartment = await this.prismaService.housing_apartment.update({
+            where: {
+                id: apartmentId,
+            },
+            data: {
+                senate_party_id: senatePartyId,
+            },
+        });
+
+        this.data[apartment.property_id].apartments.find(apartment => apartment.id === apartmentId).senatePartyId =
+            apartment.senate_party_id;
+    }
+
+    private serializeProperty(property: housing_property): Property {
+        return {
+            id: property.id,
+            identifier: property.identifier,
+            entryZone: createZoneFromLegacyData(JSON.parse(property.entry_zone)),
+            garageZone: createZoneFromLegacyData(JSON.parse(property.garage_zone)),
+            exteriorCulling: JSON.parse(property.exterior_culling),
+            apartments: [],
+        };
+    }
+
+    private serializeApartment(apartment: housing_apartment): Apartment {
+        const insideCord = JSON.parse(apartment.inside_coord);
+
+        return {
+            id: apartment.id,
+            propertyId: apartment.property_id,
+            identifier: apartment.identifier,
+            label: apartment.label,
+            price: apartment.price,
+            owner: apartment.owner,
+            roommate: apartment.roommate,
+            position: insideCord ? [insideCord.x, insideCord.y, insideCord.z, insideCord.w] : null,
+            exitZone: createZoneFromLegacyData(JSON.parse(apartment.exit_zone)),
+            fridgeZone: createZoneFromLegacyData(JSON.parse(apartment.fridge_zone)),
+            stashZone: createZoneFromLegacyData(JSON.parse(apartment.stash_zone)),
+            closetZone: createZoneFromLegacyData(JSON.parse(apartment.closet_zone)),
+            moneyZone: createZoneFromLegacyData(JSON.parse(apartment.money_zone)),
+            tier: apartment.tier,
+            hasParkingPlace: apartment.has_parking_place === 1,
+            senatePartyId: apartment.senate_party_id || null,
+        };
     }
 }

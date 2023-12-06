@@ -5,6 +5,10 @@ export enum Feature {
     HalloweenScenario2 = 'HalloweenScenario2',
     HalloweenScenario3 = 'HalloweenScenario3',
     HalloweenScenario4 = 'HalloweenScenario4',
+    Halloween2023Scenario1 = 'Halloween2023Scenario1',
+    Halloween2023Scenario2 = 'Halloween2023Scenario2',
+    Halloween2023Scenario3 = 'Halloween2023Scenario3',
+    Halloween2023Scenario4 = 'Halloween2023Scenario4',
     ChainsOfJustice = 'ChainsOfJustice',
     HalloweenReboot = 'HalloweenNight',
     Boat = 'Boat',
@@ -51,6 +55,26 @@ const FeatureConfig: Record<Feature, { [P in Environment]?: boolean }> = {
         test: false,
     },
     [Feature.HalloweenScenario4]: {
+        production: false,
+        development: false,
+        test: false,
+    },
+    [Feature.Halloween2023Scenario1]: {
+        production: false,
+        development: false,
+        test: false,
+    },
+    [Feature.Halloween2023Scenario2]: {
+        production: false,
+        development: false,
+        test: false,
+    },
+    [Feature.Halloween2023Scenario3]: {
+        production: false,
+        development: false,
+        test: false,
+    },
+    [Feature.Halloween2023Scenario4]: {
         production: false,
         development: false,
         test: false,

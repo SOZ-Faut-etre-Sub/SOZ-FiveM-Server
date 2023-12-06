@@ -4,7 +4,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
 import { ClientEvent } from '../../shared/event';
-import { VehicleVolatileState } from '../../shared/vehicle/vehicle';
+import { VehicleSeat, VehicleVolatileState } from '../../shared/vehicle/vehicle';
 import { NuiMenu } from '../nui/nui.menu';
 import { VehicleStateService } from './vehicle.state.service';
 
@@ -154,7 +154,7 @@ export class VehicleStateProvider {
             return;
         }
 
-        if (GetPedInVehicleSeat(vehicle, -1) !== ped) {
+        if (GetPedInVehicleSeat(vehicle, VehicleSeat.Driver) !== ped) {
             return;
         }
 

@@ -46,14 +46,14 @@ export const MandatoryJobMenu: FunctionComponent<MandatoryStateProps> = ({ data 
                     <MenuItemCheckbox
                         checked={data.state.radar}
                         onChange={async value => {
-                            await fetchNui(NuiEvent.ToggleRadar, value);
+                            await fetchNui(NuiEvent.ToggleRadarMendatory, value);
                         }}
                     >
                         Afficher les radars sur le GPS
                     </MenuItemCheckbox>
                     <MenuItemButton
                         onConfirm={async () => {
-                            await fetchNui(NuiEvent.RedCall);
+                            await fetchNui(NuiEvent.RedCallMendatory);
                         }}
                     >
                         🚨 Code Rouge

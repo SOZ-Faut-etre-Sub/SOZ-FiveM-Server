@@ -10,6 +10,7 @@ import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { emitRpc } from '@public/core/rpc';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
+import { Feature, isFeatureEnabled } from '@public/shared/features';
 import { JobType } from '@public/shared/job';
 import { DMC_CRAFT_ZONES, DmcConverterState } from '@public/shared/job/dmc';
 import { MenuType } from '@public/shared/nui/menu';
@@ -81,6 +82,19 @@ export class DmcProvider {
         this.blipFactory.hide('job:dmc:aluminium_mine', true);
         this.blipFactory.hide('job:dmc:iron_mine', true);
         this.blipFactory.hide('job:dmc:resell', true);
+
+        if (isFeatureEnabled(Feature.Halloween)) {
+            this.blipFactory.create('job:dmc:uranium_mine', {
+                name: "Mine d'uranium",
+                sprite: 382,
+                color: 0,
+                scale: 0.9,
+                coords: { x: 2222.34, y: 3182.4, z: 51.01 },
+            });
+            this.blipFactory.hide('job:dmc:uranium_mine', true);
+
+            this.blipState['job:dmc:uranium_mine'] = false;
+        }
     }
 
     public async isConverterEnabled() {

@@ -6,6 +6,7 @@ import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { emitRpc } from '@public/core/rpc';
 import { uuidv4, wait } from '@public/core/utils';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
+import { getChunkId } from '@public/shared/grid';
 import { MenuType } from '@public/shared/nui/menu';
 import { PLACEMENT_PROP_LIST, PlacementProp } from '@public/shared/nui/prop_placement';
 import {
@@ -17,7 +18,7 @@ import {
     WorldObject,
     WorldPlacedProp,
 } from '@public/shared/object';
-import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
+import { getDistance, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { Err, Ok } from '@public/shared/result';
 import { RpcServerEvent } from '@public/shared/rpc';
 
@@ -216,6 +217,8 @@ export class PropPlacementProvider {
             return null;
         }
 
+        const playerChunkId = getChunkId(GetEntityCoords(PlayerPedId()) as Vector3);
+
         const collectionName = this.currentCollection.name;
         for (const prop of Object.values(this.currentCollection.props)) {
             // setup already loaded props
@@ -225,7 +228,7 @@ export class PropPlacementProvider {
                 id: prop.object.id,
                 matrix: prop.object.matrix,
                 entity: prop.loaded
-                    ? await this.getCollectionLoadedEntity(prop.object.id)
+                    ? await this.getCollectionLoadedEntity(prop.object.id, prop.object.position, playerChunkId)
                     : await this.spawnDebugProp(prop.object),
                 state: prop.loaded ? PropState.loaded : PropState.placed,
                 model: prop.model,
@@ -241,8 +244,12 @@ export class PropPlacementProvider {
         );
     }
 
-    private async getCollectionLoadedEntity(id: string) {
-        for (let i = 0; i < 10; i++) {
+    private async getCollectionLoadedEntity(id: string, position: Vector4, playerChunkId: number) {
+        if (getChunkId(position) != playerChunkId) {
+            return 0;
+        }
+
+        for (let i = 0; i < 30; i++) {
             const entity = this.objectProvider.getEntityFromId(id);
             if (entity) {
                 return entity;
@@ -348,6 +355,10 @@ export class PropPlacementProvider {
             propToCreate = selectedProp;
         }
 
+        if (!propToCreate.label) {
+            propToCreate.label = GetLabelText(propToCreate.model);
+        }
+
         await this.spawnNewDebug(propToCreate);
         await this.enterEditorMode();
         return Ok(true);
@@ -385,12 +396,14 @@ export class PropPlacementProvider {
             }
         }
 
+        const entityPos = GetEntityCoords(entity) as Vector3;
+        if (this.snapMode && getDistance(this.debugProp.position, entityPos) > 0.001) {
+            PlaceObjectOnGroundProperly(entity);
+            this.refreshPositionFromGame(this.debugProp);
+        }
+
         if (IsDisabledControlJustReleased(0, 24)) {
-            if (this.snapMode) {
-                PlaceObjectOnGroundProperly(entity);
-            }
-            const entityPos = GetEntityCoords(entity, false) as Vector3;
-            const pedPosition = GetEntityCoords(PlayerPedId(), false) as Vector3;
+            const pedPosition = GetEntityCoords(PlayerPedId()) as Vector3;
             const distance = getDistance(pedPosition, entityPos);
             if (distance > PROP_MAX_DISTANCE) {
                 this.notifier.notify('Vous ne pouvez pas déplacer ce prop plus loin ! Rapprochez vous.', 'error');
@@ -733,7 +746,9 @@ export class PropPlacementProvider {
     // Debug Prop Managment
     public async spawnDebugProp(prop: WorldObject): Promise<number> {
         if (IsModelValid(prop.model)) {
-            await this.resourceLoader.loadModel(prop.model);
+            if (!(await this.resourceLoader.loadModel(prop.model))) {
+                return 0;
+            }
         } else {
             console.log(`Placement: Model ${prop.model} is not valid for ${prop.id}`);
             return 0;
@@ -748,6 +763,8 @@ export class PropPlacementProvider {
             false,
             false
         );
+
+        this.resourceLoader.unloadModel(prop.model);
 
         SetEntityHeading(entity, prop.position[3]);
 
@@ -772,7 +789,7 @@ export class PropPlacementProvider {
             return;
         }
 
-        if (prop.state != PropState.loaded) {
+        if (prop.state != PropState.loaded && prop.entity != 0) {
             if (DoesEntityExist(prop.entity)) {
                 if (GetEntityModel(prop.entity) == GetHashKey(prop.model)) {
                     DeleteEntity(prop.entity);

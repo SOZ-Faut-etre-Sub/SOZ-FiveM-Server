@@ -1,5 +1,5 @@
 import { FDO } from '@public/shared/job';
-import { VehicleClass } from '@public/shared/vehicle/vehicle';
+import { VehicleClass, VehicleSeat } from '@public/shared/vehicle/vehicle';
 
 import { Command } from '../../core/decorators/command';
 import { OnNuiEvent } from '../../core/decorators/event';
@@ -11,7 +11,6 @@ import { NuiEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { Err, Ok } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
-import { JobService } from '../job/job.service';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
@@ -27,9 +26,6 @@ export class VehicleMenuProvider {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
-
-    @Inject(JobService)
-    private jobService: JobService;
 
     @Inject(InputService)
     private inputService: InputService;
@@ -60,6 +56,25 @@ export class VehicleMenuProvider {
         return true;
     }
 
+    @OnNuiEvent<boolean, boolean>(NuiEvent.VehicleSetNeonStatus)
+    async setNeonStatus(neonLightsEnabled: boolean) {
+        const ped = PlayerPedId();
+        const vehicle = GetVehiclePedIsIn(ped, false);
+        if (!vehicle) {
+            return false;
+        }
+
+        const state = await this.vehicleStateService.getVehicleState(vehicle).then(data => {
+            return data;
+        });
+
+        const neonLightsStatus = neonLightsEnabled;
+        this.vehicleStateService.updateVehicleState(vehicle, { neonLightsStatus }, false);
+
+        DisableVehicleNeonLights(vehicle, state.neonLightsStatus);
+        return true;
+    }
+
     @Command('vehiclelimitersetter', {
         description: 'Activer / Désactiver le limiteur',
         keys: [{ mapper: 'keyboard', key: 'slash' }],
@@ -69,6 +84,12 @@ export class VehicleMenuProvider {
         const vehicle = GetVehiclePedIsIn(ped, false);
 
         if (!vehicle) {
+            return false;
+        }
+
+        const isDriver = GetPedInVehicleSeat(vehicle, VehicleSeat.Driver) === ped;
+
+        if (!isDriver) {
             return false;
         }
 
@@ -262,8 +283,8 @@ export class VehicleMenuProvider {
             return;
         }
 
-        const isDriver = GetPedInVehicleSeat(vehicle, -1) === ped;
-        const isCopilot = GetPedInVehicleSeat(vehicle, 0) === ped;
+        const isDriver = GetPedInVehicleSeat(vehicle, VehicleSeat.Driver) === ped;
+        const isCopilot = GetPedInVehicleSeat(vehicle, VehicleSeat.Copilot) === ped;
 
         if (!isDriver && !isCopilot) {
             return;
@@ -288,6 +309,24 @@ export class VehicleMenuProvider {
             doorStatus[i] = GetVehicleDoorAngleRatio(vehicle, i) >= 0.5;
         }
 
+        const pitstop = await emitRpc<[boolean, number]>(
+            RpcServerEvent.VEHICLE_PITSTOP_DATA,
+            NetworkGetNetworkIdFromEntity(vehicle)
+        );
+
+        const hasNeon = () => {
+            if (
+                IsVehicleNeonLightEnabled(vehicle, 0) ||
+                IsVehicleNeonLightEnabled(vehicle, 1) ||
+                IsVehicleNeonLightEnabled(vehicle, 2) ||
+                IsVehicleNeonLightEnabled(vehicle, 3)
+            ) {
+                return true;
+            } else {
+                return false;
+            }
+        };
+
         this.nuiMenu.openMenu<MenuType.Vehicle>(MenuType.Vehicle, {
             isDriver,
             engineOn: GetIsVehicleEngineRunning(vehicle),
@@ -300,6 +339,10 @@ export class VehicleMenuProvider {
             isBoat: GetVehicleClass(vehicle) == VehicleClass.Boats,
             police: FDO.includes(player.job.id) && FDO.includes(vehicleState.job),
             policeLocator: vehicleState.policeLocatorEnabled,
+            onDutyNg: pitstop[0],
+            pitstopPrice: pitstop[1],
+            neonLightsStatus: vehicleState.neonLightsStatus,
+            hasNeon: hasNeon(),
         });
     }
 }

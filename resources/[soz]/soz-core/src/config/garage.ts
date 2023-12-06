@@ -2100,7 +2100,7 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
                     capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
                 },
             }),
-            new BoxZone([-851.49, -1333.47, 1.61], 5.0, 3.0, {
+            new BoxZone([-855.56, -1335.68, 1.79], 5.0, 3.0, {
                 heading: 110,
                 minZ: 0.61,
                 maxZ: 2.61,
@@ -2108,7 +2108,7 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
                     capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
                 },
             }),
-            new BoxZone([-847.74, -1341.81, 1.61], 4.8, 2.2, {
+            new BoxZone([-853.14, -1343.71, 1.51], 4.8, 2.2, {
                 heading: 110,
                 minZ: 0.61,
                 maxZ: 2.61,
@@ -2488,6 +2488,81 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
                     capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
                 },
                 debugPoly: true,
+            }),
+        ],
+    },
+    lsmc_privateparking: {
+        name: 'LSMC Parking',
+        legacyId: 'lsmc_privateparking',
+        type: GarageType.Private,
+        category: GarageCategory.Car,
+        zone: new BoxZone([411.67, -1354.73, 40.16], 1.2, 1, {
+            heading: 53.07,
+            minZ: 40.16,
+            maxZ: 43.16,
+        }),
+        parkingPlaces: [
+            new BoxZone([414.17, -1355.58, 41.35], 5.4, 2.8, {
+                heading: 138.98,
+                minZ: 40.35,
+                maxZ: 42.35,
+            }),
+            new BoxZone([417.04, -1357.87, 41.82], 5.0, 2.6, {
+                heading: 139.48,
+                minZ: 40.82,
+                maxZ: 42.82,
+            }),
+            new BoxZone([420.25, -1359.75, 42.19], 5.6, 3.0, {
+                heading: 139.48,
+                minZ: 41.19,
+                maxZ: 43.19,
+            }),
+            new BoxZone([422.92, -1362.49, 42.67], 6.0, 3.0, {
+                heading: 139.92,
+                minZ: 41.67,
+                maxZ: 43.67,
+            }),
+            new BoxZone([426.1, -1364.67, 43.1], 5.4, 2.8, {
+                heading: 138.86,
+                minZ: 42.1,
+                maxZ: 44.1,
+            }),
+            new BoxZone([428.81, -1367.55, 43.44], 6.0, 2.8, {
+                heading: 139.48,
+                minZ: 42.44,
+                maxZ: 44.44,
+            }),
+            new BoxZone([431.61, -1369.7, 43.55], 6.0, 3.0, {
+                heading: 139.88,
+                minZ: 42.55,
+                maxZ: 44.55,
+            }),
+            new BoxZone([434.77, -1371.94, 43.55], 5.4, 2.8, {
+                heading: 140.09,
+                minZ: 42.55,
+                maxZ: 44.55,
+            }),
+            new BoxZone([437.27, -1374.4, 43.55], 5.4, 2.6, {
+                heading: 139.81,
+                minZ: 42.55,
+                maxZ: 44.55,
+            }),
+
+            new BoxZone([374.78, -1322.37, 43.55], 10.6, 6.0, {
+                heading: 48.06,
+                minZ: 42.55,
+                maxZ: 44.55,
+                data: {
+                    capacity: [PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([380.87, -1302.12, 43.55], 14.4, 5.2, {
+                heading: 319.41,
+                minZ: 42.55,
+                maxZ: 44.55,
+                data: {
+                    capacity: [PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
             }),
         ],
     },

@@ -6,6 +6,7 @@ import { Tick } from '../../core/decorators/tick';
 import { LogChainHandler, Logger, LogLevel } from '../../core/logger';
 import { ServerEvent } from '../../shared/event';
 import { Vector3 } from '../../shared/polyzone/vector';
+import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
 import { ServerStateService } from '../server.state.service';
 import { LokiLoggerHandler } from './loki.logger.handler';
@@ -28,6 +29,9 @@ export class MonitorLokiProvider {
     @Inject(LokiLoggerHandler)
     private lokiLoggerHandler: LokiLoggerHandler;
 
+    @Inject(PlayerPositionProvider)
+    private playerPositionProvider: PlayerPositionProvider;
+
     @Inject(Monitor)
     private monitor: Monitor;
 
@@ -49,6 +53,8 @@ export class MonitorLokiProvider {
             const ped = GetPlayerPed(player.source);
             const position = GetEntityCoords(ped) as Vector3;
             const vehicle = GetVehiclePedIsIn(ped, false);
+
+            this.playerPositionProvider.updatePosition(player.source, position);
 
             this.monitor.publish(
                 'player_position',

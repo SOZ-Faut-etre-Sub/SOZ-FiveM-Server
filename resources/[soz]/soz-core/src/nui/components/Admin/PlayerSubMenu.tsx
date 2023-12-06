@@ -1,3 +1,4 @@
+import { SenateParty } from '@public/shared/senate';
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import { SozRole } from '../../../core/permissions';
@@ -20,6 +21,7 @@ import {
 export type PlayerSubMenuProps = {
     banner: string;
     permission: SozRole;
+    parties: SenateParty[];
 };
 
 export interface NuiAdminPlayerSubMenuMethodMap {
@@ -53,7 +55,7 @@ const SCENARIO_OPTIONS = [
     { label: 'Scenario 4', value: 'scenario4' },
 ];
 
-export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, permission }) => {
+export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, permission, parties }) => {
     const [players, setPlayers] = useState<AdminPlayer[]>([]);
     const [searchFilter, setSearchFilter] = useState<string>('');
 
@@ -107,8 +109,8 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                         ))}
                 </MenuContent>
             </SubMenu>
-            {players.map(player => (
-                <SubMenu id={'player_' + player.citizenId} key={player.citizenId}>
+            {players.map((player, index) => (
+                <SubMenu id={'player_' + player.citizenId} key={`player_index_${index}`}>
                     <MenuTitle banner={banner}>{player.name}</MenuTitle>
                     <MenuContent>
                         <MenuItemButton
@@ -321,14 +323,32 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                                 ))}
                         </MenuItemSelect>
                         <MenuItemSelect
-                            title={'Réinitialiser la progression Halloween 2022'}
+                            title={'Reset Halloween 2022'}
                             onConfirm={async selectedIndex => {
                                 await fetchNui(NuiEvent.AdminMenuPlayerHandleResetHalloween, {
                                     player,
-                                    year: '2022',
+                                    year: 'halloween2022',
                                     scenario: SCENARIO_OPTIONS[selectedIndex].value,
                                 });
                             }}
+                            titleWidth={60}
+                        >
+                            {SCENARIO_OPTIONS.map(option => (
+                                <MenuItemSelectOption key={'scenario_option_' + option.value}>
+                                    {option.label}
+                                </MenuItemSelectOption>
+                            ))}
+                        </MenuItemSelect>
+                        <MenuItemSelect
+                            title={'Reset Halloween 2023'}
+                            onConfirm={async selectedIndex => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerHandleResetHalloween, {
+                                    player,
+                                    year: 'halloween2023',
+                                    scenario: SCENARIO_OPTIONS[selectedIndex].value,
+                                });
+                            }}
+                            titleWidth={60}
                         >
                             {SCENARIO_OPTIONS.map(option => (
                                 <MenuItemSelectOption key={'scenario_option_' + option.value}>
@@ -359,6 +379,35 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                         >
                             Reset Client State
                         </MenuItemButton>
+                        <MenuItemSelect
+                            title="Parti politique"
+                            value={player.partyMember?.partyId || null}
+                            onConfirm={async (_, value) => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerSetSenateParty, {
+                                    player,
+                                    value,
+                                });
+                            }}
+                        >
+                            <MenuItemSelectOption value={null}>Aucun</MenuItemSelectOption>
+                            {parties.map(party => (
+                                <MenuItemSelectOption value={party.id} key={`party_${party.id}`}>
+                                    {party.name}
+                                </MenuItemSelectOption>
+                            ))}
+                        </MenuItemSelect>
+                        <MenuItemSelect
+                            title={'Mode zombie'}
+                            onConfirm={async (_, value) => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerSetZombie, {
+                                    player,
+                                    value,
+                                });
+                            }}
+                        >
+                            <MenuItemSelectOption value={true}>Activer</MenuItemSelectOption>
+                            <MenuItemSelectOption value={false}>Désactiver</MenuItemSelectOption>
+                        </MenuItemSelect>
                     </MenuContent>
                 </SubMenu>
             ))}

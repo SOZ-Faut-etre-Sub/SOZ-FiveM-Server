@@ -3,16 +3,7 @@ import { OnEvent } from '../../core/decorators/event';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { ClientEvent } from '../../shared/event';
-import { VehicleClass } from '../../shared/vehicle/vehicle';
-
-const ALLOWED_AIR_CONTROL: Partial<Record<VehicleClass, true>> = {
-    [VehicleClass.Helicopters]: true,
-    [VehicleClass.Motorcycles]: true,
-    [VehicleClass.Cycles]: true,
-    [VehicleClass.Boats]: true,
-    [VehicleClass.Planes]: true,
-    [VehicleClass.Military]: true,
-};
+import { ALLOWED_AIR_CONTROL, VehicleSeat } from '../../shared/vehicle/vehicle';
 
 @Provider()
 export class VehicleAirProvider {
@@ -46,8 +37,8 @@ export class VehicleAirProvider {
             return;
         }
 
-        const isDriver = GetPedInVehicleSeat(vehicle, -1) === ped;
-        const isCopilot = GetPedInVehicleSeat(vehicle, 0) === ped;
+        const isDriver = GetPedInVehicleSeat(vehicle, VehicleSeat.Driver) === ped;
+        const isCopilot = GetPedInVehicleSeat(vehicle, VehicleSeat.Copilot) === ped;
 
         if (DoesVehicleAllowRappel(vehicle) && !isDriver && !isCopilot) {
             TaskRappelFromHeli(ped, 0x41200000);
@@ -63,7 +54,7 @@ export class VehicleAirProvider {
             return;
         }
 
-        if (GetPedInVehicleSeat(vehicle, -1) !== ped) {
+        if (GetPedInVehicleSeat(vehicle, VehicleSeat.Driver) !== ped) {
             return;
         }
 

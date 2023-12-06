@@ -21,7 +21,7 @@ export type TaxiStatus = {
     missionInprogress: boolean;
 };
 
-export const HorodateurTarif = 14;
+export const HorodateurTarif = 30;
 
 export const CjrCloakroom: WardrobeConfig = {
     [joaat('mp_m_freemode_01')]: {

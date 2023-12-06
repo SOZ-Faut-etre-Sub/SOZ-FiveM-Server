@@ -1,3 +1,3 @@
 export interface NuiFieldMethodMap {
-    SetHealth: string;
+    SetHealth: [string, string];
 }

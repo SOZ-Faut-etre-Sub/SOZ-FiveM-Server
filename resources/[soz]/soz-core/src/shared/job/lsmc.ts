@@ -32,15 +32,21 @@ export const PHARMACY_PRICES = {
     health_book: 50,
 };
 
-export const BedLocations: Vector3[] = [
-    [312.84, -1433.25, 32.07],
-    [315.47, -1435.46, 32.07],
-    [318.02, -1437.59, 32.07],
-    [323.21, -1441.95, 32.07],
-    [325.71, -1444.05, 32.07],
-    [328.38, -1446.29, 32.07],
+export const BedLocations: Vector4[] = [
+    [344.27, -1457.18, 32.43, 51.0],
+    [347.96, -1452.78, 32.43, 50.99],
+    [351.8, -1448.2, 32.43, 50.99],
+    [355.65, -1443.61, 32.43, 51.0],
+    [346.08, -1443.43, 32.43, 228.99],
+    [342.23, -1448.01, 32.43, 228.99],
+    [338.38, -1452.6, 32.43, 229.0],
 ];
-export const FailoverLocation: Vector4 = [337.57, -1435.95, 32.51, 83.48];
+export function getBedName(index: number) {
+    return `UHU_BED_POS_${index}`;
+}
+
+export const FailoverLocationName = 'UHU_FAILOVER_LCOCATION';
+export const FailoverLocation: Vector4 = [342.82, -1460.64, 32.51, 315.75];
 
 export const PatientClothes: WardrobeConfig = {
     [joaat('mp_m_freemode_01')]: {

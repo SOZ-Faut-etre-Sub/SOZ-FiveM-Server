@@ -1,8 +1,9 @@
-import { Once, OnEvent } from '@core/decorators/event';
+import { Once, OnceStep, OnEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { Rpc } from '@public/core/decorators/rpc';
 import { emitClientRpc } from '@public/core/rpc';
+import { PrismaService } from '@public/server/database/prisma.service';
 import { InventoryManager } from '@public/server/inventory/inventory.manager';
 import { ItemService } from '@public/server/item/item.service';
 import { Monitor } from '@public/server/monitor/monitor';
@@ -16,15 +17,18 @@ import { JobType } from '@public/shared/job';
 import {
     canCropBeHarvest,
     canCropBeHilled,
+    FDFConfig,
     FDFCrop,
     FDFCropConfig,
     FDFCropType,
     FDFFieldConfig,
     FDFGreenhouseConfig,
+    FDFHarvestStatus,
+    FDFPlowStatus,
     harvestDiff,
 } from '@public/shared/job/fdf';
 import { getLocationHash } from '@public/shared/locationhash';
-import { getDistance, rad, toVector3Object, Vector3 } from '@public/shared/polyzone/vector';
+import { getDistance, toVector3Object, Vector3 } from '@public/shared/polyzone/vector';
 import { RpcClientEvent, RpcServerEvent } from '@public/shared/rpc';
 import { formatDuration } from '@public/shared/utils/timeformat';
 
@@ -48,18 +52,51 @@ export class FDFFieldProvider {
     @Inject(ObjectProvider)
     private objectProvider: ObjectProvider;
 
+    @Inject(PrismaService)
+    private prismaService: PrismaService;
+
     @Inject(Monitor)
     private monitor: Monitor;
 
     private cropsPerField = new Map<string, Map<string, FDFCrop>>();
     private crops = new Map<string, FDFCrop>();
-    private cropRemainingBerforePlow = new Map<string, number>();
+    private cropRemainingBeforePlow = new Map<string, number>();
+    private dateBeforePlow = new Map<string, number>();
 
     @Once()
     public async onStart() {
         for (const config of Object.values(FDFCropConfig)) {
             this.itemService.setItemUseCallback(config.seed, this.plantSeed.bind(this));
         }
+    }
+
+    @Once(OnceStep.DatabaseConnected)
+    public async retrievingData() {
+        const databaseCrops = await this.prismaService.fdf_crops.findMany();
+
+        databaseCrops.forEach(crop => {
+            const data: FDFCrop = {
+                coords: JSON.parse(crop.coords),
+                hilled: crop.hilled,
+                createdAt: crop.createdAt.getTime(),
+                field: crop.field,
+                type: crop.type as FDFCropType,
+            };
+
+            this.crops.set(crop.id, data);
+
+            if (!this.cropsPerField.has(crop.field)) {
+                this.cropsPerField.set(crop.field, new Map());
+                this.cropRemainingBeforePlow.set(crop.field, 0);
+            }
+
+            this.cropsPerField.get(crop.field).set(crop.id, data);
+            this.objectProvider.createObject({
+                id: crop.id,
+                model: FDFCropConfig[data.type].prop,
+                position: [...data.coords, 0],
+            });
+        });
     }
 
     @OnEvent(ServerEvent.FDF_FIELD_PLANT)
@@ -119,82 +156,112 @@ export class FDFFieldProvider {
                 return;
             }
 
-            const heading = GetEntityHeading(ped);
-            coords[0] -= Math.sin(rad(heading));
-            coords[1] += Math.cos(rad(heading));
+            const isPositionOccupied = await emitClientRpc<[boolean, Vector3[]]>(RpcClientEvent.FDF_CHECK_ZONE, source);
 
-            const isPositionOccupied = await emitClientRpc<[boolean, number]>(
-                RpcClientEvent.FDF_CHECK_ZONE,
-                source,
-                coords
-            );
             if (isPositionOccupied[0]) {
                 return;
             }
 
-            coords[2] = isPositionOccupied[1];
-
-            const id = `fdf_crop_${getLocationHash(coords)}`;
-            const items = this.cropsPerField.get(field);
-
-            if (!items) {
-                this.notifier.notify(source, 'Impossible placer un plant dans un champs non labouré', 'error');
-                return;
-            }
-            if (items.size > 0) {
-                const [first] = items.values();
-                if (first.type != type) {
-                    this.notifier.notify(source, 'Impossible de mélanger les cultures dans le même champ', 'error');
-                    return;
+            let cropsPlanted = 0;
+            for (const coords of isPositionOccupied[1]) {
+                const id = `fdf_crop_${getLocationHash(coords)}`;
+                const items = this.cropsPerField.get(field);
+                if (!items) {
+                    this.notifier.notify(source, 'Impossible de placer un plant dans un champs non labouré', 'error');
+                    break;
                 }
+                if (items.size > 0) {
+                    const [first] = items.values();
+                    if (first.type != type) {
+                        this.notifier.notify(source, 'Impossible de mélanger les cultures dans le même champ', 'error');
+                        break;
+                    }
 
-                if (items.size >= config.fieldConfig.maxprop) {
-                    this.notifier.notify(source, 'Il y a trop de plants dans ce champs', 'error');
-                    return;
-                }
+                    if (items.size >= config.fieldConfig.maxprop) {
+                        this.notifier.notify(source, 'Il y a trop de plants dans ce champs', 'error');
+                        break;
+                    }
 
-                for (const item of items.values()) {
-                    if (getDistance(item.coords, coords) < 1) {
-                        this.notifier.notify(source, 'Il y a un autre plant trop proche', 'error');
-                        return;
+                    const cropField = Object.keys(config.fieldConfig.fields).find(fieldId =>
+                        config.fieldConfig.fields[fieldId].isPointInside(coords)
+                    );
+
+                    if (cropField !== field) {
+                        this.notifier.notify(source, "Une des graines n'est pas dans le champ.", 'error');
+                        continue;
+                    }
+
+                    if (Array.from(items.values()).find(item => getDistance(item.coords, coords) < 1.5)) {
+                        this.notifier.notify(
+                            source,
+                            "Une des graines est trop proche d'un autre plant et n'a pas été plantée.",
+                            'warning'
+                        );
+                        continue;
                     }
                 }
-            }
 
-            const remainingBeforePlow = this.cropRemainingBerforePlow.get(field);
-            if (remainingBeforePlow <= 0) {
+                const remainingBeforePlow = this.cropRemainingBeforePlow.get(field);
+                if (remainingBeforePlow <= 0) {
+                    this.notifier.notify(
+                        source,
+                        'La terre doit de nouveau être travaillée avant de pouvoir y semer de nouvelles graines',
+                        'error'
+                    );
+                    break;
+                }
+
+                const date = new Date();
+
+                if (
+                    !this.inventoryManager.removeItemFromInventory(
+                        source,
+                        item.name,
+                        1,
+                        inventoryItem.metadata,
+                        inventoryItem.slot
+                    )
+                ) {
+                    this.notifier.notify(source, "Tu n'as pas assez de graines.", 'error');
+                    break;
+                }
+
+                items.set(id, {
+                    coords: coords,
+                    createdAt: date.getTime(),
+                    type: type,
+                    hilled: false,
+                    field: field,
+                });
+                this.crops.set(id, items.get(id));
+
+                this.cropRemainingBeforePlow.set(field, remainingBeforePlow - 1);
+
+                this.objectProvider.createObject({
+                    id: id,
+                    model: config.prop,
+                    position: [...coords, 0],
+                });
+
+                await this.prismaService.fdf_crops.create({
+                    data: {
+                        id: id,
+                        coords: JSON.stringify(coords),
+                        field: field,
+                        hilled: false,
+                        type: type,
+                        createdAt: date,
+                    },
+                });
+
+                cropsPlanted++;
+            }
+            if (cropsPlanted) {
                 this.notifier.notify(
                     source,
-                    'La terre doit de nouveau être travaillée avant de pouvoir y semer de nouvelles graines',
-                    'error'
+                    `Tu as planté ~y~${cropsPlanted}~s~ graines de ~b~${this.itemService.getItem(type).label}.~s~`
                 );
-                return;
             }
-
-            items.set(id, {
-                coords: coords,
-                createdAt: Date.now(),
-                type: type,
-                hilled: false,
-                field: field,
-            });
-            this.crops.set(id, items.get(id));
-
-            this.cropRemainingBerforePlow.set(field, remainingBeforePlow - 1);
-
-            this.objectProvider.createObject({
-                id: id,
-                model: config.prop,
-                position: [...coords, 0],
-            });
-
-            this.inventoryManager.removeItemFromInventory(
-                source,
-                item.name,
-                1,
-                inventoryItem.metadata,
-                inventoryItem.slot
-            );
 
             this.monitor.publish(
                 'fdf_plant',
@@ -204,7 +271,7 @@ export class FDFFieldProvider {
                 {
                     type: type,
                     coords: coords,
-                    field: field[0],
+                    field: field,
                 }
             );
         } catch (error) {
@@ -213,59 +280,105 @@ export class FDFFieldProvider {
     }
 
     @OnEvent(ServerEvent.FDF_FIELD_HILLING)
-    public onCropHilling(source: number, id: string) {
+    public async onCropHilling(source: number, id: string) {
         const crop = this.crops.get(id);
         if (!canCropBeHilled(crop)) {
             return;
         }
+        const cropsIdToHill = [id];
 
-        crop.hilled = true;
-
-        this.notifier.notify(source, FDFCropConfig[crop.type].fieldConfig.hillingText);
-
-        this.monitor.publish(
-            'job_fdf_field_hilling',
-            {
-                player_source: source,
-                type: crop.type,
-            },
-            {
-                field: crop.field,
-                id: id,
-                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-            }
-        );
-    }
-
-    @OnEvent(ServerEvent.FDF_FIELD_HARVEST)
-    public onCropHarvest(source: number, id: string) {
-        const crop = this.crops.get(id);
-        if (!canCropBeHarvest(crop)) {
-            return;
-        }
-
-        const nbItem = FDFCropConfig[crop.type].harvestCount;
-        if (!this.inventoryManager.canCarryItem(source, crop.type, nbItem)) {
-            this.notifier.notify(
-                source,
-                `Vous ne possédez pas suffisamment de place dans votre inventaire pour récolter.`,
-                'error'
+        for (let i = 0; i < 2; i++) {
+            const found = Array.from(this.cropsPerField.get(crop.field).entries()).find(
+                ([itemId, item]) =>
+                    getDistance(item.coords, crop.coords) < 2.2 &&
+                    canCropBeHilled(item) &&
+                    !cropsIdToHill.includes(itemId)
             );
-            return 0;
+
+            if (found) {
+                cropsIdToHill.push(found[0]);
+            }
         }
 
-        this.inventoryManager.addItemToInventory(source, crop.type, nbItem);
+        let hilledCrops = 0;
+        for (const cropId of cropsIdToHill) {
+            const currentCrop = this.crops.get(cropId);
+
+            this.monitor.publish(
+                'job_fdf_field_hilling',
+                {
+                    player_source: source,
+                    type: crop.type,
+                },
+                {
+                    field: crop.field,
+                    id: cropId,
+                    position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+                }
+            );
+
+            currentCrop.hilled = true;
+
+            await this.prismaService.fdf_crops.update({
+                where: {
+                    id: cropId,
+                },
+                data: {
+                    hilled: true,
+                },
+            });
+            hilledCrops++;
+        }
 
         this.notifier.notify(
             source,
-            `Vous avez récolté ~y~${nbItem}~s~ ~g~${this.itemService.getItem(crop.type).label}~s~.`
+            `Vous avez ${FDFCropConfig[crop.type].fieldConfig.hillingLabel} ${hilledCrops} plant${
+                hilledCrops > 1 ? 's' : ''
+            }, il${hilledCrops > 1 ? 's' : ''} ser${hilledCrops > 1 ? 'ont' : 'a'} récoltable un peu plus tôt.`
         );
 
+        crop.hilled = true;
+    }
+
+    @Rpc(RpcServerEvent.FDF_CROP_WITH_TRACTOR)
+    public async onCropTractorHarvest(
+        source: number,
+        id: string,
+        trailerPlate: string,
+        context: { model: string; class: string; entity: number },
+        trunkType: string
+    ) {
+        const crop = this.crops.get(id);
+        if (!crop) {
+            return FDFHarvestStatus.UNKNOW_CROP;
+        }
+
+        await this.inventoryManager.getOrCreateInventory(trunkType, trailerPlate, context);
+        const nbItem = FDFCropConfig[crop.type].harvestCount;
+        const { success } = this.inventoryManager.addItemToInventoryNotPlayer(
+            'trunk_' + trailerPlate,
+            crop.type,
+            nbItem
+        );
+        if (success) {
+            this.removeCrop(source, crop, nbItem, id);
+            this.notifier.notify(
+                source,
+                `Vous avez récolté ~y~${nbItem}~s~ ~g~${this.itemService.getItem(crop.type).label}~s~.`
+            );
+            return FDFHarvestStatus.SUCCESS;
+        } else {
+            return FDFHarvestStatus.INVENTORY_FULL;
+        }
+    }
+
+    public async removeCrop(source: number, crop: FDFCrop, nbItem: number, id: string) {
         this.objectProvider.deleteObject(id);
         this.crops.delete(id);
         this.cropsPerField.get(crop.field).delete(id);
-        if (this.cropsPerField.get(crop.field).size <= 0) {
+        if (this.cropsPerField.get(crop.field).size <= 0 && this.cropRemainingBeforePlow.get(crop.field) <= 0) {
             this.cropsPerField.delete(crop.field);
+            this.dateBeforePlow.set(crop.field, Date.now() + FDFConfig.plowDelay);
         }
 
         this.monitor.publish(
@@ -281,10 +394,65 @@ export class FDFFieldProvider {
                 position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
             }
         );
+
+        await this.prismaService.fdf_crops.delete({
+            where: {
+                id: id,
+            },
+        });
+    }
+
+    @OnEvent(ServerEvent.FDF_FIELD_HARVEST)
+    public async onCropHarvest(source: number, id: string) {
+        const crop = this.crops.get(id);
+        if (!canCropBeHarvest(crop)) {
+            return;
+        }
+
+        const cropsIdToRemove = [id];
+
+        for (let i = 0; i < 2; i++) {
+            const found = Array.from(this.cropsPerField.get(crop.field).entries()).find(
+                ([itemId, item]) =>
+                    getDistance(item.coords, crop.coords) < 2.2 &&
+                    canCropBeHarvest(item) &&
+                    !cropsIdToRemove.includes(itemId)
+            );
+
+            if (found) {
+                cropsIdToRemove.push(found[0]);
+            }
+        }
+
+        let harvestCount = 0;
+        let removedCrops = 0;
+        for (const cropId of cropsIdToRemove) {
+            const currentCrop = this.crops.get(cropId);
+            const nbItem = FDFCropConfig[currentCrop.type].harvestCount;
+            if (!this.inventoryManager.canCarryItem(source, currentCrop.type, nbItem)) {
+                this.notifier.notify(
+                    source,
+                    `Vous ne possédez pas suffisamment de place dans votre inventaire pour récolter.`,
+                    'error'
+                );
+                return 0;
+            }
+
+            this.inventoryManager.addItemToInventory(source, currentCrop.type, nbItem);
+            harvestCount += nbItem;
+            removedCrops += 1;
+            this.removeCrop(source, currentCrop, nbItem, cropId);
+        }
+        this.notifier.notify(
+            source,
+            `Vous avez récolté ~y~${harvestCount}~s~ ~g~${
+                this.itemService.getItem(crop.type).label
+            }~s~ sur ~y~${removedCrops}~s~ plant${removedCrops > 1 ? 's' : ''}.`
+        );
     }
 
     @OnEvent(ServerEvent.FDF_FIELD_DESTROY)
-    public onCropDestroy(source: number, id: string) {
+    public async onCropDestroy(source: number, id: string) {
         const crop = this.crops.get(id);
         if (!crop) {
             return;
@@ -311,16 +479,19 @@ export class FDFFieldProvider {
                 position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
             }
         );
+        await this.prismaService.fdf_crops.delete({
+            where: {
+                id: id,
+            },
+        });
     }
 
     @OnEvent(ServerEvent.FDF_FIELD_PLOW)
     public onFiledPlow(source: number, name: string) {
         this.cropsPerField.set(name, new Map());
-
         const fields = [FDFFieldConfig, FDFGreenhouseConfig];
         const config = fields.find(item => Object.keys(item.fields).includes(name));
-        this.cropRemainingBerforePlow.set(name, config.maxprop);
-
+        this.cropRemainingBeforePlow.set(name, config.maxprop);
         this.notifier.notify(
             source,
             `Vous avez terminé de ~g~labourer~s~ champ, il est maintenant prêt pour accueillir les plantations.`
@@ -338,6 +509,14 @@ export class FDFFieldProvider {
         );
     }
 
+    @Rpc(RpcServerEvent.FDF_PLOW_STATUS)
+    public getPlowStatus(source: number, id): string {
+        if (this.dateBeforePlow.get(id) > Date.now()) {
+            return FDFPlowStatus.WAITING;
+        }
+        return FDFPlowStatus.AVALAIBLE;
+    }
+
     @Rpc(RpcServerEvent.FDF_FIELD_ISPLOW)
     public isPlow(source: number, id: string): boolean {
         return !!this.cropsPerField.get(id);
@@ -346,6 +525,19 @@ export class FDFFieldProvider {
     @Rpc(RpcServerEvent.FDF_CROP_GET)
     public onHarvestGet(source: number, id: string): FDFCrop {
         return this.crops.get(id);
+    }
+
+    @Rpc(RpcServerEvent.FDF_GET_CROP_TO_TRACTOR_HARVEST)
+    public async getCropsToHarvest(source: number, id: string) {
+        const returnOject: Record<string, FDFCrop> = {};
+
+        if (this.cropsPerField.get(id)) {
+            for (const [cropId, crop] of this.cropsPerField.get(id)) {
+                returnOject[cropId] = crop;
+            }
+        }
+
+        return returnOject;
     }
 
     @OnEvent(ServerEvent.FDF_FIELD_CHECK)

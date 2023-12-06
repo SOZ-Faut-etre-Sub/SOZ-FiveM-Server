@@ -14,6 +14,22 @@
     user-select: none;
 }
 
+.giveBanner {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+}
+
+.giveBanner > span {
+    float: right;
+    margin-block: .5rem;
+    margin-left: .7rem;
+    font-size: .8rem;
+    line-height: 1.2rem;
+    color: #fff;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
 .Banner > span {
     float: right;
     margin: .5rem 0.8rem;
@@ -43,4 +59,26 @@
     width: 1rem;
     color: #fff;
     margin-right: 0.2rem;
+}
+
+.GiveAll {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    pointer-events: all;
+    cursor: pointer;
+}
+
+.GiveAll img{
+    height: 1rem;
+    width: auto;
+    color: #fff;
+    margin-right: 0.2rem;
+}
+
+.GiveAll:hover {
+    background: rgba(255, 255, 255, 0.25);
 }

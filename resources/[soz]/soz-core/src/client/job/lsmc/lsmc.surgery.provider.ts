@@ -17,14 +17,10 @@ import { RpcServerEvent } from '@public/shared/rpc';
 
 import { LSMCDeathProvider } from './lsmc.death.provider';
 
-const surgery = BoxZone.fromZone({
-    center: [334.97, -1446.74, 32.51] as Vector3,
-    length: 8.4,
-    width: 6.2,
-    heading: 320,
-    debugPoly: false,
+const surgery = new BoxZone([329.04, -1437.38, 32.51], 19.6, 32.0, {
+    heading: 319.73,
     minZ: 31.51,
-    maxZ: 34.51,
+    maxZ: 33.51,
 });
 
 @Provider()

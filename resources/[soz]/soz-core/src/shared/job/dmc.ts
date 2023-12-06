@@ -1,5 +1,6 @@
 import { WardrobeConfig } from '../cloth';
 import { CraftCategory } from '../craft/craft';
+import { Feature } from '../features';
 import { Field } from '../field';
 import { JobType } from '../job';
 import { BoxZone, NamedZone } from '../polyzone/box.zone';
@@ -49,6 +50,13 @@ const DmcConverterRecipes: Record<string, DmcConverterRecipe> = {
         },
         outputAmount: 2,
         temperature: 1250,
+    },
+    ['halloween_uranium_ingot']: {
+        input: {
+            ['halloween_uranium_raw']: 10,
+        },
+        outputAmount: 2,
+        temperature: 1132,
     },
 };
 
@@ -142,6 +150,16 @@ export const DMC_FIELDS_ZONES: Record<string, BoxZone[]> = {
     ],
 };
 
+export const DMC_HALLOWEEN_FIELDS_ZONES: Record<string, BoxZone[]> = {
+    ['dmc_uranium_field']: [
+        new BoxZone([2222.34, 3182.4, 51.01], 20.0, 1.6, {
+            heading: 220.47,
+            minZ: 50.01,
+            maxZ: 54.81,
+        }),
+    ],
+};
+
 // 20 minutes to harvest full field
 // 1 hour to refill full field
 export const DMC_FIELDS: Record<string, Field> = {
@@ -175,6 +193,26 @@ export const DMC_FIELDS: Record<string, Field> = {
         item: [
             {
                 name: 'raw_aluminium',
+                amount: 2,
+            },
+        ],
+        capacity: 240,
+        maxCapacity: 240,
+        refill: {
+            delay: 5 * 60 * 1000,
+            amount: 20,
+        },
+        harvest: {
+            delay: 0,
+            amount: 1,
+        },
+    },
+    ['dmc_uranium_field']: {
+        identifier: 'dmc_uranium_field',
+        owner: JobType.DMC,
+        item: [
+            {
+                name: 'halloween_uranium_raw',
                 amount: 2,
             },
         ],
@@ -486,6 +524,42 @@ export const DmcCraftsLists: Record<string, CraftCategory> = {
                     utilitary_certificate: { count: 1 },
                 },
                 amount: 5,
+            },
+        },
+    },
+    Halloween: {
+        animation: {
+            dictionary: 'melee@small_wpn@streamed_core_fps',
+            name: 'car_down_attack',
+            options: {
+                repeat: true,
+            },
+        },
+        feature: Feature.Halloween,
+        duration: 5000,
+        icon: '🎃',
+        event: 'job_dmc_craft',
+        recipes: {
+            halloween_atomic_compass: {
+                inputs: {
+                    halloween_uranium_ingot: { count: 20 },
+                },
+                amount: 1,
+            },
+            halloween_atomic_gps: {
+                inputs: {
+                    halloween_uranium_ingot: { count: 20 },
+                },
+                amount: 1,
+            },
+            halloween_brain_knife: {
+                inputs: {
+                    halloween_uranium_ingot: { count: 1 },
+                    iron_ingot: { count: 1 },
+                    steel_ingot: { count: 1 },
+                    aluminium_ingot: { count: 1 },
+                },
+                amount: 1,
             },
         },
     },

@@ -8,7 +8,7 @@ local function GetOrCreateAccount(accountName, coords)
 end
 
 local function GetClosestFleeca(coord)
-    local closestBank
+    local bestBank = nil
 
     for id, l in pairs(Config.BankPedLocations) do
         if string.find(id, "pacific") == nil then

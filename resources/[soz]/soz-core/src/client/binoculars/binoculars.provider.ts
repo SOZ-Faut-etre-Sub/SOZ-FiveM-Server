@@ -1,5 +1,6 @@
 import { ResourceLoader } from '@public/client/repository/resource.loader';
 import { ClientEvent } from '@public/shared/event';
+import { Control } from '@public/shared/input';
 
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -74,7 +75,7 @@ export class BinocularsProvider {
         AddTextEntry('binoculars_help_text', text);
         DisplayHelpTextThisFrame('binoculars_help_text', false);
 
-        if (!IsPedSittingInAnyVehicle(player)) {
+        if (!IsPedInAnyVehicle(player, true)) {
             TaskStartScenarioInPlace(PlayerPedId(), 'WORLD_HUMAN_BINOCULARS', 0, true);
             PlayAmbientSpeech1(PlayerPedId(), 'GENERIC_CURSE_MED', 'SPEECH_PARAMS_FORCE');
 
@@ -103,6 +104,7 @@ export class BinocularsProvider {
             EnableControlAction(2, 241, true); // INPUT_CURSOR_SCROLL_UP
             EnableControlAction(2, 242, true); // INPUT_CURSOR_SCROLL_DOWN
             EnableControlAction(2, 202, true); // INPUT_FRONTEND_CANCEL
+            EnableControlAction(0, Control.PushToTalk, true);
 
             if (IsControlJustPressed(0, 202)) {
                 this.toggleBinoculars();

@@ -5,17 +5,6 @@ local CollectObjects = {
     [GetHashKey("v_ilev_fos_mic")] = "n_fix_mic",
 }
 
-RegisterNetEvent("job:server:placeProps", function(item, props, rotation, offset)
-    local Player = QBCore.Functions.GetPlayer(source)
-
-    if exports["soz-inventory"]:GetItem(Player.PlayerData.source, item, nil, true) >= 1 then
-        exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, item, 1)
-        TriggerClientEvent("job:client:AddObject", Player.PlayerData.source, GetHashKey(props), rotation, offset)
-    else
-        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous ne possédez pas cet objet.", "error")
-    end
-end)
-
 --- Events
 RegisterNetEvent("job:server:AddObject", function(object, position)
     exports["soz-core"]:CreateObject({model = object, position = {position.x, position.y, position.z, position.w or 0}})

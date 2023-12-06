@@ -88,7 +88,9 @@ export type Vfx = {
     position: Vector3;
     rotation: Vector3;
     manualLoop?: boolean;
-    duration?: number;
+    duration?: number[];
+    delay?: number;
+    net?: boolean;
 };
 
 export type AnimationProps = {
@@ -117,6 +119,7 @@ export type PlayOptions = {
     resetWeapon: boolean;
     clearTasksBefore: boolean;
     clearTasksAfter: boolean;
+    cancellable: boolean;
 };
 
 export type AnimationOptions = {

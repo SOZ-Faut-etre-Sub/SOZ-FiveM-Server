@@ -12,8 +12,10 @@ import { toVector4Object, Vector3, Vector4 } from '../../shared/polyzone/vector'
 import { PrismaService } from '../database/prisma.service';
 import { Notifier } from '../notifier';
 import { ObjectProvider } from '../object/object.provider';
+import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
 import { PlayerStateService } from '../player/player.state.service';
+import { PlayerZombieProvider } from '../player/player.zombie.provider';
 
 @Provider()
 export class AdminMenuPlayerProvider {
@@ -31,6 +33,12 @@ export class AdminMenuPlayerProvider {
 
     @Inject(ObjectProvider)
     private objectProvider: ObjectProvider;
+
+    @Inject(PlayerZombieProvider)
+    private playerZombieProvider: PlayerZombieProvider;
+
+    @Inject(PlayerPositionProvider)
+    private playerPositionProvider: PlayerPositionProvider;
 
     @OnEvent(ServerEvent.ADMIN_ADD_PERSISTENT_PROP)
     public async addPersistentProp(source: number, model: number, event: string | null, position: Vector4) {
@@ -131,10 +139,9 @@ export class AdminMenuPlayerProvider {
 
     @OnEvent(ServerEvent.ADMIN_TELEPORT_PLAYER_TO_ME)
     public teleportPlayerToMe(source: number, player: AdminPlayer) {
-        const ped = GetPlayerPed(player.id);
         const position = GetEntityCoords(GetPlayerPed(source));
 
-        SetEntityCoords(ped, position[0], position[1], position[2], false, false, false, false);
+        this.playerPositionProvider.teleportToCoords(player.id, [position[0], position[1], position[2], 0.0]);
 
         this.playerService.setPlayerMetadata(player.id, 'inside', {
             apartment: false,
@@ -189,14 +196,19 @@ export class AdminMenuPlayerProvider {
     }
 
     @OnEvent(ServerEvent.ADMIN_RESET_HALLOWEEN)
-    public async onResetHalloween(source: number, target: number, year: '2022', scenario: 'scenario1' | 'scenario2') {
-        this.playerService.setPlayerMetadata(target, `halloween2022`, {
-            ...this.playerService.getPlayer(target).metadata.halloween2022,
+    public async onResetHalloween(
+        source: number,
+        target: number,
+        year: 'halloween2022' | 'halloween2023',
+        scenario: 'scenario1' | 'scenario2'
+    ) {
+        this.playerService.setPlayerMetadata(target, year, {
+            ...this.playerService.getPlayer(target).metadata[year],
             [scenario]: null,
         });
         this.notifier.notify(
             source,
-            `La progression du joueur ~b~Halloween ${year} (${scenario})~s~ a été réinitialisée.`,
+            `La progression du joueur ~b~${year} (${scenario})~s~ a été réinitialisée.`,
             'info'
         );
     }
@@ -211,5 +223,87 @@ export class AdminMenuPlayerProvider {
         this.playerStateService.resetClientState(target);
 
         this.notifier.notify(source, `L'état client du joueur a été réinitialisée.`, 'info');
+    }
+
+    @OnEvent(ServerEvent.ADMIN_PLAYER_SET_SENATE_PARTY)
+    public async onPlayerSetSenateParty(source: number, target: number, value: string | null) {
+        const targetPlayer = this.playerService.getPlayer(target);
+
+        if (!targetPlayer) {
+            return;
+        }
+
+        if (value === null) {
+            const deleted = await this.prisma.senatePartyMember.delete({
+                where: {
+                    citizenId: targetPlayer.citizenid,
+                },
+            });
+
+            if (deleted) {
+                this.notifier.notify(source, `Le joueur n'est plus dans un parti.`, 'info');
+            } else {
+                this.notifier.notify(source, `Le joueur n'est pas dans un parti.`, 'info');
+            }
+
+            this.playerService.setPlayerPartyMember(target, null);
+        } else {
+            const party = await this.prisma.senateParty.findUnique({
+                where: {
+                    id: value,
+                },
+            });
+
+            if (!party) {
+                this.notifier.notify(source, `Le parti n'existe pas.`, 'error');
+
+                return;
+            }
+
+            const partyMember = await this.prisma.senatePartyMember.upsert({
+                create: {
+                    party: {
+                        connect: {
+                            id: value,
+                        },
+                    },
+                    player: {
+                        connect: {
+                            citizenid: targetPlayer.citizenid,
+                        },
+                    },
+                    firstName: targetPlayer.charinfo.firstname,
+                    lastName: targetPlayer.charinfo.lastname,
+                },
+                update: {
+                    partyId: value,
+                },
+                where: {
+                    citizenId: targetPlayer.citizenid,
+                },
+            });
+
+            this.playerService.setPlayerPartyMember(target, {
+                id: partyMember.id,
+                partyId: partyMember.partyId,
+                citizenId: partyMember.citizenId,
+                senateSeatMember: partyMember.senateSeatNumber,
+            });
+
+            this.notifier.notify(source, `Le joueur est désormais dans le parti ${party.name}.`, 'info');
+        }
+    }
+
+    @OnEvent(ServerEvent.ADMIN_PLAYER_SET_ZOMBIE)
+    public async onPlayerSetZombie(source: number, target: number, value: boolean) {
+        this.playerStateService.resetClientState(target);
+
+        if (value) {
+            this.notifier.notify(source, `Le joueur va se transformer en zombie.`, 'info');
+            this.playerZombieProvider.addZombiePlayer(target);
+        } else {
+            this.notifier.notify(source, `Le joueur redevient normal.`, 'info');
+            this.playerZombieProvider.removeZombiePlayer(target);
+        }
     }
 }

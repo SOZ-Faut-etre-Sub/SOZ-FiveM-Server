@@ -57,6 +57,14 @@ export enum VehicleSeat {
     ExtraSeat3 = 5,
     ExtraSeat4 = 6,
     ExtraSeat5 = 7,
+    ExtraSeat6 = 8,
+    ExtraSeat7 = 9,
+    ExtraSeat8 = 10,
+    ExtraSeat9 = 11,
+    ExtraSeat10 = 12,
+    ExtraSeat11 = 13,
+    ExtraSeat12 = 14,
+    ExtraSeat13 = 15,
 }
 
 export enum VehicleSyncStrategy {
@@ -158,6 +166,7 @@ export type VehicleVolatileState = {
     model: string;
     locatorEndJam: number;
     label: string;
+    neonLightsStatus: boolean | null;
 };
 
 export enum VehicleClass {
@@ -239,6 +248,7 @@ export const getDefaultVehicleVolatileState = (): VehicleVolatileState => ({
     model: null,
     locatorEndJam: 0,
     label: null,
+    neonLightsStatus: true,
 });
 
 export type VehicleMenuData = {
@@ -253,6 +263,10 @@ export type VehicleMenuData = {
     isAnchor: boolean;
     police: boolean;
     policeLocator: boolean;
+    onDutyNg: boolean;
+    pitstopPrice: number;
+    neonLightsStatus: boolean;
+    hasNeon: boolean;
 };
 
 export type VehicleAuctionMenuData = {
@@ -318,7 +332,9 @@ export const VehicleElectricModels: Record<number, string> = {
     [-107240429]: 'bcsoc7',
     [joaat('dilettante2')]: 'Dilettante 2',
     [joaat('virtue')]: 'Virtue',
-    [joaat('powersurge')]: 'Dilettante 2',
+    [joaat('powersurge')]: 'Power Surge',
+    [joaat('coureur')]: 'La Coureuse',
+    [joaat('buffalo5')]: 'Buffalo EVX',
 };
 
 export const VehicleTrailerModels: Record<number, string> = {
@@ -382,4 +398,13 @@ export type VehicleLocation = {
     name: string;
     model: string;
     position: Vector3;
+};
+
+export const ALLOWED_AIR_CONTROL: Partial<Record<VehicleClass, true>> = {
+    [VehicleClass.Helicopters]: true,
+    [VehicleClass.Motorcycles]: true,
+    [VehicleClass.Cycles]: true,
+    [VehicleClass.Boats]: true,
+    [VehicleClass.Planes]: true,
+    [VehicleClass.Military]: true,
 };
