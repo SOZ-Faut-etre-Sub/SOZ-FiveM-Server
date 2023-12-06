@@ -64,6 +64,7 @@ export class WeaponProvider {
 
     @OnEvent(ServerEvent.WEAPON_SHOOTING_ALERT)
     async onWeaponShootingAlert(source: number, alertMessage: string, htmlMessage: string, zoneID: string) {
+        //No longer used
         if (this.lastAlertByZone[zoneID] && this.lastAlertByZone[zoneID] + 60000 > Date.now()) {
             return;
         }
