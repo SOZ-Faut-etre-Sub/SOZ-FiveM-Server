@@ -67,14 +67,13 @@ RegisterNUICallback("player/giveItem", function(data, cb)
         if player ~= -1 and distance < 2.0 then
             local amount = data.amount
 
-            if amount > 1 then
-                amount = exports["soz-core"]:Input("Quantité", 5, data.amount)
-            end
-
-            if tonumber(amount, 10) == nil then
-                exports["soz-core"]:DrawNotification("Vous devez entrer un nombre entier", "error")
-                cb(true)
-                return
+            if tonumber(amount) > 1 then
+                amount = tostring(exports["soz-core"]:Input("Quantité", 5, data.amount))
+                if tonumber(amount, 10) == nil then 
+                    exports["soz-core"]:DrawNotification("Vous devez entrer un nombre entier", "error")
+                    cb(true)
+                    return
+                end
             end
 
             if amount and tonumber(amount) > 0 then
