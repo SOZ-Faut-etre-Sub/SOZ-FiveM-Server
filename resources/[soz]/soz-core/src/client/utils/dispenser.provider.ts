@@ -52,6 +52,34 @@ export class DispenserProvider {
                         this.buy('Achète à manger...', 'sandwich', dispenser_eat_price);
                     },
                 },
+                {
+                    label: 'Chips barbecue ($' + dispenser_eat_price + ')',
+                    icon: 'c:food/chips.png',
+                    action: () => {
+                        this.buy('Achète à manger...', 'bbq_chips', dispenser_eat_price);
+                    },
+                },
+                {
+                    label: 'Chips oignon ($' + dispenser_eat_price + ')',
+                    icon: 'c:food/chips.png',
+                    action: () => {
+                        this.buy('Achète à manger...', 'onion_chips', dispenser_eat_price);
+                    },
+                },
+                {
+                    label: 'Chips salé ($' + dispenser_eat_price + ')',
+                    icon: 'c:food/chips.png',
+                    action: () => {
+                        this.buy('Achète à manger...', 'water_chips', dispenser_eat_price);
+                    },
+                },
+                {
+                    label: 'Zwix ($' + dispenser_eat_price + ')',
+                    icon: 'c:food/zwix_candy.png',
+                    action: () => {
+                        this.buy('Achète à manger...', 'zwix_candy', dispenser_eat_price);
+                    },
+                },
             ],
             1
         );
@@ -64,6 +92,20 @@ export class DispenserProvider {
                     icon: 'c:food/cafe.png',
                     action: () => {
                         this.buy('Achète un Café...', 'coffee', dispenser_cafe_price);
+                    },
+                },
+                {
+                    label: 'Chocolat chaud ($' + dispenser_cafe_price + ')',
+                    icon: 'c:food/chocolate.png',
+                    action: () => {
+                        this.buy('Achète un Chocolat...', 'chocolate', dispenser_cafe_price);
+                    },
+                },
+                {
+                    label: 'Thé ($' + dispenser_cafe_price + ')',
+                    icon: 'c:food/tea.png',
+                    action: () => {
+                        this.buy('Achète un Thé...', 'tea', dispenser_cafe_price);
                     },
                 },
             ],
