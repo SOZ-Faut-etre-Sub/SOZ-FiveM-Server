@@ -1,8 +1,8 @@
 import { OnEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
-import { Monitor } from '@public/client/monitor/monitor';
 import { Rpc } from '@public/core/decorators/rpc';
+import { Monitor } from '@public/server/monitor/monitor';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { FoodHuntConfig } from '@public/shared/job/food';
 import { RpcServerEvent } from '@public/shared/rpc';
