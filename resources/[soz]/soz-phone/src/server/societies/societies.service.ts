@@ -38,7 +38,7 @@ class _SocietyService {
             isDone: false,
             muted: !qbCorePlayer.PlayerData.job.onduty,
             createdAt: new Date().getTime(),
-            info: { ...data.info, notificationId: this.policeMessageCount, serviceNumber: data.number },
+            info: data.info,
         };
 
         emitNet(SocietyEvents.CREATE_MESSAGE_BROADCAST, player, messageData);
@@ -107,6 +107,11 @@ class _SocietyService {
 
             if (['555-LSPD', '555-BCSO', '555-SASP', '555-POLICE'].includes(reqObj.data.number)) {
                 this.policeMessageCount++;
+                if (!reqObj.data.info) {
+                    reqObj.data.info = {};
+                }
+                reqObj.data.info.notificationId = this.policeMessageCount;
+                reqObj.data.info.serviceNumber = reqObj.data.number;
             }
 
             const players = await PlayerService.getPlayersFromSocietyNumber(reqObj.data.number);
@@ -136,6 +141,11 @@ class _SocietyService {
                 };
 
                 this.policeMessageCount++;
+                if (!reqObj.data.info) {
+                    reqObj.data.info = {};
+                }
+                reqObj.data.info.notificationId = this.policeMessageCount;
+                reqObj.data.info.serviceNumber = reqObj.data.number;
 
                 [lspd, bcso]
                     .reduce((acc, val) => acc.concat(val), [])
