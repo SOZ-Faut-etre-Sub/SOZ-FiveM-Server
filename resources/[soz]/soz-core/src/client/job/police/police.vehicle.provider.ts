@@ -15,6 +15,11 @@ import { VehicleType, VehicleTypeFromClass } from '@public/shared/vehicle/vehicl
 
 const jobsAllowed = [JobType.LSPD, JobType.BCSO, JobType.SASP, JobType.FBI];
 
+const PlateTypeOverride: Record<number, number> = {
+    [GetHashKey('rebel')]: 1,
+    [GetHashKey('streiter')]: 2,
+};
+
 @Provider()
 export class PoliceVehicleProvider {
     @Inject(TargetFactory)
@@ -55,11 +60,11 @@ export class PoliceVehicleProvider {
                             return false;
                         }
                         if (VehicleTypeFromClass[GetVehicleClass(vehicle)] == VehicleType.Automobile) {
-                            // Exceptions with license plate undetected but exists
-                            if (GetHashKey('rebel') == GetEntityModel(vehicle)) {
-                                return true;
+                            let vehiclePlate = PlateTypeOverride[GetEntityModel(vehicle)];
+                            if (vehiclePlate == null) {
+                                vehiclePlate = GetVehiclePlateType(vehicle);
                             }
-                            const vehiclePlate = GetVehiclePlateType(vehicle);
+
                             if (vehiclePlate == 3) {
                                 return false;
                             }
