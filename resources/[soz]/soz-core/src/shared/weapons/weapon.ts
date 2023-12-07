@@ -1106,3 +1106,20 @@ export const ExplosionMessage = [
     'Bordel ça explose de partout proche de ${0} !!',
     "Une forte déflagration vient d'être ressentie à ${0}.",
 ];
+
+export enum ExplosionType {
+    PETROL_PUMP = 9,
+    DIR_WATER_HYDRANT = 13,
+    EXP_TAG_RAYGUN = 70,
+    SMOKEGRENADELAUNCHER = 19,
+    SMOKEGRENADE = 20,
+    FLARE = 22,
+}
+
+export const excludeExplosionAlert = [
+    ExplosionType.DIR_WATER_HYDRANT,
+    ExplosionType.EXP_TAG_RAYGUN,
+    ExplosionType.SMOKEGRENADELAUNCHER,
+    ExplosionType.SMOKEGRENADE,
+    ExplosionType.FLARE,
+];

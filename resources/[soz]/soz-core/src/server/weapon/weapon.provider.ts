@@ -8,19 +8,11 @@ import { Logger } from '../../core/logger';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
 import { RpcServerEvent } from '../../shared/rpc';
-import { GlobalWeaponConfig, WeaponConfig, Weapons } from '../../shared/weapons/weapon';
+import { excludeExplosionAlert, GlobalWeaponConfig, WeaponConfig, Weapons } from '../../shared/weapons/weapon';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
 import { PlayerStateService } from '../player/player.state.service';
-
-const DIR_WATER_HYDRANT = 13;
-const EXP_TAG_RAYGUN = 70;
-const SMOKEGRENADELAUNCHER = 19;
-const SMOKEGRENADE = 20;
-const FLARE = 22;
-
-const excludeExplosionAlert = [DIR_WATER_HYDRANT, EXP_TAG_RAYGUN, SMOKEGRENADELAUNCHER, SMOKEGRENADE, FLARE];
 
 @Provider()
 export class WeaponProvider {
@@ -167,7 +159,8 @@ export class WeaponProvider {
                 source,
                 explosionData.posX,
                 explosionData.posY,
-                explosionData.posZ
+                explosionData.posZ,
+                explosionData.explosionType
             );
         }
     }

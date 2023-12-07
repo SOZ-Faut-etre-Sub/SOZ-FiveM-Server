@@ -282,6 +282,7 @@ export enum ServerEvent {
 
     VANDALISM_ABORT = 'soz-core:server:vandalism:abort',
     VANDALISM_REPAIR = 'soz-core:server:vandalism:repair',
+    VANDALISM_STATION_EXPLOSION = 'soz-core:server:vandalism:station-explosion',
 
     MDR_SHOW_TICKET = 'soz-core:server:mdr:show-ticket',
     MDR_MONEY_CLEANING = 'soz-core:server:mdr:money-cleaning',
