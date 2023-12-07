@@ -31,6 +31,7 @@ import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { rad } from '@public/shared/polyzone/vector';
 import { Ok } from '@public/shared/result';
 import { RpcServerEvent } from '@public/shared/rpc';
+import { VehicleSeat } from '@public/shared/vehicle/vehicle';
 
 import { Animation } from '../../../shared/animation';
 import { PlayerZombieProvider } from '../../player/player.zombie.provider';
@@ -237,6 +238,15 @@ export class LSMCDeathProvider {
                         plate: GetVehicleNumberPlateText(veh),
                     };
                 }
+            } else if (killerentitytype == 2) {
+                const veh = killer;
+                killer = GetPedInVehicleSeat(veh, VehicleSeat.Driver);
+                killertype = GetPedType(killer);
+                killVehData = {
+                    name: GetDisplayNameFromVehicleModel(GetEntityModel(veh)),
+                    seat: -1,
+                    plate: GetVehicleNumberPlateText(veh),
+                };
             }
 
             let killerid = NetworkGetPlayerIndexFromPed(killer);
