@@ -279,7 +279,6 @@ export enum ClientEvent {
     DRUGS_DELETE = 'soz-core:client:drugs:delete',
     DRUGS_ADD = 'soz-core:client:drugs:add',
     DRUGS_UPDATE_SEED = 'soz-core:client:drugs:update-seed',
-    DRUGS_POLICE_ALERT = 'soz-core:client:drugs:police-alert',
     DRUGS_CONSUME = 'soz-core:client:drugs:consume',
     DRUGS_ZONE_ADD_UPDATE = 'soz-core:client:drugs:zone-add',
     DRUGS_ZONE_DELETE = 'soz-core:client:drugs:zone-delete',
