@@ -8,10 +8,11 @@ import { ProgressService } from '../progress.service';
 import { TargetFactory } from '../target/target.factory';
 
 const dispenser_eat_price = 10;
-const dispenser_drink_price = 10;
+const dispenser_drink_price = 10;  // Price for water and drinks machines
 const dispenser_cafe_price = 10;
 
-const vending_machine_drink = ['prop_vend_soda_01', 'prop_vend_soda_02', 'prop_watercooler_dark', 'prop_watercooler'];
+const vending_machine_drink = ['prop_vend_soda_01', 'prop_vend_soda_02'];
+const vending_machine_water = ['prop_watercooler_dark', 'prop_watercooler'];
 const vending_machine_food = ['prop_vend_snak_01', 'prop_vend_snak_01_tu'];
 const vending_machine_cafe = ['prop_vend_coffe_01'];
 
@@ -30,6 +31,27 @@ export class DispenserProvider {
     public onStart() {
         this.targetFactory.createForModel(
             vending_machine_drink,
+            [
+                {
+                    label: "Bouteille d'eau ($" + dispenser_drink_price + ')',
+                    icon: 'c:food/bouteille.png',
+                    action: () => {
+                        this.buy('Achète à boire...', 'water_bottle', dispenser_drink_price);
+                    },
+                },
+                {
+                    label: "Zanta ($" + dispenser_drink_price + ')',
+                    icon: 'c:food/zanta.png',
+                    action: () => {
+                        this.buy('Achète à boire...', 'zanta', dispenser_drink_price);
+                    },
+                },
+            ],
+            1
+        );
+
+        this.targetFactory.createForModel(
+            vending_machine_water,
             [
                 {
                     label: "Bouteille d'eau ($" + dispenser_drink_price + ')',

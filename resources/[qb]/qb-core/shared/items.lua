@@ -1987,6 +1987,28 @@ QBShared.Items = {
         },
         ['illustrator'] = '.Smogogo',
     },
+    ['zanta'] = {
+        ['name'] = 'zanta',
+        ['label'] = 'Zanta',
+        ['weight'] = 300,
+        ['type'] = 'drink',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Avec ou sans bulles, ce n\'est pas toi qui décidera !',
+        ['nutrition'] = {
+            ['hunger'] = 2,
+            ['thirst'] = 10,
+            ['stamina'] = 3,
+            ['fiber'] = 2,
+            ['lipid'] = 0,
+            ['sugar'] = 20,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        ['illustrator'] = '.Crash',
+    },
 
     -- Alcohol
     ['beer'] = {
