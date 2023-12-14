@@ -8,10 +8,11 @@ import { ProgressService } from '../progress.service';
 import { TargetFactory } from '../target/target.factory';
 
 const dispenser_eat_price = 10;
-const dispenser_drink_price = 10;
+const dispenser_drink_price = 10;  // Price for water and drinks machines
 const dispenser_cafe_price = 10;
 
-const vending_machine_drink = ['prop_vend_soda_01', 'prop_vend_soda_02', 'prop_watercooler_dark', 'prop_watercooler'];
+const vending_machine_drink = ['prop_vend_soda_01', 'prop_vend_soda_02'];
+const vending_machine_water = ['prop_watercooler_dark', 'prop_watercooler'];
 const vending_machine_food = ['prop_vend_snak_01', 'prop_vend_snak_01_tu'];
 const vending_machine_cafe = ['prop_vend_coffe_01'];
 
@@ -38,6 +39,27 @@ export class DispenserProvider {
                         this.buy('Achète à boire...', 'water_bottle', dispenser_drink_price);
                     },
                 },
+                {
+                    label: "Zanta ($" + dispenser_drink_price + ')',
+                    icon: 'c:food/zanta.png',
+                    action: () => {
+                        this.buy('Achète à boire...', 'zanta', dispenser_drink_price);
+                    },
+                },
+            ],
+            1
+        );
+
+        this.targetFactory.createForModel(
+            vending_machine_water,
+            [
+                {
+                    label: "Bouteille d'eau ($" + dispenser_drink_price + ')',
+                    icon: 'c:food/bouteille.png',
+                    action: () => {
+                        this.buy('Achète à boire...', 'water_bottle', dispenser_drink_price);
+                    },
+                },
             ],
             1
         );
@@ -52,6 +74,34 @@ export class DispenserProvider {
                         this.buy('Achète à manger...', 'sandwich', dispenser_eat_price);
                     },
                 },
+                {
+                    label: 'Chips barbecue ($' + dispenser_eat_price + ')',
+                    icon: 'c:food/chips.png',
+                    action: () => {
+                        this.buy('Achète à manger...', 'bbq_chips', dispenser_eat_price);
+                    },
+                },
+                {
+                    label: 'Chips oignon ($' + dispenser_eat_price + ')',
+                    icon: 'c:food/chips.png',
+                    action: () => {
+                        this.buy('Achète à manger...', 'onion_chips', dispenser_eat_price);
+                    },
+                },
+                {
+                    label: 'Chips salé ($' + dispenser_eat_price + ')',
+                    icon: 'c:food/chips.png',
+                    action: () => {
+                        this.buy('Achète à manger...', 'water_chips', dispenser_eat_price);
+                    },
+                },
+                {
+                    label: 'Zwix ($' + dispenser_eat_price + ')',
+                    icon: 'c:food/zwix_candy.png',
+                    action: () => {
+                        this.buy('Achète à manger...', 'zwix_candy', dispenser_eat_price);
+                    },
+                },
             ],
             1
         );
@@ -64,6 +114,20 @@ export class DispenserProvider {
                     icon: 'c:food/cafe.png',
                     action: () => {
                         this.buy('Achète un Café...', 'coffee', dispenser_cafe_price);
+                    },
+                },
+                {
+                    label: 'Chocolat chaud ($' + dispenser_cafe_price + ')',
+                    icon: 'c:food/chocolate.png',
+                    action: () => {
+                        this.buy('Achète un Chocolat...', 'chocolate', dispenser_cafe_price);
+                    },
+                },
+                {
+                    label: 'Thé ($' + dispenser_cafe_price + ')',
+                    icon: 'c:food/tea.png',
+                    action: () => {
+                        this.buy('Achète un Thé...', 'tea', dispenser_cafe_price);
                     },
                 },
             ],

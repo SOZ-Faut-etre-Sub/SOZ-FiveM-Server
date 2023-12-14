@@ -145,7 +145,7 @@ export class PlayerStressProvider {
             return;
         }
 
-        if (name === 'coffee') {
+        if (name === 'coffee' || name === 'chocolate' || name === 'tea') {
             this.updateStress(StressLooseType.DrinkCoffee);
         }
 
