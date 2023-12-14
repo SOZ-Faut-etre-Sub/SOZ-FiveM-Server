@@ -1,8 +1,9 @@
 import data from '@emoji-mart/data/sets/14/apple.json';
 import { init } from 'emoji-mart';
 import React from 'react';
+import {CustomEmoji} from "../../config/CustomEmoji";
 
-init({ data });
+init({ data, custom: CustomEmoji });
 
 function Emoji({ emoji, size = '24px' }) {
     return (

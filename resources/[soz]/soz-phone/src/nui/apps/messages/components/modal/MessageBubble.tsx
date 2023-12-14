@@ -14,6 +14,7 @@ import { usePhoneNumber } from '../../../../hooks/useSimCard';
 import { setClipboard } from '../../../../os/phone/hooks/useClipboard';
 import Emoji from '../../../../ui/components/Emoji';
 import { Button } from '../../../../ui/old_components/Button';
+import EmojiTextRenderer from "../../../../ui/components/EmojiTextRender";
 
 const isImage = url => {
     return /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png|jpeg|gif)/g.test(url);
@@ -77,13 +78,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
                                 'text-2xl': config.textZoom.value === 1.6,
                             })}
                         >
-                            {message.message.split(/(:[a-zA-Z0-9-_+]+:)/g).map((text, i) => {
-                                if (text.startsWith(':') && text.endsWith(':')) {
-                                    return <Emoji key={i} emoji={text} />;
-                                }
-
-                                return <React.Fragment key={i}>{text}</React.Fragment>;
-                            })}
+                            <EmojiTextRenderer text={message.message} />
                         </p>
                     </Menu.Button>
                 )}

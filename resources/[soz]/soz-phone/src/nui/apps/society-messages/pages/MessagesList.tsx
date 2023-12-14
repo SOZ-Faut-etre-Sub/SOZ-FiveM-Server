@@ -20,6 +20,8 @@ import { useConfig } from '../../../hooks/usePhone';
 import { DayAgo } from '../../../ui/components/DayAgo';
 import { IPhoneSettings } from '../../settings/hooks/useSettings';
 import { useMessageNotifications } from '../hooks/useMessageNotifications';
+import Emoji from "../../../ui/components/Emoji";
+import EmojiTextRenderer from "../../../ui/components/EmojiTextRender";
 
 const MessagesList = (): any => {
     const ref = useRef();
@@ -193,7 +195,7 @@ export const MessageItem: FunctionComponent<MessageItemProps> = ({
                                     'text-gray-700': config.theme.value === 'light',
                                 })}
                             >
-                                {message.message}
+                                <EmojiTextRenderer text={message.message} />
                             </p>
                             <p className="flex justify-between text-left text-xs text-gray-400">
                                 {message.isDone ? (

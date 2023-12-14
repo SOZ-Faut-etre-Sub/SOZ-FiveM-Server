@@ -15,6 +15,7 @@ import { useConfig } from '../../../hooks/usePhone';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { ContactPicture } from '../../../ui/components/ContactPicture';
 import { SearchField } from '../../../ui/components/SearchField';
+import EmojiTextRenderer from "../../../ui/components/EmojiTextRender";
 
 export const ContactList: FunctionComponent<{ skipTitle?: boolean }> = ({ skipTitle = false }) => {
     const contactsApp = useApp('contacts');
@@ -111,7 +112,7 @@ export const ContactList: FunctionComponent<{ skipTitle?: boolean }> = ({ skipTi
                                                                 'text-gray-600': config.theme.value === 'light',
                                                             })}
                                                         >
-                                                            {contact.display}
+                                                            <EmojiTextRenderer text={contact.display} />
                                                         </p>
                                                     </div>
                                                 </div>
