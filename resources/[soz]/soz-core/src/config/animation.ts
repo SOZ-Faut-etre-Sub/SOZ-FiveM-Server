@@ -11131,6 +11131,13 @@ export const Animations: AnimationConfigList = [
                 ],
             },
             {
+                type: 'event',
+                name: 'Ramasser une boule de neige',
+                rightLabel: null,
+                icon: '❄️',
+                event: 'soz-core:client:weapon:pick-snowball',
+            },
+            {
                 type: 'animation',
                 name: 'Départ de course',
                 rightLabel: null,

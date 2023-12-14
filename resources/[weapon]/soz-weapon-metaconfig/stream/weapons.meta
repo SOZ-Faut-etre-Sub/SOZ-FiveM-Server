@@ -1229,6 +1229,74 @@
           <ThrownForce value="0.000000" />
           <ThrownForceFromVehicle value="5.000000" />
         </Item>
+
+<Item type="CAmmoThrownInfo">
+          <Name>AMMO_SNOWBALL</Name>
+          <Model>w_ex_snowball</Model>
+          <Audio />
+          <Slot />
+          <AmmoMax value="10" />
+          <AmmoMax50 value="10" />
+          <AmmoMax100 value="10" />
+          <AmmoMaxMP value="10" />
+          <AmmoMax50MP value="10" />
+          <AmmoMax100MP value="10" />
+          <AmmoFlags>FixedAfterExplosion</AmmoFlags>
+          <Damage value="0.000000" />
+          <LifeTime value="10.000000" />
+          <FromVehicleLifeTime value="2.500000" />
+          <LifeTimeAfterImpact value="0.001000" />
+          <LifeTimeAfterExplosion value="0.000000" />
+          <ExplosionTime value="0.250000" />
+          <LaunchSpeed value="25.000000" />
+          <SeparationTime value="0.000000" />
+          <TimeToReachTarget value="0.000000" />
+          <Damping value="0.050000" />
+          <GravityFactor value="1.000000" />
+          <RicochetTolerance value="0.000000" />
+          <PedRicochetTolerance value="0.000000" />
+          <VehicleRicochetTolerance value="0.000000" />
+          <Explosion>
+            <Default>EXP_TAG_SNOWBALL</Default>
+            <HitCar>DONTCARE</HitCar>
+            <HitTruck>DONTCARE</HitTruck>
+            <HitBike>DONTCARE</HitBike>
+            <HitBoat>DONTCARE</HitBoat>
+            <HitPlane>DONTCARE</HitPlane>
+          </Explosion>
+          <FuseFx>proj_snowball_fuse</FuseFx>
+		  <FuseFxFP />
+          <TrailFx>proj_snowball_trail</TrailFx>
+          <TrailFxUnderWater />
+          <TrailFxFadeInTime value="0.000000" />
+          <TrailFxFadeOutTime value="0.000000" />
+          <PrimedFx />
+          <DisturbFxDefault />
+          <DisturbFxSand />
+          <DisturbFxWater />
+          <DisturbFxDirt />
+          <DisturbFxFoliage />
+          <DisturbFxProbeDist value="0.000000" />
+          <DisturbFxScale value="0.000000" />
+          <LightOnlyActiveWhenStuck value="false" />
+          <LightFlickers value="false" />
+          <LightBone />
+          <LightColour x="0.000000" y="0.000000" z="0.000000" />
+          <LightIntensity value="0.000000" />
+          <LightRange value="0.000000" />
+          <LightFalloffExp value="0.000000" />
+          <LightFrequency value="0.000000" />
+          <LightPower value="0.000000" />
+          <CoronaSize value="0.000000" />
+          <CoronaIntensity value="0.000000" />
+          <CoronaZBias value="0.000000" />
+          <ProjectileFlags>DestroyOnImpact ProcessImpacts NoPullPin DoubleDamping ApplyDamageOnImpact DontFireAnyEvents</ProjectileFlags>
+          <ThrownForce value="0.000000" />
+          <ThrownForceFromVehicle value="5.000000" />
+        </Item>
+
+
+
         <Item type="CAmmoThrownInfo">
           <Name>AMMO_BALL</Name>
           <Model>w_am_baseball</Model>

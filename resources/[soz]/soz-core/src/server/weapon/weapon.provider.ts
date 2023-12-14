@@ -122,6 +122,23 @@ export class WeaponProvider {
         return this.inventoryManager.getSlot(source, weaponSlot);
     }
 
+    @OnEvent(ServerEvent.GET_SNOW)
+public snow(source: number) {
+    const weapon = this.inventoryManager.getFirstItemInventory(source, 'weapon_snowball');
+    if (weapon) {
+        if (weapon.metadata.ammo >= 10) {
+            this.notifier.notify(source, 'Tu as trop de boules de neige sur toi !', 'error');
+            return;
+        }
+        this.inventoryManager.updateMetadata(source, weapon.slot, {
+            ammo: weapon.metadata.ammo + 1,
+        });
+    } else {
+        this.inventoryManager.addItemToInventory(source, 'weapon_snowball', 1, { ammo: 1 });
+    }
+    this.notifier.notify(source, 'Tu as ramassé une boule de neige');
+}
+
     @Once(OnceStep.Start)
     public onStart() {
         this.item.setItemUseCallback('ammo_01', this.useAmmo.bind(this));
