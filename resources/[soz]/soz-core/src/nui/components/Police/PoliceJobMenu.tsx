@@ -96,11 +96,11 @@ export const PoliceJobMenu: FunctionComponent<PoliceJobStateProps> = ({ data }) 
                     </MenuItemButton>
                     <MenuItemSelect
                         title="🚧 Poser un objet"
-                        onConfirm={async selectedIndex => {
+                        onConfirm={async (selectedIndex) => {
                             await fetchNui(NuiEvent.JobPlaceProps, propsList[selectedIndex]);
                         }}
                     >
-                        {propsList.map(prop => (
+                        {propsList.map((prop) => (
                             <MenuItemSelectOption key={prop.item}>{prop.label}</MenuItemSelectOption>
                         ))}
                     </MenuItemSelect>
@@ -114,7 +114,7 @@ export const PoliceJobMenu: FunctionComponent<PoliceJobStateProps> = ({ data }) 
                     <MenuItemSubMenuLink id="persons_searched">👮 | Personnes recherchées</MenuItemSubMenuLink>
                     <MenuItemCheckbox
                         checked={data.displayRadar}
-                        onChange={async value => {
+                        onChange={async (value) => {
                             await fetchNui(NuiEvent.ToggleRadar, value);
                         }}
                     >
@@ -149,7 +149,7 @@ export const PoliceJobMenu: FunctionComponent<PoliceJobStateProps> = ({ data }) 
                                     setWantedPlayers(await fetchNui(NuiEvent.PoliceGetWantedPlayers));
                                 }}
                             >
-                                {player.message}
+                                {player.message + (player.reason != '' && player.reason ? ' - ' + player.reason : '')}
                             </MenuItemButton>
                         ))}
                 </MenuContent>

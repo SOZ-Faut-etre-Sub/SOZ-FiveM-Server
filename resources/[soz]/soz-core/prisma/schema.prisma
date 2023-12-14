@@ -299,6 +299,7 @@ model phone_twitch_news {
   reporter   String?  @db.VarChar(150)
   reporterId String?  @db.VarChar(70)
   image      String?  @db.VarChar(256)
+  reason     String?  @db.VarChar(256)
   message    String   @db.VarChar(512)
   job        String   @default("news") @db.VarChar(50)
   createdAt  DateTime @default(now()) @db.Timestamp(0)

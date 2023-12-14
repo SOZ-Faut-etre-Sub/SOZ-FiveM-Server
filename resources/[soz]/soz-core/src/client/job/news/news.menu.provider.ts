@@ -11,7 +11,6 @@ import { InputService } from '../../nui/input.service';
 import { NuiMenu } from '../../nui/nui.menu';
 import { getProperGroundPositionForObject } from '../../object/object.utils';
 import { PlayerService } from '../../player/player.service';
-
 @Provider()
 export class NewsMenuProvider {
     @Inject(NuiMenu)
@@ -63,6 +62,14 @@ export class NewsMenuProvider {
         if (!message || message === '') {
             return;
         }
+        var reason = '';
+        if (['lspd', 'sasp', 'bcso'].includes(type)) {
+            reason = await this.inputService.askInput({
+                title: "Raison :",
+                maxCharacters: 125,
+                defaultValue: '',
+            });
+        }
 
         TriggerServerEvent(
             ServerEvent.PHONE_APP_NEWS_CREATE_BROADCAST,
@@ -70,10 +77,11 @@ export class NewsMenuProvider {
             {
                 type,
                 message,
+                reason,
                 reporter: player.charinfo.firstname + ' ' + player.charinfo.lastname,
                 reporterId: player.citizenid,
                 job: player.job.id,
-            }
+            },
         );
 
         this.monitor.publish(
@@ -84,7 +92,7 @@ export class NewsMenuProvider {
             {
                 message,
                 position: toVector3Object(GetEntityCoords(PlayerPedId(), false) as Vector3),
-            }
+            },
         );
     }
 

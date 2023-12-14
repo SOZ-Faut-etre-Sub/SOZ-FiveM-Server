@@ -10,12 +10,13 @@ export class HudNewsProvider {
     private readonly nuiDispatch: NuiDispatch;
 
     @OnEvent(ClientEvent.NEWS_DRAW)
-    public drawNews(type: string, message: string, reporter: string, job: string): void {
+    public drawNews(type: string, message: string, reporter: string, job: string, reason: string): void {
         this.nuiDispatch.dispatch('hud', 'AddNews', {
             type,
             message,
             reporter,
             job,
+            reason,
         });
     }
 }

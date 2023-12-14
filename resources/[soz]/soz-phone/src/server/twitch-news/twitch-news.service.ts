@@ -19,6 +19,7 @@ class _TwitchNewsService {
             emit(TwitchNewsEvents.API_NEWS_BROADCAST, {
                 type: reqObj.data.type,
                 message: reqObj.data.message,
+                reason: reqObj.data.reason,
                 reporter: reqObj.data.reporter,
                 reporterId: reqObj.data.reporterId,
                 image: reqObj.data.image,
@@ -29,6 +30,7 @@ class _TwitchNewsService {
                 id: news,
                 type: reqObj.data.type,
                 reporter: reqObj.data.reporter,
+                reason: reqObj.data.reason,
                 reporterId: reqObj.data.reporterId,
                 image: reqObj.data.image,
                 message: reqObj.data.message,
@@ -43,7 +45,7 @@ class _TwitchNewsService {
                 reqObj.data.message,
                 reqObj.data.reporter,
                 reqObj.data.job
-            );
+            , reqObj.data.reason);
         } catch (e) {
             twitchNewsLogger.error(`Error in handleSendNews, ${e.toString()}`);
             resp({ status: 'error', errorMsg: 'DB_ERROR' });

@@ -111,6 +111,9 @@ const Banner: FunctionComponent<BannerProps> = ({ index, news, onDelete }) => {
                         <p>
                             Les forces de l'ordre sont à la recherche de <strong>{news.message}</strong>.
                         </p>
+                        {news.reason != "" &&
+                            <p><strong>{news.reason}</strong></p>
+                        }
                         <p>
                             Si vous avez des informations sur cette personne, veuillez les communiquer au{' '}
                             <strong style={{ textTransform: 'uppercase' }}>555-{news.type}</strong>.
