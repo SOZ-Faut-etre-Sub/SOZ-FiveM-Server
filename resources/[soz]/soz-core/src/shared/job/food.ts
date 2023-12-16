@@ -177,6 +177,43 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
             },
         },
     },
+    Patisseries: {
+        duration: 8000,
+        icon: '🥐',
+        event: 'job_cm_food_craft',
+        recipes: {
+            clafoutis_grappe: {
+                inputs: {
+                    semi_skimmed_milk: { count: 1 },
+                    grape1: { count: 2 }
+                },
+                amount: 4,
+            },
+            gingerbread: {
+                inputs: {
+                    skimmed_milk: { count: 1 },
+                    grape1: { count: 1 },
+                    orange: { count: 1 },
+                    lemon: { count: 1 }
+                },
+                amount: 4,
+            },
+        },
+    },
+    Plats : {
+        duration: 8000,
+        icon: '🍲',
+        event: 'job_cm_food_craft',
+        recipes: {
+            pumpkin_cheese_soup: {
+                inputs: {
+                    pumpkin: { count: 2 },
+                    cheese1: { count: 3 },
+                },
+                amount: 8,
+            },
+        },
+    },
     Saucissons: {
         duration: 8000,
         icon: '🌭',
@@ -246,6 +283,32 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
                     chocolat_milk_egg: { count: 2 },
                 },
                 amount: 1,
+            },
+        },
+    },
+    Hiver: {
+        feature: Feature.Winter,
+        duration: 8000,
+        icon: '❄️',
+        event: 'job_cm_food_craft',
+        recipes: {
+            hot_wine: {
+                inputs: {
+                    grape1: { count: 1 },
+                    grape2: { count: 1 },
+                    grape3: { count: 1 },
+                    grape4: { count: 1 }
+                },
+                amount: 1,
+            },
+            tartiflette: {
+                inputs: {
+                    potato: { count: 5 },
+                    cheese3: { count: 3 },
+                    viande: { count: 2 },
+                    wine3: { count: 1 }
+                },
+                amount: 8,
             },
         },
     },
