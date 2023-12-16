@@ -4,6 +4,11 @@ import { Feature } from '../features';
 import { joaat } from '../joaat';
 import { NamedZone } from '../polyzone/box.zone';
 
+export const FoodHuntConfig = {
+    noSpawnDelay: 3600_000,
+    noSpawnHarvestCount: 10,
+};
+
 export const CraftZones: NamedZone[] = [
     {
         name: 'food_craft_1',

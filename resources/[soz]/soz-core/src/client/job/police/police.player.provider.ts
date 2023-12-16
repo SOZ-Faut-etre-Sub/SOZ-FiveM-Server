@@ -74,133 +74,130 @@ export class PolicePlayerProvider {
     @Once(OnceStep.Start)
     public onStart() {
         for (const job of jobsCanFine) {
-            this.targetFactory.createForAllPlayer(
-                [
-                    {
-                        label: 'Amender',
-                        color: job,
-                        icon: 'c:police/amender.png',
-                        job: job,
-                        blackoutJob: job,
-                        blackoutGlobal: true,
-                        canInteract: () => {
-                            return this.playerService.isOnDuty();
-                        },
-                        action: entity => {
-                            const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-                            this.nuiMenu.openMenu(MenuType.PoliceJobFines, {
-                                job: job,
-                                playerServerId: target,
-                            });
-                        },
+            this.targetFactory.createForAllPlayer([
+                {
+                    label: 'Amender',
+                    color: job,
+                    icon: 'c:police/amender.png',
+                    job: job,
+                    blackoutJob: job,
+                    blackoutGlobal: true,
+                    canInteract: () => {
+                        return this.playerService.isOnDuty();
                     },
-                    {
-                        label: 'Permis',
-                        color: job,
-                        icon: 'c:police/permis.png',
-                        job: job,
-                        canInteract: () => {
-                            return this.playerService.isOnDuty();
-                        },
-                        action: async entity => {
-                            const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-                            const licences = await emitRpc<Partial<Record<PlayerLicenceType, number>>>(
-                                RpcServerEvent.PLAYER_GET_LICENCES,
-                                target
-                            );
+                    action: entity => {
+                        const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
+                        this.nuiMenu.openMenu(MenuType.PoliceJobFines, {
+                            job: job,
+                            playerServerId: target,
+                        });
+                    },
+                },
+                {
+                    label: 'Permis',
+                    color: job,
+                    icon: 'c:police/permis.png',
+                    job: job,
+                    canInteract: () => {
+                        return this.playerService.isOnDuty();
+                    },
+                    action: async entity => {
+                        const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
+                        const licences = await emitRpc<Partial<Record<PlayerLicenceType, number>>>(
+                            RpcServerEvent.PLAYER_GET_LICENCES,
+                            target
+                        );
 
-                            this.nuiMenu.openMenu(MenuType.PoliceJobLicences, {
-                                job: job,
-                                playerServerId: target,
-                                playerLicences: licences,
-                            });
-                        },
+                        this.nuiMenu.openMenu(MenuType.PoliceJobLicences, {
+                            job: job,
+                            playerServerId: target,
+                            playerLicences: licences,
+                        });
                     },
-                    {
-                        label: 'Menotter',
-                        color: job,
-                        icon: 'c:police/menotter.png',
-                        item: 'handcuffs',
-                        job: job,
-                        canInteract: entity => {
-                            return (
-                                this.playerService.isOnDuty() &&
-                                !IsEntityPlayingAnim(entity, 'mp_arresting', 'idle', 3) &&
-                                !IsPedInAnyVehicle(entity, true) &&
-                                !IsPedInAnyVehicle(PlayerPedId(), true)
-                            );
-                        },
-                        action: async entity => {
-                            if (!IsPedRagdoll(PlayerPedId())) {
-                                const player = NetworkGetPlayerIndexFromPed(entity);
-                                if (
-                                    !IsPedInAnyVehicle(GetPlayerPed(player), true) &&
-                                    !IsPedInAnyVehicle(PlayerPedId(), true)
-                                ) {
-                                    const playerId = GetPlayerServerId(player);
-                                    TriggerServerEvent(ServerEvent.CUFF_PLAYER, playerId, false);
-                                    TriggerServerEvent(
-                                        ServerEvent.MONITOR_ADD_EVENT,
-                                        'job_police_cuff_player',
-                                        {},
-                                        { target_source: playerId, position: GetEntityCoords(GetPlayerPed(player)) },
-                                        true
-                                    );
-                                } else {
-                                    this.notifier.error('Vous ne pouvez pas menotter une personne dans un véhicule');
-                                }
-                            } else {
-                                await wait(2000);
-                            }
-                        },
+                },
+                {
+                    label: 'Menotter',
+                    color: job,
+                    icon: 'c:police/menotter.png',
+                    item: 'handcuffs',
+                    job: job,
+                    canInteract: entity => {
+                        return (
+                            this.playerService.isOnDuty() &&
+                            !IsEntityPlayingAnim(entity, 'mp_arresting', 'idle', 3) &&
+                            !IsPedInAnyVehicle(entity, true) &&
+                            !IsPedInAnyVehicle(PlayerPedId(), true)
+                        );
                     },
-                    {
-                        label: 'Démenotter',
-                        color: job,
-                        icon: 'c:police/demenotter.png',
-                        item: 'handcuffs_key',
-                        job: job,
-                        canInteract: async entity => {
+                    action: async entity => {
+                        if (!IsPedRagdoll(PlayerPedId())) {
+                            const player = NetworkGetPlayerIndexFromPed(entity);
                             if (
-                                !this.playerService.isOnDuty() ||
-                                !IsEntityPlayingAnim(entity, 'mp_arresting', 'idle', 3) ||
-                                IsPedInAnyVehicle(entity, true) ||
-                                IsPedInAnyVehicle(PlayerPedId(), true)
+                                !IsPedInAnyVehicle(GetPlayerPed(player), true) &&
+                                !IsPedInAnyVehicle(PlayerPedId(), true)
                             ) {
-                                return false;
-                            }
-
-                            const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-                            return !this.playerListStateService.isZipped(target);
-                        },
-                        action: async entity => {
-                            if (!IsPedRagdoll(PlayerPedId())) {
-                                const player = NetworkGetPlayerIndexFromPed(entity);
-                                if (
-                                    !IsPedInAnyVehicle(GetPlayerPed(player), true) &&
-                                    !IsPedInAnyVehicle(PlayerPedId(), true)
-                                ) {
-                                    const playerId = GetPlayerServerId(player);
-                                    TriggerServerEvent(ServerEvent.UNCUFF_PLAYER, playerId);
-                                    TriggerServerEvent(
-                                        ServerEvent.MONITOR_ADD_EVENT,
-                                        'job_police_uncuff_player',
-                                        {},
-                                        { target_source: playerId, position: GetEntityCoords(GetPlayerPed(player)) },
-                                        true
-                                    );
-                                    await wait(500);
-                                } else {
-                                    this.notifier.error('Vous ne pouvez pas démenotter une personne dans un véhicule');
-                                }
+                                const playerId = GetPlayerServerId(player);
+                                TriggerServerEvent(ServerEvent.CUFF_PLAYER, playerId, false);
+                                TriggerServerEvent(
+                                    ServerEvent.MONITOR_ADD_EVENT,
+                                    'job_police_cuff_player',
+                                    {},
+                                    { target_source: playerId, position: GetEntityCoords(GetPlayerPed(player)) },
+                                    true
+                                );
                             } else {
-                                await wait(2000);
+                                this.notifier.error('Vous ne pouvez pas menotter une personne dans un véhicule');
                             }
-                        },
+                        } else {
+                            await wait(2000);
+                        }
                     },
-                ],
-                1.5
-            );
+                },
+                {
+                    label: 'Démenotter',
+                    color: job,
+                    icon: 'c:police/demenotter.png',
+                    item: 'handcuffs_key',
+                    job: job,
+                    canInteract: async entity => {
+                        if (
+                            !this.playerService.isOnDuty() ||
+                            !IsEntityPlayingAnim(entity, 'mp_arresting', 'idle', 3) ||
+                            IsPedInAnyVehicle(entity, true) ||
+                            IsPedInAnyVehicle(PlayerPedId(), true)
+                        ) {
+                            return false;
+                        }
+
+                        const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
+                        return !this.playerListStateService.isZipped(target);
+                    },
+                    action: async entity => {
+                        if (!IsPedRagdoll(PlayerPedId())) {
+                            const player = NetworkGetPlayerIndexFromPed(entity);
+                            if (
+                                !IsPedInAnyVehicle(GetPlayerPed(player), true) &&
+                                !IsPedInAnyVehicle(PlayerPedId(), true)
+                            ) {
+                                const playerId = GetPlayerServerId(player);
+                                TriggerServerEvent(ServerEvent.UNCUFF_PLAYER, playerId);
+                                TriggerServerEvent(
+                                    ServerEvent.MONITOR_ADD_EVENT,
+                                    'job_police_uncuff_player',
+                                    {},
+                                    { target_source: playerId, position: GetEntityCoords(GetPlayerPed(player)) },
+                                    true
+                                );
+                                await wait(500);
+                            } else {
+                                this.notifier.error('Vous ne pouvez pas démenotter une personne dans un véhicule');
+                            }
+                        } else {
+                            await wait(2000);
+                        }
+                    },
+                },
+            ]);
         }
         for (const job of jobsCanFouille) {
             this.targetFactory.createForAllPlayer(

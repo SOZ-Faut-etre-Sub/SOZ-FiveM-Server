@@ -74,6 +74,7 @@ export enum ServerEvent {
     FOOD_RETRIEVE_ORDER = 'soz-core:server:job:food:retrieve-order',
     FOOD_RETRIEVE_STATE = 'soz-core:server:job:food:retrieve-state',
     FOOD_EASTER_HARVEST = 'soz-core:server:job:food:easter-harvest',
+    FOOD_HUNT = 'soz-core:client:food:hunt',
 
     FFS_HARVEST = 'soz-core:server:job:ffs:harvest',
     FFS_RESTOCK = 'soz-core:server:job:ffs:restock',
@@ -281,6 +282,7 @@ export enum ServerEvent {
 
     VANDALISM_ABORT = 'soz-core:server:vandalism:abort',
     VANDALISM_REPAIR = 'soz-core:server:vandalism:repair',
+    VANDALISM_STATION_EXPLOSION = 'soz-core:server:vandalism:station-explosion',
 
     MDR_SHOW_TICKET = 'soz-core:server:mdr:show-ticket',
     MDR_MONEY_CLEANING = 'soz-core:server:mdr:money-cleaning',

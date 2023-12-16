@@ -4,7 +4,9 @@ import { Provider } from '@core/decorators/provider';
 import { Tick, TickInterval } from '@core/decorators/tick';
 import { emitRpc } from '@core/rpc';
 import { uuidv4, wait } from '@public/core/utils';
+import { FuelStationType } from '@public/shared/fuel';
 import { Control } from '@public/shared/input';
+import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { getRandomItem } from '@public/shared/random';
 
@@ -12,11 +14,18 @@ import { ClientEvent, GameEvent, ServerEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
 import { RpcServerEvent } from '../../shared/rpc';
 import { VehicleSeat } from '../../shared/vehicle/vehicle';
-import { ExplosionMessage, GlobalWeaponConfig, GunShotMessage, WeaponName } from '../../shared/weapons/weapon';
+import {
+    ExplosionMessage,
+    ExplosionType,
+    GlobalWeaponConfig,
+    GunShotMessage,
+    WeaponName,
+} from '../../shared/weapons/weapon';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { PhoneService } from '../phone/phone.service';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../progress.service';
+import { FuelStationRepository } from '../repository/fuel.station.repository';
 import { VoipRadioProvider } from '../voip/voip.radio.provider';
 import { WeaponDrawingProvider } from './weapon.drawing.provider';
 import { WeaponHolsterProvider } from './weapon.holster.provider';
@@ -59,6 +68,9 @@ export class WeaponProvider {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(FuelStationRepository)
+    private fuelStationRepository: FuelStationRepository;
 
     private lastPoliceCall = 0;
 
@@ -242,17 +254,22 @@ export class WeaponProvider {
 
                 const message = getRandomItem(GunShotMessage);
 
-                const alertMessage = `${zone}: ${message.replace('${0}', name)}`;
-                const htmlMessage = `${zone}: ${message.replace('${0}', nameHtml)}`;
-
-                TriggerServerEvent(ServerEvent.WEAPON_SHOOTING_ALERT, alertMessage, htmlMessage, zoneID);
+                TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
+                    anonymous: true,
+                    number: '555-POLICE',
+                    message: `${zone}: ${message.replace('${0}', name)}`,
+                    htmlMessage: `${zone}: ${message.replace('${0}', nameHtml)}`,
+                    position: true,
+                    info: { type: 'shooting' },
+                    overrideIdentifier: 'System',
+                });
             }
         }
         await this.weapon.recoil();
     }
 
     @OnEvent(ClientEvent.WEAPON_EXPLOSION)
-    async onExplosion(x: number, y: number, z: number) {
+    async onExplosion(x: number, y: number, z: number, type: number) {
         const zoneID = GetNameOfZone(x, y, z);
         if (zoneID == 'ISHEIST') {
             return;
@@ -271,6 +288,26 @@ export class WeaponProvider {
             overrideIdentifier: 'System',
             pedPosition: JSON.stringify({ x: x, y: y, z: z }),
         });
+
+        if (type == ExplosionType.PETROL_PUMP) {
+            const stations = this.fuelStationRepository.get();
+            for (const stationName in stations) {
+                const station = stations[stationName];
+                if (station.type == FuelStationType.Private) {
+                    continue;
+                }
+
+                if (BoxZone.fromZone(station.zone).isPointInside([x, y, z])) {
+                    TriggerServerEvent(
+                        ServerEvent.VANDALISM_STATION_EXPLOSION,
+                        station.objectId ? station.objectId : station.id.toString(),
+                        zone
+                    );
+
+                    break;
+                }
+            }
+        }
     }
 
     @Tick(TickInterval.EVERY_SECOND)

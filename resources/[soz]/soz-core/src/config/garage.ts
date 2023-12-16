@@ -1968,7 +1968,7 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
             maxZ: 3.0,
         }),
         parkingPlaces: [
-            new BoxZone([6.64, -2767.71, 1.0], 4.0, 2.8, {
+            new BoxZone([6.64, -2771.71, 1.0], 4.0, 2.8, {
                 heading: 175.66,
                 minZ: 0.0,
                 maxZ: 2.0,
@@ -1976,7 +1976,7 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
                     capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
                 },
             }),
-            new BoxZone([6.2, -2785.6, 1.0], 15, 7.2, {
+            new BoxZone([6.2, -2787.6, 1.0], 15, 7.2, {
                 heading: 180.79,
                 minZ: 0.0,
                 maxZ: 2.0,

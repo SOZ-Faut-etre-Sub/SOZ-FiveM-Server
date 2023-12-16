@@ -279,7 +279,7 @@ export class VehicleMenuProvider {
         const ped = PlayerPedId();
         const vehicle = GetVehiclePedIsIn(ped, false);
 
-        if (!vehicle) {
+        if (!vehicle || player.metadata.isdead) {
             return;
         }
 

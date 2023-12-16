@@ -174,6 +174,18 @@ export const MessageItem: FunctionComponent<MessageItemProps> = ({
                                 ) : (
                                     <span></span>
                                 )}
+                                {message?.info?.notificationId ? (
+                                    <span
+                                        className={cn('rounded-full px-3 py-0', {
+                                            'bg-gray-200': config.theme.value === 'light',
+                                            'bg-gray-600': config.theme.value === 'dark',
+                                        })}
+                                    >
+                                        #{message.info.notificationId}
+                                    </span>
+                                ) : (
+                                    <span></span>
+                                )}
                             </p>
                             <p
                                 className={cn('text-left text-sm font-medium break-words', {

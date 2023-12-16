@@ -39,6 +39,7 @@ export enum ClientEvent {
     FFS_EXIT_CLOTHING_SHOP = 'soz-core:client:job:ffs:exit-clothing-shop',
 
     FOOD_UPDATE_ORDER = 'soz-core:client:food:update-order',
+    FOOD_HUNT_SYNC = 'soz-core:client:food:hunt-sync',
 
     HOUSING_OPEN_UPGRADES_MENU = 'soz-core:client:housing:open-upgrades-menu',
     HOUSING_REQUEST_ENTER = 'soz-core:client:housing:request-enter',
@@ -278,7 +279,6 @@ export enum ClientEvent {
     DRUGS_DELETE = 'soz-core:client:drugs:delete',
     DRUGS_ADD = 'soz-core:client:drugs:add',
     DRUGS_UPDATE_SEED = 'soz-core:client:drugs:update-seed',
-    DRUGS_POLICE_ALERT = 'soz-core:client:drugs:police-alert',
     DRUGS_CONSUME = 'soz-core:client:drugs:consume',
     DRUGS_ZONE_ADD_UPDATE = 'soz-core:client:drugs:zone-add',
     DRUGS_ZONE_DELETE = 'soz-core:client:drugs:zone-delete',

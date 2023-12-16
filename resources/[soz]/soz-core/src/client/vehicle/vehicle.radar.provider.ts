@@ -1,3 +1,5 @@
+import { radarPrefix } from '@public/shared/vehicle/radar';
+
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -37,7 +39,7 @@ export class VehicleRadarProvider {
             radar.objectId = await this.objectProvider.createObject({
                 model: radar_props,
                 position: radar.props,
-                id: 'radar_' + radarID,
+                id: radarPrefix + radarID,
             });
 
             radar.disableTime = GetResourceKvpInt('radar/disableEndTime/' + radarID);

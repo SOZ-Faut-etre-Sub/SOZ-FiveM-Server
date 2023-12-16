@@ -31,6 +31,7 @@ import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { rad } from '@public/shared/polyzone/vector';
 import { Ok } from '@public/shared/result';
 import { RpcServerEvent } from '@public/shared/rpc';
+import { VehicleSeat } from '@public/shared/vehicle/vehicle';
 
 import { Animation } from '../../../shared/animation';
 import { PlayerZombieProvider } from '../../player/player.zombie.provider';
@@ -157,6 +158,7 @@ export class LSMCDeathProvider {
     private blipFactory: BlipFactory;
 
     private IsDead = false;
+    private doFeeze = false;
     private hungerThristDeath = false;
     private radioactiveBeerEffect = false;
 
@@ -167,9 +169,20 @@ export class LSMCDeathProvider {
             if (IsEntityDead(playerPed)) {
                 await this.onDeath(playerPed);
             }
+            this.doFeeze = this.IsDead;
             if (this.IsDead) {
                 await this.animationCheck(playerPed);
             }
+        }
+    }
+
+    @Tick(10000)
+    public async deathResyncLoop() {
+        if (this.doFeeze) {
+            const playerPed = PlayerPedId();
+            FreezeEntityPosition(playerPed, true);
+            await wait(100);
+            FreezeEntityPosition(playerPed, false);
         }
     }
 
@@ -225,6 +238,15 @@ export class LSMCDeathProvider {
                         plate: GetVehicleNumberPlateText(veh),
                     };
                 }
+            } else if (killerentitytype == 2) {
+                const veh = killer;
+                killer = GetPedInVehicleSeat(veh, VehicleSeat.Driver);
+                killertype = GetPedType(killer);
+                killVehData = {
+                    name: GetDisplayNameFromVehicleModel(GetEntityModel(veh)),
+                    seat: -1,
+                    plate: GetVehicleNumberPlateText(veh),
+                };
             }
 
             let killerid = NetworkGetPlayerIndexFromPed(killer);
@@ -375,6 +397,7 @@ export class LSMCDeathProvider {
             }
         }
 
+        FreezeEntityPosition(PlayerPedId(), false);
         SetEntityHealth(player, 200);
         ClearPedBloodDamage(player);
         SetPlayerSprint(PlayerId(), true);
@@ -395,6 +418,8 @@ export class LSMCDeathProvider {
     private async uniteHU(uniteHUBed: number) {
         const ped = PlayerPedId();
         const player = this.playerService.getPlayer();
+
+        this.monitor.publish('lsmx_uhu', {}, {});
 
         this.playerService.setTempClothes(PatientClothes[player.skin.Model.Hash]['Patient']);
         this.weaponDrawingProvider.refreshDrawWeapons();

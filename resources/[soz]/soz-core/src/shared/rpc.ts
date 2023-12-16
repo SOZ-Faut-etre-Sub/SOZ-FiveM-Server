@@ -185,6 +185,8 @@ export enum RpcServerEvent {
     FDF_PLOW_STATUS = 'soz-core:server:fdf:get-plow-status',
 
     CURRENT_PLAYERS = 'soz-core:server:utils:getnbplayers',
+
+    FOOD_HUNT_INIT = 'soz-core:server:food:hunt-init',
 }
 
 export enum RpcClientEvent {
