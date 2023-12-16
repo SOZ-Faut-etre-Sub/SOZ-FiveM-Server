@@ -1,8 +1,13 @@
-import { Injectable } from '../../core/decorators/injectable';
+import { Logger } from '@public/core/logger';
+
+import { Inject, Injectable } from '../../core/decorators/injectable';
 import { wait } from '../../core/utils';
 
 @Injectable()
 export class ResourceLoader {
+    @Inject(Logger)
+    public logger: Logger;
+
     async loadPtfxAsset(name: string): Promise<void> {
         if (!HasNamedPtfxAssetLoaded(name)) {
             RequestNamedPtfxAsset(name);
@@ -45,14 +50,21 @@ export class ResourceLoader {
         RemoveAnimSet(name);
     }
 
-    async loadModel(name: string | number): Promise<void> {
+    async loadModel(name: string | number): Promise<boolean> {
+        const start = Date.now();
         if (!HasModelLoaded(name)) {
             RequestModel(name);
 
             while (!HasModelLoaded(name)) {
+                if (Date.now() > start + 60000) {
+                    this.logger.error('Failed to load model ' + name);
+                    return false;
+                }
                 await wait(0);
             }
         }
+
+        return true;
     }
 
     unloadModel(name: string | number): void {

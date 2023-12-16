@@ -1,5 +1,6 @@
 import { WardrobeConfig } from '../cloth';
 import { CraftCategory } from '../craft/craft';
+import { Feature } from '../features';
 import { NamedZone } from '../polyzone/box.zone';
 
 export enum SewingRawMaterial {
@@ -303,6 +304,86 @@ export const FFSCraftsLists: Record<string, CraftCategory> = {
             },
         },
     },
+    Halloween: {
+        animation: {
+            name: 'base',
+            dictionary: 'amb@prop_human_seat_sewing@female@base',
+            options: {
+                repeat: true,
+                onlyUpperBody: true,
+            },
+        },
+        duration: 8000,
+        event: 'job_ffs_craft',
+        feature: Feature.Halloween,
+        icon: '🎃',
+        recipes: {
+            halloween_zombie_costume: {
+                amount: 1,
+                inputs: {
+                    [FabricMaterial.LATEX]: { count: 2 },
+                    [FabricMaterial.ARTIFICIAL_FIBER]: { count: 10 },
+                    [FabricMaterial.SYNTHETIC_FIBER]: { count: 10 },
+                },
+            },
+            halloween_alien_costume: {
+                amount: 1,
+                inputs: {
+                    [FabricMaterial.LATEX]: { count: 2 },
+                    [FabricMaterial.NATURAL_FIBER]: { count: 10 },
+                    [FabricMaterial.LEATHER]: { count: 10 },
+                },
+            },
+            halloween_gorilla_costume: {
+                amount: 1,
+                inputs: {
+                    [FabricMaterial.ARTIFICIAL_FIBER]: { count: 2 },
+                    [FabricMaterial.NATURAL_FIBER]: { count: 10 },
+                    [FabricMaterial.LEATHER]: { count: 10 },
+                },
+            },
+            halloween_galactic_ranger_costume: {
+                amount: 1,
+                inputs: {
+                    [FabricMaterial.LATEX]: { count: 2 },
+                    [FabricMaterial.ARTIFICIAL_FIBER]: { count: 10 },
+                    [FabricMaterial.LEATHER]: { count: 10 },
+                },
+            },
+            halloween_space_monkey_costume: {
+                amount: 1,
+                inputs: {
+                    [FabricMaterial.ARTIFICIAL_FIBER]: { count: 2 },
+                    [FabricMaterial.NATURAL_FIBER]: { count: 10 },
+                    [FabricMaterial.SYNTHETIC_FIBER]: { count: 10 },
+                },
+            },
+            halloween_astronaut_costume: {
+                amount: 1,
+                inputs: {
+                    [FabricMaterial.LATEX]: { count: 2 },
+                    [FabricMaterial.NATURAL_FIBER]: { count: 10 },
+                    [FabricMaterial.LEATHER]: { count: 10 },
+                },
+            },
+            halloween_fury_costume: {
+                amount: 1,
+                inputs: {
+                    [FabricMaterial.ARTIFICIAL_FIBER]: { count: 2 },
+                    [FabricMaterial.NATURAL_FIBER]: { count: 10 },
+                    [FabricMaterial.SYNTHETIC_FIBER]: { count: 10 },
+                },
+            },
+            halloween_juggernaut_costume: {
+                amount: 1,
+                inputs: {
+                    [FabricMaterial.LATEX]: { count: 2 },
+                    [FabricMaterial.NATURAL_FIBER]: { count: 10 },
+                    [FabricMaterial.LEATHER]: { count: 10 },
+                },
+            },
+        },
+    },
 };
 
 export const FFSCraftZones: NamedZone[] = [
@@ -404,25 +485,25 @@ const getRewardFromDeliveredGarment = (garment: Garment | LuxuryGarment): number
         case Garment.PANT:
         case Garment.BAG:
         case Garment.MASK:
-            return 50;
+            return 100;
         case Garment.UNDERWEAR_TOP:
-            return 30;
+            return 60;
         case Garment.UNDERWEAR:
-            return 20;
+            return 40;
         case Garment.SHOES:
         case Garment.GLOVES:
-            return 40;
+            return 80;
         case LuxuryGarment.TOP:
         case LuxuryGarment.PANT:
         case LuxuryGarment.BAG:
-            return 100;
+            return 200;
         case LuxuryGarment.UNDERWEAR_TOP:
-            return 60;
+            return 120;
         case LuxuryGarment.UNDERWEAR:
-            return 40;
+            return 80;
         case LuxuryGarment.SHOES:
         case LuxuryGarment.GLOVES:
-            return 80;
+            return 160;
     }
 };
 

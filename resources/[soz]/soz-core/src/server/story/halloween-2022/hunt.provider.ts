@@ -1,3 +1,5 @@
+import { Exportable } from '@public/core/decorators/exports';
+
 import { On } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
@@ -115,5 +117,10 @@ export class HuntProvider {
             this.playerMoneyService.add(source, loot.value as number);
             return this.notifier.notify(source, "Vous avez trouvé de l'argent", 'success');
         }
+    }
+
+    @Exportable('isHalloween')
+    public isHalloween(): boolean {
+        return isFeatureEnabled(Feature.Halloween);
     }
 }

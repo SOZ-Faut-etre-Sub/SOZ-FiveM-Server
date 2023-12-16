@@ -20,6 +20,7 @@ export class PlayerService {
 
     private player: PlayerData | null = null;
     private fakeId: FakeId = null;
+    private deguisement = false;
 
     private state: PlayerClientState = {
         isDead: false,
@@ -76,6 +77,11 @@ export class PlayerService {
         return this.player.job.onduty;
     }
 
+    /**
+     * Get the closest player
+     *
+     * @returns [number, number] - [playerId, distance]
+     */
     public getClosestPlayer(): [number, number] {
         return this.qbcore.getClosestPlayer();
     }
@@ -132,7 +138,7 @@ export class PlayerService {
         return player;
     }
 
-    public async showCard(type: CardType) {
+    public async showCard(type: CardType, accountId?: string) {
         const position = GetEntityCoords(PlayerPedId()) as Vector3;
         const players = this.getPlayersAround(position, 3.0);
 
@@ -155,7 +161,7 @@ export class PlayerService {
             },
         });
 
-        TriggerServerEvent(ServerEvent.PLAYER_SHOW_IDENTITY, type, players, player);
+        TriggerServerEvent(ServerEvent.PLAYER_SHOW_IDENTITY, type, players, player, accountId);
     }
 
     public toogleFakeId(fakeId: FakeId) {
@@ -170,5 +176,13 @@ export class PlayerService {
 
     public getFakeId() {
         return this.fakeId;
+    }
+
+    public setDeguisement(value: boolean) {
+        this.deguisement = value;
+    }
+
+    public hasDeguisement() {
+        return this.deguisement;
     }
 }

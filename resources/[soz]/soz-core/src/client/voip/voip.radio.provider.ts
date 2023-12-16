@@ -212,7 +212,7 @@ export class VoipRadioProvider {
             this.closeRadioInterface();
         } else {
             const playerState = this.playerService.getState();
-            if (!IsNuiFocused() && !playerState.carryBox) {
+            if (!IsNuiFocused() && !playerState.carryBox && !playerState.isInventoryBusy) {
                 this.openRadioInterface();
             }
         }

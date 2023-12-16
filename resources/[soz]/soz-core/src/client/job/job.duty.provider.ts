@@ -54,12 +54,12 @@ const DutyZoneConfig: Zone<JobType>[] = [
     },
     {
         data: JobType.LSMC,
-        center: [356.62, -1417.61, 32.51],
-        length: 0.65,
-        width: 0.5,
-        minZ: 32.41,
-        maxZ: 32.61,
-        heading: 325,
+        center: [360.98, -1420.47, 32.36],
+        length: 0.4,
+        width: 0.6,
+        minZ: 32.36,
+        maxZ: 32.56,
+        heading: 95.11,
     },
     {
         data: JobType.MDR,

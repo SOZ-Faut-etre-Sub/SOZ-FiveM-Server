@@ -28,11 +28,11 @@ function Field:GetHealth()
 end
 
 function Field:GetHealthState()
-    return math.ceil(self.capacity * #SozJobCore.FieldHealthStates / self.maxCapacity)
+    return math.ceil(self.capacity * #FieldHealthStates / self.maxCapacity)
 end
 
 function Field:GetHealthIndicator()
-    return SozJobCore.FieldHealthStates[self:GetHealthState()]
+    return FieldHealthStates[self:GetHealthState()]
 end
 
 --- Refill

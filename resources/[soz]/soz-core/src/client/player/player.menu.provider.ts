@@ -1,9 +1,14 @@
+import { emitRpc } from '@public/core/rpc';
+import { wait } from '@public/core/utils';
+import { Feature, isFeatureEnabled } from '@public/shared/features';
+import { RpcServerEvent } from '@public/shared/rpc';
+
 import { Command } from '../../core/decorators/command';
-import { OnNuiEvent } from '../../core/decorators/event';
+import { Once, OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClothConfig } from '../../shared/cloth';
-import { NuiEvent, ServerEvent } from '../../shared/event';
+import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { AnimationService } from '../animation/animation.service';
 import { HudMinimapProvider } from '../hud/hud.minimap.provider';
@@ -11,6 +16,7 @@ import { HudStateProvider } from '../hud/hud.state.provider';
 import { JobMenuProvider } from '../job/job.menu.provider';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { NuiMenu } from '../nui/nui.menu';
+import { HalloweenSpiderService } from '../object/halloween.spider.service';
 import { ProgressService } from '../progress.service';
 import { PlayerAnimationProvider } from './player.animation.provider';
 import { PlayerService } from './player.service';
@@ -48,6 +54,14 @@ export class PlayerMenuProvider {
     @Inject(ProgressService)
     private progressService: ProgressService;
 
+    @Inject(HalloweenSpiderService)
+    private halloweenSpiderService: HalloweenSpiderService;
+
+    @Once()
+    public async init() {
+        await this.halloweenSpiderService.init();
+    }
+
     @Command('soz_core_toggle_personal_menu', {
         description: 'Ouvrir le menu personnel',
         passthroughNuiFocus: true,
@@ -69,9 +83,17 @@ export class PlayerMenuProvider {
             scaledNui: this.hudMinimapProvider.scaledNui,
             shortcuts: this.playerAnimationProvider.getShortcuts(),
             job: this.jobMenuProvider.getJobMenuData(),
+            deguisement: this.playerService.hasDeguisement(),
+            naked: this.playerService.getPlayer().cloth_config.Config.Naked,
+            halloween: isFeatureEnabled(Feature.Halloween),
+            arachnophobe: this.halloweenSpiderService.isArachnophobeMode(),
         });
     }
 
+    @Command('openPlayerKeyInventory', {
+        description: 'Ouvrir le trousseau de clés',
+        keys: [{ mapper: 'keyboard', key: '' }],
+    })
     @OnNuiEvent(NuiEvent.PlayerMenuOpenKeys)
     public async openKeys() {
         TriggerServerEvent(ServerEvent.VEHICLE_OPEN_KEYS);
@@ -79,22 +101,29 @@ export class PlayerMenuProvider {
         this.menu.closeMenu();
     }
 
+    @OnEvent(ClientEvent.PLAYER_CARD_SHOW)
     @OnNuiEvent(NuiEvent.PlayerMenuCardShow)
-    public async onPlayerMenuCardShow({ type }) {
-        await this.playerService.showCard(type);
+    public async onPlayerMenuCardShow(type, accountId?: string) {
+        await this.playerService.showCard(type, accountId);
     }
 
+    @OnEvent(ClientEvent.PLAYER_CARD_SEE)
     @OnNuiEvent(NuiEvent.PlayerMenuCardSee)
     public async seeCard({ type }) {
         const player = this.playerService.getId();
-
+        let iban = '';
         if (!player) {
             return;
+        }
+
+        if (type === 'bank') {
+            iban = await emitRpc<string>(RpcServerEvent.BANK_GET_ACCOUNT, player.citizenid);
         }
 
         this.dispatcher.dispatch('card', 'addCard', {
             type,
             player,
+            iban,
         });
     }
 
@@ -147,5 +176,40 @@ export class PlayerMenuProvider {
     @OnNuiEvent(NuiEvent.PlayerMenuVoipReset)
     public async resetVoip() {
         TriggerEvent('voip:client:reset');
+    }
+
+    @OnNuiEvent(NuiEvent.PlayerMenuHudSetArachnophobe)
+    public async toogleArachnophobe(value: boolean) {
+        this.halloweenSpiderService.updateArachnophobeMode(value);
+    }
+
+    @OnNuiEvent(NuiEvent.PlayerMenuRemoveDeguisement)
+    public async removeDeguisement() {
+        const progress = await this.playerWardrobe.waitProgress(false);
+
+        if (!progress.completed) {
+            return;
+        }
+
+        await wait(10);
+
+        TriggerEvent('soz-character:Client:ApplyCurrent');
+        this.playerService.setDeguisement(false);
+        this.menu.closeMenu();
+    }
+
+    @OnNuiEvent(NuiEvent.PlayerMenuReDress)
+    public async reDrees() {
+        const progress = await this.playerWardrobe.waitProgress(false);
+
+        if (!progress.completed) {
+            return;
+        }
+
+        if (!progress.completed) {
+            return;
+        }
+
+        TriggerServerEvent('soz-character:server:UpdateClothConfig', 'Naked', false);
     }
 }

@@ -1,10 +1,11 @@
 import { Logger } from '@core/logger';
-import { ShopBrand } from '@public/config/shops';
+import { ShopBrand, ShopsConfig } from '@public/config/shops';
 import { OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { NuiEvent, ServerEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
+import { Vector4 } from '@public/shared/polyzone/vector';
 import { Err, Ok } from '@public/shared/result';
 import { ShopProduct } from '@public/shared/shop';
 import { ShopsContent, SuperetteItem } from '@public/shared/shop/superette';
@@ -31,7 +32,7 @@ export class SuperetteShopProvider {
     @Inject(Logger)
     private logger: Logger;
 
-    public openShop(brand: ShopBrand) {
+    public openShop(brand: ShopBrand, shop: string) {
         if (brand != ShopBrand.Zkea && brand != ShopBrand.Ammunation) {
             const superetteContent: SuperetteItem[] = [];
             for (let i = 0; i < ShopsContent[brand].length; i++) {
@@ -59,7 +60,16 @@ export class SuperetteShopProvider {
                 return;
             }
 
-            this.nuiMenu.openMenu(MenuType.SuperetteShop, { brand, products });
+            this.nuiMenu.openMenu(
+                MenuType.SuperetteShop,
+                { brand, products },
+                {
+                    position: {
+                        position: ShopsConfig[shop].location as Vector4,
+                        distance: 6.0,
+                    },
+                }
+            );
         }
     }
 

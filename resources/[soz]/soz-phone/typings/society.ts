@@ -4,7 +4,7 @@ export interface PreDBSociety {
     message: string;
     htmlMessage?: string;
     position: boolean;
-    info?: { type?: string; serviceNumber?: string; notificationId: number };
+    info?: SocietyMessageInfo;
     pedPosition?: string;
     overrideIdentifier?: string;
 }
@@ -24,6 +24,13 @@ export interface Society {
     avatar?: string;
 }
 
+export interface SocietyMessageInfo {
+    type?: string;
+    serviceNumber?: string;
+    duration?: number;
+    notificationId?: number;
+}
+
 export interface SocietyMessage {
     id: number;
     conversation_id: string;
@@ -38,11 +45,7 @@ export interface SocietyMessage {
     createdAt: number;
     updatedAt: number;
     muted?: boolean;
-    info?: {
-        type?: string;
-        serviceNumber?: string;
-        duration?: number;
-    };
+    info?: SocietyMessageInfo;
 }
 
 export enum SocietiesDatabaseLimits {

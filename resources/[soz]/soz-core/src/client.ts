@@ -33,6 +33,7 @@ import { PawlModule } from './client/job/pawl/pawl.module';
 import { PoliceModule } from './client/job/police/police.module';
 import { StonkModule } from './client/job/stonk/stonk.module';
 import { TaxiModule } from './client/job/taxi/taxi.module';
+import { JobTemporaryModule } from './client/job/temporary/temporary.module';
 import { UpwModule } from './client/job/upw/upw.module';
 import { MonitorModule } from './client/monitor/monitor.module';
 import { NuiModule } from './client/nui/nui.module';
@@ -46,6 +47,7 @@ import { StoreModule } from './client/store/store.module';
 import { StoryModule } from './client/story/story.module';
 import { StreamModule } from './client/stream/stream.module';
 import { TargetModule } from './client/target/target.module';
+import { UtilsModule } from './client/utils/utils.module';
 import { VehicleModule } from './client/vehicle/vehicle.module';
 import { VoipModule } from './client/voip/voip.module';
 import { WeaponModule } from './client/weapon/weapon.module';
@@ -113,6 +115,8 @@ async function bootstrap() {
         FDFModule,
         NewsModule,
         DMCModule,
+        JobTemporaryModule,
+        UtilsModule,
         ...PrivateModules
     );
 

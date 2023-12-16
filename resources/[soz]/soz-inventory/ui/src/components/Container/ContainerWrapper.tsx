@@ -1,6 +1,8 @@
 import { FunctionComponent, PropsWithChildren } from 'react';
 import {clsx} from 'clsx'
 import style from './ContainerWrapper.module.css';
+import vehicleKeyIcon from '/icon/car.png';
+import appartmentKeyIcon from '/icon/key.png';
 
 type Props = {
     display: boolean;
@@ -8,9 +10,12 @@ type Props = {
     weight?: number;
     maxWeight?: number;
     sortCallback?: () => void;
+    giveAllVehicleKeysCallback?: () => void;
+    giveAllAppartmentKeysCallback?: () => void;
 }
 
-export const ContainerWrapper: FunctionComponent<PropsWithChildren<Props>> = ({display, banner, weight = 1000, maxWeight = 1000, sortCallback, children}) => {
+export const ContainerWrapper: FunctionComponent<PropsWithChildren<Props>> = ({
+    display, banner, weight = 1000, maxWeight = 1000, sortCallback, giveAllVehicleKeysCallback, giveAllAppartmentKeysCallback, children}) => {
     return (
         <main
             className={clsx(style.Wrapper, {
@@ -43,6 +48,21 @@ export const ContainerWrapper: FunctionComponent<PropsWithChildren<Props>> = ({d
                         </span>
                     </>
                 )}
+                {(giveAllAppartmentKeysCallback || giveAllVehicleKeysCallback) && (
+                    <div className={style.giveBanner}>
+                        {giveAllVehicleKeysCallback && (
+                            <span className={style.GiveAll} onClick={giveAllVehicleKeysCallback}>
+                                <img src={vehicleKeyIcon} />
+                            </span>
+                        )}
+                        {giveAllAppartmentKeysCallback && (
+                            <span className={style.GiveAll} onClick={giveAllAppartmentKeysCallback}>
+                                <img src={appartmentKeyIcon} />
+                            </span>
+                        )}
+                    </div>
+                    )
+                }
             </header>
 
             {children}

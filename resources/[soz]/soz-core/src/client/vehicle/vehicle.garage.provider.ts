@@ -1,14 +1,16 @@
-import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event';
-import { Inject } from '../../core/decorators/injectable';
-import { Provider } from '../../core/decorators/provider';
-import { emitRpc } from '../../core/rpc';
-import { wait } from '../../core/utils';
-import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
+import { Once, OnceStep, OnNuiEvent } from '@core/decorators/event';
+import { Inject } from '@core/decorators/injectable';
+import { Provider } from '@core/decorators/provider';
+import { emitRpc } from '@core/rpc';
+import { wait } from '@core/utils';
+import { Apartment } from '@public/shared/housing/housing';
+
+import { NuiEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { JobPermission, JobType } from '../../shared/job';
 import { MenuType } from '../../shared/nui/menu';
 import { BoxZone } from '../../shared/polyzone/box.zone';
-import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
+import { getDistance, toVector3Object, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { Err, Ok } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
 import { Garage, GarageCategory, GarageType, GarageVehicle } from '../../shared/vehicle/garage';
@@ -16,6 +18,7 @@ import { VehicleClass } from '../../shared/vehicle/vehicle';
 import { BlipFactory } from '../blip';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { JobService } from '../job/job.service';
+import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
@@ -25,7 +28,6 @@ import { GarageRepository } from '../repository/garage.repository';
 import { VehicleRepository } from '../repository/vehicle.repository';
 import { TargetFactory } from '../target/target.factory';
 import { VehicleService } from './vehicle.service';
-import { VehicleStateService } from './vehicle.state.service';
 
 type BlipConfig = {
     name: string;
@@ -89,8 +91,8 @@ export class VehicleGarageProvider {
     @Inject(JobService)
     private jobService: JobService;
 
-    @Inject(VehicleStateService)
-    private vehicleStateService: VehicleStateService;
+    @Inject(Monitor)
+    private monitor: Monitor;
 
     private pounds: Record<string, Garage> = {};
 
@@ -143,7 +145,11 @@ export class VehicleGarageProvider {
                 });
             }
 
-            if (garage.type === GarageType.Depot || garage.category == GarageCategory.Sea) {
+            if (
+                garage.type === GarageType.Depot ||
+                garage.category == GarageCategory.Sea ||
+                garage.id == 'lsmc_privateparking'
+            ) {
                 this.objectProvider.createObject({
                     model: jobGaragePayStation,
                     position: [...garage.zone.center, garage.zone.heading] as Vector4,
@@ -423,7 +429,19 @@ export class VehicleGarageProvider {
         }
 
         const networkId = NetworkGetNetworkIdFromEntity(vehicle);
+        const plate = GetVehicleNumberPlateText(vehicle).trim();
 
+        this.monitor.publish(
+            'vehicle_garage_in_client_start',
+            {
+                vehicle_plate: plate,
+            },
+            {
+                garage: id,
+                garage_type: garage.type,
+                position: toVector3Object(GetEntityCoords(PlayerPedId()) as Vector3),
+            }
+        );
         TriggerServerEvent(ServerEvent.VEHICLE_GARAGE_STORE, id, garage, networkId, delai, cost);
     }
 
@@ -453,8 +471,7 @@ export class VehicleGarageProvider {
         this.isShowingGaragePlaces = false;
     }
 
-    @OnEvent(ClientEvent.VEHICLE_GARAGE_HOUSE_OPEN_MENU)
-    public async openHouseGarageMenu(propertyId: string) {
+    public async openHouseGarageMenu(propertyId: string, apartments: Apartment[]) {
         const garage = this.garageRepository.get()[propertyId];
 
         if (!garage) {
@@ -463,7 +480,7 @@ export class VehicleGarageProvider {
             return;
         }
 
-        await this.enterGarage(propertyId, garage);
+        await this.enterGarage(propertyId, garage, apartments);
     }
 
     @OnNuiEvent(NuiEvent.VehicleGarageSetName)
@@ -548,20 +565,31 @@ export class VehicleGarageProvider {
         this.nuiMenu.closeMenu();
     }
 
-    public async enterGarage(id: string, garage: Garage) {
+    public async enterGarage(id: string, garage: Garage, apartments: Apartment[] = []) {
         const vehicles = await emitRpc<GarageVehicle[]>(RpcServerEvent.VEHICLE_GARAGE_GET_VEHICLES, id, garage);
         if (vehicles === null) {
             return;
         }
 
         let free_places = null;
-        if (garage.type === GarageType.Private || garage.type === GarageType.House) {
-            free_places = await emitRpc<number>(RpcServerEvent.VEHICLE_GARAGE_GET_FREE_PLACES, id, garage);
+        let max_places = null;
+        let apartmentPlaces = {} as Record<number, [number | null, number | null]>;
+
+        if (garage.type === GarageType.Private) {
+            [free_places, max_places] = await emitRpc<[number, number]>(
+                RpcServerEvent.VEHICLE_GARAGE_GET_PLACES,
+                id,
+                garage
+            );
         }
 
-        let max_places = null;
-        if (garage.type === GarageType.Private || garage.type === GarageType.House) {
-            max_places = await emitRpc<number>(RpcServerEvent.VEHICLE_GARAGE_GET_MAX_PLACES, garage);
+        if (garage.type === GarageType.House) {
+            apartmentPlaces = await emitRpc<Record<string, [number | null, number | null]>>(
+                RpcServerEvent.VEHICLE_GARAGE_GET_PROPERTY_PLACES,
+                id,
+                garage,
+                apartments.map(apartment => apartment.identifier)
+            );
         }
 
         const vehicleRenamed = vehicles.map(garageVehicle => {
@@ -598,6 +626,8 @@ export class VehicleGarageProvider {
                             };
                         })
                         .filter(garage => garage !== null) ?? [],
+                apartments: apartments,
+                apartmentsPlaces: apartmentPlaces,
             },
             {
                 position: {

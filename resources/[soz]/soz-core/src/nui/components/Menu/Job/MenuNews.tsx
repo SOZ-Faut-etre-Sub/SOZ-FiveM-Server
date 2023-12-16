@@ -56,14 +56,17 @@ export const MenuNews: FunctionComponent<MenuNewsProps> = ({ data }) => {
                     <MenuItemSelect
                         title="Faire une communication"
                         onConfirm={(i, value) => {
-                            fetchNui(NuiEvent.NewsCreateAnnounce, { type: value });
+                            fetchNui(NuiEvent.NewsCreateAnnounce, {
+                                type: value,
+                                title: 'Message de la communication',
+                            });
                         }}
                     >
                         <MenuItemSelectOption value="annonce">Annonce</MenuItemSelectOption>
                         <MenuItemSelectOption value="breaking-news">Breaking News</MenuItemSelectOption>
                         <MenuItemSelectOption value="publicité">Publicité</MenuItemSelectOption>
                         <MenuItemSelectOption value="fait-divers">Fait Divers</MenuItemSelectOption>
-                        <MenuItemSelectOption value="info-traffic">Info Trafic</MenuItemSelectOption>
+                        <MenuItemSelectOption value="info-trafic">Info Trafic</MenuItemSelectOption>
                     </MenuItemSelect>
                     <MenuItemSelect
                         title="Poser un objet"

@@ -45,6 +45,8 @@ export class RaceProvider {
         race.id = dbRace.id;
         races[dbRace.id] = race;
 
+        this.raceRepository.setupTp(race);
+
         this.notifier.notify(source, `Course ~g~${race.name}~s~ créée`, 'success');
 
         TriggerClientEvent(ClientEvent.RACE_ADD_UPDATE, -1, race);
@@ -74,6 +76,8 @@ export class RaceProvider {
 
         const races = await this.raceRepository.get();
         races[race.id] = race;
+
+        this.raceRepository.setupTp(race);
 
         this.notifier.notify(source, `Course ~g~${race.name}~s~ mise à jour`, 'success');
 

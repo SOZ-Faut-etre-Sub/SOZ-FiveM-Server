@@ -13,6 +13,7 @@ export interface NuiHudMethodMap {
     SetSyringeDelay: number;
     SetTwitchNewsOverlay: JobType | null;
     SetShowHud: boolean;
-    DrawNotification: Omit<BasicNotification | AdvancedNotification | TPoliceNotification, 'id'>;
+    DrawNotification: Omit<BasicNotification | AdvancedNotification | TPoliceNotification, 'id'> & { id?: string };
+    CancelNotification: string;
     AddNews: Omit<News, 'id'>;
 }

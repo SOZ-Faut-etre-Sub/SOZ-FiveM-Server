@@ -1,3 +1,5 @@
+import { ObjectProvider } from '@public/client/object/object.provider';
+
 import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
@@ -9,6 +11,9 @@ import { TargetFactory } from '../../target/target.factory';
 export class HuntProvider {
     @Inject(TargetFactory)
     private targetFactory: TargetFactory;
+
+    @Inject(ObjectProvider)
+    private objectProvider: ObjectProvider;
 
     @Once(OnceStep.PlayerLoaded)
     public async onPlayerLoaded() {
@@ -23,6 +28,7 @@ export class HuntProvider {
                     label: 'Fouiller',
                     icon: 'fas fa-search',
                     action: async entity => TriggerServerEvent(ServerEvent.HALLOWEEN2022_HUNT, GetEntityCoords(entity)),
+                    canInteract: entity => !this.objectProvider.getIdFromEntity(entity),
                 },
             ]
         );

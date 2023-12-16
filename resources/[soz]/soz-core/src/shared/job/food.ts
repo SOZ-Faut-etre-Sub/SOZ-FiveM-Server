@@ -4,6 +4,11 @@ import { Feature } from '../features';
 import { joaat } from '../joaat';
 import { NamedZone } from '../polyzone/box.zone';
 
+export const FoodHuntConfig = {
+    noSpawnDelay: 3600_000,
+    noSpawnHarvestCount: 10,
+};
+
 export const CraftZones: NamedZone[] = [
     {
         name: 'food_craft_1',
@@ -239,6 +244,29 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
                 inputs: {
                     chocolat_egg: { count: 2 },
                     chocolat_milk_egg: { count: 2 },
+                },
+                amount: 1,
+            },
+        },
+    },
+    Halloween: {
+        feature: Feature.Halloween,
+        duration: 5000,
+        icon: '🎃',
+        event: 'job_cm_food_craft',
+        recipes: {
+            halloween_midnight_cheese: {
+                inputs: {
+                    milk: { count: 3 },
+                },
+                amount: 1,
+            },
+            halloween_damned_wine: {
+                inputs: {
+                    grape1: { count: 1 },
+                    grape2: { count: 1 },
+                    grape3: { count: 1 },
+                    grape4: { count: 1 },
                 },
                 amount: 1,
             },

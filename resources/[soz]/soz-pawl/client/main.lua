@@ -1,5 +1,4 @@
 QBCore = exports["qb-core"]:GetCoreObject()
-SozJobCore = exports["soz-jobs"]:GetCoreObject()
 PlayerData = QBCore.Functions.GetPlayerData()
 
 FieldTrees = {}
@@ -10,8 +9,7 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
 
     -- Fields
     for identifier, _ in pairs(Config.Field.List) do
-        local field = QBCore.Functions.TriggerRpc("pawl:server:getFieldData", identifier)
-        TriggerEvent("pawl:client:syncField", identifier, field)
+        TriggerServerEvent("pawl:server:getFieldData", identifier)
     end
 
     -- Degradation

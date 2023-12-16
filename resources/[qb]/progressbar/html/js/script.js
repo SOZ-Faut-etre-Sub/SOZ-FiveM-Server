@@ -21,7 +21,7 @@ $("document").ready(function () {
                             $(".progress-container").fadeOut("fast", function () {
                                 $("#progress-bar").removeClass("cancellable");
                                 $("#progress-bar").css("width", 0);
-                                $.post("https://progressbar/FinishAction", JSON.stringify({}));
+                                $.post("https://progressbar/FinishAction", JSON.stringify({progressId: data.progressId}));
                             });
                         },
                     }

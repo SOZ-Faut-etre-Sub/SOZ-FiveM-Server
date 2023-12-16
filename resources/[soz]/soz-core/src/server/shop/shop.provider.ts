@@ -1,6 +1,6 @@
 import { ShopBrand, UndershirtCategoryNeedingReplacementTorso } from '@public/config/shops';
 import { Component, OutfitItem, Prop } from '@public/shared/cloth';
-import { Skin, TenueIdToHide } from '@public/shared/player';
+import { TenueIdToHide } from '@public/shared/player';
 import {
     BarberShopItem,
     ClothingCategoryID,
@@ -22,7 +22,6 @@ import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
 import { PlayerMoneyService } from '../player/player.money.service';
 import { PlayerService } from '../player/player.service';
-import { QBCore } from '../qbcore';
 import { ClothingShopRepository } from '../repository/cloth.shop.repository';
 
 @Provider()
@@ -41,9 +40,6 @@ export class ShopProvider {
 
     @Inject(Monitor)
     private monitor: Monitor;
-
-    @Inject(QBCore)
-    private qbcore: QBCore;
 
     @Inject(ClothingShopRepository)
     private clothingShopRepository: ClothingShopRepository;
@@ -164,23 +160,45 @@ export class ShopProvider {
             this.notifier.notify(source, `Ah mais t'es pauvre en fait ! Reviens quand t'auras de quoi payer.`, 'error');
             return;
         }
-        const player_skin = this.playerService.getPlayer(source).skin;
-        const new_skin: Skin = {
-            ...player_skin,
-            Hair: {
-                ...player_skin.Hair,
-                ...product.config.Hair,
+        this.playerService.updateSkin(
+            source,
+            skin => {
+                return {
+                    ...skin,
+                    Hair: {
+                        ...skin.Hair,
+                        ...product.config.Hair,
+                    },
+                    Makeup: {
+                        ...skin.Makeup,
+                        ...product.config.Makeup,
+                    },
+                    FaceTrait: {
+                        ...skin.FaceTrait,
+                        ...product.config.FaceTraits,
+                    },
+                };
             },
-            Makeup: {
-                ...player_skin.Makeup,
-                ...product.config.Makeup,
-            },
-        };
-        this.qbcore.getPlayer(source).Functions.SetSkin(new_skin, false);
-        const notif =
-            product.overlay == 'Hair'
-                ? `Vous avez changé de ~b~coiffure~s~ pour ~g~$${product.price}.`
-                : `Vous avez changé de ~b~maquillage~s~ pour ~g~$${product.price}.`;
+            false
+        );
+
+        let label = 'coiffure';
+        switch (product.overlay) {
+            case 'Hair':
+                break;
+            case 'Makeup':
+                label = 'maquillage';
+                break;
+            case 'FaceTraits':
+                label = 'lentilles';
+                break;
+
+            default:
+                break;
+        }
+
+        const notif = `Vous avez changé de ~b~${label}~s~ pour ~g~$${product.price}.`;
+
         this.notifier.notify(source, notif, 'success');
     }
 
@@ -221,8 +239,9 @@ export class ShopProvider {
         // BaseClothSet.Props needs to be an object for soz-character
         clothConfig.BaseClothSet.Props = Object.assign({}, clothConfig.BaseClothSet.Props);
 
-        // Update player cloth config through QBCore
-        this.qbcore.getPlayer(source).Functions.SetClothConfig(clothConfig, false);
+        // Update player cloth config through playerService
+        this.playerService.updateClothConfig(source, 'BaseClothSet', clothConfig.BaseClothSet, false);
+        this.playerService.updateClothConfig(source, 'Config', clothConfig.Config, false);
 
         // Notify player
         this.notifier.notify(
@@ -233,10 +252,6 @@ export class ShopProvider {
     }
 
     public async shopClothingBuy(source: number, product: ClothingShopItem, brand: string) {
-        if (!this.shopPay(source, product.price)) {
-            this.notifier.notify(source, `Ah mais t'es pauvre en fait ! Reviens quand t'auras de quoi payer.`, 'error');
-            return;
-        }
         const repo = await this.clothingShopRepository.get();
         const shopCategories = repo.categories[this.playerService.getPlayer(source).skin.Model.Hash][product.shopId];
         const shopItem = shopCategories[product.categoryId].content[product.modelLabel].find(
@@ -245,6 +260,11 @@ export class ShopProvider {
         const stock = shopItem.stock;
         if (stock <= 0) {
             this.notifier.notify(source, `Ce produit n'est plus en stock`, 'error');
+            return;
+        }
+
+        if (!this.shopPay(source, product.price)) {
+            this.notifier.notify(source, `Ah mais t'es pauvre en fait ! Reviens quand t'auras de quoi payer.`, 'error');
             return;
         }
 
@@ -311,8 +331,10 @@ export class ShopProvider {
             }
         }
 
-        // Update player cloth config through QBCore
-        this.qbcore.getPlayer(source).Functions.SetClothConfig(clothConfig, false);
+        // Update player cloth config through playerService
+        this.playerService.updateClothConfig(source, 'BaseClothSet', clothConfig.BaseClothSet, false);
+        this.playerService.updateClothConfig(source, 'Config', clothConfig.Config, false);
+        this.playerService.updateClothConfig(source, 'NakedClothSet', clothConfig.NakedClothSet, false);
 
         // Update player stocks
         TriggerClientEvent(ClientEvent.SHOP_UPDATE_STOCKS, source, brand);
@@ -336,12 +358,22 @@ export class ShopProvider {
             this.notifier.notify(source, `Ah mais t'es pauvre en fait ! Reviens quand t'auras de quoi payer.`, 'error');
             return;
         }
-        const skin = this.playerService.getPlayer(source).skin;
-        skin.Tattoos.push({
-            Collection: GetHashKey(product.Collection),
-            Overlay: GetHashKey(product[overlayField]),
-        });
-        this.qbcore.getPlayer(source).Functions.SetSkin(skin, false);
+        this.playerService.updateSkin(
+            source,
+            skin => {
+                return {
+                    ...skin,
+                    Tattoos: [
+                        ...skin.Tattoos,
+                        {
+                            Collection: GetHashKey(product.Collection),
+                            Overlay: GetHashKey(product[overlayField]),
+                        },
+                    ],
+                };
+            },
+            false
+        );
         this.notifier.notify(source, `Vous venez de vous faire tatouer pour ~g~$${product.Price}`, 'success');
     }
 
@@ -350,7 +382,16 @@ export class ShopProvider {
         const player = this.playerService.getPlayer(source);
         const skin = player.skin;
         skin.Tattoos = [];
-        this.qbcore.getPlayer(source).Functions.SetSkin(skin, false);
+        this.playerService.updateSkin(
+            source,
+            skin => {
+                return {
+                    ...skin,
+                    Tattoos: [],
+                };
+            },
+            false
+        );
         this.notifier.notify(source, `Vous venez de vous faire retirer tous vos tatouages`, 'success');
     }
 
@@ -382,7 +423,6 @@ export class ShopProvider {
     }
 
     public shopPay(source: number, price: number): boolean {
-        const player = this.qbcore.getPlayer(source);
-        return player.Functions.RemoveMoney('money', price);
+        return this.playerMoneyService.remove(source, price, 'money');
     }
 }

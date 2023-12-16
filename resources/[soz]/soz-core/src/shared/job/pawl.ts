@@ -1,5 +1,6 @@
 import { Component, WardrobeConfig } from '../cloth';
 import { CraftCategory } from '../craft/craft';
+import { Feature } from '../features';
 import { NamedZone } from '../polyzone/box.zone';
 
 export const CraftZones: NamedZone[] = [
@@ -165,6 +166,41 @@ export const PawlCraftsLists: Record<string, CraftCategory> = {
                     wood_plank: { count: 1 },
                 },
                 amount: 4,
+            },
+        },
+    },
+    Halloween: {
+        feature: Feature.Halloween,
+        duration: 15000,
+        icon: '🎃',
+        animation: {
+            dictionary: 'mp_arresting',
+            name: 'a_uncuff',
+            options: {
+                onlyUpperBody: true,
+                repeat: true,
+            },
+        },
+        event: 'job_pawl_craft',
+        recipes: {
+            witch_broom: {
+                inputs: {
+                    wood_plank: { count: 4 },
+                },
+                amount: 1,
+            },
+            small_coffin: {
+                inputs: {
+                    wood_plank: { count: 10 },
+                },
+                amount: 1,
+            },
+            halloween_scarecrow: {
+                inputs: {
+                    wood_plank: { count: 10 },
+                    halloween_uranium_raw: { count: 1 },
+                },
+                amount: 1,
             },
         },
     },

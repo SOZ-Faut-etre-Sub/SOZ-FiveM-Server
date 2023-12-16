@@ -5,10 +5,10 @@ import { NuiEvent } from '../../../../shared/event';
 import { Property } from '../../../../shared/housing/housing';
 import { AdminMapperMenuData } from '../../../../shared/housing/menu';
 import { JobType } from '../../../../shared/job';
+import { JobRegistry } from '../../../../shared/job/config';
 import { MenuType } from '../../../../shared/nui/menu';
 import { Zone, ZoneType, ZoneTyped } from '../../../../shared/polyzone/box.zone';
 import { fetchNui } from '../../../fetch';
-import { useJobs } from '../../../hook/job';
 import {
     MainMenu,
     Menu,
@@ -32,7 +32,6 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
     const [properties, setProperties] = useState<AdminMapperMenuData['properties']>([]);
     const [zones, setZones] = useState<AdminMapperMenuData['zones']>([]);
     const [selectedObject, setSelectedObject] = useState<string>('soz_prop_bb_bin');
-    const jobs = useJobs();
     const [job, setJob] = useState<JobType | null>(null);
     const [event, setEvent] = useState<string | null>(null);
 
@@ -45,6 +44,10 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
         fetchNui(NuiEvent.DrugAdminMenuOpen);
     };
 
+    const onHubEntryAdminMenuOpen = () => {
+        fetchNui(NuiEvent.HubEntryAdminMenuOpen);
+    };
+
     if (!data) {
         return null;
     }
@@ -53,6 +56,7 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
         fetchNui(NuiEvent.RaceAdminMenuOpen);
     };
 
+    const jobIds = Object.keys(JobRegistry) as JobType[];
     const sortedProperties = properties.sort((a, b) => a.identifier.localeCompare(b.identifier));
 
     return (
@@ -73,6 +77,7 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                     <MenuItemButton onConfirm={onDrugAdminMenuOpen}>💊 Drogue</MenuItemButton>
                     <MenuItemButton onConfirm={onRaceAdminMenuOpen}>🏎 Courses</MenuItemButton>
                     <MenuItemSubMenuLink id="zones">🗺️ Gestion des zones</MenuItemSubMenuLink>
+                    <MenuItemButton onConfirm={onHubEntryAdminMenuOpen}>[🕯] Lanterne</MenuItemButton>
                 </MenuContent>
             </MainMenu>
             <SubMenu id="objects">
@@ -94,9 +99,9 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                         }}
                     >
                         <MenuItemSelectOption value={null}>Aucun</MenuItemSelectOption>
-                        {jobs.map(job => (
-                            <MenuItemSelectOption value={job.id} key={'job_' + job.id}>
-                                {job.label}
+                        {jobIds.map(jobId => (
+                            <MenuItemSelectOption value={jobId} key={'job_' + jobId}>
+                                {JobRegistry[jobId].label}
                             </MenuItemSelectOption>
                         ))}
                     </MenuItemSelect>
@@ -316,7 +321,8 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                                     onConfirm={async (i, value) => {
                                         if (value === 'teleport') {
                                             fetchNui(NuiEvent.AdminMenuMapperTeleportToInsideCoords, {
-                                                coords: apartment.position,
+                                                apartmentId: apartment.id,
+                                                propertyId: property.id,
                                             });
                                         }
 
@@ -395,6 +401,67 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                                 >
                                     ❌ Supprimer
                                 </MenuItemButton>
+                                {apartment.owner === null && (
+                                    <MenuItemSelect
+                                        value={apartment.senatePartyId}
+                                        title="Partie politique"
+                                        onConfirm={(_, value) => {
+                                            fetchNui(NuiEvent.AdminMenuMapperSetSenateParty, {
+                                                propertyId: property.id,
+                                                apartmentId: apartment.id,
+                                                senatePartyId: value,
+                                            });
+                                        }}
+                                    >
+                                        <MenuItemSelectOption value={null}>Aucun</MenuItemSelectOption>
+                                        {data.parties.map(party => (
+                                            <MenuItemSelectOption key={party.id} value={party.id}>
+                                                {party.name}
+                                            </MenuItemSelectOption>
+                                        ))}
+                                    </MenuItemSelect>
+                                )}
+                                {apartment.owner === null && (
+                                    <MenuItemButton
+                                        onConfirm={() => {
+                                            fetchNui(NuiEvent.AdminMenuMapperSetOwner, {
+                                                propertyId: property.id,
+                                                apartmentId: apartment.id,
+                                            });
+                                        }}
+                                    >
+                                        Définir le propriétaire
+                                    </MenuItemButton>
+                                )}
+                                {apartment.owner !== null && (
+                                    <MenuItemButton
+                                        onConfirm={() => {
+                                            fetchNui(NuiEvent.AdminMenuMapperClearOwner, {
+                                                propertyId: property.id,
+                                                apartmentId: apartment.id,
+                                            });
+                                        }}
+                                    >
+                                        ❌ Enlever le propriétaire ({apartment.owner})
+                                    </MenuItemButton>
+                                )}
+                                <MenuItemSelect
+                                    value={apartment.tier}
+                                    title="Tier de l'appartement"
+                                    onConfirm={(_, value) => {
+                                        fetchNui(NuiEvent.AdminMenuMapperSetApartmentTier, {
+                                            propertyId: property.id,
+                                            apartmentId: apartment.id,
+                                            tier: value,
+                                        });
+                                    }}
+                                >
+                                    <MenuItemSelectOption value={0}>Tier 0</MenuItemSelectOption>
+                                    <MenuItemSelectOption value={1}>Tier 1</MenuItemSelectOption>
+                                    <MenuItemSelectOption value={2}>Tier 2</MenuItemSelectOption>
+                                    <MenuItemSelectOption value={3}>Tier 3</MenuItemSelectOption>
+                                    <MenuItemSelectOption value={4}>Tier 4</MenuItemSelectOption>
+                                </MenuItemSelect>
                             </MenuContent>
                         </SubMenu>
                     ))}

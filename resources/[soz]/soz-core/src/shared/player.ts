@@ -1,16 +1,21 @@
 import { SozRole } from '@core/permissions';
 import { DrugSkill } from '@private/shared/drugs';
 import { Talent } from '@private/shared/talent';
+import { SenatePartyMember } from '@public/shared/senate';
 
 import { ClothConfig } from './cloth';
 import { Disease, Organ } from './disease';
 import { DrivingSchoolLicenseType } from './driving-school';
 import { InventoryItem } from './item';
 import { JobType } from './job';
-import { Halloween2022 } from './story/halloween2022';
+import { Halloween2022, Halloween2023 } from './story/halloween2022';
 
 export type QBCorePlayer = {
     Functions: {
+        SetApartment: (data: any) => void;
+        SetApartmentTier: (tier: number) => void;
+        SetPartyMember: (data: SenatePartyMember | null) => void;
+        SetApartmentHasParkingPlace: (hasParkingPlace: boolean) => void;
         SetMetaData: (key: string, val: any) => void;
         SetMetaDatas: (data: Record<string, any>) => void;
         UpdateMaxWeight: () => void;
@@ -27,7 +32,17 @@ export type QBCorePlayer = {
 
 export type PlayerData = {
     address: string;
-    apartment: any;
+    partyMember: SenatePartyMember | null;
+    apartment:
+        | {
+              id: number;
+              property_id: number;
+              tier: number;
+              price: number;
+              owner: string;
+          }
+        | null
+        | undefined;
     citizenid: string;
     license: string;
     name: string;
@@ -62,6 +77,9 @@ export type Skin = {
         BeardType?: number;
         BeardOpacity?: number;
         BeardColor?: number;
+        EyebrowType?: number;
+        EyebrowOpacity?: number;
+        EyebrowColor?: number;
     };
     Makeup: {
         BeardType?: number;
@@ -77,6 +95,9 @@ export type Skin = {
         LipstickType?: number;
         LipstickOpacity?: number;
         LipstickColor?: number;
+    };
+    FaceTrait: {
+        EyeColor?: number;
     };
     Model: {
         Hash: number;
@@ -206,7 +227,19 @@ export enum PlayerLicenceType {
     Rescuer = 'rescuer',
 }
 
-export type PlayerListStateKey = 'dead' | 'zipped' | 'wearingPatientOutfit';
+export const PlayerLicenceLabels = {
+    [PlayerLicenceType.Car]: 'Permis voiture',
+    [PlayerLicenceType.Truck]: 'Permis poids lourd',
+    [PlayerLicenceType.Moto]: 'Permis moto',
+    [PlayerLicenceType.Boat]: 'Permis maritime',
+    [PlayerLicenceType.Heli]: "Permis d'aviation",
+    [PlayerLicenceType.Weapon]: "Permis port d'arme",
+    [PlayerLicenceType.Fishing]: 'Permis de pêche',
+    [PlayerLicenceType.Hunting]: 'Permis de chasse',
+    [PlayerLicenceType.Rescuer]: 'Secouriste',
+};
+
+export type PlayerListStateKey = 'dead' | 'zipped' | 'wearingPatientOutfit' | 'escorted';
 
 export enum PlayerCriminalState {
     None,
@@ -250,6 +283,7 @@ export type PlayerMetadata = PlayerHealthBook & {
     isWearingItem: 'zevent2022_tshirt' | null;
     gym_subscription_expire_at: number | null;
     halloween2022: Halloween2022 | null;
+    halloween2023: Halloween2023 | null;
     licences: Partial<Record<PlayerLicenceType, number>>;
     shortcuts: Record<number, Partial<InventoryItem>>;
     mort: string | null;
@@ -257,6 +291,7 @@ export type PlayerMetadata = PlayerHealthBook & {
     criminal_state: PlayerCriminalState;
     criminal_reputation: number;
     criminal_talents: Talent[];
+    criminal_lastaction: number;
     drugs_skills: DrugSkill[];
     drugs_heavy_contract_date: number;
     vehiclelimit: number;
@@ -267,4 +302,19 @@ export type PlayerMetadata = PlayerHealthBook & {
     hazmat: boolean;
     mood?: string | null;
     rp_death: boolean;
+    is_senator: boolean;
+    injail: boolean;
+    scuba: boolean;
+};
+
+export const isAdmin = (player: PlayerData) => {
+    return player.role === 'admin';
+};
+
+export const isStaff = (player: PlayerData) => {
+    return player.role === 'staff' || isAdmin(player);
+};
+
+export const isGameMaster = (player: PlayerData) => {
+    return player.role === 'gamemaster' || isStaff(player);
 };

@@ -14,12 +14,11 @@ MySQL.ready(function()
     end)
 end)
 
-QBCore.Functions.CreateCallback("pawl:server:getFieldData", function(source, cb, identifier)
+RegisterNetEvent("pawl:server:getFieldData", function(identifier)
     local field = Fields[identifier]
     if field ~= nil then
-        cb(field:GetField())
+        TriggerLatentClientEvent("pawl:client:syncField", source, 16 * 1024, identifier, field:GetField())
     end
-    cb(nil)
 end)
 
 QBCore.Functions.CreateCallback("pawl:server:harvestTree", function(source, cb, identifier, position)

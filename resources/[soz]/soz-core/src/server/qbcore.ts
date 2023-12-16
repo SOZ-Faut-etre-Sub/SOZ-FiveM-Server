@@ -1,17 +1,14 @@
 import { Injectable } from '../core/decorators/injectable';
 import { SozRole } from '../core/permissions';
 import { Item, ItemType } from '../shared/item';
-import { JobPermission } from '../shared/job';
 import { QBCorePlayer } from '../shared/player';
 
 @Injectable()
 export class QBCore {
     private QBCore;
-    private SozJobCore;
 
     public constructor() {
         this.QBCore = exports['qb-core'].GetCoreObject();
-        this.SozJobCore = exports['soz-jobs'].GetCoreObject();
     }
 
     public logout(source: number): void {
@@ -63,13 +60,5 @@ export class QBCore {
 
     public getSteamIdentifier(source: number): string {
         return this.QBCore.Functions.GetSozIdentifier(source);
-    }
-    public hasJobPermission(
-        job: string,
-        playerJobId: string,
-        playerJobGrade: number,
-        permission: JobPermission
-    ): boolean {
-        return this.SozJobCore.Functions.HasPermission(job, playerJobId, playerJobGrade, permission);
     }
 }

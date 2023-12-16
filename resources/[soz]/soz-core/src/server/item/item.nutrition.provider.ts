@@ -135,6 +135,9 @@ export class ItemNutritionProvider {
         datas.hunger = this.playerService.getIncrementedMetadata(player, 'hunger', hunger, 0, 100);
         datas.thirst = this.playerService.getIncrementedMetadata(player, 'thirst', thirst, 0, 100);
         datas.alcohol = this.playerService.getIncrementedMetadata(player, 'alcohol', alcohol, 0, 100);
+        if (item.nutrition.drug) {
+            datas.drug = this.playerService.getIncrementedMetadata(player, 'drug', item.nutrition.drug, 0, 110);
+        }
 
         if (isFeatureEnabled(Feature.MyBodySummer)) {
             const fiber = dyspepsia || intoxicated ? DYSPEPSIA_NUTRITION_MALUS : item.nutrition.fiber * progress;

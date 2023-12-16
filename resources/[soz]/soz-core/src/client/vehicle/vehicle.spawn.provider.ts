@@ -143,7 +143,9 @@ export class VehicleSpawnProvider {
             }
         }
 
-        await this.resourceLoader.loadModel(hash);
+        if (!(await this.resourceLoader.loadModel(hash))) {
+            return null;
+        }
 
         const vehicle = CreateVehicle(
             hash,

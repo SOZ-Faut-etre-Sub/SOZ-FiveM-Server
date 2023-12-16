@@ -1,50 +1,86 @@
-import { Injectable } from '@core/decorators/injectable';
-
-import { Job, JobPermission, JobType } from '../../shared/job';
+import { Inject, Injectable } from '@core/decorators/injectable';
+import { PlayerService } from '@public/client/player/player.service';
+import { JobGradeRepository } from '@public/client/repository/job.grade.repository';
+import { Job, JobPermission, JobType } from '@public/shared/job';
+import { JobRegistry } from '@public/shared/job/config';
 
 @Injectable()
 export class JobService {
-    private SozJobCore;
+    @Inject(PlayerService)
+    private playerService: PlayerService;
 
-    public constructor() {
-        this.SozJobCore = exports['soz-jobs'].GetCoreObject();
-    }
+    @Inject(JobGradeRepository)
+    private jobGradeRepository: JobGradeRepository;
 
     public getJobs(): Job[] {
-        const jobs = this.getJobsFromSozJobCore();
+        const jobs = this.getJobsFromRegistry();
+
         if (!jobs) {
             return [];
         }
-        return Object.entries(jobs)
-            .sort((a, b) => a[1].label.localeCompare(b[1].label))
-            .map(([key, value]) => ({
-                ...value,
-                id: key as JobType,
-                grades: Array.isArray(value.grades) ? value.grades : Object.values(value.grades),
-            }));
+
+        return Object.values(jobs);
     }
 
-    public hasPermission(job: string, permission: JobPermission): boolean {
-        return this.SozJobCore.Functions.HasPermission(job, permission);
-    }
-
-    public getJob(jobId: string): Job | null {
-        const jobs = this.getJobsFromSozJobCore();
+    public getJob(jobId: JobType): Job | null {
+        const jobs = this.getJobsFromRegistry();
 
         if (!jobs) {
             return null;
         }
 
-        const job = jobs[jobId] || null;
-
-        if (job && !Array.isArray(job.grades)) {
-            job.grades = Object.values(job.grades);
-        }
-
-        return job;
+        return jobs[jobId] || null;
     }
 
-    private getJobsFromSozJobCore(): { [key in JobType]: Job } {
-        return exports['soz-jobs'].GetCoreObject().Jobs;
+    private getJobsFromRegistry(): Record<JobType, Job> {
+        const jobs = {};
+
+        for (const jobType of Object.keys(JobRegistry)) {
+            const job = JobRegistry[jobType];
+            jobs[jobType] = {
+                id: jobType,
+                ...job,
+            };
+        }
+
+        return jobs as Record<JobType, Job>;
+    }
+
+    public hasAnyPermission(targetJob: JobType, permissions: JobPermission[]) {
+        for (const permission of permissions) {
+            if (this.hasPermission(targetJob, permission)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public hasPermission(targetJob: JobType, permission: JobPermission): boolean {
+        const player = this.playerService.getPlayer();
+
+        if (!player) {
+            return false;
+        }
+
+        if (targetJob !== player.job.id) {
+            return false;
+        }
+
+        const grade = this.jobGradeRepository.find(Number(player.job.grade));
+
+        if (!grade) {
+            return false;
+        }
+
+        if (grade.owner) {
+            return true;
+        }
+
+        if (grade.permissions && grade.permissions.includes(permission)) {
+            return true;
+        }
+
+        return false;
     }
 }

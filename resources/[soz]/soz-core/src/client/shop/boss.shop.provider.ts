@@ -6,14 +6,11 @@ import { ShopProduct } from '../../shared/shop';
 import { BossShop } from '../../shared/shop/boss';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
-import { Qbcore } from '../qbcore';
+import { JobService } from '../job/job.service';
 import { TargetFactory } from '../target/target.factory';
 
 @Provider()
 export class BossShopProvider {
-    @Inject(Qbcore)
-    private qbCore: Qbcore;
-
     @Inject(TargetFactory)
     private targetFactory: TargetFactory;
 
@@ -22,6 +19,9 @@ export class BossShopProvider {
 
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
+
+    @Inject(JobService)
+    private jobService: JobService;
 
     public getHydratedProducts(products: ShopProduct[]) {
         const hydratedProducts = products.map((product, id) => ({
@@ -45,7 +45,7 @@ export class BossShopProvider {
                         job: shop.job,
                         blackoutGlobal: true,
                         canInteract: () => {
-                            return this.qbCore.hasJobPermission(shop.job, JobPermission.SocietyShop);
+                            return this.jobService.hasPermission(shop.job, JobPermission.SocietyShop);
                         },
                         action: () => {
                             this.inventoryManager.openShopInventory(

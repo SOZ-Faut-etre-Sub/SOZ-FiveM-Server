@@ -7,6 +7,7 @@ import { PlayerNeeds } from './PlayerNeeds';
 import { SpeedoMeter } from './SpeedoMeter';
 import { TwitchNewsOverlay } from './TwitchNewsOverlay';
 import { VoiceIndicator } from './VoiceIndicator';
+import { ZombieOverlay } from './ZombieIcon';
 
 export const HudApp: FunctionComponent = () => {
     return (
@@ -18,6 +19,7 @@ export const HudApp: FunctionComponent = () => {
             <PlayerNeeds />
             <SpeedoMeter />
             <TwitchNewsOverlay />
+            <ZombieOverlay />
         </main>
     );
 };

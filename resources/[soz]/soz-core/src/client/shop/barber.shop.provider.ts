@@ -73,10 +73,14 @@ export class BarberShopProvider {
         this.barberShopContent[PlayerPedHash.Male][0].items = this.barberShopLabels.HairMale;
         this.barberShopContent[PlayerPedHash.Male][1].items = this.barberShopLabels.BeardMale;
         this.barberShopContent[PlayerPedHash.Male][2].items = this.barberShopLabels.Makeup;
+        this.barberShopContent[PlayerPedHash.Male][3].items = this.barberShopLabels.Eye;
+        this.barberShopContent[PlayerPedHash.Male][4].items = this.barberShopLabels.Eyebrow;
         this.barberShopContent[PlayerPedHash.Female][0].items = this.barberShopLabels.HairFemale;
         this.barberShopContent[PlayerPedHash.Female][1].items = this.barberShopLabels.Blush;
         this.barberShopContent[PlayerPedHash.Female][2].items = this.barberShopLabels.Lipstick;
         this.barberShopContent[PlayerPedHash.Female][3].items = this.barberShopLabels.Makeup;
+        this.barberShopContent[PlayerPedHash.Female][4].items = this.barberShopLabels.Eye;
+        this.barberShopContent[PlayerPedHash.Female][5].items = this.barberShopLabels.Eyebrow;
     }
 
     public async openShop() {
@@ -105,6 +109,10 @@ export class BarberShopProvider {
             Makeup: {
                 ...player.skin.Makeup,
                 ...config.Makeup,
+            },
+            FaceTrait: {
+                ...player.skin.FaceTrait,
+                ...config.FaceTraits,
             },
         };
         TriggerEvent('soz-character:Client:ApplyTemporarySkin', temporarySkin);

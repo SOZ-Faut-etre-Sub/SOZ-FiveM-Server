@@ -34,7 +34,7 @@ export const ShopContainer = () => {
                 } catch (e: any) {
                     closeNUI(() => { closeMenu(); })
                 }
-            } else if (event.data.action === 'openPlayerInventory' || event.data.action === 'openInventory' || event.data.action === 'openPlayerKeyInventory') {
+            } else if (event.data.action === 'openPlayerInventory' || event.data.action === 'openInventory' || event.data.action === 'openPlayerKeyInventory' || event.data.action === 'openPlayerWalletInventory') {
                 closeMenu();
             }
         },

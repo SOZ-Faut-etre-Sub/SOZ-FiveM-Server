@@ -13,11 +13,13 @@ import { PlayerData } from '../../shared/player';
 import { BoxZone, ZoneType } from '../../shared/polyzone/box.zone';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { AnimationService } from '../animation/animation.service';
+import { LSMCDeathProvider } from '../job/lsmc/lsmc.death.provider';
 import { Notifier } from '../notifier';
 import { ProgressService } from '../progress.service';
 import { ZoneRepository } from '../repository/zone.repository';
 import { PlayerService } from './player.service';
 import { PlayerWalkstyleProvider } from './player.walkstyle.provider';
+import { PlayerZombieProvider } from './player.zombie.provider';
 
 enum StressLooseType {
     VehicleAbove160,
@@ -77,6 +79,12 @@ export class PlayerStressProvider {
 
     @Inject(ZoneRepository)
     private zoneRepository: ZoneRepository;
+
+    @Inject(LSMCDeathProvider)
+    private LSMCDeathProvider: LSMCDeathProvider;
+
+    @Inject(PlayerZombieProvider)
+    private playerZombieProvider: PlayerZombieProvider;
 
     private isStressUpdated = false;
     private wasDead = false;
@@ -147,6 +155,10 @@ export class PlayerStressProvider {
             item.nutrition.alcohol > 0
         ) {
             this.updateStress(StressLooseType.DrinkAlcohol);
+        }
+
+        if (name === 'halloween_radioactive_beer') {
+            this.LSMCDeathProvider.enableRadioactiveBeerEffect();
         }
     }
 
@@ -298,7 +310,11 @@ export class PlayerStressProvider {
     }
 
     @Tick(TickInterval.EVERY_FRAME)
-    async onEachFrame(): Promise<void> {
+    async onEachFrameStress(): Promise<void> {
+        if (this.playerZombieProvider.isZombie()) {
+            return;
+        }
+
         if (this.slowMode) {
             DisableControlAction(0, 21, true); // disable sprint
             DisableControlAction(0, 22, true); // disable jump

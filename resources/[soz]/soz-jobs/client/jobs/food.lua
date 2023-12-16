@@ -25,7 +25,7 @@ local function SpawnFieldZones()
             minZ = minZ - 2.0,
             maxZ = maxZ + 2.0,
             onPlayerInOut = function(isIn)
-                if isIn and PlayerData.job.id == SozJobCore.JobType.Food and PlayerData.job.onduty then
+                if isIn and PlayerData.job.id == "food" and PlayerData.job.onduty then
                     currentField = zoneName
                 else
                     currentField = nil
@@ -41,7 +41,7 @@ local function SpawnFieldZones()
                     blackoutGlobal = true,
                     blackoutJob = "food",
                     canInteract = function(entity)
-                        local hasPermission = SozJobCore.Functions.HasPermission("food", SozJobCore.JobPermission.Food.Harvest)
+                        local hasPermission = exports["soz-core"]:HasJobPermission("food", "harvest")
                         return hasPermission and PlayerData.job.onduty and currentField and not IsEntityAVehicle(entity) and not IsEntityAPed(entity)
                     end,
                 },
@@ -263,7 +263,7 @@ FoodJob.Functions.GetItemCountFromInventory = function(itemName)
     local amount = 0
     for _, item in pairs(PlayerData.items or {}) do
         if item.name == itemName then
-            if not exports["soz-utils"]:ItemIsExpired(item) then
+            if not exports["soz-core"]:ItemIsExpired(item) then
                 amount = amount + item.amount
             end
         end
@@ -409,6 +409,9 @@ RegisterNetEvent("jobs:client:food:hunting", function(data)
     }, {}, {}, {}, function() -- Done
         if hasKnife then
             if DoesEntityExist(data.entity) then
+                local coords = GetEntityCoords(ped);
+                local zoneId = GetNameOfZone(coords);
+                TriggerServerEvent("soz-core:client:food:hunt", zoneId);
                 TriggerServerEvent("jobs:server:food:hunting", NetworkGetNetworkIdFromEntity(data.entity))
             end
         else
@@ -419,7 +422,7 @@ end)
 
 -- Resell Port of Los Santos
 Citizen.CreateThread(function()
-    local resellOpt = SozJobCore.Jobs[SozJobCore.JobType.Food].resell
+    local resellOpt = FoodResell
     local coords = resellOpt.coords
 
     exports["qb-target"]:SpawnPed({

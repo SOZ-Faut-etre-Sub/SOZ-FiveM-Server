@@ -3,6 +3,12 @@ import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
 import TwitchNewsService from './twitch-news.service';
 import { twitchNewsLogger } from './twitch-news.utils';
 
+const exps = global.exports;
+
+exps('createNewsBroadcast', (reqObj: TwitchNewsMessage) =>
+    TwitchNewsService.handleSendNews({ data: reqObj, source: null }, () => {})
+);
+
 onNetPromise<string, TwitchNewsMessage[]>(TwitchNewsEvents.FETCH_NEWS, (reqObj, resp) => {
     TwitchNewsService.fetchNews(reqObj, resp).catch(e => {
         twitchNewsLogger.error(`Error occured in fetch news event (${reqObj.source}), Error:  ${e.message}`);

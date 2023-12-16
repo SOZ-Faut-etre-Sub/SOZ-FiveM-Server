@@ -120,7 +120,7 @@ export const StorageContainer = () => {
                         target: targetInventory?.id,
                     },
                 );
-            } else if (event.data.action === 'openShop' || event.data.action === 'openInventory' || event.data.action === 'openPlayerKeyInventory') {
+            } else if (event.data.action === 'openShop' || event.data.action === 'openInventory' || event.data.action === 'openPlayerKeyInventory' || event.data.action === 'openPlayerWalletInventory') {
                 closeMenu();
             }
         },
@@ -333,6 +333,8 @@ export const StorageContainer = () => {
                             id='player'
                             rows={playerInventoryRow}
                             money={playerMoney}
+                            wallet={-1}
+                            keychain={-1}
                             items={playerInventory.items.map((item, i) => ({ ...item, id: i }))}
                         />
                     </ContainerWrapper>

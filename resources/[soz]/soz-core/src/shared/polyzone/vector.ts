@@ -78,3 +78,19 @@ export const toVector4Object = (vector: Vector4) => {
 export const toVectorNorm = (vector: Vector3) => {
     return Math.sqrt(vector[0] * vector[0] + vector[1] * vector[1] + vector[2] * vector[2]);
 };
+
+export const multVector3 = (vector: Vector3, value: number): Vector3 => {
+    return [vector[0] * value, vector[1] * value, vector[2] * value];
+};
+
+export const mult2Vector3 = (vector1: Vector3, vector2: Vector3): Vector3 => {
+    return [vector1[0] * vector2[0], vector1[1] * vector2[1], vector1[2] * vector2[2]];
+};
+
+export const addVector3 = (vector: Vector3, value: number): Vector3 => {
+    return [vector[0] + value, vector[1] + value, vector[2] + value];
+};
+
+export const add2Vector3 = (vector1: Vector3, vector2: Vector3): Vector3 => {
+    return [vector1[0] + vector2[0], vector1[1] + vector2[1], vector1[2] + vector2[2]];
+};

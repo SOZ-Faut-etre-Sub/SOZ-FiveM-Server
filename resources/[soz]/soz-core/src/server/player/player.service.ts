@@ -1,7 +1,9 @@
 import { ServerStateService } from '@public/server/server.state.service';
 import { ClothConfig } from '@public/shared/cloth';
 import { DrivingSchoolLicense } from '@public/shared/driving-school';
+import { Apartment, Property } from '@public/shared/housing/housing';
 import { JobType } from '@public/shared/job';
+import { SenatePartyMember } from '@public/shared/senate';
 
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { Disease } from '../../shared/disease';
@@ -43,7 +45,7 @@ export class PlayerService {
         return player;
     }
 
-    public getPlayerJobAndGrade(source: number): [string, number] | null {
+    public getPlayerJobAndGrade(source: number): [JobType, number] | null {
         const player = this.QBCore.getPlayer(source);
 
         return [player.PlayerData.job.id, Number(player.PlayerData.job.grade)];
@@ -54,6 +56,55 @@ export class PlayerService {
 
         if (player) {
             player.Functions.UpdateMaxWeight();
+        }
+    }
+
+    public setPlayerApartmentTier(source: number, tier: number): void {
+        const player = this.QBCore.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        player.Functions.SetApartmentTier(tier);
+    }
+
+    public setPlayerApartmentHasParking(source: number, hasParkingPlace: boolean): void {
+        const player = this.QBCore.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        player.Functions.SetApartmentHasParkingPlace(hasParkingPlace);
+    }
+
+    public setPlayerApartment(source: number, apartment: Apartment, property: Property): void {
+        const player = this.QBCore.getPlayer(source);
+
+        if (player) {
+            if (apartment === null) {
+                player.Functions.SetApartment(null);
+
+                return;
+            }
+
+            player.Functions.SetApartment({
+                id: apartment.id,
+                property_id: property.id,
+                label: apartment.label,
+                price: apartment.price,
+                owner: apartment.owner,
+                tier: apartment.tier,
+            });
+        }
+    }
+
+    public setPlayerPartyMember(source: number, partyMember: SenatePartyMember | null): void {
+        const player = this.QBCore.getPlayer(source);
+
+        if (player) {
+            player.Functions.SetPartyMember(partyMember);
         }
     }
 
@@ -225,6 +276,9 @@ export class PlayerService {
         }
 
         player.Functions.SetJobDuty(onDuty);
+
+        TriggerClientEvent('QBCore:Client:SetDuty', source, onDuty);
+        TriggerEvent('QBCore:Server:SetDuty', player.PlayerData.job.id, onDuty, player.PlayerData.source);
     }
 
     public getSteamIdentifier(source: number): string {

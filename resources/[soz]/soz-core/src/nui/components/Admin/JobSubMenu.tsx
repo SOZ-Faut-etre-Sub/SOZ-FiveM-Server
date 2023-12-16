@@ -1,5 +1,7 @@
-import { useJobs } from '@public/nui/hook/job';
+import { useJobGrades } from '@public/nui/hook/job';
 import { NuiEvent } from '@public/shared/event';
+import { JobType } from '@public/shared/job';
+import { JobRegistry } from '@public/shared/job/config';
 import { FunctionComponent } from 'react';
 
 import { fetchNui } from '../../fetch';
@@ -19,14 +21,14 @@ export type JobSubMenuProps = {
 
 export const JobSubMenu: FunctionComponent<JobSubMenuProps> = ({ banner }) => {
     const player = usePlayer();
-    const jobs = useJobs();
+    const jobGrades = useJobGrades();
 
-    if (!jobs || !player) {
+    if (!jobGrades || !player) {
         return null;
     }
 
-    const currentJob = jobs.find(job => job.id === player.job.id);
-    const grades = currentJob?.grades || [];
+    const jobIds = Object.keys(JobRegistry) as JobType[];
+    const grades = jobGrades.filter(grade => grade.jobId === player.job.id);
 
     return (
         <SubMenu id="job">
@@ -36,20 +38,18 @@ export const JobSubMenu: FunctionComponent<JobSubMenuProps> = ({ banner }) => {
                     title="Changer de métier"
                     value={player.job.id}
                     onConfirm={async (index, jobId) => {
-                        const job = jobs.find(job => job.id === jobId);
-
-                        if (!job) {
-                            return;
-                        }
-
-                        await fetchNui(NuiEvent.AdminSetJob, { jobId: job.id, jobGrade: job.grades[0]?.id || 0 });
+                        await fetchNui(NuiEvent.AdminSetJob, { jobId });
                     }}
                 >
-                    {jobs.map(job => (
-                        <MenuItemSelectOption value={job.id} key={'job_' + job.id}>
-                            {job.label}
-                        </MenuItemSelectOption>
-                    ))}
+                    {jobIds.map(jobId => {
+                        const job = JobRegistry[jobId];
+
+                        return (
+                            <MenuItemSelectOption value={jobId} key={'job_' + jobId}>
+                                {job.label}
+                            </MenuItemSelectOption>
+                        );
+                    })}
                 </MenuItemSelect>
                 <MenuItemSelect
                     title="Changer de grade"

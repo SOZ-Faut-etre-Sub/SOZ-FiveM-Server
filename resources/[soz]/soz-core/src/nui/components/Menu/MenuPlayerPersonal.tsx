@@ -5,11 +5,11 @@ import { AnimationConfigItem, WalkConfigItem } from '../../../shared/animation';
 import { ClothConfig } from '../../../shared/cloth';
 import { NuiEvent } from '../../../shared/event';
 import { JobPermission } from '../../../shared/job';
-import { CardType } from '../../../shared/nui/card';
 import { MenuType } from '../../../shared/nui/menu';
 import { JobMenuData, PlayerPersonalMenuData, Shortcut } from '../../../shared/nui/player';
 import { fetchNui } from '../../fetch';
 import { usePlayer } from '../../hook/data';
+import { useJobGrades } from '../../hook/job';
 import { useNuiEvent } from '../../hook/nui';
 import {
     MainMenu,
@@ -35,10 +35,6 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
         return null;
     }
 
-    const openKeys = () => {
-        fetchNui(NuiEvent.PlayerMenuOpenKeys);
-    };
-
     return (
         <Menu type={MenuType.PlayerPersonal}>
             <MainMenu>
@@ -46,20 +42,36 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                     {player.charinfo.firstname} {player.charinfo.lastname}
                 </MenuTitle>
                 <MenuContent>
-                    <MenuItemSubMenuLink id="identity" description="Voir/Montrer vos papiers d'identité">
-                        Mon identité
-                    </MenuItemSubMenuLink>
-                    <MenuItemButton onConfirm={openKeys}>Gestion des clés</MenuItemButton>
-                    <MenuItemSubMenuLink id="clothing">Gestion de la tenue</MenuItemSubMenuLink>
+                    {data.deguisement && (
+                        <MenuItemButton onConfirm={() => fetchNui(NuiEvent.PlayerMenuRemoveDeguisement)}>
+                            Enlever le déguisement
+                        </MenuItemButton>
+                    )}
+                    {data.naked && (
+                        <MenuItemButton onConfirm={() => fetchNui(NuiEvent.PlayerMenuReDress)}>
+                            Se rhabiller
+                        </MenuItemButton>
+                    )}
+                    {!data.naked && !data.deguisement && (
+                        <MenuItemSubMenuLink id="clothing">Gestion de la tenue</MenuItemSubMenuLink>
+                    )}
+
                     <MenuItemSubMenuLink id="animations">Animations</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="hud">HUD</MenuItemSubMenuLink>
                     {data.job.enabled && <MenuItemSubMenuLink id="job">Gestion de votre métier</MenuItemSubMenuLink>}
                     <MenuItemButton onConfirm={() => fetchNui(NuiEvent.PlayerMenuVoipReset)}>
                         Redémarrer la voip
                     </MenuItemButton>
+                    {data.halloween && (
+                        <MenuItemCheckbox
+                            checked={data.arachnophobe}
+                            onChange={value => fetchNui(NuiEvent.PlayerMenuHudSetArachnophobe, value)}
+                        >
+                            Mode arachnophobe
+                        </MenuItemCheckbox>
+                    )}
                 </MenuContent>
             </MainMenu>
-            <MenuIdentity />
             <MenuClothing />
             <MenuAnimation shortcuts={data.shortcuts} />
             <SubMenu id="hud">
@@ -97,38 +109,6 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
             </SubMenu>
             <MenuJob data={data.job} />
         </Menu>
-    );
-};
-
-const MenuIdentity: FunctionComponent = () => {
-    const showOrSeeCard = (type: CardType) => {
-        return (index, value) => {
-            if (value === 'see') {
-                fetchNui(NuiEvent.PlayerMenuCardSee, { type });
-            } else {
-                fetchNui(NuiEvent.PlayerMenuCardShow, { type });
-            }
-        };
-    };
-
-    return (
-        <SubMenu id="identity">
-            <MenuTitle banner="https://nui-img/soz/menu_personal">Gestion de l'identité</MenuTitle>
-            <MenuContent>
-                <MenuItemSelect title="Carte d'identité" onConfirm={showOrSeeCard('identity')}>
-                    <MenuItemSelectOption value="see">Voir</MenuItemSelectOption>
-                    <MenuItemSelectOption value="show">Montrer</MenuItemSelectOption>
-                </MenuItemSelect>
-                <MenuItemSelect title="Vos licences" onConfirm={showOrSeeCard('license')}>
-                    <MenuItemSelectOption value="see">Voir</MenuItemSelectOption>
-                    <MenuItemSelectOption value="show">Montrer</MenuItemSelectOption>
-                </MenuItemSelect>
-                <MenuItemSelect title="Carte de santé" onConfirm={showOrSeeCard('health')}>
-                    <MenuItemSelectOption value="see">Voir</MenuItemSelectOption>
-                    <MenuItemSelectOption value="show">Montrer</MenuItemSelectOption>
-                </MenuItemSelect>
-            </MenuContent>
-        </SubMenu>
     );
 };
 
@@ -471,9 +451,13 @@ type MenuJobProps = {
 };
 
 const MenuJob: FunctionComponent<MenuJobProps> = ({ data }) => {
+    const grades = useJobGrades();
+
     if (!data.enabled) {
         return null;
     }
+
+    const jobGrades = grades.filter(grade => grade.jobId === data.job.id);
 
     return (
         <>
@@ -490,7 +474,7 @@ const MenuJob: FunctionComponent<MenuJobProps> = ({ data }) => {
                         Ajouter un grade
                     </MenuItemButton>
 
-                    {data.job.grades.map((grade, i) => {
+                    {jobGrades.map((grade, i) => {
                         return (
                             <MenuItemSubMenuLink key={i} id={`job_grade_${grade.id}`}>
                                 {grade.name} {!!grade.is_default && '(par défaut)'}
@@ -499,7 +483,7 @@ const MenuJob: FunctionComponent<MenuJobProps> = ({ data }) => {
                     })}
                 </MenuContent>
             </SubMenu>
-            {data.job.grades
+            {jobGrades
                 .sort((a, b) => {
                     return b.weight - a.weight;
                 })

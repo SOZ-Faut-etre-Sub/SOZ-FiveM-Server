@@ -1,4 +1,5 @@
 import { Injectable } from '@core/decorators/injectable';
+import { Apartment } from '@public/shared/housing/housing';
 import { getLocationHash } from '@public/shared/locationhash';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { Err, Ok, Result } from '@public/shared/result';
@@ -46,5 +47,11 @@ export class BankService {
             type,
             value
         );
+    }
+
+    public openHouseSafe(apartment: Apartment) {
+        TriggerEvent('banking:client:openHouseSafe', apartment.identifier, {
+            apartmentTier: apartment.tier,
+        });
     }
 }

@@ -12,7 +12,6 @@ import { RpcServerEvent } from '../../shared/rpc';
 import { PlayerVehicleState } from '../../shared/vehicle/player.vehicle';
 import { VehicleCondition, VehicleLocation, VehicleSeat, VehicleVolatileState } from '../../shared/vehicle/vehicle';
 import { PrismaService } from '../database/prisma.service';
-import { JobService } from '../job.service';
 import { Monitor } from '../monitor/monitor';
 import { PlayerService } from '../player/player.service';
 import { VehicleStateService } from './vehicle.state.service';
@@ -30,9 +29,6 @@ export class VehicleStateProvider {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
-
-    @Inject(JobService)
-    private jobService: JobService;
 
     @Tick(TickInterval.EVERY_SECOND, 'vehicle:state:check')
     public async checkVehicleState() {
@@ -103,11 +99,40 @@ export class VehicleStateProvider {
                         previous_owner: previousOwner?.citizenid,
                         previous_owner_name: previousOwner?.charinfo.firstname + ' ' + previousOwner?.charinfo.lastname,
                         previous_owner_source: state.owner,
-                        owner: state.owner || null,
+                        owner: owner,
                         condition: state.condition || null,
                         position: toVector3Object(state.position || [0, 0, 0]),
                     }
                 );
+            }
+
+            const attachedTo = GetEntityAttachedTo(entityId);
+            if (attachedTo) {
+                const attachedToNetId = NetworkGetNetworkIdFromEntity(attachedTo);
+                const attachedState = this.vehicleStateService.getVehicleState(attachedToNetId);
+                if (
+                    attachedToNetId &&
+                    attachedState.volatile.model == 'flatbed4' &&
+                    !attachedState.volatile.flatbedAttachedVehicle
+                ) {
+                    this.vehicleStateService.updateVehicleVolatileState(attachedToNetId, {
+                        flatbedAttachedVehicle: netId,
+                    });
+                    this.monitor.publish(
+                        'vehicle_fix_attached',
+                        {
+                            vehicle_plate: state.volatile.plate,
+                            player_source: owner,
+                        },
+                        {
+                            vehicle_id: state.volatile.id,
+                            vehicle_net_id: netId,
+                            attachedTo: attachedTo,
+                            attachedToNetId: attachedToNetId,
+                            owner: owner,
+                        }
+                    );
+                }
             }
         }
     }

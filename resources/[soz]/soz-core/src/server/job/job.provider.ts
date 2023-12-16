@@ -1,98 +1,27 @@
 import { OnEvent } from '@public/core/decorators/event';
 import { ServerEvent } from '@public/shared/event';
-import { JobType } from '@public/shared/job';
+import { Job, JobPermission, JobType } from '@public/shared/job';
 
+import { Exportable } from '../../core/decorators/exports';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
-import { Job } from '../../shared/job';
 import { toVector3Object, Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
-import { PrismaService } from '../database/prisma.service';
 import { InventoryManager } from '../inventory/inventory.manager';
-import { ItemService } from '../item/item.service';
 import { JobService } from '../job.service';
 import { Monitor } from '../monitor/monitor';
-import { Notifier } from '../notifier';
-import { PlayerMoneyService } from '../player/player.money.service';
-import { PlayerService } from '../player/player.service';
+
 @Provider()
 export class JobProvider {
-    @Inject(PrismaService)
-    private prismaService: PrismaService;
-
-    @Inject(JobService)
-    private jobService: JobService;
-
-    @Inject(ItemService)
-    private itemService: ItemService;
-
-    @Inject(PlayerService)
-    private playerService: PlayerService;
-
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
-
-    @Inject(PlayerMoneyService)
-    private playerMoneyService: PlayerMoneyService;
-
-    @Inject(Notifier)
-    private notifier: Notifier;
 
     @Inject(Monitor)
     private monitor: Monitor;
 
-    @Rpc(RpcServerEvent.JOB_GET_JOBS)
-    public async getJobs(): Promise<Job[]> {
-        const jobs = this.jobService.getJobs();
-
-        const grades = await this.prismaService.job_grades.findMany({
-            orderBy: {
-                jobId: 'asc',
-            },
-        });
-
-        for (const job of Object.values(jobs)) {
-            job.grades = [];
-        }
-
-        for (const grade of grades) {
-            const job = jobs[grade.jobId];
-
-            if (job) {
-                job.grades.push({
-                    id: grade.id,
-                    jobId: grade.jobId,
-                    salary: grade.salary,
-                    name: grade.name,
-                    is_default: grade.is_default === 1,
-                    owner: grade.owner,
-                    permissions: JSON.parse(grade.permissions),
-                    weight: grade.weight,
-                });
-                job.id = grade.jobId;
-            }
-        }
-
-        return Object.values(jobs).map(job => {
-            if (job.grades.length > 0) {
-                return job;
-            }
-
-            job.grades.push({
-                id: 0,
-                jobId: job.id,
-                salary: 0,
-                name: 'Défaut',
-                is_default: true,
-                owner: 1,
-                permissions: [],
-                weight: 0,
-            });
-
-            return job;
-        });
-    }
+    @Inject(JobService)
+    private jobService: JobService;
 
     @Rpc(RpcServerEvent.JOBS_USE_WORK_CLOTHES)
     public async useWorkClothes(source: number, storageId: string) {
@@ -110,5 +39,20 @@ export class JobProvider {
                 position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
             }
         );
+    }
+
+    @Exportable('HasJobPermission')
+    public hasJobPermission(targetJobId: JobType, jobId: JobType, gradeId: number, permission: JobPermission) {
+        return this.jobService.hasTargetJobPermission(targetJobId, jobId, gradeId, permission);
+    }
+
+    @Exportable('GetJobs')
+    public getJobs(): Record<JobType, Job> {
+        return this.jobService.getJobs();
+    }
+
+    @Exportable('GetJob')
+    public getJob(jobId: JobType): Job | null {
+        return this.jobService.getJob(jobId);
     }
 }

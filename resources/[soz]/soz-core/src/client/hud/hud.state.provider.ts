@@ -60,6 +60,7 @@ export class HudStateProvider {
     }
 
     public setCinematicCameraActive(enabled: boolean): void {
+        DisableVehiclePassengerIdleCamera(!enabled);
         this.isCinematicCameraActive = enabled;
     }
 

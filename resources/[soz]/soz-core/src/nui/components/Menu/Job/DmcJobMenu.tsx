@@ -10,6 +10,13 @@ type DmcStateProps = {
     data: DmcJobMenuData;
 };
 
+const labels = {
+    'job:dmc:iron_mine': 'Afficher la mine de fer',
+    'job:dmc:aluminium_mine': "Afficher la mine d'aluminium",
+    'job:dmc:uranium_mine': "Afficher la mine d'uranium",
+    'job:dmc:resell': 'Afficher le point de revente de métaux',
+};
+
 export const DmcJobMenu: FunctionComponent<DmcStateProps> = ({ data }) => {
     const banner = 'https://cfx-nui-soz-core/public/images/banner/menu_job_dmc.webp';
 
@@ -31,30 +38,17 @@ export const DmcJobMenu: FunctionComponent<DmcStateProps> = ({ data }) => {
             <MainMenu>
                 <MenuTitle banner={banner}></MenuTitle>
                 <MenuContent>
-                    <MenuItemCheckbox
-                        checked={data.blipState['job:dmc:iron_mine']}
-                        onChange={value => {
-                            fetchNui(NuiEvent.DmcToggleBlip, { blip: 'job:dmc:iron_mine', value });
-                        }}
-                    >
-                        Afficher la mine de fer
-                    </MenuItemCheckbox>
-                    <MenuItemCheckbox
-                        checked={data.blipState['job:dmc:aluminium_mine']}
-                        onChange={value => {
-                            fetchNui(NuiEvent.DmcToggleBlip, { blip: 'job:dmc:aluminium_mine', value });
-                        }}
-                    >
-                        Afficher la mine d'aluminium
-                    </MenuItemCheckbox>
-                    <MenuItemCheckbox
-                        checked={data.blipState['job:dmc:resell']}
-                        onChange={value => {
-                            fetchNui(NuiEvent.DmcToggleBlip, { blip: 'job:dmc:resell', value });
-                        }}
-                    >
-                        Afficher le point de revente de métaux
-                    </MenuItemCheckbox>
+                    {Object.entries(data.blipState).map(([key, checked]) => (
+                        <MenuItemCheckbox
+                            key={key}
+                            checked={checked}
+                            onChange={value => {
+                                fetchNui(NuiEvent.DmcToggleBlip, { blip: key, value });
+                            }}
+                        >
+                            {labels[key]}
+                        </MenuItemCheckbox>
+                    ))}
                 </MenuContent>
             </MainMenu>
         </Menu>

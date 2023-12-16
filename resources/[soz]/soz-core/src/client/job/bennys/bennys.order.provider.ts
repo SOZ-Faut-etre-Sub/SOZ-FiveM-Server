@@ -3,7 +3,7 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { emitRpc } from '../../../core/rpc';
 import { NuiEvent } from '../../../shared/event';
-import { JobPermission } from '../../../shared/job';
+import { JobPermission, JobType } from '../../../shared/job';
 import { BennysConfig, BennysOrder } from '../../../shared/job/bennys';
 import { MenuType } from '../../../shared/nui/menu';
 import { Err, Ok } from '../../../shared/result';
@@ -12,8 +12,8 @@ import { InputService } from '../../nui/input.service';
 import { NuiDispatch } from '../../nui/nui.dispatch';
 import { NuiMenu } from '../../nui/nui.menu';
 import { PlayerService } from '../../player/player.service';
-import { Qbcore } from '../../qbcore';
 import { TargetFactory } from '../../target/target.factory';
+import { JobService } from '../job.service';
 
 @Provider()
 export class BennysOrderProvider {
@@ -23,8 +23,8 @@ export class BennysOrderProvider {
     @Inject(TargetFactory)
     private targetFactory: TargetFactory;
 
-    @Inject(Qbcore)
-    private QBCore: Qbcore;
+    @Inject(JobService)
+    private jobService: JobService;
 
     @Inject(InputService)
     private inputService: InputService;
@@ -97,7 +97,7 @@ export class BennysOrderProvider {
                 canInteract: () => {
                     return (
                         this.playerService.isOnDuty() &&
-                        this.QBCore.hasJobPermission('bennys', JobPermission.BennysOrder)
+                        this.jobService.hasPermission(JobType.Bennys, JobPermission.BennysOrder)
                     );
                 },
                 action: async () => {

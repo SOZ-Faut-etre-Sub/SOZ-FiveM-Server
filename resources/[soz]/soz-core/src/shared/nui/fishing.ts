@@ -1,5 +1,8 @@
 export interface NuiFishingMethodMap {
     ShowFishingMinigame: any;
     HideFishingMinigame: boolean;
-    SetFishingStatus: boolean;
+    SetFishingStatus: {
+        activate: boolean;
+        bait?: string;
+    };
 }

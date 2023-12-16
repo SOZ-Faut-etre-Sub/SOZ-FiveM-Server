@@ -1,3 +1,8 @@
+import { uuidv4 } from '@core/utils';
+import { AnimationProps } from '@public/shared/animation';
+import { getChunkId } from '@public/shared/grid';
+import { Vector3 } from '@public/shared/polyzone/vector';
+
 import { Once, OnceStep } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -23,6 +28,12 @@ export type Ped = {
     flag?: number;
     network?: boolean;
     isScriptHostPed?: boolean;
+    isRandomClothes?: boolean;
+    animprops?: AnimationProps[];
+};
+
+export type GridPed = Ped & {
+    id: string;
 };
 
 export enum PedFaceFeature {
@@ -64,17 +75,109 @@ export enum PedHeadOverlay {
     AddBodyBlemishes = 12,
 }
 
+type SpawnedPed = {
+    entity: number;
+    ped: GridPed;
+};
+
 @Provider()
 export class PedFactory {
     private peds: { [id: number]: any } = {};
+    private pedprops = new Map<number, number[]>();
 
     @Inject(ResourceLoader)
     private resourceLoader: ResourceLoader;
 
+    private loadedPeds: Record<string, SpawnedPed> = {};
+
+    private pedsByChunk = new Map<number, GridPed[]>();
+
+    private currentChunks: number[] = [];
+
+    public async createPedOnGrid(ped: Ped): Promise<string> {
+        const position = [ped.coords.x, ped.coords.y, ped.coords.z] as Vector3;
+        const chunk = getChunkId(position);
+        const gridPed = {
+            ...ped,
+            id: uuidv4(),
+        };
+
+        if (!this.pedsByChunk.has(chunk)) {
+            this.pedsByChunk.set(chunk, []);
+        }
+
+        this.pedsByChunk.get(chunk).push(gridPed);
+
+        if (this.currentChunks.includes(chunk)) {
+            await this.spawnPed(gridPed);
+        }
+
+        return gridPed.id;
+    }
+
+    private async spawnPed(ped: GridPed) {
+        const entity = await this.createPed(ped);
+
+        this.loadedPeds[ped.id] = {
+            entity,
+            ped,
+        };
+    }
+
+    private unspawnPed(id: string): void {
+        const spawned = this.loadedPeds[id];
+
+        if (!spawned) {
+            return;
+        }
+
+        if (!DoesEntityExist(spawned.entity)) {
+            return;
+        }
+
+        const props = this.pedprops.get(spawned.entity);
+        if (props) {
+            for (const prop of props) {
+                DeleteObject(prop);
+            }
+        }
+        this.pedprops.delete(spawned.entity);
+
+        DeletePed(spawned.entity);
+        delete this.loadedPeds[id];
+    }
+
+    public async updateSpawnPedOnGridChange(grid: number[]) {
+        const removedChunks = this.currentChunks.filter(chunk => !grid.includes(chunk));
+        const addedChunks = grid.filter(chunk => !this.currentChunks.includes(chunk));
+
+        this.currentChunks = grid;
+
+        // Unload objects from removed chunks
+        for (const chunk of removedChunks) {
+            if (this.pedsByChunk.has(chunk)) {
+                for (const ped of this.pedsByChunk.get(chunk)) {
+                    this.unspawnPed(ped.id);
+                }
+            }
+        }
+
+        // Load objects from added chunks
+        for (const chunk of addedChunks) {
+            if (this.pedsByChunk.has(chunk)) {
+                for (const ped of this.pedsByChunk.get(chunk)) {
+                    await this.spawnPed(ped);
+                }
+            }
+        }
+    }
+
     public async createPed(ped: Ped): Promise<number> {
         const hash = typeof ped.model === 'string' ? GetHashKey(ped.model) : ped.model;
 
-        await this.resourceLoader.loadModel(hash);
+        if (!(await this.resourceLoader.loadModel(hash))) {
+            return 0;
+        }
 
         const pedId = CreatePed(
             0,
@@ -87,6 +190,15 @@ export class PedFactory {
             ped.isScriptHostPed || false
         );
 
+        this.resourceLoader.unloadModel(hash);
+
+        // if (ped.isRandomClothes) {
+        //     SetPedRandomComponentVariation(pedId, 0);
+        // } else {
+        //     SetPedDefaultComponentVariation(pedId);
+        // }
+        // @TODO Temporary disabled random variation as it's seems there is too much memory involved when doing that
+        // @TODO We should add a grid system to load only the peds around the player (and unload the others)
         SetPedDefaultComponentVariation(pedId);
 
         if (ped.components) {
@@ -176,12 +288,60 @@ export class PedFactory {
             TaskStartScenarioInPlace(pedId, ped.scenario, 0, true);
         }
 
+        if (ped.animprops) {
+            const pedprops = [];
+            for (const prop of ped.animprops) {
+                if (!(await this.resourceLoader.loadModel(prop.model))) {
+                    continue;
+                }
+
+                const playerOffset = GetOffsetFromEntityInWorldCoords(pedId, 0.0, 0.0, 0.0) as Vector3;
+                const propId = CreateObject(
+                    GetHashKey(prop.model),
+                    playerOffset[0],
+                    playerOffset[1],
+                    playerOffset[2],
+                    false,
+                    false,
+                    false
+                );
+
+                this.resourceLoader.unloadModel(prop.model);
+
+                AttachEntityToEntity(
+                    propId,
+                    pedId,
+                    GetPedBoneIndex(pedId, prop.bone),
+                    prop.position[0],
+                    prop.position[1],
+                    prop.position[2],
+                    prop.rotation[0],
+                    prop.rotation[1],
+                    prop.rotation[2],
+                    true,
+                    true,
+                    false,
+                    true,
+                    0,
+                    true
+                );
+                pedprops.push(propId);
+            }
+            this.pedprops.set(pedId, pedprops);
+        }
+
         this.peds[pedId] = true;
         return pedId;
     }
 
     @Once(OnceStep.Stop)
     public async onServerStop() {
+        for (const [, props] of this.pedprops) {
+            for (const prop of props) {
+                DeleteObject(prop);
+            }
+        }
+        this.pedprops.clear();
         for (const pedId in this.peds) {
             DeletePed(Number(pedId));
         }

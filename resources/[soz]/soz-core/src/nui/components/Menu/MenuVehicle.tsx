@@ -39,6 +39,10 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
         fetchNui(NuiEvent.VehicleSetEngine, value);
     };
 
+    const onNeonLightStatusChange = (value: boolean) => {
+        fetchNui(NuiEvent.VehicleSetNeonStatus, value);
+    };
+
     const onSpeedLimit = (value: number | null) => {
         fetchNui(NuiEvent.VehicleSetSpeedLimit, value);
     };
@@ -49,6 +53,10 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
 
     const onOpenLSCustom = () => {
         fetchNui(NuiEvent.VehicleOpenLSCustom);
+    };
+
+    const onPitStop = price => {
+        fetchNui(NuiEvent.VehiclePitStop, price);
     };
 
     const createOnDoorChange = (doorIndex: number) => {
@@ -75,6 +83,11 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
                             Moteur allumé
                         </MenuItemCheckbox>
                     )}
+                    {data.isDriver && data.hasNeon && (
+                        <MenuItemCheckbox onChange={onNeonLightStatusChange} checked={data.neonLightsStatus}>
+                            Néons allumés
+                        </MenuItemCheckbox>
+                    )}
                     {data.hasRadio && (
                         <MenuItemButton onConfirm={() => onRadioLongRange()}>Radio longue portée</MenuItemButton>
                     )}
@@ -99,6 +112,14 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
                             <MenuItemSubMenuLink id="door">Gestion des portes</MenuItemSubMenuLink>
                             {data.insideLSCustom && (
                                 <MenuItemButton onConfirm={() => onOpenLSCustom()}>LS Custom</MenuItemButton>
+                            )}
+                            {data.insideLSCustom && !data.onDutyNg && (
+                                <MenuItemButton
+                                    onConfirm={() => onPitStop(data.pitstopPrice)}
+                                    description={`Prix: ${data.pitstopPrice} $`}
+                                >
+                                    Pit Stop
+                                </MenuItemButton>
                             )}
                         </>
                     )}

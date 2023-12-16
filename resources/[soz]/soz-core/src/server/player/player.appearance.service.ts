@@ -151,4 +151,8 @@ export class PlayerAppearanceService {
         const player = this.QBCore.getPlayer(source);
         player.Functions.SetClothConfig(config, skipApply);
     }
+
+    public clearCloakroom(citizenId: string) {
+        exports['soz-character'].TruncatePlayerCloakroomFromTier(citizenId, 0);
+    }
 }

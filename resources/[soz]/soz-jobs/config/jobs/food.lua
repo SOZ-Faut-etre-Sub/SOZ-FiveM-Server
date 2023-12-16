@@ -22,27 +22,27 @@ FoodConfig.Categories = {
 
 FoodConfig.Fields = {
     ["cardinal"] = {
-        prodRange = {min = 250, max = 400},
+        prodRange = {min = 500, max = 800},
         harvestRange = {min = 3, max = 5},
-        refillDelay = 60000, -- in ms
+        refillDelay = 30000, -- in ms
         item = "grape1",
     },
     ["muscat"] = {
-        prodRange = {min = 400, max = 600},
+        prodRange = {min = 800, max = 1200},
         harvestRange = {min = 3, max = 5},
-        refillDelay = 60000, -- in ms
+        refillDelay = 30000, -- in ms
         item = "grape2",
     },
     ["centennial"] = {
-        prodRange = {min = 400, max = 600},
+        prodRange = {min = 800, max = 1200},
         harvestRange = {min = 3, max = 5},
-        refillDelay = 60000, -- in ms
+        refillDelay = 30000, -- in ms
         item = "grape3",
     },
     ["chasselas"] = {
-        prodRange = {min = 400, max = 600},
+        prodRange = {min = 800, max = 1200},
         harvestRange = {min = 3, max = 5},
-        refillDelay = 60000, -- in ms
+        refillDelay = 30000, -- in ms
         item = "grape4",
     },
 }
@@ -195,6 +195,10 @@ FoodConfig.AnimalAllowedToHunt = {
     [GetHashKey("a_c_pigeon")] = true,
     [GetHashKey("a_c_rabbit_01")] = true,
     [GetHashKey("a_c_seagull")] = true,
+    [GetHashKey("a_c_boar_02")] = true,
+    [GetHashKey("a_c_coyote_02")] = true,
+    [GetHashKey("a_c_deer_02")] = true,
+    [GetHashKey("a_c_mtlion_02")] = true,
 }
 FoodConfig.HuntingReward = {
     ["peau"] = {min = 0, max = 2},

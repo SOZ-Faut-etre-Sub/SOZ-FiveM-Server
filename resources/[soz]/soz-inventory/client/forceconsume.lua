@@ -5,6 +5,7 @@ AddEventHandler("inventory:client:force-consume", function(targetId)
         if inventory ~= nil then
             SendNUIMessage({action = "openForceConsume", playerInventory = inventory, targetId = targetId})
             SetNuiFocus(true, true)
+            InventoryOpen = true
         end
     end, "player", targetId)
 end)

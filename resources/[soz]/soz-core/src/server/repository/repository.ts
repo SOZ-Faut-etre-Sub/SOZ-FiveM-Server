@@ -1,5 +1,5 @@
-import { ClientEvent } from '@public/shared/event';
 import { RepositoryConfig, RepositoryType } from '@public/shared/repository';
+import { applyPatch, generate, observe, Observer } from 'fast-json-patch';
 
 export abstract class RepositoryLegacy<T> {
     private data: T | null;
@@ -51,6 +51,7 @@ export abstract class Repository<
 
     private loadPromise: Promise<void> | null = null;
     private loadResolve: () => void;
+    private observer: Observer<Record<K, V>> = null;
 
     public constructor() {
         this.loadPromise = new Promise(resolve => {
@@ -60,14 +61,18 @@ export abstract class Repository<
 
     public async init() {
         this.data = await this.load();
+        this.observer = observe(this.data);
+
+        // normalize data
+        const patch = generate(this.observer);
+        applyPatch(this.data, patch);
+
         this.loadResolve();
         this.loadPromise = null;
     }
 
-    public async delete(id: K): Promise<void> {
+    public delete(id: K): void {
         delete this.data[id];
-
-        TriggerClientEvent(ClientEvent.REPOSITORY_DELETE_DATA, -1, this.type, id);
     }
 
     public async set(id: K, value: V): Promise<void> {
@@ -76,7 +81,6 @@ export abstract class Repository<
         }
 
         this.data[id] = value;
-        this.sync(id);
     }
 
     public async find(id: K): Promise<V | null> {
@@ -95,7 +99,7 @@ export abstract class Repository<
         return this.data;
     }
 
-    public async get(predicate?: (value: V, index: number, array: V[]) => T): Promise<V[]> {
+    public async get(predicate?: (value: V, index: number, array: V[]) => boolean): Promise<V[]> {
         if (this.loadPromise) {
             await this.loadPromise;
         }
@@ -109,8 +113,12 @@ export abstract class Repository<
         return values;
     }
 
-    protected sync(key: K) {
-        TriggerClientEvent(ClientEvent.REPOSITORY_SET_DATA, -1, this.type, key, this.data[key]);
+    public observe() {
+        if (!this.observer) {
+            return;
+        }
+
+        return generate(this.observer);
     }
 
     protected abstract load(): Promise<Record<K, V>>;

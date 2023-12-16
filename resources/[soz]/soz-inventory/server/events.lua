@@ -25,7 +25,8 @@ RegisterServerEvent("inventory:server:bin-vandalism", function(invID, ctx)
     local binInv = GetOrCreateInventory(storageType, invID, ctx)
     local count = Inventory.Search(binInv, "amount", "garbagebag")
     Inventory.RemoveItem(binInv, "garbagebag", count)
-    Inventory.AddItem(source, binInv, "torn_garbagebag", math.floor(count / 2))
+    local isHalloween = exports["soz-core"]:isHalloween()
+    Inventory.AddItem(source, binInv, isHalloween and "halloween_infernus_garbage" or "torn_garbagebag", math.floor(count / 2))
 end)
 
 QBCore.Functions.CreateCallback("inventory:server:TransfertItem",
@@ -33,6 +34,19 @@ QBCore.Functions.CreateCallback("inventory:server:TransfertItem",
     Inventory.TransfertItem(source, inventorySource, inventoryTarget, item, amount, metadata, slot, function(success, reason)
         local sourceInv = Inventory(inventorySource)
         local targetInv = Inventory(inventoryTarget)
+
+        if sourceInv.type == "player" and targetInv.type == "player" then
+            local coord1 = GetEntityCoords(GetPlayerPed(sourceInv.id))
+            local coord2 = GetEntityCoords(GetPlayerPed(targetInv.id))
+
+            if (#(coord1 - coord2) > 10) then
+                exports["soz-core"]:Report(source, "Vol de d'objet", targetInv.owner, item .. " " .. amount, {
+                    coord1.x,
+                    coord1.y,
+                    coord1.z,
+                });
+            end
+        end
 
         local sourceInventory = sourceInv
         if sourceInv.id == targetInv.id and manualFilter then
@@ -52,6 +66,17 @@ end)
 QBCore.Functions.CreateCallback("inventory:server:TransfertMoney", function(source, cb, target, amount, inverse)
     local SourcePlayer = QBCore.Functions.GetPlayer(source)
     local TargetPlayer = QBCore.Functions.GetPlayer(tonumber(target))
+
+    local coord1 = GetEntityCoords(GetPlayerPed(SourcePlayer.PlayerData.source))
+    local coord2 = GetEntityCoords(GetPlayerPed(TargetPlayer.PlayerData.source))
+
+    if (#(coord1 - coord2) > 10) then
+        exports["soz-core"]:Report(source, "Vol d'argent", TargetPlayer.PlayerData.citizenid, amount, {
+            coord2.x,
+            coord2.y,
+            coord2.z,
+        });
+    end
 
     if inverse then
         local temp = TargetPlayer
@@ -92,9 +117,9 @@ QBCore.Functions.CreateCallback("inventory:server:TransfertMoney", function(sour
         end
 
         exports["soz-core"]:Event("give_money", {
-            src = SourcePlayer.PlayerData.citizenid,
+            player_source = SourcePlayer.PlayerData.source,
             target = TargetPlayer.PlayerData.citizenid,
-        }, {money = moneyTake, marked_money = markedMoneyTake})
+        }, {money = moneyTake, marked_money = markedMoneyTake, inverse = inverse})
     else
         TriggerClientEvent("soz-core:client:notification:draw", source, "Pas assez d'argent", "error")
     end

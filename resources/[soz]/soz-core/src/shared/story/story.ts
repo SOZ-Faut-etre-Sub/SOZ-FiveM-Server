@@ -25,3 +25,8 @@ export enum ScenarioState {
     Running,
     Finished,
 }
+
+export const ScenarioOrder = {
+    halloween2022: ['scenario1', 'scenario2', 'scenario3', 'scenario4'],
+    halloween2023: ['scenario1', 'scenario2', 'scenario3', 'scenario4'],
+};

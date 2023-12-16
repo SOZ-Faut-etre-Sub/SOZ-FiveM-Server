@@ -18,6 +18,14 @@ export class CallService {
         });
     }
 
+    isTransmitter() {
+        return this.currentCallData?.isTransmitter;
+    }
+
+    getTransmitterNumber() {
+        return this.currentCallData?.transmitter;
+    }
+
     hasAnActiveCall() {
         return this.currentCallData !== null;
     }
@@ -44,8 +52,9 @@ export class CallService {
     }
 
     handleStartCall(transmitter: string, receiver: string, isTransmitter: boolean, isUnavailable: boolean) {
+        const state = exports['soz-core'].GetPlayerState();
         // If we're already in a call we want to automatically reject
-        if (this.hasAnActiveCall() || this.isInCall()) {
+        if (this.hasAnActiveCall() || this.isInCall() || state.isDead) {
             //Currently we let the caller wait indefinitly, so no rejection send to caller
             return;
         }

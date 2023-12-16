@@ -1,4 +1,4 @@
-import { Injectable } from '@core/decorators/injectable';
+import { Inject, Injectable } from '@core/decorators/injectable';
 import { ClientEvent } from '@public/shared/event';
 import { Vector4 } from '@public/shared/polyzone/vector';
 import { getDefaultVehicleConfiguration, VehicleConfiguration } from '@public/shared/vehicle/modification';
@@ -11,6 +11,7 @@ import {
     VehicleSyncStrategy,
     VehicleVolatileState,
 } from '../../shared/vehicle/vehicle';
+import { VehicleTowProvider } from './vehicle.tow.provider';
 
 type VehicleState = {
     volatile: VehicleVolatileState;
@@ -38,6 +39,9 @@ const VehicleConditionSyncStrategy: Record<keyof VehicleCondition, VehicleSyncSt
 
 @Injectable()
 export class VehicleStateService {
+    @Inject(VehicleTowProvider)
+    private vehicleTowProvider: VehicleTowProvider;
+
     private state: Map<number, VehicleState> = new Map<number, VehicleState>();
 
     private vehicleKeys: Record<string, Set<string>> = {};
@@ -290,7 +294,7 @@ export class VehicleStateService {
         );
     }
 
-    public unregister(netId) {
+    public unregister(netId: number) {
         this.state.delete(netId);
         TriggerClientEvent(ClientEvent.VEHICLE_DELETE_STATE, -1, netId);
         TriggerClientEvent(ClientEvent.VEHICLE_CONDITION_UNREGISTER, -1, netId);
@@ -299,6 +303,8 @@ export class VehicleStateService {
             this.vehicleOpened.delete(netId);
             TriggerClientEvent(ClientEvent.VEHICLE_SET_OPEN_LIST, -1, [...this.vehicleOpened]);
         }
+
+        this.vehicleTowProvider.unregister(netId);
     }
 
     public hasVehicleKey(vehiclePlate: string, citizenId: string): boolean {

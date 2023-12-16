@@ -81,6 +81,14 @@ export class InventoryManager {
         return inventoryItem;
     }
 
+    public getOrCreateInventory(
+        trunkType: string,
+        plate: string,
+        context: { model: string; class: string; entity: number }
+    ) {
+        return this.sozInventory.GetOrCreateInventory(trunkType, plate, context);
+    }
+
     public async getVehicleStorageWeight(plate: string): Promise<number> {
         const inventory = this.sozInventory.GetOrCreateInventory('trunk', plate);
 
@@ -227,7 +235,7 @@ export class InventoryManager {
     }
 
     public addItemToInventoryNotPlayer(
-        source: string,
+        inventoryId: string,
         itemId: string,
         amount = 1,
         metadata?: InventoryItemMetadata,
@@ -235,7 +243,7 @@ export class InventoryManager {
     ): { success: boolean; reason?: string } {
         let success, reason;
 
-        this.sozInventory.AddItem(-2, source, itemId, amount, metadata, slot, (s, r) => {
+        this.sozInventory.AddItem(-2, inventoryId, itemId, amount, metadata, slot, (s, r) => {
             success = s;
             reason = r;
         });
@@ -315,6 +323,15 @@ export class InventoryManager {
         }
 
         return false;
+    }
+
+    public clearApartment(apartmentIdentifier: string): void {
+        this.sozInventory.ClearByOwner(apartmentIdentifier);
+        this.sozInventory.SetHouseStashMaxWeightFromTier(apartmentIdentifier, 0);
+    }
+
+    public setHouseStashMaxWeightFromTier(apartmentIdentifier: string, tier: number): void {
+        this.sozInventory.SetHouseStashMaxWeightFromTier(apartmentIdentifier, tier);
     }
 
     // TODO: Implement the following method in soz core directly

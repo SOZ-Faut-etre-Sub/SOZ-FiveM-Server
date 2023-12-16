@@ -77,7 +77,7 @@ export const DealershipConfig: Partial<Record<DealershipType, DealershipConfigIt
             position: [-46.64, -1097.53, 25.44, 26.42],
             camera: [-53.69, -1094.83, 27.0],
         },
-        daysBeforeNextPurchase: 7,
+        //daysBeforeNextPurchase: 7,
         garageName: 'airport_public',
     },
     [DealershipType.Cycle]: {
@@ -106,7 +106,7 @@ export const DealershipConfig: Partial<Record<DealershipType, DealershipConfigIt
             position: [1224.66, 2706.15, 38.01, 120.0],
             camera: [1224.5, 2701.63, 39.0],
         },
-        daysBeforeNextPurchase: 7,
+        //daysBeforeNextPurchase: 7,
         garageName: 'bell_farms',
     },
     [DealershipType.Air]: {
@@ -121,7 +121,7 @@ export const DealershipConfig: Partial<Record<DealershipType, DealershipConfigIt
             position: [1730.47, 3314.38, 40.22, 153.64],
             camera: [1733.07, 3303.82, 42.22],
         },
-        daysBeforeNextPurchase: 7,
+        //daysBeforeNextPurchase: 7,
         garageName: 'sandy_shores_air',
     },
     [DealershipType.Boat]: {
@@ -136,7 +136,7 @@ export const DealershipConfig: Partial<Record<DealershipType, DealershipConfigIt
             position: [-128.36, -2729.54, 0.58, 136.81],
             camera: [-144.22, -2721.76, 6.09],
         },
-        daysBeforeNextPurchase: 7,
+        //daysBeforeNextPurchase: 7,
         garageName: 'docks_boat',
         task: 'WORLD_HUMAN_SMOKING',
     },
@@ -152,7 +152,7 @@ export const DealershipConfig: Partial<Record<DealershipType, DealershipConfigIt
             position: [-71.42, 70.37, 71.97, 324.87],
             camera: [-71.09, 76.8, 72.68],
         },
-        daysBeforeNextPurchase: 7,
+        //daysBeforeNextPurchase: 7,
         garageName: 'airport_public',
     },
 };

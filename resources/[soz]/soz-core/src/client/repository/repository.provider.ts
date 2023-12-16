@@ -1,15 +1,16 @@
 import { DrugSeedlingRepository } from '@private/client/repository/drug.seedling.repository';
 import { DrugSellLocationRepository } from '@private/client/repository/drug.sell.location.repository';
+import { Operation } from 'fast-json-patch';
 
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject, MultiInject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { OnceLoader } from '../../core/loader/once.loader';
+import { Logger } from '../../core/logger';
 import { ClientEvent } from '../../shared/event';
 import { BillboardRepository } from './billboard.repository';
 import { FuelStationRepository } from './fuel.station.repository';
 import { GarageRepository } from './garage.repository';
-import { JobGradeRepository } from './job.grade.repository';
 import { RaceRepository } from './race.repository';
 import { Repository } from './repository';
 import { UnderTypesShopRepository } from './under_types.shop.repository';
@@ -20,9 +21,6 @@ import { VehicleRepository } from './vehicle.repository';
 export class RepositoryProvider {
     @Inject(GarageRepository)
     private garageRepository: GarageRepository;
-
-    @Inject(JobGradeRepository)
-    private jobGradeRepository: JobGradeRepository;
 
     @Inject(VehicleRepository)
     private vehicleRepository: VehicleRepository;
@@ -54,10 +52,12 @@ export class RepositoryProvider {
     @MultiInject(Repository)
     private repositories: Repository<any>[];
 
+    @MultiInject(Logger)
+    private logger: Logger;
+
     @Once(OnceStep.PlayerLoaded)
     public async onRepositoryStart() {
         await this.garageRepository.load();
-        await this.jobGradeRepository.load();
         await this.vehicleRepository.load();
         await this.fuelStationRepository.load();
         await this.upwChargerRepository.load();
@@ -74,26 +74,23 @@ export class RepositoryProvider {
         this.onceLoader.trigger(OnceStep.RepositoriesLoaded);
     }
 
-    @OnEvent(ClientEvent.REPOSITORY_SET_DATA)
-    onAddData(type: string, key: any, data: any) {
+    @OnEvent(ClientEvent.REPOSITORY_PATCH_DATA)
+    onPatchData(type: string, patch: Operation[]) {
         const repository = this.repositories.find(repository => repository.type === type);
 
         if (!repository) {
             return;
         }
 
-        repository.set(key, data);
-    }
-
-    @OnEvent(ClientEvent.REPOSITORY_DELETE_DATA)
-    onDeleteData(type: string, key: any) {
-        const repository = this.repositories.find(repository => repository.type === type);
-
-        if (!repository) {
+        if (!repository.isInitialized) {
             return;
         }
 
-        repository.delete(key);
+        try {
+            repository.patch(patch);
+        } catch (e) {
+            this.logger.error(`Error while patching repository ${type}`, e, JSON.stringify(patch));
+        }
     }
 
     @OnEvent(ClientEvent.REPOSITORY_SYNC_DATA)
@@ -101,9 +98,6 @@ export class RepositoryProvider {
         switch (repositoryName) {
             case 'garage':
                 this.garageRepository.update(data);
-                break;
-            case 'jobGrade':
-                this.jobGradeRepository.update(data);
                 break;
             case 'vehicle':
                 this.vehicleRepository.update(data);

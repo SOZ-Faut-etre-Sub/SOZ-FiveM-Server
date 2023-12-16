@@ -28,4 +28,8 @@ export type PlayerPersonalMenuData = {
     scaledNui: boolean;
     shortcuts: Record<string, Shortcut>;
     job: JobMenuData;
+    deguisement: boolean;
+    naked: boolean;
+    halloween: boolean;
+    arachnophobe: boolean;
 };

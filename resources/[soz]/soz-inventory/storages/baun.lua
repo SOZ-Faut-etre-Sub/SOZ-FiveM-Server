@@ -29,7 +29,7 @@ local function getCocktailTargetOption()
         canInteract = function()
             local numberOfCocktails = 0
             for _, item in pairs(PlayerData.items) do
-                if item.type == "cocktail" and not exports["soz-utils"]:ItemIsExpired(item) then
+                if item.type == "cocktail" and not exports["soz-core"]:ItemIsExpired(item) then
                     numberOfCocktails = numberOfCocktails + item.amount
                 end
             end
@@ -51,7 +51,7 @@ local function getIceMachineTargetOption()
         canInteract = function()
             local numberOfWaterBottle = 0
             for _, item in pairs(PlayerData.items) do
-                if item.name == "water_bottle" and not exports["soz-utils"]:ItemIsExpired(item) then
+                if item.name == "water_bottle" and not exports["soz-core"]:ItemIsExpired(item) then
                     numberOfWaterBottle = numberOfWaterBottle + item.amount
                 end
             end

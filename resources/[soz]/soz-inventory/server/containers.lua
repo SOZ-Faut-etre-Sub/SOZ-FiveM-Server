@@ -156,7 +156,7 @@ Container["boss_storage"] = InventoryContainer:new({
     type = "boss_storage",
     allowedTypes = {"weapon", "weapon_ammo", "item", "oil_and_item", "tool"},
     inventoryPermissionCallback = function(player, owner)
-        return SozJobCore.Functions.HasPermission(owner, player.PlayerData.job.id, player.PlayerData.job.grade, SozJobCore.JobPermission.SocietyPrivateStorage)
+        return exports["soz-core"]:HasJobPermission(owner, player.PlayerData.job.id, player.PlayerData.job.grade, "society-private-storage")
     end,
 })
 

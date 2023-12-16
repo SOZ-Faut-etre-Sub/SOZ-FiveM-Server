@@ -21,6 +21,7 @@ import { RpcServerEvent } from '../../shared/rpc';
 import { PedFactory } from '../factory/ped.factory';
 import { Notifier } from '../notifier';
 import { PhoneService } from '../phone/phone.service';
+import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
 import { VehicleSeatbeltProvider } from '../vehicle/vehicle.seatbelt.provider';
 import { Penalties } from './penalties';
@@ -41,36 +42,39 @@ export class ExamProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
+    @Inject(PlayerPositionProvider)
+    private playerPositionProvider: PlayerPositionProvider;
+
     @Inject(VehicleSeatbeltProvider)
     private seatbeltProvider: VehicleSeatbeltProvider;
 
     @On(ClientEvent.DRIVING_SCHOOL_SETUP_EXAM)
-    public async setupDrivingSchoolExam(licenseType: DrivingSchoolLicenseType, spawnPoint: Vector4) {
+    public async setupDrivingSchoolExam(licenseType: DrivingSchoolLicenseType, spawnPoint: Vector4, spawnName: string) {
         await this.screenFadeOut();
 
         this.examState.license = DrivingSchoolConfig.licenses[licenseType];
 
         this.examState.spawnPoint = spawnPoint;
 
-        const instructorConfig = DrivingSchoolConfig.peds.instructor;
-        const instructor = await this.pedFactory.createPed({
-            ...instructorConfig,
-            invincible: true,
-            blockevents: true,
+        await this.playerPositionProvider.teleportPlayerToPosition(spawnName, async () => {
+            await wait(200);
+            const instructorConfig = DrivingSchoolConfig.peds.instructor;
+            const instructor = await this.pedFactory.createPed({
+                ...instructorConfig,
+                invincible: true,
+                blockevents: true,
+            });
+
+            const vehicleModel = this.examState.license.vehicle.model;
+            const vehicleNetId = await emitRpc<number>(RpcServerEvent.DRIVING_SCHOOL_SPAWN_VEHICLE, vehicleModel);
+
+            const vehicle = NetToVeh(vehicleNetId);
+            SetVehicleNumberPlateText(vehicle, DrivingSchoolConfig.vehiclePlateText);
+            SetPedIntoVehicle(instructor, vehicle, 0);
+
+            this.examState.instructorEntity = instructor;
+            this.examState.vehicleEntity = vehicle;
         });
-
-        this.teleportPlayer(this.examState.spawnPoint);
-        await wait(200);
-
-        const vehicleModel = this.examState.license.vehicle.model;
-        const vehicleNetId = await emitRpc<number>(RpcServerEvent.DRIVING_SCHOOL_SPAWN_VEHICLE, vehicleModel);
-
-        const vehicle = NetToVeh(vehicleNetId);
-        SetVehicleNumberPlateText(vehicle, DrivingSchoolConfig.vehiclePlateText);
-        SetPedIntoVehicle(instructor, vehicle, 0);
-
-        this.examState.instructorEntity = instructor;
-        this.examState.vehicleEntity = vehicle;
 
         this.startExam();
 
@@ -149,12 +153,6 @@ export class ExamProvider {
         }
     }
 
-    private teleportPlayer([x, y, z, w]: Vector4) {
-        const playerPed = PlayerPedId();
-        SetEntityCoords(playerPed, x, y, z, false, false, false, false);
-        SetEntityHeading(playerPed, w);
-    }
-
     private startExam() {
         this.displayInstructorStartSpeech(this.examState.license.licenseType);
 
@@ -182,6 +180,15 @@ export class ExamProvider {
 
         if (this.playerService.getPlayer().metadata.isdead) {
             this.deleteVehicleAndPed();
+            if (
+                this.examState.license &&
+                (this.examState.license.licenseType === DrivingSchoolLicenseType.Heli ||
+                    this.examState.license.licenseType == DrivingSchoolLicenseType.Boat)
+            ) {
+                await this.playerPositionProvider.teleportPlayerToPosition(
+                    DrivingSchoolConfig.playerDefaultLocationName
+                );
+            }
         } else {
             await wait(2000);
             await this.deleteEntitiesAndTeleportBack();
@@ -240,7 +247,7 @@ export class ExamProvider {
 
         this.deleteVehicleAndPed();
 
-        this.teleportPlayer(DrivingSchoolConfig.playerDefaultLocation);
+        await this.playerPositionProvider.teleportPlayerToPosition(DrivingSchoolConfig.playerDefaultLocationName);
 
         await this.screenFadeIn();
     }

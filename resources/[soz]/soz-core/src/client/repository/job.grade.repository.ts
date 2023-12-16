@@ -1,25 +1,17 @@
 import { Injectable } from '../../core/decorators/injectable';
-import { emitRpc } from '../../core/rpc';
-import { JobGrade } from '../../shared/job';
-import { RpcServerEvent } from '../../shared/rpc';
+import { JobGrade, JobType } from '../../shared/job';
+import { RepositoryType } from '../../shared/repository';
+import { Repository } from './repository';
 
-@Injectable()
-export class JobGradeRepository {
-    private jobGrades: JobGrade[] = [];
+@Injectable(JobGradeRepository, Repository)
+export class JobGradeRepository extends Repository<RepositoryType.JobGrade> {
+    public type = RepositoryType.JobGrade;
 
-    public async load() {
-        this.jobGrades = await emitRpc(RpcServerEvent.REPOSITORY_GET_DATA, 'jobGrade');
-    }
-
-    public update(jobGrades: JobGrade[]) {
-        this.jobGrades = jobGrades;
-    }
-
-    public getJobGrade(job: string, grade: number): JobGrade | null {
-        return this.jobGrades.find(x => x.jobId === job && x.id === grade) ?? null;
-    }
-
-    public get(): JobGrade[] {
-        return this.jobGrades;
+    public getGradesByJob(jobId: JobType, maxGradeWeight?: number): JobGrade[] {
+        if (!maxGradeWeight) {
+            return this.get(grade => grade.jobId === jobId);
+        } else {
+            return this.get(grade => grade.jobId === jobId && grade.weight < maxGradeWeight);
+        }
     }
 }
