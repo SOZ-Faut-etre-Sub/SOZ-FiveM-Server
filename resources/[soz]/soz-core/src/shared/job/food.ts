@@ -177,6 +177,29 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
             },
         },
     },
+    Patisseries: {
+        duration: 6000,
+        icon: '🥐',
+        event: 'job_cm_food_craft',
+        recipes: {
+            clafoutis_grappe: {
+                inputs: {
+                    semi_skimmed_milk: { count: 1 },
+                    grape1: { count: 2 }
+                },
+                amount: 2,
+            },
+            gingerbread: {
+                inputs: {
+                    skimmed_milk: { count: 1 },
+                    grape1: { count: 1 },
+                    orange: { count: 1 },
+                    lemon: { count: 1 }
+                },
+                amount: 2,
+            },
+        },
+    },
     Saucissons: {
         duration: 8000,
         icon: '🌭',
@@ -244,6 +267,31 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
                 inputs: {
                     chocolat_egg: { count: 2 },
                     chocolat_milk_egg: { count: 2 },
+                },
+                amount: 1,
+            },
+        },
+    },
+    Hiver: {
+        feature: Feature.Winter,
+        duration: 5000,
+        icon: '❄️',
+        event: 'job_cm_food_craft',
+        recipes: {
+            hot_wine: {
+                inputs: {
+                    grape1: { count: 1 },
+                    grape2: { count: 1 },
+                    grape3: { count: 1 },
+                    grape4: { count: 1 }
+                },
+                amount: 1,
+            },
+            tartiflette: {
+                inputs: {
+                    potato: { count: 2 },
+                    cheese7: { count: 1 },
+                    viande: { count: 1 }
                 },
                 amount: 1,
             },
