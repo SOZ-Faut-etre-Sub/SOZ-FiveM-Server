@@ -178,7 +178,7 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
         },
     },
     Patisseries: {
-        duration: 6000,
+        duration: 8000,
         icon: '🥐',
         event: 'job_cm_food_craft',
         recipes: {
@@ -187,7 +187,7 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
                     semi_skimmed_milk: { count: 1 },
                     grape1: { count: 2 }
                 },
-                amount: 2,
+                amount: 4,
             },
             gingerbread: {
                 inputs: {
@@ -196,7 +196,21 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
                     orange: { count: 1 },
                     lemon: { count: 1 }
                 },
-                amount: 2,
+                amount: 4,
+            },
+        },
+    },
+    Plats : {
+        duration: 8000,
+        icon: '🍲',
+        event: 'job_cm_food_craft',
+        recipes: {
+            pumpkin_cheese_soup: {
+                inputs: {
+                    pumpkin: { count: 2 },
+                    cheese1: { count: 3 },
+                },
+                amount: 8,
             },
         },
     },
@@ -274,7 +288,7 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
     },
     Hiver: {
         feature: Feature.Winter,
-        duration: 5000,
+        duration: 8000,
         icon: '❄️',
         event: 'job_cm_food_craft',
         recipes: {
@@ -289,11 +303,12 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
             },
             tartiflette: {
                 inputs: {
-                    potato: { count: 2 },
-                    cheese7: { count: 1 },
-                    viande: { count: 1 }
+                    potato: { count: 5 },
+                    cheese3: { count: 3 },
+                    viande: { count: 2 },
+                    wine3: { count: 1 }
                 },
-                amount: 1,
+                amount: 8,
             },
         },
     },

@@ -14881,7 +14881,7 @@ QBShared.Items = {
     ['clafoutis_grappe'] = {
         ['name'] = 'clafoutis_grappe',
         ['label'] = 'Clafoutis aux raisins',
-        ['weight'] = 300,
+        ['weight'] = 500,
         ['type'] = 'food',
         ['durability'] = 14,
         ['unique'] = false,
@@ -14904,7 +14904,7 @@ QBShared.Items = {
     ['gingerbread'] = {
         ['name'] = 'gingerbread',
         ['label'] = 'Pain d\'épice aux fruits confits',
-        ['weight'] = 300,
+        ['weight'] = 500,
         ['type'] = 'food',
         ['durability'] = 14,
         ['unique'] = false,
@@ -14955,7 +14955,7 @@ QBShared.Items = {
     ['tartiflette'] = {
         ['name'] = 'tartiflette',
         ['label'] = 'Tartiflette',
-        ['weight'] = 300,
+        ['weight'] = 800,
         ['type'] = 'food',
         ['durability'] = 14,
         ['unique'] = false,
@@ -14974,5 +14974,28 @@ QBShared.Items = {
             ['alcohol'] = 0,
         },
         ['illustrator'] = '.Terrainwax',
+    },
+    ['pumpkin_cheese_soup'] = {
+        ['name'] = 'pumpkin_cheese_soup',
+        ['label'] = 'Soupe de citrouille gratinée',
+        ['weight'] = 800,
+        ['type'] = 'food',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = false,
+        ['durability'] = 14,
+        ['combinable'] = nil,
+        ['description'] = "Éruption de citrouille dans un océan de fromage fondant !",
+        ['nutrition'] = {
+            ['hunger'] = 50,
+            ['thirst'] = 50,
+            ['stamina'] = 0,
+            ['fiber'] = 2,
+            ['lipid'] = 0,
+            ['sugar'] = 1,
+            ['protein'] = 1,
+            ['alcohol'] = 0,
+        },
+        ['illustrator'] = '.Terrainwax'
     },
 }
