@@ -95,7 +95,6 @@ Config.Peds = {
 -------------------------------------------------------------------------------
 local function JobCheck() return true end
 local function SousMenu() return true end
-local function GangCheck() return true end
 local function ItemCount() return true end
 local function CitizenCheck() return true end
 local function RoleCheck() return true end
@@ -131,18 +130,6 @@ CreateThread(function()
 				return true
 			end
 
-			return false
-		end
-
-		GangCheck = function(gang)
-			if type(gang) == 'table' then
-				gang = gang[PlayerData.gang.name]
-				if PlayerData.gang.grade.level >= gang then
-					return true
-				end
-			elseif gang == 'all' or gang == PlayerData.gang.name then
-				return true
-			end
 			return false
 		end
 
@@ -233,10 +220,6 @@ CreateThread(function()
 			PlayerData.job = JobInfo
 		end)
 
-		RegisterNetEvent('QBCore:Client:OnGangUpdate', function(GangInfo)
-			PlayerData.gang = GangInfo
-		end)
-
 		RegisterNetEvent('QBCore:Player:SetPlayerData', function(val)
 			PlayerData = val
 		end)
@@ -259,7 +242,6 @@ function CheckOptions(data, entity, distance)
 	if data.job and not JobCheck(data.job) then return false end
 	if not data.allowVehicle and IsPedInAnyVehicle(ped, false) then return false end
 	if data.menu and SousMenu(data.menu) then return false end
-	if data.gang and not GangCheck(data.gang) then return false end
 	if data.item and ItemCount(data.item) < 1 then return false end
 	if data.citizenid and not CitizenCheck(data.citizenid) then return false end
 	if data.role and not RoleCheck(data.role) then return false end

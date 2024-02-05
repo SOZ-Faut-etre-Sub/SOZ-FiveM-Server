@@ -30,6 +30,7 @@ export type QBCorePlayer = {
         SetJobDuty: (onDuty: boolean) => void;
         SetJob: (job: JobType, grade: number) => void;
         SetSkin: (skin: Skin, skipApply: boolean) => void;
+        SetGang: (gangId: number, isboss: boolean) => void;
     };
     PlayerData: PlayerData;
 };
@@ -65,6 +66,10 @@ export type PlayerData = {
     skin: Skin;
     cloth_config: ClothConfig;
     source: number;
+    gang: {
+        id: number;
+        isboss: boolean;
+    };
 };
 
 export type FakeId = {

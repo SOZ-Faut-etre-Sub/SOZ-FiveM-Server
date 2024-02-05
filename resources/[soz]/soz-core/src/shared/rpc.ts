@@ -226,6 +226,9 @@ export enum RpcServerEvent {
 
     BANK_GET_INVOICES = 'soz-core:server:bank:get-invoices',
     BANK_CREATE_INVOICE = 'soz-core:server:bank:create-invoice',
+
+    GANG_VEHBIZ_LIST = 'soz-core:server:gang:vehbiz:list',
+    GANG_VEHBIZ_REFRESH_LIST = 'soz-core:server:gang:vehbiz:refresh-list',
 }
 
 export enum RpcClientEvent {

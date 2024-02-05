@@ -10053,6 +10053,18 @@ QBShared.Items = {
         ['description'] = "Si ton toit est sous l'eau, ce ticket peut t'aider !",
         ['illustrator'] = '.Sniteur'
     },
+    ['hacking_device'] = {
+        ['name'] = 'hacking_device',
+        ['label'] = "Système de Hack",
+        ['weight'] = 50,
+        ['useable'] = false,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
 
     --- Fishing Items
     ['basic_rod'] = {

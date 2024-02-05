@@ -121,6 +121,7 @@ export enum MenuType {
     HousingCloakroomMenu = 'housing_cloakroom_menu',
     ZkeaFournitureMenu = 'zkea_fourniture_menu',
     LsmcPlaster = 'lsmc_plaster',
+    GangAdmin = 'gang_admin',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {

@@ -6,6 +6,7 @@ import { TargetFactory } from '@public/client/target/target.factory';
 import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
+import { BlipType } from '@public/shared/blip';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { FDO, JobType } from '@public/shared/job';
 import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
@@ -132,7 +133,7 @@ export class PoliceSpeedZoneProvider {
                     ...zones[k],
                     zoneId,
                 };
-                this.blipFactory.createAreaBlip(
+                this.blipFactory.create(
                     k,
                     {
                         name: k,
@@ -142,9 +143,10 @@ export class PoliceSpeedZoneProvider {
                             z: zones[k].position[2],
                         },
                         radius: zones[k].radius,
+                        color: 1,
+                        sprite: 4,
+                        type: BlipType.Radius,
                     },
-                    1,
-                    4,
                     shouldDisplayBlip
                 );
             }

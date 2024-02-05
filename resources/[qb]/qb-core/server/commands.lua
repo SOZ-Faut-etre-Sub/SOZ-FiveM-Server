@@ -129,7 +129,7 @@ end, 'admin')
 QBCore.Commands.Add('gang', 'Check Your Gang', {}, false, function(source)
     local src = source
     local PlayerGang = QBCore.Functions.GetPlayer(source).PlayerData.gang
-    TriggerClientEvent('soz-core:client:notification:draw', src, string.format('[Gang]: %s [Grade]: %s', PlayerGang.label, PlayerGang.grade.name))
+    TriggerClientEvent('soz-core:client:notification:draw', src, string.format('[Gang]: %d [boss]: %s', PlayerGang.id, PlayerGang.grade.isboss and "true" or "false"))
 end, 'user')
 
 QBCore.Commands.Add('setgang', 'Set A Players Gang (Admin Only)', { { name = 'id', help = 'Player ID' }, { name = 'gang', help = 'Name of a gang' }, { name = 'grade', help = 'Grade' } }, true, function(source, args)

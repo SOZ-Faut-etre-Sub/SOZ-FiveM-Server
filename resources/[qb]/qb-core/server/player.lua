@@ -243,12 +243,8 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.job.grade = tostring(PlayerData.job.grade) or "1"
     -- Gang
     PlayerData.gang = PlayerData.gang or {}
-    PlayerData.gang.name = PlayerData.gang.name or 'none'
-    PlayerData.gang.label = PlayerData.gang.label or 'No Gang Affiliaton'
+    PlayerData.gang.id = PlayerData.gang.id or 0
     PlayerData.gang.isboss = PlayerData.gang.isboss or false
-    PlayerData.gang.grade = PlayerData.gang.grade or {}
-    PlayerData.gang.grade.name = PlayerData.gang.grade.name or 'none'
-    PlayerData.gang.grade.level = PlayerData.gang.grade.level or 0
     -- Other
     PlayerData.position = PlayerData.position or QBConfig.DefaultSpawn
     PlayerData.LoggedIn = true
@@ -332,31 +328,11 @@ function QBCore.Player.CreatePlayer(PlayerData)
         return true
     end
 
-    self.Functions.SetGang = function(gang, grade)
-        local gang = gang:lower()
-        local grade = tostring(grade) or '0'
+    self.Functions.SetGang = function(gangId, isboss)
+        self.PlayerData.gang.id = gangId
+        self.PlayerData.gang.isboss = isboss
 
-        if QBCore.Shared.Gangs[gang] then
-            self.PlayerData.gang.name = gang
-            self.PlayerData.gang.label = QBCore.Shared.Gangs[gang].label
-            if QBCore.Shared.Gangs[gang].grades[grade] then
-                local ganggrade = QBCore.Shared.Gangs[gang].grades[grade]
-                self.PlayerData.gang.grade = {}
-                self.PlayerData.gang.grade.name = ganggrade.name
-                self.PlayerData.gang.grade.level = tonumber(grade)
-                self.PlayerData.gang.isboss = ganggrade.isboss or false
-            else
-                self.PlayerData.gang.grade = {}
-                self.PlayerData.gang.grade.name = 'No Grades'
-                self.PlayerData.gang.grade.level = 0
-                self.PlayerData.gang.isboss = false
-            end
-
-            self.Functions.UpdatePlayerData()
-            TriggerClientEvent('QBCore:Client:OnGangUpdate', self.PlayerData.source, self.PlayerData.gang)
-            return true
-        end
-        return false
+        self.Functions.UpdatePlayerData()
     end
 
     self.Functions.SetJobDuty = function(onDuty)

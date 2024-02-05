@@ -862,3 +862,12 @@ model tax {
   id    String @id
   value Int    @db.Int
 }
+
+model gang {
+  id                 Int        @id @default(autoincrement())
+  name               String     @db.VarChar(100)
+  type               String     @db.VarChar(100)
+  universal_business String?    @db.VarChar(100)
+  hub                String     @db.Text
+  metadata           String     @db.Text
+}

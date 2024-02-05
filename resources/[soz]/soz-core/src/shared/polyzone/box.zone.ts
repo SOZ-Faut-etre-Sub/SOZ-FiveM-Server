@@ -32,6 +32,9 @@ export type LegacyHousingZone = {
 
 export enum ZoneType {
     NoStress = 'NoStress',
+    VehBizSpawn = 'VehBizSpawn',
+    VehBizDelivery = 'VehBizDelivery',
+    VehBizResell = 'VehBizResell',
 }
 
 export type ZoneTyped = Zone<{

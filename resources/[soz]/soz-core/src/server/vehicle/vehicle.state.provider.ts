@@ -253,7 +253,7 @@ export class VehicleStateProvider {
     public getFDOVehiclePosition(): VehicleLocation[] {
         const ret: VehicleLocation[] = [];
         for (const [netId, state] of this.vehicleStateService.getStates().entries()) {
-            if (!FDO_NO_FBI.includes(state.volatile.job)) {
+            if (!FDO_NO_FBI.includes(state.volatile.job) && !state.volatile.stolenLocator) {
                 continue;
             }
 
@@ -267,7 +267,7 @@ export class VehicleStateProvider {
                 plate: state.volatile.plate,
                 model: state.volatile.model,
                 position: [state.position[0], state.position[1], state.position[2]],
-                name: state.volatile.label,
+                name: state.volatile.stolenLocator ? 'Véhicule volé' : state.volatile.label,
             });
         }
 

@@ -1,5 +1,6 @@
 import { MenuDrugAdminLocation } from '@private/nui/drug/MenuDrugAdminLocation';
 import { DrugGardenMenu } from '@private/nui/drug/MenuDrugGarden';
+import { MenuGangAdmin } from '@private/nui/gang/MenuGangAdmin';
 import { MenuHubEntryAdmin } from '@private/nui/hub/MenuHubEntryAdmin';
 import { MenuIllegalShop } from '@private/nui/illegalshop/MenuIllegalShop';
 import { FunctionComponent, useLayoutEffect, useState } from 'react';
@@ -272,6 +273,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.HousingVisitMenu}/*`} element={<HousingVisitMenu data={menuData} />} />
             <Route path={`/${MenuType.LsmcPlaster}/*`} element={<LsmcPlasterMenu data={menuData} />} />
             <Route path={`/${MenuType.ObjectEditor}/*`} element={<MenuEditorObject data={menuData} />} />
+            <Route path={`/${MenuType.GangAdmin}/*`} element={<MenuGangAdmin />} />
         </Routes>
     );
 };

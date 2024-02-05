@@ -82,6 +82,15 @@ export class VehicleSpawnProvider {
         volatile: VehicleVolatileState,
         condition: VehicleCondition
     ): Promise<boolean> {
+        let tryCount = 0;
+        while (!NetworkDoesEntityExistWithNetworkId(networkId) || !NetworkDoesNetworkIdExist(networkId)) {
+            console.log('Fail try', tryCount);
+            await wait(0);
+            if (tryCount++ > 100) {
+                break;
+            }
+        }
+
         if (!NetworkDoesEntityExistWithNetworkId(networkId) || !NetworkDoesNetworkIdExist(networkId)) {
             this.logger.error(`network id ${networkId} does not exist, cannot spawn vehicle`);
 

@@ -1,3 +1,4 @@
+import { Gang } from '@private/shared/gang';
 import { BankAccount, Invoice, Tax, TaxType } from '@public/shared/bank';
 import { Configuration } from '@public/shared/configuration';
 import { Field } from '@public/shared/field';
@@ -44,6 +45,7 @@ export enum RepositoryType {
     Tax = 'tax',
     TowRope = 'towRope',
     Zone = 'zone',
+    Gang = 'gang',
 }
 
 export type RepositoryMapping = {
@@ -72,6 +74,7 @@ export type RepositoryMapping = {
     [RepositoryType.Tax]: Tax;
     [RepositoryType.TowRope]: TowRope;
     [RepositoryType.Zone]: ZoneTyped;
+    [RepositoryType.Gang]: Gang;
 };
 
 export interface RepositoryConfig extends Record<keyof RepositoryMapping, any> {
@@ -89,6 +92,7 @@ export interface RepositoryConfig extends Record<keyof RepositoryMapping, any> {
     [RepositoryType.Tax]: Record<TaxType, Tax>;
     [RepositoryType.TowRope]: Record<string, TowRope>;
     [RepositoryType.Zone]: Record<number, ZoneTyped>;
+    [RepositoryType.Gang]: Record<number, Gang>;
     // Not implemented
     [RepositoryType.Billboard]: Record<number, Billboard>;
     [RepositoryType.ChargerUpw]: Record<number, UpwCharger>;

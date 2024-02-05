@@ -488,4 +488,12 @@ export enum ServerEvent {
     BANK_INVOICE_REJECT = 'soz-core:server:bank:invoice-reject',
     BANK_REMOVE_ATM_LIQUIDITY_RATIO = 'soz-core:server:bank:remove-atm-liquidity-ratio',
     BANK_REFRESH_ACCOUNT = 'soz-core:server:bank:refresh-account',
+
+    GANG_ADMIN_CREATE = 'soz-core:server:gang:admin-create',
+    GANG_ADMIN_QUIT = 'soz-core:server:gang:admin-quit',
+    GANG_ADMIN_ASSIGN = 'soz-core:server:gang:admin-assign',
+
+    GANG_VEHBIZ_COMMAND = 'soz-core:server:gang:veh:command',
+    GANG_VEHBIZ_SPAWN = 'soz-core:server:gang:veh:spawn',
+    GANG_VEHBIZ_RESELL = 'soz-core:server:gang:veh:resell',
 }

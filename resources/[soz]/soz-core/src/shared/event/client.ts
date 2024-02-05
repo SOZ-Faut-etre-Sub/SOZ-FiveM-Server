@@ -350,4 +350,9 @@ export enum ClientEvent {
     BANK_PHONE_NEW_STATEMENT = 'phone:app:bank-statements:newStatement',
     BANK_PHONE_NEW_CONTACT = 'phone:app:bank-contacts:addContact',
     BANK_PHONE_REMOVE_CONTACT = 'phone:app:bank-contacts:removeContact',
+
+    BLIP_CREATE = 'soz-core:client:blip:create',
+    BLIP_DELETE = 'soz-core:client:blip:delete',
+
+    GANG_VEHBIZ_CONTAINER = 'soz-core:client:gang:veh:container',
 }

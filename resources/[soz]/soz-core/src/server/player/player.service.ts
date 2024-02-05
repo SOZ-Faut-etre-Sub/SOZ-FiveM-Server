@@ -132,6 +132,14 @@ export class PlayerService {
         }
     }
 
+    public setPlayerGang(source: number, gangId: number, isboss: boolean): void {
+        const player = this.QBCore.getPlayer(source);
+
+        if (player) {
+            player.Functions.SetGang(gangId, isboss);
+        }
+    }
+
     public setPlayerMetadata<K extends keyof PlayerMetadata>(source: number, key: K, value: PlayerMetadata[K]) {
         const player = this.QBCore.getPlayer(source);
 

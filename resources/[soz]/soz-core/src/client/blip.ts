@@ -1,9 +1,10 @@
-import { Once, OnceStep } from '@core/decorators/event';
+import { Once, OnceStep, OnEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { Qbcore } from '@public/client/qbcore';
+import { ClientEvent } from '@public/shared/event/client';
 
-import { Blip } from '../shared/blip';
+import { Blip, BlipType } from '../shared/blip';
 
 type GameBlip = {
     blip: Blip;
@@ -18,10 +19,12 @@ export class BlipFactory {
 
     private blips = new Map<string, GameBlip>();
 
+    @OnEvent(ClientEvent.BLIP_CREATE)
     public create(id: string, blipCreated: Blip, show = true): number {
         const blip = {
             range: true,
             scale: 0.8,
+            type: BlipType.Coord,
             ...blipCreated,
         };
 
@@ -29,38 +32,14 @@ export class BlipFactory {
             blip.position = [blip.coords.x, blip.coords.y, blip.coords.z];
         }
 
-        const gameId = AddBlipForCoord(blip.position[0], blip.position[1], blip.position[2]);
-
-        if (!gameId) {
-            throw new Error(`Failed to create blip ${id}`);
-        }
-
-        this.updateGameBlip(id, gameId, blip);
-        this.blips.set(id, { blip, id, gameId });
-
-        if (!show) {
-            this.hide(id, true);
-        }
-
-        return gameId;
-    }
-
-    public createAreaBlip(id: string, blipCreated: Blip, colour?: number, sprite?: number, show = true) {
-        const blip = {
-            radius: 5,
-            ...blipCreated,
-        };
-
-        if (blip.coords) {
-            blip.position = [blip.coords.x, blip.coords.y, blip.coords.z];
-        }
-
-        const gameId = AddBlipForRadius(blip.position[0], blip.position[1], blip.position[2], blip.radius);
-        if (colour) {
-            SetBlipColour(gameId, colour);
-        }
-        if (sprite) {
-            SetBlipSprite(gameId, sprite);
+        let gameId = null;
+        switch (blip.type) {
+            case BlipType.Coord:
+                gameId = AddBlipForCoord(blip.position[0], blip.position[1], blip.position[2]);
+                break;
+            case BlipType.Radius:
+                gameId = AddBlipForRadius(blip.position[0], blip.position[1], blip.position[2], blip.radius);
+                break;
         }
 
         if (!gameId) {
@@ -97,6 +76,7 @@ export class BlipFactory {
         this.qbcore.HideBlip(id, value);
     }
 
+    @OnEvent(ClientEvent.BLIP_DELETE)
     public remove(id: string): void {
         const gameBlip = this.blips.get(id);
 

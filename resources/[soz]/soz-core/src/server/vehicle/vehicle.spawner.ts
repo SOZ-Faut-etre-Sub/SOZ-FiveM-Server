@@ -388,7 +388,6 @@ export class VehicleSpawner {
         );
     }
 
-    // eslint-disable-next-line @typescript-eslint/ban-types
     public async spawnRentVehicle(
         source: number,
         model: string,
@@ -437,7 +436,7 @@ export class VehicleSpawner {
         );
     }
 
-    private async spawn(
+    public async spawn(
         player: number,
         vehicle: VehicleSpawn,
         volatileState: Partial<VehicleVolatileState>,
@@ -479,6 +478,8 @@ export class VehicleSpawner {
                 condition,
                 vehicle.modification || getDefaultVehicleConfiguration()
             );
+
+            this.vehicleStateService.handleVehicleOpenChange(netId);
 
             return netId;
         } catch (e) {

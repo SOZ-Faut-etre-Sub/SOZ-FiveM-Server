@@ -432,4 +432,10 @@ export enum NuiEvent {
 
     ZkeaFournitureShow = 'soz-core:nui:zkea:fourniture:show',
     ZkeaFourniturePurchase = 'soz-core:nui:zkea:fourniture:purchase',
+
+    GangFetch = 'soz-core:client:gang:fetch',
+    GangAdminCreate = 'soz-core:client:gang:create',
+    GangAdminQuit = 'soz-core:client:gang:quit',
+    GangAdminAssign = 'soz-core:client:gang:assign',
+    GangAdminMenuOpen = 'soz-core:client:gang:admin-menu-open',
 }

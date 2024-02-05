@@ -45,6 +45,10 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
         fetchNui(NuiEvent.DrugAdminMenuOpen);
     };
 
+    const onGangAdminMenuOpen = () => {
+        fetchNui(NuiEvent.GangAdminMenuOpen);
+    };
+
     const onHubEntryAdminMenuOpen = () => {
         fetchNui(NuiEvent.HubEntryAdminMenuOpen);
     };
@@ -79,6 +83,7 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                     <MenuItemButton onConfirm={onRaceAdminMenuOpen}>🏎 Courses</MenuItemButton>
                     <MenuItemSubMenuLink id="zones">🗺️ Gestion des zones</MenuItemSubMenuLink>
                     <MenuItemButton onConfirm={onHubEntryAdminMenuOpen}>[🕯] Lanterne</MenuItemButton>
+                    <MenuItemButton onConfirm={onGangAdminMenuOpen}>Gang</MenuItemButton>
                 </MenuContent>
             </MainMenu>
             <SubMenu id="objects">
@@ -494,6 +499,11 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                         }}
                     >
                         <MenuItemSelectOption value={ZoneType.NoStress}>No stress zone</MenuItemSelectOption>
+                        <MenuItemSelectOption value={ZoneType.VehBizDelivery}>HC Exportvehicle</MenuItemSelectOption>
+                        <MenuItemSelectOption value={ZoneType.VehBizResell}>
+                            HC Revente piece de vehicle
+                        </MenuItemSelectOption>
+                        <MenuItemSelectOption value={ZoneType.VehBizSpawn}>HC Spawn vehicle</MenuItemSelectOption>
                     </MenuItemSelect>
                     {zones.map(zone => (
                         <MenuItemSelect
