@@ -268,6 +268,7 @@ export class VehicleStateProvider {
                 model: state.volatile.model,
                 position: [state.position[0], state.position[1], state.position[2]],
                 name: state.volatile.stolenLocator ? 'Véhicule volé' : state.volatile.label,
+                stolen: state.volatile.stolenLocator,
             });
         }
 

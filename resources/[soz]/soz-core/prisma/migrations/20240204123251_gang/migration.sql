@@ -3,7 +3,6 @@ CREATE TABLE `gang` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(100) NOT NULL,
     `type` VARCHAR(100) NOT NULL,
-    `universal_business` VARCHAR(100),
     `hub` TEXT NOT NULL,
     `metadata` TEXT NOT NULL,
 

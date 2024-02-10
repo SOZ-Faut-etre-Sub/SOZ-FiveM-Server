@@ -39,10 +39,14 @@ export class VehiclePoliceLocator {
         this.locationBlips.clear();
     }
 
-    private getSpriteFromModel(model: string) {
+    private getSpriteFromModel(model: string, stolen: boolean) {
         const hash = GetHashKey(model);
         if (IsThisModelACar(hash)) {
-            return 56;
+            if (stolen) {
+                return 225;
+            } else {
+                return 56;
+            }
         } else if (IsThisModelABoat(hash)) {
             return 755;
         } else if (IsThisModelAHeli(hash)) {
@@ -67,7 +71,7 @@ export class VehiclePoliceLocator {
     }
 
     private customBlip(blip: number, veh: VehicleLocation) {
-        SetBlipSprite(blip, this.getSpriteFromModel(veh.model));
+        SetBlipSprite(blip, this.getSpriteFromModel(veh.model, veh.stolen));
         SetBlipColour(blip, color[veh.job]);
         SetBlipAsShortRange(blip, true);
 

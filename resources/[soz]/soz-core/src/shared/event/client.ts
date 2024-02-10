@@ -355,4 +355,5 @@ export enum ClientEvent {
     BLIP_DELETE = 'soz-core:client:blip:delete',
 
     GANG_VEHBIZ_CONTAINER = 'soz-core:client:gang:veh:container',
+    GANG_VEHBIZ_HACK = 'soz-core:client:gang:veh:hack',
 }

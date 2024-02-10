@@ -1,3 +1,5 @@
+import { BusinessUiInput } from '@private/shared/gang';
+
 export interface NuiGroupMethodMap {
-    ShowGroupBusinesses: boolean;
+    ShowGroupBusinesses: BusinessUiInput;
 }

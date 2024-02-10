@@ -515,6 +515,7 @@ export type VehicleLocation = {
     name: string;
     model: string;
     position: Vector3;
+    stolen: boolean;
 };
 
 export const ALLOWED_AIR_CONTROL: Partial<Record<VehicleClass, true>> = {

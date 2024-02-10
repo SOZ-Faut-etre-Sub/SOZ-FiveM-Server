@@ -492,8 +492,10 @@ export enum ServerEvent {
     GANG_ADMIN_CREATE = 'soz-core:server:gang:admin-create',
     GANG_ADMIN_QUIT = 'soz-core:server:gang:admin-quit',
     GANG_ADMIN_ASSIGN = 'soz-core:server:gang:admin-assign',
+    GANG_SKILL_ADD = 'soz-core:server:gang:skill-add',
 
     GANG_VEHBIZ_COMMAND = 'soz-core:server:gang:veh:command',
     GANG_VEHBIZ_SPAWN = 'soz-core:server:gang:veh:spawn',
     GANG_VEHBIZ_RESELL = 'soz-core:server:gang:veh:resell',
+    GANG_VEHBIZ_HACK = 'soz-core:server:gang:veh:hack',
 }
