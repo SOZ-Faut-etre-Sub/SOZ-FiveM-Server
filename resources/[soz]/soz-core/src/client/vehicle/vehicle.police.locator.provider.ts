@@ -58,7 +58,11 @@ export class VehiclePoliceLocator {
         } else if (IsThisModelABike(hash) || IsThisModelABicycle(hash)) {
             return 661;
         } else {
-            return 56;
+            if (stolen) {
+                return 225;
+            } else {
+                return 56;
+            }
         }
     }
 
