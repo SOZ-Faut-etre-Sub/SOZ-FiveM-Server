@@ -5,6 +5,7 @@ import { DrugContractApp } from '@private/nui/drug/DrugContractApp';
 import { DrugSkillApp } from '@private/nui/drug/DrugSkillApp';
 import { DrugTransformApp } from '@private/nui/drug/DrugTransformApp';
 import { FishingApp } from '@private/nui/fishing/FishingApp';
+import { BusinessManagementApp } from '@private/nui/group/BusinessManagementApp';
 import { HoodApp } from '@private/nui/hood/HoodApp';
 import { MissiveApp } from '@private/nui/missive/MissiveApp';
 import { DetectiveBoard } from '@private/nui/Police/DetectiveBoard';
@@ -46,7 +47,6 @@ import { RadioVehicleApp } from './Radio/RadioVehicleApp';
 import { StateApp } from './StateApp';
 import { TaxiHorodateurApp } from './Taxi/TaxiHorodateurApp';
 import { Meteor } from './World/Meteor';
-import { BusinesssManagementApp } from '@private/nui/group/BusinessManagementApp';
 
 export const App: FunctionComponent = () => {
     const [pauseMenuActive, setPauseMenuActive] = useState(false);
@@ -118,7 +118,7 @@ export const App: FunctionComponent = () => {
                 <BankApp />
                 <AtmApp />
                 <SafeApp />
-                <BusinesssManagementApp />
+                <BusinessManagementApp />
             </div>
             <Meteor />
         </Provider>

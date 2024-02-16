@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
 
-export const BusinesssManagementApp: FunctionComponent = () => {
+export const BusinessManagementApp: FunctionComponent = () => {
     return null;
 };
