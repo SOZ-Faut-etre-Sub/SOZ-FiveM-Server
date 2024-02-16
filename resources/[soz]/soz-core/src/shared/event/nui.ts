@@ -439,4 +439,6 @@ export enum NuiEvent {
     GangAdminAssign = 'soz-core:client:gang:assign',
     GangAdminMenuOpen = 'soz-core:client:gang:admin-menu-open',
     GangBusinessSkillBuy = 'soz-core:client:gang:business-buy',
+
+    BusinessVehicleOrder = 'soz-core:client:business:vehicle:order',
 }
