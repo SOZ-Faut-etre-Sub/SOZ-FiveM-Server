@@ -20,7 +20,7 @@ import { NuiCraftMethodMap } from './craft';
 import { NuiDrugMethodMap } from './drug';
 import { NuiFieldMethodMap } from './field';
 import { NuiFishingMethodMap } from './fishing';
-import { NuiGroupMethodMap } from './group';
+import { NuiGangMethodMap } from './gang';
 import { NuiHoodMethodMap } from './hood';
 import { NuiInputMethodMap } from './input';
 import { NuiMedicalDiagMethodMap } from './medical_diag';
@@ -87,6 +87,7 @@ export interface NuiMethodMap {
     bank: NuiBankMethodMap;
     bank_atm: NuiBankAtmMethodMap;
     bank_safe: NuiBankSafeMethodMap;
+    gang: NuiGangMethodMap;
     group: NuiGroupMethodMap;
 }
 

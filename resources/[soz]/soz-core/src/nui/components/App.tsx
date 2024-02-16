@@ -5,6 +5,7 @@ import { DrugContractApp } from '@private/nui/drug/DrugContractApp';
 import { DrugSkillApp } from '@private/nui/drug/DrugSkillApp';
 import { DrugTransformApp } from '@private/nui/drug/DrugTransformApp';
 import { FishingApp } from '@private/nui/fishing/FishingApp';
+import { BusinessVehicleOrderApp } from '@private/nui/gang/BusinessVehicle/BusinessVehicleOrderApp';
 import { BusinessManagementApp } from '@private/nui/group/BusinessManagementApp';
 import { HoodApp } from '@private/nui/hood/HoodApp';
 import { MissiveApp } from '@private/nui/missive/MissiveApp';
@@ -119,6 +120,7 @@ export const App: FunctionComponent = () => {
                 <AtmApp />
                 <SafeApp />
                 <BusinessManagementApp />
+                <BusinessVehicleOrderApp />
             </div>
             <Meteor />
         </Provider>
