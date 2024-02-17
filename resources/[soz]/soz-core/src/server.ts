@@ -14,6 +14,7 @@ import { BankModule } from './server/bank/bank.module';
 import { ClickhouseModule } from './server/clickhouse/clickhouse.module';
 import { CraftModule } from './server/craft/craft.module';
 import { DatabaseModule } from './server/database/database.module';
+import { DoorModule } from './server/door/door.module';
 import { DrivingSchoolModule } from './server/driving-school/ds.module';
 import { FieldModule } from './server/farm/field.module';
 import { HousingModule } from './server/housing/housing.module';
@@ -120,6 +121,7 @@ async function bootstrap() {
         GouvModule,
         GarbageModule,
         WorldModule,
+        DoorModule,
         ...PrivateModules
     );
 

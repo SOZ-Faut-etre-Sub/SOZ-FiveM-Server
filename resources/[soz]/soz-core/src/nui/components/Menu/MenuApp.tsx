@@ -13,6 +13,7 @@ import { useControl } from '../../hook/control';
 import { useMenuNuiEvent, useNuiEvent, useNuiFocus } from '../../hook/nui';
 import { usePrevious } from '../../hook/previous';
 import { AdminMenu } from '../Admin/AdminMenu';
+import { DoorAdminMenu } from '../Admin/DoorAdminMenu';
 import { AdminMenuMapper } from '../Admin/Mapper/AdminMenuMapper';
 import { BahamaUnicornJobMenu } from '../BahamaUnicorn/BahamaUnicornJobMenu';
 import { BennysOrderMenu } from '../Bennys/BennysOrderMenu';
@@ -274,6 +275,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.LsmcPlaster}/*`} element={<LsmcPlasterMenu data={menuData} />} />
             <Route path={`/${MenuType.ObjectEditor}/*`} element={<MenuEditorObject data={menuData} />} />
             <Route path={`/${MenuType.GangAdmin}/*`} element={<MenuGangAdmin />} />
+            <Route path={`/${MenuType.DoorAdmin}/*`} element={<DoorAdminMenu data={menuData} />} />
         </Routes>
     );
 };

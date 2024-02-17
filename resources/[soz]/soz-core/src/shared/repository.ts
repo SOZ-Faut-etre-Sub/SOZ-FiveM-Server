@@ -8,6 +8,7 @@ import { SenateParty } from '@public/shared/senate';
 
 import { Billboard } from './billboard';
 import { GlovesItem } from './cloth';
+import { Door } from './door';
 import { FuelStation, UpwCharger, UpwStation } from './fuel';
 import { Property } from './housing/housing';
 import { JobGrade } from './job';
@@ -46,6 +47,7 @@ export enum RepositoryType {
     TowRope = 'towRope',
     Zone = 'zone',
     Gang = 'gang',
+    Door = 'door',
 }
 
 export type RepositoryMapping = {
@@ -75,6 +77,7 @@ export type RepositoryMapping = {
     [RepositoryType.TowRope]: TowRope;
     [RepositoryType.Zone]: ZoneTyped;
     [RepositoryType.Gang]: Gang;
+    [RepositoryType.Door]: Door;
 };
 
 export interface RepositoryConfig extends Record<keyof RepositoryMapping, any> {
@@ -93,6 +96,7 @@ export interface RepositoryConfig extends Record<keyof RepositoryMapping, any> {
     [RepositoryType.TowRope]: Record<string, TowRope>;
     [RepositoryType.Zone]: Record<number, ZoneTyped>;
     [RepositoryType.Gang]: Record<number, Gang>;
+    [RepositoryType.Door]: Record<string, Door>;
     // Not implemented
     [RepositoryType.Billboard]: Record<number, Billboard>;
     [RepositoryType.ChargerUpw]: Record<number, UpwCharger>;

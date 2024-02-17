@@ -870,3 +870,9 @@ model gang {
   hub                String     @db.Text
   metadata           String     @db.Text
 }
+
+model door {
+  id             String     @id
+  data           String     @db.Text
+}
+

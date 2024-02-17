@@ -12,6 +12,7 @@ import { BinocularsModule } from './client/binoculars/binoculars.module';
 import { CameraModule } from './client/camera/camera.module';
 import { ClothingModule } from './client/clothing/clothing.module';
 import { CraftModule } from './client/craft/craft.module';
+import { DoorModule } from './client/door/door.module';
 import { DrivingSchoolModule } from './client/driving-school/ds.module';
 import { FactoryModule } from './client/factory/factory.module';
 import { HousingModule } from './client/housing/housing.module';
@@ -127,6 +128,7 @@ async function bootstrap() {
         JobTemporaryModule,
         UtilsModule,
         CameraModule,
+        DoorModule,
         ...PrivateModules
     );
 

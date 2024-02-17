@@ -147,6 +147,7 @@ export enum NuiEvent {
     PlayerSetHealthBookField = 'soz-core:client:player:health-book:set',
     InputSet = 'soz-core:client:input:set',
     InputCancel = 'soz-core:client:input:cancel',
+    AskInput = 'soz-core:client:input:askinput',
 
     Loaded = 'soz-core:nui:loaded',
     MenuClosed = 'menu_closed',
@@ -441,4 +442,8 @@ export enum NuiEvent {
     GangBusinessSkillBuy = 'soz-core:client:gang:business-buy',
 
     BusinessVehicleOrder = 'soz-core:client:business:vehicle:order',
+
+    AdminDoorSetState = 'soz-core:client:door:set-state',
+    AdminDoorAddSub = 'soz-core:client:door:add-subdoor',
+    AdminDoorDelete = 'soz-core:client:door:delete',
 }

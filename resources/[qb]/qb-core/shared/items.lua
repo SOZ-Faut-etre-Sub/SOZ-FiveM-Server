@@ -958,16 +958,6 @@ QBShared.Items = {
         ['ammotype'] = 'AMMO_SNIPER',
         ['unique'] = true,
         ['useable'] = true,
-        ['description'] = 'Un fusil à lunette.'
-    },
-    ['weapon_precisionrifle'] = {
-        ['name'] = 'weapon_precisionrifle',
-        ['label'] = 'Fusil de précision',
-        ['weight'] = 4500,
-        ['type'] = 'weapon',
-        ['ammotype'] = 'AMMO_SNIPER',
-        ['unique'] = true,
-        ['useable'] = true,
         ['description'] = "Un fusil de précision lourd sans lunette",
         ['illustrator'] = '.NariieL'
     },
@@ -10064,6 +10054,18 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = "",
         ['illustrator'] = ''
+    },
+    ['key'] = {
+        ['name'] = 'key',
+        ['label'] = "Clef",
+        ['weight'] = 50,
+        ['useable'] = false,
+        ['type'] = 'item',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Ouvre des portes.",
+        ['illustrator'] = '.Moustash'
     },
 
     --- Fishing Items

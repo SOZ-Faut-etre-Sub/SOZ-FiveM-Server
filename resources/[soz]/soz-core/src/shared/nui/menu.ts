@@ -7,6 +7,7 @@ import { EditorMenuData } from '@public/shared/object';
 
 import { AdminMenuStateProps } from '../../nui/components/Admin/AdminMenu';
 import { PlayerCloakroomItem, WardrobeMenuData } from '../cloth';
+import { Door } from '../door';
 import { DrivingSchoolMenuData } from '../driving-school';
 import { FuelType } from '../fuel';
 import { AdminMapperMenuData, HousingUpgradesMenuData } from '../housing/menu';
@@ -122,6 +123,7 @@ export enum MenuType {
     ZkeaFournitureMenu = 'zkea_fourniture_menu',
     LsmcPlaster = 'lsmc_plaster',
     GangAdmin = 'gang_admin',
+    DoorAdmin = 'door_admin',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {
@@ -190,4 +192,5 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.ZkeaFournitureMenu]: never;
     [MenuType.LsmcPlaster]: PlasterMenuData;
     [MenuType.ObjectEditor]: EditorMenuData;
+    [MenuType.DoorAdmin]: Door;
 }

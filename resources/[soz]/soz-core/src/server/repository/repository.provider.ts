@@ -14,6 +14,7 @@ import { ClientEvent } from '../../shared/event';
 import { RpcServerEvent } from '../../shared/rpc';
 import { BillboardRepository } from './billboard.repository';
 import { ClothingShopRepository } from './cloth.shop.repository';
+import { DoorRepository } from './door.repository';
 import { FuelStationRepository } from './fuel.station.repository';
 import { GarageRepository } from './garage.repository';
 import { GloveShopRepository } from './glove.shop.repository';
@@ -49,6 +50,9 @@ export class RepositoryProvider {
 
     @Inject(TowRopeRepository)
     private towRopeRepository: TowRopeRepository;
+
+    @Inject(DoorRepository)
+    private doorRepository: DoorRepository;
 
     @Inject(ObjectRepository)
     private objectRepository: ObjectRepository;

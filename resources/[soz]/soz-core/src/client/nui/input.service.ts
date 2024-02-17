@@ -98,4 +98,9 @@ export class InputService {
 
         return Ok(null);
     }
+
+    @OnNuiEvent(NuiEvent.AskInput)
+    public async askNuiInput(input: AskInput) {
+        return this.askInput(input);
+    }
 }

@@ -289,6 +289,7 @@ export type InventoryItemMetadata = {
     photoUrl?: string;
     evidenceInfos?: EvidenceMetadata;
     storageElements?: InventoryItem[];
+    keyid?: string;
 };
 
 export type Inventory = {
