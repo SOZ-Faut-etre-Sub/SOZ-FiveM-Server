@@ -41,7 +41,7 @@ export class HudVehicleProvider {
         }
 
         const speed = GetEntitySpeed(vehicle) * 3.6;
-        const rpm = GetVehicleCurrentRpm(vehicle);
+        const rpm = GetVehicleDashboardRpm();
 
         this.nuiDispatch.dispatch('hud', 'UpdateVehicleSpeed', {
             speed,

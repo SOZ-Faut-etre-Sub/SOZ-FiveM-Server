@@ -385,6 +385,33 @@ export type VehicleModification = {
     windowsSecondary?: number;
 };
 
+export enum VehicleHandlingType {
+    fInitialDriveForce = 'fInitialDriveForce',
+    fDriveInertia = 'fDriveInertia',
+    fInitialDriveMaxFlatVel = 'fInitialDriveMaxFlatVel',
+    fClutchChangeRateScaleUpShift = 'fClutchChangeRateScaleUpShift',
+    fClutchChangeRateScaleDownShift = 'fClutchChangeRateScaleDownShift',
+    fBrakeForce = 'fBrakeForce',
+    fBrakeBiasFront = 'fBrakeBiasFront',
+    fHandBrakeForce = 'fHandBrakeForce',
+    fTractionCurveMax = 'fTractionCurveMax',
+    fTractionCurveMin = 'fTractionCurveMin',
+    fTractionCurveLateral = 'fTractionCurveLateral',
+    fTractionBiasFront = 'fTractionBiasFront',
+    fTractionLossMult = 'fTractionLossMult',
+    fLowSpeedTractionLossMult = 'fLowSpeedTractionLossMult',
+    fSteeringLock = 'fSteeringLock',
+    fSuspensionForce = 'fSuspensionForce',
+    fSuspensionCompDamp = 'fSuspensionCompDamp',
+    fSuspensionReboundDamp = 'fSuspensionReboundDamp',
+    fSuspensionUpperLimit = 'fSuspensionUpperLimit',
+    fSuspensionLowerLimit = 'fSuspensionLowerLimit',
+    fSuspensionRaise = 'fSuspensionRaise',
+    fSuspensionBiasFront = 'fSuspensionBiasFront',
+}
+
+export type VehicleHandling = Partial<Record<VehicleHandlingType, number>>;
+
 export type VehicleConfiguration = {
     color?: VehicleBodyColor;
     dashboardColor?: VehicleColor;
@@ -397,11 +424,12 @@ export type VehicleConfiguration = {
     windowTint?: VehicleWindowTint;
     xenonColor?: VehicleXenonColor;
     livery?: number;
-    // extras: Record<number, boolean>; // Temporary disables
     customWheelFront?: boolean;
     customWheelRear?: boolean;
     modification: VehicleModification;
     extra?: Record<number, boolean>;
+    manualGearbox?: boolean;
+    handling?: VehicleHandling;
 };
 
 export enum VehicleModType {
@@ -1811,6 +1839,7 @@ export const VehicleModificationPricing: Partial<Record<keyof VehicleModificatio
         type: 'toggle',
     },
 };
+export const VehicleManualPricing = [0, 0.01];
 
 export const getDefaultVehicleConfiguration = (): VehicleConfiguration => ({
     color: {
@@ -1863,6 +1892,16 @@ export const getVehicleCustomPrice = (
         }
     }
 
+    const hasCurrentManual = Boolean(currentModification.manualGearbox);
+    const hasNewManual = Boolean(newModification.manualGearbox);
+    if (hasCurrentManual !== hasNewManual) {
+        if (hasNewManual) {
+            price = price + vehiclePrice * VehicleManualPricing[1];
+        } else {
+            price = price + vehiclePrice * VehicleManualPricing[0];
+        }
+    }
+
     return price;
 };
 
@@ -1873,6 +1912,7 @@ export type VehicleCustomMenuData = {
     originalConfiguration: VehicleConfiguration;
     currentConfiguration: VehicleConfiguration;
     admin: boolean;
+    advenced: boolean;
 };
 
 export const HornLabelList: Record<number, { name: string; label: string }> = {

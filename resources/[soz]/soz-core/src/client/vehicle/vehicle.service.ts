@@ -488,6 +488,9 @@ export class VehicleService {
             true,
             ['turbo', 'armor', 'suspension', 'transmission', 'brakes', 'engine']
         );
+
+        this.vehicleModificationService.applyVehicleHandling(vehicle, modification.handling);
+        this.vehicleModificationService.applyVehicleManualBox(vehicle, modification.manualGearbox);
     }
 
     public applyVehicleConfiguration(vehicle: number, modification: VehicleConfiguration): void {

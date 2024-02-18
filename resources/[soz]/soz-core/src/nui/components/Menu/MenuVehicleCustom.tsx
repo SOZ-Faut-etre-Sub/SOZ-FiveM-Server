@@ -118,6 +118,13 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
         });
     };
 
+    const manualChange = () => (value: boolean) => {
+        setConfiguration({
+            ...configuration,
+            manualGearbox: value,
+        });
+    };
+
     return (
         <Menu type={MenuType.VehicleCustom}>
             <MainMenu>
@@ -167,6 +174,26 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
                                 <div className="flex items-center w-[9.3rem]">
                                     <img alt="Turbo" className="ml-4 w-8 h-8" src="/public/images/vehicle/turbo.webp" />
                                     <h3 className="ml-2 uppercase">Turbo</h3>
+                                </div>
+                            }
+                        >
+                            <MenuItemSelectOptionBox value={false}>Désactivé</MenuItemSelectOptionBox>
+                            <MenuItemSelectOptionBox value={true}>Activé</MenuItemSelectOptionBox>
+                        </MenuItemSelect>
+                    )}
+                    {data.advenced && (
+                        <MenuItemSelect
+                            value={!!configuration.manualGearbox}
+                            showAllOptions
+                            onChange={(index, value) => manualChange()(value)}
+                            title={
+                                <div className="flex items-center w-[9.3rem]">
+                                    <img
+                                        alt="Manual"
+                                        className="ml-4 w-8 h-8"
+                                        src="/public/images/vehicle/transmission.webp"
+                                    />
+                                    <h3 className="ml-2 uppercase">Boite manuelle</h3>
                                 </div>
                             }
                         >

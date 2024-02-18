@@ -2,6 +2,7 @@ import { Injectable } from '../../core/decorators/injectable';
 import {
     HornLabelList,
     VehicleConfiguration,
+    VehicleHandling,
     VehicleModification,
     VehicleModType,
     VehicleNeonLight,
@@ -754,6 +755,28 @@ export class VehicleModificationService {
 
                     SetVehicleExtra(vehicle, i, !haxExtra);
                 }
+            }
+        }
+
+        this.applyVehicleHandling(vehicle, configuration.handling);
+        this.applyVehicleManualBox(vehicle, configuration.manualGearbox);
+    }
+
+    public applyVehicleHandling(vehicle: number, vehiculeHandling: VehicleHandling) {
+        if (vehiculeHandling) {
+            for (const handling of Object.keys(vehiculeHandling)) {
+                SetVehicleHandlingFloat(vehicle, 'CHandlingData', handling, vehiculeHandling[handling]);
+            }
+        }
+    }
+
+    public applyVehicleManualBox(vehicle: number, manual: boolean) {
+        const advancedFlag = GetVehicleHandlingInt(vehicle, 'CCarHandlingData', 'strAdvancedFlags');
+        if (advancedFlag) {
+            if (manual) {
+                SetVehicleHandlingInt(vehicle, 'CCarHandlingData', 'strAdvancedFlags', advancedFlag | 0x400);
+            } else {
+                SetVehicleHandlingInt(vehicle, 'CCarHandlingData', 'strAdvancedFlags', advancedFlag & ~0x400);
             }
         }
     }

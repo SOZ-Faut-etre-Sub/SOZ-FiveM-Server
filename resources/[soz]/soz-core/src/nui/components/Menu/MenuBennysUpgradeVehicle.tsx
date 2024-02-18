@@ -697,6 +697,13 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                         <MenuItemSelectOption value={3}>Bleu sur blanc 2</MenuItemSelectOption>
                         <MenuItemSelectOption value={4}>Bleu sur blanc 3</MenuItemSelectOption>
                         <MenuItemSelectOption value={5}>Yankton</MenuItemSelectOption>
+                        <MenuItemSelectOption value={6}>eCola</MenuItemSelectOption>
+                        <MenuItemSelectOption value={7}>Las Venturas</MenuItemSelectOption>
+                        <MenuItemSelectOption value={8}>Liberty City</MenuItemSelectOption>
+                        <MenuItemSelectOption value={9}>Los Santos Car Meet</MenuItemSelectOption>
+                        <MenuItemSelectOption value={10}>Los Santos Panic</MenuItemSelectOption>
+                        <MenuItemSelectOption value={11}>Los Santos Pounders</MenuItemSelectOption>
+                        <MenuItemSelectOption value={12}>Sprunk</MenuItemSelectOption>
                     </MenuItemSelect>
                     <MenuItemSelect
                         title="Teinte vitre"

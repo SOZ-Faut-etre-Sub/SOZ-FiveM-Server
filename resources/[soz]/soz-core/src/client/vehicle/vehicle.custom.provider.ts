@@ -190,6 +190,8 @@ export class VehicleCustomProvider {
             return;
         }
 
+        const advancedFlag = GetVehicleHandlingInt(vehicleEntityId, 'CCarHandlingData', 'strAdvancedFlags');
+
         const vehicleConfiguration = await this.vehicleService.getVehicleConfiguration(vehicleEntityId);
 
         SetVehicleUndriveable(vehicleEntityId, true);
@@ -201,6 +203,7 @@ export class VehicleCustomProvider {
             originalConfiguration: { ...vehicleConfiguration },
             currentConfiguration: vehicleConfiguration,
             admin: admin,
+            advenced: advancedFlag > 0,
         });
     }
 
