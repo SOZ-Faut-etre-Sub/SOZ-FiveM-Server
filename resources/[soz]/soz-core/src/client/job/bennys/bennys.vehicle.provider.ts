@@ -310,6 +310,7 @@ export class BennysVehicleProvider {
                 originalConfiguration: vehicleConfiguration,
                 currentConfiguration: vehicleConfiguration,
                 admin: false,
+                advenced: false,
             },
             {
                 useMouse: true,
