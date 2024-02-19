@@ -442,6 +442,7 @@ export enum NuiEvent {
     GangBusinessSkillBuy = 'soz-core:client:gang:business-buy',
 
     BusinessVehicleOrder = 'soz-core:client:business:vehicle:order',
+    BusinessVehiclePosition = 'soz-core:client:business:vehicle:position',
 
     AdminDoorSetState = 'soz-core:client:door:set-state',
     AdminDoorAddSub = 'soz-core:client:door:add-subdoor',
