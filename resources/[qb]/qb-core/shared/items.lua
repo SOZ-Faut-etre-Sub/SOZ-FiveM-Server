@@ -3289,6 +3289,32 @@ QBShared.Items = {
         ['description'] = 'Pas content ! Pas content !',
         ['illustrator'] = '.Poulpito'
     },
+    ['ffs_crafted_outfit_m'] = {
+        ['name'] = 'ffs_crafted_outfit_m',
+        ['label'] = 'Tenue Sur-mesure',
+        ['weight'] = 1000,
+        ['type'] = 'item_outfit',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['itemExtraLabel'] = 'Homme',
+        ['description'] = 'Tenue réalisée spécialement pour: ',
+        ['illustrator'] = '.Crash'
+    },
+    ['ffs_crafted_outfit_f'] = {
+        ['name'] = 'ffs_crafted_outfit_f',
+        ['label'] = 'Tenue Sur-mesure',
+        ['weight'] = 1000,
+        ['type'] = 'item_outfit',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['itemExtraLabel'] = 'Femme',
+        ['description'] = 'Tenue réalisée spécialement pour: ',
+        ['illustrator'] = '.Crash'
+    },
     -- Vehicle Tools
     ['repairkit'] = {
         ['name'] = 'repairkit',

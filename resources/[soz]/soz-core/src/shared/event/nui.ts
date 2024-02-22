@@ -345,4 +345,11 @@ export enum NuiEvent {
     HubEntryShow = 'soz-core:client:hub:entry-show',
     HubEntryUpdate = 'soz-core:client:hub:entry-update',
     HubEntryAdminMenuOpen = 'soz-core:client:hub:entry-open-menu',
+
+    
+    FfsShowRoomChangeComponent = 'soz-core:client:job:ffs:change-component',
+    FfsMenuChangeDescription = 'soz-core:client:ffs:change-description',
+    FfsShowRoomChangeProp = 'soz-core:client:job:ffs:change-prop',
+    FfsMenuLookAtDrawable = 'soz-core:client:ffs:look-at-drawable',
+    FfsMenuCraftOutfit = 'soz-core:client:ffs:craft-outfit',
 }

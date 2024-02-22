@@ -9,7 +9,8 @@
         "dev-module": "webpack --config webpack.config.watch.js --watch --mode development",
         "dev-nui": "webpack-dev-server --config webpack.config.dev_server.js --mode development --hot",
         "dev": "concurrently \"yarn run dev-module\" \"yarn run dev-nui\"",
-        "lint": "tsc -p tsconfig.json --noEmit"
+        "lint": "tsc -p tsconfig.json --noEmit",
+        "build-showroom": "node data/FightForStyleShowRoom/conversion.js"
     },
     "prisma": {
         "seed": "ts-node --transpile-only prisma/seed.ts"
@@ -26,6 +27,7 @@
         "chokidar": "^3.5.3",
         "concurrently": "^7.2.2",
         "css-loader": "^6.7.1",
+        "csvtojson": "^2.0.10",
         "eslint": "^8.18.0",
         "eslint-config-prettier": "^8.5.0",
         "eslint-plugin-jsx-a11y": "^6.5.1",

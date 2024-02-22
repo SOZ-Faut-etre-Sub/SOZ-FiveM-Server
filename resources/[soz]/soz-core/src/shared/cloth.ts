@@ -1,3 +1,7 @@
+export interface ComponentEnum {
+    [id: number]: string;
+}
+
 export enum Component {
     Mask = 1,
     Hair = 2,
@@ -12,6 +16,17 @@ export enum Component {
     Tops = 11,
 }
 
+export enum FfsComponent {
+    Mask = 1,
+    Torso = 3,
+    Legs = 4,
+    Bag = 5,
+    Shoes = 6,
+    Accessories = 7,
+    Undershirt = 8,
+    Tops = 11,
+}
+
 export enum Prop {
     Hat = 0,
     Glasses = 1,
@@ -20,6 +35,8 @@ export enum Prop {
     RightHand = 7,
     Helmet = 'Helmet',
 }
+
+export const ShowRoomPricePerSelection = 125;
 
 export type OutfitItem = {
     Index?: number;
@@ -40,6 +57,12 @@ export type Outfit = {
     Props: Partial<Record<Prop, OutfitItem>>;
     GlovesID?: number;
     TopID?: number;
+};
+
+export type CustomOutfitItem = {
+    Components: Partial<Record<Component, OutfitItem>>;
+    Props: Partial<Record<Prop, OutfitItem>>;
+    label: string;
 };
 
 export type ClothConfig = {

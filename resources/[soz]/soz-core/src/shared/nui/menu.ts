@@ -60,6 +60,7 @@ export enum MenuType {
     JewelryShop = 'jewelry_shop',
     BarberShop = 'barber_shop',
     FightForStyleJobMenu = 'ffs_job',
+    FightForStyleShowRoomMenu = 'ffs_show_room',
     FoodJobMenu = 'food_job_menu',
     HousingUpgrades = 'housing_upgrades',
     Garage = 'garage_menu',
@@ -123,6 +124,7 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.Demo]: never;
     [MenuType.DrivingSchool]: DrivingSchoolMenuData;
     [MenuType.FightForStyleJobMenu]: any;
+    [MenuType.FightForStyleShowRoomMenu]: any;
     [MenuType.HousingUpgrades]: HousingUpgradesMenuData;
     [MenuType.Garage]: GarageMenuData;
     [MenuType.JobBennys]: {

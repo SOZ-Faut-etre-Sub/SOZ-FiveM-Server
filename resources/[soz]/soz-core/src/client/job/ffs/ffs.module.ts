@@ -3,6 +3,7 @@ import { FightForStyleCraftProvider } from './ffs.craft.provider';
 import { FightForStyleHarvestProvider } from './ffs.harvest.provider';
 import { FightForStyleProvider } from './ffs.provider';
 import { FightForStyleRestockProvider } from './ffs.restock.provider';
+import { FightForStylShowRoomProvider } from './ffs.showroom.provider';
 
 @Module({
     providers: [
@@ -10,6 +11,7 @@ import { FightForStyleRestockProvider } from './ffs.restock.provider';
         FightForStyleCraftProvider,
         FightForStyleRestockProvider,
         FightForStyleProvider,
+        FightForStylShowRoomProvider,
     ],
 })
 export class FightForStyleModule {}

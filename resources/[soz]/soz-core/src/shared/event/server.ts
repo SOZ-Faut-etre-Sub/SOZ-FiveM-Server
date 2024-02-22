@@ -79,6 +79,7 @@ export enum ServerEvent {
     FFS_HARVEST = 'soz-core:server:job:ffs:harvest',
     FFS_RESTOCK = 'soz-core:server:job:ffs:restock',
     FFS_TRANSFORM = 'soz-core:server:job:ffs:transform',
+    FFS_SHOW_ROOM_CRAFTING = 'soz-core:server:job:ffs:showroom-crafting',
 
     HOUSING_ADD_TEMPORARY_ACCESS = 'soz-core:server:housing:add-temporary-access',
     HOUSING_ADD_ROOMMATE = 'soz-core:server:housing:add-roommate',
