@@ -59,6 +59,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
         }
 
         let itemLabel = item?.metadata?.label ? `${item.metadata.label} <small>${item.label}</small>` : item.label;
+        let description = item.description ? item.description : ''
         let itemExtraLabel = '';
         let contextExtraLabel = '';
         let secondaryDescription = '';
@@ -106,6 +107,12 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
             
             itemExtraLabel = `[${crateWeight/1000}/12 Kg]`
             
+        } else if (item.type === 'item_outfit') {
+            itemLabel = item.label;
+            if (item?.metadata?.label) {
+                description += item.metadata.label;
+            }
+            itemExtraLabel += ` [${item.itemExtraLabel}]`
         } else if (item?.metadata?.expiration) {
             const currentTime = new Date().getTime();
             const expiration = new Date(item.metadata['expiration'])
@@ -131,7 +138,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
 
         onItemHover?.(`
             <div><b>${itemLabel}</b> <span>${itemExtraLabel}</span></div>
-            ${item.description ? item.description : ''}
+            ${description}
             <div>${secondaryDescription}</div>
             <div><span>${contextExtraLabel}</span> <span>${illustrator}</span></div>
         `);

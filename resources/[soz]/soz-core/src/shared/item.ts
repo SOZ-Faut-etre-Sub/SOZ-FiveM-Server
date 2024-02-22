@@ -226,6 +226,9 @@ export type InventoryItemMetadata = {
     fakeIdData?: FakeId;
     // Weapon certificate (DMC)
     craftCertificate?: string;
+    // FFS Showroom
+    Components?: object;
+    Props?: object;
 };
 
 export type InventoryItem = {
@@ -238,6 +241,7 @@ export type InventoryItem = {
     unique: boolean;
     type: ItemType;
     amount: number;
+    itemExtraLabel?: string;
     metadata?: InventoryItemMetadata;
 };
 

@@ -138,7 +138,8 @@ export class TargetFactory {
                 maxZ: ped.coords.z + 2,
                 debugPoly: ped.debugPoly,
             },
-            ped.target.options
+            ped.target.options,
+            ped.target?.distance
         );
     }
 

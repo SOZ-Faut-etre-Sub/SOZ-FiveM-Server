@@ -21,6 +21,7 @@ export type SkinSubMenuProps = {
         maxOptions: {
             componentIndex?: Component;
             propIndex?: Prop;
+            maxTextures?: number;
             maxDrawables: number;
         }[];
     };

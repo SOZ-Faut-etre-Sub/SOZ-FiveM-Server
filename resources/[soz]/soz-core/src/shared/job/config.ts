@@ -420,6 +420,7 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
             [JobPermission.FfsHarvest]: { label: 'Récolter des matériaux' },
             [JobPermission.FfsRestock]: { label: "Réapprovisionner l'atelier" },
             [JobPermission.FfsCraft]: { label: 'Coudre un vêtement' },
+            [JobPermission.FfsCraftShowRoom]: {label: "Confectionner au ShowRoom"},
         },
         bossZones: [
             {

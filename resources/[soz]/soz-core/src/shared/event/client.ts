@@ -141,6 +141,7 @@ export enum ClientEvent {
     PLAYER_HEALTH_DO_FREE_WEIGHT = 'soz-core:client:player:health:free-weight',
     PLAYER_UPDATE = 'soz-core:client:player:update',
     PLAYER_SET_JOB_OUTFIT = 'soz-core:client:player:set-job-outfit',
+    PLAYER_SET_OUTFIT_FROM_ITEM = 'soz-core:client:set-outfit',
     PLAYER_SET_UNLIMITED_SPRINT = 'soz-core:client:player:set-unlimited-sprint',
     PLAYER_SHOW_IDENTITY = 'soz-core:client:player:show-identity',
     PLAYER_UPDATE_CROSSHAIR = 'soz-core:client:player:update-crosshair',

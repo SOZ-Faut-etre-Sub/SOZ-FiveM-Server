@@ -73,6 +73,7 @@ export enum JobPermission {
     FfsHarvest = 'harvest',
     FfsRestock = 'restock',
     FfsCraft = 'craft',
+    FfsCraftShowRoom = 'craft-showroom',
     BennysEstimate = 'estimate',
     BennysResell = 'resell',
     BennysOrder = 'order',

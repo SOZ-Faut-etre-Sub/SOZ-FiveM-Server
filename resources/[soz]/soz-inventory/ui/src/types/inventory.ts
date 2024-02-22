@@ -33,6 +33,7 @@ export type InventoryItem = {
     metadata?: InventoryItemMetadata;
     shouldClose?: boolean;
     illustrator?: Record<string, string> | string;
+    itemExtraLabel?: string;
     disabled?: boolean; // added by inventory on the fly
     shortcut?: string | null; // added by inventory on the fly
 };
@@ -56,6 +57,7 @@ export type ItemType =
     | 'furniture'
     | 'liquor'
     | 'outfit'
+    | 'item_outfit'
     | 'key'
     | 'fishing_rod'
     | 'fishing_bait'

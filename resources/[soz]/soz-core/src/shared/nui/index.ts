@@ -16,6 +16,7 @@ import { NuiClipboardMethodMap } from './clipboard';
 import { NuiClothShopMethodMap } from './cloth_shop';
 import { NuiCraftMethodMap } from './craft';
 import { NuiDrugMethodMap } from './drug';
+import { NuiFFSSubMenuMethodMap } from '../../nui/components/FightForStyle/FightForStyleShowRoomMenu';
 import { NuiFieldMethodMap } from './field';
 import { NuiFishingMethodMap } from './fishing';
 import { NuiHoodMethodMap } from './hood';
@@ -45,6 +46,7 @@ export interface NuiMethodMap {
     upw_order_menu: NuiUpwOrderMenuMethodMap;
     clipboard: NuiClipboardMethodMap;
     cloth_shop: NuiClothShopMethodMap;
+    ffs_skin_submenu: NuiFFSSubMenuMethodMap;
     global: NuiGlobalMethodMap;
     input: NuiInputMethodMap;
     menu: NuiMenuMethodMap;
