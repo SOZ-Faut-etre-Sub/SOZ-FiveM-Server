@@ -130,15 +130,7 @@ export class PoliceVehicleProvider {
                             return;
                         }
                         const plate = GetVehicleNumberPlateText(entity);
-                        const playerName = await emitRpc<string>(RpcServerEvent.POLICE_GET_VEHICLE_OWNER, plate);
-                        await this.notifier.notifyAdvanced({
-                            title: 'San Andreas',
-                            subtitle: 'Vérification de plaque',
-                            message: `Propriétaire: ~b~${playerName}`,
-                            image: 'CHAR_DAVE',
-                            style: 'info',
-                            delay: 5000,
-                        });
+                        TriggerServerEvent(ServerEvent.POLICE_GET_VEHICLE_OWNER, plate, VehToNet(entity));
                     },
                 },
                 {

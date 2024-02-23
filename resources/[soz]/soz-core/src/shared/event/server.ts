@@ -384,6 +384,7 @@ export enum ServerEvent {
     POLICE_ADD_PHOTO_DETECTIVE_BOARD = 'soz-core:server:police:add-photo-detective-board',
     POLICE_DESTROY_CLUE = 'soz-core:server:police:destroy-clue',
     POLICE_DRUG_IN_TRUNK = 'soz-core:server:police:drug-in-trunk',
+    POLICE_GET_VEHICLE_OWNER = 'soz-core:server:police:get-vehicule-owner',
 
     ESCORT_PLAYER = 'soz-core:server:escort',
     REMOVE_ESCORT_PLAYER = 'soz-core:server:remove-escort',

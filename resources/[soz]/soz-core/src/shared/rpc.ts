@@ -145,7 +145,6 @@ export enum RpcServerEvent {
     POLICE_DRUGLEVEL_AND_TYPE = 'soz-core:server:police:drug-level',
     POLICE_GET_WANTED_PLAYERS = 'soz-core:server:police:get-wanted-players',
     POLICE_DELETE_WANTED_PLAYER = 'soz-core:server:police:delete-wanted-player',
-    POLICE_GET_VEHICLE_OWNER = 'soz-core:server:police:get-vehicule-owner',
     POLICE_GET_MARKED_MONEY = 'soz-core:server:police:get-marked-money',
     POLICE_GET_CLUES_IN_AREA = 'soz-core:server:police:get-clues-in-area',
     POLICE_GET_ALL_IDENTIFIED_CLUES = 'soz-core:server:police:get-all-identified-clues',

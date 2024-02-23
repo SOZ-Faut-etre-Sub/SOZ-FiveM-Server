@@ -277,6 +277,7 @@ export type VehicleVolatileState = {
     lastDrugTrace: string[] | null;
     isAnalyzed: boolean;
     stolenLocator: boolean;
+    exportBiz: boolean;
 };
 
 export enum VehicleClass {
@@ -366,6 +367,7 @@ export const getDefaultVehicleVolatileState = (): VehicleVolatileState => ({
     lastDrugTrace: null,
     isAnalyzed: false,
     stolenLocator: false,
+    exportBiz: false,
 });
 
 export type VehicleMenuData = {
