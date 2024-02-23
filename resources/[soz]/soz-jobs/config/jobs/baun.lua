@@ -185,4 +185,5 @@ BaunConfig.Durations = {
     Crafting = 4000, -- in ms
     Restocking = 4000, -- in ms
     Harvesting = 2000, -- in ms
+    Icecube = 1000, -- in ms
 }

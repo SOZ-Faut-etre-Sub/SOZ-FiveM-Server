@@ -189,6 +189,12 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:createCocktailBox", functi
     end)
 end)
 
+QBCore.Functions.CreateCallback("soz-jobs:server:baun:can-createIceCubes", function(source, cb)
+    local canCreateIceCubes = exports["soz-inventory"]:GetItem(source, "water_bottle", nil, true) > 0
+    cb(canCreateIceCubes)
+end)
+
+
 QBCore.Functions.CreateCallback("soz-jobs:server:baun:createIceCubes", function(source, cb)
     local player = QBCore.Functions.GetPlayer(source)
     local bottleToRemove = 1

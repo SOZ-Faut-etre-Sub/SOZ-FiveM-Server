@@ -33,8 +33,3 @@ RegisterNetEvent("soz-jobs:client:baun:createCocktailBox", function()
     QBCore.Functions.TriggerCallback("soz-jobs:server:baun:createCocktailBox", function()
     end)
 end)
-
-RegisterNetEvent("soz-jobs:client:baun:createIceCubes", function()
-    QBCore.Functions.TriggerCallback("soz-jobs:server:baun:createIceCubes", function()
-    end)
-end)

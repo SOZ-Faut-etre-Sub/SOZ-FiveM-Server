@@ -44,6 +44,7 @@ export enum ServerEvent {
     BASE_CHANGE_VEHICLE_SEAT = 'baseevents:changeVehicleSeat',
 
     BAUN_RESELL = 'soz-core:server:job:baun:resell',
+    BAUN_COFE = 'soz-core:server:job:baun:cofe',
 
     BENNYS_ESTIMATE_VEHICLE = 'soz-core:server:job:bennys:estimate-vehicle',
     BENNYS_SELL_VEHICLE = 'soz-core:server:job:bennys:sell-vehicle',
