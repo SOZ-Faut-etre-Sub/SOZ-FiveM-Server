@@ -10067,6 +10067,30 @@ QBShared.Items = {
         ['description'] = "Ouvre des portes.",
         ['illustrator'] = '.Moustash'
     },
+    ['veh_strip_saw'] = {
+        ['name'] = 'veh_strip_saw',
+        ['label'] = "Scie de désossage",
+        ['weight'] = 500,
+        ['useable'] = false,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['veh_strip_piece'] = {
+        ['name'] = 'veh_strip_piece',
+        ['label'] = "Pièce de recupération de véhicules",
+        ['weight'] = 80,
+        ['useable'] = false,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
 
     --- Fishing Items
     ['basic_rod'] = {

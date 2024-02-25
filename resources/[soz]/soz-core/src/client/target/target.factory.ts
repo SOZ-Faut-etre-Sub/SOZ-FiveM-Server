@@ -194,6 +194,13 @@ export class TargetFactory {
         exports['qb-target'].RemoveZone(id);
     }
 
+    public createForBone(bones: string[] | string, targets: TargetOptions[], distance = 1.5) {
+        exports['qb-target'].AddTargetBone(bones, {
+            options: targets,
+            distance: distance,
+        });
+    }
+
     public raycastFromMousePosition(flag: number) {
         return exports['qb-target'].RaycastFromMousePosition(flag);
     }
