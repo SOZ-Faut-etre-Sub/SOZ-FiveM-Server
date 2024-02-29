@@ -92,7 +92,12 @@ export class ShopProvider {
     }
 
     @OnEvent(ServerEvent.SHOP_VALIDATE_CART)
-    public async onShopBuy(source: number, cartContent: CartElement[], taxType?: TaxType) {
+    public async onShopMaskBuy(
+        source: number,
+        cartContent: CartElement[],
+        moneytype: 'money' | 'marked_money',
+        taxType?: TaxType
+    ) {
         const player = this.playerService.getPlayer(source);
         if (!player) {
             return;
@@ -116,7 +121,7 @@ export class ShopProvider {
 
         const hasRemovedMoney = taxType
             ? await this.playerMoneyService.buy(source, cartAmount, taxType)
-            : this.playerMoneyService.remove(source, cartAmount);
+            : this.playerMoneyService.remove(source, cartAmount, moneytype);
 
         if (!hasRemovedMoney) {
             this.notifier.notify(source, "Vous n'avez pas assez d'argent", 'error');

@@ -82,10 +82,13 @@ export class InventoryManager {
         }
     }
 
-    public openShopInventory(shopContent, shopHeaderTexture, taxType?: TaxType) {
-        const taxValue = taxType ? this.taxRepository.getTaxValue(taxType) : 0;
-
-        TriggerEvent('inventory:client:openShop', shopContent, shopHeaderTexture, taxValue / 100, taxType);
+    public openShopInventory(
+        shopContent,
+        shopHeaderTexture: string,
+        type: 'money' | 'marked_money' = 'money',
+        taxType?: TaxType
+    ) {
+        TriggerEvent('inventory:client:openShop', shopContent, shopHeaderTexture, type, taxValue / 100, taxType);
     }
 
     public openInventory(inventoryType: string, inventoryIdentifier: string, context?: any) {

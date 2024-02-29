@@ -192,13 +192,18 @@ RegisterNUICallback("player/giveItemToTarget", function(data, cb)
             [GetHashKey("v_med_cor_photocopy")] = true,
             [GetHashKey("prop_copier_01")] = true,
         }
-        if printers[GetEntityModel(entityHit)] then
+        if entityHit and entityType > 0 and printers[GetEntityModel(entityHit)] then
             TriggerServerEvent("soz-core:server:police:make-copy-detective-board", data)
             cb(true)
             return
         end
         if data.type == "evidence" and data.name ~= "scientist_photo" then
             TriggerEvent("soz-core:client:police:analyze-evidence", data, {endCoords.x, endCoords.y, endCoords.z})
+            cb(true)
+            return
+        end
+        if data.name == "box_veh_strip_piece" then
+            TriggerEvent("soz-core:client:gang:veh:box-sell", data, {endCoords.x, endCoords.y, endCoords.z})
             cb(true)
             return
         end

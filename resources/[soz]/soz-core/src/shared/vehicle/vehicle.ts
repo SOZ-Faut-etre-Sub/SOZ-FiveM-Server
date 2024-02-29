@@ -241,6 +241,7 @@ export type VehicleCondition = {
     doorStatus: { [key: number]: boolean };
     windowStatus: { [key: number]: boolean };
     mileage: number;
+    nitro: number;
 };
 
 // state not sync to database, only in memory
@@ -332,6 +333,7 @@ export const getDefaultVehicleCondition = (): VehicleCondition => ({
     tankHealth: 1000,
     windowStatus: {},
     mileage: 0,
+    nitro: 0,
 });
 
 export const getDefaultVehicleVolatileState = (): VehicleVolatileState => ({

@@ -354,6 +354,14 @@ export class InventoryManager {
         return this.sozInventory.ErrorMessage(reason);
     }
 
+    public updateVehMaxWeight(
+        type: string,
+        plate: string,
+        ctx: { model: string; class: string; entity: number }
+    ): void {
+        this.sozInventory.UpdateVehMaxWeight(type, plate, ctx);
+    }
+
     // TODO: Implement the following method in soz core directly
     // public canSwapItem(source: number, { id: string; amount: number; }[], { id: string; amount: number;}[]): boolean {
 }

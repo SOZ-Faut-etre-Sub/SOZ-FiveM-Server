@@ -359,4 +359,6 @@ export enum ClientEvent {
     GANG_VEHBIZ_APPLY_MOD = 'soz-core:client:gang:veh:apply-mod',
     GANG_VEHBIZ_STRIP_WHEEL = 'soz-core:client:gang:veh:strip-wheel',
     GANG_VEHBIZ_STRIP_ENGINE = 'soz-core:client:gang:veh:strip-engine',
+    GANG_VEHBIZ_SELLBOX = 'soz-core:client:gang:veh:box-sell',
+    GANG_VEHBIZ_BOX_RESELL_ZONE = 'soz-core:client:gang:veh:box-resell-zone',
 }

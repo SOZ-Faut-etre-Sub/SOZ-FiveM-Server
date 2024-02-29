@@ -199,6 +199,26 @@ function Inventory.SetHouseStashAndFridgeMaxWeightFromTier(inv, tier)
 end
 exports("SetHouseStashAndFridgeMaxWeightFromTier", Inventory.SetHouseStashAndFridgeMaxWeightFromTier)
 
+function Inventory.UpdateVehMaxWeight(type, plate, ctx)
+    local inv = GetOrCreateInventory(type, plate, ctx)
+
+    print(json.encode(type), json.encode(plate), json.encode(ctx))
+
+    local trunkConfig = QBCore.Shared.Trunks[ctx.class]
+    if ctx.model and QBCore.Shared.Trunks[ctx.model] then
+        trunkConfig = QBCore.Shared.Trunks[ctx.model]
+    end
+
+    local maxWeight = trunkConfig.weight;
+    local vehicleConf = exports["soz-core"]:GetVehicleConfiguration(ctx.entity)
+    if vehicleConf.extraStorage then
+        maxWeight = maxWeight + QBCore.Shared.Round(maxWeight * 25 / 100)
+    end
+
+    inv.maxWeight = maxWeight
+end
+exports("UpdateVehMaxWeight", Inventory.UpdateVehMaxWeight)
+
 function Inventory.GetItemWeight(item, metadata, amount)
     if metadata and metadata.weight then
         item.weight = metadata.weight
@@ -1115,7 +1135,13 @@ function GetOrCreateInventory(storageType, invID, ctx)
                 end
             end
 
-            targetInv = Inventory.Create("trunk_" .. invID, invID, storageType, trunkConfig.slot, trunkConfig.weight, invID)
+            local vehicleConf = exports["soz-core"]:GetVehicleConfiguration(ctx.entity)
+            local maxWeight = trunkConfig.weight;
+            if vehicleConf.extraStorage then
+                maxWeight = maxWeight + QBCore.Shared.Round(maxWeight * 25 / 100)
+            end
+
+            targetInv = Inventory.Create("trunk_" .. invID, invID, storageType, trunkConfig.slot, maxWeight, invID)
         end
     elseif storageType == "stash" then
         targetInv = Inventory("stash_" .. invID)

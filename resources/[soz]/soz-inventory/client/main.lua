@@ -249,11 +249,12 @@ end)
 
 -- SHOPS
 
-AddEventHandler("inventory:client:openShop", function(shopContent, shopHeaderTexture, taxValue, taxType)
+AddEventHandler("inventory:client:openShop", function(shopContent, shopHeaderTexture, moneyType, taxValue, taxType)
     SendNUIMessage({
         action = "openShop",
         shopContent = shopContent,
         shopHeaderTexture = shopHeaderTexture,
+        moneyType = moneyType,
         taxValue = taxValue,
         taxType = taxType,
     })
@@ -271,7 +272,7 @@ RegisterNUICallback("player/validateCart", function(data, cb)
     SetNuiFocus(false, false)
     local cartContent = data
 
-    TriggerServerEvent("soz-core:server:shop:validate-cart", cartContent.items, cartContent.tax)
+    TriggerServerEvent("soz-core:server:shop:validate-cart", cartContent.items, data.moneyType, cartContent.tax)
 
     SetNuiFocus(true, true)
     cb(amount)

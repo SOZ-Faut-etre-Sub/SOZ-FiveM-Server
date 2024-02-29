@@ -76,6 +76,7 @@ Container["trunk"] = InventoryContainer:new({
         "crate",
         "drug_pot",
         "tool",
+        "veh_biz_piece",
     },
 })
 
@@ -106,6 +107,7 @@ Container["temporary_trunk"] = InventoryDatastore:new({
         "crate",
         "drug_pot",
         "tool",
+        "veh_biz_piece",
     },
 })
 
@@ -140,6 +142,7 @@ Container["trash"] = InventoryContainer:new({
         "outfit",
         "crate",
         "drug_pot",
+        "veh_biz_piece",
     },
 })
 
@@ -176,6 +179,7 @@ Container["seizure"] = InventoryContainer:new({
         "drug_pot",
         "tool",
         "evidence",
+        "veh_biz_piece",
     },
     inventoryPermissionCallback = playerHaveStorageAccessAndDuty,
 })
@@ -235,6 +239,7 @@ Container["bin"] = InventoryDatastore:new({
         "drug_pot",
         "tool",
         "metal",
+        "veh_biz_piece",
     },
     populateDatastoreCallback = function()
         local inventory = {}
@@ -288,6 +293,7 @@ Container["house_stash"] = InventoryContainer:new({
         "drug_pot",
         "tool",
         "edvidence",
+        "veh_biz_piece",
     },
 })
 Container["house_fridge"] = InventoryContainer:new({
@@ -389,6 +395,7 @@ Container["smuggling_box"] = InventoryDatastore:new({
         "weapon",
         "weapon_ammo",
         "evidence",
+        "veh_biz_piece",
     },
 })
 
@@ -472,6 +479,7 @@ Container["recycler_processing"] = InventoryContainer:new({
         "fishing_bait",
         "evidence",
         "drug_pot",
+        "veh_biz_piece",
     },
     inventoryPermissionCallback = playerHaveJobAndDuty,
     inventoryGetContentCallback = function()

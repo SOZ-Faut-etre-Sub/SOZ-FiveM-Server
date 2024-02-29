@@ -290,6 +290,7 @@ export type InventoryItemMetadata = {
     evidenceInfos?: EvidenceMetadata;
     storageElements?: InventoryItem[];
     keyid?: string;
+    storageElements?: InventoryItem[];
 };
 
 export type Inventory = {

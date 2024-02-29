@@ -504,6 +504,10 @@ export enum ServerEvent {
     GANG_VEHBIZ_STRIP_WHEEL = 'soz-core:server:gang:veh:strip-wheel',
     GANG_VEHBIZ_STRIP_ENGINE = 'soz-core:server:gang:veh:strip-engine',
     GANG_VEHBIZ_STRIP_BODY = 'soz-core:server:gang:veh:strip-body',
+    GANG_VEHBIZ_BOX_RESELL = 'soz-core:server:gang:veh:box-resell',
+    GANG_VEHBIZ_BOX_RESELL_ZONE = 'soz-core:server:gang:veh:box-resell-zone',
+    GANG_VEHBIZ_SECRET_STORAGE = 'soz-core:server:gang:veh:secret-storage',
+    GANG_VEHBIZ_ADD_NOS = 'soz-core:server:gang:veh:nos-add',
 
     DOOR_ADD_UPDATE = 'soz-core:server:door:add-update',
     DOOR_DELETE = 'soz-core:server:door:delete',

@@ -14,7 +14,8 @@ export const ShopContainer = () => {
     const [cartAmount, setCartAmount] = useState<number>(0);
     const [shopContent, setShopContent] = useState<ShopItem[] | null>();
     const [cartContent, setCartContent] = useState<ShopItem[]>([]);
-    const [shopHeaderTexture, setShopHeaderTexture] = useState<string>('')
+    const [shopHeaderTexture, setShopHeaderTexture] = useState<string>('');
+    const [moneyType, setMoneyType] = useState<string>('money');
     const [taxValue, setTaxValue] = useState<number>(0)
     const [taxType, setTaxType] = useState<string | null>(null)
 
@@ -33,7 +34,8 @@ export const ShopContainer = () => {
                 if (event.data.shopContent === undefined) return;
                 try {
                     setShopContent(event.data.shopContent);
-                    setShopHeaderTexture(event.data.shopHeaderTexture)
+                    setShopHeaderTexture(event.data.shopHeaderTexture);
+                    setMoneyType(event.data.moneyType);
                     setDisplay(true);
                     setTaxValue(event.data.taxValue || 0);
                     setTaxType(event.data.taxType || null);
@@ -71,11 +73,12 @@ export const ShopContainer = () => {
             body: JSON.stringify({
                 items: cartContent,
                 tax: taxType,
+                moneyType,
             })
         }).then(() => {
             closeNUI(() => closeMenu());
         });
-    }, [closeMenu, taxType]);
+    }, [closeMenu, taxType, moneyType]);
 
     const putInCart = useCallback((event: DragEndEvent) => {
         if (!event.active.data.current) return;

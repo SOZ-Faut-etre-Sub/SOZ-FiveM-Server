@@ -3,6 +3,7 @@ import { emitClientRpc } from '@public/core/rpc';
 import { uuidv4 } from '@public/core/utils';
 import { joaat } from '@public/shared/joaat';
 import { FDO_NO_FBI } from '@public/shared/job';
+import { VehicleConfiguration } from '@public/shared/vehicle/modification';
 
 import { OnEvent } from '../../core/decorators/event';
 import { Exportable } from '../../core/decorators/exports';
@@ -140,6 +141,11 @@ export class VehicleStateProvider {
     @Rpc(RpcServerEvent.VEHICLE_GET_STATE)
     public getVehicleState(source: number, vehicleNetworkId: number): VehicleVolatileState {
         return this.vehicleStateService.getVehicleState(vehicleNetworkId).volatile;
+    }
+
+    @Exportable('GetVehicleConfiguration')
+    public getVehicleConfiguration(vehicleNetworkId: number): VehicleConfiguration {
+        return this.vehicleStateService.getVehicleState(vehicleNetworkId).configuration;
     }
 
     @Rpc(RpcServerEvent.VEHICLE_GET_CONDITION)

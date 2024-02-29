@@ -430,6 +430,7 @@ export type VehicleConfiguration = {
     extra?: Record<number, boolean>;
     manualGearbox?: boolean;
     handling?: VehicleHandling;
+    extraStorage?: boolean;
 };
 
 export enum VehicleModType {
