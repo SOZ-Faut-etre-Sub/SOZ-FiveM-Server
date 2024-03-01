@@ -33,6 +33,7 @@ export type VehicleHud = {
     fuelLevel: number;
     vehCategory: string;
     useRpm: boolean;
+    nosLevel: number | null;
 };
 
 export type VehicleHudSpeed = {

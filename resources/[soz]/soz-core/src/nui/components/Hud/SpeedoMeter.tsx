@@ -18,6 +18,7 @@ import HighBeamIcon from '../../icons/hud/vehicle/highBeam.svg';
 import KeyIcon from '../../icons/hud/vehicle/key.svg';
 import LowBeamIcon from '../../icons/hud/vehicle/lowBeam.svg';
 import MotorIcon from '../../icons/hud/vehicle/motor.svg';
+import NosIcon from '../../icons/hud/vehicle/nos.svg';
 import OilIcon from '../../icons/hud/vehicle/oil.svg';
 import SeatbeltIcon from '../../icons/hud/vehicle/seatbelt.svg';
 
@@ -189,6 +190,34 @@ const FuelGauge: FunctionComponent<{ value: number; fuelType: string; vehCategor
     );
 };
 
+const NosGauge: FunctionComponent<{ value: number }> = ({ value }) => {
+    return (
+        <div className="relative right-[19px] top-[6px]">
+            <svg className={'flex text-blue-500'} width="30" height="50">
+                <path
+                    d="M16.3586 56.0748C17.1932 52.039 17.6419 47.8612 17.6645 43.5816C17.7481 27.6865 11.9379 13.1353 2.28418 2"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="1.5"
+                    strokeOpacity="0.2"
+                />
+                <path
+                    d="M16.3586 56.0748C17.1932 52.039 17.6419 47.8612 17.6645 43.5816C17.7481 27.6865 11.9379 13.1353 2.28418 2"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="3"
+                    strokeOpacity="1.0"
+                    strokeDasharray="60"
+                    style={{
+                        strokeDashoffset: 60 - 60 * value,
+                    }}
+                />
+            </svg>
+            <NosIcon className={'relative top-[7px] left-[10px] w-6 h-6 text-gray-400/60'} />
+        </div>
+    );
+};
+
 export const SpeedoMeter: FunctionComponent = () => {
     const vehicle = useVehicle();
     const player = usePlayer();
@@ -250,6 +279,7 @@ export const SpeedoMeter: FunctionComponent = () => {
                         vehCategory={vehicle.vehCategory}
                     />
                 )}
+                {vehicle.nosLevel != null && <NosGauge value={vehicle.nosLevel} />}
                 <MotorIndicator motor={vehicle.engineHealth} oil={vehicle.oilLevel} fuelType={vehicle.fuelType} />
             </div>
             <div className={classesLight}>

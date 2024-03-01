@@ -313,6 +313,7 @@ export enum ServerEvent {
     VEHICLE_DAMAGE_BLUR = 'soz-core:server:vehicle:damage-blur',
     VEHICLE_LOCKPICK = 'soz-core:server:vehicle:lockpick',
     VEHICLE_BREAK_DOOR = 'soz-core:server:vehicle:break-door',
+    VEHICLE_NOS_START = 'soz-core:server:vehicle:nos-start',
     VEHICLE_RESET_SURFACE_STATE_TO_OWNER = 'soz-core:server:vehicle:reset-surface-effect-to-owner',
 
     VOIP_SET_MEGAPHONE = 'soz-core:server:voip:set-megaphone',

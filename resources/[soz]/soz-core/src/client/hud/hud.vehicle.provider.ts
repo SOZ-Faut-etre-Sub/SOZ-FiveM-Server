@@ -32,6 +32,8 @@ export class HudVehicleProvider {
     @Inject(VehicleConditionProvider)
     private readonly vehicleConditionProvider: VehicleConditionProvider;
 
+    private nosLevel = 1.0;
+
     @Tick(0)
     async updateVehicleHudSpeed() {
         const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
@@ -136,6 +138,11 @@ export class HudVehicleProvider {
                       ? VehicleLightState.LowBeam
                       : VehicleLightState.Off
                 : VehicleLightState.Off,
+            nosLevel: !condition.nitro ? null : this.nosLevel,
         });
+    }
+
+    public setNosLevel(value: number) {
+        this.nosLevel = value;
     }
 }

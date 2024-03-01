@@ -17,6 +17,7 @@ export const vehicle = createModel<RootModel>()({
         rpm: 0,
         vehCategory: null,
         useRpm: true,
+        nosLevel: null,
     } as VehicleHud,
     reducers: {
         update(state, vehicle: Partial<VehicleHud>) {
