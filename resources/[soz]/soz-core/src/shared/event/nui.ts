@@ -443,6 +443,7 @@ export enum NuiEvent {
 
     BusinessVehicleOrder = 'soz-core:client:business:vehicle:order',
     BusinessVehiclePosition = 'soz-core:client:business:vehicle:position',
+    BusinessVehicleHackSuccess = 'soz-core:client:business:vehicle:hack-success',
 
     AdminDoorSetState = 'soz-core:client:door:set-state',
     AdminDoorAddSub = 'soz-core:client:door:add-subdoor',

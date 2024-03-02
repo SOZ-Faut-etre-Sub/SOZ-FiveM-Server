@@ -498,7 +498,7 @@ export enum ServerEvent {
 
     GANG_VEHBIZ_COMMAND = 'soz-core:server:gang:veh:command',
     GANG_VEHBIZ_GET_POSITION = 'soz-core:server:gang:veh:position',
-    GANG_VEHBIZ_SPAWN = 'soz-core:server:gang:veh:spawn',
+    GANG_VEHBIZ_UNLOCK = 'soz-core:server:gang:veh:unlock',
     GANG_VEHBIZ_RESELL = 'soz-core:server:gang:veh:resell',
     GANG_VEHBIZ_HACK = 'soz-core:server:gang:veh:hack',
     GANG_VEHBIZ_STRIP_DOOR = 'soz-core:server:gang:veh:strip-door',

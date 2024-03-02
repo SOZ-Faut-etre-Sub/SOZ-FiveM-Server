@@ -128,6 +128,10 @@ export class VehicleConditionProvider {
             ...currentCondition,
             ...condition,
         });
+
+        if (Object.keys(condition).includes('nitro')) {
+            TriggerServerEvent(ServerEvent.VEHICLE_UPDATE_CONDITION_FROM_OWNER, vehicleNetworkId, condition);
+        }
     }
 
     @Tick(TickInterval.EVERY_SECOND)
