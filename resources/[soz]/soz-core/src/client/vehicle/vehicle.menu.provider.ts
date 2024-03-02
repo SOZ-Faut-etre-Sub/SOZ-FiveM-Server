@@ -1,5 +1,8 @@
+import { VehicleBusinessProvider } from '@private/client/gang/business.vehicle.provider';
 import { FDO } from '@public/shared/job';
-import { VehicleClass, VehicleSeat } from '@public/shared/vehicle/vehicle';
+import { BoxZone, ZoneType } from '@public/shared/polyzone/box.zone';
+import { Vector3 } from '@public/shared/polyzone/vector';
+import { LSCustomMode, VehicleClass, VehicleSeat } from '@public/shared/vehicle/vehicle';
 
 import { Command } from '../../core/decorators/command';
 import { OnNuiEvent } from '../../core/decorators/event';
@@ -15,6 +18,7 @@ import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
+import { ZoneRepository } from '../repository/zone.repository';
 import { VoipRadioVehicleProvider } from '../voip/voip.radio.vehicle.provider';
 import { VehicleCustomProvider } from './vehicle.custom.provider';
 import { VehicleStateService } from './vehicle.state.service';
@@ -41,6 +45,12 @@ export class VehicleMenuProvider {
 
     @Inject(VoipRadioVehicleProvider)
     private voipRadioVehicleProvider: VoipRadioVehicleProvider;
+
+    @Inject(ZoneRepository)
+    private zoneRepository: ZoneRepository;
+
+    @Inject(VehicleBusinessProvider)
+    private vehicleBusinessProvider: VehicleBusinessProvider;
 
     @OnNuiEvent<boolean, boolean>(NuiEvent.VehicleSetEngine)
     async setVehicleEngine(engineOn: boolean) {
@@ -192,7 +202,7 @@ export class VehicleMenuProvider {
     }
 
     @OnNuiEvent(NuiEvent.VehicleOpenLSCustom)
-    async handleVehicleLSCustom(admin?: boolean) {
+    async handleVehicleLSCustom(mode: LSCustomMode) {
         const ped = PlayerPedId();
         const vehicle = GetVehiclePedIsIn(ped, false);
 
@@ -202,7 +212,7 @@ export class VehicleMenuProvider {
 
         this.nuiMenu.closeMenu();
 
-        await this.vehicleCustomProvider.upgradeVehicle(vehicle, admin);
+        await this.vehicleCustomProvider.upgradeVehicle(vehicle, mode);
 
         return true;
     }
@@ -324,6 +334,11 @@ export class VehicleMenuProvider {
             }
         };
 
+        const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
+        const crimiZone = this.zoneRepository.get(
+            zone => zone.data.type == ZoneType.VehBizGarage && BoxZone.fromZone(zone).isPointInside(position)
+        );
+
         this.nuiMenu.openMenu<MenuType.Vehicle>(MenuType.Vehicle, {
             isDriver,
             engineOn: GetIsVehicleEngineRunning(vehicle),
@@ -340,6 +355,8 @@ export class VehicleMenuProvider {
             pitstopPrice: pitstop[1],
             neonLightsStatus: vehicleState.neonLightsStatus,
             hasNeon: hasNeon(),
+            crimiPerformance: crimiZone.length > 0 && this.vehicleBusinessProvider.canPerformance(),
+            crimiCustom: crimiZone.length > 0 && this.vehicleBusinessProvider.canCustom(),
         });
     }
 }

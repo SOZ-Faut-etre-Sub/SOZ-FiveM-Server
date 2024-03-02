@@ -1,3 +1,5 @@
+import { VehicleBusinessCustomPrice } from '@private/shared/business.vehicle';
+import { LSCustomMode } from '@public/shared/vehicle/vehicle';
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import { TaxType } from '../../../shared/bank';
@@ -6,6 +8,7 @@ import { MenuType } from '../../../shared/nui/menu';
 import {
     getVehicleCustomPrice,
     VehicleConfiguration,
+    VehicleCustomInput,
     VehicleCustomMenuData,
     VehicleModification,
     VehicleUpgradeChoice,
@@ -92,20 +95,22 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
         return null;
     }
 
-    const price = data.admin
-        ? 0
-        : configuration
-          ? getVehicleCustomPrice(data.vehiclePrice, data.options, data.currentConfiguration, configuration)
-          : 0;
+    const price =
+        data.mode == LSCustomMode.Admin
+            ? 0
+            : configuration
+              ? getVehicleCustomPrice(data.vehiclePrice, data.options, data.currentConfiguration, configuration)
+              : 0;
 
     const onConfirm = () => {
-        fetchNui(NuiEvent.VehicleCustomConfirmModification, {
+        const input: VehicleCustomInput = {
             vehicleEntityId: data.vehicle,
             originalConfiguration: data.originalConfiguration,
             vehicleConfiguration: configuration,
-            usePricing: !data.admin,
+            mode: data.mode,
             onlyPerformance: true,
-        });
+        };
+        fetchNui(NuiEvent.VehicleCustomConfirmModification, input);
     };
 
     const createOnChange = (key: keyof VehicleModification) => (value: any) => {
@@ -204,7 +209,15 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
                     <MenuItemButton className="border-t border-white/50" onConfirm={() => onConfirm()}>
                         <div className="flex w-full justify-between items-center">
                             <span>Confirmer les changements</span>
-                            <span>$ {Intl.NumberFormat('fr-FR').format(getPrice(price, TaxType.VEHICLE))}</span>
+                            {data.mode == LSCustomMode.Normal && (
+                                <span>$ {Intl.NumberFormat('fr-FR').format(getPrice(price, TaxType.VEHICLE))}</span>
+                            )}
+                            {data.mode == LSCustomMode.Crimi && (
+                                <span>
+                                    {Intl.NumberFormat('fr-FR').format(Math.ceil(price / VehicleBusinessCustomPrice))}{' '}
+                                    pièces
+                                </span>
+                            )}
                         </div>
                     </MenuItemButton>
                 </MenuContent>

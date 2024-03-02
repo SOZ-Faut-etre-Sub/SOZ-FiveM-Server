@@ -1,4 +1,5 @@
 import { RGBColor } from '../color';
+import { LSCustomMode } from './vehicle';
 
 export enum VehiclePaintType {
     Normal,
@@ -1841,6 +1842,7 @@ export const VehicleModificationPricing: Partial<Record<keyof VehicleModificatio
     },
 };
 export const VehicleManualPricing = [0, 0.01];
+export const VehicleDefaultPricing = 50;
 
 export const getDefaultVehicleConfiguration = (): VehicleConfiguration => ({
     color: {
@@ -1861,34 +1863,42 @@ export const getVehicleCustomPrice = (
 ): number => {
     let price = 0;
 
-    for (const key of Object.keys(VehicleModificationPricing)) {
+    for (const key of Object.keys(newModification.modification)) {
         const category = VehicleModificationPricing[key];
+        if (category) {
+            if (category.type === 'list') {
+                const currentLevel = (currentModification.modification[key] as number) ?? -1;
+                const newLevel = (newModification.modification[key] as number) ?? -1;
 
-        if (category.type === 'list') {
-            const currentLevel = (currentModification.modification[key] as number) ?? -1;
-            const newLevel = (newModification.modification[key] as number) ?? -1;
+                if (currentLevel !== newLevel) {
+                    for (let subLevel = currentLevel + 1; subLevel < newLevel + 1; subLevel++) {
+                        const level = category.priceByLevels[subLevel];
 
-            if (currentLevel !== newLevel) {
-                for (let subLevel = currentLevel + 1; subLevel < newLevel + 1; subLevel++) {
-                    const level = category.priceByLevels[subLevel];
-
-                    if (level) {
-                        price = price + vehiclePrice * level;
+                        if (level) {
+                            price = price + vehiclePrice * level;
+                        }
                     }
                 }
             }
-        }
 
-        if (category.type === 'toggle') {
-            const hasCurrent = Boolean(currentModification.modification[key]);
-            const hasNew = Boolean(newModification.modification[key]);
+            if (category.type === 'toggle') {
+                const hasCurrent = Boolean(currentModification.modification[key]);
+                const hasNew = Boolean(newModification.modification[key]);
+
+                if (hasCurrent !== hasNew) {
+                    if (hasNew) {
+                        price = price + vehiclePrice * category.priceByLevels[1];
+                    } else {
+                        price = price + vehiclePrice * category.priceByLevels[0];
+                    }
+                }
+            }
+        } else {
+            const hasCurrent = currentModification.modification[key];
+            const hasNew = newModification.modification[key];
 
             if (hasCurrent !== hasNew) {
-                if (hasNew) {
-                    price = price + vehiclePrice * category.priceByLevels[1];
-                } else {
-                    price = price + vehiclePrice * category.priceByLevels[0];
-                }
+                price += VehicleDefaultPricing;
             }
         }
     }
@@ -1903,6 +1913,18 @@ export const getVehicleCustomPrice = (
         }
     }
 
+    for (const key of Object.keys(newModification)) {
+        if (key == 'modification' || key == 'manualGearbox') {
+            continue;
+        }
+        const hasCurrent = JSON.stringify(currentModification[key]);
+        const hasNew = JSON.stringify(newModification[key]);
+
+        if (hasCurrent !== hasNew) {
+            price += VehicleDefaultPricing;
+        }
+    }
+
     return price;
 };
 
@@ -1912,8 +1934,16 @@ export type VehicleCustomMenuData = {
     options: VehicleUpgradeOptions;
     originalConfiguration: VehicleConfiguration;
     currentConfiguration: VehicleConfiguration;
-    admin: boolean;
+    mode: LSCustomMode;
     advenced: boolean;
+};
+
+export type VehicleCustomInput = {
+    vehicleEntityId: number;
+    vehicleConfiguration: VehicleConfiguration;
+    originalConfiguration: VehicleConfiguration;
+    mode: LSCustomMode;
+    onlyPerformance: boolean;
 };
 
 export const HornLabelList: Record<number, { name: string; label: string }> = {

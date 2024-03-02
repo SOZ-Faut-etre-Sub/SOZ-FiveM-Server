@@ -10,6 +10,7 @@ import { RpcServerEvent } from '../../shared/rpc';
 import { VehicleConfiguration } from '../../shared/vehicle/modification';
 import {
     getDefaultVehicleCondition,
+    LSCustomMode,
     VehicleClassFuelStorageMultiplier,
     VehicleCondition,
     VehicleVolatileState,
@@ -103,7 +104,8 @@ export class VehicleConditionProvider {
                 currentVehicleConfiguration,
                 currentVehicleConfiguration,
                 null,
-                false
+                false,
+                LSCustomMode.Normal
             );
         }
     }

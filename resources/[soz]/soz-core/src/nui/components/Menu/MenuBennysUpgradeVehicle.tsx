@@ -1,3 +1,5 @@
+import { VehicleBusinessCustomPrice } from '@private/shared/business.vehicle';
+import { LSCustomMode } from '@public/shared/vehicle/vehicle';
 import { FunctionComponent, useEffect, useMemo, useState } from 'react';
 
 import { TaxType } from '../../../shared/bank';
@@ -5,11 +7,13 @@ import { RGBColor } from '../../../shared/color';
 import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
 import {
+    getVehicleCustomPrice,
     VehicleColor,
     VehicleColorCategory,
     VehicleColorChoiceItem,
     VehicleColorChoices,
     VehicleConfiguration,
+    VehicleCustomInput,
     VehicleCustomMenuData,
     VehicleModification,
     VehicleModificationPricing,
@@ -360,11 +364,14 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
     }
 
     const onConfirm = () => {
-        fetchNui(NuiEvent.VehicleCustomConfirmModification, {
+        const input: VehicleCustomInput = {
             vehicleEntityId: data.vehicle,
             originalConfiguration: data.originalConfiguration,
             vehicleConfiguration: config,
-        });
+            mode: LSCustomMode.Normal,
+            onlyPerformance: false,
+        };
+        fetchNui(NuiEvent.VehicleCustomConfirmModification, input);
     };
 
     const createOnDoorChange = (doorIndex: number) => {
@@ -372,6 +379,13 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
             await fetchNui(NuiEvent.VehicleSetDoorOpen, { doorIndex, open: value });
         };
     };
+
+    const price =
+        data.mode != LSCustomMode.Crimi
+            ? 0
+            : config
+            ? getVehicleCustomPrice(data.vehiclePrice, data.options, data.currentConfiguration, config)
+            : 0;
 
     return (
         <Menu type={MenuType.BennysUpgradeVehicle}>
@@ -391,7 +405,17 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                     <MenuItemCheckbox onChange={createOnDoorChange(5)} checked={false}>
                         Ouvrir coffre
                     </MenuItemCheckbox>
-                    <MenuItemButton onConfirm={() => onConfirm()}>✅ Confirmer les changements</MenuItemButton>
+                    <MenuItemButton onConfirm={() => onConfirm()}>
+                        <div className="flex w-full justify-between items-center">
+                            <span>✅ Confirmer les changements</span>
+                            {data.mode == LSCustomMode.Crimi && (
+                                <span>
+                                    {Intl.NumberFormat('fr-FR').format(Math.ceil(price / VehicleBusinessCustomPrice))}{' '}
+                                    pièces
+                                </span>
+                            )}
+                        </div>
+                    </MenuItemButton>
                 </MenuContent>
             </MainMenu>
             <SubMenu id="colors">

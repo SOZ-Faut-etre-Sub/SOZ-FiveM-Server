@@ -1,3 +1,4 @@
+import { LSCustomMode } from '@public/shared/vehicle/vehicle';
 import { FunctionComponent } from 'react';
 
 import { NuiEvent } from '../../../../shared/event';
@@ -40,6 +41,14 @@ export const MenuBennys: FunctionComponent<MenuBennysProps> = ({ data }) => {
             </Menu>
         );
     }
+
+    const onConfirm = (item, props) => {
+        triggerServerEvent(ServerEvent.JOBS_PLACE_PROPS, item, props);
+    };
+
+    const onUpgradeVehicle = () => {
+        fetchNui(NuiEvent.BennysUpgradeVehicle, LSCustomMode.Normal);
+    };
 
     return (
         <Menu type={MenuType.JobBennys}>

@@ -1,3 +1,6 @@
+import { VehicleBusinessCustomPrice } from '@private/shared/business.vehicle';
+import { LSCustomMode } from '@public/shared/vehicle/vehicle';
+
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
@@ -11,6 +14,7 @@ import {
 import { PriceService } from '../bank/price.service';
 import { PrismaService } from '../database/prisma.service';
 import { InventoryManager } from '../inventory/inventory.manager';
+import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
 import { PlayerMoneyService } from '../player/player.money.service';
 import { VehicleStateService } from './vehicle.state.service';
@@ -37,6 +41,9 @@ export class VehicleCustomProvider {
     @Inject(PriceService)
     private priceService: PriceService;
 
+    @Inject(ItemService)
+    private itemService: ItemService;
+
     @Rpc(RpcServerEvent.VEHICLE_CUSTOM_SET_MODS)
     public async setMods(
         source: number,
@@ -44,7 +51,8 @@ export class VehicleCustomProvider {
         mods: VehicleConfiguration,
         originalConfiguration: VehicleConfiguration,
         price: number | null = null,
-        notify = true
+        notify = true,
+        mode = LSCustomMode.Normal
     ) {
         // @TODO Price client side
         const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
@@ -58,13 +66,23 @@ export class VehicleCustomProvider {
               })
             : null;
 
-        if (taxedPrice && this.playerMoneyService.get(source) < taxedPrice) {
+        if (mode == LSCustomMode.Normal && taxedPrice && this.playerMoneyService.get(source) < taxedPrice) {
             this.notifier.notify(source, "Vous n'avez pas assez d'argent", 'error');
 
             return originalConfiguration;
         }
+        if (
+            mode == LSCustomMode.Crimi &&
+            price &&
+            this.inventoryManager.getItemCount(source, 'veh_strip_piece') <
+                Math.ceil(price / VehicleBusinessCustomPrice)
+        ) {
+            const item = this.itemService.getItem('veh_strip_piece');
+            this.notifier.notify(source, `Vous n'avez pas assez de ${item.label}`, 'error');
 
-        if (taxedPrice) {
+            return originalConfiguration;
+        }
+        if (taxedPrice && mode == LSCustomMode.Normal) {
             // LS Custom upgrade parts
             const upgradedParts = this.getLSCustomUpgradedPart(originalConfiguration, mods);
 
@@ -86,6 +104,12 @@ export class VehicleCustomProvider {
             }
 
             await this.playerMoneyService.buy(source, price, TaxType.VEHICLE);
+        } else if (mode == LSCustomMode.Crimi) {
+            this.inventoryManager.removeItemFromInventory(
+                source,
+                'veh_strip_piece',
+                Math.ceil(price / VehicleBusinessCustomPrice)
+            );
         }
 
         if (playerVehicle) {
@@ -99,7 +123,7 @@ export class VehicleCustomProvider {
             });
         }
 
-        if (taxedPrice) {
+        if (taxedPrice && mode == LSCustomMode.Normal) {
             this.notifier.notify(source, `Vous avez payé $${taxedPrice.toFixed(0)} pour modifier votre véhicule.`);
         } else if (notify) {
             this.notifier.notify(source, 'Le véhicule a été modifié');

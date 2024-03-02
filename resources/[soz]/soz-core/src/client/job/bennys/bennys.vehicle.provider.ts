@@ -1,5 +1,10 @@
 import { JobType } from '@public/shared/job';
-import { isVehicleModelElectric, isVehicleModelTrailer, VehicleSeat } from '@public/shared/vehicle/vehicle';
+import {
+    isVehicleModelElectric,
+    isVehicleModelTrailer,
+    LSCustomMode,
+    VehicleSeat,
+} from '@public/shared/vehicle/vehicle';
 
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
@@ -275,10 +280,10 @@ export class BennysVehicleProvider {
         return closestVehicle !== null;
     }
 
-    public async upgradeVehicle(vehicleEntityId: number) {
+    public async upgradeVehicle(vehicleEntityId: number, mode: LSCustomMode) {
         const vehicleCondition = await this.vehicleStateService.getVehicleCondition(vehicleEntityId);
 
-        if (this.vehicleService.isInBadCondition(vehicleEntityId, vehicleCondition)) {
+        if (mode == LSCustomMode.Normal && this.vehicleService.isInBadCondition(vehicleEntityId, vehicleCondition)) {
             this.notifier.notify(
                 'Ce véhicule est trop endommagé pour être modifié, veuillez le réparer avant de le modifier.',
                 'error'
@@ -287,7 +292,7 @@ export class BennysVehicleProvider {
             return;
         }
 
-        if (vehicleCondition.dirtLevel > 5.0) {
+        if (mode == LSCustomMode.Normal && vehicleCondition.dirtLevel > 5.0) {
             this.notifier.notify(
                 'Ce véhicule est trop sale pour être modifié, veuillez le laver avant de le modifier.',
                 'error'
@@ -309,7 +314,7 @@ export class BennysVehicleProvider {
                 options,
                 originalConfiguration: vehicleConfiguration,
                 currentConfiguration: vehicleConfiguration,
-                admin: false,
+                mode: mode,
                 advenced: false,
             },
             {
@@ -365,11 +370,11 @@ export class BennysVehicleProvider {
     }
 
     @OnNuiEvent(NuiEvent.BennysUpgradeVehicle)
-    public async onUpgradeVehicle() {
+    public async onUpgradeVehicle(mode: LSCustomMode) {
         const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
 
         if (vehicle) {
-            await this.upgradeVehicle(vehicle);
+            await this.upgradeVehicle(vehicle, mode);
         }
 
         return true;

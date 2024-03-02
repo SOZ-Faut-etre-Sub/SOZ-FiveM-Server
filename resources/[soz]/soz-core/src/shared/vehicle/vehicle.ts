@@ -389,7 +389,15 @@ export type VehicleMenuData = {
     pitstopPrice: number;
     neonLightsStatus: boolean;
     hasNeon: boolean;
+    crimiPerformance: boolean;
+    crimiCustom: boolean;
 };
+
+export enum LSCustomMode {
+    Admin = 'admin',
+    Crimi = 'crimi',
+    Normal = 'normal',
+}
 
 export type VehicleAuctionMenuData = {
     name: string;

@@ -3,7 +3,7 @@ import { FunctionComponent } from 'react';
 import { TaxType } from '../../../shared/bank';
 import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
-import { VehicleMenuData } from '../../../shared/vehicle/vehicle';
+import { LSCustomMode, VehicleMenuData } from '../../../shared/vehicle/vehicle';
 import { fetchNui } from '../../fetch';
 import { useGetPrice } from '../../hook/price';
 import {
@@ -55,8 +55,12 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
         fetchNui(NuiEvent.VehicleHandleRadio);
     };
 
-    const onOpenLSCustom = () => {
-        fetchNui(NuiEvent.VehicleOpenLSCustom);
+    const onOpenLSCustom = (mode: LSCustomMode) => {
+        fetchNui(NuiEvent.VehicleOpenLSCustom, mode);
+    };
+
+    const onOpenBennysUpgrade = (mode: LSCustomMode) => {
+        fetchNui(NuiEvent.BennysUpgradeVehicle, mode);
     };
 
     const onPitStop = price => {
@@ -115,7 +119,9 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
                             </MenuItemSelect>
                             <MenuItemSubMenuLink id="door">Gestion des portes</MenuItemSubMenuLink>
                             {data.insideLSCustom && (
-                                <MenuItemButton onConfirm={() => onOpenLSCustom()}>LS Custom</MenuItemButton>
+                                <MenuItemButton onConfirm={() => onOpenLSCustom(LSCustomMode.Normal)}>
+                                    LS Custom
+                                </MenuItemButton>
                             )}
                             {data.insideLSCustom && !data.onDutyNg && (
                                 <MenuItemButton
@@ -123,6 +129,16 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
                                     description={`Prix: ${getPrice(data.pitstopPrice, TaxType.SERVICE)} $`}
                                 >
                                     Pit Stop
+                                </MenuItemButton>
+                            )}
+                            {data.crimiCustom && (
+                                <MenuItemButton onConfirm={() => onOpenBennysUpgrade(LSCustomMode.Crimi)}>
+                                    Modifier l'apparence
+                                </MenuItemButton>
+                            )}
+                            {data.crimiPerformance && (
+                                <MenuItemButton onConfirm={() => onOpenLSCustom(LSCustomMode.Crimi)}>
+                                    Modifier les performances
                                 </MenuItemButton>
                             )}
                         </>

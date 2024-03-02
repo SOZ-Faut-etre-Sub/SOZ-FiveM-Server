@@ -8,7 +8,7 @@ import { AdminMapperMenuData } from '../../../../shared/housing/menu';
 import { JobType } from '../../../../shared/job';
 import { JobRegistry } from '../../../../shared/job/config';
 import { MenuType } from '../../../../shared/nui/menu';
-import { Zone, ZoneType, ZoneTyped } from '../../../../shared/polyzone/box.zone';
+import { Zone, ZoneType, ZoneTyped, ZoneTypeLabel } from '../../../../shared/polyzone/box.zone';
 import { fetchNui } from '../../../fetch';
 import {
     MainMenu,
@@ -498,12 +498,9 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                             setZones(zones);
                         }}
                     >
-                        <MenuItemSelectOption value={ZoneType.NoStress}>No stress zone</MenuItemSelectOption>
-                        <MenuItemSelectOption value={ZoneType.VehBizDelivery}>HC Exportvehicle</MenuItemSelectOption>
-                        <MenuItemSelectOption value={ZoneType.VehBizResell}>
-                            HC Revente piece de vehicle
-                        </MenuItemSelectOption>
-                        <MenuItemSelectOption value={ZoneType.VehBizSpawn}>HC Spawn vehicle</MenuItemSelectOption>
+                        {Object.values(ZoneType).map(type => (
+                            <MenuItemSelectOption value={type}>{ZoneTypeLabel[type]}</MenuItemSelectOption>
+                        ))}
                     </MenuItemSelect>
                     {zones.map(zone => (
                         <MenuItemSelect

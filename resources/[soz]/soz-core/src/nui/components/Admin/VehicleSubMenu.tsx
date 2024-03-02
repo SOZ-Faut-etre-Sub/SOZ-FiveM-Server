@@ -4,7 +4,7 @@ import { FunctionComponent, useEffect, useState } from 'react';
 import { SozRole } from '../../../core/permissions';
 import { NuiEvent } from '../../../shared/event';
 import { isOk, Result } from '../../../shared/result';
-import { Vehicle, VehicleCategory } from '../../../shared/vehicle/vehicle';
+import { LSCustomMode, Vehicle, VehicleCategory } from '../../../shared/vehicle/vehicle';
 import { fetchNui } from '../../fetch';
 import {
     MenuContent,
@@ -54,7 +54,7 @@ export const VehicleSubMenu: FunctionComponent<VehicleSubMenuProps> = ({ banner,
     }
 
     const onOpenBennysUpgrade = () => {
-        fetchNui(NuiEvent.BennysUpgradeVehicle);
+        fetchNui(NuiEvent.BennysUpgradeVehicle, LSCustomMode.Admin);
     };
     const onOpenLSCustom = () => {
         fetchNui(NuiEvent.VehicleOpenLSCustom, true);

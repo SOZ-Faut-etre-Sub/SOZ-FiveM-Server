@@ -13,10 +13,11 @@ import {
     getVehicleConfigurationDiff,
     getVehicleCustomPrice,
     VehicleConfiguration,
+    VehicleCustomInput,
     VehicleCustomMenuData,
     VehicleUpgradeOptions,
 } from '../../shared/vehicle/modification';
-import { VehicleClass, VehicleSeat } from '../../shared/vehicle/vehicle';
+import { LSCustomMode, VehicleClass, VehicleSeat } from '../../shared/vehicle/vehicle';
 import { Notifier } from '../notifier';
 import { NuiMenu } from '../nui/nui.menu';
 import { VehicleRepository } from '../repository/vehicle.repository';
@@ -99,33 +100,28 @@ export class VehicleCustomProvider {
         return this.vehicleModificationService.createOptions(vehicleEntityId);
     }
 
-    @OnNuiEvent<{ vehicleEntityId: number; vehicleConfiguration: Partial<VehicleConfiguration> }>(
-        NuiEvent.VehicleCustomConfirmModification
-    )
-    public async confirmVehicleCustom({
-        vehicleEntityId,
-        vehicleConfiguration,
-        originalConfiguration,
-        usePricing,
-        onlyPerformance,
-    }): Promise<void> {
-        const options = this.vehicleModificationService.createOptions(vehicleEntityId);
-        const vehicle = this.vehicleRepository.getByModelHash(GetEntityModel(vehicleEntityId));
-        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
+    @OnNuiEvent(NuiEvent.VehicleCustomConfirmModification)
+    public async confirmVehicleCustom(input: VehicleCustomInput): Promise<void> {
+        const options = this.vehicleModificationService.createOptions(input.vehicleEntityId);
+        const vehicle = this.vehicleRepository.getByModelHash(GetEntityModel(input.vehicleEntityId));
+        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(input.vehicleEntityId);
 
-        if (usePricing && (!vehicle || !vehicle.price)) {
+        if (input.mode != LSCustomMode.Admin && (!vehicle || !vehicle.price)) {
             this.notifier.notify(
                 "Ce véhicule n'est pas enregistré auprès des autorités et ne peut donc pas être modifié, veuillez prendre contact avec les autorités.",
                 'error'
             );
 
-            SetVehicleUndriveable(vehicleEntityId, false);
-            SetVehicleLights(vehicleEntityId, 0);
+            SetVehicleUndriveable(input.vehicleEntityId, false);
+            SetVehicleLights(input.vehicleEntityId, 0);
 
-            if (onlyPerformance) {
-                this.vehicleService.applyVehicleConfigurationPerformance(vehicleEntityId, originalConfiguration);
+            if (input.onlyPerformance) {
+                this.vehicleService.applyVehicleConfigurationPerformance(
+                    input.vehicleEntityId,
+                    input.originalConfiguration
+                );
             } else {
-                this.vehicleService.applyVehicleConfiguration(vehicleEntityId, originalConfiguration);
+                this.vehicleService.applyVehicleConfiguration(input.vehicleEntityId, input.originalConfiguration);
             }
 
             this.nuiMenu.closeMenu();
@@ -133,31 +129,34 @@ export class VehicleCustomProvider {
             return;
         }
 
-        const price = usePricing
-            ? getVehicleCustomPrice(vehicle.price, options, originalConfiguration, vehicleConfiguration)
-            : 0;
+        const price =
+            input.mode != LSCustomMode.Admin
+                ? getVehicleCustomPrice(vehicle.price, options, input.originalConfiguration, input.vehicleConfiguration)
+                : 0;
 
         const newVehicleConfiguration = await emitRpc<VehicleConfiguration>(
             RpcServerEvent.VEHICLE_CUSTOM_SET_MODS,
             vehicleNetworkId,
-            vehicleConfiguration,
-            originalConfiguration,
-            price
+            input.vehicleConfiguration,
+            input.originalConfiguration,
+            price,
+            true,
+            input.mode
         );
 
-        SetVehicleUndriveable(vehicleEntityId, false);
-        SetVehicleLights(vehicleEntityId, 0);
+        SetVehicleUndriveable(input.vehicleEntityId, false);
+        SetVehicleLights(input.vehicleEntityId, 0);
 
-        if (onlyPerformance) {
-            this.vehicleService.applyVehicleConfigurationPerformance(vehicleEntityId, newVehicleConfiguration);
+        if (input.onlyPerformance) {
+            this.vehicleService.applyVehicleConfigurationPerformance(input.vehicleEntityId, newVehicleConfiguration);
         } else {
-            this.vehicleService.applyVehicleConfiguration(vehicleEntityId, newVehicleConfiguration);
+            this.vehicleService.applyVehicleConfiguration(input.vehicleEntityId, newVehicleConfiguration);
         }
 
         this.nuiMenu.closeMenu();
     }
 
-    public async upgradeVehicle(vehicleEntityId: number, admin: boolean) {
+    public async upgradeVehicle(vehicleEntityId: number, mode: LSCustomMode) {
         const options = this.vehicleModificationService.createOptions(vehicleEntityId);
         const vehicle = this.vehicleRepository.getByModelHash(GetEntityModel(vehicleEntityId));
 
@@ -202,7 +201,7 @@ export class VehicleCustomProvider {
             options,
             originalConfiguration: { ...vehicleConfiguration },
             currentConfiguration: vehicleConfiguration,
-            admin: admin,
+            mode: mode,
             advenced: advancedFlag > 0,
         });
     }

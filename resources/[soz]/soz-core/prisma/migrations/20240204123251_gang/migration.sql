@@ -9,4 +9,4 @@ CREATE TABLE `gang` (
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-ALTER TABLE `zone` MODIFY `type` ENUM('NoStress', 'VehBizSpawn', 'VehBizDelivery', 'VehBizResell') NOT NULL DEFAULT 'NoStress';
+ALTER TABLE `zone` MODIFY `type` ENUM('NoStress', 'VehBizSpawn', 'VehBizDelivery', 'VehBizResell', 'VehBizGarage') NOT NULL DEFAULT 'NoStress';

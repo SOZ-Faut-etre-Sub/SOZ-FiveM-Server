@@ -8,7 +8,7 @@ import { Err, Ok } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
 import { groupBy } from '../../shared/utils/array';
 import { VehicleConfiguration, VehicleModType } from '../../shared/vehicle/modification';
-import { Vehicle, VehicleCategory } from '../../shared/vehicle/vehicle';
+import { LSCustomMode, Vehicle, VehicleCategory } from '../../shared/vehicle/vehicle';
 import { InputService } from '../nui/input.service';
 import { VehicleDamageProvider } from '../vehicle/vehicle.damage.provider';
 import { VehicleModificationService } from '../vehicle/vehicle.modification.service';
@@ -144,7 +144,10 @@ export class AdminMenuVehicleProvider {
                 RpcServerEvent.VEHICLE_CUSTOM_SET_MODS,
                 vehicleNetworkId,
                 fbiConfiguration,
-                configuration
+                configuration,
+                null,
+                true,
+                LSCustomMode.Admin
             );
 
             this.vehicleModificationService.applyVehicleConfiguration(vehicle, newVehicleConfiguration);

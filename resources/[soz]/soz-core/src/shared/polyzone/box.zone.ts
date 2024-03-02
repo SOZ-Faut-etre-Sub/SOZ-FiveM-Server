@@ -35,7 +35,16 @@ export enum ZoneType {
     VehBizSpawn = 'VehBizSpawn',
     VehBizDelivery = 'VehBizDelivery',
     VehBizResell = 'VehBizResell',
+    VehBizGarage = 'VehBizGarage',
 }
+
+export const ZoneTypeLabel: Record<ZoneType, string> = {
+    NoStress: 'No stress zone',
+    VehBizSpawn: 'VehBiz Spawn',
+    VehBizDelivery: 'VehBiz Delivery',
+    VehBizResell: 'VehBiz Resell',
+    VehBizGarage: 'VehBiz Garage',
+};
 
 export type ZoneTyped = Zone<{
     id: number;
