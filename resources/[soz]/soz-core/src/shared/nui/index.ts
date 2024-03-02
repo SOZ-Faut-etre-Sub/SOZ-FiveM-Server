@@ -21,6 +21,7 @@ import { NuiDrugMethodMap } from './drug';
 import { NuiFieldMethodMap } from './field';
 import { NuiFishingMethodMap } from './fishing';
 import { NuiGangMethodMap } from './gang';
+import { NuiHackingDeviceMethodMap } from './hacking_device';
 import { NuiHoodMethodMap } from './hood';
 import { NuiInputMethodMap } from './input';
 import { NuiMedicalDiagMethodMap } from './medical_diag';
@@ -89,6 +90,7 @@ export interface NuiMethodMap {
     bank_safe: NuiBankSafeMethodMap;
     gang: NuiGangMethodMap;
     group: NuiGroupMethodMap;
+    hacking_device: NuiHackingDeviceMethodMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(
