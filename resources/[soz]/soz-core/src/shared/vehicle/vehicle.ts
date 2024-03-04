@@ -391,6 +391,7 @@ export type VehicleMenuData = {
     hasNeon: boolean;
     crimiPerformance: boolean;
     crimiCustom: boolean;
+    crimiPlate: boolean;
 };
 
 export enum LSCustomMode {

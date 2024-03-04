@@ -9,4 +9,8 @@ export class VehicleBusinessProvider {
     public canPerformance(): boolean {
         return false;
     }
+
+    public canPlate(): boolean {
+        return false;
+    }
 }

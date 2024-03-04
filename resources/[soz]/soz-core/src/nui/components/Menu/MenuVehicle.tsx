@@ -141,6 +141,11 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
                                     Modifier les performances
                                 </MenuItemButton>
                             )}
+                            {data.crimiPlate && (
+                                <MenuItemButton onConfirm={() => fetchNui(NuiEvent.VehicleChangePlate)}>
+                                    Modifier la plaque
+                                </MenuItemButton>
+                            )}
                         </>
                     )}
                     {data.isDriver && data.isBoat && (

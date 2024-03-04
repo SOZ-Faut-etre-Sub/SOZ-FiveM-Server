@@ -202,8 +202,6 @@ exports("SetHouseStashAndFridgeMaxWeightFromTier", Inventory.SetHouseStashAndFri
 function Inventory.UpdateVehMaxWeight(type, plate, ctx)
     local inv = GetOrCreateInventory(type, plate, ctx)
 
-    print(json.encode(type), json.encode(plate), json.encode(ctx))
-
     local trunkConfig = QBCore.Shared.Trunks[ctx.class]
     if ctx.model and QBCore.Shared.Trunks[ctx.model] then
         trunkConfig = QBCore.Shared.Trunks[ctx.model]
@@ -218,6 +216,15 @@ function Inventory.UpdateVehMaxWeight(type, plate, ctx)
     inv.maxWeight = maxWeight
 end
 exports("UpdateVehMaxWeight", Inventory.UpdateVehMaxWeight)
+
+function Inventory.UpdateVehPlate(type, plate, ctx, newplate)
+    local inv = GetOrCreateInventory(type, plate, ctx)
+    local newInv = GetOrCreateInventory(type, newplate, ctx)
+
+    newInv.items = inv.items
+    newInv.changed = true
+end
+exports("UpdateVehPlate", Inventory.UpdateVehPlate)
 
 function Inventory.GetItemWeight(item, metadata, amount)
     if metadata and metadata.weight then

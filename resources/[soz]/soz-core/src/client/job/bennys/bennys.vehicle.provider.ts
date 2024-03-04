@@ -1,3 +1,4 @@
+import { VehicleMenuProvider } from '@public/client/vehicle/vehicle.menu.provider';
 import { JobType } from '@public/shared/job';
 import {
     isVehicleModelElectric,
@@ -58,6 +59,9 @@ export class BennysVehicleProvider {
 
     @Inject(PhoneService)
     private phoneService: PhoneService;
+
+    @Inject(VehicleMenuProvider)
+    private vehicleMenuProvider: VehicleMenuProvider;
 
     private upgradeZone: MultiZone<BoxZone> = new MultiZone([
         new BoxZone([-222.49, -1323.6, 30.89], 9, 6, {
@@ -373,9 +377,15 @@ export class BennysVehicleProvider {
     public async onUpgradeVehicle(mode: LSCustomMode) {
         const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
 
-        if (vehicle) {
-            await this.upgradeVehicle(vehicle, mode);
+        if (!vehicle) {
+            return;
         }
+
+        if (mode == LSCustomMode.Crimi && !this.vehicleMenuProvider.testCrimiGarage(vehicle, true)) {
+            return;
+        }
+
+        await this.upgradeVehicle(vehicle, mode);
 
         return true;
     }

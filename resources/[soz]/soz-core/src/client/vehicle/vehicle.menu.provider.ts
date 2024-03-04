@@ -2,7 +2,7 @@ import { VehicleBusinessProvider } from '@private/client/gang/business.vehicle.p
 import { FDO } from '@public/shared/job';
 import { BoxZone, ZoneType } from '@public/shared/polyzone/box.zone';
 import { Vector3 } from '@public/shared/polyzone/vector';
-import { LSCustomMode, VehicleClass, VehicleSeat } from '@public/shared/vehicle/vehicle';
+import { LSCustomMode, VEHICLE_TRUNK_TYPES, VehicleClass, VehicleSeat } from '@public/shared/vehicle/vehicle';
 
 import { Command } from '../../core/decorators/command';
 import { OnNuiEvent } from '../../core/decorators/event';
@@ -10,7 +10,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { emitRpc } from '../../core/rpc';
-import { NuiEvent } from '../../shared/event';
+import { NuiEvent, ServerEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { Err, Ok } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
@@ -210,11 +210,41 @@ export class VehicleMenuProvider {
             return false;
         }
 
+        if (mode == LSCustomMode.Crimi && !this.testCrimiGarage(ped, true)) {
+            return;
+        }
+
         this.nuiMenu.closeMenu();
 
         await this.vehicleCustomProvider.upgradeVehicle(vehicle, mode);
 
         return true;
+    }
+
+    @OnNuiEvent(NuiEvent.VehicleChangePlate)
+    async handleVehicleChangePlate() {
+        const ped = PlayerPedId();
+        const vehicle = GetVehiclePedIsIn(ped, false);
+
+        if (!vehicle || !NetworkGetEntityIsNetworked(vehicle)) {
+            return;
+        }
+
+        if (!this.testCrimiGarage(ped, true)) {
+            return;
+        }
+
+        const plate = GetVehicleNumberPlateText(vehicle).trim();
+        const vehicleModel = GetEntityModel(vehicle);
+        const vehicleClass = GetVehicleClass(vehicle);
+        const trunkType = VEHICLE_TRUNK_TYPES[vehicleModel] || 'trunk';
+
+        const vehicleNetworkId = VehToNet(vehicle);
+        TriggerServerEvent(ServerEvent.VEHICLE_PLATE_CHANGE, trunkType, plate, {
+            model: vehicleModel,
+            class: vehicleClass,
+            entity: vehicleNetworkId,
+        });
     }
 
     @OnNuiEvent(NuiEvent.VehicleAnchorChange)
@@ -334,10 +364,7 @@ export class VehicleMenuProvider {
             }
         };
 
-        const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
-        const crimiZone = this.zoneRepository.get(
-            zone => zone.data.type == ZoneType.VehBizGarage && BoxZone.fromZone(zone).isPointInside(position)
-        );
+        const crimiGarage = this.testCrimiGarage(ped, false);
 
         this.nuiMenu.openMenu<MenuType.Vehicle>(MenuType.Vehicle, {
             isDriver,
@@ -355,8 +382,25 @@ export class VehicleMenuProvider {
             pitstopPrice: pitstop[1],
             neonLightsStatus: vehicleState.neonLightsStatus,
             hasNeon: hasNeon(),
-            crimiPerformance: crimiZone.length > 0 && this.vehicleBusinessProvider.canPerformance(),
-            crimiCustom: crimiZone.length > 0 && this.vehicleBusinessProvider.canCustom(),
+            crimiPerformance: crimiGarage && this.vehicleBusinessProvider.canPerformance(),
+            crimiCustom: crimiGarage && this.vehicleBusinessProvider.canCustom(),
+            crimiPlate: crimiGarage && this.vehicleBusinessProvider.canPlate(),
         });
+    }
+
+    public testCrimiGarage(entity: number, notif: boolean): boolean {
+        const position = GetEntityCoords(entity, true) as Vector3;
+        const crimiGarage = this.zoneRepository.get(
+            zone => zone.data.type == ZoneType.VehBizGarage && BoxZone.fromZone(zone).isPointInside(position)
+        );
+
+        if (crimiGarage.length < 1) {
+            if (notif) {
+                this.notifier.notify("Vous n'êtes pas dans un ~r~Garage~s~.");
+            }
+            return false;
+        }
+
+        return true;
     }
 }
