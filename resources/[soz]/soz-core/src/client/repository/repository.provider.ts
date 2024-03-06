@@ -65,7 +65,6 @@ export class RepositoryProvider {
     @Once(OnceStep.PlayerLoaded)
     public async onRepositoryStart() {
         await this.garageRepository.load();
-        await this.vehicleRepository.load();
         await this.fuelStationRepository.load();
         await this.upwChargerRepository.load();
         await this.underTypesShopRepository.load();
@@ -111,9 +110,6 @@ export class RepositoryProvider {
         switch (repositoryName) {
             case 'garage':
                 this.garageRepository.update(data);
-                break;
-            case 'vehicle':
-                this.vehicleRepository.update(data);
                 break;
             case 'fuelStation':
                 this.fuelStationRepository.update(data);

@@ -152,7 +152,8 @@ export class VehicleStateProvider {
     }
 
     @Exportable('GetVehicleConfiguration')
-    public getVehicleConfiguration(vehicleNetworkId: number): VehicleConfiguration {
+    @Rpc(RpcServerEvent.VEHICLE_GET_CONFIGURATION)
+    public getVehicleConfiguration(source: number, vehicleNetworkId: number): VehicleConfiguration {
         return this.vehicleStateService.getVehicleState(vehicleNetworkId).configuration;
     }
 

@@ -28,6 +28,7 @@ export class AdminMenuVehicleProvider {
             .map(v => ({
                 ...v,
                 jobName: JSON.parse(v.jobName) as { [key in JobType]: string },
+                handling: v.handling ? JSON.parse(v.handling) : null,
             }));
     }
 

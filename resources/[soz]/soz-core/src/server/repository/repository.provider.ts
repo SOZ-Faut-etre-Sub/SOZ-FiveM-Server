@@ -89,7 +89,6 @@ export class RepositoryProvider {
     @Once()
     public setup() {
         this.legacyRepositories['garage'] = this.garageRepository;
-        this.legacyRepositories['vehicle'] = this.vehicleRepository;
         this.legacyRepositories['fuelStation'] = this.fuelStationRepository;
         this.legacyRepositories['upwCharger'] = this.upwChargerRepository;
         this.legacyRepositories['upwStation'] = this.upwStationRepository;

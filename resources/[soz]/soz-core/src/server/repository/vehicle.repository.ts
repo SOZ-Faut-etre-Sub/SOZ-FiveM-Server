@@ -1,21 +1,33 @@
+import { RepositoryType } from '@public/shared/repository';
+
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { JobType } from '../../shared/job';
 import { Vehicle } from '../../shared/vehicle/vehicle';
 import { PrismaService } from '../database/prisma.service';
-import { RepositoryLegacy } from './repository';
+import { Repository } from './repository';
 
-@Injectable()
-export class VehicleRepository extends RepositoryLegacy<Vehicle[]> {
+@Injectable(VehicleRepository, Repository)
+export class VehicleRepository extends Repository<RepositoryType.Vehicle> {
     @Inject(PrismaService)
     private prismaService: PrismaService;
 
-    protected async load(): Promise<Vehicle[]> {
-        return (await this.prismaService.vehicle.findMany())
-            .sort((a, b) => a.name.localeCompare(b.name))
-            .map(v => ({
-                ...v,
-                jobName: JSON.parse(v.jobName) as { [key in JobType]: string },
-            }));
+    public type = RepositoryType.Vehicle;
+
+    protected async load(): Promise<Record<string, Vehicle>> {
+        const rows = await this.prismaService.vehicle.findMany();
+        const list = {};
+
+        for (const row of rows) {
+            const veh: Vehicle = {
+                ...row,
+                jobName: JSON.parse(row.jobName) as { [key in JobType]: string },
+                handling: row.handling ? JSON.parse(row.handling) : null,
+            };
+
+            list[veh.model] = veh;
+        }
+
+        return list;
     }
 
     public async findByModel(model: string): Promise<Vehicle | null> {

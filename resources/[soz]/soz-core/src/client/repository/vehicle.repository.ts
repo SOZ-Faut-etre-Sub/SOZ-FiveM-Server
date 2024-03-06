@@ -1,25 +1,14 @@
+import { RepositoryType } from '@public/shared/repository';
+
 import { Injectable } from '../../core/decorators/injectable';
-import { emitRpc } from '../../core/rpc';
-import { RpcServerEvent } from '../../shared/rpc';
 import { Vehicle } from '../../shared/vehicle/vehicle';
+import { Repository } from './repository';
 
-@Injectable()
-export class VehicleRepository {
-    private vehicles: Vehicle[] = [];
-
-    public async load() {
-        this.vehicles = await emitRpc(RpcServerEvent.REPOSITORY_GET_DATA, 'vehicle');
-    }
-
-    public update(vehicles: Vehicle[]) {
-        this.vehicles = vehicles;
-    }
-
-    public get(): Vehicle[] {
-        return this.vehicles;
-    }
+@Injectable(VehicleRepository, Repository)
+export class VehicleRepository extends Repository<RepositoryType.Vehicle> {
+    public type = RepositoryType.Vehicle;
 
     public getByModelHash(hash: number): Vehicle | null {
-        return this.vehicles.find(vehicle => vehicle.hash === hash) || null;
+        return this.get().find(vehicle => vehicle.hash === hash) || null;
     }
 }

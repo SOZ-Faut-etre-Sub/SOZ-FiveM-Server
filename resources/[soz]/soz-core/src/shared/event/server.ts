@@ -315,6 +315,7 @@ export enum ServerEvent {
     VEHICLE_BREAK_DOOR = 'soz-core:server:vehicle:break-door',
     VEHICLE_NOS_START = 'soz-core:server:vehicle:nos-start',
     VEHICLE_PLATE_CHANGE = 'soz-core:server:vehicle:plate-change',
+    VEHICLE_HANDLING_BASE_SAVE = 'soz-core:server:vehicle:handling-base-save',
     VEHICLE_RESET_SURFACE_STATE_TO_OWNER = 'soz-core:server:vehicle:reset-surface-effect-to-owner',
 
     VOIP_SET_MEGAPHONE = 'soz-core:server:voip:set-megaphone',

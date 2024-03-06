@@ -1,4 +1,5 @@
 import { GarageList } from '@public/config/garage';
+import { VehicleHandlingType } from '@public/shared/vehicle/modification';
 import { VehicleClass } from '@public/shared/vehicle/vehicle';
 
 import { OnEvent } from '../../core/decorators/event';
@@ -9,6 +10,7 @@ import { PrismaService } from '../database/prisma.service';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
+import { VehicleRepository } from '../repository/vehicle.repository';
 import { VehicleService } from './vehicle.service';
 import { VehicleStateService } from './vehicle.state.service';
 
@@ -31,6 +33,9 @@ export class VehicleProvider {
 
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
+
+    @Inject(VehicleRepository)
+    private vehicleRepository: VehicleRepository;
 
     @OnEvent(ServerEvent.ADMIN_ADD_VEHICLE)
     public async addVehicle(source: number, model: string, name: string, vehClass: VehicleClass, mods: any[]) {
@@ -111,6 +116,21 @@ export class VehicleProvider {
         this.notifier.notify(source, 'Échantillon de drogue récupéré.');
         this.vehicleStateService.updateVehicleVolatileState(vehicleNetworkId, {
             lastDrugTrace: null,
+        });
+    }
+
+    @OnEvent(ServerEvent.VEHICLE_HANDLING_BASE_SAVE)
+    public async saveBaseHandling(source: number, model: number, handling: Record<VehicleHandlingType, number>) {
+        const vehConf = await this.vehicleRepository.findByHash(model);
+        vehConf.handling = handling;
+
+        await this.prismaService.vehicle.update({
+            where: {
+                model: vehConf.model,
+            },
+            data: {
+                handling: JSON.stringify(vehConf.handling),
+            },
         });
     }
 }

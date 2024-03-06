@@ -1,3 +1,6 @@
+import { emitRpc } from '@public/core/rpc';
+import { RpcServerEvent } from '@public/shared/rpc';
+
 import { Injectable } from '../../core/decorators/injectable';
 import {
     HornLabelList,
@@ -859,5 +862,9 @@ export class VehicleModificationService {
             modification,
             extra,
         };
+    }
+
+    public async getVehicleServerConfiguration(vehicle: number): Promise<VehicleConfiguration> {
+        return emitRpc<VehicleConfiguration>(RpcServerEvent.VEHICLE_GET_CONFIGURATION, VehToNet(vehicle));
     }
 }

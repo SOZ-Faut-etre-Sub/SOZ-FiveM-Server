@@ -208,7 +208,7 @@ function Inventory.UpdateVehMaxWeight(type, plate, ctx)
     end
 
     local maxWeight = trunkConfig.weight;
-    local vehicleConf = exports["soz-core"]:GetVehicleConfiguration(ctx.entity)
+    local vehicleConf = exports["soz-core"]:GetVehicleConfiguration(nil, ctx.entity)
     if vehicleConf.extraStorage then
         maxWeight = maxWeight + QBCore.Shared.Round(maxWeight * 25 / 100)
     end
@@ -1142,7 +1142,7 @@ function GetOrCreateInventory(storageType, invID, ctx)
                 end
             end
 
-            local vehicleConf = exports["soz-core"]:GetVehicleConfiguration(ctx.entity)
+            local vehicleConf = exports["soz-core"]:GetVehicleConfiguration(nil, ctx.entity)
             local maxWeight = trunkConfig.weight;
             if vehicleConf.extraStorage then
                 maxWeight = maxWeight + QBCore.Shared.Round(maxWeight * 25 / 100)

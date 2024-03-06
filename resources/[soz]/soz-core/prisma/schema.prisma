@@ -465,6 +465,7 @@ model Vehicle {
   stock           Int?    @default(0)
   radio           Boolean @default(false)
   maxStock        Int?    @default(2)
+  handling        String? @db.Text
 
   @@index([category])
   @@index([dealershipId], map: "vehicles_dealership_idx")

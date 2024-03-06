@@ -103,8 +103,8 @@ export class VehicleCustomProvider {
                 return originalConfiguration;
             }
 
-            await this.playerMoneyService.buy(source, price, TaxType.VEHICLE);
-        } else if (mode == LSCustomMode.Crimi) {
+            this.playerMoneyService.remove(source, price);
+        } else if (price && mode == LSCustomMode.Crimi) {
             this.inventoryManager.removeItemFromInventory(
                 source,
                 'veh_strip_piece',

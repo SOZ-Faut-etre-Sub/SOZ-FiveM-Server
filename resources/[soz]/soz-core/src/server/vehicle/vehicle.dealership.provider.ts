@@ -111,6 +111,7 @@ export class VehicleDealershipProvider {
             const vehicle = {
                 ...selectedVehicle,
                 jobName: JSON.parse(selectedVehicle.jobName),
+                handling: selectedVehicle.handling ? JSON.parse(selectedVehicle.handling) : null,
             };
 
             this.auctions[selectedVehicle.model] = {
@@ -368,6 +369,7 @@ export class VehicleDealershipProvider {
             return {
                 ...vehicle,
                 jobName: JSON.parse(vehicle.jobName),
+                handling: vehicle.handling ? JSON.parse(vehicle.handling) : null,
             };
         });
     }
@@ -400,6 +402,7 @@ export class VehicleDealershipProvider {
                 // Use price for job
                 price: jobVehicle.price,
                 name: jobName && jobName[job] ? jobName[job] : vehicle.name,
+                handling: vehicle.handling ? JSON.parse(vehicle.handling) : null,
             };
         });
     }
