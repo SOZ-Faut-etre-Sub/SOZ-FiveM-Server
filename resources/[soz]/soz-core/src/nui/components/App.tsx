@@ -10,6 +10,7 @@ import { BusinessVehicleOrderApp } from '@private/nui/gang/BusinessVehicle/Busin
 import { BusinessManagementApp } from '@private/nui/group/BusinessManagementApp';
 import { HackingDeviceApp } from '@private/nui/hacking/HackingDeviceApp';
 import { HoodApp } from '@private/nui/hood/HoodApp';
+import { ArrowsMinigameApp } from '@private/nui/minigames/arrows/ArrowsMinigameApp';
 import { MissiveApp } from '@private/nui/missive/MissiveApp';
 import { DetectiveBoard } from '@private/nui/Police/DetectiveBoard';
 import { ScientistCamera } from '@private/nui/Police/ScientistCamera';
@@ -124,6 +125,7 @@ export const App: FunctionComponent = () => {
                 <BusinessManagementApp />
                 <BusinessVehicleOrderApp />
                 <HackingDeviceApp />
+                <ArrowsMinigameApp />
                 <BusinessVehicleMappingApp />
             </div>
             <Meteor />
