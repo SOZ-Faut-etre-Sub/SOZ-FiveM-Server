@@ -322,12 +322,12 @@ export class DoorProvider {
     }
 
     @RepositoryInsert(RepositoryType.Door)
-    public addDoor(door: Door) {
+    public async addDoor(door: Door) {
         this.createDoor(door);
     }
 
     @RepositoryUpdate(RepositoryType.Door)
-    public updateDoor(door: Door) {
+    public async updateDoor(door: Door) {
         const subdoors = door.subdoors;
 
         for (const subdoor of subdoors) {
@@ -358,7 +358,7 @@ export class DoorProvider {
     }
 
     @RepositoryDelete(RepositoryType.Door)
-    public deleteDoor(door: Door) {
+    public async deleteDoor(door: Door) {
         const subdoors = door.subdoors;
         for (const subdoor of subdoors) {
             if (IsDoorRegisteredWithSystem(subdoor.hash)) {

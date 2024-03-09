@@ -90,7 +90,6 @@ export interface NuiMethodMap {
     bank_atm: NuiBankAtmMethodMap;
     bank_safe: NuiBankSafeMethodMap;
     gang: NuiGangMethodMap;
-    group: NuiGroupMethodMap;
     hacking_device: NuiHackingDeviceMethodMap;
     minigame_arrows: NuiArrowMiniGameMethodMap;
 }

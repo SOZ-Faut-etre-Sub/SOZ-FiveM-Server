@@ -85,9 +85,10 @@ export class InventoryManager {
     public openShopInventory(
         shopContent,
         shopHeaderTexture: string,
-        type: 'money' | 'marked_money' = 'money',
-        taxType?: TaxType
+        taxType?: TaxType,
+        type: 'money' | 'marked_money' = 'money'
     ) {
+        const taxValue = taxType ? this.taxRepository.getTaxValue(taxType) : 0;
         TriggerEvent('inventory:client:openShop', shopContent, shopHeaderTexture, type, taxValue / 100, taxType);
     }
 
