@@ -19,15 +19,11 @@ import { RaceRepository } from './race.repository';
 import { Repository } from './repository';
 import { UnderTypesShopRepository } from './under_types.shop.repository';
 import { UpwChargerRepository } from './upw.station.repository';
-import { VehicleRepository } from './vehicle.repository';
 
 @Provider()
 export class RepositoryProvider {
     @Inject(GarageRepository)
     private garageRepository: GarageRepository;
-
-    @Inject(VehicleRepository)
-    private vehicleRepository: VehicleRepository;
 
     @Inject(FuelStationRepository)
     private fuelStationRepository: FuelStationRepository;

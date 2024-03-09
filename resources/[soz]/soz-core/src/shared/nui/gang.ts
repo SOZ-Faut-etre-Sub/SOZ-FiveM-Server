@@ -1,7 +1,10 @@
-import { BusinessUiInput, BusinessVehicleMappingUiInput, BusinessVehicleOrderUiInput } from '@private/shared/gang';
+import { BusinessVehicleMappingUiInput, BusinessVehicleOrderUiInput } from '@private/shared/gang';
 
 export interface NuiGangMethodMap {
-    ShowGangBusinesses: BusinessUiInput;
+    ShowGangBusinesses: {
+        id: number;
+        isboss: boolean;
+    };
     ShowGangBusinessVehicleOrder: BusinessVehicleOrderUiInput;
     GangBusinessVehicleMapping: BusinessVehicleMappingUiInput;
 }
