@@ -1,10 +1,13 @@
 import { TYPE_LABEL } from '@public/shared/housing/upgrades';
 
+import { OnEvent } from '@public/core/decorators/event';
+import { ServerEvent } from '@public/shared/event';
+
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { ApartementTiers, Property } from '../../shared/housing/housing';
-import { Zone, ZoneTyped } from '../../shared/polyzone/box.zone';
+import { Zone } from '../../shared/polyzone/box.zone';
 import { RpcServerEvent } from '../../shared/rpc';
 import { HousingProvider } from '../housing/housing.provider';
 import { InventoryManager } from '../inventory/inventory.manager';
@@ -133,18 +136,22 @@ export class AdminMenuMapperProvider {
         return this.housingRepository.get();
     }
 
-    @Rpc(RpcServerEvent.ADMIN_MAPPER_ADD_ZONE)
-    public async addZone(source: number, zone: Zone): Promise<ZoneTyped[]> {
+    @OnEvent(ServerEvent.ADMIN_MAPPER_ADD_ZONE)
+    public async addZone(source: number, zone: Zone) {
         await this.zoneRepository.addZone(zone);
-
-        return this.zoneRepository.get();
     }
 
-    @Rpc(RpcServerEvent.ADMIN_MAPPER_REMOVE_ZONE)
-    public async removeZone(source: number, id: number): Promise<ZoneTyped[]> {
+    @OnEvent(ServerEvent.ADMIN_MAPPER_REMOVE_ZONE)
+    public async removeZone(source: number, id: number) {
         await this.zoneRepository.removeZone(id);
+    }
 
-        return this.zoneRepository.get();
+    @OnEvent(ServerEvent.ADMIN_MAPPER_RENAME_ZONE)
+    public async renameZone(source: number, id: number, name: string) {
+        const zone = await this.zoneRepository.find(id);
+        zone.data.name = name;
+
+        this.zoneRepository.set(id, zone);
     }
 
     @Rpc(RpcServerEvent.ADMIN_MAPPER_SET_SENATE_PARTY)

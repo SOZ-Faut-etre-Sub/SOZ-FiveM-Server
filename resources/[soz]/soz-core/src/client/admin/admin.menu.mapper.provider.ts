@@ -13,7 +13,7 @@ import { Font } from '../../shared/hud';
 import { JobType } from '../../shared/job';
 import { NotEmptyStringValidator, PositiveNumberValidator } from '../../shared/nui/input';
 import { MenuType } from '../../shared/nui/menu';
-import { BoxZone, Zone, ZoneType, ZoneTyped } from '../../shared/polyzone/box.zone';
+import { BoxZone, Zone, ZoneType } from '../../shared/polyzone/box.zone';
 import { toVector4Object, Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import { DrawService } from '../draw.service';
@@ -136,7 +136,6 @@ export class AdminMenuMapperProvider {
         this.nuiMenu.openMenu(MenuType.AdminMapperMenu, {
             properties: this.housingRepository.get(),
             showInterior: this.showInteriorData,
-            zones: this.zoneRepository.get(),
             parties: this.senateRepository.get(),
         });
     }
@@ -522,14 +521,15 @@ export class AdminMenuMapperProvider {
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuMapperAddZone)
-    public async addZone({ type }: { type: ZoneType }): Promise<ZoneTyped[]> {
-        const name = await this.inputService.askInput(
-            {
-                title: 'Nom de la zone',
-                defaultValue: '',
-            },
-            NotEmptyStringValidator
-        );
+    public async addZone({ type }: { type: ZoneType }) {
+        const name = await this.inputService.askInput({
+            title: 'Nom de la zone',
+            defaultValue: '',
+        });
+
+        if (!name) {
+            return;
+        }
 
         const newZone = await this.nuiZoneProvider.askZone(null);
 
@@ -537,7 +537,7 @@ export class AdminMenuMapperProvider {
             return;
         }
 
-        return await emitRpc<ZoneTyped[]>(RpcServerEvent.ADMIN_MAPPER_ADD_ZONE, {
+        TriggerServerEvent(ServerEvent.ADMIN_MAPPER_ADD_ZONE, {
             ...newZone,
             data: {
                 type,
@@ -548,8 +548,22 @@ export class AdminMenuMapperProvider {
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuMapperDeleteZone)
-    public async deleteZone({ id }: { id: number }): Promise<ZoneTyped[]> {
-        return await emitRpc<ZoneTyped[]>(RpcServerEvent.ADMIN_MAPPER_REMOVE_ZONE, id);
+    public async deleteZone({ id }: { id: number }) {
+        TriggerServerEvent(ServerEvent.ADMIN_MAPPER_REMOVE_ZONE, id);
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuMapperRenameZone)
+    public async renameZone({ id }: { id: number }) {
+        const name = await this.inputService.askInput({
+            title: 'Nom de la zone',
+            defaultValue: '',
+        });
+
+        if (!name) {
+            return;
+        }
+
+        TriggerServerEvent(ServerEvent.ADMIN_MAPPER_RENAME_ZONE, id, name);
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuMapperShowZone)

@@ -1,4 +1,6 @@
 import { TYPE_LABEL } from '@public/shared/housing/upgrades';
+import { useRepository } from '@public/nui/hook/repository';
+import { RepositoryType } from '@public/shared/repository';
 import { Fragment, FunctionComponent, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -8,7 +10,7 @@ import { AdminMapperMenuData } from '../../../../shared/housing/menu';
 import { JobType } from '../../../../shared/job';
 import { JobRegistry } from '../../../../shared/job/config';
 import { MenuType } from '../../../../shared/nui/menu';
-import { Zone, ZoneType, ZoneTyped, ZoneTypeLabel } from '../../../../shared/polyzone/box.zone';
+import { Zone, ZoneType, ZoneTypeLabel } from '../../../../shared/polyzone/box.zone';
 import { fetchNui } from '../../../fetch';
 import {
     MainMenu,
@@ -31,14 +33,13 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
     const navigate = useNavigate();
     const location = useLocation();
     const [properties, setProperties] = useState<AdminMapperMenuData['properties']>([]);
-    const [zones, setZones] = useState<AdminMapperMenuData['zones']>([]);
+    const zones = useRepository(RepositoryType.Zone);
     const [selectedObject, setSelectedObject] = useState<string>('soz_prop_bb_bin');
     const [job, setJob] = useState<JobType | null>(null);
     const [event, setEvent] = useState<string | null>(null);
 
     useEffect(() => {
         setProperties(data?.properties || []);
-        setZones(data?.zones || []);
     }, [data]);
 
     const onDrugAdminMenuOpen = () => {
@@ -186,14 +187,14 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                     <SubMenu id={`property_${property.identifier}`}>
                         <MenuTitle banner="https://nui-img/soz/menu_mapper">Batiment : {property.identifier}</MenuTitle>
                         <MenuContent>
-                            <ZoneMenuSelect
+                            <ZoneHouseMenuSelect
                                 title="🚪 Zone entrée"
                                 type="entry"
                                 zone={property.entryZone}
                                 propertyId={property.id}
                                 setProperties={setProperties}
                             />
-                            <ZoneMenuSelect
+                            <ZoneHouseMenuSelect
                                 title="🅿️ Zone garage"
                                 type="garage"
                                 zone={property.garageZone}
@@ -352,7 +353,7 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                                     <MenuItemSelectOption value="teleport">Téléporter</MenuItemSelectOption>
                                     <MenuItemSelectOption value="update">Définir</MenuItemSelectOption>
                                 </MenuItemSelect>
-                                <ZoneMenuSelect
+                                <ZoneHouseMenuSelect
                                     title="🚪 Zone de sortie"
                                     type="exit"
                                     zone={apartment.exitZone}
@@ -360,7 +361,7 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                                     apartmentId={apartment.id}
                                     setProperties={setProperties}
                                 />
-                                <ZoneMenuSelect
+                                <ZoneHouseMenuSelect
                                     title="❄️️ Zone frigo"
                                     type="fridge"
                                     zone={apartment.fridgeZone}
@@ -368,7 +369,7 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                                     apartmentId={apartment.id}
                                     setProperties={setProperties}
                                 />
-                                <ZoneMenuSelect
+                                <ZoneHouseMenuSelect
                                     title="🗄️ Zone du coffre"
                                     type="stash"
                                     zone={apartment.stashZone}
@@ -376,7 +377,7 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                                     apartmentId={apartment.id}
                                     setProperties={setProperties}
                                 />
-                                <ZoneMenuSelect
+                                <ZoneHouseMenuSelect
                                     title="👕 Zone de la penderie"
                                     type="closet"
                                     zone={apartment.closetZone}
@@ -384,7 +385,7 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                                     apartmentId={apartment.id}
                                     setProperties={setProperties}
                                 />
-                                <ZoneMenuSelect
+                                <ZoneHouseMenuSelect
                                     title="👛 Zone du coffre d'argent"
                                     type="money"
                                     zone={apartment.moneyZone}
@@ -488,54 +489,75 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                     Des zones, des zoneuh, oui mais des panzazones !
                 </MenuTitle>
                 <MenuContent>
-                    <MenuItemSelect
-                        title="Ajouter une zone"
-                        onConfirm={async (index, value) => {
-                            const zones = (await fetchNui(NuiEvent.AdminMenuMapperAddZone, {
-                                type: value,
-                            })) as ZoneTyped[];
-
-                            setZones(zones);
-                        }}
-                    >
-                        {Object.values(ZoneType).map(type => (
-                            <MenuItemSelectOption value={type}>{ZoneTypeLabel[type]}</MenuItemSelectOption>
-                        ))}
-                    </MenuItemSelect>
-                    {zones.map(zone => (
-                        <MenuItemSelect
-                            key={`zone-${zone.data.id}`}
-                            title={zone.data.name}
-                            onConfirm={async (index, action) => {
-                                if (action === 'delete') {
-                                    const zones = (await fetchNui(NuiEvent.AdminMenuMapperDeleteZone, {
-                                        id: zone.data.id,
-                                    })) as ZoneTyped[];
-
-                                    setZones(zones);
-                                }
-
-                                if (action === 'teleport') {
-                                    fetchNui(NuiEvent.AdminMenuMapperTeleportToZone, { zone });
-                                }
-
-                                if (action === 'show') {
-                                    fetchNui(NuiEvent.AdminMenuMapperShowZone, { id: zone.data.id, show: true });
-                                }
-
-                                if (action === 'hide') {
-                                    fetchNui(NuiEvent.AdminMenuMapperShowZone, { id: zone.data.id, show: false });
-                                }
-                            }}
-                        >
-                            <MenuItemSelectOption value="teleport">Téléporter</MenuItemSelectOption>
-                            <MenuItemSelectOption value="show">Afficher</MenuItemSelectOption>
-                            <MenuItemSelectOption value="hide">Cacher</MenuItemSelectOption>
-                            <MenuItemSelectOption value="delete">Supprimer</MenuItemSelectOption>
-                        </MenuItemSelect>
+                    {Object.values(ZoneType).map(type => (
+                        <MenuItemSubMenuLink key={'link_zones_' + type} id={'zones_' + type}>
+                            {ZoneTypeLabel[type]}
+                        </MenuItemSubMenuLink>
                     ))}
                 </MenuContent>
             </SubMenu>
+            {Object.values(ZoneType).map(type => (
+                <SubMenu id={'zones_' + type} key={'zones_' + type}>
+                    <MenuTitle banner="https://nui-img/soz/menu_mapper">Zones {ZoneTypeLabel[type]}</MenuTitle>
+                    <MenuContent>
+                        <MenuItemButton
+                            onConfirm={() =>
+                                fetchNui(NuiEvent.AdminMenuMapperAddZone, {
+                                    type,
+                                })
+                            }
+                        >
+                            Ajouter une zone
+                        </MenuItemButton>
+                        {Object.values(zones)
+                            .filter(zone => zone.data.type == type)
+                            .sort((a, b) => a.data.name.localeCompare(b.data.name))
+                            .map(zone => (
+                                <MenuItemSelect
+                                    key={`zone-${zone.data.id}`}
+                                    title={zone.data.name}
+                                    onConfirm={async (index, action) => {
+                                        if (action === 'delete') {
+                                            fetchNui(NuiEvent.AdminMenuMapperDeleteZone, {
+                                                id: zone.data.id,
+                                            });
+                                        }
+
+                                        if (action === 'teleport') {
+                                            fetchNui(NuiEvent.AdminMenuMapperTeleportToZone, { zone });
+                                        }
+
+                                        if (action === 'show') {
+                                            fetchNui(NuiEvent.AdminMenuMapperShowZone, {
+                                                id: zone.data.id,
+                                                show: true,
+                                            });
+                                        }
+
+                                        if (action === 'hide') {
+                                            fetchNui(NuiEvent.AdminMenuMapperShowZone, {
+                                                id: zone.data.id,
+                                                show: false,
+                                            });
+                                        }
+
+                                        if (action === 'rename') {
+                                            fetchNui(NuiEvent.AdminMenuMapperRenameZone, {
+                                                id: zone.data.id,
+                                            });
+                                        }
+                                    }}
+                                >
+                                    <MenuItemSelectOption value="teleport">Téléporter</MenuItemSelectOption>
+                                    <MenuItemSelectOption value="show">Afficher</MenuItemSelectOption>
+                                    <MenuItemSelectOption value="hide">Cacher</MenuItemSelectOption>
+                                    <MenuItemSelectOption value="delete">Supprimer</MenuItemSelectOption>
+                                    <MenuItemSelectOption value="rename">Renommer</MenuItemSelectOption>
+                                </MenuItemSelect>
+                            ))}
+                    </MenuContent>
+                </SubMenu>
+            ))}
         </Menu>
     );
 };
@@ -549,7 +571,7 @@ type ZoneMenuSelectProps = {
     setProperties: (properties: Property[]) => void;
 };
 
-const ZoneMenuSelect: FunctionComponent<ZoneMenuSelectProps> = ({
+const ZoneHouseMenuSelect: FunctionComponent<ZoneMenuSelectProps> = ({
     title,
     zone,
     type,
