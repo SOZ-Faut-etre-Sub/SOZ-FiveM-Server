@@ -360,4 +360,8 @@ export class BankService {
 
         this.notifier.advancedNotify(source, 'Fleeca Banque', title, message, 'CHAR_BANK_MAZE', type);
     }
+
+    public loadGangs(gangs: Record<string, number>) {
+        return exports['soz-bank'].LoadGangs(gangs);
+    }
 }

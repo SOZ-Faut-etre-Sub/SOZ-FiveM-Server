@@ -441,6 +441,8 @@ export enum NuiEvent {
     GangAdminAssign = 'soz-core:client:gang:assign',
     GangAdminMenuOpen = 'soz-core:client:gang:admin-menu-open',
     GangBusinessSkillBuy = 'soz-core:client:gang:business-buy',
+    GangInfluenceZoneGet = 'soz-core:client:gang:influence-get',
+    GangInfluenceZoneUpdate = 'soz-core:client:gang:influence-update',
 
     BusinessVehicleOrder = 'soz-core:client:business:vehicle:order',
     BusinessVehiclePosition = 'soz-core:client:business:vehicle:position',

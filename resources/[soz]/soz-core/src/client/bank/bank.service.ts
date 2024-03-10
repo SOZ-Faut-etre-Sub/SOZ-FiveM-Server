@@ -45,4 +45,8 @@ export class BankService {
             },
         });
     }
+
+    public openGangSafe(gangId: number) {
+        TriggerEvent('banking:client:openGangSafe', gangId);
+    }
 }

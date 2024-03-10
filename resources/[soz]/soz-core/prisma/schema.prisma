@@ -881,3 +881,10 @@ model vehicle_business_unique {
   id             String     @id
   data           String     @db.Text
 }
+
+model influence_zones {
+  id             Int        @id @default(autoincrement())
+  name           String     @unique @db.VarChar(100)
+  zone           String     @db.Text
+  gang           Int?
+}
