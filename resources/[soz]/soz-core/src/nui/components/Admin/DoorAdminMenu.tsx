@@ -1,11 +1,12 @@
-import { Gang } from '@private/shared/gang';
 import { fetchNui } from '@public/nui/fetch';
+import { useRepository } from '@public/nui/hook/repository';
 import { Door } from '@public/shared/door';
 import { NuiEvent } from '@public/shared/event/nui';
 import { JobType } from '@public/shared/job';
 import { JobRegistry } from '@public/shared/job/config';
 import { AskInput } from '@public/shared/nui/input';
-import { FunctionComponent, useEffect, useState } from 'react';
+import { RepositoryType } from '@public/shared/repository';
+import { FunctionComponent, useState } from 'react';
 
 import { MenuType } from '../../../shared/nui/menu';
 import {
@@ -27,14 +28,8 @@ export type DoorMenuStateProps = {
 };
 
 export const DoorGangSubMenu: FunctionComponent<DoorMenuStateProps> = ({ data }) => {
-    const [gangs, setGangs] = useState<Gang[]>(null);
     const [assignedGangs, setAssignedGangs] = useState<number[]>(data.gangs);
-
-    useEffect(() => {
-        fetchNui<never, Gang[]>(NuiEvent.GangFetch).then(result => {
-            setGangs(result);
-        });
-    }, []);
+    const gangs = useRepository(RepositoryType.Gang);
 
     if (!gangs) {
         return;
@@ -56,7 +51,7 @@ export const DoorGangSubMenu: FunctionComponent<DoorMenuStateProps> = ({ data })
                         setAssignedGangs(data.gangs);
                     }}
                 >
-                    {gangs.map(gang => {
+                    {Object.values(gangs).map(gang => {
                         return (
                             <MenuItemSelectOption value={gang.id} key={'gang_' + gang.id}>
                                 {gang.name}
@@ -66,7 +61,7 @@ export const DoorGangSubMenu: FunctionComponent<DoorMenuStateProps> = ({ data })
                 </MenuItemSelect>
                 {assignedGangs &&
                     assignedGangs.map((gangId, index) => {
-                        const gang = gangs.find(gang => gang.id == gangId);
+                        const gang = Object.values(gangs).find(gang => gang.id == gangId);
                         return (
                             <MenuItemButton
                                 onConfirm={async () => {

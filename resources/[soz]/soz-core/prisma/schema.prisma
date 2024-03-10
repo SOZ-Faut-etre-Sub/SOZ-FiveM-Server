@@ -877,3 +877,7 @@ model door {
   data           String     @db.Text
 }
 
+model vehicle_business_unique {
+  id             String     @id
+  data           String     @db.Text
+}

@@ -229,6 +229,11 @@ export enum RpcServerEvent {
 
     GANG_VEHBIZ_LIST = 'soz-core:server:gang:vehbiz:list',
     GANG_VEHBIZ_REFRESH_LIST = 'soz-core:server:gang:vehbiz:refresh-list',
+    GANG_VEHBIZ_COMMAND = 'soz-core:server:gang:veh:command',
+    GANG_VEHBIZ_UNIQUE_GET = 'soz-core:server:gang:veh:unique-get',
+    GANG_VEHBIZ_UNIQUE_ADD = 'soz-core:server:gang:veh:unique-add',
+    GANG_VEHBIZ_UNIQUE_DELETE = 'soz-core:server:gang:veh:unique-delete',
+    GANG_VEHBIZ_UNIQUE_PRICE = 'soz-core:server:gang:veh:unique-price',
 }
 
 export enum RpcClientEvent {

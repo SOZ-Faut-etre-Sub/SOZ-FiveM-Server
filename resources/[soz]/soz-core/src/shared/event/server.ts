@@ -498,7 +498,6 @@ export enum ServerEvent {
     GANG_ADMIN_ASSIGN = 'soz-core:server:gang:admin-assign',
     GANG_SKILL_ADD = 'soz-core:server:gang:skill-add',
 
-    GANG_VEHBIZ_COMMAND = 'soz-core:server:gang:veh:command',
     GANG_VEHBIZ_GET_POSITION = 'soz-core:server:gang:veh:position',
     GANG_VEHBIZ_UNLOCK = 'soz-core:server:gang:veh:unlock',
     GANG_VEHBIZ_RESELL = 'soz-core:server:gang:veh:resell',
@@ -511,6 +510,7 @@ export enum ServerEvent {
     GANG_VEHBIZ_BOX_RESELL_ZONE = 'soz-core:server:gang:veh:box-resell-zone',
     GANG_VEHBIZ_SECRET_STORAGE = 'soz-core:server:gang:veh:secret-storage',
     GANG_VEHBIZ_ADD_NOS = 'soz-core:server:gang:veh:nos-add',
+    GANG_VEHBIZ_UNIQUE_SPAWN = 'soz-core:server:gang:veh:unique-spawn',
 
     DOOR_ADD_UPDATE = 'soz-core:server:door:add-update',
     DOOR_DELETE = 'soz-core:server:door:delete',

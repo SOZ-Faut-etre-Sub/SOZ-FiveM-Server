@@ -435,7 +435,6 @@ export enum NuiEvent {
     ZkeaFournitureShow = 'soz-core:nui:zkea:fourniture:show',
     ZkeaFourniturePurchase = 'soz-core:nui:zkea:fourniture:purchase',
 
-    GangFetch = 'soz-core:client:gang:fetch',
     GangAdminCreate = 'soz-core:client:gang:create',
     GangAdminQuit = 'soz-core:client:gang:quit',
     GangAdminAssign = 'soz-core:client:gang:assign',
@@ -446,6 +445,9 @@ export enum NuiEvent {
     BusinessVehiclePosition = 'soz-core:client:business:vehicle:position',
     BusinessVehicleHackSuccess = 'soz-core:client:business:vehicle:hack-success',
     BusinessVehicleHandling = 'soz-core:client:business:vehicle:handling',
+    BusinessVehicleUniqueAdd = 'soz-core:client:business:vehicle:unique-add',
+    BusinessVehicleUniqueUpdate = 'soz-core:client:business:vehicle:unique-update',
+    BusinessVehicleUniqueGet = 'soz-core:client:business:vehicle:unique-get',
 
     AdminDoorSetState = 'soz-core:client:door:set-state',
     AdminDoorAddSub = 'soz-core:client:door:add-subdoor',

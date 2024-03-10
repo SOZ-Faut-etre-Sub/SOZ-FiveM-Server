@@ -249,6 +249,7 @@ export class VehicleSpawner {
                 isPlayerVehicle: true,
                 owner: player.citizenid,
                 open: true,
+                model: model,
             },
             getDefaultVehicleCondition()
         );
@@ -368,11 +369,12 @@ export class VehicleSpawner {
         position[3] = GetEntityHeading(GetPlayerPed(source));
 
         const modelHash = GetHashKey(model);
-        const volatileState = {
+        const volatileState: VehicleVolatileState = {
             ...getDefaultVehicleVolatileState(),
             isPlayerVehicle: false,
             owner: player.citizenid,
             open: true,
+            model: model,
         };
         const condition = getDefaultVehicleCondition();
         return this.spawn(
@@ -420,6 +422,7 @@ export class VehicleSpawner {
             owner: player.citizenid,
             open: false,
             rentOwner: player.citizenid,
+            model: model,
         };
         const condition = getDefaultVehicleCondition();
         return this.spawn(
