@@ -512,6 +512,7 @@ export enum ServerEvent {
     GANG_VEHBIZ_SECRET_STORAGE = 'soz-core:server:gang:veh:secret-storage',
     GANG_VEHBIZ_ADD_NOS = 'soz-core:server:gang:veh:nos-add',
     GANG_VEHBIZ_UNIQUE_SPAWN = 'soz-core:server:gang:veh:unique-spawn',
+    GANG_VEHBIZ_NPC_REGISTER = 'soz-core:server:gang:veh:npc-register',
 
     DOOR_ADD_UPDATE = 'soz-core:server:door:add-update',
     DOOR_DELETE = 'soz-core:server:door:delete',

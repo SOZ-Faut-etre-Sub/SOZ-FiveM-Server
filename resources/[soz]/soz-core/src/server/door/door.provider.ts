@@ -17,7 +17,6 @@ export class DoorProvider {
 
     @OnEvent(ServerEvent.DOOR_ADD_UPDATE)
     public async doorAddUpdate(source: number, door: Door) {
-        console.log(door);
         door.subdoors.forEach(sub => delete sub['entity']);
 
         await this.prismaService.door.upsert({
