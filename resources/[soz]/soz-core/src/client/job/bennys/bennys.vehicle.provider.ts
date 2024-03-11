@@ -1,4 +1,4 @@
-import { VehicleMenuProvider } from '@public/client/vehicle/vehicle.menu.provider';
+import { VehicleBusinessProvider } from '@private/client/gang/business.vehicle.provider';
 import { JobType } from '@public/shared/job';
 import {
     isVehicleModelElectric,
@@ -60,8 +60,8 @@ export class BennysVehicleProvider {
     @Inject(PhoneService)
     private phoneService: PhoneService;
 
-    @Inject(VehicleMenuProvider)
-    private vehicleMenuProvider: VehicleMenuProvider;
+    @Inject(VehicleBusinessProvider)
+    private vehicleBusinessProvider: VehicleBusinessProvider;
 
     private upgradeZone: MultiZone<BoxZone> = new MultiZone([
         new BoxZone([-222.49, -1323.6, 30.89], 9, 6, {
@@ -381,7 +381,7 @@ export class BennysVehicleProvider {
             return;
         }
 
-        if (mode == LSCustomMode.Crimi && !this.vehicleMenuProvider.testCrimiGarage(vehicle, true)) {
+        if (mode == LSCustomMode.Crimi && !this.vehicleBusinessProvider.testCrimiGarage(vehicle, true)) {
             return;
         }
 

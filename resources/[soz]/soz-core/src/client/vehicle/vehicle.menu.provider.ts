@@ -1,7 +1,5 @@
 import { VehicleBusinessProvider } from '@private/client/gang/business.vehicle.provider';
 import { FDO } from '@public/shared/job';
-import { BoxZone, ZoneType } from '@public/shared/polyzone/box.zone';
-import { Vector3 } from '@public/shared/polyzone/vector';
 import { LSCustomMode, VEHICLE_TRUNK_TYPES, VehicleClass, VehicleSeat } from '@public/shared/vehicle/vehicle';
 
 import { Command } from '../../core/decorators/command';
@@ -210,7 +208,7 @@ export class VehicleMenuProvider {
             return false;
         }
 
-        if (mode == LSCustomMode.Crimi && !this.testCrimiGarage(ped, true)) {
+        if (mode == LSCustomMode.Crimi && !this.vehicleBusinessProvider.testCrimiGarage(ped, true)) {
             return;
         }
 
@@ -230,7 +228,7 @@ export class VehicleMenuProvider {
             return;
         }
 
-        if (!this.testCrimiGarage(ped, true)) {
+        if (!this.vehicleBusinessProvider.testCrimiGarage(ped, true)) {
             return;
         }
 
@@ -364,7 +362,7 @@ export class VehicleMenuProvider {
             }
         };
 
-        const crimiGarage = this.testCrimiGarage(ped, false);
+        const crimiGarage = this.vehicleBusinessProvider.testCrimiGarage(ped, false);
 
         this.nuiMenu.openMenu<MenuType.Vehicle>(MenuType.Vehicle, {
             isDriver,
@@ -386,21 +384,5 @@ export class VehicleMenuProvider {
             crimiCustom: crimiGarage && this.vehicleBusinessProvider.canCustom(),
             crimiPlate: crimiGarage && this.vehicleBusinessProvider.canPlate(),
         });
-    }
-
-    public testCrimiGarage(entity: number, notif: boolean): boolean {
-        const position = GetEntityCoords(entity, true) as Vector3;
-        const crimiGarage = this.zoneRepository.get(
-            zone => zone.data.type == ZoneType.VehBizGarage && BoxZone.fromZone(zone).isPointInside(position)
-        );
-
-        if (crimiGarage.length < 1) {
-            if (notif) {
-                this.notifier.notify("Vous n'êtes pas dans un ~r~Garage~s~.");
-            }
-            return false;
-        }
-
-        return true;
     }
 }
