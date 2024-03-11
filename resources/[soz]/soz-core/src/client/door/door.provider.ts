@@ -94,6 +94,9 @@ export class DoorProvider {
                                     model: GetEntityModel(entity),
                                 },
                             ],
+                            gangs: [],
+                            jobs: [],
+                            keyMetadata: [],
                         };
                         RemoveDoorFromSystem(temp);
                         TriggerServerEvent(ServerEvent.DOOR_ADD_UPDATE, door);
@@ -169,7 +172,7 @@ export class DoorProvider {
                         const doors = this.doorRepository.get();
                         const door = doors.find(door => door.subdoors.map(elem => elem.entity).includes(entity));
 
-                        this.nuiMenu.openMenu(MenuType.DoorAdmin, door);
+                        this.nuiMenu.openMenu(MenuType.DoorAdmin, door.id);
                     },
                 },
                 {

@@ -12,9 +12,9 @@ export type Door = {
     }[];
     lock: boolean;
     holdOpen?: boolean;
-    gangs?: number[];
-    jobs?: JobType[];
-    keyMetadata?: string[];
+    gangs: number[];
+    jobs: JobType[];
+    keyMetadata: string[];
 };
 
 export const DoorModels = [

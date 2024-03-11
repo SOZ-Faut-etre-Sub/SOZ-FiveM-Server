@@ -1,12 +1,11 @@
 import { fetchNui } from '@public/nui/fetch';
 import { useRepository } from '@public/nui/hook/repository';
-import { Door } from '@public/shared/door';
 import { NuiEvent } from '@public/shared/event/nui';
 import { JobType } from '@public/shared/job';
 import { JobRegistry } from '@public/shared/job/config';
 import { AskInput } from '@public/shared/nui/input';
 import { RepositoryType } from '@public/shared/repository';
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent } from 'react';
 
 import { MenuType } from '../../../shared/nui/menu';
 import {
@@ -24,12 +23,14 @@ import {
 } from '../Styleguide/Menu';
 
 export type DoorMenuStateProps = {
-    data: Door;
+    data: string;
 };
 
 export const DoorGangSubMenu: FunctionComponent<DoorMenuStateProps> = ({ data }) => {
-    const [assignedGangs, setAssignedGangs] = useState<number[]>(data.gangs);
+    const doors = useRepository(RepositoryType.Door);
     const gangs = useRepository(RepositoryType.Gang);
+
+    const door = doors[data];
 
     if (!gangs) {
         return;
@@ -42,13 +43,8 @@ export const DoorGangSubMenu: FunctionComponent<DoorMenuStateProps> = ({ data })
                 <MenuItemSelect
                     title="Ajouter"
                     onConfirm={async (index, gangId) => {
-                        if (data.gangs) {
-                            data.gangs.push(gangId);
-                        } else {
-                            data.gangs = [gangId];
-                        }
-                        await fetchNui(NuiEvent.AdminDoorSetState, data);
-                        setAssignedGangs(data.gangs);
+                        door.gangs.push(gangId);
+                        fetchNui(NuiEvent.AdminDoorSetState, door);
                     }}
                 >
                     {Object.values(gangs).map(gang => {
@@ -59,15 +55,14 @@ export const DoorGangSubMenu: FunctionComponent<DoorMenuStateProps> = ({ data })
                         );
                     })}
                 </MenuItemSelect>
-                {assignedGangs &&
-                    assignedGangs.map((gangId, index) => {
+                {door.gangs &&
+                    door.gangs.map((gangId, index) => {
                         const gang = Object.values(gangs).find(gang => gang.id == gangId);
                         return (
                             <MenuItemButton
                                 onConfirm={async () => {
-                                    data.gangs.splice(index, 1);
-                                    await fetchNui(NuiEvent.AdminDoorSetState, data);
-                                    setAssignedGangs(data.gangs);
+                                    door.gangs.splice(index, 1);
+                                    fetchNui(NuiEvent.AdminDoorSetState, door);
                                 }}
                                 key={'DoorGangSubMenu' + index}
                             >
@@ -82,7 +77,9 @@ export const DoorGangSubMenu: FunctionComponent<DoorMenuStateProps> = ({ data })
 
 export const DoorJobSubMenu: FunctionComponent<DoorMenuStateProps> = ({ data }) => {
     const jobIds = Object.keys(JobRegistry) as JobType[];
-    const [assignedJobs, setAssignedJobs] = useState<JobType[]>(data.jobs);
+    const doors = useRepository(RepositoryType.Door);
+
+    const door = doors[data];
 
     return (
         <SubMenu id="job">
@@ -91,13 +88,8 @@ export const DoorJobSubMenu: FunctionComponent<DoorMenuStateProps> = ({ data }) 
                 <MenuItemSelect
                     title="Ajouter"
                     onConfirm={async (index, jobId) => {
-                        if (data.jobs) {
-                            data.jobs.push(jobId);
-                        } else {
-                            data.jobs = [jobId];
-                        }
-                        await fetchNui(NuiEvent.AdminDoorSetState, data);
-                        setAssignedJobs(data.jobs);
+                        door.jobs.push(jobId);
+                        fetchNui(NuiEvent.AdminDoorSetState, door);
                     }}
                 >
                     {jobIds.map(jobId => {
@@ -110,14 +102,13 @@ export const DoorJobSubMenu: FunctionComponent<DoorMenuStateProps> = ({ data }) 
                         );
                     })}
                 </MenuItemSelect>
-                {assignedJobs &&
-                    assignedJobs.map((job, index) => {
+                {door.jobs &&
+                    door.jobs.map((job, index) => {
                         return (
                             <MenuItemButton
                                 onConfirm={async () => {
-                                    data.jobs.splice(index, 1);
-                                    await fetchNui(NuiEvent.AdminDoorSetState, data);
-                                    setAssignedJobs(data.jobs);
+                                    door.jobs.splice(index, 1);
+                                    fetchNui(NuiEvent.AdminDoorSetState, door);
                                 }}
                                 key={'DoorJobSubMenu' + index}
                             >
@@ -131,7 +122,9 @@ export const DoorJobSubMenu: FunctionComponent<DoorMenuStateProps> = ({ data }) 
 };
 
 export const DoorKeySubMenu: FunctionComponent<DoorMenuStateProps> = ({ data }) => {
-    const [assignedKeys, setAssignedKeys] = useState<string[]>(data.keyMetadata);
+    const doors = useRepository(RepositoryType.Door);
+
+    const door = doors[data];
 
     return (
         <SubMenu id="key">
@@ -142,27 +135,21 @@ export const DoorKeySubMenu: FunctionComponent<DoorMenuStateProps> = ({ data }) 
                         const inputData: AskInput = {
                             title: 'Valeur de clef',
                         };
-                        await fetchNui<any, string>(NuiEvent.AskInput, inputData).then(async input => {
-                            if (data.keyMetadata) {
-                                data.keyMetadata.push(input);
-                            } else {
-                                data.keyMetadata = [input];
-                            }
-                            await fetchNui(NuiEvent.AdminDoorSetState, data);
-                            setAssignedKeys(data.keyMetadata);
+                        fetchNui<any, string>(NuiEvent.AskInput, inputData).then(async input => {
+                            door.keyMetadata.push(input);
+                            await fetchNui(NuiEvent.AdminDoorSetState, door);
                         });
                     }}
                 >
                     Ajouter une valeur de clef
                 </MenuItemButton>
-                {assignedKeys &&
-                    assignedKeys.map((key, index) => {
+                {door.keyMetadata &&
+                    door.keyMetadata.map((key, index) => {
                         return (
                             <MenuItemButton
                                 onConfirm={async () => {
-                                    data.keyMetadata.splice(index, 1);
-                                    await fetchNui(NuiEvent.AdminDoorSetState, data);
-                                    setAssignedKeys(data.keyMetadata);
+                                    door.keyMetadata.splice(index, 1);
+                                    fetchNui(NuiEvent.AdminDoorSetState, door);
                                 }}
                                 key={'DoorKeySubMenu' + index}
                             >
@@ -176,39 +163,43 @@ export const DoorKeySubMenu: FunctionComponent<DoorMenuStateProps> = ({ data }) 
 };
 
 export const DoorAdminMenu: FunctionComponent<DoorMenuStateProps> = ({ data }) => {
+    const doors = useRepository(RepositoryType.Door);
+
+    const door = doors[data];
+
     return (
         <Menu type={MenuType.DoorAdmin}>
             <MainMenu>
                 <MenuTitle banner="https://nui-img/soz/menu_mapper">Gestion de Porte</MenuTitle>
                 <MenuContent>
                     <MenuItemCheckbox
-                        checked={data.lock}
+                        checked={door.lock}
                         onChange={async value => {
-                            data.lock = value;
-                            await fetchNui(NuiEvent.AdminDoorSetState, data);
+                            door.lock = value;
+                            fetchNui(NuiEvent.AdminDoorSetState, door);
                         }}
                     >
-                        Verrouillé
+                        Verrouillée
                     </MenuItemCheckbox>
                     <MenuItemCheckbox
-                        checked={data.holdOpen}
+                        checked={door.holdOpen}
                         onChange={async value => {
-                            data.holdOpen = value;
-                            await fetchNui(NuiEvent.AdminDoorSetState, data);
+                            door.holdOpen = value;
+                            fetchNui(NuiEvent.AdminDoorSetState, door);
                         }}
                     >
                         Reste Ouverte
                     </MenuItemCheckbox>
                     <MenuItemButton
                         onConfirm={async () => {
-                            await fetchNui(NuiEvent.AdminDoorAddSub, data.id);
+                            fetchNui(NuiEvent.AdminDoorAddSub, door.id);
                         }}
                     >
                         Ajouter un battant
                     </MenuItemButton>
                     <MenuItemButton
                         onConfirm={async () => {
-                            await fetchNui(NuiEvent.AdminDoorDelete, data.id);
+                            fetchNui(NuiEvent.AdminDoorDelete, door.id);
                         }}
                     >
                         Supprimer la porte
