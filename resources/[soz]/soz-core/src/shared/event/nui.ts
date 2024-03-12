@@ -445,6 +445,7 @@ export enum NuiEvent {
     GangInfluenceZoneUpdate = 'soz-core:client:gang:influence-update',
 
     BusinessVehicleOrder = 'soz-core:client:business:vehicle:order',
+    BusinessVehicleResetList = 'soz-core:client:business:vehicle:list-reset',
     BusinessVehiclePosition = 'soz-core:client:business:vehicle:position',
     BusinessVehicleHackSuccess = 'soz-core:client:business:vehicle:hack-success',
     BusinessVehicleHandling = 'soz-core:client:business:vehicle:handling',
