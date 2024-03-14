@@ -140,6 +140,13 @@ export class TargetFactory {
             },
             ped.target.options
         );
+
+        return id;
+    }
+
+    public deleteForPed(id: string) {
+        this.pedFactory.deletePedOnGrid(id);
+        this.removeBoxZone(`entity_${id}`);
     }
 
     public createForModel(

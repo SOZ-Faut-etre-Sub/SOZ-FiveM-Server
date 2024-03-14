@@ -16,6 +16,7 @@ import { RpcClientEvent, RpcServerEvent } from '@public/shared/rpc';
 
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { WorldObject } from '../../shared/object';
+import { TargetFactory } from '../target/target.factory';
 
 type SpawnedObject = {
     entity: number;
@@ -235,6 +236,10 @@ export class ObjectProvider {
             object,
         };
 
+        if (object.targets) {
+            this.targetFactory.createForEntity(entity, object.targets);
+        }
+
         await wait(0);
     }
 
@@ -243,6 +248,13 @@ export class ObjectProvider {
 
         if (!object) {
             return;
+        }
+
+        if (object.object.targets) {
+            this.targetFactory.removeForEntity(
+                [object.entity],
+                object.object.targets.map(target => target.label)
+            );
         }
 
         if (!this.objectService.deleteObject(object.entity, object.object)) {

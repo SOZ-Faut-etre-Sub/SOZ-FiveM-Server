@@ -1,3 +1,4 @@
+import { TargetOptions } from '@public/client/target/target.factory';
 import { JobType } from '@public/shared/job';
 
 import { Vector3, Vector4 } from './polyzone/vector';
@@ -11,6 +12,7 @@ export type WorldObject = {
     matrix?: Float32Array;
     noCollision?: boolean;
     invisible?: boolean;
+    targets?: TargetOptions[];
 };
 
 export type WorldPlacedProp = {

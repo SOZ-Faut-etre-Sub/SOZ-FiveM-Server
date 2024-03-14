@@ -12,6 +12,7 @@ export type Ped = {
     model: number | string;
     coords: { x: number; y: number; z: number; w: number };
 
+    id?: string;
     components?: { [key: number]: [number, number, number] };
     props?: { [key: number]: [number, number, number] };
     face?: { [key: string]: number };
@@ -99,7 +100,7 @@ export class PedFactory {
         const chunk = getChunkId(position);
         const gridPed = {
             ...ped,
-            id: uuidv4(),
+            id: ped.id || uuidv4(),
         };
 
         if (!this.pedsByChunk.has(chunk)) {
@@ -113,6 +114,11 @@ export class PedFactory {
         }
 
         return gridPed.id;
+    }
+
+    public async deletePedOnGrid(id: string) {
+        delete this.peds[id];
+        this.unspawnPed(id);
     }
 
     private async spawnPed(ped: GridPed) {
