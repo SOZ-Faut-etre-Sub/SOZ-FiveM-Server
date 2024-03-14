@@ -28,6 +28,7 @@ import { NuiMedicalDiagMethodMap } from './medical_diag';
 import { NuiMenuMethodMap } from './menu';
 import { NuiMeteorMap } from './meteor';
 import { NuiArrowMiniGameMethodMap } from './minigame_arrow';
+import { NuiGridMiniGameMethodMap } from './minigame_grid';
 import { NuiPanelMethodMap } from './panel';
 import { NuiPLayerMethodMap } from './player';
 import { NuiPoliceMethodMap } from './police';
@@ -92,6 +93,7 @@ export interface NuiMethodMap {
     gang: NuiGangMethodMap;
     hacking_device: NuiHackingDeviceMethodMap;
     minigame_arrows: NuiArrowMiniGameMethodMap;
+    minigame_grid: NuiGridMiniGameMethodMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(
