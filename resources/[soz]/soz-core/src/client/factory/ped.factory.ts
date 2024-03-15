@@ -121,6 +121,20 @@ export class PedFactory {
         this.unspawnPed(id);
     }
 
+    public isPedLoaded(id: string) {
+        const spawned = this.loadedPeds[id];
+
+        if (!spawned) {
+            return false;
+        }
+
+        if (!DoesEntityExist(spawned.entity)) {
+            return false;
+        }
+
+        return true;
+    }
+
     private async spawnPed(ped: GridPed) {
         const entity = await this.createPed(ped);
 
@@ -198,6 +212,12 @@ export class PedFactory {
 
         this.resourceLoader.unloadModel(hash);
 
+        await this.configurePed(pedId, ped);
+
+        return pedId;
+    }
+
+    public async configurePed(pedId: number, ped: Ped) {
         // if (ped.isRandomClothes) {
         //     SetPedRandomComponentVariation(pedId, 0);
         // } else {
@@ -340,7 +360,6 @@ export class PedFactory {
         }
 
         this.peds[pedId] = true;
-        return pedId;
     }
 
     @Once(OnceStep.Stop)

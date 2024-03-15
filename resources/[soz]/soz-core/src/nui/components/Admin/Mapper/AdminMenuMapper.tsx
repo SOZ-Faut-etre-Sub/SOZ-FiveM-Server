@@ -84,7 +84,7 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                     <MenuItemButton onConfirm={onRaceAdminMenuOpen}>🏎 Courses</MenuItemButton>
                     <MenuItemSubMenuLink id="zones">🗺️ Gestion des zones</MenuItemSubMenuLink>
                     <MenuItemButton onConfirm={onHubEntryAdminMenuOpen}>[🕯] Lanterne</MenuItemButton>
-                    <MenuItemButton onConfirm={onGangAdminMenuOpen}>Gang</MenuItemButton>
+                    <MenuItemButton onConfirm={onGangAdminMenuOpen}>💀 Gang</MenuItemButton>
                 </MenuContent>
             </MainMenu>
             <SubMenu id="objects">

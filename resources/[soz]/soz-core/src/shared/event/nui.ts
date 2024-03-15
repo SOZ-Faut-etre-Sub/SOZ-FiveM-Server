@@ -149,6 +149,7 @@ export enum NuiEvent {
     InputSet = 'soz-core:client:input:set',
     InputCancel = 'soz-core:client:input:cancel',
     AskInput = 'soz-core:client:input:askinput',
+    AskInputNumber = 'soz-core:client:input:askinput-number',
 
     Loaded = 'soz-core:nui:loaded',
     MenuClosed = 'menu_closed',
@@ -444,6 +445,9 @@ export enum NuiEvent {
     GangAdminDelete = 'soz-core:client:gang:admin-delete',
     GangAdminUpdatePedLocation = 'soz-core:client:gang:admin-update-ped-location',
     GangAdminUpdatePedLook = 'soz-core:client:gang:admin-update-ped-look',
+    GangAdminTP = 'soz-core:client:gang:admin-hub-tp',
+    GangAdminUpdatePedToPlayer = 'soz-core:client:gang:admin-ped-to-player',
+    GangAdminUpdatePlayerToPed = 'soz-core:client:gang:admin-player-to-ped',
     GangAdminUpdatePropModel = 'soz-core:client:gang:admin-update-prop-model',
     GangAdminUpdatePropLocation = 'soz-core:client:gang:admin-update-prop-location',
     GangAdminUpdateZone = 'soz-core:client:gang:admin-update-zone',
