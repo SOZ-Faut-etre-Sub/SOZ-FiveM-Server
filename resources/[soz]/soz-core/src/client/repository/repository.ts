@@ -1,6 +1,7 @@
 import { Inject } from '@core/decorators/injectable';
 import { RepositoryLoader } from '@core/loader/repository.loader';
 import { emitRpc } from '@core/rpc';
+import { deepCopy } from '@public/shared/utils/array';
 import { applyPatch, Operation } from 'fast-json-patch';
 
 import { RepositoryConfig, RepositoryMapping, RepositoryType } from '../../shared/repository';
@@ -35,7 +36,7 @@ export abstract class Repository<
             const key = operation.path.split('/')[1] || null;
 
             if (key) {
-                changedValues[key] = this.data[key] || null;
+                changedValues[key] = this.data[key] ? deepCopy(this.data[key]) : null;
             }
         }
 
@@ -54,7 +55,7 @@ export abstract class Repository<
             }
 
             if (previousValue !== null && newValue !== null) {
-                this.repositoryLoader.trigger(this.type, 'update', newValue);
+                this.repositoryLoader.trigger(this.type, 'update', newValue, previousValue);
             }
         }
 

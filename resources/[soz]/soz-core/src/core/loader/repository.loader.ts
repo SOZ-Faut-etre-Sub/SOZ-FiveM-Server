@@ -8,7 +8,7 @@ import {
 } from '../decorators/repository';
 import { Logger } from '../logger';
 
-type Listener = (data) => void | Promise<void>;
+type Listener = (data, prev) => void | Promise<void>;
 
 @Injectable()
 export class RepositoryLoader {
@@ -17,12 +17,17 @@ export class RepositoryLoader {
 
     private listeners: Map<RepositoryType, Record<RepositoryListenerType, Listener[]>> = new Map();
 
-    public async trigger<T>(repository: RepositoryType, type: RepositoryListenerType, data: T): Promise<void> {
+    public async trigger<T>(
+        repository: RepositoryType,
+        type: RepositoryListenerType,
+        data: T,
+        prev?: T
+    ): Promise<void> {
         const listeners = this.listeners.get(repository)?.[type] ?? [];
         const promises = [];
 
         for (const method of listeners) {
-            promises.push(method(data));
+            promises.push(method(data, prev));
         }
 
         await Promise.all(promises);
@@ -39,9 +44,9 @@ export class RepositoryLoader {
             const method = provider[methodName].bind(provider);
 
             for (const metadata of metadataList) {
-                const decoratedMethod = async data => {
+                const decoratedMethod = async (data, prev) => {
                     try {
-                        await method(data);
+                        await method(data, prev);
                     } catch (e) {
                         this.logger.error(
                             `Error on repository listener ${metadata.entityType} - ${metadata.type} in method ${methodName} of provider ${provider.constructor.name}`,

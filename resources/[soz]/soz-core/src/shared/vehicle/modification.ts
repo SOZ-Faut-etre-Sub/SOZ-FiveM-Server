@@ -1841,7 +1841,7 @@ export const VehicleModificationPricing: Partial<Record<keyof VehicleModificatio
         type: 'toggle',
     },
 };
-export const VehicleManualPricing = [0, 0.01];
+export const VehicleManualPricing = [0.01, 0.01];
 export const VehicleDefaultPricing = 50;
 
 export const getDefaultVehicleConfiguration = (): VehicleConfiguration => ({

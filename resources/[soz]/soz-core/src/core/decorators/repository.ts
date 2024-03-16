@@ -31,7 +31,7 @@ export const RepositoryInsert = <R extends keyof RepositoryMapping, T extends Re
 };
 
 export const RepositoryUpdate = <R extends keyof RepositoryMapping, T extends RepositoryMapping[R]>(data: R) => {
-    return (target, propertyKey, descriptor: TypedPropertyDescriptor<(data: T) => Promise<void>>) => {
+    return (target, propertyKey, descriptor: TypedPropertyDescriptor<(data: T, prev?: T) => Promise<void>>) => {
         addMethodMetadata(
             RepositoryListenerMetadataKey,
             {

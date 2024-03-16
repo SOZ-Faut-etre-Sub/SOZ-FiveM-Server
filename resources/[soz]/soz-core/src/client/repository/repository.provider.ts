@@ -55,7 +55,7 @@ export class RepositoryProvider {
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
 
-    @MultiInject(Logger)
+    @Inject(Logger)
     private logger: Logger;
 
     @Once(OnceStep.PlayerLoaded)
