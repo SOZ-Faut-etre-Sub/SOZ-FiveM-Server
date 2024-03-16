@@ -411,6 +411,163 @@ export enum VehicleHandlingType {
     fSuspensionBiasFront = 'fSuspensionBiasFront',
 }
 
+export const modificationTabs = [
+    {
+        title: 'Freinage',
+        description: 'Réglage des paramètres liés au freinage du véhicle.',
+        handlings: [
+            {
+                type: VehicleHandlingType.fBrakeBiasFront,
+                label: 'Répartition du freinage',
+                description:
+                    "Une valeur comprise entre 0,01 et 0,49 signifie que l'essieu arrière recevra plus d'effort de freinage que l'avant et une valeur comprise entre 0,051 et 0,99 signifie que les essieux avant recevront plus de force de freinage que l'arrière.",
+            },
+            {
+                type: VehicleHandlingType.fBrakeForce,
+                label: 'Force de freinage',
+                description: 'Multiplie le calcul de la décélération du jeu. Nombre plus grand - freinage plus dur',
+            },
+            {
+                type: VehicleHandlingType.fHandBrakeForce,
+                label: 'Frein à main',
+                description: "Permet d'augmenter ou de diminuer la puissance du frein à main.",
+            },
+        ],
+    },
+    {
+        title: 'Embrayage',
+        description: "Réglage des paramètres de l'embryage",
+        handlings: [
+            {
+                type: VehicleHandlingType.fClutchChangeRateScaleDownShift,
+                label: 'Réactivité du passage de vitesse inférieur',
+                description:
+                    'Réglage du coefficient de réactivité du passage au rapport inférieur, plus le coefficient est élevé, plus les rapports passeront rapidement.',
+            },
+            {
+                type: VehicleHandlingType.fClutchChangeRateScaleUpShift,
+                label: 'Réactivité du passage de vitesse supérieur',
+                description:
+                    'Réglage du coefficient de réactivité du passage au rapport supérieur, plus le coefficient est élevé, plus les rapports passeront rapidement.',
+            },
+        ],
+    },
+    {
+        title: 'Moteur',
+        description: 'Réglage des paramètres liés au compartiment moteur',
+        handlings: [
+            {
+                type: VehicleHandlingType.fInitialDriveForce,
+                label: 'Couple',
+                description:
+                    'Réglage du coefficient de couple du véhicule. Plus la valeur est haute, plus la puissance transmise aux roues est élevée.',
+            },
+            {
+                type: VehicleHandlingType.fDriveInertia,
+                label: 'Rupteur',
+                description: 'Réglage du coefficient concernant le réglage du rupteur et des tours par minute maximum.',
+            },
+            {
+                type: VehicleHandlingType.fInitialDriveMaxFlatVel,
+                label: 'VMAX',
+                description: 'Réglage de la vitesse maximale théorique autorisée par le système du véhicule.',
+            },
+        ],
+    },
+    {
+        title: 'Adhérence',
+        description: "Réglage des paramètres d'adhérence",
+        handlings: [
+            {
+                type: VehicleHandlingType.fTractionCurveMin,
+                label: "Coefficient d'adhérence minimal",
+                description:
+                    "Coefficient d'adhérence en glissement pour le virage et l'accélération. Cela décrit l'état d'adhérence après une perte de traction, par exemple, des pneus qui patinent, du survirage ou du sous-virage.",
+            },
+            {
+                type: VehicleHandlingType.fTractionCurveMax,
+                label: "Coefficient d'adhérence maximal",
+                description:
+                    "Coefficient maximal d'adhérence en virage et en accélération. Cela représente l'état d'adhérence maximale avant le début de toute perte de traction.",
+            },
+            {
+                type: VehicleHandlingType.fTractionCurveLateral,
+                label: "Coefficient d'adhérence latéral",
+                description:
+                    "Abaisser cette valeur rend la réaction de l'adhérence du véhicule plus immédiate, toutefois elle sera moins tolérante en cas de perte de traction. À l'inverse, augmenter cette valeur rend l'adhérence moins prompte, mais permet une meilleure tolérance face à la perte de traction. Ce phénomène est aussi appelé 'angle de glissement'.",
+            },
+            {
+                type: VehicleHandlingType.fTractionBiasFront,
+                label: 'Répartition de traction',
+                description:
+                    "De 0,01 à 0,99. Un réglage à 0,01 signifie que seule l'adhérence sur l'essieu arrière est active, tandis qu'un réglage à 0,99 indique que l'adhérence est principalement sur l'essieu avant. Il est possible d'ajuster ce paramètre pour modifier la répartition de l'adhérence, par exemple, à 0,25 pour 25% sur l'essieu arrière et 0,75 pour 75% sur l'essieu avant.",
+            },
+            {
+                type: VehicleHandlingType.fTractionLossMult,
+                label: "Coefficient de perte d'adhérence tout terrain",
+                description: 'Force du freinage',
+            },
+        ],
+    },
+    {
+        title: 'Direction',
+        description: 'Réglage de direction',
+        handlings: [
+            {
+                type: VehicleHandlingType.fSteeringLock,
+                label: 'Angle de braquage maximal',
+                description: '',
+            },
+        ],
+    },
+    {
+        title: 'Suspensions',
+        description: 'Réglage des suspensions',
+        handlings: [
+            {
+                type: VehicleHandlingType.fSuspensionBiasFront,
+                label: "Répartition d'amortissement",
+                description:
+                    "Ce paramètre permet de choisir quelle suspension, avant ou arrière, sera la plus rigide. Si la valeur est au-dessus de 0,50, cela signifie que la suspension avant est réglée pour être plus dure. Si elle est en dessous, c'est la suspension arrière qui est rendue plus rigide.",
+            },
+            {
+                type: VehicleHandlingType.fSuspensionCompDamp,
+                label: 'Compression',
+                description:
+                    'Amortissement lors de la compression du ressort. Plus la valeur est élevée, plus le ressort est rigide.',
+            },
+            {
+                type: VehicleHandlingType.fSuspensionForce,
+                label: 'Rigidité',
+                description:
+                    'Influe sur la rigidité de la suspension. Peut être utile si la voiture a tendance à se renverser facilement lors des virages.',
+            },
+            {
+                type: VehicleHandlingType.fSuspensionLowerLimit,
+                label: 'Expansion maximale',
+                description: 'Expansion maximale des suspensions',
+            },
+            {
+                type: VehicleHandlingType.fSuspensionUpperLimit,
+                label: 'Compression maximale',
+                description: 'Compression maximale des suspensions',
+            },
+            {
+                type: VehicleHandlingType.fSuspensionReboundDamp,
+                label: 'Rebond',
+                description:
+                    'Amortissement lors du rebond du ressort. Plus la valeur est grande, plus le ressort est rigide',
+            },
+            {
+                type: VehicleHandlingType.fSuspensionRaise,
+                label: 'Hauteur de voie',
+                description:
+                    "La hauteur à laquelle la suspension soulève la carrosserie au-dessus des roues. Il est recommandé d'ajuster au deuxième chiffre après la virgule, sauf si le véhicule dispose d'espace pour bouger.",
+            },
+        ],
+    },
+];
+
 export type VehicleHandling = Partial<Record<VehicleHandlingType, number>>;
 
 export type VehicleConfiguration = {
