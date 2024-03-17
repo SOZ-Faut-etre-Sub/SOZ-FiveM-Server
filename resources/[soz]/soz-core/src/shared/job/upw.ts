@@ -1,7 +1,6 @@
 import { Component, Prop, WardrobeConfig } from '../cloth';
 import { PlayerPedHash } from '../player';
 import { NamedZone } from '../polyzone/box.zone';
-import { Vehicle } from '../vehicle/vehicle';
 
 export const UpwCloakroom: WardrobeConfig = {
     [PlayerPedHash.Male]: {
@@ -201,12 +200,6 @@ export type UpwFacility = {
     data: string;
 };
 
-export type UpwOrder = {
-    uuid: string;
-    model: string;
-    orderDate: string;
-};
-
 const orderZone: NamedZone = {
     name: 'upw_order',
     center: [609.3484, 2759.589, 40.85264],
@@ -222,6 +215,9 @@ export const UpwConfig = {
     Order: {
         zone: orderZone,
         waitingTime: 60, // In minutes
+        garage: 'upw',
+        account: 'upw',
+        farm: 'farm_upw',
     },
 };
 
@@ -241,8 +237,4 @@ export type MenuUpwData = {
         resell: boolean;
         charger: boolean;
     };
-};
-
-export type UpwOrderMenuData = {
-    catalog: Vehicle[];
 };

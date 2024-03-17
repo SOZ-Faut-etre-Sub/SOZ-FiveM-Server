@@ -18,12 +18,17 @@ import {
     PoliceJobMenuData,
     PoliceJobMoneycheckerMenuData,
 } from '../job/police';
-import { MenuUpwData, UpwOrderMenuData } from '../job/upw';
+import { MenuUpwData } from '../job/upw';
 import { Race } from '../race';
 import { BossShopMenu, ShopProduct } from '../shop';
 import { GarageMenuData } from '../vehicle/garage';
 import { VehicleCustomMenuData } from '../vehicle/modification';
-import { VehicleAuctionMenuData, VehicleDealershipMenuData, VehicleMenuData } from '../vehicle/vehicle';
+import {
+    VehicleAuctionMenuData,
+    VehicleDealershipMenuData,
+    VehicleMenuData,
+    VehicleOrderMenuData,
+} from '../vehicle/vehicle';
 import { WeaponsMenuData } from '../weapons/weapon';
 import { HousingPropPlacementMenuData, PropPlacementMenuData } from './prop_placement';
 
@@ -53,7 +58,6 @@ export enum MenuType {
     AdminMenu = 'AdminMenu',
     AdminMapperMenu = 'AdminMapperMenu',
     BahamaUnicornJobMenu = 'baun_job',
-    BennysOrderMenu = 'bennys_order',
     BennysUpgradeVehicle = 'bennys_upgrade_vehicle',
     Demo = 'demo',
     DrivingSchool = 'driving_school',
@@ -71,7 +75,7 @@ export enum MenuType {
     JobUpw = 'job_upw',
     JobNews = 'job_news',
     JobOil = 'job_oil',
-    UpwOrderMenu = 'upw_order',
+    VehicleOrderMenu = 'vehicle_order',
     OilSetStationPrice = 'oil_set_station_price',
     SetHealthState = 'set_health_state',
     StonkJobMenu = 'stonk_job',
@@ -130,7 +134,6 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.AdminMapperMenu]: AdminMapperMenuData;
     [MenuType.BahamaUnicornJobMenu]: any;
     [MenuType.BennysUpgradeVehicle]: VehicleCustomMenuData;
-    [MenuType.BennysOrderMenu]: any;
     [MenuType.BossShop]: BossShopMenu;
     [MenuType.Demo]: never;
     [MenuType.DrivingSchool]: DrivingSchoolMenuData;
@@ -142,7 +145,7 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     };
     [MenuType.JobUpw]: MenuUpwData;
     [MenuType.JobOil]: MenuOilData;
-    [MenuType.UpwOrderMenu]: UpwOrderMenuData;
+    [MenuType.VehicleOrderMenu]: VehicleOrderMenuData;
     [MenuType.OilSetStationPrice]: Record<FuelType, number>;
     [MenuType.SetHealthState]: number;
     [MenuType.Vehicle]: VehicleMenuData;

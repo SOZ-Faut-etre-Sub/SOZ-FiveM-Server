@@ -1,28 +1,34 @@
-import { Exportable } from '../../../core/decorators/exports';
-import { Inject } from '../../../core/decorators/injectable';
-import { Provider } from '../../../core/decorators/provider';
-import { Rpc } from '../../../core/decorators/rpc';
-import { Tick, TickInterval } from '../../../core/decorators/tick';
-import { uuidv4 } from '../../../core/utils';
-import { BennysConfig, BennysOrder } from '../../../shared/job/bennys';
-import { RpcServerEvent } from '../../../shared/rpc';
+import { JobType } from '@public/shared/job';
+import { UpwConfig } from '@public/shared/job/upw';
+
+import { BankService } from '../../client/bank/bank.service';
+import { Inject } from '../../core/decorators/injectable';
+import { Provider } from '../../core/decorators/provider';
+import { Rpc } from '../../core/decorators/rpc';
+import { Tick, TickInterval } from '../../core/decorators/tick';
+import { uuidv4 } from '../../core/utils';
+import { BennysConfig } from '../../shared/job/bennys';
+import { RpcServerEvent } from '../../shared/rpc';
 import {
     getDefaultVehicleCondition,
     VehicleClassFuelStorageMultiplier,
     VehicleCondition,
-} from '../../../shared/vehicle/vehicle';
-import { BankService } from '../../bank/bank.service';
-import { PrismaService } from '../../database/prisma.service';
-import { Notifier } from '../../notifier';
-import { PlayerService } from '../../player/player.service';
+    VehicleOrder,
+    VehicleOrderConfig,
+} from '../../shared/vehicle/vehicle';
+import { PrismaService } from '../database/prisma.service';
+import { Notifier } from '../notifier';
+import { PlayerService } from '../player/player.service';
+
+const Configs: Partial<Record<JobType, VehicleOrderConfig>> = {
+    [JobType.Upw]: UpwConfig.Order,
+    [JobType.Bennys]: BennysConfig.Order,
+};
 
 @Provider()
-export class BennysOrderProvider {
+export class VehicleOrderProvider {
     @Inject(PrismaService)
     private prismaService: PrismaService;
-
-    @Inject(PlayerService)
-    private playerService: PlayerService;
 
     @Inject(Notifier)
     private notifier: Notifier;
@@ -30,27 +36,35 @@ export class BennysOrderProvider {
     @Inject(BankService)
     private bankService: BankService;
 
-    private ordersInProgress: Map<string, BennysOrder> = new Map();
+    @Inject(PlayerService)
+    private playerService: PlayerService;
+
+    private ordersInProgress: Map<string, VehicleOrder> = new Map();
 
     private orderedVehicle = 0;
 
     // Tick every minute to check the orders to complete.
-    @Tick(TickInterval.EVERY_MINUTE, 'bennys:orders:check')
+    @Tick(TickInterval.EVERY_MINUTE)
     public async onTick() {
-        for (const [uuid, bennyOrder] of this.ordersInProgress.entries()) {
-            if (new Date(bennyOrder.orderDate).getTime() + 1000 * 60 * BennysConfig.Order.waitingTime < Date.now()) {
-                await this.addVehicle(bennyOrder.model);
+        for (const [uuid, vehicleOrder] of this.ordersInProgress.entries()) {
+            if (vehicleOrder.deliverDate < Date.now()) {
+                await this.addVehicle(vehicleOrder);
                 this.ordersInProgress.delete(uuid);
             }
         }
     }
 
-    @Rpc(RpcServerEvent.BENNYS_GET_ORDERS)
-    public getOrders(): BennysOrder[] {
-        return Array.from(this.ordersInProgress.values());
+    @Rpc(RpcServerEvent.VEHICLE_ORDER_GET)
+    public getOrders(source: number): VehicleOrder[] {
+        const player = this.playerService.getPlayer(source);
+        if (!player) {
+            return [];
+        }
+
+        return Array.from(this.ordersInProgress.values()).filter(order => (order.job = player.job.id));
     }
 
-    @Rpc(RpcServerEvent.BENNYS_CANCEL_ORDER)
+    @Rpc(RpcServerEvent.VEHICLE_ORDER_CANCEL)
     public async onCancelOrder(source: number, uuid: string) {
         const order = this.ordersInProgress.get(uuid);
         if (!order) {
@@ -59,10 +73,18 @@ export class BennysOrderProvider {
         }
         this.ordersInProgress.delete(uuid);
         this.notifier.notify(source, `Commande annulée.`);
+
+        return this.getOrders(source);
     }
 
-    @Rpc(RpcServerEvent.BENNYS_ORDER_VEHICLE)
+    @Rpc(RpcServerEvent.VEHICLE_ORDER_DO)
     public async onOrderVehicle(source: number, model: string) {
+        const player = this.playerService.getPlayer(source);
+        if (!player) {
+            return;
+        }
+
+        const config = Configs[player.job.id];
         const vehicle = await this.prismaService.vehicle.findFirst({
             where: {
                 model,
@@ -74,53 +96,40 @@ export class BennysOrderProvider {
         });
         if (!vehicle || vehicle.price === 0) {
             this.notifier.notify(source, `Ce modèle de véhicule n'est pas disponible.`);
-            return;
+            return this.getOrders(source);
         }
         const vehiclePrice = Math.ceil(vehicle.price * 0.01);
-        const transferred = await this.bankService.transferFarmMoney(
-            source,
-            'farm_bennys',
-            'bennys',
-            vehiclePrice,
-            'money',
-            true
-        );
+        
+        const transferred = await this.bankService.transferFarmMoney(source, 'farm_bennys', 'bennys', vehiclePrice, 'money', true);
 
         if (!transferred) {
             this.notifier.notify(
                 source,
                 `Il faut ~r~${vehiclePrice.toLocaleString()}$~s~ sur le compte de l'entreprise.`
             );
-            return;
+            return this.getOrders(source);
         } else {
             this.notifier.notify(source, `Virement de ~g~${vehiclePrice.toLocaleString()}$~s~ effectué.`);
         }
 
         const uuid = uuidv4();
+        const coef = GetConvar('soz_core_environment', 'development') ? 30 : 1;
         this.ordersInProgress.set(uuid, {
             uuid,
             model,
-            orderDate: new Date().toISOString(),
+            deliverDate: Date.now() + (config.waitingTime * 60_000) / coef,
+            job: player.job.id,
         });
 
         this.notifier.notify(source, `Votre ${vehicle.model} arrive dans une heure.`);
+
+        return this.getOrders(source);
     }
 
-    @Exportable('deleteTestVehicles')
-    async deleteTestVehicles() {
-        await this.prismaService.playerVehicle.deleteMany({
-            where: {
-                plate: {
-                    contains: 'ESSAI',
-                },
-            },
-        });
-    }
-
-    private async addVehicle(model: string) {
+    private async addVehicle(order: VehicleOrder) {
         const vehicle = await this.prismaService.vehicle.findFirst({
             where: {
-                model,
+                model: order.model,
             },
         });
         let category = 'car';
@@ -140,13 +149,13 @@ export class BennysOrderProvider {
 
         await this.prismaService.playerVehicle.create({
             data: {
-                vehicle: model,
-                hash: GetHashKey(model).toString(),
+                vehicle: order.model,
+                hash: GetHashKey(order.model).toString(),
                 mods: JSON.stringify(BennysConfig.UpgradeConfiguration),
                 condition: JSON.stringify(condition),
                 plate: 'ESSAI N' + (this.orderedVehicle + 1),
-                garage: 'bennys_luxury',
-                job: 'bennys',
+                garage: Configs[order.job].garage,
+                job: order.job,
                 category: category,
                 fuel: 100,
                 engine: 1000,

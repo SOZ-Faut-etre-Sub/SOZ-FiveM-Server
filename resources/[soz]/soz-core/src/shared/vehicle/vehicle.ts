@@ -4,6 +4,7 @@ import { RadioChannel } from '@public/shared/voip';
 
 import { DealershipConfigItem, DealershipType } from '../../config/dealership';
 import { JobType } from '../job';
+import { NamedZone } from '../polyzone/box.zone';
 import { Vector3, Vector4 } from '../polyzone/vector';
 import { AuctionVehicle } from './auction';
 import { DealershipId } from './dealership';
@@ -562,4 +563,23 @@ export const VEHICLE_TRUNK_TYPES = {
     [joaat('brickade1')]: 'brickade',
     [joaat('trash')]: 'trash',
     [joaat('tiptruck2')]: 'tiptruck',
+};
+
+export type VehicleOrder = {
+    uuid: string;
+    model: string;
+    job: JobType;
+    deliverDate: number;
+};
+
+export type VehicleOrderMenuData = {
+    dealerships: string[];
+};
+
+export type VehicleOrderConfig = {
+    zone: NamedZone;
+    waitingTime: number;
+    garage: string;
+    account: string;
+    farm: string;
 };

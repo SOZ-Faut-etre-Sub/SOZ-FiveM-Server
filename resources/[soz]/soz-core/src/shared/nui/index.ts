@@ -13,7 +13,6 @@ import { NuiTalentMethodMap } from '@public/shared/nui/talent';
 import { NuiAdminPlayerSubMenuMethodMap } from '../../nui/components/Admin/PlayerSubMenu';
 import { NuiAdminSkinSubMenuMethodMap } from '../../nui/components/Admin/SkinSubMenu';
 import { NuiAudioMethodMap } from './audio';
-import { NuiBennysOrderMenuMethodMap } from './bennys_order_menu';
 import { NuiClipboardMethodMap } from './clipboard';
 import { NuiClothShopMethodMap } from './cloth_shop';
 import { NuiCraftMethodMap } from './craft';
@@ -38,7 +37,6 @@ import { NuiRaceMethodMap } from './race';
 import { NuiRepairMethodMap } from './repair';
 import { NuiSozedexMethodMap } from './sozedex';
 import { NuiTaxiMethodMap } from './taxi';
-import { NuiUpwOrderMenuMethodMap } from './upw_order_menu';
 import { NuiWeatherMethodMap } from './wheather';
 
 export interface NuiGlobalMethodMap {
@@ -50,8 +48,6 @@ export interface NuiMethodMap {
     admin_player_submenu: NuiAdminPlayerSubMenuMethodMap;
     admin_skin_submenu: NuiAdminSkinSubMenuMethodMap;
     audio: NuiAudioMethodMap;
-    bennys_order_menu: NuiBennysOrderMenuMethodMap;
-    upw_order_menu: NuiUpwOrderMenuMethodMap;
     clipboard: NuiClipboardMethodMap;
     cloth_shop: NuiClothShopMethodMap;
     global: NuiGlobalMethodMap;

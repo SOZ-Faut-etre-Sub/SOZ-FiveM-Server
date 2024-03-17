@@ -1,5 +1,6 @@
 import { VehicleBusinessProvider } from '@private/client/gang/business.vehicle.provider';
-import { JobType } from '@public/shared/job';
+import { DealershipType } from '@public/config/dealership';
+import { JobPermission, JobType } from '@public/shared/job';
 import {
     isVehicleModelElectric,
     isVehicleModelTrailer,
@@ -27,6 +28,7 @@ import { TargetFactory } from '../../target/target.factory';
 import { VehicleModificationService } from '../../vehicle/vehicle.modification.service';
 import { VehicleService } from '../../vehicle/vehicle.service';
 import { VehicleStateService } from '../../vehicle/vehicle.state.service';
+import { JobService } from '../job.service';
 
 @Provider()
 export class BennysVehicleProvider {
@@ -62,6 +64,9 @@ export class BennysVehicleProvider {
 
     @Inject(VehicleBusinessProvider)
     private vehicleBusinessProvider: VehicleBusinessProvider;
+
+    @Inject(JobService)
+    private jobService: JobService;
 
     private upgradeZone: MultiZone<BoxZone> = new MultiZone([
         new BoxZone([-222.49, -1323.6, 30.89], 9, 6, {
@@ -472,5 +477,45 @@ export class BennysVehicleProvider {
             windows: windowExist,
             tabletType: tabletType,
         });
+    }
+
+    @Once(OnceStep.Start)
+    public async onStart() {
+        const orderZone = BennysConfig.Order.zone;
+        this.targetFactory.createForBoxZone(orderZone.name, orderZone, [
+            {
+                label: 'Commander une voiture',
+                icon: 'c:/mechanic/order.png',
+                color: 'bennys',
+                job: 'bennys',
+                blackoutJob: 'bennys',
+                blackoutGlobal: true,
+                canInteract: () => {
+                    return (
+                        this.playerService.isOnDuty() &&
+                        this.jobService.hasPermission(JobType.Bennys, JobPermission.BennysOrder)
+                    );
+                },
+                action: async () => {
+                    this.nuiMenu.openMenu(
+                        MenuType.VehicleOrderMenu,
+                        {
+                            dealerships: [
+                                DealershipType.Cycle,
+                                DealershipType.Luxury,
+                                DealershipType.Moto,
+                                DealershipType.Pdm,
+                            ],
+                        },
+                        {
+                            position: {
+                                position: orderZone.center,
+                                distance: 5.0,
+                            },
+                        }
+                    );
+                },
+            },
+        ]);
     }
 }

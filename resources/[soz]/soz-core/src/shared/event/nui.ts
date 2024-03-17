@@ -136,9 +136,6 @@ export enum NuiEvent {
     ObjectEditorToggleCollision = 'soz-core:nui:object-editor:toggle-collision',
     ObjectEditorToggleSnap = 'soz-core:nui:object-editor:toggle-snap',
 
-    BennysCancelOrder = 'soz-core:client:job:bennys:cancel-order',
-    BennysOrder = 'soz-core:client:job:bennys:order',
-    BennysGetOrders = 'soz-core:client:job:bennys:get-orders',
     BennysUpgradeVehicle = 'soz-core:nui:job:bennys:upgrade-vehicle',
 
     FfsDisplayBlip = 'soz-core:client:job:ffs:display-blip',
@@ -245,6 +242,11 @@ export enum NuiEvent {
     VehicleGarageShowPlaces = 'soz-core:client:vehicle:garage:show-places',
     VehicleGarageTransfer = 'soz-core:client:vehicle:garage:transfer',
 
+    VehicleCancelOrder = 'soz-core:client:vehicle:cancel-order',
+    VehicleOrder = 'soz-core:client:vehicle:order',
+    VehicleGetOrders = 'soz-core:client:vehicle:get-orders',
+    VehicleUpgradeVehicle = 'soz-core:nui:vehicle:upgrade-vehicle',
+
     VoipCloseRadio = 'soz-core:nui:voip:close-radio',
     VoipEnableRadio = 'soz-core:nui:voip:enable-radio',
     VoipUpdateRadioChannel = 'soz-core:nui:voip:update-radio-channel',
@@ -254,11 +256,6 @@ export enum NuiEvent {
     VoipEnableRadioVehicle = 'soz-core:nui:voip:enable-radio-vehicle',
     VoipUpdateRadioVehicleChannel = 'soz-core:nui:voip:update-radio-vehicle-channel',
     VoipUpdateRadioVehicleVolumeClick = 'soz-core:nui:voip:update-radio-volume-vehicle-click',
-
-    UpwGetOrders = 'soz-core:client:job:upw:get-orders',
-    UpwOrder = 'soz-core:client:job:upw:order',
-    UpwGetCatalog = 'soz-core:client:job:upw:get-catalog',
-    UpwCancelOrder = 'soz-core:client:job:upw:cancel-order',
 
     GunSmithRenameWeapon = 'soz-core:client:job:gunsmith:rename-weapon',
     GunSmithPreviewTint = 'soz-core:client:job:gunsmith:preview-tint',

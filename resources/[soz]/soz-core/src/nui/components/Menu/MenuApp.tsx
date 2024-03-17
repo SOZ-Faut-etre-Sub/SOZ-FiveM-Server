@@ -16,7 +16,6 @@ import { AdminMenu } from '../Admin/AdminMenu';
 import { DoorAdminMenu } from '../Admin/DoorAdminMenu';
 import { AdminMenuMapper } from '../Admin/Mapper/AdminMenuMapper';
 import { BahamaUnicornJobMenu } from '../BahamaUnicorn/BahamaUnicornJobMenu';
-import { BennysOrderMenu } from '../Bennys/BennysOrderMenu';
 import { PitStopPriceMenu } from '../Bennys/PitStopPriceMenu';
 import { DrivingSchoolMenu } from '../DrivingSchool/DrivingSchoolMenu';
 import { FdfJobMenu } from '../FDF/FdfJobMenu';
@@ -65,7 +64,6 @@ import { MenuDemo } from './MenuDemo';
 import { MenuEditorObject } from './MenuEditorObject';
 import { MenuGarage } from './MenuGarage';
 import { MenuOilSetPrice } from './MenuOilSetPrice';
-import { UpwOrderMenu } from './MenuOrderUpw';
 import { MenuPlayerPersonal } from './MenuPlayerPersonal';
 import { MenuPropPlacement } from './MenuPropPlacement';
 import { MenuPropPlacementHousing } from './MenuPropPlacementHousing';
@@ -76,6 +74,7 @@ import { MenuVehicle } from './MenuVehicle';
 import { MenuVehicleAuction } from './MenuVehicleAuction';
 import { MenuVehicleCustom } from './MenuVehicleCustom';
 import { MenuVehicleDealership } from './MenuVehicleDealership';
+import { VehicleOrderMenu } from './MenuVehicleOrder';
 import { MenuWardrobe } from './MenuWardrobe';
 
 export const MenuApp: FunctionComponent = () => {
@@ -196,7 +195,6 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.AdminMenu}/*`} element={<AdminMenu data={menuData} />} />
             <Route path={`/${MenuType.AdminMapperMenu}/*`} element={<AdminMenuMapper data={menuData} />} />
             <Route path={`/${MenuType.BahamaUnicornJobMenu}/*`} element={<BahamaUnicornJobMenu data={menuData} />} />
-            <Route path={`/${MenuType.BennysOrderMenu}`} element={<BennysOrderMenu />} />
             <Route path={`/${MenuType.Demo}/*`} element={<MenuDemo />} />
             <Route path={`/${MenuType.FightForStyleJobMenu}/*`} element={<FightForStyleJobMenu data={menuData} />} />
             <Route path={`/${MenuType.StonkJobMenu}/*`} element={<StonkJobMenu data={menuData} />} />
@@ -230,7 +228,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.JobBennys}/*`} element={<MenuBennys data={menuData} />} />
             <Route path={`/${MenuType.JobUpw}/*`} element={<MenuUpw data={menuData} />} />
             <Route path={`/${MenuType.JobOil}/*`} element={<MenuOil data={menuData} />} />
-            <Route path={`/${MenuType.UpwOrderMenu}/*`} element={<UpwOrderMenu data={menuData} />} />
+            <Route path={`/${MenuType.VehicleOrderMenu}/*`} element={<VehicleOrderMenu data={menuData} />} />
             <Route path={`/${MenuType.GarbageJobMenu}/*`} element={<GarbageJobMenu data={menuData} />} />
             <Route
                 path={`/${MenuType.BennysUpgradeVehicle}/*`}

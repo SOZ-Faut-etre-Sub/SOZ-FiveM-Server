@@ -30,7 +30,7 @@ export const PitStopPriceMenu: FunctionComponent = () => {
     }
 
     return (
-        <Menu type={MenuType.BennysOrderMenu}>
+        <Menu type={MenuType.PitStopPriceMenu}>
             <MainMenu>
                 <MenuTitle banner={banner}>Gestion des Prix du Pit Stop</MenuTitle>
                 <MenuContent>

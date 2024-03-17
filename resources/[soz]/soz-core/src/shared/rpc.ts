@@ -98,6 +98,10 @@ export enum RpcServerEvent {
     VEHICLE_PITSTOP_PRICES_UPDATE = 'soz-core:rpc:vehicle:pitstop:price-update',
     VEHICLE_SPAWN_TEMPORARY = 'soz-core:rpc:vehicle:spawn-temporary',
 
+    VEHICLE_ORDER_GET = 'soz-core:vehicle:orders-get',
+    VEHICLE_ORDER_CANCEL = 'soz-core:server:vehicle:cancel-order',
+    VEHICLE_ORDER_DO = 'soz-core:server:vehicle:order-do',
+
     VOIP_SET_MUTE = 'soz-core:voip:set-mute',
     VOIP_IS_MUTED = 'soz-core:voip:is-muted',
     VOIP_GET_MEGAPHONE_PLAYERS = 'soz-core:voip:get-megaphone-players',
@@ -107,10 +111,6 @@ export enum RpcServerEvent {
     INVENTORY_GET_ITEM_BY_SHORTCUT = 'soz-core:inventory:get-item-by-shortcut',
 
     UPW_GET_FACILITIES = 'soz-core:job:upw:get-facilities',
-    UPW_GET_ORDERS = 'soz-core:job:upw:get-orders',
-    UPW_CANCEL_ORDER = 'soz-core:server:job:upw:cancel-order',
-    UPW_ORDER_VEHICLE = 'soz-core:server:job:upw:order-vehicle',
-    UPW_GET_CATALOG = 'soz-core:server:job:upw:get-catalog',
     UPW_GET_STATION = 'soz-core:server:job:upw:get-station',
 
     WEAPON_USE_AMMO = 'soz-core:server:weapon:useAmmo',

@@ -72,6 +72,9 @@ export const BennysConfig = {
     Order: {
         zone: orderZone,
         waitingTime: 60, // In minutes
+        garage: 'bennys_luxury',
+        account: 'bennys',
+        farm: 'farm_bennys',
     },
     Resell: [
         {
@@ -90,12 +93,6 @@ export const BennysConfig = {
             types: [15, 16],
         },
     ],
-};
-
-export type BennysOrder = {
-    uuid: string;
-    model: string;
-    orderDate: string;
 };
 
 export const NewGarrayCloakroom: WardrobeConfig = {
