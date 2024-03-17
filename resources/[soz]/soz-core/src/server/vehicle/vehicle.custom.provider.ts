@@ -52,7 +52,8 @@ export class VehicleCustomProvider {
         originalConfiguration: VehicleConfiguration,
         price: number | null = null,
         notify = true,
-        mode = LSCustomMode.Normal
+        mode = LSCustomMode.Normal,
+        crimiPrice: Record<string, number>
     ) {
         // @TODO Price client side
         const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
@@ -72,15 +73,26 @@ export class VehicleCustomProvider {
             return originalConfiguration;
         }
         if (
-            mode == LSCustomMode.Crimi &&
+            mode == LSCustomMode.CrimiCusto &&
             price &&
-            this.inventoryManager.getItemCount(source, 'veh_strip_piece') <
+            this.inventoryManager.getItemCount(source, 'veh_strip_piece_std') <
                 Math.ceil(price / VehicleBusinessCustomPrice)
         ) {
-            const item = this.itemService.getItem('veh_strip_piece');
-            this.notifier.notify(source, `Vous n'avez pas assez de ${item.label}`, 'error');
+            const item = this.itemService.getItem('veh_strip_piece_std');
+            this.notifier.notify(source, `Vous n'avez pas assez de  ~r~${item.label}.`, 'error');
 
             return originalConfiguration;
+        }
+
+        if (mode == LSCustomMode.CrimiPerfo && crimiPrice) {
+            for (const itemName of Object.keys(crimiPrice)) {
+                if (this.inventoryManager.getItemCount(source, itemName) < crimiPrice[itemName]) {
+                    const item = this.itemService.getItem(itemName);
+                    this.notifier.notify(source, `Vous n'avez pas assez de ~r~${item.label}~s~.`, 'error');
+
+                    return originalConfiguration;
+                }
+            }
         }
         if (taxedPrice && mode == LSCustomMode.Normal) {
             // LS Custom upgrade parts
@@ -104,12 +116,16 @@ export class VehicleCustomProvider {
             }
 
             this.playerMoneyService.remove(source, price);
-        } else if (price && mode == LSCustomMode.Crimi) {
+        } else if (price && mode == LSCustomMode.CrimiCusto) {
             this.inventoryManager.removeItemFromInventory(
                 source,
-                'veh_strip_piece',
+                'veh_strip_piece_std',
                 Math.ceil(price / VehicleBusinessCustomPrice)
             );
+        } else if (crimiPrice && mode == LSCustomMode.CrimiPerfo) {
+            for (const itemName of Object.keys(crimiPrice)) {
+                this.inventoryManager.removeItemFromInventory(source, itemName, crimiPrice[itemName]);
+            }
         }
 
         if (playerVehicle) {

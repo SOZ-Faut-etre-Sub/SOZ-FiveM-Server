@@ -398,7 +398,8 @@ export type VehicleMenuData = {
 
 export enum LSCustomMode {
     Admin = 'admin',
-    Crimi = 'crimi',
+    CrimiPerfo = 'crimi_perfo',
+    CrimiCusto = 'crimi_custom',
     Normal = 'normal',
 }
 

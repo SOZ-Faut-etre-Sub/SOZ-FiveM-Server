@@ -314,7 +314,6 @@ export enum ServerEvent {
     VEHICLE_LOCKPICK = 'soz-core:server:vehicle:lockpick',
     VEHICLE_BREAK_DOOR = 'soz-core:server:vehicle:break-door',
     VEHICLE_NOS_START = 'soz-core:server:vehicle:nos-start',
-    VEHICLE_PLATE_CHANGE = 'soz-core:server:vehicle:plate-change',
     VEHICLE_HANDLING_BASE_SAVE = 'soz-core:server:vehicle:handling-base-save',
     VEHICLE_RESET_SURFACE_STATE_TO_OWNER = 'soz-core:server:vehicle:reset-surface-effect-to-owner',
 
@@ -515,6 +514,7 @@ export enum ServerEvent {
     GANG_VEHBIZ_ADD_NOS = 'soz-core:server:gang:veh:nos-add',
     GANG_VEHBIZ_UNIQUE_SPAWN = 'soz-core:server:gang:veh:unique-spawn',
     GANG_VEHBIZ_NPC_REGISTER = 'soz-core:server:gang:veh:npc-register',
+    GANG_VEHBIZ_PLATE_CHANGE = 'soz-core:server:gang:veh:plate-change',
 
     DOOR_ADD_UPDATE = 'soz-core:server:door:add-update',
     DOOR_DELETE = 'soz-core:server:door:delete',

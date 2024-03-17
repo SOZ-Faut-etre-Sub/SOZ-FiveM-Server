@@ -289,32 +289,4 @@ export class VehicleStateProvider {
 
         return ret;
     }
-
-    @OnEvent(ServerEvent.VEHICLE_PLATE_CHANGE)
-    public async updatePlate(
-        source: number,
-        trunkType: string,
-        plate: string,
-        context: { model: string; class: string; entity: number }
-    ) {
-        const state = this.vehicleStateService.getVehicleState(context.entity);
-        const newplate = await this.vehicleService.generatePlate();
-
-        this.vehicleStateService.updateVehicleVolatileState(context.entity, {
-            plate: newplate,
-        });
-
-        this.inventoryManager.updateVehPlate(trunkType, plate, context, newplate);
-
-        if (state.volatile.isPlayerVehicle) {
-            await this.prismaService.playerVehicle.updateMany({
-                where: {
-                    id: state.volatile.id,
-                },
-                data: {
-                    plate: newplate,
-                },
-            });
-        }
-    }
 }

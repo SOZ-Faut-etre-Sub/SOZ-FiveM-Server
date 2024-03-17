@@ -52,11 +52,3 @@ export const Crafts: Record<string, Record<string, CraftCategory>> = {
     [JobType.FDF]: FDFCraftsLists,
     [JobType.DMC]: DmcCraftsLists,
 };
-
-export const CraftEvent: Record<string, string> = {
-    [JobType.Food]: 'job_cm_food_craft',
-    [JobType.Baun]: 'job_baun_craft',
-    [JobType.Ffs]: 'job_ffs_craft',
-    [JobType.Pawl]: 'job_pawl_craft',
-    [JobType.DMC]: 'job_dmc_craft',
-};

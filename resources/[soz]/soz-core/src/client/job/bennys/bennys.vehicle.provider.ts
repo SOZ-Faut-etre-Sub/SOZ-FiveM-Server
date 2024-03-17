@@ -381,7 +381,7 @@ export class BennysVehicleProvider {
             return;
         }
 
-        if (mode == LSCustomMode.Crimi && !this.vehicleBusinessProvider.testCrimiGarage(vehicle, true)) {
+        if (mode == LSCustomMode.CrimiCusto && !this.vehicleBusinessProvider.testCrimiGarage(vehicle, true)) {
             return;
         }
 

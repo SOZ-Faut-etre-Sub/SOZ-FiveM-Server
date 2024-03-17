@@ -10043,18 +10043,6 @@ QBShared.Items = {
         ['description'] = "Si ton toit est sous l'eau, ce ticket peut t'aider !",
         ['illustrator'] = '.Sniteur'
     },
-    ['hacking_device'] = {
-        ['name'] = 'hacking_device',
-        ['label'] = "Système de Hack",
-        ['weight'] = 500,
-        ['useable'] = false,
-        ['type'] = 'item_illegal',
-        ['shouldClose'] = false,
-        ['unique'] = false,
-        ['combinable'] = nil,
-        ['description'] = "",
-        ['illustrator'] = ''
-    },
     ['key'] = {
         ['name'] = 'key',
         ['label'] = "Clef",
@@ -10067,9 +10055,11 @@ QBShared.Items = {
         ['description'] = "Ouvre des portes.",
         ['illustrator'] = '.Moustash'
     },
-    ['veh_strip_saw'] = {
-        ['name'] = 'veh_strip_saw',
-        ['label'] = "Scie de désossage",
+
+    --HC
+    ['hacking_device'] = {
+        ['name'] = 'hacking_device',
+        ['label'] = "Boitier de Déverrouillage",
         ['weight'] = 500,
         ['useable'] = false,
         ['type'] = 'item_illegal',
@@ -10079,9 +10069,57 @@ QBShared.Items = {
         ['description'] = "",
         ['illustrator'] = ''
     },
-    ['veh_strip_piece'] = {
-        ['name'] = 'veh_strip_piece',
-        ['label'] = "Pièce de recupération de véhicules",
+    ['veh_strip_saw'] = {
+        ['name'] = 'veh_strip_saw',
+        ['label'] = "Scie de démantèlement",
+        ['weight'] = 500,
+        ['useable'] = false,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['veh_strip_piece_rusted'] = {
+        ['name'] = 'veh_strip_piece_rusted',
+        ['label'] = "Pièces de véhicules Rouillé",
+        ['weight'] = 80,
+        ['useable'] = false,
+        ['type'] = 'veh_biz_piece',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['veh_strip_piece_std'] = {
+        ['name'] = 'veh_strip_piece_std',
+        ['label'] = "Pièces de véhicules Standard",
+        ['weight'] = 80,
+        ['useable'] = false,
+        ['type'] = 'veh_biz_piece',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['veh_strip_piece_perfo'] = {
+        ['name'] = 'veh_strip_piece_perfo',
+        ['label'] = "Pièces de véhicules Performant",
+        ['weight'] = 80,
+        ['useable'] = false,
+        ['type'] = 'veh_biz_piece',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['veh_strip_piece_tuning'] = {
+        ['name'] = 'veh_strip_piece_tuning',
+        ['label'] = "Pièces de véhicules Tuning",
         ['weight'] = 80,
         ['useable'] = false,
         ['type'] = 'veh_biz_piece',
@@ -10093,7 +10131,7 @@ QBShared.Items = {
     },
     ['box_veh_strip_piece'] = {
         ['name'] = 'box_veh_strip_piece',
-        ['label'] = "Boites de pièces de recupération de véhicules",
+        ['label'] = "Boites de pièces véhicules",
         ['weight'] = 80,
         ['useable'] = false,
         ['type'] = 'item_illegal',
@@ -10128,9 +10166,81 @@ QBShared.Items = {
         ['description'] = "",
         ['illustrator'] = ''
     },
+    ['veh_plate_kit'] = {
+        ['name'] = 'veh_plate_kit',
+        ['label'] = "Kit de plaque",
+        ['weight'] = 600,
+        ['useable'] = false,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
     ['veh_mapping_box'] = {
         ['name'] = 'veh_mapping_box',
         ['label'] = "Boitier de Cartographie",
+        ['weight'] = 3000,
+        ['useable'] = false,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['veh_upgrade_race_kit'] = {
+        ['name'] = 'veh_upgrade_race_kit',
+        ['label'] = "Kit d'amélioration Race",
+        ['weight'] = 3000,
+        ['useable'] = false,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['veh_upgrade_pro_kit'] = {
+        ['name'] = 'veh_upgrade_pro_kit',
+        ['label'] = "Kit d’amélioration Pro",
+        ['weight'] = 3000,
+        ['useable'] = false,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['veh_upgrade_superpro_kit'] = {
+        ['name'] = 'veh_upgrade_superpro_kit',
+        ['label'] = "Kit d’amélioration Super Pro",
+        ['weight'] = 3000,
+        ['useable'] = false,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['veh_upgrade_ultima_kit'] = {
+        ['name'] = 'veh_upgrade_ultima_kit',
+        ['label'] = "Kit d’amélioration Ultimate",
+        ['weight'] = 3000,
+        ['useable'] = false,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['veh_upgrade_nfs_kit'] = {
+        ['name'] = 'veh_upgrade_nfs_kit',
+        ['label'] = "Kit d’amélioration NFS",
         ['weight'] = 3000,
         ['useable'] = false,
         ['type'] = 'item_illegal',

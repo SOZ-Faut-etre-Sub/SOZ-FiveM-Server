@@ -499,8 +499,13 @@ export type VehicleLsCustomCategory = {
 
 export type VehicleLsCustom = Partial<Record<keyof VehicleConfiguration, VehicleLsCustomCategory>>;
 
-type VehicleLsCustomBaseConfigItem = {
+export type VehicleLsCustomBaseConfigItem = {
     priceByLevels: number[];
+    type: 'list' | 'toggle';
+};
+
+export type VehicleLsCustomBaseCrimiConfigItem = {
+    priceByLevels: string[];
     type: 'list' | 'toggle';
 };
 
@@ -1815,7 +1820,9 @@ export const VehicleXenonColorChoices: Record<VehicleXenonColor, VehicleColorCho
     },
 };
 
-export const VehicleModificationPricing: Partial<Record<keyof VehicleModification, VehicleLsCustomBaseConfigItem>> = {
+export const VehicleModificationPricing: Partial<
+    Record<keyof VehicleModification | 'manualGearBox', VehicleLsCustomBaseConfigItem>
+> = {
     engine: {
         priceByLevels: [0.04, 0.05, 0.07, 0.1, 0.12],
         type: 'list',
@@ -1840,8 +1847,11 @@ export const VehicleModificationPricing: Partial<Record<keyof VehicleModificatio
         priceByLevels: [0, 0.1],
         type: 'toggle',
     },
+    manualGearBox: {
+        priceByLevels: [0.01, 0.01],
+        type: 'toggle',
+    },
 };
-export const VehicleManualPricing = [0.01, 0.01];
 export const VehicleDefaultPricing = 50;
 
 export const getDefaultVehicleConfiguration = (): VehicleConfiguration => ({
@@ -1864,7 +1874,7 @@ export const getVehicleCustomPrice = (
     let price = 0;
 
     for (const key of Object.keys(newModification.modification)) {
-        const category = VehicleModificationPricing[key];
+        const category = VehicleModificationPricing[key as keyof VehicleModification];
         if (category) {
             if (category.type === 'list') {
                 const currentLevel = (currentModification.modification[key] as number) ?? -1;
@@ -1886,11 +1896,7 @@ export const getVehicleCustomPrice = (
                 const hasNew = Boolean(newModification.modification[key]);
 
                 if (hasCurrent !== hasNew) {
-                    if (hasNew) {
-                        price = price + vehiclePrice * category.priceByLevels[1];
-                    } else {
-                        price = price + vehiclePrice * category.priceByLevels[0];
-                    }
+                    price = price + vehiclePrice * category.priceByLevels[hasNew ? 1 : 0];
                 }
             }
         } else {
@@ -1906,11 +1912,7 @@ export const getVehicleCustomPrice = (
     const hasCurrentManual = Boolean(currentModification.manualGearbox);
     const hasNewManual = Boolean(newModification.manualGearbox);
     if (hasCurrentManual !== hasNewManual) {
-        if (hasNewManual) {
-            price = price + vehiclePrice * VehicleManualPricing[1];
-        } else {
-            price = price + vehiclePrice * VehicleManualPricing[0];
-        }
+        price = price + vehiclePrice * VehicleModificationPricing['manualGearBox'].priceByLevels[hasNewManual ? 1 : 0];
     }
 
     for (const key of Object.keys(newModification)) {
@@ -1926,6 +1928,131 @@ export const getVehicleCustomPrice = (
     }
 
     return price;
+};
+
+export const VehicleModificationCrimiPricing: Partial<
+    Record<keyof VehicleModification | 'manualGearBox', VehicleLsCustomBaseCrimiConfigItem>
+> = {
+    engine: {
+        priceByLevels: [
+            'veh_upgrade_race_kit',
+            'veh_upgrade_pro_kit',
+            'veh_upgrade_superpro_kit',
+            'veh_upgrade_ultima_kit',
+            'veh_upgrade_nfs_kit',
+        ],
+        type: 'list',
+    },
+    brakes: {
+        priceByLevels: [
+            'veh_upgrade_race_kit',
+            'veh_upgrade_pro_kit',
+            'veh_upgrade_superpro_kit',
+            'veh_upgrade_ultima_kit',
+            'veh_upgrade_nfs_kit',
+        ],
+        type: 'list',
+    },
+    transmission: {
+        priceByLevels: [
+            'veh_upgrade_race_kit',
+            'veh_upgrade_pro_kit',
+            'veh_upgrade_superpro_kit',
+            'veh_upgrade_ultima_kit',
+            'veh_upgrade_nfs_kit',
+        ],
+        type: 'list',
+    },
+    suspension: {
+        priceByLevels: [
+            'veh_upgrade_race_kit',
+            'veh_upgrade_pro_kit',
+            'veh_upgrade_superpro_kit',
+            'veh_upgrade_ultima_kit',
+            'veh_upgrade_nfs_kit',
+        ],
+        type: 'list',
+    },
+    armor: {
+        priceByLevels: [
+            'veh_upgrade_race_kit',
+            'veh_upgrade_pro_kit',
+            'veh_upgrade_superpro_kit',
+            'veh_upgrade_ultima_kit',
+            'veh_upgrade_nfs_kit',
+        ],
+        type: 'list',
+    },
+    turbo: {
+        priceByLevels: [null, 'veh_upgrade_pro_kit'],
+        type: 'toggle',
+    },
+    manualGearBox: {
+        priceByLevels: ['veh_upgrade_race_kit', 'veh_upgrade_race_kit'],
+        type: 'toggle',
+    },
+};
+
+export const getVehicleCrimiCustomPrice = (
+    vehiclePrice: number,
+    options: VehicleUpgradeOptions,
+    currentModification: VehicleConfiguration,
+    newModification: VehicleConfiguration
+): Record<string, number> => {
+    const ret: Record<string, number> = {};
+
+    for (const key of Object.keys(newModification.modification)) {
+        const category = VehicleModificationCrimiPricing[key as keyof VehicleModification];
+        if (category) {
+            if (category.type === 'list') {
+                const currentLevel = (currentModification.modification[key] as number) ?? -1;
+                const newLevel = (newModification.modification[key] as number) ?? -1;
+
+                if (currentLevel !== newLevel) {
+                    for (let subLevel = currentLevel + 1; subLevel < newLevel + 1; subLevel++) {
+                        const item = category.priceByLevels[subLevel];
+
+                        if (item) {
+                            if (!ret[item]) {
+                                ret[item] = 0;
+                            }
+                            ret[item] = ret[item] + 1;
+                        }
+                    }
+                }
+            }
+
+            if (category.type === 'toggle') {
+                const hasCurrent = Boolean(currentModification.modification[key]);
+                const hasNew = Boolean(newModification.modification[key]);
+
+                if (hasCurrent !== hasNew) {
+                    const item = category.priceByLevels[hasNew ? 1 : 0];
+                    if (item) {
+                        if (!ret[item]) {
+                            ret[item] = 0;
+                        }
+                        ret[item] = ret[item] + 1;
+                    }
+                }
+            }
+        }
+    }
+
+    const hasCurrentManual = Boolean(currentModification.manualGearbox);
+    const hasNewManual = Boolean(newModification.manualGearbox);
+    if (hasCurrentManual !== hasNewManual) {
+        const item = VehicleModificationCrimiPricing['manualGearBox'].priceByLevels[hasNewManual ? 1 : 0];
+        if (item) {
+            if (ret[item]) {
+                ret[item] = ret[item] + 1;
+            } else {
+                ret[item] = 1;
+            }
+        }
+    }
+
+    return ret;
 };
 
 export type VehicleCustomMenuData = {

@@ -132,12 +132,12 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
                                 </MenuItemButton>
                             )}
                             {data.crimiCustom && (
-                                <MenuItemButton onConfirm={() => onOpenBennysUpgrade(LSCustomMode.Crimi)}>
+                                <MenuItemButton onConfirm={() => onOpenBennysUpgrade(LSCustomMode.CrimiCusto)}>
                                     Modifier l'apparence
                                 </MenuItemButton>
                             )}
                             {data.crimiPerformance && (
-                                <MenuItemButton onConfirm={() => onOpenLSCustom(LSCustomMode.Crimi)}>
+                                <MenuItemButton onConfirm={() => onOpenLSCustom(LSCustomMode.CrimiPerfo)}>
                                     Modifier les performances
                                 </MenuItemButton>
                             )}

@@ -1,7 +1,8 @@
 import { Provider } from '@core/decorators/provider';
+import { GangProvider } from '@private/server/gang/gang.provider';
 import { Inject } from '@public/core/decorators/injectable';
 import { Rpc } from '@public/core/decorators/rpc';
-import { Crafts, CraftsList } from '@public/shared/craft/craft';
+import { CraftCategory, Crafts, CraftsList } from '@public/shared/craft/craft';
 import { isFeatureEnabled } from '@public/shared/features';
 import { InventoryItemMetadata } from '@public/shared/item';
 import { toVector3Object, Vector3 } from '@public/shared/polyzone/vector';
@@ -35,9 +36,20 @@ export class CraftProvider {
     @Inject(ProgressService)
     private progressService: ProgressService;
 
+    @Inject(GangProvider)
+    private gangProvider: GangProvider;
+
+    private async getCrafts(source: number, type: string): Promise<Record<string, CraftCategory>> {
+        if (type == 'gang') {
+            return await this.gangProvider.getGangRecipes(source);
+        }
+
+        return Crafts[type];
+    }
+
     @Rpc(RpcServerEvent.CRAFT_GET_RECIPES)
     public async getTransformRecipes(source: number, type: string, cancelled?: boolean): Promise<CraftsList> {
-        const crafts = { ...Crafts[type] };
+        const crafts = { ...(await this.getCrafts(source, type)) };
         for (const category of Object.keys(crafts)) {
             const categoryList = crafts[category];
 
@@ -71,7 +83,7 @@ export class CraftProvider {
 
     @Rpc(RpcServerEvent.CRAFT_DO_RECIPES)
     public async doCraft(source: number, itemId: string, type: string, category: string): Promise<CraftsList> {
-        const crafts = Crafts[type];
+        const crafts = await this.getCrafts(source, type);
         const recipe = crafts[category].recipes[itemId];
         const item = this.itemService.getItem(itemId);
         const player = this.playerService.getPlayer(source);

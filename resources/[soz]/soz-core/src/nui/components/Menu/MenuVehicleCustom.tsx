@@ -1,4 +1,4 @@
-import { VehicleBusinessCustomPrice } from '@private/shared/business.vehicle';
+import { useItems } from '@public/nui/hook/data';
 import { LSCustomMode } from '@public/shared/vehicle/vehicle';
 import { FunctionComponent, useEffect, useState } from 'react';
 
@@ -6,6 +6,7 @@ import { TaxType } from '../../../shared/bank';
 import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
 import {
+    getVehicleCrimiCustomPrice,
     getVehicleCustomPrice,
     VehicleConfiguration,
     VehicleCustomInput,
@@ -23,6 +24,7 @@ import {
     MenuItemButton,
     MenuItemSelect,
     MenuItemSelectOptionBox,
+    MenuItemText,
     MenuTitle,
 } from '../Styleguide/Menu';
 
@@ -73,6 +75,7 @@ type MenuVehicleCustomProps = {
 export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ data }) => {
     const [configuration, setConfiguration] = useState<VehicleConfiguration | null>(null);
     const getPrice = useGetPrice();
+    const items = useItems();
 
     useEffect(() => {
         if (data?.currentConfiguration) {
@@ -94,13 +97,6 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
     if (!data || !configuration) {
         return null;
     }
-
-    const price =
-        data.mode == LSCustomMode.Admin
-            ? 0
-            : configuration
-              ? getVehicleCustomPrice(data.vehiclePrice, data.options, data.currentConfiguration, configuration)
-              : 0;
 
     const onConfirm = () => {
         const input: VehicleCustomInput = {
@@ -127,6 +123,19 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
         setConfiguration({
             ...configuration,
             manualGearbox: value,
+        });
+    };
+
+    const crimiPrice = () => {
+        const price = getVehicleCrimiCustomPrice(
+            data.vehiclePrice,
+            data.options,
+            data.currentConfiguration,
+            configuration
+        );
+
+        return Object.keys(price).map(item => {
+            return price[item] + 'x ' + items.find(elem => elem.name == item).label;
         });
     };
 
@@ -210,16 +219,25 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
                         <div className="flex w-full justify-between items-center">
                             <span>Confirmer les changements</span>
                             {data.mode == LSCustomMode.Normal && (
-                                <span>$ {Intl.NumberFormat('fr-FR').format(getPrice(price, TaxType.VEHICLE))}</span>
-                            )}
-                            {data.mode == LSCustomMode.Crimi && (
                                 <span>
-                                    {Intl.NumberFormat('fr-FR').format(Math.ceil(price / VehicleBusinessCustomPrice))}{' '}
-                                    pièces
+                                    ${' '}
+                                    {Intl.NumberFormat('fr-FR').format(
+                                        getPrice(
+                                            getVehicleCustomPrice(
+                                                data.vehiclePrice,
+                                                data.options,
+                                                data.currentConfiguration,
+                                                configuration
+                                            ),
+                                            TaxType.VEHICLE
+                                        )
+                                    )}
                                 </span>
                             )}
                         </div>
                     </MenuItemButton>
+                    {data.mode == LSCustomMode.CrimiPerfo &&
+                        crimiPrice().map(elem => <MenuItemText key={'cost_' + elem}>{elem}</MenuItemText>)}
                 </MenuContent>
             </MainMenu>
         </Menu>

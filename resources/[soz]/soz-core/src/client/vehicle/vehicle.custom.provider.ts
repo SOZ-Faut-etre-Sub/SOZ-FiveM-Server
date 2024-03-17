@@ -11,6 +11,7 @@ import { Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import {
     getVehicleConfigurationDiff,
+    getVehicleCrimiCustomPrice,
     getVehicleCustomPrice,
     VehicleConfiguration,
     VehicleCustomInput,
@@ -133,6 +134,15 @@ export class VehicleCustomProvider {
             input.mode != LSCustomMode.Admin
                 ? getVehicleCustomPrice(vehicle.price, options, input.originalConfiguration, input.vehicleConfiguration)
                 : 0;
+        const crimiPrice =
+            input.mode == LSCustomMode.CrimiPerfo
+                ? getVehicleCrimiCustomPrice(
+                      vehicle.price,
+                      options,
+                      input.originalConfiguration,
+                      input.vehicleConfiguration
+                  )
+                : null;
 
         const newVehicleConfiguration = await emitRpc<VehicleConfiguration>(
             RpcServerEvent.VEHICLE_CUSTOM_SET_MODS,
@@ -141,7 +151,8 @@ export class VehicleCustomProvider {
             input.originalConfiguration,
             price,
             true,
-            input.mode
+            input.mode,
+            crimiPrice
         );
 
         SetVehicleUndriveable(input.vehicleEntityId, false);

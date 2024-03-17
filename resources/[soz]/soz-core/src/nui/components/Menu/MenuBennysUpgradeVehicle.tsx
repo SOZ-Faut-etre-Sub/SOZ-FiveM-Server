@@ -368,7 +368,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
             vehicleEntityId: data.vehicle,
             originalConfiguration: data.originalConfiguration,
             vehicleConfiguration: config,
-            mode: LSCustomMode.Normal,
+            mode: data.mode,
             onlyPerformance: false,
         };
         fetchNui(NuiEvent.VehicleCustomConfirmModification, input);
@@ -381,7 +381,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
     };
 
     const price =
-        data.mode != LSCustomMode.Crimi
+        data.mode != LSCustomMode.CrimiCusto
             ? 0
             : config
             ? getVehicleCustomPrice(data.vehiclePrice, data.options, data.currentConfiguration, config)
@@ -408,7 +408,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                     <MenuItemButton onConfirm={() => onConfirm()}>
                         <div className="flex w-full justify-between items-center">
                             <span>✅ Confirmer les changements</span>
-                            {data.mode == LSCustomMode.Crimi && (
+                            {data.mode == LSCustomMode.CrimiCusto && (
                                 <span>
                                     {Intl.NumberFormat('fr-FR').format(Math.ceil(price / VehicleBusinessCustomPrice))}{' '}
                                     pièces

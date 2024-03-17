@@ -208,7 +208,7 @@ export class VehicleMenuProvider {
             return false;
         }
 
-        if (mode == LSCustomMode.Crimi && !this.vehicleBusinessProvider.testCrimiGarage(ped, true)) {
+        if (mode == LSCustomMode.CrimiPerfo && !this.vehicleBusinessProvider.testCrimiGarage(ped, true)) {
             return;
         }
 
@@ -238,7 +238,7 @@ export class VehicleMenuProvider {
         const trunkType = VEHICLE_TRUNK_TYPES[vehicleModel] || 'trunk';
 
         const vehicleNetworkId = VehToNet(vehicle);
-        TriggerServerEvent(ServerEvent.VEHICLE_PLATE_CHANGE, trunkType, plate, {
+        TriggerServerEvent(ServerEvent.GANG_VEHBIZ_PLATE_CHANGE, trunkType, plate, {
             model: vehicleModel,
             class: vehicleClass,
             entity: vehicleNetworkId,
