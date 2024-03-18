@@ -180,7 +180,7 @@ exports('CheckEntity', CheckEntity)
 local Bones = Load('bones')
 local function CheckBones(coords, entity, bonelist)
 	local closestBone = -1
-	local closestDistance = 20
+	local closestDistance = 1
 	local closestPos, closestBoneName
 	for k, v in pairs(bonelist) do
 		if Bones.Options[v] then
