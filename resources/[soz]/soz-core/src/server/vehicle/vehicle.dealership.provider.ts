@@ -415,6 +415,7 @@ export class VehicleDealershipProvider {
                 state: {
                     not: PlayerVehicleState.Destroyed,
                 },
+                crimiImport: false,
             },
         });
 

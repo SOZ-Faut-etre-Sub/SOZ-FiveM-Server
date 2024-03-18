@@ -422,6 +422,7 @@ model PlayerVehicle {
   boughttime      Int     @default(0)
   parkingtime     Int     @default(0)
   pound_price     Int?    @default(0)
+  crimiImport     Boolean @default(false)
   player          player? @relation(fields: [citizenid], references: [citizenid], onDelete: Cascade, map: "FK_playervehicles_players")
 
   @@index([citizenid], map: "citizenid")

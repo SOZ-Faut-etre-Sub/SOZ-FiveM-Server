@@ -137,6 +137,7 @@ export class DrivingSchoolProvider {
                 vehicle: {
                     in: vehicleModels,
                 },
+                crimiImport: false,
             },
         });
         const limit = player.metadata.vehiclelimit;
