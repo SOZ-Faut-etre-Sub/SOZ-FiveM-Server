@@ -109,5 +109,5 @@ export interface RepositoryConfig extends Record<keyof RepositoryMapping, any> {
     [RepositoryType.ShopGlove]: Record<number, GlovesItem>;
     [RepositoryType.StationFuel]: Record<string, FuelStation>;
     [RepositoryType.StationUpw]: Record<number, UpwStation>;
-    [RepositoryType.Vehicle]: Record<number, Vehicle>;
+    [RepositoryType.Vehicle]: Record<string, Vehicle>;
 }

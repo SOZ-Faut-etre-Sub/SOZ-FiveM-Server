@@ -888,3 +888,10 @@ model influence_zones {
   zone           String     @db.Text
   gang           Int?
 }
+
+model vehicle_order {
+  id             String     @id
+  model          String     @db.VarChar(100)
+  deliverDate    DateTime   @default(now())
+  data           String     @db.Text
+}

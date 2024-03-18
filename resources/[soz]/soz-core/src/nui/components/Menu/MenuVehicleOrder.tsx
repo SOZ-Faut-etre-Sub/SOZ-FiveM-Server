@@ -4,7 +4,8 @@ import { useRepository } from '@public/nui/hook/repository';
 import { NuiEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
 import { RepositoryType } from '@public/shared/repository';
-import { VehicleOrder, VehicleOrderMenuData } from '@public/shared/vehicle/vehicle';
+import { formatDuration } from '@public/shared/utils/timeformat';
+import { VehicleOrder, VehicleOrderCostMuliplier, VehicleOrderMenuData } from '@public/shared/vehicle/vehicle';
 import { FunctionComponent, useState } from 'react';
 
 import {
@@ -25,9 +26,10 @@ export const VehicleOrderMenu: FunctionComponent<VehicleOrderMenuProps> = ({ dat
     const [orders, setOrders] = useState<VehicleOrder[]>([]);
     const vehicles = useRepository(RepositoryType.Vehicle);
     const player = usePlayer();
+    const banner = `https://nui-img/soz/menu_job_${player.job.id}`;
 
     useState(() => {
-        fetchNui<any, VehicleOrder[]>(NuiEvent.VehicleGetOrders).then(orders => setOrders(orders));
+        fetchNui<any, VehicleOrder[]>(NuiEvent.VehicleGetOrders, data.mode).then(orders => setOrders(orders));
     });
 
     const sortedCatalog = Object.values(vehicles)
@@ -41,35 +43,31 @@ export const VehicleOrderMenu: FunctionComponent<VehicleOrderMenuProps> = ({ dat
     return (
         <Menu type={MenuType.VehicleOrderMenu}>
             <MainMenu>
-                <MenuTitle banner={`https://nui-img/soz/menu_job_${player.job.id}`}>Gestion des commandes</MenuTitle>
+                <MenuTitle banner={banner}>Gestion des commandes</MenuTitle>
                 <MenuContent>
                     <MenuItemSubMenuLink id="order">➕ Commander un véhicule</MenuItemSubMenuLink>
                     {orders
                         .sort((a, b) => a.deliverDate - b.deliverDate)
                         .map(order => {
-                            const remainingMinutes = Math.floor((order.deliverDate - Date.now()) / 60_000);
+                            const vehName = vehicles[order.model].name;
                             return (
                                 <MenuItemButton
                                     onConfirm={async () => {
-                                        await fetchNui(NuiEvent.VehicleCancelOrder, order.uuid);
+                                        await fetchNui(NuiEvent.VehicleCancelOrder, {
+                                            id: order.uuid,
+                                            mode: data.mode,
+                                        });
                                     }}
                                     key={order.uuid}
                                 >
-                                    {remainingMinutes > 0 && (
-                                        <span>❌ {order.model.toUpperCase() + ' - ' + remainingMinutes} minutes</span>
-                                    )}
-                                    {remainingMinutes <= 0 && (
-                                        <span>
-                                            ❌ {order.model.toUpperCase() + ' - ' + 'Arrive dans quelques instants'}
-                                        </span>
-                                    )}
+                                    <span>{`❌ ${vehName} - ${formatDuration(Date.now() - order.deliverDate)}`}</span>
                                 </MenuItemButton>
                             );
                         })}
                 </MenuContent>
             </MainMenu>
             <SubMenu id="order">
-                <MenuTitle banner={`https://nui-img/soz/menu_job_${player.job.id}`}>Catalogue des véhicules</MenuTitle>
+                <MenuTitle banner={banner}>Catalogue des véhicules</MenuTitle>
                 <MenuContent>
                     {sortedCategories.map((category, index) => {
                         return (
@@ -83,22 +81,25 @@ export const VehicleOrderMenu: FunctionComponent<VehicleOrderMenuProps> = ({ dat
             {sortedCategories.map((category, index) => {
                 return (
                     <SubMenu id={`category_${index}`} key={index}>
-                        <MenuTitle banner={`https://nui-img/soz/menu_job_${player.job.id}`}>{category}</MenuTitle>
+                        <MenuTitle banner={banner}>{category}</MenuTitle>
                         <MenuContent>
                             {sortedCatalog
                                 .filter(veh => veh.category == category)
                                 .map(vehicle => (
                                     <MenuItemButton
                                         onConfirm={async () => {
-                                            fetchNui<any, VehicleOrder[]>(NuiEvent.VehicleOrder, vehicle.model).then(
-                                                orders => setOrders(orders)
-                                            );
+                                            fetchNui<any, VehicleOrder[]>(NuiEvent.VehicleOrder, {
+                                                model: vehicle.model,
+                                                mode: data.mode,
+                                            }).then(orders => setOrders(orders));
                                         }}
                                         key={vehicle.model}
                                     >
                                         <div className="pr-2 flex items-center justify-between">
                                             <span> {vehicle.name} </span>
-                                            <span>💸 {Math.ceil(vehicle.price * 0.01)} </span>
+                                            <span>
+                                                💸 {Math.ceil(vehicle.price * VehicleOrderCostMuliplier[data.mode])}{' '}
+                                            </span>
                                         </div>
                                     </MenuItemButton>
                                 ))}

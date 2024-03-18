@@ -5,6 +5,7 @@ import {
     isVehicleModelElectric,
     isVehicleModelTrailer,
     LSCustomMode,
+    VehicleOrderMode,
     VehicleSeat,
 } from '@public/shared/vehicle/vehicle';
 
@@ -506,6 +507,7 @@ export class BennysVehicleProvider {
                                 DealershipType.Moto,
                                 DealershipType.Pdm,
                             ],
+                            mode: VehicleOrderMode.Job,
                         },
                         {
                             position: {

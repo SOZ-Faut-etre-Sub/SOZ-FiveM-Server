@@ -76,11 +76,19 @@ export class GarageRepository extends RepositoryLegacy<Record<string, Garage>> {
         };
     }
 
-    public async updateAddGarage(identifier: string, garage_zone: string, entry_zone: string) {
+    public async updateAddHouseGarage(identifier: string, garage_zone: string, entry_zone: string) {
         const garageList = await this.get();
 
         garageList[identifier] = this.garageFromDB(identifier, garage_zone, entry_zone);
 
         TriggerLatentClientEvent(ClientEvent.VEHICLE_GARAGE_UPDATE, -1, 16 * 1024, identifier, garageList[identifier]);
+    }
+
+    public async updateAddGarage(garage: Garage) {
+        const garageList = await this.get();
+
+        garageList[garage.id] = garage;
+
+        TriggerLatentClientEvent(ClientEvent.VEHICLE_GARAGE_UPDATE, -1, 16 * 1024, garage.id, garageList[garage.id]);
     }
 }

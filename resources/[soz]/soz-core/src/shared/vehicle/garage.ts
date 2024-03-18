@@ -11,6 +11,7 @@ export enum GarageType {
     JobLuxury = 'job_luxury',
     Depot = 'depot',
     House = 'house',
+    Gang = 'gang',
 }
 
 export enum GarageCategory {

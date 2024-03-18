@@ -1,3 +1,4 @@
+import { VehicleBusinessImportCostMuliplier } from '@private/shared/business.vehicle';
 import { joaat } from '@public/shared/joaat';
 import { PlayerLicenceType } from '@public/shared/player';
 import { RadioChannel } from '@public/shared/voip';
@@ -570,10 +571,19 @@ export type VehicleOrder = {
     model: string;
     job: JobType;
     deliverDate: number;
+    gang: number;
+    citizenId: string;
+    license: string;
 };
+
+export enum VehicleOrderMode {
+    Job = 'job',
+    Crimi = 'crimi',
+}
 
 export type VehicleOrderMenuData = {
     dealerships: string[];
+    mode: VehicleOrderMode;
 };
 
 export type VehicleOrderConfig = {
@@ -582,4 +592,9 @@ export type VehicleOrderConfig = {
     garage: string;
     account: string;
     farm: string;
+};
+
+export const VehicleOrderCostMuliplier: Record<VehicleOrderMode, number> = {
+    [VehicleOrderMode.Crimi]: VehicleBusinessImportCostMuliplier,
+    [VehicleOrderMode.Job]: 0.01,
 };

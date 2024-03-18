@@ -371,7 +371,7 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
         this.data[propertyId][`${type}Zone`] = zone;
 
         if (dbZone.garage_zone && dbZone.entry_zone) {
-            this.garageRepository.updateAddGarage(dbZone.identifier, dbZone.garage_zone, dbZone.entry_zone);
+            this.garageRepository.updateAddHouseGarage(dbZone.identifier, dbZone.garage_zone, dbZone.entry_zone);
         }
     }
 

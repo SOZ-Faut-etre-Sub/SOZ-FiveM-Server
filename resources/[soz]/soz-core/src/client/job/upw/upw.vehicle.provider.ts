@@ -11,7 +11,7 @@ import { JobPermission, JobType } from '@public/shared/job';
 import { UpwConfig } from '@public/shared/job/upw';
 import { PositiveNumberValidator } from '@public/shared/nui/input';
 import { MenuType } from '@public/shared/nui/menu';
-import { isVehicleModelElectric } from '@public/shared/vehicle/vehicle';
+import { isVehicleModelElectric, VehicleOrderMode } from '@public/shared/vehicle/vehicle';
 
 import { JobService } from '../job.service';
 
@@ -90,7 +90,7 @@ export class UpwVehicleProvider {
                 action: () => {
                     this.nuiMenu.openMenu(
                         MenuType.VehicleOrderMenu,
-                        { dealerships: [DealershipType.Electric] },
+                        { dealerships: [DealershipType.Electric], mode: VehicleOrderMode.Job },
                         {
                             position: {
                                 position: UpwConfig.Order.zone.center,

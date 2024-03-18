@@ -12,6 +12,7 @@ export enum DealershipType {
     Job = 'job',
     Luxury = 'luxury',
     Electric = 'electric',
+    Armored = 'armored',
 }
 
 export type DealershipConfigItem = {

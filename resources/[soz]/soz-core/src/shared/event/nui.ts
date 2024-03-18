@@ -443,6 +443,7 @@ export enum NuiEvent {
     GangAdminUpdatePedLocation = 'soz-core:client:gang:admin-update-ped-location',
     GangAdminUpdatePedLook = 'soz-core:client:gang:admin-update-ped-look',
     GangAdminTP = 'soz-core:client:gang:admin-hub-tp',
+    GangAdminGarage = 'soz-core:client:gang:admin-garage',
     GangAdminUpdatePedToPlayer = 'soz-core:client:gang:admin-ped-to-player',
     GangAdminUpdatePlayerToPed = 'soz-core:client:gang:admin-player-to-ped',
     GangAdminUpdatePropModel = 'soz-core:client:gang:admin-update-prop-model',
