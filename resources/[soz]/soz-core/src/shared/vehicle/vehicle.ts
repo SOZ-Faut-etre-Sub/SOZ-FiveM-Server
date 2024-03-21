@@ -1,4 +1,4 @@
-import { VehicleBusinessImportCostMuliplier } from '@private/shared/business.vehicle';
+import { VehicleBusinessImportConf } from '@private/shared/business.vehicle';
 import { joaat } from '@public/shared/joaat';
 import { PlayerLicenceType } from '@public/shared/player';
 import { RadioChannel } from '@public/shared/voip';
@@ -595,6 +595,6 @@ export type VehicleOrderConfig = {
 };
 
 export const VehicleOrderCostMuliplier: Record<VehicleOrderMode, number> = {
-    [VehicleOrderMode.Crimi]: VehicleBusinessImportCostMuliplier,
+    [VehicleOrderMode.Crimi]: VehicleBusinessImportConf.CostMuliplier,
     [VehicleOrderMode.Job]: 0.01,
 };

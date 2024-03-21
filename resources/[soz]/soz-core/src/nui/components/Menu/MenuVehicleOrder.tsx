@@ -53,10 +53,10 @@ export const VehicleOrderMenu: FunctionComponent<VehicleOrderMenuProps> = ({ dat
                             return (
                                 <MenuItemButton
                                     onConfirm={async () => {
-                                        await fetchNui(NuiEvent.VehicleCancelOrder, {
-                                            id: order.uuid,
+                                        fetchNui<any, VehicleOrder[]>(NuiEvent.VehicleCancelOrder, {
+                                            uuid: order.uuid,
                                             mode: data.mode,
-                                        });
+                                        }).then(orders => setOrders(orders));
                                     }}
                                     key={order.uuid}
                                 >

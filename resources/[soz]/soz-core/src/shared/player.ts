@@ -35,6 +35,11 @@ export type QBCorePlayer = {
     PlayerData: PlayerData;
 };
 
+export type GangPlayerData = {
+    id: number;
+    isboss: boolean;
+};
+
 export type PlayerData = {
     address: string;
     partyMember: SenatePartyMember | null;
@@ -66,10 +71,7 @@ export type PlayerData = {
     skin: Skin;
     cloth_config: ClothConfig;
     source: number;
-    gang: {
-        id: number;
-        isboss: boolean;
-    };
+    gang: GangPlayerData;
 };
 
 export type FakeId = {

@@ -232,6 +232,9 @@ export enum RpcServerEvent {
     GANG_VEHBIZ_UNIQUE_DELETE = 'soz-core:server:gang:veh:unique-delete',
     GANG_VEHBIZ_UNIQUE_PRICE = 'soz-core:server:gang:veh:unique-price',
     GANG_INFLUENCE_ZONE_GET = 'soz-core:server:gang:inflence:get',
+    GANG_MEMBER_FETCH = 'soz-core:server:gang:member:get',
+    GANG_MEMBER_ADD = 'soz-core:server:gang:member:add',
+    GANG_MEMBER_UPDATE = 'soz-core:server:gang:member:update',
 }
 
 export enum RpcClientEvent {

@@ -741,7 +741,9 @@ const MenuSelectControls: FunctionComponent<MenuSelectControlsProps> = ({ onChan
         }
 
         if (defaultIndex !== null) {
-            setActiveOptionIndex(defaultIndex);
+            if (defaultIndex !== activeOptionIndex) {
+                setActiveOptionIndex(defaultIndex);
+            }
         } else {
             setActiveOptionIndex(0);
         }

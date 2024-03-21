@@ -110,6 +110,11 @@ export class DoorProvider {
                             return false;
                         }
 
+                        const door = this.doorRepository.find(this.idToAdd);
+                        if (!door) {
+                            return false;
+                        }
+
                         const doors = this.doorRepository.get();
 
                         const player = this.playerService.getPlayer();
@@ -124,6 +129,11 @@ export class DoorProvider {
                         return true;
                     },
                     action: entity => {
+                        const door = this.doorRepository.find(this.idToAdd);
+                        if (!door) {
+                            return;
+                        }
+
                         const id = uuidv4();
                         const coords = GetEntityCoords(entity);
                         const temp = uuidv4();
@@ -139,7 +149,6 @@ export class DoorProvider {
                         );
                         DoorSystemSetOpenRatio(temp, 0.0, false, false);
 
-                        const door = this.doorRepository.find(this.idToAdd);
                         door.subdoors.push({
                             coords: GetEntityCoords(entity) as Vector3,
                             hash: GetHashKey(id),
@@ -176,7 +185,7 @@ export class DoorProvider {
                     },
                 },
                 {
-                    label: 'Vérouiller',
+                    label: 'Verrouiller',
                     icon: 'c:door/lock.png',
                     canInteract: entity => {
                         const [valid, locked] = this.canInterract(entity);
@@ -201,7 +210,7 @@ export class DoorProvider {
                     },
                 },
                 {
-                    label: 'Dévérouiller',
+                    label: 'Déverrouiller',
                     icon: 'c:door/unlock.png',
                     canInteract: entity => {
                         const [valid, locked] = this.canInterract(entity);

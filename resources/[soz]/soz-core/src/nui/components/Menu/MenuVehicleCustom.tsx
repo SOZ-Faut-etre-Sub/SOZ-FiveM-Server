@@ -24,7 +24,6 @@ import {
     MenuItemButton,
     MenuItemSelect,
     MenuItemSelectOptionBox,
-    MenuItemText,
     MenuTitle,
 } from '../Styleguide/Menu';
 
@@ -215,7 +214,13 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
                             <MenuItemSelectOptionBox value={true}>Activé</MenuItemSelectOptionBox>
                         </MenuItemSelect>
                     )}
-                    <MenuItemButton className="border-t border-white/50" onConfirm={() => onConfirm()}>
+                    <MenuItemButton
+                        className="border-t border-white/50"
+                        onConfirm={() => onConfirm()}
+                        description={crimiPrice().map(elem => (
+                            <div key={'cost_' + elem}>{elem}</div>
+                        ))}
+                    >
                         <div className="flex w-full justify-between items-center">
                             <span>Confirmer les changements</span>
                             {data.mode == LSCustomMode.Normal && (
@@ -236,8 +241,6 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
                             )}
                         </div>
                     </MenuItemButton>
-                    {data.mode == LSCustomMode.CrimiPerfo &&
-                        crimiPrice().map(elem => <MenuItemText key={'cost_' + elem}>{elem}</MenuItemText>)}
                 </MenuContent>
             </MainMenu>
         </Menu>

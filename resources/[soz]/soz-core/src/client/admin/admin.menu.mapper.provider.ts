@@ -25,14 +25,7 @@ import { ObjectEditorProvider } from '../object/object.editor.provider';
 import { HousingRepository } from '../repository/housing.repository';
 import { SenateRepository } from '../repository/senate.repository';
 import { ZoneRepository } from '../repository/zone.repository';
-
-type ZoneDrawn = {
-    zone: BoxZone<string>;
-    id: string;
-    color: RGBAColor;
-    type: string;
-    name?: string;
-};
+import { AdminZoneProvider } from './admin.zone.provider';
 
 const COLOR_BY_TYPE: Record<string, RGBAColor> = {
     entry: [0, 255, 0, 100],
@@ -73,16 +66,13 @@ export class AdminMenuMapperProvider {
     @Inject(SenateRepository)
     private senateRepository: SenateRepository;
 
-    private zonesDrawn: ZoneDrawn[] = [];
+    @Inject(AdminZoneProvider)
+    private adminZoneProvider: AdminZoneProvider;
 
     private showInteriorData = false;
 
     @Tick()
     public async showMenuMapperZones(): Promise<void> {
-        for (const zoneDrawn of this.zonesDrawn) {
-            zoneDrawn.zone.draw(zoneDrawn.color, 150, zoneDrawn.name);
-        }
-
         if (this.showInteriorData) {
             const ped = PlayerPedId();
             const interiorId = GetInteriorFromEntity(ped);
@@ -154,7 +144,7 @@ export class AdminMenuMapperProvider {
         const id = `apartment-${propertyId}-${type}`;
 
         // Remove existing zone if any
-        this.zonesDrawn = this.zonesDrawn.filter(zoneDrawn => zoneDrawn.id !== id);
+        this.adminZoneProvider.removeZoneToDraw(id);
 
         if (show) {
             const property = this.housingRepository.findProperty(propertyId);
@@ -163,7 +153,7 @@ export class AdminMenuMapperProvider {
                 return;
             }
 
-            this.zonesDrawn.push({
+            this.adminZoneProvider.addZoneToDraw({
                 zone: BoxZone.fromZone(property[zoneField]),
                 id,
                 color: COLOR_BY_TYPE[type],
@@ -189,7 +179,7 @@ export class AdminMenuMapperProvider {
         const id = `apartment-${propertyId}-${apartmentId}-${type}`;
 
         // Remove existing zone if any
-        this.zonesDrawn = this.zonesDrawn.filter(zoneDrawn => zoneDrawn.id !== id);
+        this.adminZoneProvider.removeZoneToDraw(id);
 
         if (show) {
             const apartment = this.housingRepository.findApartment(propertyId, apartmentId);
@@ -198,7 +188,7 @@ export class AdminMenuMapperProvider {
                 return;
             }
 
-            this.zonesDrawn.push({
+            this.adminZoneProvider.addZoneToDraw({
                 zone: BoxZone.fromZone(apartment[zoneField]),
                 id,
                 color: COLOR_BY_TYPE[type],
@@ -239,10 +229,8 @@ export class AdminMenuMapperProvider {
         const newZone = await this.nuiZoneProvider.askZone(existingZone);
         const id = `apartment-${propertyId}-${type}`;
 
-        if (this.zonesDrawn.some(zoneDrawn => zoneDrawn.id === id)) {
-            this.zonesDrawn = this.zonesDrawn.filter(zoneDrawn => zoneDrawn.id !== id);
-
-            this.zonesDrawn.push({
+        if (this.adminZoneProvider.isZoneDrawn(id)) {
+            this.adminZoneProvider.addZoneToDraw({
                 zone: BoxZone.fromZone(newZone),
                 id,
                 color: COLOR_BY_TYPE[type],
@@ -275,10 +263,8 @@ export class AdminMenuMapperProvider {
         const newZone = await this.nuiZoneProvider.askZone(existingZone);
         const id = `apartment-${propertyId}-${apartmentId}-${type}`;
 
-        if (this.zonesDrawn.some(zoneDrawn => zoneDrawn.id === id)) {
-            this.zonesDrawn = this.zonesDrawn.filter(zoneDrawn => zoneDrawn.id !== id);
-
-            this.zonesDrawn.push({
+        if (this.adminZoneProvider.isZoneDrawn(id)) {
+            this.adminZoneProvider.addZoneToDraw({
                 zone: BoxZone.fromZone(newZone),
                 id,
                 color: COLOR_BY_TYPE[type],
@@ -431,7 +417,7 @@ export class AdminMenuMapperProvider {
 
     @OnNuiEvent(NuiEvent.AdminMenuMapperShowAllProperty)
     public async showAllProperty({ show }: { show: boolean }): Promise<void> {
-        this.zonesDrawn = this.zonesDrawn.filter(zoneDrawn => zoneDrawn.type !== 'entry');
+        this.adminZoneProvider.removeTypeZoneToDraw('entry');
 
         if (!show) {
             return;
@@ -448,7 +434,7 @@ export class AdminMenuMapperProvider {
                 continue;
             }
 
-            this.zonesDrawn.push({
+            this.adminZoneProvider.addZoneToDraw({
                 zone: BoxZone.fromZone(property[zoneField]),
                 id,
                 color: COLOR_BY_TYPE.entry,
@@ -571,7 +557,7 @@ export class AdminMenuMapperProvider {
         const showId = `zone-${id}`;
 
         // Remove existing zone if any
-        this.zonesDrawn = this.zonesDrawn.filter(zoneDrawn => zoneDrawn.id !== showId);
+        this.adminZoneProvider.removeZoneToDraw(showId);
 
         if (!show) {
             return;
@@ -583,7 +569,7 @@ export class AdminMenuMapperProvider {
             return;
         }
 
-        this.zonesDrawn.push({
+        this.adminZoneProvider.addZoneToDraw({
             zone: BoxZone.fromZone({
                 ...zone,
                 data: zone.data.name,

@@ -504,6 +504,7 @@ export enum ServerEvent {
     GANG_VEHBIZ_UNLOCK = 'soz-core:server:gang:veh:unlock',
     GANG_VEHBIZ_RESELL = 'soz-core:server:gang:veh:resell',
     GANG_VEHBIZ_HACK = 'soz-core:server:gang:veh:hack',
+    GANG_VEHBIZ_HACK_FAIL = 'soz-core:server:gang:veh:hack-fail',
     GANG_VEHBIZ_STRIP_DOOR = 'soz-core:server:gang:veh:strip-door',
     GANG_VEHBIZ_STRIP_WHEEL = 'soz-core:server:gang:veh:strip-wheel',
     GANG_VEHBIZ_STRIP_ENGINE = 'soz-core:server:gang:veh:strip-engine',

@@ -36,7 +36,7 @@ export abstract class Repository<
             const key = operation.path.split('/')[1] || null;
 
             if (key) {
-                changedValues[key] = this.data[key] ? deepCopy(this.data[key]) : null;
+                changedValues[key] = deepCopy(this.data[key]);
             }
         }
 

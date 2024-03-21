@@ -8,7 +8,7 @@ export const groupBy = <T, K extends keyof any>(arr: T[], key: (i: T) => K) =>
         {} as Record<K, T[]>
     );
 
-export function deepCopy(obj) {
+export function deepCopy<T>(obj: T): T {
     let copy;
 
     // Handle the 3 simple types, and null or undefined

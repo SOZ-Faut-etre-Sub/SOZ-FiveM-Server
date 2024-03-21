@@ -127,6 +127,7 @@ export enum MenuType {
     LsmcPlaster = 'lsmc_plaster',
     GangAdmin = 'gang_admin',
     DoorAdmin = 'door_admin',
+    GangMember = 'gang_member',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {
