@@ -96,13 +96,13 @@ const SpeedGauge: FunctionComponent<{ hasFuel: boolean; useRpm: boolean }> = ({ 
     const vehicleSpeed = useVehicleSpeed();
 
     const classes = classNames(
-        'font-prompt font-semibold flex absolute flex-col text-center top-[1.5rem] mr-[80px] w-[100px] text-white/80 uppercase text-sm tabular-nums [text-shadow:_0px_0px_4px_rgb(0_0_0_/_40%)]',
+        'font-prompt font-semibold flex absolute flex-col text-center top-[0.5rem] mr-[80px] w-[100px] text-white/80 uppercase text-sm tabular-nums [text-shadow:_0px_0px_4px_rgb(0_0_0_/_40%)]',
         {
             'mr-[50px]': !hasFuel,
         }
     );
 
-    let rpm;
+    let rpm: number;
 
     if (!useRpm) {
         rpm = vehicleSpeed.speed / 250;
@@ -115,33 +115,38 @@ const SpeedGauge: FunctionComponent<{ hasFuel: boolean; useRpm: boolean }> = ({ 
     }
 
     return (
-        <div className="w-[100px] h-[100px] relative">
-            <svg className="h-full w-full">
-                <path
-                    d="M97 47.8863C97 22.544 75.7335 2 49.5 2C23.2665 2 2 22.544 2 47.8863C2 60.389 7.17623 71.7238 15.5714 80"
-                    fill="none"
-                    stroke="white"
-                    strokeWidth="2"
-                    strokeOpacity="0.2"
-                />
-                <path
-                    d="M97 47.8863C97 22.544 75.7335 2 49.5 2C23.2665 2 2 22.544 2 47.8863C2 60.389 7.17623 71.7238 15.5714 80"
-                    className="progress"
-                    fill="none"
-                    stroke="#00E949"
-                    strokeWidth="4"
-                    strokeOpacity="1.0"
-                    strokeDasharray="185"
-                    style={{
-                        strokeDashoffset: Math.min(-(185 - rpm * 185), 0),
-                    }}
-                />
-            </svg>
-            <div className={classes}>
-                <span className="text-white text-3xl">{vehicleSpeed.speed.toFixed(0)}</span>
-                <span>km/h</span>
+        <>
+            <div className="w-[100px] h-[100px] relative">
+                <svg className="h-full w-full">
+                    <path
+                        d="M97 47.8863C97 22.544 75.7335 2 49.5 2C23.2665 2 2 22.544 2 47.8863C2 60.389 7.17623 71.7238 15.5714 80"
+                        fill="none"
+                        stroke="white"
+                        strokeWidth="2"
+                        strokeOpacity="0.2"
+                    />
+                    <path
+                        d="M97 47.8863C97 22.544 75.7335 2 49.5 2C23.2665 2 2 22.544 2 47.8863C2 60.389 7.17623 71.7238 15.5714 80"
+                        className="progress"
+                        fill="none"
+                        stroke="#00E949"
+                        strokeWidth="4"
+                        strokeOpacity="1.0"
+                        strokeDasharray="185"
+                        style={{
+                            strokeDashoffset: Math.min(-(185 - rpm * 185), 0),
+                        }}
+                    />
+                </svg>
+                <div className={classes}>
+                    <span className="text-white border-2 w-6 border-green-300 text-green-300 text-center rounded-md mx-auto">
+                        {vehicleSpeed.gear}
+                    </span>
+                    <span className="text-white text-3xl">{vehicleSpeed.speed.toFixed(0)}</span>
+                    <span>km/h</span>
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 

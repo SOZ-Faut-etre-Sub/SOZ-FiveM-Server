@@ -43,6 +43,7 @@ export type VehicleHud = {
 export type VehicleHudSpeed = {
     speed: number;
     rpm: number;
+    gear: number;
 };
 
 export type VehicleSpawn = {
