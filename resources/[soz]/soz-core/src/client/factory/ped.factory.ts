@@ -117,7 +117,13 @@ export class PedFactory {
     }
 
     public async deletePedOnGrid(id: string) {
-        delete this.peds[id];
+        for (const peds of this.pedsByChunk.values()) {
+            const index = peds.findIndex(ped => ped.id == id);
+            if (index >= 0) {
+                peds.splice(index, 1);
+            }
+        }
+
         this.unspawnPed(id);
     }
 

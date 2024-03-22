@@ -233,7 +233,6 @@ export enum NuiEvent {
     VehiclePitStop = 'soz-core:client:vehicle:pitstop',
     VehiclePitStopPrices = 'soz-core:client:vehicle:prices',
     VehiclePitStopSetPrice = 'soz-core:client:vehicle:set-price',
-    VehicleChangePlate = 'soz-core:client:vehicle:plate-change',
 
     VehicleGarageTakeOut = 'soz-core:client:vehicle:garage:take-out',
     VehicleGarageSetName = 'soz-core:client:vehicle:garage:set-name',
@@ -450,6 +449,7 @@ export enum NuiEvent {
     GangAdminUpdatePropLocation = 'soz-core:client:gang:admin-update-prop-location',
     GangAdminUpdateZone = 'soz-core:client:gang:admin-update-zone',
     GangBusinessSkillBuy = 'soz-core:client:gang:business-buy',
+    GangBusinessReset = 'soz-core:client:gang:business-reset',
     GangInfluenceZoneGet = 'soz-core:client:gang:influence-get',
     GangInfluenceZoneUpdate = 'soz-core:client:gang:influence-update',
     GangMemberFetch = 'soz-core:client:gang:member-fetch',

@@ -34,7 +34,7 @@ export const VehicleOrderMenu: FunctionComponent<VehicleOrderMenuProps> = ({ dat
 
     const sortedCatalog = Object.values(vehicles)
         .filter(veh => data.dealerships.includes(veh.dealershipId))
-        .sort((a, b) => a.model.localeCompare(b.model));
+        .sort((a, b) => a.price - b.price);
 
     const sortedCategories = Array.from(
         new Set(sortedCatalog.map(veh => veh.category).sort((a, b) => a.localeCompare(b)))

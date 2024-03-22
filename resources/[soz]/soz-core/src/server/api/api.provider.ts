@@ -1,3 +1,4 @@
+import { GangProvider } from '@private/server/gang/gang.provider';
 import { PlayerData, PlayerMetadata } from '@public/shared/player';
 import { fromVector4Object } from '@public/shared/polyzone/vector';
 
@@ -33,6 +34,9 @@ export class ApiProvider {
 
     @Inject(PlayerPositionProvider)
     private playerPositionProvider: PlayerPositionProvider;
+
+    @Inject(GangProvider)
+    private gangProvider: GangProvider;
 
     @Inject(Notifier)
     private notifier: Notifier;
@@ -173,5 +177,13 @@ export class ApiProvider {
     @Get('/fdf-data')
     public async fdfData(): Promise<Response> {
         return Response.json(this.FDFFieldProvider.exportData());
+    }
+
+    @Post('/gang')
+    public async gang(request: Request): Promise<Response> {
+        const data = JSON.parse(await request.body);
+        this.gangProvider.gangApiUpdate(data.player, data.gangId, data.boss);
+
+        return Response.ok();
     }
 }

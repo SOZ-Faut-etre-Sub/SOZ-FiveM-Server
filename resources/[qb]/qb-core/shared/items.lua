@@ -10131,11 +10131,12 @@ QBShared.Items = {
     },
     ['box_veh_strip_piece'] = {
         ['name'] = 'box_veh_strip_piece',
-        ['label'] = "Boites de pièces véhicules",
+        ['label'] = "Boite de pièces véhicules",
         ['weight'] = 80,
         ['useable'] = false,
         ['type'] = 'item_illegal',
         ['storageItemType'] = 'veh_biz_piece',
+        ['storageItemWeight'] = 20000,
         ['shouldClose'] = false,
         ['unique'] = true,
         ['combinable'] = nil,

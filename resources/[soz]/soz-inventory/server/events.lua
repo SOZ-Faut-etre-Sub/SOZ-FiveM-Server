@@ -36,7 +36,7 @@ RegisterServerEvent("inventory:server:openItemStorage", function(slot)
 
     local targetInv = Inventory(item.metadata.id)
     if not targetInv then
-        targetInv = Inventory.Create(item.metadata.id, itemDef.label, itemDef.storageItemType, 1000, 1000000, source,
+        targetInv = Inventory.Create(item.metadata.id, itemDef.label, itemDef.storageItemType, 1000, itemDef.storageItemWeight or 1000000, source,
                                      table.deepclone(item.metadata.storageElements))
     end
     targetInv.slot = slot

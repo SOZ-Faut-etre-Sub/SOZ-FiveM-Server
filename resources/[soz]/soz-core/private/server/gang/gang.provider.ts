@@ -6,4 +6,7 @@ export class GangProvider {
     public async getGangRecipes(source: number) {
         return {};
     }
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    public async gangApiUpdate(citizenId: string, gangId: number, boss: boolean) {}
 }

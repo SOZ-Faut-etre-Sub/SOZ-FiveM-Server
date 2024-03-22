@@ -1,6 +1,6 @@
 import { VehicleBusinessProvider } from '@private/client/gang/business.vehicle.provider';
 import { FDO } from '@public/shared/job';
-import { LSCustomMode, VEHICLE_TRUNK_TYPES, VehicleClass, VehicleSeat } from '@public/shared/vehicle/vehicle';
+import { LSCustomMode, VehicleClass, VehicleSeat } from '@public/shared/vehicle/vehicle';
 
 import { Command } from '../../core/decorators/command';
 import { OnNuiEvent } from '../../core/decorators/event';
@@ -8,7 +8,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { emitRpc } from '../../core/rpc';
-import { NuiEvent, ServerEvent } from '../../shared/event';
+import { NuiEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { Err, Ok } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
@@ -219,32 +219,6 @@ export class VehicleMenuProvider {
         return true;
     }
 
-    @OnNuiEvent(NuiEvent.VehicleChangePlate)
-    async handleVehicleChangePlate() {
-        const ped = PlayerPedId();
-        const vehicle = GetVehiclePedIsIn(ped, false);
-
-        if (!vehicle || !NetworkGetEntityIsNetworked(vehicle)) {
-            return;
-        }
-
-        if (!this.vehicleBusinessProvider.testCrimiGarage(ped, true)) {
-            return;
-        }
-
-        const plate = GetVehicleNumberPlateText(vehicle).trim();
-        const vehicleModel = GetEntityModel(vehicle);
-        const vehicleClass = GetVehicleClass(vehicle);
-        const trunkType = VEHICLE_TRUNK_TYPES[vehicleModel] || 'trunk';
-
-        const vehicleNetworkId = VehToNet(vehicle);
-        TriggerServerEvent(ServerEvent.GANG_VEHBIZ_PLATE_CHANGE, trunkType, plate, {
-            model: vehicleModel,
-            class: vehicleClass,
-            entity: vehicleNetworkId,
-        });
-    }
-
     @OnNuiEvent(NuiEvent.VehicleAnchorChange)
     async handleAnchorChange(status: boolean) {
         const ped = PlayerPedId();
@@ -382,7 +356,6 @@ export class VehicleMenuProvider {
             hasNeon: hasNeon(),
             crimiPerformance: crimiGarage && this.vehicleBusinessProvider.canPerformance(),
             crimiCustom: crimiGarage && this.vehicleBusinessProvider.canCustom(),
-            crimiPlate: crimiGarage && this.vehicleBusinessProvider.canPlate(),
         });
     }
 }
