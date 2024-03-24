@@ -147,7 +147,7 @@ export const emitQBRpc = async <R>(name: string, ...args: any[]): Promise<R> => 
     } else {
         const eventResponseName = `${name}_${uuidv4()}`;
         const promise = new Promise<any>((resolve, reject) => {
-            const resultCallback = result => {
+            const resultCallback = (...result) => {
                 resolve(result);
                 removeEventListener(eventResponseName, resultCallback);
             };

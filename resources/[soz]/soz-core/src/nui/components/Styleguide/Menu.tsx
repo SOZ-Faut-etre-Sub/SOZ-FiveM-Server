@@ -642,6 +642,7 @@ type MenuItemSubMenuLinkProps = PropsWithChildren<{
     disabled?: boolean;
     selectable?: boolean;
     description?: string;
+    noChevron?: boolean;
 }>;
 
 export const useMenuNavigate = (id: string): (() => void) => {
@@ -667,25 +668,40 @@ export const MenuItemSubMenuLink: FunctionComponent<MenuItemSubMenuLinkProps> = 
     description = null,
     disabled = false,
     selectable = null,
+    noChevron = false,
 }) => {
     const navigateTo = useMenuNavigate(id);
 
-    return (
-        <MenuItemContainer
-            onSelected={onSelected}
-            onConfirm={navigateTo}
-            disabled={disabled}
-            selectable={selectable}
-            description={description}
-        >
-            <div className="flex items-center justify-between">
-                <div>{children}</div>
-                <div>
-                    <ChevronRightIcon className="h-5 w-5 p-0.5 ml-2 bg-black/20 rounded-full" />
+    if (noChevron) {
+        return (
+            <MenuItemContainer
+                onSelected={onSelected}
+                onConfirm={navigateTo}
+                disabled={disabled}
+                selectable={selectable}
+                description={description}
+            >
+                {children}
+            </MenuItemContainer>
+        );
+    } else {
+        return (
+            <MenuItemContainer
+                onSelected={onSelected}
+                onConfirm={navigateTo}
+                disabled={disabled}
+                selectable={selectable}
+                description={description}
+            >
+                <div className="flex items-center justify-between">
+                    <div>{children}</div>
+                    <div>
+                        <ChevronRightIcon className="h-5 w-5 p-0.5 ml-2 bg-black/20 rounded-full" />
+                    </div>
                 </div>
-            </div>
-        </MenuItemContainer>
-    );
+            </MenuItemContainer>
+        );
+    }
 };
 
 export const MenuItemGoBack: FunctionComponent = () => {

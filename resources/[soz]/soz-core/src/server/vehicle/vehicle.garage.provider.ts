@@ -62,7 +62,15 @@ const FORMAT_LOCALIZED: Intl.DateTimeFormatOptions = {
     timeZone: 'CET',
 };
 
-const PRIVATE_GARAGE_MAX_PLACES = 60;
+const MaxPlaces: Record<GarageType, number> = {
+    depot: 0,
+    gang: 10,
+    house: 0,
+    job: 0,
+    job_luxury: 0,
+    private: 60,
+    public: 0,
+};
 
 @Provider()
 export class VehicleGarageProvider {
@@ -298,7 +306,7 @@ export class VehicleGarageProvider {
 
     @Rpc(RpcServerEvent.VEHICLE_GARAGE_GET_PLACES)
     public async getPrivatePlaces(source: number, id: string, garage: Garage): Promise<[number | null, number | null]> {
-        if (garage.type !== GarageType.Private) {
+        if (![GarageType.Private, GarageType.Gang].includes(garage.type)) {
             return [null, null];
         }
 
@@ -317,7 +325,8 @@ export class VehicleGarageProvider {
             },
         });
 
-        return [Math.max(0, PRIVATE_GARAGE_MAX_PLACES - count), PRIVATE_GARAGE_MAX_PLACES];
+        const max = MaxPlaces[garage.type];
+        return [Math.max(0, max - count), max];
     }
 
     @Rpc(RpcServerEvent.VEHICLE_GARAGE_GET_PROPERTY_PLACES)

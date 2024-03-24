@@ -235,6 +235,7 @@ export enum RpcServerEvent {
     GANG_MEMBER_FETCH = 'soz-core:server:gang:member:get',
     GANG_MEMBER_ADD = 'soz-core:server:gang:member:add',
     GANG_MEMBER_UPDATE = 'soz-core:server:gang:member:update',
+    GANG_CAN_CRIMI = 'soz-core:server:gang:can-crimi',
 }
 
 export enum RpcClientEvent {

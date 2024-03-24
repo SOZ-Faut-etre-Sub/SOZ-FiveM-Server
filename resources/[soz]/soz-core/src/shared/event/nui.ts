@@ -469,4 +469,6 @@ export enum NuiEvent {
     AdminDoorSetState = 'soz-core:client:door:set-state',
     AdminDoorAddSub = 'soz-core:client:door:add-subdoor',
     AdminDoorDelete = 'soz-core:client:door:delete',
+
+    SafeStorageAction = 'soz-core:client:safestorage:action',
 }

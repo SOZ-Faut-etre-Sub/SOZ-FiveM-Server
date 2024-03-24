@@ -4,6 +4,7 @@ import { ClientEvent } from '@public/shared/event/client';
 import { ServerEvent } from '@public/shared/event/server';
 import { Apartment } from '@public/shared/housing/housing';
 import { getLocationHash } from '@public/shared/locationhash';
+import { MenuType } from '@public/shared/nui/menu';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
 @Injectable()
@@ -46,7 +47,29 @@ export class BankService {
         });
     }
 
-    public openGangSafe(gangId: number) {
-        TriggerEvent('banking:client:openGangSafe', gangId);
+    public async openGangSafe(gangId: number) {
+        const safeId = 'gang_' + gangId;
+        const [isAllowed, money, black_money] = await emitQBRpc<any>('banking:server:openSafeStorage', safeId);
+        if (!isAllowed) {
+            this.notifier.error("Vous n'avez pas accès à ce coffre");
+            return;
+        }
+
+        this.nuiMenu.openMenu(
+            MenuType.SafeStorage,
+            {
+                id: safeId,
+                banner: 'menu_inventory',
+                money: money,
+                marked_money: black_money,
+                showMoney: false,
+            },
+            {
+                position: {
+                    position: GetEntityCoords(PlayerPedId()) as Vector3,
+                    distance: 1.0,
+                },
+            }
+        );
     }
 }

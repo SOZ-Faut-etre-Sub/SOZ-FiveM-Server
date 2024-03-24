@@ -6,6 +6,7 @@ import { PlayerPersonalMenuData } from '@public/shared/nui/player';
 import { EditorMenuData } from '@public/shared/object';
 
 import { AdminMenuStateProps } from '../../nui/components/Admin/AdminMenu';
+import { MenuSafeStorageData } from '../bank';
 import { PlayerCloakroomItem, WardrobeMenuData } from '../cloth';
 import { DrivingSchoolMenuData } from '../driving-school';
 import { FuelType } from '../fuel';
@@ -128,6 +129,7 @@ export enum MenuType {
     GangAdmin = 'gang_admin',
     DoorAdmin = 'door_admin',
     GangMember = 'gang_member',
+    SafeStorage = 'safe_storage',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {
@@ -196,4 +198,5 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.LsmcPlaster]: PlasterMenuData;
     [MenuType.ObjectEditor]: EditorMenuData;
     [MenuType.DoorAdmin]: string;
+    [MenuType.SafeStorage]: MenuSafeStorageData;
 }

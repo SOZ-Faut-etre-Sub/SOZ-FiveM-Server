@@ -14,6 +14,8 @@ export enum ClientEvent {
 
     BAUN_ICE_CUBE = 'soz-core:client:baun:create-ice-cubes',
 
+    BANK_SAFE_OPEN = 'banking:client:qTargetOpenSafe',
+
     BENNYS_OPEN_CLOAKROOM = 'soz-core:client:job:bennys:open-cloakroom',
     BENNYS_FLATBED_DETACH_VEHICLE = 'soz-core:client:job:bennys:flatbed:detach-vehicle',
 

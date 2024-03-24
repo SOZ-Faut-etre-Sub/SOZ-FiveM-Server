@@ -115,3 +115,24 @@ export type Tax = {
 };
 
 export const DEFAULT_TAX_PERCENTAGE = 11;
+
+export type MenuSafeStorageData = {
+    id: string;
+    banner: string;
+    money: number;
+    marked_money: number;
+    showMoney: boolean;
+    maxMarked?: number;
+};
+
+export enum MenuSafeStorageAction {
+    deposit = 'Déposer',
+    depositAll = 'Tout déposer',
+    withdraw = 'Retirer',
+}
+
+export type MenuSafeStorageInput = {
+    id: string;
+    type: 'money' | 'marked_money';
+    action: MenuSafeStorageAction;
+};

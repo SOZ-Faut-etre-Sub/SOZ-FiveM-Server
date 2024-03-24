@@ -566,7 +566,7 @@ export class VehicleGarageProvider {
         let max_places = null;
         let apartmentPlaces = {} as Record<number, [number | null, number | null]>;
 
-        if (garage.type === GarageType.Private) {
+        if ([GarageType.Private, GarageType.Gang].includes(garage.type)) {
             [free_places, max_places] = await emitRpc<[number, number]>(
                 RpcServerEvent.VEHICLE_GARAGE_GET_PLACES,
                 id,
