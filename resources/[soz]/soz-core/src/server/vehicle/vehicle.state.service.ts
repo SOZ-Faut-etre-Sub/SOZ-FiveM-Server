@@ -110,6 +110,16 @@ export class VehicleStateService {
 
         const state = this.state.get(vehicleNetworkId);
         state.configuration = configuration;
+
+        const owner = NetworkGetEntityOwner(NetworkGetEntityFromNetworkId(vehicleNetworkId));
+        TriggerClientEvent(
+            ClientEvent.VEHICLE_CONDITION_REGISTER,
+            owner,
+            vehicleNetworkId,
+            state.condition,
+            state.configuration,
+            false
+        );
     }
 
     public updateVehicleVolatileState(
