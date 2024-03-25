@@ -147,6 +147,20 @@ export const VehicleSubMenu: FunctionComponent<VehicleSubMenuProps> = ({ banner,
                         ⛍ Surface désactivée
                     </MenuItemCheckbox>
                     <MenuItemButton
+                        onConfirm={async () => {
+                            await fetchNui(NuiEvent.AdminMenuVehicleNos);
+                        }}
+                    >
+                        🏎 NOS
+                    </MenuItemButton>
+                    <MenuItemButton
+                        onConfirm={async () => {
+                            await fetchNui(NuiEvent.AdminMenuVehicleMapping);
+                        }}
+                    >
+                        🖳 Cartopgraphie
+                    </MenuItemButton>
+                    <MenuItemButton
                         disabled={!isStaffOrAdmin}
                         onConfirm={async () => {
                             await fetchNui(NuiEvent.AdminMenuVehicleDelete);

@@ -7,6 +7,8 @@ import { JobType } from '../../shared/job';
 import { RpcServerEvent } from '../../shared/rpc';
 import { Vehicle } from '../../shared/vehicle/vehicle';
 import { PrismaService } from '../database/prisma.service';
+import { Notifier } from '../notifier';
+import { PermissionService } from '../permission.service';
 import { VehicleSpawner } from '../vehicle/vehicle.spawner';
 import { VehicleStateService } from '../vehicle/vehicle.state.service';
 
@@ -20,6 +22,12 @@ export class AdminMenuVehicleProvider {
 
     @Inject(VehicleStateService)
     private vehicleStateService: VehicleStateService;
+
+    @Inject(PermissionService)
+    private permissionService: PermissionService;
+
+    @Inject(Notifier)
+    private notifier: Notifier;
 
     @Rpc(RpcServerEvent.ADMIN_GET_VEHICLES)
     public async getVehicles(): Promise<Vehicle[]> {
@@ -44,5 +52,15 @@ export class AdminMenuVehicleProvider {
         if (closestVehicle !== null) {
             await this.vehicleSpawner.delete(closestVehicle.vehicleNetworkId);
         }
+    }
+
+    @OnEvent(ServerEvent.ADMIN_VEHICLE_NOS)
+    public async addNOS(source: number, netId: number) {
+        if (!this.permissionService.isGameMaster(source)) {
+            return;
+        }
+
+        this.vehicleStateService.updateVehicleCondition(netId, { nitro: 3 });
+        this.notifier.notify(source, '~g~3 kits NOS~s~ ont été installé sur le véhicule.');
     }
 }

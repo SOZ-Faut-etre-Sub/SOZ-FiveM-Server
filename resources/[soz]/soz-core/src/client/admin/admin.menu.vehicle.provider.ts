@@ -1,3 +1,5 @@
+import { VehicleBusinessProvider } from '@private/client/gang/business.vehicle.provider';
+
 import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -27,6 +29,9 @@ export class AdminMenuVehicleProvider {
 
     @Inject(VehicleDamageProvider)
     private vehicleDamageProvider: VehicleDamageProvider;
+
+    @Inject(VehicleBusinessProvider)
+    private vehicleBusinessProvider: VehicleBusinessProvider;
 
     private noBurstTyre = false;
 
@@ -221,5 +226,21 @@ export class AdminMenuVehicleProvider {
 
     public getNoBurstTyres(): boolean {
         return this.noBurstTyre;
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuVehicleNos)
+    public async setNos(): Promise<void> {
+        const veh = GetVehiclePedIsIn(PlayerPedId(), false);
+        if (veh) {
+            TriggerServerEvent(ServerEvent.ADMIN_VEHICLE_NOS, VehToNet(veh));
+        }
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuVehicleMapping)
+    public async setMapping(): Promise<void> {
+        const veh = GetVehiclePedIsIn(PlayerPedId(), false);
+        if (veh) {
+            this.vehicleBusinessProvider.mapping(veh, true);
+        }
     }
 }

@@ -85,6 +85,8 @@ export enum NuiEvent {
     AdminMenuVehicleSave = 'soz-core:client:admin:vehicle:save',
     AdminMenuVehicleSetFBIConfig = 'soz-core:client:admin:vehicle:set-fbi-config',
     AdminMenuVehicleDelete = 'soz-core:client:admin:vehicle:delete',
+    AdminMenuVehicleNos = 'soz-core:client:admin:vehicle:nos',
+    AdminMenuVehicleMapping = 'soz-core:client:admin:vehicle:mapping',
     AdminMenuSkinChangeAppearance = 'soz-core:client:admin:skin:change-appearance',
     AdminMenuSkinChangeComponent = 'soz-core:client:admin:skin:change-component',
     AdminMenuSkinChangeProp = 'soz-core:client:admin:skin:change-prop',
@@ -465,6 +467,7 @@ export enum NuiEvent {
     BusinessVehicleUniqueAdd = 'soz-core:client:business:vehicle:unique-add',
     BusinessVehicleUniqueUpdate = 'soz-core:client:business:vehicle:unique-update',
     BusinessVehicleUniqueGet = 'soz-core:client:business:vehicle:unique-get',
+    BusinessVehicleMappingClose = 'soz-core:client:business:vehicle:mapping-close',
 
     AdminDoorSetState = 'soz-core:client:door:set-state',
     AdminDoorAddSub = 'soz-core:client:door:add-subdoor',

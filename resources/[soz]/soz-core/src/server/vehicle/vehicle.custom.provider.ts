@@ -15,6 +15,7 @@ import { PriceService } from '../bank/price.service';
 import { PrismaService } from '../database/prisma.service';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
+import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
 import { PlayerMoneyService } from '../player/player.money.service';
 import { VehicleStateService } from './vehicle.state.service';
@@ -44,6 +45,9 @@ export class VehicleCustomProvider {
     @Inject(ItemService)
     private itemService: ItemService;
 
+    @Inject(Monitor)
+    private monitor: Monitor;
+
     @Rpc(RpcServerEvent.VEHICLE_CUSTOM_SET_MODS)
     public async setMods(
         source: number,
@@ -59,13 +63,7 @@ export class VehicleCustomProvider {
         const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
         const taxedPrice = await this.priceService.getPrice(price ?? 0, TaxType.VEHICLE);
 
-        const playerVehicle = state.volatile.id
-            ? await this.prismaService.playerVehicle.findUnique({
-                  where: {
-                      id: state.volatile.id,
-                  },
-              })
-            : null;
+        const playerVehicle = state.volatile.isPlayerVehicle;
 
         if (mode == LSCustomMode.Normal && taxedPrice && this.playerMoneyService.get(source) < taxedPrice) {
             this.notifier.notify(source, "Vous n'avez pas assez d'argent", 'error');
@@ -131,7 +129,7 @@ export class VehicleCustomProvider {
         if (playerVehicle) {
             await this.prismaService.playerVehicle.update({
                 where: {
-                    id: playerVehicle.id,
+                    id: state.volatile.id,
                 },
                 data: {
                     mods: JSON.stringify(mods),
@@ -146,6 +144,21 @@ export class VehicleCustomProvider {
         }
 
         this.vehicleStateService.updateVehicleConfiguration(vehicleNetworkId, mods);
+
+        this.monitor.publish(
+            'vehicle_update_config',
+            {
+                player_source: source,
+                vehicle_plate: state.volatile.plate,
+            },
+            {
+                mode: mode,
+                price: price,
+                crimiPrice: crimiPrice,
+                mods: JSON.stringify(mods),
+                orig: JSON.stringify(originalConfiguration),
+            }
+        );
 
         return mods;
     }
@@ -173,23 +186,9 @@ export class VehicleCustomProvider {
     public async getMods(source: number, vehicleNetworkId: number): Promise<VehicleConfiguration> {
         const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
 
-        if (!state.volatile.id) {
-            return null;
-        }
-
-        const playerVehicle = await this.prismaService.playerVehicle.findUnique({
-            where: {
-                id: state.volatile.id,
-            },
-        });
-
-        if (!playerVehicle) {
-            return null;
-        }
-
         return {
             ...getDefaultVehicleConfiguration(),
-            ...JSON.parse(playerVehicle.mods || '{}'),
+            ...state.configuration,
         };
     }
 }

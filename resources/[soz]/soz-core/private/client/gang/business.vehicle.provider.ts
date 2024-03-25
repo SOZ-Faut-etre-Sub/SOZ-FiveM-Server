@@ -14,4 +14,7 @@ export class VehicleBusinessProvider {
     public testCrimiGarage(entity: number, notif: boolean): boolean {
         return false;
     }
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    public async mapping(entity: number, admin: boolean) {}
 }

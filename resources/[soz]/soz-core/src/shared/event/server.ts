@@ -32,6 +32,7 @@ export enum ServerEvent {
     ADMIN_VEHICLE_CHANGE_CAR_PRICE = 'soz-core:server:admin:vehicle:change-car-price',
     ADMIN_VEHICLE_SPAWN = 'soz-core:server:admin:vehicle:spawn',
     ADMIN_VEHICLE_DELETE = 'soz-core:server:admin:vehicle:delete',
+    ADMIN_VEHICLE_NOS = 'soz-core:server:admin:vehicle:nos',
     ADMIN_CREATE_CHARACTER = 'soz-core:server:admin:create-character',
     ADMIN_SWITCH_CHARACTER = 'soz-core:server:admin:switch-character',
     ADMIN_ADD_PERSISTENT_PROP = 'soz-core:server:admin:add-persistent-prop',

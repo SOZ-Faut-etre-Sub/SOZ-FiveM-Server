@@ -4,6 +4,7 @@ import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent, NuiEvent } from '../../shared/event';
+import { AnimationRunner } from '../animation/animation.factory';
 import { AnimationService } from '../animation/animation.service';
 import { NuiDispatch } from './nui.dispatch';
 
@@ -34,8 +35,8 @@ export class NuiPanelProvider {
                 {
                     bone: 28422,
                     model: 'prop_cs_tablet',
-                    position: [-0.05, 0.0, 0.0],
-                    rotation: [0.0, 0.0, 0.0],
+                    position: [-0.05, 0, 0],
+                    rotation: [0, 0, 0],
                 },
             ],
         });
@@ -46,6 +47,7 @@ export class NuiPanelProvider {
         if (!this.anim) {
             return;
         }
+
         this.anim.cancel();
         this.anim = null;
     }

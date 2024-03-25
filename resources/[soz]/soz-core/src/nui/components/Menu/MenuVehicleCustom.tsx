@@ -217,9 +217,10 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
                     <MenuItemButton
                         className="border-t border-white/50"
                         onConfirm={() => onConfirm()}
-                        description={crimiPrice().map(elem => (
-                            <div key={'cost_' + elem}>{elem}</div>
-                        ))}
+                        description={
+                            data.mode == LSCustomMode.CrimiPerfo &&
+                            crimiPrice().map(elem => <div key={'cost_' + elem}>{elem}</div>)
+                        }
                     >
                         <div className="flex w-full justify-between items-center">
                             <span>Confirmer les changements</span>
