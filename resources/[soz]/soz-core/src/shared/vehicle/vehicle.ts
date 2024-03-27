@@ -285,6 +285,7 @@ export type VehicleVolatileState = {
     isAnalyzed: boolean;
     stolenLocator: boolean;
     exportBiz: boolean;
+    nitroReloadStart: number;
 };
 
 export enum VehicleClass {
@@ -376,6 +377,7 @@ export const getDefaultVehicleVolatileState = (): VehicleVolatileState => ({
     isAnalyzed: false,
     stolenLocator: false,
     exportBiz: false,
+    nitroReloadStart: 0,
 });
 
 export type VehicleMenuData = {

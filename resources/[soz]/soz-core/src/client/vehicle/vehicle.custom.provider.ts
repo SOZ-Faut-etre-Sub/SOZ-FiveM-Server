@@ -18,7 +18,7 @@ import {
     VehicleCustomMenuData,
     VehicleUpgradeOptions,
 } from '../../shared/vehicle/modification';
-import { LSCustomMode, VehicleClass, VehicleSeat } from '../../shared/vehicle/vehicle';
+import { isVehicleModelElectric, LSCustomMode, VehicleClass, VehicleSeat } from '../../shared/vehicle/vehicle';
 import { Notifier } from '../notifier';
 import { NuiMenu } from '../nui/nui.menu';
 import { VehicleRepository } from '../repository/vehicle.repository';
@@ -200,7 +200,9 @@ export class VehicleCustomProvider {
             return;
         }
 
-        const advancedFlag = GetVehicleHandlingInt(vehicleEntityId, 'CCarHandlingData', 'strAdvancedFlags');
+        const advancedFlag = isVehicleModelElectric(GetEntityModel(vehicleEntityId))
+            ? 0
+            : GetVehicleHandlingInt(vehicleEntityId, 'CCarHandlingData', 'strAdvancedFlags');
 
         const vehicleConfiguration = await this.vehicleService.getVehicleConfiguration(vehicleEntityId);
 
