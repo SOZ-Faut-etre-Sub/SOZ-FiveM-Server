@@ -40,6 +40,16 @@ export const HouseGarageLimits = {
     9: 20,
 };
 
+export const MaxPlaces: Record<GarageType, number> = {
+    depot: 0,
+    gang: 0,
+    house: 99,
+    job: 0,
+    job_luxury: 0,
+    private: 60,
+    public: 0,
+};
+
 export type GarageParkingPlaceData = {
     capacity: PlaceCapacity[];
 };

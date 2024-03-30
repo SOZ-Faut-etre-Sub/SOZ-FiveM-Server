@@ -13,7 +13,7 @@ import { BoxZone } from '../../shared/polyzone/box.zone';
 import { getDistance, toVector3Object, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { Err, Ok } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
-import { Garage, GarageCategory, GarageType, GarageVehicle } from '../../shared/vehicle/garage';
+import { Garage, GarageCategory, GarageType, GarageVehicle, MaxPlaces } from '../../shared/vehicle/garage';
 import { VehicleClass } from '../../shared/vehicle/vehicle';
 import { BlipFactory } from '../blip';
 import { InventoryManager } from '../inventory/inventory.manager';
@@ -566,7 +566,7 @@ export class VehicleGarageProvider {
         let max_places = null;
         let apartmentPlaces = {} as Record<number, [number | null, number | null]>;
 
-        if ([GarageType.Private, GarageType.Gang].includes(garage.type)) {
+        if (MaxPlaces[garage.type]) {
             [free_places, max_places] = await emitRpc<[number, number]>(
                 RpcServerEvent.VEHICLE_GARAGE_GET_PLACES,
                 id,

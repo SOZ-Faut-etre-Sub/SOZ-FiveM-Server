@@ -333,7 +333,9 @@ export class ObjectProvider {
     @Command('props')
     public async listprops() {
         const [isAllowed] = await emitRpc<[boolean, string]>(RpcServerEvent.ADMIN_IS_ALLOWED);
-        const propsIds = Object.keys(this.loadedObjects).filter(id => isAllowed || !id.includes('drug_seedling'));
+        const propsIds = Object.keys(this.loadedObjects).filter(
+            id => isAllowed || (!id.includes('drug_seedling') && !id.includes('gang'))
+        );
 
         console.log(propsIds);
     }

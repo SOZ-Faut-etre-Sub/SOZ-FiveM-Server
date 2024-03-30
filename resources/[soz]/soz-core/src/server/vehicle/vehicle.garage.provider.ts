@@ -23,6 +23,7 @@ import {
     GarageVehicle,
     getTransferPrice,
     HouseGarageLimits,
+    MaxPlaces,
     PlaceCapacity,
 } from '../../shared/vehicle/garage';
 import { getDefaultVehicleConfiguration } from '../../shared/vehicle/modification';
@@ -60,16 +61,6 @@ const FORMAT_LOCALIZED: Intl.DateTimeFormatOptions = {
     hour: 'numeric',
     minute: 'numeric',
     timeZone: 'CET',
-};
-
-const MaxPlaces: Record<GarageType, number> = {
-    depot: 0,
-    gang: 10,
-    house: 0,
-    job: 0,
-    job_luxury: 0,
-    private: 60,
-    public: 0,
 };
 
 @Provider()
@@ -306,7 +297,7 @@ export class VehicleGarageProvider {
 
     @Rpc(RpcServerEvent.VEHICLE_GARAGE_GET_PLACES)
     public async getPrivatePlaces(source: number, id: string, garage: Garage): Promise<[number | null, number | null]> {
-        if (![GarageType.Private, GarageType.Gang].includes(garage.type)) {
+        if (!MaxPlaces[garage.type]) {
             return [null, null];
         }
 
