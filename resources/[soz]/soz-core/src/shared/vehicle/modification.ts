@@ -413,6 +413,7 @@ export enum VehicleHandlingType {
 
 export const modificationTabs = [
     {
+        id: 'brakes',
         title: 'Freinage',
         description: 'Réglage des paramètres liés au freinage du véhicle.',
         handlings: [
@@ -435,6 +436,7 @@ export const modificationTabs = [
         ],
     },
     {
+        id: 'clutch',
         title: 'Embrayage',
         description: "Réglage des paramètres de l'embryage",
         handlings: [
@@ -453,6 +455,7 @@ export const modificationTabs = [
         ],
     },
     {
+        id: 'engine',
         title: 'Moteur',
         description: 'Réglage des paramètres liés au compartiment moteur',
         handlings: [
@@ -475,6 +478,7 @@ export const modificationTabs = [
         ],
     },
     {
+        id: 'grip',
         title: 'Adhérence',
         description: "Réglage des paramètres d'adhérence",
         handlings: [
@@ -510,6 +514,7 @@ export const modificationTabs = [
         ],
     },
     {
+        id: 'steering',
         title: 'Direction',
         description: 'Réglage de direction',
         handlings: [
@@ -521,6 +526,7 @@ export const modificationTabs = [
         ],
     },
     {
+        id: 'suspensions',
         title: 'Suspensions',
         description: 'Réglage des suspensions',
         handlings: [
