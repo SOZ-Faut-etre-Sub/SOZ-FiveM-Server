@@ -75,6 +75,10 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
     const [configuration, setConfiguration] = useState<VehicleConfiguration | null>(null);
     const getPrice = useGetPrice();
     const items = useItems();
+    const crimi = ![LSCustomMode.Admin, LSCustomMode.Normal].includes(data.mode);
+    const banner = crimi
+        ? 'https://cfx-nui-soz-core/public/images/banner/vehbiz_perfo.webp'
+        : 'https://nui-img/soz/menu_shop_lscustoms';
 
     useEffect(() => {
         if (data?.currentConfiguration) {
@@ -141,7 +145,7 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
     return (
         <Menu type={MenuType.VehicleCustom}>
             <MainMenu>
-                <MenuTitle banner="https://nui-img/soz/menu_shop_lscustoms">LS Customs</MenuTitle>
+                <MenuTitle banner={banner}>{crimi ? 'Performance' : 'LS Customs'}</MenuTitle>
                 <MenuContent>
                     <MenuItemSelectVehicleCustomLevel
                         value={configuration.modification.engine}
@@ -219,6 +223,7 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
                         onConfirm={() => onConfirm()}
                         description={
                             data.mode == LSCustomMode.CrimiPerfo &&
+                            crimiPrice().length > 0 &&
                             crimiPrice().map(elem => <div key={'cost_' + elem}>{elem}</div>)
                         }
                     >

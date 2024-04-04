@@ -1,4 +1,5 @@
 import { VehicleBusinessCustomPrice } from '@private/shared/business.vehicle';
+import { useItem } from '@public/nui/hook/data';
 import { LSCustomMode } from '@public/shared/vehicle/vehicle';
 import { FunctionComponent, useEffect, useMemo, useState } from 'react';
 
@@ -328,6 +329,11 @@ export const MenuItemSelectVehicleRGBColor: FunctionComponent<MenuItemSelectVehi
 export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicleProps> = ({ data }) => {
     const [config, setConfig] = useState<VehicleConfiguration | null>(null);
     const [options, setOptions] = useState<VehicleUpgradeOptions | null>(null);
+    const item = useItem('veh_strip_piece_std');
+    const crimi = ![LSCustomMode.Admin, LSCustomMode.Normal].includes(data.mode);
+    const banner = crimi
+        ? 'https://cfx-nui-soz-core/public/images/banner/vehbiz_custo.webp'
+        : 'https://nui-img/soz/menu_job_bennys';
 
     useEffect(() => {
         if (data?.currentConfiguration) {
@@ -390,7 +396,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
     return (
         <Menu type={MenuType.BennysUpgradeVehicle}>
             <MainMenu>
-                <MenuTitle banner="https://nui-img/soz/menu_job_bennys">Station entretien</MenuTitle>
+                <MenuTitle banner={banner}>{crimi ? 'Customisations' : 'Couleur et aspects'}</MenuTitle>
                 <MenuContent>
                     <MenuItemSubMenuLink id="colors">Couleur et aspects</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="body">Carrosserie</MenuItemSubMenuLink>
@@ -405,21 +411,21 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                     <MenuItemCheckbox onChange={createOnDoorChange(5)} checked={false}>
                         Ouvrir coffre
                     </MenuItemCheckbox>
-                    <MenuItemButton onConfirm={() => onConfirm()}>
+                    <MenuItemButton
+                        onConfirm={() => onConfirm()}
+                        description={
+                            data.mode == LSCustomMode.CrimiCusto &&
+                            `${Math.ceil(price / VehicleBusinessCustomPrice)} ${item.label}`
+                        }
+                    >
                         <div className="flex w-full justify-between items-center">
                             <span>✅ Confirmer les changements</span>
-                            {data.mode == LSCustomMode.CrimiCusto && (
-                                <span>
-                                    {Intl.NumberFormat('fr-FR').format(Math.ceil(price / VehicleBusinessCustomPrice))}{' '}
-                                    pièces
-                                </span>
-                            )}
                         </div>
                     </MenuItemButton>
                 </MenuContent>
             </MainMenu>
             <SubMenu id="colors">
-                <MenuTitle banner="https://nui-img/soz/menu_job_bennys">Couleur et aspects</MenuTitle>
+                <MenuTitle banner={banner}>Couleur et aspects</MenuTitle>
                 <MenuContent>
                     {options?.livery && (
                         <MenuItemSelect
@@ -500,7 +506,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                 </MenuContent>
             </SubMenu>
             <SubMenu id="body">
-                <MenuTitle banner="https://nui-img/soz/menu_job_bennys">Carrosserie</MenuTitle>
+                <MenuTitle banner={banner}>Carrosserie</MenuTitle>
                 <MenuContent>
                     <MenuItemVehicleModification
                         initialConfig={data?.originalConfiguration}
@@ -625,7 +631,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                 </MenuContent>
             </SubMenu>
             <SubMenu id="wheel">
-                <MenuTitle banner="https://nui-img/soz/menu_job_bennys">Roues</MenuTitle>
+                <MenuTitle banner={banner}>Roues</MenuTitle>
                 <MenuContent>
                     {Object.keys(options.wheelType).length > 1 && (
                         <MenuItemSelect
@@ -702,7 +708,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                 </MenuContent>
             </SubMenu>
             <SubMenu id="exterior">
-                <MenuTitle banner="https://nui-img/soz/menu_job_bennys">Exterieur</MenuTitle>
+                <MenuTitle banner={banner}>Exterieur</MenuTitle>
                 <MenuContent>
                     <MenuItemSelect
                         title="Style plaque d'immatriculation"
@@ -800,7 +806,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                 </MenuContent>
             </SubMenu>
             <SubMenu id="interior">
-                <MenuTitle banner="https://nui-img/soz/menu_job_bennys">Intérieur</MenuTitle>
+                <MenuTitle banner={banner}>Intérieur</MenuTitle>
                 <MenuContent>
                     <MenuItemVehicleModification
                         initialConfig={data?.originalConfiguration}
@@ -877,7 +883,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                 </MenuContent>
             </SubMenu>
             <SubMenu id="light">
-                <MenuTitle banner="https://nui-img/soz/menu_job_bennys">Lumières</MenuTitle>
+                <MenuTitle banner={banner}>Lumières</MenuTitle>
                 <MenuContent>
                     <MenuItemCheckbox
                         checked={config?.neon?.light[VehicleNeonLight.Front]}
@@ -990,7 +996,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                 </MenuContent>
             </SubMenu>
             <SubMenu id="extra">
-                <MenuTitle banner="https://nui-img/soz/menu_job_bennys">Extras</MenuTitle>
+                <MenuTitle banner={banner}>Extras</MenuTitle>
                 <MenuContent>
                     {options.extra?.map((extra, index) => (
                         <MenuItemCheckbox
