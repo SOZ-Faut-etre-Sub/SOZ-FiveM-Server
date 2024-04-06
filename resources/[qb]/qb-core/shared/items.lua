@@ -10251,6 +10251,32 @@ QBShared.Items = {
         ['description'] = "",
         ['illustrator'] = ''
     },
+    ['cartel_hub'] = {
+        ['name'] = 'cartel_hub',
+        ['label'] = "Conteneur de Gang",
+        ['weight'] = 10000,
+        ['useable'] = true,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['not_searchable'] = true,
+        ['giveable'] = false,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['smuggling_black_market_box'] = {
+        ['name'] = 'smuggling_black_market_box',
+        ['label'] = "Caisse de marché noir",
+        ['weight'] = 5000,
+        ['useable'] = true,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
 
     --- Fishing Items
     ['basic_rod'] = {

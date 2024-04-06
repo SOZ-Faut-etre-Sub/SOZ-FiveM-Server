@@ -332,6 +332,10 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
                         </span> : <span className={style.Amount}>
                             {item.amount > 1 && item.amount}
                         </span>}
+                        { price && item.amount > 0 && (
+                        <span className={style.ShopAmount}>
+                            {item.amount}
+                        </span>)}
                         {(item?.shortcut) && (
                             <span className={style.Shortcut}>
                                 {item?.shortcut}

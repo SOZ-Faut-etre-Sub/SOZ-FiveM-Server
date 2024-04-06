@@ -1889,7 +1889,7 @@ export class DevilBaitShopProvider {
                                 {
                                     ...this.itemService.getItem('halloween_devil_bait'),
                                     price: 5,
-                                    amount: 2000,
+                                    amount: 0,
                                     slot: 1,
                                 },
                             ];

@@ -1,16 +1,10 @@
 import { ShopBrand } from '@public/config/shops';
 
-import { InventoryItem, Item } from '../item';
+import { InventoryItem } from '../item';
 import { PlayerLicenceType } from '../player';
 import { ShopProduct } from '../shop';
 
 export type ShopContent = ShopProduct[];
-
-export type SuperetteItem = Item & {
-    price?: number;
-    amount?: number;
-    slot?: number;
-};
 
 export type CartElement = InventoryItem & {
     price: number;

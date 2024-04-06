@@ -30,6 +30,7 @@ export class BossShopProvider {
             ...this.itemService.getItem(product.id),
             ...product,
             slot: id + 1,
+            amount: 0,
         }));
         return hydratedProducts;
     }

@@ -4,7 +4,7 @@ import { Storage, StorageType } from '@public/shared/inventory';
 import { VehicleClass } from '@public/shared/vehicle/vehicle';
 
 import { Inject, Injectable } from '../../core/decorators/injectable';
-import { Inventory, InventoryItem, InventoryItemMetadata, Item } from '../../shared/item';
+import { Inventory, InventoryItem, InventoryItemMetadata, Item, Item } from '../../shared/item';
 import { PlayerService } from '../player/player.service';
 
 type AllItemItem = {
@@ -369,6 +369,36 @@ export class InventoryManager {
         newPlate: string
     ): void {
         this.sozInventory.UpdateVehPlate(type, plate, ctx, newPlate);
+    }
+
+    public transfertItem(
+        source: number,
+        invSource: string | number,
+        invTarget: string | number,
+        item: string,
+        amount = 1,
+        slot?: number,
+        metadata?: InventoryItemMetadata,
+        targetSlot?: number
+    ): { success: boolean; reason?: string } {
+        const ret = this.sozInventory.TransfertItem(
+            source,
+            invSource,
+            invTarget,
+            item,
+            amount,
+            metadata,
+            slot,
+            targetSlot
+        );
+        return {
+            success: ret[0],
+            reason: ret[1],
+        };
+    }
+
+    public errorMessage(reason: string) {
+        this.sozInventory.ErrorMessage(reason);
     }
 
     // TODO: Implement the following method in soz core directly

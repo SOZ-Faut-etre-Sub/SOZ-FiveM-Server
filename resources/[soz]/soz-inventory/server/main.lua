@@ -34,6 +34,9 @@ MySQL.ready(function()
                     Inventory.Create(v.name, st.label, v.type, v.max_slots, v.max_weight, v.owner)
                     StorageNotLoaded[v.name] = nil
                 end
+                if v.type == "smuggling_blackmarket" then
+                    Inventory.Create(v.name, v.name, v.type, v.max_slots, v.max_weight, v.owner)
+                end
             end
         end
 
@@ -712,7 +715,7 @@ function Inventory.RemoveItem(inv, item, amount, metadata, slot, allowMoreThanOw
                 if not allowMoreThanOwned then
                     return false
                 end
-                amount = totalAmount
+                amount = inv.items[slot].amount
             end
             removed = amount
             Inventory.SetSlot(inv, item, -amount, nil, slot)
@@ -801,7 +804,7 @@ function Inventory.TransfertItem(source, invSource, invTarget, item, amount, met
         metadata = {}
     end
     amount = math.floor(amount + 0.5)
-    cb = type(cb) == "function" and cb or function()
+    cb = type(cb) == "function" and cb or function(success, reason)
     end
 
     if not item then
@@ -904,6 +907,15 @@ function Inventory.TransfertItem(source, invSource, invTarget, item, amount, met
 
     cb(success, reason)
 end
+exports("TransfertItem", function(source, invSource, invTarget, item, amount, metadata, slot, targetSlot)
+    local success, reason
+    Inventory.TransfertItem(source, invSource, invTarget, item, amount, metadata, slot, function(s, r)
+        success = s
+        reason = r
+    end, targetSlot)
+
+    return {success, reason}
+end)
 
 function Inventory.SortInventoryAZ(inv, cb)
     local success, reason = false, nil
@@ -1185,7 +1197,7 @@ function GetOrCreateInventory(storageType, invID, ctx)
         if targetInv == nil then
             targetInv = Inventory.Create("inverter_" .. invID, invID, storageType, storageConfig.slot, storageConfig.weight, "upw")
         end
-    elseif storageType == "smuggling_box" then
+    elseif storageType == "smuggling_box" or storageType == "smuggling_blackmarket" then
         if targetInv == nil then
             targetInv = Inventory.Create(invID, invID, storageType, storageConfig.slot, storageConfig.weight, invID)
         end

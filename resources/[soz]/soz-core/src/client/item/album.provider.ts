@@ -62,13 +62,14 @@ export class AlbumProvider {
 
     @Once(OnceStep.Start)
     async onStart(): Promise<void> {
-        const products = [{ name: '900k_album', price: 500, amount: 200000 }];
+        const products = [{ name: '900k_album', price: 500 }];
 
         const shopProducts = products.map((product, id) => {
             return {
                 ...this.itemService.getItem(product.name),
                 ...product,
                 slot: id + 1,
+                amount: 0,
             };
         });
 

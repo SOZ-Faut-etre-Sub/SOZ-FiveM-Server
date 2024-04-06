@@ -51,6 +51,17 @@
     pointer-events: none;
 }
 
+.ShopAmount {
+    position: absolute;
+    bottom: 0.25rem;
+    left: 0.25rem;
+    font-size: 0.75rem;
+    color: #ffffff;
+    z-index: 100;
+    text-shadow: black 5px 0 10px;
+    pointer-events: none;
+}
+
 .Shortcut {
     position: absolute;
     display: flex;

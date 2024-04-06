@@ -1,6 +1,6 @@
-import { InventoryItem } from '../types/inventory';
+import { ShopItem } from '../types/shop';
 
-export const useShopRow = (items: InventoryItem[]) => {
+export const useShopRow = (items: ShopItem[]) => {
     if (!items || items.length === 0) {
         return 0;
     }

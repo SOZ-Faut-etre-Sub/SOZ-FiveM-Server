@@ -17,7 +17,10 @@ export const ShopContainer = () => {
     const [shopHeaderTexture, setShopHeaderTexture] = useState<string>('');
     const [moneyType, setMoneyType] = useState<string>('money');
     const [taxValue, setTaxValue] = useState<number>(0)
-    const [taxType, setTaxType] = useState<string | null>(null)
+    const [taxType, setTaxType] = useState<string | null>(null);
+    const [serverEvent, setServerEvent] = useState<string | null>(null);
+    const [shopId, setShopId] = useState<string | null>(null);
+
 
     const closeMenu = useCallback(() => {
         setDisplay(false)
@@ -39,6 +42,8 @@ export const ShopContainer = () => {
                     setDisplay(true);
                     setTaxValue(event.data.taxValue || 0);
                     setTaxType(event.data.taxType || null);
+                    setServerEvent(event.data.serverEvent || null);
+                    setShopId(event.data.shopId || null);
                 } catch (e: any) {
                     closeNUI(() => { closeMenu(); })
                 }
@@ -74,11 +79,13 @@ export const ShopContainer = () => {
                 items: cartContent,
                 tax: taxType,
                 moneyType,
+                serverEvent,
+                shopId,
             })
         }).then(() => {
             closeNUI(() => closeMenu());
         });
-    }, [closeMenu, taxType, moneyType]);
+    }, [closeMenu, taxType, moneyType, serverEvent, shopId]);
 
     const putInCart = useCallback((event: DragEndEvent) => {
         if (!event.active.data.current) return;

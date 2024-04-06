@@ -29,15 +29,15 @@ export class LSMCPharmacyProvider {
     @Once(OnceStep.PlayerLoaded)
     public setupPharmacy() {
         const products = [
-            { name: 'tissue', price: PHARMACY_PRICES.tissue, amount: 2000 },
-            { name: 'antibiotic', price: PHARMACY_PRICES.antibiotic, amount: 2000 },
-            { name: 'pommade', price: PHARMACY_PRICES.pommade, amount: 2000 },
-            { name: 'painkiller', price: PHARMACY_PRICES.painkiller, amount: 2000 },
-            { name: 'antiacide', price: PHARMACY_PRICES.antiacide, amount: 2000 },
-            { name: 'health_book', price: PHARMACY_PRICES.health_book, amount: 2000 },
+            { name: 'tissue', price: PHARMACY_PRICES.tissue },
+            { name: 'antibiotic', price: PHARMACY_PRICES.antibiotic },
+            { name: 'pommade', price: PHARMACY_PRICES.pommade },
+            { name: 'painkiller', price: PHARMACY_PRICES.painkiller },
+            { name: 'antiacide', price: PHARMACY_PRICES.antiacide },
+            { name: 'health_book', price: PHARMACY_PRICES.health_book },
         ];
         if (isFeatureEnabled(Feature.Halloween)) {
-            products.push({ name: 'horrific_lollipop', price: 15, amount: 2000 });
+            products.push({ name: 'horrific_lollipop', price: 15 });
         }
 
         const getLsmcShopProduct = products => {
@@ -45,6 +45,7 @@ export class LSMCPharmacyProvider {
                 ...this.itemService.getItem(product.name),
                 ...product,
                 slot: id + 1,
+                amount: 0,
             }));
 
             return hydratedProducts;

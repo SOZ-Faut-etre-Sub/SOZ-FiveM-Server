@@ -130,6 +130,7 @@ export enum MenuType {
     DoorAdmin = 'door_admin',
     GangMember = 'gang_member',
     SafeStorage = 'safe_storage',
+    SmugglingBlackMarketPrices = 'smuggling_blackMarket_prices',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {
@@ -199,4 +200,5 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.ObjectEditor]: EditorMenuData;
     [MenuType.DoorAdmin]: string;
     [MenuType.SafeStorage]: MenuSafeStorageData;
+    [MenuType.SmugglingBlackMarketPrices]: string[];
 }

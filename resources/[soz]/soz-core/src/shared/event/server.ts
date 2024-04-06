@@ -501,6 +501,8 @@ export enum ServerEvent {
     GANG_ADMIN_DELETE = 'soz-core:server:gang:admin-delete',
     GANG_SKILL_ADD = 'soz-core:server:gang:skill-add',
     GANG_INFLUENCE_ZONE_UPDATE = 'soz-core:server:gang:influence:update',
+    GANG_CARTEL_CONTAINER_TAKE = 'soz-core:server:gang:container-take',
+    GANG_CARTEL_CONTAINER_USE = 'soz-core:server:gang:container-use',
 
     GANG_VEHBIZ_GET_POSITION = 'soz-core:server:gang:veh:position',
     GANG_VEHBIZ_UNLOCK = 'soz-core:server:gang:veh:unlock',
@@ -518,6 +520,11 @@ export enum ServerEvent {
     GANG_VEHBIZ_UNIQUE_SPAWN = 'soz-core:server:gang:veh:unique-spawn',
     GANG_VEHBIZ_NPC_REGISTER = 'soz-core:server:gang:veh:npc-register',
     GANG_VEHBIZ_PLATE_CHANGE = 'soz-core:server:gang:veh:plate-change',
+
+    GANG_SMUGGLING_BLACK_MARKET_BOX_USE = 'soz-core:server:gang:smuggling:black-market-box-use',
+    GANG_SMUGGLING_BLACK_MARKET_PRICE_UPDATE = 'soz-core:server:gang:smuggling:black-market-price',
+    GANG_SMUGGLING_BLACK_MARKET_BOX_TAKE = 'soz-core:server:gang:smuggling:black-market-box-take',
+    GANG_SMUGGLING_BLACK_MARKET_VALIDATE_CART = 'soz-core:server:gang:smuggling:black-market-validate-cart',
 
     DOOR_ADD_UPDATE = 'soz-core:server:door:add-update',
     DOOR_DELETE = 'soz-core:server:door:delete',

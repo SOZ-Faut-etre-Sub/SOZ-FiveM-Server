@@ -345,3 +345,13 @@ export type Item =
     | FishingGarbageItem
     | ToolItem
     | MetalItem;
+
+export type ShopItem = {
+    name: string;
+    label: string;
+    description: string;
+    slot: number;
+    amount: number;
+    metadata?: InventoryItemMetadata;
+    price: number;
+};

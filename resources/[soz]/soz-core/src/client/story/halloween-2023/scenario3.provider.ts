@@ -210,7 +210,7 @@ export class Halloween2023Scenario3Provider {
                                 {
                                     ...this.itemService.getItem('halloween_beef_with_bone'),
                                     price: 100,
-                                    amount: 2000,
+                                    amount: 0,
                                     slot: 1,
                                 },
                             ];

@@ -447,7 +447,6 @@ export enum NuiEvent {
     GangAdminGarage = 'soz-core:client:gang:admin-garage',
     GangAdminUpdatePedToPlayer = 'soz-core:client:gang:admin-ped-to-player',
     GangAdminUpdatePlayerToPed = 'soz-core:client:gang:admin-player-to-ped',
-    GangAdminUpdatePropModel = 'soz-core:client:gang:admin-update-prop-model',
     GangAdminUpdatePropLocation = 'soz-core:client:gang:admin-update-prop-location',
     GangAdminUpdateZone = 'soz-core:client:gang:admin-update-zone',
     GangBusinessSkillBuy = 'soz-core:client:gang:business-buy',
@@ -468,6 +467,8 @@ export enum NuiEvent {
     BusinessVehicleUniqueUpdate = 'soz-core:client:business:vehicle:unique-update',
     BusinessVehicleUniqueGet = 'soz-core:client:business:vehicle:unique-get',
     BusinessVehicleMappingClose = 'soz-core:client:business:vehicle:mapping-close',
+
+    BusinessSmugglingPriceUpdate = 'soz-core:client:business:smuggling:price-update',
 
     AdminDoorSetState = 'soz-core:client:door:set-state',
     AdminDoorAddSub = 'soz-core:client:door:add-subdoor',
