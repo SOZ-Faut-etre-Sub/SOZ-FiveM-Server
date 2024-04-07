@@ -42,21 +42,13 @@ export const MenuBennys: FunctionComponent<MenuBennysProps> = ({ data }) => {
         );
     }
 
-    const onConfirm = (item, props) => {
-        triggerServerEvent(ServerEvent.JOBS_PLACE_PROPS, item, props);
-    };
-
-    const onUpgradeVehicle = () => {
-        fetchNui(NuiEvent.BennysUpgradeVehicle, LSCustomMode.Normal);
-    };
-
     return (
         <Menu type={MenuType.JobBennys}>
             <MainMenu>
                 <MenuTitle banner="https://nui-img/soz/menu_job_bennys">Services Bennys</MenuTitle>
                 <MenuContent>
                     {data.insideUpgradeZone && (
-                        <MenuItemButton onConfirm={() => fetchNui(NuiEvent.BennysUpgradeVehicle)}>
+                        <MenuItemButton onConfirm={() => fetchNui(NuiEvent.BennysUpgradeVehicle, LSCustomMode.Normal)}>
                             🔧 Améliorer le véhicule
                         </MenuItemButton>
                     )}

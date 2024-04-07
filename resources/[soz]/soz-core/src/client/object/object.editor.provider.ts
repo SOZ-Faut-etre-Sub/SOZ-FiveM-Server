@@ -71,7 +71,7 @@ export class ObjectEditorProvider {
             model,
             position,
             id: existingObject?.id || uuidv4(),
-            placeOnGround: existingObject?.placeOnGround || false,
+            placeOnGround: existingObject?.placeOnGround || options.snapToGround,
             noCollision: true,
             matrix: existingObject?.matrix,
             invisible: false,

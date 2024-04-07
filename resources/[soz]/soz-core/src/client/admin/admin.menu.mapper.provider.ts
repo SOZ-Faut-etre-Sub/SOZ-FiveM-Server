@@ -1,3 +1,5 @@
+import { VehicleBusinessExportContainerProp, VehicleBusinessExportCoveredProp } from '@private/shared/business.vehicle';
+
 import { Command } from '../../core/decorators/command';
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -35,6 +37,11 @@ const COLOR_BY_TYPE: Record<string, RGBAColor> = {
     stash: [0, 255, 255, 100],
     closet: [255, 0, 255, 100],
     money: [255, 0, 255, 100],
+};
+
+const ZoneProps: Partial<Record<ZoneType, number>> = {
+    [ZoneType.VehBizSpawn]: VehicleBusinessExportCoveredProp,
+    [ZoneType.VehBizDelivery]: VehicleBusinessExportContainerProp,
 };
 
 @Provider()
@@ -517,7 +524,23 @@ export class AdminMenuMapperProvider {
             return;
         }
 
-        const newZone = await this.nuiZoneProvider.askZone(null);
+        let newZone: Zone = null;
+        if (ZoneProps[type]) {
+            const object = await this.objectEditorProvider.createOrUpdateObject(ZoneProps[type], {
+                snapToGround: true,
+                allowScale: false,
+                context: 'admin',
+            });
+            if (!object) {
+                return;
+            }
+            newZone = {
+                center: object.position,
+                heading: object.position[3],
+            };
+        } else {
+            newZone = await this.nuiZoneProvider.askZone(null);
+        }
 
         if (!newZone) {
             return;
@@ -536,6 +559,19 @@ export class AdminMenuMapperProvider {
     @OnNuiEvent(NuiEvent.AdminMenuMapperDeleteZone)
     public async deleteZone({ id }: { id: number }) {
         TriggerServerEvent(ServerEvent.ADMIN_MAPPER_REMOVE_ZONE, id);
+        const zone = this.zoneRepository.find(id);
+
+        if (!zone) {
+            return;
+        }
+
+        const showId = `zone-${id}`;
+        // Remove existing zone if any
+        if (ZoneProps[zone.data.type]) {
+            this.adminZoneProvider.removeEntityToDraw(showId);
+        } else {
+            this.adminZoneProvider.removeZoneToDraw(showId);
+        }
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuMapperRenameZone)
@@ -555,30 +591,42 @@ export class AdminMenuMapperProvider {
     @OnNuiEvent(NuiEvent.AdminMenuMapperShowZone)
     public async showZone({ id, show }: { id: number; show: boolean }): Promise<void> {
         const showId = `zone-${id}`;
-
-        // Remove existing zone if any
-        this.adminZoneProvider.removeZoneToDraw(showId);
-
-        if (!show) {
-            return;
-        }
-
         const zone = this.zoneRepository.find(id);
 
         if (!zone) {
             return;
         }
 
-        this.adminZoneProvider.addZoneToDraw({
-            zone: BoxZone.fromZone({
-                ...zone,
-                data: zone.data.name,
-            }),
-            id: showId,
-            color: COLOR_BY_TYPE.entry,
-            type: 'zone',
-            name: zone.data.name,
-        });
+        // Remove existing zone if any
+        if (ZoneProps[zone.data.type]) {
+            this.adminZoneProvider.removeEntityToDraw(showId);
+        } else {
+            this.adminZoneProvider.removeZoneToDraw(showId);
+        }
+
+        if (!show) {
+            return;
+        }
+
+        if (ZoneProps[zone.data.type]) {
+            this.adminZoneProvider.addEntityToDraw(showId, ZoneProps[zone.data.type], [
+                zone.center[0],
+                zone.center[1],
+                zone.center[2],
+                zone.center[3] || zone.heading,
+            ]);
+        } else {
+            this.adminZoneProvider.addZoneToDraw({
+                zone: BoxZone.fromZone({
+                    ...zone,
+                    data: zone.data.name,
+                }),
+                id: showId,
+                color: COLOR_BY_TYPE.entry,
+                type: 'zone',
+                name: zone.data.name,
+            });
+        }
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuMapperAddPropertyCulling)

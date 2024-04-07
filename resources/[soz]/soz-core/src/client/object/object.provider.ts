@@ -16,7 +16,6 @@ import { RpcClientEvent, RpcServerEvent } from '@public/shared/rpc';
 
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { WorldObject } from '../../shared/object';
-import { TargetFactory } from '../target/target.factory';
 
 type SpawnedObject = {
     entity: number;

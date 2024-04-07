@@ -4,7 +4,7 @@ import { Storage, StorageType } from '@public/shared/inventory';
 import { VehicleClass } from '@public/shared/vehicle/vehicle';
 
 import { Inject, Injectable } from '../../core/decorators/injectable';
-import { Inventory, InventoryItem, InventoryItemMetadata, Item, Item } from '../../shared/item';
+import { Inventory, InventoryItem, InventoryItemMetadata, Item } from '../../shared/item';
 import { PlayerService } from '../player/player.service';
 
 type AllItemItem = {
