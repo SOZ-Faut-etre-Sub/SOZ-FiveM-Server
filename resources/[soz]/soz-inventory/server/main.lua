@@ -1197,7 +1197,7 @@ function GetOrCreateInventory(storageType, invID, ctx)
         if targetInv == nil then
             targetInv = Inventory.Create("inverter_" .. invID, invID, storageType, storageConfig.slot, storageConfig.weight, "upw")
         end
-    elseif storageType == "smuggling_box" or storageType == "smuggling_blackmarket" then
+    elseif storageType == "smuggling_box" or storageType == "smuggling_blackmarket" or "smuggling_connected" then
         if targetInv == nil then
             targetInv = Inventory.Create(invID, invID, storageType, storageConfig.slot, storageConfig.weight, invID)
         end

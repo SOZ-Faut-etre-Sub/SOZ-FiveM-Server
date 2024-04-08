@@ -434,6 +434,41 @@ Container["smuggling_blackmarket"] = InventoryContainer:new({
     },
 })
 
+Container["smuggling_connected"] = InventoryContainer:new({
+    type = "smuggling_connected",
+    allowedTypes = {
+        "item",
+        "fishing_rod",
+        "fishing_garbage",
+        "fishing_bait",
+        "fish",
+        "drug",
+        "food",
+        "drink",
+        "cocktail",
+        "item_illegal",
+        "organ",
+        "oil",
+        "oil_and_item",
+        "log",
+        "sawdust",
+        "plank",
+        "flavor",
+        "furniture",
+        "liquor",
+        "outfit",
+        "crate",
+        "drug_pot",
+        "tool",
+        "energy",
+        "metal",
+        "weapon",
+        "weapon_ammo",
+        "evidence",
+        "veh_biz_piece",
+    },
+})
+
 --- Jobs DMC
 
 local canAccessConverter = function(player, owner)

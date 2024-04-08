@@ -773,10 +773,11 @@ model vandalism_props {
 }
 
 model Zone {
-  id   Int    @id @default(autoincrement())
-  type String @db.VarChar(50)
-  zone String @db.LongText
-  name String @db.VarChar(50)
+  id   Int      @id @default(autoincrement())
+  type String   @db.VarChar(50)
+  zone String   @db.LongText
+  name String   @db.VarChar(50)
+  extra String? @db.LongText
 
   @@map("zone")
 }

@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '../../core/decorators/injectable';
-import { ZoneType, ZoneTyped } from '../../shared/polyzone/box.zone';
+import { ZoneExtra, ZoneType, ZoneTyped } from '../../shared/polyzone/box.zone';
 import { RepositoryType } from '../../shared/repository';
 import { PrismaService } from '../database/prisma.service';
 import { Repository } from './repository';
@@ -17,11 +17,13 @@ export class ZoneRepository extends Repository<RepositoryType.Zone> {
 
         for (const zone of zones) {
             const zoneDecoded = JSON.parse(zone.zone) as ZoneTyped;
+            const extra = zone.extra ? (JSON.parse(zone.extra) as ZoneExtra) : null;
 
             zoneDecoded.data = {
                 type: zone.type as ZoneType,
                 name: zone.name,
                 id: zone.id,
+                extra: extra,
             };
 
             list[zone.id] = zoneDecoded;
@@ -50,6 +52,7 @@ export class ZoneRepository extends Repository<RepositoryType.Zone> {
                 zone: JSON.stringify(zone),
                 type: zone.data.type,
                 name: zone.data.name,
+                extra: zone.data.extra ? JSON.stringify(zone.data.extra) : null,
             },
             where: {
                 id: zone.data.id,

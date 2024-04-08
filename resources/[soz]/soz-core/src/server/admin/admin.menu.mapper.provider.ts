@@ -151,7 +151,7 @@ export class AdminMenuMapperProvider {
         const zone = await this.zoneRepository.find(id);
         zone.data.name = name;
 
-        this.zoneRepository.set(id, zone);
+        this.zoneRepository.updateZone(zone);
     }
 
     @Rpc(RpcServerEvent.ADMIN_MAPPER_SET_SENATE_PARTY)
