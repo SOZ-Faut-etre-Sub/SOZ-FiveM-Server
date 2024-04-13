@@ -192,4 +192,9 @@ export class ObjectProvider {
 
         TriggerClientEvent(ClientEvent.OBJECT_EDIT, -1, object);
     }
+
+    @OnEvent(ServerEvent.OBJECT_DELETE)
+    public async onObjectDelete(source: number, id: string) {
+        this.deleteObject(id);
+    }
 }

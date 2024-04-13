@@ -897,3 +897,14 @@ model vehicle_order {
   deliverDate    DateTime   @default(now())
   data           String     @db.Text
 }
+
+model loot_item {
+  id             Int        @id @default(autoincrement())
+  type           String     @db.VarChar(100)
+  item           String     @db.VarChar(100)
+  metadata       String?    @db.Text
+  max            Int
+  chance         Int
+  
+  @@index([type])
+}

@@ -469,6 +469,10 @@ export enum NuiEvent {
     BusinessVehicleMappingClose = 'soz-core:client:business:vehicle:mapping-close',
 
     BusinessSmugglingPriceUpdate = 'soz-core:client:business:smuggling:price-update',
+    BusinessSmugglingContainerOrdersGet = 'soz-core:client:business:smuggling:order-get',
+    BusinessSmugglingContainerOrdersPosition = 'soz-core:client:business:smuggling:order-position',
+    BusinessSmugglingContainerOrdersCancel = 'soz-core:client:business:smuggling:order-cancel',
+    BusinessSmugglingContainerOrdersNew = 'soz-core:client:business:smuggling:order-new',
 
     AdminDoorSetState = 'soz-core:client:door:set-state',
     AdminDoorAddSub = 'soz-core:client:door:add-subdoor',

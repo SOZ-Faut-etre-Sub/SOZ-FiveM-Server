@@ -183,6 +183,7 @@ export enum ServerEvent {
     OBJECT_COLLECT = 'soz-core:server:object:collect',
     OBJECT_ATTACHED_REGISTER = 'soz-core:client:object:attached:register',
     OBJECT_ATTACHED_UNREGISTER = 'soz-core:client:object:attached:unregister',
+    OBJECT_DELETE = 'soz-core:server:object:delete',
 
     OIL_CRAFT_ESSENCE = 'soz-core:server:oil:craft-essence',
     OIL_CRAFT_ESSENCE_JERRYCAN = 'soz-core:server:oil:craft-essence-jerrycan',
@@ -525,6 +526,7 @@ export enum ServerEvent {
     GANG_SMUGGLING_BLACK_MARKET_PRICE_UPDATE = 'soz-core:server:gang:smuggling:black-market-price',
     GANG_SMUGGLING_BLACK_MARKET_BOX_TAKE = 'soz-core:server:gang:smuggling:black-market-box-take',
     GANG_SMUGGLING_BLACK_MARKET_VALIDATE_CART = 'soz-core:server:gang:smuggling:black-market-validate-cart',
+    GANG_SMUGGLING_CONTAINER_OPEN = 'soz-core:server:gang:smuggling:container-open',
 
     DOOR_ADD_UPDATE = 'soz-core:server:door:add-update',
     DOOR_DELETE = 'soz-core:server:door:delete',

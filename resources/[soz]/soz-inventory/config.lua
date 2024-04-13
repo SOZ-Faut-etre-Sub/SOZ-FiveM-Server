@@ -59,7 +59,7 @@ Config.StorageCapacity = {
     --- Zkea
     ["cabinet_storage"] = {slot = 1, weight = 24000000}, -- 6000 cabinet_zkea maximum
     --- Smuggling Box
-    ["smuggling_box"] = {slot = 100, weight = 250000},
+    ["smuggling_box"] = {slot = 100, weight = 200000},
     ["smuggling_blackmarket"] = {slot = 100, weight = 250000},
     ["smuggling_connected"] = {slot = 100, weight = 10000000},
     --- Jobs DMC

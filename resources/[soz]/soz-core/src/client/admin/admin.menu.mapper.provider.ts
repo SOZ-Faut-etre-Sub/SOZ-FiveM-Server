@@ -1,4 +1,7 @@
-import { SmugglingBusinessNetworkBox } from '@private/shared/business.smuggling';
+import {
+    SmugglingBusinessImportContainerConfig,
+    SmugglingBusinessNetworkBox,
+} from '@private/shared/business.smuggling';
 import { VehicleBusinessExportContainerProp, VehicleBusinessExportCoveredProp } from '@private/shared/business.vehicle';
 
 import { Command } from '../../core/decorators/command';
@@ -44,6 +47,7 @@ const ZoneProps: Partial<Record<ZoneType, number>> = {
     [ZoneType.VehBizSpawn]: VehicleBusinessExportCoveredProp,
     [ZoneType.VehBizDelivery]: VehicleBusinessExportContainerProp,
     [ZoneType.SmugglingBizStorage]: SmugglingBusinessNetworkBox,
+    [ZoneType.SmugglingBizContainer]: SmugglingBusinessImportContainerConfig.props.container,
 };
 
 @Provider()
