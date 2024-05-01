@@ -313,14 +313,14 @@ export class ObjectEditorProvider {
     }
 
     @OnNuiEvent(NuiEvent.ObjectEditorToggleSnap)
-    public async toggleSnap({ snap }: { snap: boolean }) {
+    public async toggleSnap({ value }: { value: boolean }) {
         if (!this.currentObject) {
             return;
         }
 
-        this.currentObject.options.snapToGround = snap;
+        this.currentObject.options.snapToGround = value;
 
-        if (snap) {
+        if (value) {
             PlaceObjectOnGroundProperly_2(this.currentObject.entity);
         }
     }

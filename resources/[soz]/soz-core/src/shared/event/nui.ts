@@ -473,6 +473,13 @@ export enum NuiEvent {
     BusinessSmugglingContainerOrdersPosition = 'soz-core:client:business:smuggling:order-position',
     BusinessSmugglingContainerOrdersCancel = 'soz-core:client:business:smuggling:order-cancel',
     BusinessSmugglingContainerOrdersNew = 'soz-core:client:business:smuggling:order-new',
+    BusinessSmugglingHarvestGetType = 'soz-core:client:business:smuggling:harvest-get-type',
+    BusinessSmugglingHarvestGetId = 'soz-core:client:business:smuggling:harvest-get-id',
+    BusinessSmugglingHarvestCreate = 'soz-core:client:business:smuggling:harvest-create',
+    BusinessSmugglingHarvestDelete = 'soz-core:client:business:smuggling:harvest-delete',
+    BusinessSmugglingHarvestRename = 'soz-core:client:business:smuggling:harvest-rename',
+    BusinessSmugglingHarvestPropAdd = 'soz-core:client:business:smuggling:harvest-prop-add',
+    BusinessSmugglingHarvestPropUpdate = 'soz-core:client:business:smuggling:harvest-prop-update',
 
     AdminDoorSetState = 'soz-core:client:door:set-state',
     AdminDoorAddSub = 'soz-core:client:door:add-subdoor',

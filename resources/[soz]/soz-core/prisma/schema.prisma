@@ -908,3 +908,10 @@ model loot_item {
   
   @@index([type])
 }
+
+model smuggling_business_harvest_zone {
+  id             String     @id
+  name           String     @unique @db.VarChar(100)
+  type           String     @db.VarChar(100)
+  data           String     @db.Text
+}
