@@ -524,6 +524,7 @@ export enum ServerEvent {
 
     GANG_SMUGGLING_BLACK_MARKET_BOX_USE = 'soz-core:server:gang:smuggling:black-market-box-use',
     GANG_SMUGGLING_BLACK_MARKET_PRICE_UPDATE = 'soz-core:server:gang:smuggling:black-market-price',
+    GANG_SMUGGLING_BLACK_MARKET_BOX_LOCK = 'soz-core:server:gang:smuggling:black-market-lock',
     GANG_SMUGGLING_BLACK_MARKET_BOX_TAKE = 'soz-core:server:gang:smuggling:black-market-box-take',
     GANG_SMUGGLING_BLACK_MARKET_VALIDATE_CART = 'soz-core:server:gang:smuggling:black-market-validate-cart',
     GANG_SMUGGLING_CONTAINER_OPEN = 'soz-core:server:gang:smuggling:container-open',

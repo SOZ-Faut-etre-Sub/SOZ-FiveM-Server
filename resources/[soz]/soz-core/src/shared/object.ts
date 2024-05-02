@@ -3,6 +3,11 @@ import { JobType } from '@public/shared/job';
 
 import { Vector3, Vector4 } from './polyzone/vector';
 
+export type WorldObjectMetadata = {
+    gangId?: number;
+    index?: number;
+};
+
 export type WorldObject = {
     id: string;
     model: number;
@@ -13,6 +18,7 @@ export type WorldObject = {
     noCollision?: boolean;
     invisible?: boolean;
     targets?: TargetOptions[];
+    metadata?: WorldObjectMetadata;
 };
 
 export type WorldPlacedProp = {

@@ -52,6 +52,7 @@ export class RepositoryLoader {
                             `Error on repository listener ${metadata.entityType} - ${metadata.type} in method ${methodName} of provider ${provider.constructor.name}`,
                             e
                         );
+                        console.log(e);
                     }
                 };
 
