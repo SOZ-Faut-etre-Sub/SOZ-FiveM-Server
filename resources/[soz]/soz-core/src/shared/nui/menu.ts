@@ -132,6 +132,7 @@ export enum MenuType {
     SafeStorage = 'safe_storage',
     SmugglingBlackMarketPrices = 'smuggling_blackMarket_prices',
     SmugglingContainerOrderMenu = 'smuggling_container_order',
+    SmugglingMenu = 'smuggling',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {

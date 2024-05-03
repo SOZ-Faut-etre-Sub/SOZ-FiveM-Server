@@ -6,6 +6,7 @@ import { Vector3, Vector4 } from './polyzone/vector';
 export type WorldObjectMetadata = {
     gangId?: number;
     index?: number;
+    zoneId?: string;
 };
 
 export type WorldObject = {

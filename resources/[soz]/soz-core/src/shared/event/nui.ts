@@ -480,6 +480,7 @@ export enum NuiEvent {
     BusinessSmugglingHarvestRename = 'soz-core:client:business:smuggling:harvest-rename',
     BusinessSmugglingHarvestPropAdd = 'soz-core:client:business:smuggling:harvest-prop-add',
     BusinessSmugglingHarvestPropUpdate = 'soz-core:client:business:smuggling:harvest-prop-update',
+    BusinessSmugglingHarvestPosition = 'soz-core:client:business:smuggling:harvest-position',
 
     AdminDoorSetState = 'soz-core:client:door:set-state',
     AdminDoorAddSub = 'soz-core:client:door:add-subdoor',

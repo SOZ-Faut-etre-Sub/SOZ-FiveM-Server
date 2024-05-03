@@ -10277,7 +10277,130 @@ QBShared.Items = {
         ['description'] = "",
         ['illustrator'] = ''
     },
+    ['smuggling_box_zabac'] = {
+        ['name'] = 'smuggling_box_zabac',
+        ['label'] = "Caisse de Zabac",
+        ['weight'] = 40000,
+        ['useable'] = false,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['carrybox'] = 'prop_box_wood04a',
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['smuggling_leaf_zabac'] = {
+        ['name'] = 'smuggling_leaf_zabac',
+        ['label'] = "Feuille de Zabac",
+        ['weight'] = 200,
+        ['useable'] = false,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['smuggling_seed_zabac'] = {
+        ['name'] = 'smuggling_seed_zabac',
+        ['label'] = "Graine de zabac",
+        ['weight'] = 400,
+        ['useable'] = true,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['smuggling_zedwood_cigarette'] = {
+        ['name'] = 'smuggling_zedwood_cigarette',
+        ['label'] = "Cigarette Zedwood",
+        ['weight'] = 300,
+        ['useable'] = false,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['smuggling_zigarico_cigar'] = {
+        ['name'] = 'smuggling_zigarico_cigar',
+        ['label'] = "Cigar Zigarico",
+        ['weight'] = 1000,
+        ['useable'] = false,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['smuggling_zedwood_cigarette_pack'] = {
+        ['name'] = 'smuggling_zedwood_cigarette_pack',
+        ['label'] = "Paquet de cigarette Zedwood",
+        ['weight'] = 3000,
+        ['useable'] = false,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['smuggling_zigarico_cigar_box'] = {
+        ['name'] = 'smuggling_zigarico_cigar_box',
+        ['label'] = "Boite de cigars Zigarico",
+        ['weight'] = 3000,
+        ['useable'] = false,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['smuggling_zedwood_export'] = {
+        ['name'] = 'smuggling_zedwood_export',
+        ['label'] = "Caisse d’exportation Zedwood",
+        ['weight'] = 20000,
+        ['useable'] = false,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['smuggling_zigarico_export'] = {
+        ['name'] = 'smuggling_zigarico_export',
+        ['label'] = "Caisse d’exportation Zigarico",
+        ['weight'] = 20000,
+        ['useable'] = false,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['smuggling_box_zoublon'] = {
+        ['name'] = 'smuggling_box_zoublon',
+        ['label'] = "Caisse de Zoublon",
+        ['weight'] = 40000,
+        ['useable'] = false,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['carrybox'] = 'prop_box_wood03a',
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
 
+    
     --- Fishing Items
     ['basic_rod'] = {
         ['name'] = 'basic_rod',

@@ -247,6 +247,7 @@ export enum RpcServerEvent {
     GANG_SMUGGLING_HARVEST_ZONE_LOCATION_ADD = 'soz-core:server:gang:smuggling:harvest:location-add',
     GANG_SMUGGLING_HARVEST_ZONE_LOCATION_REMOVE = 'soz-core:server:gang:smuggling:harvest:location-remove',
     GANG_SMUGGLING_HARVEST_ZONE_LOCATION_UPDATE = 'soz-core:server:gang:smuggling:harvest:location-update',
+    GANG_SMUGGLING_HARVEST_LOCATION = 'soz-core:server:gang:smuggling:harvest:location',
 }
 
 export enum RpcClientEvent {
@@ -262,4 +263,5 @@ export enum RpcClientEvent {
     FDF_CHECK_ZONE = 'soz-core:rpc:client:fdf:check-zone',
     CHECK_WEARING_GLOVES = 'soz-core:rpc:client:check-wearing-gloves',
     OBJECT_GET_GROUND_POSITION = 'soz-core:rpc:client:object:get-ground-position',
+    GANG_SMUGGLING_TOBACCO_CHECK_ZONE = 'soz-core:rpc:client:gang:smuggling:check-zone',
 }
