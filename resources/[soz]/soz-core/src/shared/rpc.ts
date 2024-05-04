@@ -263,5 +263,5 @@ export enum RpcClientEvent {
     FDF_CHECK_ZONE = 'soz-core:rpc:client:fdf:check-zone',
     CHECK_WEARING_GLOVES = 'soz-core:rpc:client:check-wearing-gloves',
     OBJECT_GET_GROUND_POSITION = 'soz-core:rpc:client:object:get-ground-position',
-    GANG_SMUGGLING_TOBACCO_CHECK_ZONE = 'soz-core:rpc:client:gang:smuggling:check-zone',
+    GANG_SMUGGLING_CHECK_ZONE = 'soz-core:rpc:client:gang:smuggling:check-zone',
 }

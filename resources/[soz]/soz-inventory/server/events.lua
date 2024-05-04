@@ -13,8 +13,8 @@ RegisterServerEvent("inventory:server:openInventory", function(storageType, invI
     if Inventory.AccessGranted(targetInv, Player.PlayerData.source) then
         targetInv.users[Player.PlayerData.source] = true
 
-        TriggerClientEvent("inventory:client:openInventory", Player.PlayerData.source, Inventory.FilterItems(sourceInv, targetInv.type),
-                           Inventory.FilterItems(targetInv, sourceInv.type), targetMoney)
+        TriggerClientEvent("inventory:client:openInventory", Player.PlayerData.source, Inventory.FilterItems(sourceInv, targetInv),
+                           Inventory.FilterItems(targetInv, sourceInv), targetMoney)
     else
         TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous n'avez pas accès à ce stockage", "error")
     end
@@ -42,8 +42,8 @@ RegisterServerEvent("inventory:server:openItemStorage", function(slot)
     targetInv.slot = slot
     targetInv.owner = source
 
-    TriggerClientEvent("inventory:client:openInventory", Player.PlayerData.source, Inventory.FilterItems(sourceInv, targetInv.type),
-                       Inventory.FilterItems(targetInv, sourceInv.type), nil)
+    TriggerClientEvent("inventory:client:openInventory", Player.PlayerData.source, Inventory.FilterItems(sourceInv, targetInv),
+                       Inventory.FilterItems(targetInv, sourceInv), nil)
 end)
 
 RegisterServerEvent("inventory:server:bin-vandalism", function(invID, ctx)
@@ -56,7 +56,7 @@ RegisterServerEvent("inventory:server:bin-vandalism", function(invID, ctx)
 end)
 
 QBCore.Functions.CreateCallback("inventory:server:TransfertItem",
-                                function(source, cb, inventorySource, inventoryTarget, item, amount, metadata, slot, targetSlot, manualFilter)
+                                function(source, cb, inventorySource, inventoryTarget, item, amount, metadata, slot, targetSlot, inventoryTargetWhenSorting)
     Inventory.TransfertItem(source, inventorySource, inventoryTarget, item, amount, metadata, slot, function(success, reason)
         local sourceInv = Inventory(inventorySource)
         local targetInv = Inventory(inventoryTarget)
@@ -75,18 +75,19 @@ QBCore.Functions.CreateCallback("inventory:server:TransfertItem",
         end
 
         local sourceInventory = sourceInv
-        if sourceInv.id == targetInv.id and manualFilter then
-            sourceInventory = Inventory.FilterItems(sourceInv, manualFilter)
+        if sourceInv.id == targetInv.id and inventoryTargetWhenSorting then
+            local targetInventory = Inventory(inventoryTargetWhenSorting)
+            sourceInventory = Inventory.FilterItems(sourceInv, targetInventory)
         elseif sourceInv.id ~= targetInv.id then
-            sourceInventory = Inventory.FilterItems(sourceInv, targetInv.type)
+            sourceInventory = Inventory.FilterItems(sourceInv, targetInv)
         end
 
         if sourceInv.type == "trunk" or targetInv.type == "trunk" then
             TriggerClientEvent("soz-core:client:animation:give", source)
         end
 
-        cb(success, reason, sourceInventory, Inventory.FilterItems(targetInv, sourceInv.type))
-    end, targetSlot, manualFilter)
+        cb(success, reason, sourceInventory, Inventory.FilterItems(targetInv, sourceInv))
+    end, targetSlot)
 end)
 
 QBCore.Functions.CreateCallback("inventory:server:TransfertMoney", function(source, cb, target, amount, inverse)

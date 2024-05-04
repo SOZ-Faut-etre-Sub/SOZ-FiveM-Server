@@ -34,7 +34,7 @@ MySQL.ready(function()
                     Inventory.Create(v.name, st.label, v.type, v.max_slots, v.max_weight, v.owner)
                     StorageNotLoaded[v.name] = nil
                 end
-                if v.type == "smuggling_blackmarket" then
+                if v.type == "smuggling_blackmarket" or v.type == "distillery" then
                     Inventory.Create(v.name, v.name, v.type, v.max_slots, v.max_weight, v.owner)
                 end
             end
@@ -356,7 +356,7 @@ RegisterNetEvent("inventory:server:CanCarryItems", Inventory.CanCarryItems)
 exports("CanCarryItems", Inventory.CanCarryItems)
 
 --- Items management
-function Inventory.FilterItems(inv, invType)
+function Inventory.FilterItems(inv, target)
     if type(inv) ~= "table" then
         inv = Inventory(inv)
     end
@@ -365,14 +365,15 @@ function Inventory.FilterItems(inv, invType)
     local inventory = table.deepclone(inv)
     local items = {}
 
-    if invType then
+    if target then
+        local disabled = not _G.Container[inv.type]:CanGetContentInInventory(inv) or not _G.Container[target.type]:CanPutContentInInventory(target)
         if inv.items ~= nil then
             for _, v in pairs(inv.items) do
                 local insertId = #items + 1
                 items[insertId] = table.deepclone(v)
 
-                if not _G.Container[invType]:ItemIsAllowed(v) or
-                    (invType == "player" and inv.type == "player" and QBCore.Shared.Items[v.name]["not_searchable"]) then
+                if disabled or not _G.Container[target.type]:ItemIsAllowed(v) or
+                    (target.type == "player" and inv.type == "player" and QBCore.Shared.Items[v.name]["not_searchable"]) then
                     items[insertId].disabled = true
                 end
             end
@@ -837,12 +838,12 @@ function Inventory.TransfertItem(source, invSource, invTarget, item, amount, met
         return
     end
 
-    if not _G.Container[invSource.type]:CanGetContentInInventory(item) then
+    if not _G.Container[invSource.type]:CanGetContentInInventory(invSource) then
         cb(false, "get_not_allowed")
         return
     end
 
-    if not _G.Container[invTarget.type]:CanPutContentInInventory(item) then
+    if not _G.Container[invTarget.type]:CanPutContentInInventory(invTarget) then
         cb(false, "put_not_allowed")
         return
     end
@@ -923,12 +924,12 @@ function Inventory.SortInventoryAZ(inv, cb)
         inv = Inventory(inv)
     end
 
-    if not _G.Container[inv.type]:CanGetContentInInventory(item) then
+    if not _G.Container[inv.type]:CanGetContentInInventory(inv) then
         cb(false, "get_not_allowed")
         return
     end
 
-    if not _G.Container[inv.type]:CanPutContentInInventory(item) then
+    if not _G.Container[inv.type]:CanPutContentInInventory(inv) then
         cb(false, "put_not_allowed")
         return
     end
@@ -1197,9 +1198,13 @@ function GetOrCreateInventory(storageType, invID, ctx)
         if targetInv == nil then
             targetInv = Inventory.Create("inverter_" .. invID, invID, storageType, storageConfig.slot, storageConfig.weight, "upw")
         end
-    elseif storageType == "smuggling_box" or storageType == "smuggling_blackmarket" or "smuggling_connected" then
+    elseif storageType == "smuggling_box" or storageType == "smuggling_blackmarket" or storageType == "smuggling_connected" then
         if targetInv == nil then
-            targetInv = Inventory.Create(invID, invID, storageType, storageConfig.slot, storageConfig.weight, invID)
+            targetInv = Inventory.Create(invID, invID, storageType, storageConfig.slot, storageConfig.weight, ctx and ctx.entity or invID)
+        end
+    elseif storageType == "distillery" then
+        if targetInv == nil then
+            targetInv = Inventory.Create(invID, invID, storageType, storageConfig.slot, storageConfig.weight, ctx.entity)
         end
     end
 
@@ -1332,3 +1337,10 @@ local function ErrorMessage(reason)
     return Config.ErrorMessage[reason] or reason
 end
 exports("ErrorMessage", ErrorMessage)
+
+local function Delete(inv)
+    Inventory.Remove(inv)
+    MySQL.query("DELETE FROM storages WHERE NAME = ? ", {inv})
+
+end
+exports("Delete", Delete)

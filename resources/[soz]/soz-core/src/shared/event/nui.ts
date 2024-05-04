@@ -479,6 +479,7 @@ export enum NuiEvent {
     BusinessSmugglingHarvestDelete = 'soz-core:client:business:smuggling:harvest-delete',
     BusinessSmugglingHarvestRename = 'soz-core:client:business:smuggling:harvest-rename',
     BusinessSmugglingHarvestPropAdd = 'soz-core:client:business:smuggling:harvest-prop-add',
+    BusinessSmugglingHarvestPropTP = 'soz-core:client:business:smuggling:harvest-prop-tp',
     BusinessSmugglingHarvestPropUpdate = 'soz-core:client:business:smuggling:harvest-prop-update',
     BusinessSmugglingHarvestPosition = 'soz-core:client:business:smuggling:harvest-position',
 

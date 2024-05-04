@@ -135,19 +135,19 @@ function InventoryContainer:CanPlayerUseInventory(owner, playerId)
     end
 end
 
-function InventoryContainer:CanGetContentInInventory()
+function InventoryContainer:CanGetContentInInventory(inv)
     if not self.inventoryGetContentCallback then
         return true
     end
 
-    return self.inventoryGetContentCallback()
+    return self.inventoryGetContentCallback(inv)
 end
-function InventoryContainer:CanPutContentInInventory()
+function InventoryContainer:CanPutContentInInventory(inv)
     if not self.inventoryPutContentCallback then
         return true
     end
 
-    return self.inventoryPutContentCallback()
+    return self.inventoryPutContentCallback(inv)
 end
 
 function InventoryContainer:IsDatastore()

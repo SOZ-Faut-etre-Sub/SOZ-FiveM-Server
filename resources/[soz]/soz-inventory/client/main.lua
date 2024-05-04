@@ -168,7 +168,7 @@ RegisterNUICallback("sortItem", function(data, cb)
         if not success then
             exports["soz-core"]:DrawNotification(Config.ErrorMessage[reason] or reason, "error")
         end
-    end, data.inventory, data.inventory, data.item.name, tonumber(amount) or 0, data.item.metadata, data.item.slot, data.slot, data.manualFilter)
+    end, data.inventory, data.inventory, data.item.name, tonumber(amount) or 0, data.item.metadata, data.item.slot, data.slot, data.targetInventory)
 end)
 
 RegisterNUICallback("sortInventoryAZ", function(data, cb)

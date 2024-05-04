@@ -487,18 +487,6 @@ Container["metal_converter"] = InventoryContainer:new({
     type = "metal_converter",
     allowedTypes = {"metal"},
     inventoryPermissionCallback = canAccessConverter,
-    syncCallback = function(id, items)
-        local inv = GetOrCreateInventory("metal_converter", id)
-        if not inv then
-            return false
-        end
-        if table.length(inv.users) > 0 then
-            for player, _ in pairs(inv.users) do
-                TriggerClientEvent("inventory:client:updateTargetStoragesState", player, inv)
-            end
-        end
-
-    end,
 })
 
 Container["metal_incinerator"] = InventoryContainer:new({
@@ -554,5 +542,16 @@ Container["recycler_processing"] = InventoryContainer:new({
     inventoryPermissionCallback = playerHaveJobAndDuty,
     inventoryGetContentCallback = function()
         return false
+    end,
+})
+
+Container["distillery"] = InventoryContainer:new({
+    type = "distillery",
+    allowedItems = {"smuggling_flower_zoublon"},
+    inventoryGetContentCallback = function(inv, item)
+        return exports["soz-core"]:CanUpdateDistillery(inv.id, inv.owner)
+    end,
+    inventoryPutContentCallback = function(inv, item)
+        return exports["soz-core"]:CanUpdateDistillery(inv.id, inv.owner)
     end,
 })
