@@ -482,6 +482,7 @@ export enum NuiEvent {
     BusinessSmugglingHarvestPropTP = 'soz-core:client:business:smuggling:harvest-prop-tp',
     BusinessSmugglingHarvestPropUpdate = 'soz-core:client:business:smuggling:harvest-prop-update',
     BusinessSmugglingHarvestPosition = 'soz-core:client:business:smuggling:harvest-position',
+    BusinessSmugglingExportContainer = 'soz-core:client:business:smuggling:export-container',
 
     AdminDoorSetState = 'soz-core:client:door:set-state',
     AdminDoorAddSub = 'soz-core:client:door:add-subdoor',

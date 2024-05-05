@@ -77,6 +77,7 @@ Container["trunk"] = InventoryContainer:new({
         "drug_pot",
         "tool",
         "veh_biz_piece",
+        "smuggling_export",
     },
 })
 
@@ -108,6 +109,7 @@ Container["temporary_trunk"] = InventoryDatastore:new({
         "drug_pot",
         "tool",
         "veh_biz_piece",
+        "smuggling_export",
     },
 })
 
@@ -143,6 +145,7 @@ Container["trash"] = InventoryContainer:new({
         "crate",
         "drug_pot",
         "veh_biz_piece",
+        "smuggling_export",
     },
 })
 
@@ -180,6 +183,7 @@ Container["seizure"] = InventoryContainer:new({
         "tool",
         "evidence",
         "veh_biz_piece",
+        "smuggling_export",
     },
     inventoryPermissionCallback = playerHaveStorageAccessAndDuty,
 })
@@ -240,6 +244,7 @@ Container["bin"] = InventoryDatastore:new({
         "tool",
         "metal",
         "veh_biz_piece",
+        "smuggling_export",
     },
     populateDatastoreCallback = function()
         local inventory = {}
@@ -294,6 +299,7 @@ Container["house_stash"] = InventoryContainer:new({
         "tool",
         "edvidence",
         "veh_biz_piece",
+        "smuggling_export",
     },
 })
 Container["house_fridge"] = InventoryContainer:new({
@@ -396,6 +402,7 @@ Container["smuggling_box"] = InventoryDatastore:new({
         "weapon_ammo",
         "evidence",
         "veh_biz_piece",
+        "smuggling_export",
     },
 })
 
@@ -431,6 +438,7 @@ Container["smuggling_blackmarket"] = InventoryContainer:new({
         "weapon_ammo",
         "evidence",
         "veh_biz_piece",
+        "smuggling_export",
     },
 })
 
@@ -466,8 +474,11 @@ Container["smuggling_connected"] = InventoryContainer:new({
         "weapon_ammo",
         "evidence",
         "veh_biz_piece",
+        "smuggling_export",
     },
 })
+
+Container["smuggling_export"] = InventoryDatastore:new({type = "smuggling_export", allowedTypes = {"smuggling_export"}})
 
 --- Jobs DMC
 

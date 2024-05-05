@@ -98,6 +98,7 @@ export type Vfx = {
     duration?: number[];
     delay?: number;
     net?: boolean;
+    rgb?: Vector3;
 };
 
 export type AnimationProps = {

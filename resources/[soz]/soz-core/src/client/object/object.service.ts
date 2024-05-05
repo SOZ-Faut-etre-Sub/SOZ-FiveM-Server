@@ -74,12 +74,12 @@ export class ObjectService {
 
         this.resourceLoader.unloadModel(model);
 
-        this.updateObject(entity, object);
+        await this.updateObject(entity, object);
 
         return entity;
     }
 
-    public updateObject(entity: number, object: WorldObject) {
+    public async updateObject(entity: number, object: WorldObject) {
         const model = GetEntityModel(entity);
 
         SetEntityHeading(entity, object.position[3]);
@@ -117,6 +117,30 @@ export class ObjectService {
 
         SetEntityCollision(entity, !object.noCollision, false);
         SetEntityInvincible(entity, true);
+
+        RemoveParticleFxFromEntity(entity);
+        if (object.vfx) {
+            await this.resourceLoader.loadPtfxAsset(object.vfx.dictionary);
+            UseParticleFxAsset(object.vfx.dictionary);
+            const fx = StartParticleFxLoopedOnEntity(
+                object.vfx.name,
+                entity,
+                object.vfx.position[0],
+                object.vfx.position[1],
+                object.vfx.position[2],
+                object.vfx.rotation[0],
+                object.vfx.rotation[1],
+                object.vfx.rotation[2],
+                object.vfx.scale,
+                false,
+                false,
+                false
+            );
+            if (object.vfx.rgb) {
+                SetParticleFxLoopedColour(fx, object.vfx.rgb[0], object.vfx.rgb[1], object.vfx.rgb[2], true);
+            }
+            this.resourceLoader.unloadPtfxAsset(object.vfx.dictionary);
+        }
     }
 
     public deleteObject(entity: number, object: WorldObject) {

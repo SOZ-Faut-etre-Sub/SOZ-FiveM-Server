@@ -4,3 +4,7 @@ export const SmugglingBusinessImportContainerConfig = {
         container: 0,
     },
 };
+
+export const SmugglingBusinessExportContainerConfig = {
+    prop: 0,
+};

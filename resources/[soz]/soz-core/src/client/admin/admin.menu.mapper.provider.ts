@@ -1,4 +1,5 @@
 import {
+    SmugglingBusinessExportContainerConfig,
     SmugglingBusinessImportContainerConfig,
     SmugglingBusinessNetworkBox,
 } from '@private/shared/business.smuggling';
@@ -48,6 +49,7 @@ const ZoneProps: Partial<Record<ZoneType, number>> = {
     [ZoneType.VehBizDelivery]: VehicleBusinessExportContainerProp,
     [ZoneType.SmugglingBizStorage]: SmugglingBusinessNetworkBox,
     [ZoneType.SmugglingBizContainer]: SmugglingBusinessImportContainerConfig.props.container,
+    [ZoneType.SmugglingBizExport]: SmugglingBusinessExportContainerConfig.prop,
 };
 
 @Provider()
@@ -534,6 +536,7 @@ export class AdminMenuMapperProvider {
         if (ZoneProps[type]) {
             const object = await this.objectEditorProvider.createOrUpdateObject(ZoneProps[type], {
                 snapToGround: true,
+                allowToggleSnap: true,
                 allowScale: false,
                 context: 'admin',
             });

@@ -63,6 +63,7 @@ Config.StorageCapacity = {
     ["smuggling_blackmarket"] = {slot = 100, weight = 250000},
     ["smuggling_connected"] = {slot = 100, weight = 10000000},
     ["distillery"] = {slot = 100, weight = 48000},
+    ["smuggling_export"] = {slot = 100, weight = 5000000},
     --- Jobs DMC
     ["metal_converter"] = {slot = 100, weight = 500000},
     ["metal_incinerator"] = {slot = 100, weight = 500000},

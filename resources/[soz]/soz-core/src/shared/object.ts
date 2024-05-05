@@ -1,12 +1,15 @@
 import { TargetOptions } from '@public/client/target/target.factory';
 import { JobType } from '@public/shared/job';
 
+import { Vfx } from './animation';
 import { Vector3, Vector4 } from './polyzone/vector';
 
 export type WorldObjectMetadata = {
     gangId?: number;
     index?: number;
     zoneId?: string;
+    locked?: boolean;
+    closed?: boolean;
 };
 
 export type WorldObject = {
@@ -20,6 +23,7 @@ export type WorldObject = {
     invisible?: boolean;
     targets?: TargetOptions[];
     metadata?: WorldObjectMetadata;
+    vfx?: Vfx;
 };
 
 export type WorldPlacedProp = {

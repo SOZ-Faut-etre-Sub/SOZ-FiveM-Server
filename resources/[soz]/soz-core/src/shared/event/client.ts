@@ -370,6 +370,7 @@ export enum ClientEvent {
 
     GANG_SMUGGLING_BLACK_MARKET_BOX_USE = 'soz-core:client:gang:smuggling:black-market-box',
     GANG_SMUGGLING_CONNECTED_REFRESH = 'soz-core:client:gang:smuggling:connected-refresh',
+    GANG_SMUGGLING_EXPORT_POSITION = 'soz-core:client:gang:smuggling:export-position',
 
     GANG_CARTEL_CONTAINER_USE = 'soz-core:client:gang:container-use',
 }

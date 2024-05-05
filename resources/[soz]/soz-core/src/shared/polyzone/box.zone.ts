@@ -38,6 +38,7 @@ export enum ZoneType {
     VehBizGarage = 'VehBizGarage',
     SmugglingBizStorage = 'SmugglingBizStorage',
     SmugglingBizContainer = 'SmugglingBizContainer',
+    SmugglingBizExport = 'SmugglingBizExport',
 }
 
 export const ZoneTypeLabel: Record<ZoneType, string> = {
@@ -47,7 +48,8 @@ export const ZoneTypeLabel: Record<ZoneType, string> = {
     VehBizResell: 'VehBiz Resell',
     VehBizGarage: 'VehBiz Garage',
     SmugglingBizStorage: 'Coffre contrebande connecté',
-    SmugglingBizContainer: 'Conteneur de contrebande',
+    SmugglingBizContainer: 'Contrebande import',
+    SmugglingBizExport: 'Contrebande Export',
 };
 
 export type ZoneExtra = {
