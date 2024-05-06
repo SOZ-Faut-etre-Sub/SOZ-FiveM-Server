@@ -67,12 +67,7 @@ function InventoryContainer:CompactInventory(inv)
     return inventory
 end
 
-function InventoryContainer:GetCapacity()
-    local capacity = Config.StorageCapacity[self.type] or Config.StorageCapacity["default"]
-    return capacity.slot, capacity.weight
-end
-
-function InventoryContainer:LoadInventory(id, owner)
+function InventoryContainer:LoadInventory(id, owner, slots, max_weight)
     local result = nil
     if self.type == "player" then --- Special case for player inventory
         result = exports.oxmysql:scalar_async("SELECT inventory FROM player WHERE citizenid = ?", {owner})
@@ -84,7 +79,7 @@ function InventoryContainer:LoadInventory(id, owner)
         })
         if result == nil then
             exports.oxmysql:insert_async("INSERT INTO storages(name,type,owner,max_slots,max_weight) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE name=name",
-                                         {id, self.type, owner, self:GetCapacity()})
+                                         {id, self.type, owner, slots, max_weight})
         end
     end
     return result and json.decode(result) or {}

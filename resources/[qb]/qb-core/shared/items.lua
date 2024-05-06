@@ -10519,6 +10519,42 @@ QBShared.Items = {
         ['description'] = "",
         ['illustrator'] = ''
     },
+    ['smuggling_secret_stash_small'] = {
+        ['name'] = 'smuggling_secret_stash_small',
+        ['label'] = "Petite Cache secrète",
+        ['weight'] = 800,
+        ['useable'] = true,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['smuggling_secret_stash_medium'] = {
+        ['name'] = 'smuggling_secret_stash_medium',
+        ['label'] = "Moyenne Cache secrète",
+        ['weight'] = 1000,
+        ['useable'] = true,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['smuggling_secret_stash_big'] = {
+        ['name'] = 'smuggling_secret_stash_big',
+        ['label'] = "Grande Cache secrète",
+        ['weight'] = 1200,
+        ['useable'] = true,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
 
     
     --- Fishing Items

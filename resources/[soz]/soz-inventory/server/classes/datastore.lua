@@ -42,12 +42,7 @@ function InventoryDatastore:new(options)
     return setmetatable(inventoryOptions, self)
 end
 
-function InventoryDatastore:GetCapacity()
-    local capacity = Config.StorageCapacity[self.type] or Config.StorageCapacity["default"]
-    return capacity.slot, capacity.weight
-end
-
-function InventoryDatastore:LoadInventory(id, owner)
+function InventoryDatastore:LoadInventory(id, owner, slots, max_weight)
     local inventory = {}
 
     if self.populateDatastoreCallback then

@@ -1,9 +1,10 @@
-import { Once, OnceStep, OnNuiEvent } from '@public/core/decorators/event';
+import { Once, OnceStep, OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { uuidv4, wait } from '@public/core/utils';
-import { NuiEvent } from '@public/shared/event';
+import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
+import { InventoryItem } from '@public/shared/item';
 import { ObjectEditorOptions, WorldObject } from '@public/shared/object';
 import { getDistance, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 
@@ -395,5 +396,18 @@ export class ObjectEditorProvider {
         const [f, r, u, a] = GetEntityMatrix(entity);
 
         return new Float32Array([r[0], r[1], r[2], 0, f[0], f[1], f[2], 0, u[0], u[1], u[2], 0, a[0], a[1], a[2], 1]);
+    }
+
+    @OnEvent(ClientEvent.OBJECT_PLACE_ITEM)
+    public async placeItem(serverEvent: ServerEvent, model: string, inventoryItem: InventoryItem) {
+        const object = await this.createOrUpdateObject(GetHashKey(model), {
+            snapToGround: true,
+            allowScale: false,
+        });
+        if (!object) {
+            return;
+        }
+
+        TriggerServerEvent(serverEvent, object.position, inventoryItem);
     }
 }

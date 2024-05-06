@@ -538,6 +538,8 @@ export enum ServerEvent {
     GANG_SMUGGLING_ALCOHOL_DISTILLERY_SETUP = 'soz-core:server:gang:smuggling:distillery-setup',
     GANG_SMUGGLING_EXPORT = 'soz-core:server:gang:smuggling:export',
     GANG_SMUGGLING_ALCOHOL_EXPORT_CLOSE = 'soz-core:server:gang:smuggling:export-close',
+    GANG_SMUGGLING_SECRET_STASH_USE = 'soz-core:server:gang:smuggling:secret-stash-use',
+    GANG_SMUGGLING_SECRET_STASH_REMOVE = 'soz-core:server:gang:smuggling:secret-stash-remove',
 
     DOOR_ADD_UPDATE = 'soz-core:server:door:add-update',
     DOOR_DELETE = 'soz-core:server:door:delete',

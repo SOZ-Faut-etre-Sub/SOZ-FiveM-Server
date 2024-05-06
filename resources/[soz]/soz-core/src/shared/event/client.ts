@@ -132,6 +132,7 @@ export enum ClientEvent {
     OBJECT_CREATE = 'soz-core:client:object:create',
     OBJECT_DELETE = 'soz-core:client:object:delete',
     OBJECT_EDIT = 'soz-core:client:object:edit',
+    OBJECT_PLACE_ITEM = 'soz-core:client:object:place',
 
     PROP_OPEN_MENU = 'soz-core:client:prop:open-menu',
 
@@ -368,7 +369,6 @@ export enum ClientEvent {
     GANG_VEHBIZ_NPC_RELEASE = 'soz-core:client:gang:veh:npc-release',
     GANG_VEHBIZ_NPC_CHASE = 'soz-core:client:gang:veh:npc-chase',
 
-    GANG_SMUGGLING_BLACK_MARKET_BOX_USE = 'soz-core:client:gang:smuggling:black-market-box',
     GANG_SMUGGLING_CONNECTED_REFRESH = 'soz-core:client:gang:smuggling:connected-refresh',
     GANG_SMUGGLING_EXPORT_POSITION = 'soz-core:client:gang:smuggling:export-position',
 

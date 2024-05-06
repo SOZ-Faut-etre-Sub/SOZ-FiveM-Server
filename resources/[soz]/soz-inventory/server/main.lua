@@ -76,7 +76,7 @@ function Inventory.Create(id, label, invType, slots, maxWeight, owner, items)
         }
 
         if not self.items then
-            self.items, self.weight, self.datastore = Inventory.Load(self.id, self.type, self.owner)
+            self.items, self.weight, self.datastore = Inventory.Load(self.id, self.type, self.owner, self.slots, self.maxWeight)
         elseif self.weight == 0 and next(self.items) then
             self.weight = Inventory.CalculateWeight(self.items)
         end
@@ -88,12 +88,12 @@ function Inventory.Create(id, label, invType, slots, maxWeight, owner, items)
     end
 end
 
-function Inventory.Load(id, invType, owner)
+function Inventory.Load(id, invType, owner, slots, maxWeight)
     local datastore, result = nil, nil
 
     if (id or owner) and invType then
         datastore = _G.Container[invType]:IsDatastore()
-        result = _G.Container[invType]:LoadInventory(id, owner)
+        result = _G.Container[invType]:LoadInventory(id, owner, slots, maxWeight)
     end
 
     local returnData, weight = {}, 0
@@ -1200,7 +1200,8 @@ function GetOrCreateInventory(storageType, invID, ctx)
         end
     elseif storageType == "smuggling_box" or storageType == "smuggling_blackmarket" or storageType == "smuggling_connected" or storageType == "smuggling_export" then
         if targetInv == nil then
-            targetInv = Inventory.Create(invID, invID, storageType, storageConfig.slot, storageConfig.weight, ctx and ctx.entity or invID)
+            targetInv = Inventory.Create(invID, invID, storageType, storageConfig.slot, ctx.model or storageConfig.weight,
+                                         ctx and "gang_" .. ctx.entity or invID)
         end
     elseif storageType == "distillery" then
         if targetInv == nil then

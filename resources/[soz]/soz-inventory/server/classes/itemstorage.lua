@@ -41,7 +41,7 @@ function InventoryItemStorage:new(options)
     return setmetatable(inventoryOptions, self)
 end
 
-function InventoryItemStorage:LoadInventory(id, owner)
+function InventoryItemStorage:LoadInventory(id, owner, slots, max_weight)
     return {}
 end
 
