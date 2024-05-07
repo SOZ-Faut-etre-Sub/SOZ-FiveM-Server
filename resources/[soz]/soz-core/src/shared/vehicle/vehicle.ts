@@ -8,7 +8,6 @@ import { JobType } from '../job';
 import { NamedZone } from '../polyzone/box.zone';
 import { Vector3, Vector4 } from '../polyzone/vector';
 import { AuctionVehicle } from './auction';
-import { DealershipId } from './dealership';
 import { VehicleConfiguration, VehicleHandlingType } from './modification';
 
 export type Vehicle = {

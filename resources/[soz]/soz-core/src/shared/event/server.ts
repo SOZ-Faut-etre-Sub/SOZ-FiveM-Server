@@ -547,6 +547,8 @@ export enum ServerEvent {
     GANG_SMUGGLING_PRINTER_STOP = 'soz-core:server:gang:smuggling:printer-stop',
     GANG_SMUGGLING_PRINTER_RETRIEVE = 'soz-core:server:gang:smuggling:printer-retrieve',
     GANG_SMUGGLING_PRINTER_REMOVE = 'soz-core:server:gang:smuggling:printer-remove',
+    GANG_SMUGGLING_MINE_PUT_C4 = 'soz-core:server:gang:smuggling:mine-putting-c4',
+    GANG_SMUGGLING_GETTING_ORE = 'soz-core:server:gang:smuggling:mine-getting-ore',
 
     DOOR_ADD_UPDATE = 'soz-core:server:door:add-update',
     DOOR_DELETE = 'soz-core:server:door:delete',

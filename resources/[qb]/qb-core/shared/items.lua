@@ -10555,6 +10555,66 @@ QBShared.Items = {
         ['description'] = "",
         ['illustrator'] = ''
     },
+    ['smuggling_gold_ore'] = {
+        ['name'] = 'smuggling_gold_ore',
+        ['label'] = "Minerai d'or",
+        ['weight'] = 200,
+        ['useable'] = false,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['smuggling_emerald_ore'] = {
+        ['name'] = 'smuggling_emerald_ore',
+        ['label'] = "Minerai d'émeraude",
+        ['weight'] = 200,
+        ['useable'] = false,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['smuggling_diamond_ore'] = {
+        ['name'] = 'smuggling_diamond_ore',
+        ['label'] = "Minerai de diamant",
+        ['weight'] = 200,
+        ['useable'] = false,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['smuggling_ruby_ore'] = {
+        ['name'] = 'smuggling_ruby_ore',
+        ['label'] = "Minerai de ruby",
+        ['weight'] = 200,
+        ['useable'] = false,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['smuggling_rock_piercer'] = {
+        ['name'] = 'smuggling_rock_piercer',
+        ['label'] = "Perce-Roche",
+        ['weight'] = 2000,
+        ['useable'] = false,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
     ['smuggling_3d_printer'] = {
         ['name'] = 'smuggling_3d_printer',
         ['label'] = "Imprimante 3D",

@@ -643,7 +643,7 @@ export class VehicleDealershipProvider {
         ) {
             if (IsPedArmed(playerPed, 1 | 2 | 4)) {
                 const player = this.playerService.getPlayer();
-                if (player && !(PUBLIC_SERVICES.includes(player.job.id) && this.playerService.isOnDuty())) {
+                if (player && !(PUBLIC_SERVICES.includes(player.job.id) && player.job.onduty)) {
                     this.secondPastInZone++;
                     resetTimer = false;
                 }
