@@ -8,7 +8,7 @@ import { ObjectService } from '@public/client/object/object.service';
 import { getProperGroundPositionForObject } from '@public/client/object/object.utils';
 import { TargetFactory } from '@public/client/target/target.factory';
 import { Command } from '@public/core/decorators/command';
-import { Tick } from '@public/core/decorators/tick';
+import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { wait } from '@public/core/utils';
 import { getChunkId, getGridChunks } from '@public/shared/grid';
 import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
@@ -316,6 +316,15 @@ export class ObjectProvider {
             matrix[13],
             matrix[14] // Position
         );
+    }
+
+    @Tick(TickInterval.EVERY_MINUTE, 'object-scale')
+    public async objectScale() {
+        for (const obj of Object.values(this.loadedObjects)) {
+            if (obj.object.growth) {
+                this.objectService.computeGrowth(obj.entity, obj.object);
+            }
+        }
     }
 
     @Tick(30000, 'object-spawn-check')

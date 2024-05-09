@@ -105,6 +105,8 @@ export class ObjectService {
                 }
             }
             this.applyEntityMatrix(entity, object.matrix);
+        } else if (object.growth) {
+            this.computeGrowth(entity, object);
         }
 
         if (object.rotation) {
@@ -204,6 +206,38 @@ export class ObjectService {
             0,
             0,
             1, // Up
+            matrix[12],
+            matrix[13],
+            matrix[14] // Position
+        );
+    }
+
+    public computeGrowth(entity: number, object: WorldObject) {
+        let ratio = object.growth.endSize;
+        if (Date.now() < object.growth.beginTime) {
+            ratio = object.growth.beginSize;
+        } else if (Date.now() < object.growth.endTime) {
+            ratio =
+                ((Date.now() - object.growth.beginTime) / (object.growth.endTime - object.growth.beginTime)) *
+                    (object.growth.endSize - object.growth.beginSize) +
+                object.growth.beginSize;
+        }
+        const matrix = this.getEntityMatrix(entity);
+        matrix[0] = ratio;
+        matrix[5] = ratio;
+        matrix[10] = ratio;
+
+        SetEntityMatrix(
+            entity,
+            matrix[4],
+            matrix[5],
+            matrix[6], // Right
+            matrix[0],
+            matrix[1],
+            matrix[2], // Forward
+            matrix[8],
+            matrix[9],
+            matrix[10], // Up
             matrix[12],
             matrix[13],
             matrix[14] // Position

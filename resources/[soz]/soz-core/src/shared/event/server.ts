@@ -531,6 +531,7 @@ export enum ServerEvent {
     GANG_SMUGGLING_HARVEST_TAKE = 'soz-core:server:gang:smuggling:harvest-take',
     GANG_SMUGGLING_HARVEST_SIGNAL = 'soz-core:server:gang:smuggling:harvest-signal',
     GANG_SMUGGLING_TOBACCO_STIR = 'soz-core:server:gang:smuggling:tobacco-stir',
+    GANG_SMUGGLING_TOBACCO_CHECK = 'soz-core:server:gang:smuggling:tobacco-check',
     GANG_SMUGGLING_TOBACCO_HARVEST = 'soz-core:server:gang:smuggling:tobacco-harvest',
     GANG_SMUGGLING_TOBACCO_DESTROY = 'soz-core:server:gang:smuggling:tobacco-destroy',
     GANG_SMUGGLING_ALCOHOL_DISTILLERY_SWITCH = 'soz-core:server:gang:smuggling:distillery-switch',

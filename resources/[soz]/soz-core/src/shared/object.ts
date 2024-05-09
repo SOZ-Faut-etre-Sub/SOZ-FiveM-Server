@@ -12,6 +12,13 @@ export type WorldObjectMetadata = {
     closed?: boolean;
 };
 
+export type WorldObjectGrowth = {
+    beginTime: number;
+    endTime: number;
+    beginSize: number;
+    endSize: number;
+};
+
 export type WorldObject = {
     id: string;
     model: number;
@@ -24,6 +31,7 @@ export type WorldObject = {
     targets?: TargetOptions[];
     metadata?: WorldObjectMetadata;
     vfx?: Vfx;
+    growth?: WorldObjectGrowth;
 };
 
 export type WorldPlacedProp = {
