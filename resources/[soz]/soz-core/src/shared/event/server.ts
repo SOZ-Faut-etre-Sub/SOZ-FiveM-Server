@@ -541,6 +541,12 @@ export enum ServerEvent {
     GANG_SMUGGLING_ALCOHOL_EXPORT_CLOSE = 'soz-core:server:gang:smuggling:export-close',
     GANG_SMUGGLING_SECRET_STASH_USE = 'soz-core:server:gang:smuggling:secret-stash-use',
     GANG_SMUGGLING_SECRET_STASH_REMOVE = 'soz-core:server:gang:smuggling:secret-stash-remove',
+    GANG_SMUGGLING_PRINTER_USE = 'soz-core:server:gang:smuggling:printer-use',
+    GANG_SMUGGLING_PRINTER_START = 'soz-core:server:gang:smuggling:printer-start',
+    GANG_SMUGGLING_PRINTER_CHECK = 'soz-core:server:gang:smuggling:printer-check',
+    GANG_SMUGGLING_PRINTER_STOP = 'soz-core:server:gang:smuggling:printer-stop',
+    GANG_SMUGGLING_PRINTER_RETRIEVE = 'soz-core:server:gang:smuggling:printer-retrieve',
+    GANG_SMUGGLING_PRINTER_REMOVE = 'soz-core:server:gang:smuggling:printer-remove',
 
     DOOR_ADD_UPDATE = 'soz-core:server:door:add-update',
     DOOR_DELETE = 'soz-core:server:door:delete',

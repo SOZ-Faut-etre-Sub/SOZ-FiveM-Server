@@ -154,6 +154,11 @@ RegisterNUICallback("player/giveItemToTarget", function(data, cb)
     local hit, endCoords, _, entityHit, entityType, _ = ScreenToWorld()
     SetNuiFocus(false, false)
 
+    if hit == 0 then
+        exports["soz-core"]:DrawNotification("Personne n'est à portée de vous", "error")
+        cb(true)
+    end
+
     if hit == 1 and entityType == 1 then
         local amount = data.amount
 
@@ -185,29 +190,7 @@ RegisterNUICallback("player/giveItemToTarget", function(data, cb)
             end
         end
     else
-        local printers = {
-            [GetHashKey("prop_printer_01")] = true,
-            [GetHashKey("prop_printer_02")] = true,
-            [GetHashKey("v_res_printer")] = true,
-            [GetHashKey("v_med_cor_photocopy")] = true,
-            [GetHashKey("prop_copier_01")] = true,
-        }
-        if entityHit and entityType > 0 and printers[GetEntityModel(entityHit)] then
-            TriggerServerEvent("soz-core:server:police:make-copy-detective-board", data)
-            cb(true)
-            return
-        end
-        if data.type == "evidence" and data.name ~= "scientist_photo" then
-            TriggerEvent("soz-core:client:police:analyze-evidence", data, {endCoords.x, endCoords.y, endCoords.z})
-            cb(true)
-            return
-        end
-        if data.name == "box_veh_strip_piece" then
-            TriggerEvent("soz-core:client:gang:veh:box-sell", data, {endCoords.x, endCoords.y, endCoords.z})
-            cb(true)
-            return
-        end
-        exports["soz-core"]:DrawNotification("Personne n'est à portée de vous", "error")
+        exports["soz-core"]:DragAndDrop(entityHit, entityType, {endCoords.x, endCoords.y, endCoords.z}, data)
     end
 
     cb(true)

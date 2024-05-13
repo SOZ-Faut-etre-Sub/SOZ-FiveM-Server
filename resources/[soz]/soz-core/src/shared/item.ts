@@ -28,7 +28,15 @@ export type ItemType =
     | 'fishing_garbage'
     | 'outfit'
     | 'tool'
-    | 'metal';
+    | 'evidence'
+    | 'metal'
+    | 'fishing_rod'
+    | 'fishing_bait'
+    | 'crate'
+    | 'drug_pot'
+    | 'energy'
+    | 'veh_biz_piece'
+    | 'smuggling_export';
 
 type BaseItem = {
     name: string;
@@ -291,6 +299,7 @@ export type InventoryItemMetadata = {
     storageElements?: InventoryItem[];
     keyid?: string;
     storageElements?: InventoryItem[];
+    printed?: boolean;
 };
 
 export type Inventory = {

@@ -10555,6 +10555,18 @@ QBShared.Items = {
         ['description'] = "",
         ['illustrator'] = ''
     },
+    ['smuggling_3d_printer'] = {
+        ['name'] = 'smuggling_3d_printer',
+        ['label'] = "Imprimante 3D",
+        ['weight'] = 5000,
+        ['useable'] = true,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
 
     
     --- Fishing Items
