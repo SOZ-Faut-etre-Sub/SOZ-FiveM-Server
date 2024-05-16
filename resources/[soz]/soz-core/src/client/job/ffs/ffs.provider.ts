@@ -49,7 +49,6 @@ export class FightForStyleProvider {
         this.nuiMenu.openMenu(MenuType.FightForStyleJobMenu, {
             recipes: crafting.categories,
             state: this.state,
-            onDuty: this.playerService.isOnDuty(),
         });
     }
 

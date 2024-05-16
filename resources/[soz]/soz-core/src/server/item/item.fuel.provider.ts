@@ -42,12 +42,6 @@ export class ItemFuelProvider {
     private vehicleRepository: VehicleRepository;
 
     public async useEssenceJerrycan(source: number, item: CommonItem, inventoryItem: InventoryItem) {
-        if (this.item.isItemExpired(inventoryItem)) {
-            this.notifier.notify(source, "L'essence du jerrycan est périmé.", 'error');
-
-            return;
-        }
-
         const closestVehicle = await this.vehicleSpawner.getClosestVehicle(source);
 
         if (!closestVehicle) {
@@ -93,15 +87,7 @@ export class ItemFuelProvider {
             return;
         }
 
-        if (
-            !this.inventoryManager.removeItemFromInventory(
-                source,
-                item.name,
-                1,
-                inventoryItem.metadata,
-                inventoryItem.slot
-            )
-        ) {
+        if (!this.inventoryManager.removeInventoryItem(source, inventoryItem)) {
             return;
         }
 
@@ -166,15 +152,7 @@ export class ItemFuelProvider {
             return;
         }
 
-        if (
-            !this.inventoryManager.removeItemFromInventory(
-                source,
-                item.name,
-                1,
-                inventoryItem.metadata,
-                inventoryItem.slot
-            )
-        ) {
+        if (!this.inventoryManager.removeInventoryItem(source, inventoryItem)) {
             return;
         }
 
@@ -231,15 +209,7 @@ export class ItemFuelProvider {
 
         const vehicleState = this.vehicleStateService.getVehicleState(closestVehicle.vehicleNetworkId);
 
-        if (
-            !this.inventoryManager.removeItemFromInventory(
-                source,
-                item.name,
-                1,
-                inventoryItem.metadata,
-                inventoryItem.slot
-            )
-        ) {
+        if (!this.inventoryManager.removeInventoryItem(source, inventoryItem)) {
             return;
         }
 
@@ -295,15 +265,7 @@ export class ItemFuelProvider {
             return;
         }
 
-        if (
-            !this.inventoryManager.removeItemFromInventory(
-                source,
-                item.name,
-                1,
-                inventoryItem.metadata,
-                inventoryItem.slot
-            )
-        ) {
+        if (!this.inventoryManager.removeInventoryItem(source, inventoryItem)) {
             return;
         }
 

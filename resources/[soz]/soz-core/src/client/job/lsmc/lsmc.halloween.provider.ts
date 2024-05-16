@@ -1,3 +1,5 @@
+import { JobType } from '@public/shared/job';
+
 import { Once } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
@@ -46,10 +48,7 @@ export class LSMCHalloweenProvider {
             {
                 label: 'Un fil qui dépasse...',
                 color: 'lsmc',
-                job: 'lsmc',
-                canInteract: () => {
-                    return this.playerService.isOnDuty();
-                },
+                job: JobType.LSMC,
                 action: this.doLoot.bind(this),
             },
         ]);

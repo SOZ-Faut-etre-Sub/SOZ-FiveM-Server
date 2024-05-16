@@ -141,6 +141,7 @@ export class VehicleFuelProvider {
                 label: "Remplir la station d'essence",
                 color: JobType.Oil,
                 icon: 'c:fuel/pistolet.png',
+                job: JobType.Oil,
                 action: entity => {
                     const station = this.fuelStationRepository.getStationForEntity(entity);
 
@@ -151,13 +152,7 @@ export class VehicleFuelProvider {
                     TriggerEvent(ClientEvent.OIL_REFILL_ESSENCE_STATION, entity, station.id);
                 },
                 canInteract: (entity: number) => {
-                    const player = this.playerService.getPlayer();
-
-                    if (!player) {
-                        return false;
-                    }
-
-                    if (!this.oilTankerProvider.currentTankerAttached || !player.job.onduty) {
+                    if (!this.oilTankerProvider.currentTankerAttached) {
                         return false;
                     }
 
@@ -169,7 +164,6 @@ export class VehicleFuelProvider {
 
                     return station.fuel === FuelType.Essence;
                 },
-                job: JobType.Oil,
                 blackoutGlobal: true,
                 blackoutJob: JobType.Oil,
             },
@@ -187,16 +181,6 @@ export class VehicleFuelProvider {
                     TriggerEvent(ClientEvent.OIL_REFILL_KEROSENE_STATION, entity, station.id);
                 },
                 canInteract: (entity: number) => {
-                    const player = this.playerService.getPlayer();
-
-                    if (!player) {
-                        return false;
-                    }
-
-                    if (!player.job.onduty) {
-                        return false;
-                    }
-
                     const station = this.fuelStationRepository.getStationForEntity(entity);
 
                     if (!station) {

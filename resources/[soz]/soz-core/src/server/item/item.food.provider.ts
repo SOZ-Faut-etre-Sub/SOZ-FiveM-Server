@@ -38,13 +38,7 @@ export class ItemFoodProvider {
                 { name: 'royal_vegetables', amount: 5 },
             ])
         ) {
-            this.inventoryManager.removeItemFromInventory(
-                source,
-                'meal_box',
-                1,
-                inventoryItem.metadata,
-                inventoryItem.slot
-            );
+            this.inventoryManager.removeInventoryItem(source, inventoryItem);
 
             this.inventoryManager.addItemToInventory(source, 'vegan_meal', 5, inventoryItem.metadata);
             this.inventoryManager.addItemToInventory(source, 'onigiri_assortment', 5, inventoryItem.metadata);

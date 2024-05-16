@@ -118,146 +118,65 @@ export class BennysVehicleProvider {
             {
                 icon: 'c:mechanic/repair_engine.png',
                 label: 'Réparer moteur',
-                color: 'bennys',
+                color: JobType.Bennys,
                 action: this.repairVehicleEngine.bind(this),
                 blackoutGlobal: true,
-                blackoutJob: 'bennys',
-                canInteract: entity => {
-                    const player = this.playerService.getPlayer();
-
-                    if (!player) {
-                        return false;
-                    }
-
-                    if (IsEntityDead(entity)) {
-                        return false;
-                    }
-
-                    if (!this.isInsideUpgradeZoneOrNearRepairVehicle()) {
-                        return false;
-                    }
-
-                    return player.job.onduty && player.job.id === JobType.Bennys;
-                },
+                blackoutJob: JobType.Bennys,
+                job: JobType.Bennys,
+                canInteract: entity => !IsEntityDead(entity) && this.isInsideUpgradeZoneOrNearRepairVehicle(),
             },
             {
                 icon: 'c:mechanic/reparer.png',
                 label: 'Réparer carrosserie',
-                color: 'bennys',
+                color: JobType.Bennys,
                 action: this.repairVehicleBody.bind(this),
                 blackoutGlobal: true,
-                blackoutJob: 'bennys',
-                canInteract: entity => {
-                    const player = this.playerService.getPlayer();
-
-                    if (!player) {
-                        return false;
-                    }
-
-                    if (IsEntityDead(entity)) {
-                        return false;
-                    }
-
-                    if (!this.isInsideUpgradeZoneOrNearRepairVehicle()) {
-                        return false;
-                    }
-
-                    return player.job.onduty && player.job.id === JobType.Bennys;
-                },
+                blackoutJob: JobType.Bennys,
+                job: JobType.Bennys,
+                canInteract: entity => !IsEntityDead(entity) && this.isInsideUpgradeZoneOrNearRepairVehicle(),
             },
             {
                 icon: 'c:mechanic/repair_tank.png',
                 label: 'Réparer réservoir',
-                color: 'bennys',
+                color: JobType.Bennys,
                 action: this.repairVehicleTank.bind(this),
                 blackoutGlobal: true,
-                blackoutJob: 'bennys',
-                canInteract: entity => {
-                    const player = this.playerService.getPlayer();
-
-                    if (!player) {
-                        return false;
-                    }
-
-                    if (IsEntityDead(entity)) {
-                        return false;
-                    }
-
-                    if (!this.isInsideUpgradeZoneOrNearRepairVehicle()) {
-                        return false;
-                    }
-
-                    if (isVehicleModelElectric(GetEntityModel(entity))) {
-                        return false;
-                    }
-
-                    return player.job.onduty && player.job.id === JobType.Bennys;
-                },
+                blackoutJob: JobType.Bennys,
+                job: JobType.Bennys,
+                canInteract: entity =>
+                    !IsEntityDead(entity) &&
+                    this.isInsideUpgradeZoneOrNearRepairVehicle() &&
+                    !isVehicleModelElectric(GetEntityModel(entity)),
             },
             {
                 icon: 'c:mechanic/repair_wheel.png',
                 label: 'Changement des roues',
-                color: 'bennys',
+                color: JobType.Bennys,
                 action: this.repairVehicleWheel.bind(this),
                 blackoutGlobal: true,
-                blackoutJob: 'bennys',
-                canInteract: entity => {
-                    const player = this.playerService.getPlayer();
-
-                    if (!player) {
-                        return false;
-                    }
-
-                    if (IsEntityDead(entity)) {
-                        return false;
-                    }
-
-                    if (!this.isInsideUpgradeZoneOrNearRepairVehicle()) {
-                        return false;
-                    }
-
-                    return player.job.onduty && player.job.id === JobType.Bennys;
-                },
+                blackoutJob: JobType.Bennys,
+                job: JobType.Bennys,
+                canInteract: entity => !IsEntityDead(entity) && this.isInsideUpgradeZoneOrNearRepairVehicle(),
             },
             {
                 icon: 'c:mechanic/nettoyer.png',
                 label: 'Laver',
-                color: 'bennys',
+                color: JobType.Bennys,
                 blackoutGlobal: true,
-                blackoutJob: 'bennys',
+                blackoutJob: JobType.Bennys,
                 action: this.washVehicle.bind(this),
-                canInteract: () => {
-                    const player = this.playerService.getPlayer();
-
-                    if (!player) {
-                        return false;
-                    }
-
-                    if (!this.isInsideUpgradeZoneOrNearRepairVehicle()) {
-                        return false;
-                    }
-
-                    return player.job.onduty && player.job.id === JobType.Bennys;
-                },
+                job: JobType.Bennys,
+                canInteract: entity => !IsEntityDead(entity) && this.isInsideUpgradeZoneOrNearRepairVehicle(),
             },
             {
                 icon: 'c:mechanic/repair_diag.png',
                 label: 'Faire un diagnostic',
-                color: 'bennys',
+                color: JobType.Bennys,
                 blackoutGlobal: true,
-                blackoutJob: 'bennys',
-                job: 'bennys',
+                blackoutJob: JobType.Bennys,
+                job: JobType.Bennys,
                 item: 'diagnostic_pad',
                 action: this.analyzeVehicle.bind(this),
-                canInteract: () => {
-                    const player = this.playerService.getPlayer();
-
-                    if (!player) {
-                        return false;
-                    }
-
-                    return player.job.onduty && player.job.id === JobType.Bennys;
-                },
             },
         ]);
     }
@@ -487,15 +406,12 @@ export class BennysVehicleProvider {
             {
                 label: 'Commander une voiture',
                 icon: 'c:/mechanic/order.png',
-                color: 'bennys',
-                job: 'bennys',
-                blackoutJob: 'bennys',
+                color: JobType.Bennys,
+                job: JobType.Bennys,
+                blackoutJob: JobType.Bennys,
                 blackoutGlobal: true,
                 canInteract: () => {
-                    return (
-                        this.playerService.isOnDuty() &&
-                        this.jobService.hasPermission(JobType.Bennys, JobPermission.BennysOrder)
-                    );
+                    return this.jobService.hasPermission(JobType.Bennys, JobPermission.BennysOrder);
                 },
                 action: async () => {
                     this.nuiMenu.openMenu(

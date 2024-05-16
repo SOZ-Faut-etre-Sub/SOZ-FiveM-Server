@@ -1,3 +1,5 @@
+import { ItemService } from '@public/server/item/item.service';
+
 import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
@@ -27,9 +29,15 @@ export class BaunResellProvider {
     @Inject(BankService)
     private bankService: BankService;
 
+    @Inject(ItemService)
+    private itemService: ItemService;
+
     @OnEvent(ServerEvent.BAUN_RESELL)
     public async onResell(source: number) {
-        const item = this.inventoryManager.getFirstItemInventory(source, 'cocktail_box');
+        const item = this.inventoryManager.findItem(
+            source,
+            item => item.name == 'cocktail_box' && !this.itemService.isItemExpired(item)
+        );
 
         if (!item) {
             return;
@@ -52,7 +60,7 @@ export class BaunResellProvider {
             return;
         }
 
-        this.inventoryManager.removeItemFromInventory(source, 'cocktail_box', item.amount);
+        this.inventoryManager.removeInventoryItem(source, item, item.amount);
 
         const totalAmount = item.amount * BaunConfig.Resell.reward;
         await this.bankService.transferFarmMoney(source, 'farm_baun', 'safe_baun', totalAmount);

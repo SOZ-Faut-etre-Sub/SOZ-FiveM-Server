@@ -55,7 +55,7 @@ export class CraftService {
                                 return false;
                             }
                         }
-                        return this.playerService.isOnDuty();
+                        return true;
                     },
                     action: async () => {
                         const crafting = await emitRpc<CraftsList>(RpcServerEvent.CRAFT_GET_RECIPES, job);

@@ -18,7 +18,6 @@ export type DmcConverterState = {
 };
 
 export type DmcJobMenuData = {
-    onDuty: boolean;
     blipState: {
         'job:dmc:iron_mine': boolean;
         'job:dmc:aluminium_mine': boolean;

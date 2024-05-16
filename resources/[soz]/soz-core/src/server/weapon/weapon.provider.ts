@@ -285,7 +285,10 @@ export class WeaponProvider {
             return;
         }
 
-        const ammo = this.inventoryManager.getItem(source, ammoName);
+        const ammo = this.inventoryManager.findItem(
+            source,
+            item => item.name == ammoName && !this.item.isItemExpired(item)
+        );
         if (!ammo) {
             return;
         }
@@ -300,7 +303,7 @@ export class WeaponProvider {
             return;
         }
 
-        if (!this.inventoryManager.removeItemFromInventory(source, ammo.name, 1, ammo.metadata, ammo.slot)) {
+        if (!this.inventoryManager.removeInventoryItem(source, ammo)) {
             return;
         }
 

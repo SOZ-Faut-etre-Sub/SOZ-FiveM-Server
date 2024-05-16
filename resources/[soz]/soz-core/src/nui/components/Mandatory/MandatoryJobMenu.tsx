@@ -1,3 +1,4 @@
+import { usePlayer } from '@public/nui/hook/data';
 import { FunctionComponent } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
@@ -15,15 +16,15 @@ import {
 
 type MandatoryStateProps = {
     data: {
-        onDuty: boolean;
         displayRadar: boolean;
     };
 };
 
 export const MandatoryJobMenu: FunctionComponent<MandatoryStateProps> = ({ data }) => {
     const banner = 'https://nui-img/soz/menu_job_mdr';
+    const player = usePlayer();
 
-    if (!data.onDuty) {
+    if (!player.job.onduty) {
         return (
             <Menu type={MenuType.MandatoryJobMenu}>
                 <MainMenu>

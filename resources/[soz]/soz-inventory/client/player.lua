@@ -236,7 +236,7 @@ exports("hasPhone", function()
 
     local hasphone = false
     for _, item in pairs(PlayerData.items) do
-        if item.name == "phone" then
+        if item.name == "phone" and not exports["soz-core"]:ItemIsExpired(item) then
             hasphone = true
             break
         end

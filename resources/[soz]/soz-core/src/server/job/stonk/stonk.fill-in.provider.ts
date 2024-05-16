@@ -169,7 +169,10 @@ export class StonkFillInProvider {
             return [false, 0];
         }
 
-        const items = this.inventoryManager.getFirstItemInventory(source, item);
+        const items = this.inventoryManager.findItem(
+            source,
+            elem => elem.name == item && this.itemService.isItemExpired(elem)
+        );
         let fillInAmount = await this.numberOfItemsRequired(item, maxBalance, accountName);
 
         if (!items || fillInAmount == 0) {
@@ -184,7 +187,7 @@ export class StonkFillInProvider {
             fillInAmount = items.amount;
         }
 
-        const removeRequest = this.inventoryManager.removeItemFromInventory(source, item, fillInAmount);
+        const removeRequest = this.inventoryManager.removeNotExpiredItem(source, item, fillInAmount);
 
         return [removeRequest, fillInAmount];
     }

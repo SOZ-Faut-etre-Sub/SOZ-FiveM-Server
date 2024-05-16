@@ -45,10 +45,6 @@ export class FDFTreeProvider {
                     blackoutGlobal: true,
                     job: JobType.FDF,
                     canInteract: async entity => {
-                        if (!this.playerService.isOnDuty()) {
-                            return false;
-                        }
-
                         const [field, id] = this.getFieldId(entity);
                         if (!field) {
                             return false;
@@ -91,10 +87,6 @@ export class FDFTreeProvider {
                     blackoutGlobal: true,
                     job: JobType.FDF,
                     canInteract: async entity => {
-                        if (!this.playerService.isOnDuty()) {
-                            return false;
-                        }
-
                         const [field, id] = this.getFieldId(entity);
                         if (!field) {
                             return false;
@@ -154,10 +146,6 @@ export class FDFTreeProvider {
                     blackoutGlobal: true,
                     job: JobType.FDF,
                     canInteract: async entity => {
-                        if (!this.playerService.isOnDuty()) {
-                            return false;
-                        }
-
                         const [field, id] = this.getFieldId(entity);
                         if (!field) {
                             return false;
@@ -216,10 +204,6 @@ export class FDFTreeProvider {
                     blackoutGlobal: true,
                     job: JobType.FDF,
                     canInteract: async entity => {
-                        if (!this.playerService.isOnDuty()) {
-                            return false;
-                        }
-
                         const [field, id] = this.getFieldId(entity);
                         if (!field) {
                             return false;

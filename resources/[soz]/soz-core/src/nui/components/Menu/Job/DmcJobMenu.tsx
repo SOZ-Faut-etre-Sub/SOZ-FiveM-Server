@@ -1,3 +1,4 @@
+import { usePlayer } from '@public/nui/hook/data';
 import { DmcJobMenuData } from '@public/shared/job/dmc';
 import { FunctionComponent } from 'react';
 
@@ -19,8 +20,9 @@ const labels = {
 
 export const DmcJobMenu: FunctionComponent<DmcStateProps> = ({ data }) => {
     const banner = 'https://cfx-nui-soz-core/public/images/banner/menu_job_dmc.webp';
+    const player = usePlayer();
 
-    if (!data.onDuty) {
+    if (!player.job.onduty) {
         return (
             <Menu type={MenuType.DmcJobMenu}>
                 <MainMenu>

@@ -113,12 +113,9 @@ export class Halloween2023Scenario2Provider {
                     {
                         label: 'Donner',
                         icon: 'c:pole/livrer.png',
+                        item: 'halloween_alien_artifact',
                         canInteract: () => {
-                            if (!this.storyService.canInteractForPart('halloween2023', 'scenario2', 6)) {
-                                return false;
-                            }
-
-                            return this.inventoryManager.hasEnoughItem('halloween_alien_artifact');
+                            return this.storyService.canInteractForPart('halloween2023', 'scenario2', 6);
                         },
                         action: async entity => {
                             TriggerServerEvent(ServerEvent.STORY_HALLOWEEN_2023_SCENARIO_2, 7);

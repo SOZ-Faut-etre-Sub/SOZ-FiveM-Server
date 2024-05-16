@@ -67,13 +67,13 @@ export class UpwVehicleProvider {
             return;
         }
 
-        if (!this.inventoryManager.addItemToInventory(source, 'empty_lithium_battery', 1).success) {
-            this.notifier.notify(source, 'Vous êtes ~r~trop chargé~s~ pour récupérer la batterie vide.', 'error');
+        if (!this.inventoryManager.removeNotExpiredItem(source, 'lithium_battery')) {
+            this.notifier.notify(source, "~r~Vous n'avez pas de batterie Lithium-ion.~s~", 'error');
             return;
         }
 
-        if (!this.inventoryManager.removeItemFromInventory(source, 'lithium_battery', 1)) {
-            this.notifier.notify(source, "~r~Vous n'avez pas de batterie Lithium-ion.~s~", 'error');
+        if (!this.inventoryManager.addItemToInventory(source, 'empty_lithium_battery', 1).success) {
+            this.notifier.notify(source, 'Vous êtes ~r~trop chargé~s~ pour récupérer la batterie vide.', 'error');
             return;
         }
 

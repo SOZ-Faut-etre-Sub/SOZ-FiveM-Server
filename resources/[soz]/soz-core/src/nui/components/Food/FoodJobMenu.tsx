@@ -1,4 +1,4 @@
-import { useItems } from '@public/nui/hook/data';
+import { useItems, usePlayer } from '@public/nui/hook/data';
 import { CraftCategory, CraftRecipe } from '@public/shared/craft/craft';
 import { FunctionComponent, useEffect, useState } from 'react';
 
@@ -27,7 +27,6 @@ type FoodStateProps = {
             displayEasterEggBlip: boolean;
             easterEnabled: boolean;
         };
-        onDuty: boolean;
     };
 };
 
@@ -36,6 +35,7 @@ export const FoodJobMenu: FunctionComponent<FoodStateProps> = ({ data }) => {
     const [blips, setBlips] = useState(null);
     const [currentRecipe, setCurrentRecipe] = useState<CraftRecipe>(null);
     const items = useItems();
+    const player = usePlayer();
 
     useEffect(() => {
         if (data && data.state) {
@@ -52,7 +52,7 @@ export const FoodJobMenu: FunctionComponent<FoodStateProps> = ({ data }) => {
         return null;
     }
 
-    if (!data.onDuty) {
+    if (!player.job.onduty) {
         return (
             <Menu type={MenuType.FoodJobMenu}>
                 <MainMenu>

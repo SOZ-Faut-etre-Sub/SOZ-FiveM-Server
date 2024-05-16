@@ -48,18 +48,9 @@ export class GouvRadarProvider {
                 job: JobType.Gouv,
                 blackoutJob: JobType.Gouv,
                 blackoutGlobal: true,
-                canInteract: entity => {
-                    const player = this.playerService.getPlayer();
-
-                    if (!player || !player.job.onduty) {
-                        return false;
-                    }
-                    if (!this.jobService.hasPermission(JobType.Gouv, JobPermission.GouvManageRadar)) {
-                        return false;
-                    }
-
-                    return this.getRadarId(entity) !== null;
-                },
+                canInteract: entity =>
+                    this.jobService.hasPermission(JobType.Gouv, JobPermission.GouvManageRadar) &&
+                    this.getRadarId(entity) !== null,
                 action: this.setRadarSpeed.bind(this),
             },
             {
@@ -69,12 +60,6 @@ export class GouvRadarProvider {
                 blackoutJob: JobType.Gouv,
                 blackoutGlobal: true,
                 canInteract: entity => {
-                    const player = this.playerService.getPlayer();
-
-                    if (!player || !player.job.onduty) {
-                        return false;
-                    }
-
                     if (!this.jobService.hasPermission(JobType.Gouv, JobPermission.GouvManageRadar)) {
                         return false;
                     }
@@ -104,12 +89,6 @@ export class GouvRadarProvider {
                 blackoutJob: JobType.Gouv,
                 blackoutGlobal: true,
                 canInteract: entity => {
-                    const player = this.playerService.getPlayer();
-
-                    if (!player || !player.job.onduty) {
-                        return false;
-                    }
-
                     if (!this.jobService.hasPermission(JobType.Gouv, JobPermission.GouvManageRadar)) {
                         return false;
                     }
@@ -139,12 +118,6 @@ export class GouvRadarProvider {
                 blackoutJob: JobType.Gouv,
                 blackoutGlobal: true,
                 canInteract: entity => {
-                    const player = this.playerService.getPlayer();
-
-                    if (!player || !player.job.onduty) {
-                        return false;
-                    }
-
                     if (!this.jobService.hasPermission(JobType.Gouv, JobPermission.GouvManageRadar)) {
                         return false;
                     }

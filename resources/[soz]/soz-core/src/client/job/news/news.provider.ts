@@ -86,7 +86,6 @@ export class NewsProvider {
                     job: JobType.News,
                     canInteract: () => {
                         return false;
-                        //return this.playerService.isOnDuty();
                     },
                 },
             ]
@@ -113,7 +112,6 @@ export class NewsProvider {
                     job: JobType.YouNews,
                     canInteract: () => {
                         return false;
-                        //return this.playerService.isOnDuty();
                     },
                 },
             ]
@@ -192,9 +190,6 @@ export class NewsProvider {
                         TriggerServerEvent(ServerEvent.NEWS_NEWSPAPER_SOLD);
                     },
                     job: player.job.id,
-                    canInteract: () => {
-                        return this.playerService.isOnDuty();
-                    },
                 },
             ]
         );

@@ -62,18 +62,7 @@ export class OilStationProvider {
                     job: JobType.Oil,
                     blackoutGlobal: true,
                     blackoutJob: JobType.Oil,
-                    canInteract: () => {
-                        const player = this.playerService.getPlayer();
-
-                        if (!player) {
-                            return false;
-                        }
-
-                        return (
-                            player.job.onduty &&
-                            this.jobService.hasPermission(JobType.Oil, JobPermission.FuelerChangePrice)
-                        );
-                    },
+                    canInteract: () => this.jobService.hasPermission(JobType.Oil, JobPermission.FuelerChangePrice),
                     action: () => {
                         this.updateStationPrice();
                     },

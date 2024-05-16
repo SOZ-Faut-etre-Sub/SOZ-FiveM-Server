@@ -38,18 +38,14 @@ export class FoodMealsProvider {
                     label: 'Commander',
                     icon: 'c:food/order.png',
                     job: 'food',
-                    canInteract: () => {
-                        return this.playerService.isOnDuty() && !this.orderInProgress;
-                    },
+                    canInteract: () => !this.orderInProgress,
                     action: this.doOrderMeals.bind(this),
                 },
                 {
                     label: 'Récupérer la commande',
                     icon: 'c:food/retrieve-order.png',
                     job: 'food',
-                    canInteract: () => {
-                        return this.playerService.isOnDuty() && this.orderInProgress;
-                    },
+                    canInteract: () => this.orderInProgress,
                     action: this.doRetrieveOrder.bind(this),
                 },
             ]

@@ -82,13 +82,9 @@ export class FDFFieldProvider {
                     blackoutGlobal: true,
                     job: JobType.FDF,
                     canInteract: async entity => {
-                        if (!this.playerService.isOnDuty()) {
-                            return false;
-                        }
-
                         const id = this.objectProvider.getIdFromEntity(entity);
                         if (!id) {
-                            return;
+                            return false;
                         }
 
                         const crop = await this.getCropStatus(id);
@@ -122,13 +118,9 @@ export class FDFFieldProvider {
                     blackoutGlobal: true,
                     job: JobType.FDF,
                     canInteract: async entity => {
-                        if (!this.playerService.isOnDuty()) {
-                            return false;
-                        }
-
                         const id = this.objectProvider.getIdFromEntity(entity);
                         if (!id) {
-                            return;
+                            return false;
                         }
 
                         const crop = await this.getCropStatus(id);
@@ -164,10 +156,6 @@ export class FDFFieldProvider {
                     blackoutGlobal: true,
                     job: JobType.FDF,
                     canInteract: async entity => {
-                        if (!this.playerService.isOnDuty()) {
-                            return false;
-                        }
-
                         const id = this.objectProvider.getIdFromEntity(entity);
                         if (!id) {
                             return false;
@@ -205,10 +193,6 @@ export class FDFFieldProvider {
                     blackoutGlobal: true,
                     job: JobType.FDF,
                     canInteract: async entity => {
-                        if (!this.playerService.isOnDuty()) {
-                            return false;
-                        }
-
                         const id = this.objectProvider.getIdFromEntity(entity);
                         if (!id) {
                             return false;
@@ -257,10 +241,6 @@ export class FDFFieldProvider {
                 blackoutGlobal: true,
                 job: JobType.FDF,
                 canInteract: async () => {
-                    if (!this.playerService.isOnDuty()) {
-                        return false;
-                    }
-
                     const coords = GetEntityCoords(PlayerPedId()) as Vector3;
                     const field = Object.keys(FDFFields).find(fieldId => FDFFields[fieldId].isPointInside(coords));
 
@@ -284,10 +264,6 @@ export class FDFFieldProvider {
                 blackoutGlobal: true,
                 job: JobType.FDF,
                 canInteract: async () => {
-                    if (!this.playerService.isOnDuty()) {
-                        return false;
-                    }
-
                     const coords = GetEntityCoords(PlayerPedId()) as Vector3;
                     const field = Object.keys(FDFFields).find(fieldId => FDFFields[fieldId].isPointInside(coords));
 
@@ -522,10 +498,6 @@ export class FDFFieldProvider {
                     job: JobType.FDF,
                     item: FDFCropConfig[type].seed,
                     canInteract: async () => {
-                        if (!this.playerService.isOnDuty()) {
-                            return false;
-                        }
-
                         return await this.getFieldPlowStatus(name);
                     },
                     action: async () => {
@@ -542,10 +514,6 @@ export class FDFFieldProvider {
                 blackoutGlobal: true,
                 job: JobType.FDF,
                 canInteract: async () => {
-                    if (!this.playerService.isOnDuty()) {
-                        return false;
-                    }
-
                     return !(await this.getFieldPlowStatus(name));
                 },
                 action: async () => {

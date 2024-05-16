@@ -80,10 +80,6 @@ export class LSMCInteractionProvider {
                 blackoutGlobal: true,
                 blackoutJob: 'lsmc',
                 canInteract: async entity => {
-                    if (!this.playerService.isOnDuty()) {
-                        return false;
-                    }
-
                     if (!hopital.isPointInside(GetEntityCoords(PlayerPedId()) as Vector3)) {
                         return false;
                     }
@@ -107,10 +103,6 @@ export class LSMCInteractionProvider {
                 blackoutGlobal: true,
                 blackoutJob: 'lsmc',
                 canInteract: async entity => {
-                    if (!this.playerService.isOnDuty()) {
-                        return false;
-                    }
-
                     if (!hopital.isPointInside(GetEntityCoords(PlayerPedId()) as Vector3)) {
                         return false;
                     }
@@ -145,10 +137,6 @@ export class LSMCInteractionProvider {
                 icon: 'c:ems/desabhiller.png',
                 job: JobType.LSMC,
                 canInteract: entity => {
-                    if (!this.playerService.isOnDuty()) {
-                        return false;
-                    }
-
                     if (!hopital.isPointInside(GetEntityCoords(PlayerPedId()) as Vector3)) {
                         return false;
                     }
@@ -171,10 +159,6 @@ export class LSMCInteractionProvider {
                 icon: 'c:ems/rhabiller.png',
                 job: JobType.LSMC,
                 canInteract: entity => {
-                    if (!this.playerService.isOnDuty()) {
-                        return false;
-                    }
-
                     if (!hopital.isPointInside(GetEntityCoords(PlayerPedId()) as Vector3)) {
                         return false;
                     }
@@ -197,10 +181,6 @@ export class LSMCInteractionProvider {
                 icon: 'c:ems/heal.png',
                 job: JobType.LSMC,
                 canInteract: entity => {
-                    if (!this.playerService.isOnDuty()) {
-                        return false;
-                    }
-
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
 
                     return !this.playerListStateService.isDead(target);
@@ -237,14 +217,6 @@ export class LSMCInteractionProvider {
                 icon: 'c:ems/revive.png',
                 job: JobType.LSMC,
                 canInteract: entity => {
-                    if (!this.playerService.isOnDuty()) {
-                        return false;
-                    }
-
-                    if (!this.inventoryManager.hasEnoughItem('bloodbag', 1, true)) {
-                        return false;
-                    }
-
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
 
                     return this.playerListStateService.isDead(target);
@@ -252,6 +224,7 @@ export class LSMCInteractionProvider {
                 action: entity => {
                     this.LSMCDeathProvider.reviveTarget(entity, true);
                 },
+                item: 'bloodbag',
             },
             {
                 label: 'Utiliser Défibrilateur',
@@ -274,11 +247,6 @@ export class LSMCInteractionProvider {
                 job: JobType.LSMC,
                 canInteract: entity => {
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-
-                    if (!this.playerService.isOnDuty()) {
-                        return false;
-                    }
-
                     return !this.playerListStateService.isDead(target);
                 },
                 action: async entity => {
@@ -318,9 +286,6 @@ export class LSMCInteractionProvider {
                 job: JobType.LSMC,
                 icon: 'c:ems/rescuer.png',
                 canInteract: async entity => {
-                    if (!this.playerService.isOnDuty()) {
-                        return false;
-                    }
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                     const hasRescuerLicense = await emitRpcCache<number>(
                         RpcServerEvent.POLICE_LICENSE_HAS_RECUER,
@@ -348,9 +313,6 @@ export class LSMCInteractionProvider {
                 job: JobType.LSMC,
                 icon: 'c:ems/notrescuer.png',
                 canInteract: async entity => {
-                    if (!this.playerService.isOnDuty()) {
-                        return false;
-                    }
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                     const hasRescuerLicense = await emitRpcCache<number>(
                         RpcServerEvent.POLICE_LICENSE_HAS_RECUER,
@@ -377,12 +339,6 @@ export class LSMCInteractionProvider {
                 color: JobType.LSMC,
                 job: JobType.LSMC,
                 icon: 'c:ems/platre.png',
-                canInteract: () => {
-                    if (!this.playerService.isOnDuty()) {
-                        return false;
-                    }
-                    return true;
-                },
                 action: async entity => {
                     const playerServerId = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                     const data = await emitRpc<PlasterLocation[]>(RpcServerEvent.LSMC_PLAYER_PLASTER, playerServerId);
@@ -398,11 +354,10 @@ export class LSMCInteractionProvider {
                 color: JobType.LSMC,
                 job: JobType.LSMC,
                 icon: 'c:ems/naloxone.png',
-                canInteract: () => {
-                    if (!this.playerService.isOnDuty()) {
-                        return false;
-                    }
-                    return true;
+                canInteract: entity => {
+                    const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
+
+                    return !this.playerListStateService.isDead(target);
                 },
                 action: async entity => {
                     const playerServerId = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
@@ -416,10 +371,6 @@ export class LSMCInteractionProvider {
                 icon: 'c:ems/morphine.png',
                 job: JobType.LSMC,
                 canInteract: entity => {
-                    if (!this.playerService.isOnDuty()) {
-                        return false;
-                    }
-
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
 
                     return !this.playerListStateService.isDead(target);
@@ -445,7 +396,6 @@ export class LSMCInteractionProvider {
                     color: JobType.LSMC,
                     icon: 'c:ems/heal.png',
                     job: JobType.LSMC,
-                    canInteract: () => this.playerService.isOnDuty(),
                     action: () => {
                         this.progressService.progress(
                             'heal_training',
@@ -469,7 +419,6 @@ export class LSMCInteractionProvider {
                     color: JobType.LSMC,
                     icon: 'c:ems/morphine.png',
                     job: JobType.LSMC,
-                    canInteract: () => this.playerService.isOnDuty(),
                     action: () => {
                         this.progressService.progress(
                             'shooting_training',
@@ -500,7 +449,6 @@ export class LSMCInteractionProvider {
                     color: JobType.LSMC,
                     icon: 'c:ems/greffer.png',
                     job: JobType.LSMC,
-                    canInteract: () => this.playerService.isOnDuty(),
                     action: () => {
                         this.progressService.progress(
                             'Soigner',

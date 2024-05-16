@@ -280,18 +280,15 @@ export class JobDutyProvider {
                 icon: 'fas fa-sign-in-alt',
                 label: 'Prise de service',
                 canInteract: () => {
-                    return !this.playerService.isOnDuty();
+                    const player = this.playerService.getPlayer();
+                    return player.job.id == job && !player.job.onduty;
                 },
-                job,
             },
             {
                 type: 'server',
                 event: 'QBCore:ToggleDuty',
                 icon: 'fas fa-sign-in-alt',
                 label: 'Fin de service',
-                canInteract: () => {
-                    return this.playerService.isOnDuty();
-                },
                 job,
             },
             {
@@ -302,10 +299,7 @@ export class JobDutyProvider {
                 },
                 canInteract: () => {
                     const player = this.playerService.getPlayer();
-                    return (
-                        this.playerService.isOnDuty() &&
-                        this.jobService.hasPermission(player.job.id, JobPermission.OnDutyView)
-                    );
+                    return this.jobService.hasPermission(player.job.id, JobPermission.OnDutyView);
                 },
                 job,
             },

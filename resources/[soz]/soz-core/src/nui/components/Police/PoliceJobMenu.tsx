@@ -1,4 +1,5 @@
 import { fetchNui } from '@public/nui/fetch';
+import { usePlayer } from '@public/nui/hook/data';
 import { NuiEvent } from '@public/shared/event';
 import { JobType } from '@public/shared/job';
 import { PoliceJobMenuData } from '@public/shared/job/police';
@@ -24,7 +25,8 @@ type PoliceJobStateProps = {
 };
 
 export const PoliceJobMenu: FunctionComponent<PoliceJobStateProps> = ({ data }) => {
-    const banner = `https://cfx-nui-soz-core/public/images/banner/menu_job_${data.job}.webp`;
+    const player = usePlayer();
+    const banner = `https://cfx-nui-soz-core/public/images/banner/menu_job_${player.job.id}.webp`;
     const propsList = [
         { label: 'Cône de circulation', item: 'cone', props: 'prop_air_conelight', offset: -0.15 },
         { label: 'Barrière', item: 'police_barrier', props: 'prop_barrier_work05' },
@@ -35,14 +37,14 @@ export const PoliceJobMenu: FunctionComponent<PoliceJobStateProps> = ({ data }) 
     const [wantedPlayers, setWantedPlayers] = useState(null);
 
     useEffect(() => {
-        if (data.onDuty && wantedPlayers == null) {
+        if (player.job.onduty && wantedPlayers == null) {
             fetchNui(NuiEvent.PoliceGetWantedPlayers).then((players: any) => {
                 setWantedPlayers(players);
             });
         }
     });
 
-    if (!data.onDuty) {
+    if (!player.job.onduty) {
         return (
             <Menu type={MenuType.PoliceJobMenu}>
                 <MainMenu>
@@ -60,11 +62,11 @@ export const PoliceJobMenu: FunctionComponent<PoliceJobStateProps> = ({ data }) 
             <MainMenu>
                 <MenuTitle banner={banner}>L'ordre et la justice !</MenuTitle>
                 <MenuContent>
-                    {data.job == JobType.SASP || data.job == JobType.FBI ? (
+                    {player.job.id == JobType.SASP || player.job.id == JobType.FBI ? (
                         <MenuItemButton
                             onConfirm={async () => {
                                 await fetchNui(NuiEvent.NewsCreateAnnounce, {
-                                    type: `${data.job}_annoncement`,
+                                    type: `${player.job.id}_annoncement`,
                                     title: 'Message de la communication',
                                 });
                             }}
@@ -74,7 +76,7 @@ export const PoliceJobMenu: FunctionComponent<PoliceJobStateProps> = ({ data }) 
                     ) : (
                         <></>
                     )}
-                    {data.job == JobType.FBI ? (
+                    {player.job.id == JobType.FBI ? (
                         <MenuItemButton
                             onConfirm={async () => {
                                 await fetchNui(NuiEvent.NewsCreateAnnounce, {
@@ -137,7 +139,7 @@ export const PoliceJobMenu: FunctionComponent<PoliceJobStateProps> = ({ data }) 
                     <MenuItemButton
                         onConfirm={async () => {
                             await fetchNui(NuiEvent.NewsCreateAnnounce, {
-                                type: data.job,
+                                type: player.job.id,
                                 title: 'Nom de la personne recherchée :',
                             });
                             setWantedPlayers(await fetchNui(NuiEvent.PoliceGetWantedPlayers));

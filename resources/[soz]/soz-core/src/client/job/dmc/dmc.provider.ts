@@ -121,7 +121,6 @@ export class DmcProvider {
         }
 
         this.nuiMenu.openMenu(MenuType.DmcJobMenu, {
-            onDuty: this.playerService.isOnDuty(),
             blipState: this.blipState,
         });
     }
@@ -152,9 +151,6 @@ export class DmcProvider {
                     icon: 'c:/dmc/allumer.png',
                     label: 'Allumer le Convertisseur',
                     canInteract: async () => {
-                        if (!this.playerService.isOnDuty()) {
-                            return false;
-                        }
                         return !(await this.isConverterEnabled());
                     },
                     job: JobType.DMC,
@@ -168,9 +164,6 @@ export class DmcProvider {
                     icon: 'c:/dmc/allumer.png',
                     label: 'Eteindre le Convertisseur',
                     canInteract: async () => {
-                        if (!this.playerService.isOnDuty()) {
-                            return false;
-                        }
                         return await this.isConverterEnabled();
                     },
                     job: JobType.DMC,
@@ -182,9 +175,6 @@ export class DmcProvider {
                     icon: 'c:/dmc/temperature.png',
                     label: 'Consulter la température',
                     canInteract: async () => {
-                        if (!this.playerService.isOnDuty()) {
-                            return false;
-                        }
                         return await this.isConverterEnabled();
                     },
                     job: JobType.DMC,
@@ -199,9 +189,6 @@ export class DmcProvider {
                     icon: 'c:/dmc/temperature-set.png',
                     label: 'Modifier la température',
                     canInteract: async () => {
-                        if (!this.playerService.isOnDuty()) {
-                            return false;
-                        }
                         return await this.isConverterEnabled();
                     },
                     job: JobType.DMC,

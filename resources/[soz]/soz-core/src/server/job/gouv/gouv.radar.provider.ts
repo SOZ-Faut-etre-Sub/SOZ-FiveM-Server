@@ -43,7 +43,7 @@ export class GouvRadarProvider {
             return;
         }
 
-        if (!this.inventoryManager.removeItemFromInventory(source, 'radar', 1)) {
+        if (!this.inventoryManager.removeNotExpiredItem(source, 'radar')) {
             this.notifier.notify(source, `Vous n'avez pas de radar sur vous.`);
 
             return;

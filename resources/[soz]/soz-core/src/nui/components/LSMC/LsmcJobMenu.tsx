@@ -1,3 +1,4 @@
+import { usePlayer } from '@public/nui/hook/data';
 import { NuiEvent } from '@public/shared/event';
 import { FunctionComponent } from 'react';
 
@@ -13,16 +14,11 @@ import {
     MenuTitle,
 } from '../Styleguide/Menu';
 
-type LSMCStateProps = {
-    data: {
-        onDuty: boolean;
-    };
-};
-
-export const LsmcJobMenu: FunctionComponent<LSMCStateProps> = ({ data }) => {
+export const LsmcJobMenu: FunctionComponent = () => {
     const banner = 'https://nui-img/soz/menu_job_lsmc';
+    const player = usePlayer();
 
-    if (!data.onDuty) {
+    if (!player.job.onduty) {
         return (
             <Menu type={MenuType.LsmcJobMenu}>
                 <MainMenu>

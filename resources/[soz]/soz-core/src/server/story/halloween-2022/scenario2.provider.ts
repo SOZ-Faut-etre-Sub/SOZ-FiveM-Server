@@ -53,7 +53,7 @@ export class Halloween2022Scenario2Provider {
                 });
                 return Halloween2022Scenario2.dialog['part2'];
             case 'part3':
-                if (this.inventoryManager.removeItemFromInventory(source, 'horror_cauldron', 1)) {
+                if (this.inventoryManager.removeNotExpiredItem(source, 'horror_cauldron')) {
                     this.playerService.setPlayerMetadata(source, 'halloween2022', {
                         ...player.metadata.halloween2022,
                         scenario2: {
@@ -97,7 +97,7 @@ export class Halloween2022Scenario2Provider {
                 return;
             case 'part6':
                 if (this.inventoryManager.canSwapItem(source, 'old_relic', 1, 'halloween2022_story', 1)) {
-                    this.inventoryManager.removeItemFromInventory(source, 'old_relic', 1);
+                    this.inventoryManager.removeNotExpiredItem(source, 'old_relic');
                     this.inventoryManager.addItemToInventory(source, 'halloween2022_story', 1);
 
                     this.playerService.setPlayerMetadata(source, 'halloween2022', {

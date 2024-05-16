@@ -229,25 +229,8 @@ export class VehicleGarageProvider {
                     },
                     blackoutGlobal: true,
                     blackoutJob: JobType.Bennys,
-                    canInteract: (): boolean => {
-                        const player = this.playerService.getPlayer();
-
-                        if (!player) {
-                            return false;
-                        }
-
-                        if (player.job.id !== JobType.Bennys || !player.job.onduty) {
-                            return false;
-                        }
-
-                        const closestPound = this.getClosestPound();
-
-                        if (!closestPound) {
-                            return false;
-                        }
-
-                        return true;
-                    },
+                    job: JobType.Bennys,
+                    canInteract: (): boolean => !!this.getClosestPound(),
                 },
                 {
                     label: 'Fourrière Fédérale',
@@ -316,10 +299,6 @@ export class VehicleGarageProvider {
                         const player = this.playerService.getPlayer();
 
                         if (!player) {
-                            return false;
-                        }
-
-                        if (!player.job.onduty) {
                             return false;
                         }
 
@@ -601,7 +580,7 @@ export class VehicleGarageProvider {
                 garage,
                 free_places,
                 max_places,
-                has_fake_ticket: this.inventoryManager.hasEnoughItem('parking_ticket_fake', 1),
+                has_fake_ticket: this.inventoryManager.hasEnoughItem('parking_ticket_fake', 1, true),
                 transferGarageList:
                     garage.transferList
                         ?.map(garageId => {

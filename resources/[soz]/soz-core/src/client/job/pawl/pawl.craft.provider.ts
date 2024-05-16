@@ -37,9 +37,6 @@ export class PawlCraftProvider {
                     icon: 'c:/pawl/start-prod.png',
                     color: JobType.Pawl,
                     job: JobType.Pawl,
-                    canInteract: () => {
-                        return this.playerService.isOnDuty();
-                    },
                     action: async () => {
                         const crafting = await emitRpc<CraftsList>(RpcServerEvent.CRAFT_GET_RECIPES, JobType.Pawl);
                         crafting.title = this.jobService.getJob(JobType.Pawl).label;

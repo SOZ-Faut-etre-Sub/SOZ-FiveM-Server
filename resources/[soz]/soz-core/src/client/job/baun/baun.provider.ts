@@ -58,7 +58,6 @@ export class BaunProvider {
         this.nuiMenu.openMenu(MenuType.BahamaUnicornJobMenu, {
             recipes: crafting.categories,
             state: this.state,
-            onDuty: this.playerService.isOnDuty(),
         });
     }
 

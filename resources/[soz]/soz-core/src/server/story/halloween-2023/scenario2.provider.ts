@@ -59,7 +59,7 @@ export class Halloween2023Scenario2Provider {
                 });
                 break;
             case 4:
-                this.inventoryManager.removeItemFromInventory(source, 'halloween_damned_wine');
+                this.inventoryManager.removeNotExpiredItem(source, 'halloween_damned_wine');
                 this.playerService.setPlayerMetadata(source, 'halloween2023', {
                     ...player.metadata.halloween2023,
                     scenario2: {
@@ -97,12 +97,12 @@ export class Halloween2023Scenario2Provider {
                 });
                 break;
             case 7:
+                this.inventoryManager.removeNotExpiredItem(source, 'halloween_alien_artifact');
                 if (!this.inventoryManager.canCarryItem(source, 'halloween2023_story', 1)) {
                     this.notifier.notify(source, `Tu n'as pas assez de place dans ton inventaire.`, 'error');
                     return;
                 }
                 this.inventoryManager.addItemToInventory(source, 'halloween2023_story', 1);
-                this.inventoryManager.removeItemFromInventory(source, 'halloween_alien_artifact');
 
                 this.playerService.setPlayerMetadata(source, 'halloween2023', {
                     ...player.metadata.halloween2023,

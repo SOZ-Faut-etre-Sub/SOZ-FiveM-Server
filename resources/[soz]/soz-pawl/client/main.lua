@@ -50,7 +50,7 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
                 event = "pawl:server:startProcessingTree",
                 canInteract = function()
                     local enabled = QBCore.Functions.TriggerRpc("pawl:server:processingTreeIsEnabled")
-                    return not enabled and PlayerData.job.onduty
+                    return not enabled
                 end,
                 job = "pawl",
                 blackoutGlobal = true,
@@ -64,7 +64,7 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
                 event = "pawl:server:stopProcessingTree",
                 canInteract = function()
                     local enabled = QBCore.Functions.TriggerRpc("pawl:server:processingTreeIsEnabled")
-                    return enabled and PlayerData.job.onduty
+                    return enabled
                 end,
                 job = "pawl",
                 blackoutGlobal = true,
@@ -76,9 +76,6 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
                 label = "État production",
                 icon = "c:pawl/status-prod.png",
                 event = "pawl:server:statusProcessingTree",
-                canInteract = function()
-                    return PlayerData.job.onduty
-                end,
                 job = "pawl",
                 blackoutGlobal = true,
                 blackoutJob = "pawl",

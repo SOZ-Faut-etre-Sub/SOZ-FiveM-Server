@@ -33,15 +33,10 @@ export class DmcRestockProvider {
                 job: JobType.DMC,
                 blackoutGlobal: true,
                 blackoutJob: JobType.DMC,
-                canInteract: () => {
-                    return (
-                        this.playerService.isOnDuty() &&
-                        this.inventoryManager.hasEnoughItem('ls_custom_upgrade_part', 1)
-                    );
-                },
                 action: () => {
                     TriggerServerEvent(ServerEvent.DMC_RESTOCK);
                 },
+                item: 'ls_custom_upgrade_part',
             },
         ]);
     }

@@ -220,11 +220,11 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.OilSetStationPrice}/*`} element={<MenuOilSetPrice data={menuData} />} />
             <Route path={`/${MenuType.DrivingSchool}/*`} element={<DrivingSchoolMenu data={menuData} />} />
             <Route path={`/${MenuType.HousingUpgrades}/*`} element={<HousingUpgradesMenu data={menuData} />} />
-            <Route path={`/${MenuType.LsmcJobMenu}/*`} element={<LsmcJobMenu data={menuData} />} />
+            <Route path={`/${MenuType.LsmcJobMenu}/*`} element={<LsmcJobMenu />} />
             <Route path={`/${MenuType.MandatoryJobMenu}/*`} element={<MandatoryJobMenu data={menuData} />} />
             <Route path={`/${MenuType.IllegalShop}/*`} element={<MenuIllegalShop data={menuData} />} />
             <Route path={`/${MenuType.EasterShop}/*`} element={<EasterShopMenu data={menuData} />} />
-            <Route path={`/${MenuType.TaxiJobMenu}/*`} element={<TaxiJobMenu data={menuData} />} />
+            <Route path={`/${MenuType.TaxiJobMenu}/*`} element={<TaxiJobMenu />} />
             <Route path={`/${MenuType.PlayerPersonal}/*`} element={<MenuPlayerPersonal data={menuData} />} />
             <Route path={`/${MenuType.JobOnDutyMenu}/*`} element={<JobOnDutyMenu data={menuData} />} />
             <Route path={`/${MenuType.DrugGarden}/*`} element={<DrugGardenMenu data={menuData} />} />

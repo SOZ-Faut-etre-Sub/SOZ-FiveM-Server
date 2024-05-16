@@ -34,9 +34,6 @@ export class BaunResellProvider {
                     item: 'cocktail_box',
                     blackoutGlobal: true,
                     blackoutJob: 'baun',
-                    canInteract: () => {
-                        return this.playerService.isOnDuty();
-                    },
                     action: () => {
                         TriggerServerEvent(ServerEvent.BAUN_RESELL);
                     },

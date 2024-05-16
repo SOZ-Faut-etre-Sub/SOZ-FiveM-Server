@@ -25,7 +25,7 @@ export class VehicleTowProvider {
 
     @OnEvent(ServerEvent.VEHICLE_TOW_ROPE_ADD)
     public addTowRope(source: number, towRope: TowRope) {
-        if (!this.inventoryManager.removeItemFromInventory(source, 'tow_cable')) {
+        if (!this.inventoryManager.removeNotExpiredItem(source, 'tow_cable')) {
             return;
         }
 

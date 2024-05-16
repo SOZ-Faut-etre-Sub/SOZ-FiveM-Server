@@ -1,3 +1,4 @@
+import { usePlayer } from '@public/nui/hook/data';
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
@@ -23,13 +24,13 @@ type FightForStyleStateProps = {
             displayResellMediumBagBlip: boolean;
             displayResellSmallBagBlip: boolean;
         };
-        onDuty: boolean;
     };
 };
 
 export const StonkJobMenu: FunctionComponent<FightForStyleStateProps> = ({ data }) => {
     const banner = 'https://cfx-nui-soz-core/public/images/banner/menu_job_cash-transfer.webp';
     const [blips, setBlips] = useState(null);
+    const player = usePlayer();
 
     const propsList = [{ label: 'Cône de circulation', item: 'cone', props: 'prop_roadcone02a' }];
 
@@ -48,7 +49,7 @@ export const StonkJobMenu: FunctionComponent<FightForStyleStateProps> = ({ data 
         await fetchNui(NuiEvent.StonkDisplayBlip, { blip, value });
     };
 
-    if (!data.onDuty) {
+    if (!player.job.onduty) {
         return (
             <Menu type={MenuType.StonkJobMenu}>
                 <MainMenu>

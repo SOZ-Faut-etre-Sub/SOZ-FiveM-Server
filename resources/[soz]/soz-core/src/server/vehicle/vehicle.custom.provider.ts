@@ -73,8 +73,12 @@ export class VehicleCustomProvider {
         if (
             mode == LSCustomMode.CrimiCusto &&
             price &&
-            this.inventoryManager.getItemCount(source, 'veh_strip_piece_std') <
-                Math.ceil(price / VehicleBusinessCustomPrice)
+            !this.inventoryManager.hasEnoughItem(
+                source,
+                'veh_strip_piece_std',
+                Math.ceil(price / VehicleBusinessCustomPrice),
+                true
+            )
         ) {
             const item = this.itemService.getItem('veh_strip_piece_std');
             this.notifier.notify(source, `Vous n'avez pas assez de  ~r~${item.label}.`, 'error');
@@ -84,7 +88,7 @@ export class VehicleCustomProvider {
 
         if (mode == LSCustomMode.CrimiPerfo && crimiPrice) {
             for (const itemName of Object.keys(crimiPrice)) {
-                if (this.inventoryManager.getItemCount(source, itemName) < crimiPrice[itemName]) {
+                if (!this.inventoryManager.hasEnoughItem(source, itemName, crimiPrice[itemName], true)) {
                     const item = this.itemService.getItem(itemName);
                     this.notifier.notify(source, `Vous n'avez pas assez de ~r~${item.label}~s~.`, 'error');
 
@@ -115,14 +119,14 @@ export class VehicleCustomProvider {
 
             this.playerMoneyService.remove(source, price);
         } else if (price && mode == LSCustomMode.CrimiCusto) {
-            this.inventoryManager.removeItemFromInventory(
+            this.inventoryManager.removeNotExpiredItem(
                 source,
                 'veh_strip_piece_std',
                 Math.ceil(price / VehicleBusinessCustomPrice)
             );
         } else if (crimiPrice && mode == LSCustomMode.CrimiPerfo) {
             for (const itemName of Object.keys(crimiPrice)) {
-                this.inventoryManager.removeItemFromInventory(source, itemName, crimiPrice[itemName]);
+                this.inventoryManager.removeNotExpiredItem(source, itemName, crimiPrice[itemName]);
             }
         }
 

@@ -1049,7 +1049,7 @@ export class VehicleGarageProvider {
                     this.notifier.notify(source, 'Vous avez sorti votre véhicule.', 'success');
 
                     if (use_ticket) {
-                        this.inventoryManager.removeItemFromInventory(source, 'parking_ticket_fake', 1);
+                        this.inventoryManager.removeNotExpiredItem(source, 'parking_ticket_fake', 1);
                     }
                 } else {
                     this.notifier.notify(

@@ -172,10 +172,6 @@ export class LSMCProvider {
                         [JobType.FBI]: 0,
                     },
                     canInteract: entity => {
-                        if (!this.playerService.isOnDuty()) {
-                            return false;
-                        }
-
                         const deadPed = this.getDeadPedInVehicle(entity);
 
                         return deadPed !== null;
@@ -344,9 +340,7 @@ export class LSMCProvider {
             return;
         }
 
-        this.nuiMenu.openMenu(MenuType.LsmcJobMenu, {
-            onDuty: this.playerService.isOnDuty(),
-        });
+        this.nuiMenu.openMenu(MenuType.LsmcJobMenu, {});
     }
 
     @OnEvent(ClientEvent.LSMC_HEAL)

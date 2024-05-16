@@ -36,12 +36,10 @@ export class FightForStyleRestockProvider {
                 job: 'ffs',
                 blackoutGlobal: true,
                 blackoutJob: 'ffs',
-                canInteract: () => {
-                    return this.playerService.isOnDuty() && this.inventoryManager.hasEnoughItem(garment, 1);
-                },
                 action: () => {
                     TriggerServerEvent(ServerEvent.FFS_RESTOCK, brand, garment);
                 },
+                item: garment,
             };
         });
         this.targetFactory.createForModel([pedModel], targets);

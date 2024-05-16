@@ -1,4 +1,4 @@
-import { useItems } from '@public/nui/hook/data';
+import { useItems, usePlayer } from '@public/nui/hook/data';
 import { CraftCategory, CraftRecipe } from '@public/shared/craft/craft';
 import { FunctionComponent, useEffect, useState } from 'react';
 
@@ -25,7 +25,6 @@ type FightForStyleStateProps = {
         state: {
             ffs_cotton_bale: boolean;
         };
-        onDuty: boolean;
     };
 };
 
@@ -34,6 +33,7 @@ export const FightForStyleJobMenu: FunctionComponent<FightForStyleStateProps> = 
     const [blips, setBlips] = useState(null);
     const [currentRecipe, setCurrentRecipe] = useState<CraftRecipe>();
     const items = useItems();
+    const player = usePlayer();
 
     useEffect(() => {
         if (data && data.state) {
@@ -52,7 +52,7 @@ export const FightForStyleJobMenu: FunctionComponent<FightForStyleStateProps> = 
         await fetchNui(NuiEvent.FfsDisplayBlip, { blip, value });
     };
 
-    if (!data.onDuty) {
+    if (!player.job.onduty) {
         return (
             <Menu type={MenuType.FightForStyleJobMenu}>
                 <MainMenu>

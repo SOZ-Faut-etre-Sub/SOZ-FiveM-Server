@@ -40,9 +40,7 @@ export class StonkResellProvider {
             job: JobType.CashTransfer,
             blackoutGlobal: true,
             blackoutJob: JobType.CashTransfer,
-            canInteract: () => {
-                return this.playerService.isOnDuty() && this.inventoryManager.hasEnoughItem(item, 1);
-            },
+            item: item,
             action: () => {
                 TriggerServerEvent(ServerEvent.STONK_RESELL, item);
             },

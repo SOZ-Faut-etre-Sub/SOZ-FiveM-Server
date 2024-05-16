@@ -111,13 +111,7 @@ export class DmcForgeProvider {
             // Remove input items
             for (const input_item of Object.keys(recipe.input)) {
                 const amount = recipe.input[input_item];
-                this.inventoryManager.removeItemFromInventory(
-                    DmcConverterConfig.converterStorage,
-                    input_item,
-                    amount,
-                    null,
-                    null
-                );
+                this.inventoryManager.removeItemFromInventory(DmcConverterConfig.converterStorage, input_item, amount);
             }
             // Add output items
             this.inventoryManager.addItemToInventoryNotPlayer(
@@ -139,27 +133,22 @@ export class DmcForgeProvider {
             return;
         }
         const allItems = this.inventoryManager.getAllItems(DmcIncineratorConfig.incineratorStorage);
-        const itemsToProcess = [];
         let remainingItemsToProcess = DmcIncineratorConfig.incineratorProcessingAmount;
         for (const item of allItems) {
             if (remainingItemsToProcess == 0) {
                 break;
             }
             const amountToProcess = Math.min(item.amount, remainingItemsToProcess);
-            itemsToProcess.push({
-                ...item,
-                amount: amountToProcess,
-            });
-            remainingItemsToProcess -= amountToProcess;
-        }
-        for (const item of itemsToProcess) {
+
             this.inventoryManager.removeItemFromInventory(
                 DmcIncineratorConfig.incineratorStorage,
                 item.item.name,
                 item.amount,
-                item.item.metadata,
-                item.item.slot
+                item.metadata,
+                item.slot
             );
+
+            remainingItemsToProcess -= amountToProcess;
         }
     }
 

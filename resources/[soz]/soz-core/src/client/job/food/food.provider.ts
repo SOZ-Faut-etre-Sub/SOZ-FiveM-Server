@@ -77,11 +77,8 @@ export class FoodProvider {
                     {
                         label: 'Récolter',
                         icon: 'c:food/collecter.png',
-                        color: 'food',
-                        job: 'food',
-                        canInteract: () => {
-                            return this.playerService.isOnDuty();
-                        },
+                        color: JobType.Food,
+                        job: JobType.Food,
                         action: () => {
                             TriggerServerEvent(ServerEvent.FOOD_EASTER_HARVEST);
                         },
@@ -101,7 +98,6 @@ export class FoodProvider {
         this.nuiMenu.openMenu(MenuType.FoodJobMenu, {
             recipes: crafting.categories,
             state: this.state,
-            onDuty: this.playerService.isOnDuty(),
         });
     }
 }

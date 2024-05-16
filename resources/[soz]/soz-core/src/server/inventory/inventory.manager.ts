@@ -11,6 +11,7 @@ type AllItemItem = {
     amount: number;
     metadata: InventoryItemMetadata;
     item: Item;
+    slot: number;
 };
 
 @Injectable()
@@ -130,7 +131,7 @@ export class InventoryManager {
         }
     }
 
-    public getItem(inventory: number | string, itemId: string, metadata?: InventoryItemMetadata): any {
+    public getItem(inventory: number | string, itemId: string, metadata?: InventoryItemMetadata): InventoryItem {
         return this.sozInventory.GetItem(inventory, itemId, metadata);
     }
 

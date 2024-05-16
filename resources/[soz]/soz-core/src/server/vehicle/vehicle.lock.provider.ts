@@ -81,12 +81,6 @@ export class VehicleLockProvider {
     }
 
     public async useLockpick(source: number, item: Item, inventoryItem: InventoryItem): Promise<void> {
-        if (this.item.isItemExpired(inventoryItem)) {
-            this.notifier.notify(source, 'Le lockpick est cassé', 'error');
-
-            return;
-        }
-
         const closestVehicle = await this.vehicleSpawner.getClosestVehicle(source);
         if (null === closestVehicle || closestVehicle.distance > 3) {
             this.notifier.notify(source, 'Aucun véhicule à proximité', 'error');

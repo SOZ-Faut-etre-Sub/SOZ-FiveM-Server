@@ -33,15 +33,7 @@ export class ItemHealthProvider {
     private usedAntiDepressant = new Set<string>();
 
     public async useFlaskPee(source: number, item: CommonItem, inventoryItem: InventoryItem) {
-        if (
-            !this.inventoryManager.removeItemFromInventory(
-                source,
-                item.name,
-                1,
-                inventoryItem.metadata,
-                inventoryItem.slot
-            )
-        ) {
+        if (!this.inventoryManager.removeInventoryItem(source, inventoryItem)) {
             return;
         }
 
@@ -79,21 +71,13 @@ export class ItemHealthProvider {
             return;
         }
 
-        if (
-            !this.inventoryManager.removeItemFromInventory(
-                source,
-                item.name,
-                1,
-                inventoryItem.metadata,
-                inventoryItem.slot
-            )
-        ) {
-            return;
-        }
-
         if (this.usedAntiDepressant.has(player.citizenid)) {
             this.notifier.notify(source, 'Vous avez déjà pris un antidépresseur.', 'error');
 
+            return;
+        }
+
+        if (!this.inventoryManager.removeInventoryItem(source, inventoryItem)) {
             return;
         }
 
@@ -151,15 +135,7 @@ export class ItemHealthProvider {
             return;
         }
 
-        if (
-            !this.inventoryManager.removeItemFromInventory(
-                source,
-                item.name,
-                1,
-                inventoryItem.metadata,
-                inventoryItem.slot
-            )
-        ) {
+        if (!this.inventoryManager.removeInventoryItem(source, inventoryItem)) {
             return;
         }
 

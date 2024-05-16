@@ -80,9 +80,6 @@ export class BaunHarvestProvider {
                         blackoutJob: JobType.Baun,
                         blackoutGlobal: true,
                         job: JobType.Baun,
-                        canInteract: () => {
-                            return this.playerService.isOnDuty();
-                        },
                         action: () => {
                             this.harvest(harvestZone);
                         },

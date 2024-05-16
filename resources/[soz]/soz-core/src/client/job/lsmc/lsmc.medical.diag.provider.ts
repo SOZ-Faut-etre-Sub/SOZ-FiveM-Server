@@ -56,10 +56,6 @@ export class LSMCMedicalDiagProvider {
                 blackoutGlobal: true,
                 icon: 'c:ems/irm.png',
                 canInteract: () => {
-                    if (!this.playerService.isOnDuty()) {
-                        return false;
-                    }
-
                     const playerPed = PlayerPedId();
                     const coord = GetEntityCoords(playerPed) as Vector3;
                     const players = this.playerService.getPlayersAround(coord, 3.0, true, player => {

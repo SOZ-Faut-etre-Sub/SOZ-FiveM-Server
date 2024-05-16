@@ -99,9 +99,6 @@ export class PolicePlayerProvider {
                     job: job,
                     blackoutJob: job,
                     blackoutGlobal: true,
-                    canInteract: () => {
-                        return this.playerService.isOnDuty();
-                    },
                     action: entity => {
                         const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                         this.nuiMenu.openMenu(MenuType.PoliceJobFines, {
@@ -115,9 +112,6 @@ export class PolicePlayerProvider {
                     color: job,
                     icon: 'c:police/permis.png',
                     job: job,
-                    canInteract: () => {
-                        return this.playerService.isOnDuty();
-                    },
                     action: async entity => {
                         const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                         const licences = await emitRpc<Partial<Record<PlayerLicenceType, number>>>(
@@ -140,7 +134,6 @@ export class PolicePlayerProvider {
                     job: job,
                     canInteract: entity => {
                         return (
-                            this.playerService.isOnDuty() &&
                             !IsEntityPlayingAnim(entity, 'mp_arresting', 'idle', 3) &&
                             !IsPedInAnyVehicle(entity, true) &&
                             !IsPedInAnyVehicle(PlayerPedId(), true)
@@ -171,7 +164,6 @@ export class PolicePlayerProvider {
                     job: job,
                     canInteract: async entity => {
                         if (
-                            !this.playerService.isOnDuty() ||
                             !IsEntityPlayingAnim(entity, 'mp_arresting', 'idle', 3) ||
                             IsPedInAnyVehicle(entity, true) ||
                             IsPedInAnyVehicle(PlayerPedId(), true)
@@ -206,9 +198,6 @@ export class PolicePlayerProvider {
                     icon: 'c:police/fouiller.png',
                     job: job,
                     item: 'fingerprint_collector',
-                    canInteract: () => {
-                        return this.playerService.isOnDuty();
-                    },
                     action: async entity => {
                         const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                         const { completed } = await this.progressService.progress(
@@ -241,9 +230,6 @@ export class PolicePlayerProvider {
                     color: job,
                     icon: 'c:police/fouiller.png',
                     job: job,
-                    canInteract: () => {
-                        return this.playerService.isOnDuty();
-                    },
                     action: async entity => {
                         const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                         const { completed } = await this.progressService.progress(
@@ -289,9 +275,8 @@ export class PolicePlayerProvider {
                                 return false;
                             }
                             return (
-                                this.playerService.isOnDuty() &&
-                                (IsEntityPlayingAnim(entity, 'missminuteman_1ig_2', 'handsup_base', 3) ||
-                                    IsEntityPlayingAnim(entity, 'mp_arresting', 'idle', 3))
+                                IsEntityPlayingAnim(entity, 'missminuteman_1ig_2', 'handsup_base', 3) ||
+                                IsEntityPlayingAnim(entity, 'mp_arresting', 'idle', 3)
                             );
                         },
                         action: async entity => {
@@ -316,11 +301,7 @@ export class PolicePlayerProvider {
                         ) {
                             return false;
                         }
-                        if (
-                            !this.playerService.isOnDuty() ||
-                            IsPedInAnyVehicle(entity, true) ||
-                            IsPedInAnyVehicle(PlayerPedId(), true)
-                        ) {
+                        if (IsPedInAnyVehicle(entity, true) || IsPedInAnyVehicle(PlayerPedId(), true)) {
                             return false;
                         }
 
@@ -342,9 +323,6 @@ export class PolicePlayerProvider {
                         icon: 'c:police/alcootest.png',
                         job: job,
                         item: 'breathanalyzer',
-                        canInteract: () => {
-                            return this.playerService.isOnDuty();
-                        },
                         action: async entity => {
                             const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
 
@@ -358,9 +336,6 @@ export class PolicePlayerProvider {
                         icon: 'c:police/screening.png',
                         job: job,
                         item: 'screening_test',
-                        canInteract: () => {
-                            return this.playerService.isOnDuty();
-                        },
                         action: async entity => {
                             const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
 

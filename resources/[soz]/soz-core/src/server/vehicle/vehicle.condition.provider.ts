@@ -39,7 +39,7 @@ export class VehicleConditionProvider {
 
     @OnEvent(ServerEvent.VEHICLE_USE_REPAIR_KIT)
     public async onVehicleUseRepairKit(source: number, vehicleNetworkId: number) {
-        if (!this.inventoryManager.removeItemFromInventory(source, 'repairkit', 1)) {
+        if (!this.inventoryManager.removeNotExpiredItem(source, 'repairkit')) {
             this.notifier.notify(source, "Vous n'avez pas de kit de réparation.");
 
             return;
@@ -65,7 +65,7 @@ export class VehicleConditionProvider {
 
     @OnEvent(ServerEvent.VEHICLE_USE_BODY_REPAIR_KIT)
     public async onVehicleUseBodyRepairKit(source: number, vehicleNetworkId: number) {
-        if (!this.inventoryManager.removeItemFromInventory(source, 'bodyrepairkit', 1)) {
+        if (!this.inventoryManager.removeNotExpiredItem(source, 'bodyrepairkit')) {
             this.notifier.notify(source, "Vous n'avez pas de kit de réparation carosserie.");
 
             return;
@@ -91,7 +91,7 @@ export class VehicleConditionProvider {
 
     @OnEvent(ServerEvent.VEHICLE_USE_CLEANING_KIT)
     public async onVehicleUseCleaningKit(source: number, vehicleNetworkId: number) {
-        if (!this.inventoryManager.removeItemFromInventory(source, 'cleaningkit', 1)) {
+        if (!this.inventoryManager.removeNotExpiredItem(source, 'cleaningkit')) {
             this.notifier.notify(source, "Vous n'avez pas de kit de nettoyage.");
 
             return;
@@ -149,7 +149,7 @@ export class VehicleConditionProvider {
             return;
         }
 
-        if (!this.inventoryManager.removeItemFromInventory(source, 'wheel_kit', 1)) {
+        if (!this.inventoryManager.removeNotExpiredItem(source, 'wheel_kit')) {
             this.notifier.notify(source, "Vous n'avez pas de kit anti crevaison.");
 
             return;

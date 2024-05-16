@@ -135,7 +135,6 @@ export class GarbageProvider {
 
         this.nuiMenu.openMenu(MenuType.GarbageJobMenu, {
             displayBinBlip: this.displayBinBlip,
-            onDuty: this.playerService.isOnDuty(),
         });
     }
 }

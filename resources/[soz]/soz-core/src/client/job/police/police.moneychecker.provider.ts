@@ -75,7 +75,7 @@ export class PoliceMoneyCheckerProvider {
                         canInteract: () => {
                             const [player, distance] = this.playerService.getClosestPlayer();
 
-                            return this.playerService.getPlayer().job.onduty && player != -1 && distance <= 2.0;
+                            return player != -1 && distance <= 2.0;
                         },
                         action: async () => {
                             const [player, distance] = this.playerService.getClosestPlayer();

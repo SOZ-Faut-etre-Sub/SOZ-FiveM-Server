@@ -49,23 +49,7 @@ export class UpwVehicleProvider {
                 blackoutGlobal: true,
                 blackoutJob: 'upw',
                 item: 'lithium_battery',
-                canInteract: entity => {
-                    const player = this.playerService.getPlayer();
-
-                    if (!player) {
-                        return false;
-                    }
-
-                    if (IsEntityDead(entity)) {
-                        return false;
-                    }
-
-                    if (!isVehicleModelElectric(GetEntityModel(entity))) {
-                        return false;
-                    }
-
-                    return player.job.onduty && player.job.id === JobType.Upw;
-                },
+                canInteract: entity => !IsEntityDead(entity) && isVehicleModelElectric(GetEntityModel(entity)),
             },
         ]);
     }
@@ -77,16 +61,11 @@ export class UpwVehicleProvider {
             {
                 label: 'Commander une voiture éléctrique',
                 icon: 'c:/mechanic/order.png',
-                color: 'upw',
-                job: 'upw',
-                blackoutJob: 'upw',
+                color: JobType.Upw,
+                job: JobType.Upw,
+                blackoutJob: JobType.Upw,
                 blackoutGlobal: true,
-                canInteract: () => {
-                    return (
-                        this.playerService.isOnDuty() &&
-                        this.jobService.hasPermission(JobType.Upw, JobPermission.UpwOrder)
-                    );
-                },
+                canInteract: () => this.jobService.hasPermission(JobType.Upw, JobPermission.UpwOrder),
                 action: () => {
                     this.nuiMenu.openMenu(
                         MenuType.VehicleOrderMenu,
@@ -103,16 +82,11 @@ export class UpwVehicleProvider {
             {
                 label: 'Prix des chargeurs',
                 icon: 'c:/fuel/plug.png',
-                color: 'upw',
-                job: 'upw',
-                blackoutJob: 'upw',
+                color: JobType.Upw,
+                job: JobType.Upw,
+                blackoutJob: JobType.Upw,
                 blackoutGlobal: true,
-                canInteract: () => {
-                    return (
-                        this.playerService.isOnDuty() &&
-                        this.jobService.hasPermission(JobType.Upw, JobPermission.UpwChangePrice)
-                    );
-                },
+                canInteract: () => this.jobService.hasPermission(JobType.Upw, JobPermission.UpwChangePrice),
                 action: this.setChargerPrice.bind(this),
             },
         ]);

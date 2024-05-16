@@ -128,6 +128,7 @@ export type InventoryItemMetadata = {
     photosInDetectiveBoard?: string[];
     evidenceInfos?: EvidenceMetadata;
     photoUrl?: string;
+    printed?: boolean;
 };
 
 

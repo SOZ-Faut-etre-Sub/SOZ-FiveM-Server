@@ -71,7 +71,7 @@ export class Halloween2023Scenario1Provider {
 
                 break;
             case 4:
-                this.inventoryManager.removeItemFromInventory(source, 'halloween_prehistoric_blood_analysis', 1);
+                this.inventoryManager.removeNotExpiredItem(source, 'halloween_prehistoric_blood_analysis');
 
                 for (let i = 0; i < 20; i++) {
                     const onefish = this.inventoryManager.findItem(source, item => item.type === 'fish');

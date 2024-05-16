@@ -7,13 +7,13 @@ import { Provider } from '@public/core/decorators/provider';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { Feature, isFeatureEnabled } from '@public/shared/features';
 import { JobPermission, JobType } from '@public/shared/job';
+import { StonkConfig } from '@public/shared/job/stonk';
 import { MenuType } from '@public/shared/nui/menu';
 import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 
 import { BlipFactory } from '../blip';
 import { PedFactory } from '../factory/ped.factory';
 import { JobService } from '../job/job.service';
-import { StonkCollectService } from '../job/stonk/stonk.collect.service';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
 import { TargetFactory, TargetOptions } from '../target/target.factory';
@@ -46,9 +46,6 @@ export class ShopProvider {
 
     @Inject(ClothingShopProvider)
     private clothingShopProvider: ClothingShopProvider;
-
-    @Inject(StonkCollectService)
-    private stonkCollectService: StonkCollectService;
 
     @Inject(TattooShopProvider)
     private tattooShopProvider: TattooShopProvider;
@@ -108,8 +105,11 @@ export class ShopProvider {
         {
             icon: 'c:stonk/collecter.png',
             label: 'Collecter',
+            job: JobType.CashTransfer,
             canInteract: () => {
-                return this.stonkCollectService.canBagsBeCollected(this.currentShopBrand);
+                return Object.values(StonkConfig.collection).some(item =>
+                    item.takeInAvailableIn.includes(this.currentShopBrand)
+                );
             },
             blackoutGlobal: true,
             blackoutJob: JobType.CashTransfer,
@@ -269,13 +269,11 @@ export class ShopProvider {
                 {
                     label: 'Restock: Masques',
                     icon: 'c:/ffs/restock.png',
-                    color: 'ffs',
-                    job: 'ffs',
+                    color: JobType.Ffs,
+                    job: JobType.Ffs,
                     blackoutGlobal: true,
-                    blackoutJob: 'ffs',
-                    canInteract: () => {
-                        return this.playerService.isOnDuty() && this.inventoryManager.hasEnoughItem('garment_mask', 1);
-                    },
+                    blackoutJob: JobType.Ffs,
+                    item: 'garment_mask',
                     action: () => {
                         TriggerServerEvent(ServerEvent.FFS_RESTOCK, ShopBrand.Mask, 'garment_mask');
                     },

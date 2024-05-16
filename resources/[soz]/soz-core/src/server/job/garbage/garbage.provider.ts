@@ -51,7 +51,15 @@ export class GarbageProvider {
         for (const item of processingItems) {
             const amountToProcess = Math.min(itemLeftToProcess, item.amount);
 
-            if (this.inventoryManager.removeItemFromInventory(PROCESSING_STORAGE, item.item.name, amountToProcess)) {
+            if (
+                this.inventoryManager.removeItemFromInventory(
+                    PROCESSING_STORAGE,
+                    item.item.name,
+                    amountToProcess,
+                    item.metadata,
+                    item.slot
+                )
+            ) {
                 const sellPrice = SELL_PRICE[item.item.name] || DEFAULT_SELL_PRICE;
                 const totalMoney = amountToProcess * sellPrice;
 

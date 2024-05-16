@@ -110,7 +110,7 @@ CreateThread(function()
 
 		ItemCount = function(item)
 			for _, v in pairs(PlayerData.items) do
-				if v.name == item then
+				if v.name == item and not exports["soz-core"]:ItemIsExpired(item) then
 					return v.amount
 				end
 			end
@@ -120,14 +120,14 @@ CreateThread(function()
 		JobCheck = function(job, permission)
 			if type(job) == 'table' then
 				if job[PlayerData.job.id] and tonumber(PlayerData.job.grade) >= job[PlayerData.job.id] then
-					return true
+					return PlayerData.job.onduty
 				end
 			elseif type(job) == 'string' and job == PlayerData.job.id then
 				if permission then
 					return exports["soz-core"]:HasJobPermission(job, permission)
 				end
 
-				return true
+				return PlayerData.job.onduty
 			end
 
 			return false

@@ -1,4 +1,5 @@
 import { Prisma } from '@prisma/client';
+import { ItemService } from '@public/server/item/item.service';
 import { ClothingShopRepository } from '@public/server/repository/cloth.shop.repository';
 import { PlayerPedHash } from '@public/shared/player';
 
@@ -43,6 +44,9 @@ export class FightForStyleRestockProvider {
     @Inject(ClothingShopRepository)
     private clothingShopRepository: ClothingShopRepository;
 
+    @Inject(ItemService)
+    private itemService: ItemService;
+
     @Once(OnceStep.DatabaseConnected)
     public async onOnceStart() {
         await this.prismaService.$queryRaw(
@@ -84,7 +88,10 @@ export class FightForStyleRestockProvider {
 
     @OnEvent(ServerEvent.FFS_RESTOCK)
     public async onRestock(source: number, brand: ClothingBrand, garment: Garment | LuxuryGarment) {
-        const item = this.inventoryManager.getFirstItemInventory(source, garment);
+        const item = this.inventoryManager.findItem(
+            source,
+            item => item.name == garment && this.itemService.isItemExpired(item)
+        );
 
         if (!item) {
             return;
@@ -101,7 +108,9 @@ export class FightForStyleRestockProvider {
             return;
         }
 
-        this.inventoryManager.removeItemFromInventory(source, garment, item.amount);
+        if (!this.inventoryManager.removeInventoryItem(source, item, item.amount)) {
+            return;
+        }
 
         // Restock shops
         await this.restockLoop(brand, garment, item.amount);

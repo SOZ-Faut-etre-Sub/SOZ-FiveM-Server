@@ -335,23 +335,36 @@ export class LSMCItemProvider {
             return;
         }
 
+        if (!this.inventoryManager.removeNotExpiredItem(source, 'naloxone')) {
+            return;
+        }
+
         const targetPlayer = this.playerService.getPlayer(target);
         this.playerService.setPlayerMetadata(target, 'drug', Math.max(0, targetPlayer.metadata.drug - 50));
-        this.inventoryManager.removeItemFromInventory(source, 'naloxone', 1);
 
         this.notifier.notify(source, 'Vous avez injecté une dose de ~g~Naloxone~s~.');
         this.notifier.notify(target, 'Vous recu une dose de ~g~Naloxone~s~, vous êtes désormais désintoxiqué.');
     }
 
     public async useMorphine(source: number, item: Item, inventoryItem: InventoryItem): Promise<void> {
-        this.onMorphine(source, source, inventoryItem.slot);
+        this.onMorphine(source, source, inventoryItem);
     }
 
     @OnEvent(ServerEvent.LSMC_MORPHINE)
-    public async onMorphine(source: number, target: number, slot: number) {
+    public async onMorphine(source: number, target: number, item: InventoryItem) {
         const player = this.playerService.getPlayer(target);
         if (!player) {
             return;
+        }
+
+        if (!item) {
+            item = this.inventoryManager.findItem(
+                source,
+                item => item.name == 'morphine' && !this.item.isItemExpired(item)
+            );
+            if (!item) {
+                return;
+            }
         }
 
         const { completed } = await this.progressService.progress(
@@ -382,7 +395,9 @@ export class LSMCItemProvider {
             return;
         }
 
-        this.inventoryManager.removeItemFromInventory(source, 'morphine', 1, null, slot);
+        if (!this.inventoryManager.removeInventoryItem(source, item)) {
+            return;
+        }
 
         this.playerService.incrementMetadata(target, 'drug', 10, 0, 110);
 

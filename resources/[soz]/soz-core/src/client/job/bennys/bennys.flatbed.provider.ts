@@ -69,15 +69,7 @@ export class BennysFlatbedProvider {
                 action: (entity: number) => {
                     this.attachVehicle(entity);
                 },
-                canInteract: () => {
-                    const player = this.playerService.getPlayer();
-
-                    if (!player) {
-                        return false;
-                    }
-
-                    return player.job.onduty && this.currentFlatbedAttach !== null;
-                },
+                canInteract: () => this.currentFlatbedAttach !== null,
             },
             {
                 icon: 'c:mechanic/Attacher.png',
@@ -93,16 +85,6 @@ export class BennysFlatbedProvider {
                     }
 
                     if (this.currentFlatbedAttach !== null) {
-                        return false;
-                    }
-
-                    const player = this.playerService.getPlayer();
-
-                    if (!player) {
-                        return false;
-                    }
-
-                    if (!player.job.onduty) {
                         return false;
                     }
 
@@ -129,13 +111,7 @@ export class BennysFlatbedProvider {
                         return false;
                     }
 
-                    const player = this.playerService.getPlayer();
-
-                    if (!player) {
-                        return false;
-                    }
-
-                    return player.job.onduty;
+                    return true;
                 },
             },
             {
@@ -151,16 +127,6 @@ export class BennysFlatbedProvider {
                 },
                 canInteract: async (entity: number) => {
                     if (GetEntityModel(entity) !== GetHashKey('flatbed4')) {
-                        return false;
-                    }
-
-                    const player = this.playerService.getPlayer();
-
-                    if (!player) {
-                        return false;
-                    }
-
-                    if (!player.job.onduty) {
                         return false;
                     }
 

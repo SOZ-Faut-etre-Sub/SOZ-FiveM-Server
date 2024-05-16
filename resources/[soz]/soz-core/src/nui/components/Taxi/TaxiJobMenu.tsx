@@ -1,3 +1,4 @@
+import { usePlayer } from '@public/nui/hook/data';
 import { RootState } from '@public/nui/store';
 import { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux';
@@ -7,17 +8,12 @@ import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';
 import { MainMenu, Menu, MenuContent, MenuItemButton, MenuItemText, MenuTitle } from '../Styleguide/Menu';
 
-type TaxiStateProps = {
-    data: {
-        onDuty: boolean;
-    };
-};
-
-export const TaxiJobMenu: FunctionComponent<TaxiStateProps> = ({ data }) => {
+export const TaxiJobMenu: FunctionComponent = () => {
     const status = useSelector((state: RootState) => state.taxi);
     const banner = 'https://nui-img/soz/menu_job_taxi';
+    const player = usePlayer();
 
-    if (!data.onDuty) {
+    if (!player.job.onduty) {
         return (
             <Menu type={MenuType.TaxiJobMenu}>
                 <MainMenu>

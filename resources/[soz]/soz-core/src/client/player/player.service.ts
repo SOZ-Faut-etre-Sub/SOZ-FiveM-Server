@@ -86,10 +86,6 @@ export class PlayerService {
         TriggerServerEvent(ServerEvent.PLAYER_UPDATE_STATE, state);
     }
 
-    public isOnDuty(): boolean {
-        return this.player.job.onduty;
-    }
-
     /**
      * Get the closest player
      *

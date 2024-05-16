@@ -23,11 +23,11 @@ export class LSMCCheckHealthProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    async doAnalyze(source: number, label: string, item_id: string) {
+    private async doAnalyze(source: number, label: string, item_id: string) {
         const inventoryItem = this.inventoryManager.getFirstItemInventory(source, item_id);
 
         if (!inventoryItem) {
-            return {};
+            return null;
         }
 
         const { completed } = await this.progressService.progress(source, 'analyze', label, 5000, {
@@ -37,24 +37,24 @@ export class LSMCCheckHealthProvider {
         });
 
         if (!completed) {
-            return {};
+            return null;
         }
 
         const targetPlayerSource = inventoryItem.metadata?.player;
 
         if (!targetPlayerSource) {
-            return {};
+            return null;
         }
 
         const targetPlayer = this.playerService.getPlayer(targetPlayerSource);
 
         if (!targetPlayer) {
-            return {};
+            return null;
         }
 
-        this.inventoryManager.removeItemFromInventory(source, item_id, 1, inventoryItem.metadata, inventoryItem.slot);
+        this.inventoryManager.removeInventoryItem(source, inventoryItem);
 
-        return { targetPlayer, inventoryItem };
+        return targetPlayer;
     }
 
     @OnEvent(ServerEvent.LSMC_SET_HEALTH_BOOK)
@@ -66,7 +66,7 @@ export class LSMCCheckHealthProvider {
 
     @OnEvent(ServerEvent.LSMC_BLOOD_ANALYZE)
     async onBloodAnalyze(source: number) {
-        const { targetPlayer } = await this.doAnalyze(source, 'Analyse de sang', 'flask_blood_full');
+        const targetPlayer = await this.doAnalyze(source, 'Analyse de sang', 'flask_blood_full');
 
         if (!targetPlayer) {
             return;
@@ -107,7 +107,7 @@ export class LSMCCheckHealthProvider {
 
     @OnEvent(ServerEvent.LSMC_PEE_ANALYZE)
     async onPeeAnalyze(source: number) {
-        const { targetPlayer } = await this.doAnalyze(source, 'Analyse urinaire', 'flask_pee_full');
+        const targetPlayer = await this.doAnalyze(source, 'Analyse urinaire', 'flask_pee_full');
 
         if (!targetPlayer) {
             return;

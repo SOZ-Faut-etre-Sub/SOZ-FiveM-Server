@@ -246,12 +246,9 @@ export class Halloween2023Scenario1Provider {
                     {
                         label: 'Donner',
                         icon: 'c:pole/livrer.png',
+                        item: 'halloween_prehistoric_blood_analysis',
                         canInteract: () => {
                             if (!this.storyService.canInteractForPart('halloween2023', 'scenario1', 3)) {
-                                return false;
-                            }
-
-                            if (!this.inventoryManager.hasEnoughItem('halloween_prehistoric_blood_analysis')) {
                                 return false;
                             }
 

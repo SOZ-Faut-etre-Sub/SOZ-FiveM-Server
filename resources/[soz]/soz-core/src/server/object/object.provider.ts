@@ -64,7 +64,7 @@ export class ObjectProvider {
 
     @OnEvent(ServerEvent.OBJECT_PLACE)
     public async onPlaceObject(source: number, item: string, object: string, position: Vector4) {
-        if (!this.inventoryManager.removeItemFromInventory(source, item)) {
+        if (!this.inventoryManager.removeNotExpiredItem(source, item)) {
             this.notifier.error(source, 'Vous ne possédez pas cet objet.');
 
             return;

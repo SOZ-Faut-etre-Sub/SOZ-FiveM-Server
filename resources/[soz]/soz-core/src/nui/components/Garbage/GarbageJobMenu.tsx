@@ -1,3 +1,4 @@
+import { usePlayer } from '@public/nui/hook/data';
 import { FunctionComponent } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
@@ -8,14 +9,14 @@ import { MainMenu, Menu, MenuContent, MenuItemCheckbox, MenuItemText, MenuTitle 
 type FoodStateProps = {
     data: {
         displayBinBlip: boolean;
-        onDuty: boolean;
     };
 };
 
 export const GarbageJobMenu: FunctionComponent<FoodStateProps> = ({ data }) => {
     const banner = 'https://nui-img/soz/menu_job_garbage';
+    const player = usePlayer();
 
-    if (!data.onDuty) {
+    if (!player.job.onduty) {
         return (
             <Menu type={MenuType.GarbageJobMenu}>
                 <MainMenu>

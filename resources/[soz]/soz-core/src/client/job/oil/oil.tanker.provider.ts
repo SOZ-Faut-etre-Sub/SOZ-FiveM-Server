@@ -88,15 +88,7 @@ export class OilTankerProvider {
                     job: JobType.Oil,
                     blackoutGlobal: true,
                     blackoutJob: JobType.Oil,
-                    canInteract: () => {
-                        const player = this.playerService.getPlayer();
-
-                        if (!player) {
-                            return false;
-                        }
-
-                        return !this.currentTankerAttached && player.job.onduty;
-                    },
+                    canInteract: () => !this.currentTankerAttached,
                     action: this.connectTanker.bind(this),
                 },
                 {
@@ -145,15 +137,7 @@ export class OilTankerProvider {
                     job: JobType.Oil,
                     blackoutGlobal: true,
                     blackoutJob: JobType.Oil,
-                    canInteract: () => {
-                        const player = this.playerService.getPlayer();
-
-                        if (!player) {
-                            return false;
-                        }
-
-                        return player.job.onduty && this.currentTankerAttached !== null;
-                    },
+                    canInteract: () => this.currentTankerAttached !== null,
                     action: this.tankerResell.bind(this),
                 },
             ]
@@ -168,15 +152,7 @@ export class OilTankerProvider {
                     job: JobType.Oil,
                     blackoutGlobal: true,
                     blackoutJob: JobType.Oil,
-                    canInteract: () => {
-                        const player = this.playerService.getPlayer();
-
-                        if (!player) {
-                            return false;
-                        }
-
-                        return player.job.onduty && this.currentTankerAttached !== null;
-                    },
+                    canInteract: () => this.currentTankerAttached !== null,
                     action: this.refineTanker.bind(this),
                 },
             ]);
@@ -192,19 +168,9 @@ export class OilTankerProvider {
                     job: JobType.Oil,
                     blackoutGlobal: true,
                     blackoutJob: JobType.Oil,
-                    canInteract: () => {
-                        const player = this.playerService.getPlayer();
-
-                        if (!player) {
-                            return false;
-                        }
-
-                        if (!this.fieldZone.isPointInside(GetEntityCoords(PlayerPedId()) as Vector3)) {
-                            return false;
-                        }
-
-                        return player.job.onduty && this.currentTankerAttached !== null;
-                    },
+                    canInteract: () =>
+                        this.currentTankerAttached !== null &&
+                        this.fieldZone.isPointInside(GetEntityCoords(PlayerPedId()) as Vector3),
                     action: this.refillTanker.bind(this),
                 },
             ]

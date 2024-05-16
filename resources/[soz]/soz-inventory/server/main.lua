@@ -1014,7 +1014,7 @@ function Inventory.GetAllItems(inv)
             local item = QBCore.Shared.Items[v.name]
 
             if item then
-                table.insert(items, {item = item, amount = v.amount, metadata = v.metadata})
+                table.insert(items, {item = item, amount = v.amount, metadata = v.metadata, slot = v.slot})
             end
         end
     end

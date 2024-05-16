@@ -34,15 +34,6 @@ export class OilCraftProvider {
                     job: JobType.Oil,
                     blackoutGlobal: true,
                     blackoutJob: JobType.Oil,
-                    canInteract: () => {
-                        const player = this.playerService.getPlayer();
-
-                        if (!player) {
-                            return false;
-                        }
-
-                        return player.job.onduty;
-                    },
                     action: this.craftOil.bind(this),
                 },
                 {
@@ -52,15 +43,6 @@ export class OilCraftProvider {
                     job: JobType.Oil,
                     blackoutGlobal: true,
                     blackoutJob: JobType.Oil,
-                    canInteract: () => {
-                        const player = this.playerService.getPlayer();
-
-                        if (!player) {
-                            return false;
-                        }
-
-                        return player.job.onduty;
-                    },
                     action: this.craftKerosene.bind(this),
                 },
             ]
@@ -84,15 +66,6 @@ export class OilCraftProvider {
                     job: JobType.Oil,
                     blackoutGlobal: true,
                     blackoutJob: JobType.Oil,
-                    canInteract: () => {
-                        const player = this.playerService.getPlayer();
-
-                        if (!player) {
-                            return false;
-                        }
-
-                        return player.job.onduty;
-                    },
                     action: this.craftOilJerryCan.bind(this),
                 },
                 {
@@ -102,15 +75,6 @@ export class OilCraftProvider {
                     job: JobType.Oil,
                     blackoutGlobal: true,
                     blackoutJob: JobType.Oil,
-                    canInteract: () => {
-                        const player = this.playerService.getPlayer();
-
-                        if (!player) {
-                            return false;
-                        }
-
-                        return player.job.onduty;
-                    },
                     action: this.craftKeroseneJerryCan.bind(this),
                 },
             ]

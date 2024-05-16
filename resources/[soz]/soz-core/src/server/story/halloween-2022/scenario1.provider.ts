@@ -81,7 +81,7 @@ export class Halloween2022Scenario1Provider {
                 });
                 return Halloween2022Scenario1.dialog['part2'];
             case 'part3':
-                if (this.inventoryManager.removeItemFromInventory(source, 'bloody_knife', 1)) {
+                if (this.inventoryManager.removeNotExpiredItem(source, 'bloody_knife')) {
                     this.playerService.setPlayerMetadata(source, 'halloween2022', {
                         ...player.metadata.halloween2022,
                         scenario1: {
@@ -94,7 +94,7 @@ export class Halloween2022Scenario1Provider {
                 }
                 return;
             case 'part4':
-                if (this.inventoryManager.removeItemFromInventory(source, 'small_coffin', 1)) {
+                if (this.inventoryManager.removeNotExpiredItem(source, 'small_coffin')) {
                     this.playerService.setPlayerMetadata(source, 'halloween2022', {
                         ...player.metadata.halloween2022,
                         scenario1: {
@@ -132,7 +132,7 @@ export class Halloween2022Scenario1Provider {
                 }
                 return Halloween2022Scenario1.dialog['part5'];
             case 'part6':
-                if (this.inventoryManager.removeItemFromInventory(source, 'bag_kibble', 1)) {
+                if (this.inventoryManager.removeNotExpiredItem(source, 'bag_kibble')) {
                     this.playerService.setPlayerMetadata(source, 'halloween2022', {
                         ...player.metadata.halloween2022,
                         scenario1: {
@@ -146,7 +146,7 @@ export class Halloween2022Scenario1Provider {
                 return;
             case 'part7':
                 if (this.inventoryManager.canSwapItem(source, 'pumpkin_soup', 1, 'halloween2022_story', 1)) {
-                    this.inventoryManager.removeItemFromInventory(source, 'pumpkin_soup', 1);
+                    this.inventoryManager.removeNotExpiredItem(source, 'pumpkin_soup');
                     this.inventoryManager.addItemToInventory(source, 'halloween2022_story', 1);
 
                     this.playerService.setPlayerMetadata(source, 'halloween2022', {

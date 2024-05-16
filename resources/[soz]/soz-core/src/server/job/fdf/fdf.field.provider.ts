@@ -215,15 +215,7 @@ export class FDFFieldProvider {
 
                 const date = new Date();
 
-                if (
-                    !this.inventoryManager.removeItemFromInventory(
-                        source,
-                        item.name,
-                        1,
-                        inventoryItem.metadata,
-                        inventoryItem.slot
-                    )
-                ) {
+                if (!this.inventoryManager.removeInventoryItem(source, inventoryItem)) {
                     this.notifier.notify(source, "Tu n'as pas assez de graines.", 'error');
                     break;
                 }

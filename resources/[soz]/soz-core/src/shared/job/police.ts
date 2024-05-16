@@ -1599,8 +1599,6 @@ export type PoliceJobFineMenuData = {
 };
 
 export type PoliceJobMenuData = {
-    job: JobType;
-    onDuty: boolean;
     displayRadar: boolean;
 };
 

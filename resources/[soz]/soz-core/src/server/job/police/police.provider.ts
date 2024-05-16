@@ -81,7 +81,7 @@ export class PoliceProvider {
             return;
         }
 
-        if (this.inventoryManager.removeItemFromInventory(source, item.name, 1, item.metadata)) {
+        if (this.inventoryManager.removeNotExpiredItem(source, item.name, 1, item.metadata)) {
             this.playerService.setPlayerMetadata(source, 'armor', { current: 100, hidden: true });
             TriggerClientEvent(ClientEvent.POLICE_SETUP_ARMOR, source, armorType);
         }
@@ -96,7 +96,7 @@ export class PoliceProvider {
             return;
         }
 
-        if (!this.inventoryManager.removeItemFromInventory(player.source, item.name, 1, item.metadata)) {
+        if (!this.inventoryManager.removeNotExpiredItem(player.source, item.name, 1, item.metadata)) {
             return;
         }
 
@@ -128,7 +128,9 @@ export class PoliceProvider {
 
     @Rpc(RpcServerEvent.POLICE_ALCOOLLEVEL)
     public getAlcoolLevel(source: number, target: number) {
-        this.inventoryManager.removeItemFromInventory(source, 'breathanalyzer', 1);
+        if (!this.inventoryManager.removeNotExpiredItem(source, 'breathanalyzer')) {
+            return;
+        }
         const targetPlayer = this.playerService.getPlayer(target);
         TriggerClientEvent(ClientEvent.POLICE_BREATHANALYZER_TARGET, targetPlayer.source);
         return targetPlayer.metadata.alcohol;
@@ -136,7 +138,9 @@ export class PoliceProvider {
 
     @Rpc(RpcServerEvent.POLICE_DRUGLEVEL_AND_TYPE)
     public getDrugLevel(source: number, target: number) {
-        this.inventoryManager.removeItemFromInventory(source, 'screening_test', 1);
+        if (!this.inventoryManager.removeNotExpiredItem(source, 'screening_test')) {
+            return;
+        }
         const targetPlayer = this.playerService.getPlayer(target);
         TriggerClientEvent(ClientEvent.POLICE_BREATHANALYZER_TARGET, targetPlayer.source);
         return { level: targetPlayer.metadata.drug, type: targetPlayer.metadata.last_drug_eaten };

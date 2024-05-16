@@ -35,9 +35,7 @@ export class TaxiMenuProvider {
             return;
         }
 
-        this.nuiMenu.openMenu(MenuType.TaxiJobMenu, {
-            onDuty: this.playerService.isOnDuty(),
-        });
+        this.nuiMenu.openMenu(MenuType.TaxiJobMenu, {});
     }
 
     @OnNuiEvent(NuiEvent.TaxiSetMission)

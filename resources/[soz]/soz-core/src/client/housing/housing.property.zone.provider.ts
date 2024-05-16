@@ -137,7 +137,7 @@ export class HousingPropertyZoneProvider {
             return;
         }
 
-        const hasMap = this.inventoryManager.hasEnoughItem('house_map');
+        const hasMap = this.inventoryManager.hasEnoughItem('house_map', 1, true);
         const properties = this.housingRepository.get();
 
         if (properties.length === 0) {

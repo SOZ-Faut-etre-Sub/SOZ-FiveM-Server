@@ -31,9 +31,6 @@ export class FightForStyleHarvestProvider {
                     icon: 'c:/ffs/harvest.png',
                     color: 'ffs',
                     job: 'ffs',
-                    canInteract: () => {
-                        return this.playerService.isOnDuty();
-                    },
                     action: () => {
                         TriggerServerEvent(ServerEvent.FFS_HARVEST);
                     },

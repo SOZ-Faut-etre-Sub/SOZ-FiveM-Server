@@ -91,7 +91,6 @@ export class StonkProvider {
 
         this.nuiMenu.openMenu(MenuType.StonkJobMenu, {
             state: this.state,
-            onDuty: this.playerService.isOnDuty(),
         });
     }
 }

@@ -49,7 +49,6 @@ export class DmcHarvestProvider {
                             job: JobType.DMC,
                             canInteract: () => {
                                 return (
-                                    this.playerService.isOnDuty() &&
                                     this.weaponService.getCurrentWeapon() &&
                                     this.weaponService.getCurrentWeapon().name === 'weapon_pickaxe'
                                 );

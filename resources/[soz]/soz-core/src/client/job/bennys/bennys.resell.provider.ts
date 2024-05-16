@@ -57,7 +57,6 @@ export class BennysResellProvider {
                     const point: Vector3 = [coords[0], coords[1], coords[2]];
                     const vehicleType = GetVehicleClass(entity);
                     return (
-                        this.playerService.isOnDuty() &&
                         this.jobService.hasPermission(JobType.Bennys, JobPermission.BennysResell) &&
                         zone.isPointInside(point) &&
                         allowedTypes.includes(vehicleType)

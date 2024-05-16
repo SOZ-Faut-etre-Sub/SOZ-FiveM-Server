@@ -112,7 +112,6 @@ export class FDFProvider {
         this.nuiMenu.openMenu(MenuType.FDFJobMenu, {
             recipes: crafting.categories,
             state: this.state,
-            onDuty: this.playerService.isOnDuty(),
         });
     }
 

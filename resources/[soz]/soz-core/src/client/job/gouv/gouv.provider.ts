@@ -49,7 +49,6 @@ export class GouvProvider {
 
         this.nuiMenu.openMenu(MenuType.GouvJobMenu, {
             displayRadar: this.vehicleRadarProvider.displayRadar,
-            onDuty: this.playerService.isOnDuty(),
         });
     }
 

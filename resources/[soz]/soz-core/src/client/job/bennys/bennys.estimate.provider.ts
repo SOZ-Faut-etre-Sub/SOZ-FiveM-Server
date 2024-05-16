@@ -31,10 +31,7 @@ export class BennysEstimateProvider {
                 job: JobType.Bennys,
                 color: JobType.Bennys,
                 canInteract: () => {
-                    return (
-                        this.playerService.isOnDuty() &&
-                        this.jobService.hasPermission(JobType.Bennys, JobPermission.BennysEstimate)
-                    );
+                    return this.jobService.hasPermission(JobType.Bennys, JobPermission.BennysEstimate);
                 },
                 action: async vehicle => {
                     const networkId = NetworkGetNetworkIdFromEntity(vehicle);

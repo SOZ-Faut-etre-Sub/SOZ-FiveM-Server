@@ -40,15 +40,6 @@ export class JobInvoiceProvider {
                     blackoutJob: job.id,
                     job: job.id,
                     color: job.id,
-                    canInteract: () => {
-                        const player = this.playerService.getPlayer();
-
-                        if (!player) {
-                            return false;
-                        }
-
-                        return player.job.onduty;
-                    },
                     action: this.invoicePlayer.bind(this),
                 },
                 {
@@ -61,7 +52,7 @@ export class JobInvoiceProvider {
                     canInteract: async entity => {
                         const player = this.playerService.getPlayer();
 
-                        if (!player || !player.job.onduty) {
+                        if (!player) {
                             return false;
                         }
 

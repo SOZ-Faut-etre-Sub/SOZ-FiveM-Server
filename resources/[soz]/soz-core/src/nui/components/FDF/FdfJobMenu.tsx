@@ -1,4 +1,4 @@
-import { useItems } from '@public/nui/hook/data';
+import { useItems, usePlayer } from '@public/nui/hook/data';
 import { CraftCategory, CraftRecipe } from '@public/shared/craft/craft';
 import { FDFFieldBlips, FDFFieldKind, FDFFieldMenu } from '@public/shared/job/fdf';
 import { FunctionComponent, useEffect, useState } from 'react';
@@ -29,7 +29,6 @@ type FDFStateProps = {
             [FDFFieldKind.apple]: boolean;
             [FDFFieldKind.orange]: boolean;
         };
-        onDuty: boolean;
     };
 };
 
@@ -38,6 +37,7 @@ export const FdfJobMenu: FunctionComponent<FDFStateProps> = ({ data }) => {
     const [blips, setBlips] = useState(null);
     const [currentRecipe, setCurrentRecipe] = useState<CraftRecipe>();
     const items = useItems();
+    const player = usePlayer();
 
     useEffect(() => {
         if (data && data.state) {
@@ -50,7 +50,7 @@ export const FdfJobMenu: FunctionComponent<FDFStateProps> = ({ data }) => {
         await fetchNui(NuiEvent.FdfDisplayBlip, { type, value });
     };
 
-    if (!data.onDuty) {
+    if (!player.job.onduty) {
         return (
             <Menu type={MenuType.FDFJobMenu}>
                 <MainMenu>

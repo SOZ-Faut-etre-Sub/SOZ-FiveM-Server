@@ -72,7 +72,7 @@ export class UpwStationProvider {
 
     @OnEvent(ServerEvent.UPW_CREATE_CHARGER)
     public async createCharger(source: number, charger: UpwCharger) {
-        if (!this.inventoryManager.removeItemFromInventory(source, 'car_charger', 1)) {
+        if (!this.inventoryManager.removeNotExpiredItem(source, 'car_charger')) {
             this.notifier.notify(source, "Vous n'avez pas de chargeur de voiture.", 'error');
 
             return;
@@ -143,7 +143,7 @@ export class UpwStationProvider {
             this.notifier.notify(source, 'La station est pleine !', 'success');
             return;
         }
-        if (!this.inventoryManager.removeItemFromInventory(source, cell, 1)) {
+        if (!this.inventoryManager.removeNotExpiredItem(source, cell)) {
             this.notifier.notify(source, "Une erreur s'est produite lors de la recharge.", 'error');
             return;
         }

@@ -307,8 +307,6 @@ export class PoliceProvider {
         }
 
         this.nuiMenu.openMenu(MenuType.PoliceJobMenu, {
-            onDuty: this.playerService.isOnDuty(),
-            job: this.playerService.getPlayer().job.id,
             displayRadar: this.vehicleRadarProvider.displayRadar,
         });
     }

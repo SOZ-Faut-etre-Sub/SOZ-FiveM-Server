@@ -72,7 +72,7 @@ export class PlayerZombieProvider {
             return;
         }
 
-        if (this.inventoryManager.removeItemFromInventory(source, 'halloween_zombie_serum', 1)) {
+        if (this.inventoryManager.removeNotExpiredItem(source, 'halloween_zombie_serum')) {
             this.removeZombiePlayer(target);
         } else {
             this.notifier.notify(source, "Vous n'avez plus de sérum...");

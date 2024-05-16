@@ -43,27 +43,10 @@ export class FoodFieldProvider {
                         blackoutGlobal: true,
                         blackoutJob: JobType.Food,
                         job: JobType.Food,
-                        canInteract: entity => {
-                            const player = this.playerService.getPlayer();
-
-                            if (!player) {
-                                return false;
-                            }
-
-                            if (!this.jobService.hasPermission(JobType.Food, JobPermission.FoodHarvest)) {
-                                return false;
-                            }
-
-                            if (IsEntityAVehicle(entity)) {
-                                return false;
-                            }
-
-                            if (IsEntityAPed(entity)) {
-                                return false;
-                            }
-
-                            return player.job.onduty;
-                        },
+                        canInteract: entity =>
+                            !IsEntityAVehicle(entity) &&
+                            !IsEntityAPed(entity) &&
+                            this.jobService.hasPermission(JobType.Food, JobPermission.FoodHarvest),
                         action: () => {
                             this.collectIngredients(type as FoodFieldType, index);
                         },
@@ -72,17 +55,10 @@ export class FoodFieldProvider {
                         label: 'Récolter de la Zeed',
                         color: 'crimi',
                         icon: 'c:crimi/zeed.png',
-                        canInteract: entity => {
-                            if (IsEntityAVehicle(entity)) {
-                                return false;
-                            }
-
-                            if (IsEntityAPed(entity)) {
-                                return false;
-                            }
-
-                            return this.playerService.hasDrugSkill(DrugSkill.Botaniste);
-                        },
+                        canInteract: entity =>
+                            !IsEntityAVehicle(entity) &&
+                            !IsEntityAPed(entity) &&
+                            this.playerService.hasDrugSkill(DrugSkill.Botaniste),
                         action: this.harvestZeed.bind(this),
                     },
                 ]);
@@ -107,15 +83,6 @@ export class FoodFieldProvider {
                     blackoutGlobal: true,
                     blackoutJob: JobType.Food,
                     job: JobType.Food,
-                    canInteract: () => {
-                        const player = this.playerService.getPlayer();
-
-                        if (!player) {
-                            return false;
-                        }
-
-                        return player.job.onduty;
-                    },
                     action: this.harvestMilk.bind(this),
                 },
             ]

@@ -133,10 +133,6 @@ export class VehicleElectricProvider {
                 blackoutGlobal: true,
                 blackoutJob: JobType.Upw,
                 job: JobType.Upw,
-                canInteract: () => {
-                    const player = this.playerService.getPlayer();
-                    return player && player.job.onduty;
-                },
                 action: entity => {
                     const position = GetEntityCoords(entity) as Vector3;
                     const charger = this.upwChargerRepository.getClosestCharger(position);
@@ -156,10 +152,6 @@ export class VehicleElectricProvider {
                 blackoutGlobal: true,
                 blackoutJob: JobType.Upw,
                 job: JobType.Upw,
-                canInteract: () => {
-                    const player = this.playerService.getPlayer();
-                    return player && player.job.onduty;
-                },
                 action: entity => {
                     const position = GetEntityCoords(entity) as Vector3;
                     const charger = this.upwChargerRepository.getClosestCharger(position);
@@ -178,10 +170,6 @@ export class VehicleElectricProvider {
                 blackoutGlobal: true,
                 blackoutJob: JobType.Upw,
                 job: JobType.Upw,
-                canInteract: () => {
-                    const player = this.playerService.getPlayer();
-                    return player && player.job.onduty;
-                },
                 action: entity => {
                     const position = GetEntityCoords(entity) as Vector3;
                     const charger = this.upwChargerRepository.getClosestCharger(position);
@@ -200,10 +188,6 @@ export class VehicleElectricProvider {
                 blackoutGlobal: true,
                 blackoutJob: JobType.Upw,
                 job: JobType.Upw,
-                canInteract: () => {
-                    const player = this.playerService.getPlayer();
-                    return player && player.job.onduty;
-                },
                 action: entity => {
                     const position = GetEntityCoords(entity) as Vector3;
                     const charger = this.upwChargerRepository.getClosestCharger(position);
@@ -224,10 +208,6 @@ export class VehicleElectricProvider {
                 job: JobType.Upw,
                 action: (entity: number) => {
                     this.getStationEnergyLevel(entity);
-                },
-                canInteract: () => {
-                    const player = this.playerService.getPlayer();
-                    return player && player.job.onduty;
                 },
             },
             {
@@ -331,7 +311,7 @@ export class VehicleElectricProvider {
             this.notifier.notify('La station est pleine !', 'success');
             return;
         }
-        if (!this.inventoryManager.hasEnoughItem(cell, 1)) {
+        if (!this.inventoryManager.hasEnoughItem(cell, 1, true)) {
             this.notifier.notify("Vous n'avez plus de cellule de ce type.", 'warning');
             return;
         }

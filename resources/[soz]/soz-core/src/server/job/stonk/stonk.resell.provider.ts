@@ -125,7 +125,10 @@ export class StonkResellProvider {
             return [false, 0];
         }
 
-        const items = this.inventoryManager.getFirstItemInventory(source, item);
+        const items = this.inventoryManager.findItem(
+            source,
+            elem => elem.name == item && this.itemService.isItemExpired(elem)
+        );
         let resoldAmount = items.amount;
 
         if (!items) {
@@ -136,7 +139,7 @@ export class StonkResellProvider {
             resoldAmount = StonkConfig.resell.amount;
         }
 
-        const removeRequest = this.inventoryManager.removeItemFromInventory(source, item, resoldAmount);
+        const removeRequest = this.inventoryManager.removeNotExpiredItem(source, item, resoldAmount);
 
         return [removeRequest, resoldAmount];
     }

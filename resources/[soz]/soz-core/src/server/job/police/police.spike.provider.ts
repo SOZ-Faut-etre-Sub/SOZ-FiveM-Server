@@ -29,8 +29,8 @@ export class PoliceSpikeProvider {
         if (!allowedJobInteraction.includes(player.job.id)) {
             return;
         }
-        if (this.inventoryManager.getItemCount(player.source, item) >= 1) {
-            this.inventoryManager.removeItemFromInventory(player.source, item, 1);
+
+        if (this.inventoryManager.removeNotExpiredItem(player.source, item)) {
             TriggerClientEvent(ClientEvent.POLICE_REQUEST_ADD_SPIKE, player.source);
         } else {
             TriggerClientEvent(

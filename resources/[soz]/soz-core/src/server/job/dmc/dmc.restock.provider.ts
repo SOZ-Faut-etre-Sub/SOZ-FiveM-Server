@@ -2,10 +2,10 @@ import { OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { InventoryManager } from '@public/server/inventory/inventory.manager';
+import { ItemService } from '@public/server/item/item.service';
 import { Monitor } from '@public/server/monitor/monitor';
 import { Notifier } from '@public/server/notifier';
 import { ProgressService } from '@public/server/player/progress.service';
-import { QBCore } from '@public/server/qbcore';
 import { ServerEvent } from '@public/shared/event';
 import { DmcResellconfig } from '@public/shared/job/dmc';
 import { toVector3Object, Vector3 } from '@public/shared/polyzone/vector';
@@ -26,22 +26,25 @@ export class DmcRestockProvider {
     @Inject(Monitor)
     private monitor: Monitor;
 
-    @Inject(QBCore)
-    private qbcore: QBCore;
+    @Inject(ItemService)
+    private itemService: ItemService;
 
     @Inject(BankService)
     private bankService: BankService;
 
     @OnEvent(ServerEvent.DMC_RESTOCK)
     public async onDmcRestock(source: number) {
-        const item = this.inventoryManager.getFirstItemInventory(source, DmcResellconfig.resell_item);
+        const item = this.inventoryManager.findItem(
+            source,
+            item => item.name == DmcResellconfig.resell_item && !this.itemService.isItemExpired(item)
+        );
 
         if (!item) {
             return;
         }
 
         const maxAmount = item.amount;
-        const itemWeight = this.qbcore.getItem(DmcResellconfig.resell_item).weight;
+        const itemWeight = this.itemService.getItem(DmcResellconfig.resell_item).weight;
         const availableWeight = await this.inventoryManager.getAvailableWeight('ls_custom_storage');
         const availableAmount = Math.floor(availableWeight / itemWeight);
         const toAddAmount = Math.min(maxAmount, availableAmount);
@@ -68,7 +71,10 @@ export class DmcRestockProvider {
             return;
         }
 
-        this.inventoryManager.removeItemFromInventory(source, DmcResellconfig.resell_item, toAddAmount);
+        if (!this.inventoryManager.removeNotExpiredItem(source, DmcResellconfig.resell_item, toAddAmount)) {
+            return;
+        }
+
         this.inventoryManager.addItemToInventoryNotPlayer(
             'ls_custom_storage',
             DmcResellconfig.resell_item,

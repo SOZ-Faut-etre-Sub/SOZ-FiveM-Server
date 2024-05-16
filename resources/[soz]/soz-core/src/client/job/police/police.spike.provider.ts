@@ -44,9 +44,6 @@ export class PoliceSpikeProvider {
                     label: 'Démonter',
                     icon: 'c:jobs/demonter.png',
                     job: jobsTarget,
-                    canInteract: () => {
-                        return this.playerService.isOnDuty();
-                    },
                     action: async (entity: number) => {
                         const { completed } = await this.progressService.progress(
                             'remove_object',
@@ -87,12 +84,7 @@ export class PoliceSpikeProvider {
                     job: jobsTarget,
                     canInteract: entity => {
                         const id = this.objectProvider.getIdFromEntity(entity);
-
-                        if (!id) {
-                            return false;
-                        }
-
-                        return this.playerService.isOnDuty();
+                        return !!id;
                     },
                     action: async (entity: number) => {
                         const id = this.objectProvider.getIdFromEntity(entity);

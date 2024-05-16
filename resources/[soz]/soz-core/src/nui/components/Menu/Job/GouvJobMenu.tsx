@@ -1,3 +1,4 @@
+import { usePlayer } from '@public/nui/hook/data';
 import { FunctionComponent } from 'react';
 
 import { TaxLabel, TaxType } from '../../../../shared/bank';
@@ -24,7 +25,6 @@ import {
 
 type GouvJobMenuProps = {
     data: {
-        onDuty: boolean;
         displayRadar: boolean;
     };
 };
@@ -55,8 +55,9 @@ export const GouvJobMenu: FunctionComponent<GouvJobMenuProps> = ({ data }) => {
     const taxAllowed = useHasJobPermission(JobType.Gouv, JobPermission.GouvUpdateTax);
     const fineAllowed = useHasJobPermission(JobType.Gouv, JobPermission.GouvManageFine);
     const tier = useConfigurationValue('JobTaxTier');
+    const player = usePlayer();
 
-    if (!data.onDuty) {
+    if (!player.job.onduty) {
         return (
             <Menu type={MenuType.GouvJobMenu}>
                 <MainMenu>

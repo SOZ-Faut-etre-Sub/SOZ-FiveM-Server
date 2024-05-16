@@ -167,7 +167,7 @@ export class StonkDeliveryProvider {
             return false;
         }
 
-        if (this.inventoryManager.removeItemFromInventory(source, StonkConfig.delivery.item, 1)) {
+        if (this.inventoryManager.removeNotExpiredItem(source, StonkConfig.delivery.item)) {
             this.notifier.notify(source, `Vous avez ~g~déposé~s~ une caisse.`);
 
             const transfer = await this.bankService.transferFarmMoney(

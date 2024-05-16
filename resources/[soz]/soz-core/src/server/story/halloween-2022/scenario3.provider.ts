@@ -85,7 +85,7 @@ export class Halloween2022Scenario3Provider {
                 return;
             case 'part4':
                 if (this.inventoryManager.getItem(source, 'zombie_hand') !== null) {
-                    this.inventoryManager.removeItemFromInventory(source, 'zombie_hand', 1);
+                    this.inventoryManager.removeNotExpiredItem(source, 'zombie_hand');
                     this.playerService.setPlayerMetadata(source, 'halloween2022', {
                         ...player.metadata.halloween2022,
                         scenario3: {

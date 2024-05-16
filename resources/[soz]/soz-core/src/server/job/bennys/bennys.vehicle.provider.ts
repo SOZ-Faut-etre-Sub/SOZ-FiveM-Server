@@ -38,7 +38,7 @@ export class BennysVehicleProvider {
 
     @OnEvent(ServerEvent.BENNYS_REPAIR_VEHICLE_ENGINE)
     public async onRepairVehicleEngine(source: number, vehicleNetworkId: number) {
-        if (!this.inventoryManager.hasEnoughItem(source, 'repair_part_motor', 1)) {
+        if (!this.inventoryManager.hasEnoughItem(source, 'repair_part_motor', 1, true)) {
             this.notifier.error(source, `Vous n'avez pas de pièce de réparation moteur.`);
 
             return;
@@ -52,7 +52,9 @@ export class BennysVehicleProvider {
             return;
         }
 
-        this.inventoryManager.removeItemFromInventory(source, 'repair_part_motor', 1);
+        if (!this.inventoryManager.removeNotExpiredItem(source, 'repair_part_motor')) {
+            return;
+        }
 
         this.notifier.notify(source, `Le moteur a été réparé.`);
 
@@ -70,7 +72,7 @@ export class BennysVehicleProvider {
 
     @OnEvent(ServerEvent.BENNYS_REPAIR_VEHICLE_BODY)
     public async onRepairVehicleEngineBody(source: number, vehicleNetworkId: number) {
-        if (!this.inventoryManager.hasEnoughItem(source, 'repair_part_body', 1)) {
+        if (!this.inventoryManager.hasEnoughItem(source, 'repair_part_body', 1, true)) {
             this.notifier.error(source, `Vous n'avez pas de pièce de réparation carosserie.`);
 
             return;
@@ -84,7 +86,9 @@ export class BennysVehicleProvider {
             return;
         }
 
-        this.inventoryManager.removeItemFromInventory(source, 'repair_part_body', 1);
+        if (!this.inventoryManager.removeNotExpiredItem(source, 'repair_part_body')) {
+            return;
+        }
 
         this.notifier.notify(source, `La carrosserie a été réparée.`);
 
@@ -105,7 +109,7 @@ export class BennysVehicleProvider {
 
     @OnEvent(ServerEvent.BENNYS_REPAIR_VEHICLE_TANK)
     public async onRepairVehicleEngineTank(source: number, vehicleNetworkId: number) {
-        if (!this.inventoryManager.hasEnoughItem(source, 'repair_part_fuel_tank', 1)) {
+        if (!this.inventoryManager.hasEnoughItem(source, 'repair_part_fuel_tank', 1, true)) {
             this.notifier.error(source, `Vous n'avez pas de pièce de réparation réservoir.`);
 
             return;
@@ -119,7 +123,9 @@ export class BennysVehicleProvider {
             return;
         }
 
-        this.inventoryManager.removeItemFromInventory(source, 'repair_part_fuel_tank', 1);
+        if (!this.inventoryManager.removeNotExpiredItem(source, 'repair_part_fuel_tank')) {
+            return;
+        }
 
         this.notifier.notify(source, `Le réservoir d'essence a été réparé.`);
 

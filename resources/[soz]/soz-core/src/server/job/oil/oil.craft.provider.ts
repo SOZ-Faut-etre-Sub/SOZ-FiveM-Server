@@ -113,7 +113,9 @@ export class OilCraftProvider {
             return;
         }
 
-        this.inventoryManager.removeItemFromInventory(source, itemIdToRemove, removeAmount);
+        if (!this.inventoryManager.removeNotExpiredItem(source, itemIdToRemove, removeAmount)) {
+            return;
+        }
         this.inventoryManager.addItemToInventory(source, itemIdToAdd, addAmount);
 
         this.notifier.notify(

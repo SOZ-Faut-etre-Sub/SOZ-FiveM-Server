@@ -2,12 +2,19 @@ import { ClientEvent } from '@public/shared/event/client';
 
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { InventoryItem, Item, ItemType } from '../../shared/item';
+import { Notifier } from '../notifier';
 import { QBCore } from '../qbcore';
+
+const BypassExpirationCheckType: ItemType[] = ['food', 'drink', 'cocktail', 'liquor'];
 
 @Injectable()
 export class ItemService {
     @Inject(QBCore)
     private qbcore: QBCore;
+
+    @Inject(Notifier)
+    private notifier: Notifier;
+
     private showCallbacks = new Map<string, (source: number, target: number, item: InventoryItem) => void>();
 
     public getItems<T extends Item = Item>(type?: ItemType): Record<string, T> {
@@ -30,8 +37,14 @@ export class ItemService {
         itemId: string,
         callback: (player: number, item: T, inventoryItem: InventoryItem) => void
     ) {
-        this.qbcore.createUseableItem(itemId, (player: number, item: any) => {
-            return callback(player, this.qbcore.getItem<T>(itemId), item as InventoryItem);
+        this.qbcore.createUseableItem(itemId, (player: number, item: InventoryItem) => {
+            const itemDef = this.getItem<T>(itemId);
+            if (!BypassExpirationCheckType.includes(itemDef.type) && this.isItemExpired(item)) {
+                this.notifier.notify(player, `${itemDef.label} est périmé(e).`, 'error');
+
+                return;
+            }
+            return callback(player, itemDef, item);
         });
     }
 

@@ -51,14 +51,6 @@ export class StonkDeliveryProvider {
                         color: JobType.CashTransfer,
                         blackoutGlobal: true,
                         blackoutJob: JobType.CashTransfer,
-                        canInteract: () => {
-                            const player = this.playerService.getPlayer();
-                            if (!player) {
-                                return false;
-                            }
-
-                            return player.job.onduty;
-                        },
                         action: () => {
                             TriggerServerEvent(ServerEvent.STONK_DELIVERY_TAKE);
                         },
@@ -86,11 +78,7 @@ export class StonkDeliveryProvider {
             job: JobType.CashTransfer,
             blackoutGlobal: true,
             blackoutJob: JobType.CashTransfer,
-            canInteract: () => {
-                return (
-                    this.playerService.isOnDuty() && this.inventoryManager.hasEnoughItem(StonkConfig.delivery.item, 1)
-                );
-            },
+            item: StonkConfig.delivery.item,
             action: () => {
                 TriggerServerEvent(ServerEvent.STONK_DELIVERY_END, this.currentDeliverLocation);
                 this.targetFactory.removeBoxZone(this.currentDeliverLocation.name);

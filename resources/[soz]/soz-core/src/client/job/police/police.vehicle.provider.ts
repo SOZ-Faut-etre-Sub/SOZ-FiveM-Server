@@ -60,9 +60,6 @@ export class PoliceVehicleProvider {
                     blackoutJob: job,
                     blackoutGlobal: true,
                     canInteract: vehicle => {
-                        if (!this.playerService.isOnDuty()) {
-                            return false;
-                        }
                         if (VehicleTypeFromClass[GetVehicleClass(vehicle)] == VehicleType.Automobile) {
                             let vehiclePlate = PlateTypeOverride[GetEntityModel(vehicle)];
                             if (vehiclePlate == null) {
@@ -139,9 +136,6 @@ export class PoliceVehicleProvider {
                     icon: 'c:police/fouiller_vehicle.png',
                     job: job,
                     canInteract: vehicle => {
-                        if (!this.playerService.isOnDuty()) {
-                            return false;
-                        }
                         if (VehicleTypeFromClass[GetVehicleClass(vehicle)] == VehicleType.Automobile) {
                             const model = GetEntityModel(vehicle);
                             const [modelDimMin, modelDimMax] = GetModelDimensions(model);
@@ -188,9 +182,6 @@ export class PoliceVehicleProvider {
                     color: job,
                     icon: 'c:police/forcer.png',
                     job: job,
-                    canInteract: () => {
-                        return this.playerService.isOnDuty();
-                    },
                     action: async entity => {
                         const { completed } = await this.progressService.progress(
                             'police:vehicle:lockpick',
@@ -231,7 +222,7 @@ export class PoliceVehicleProvider {
                         if (!vehicleState.isAnalyzed) {
                             return false;
                         }
-                        return this.playerService.isOnDuty();
+                        return true;
                     },
                     action: async entity => {
                         const { completed } = await this.progressService.progress(
@@ -276,7 +267,7 @@ export class PoliceVehicleProvider {
                         if (!vehicleState.isAnalyzed) {
                             return false;
                         }
-                        return this.playerService.isOnDuty();
+                        return true;
                     },
                     action: async entity => {
                         const { completed } = await this.progressService.progress(

@@ -59,10 +59,7 @@ export class MandatoryProvider {
                     icon: 'c:stonk/collecter.png',
                     label: 'Réhabilitation des billets',
                     canInteract: () => {
-                        return (
-                            this.playerService.isOnDuty() &&
-                            this.jobService.hasPermission(JobType.MDR, JobPermission.MdrMarkedMoneyCleaning)
-                        );
+                        return this.jobService.hasPermission(JobType.MDR, JobPermission.MdrMarkedMoneyCleaning);
                     },
                     job: JobType.MDR,
                     action: () => {
@@ -84,7 +81,6 @@ export class MandatoryProvider {
 
         this.nuiMenu.openMenu(MenuType.MandatoryJobMenu, {
             displayRadar: this.vehicleRadarProvider.displayRadar,
-            onDuty: this.playerService.isOnDuty(),
         });
     }
 

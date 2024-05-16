@@ -27,9 +27,6 @@ local function TreeInteraction(identifier, position)
                 icon = "c:pawl/harvest.png",
                 event = "pawl:client:harvestTree",
                 item = Config.Harvest.RequiredWeapon,
-                canInteract = function()
-                    return not harvesting and PlayerData.job.onduty
-                end,
                 job = "pawl",
                 blackoutGlobal = true,
                 blackoutJob = "pawl",
@@ -43,9 +40,6 @@ local function TreeInteraction(identifier, position)
                 icon = "c:pawl/harvest-chainsaw.png",
                 event = "pawl:client:checkChainsawFuel",
                 item = Config.FastHarvest.RequiredWeapon,
-                canInteract = function()
-                    return not harvesting and PlayerData.job.onduty
-                end,
                 job = "pawl",
                 blackoutGlobal = true,
                 blackoutJob = "pawl",
@@ -65,7 +59,7 @@ local function TreeInteraction(identifier, position)
                         return false
                     end
 
-                    return not harvesting and PlayerData.job.onduty
+                    return not harvesting
                 end,
                 job = "pawl",
                 blackoutGlobal = true,

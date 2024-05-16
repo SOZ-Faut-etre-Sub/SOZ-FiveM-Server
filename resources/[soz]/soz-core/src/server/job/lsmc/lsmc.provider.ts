@@ -107,7 +107,7 @@ export class LSMCProvider {
             return;
         }
 
-        if (!this.inventoryManager.removeItemFromInventory(source, 'firstaid')) {
+        if (!this.inventoryManager.removeNotExpiredItem(source, 'firstaid')) {
             return;
         }
 
@@ -138,7 +138,7 @@ export class LSMCProvider {
             return;
         }
 
-        if (!this.inventoryManager.removeItemFromInventory(source, 'empty_bloodbag')) {
+        if (!this.inventoryManager.removeNotExpiredItem(source, 'empty_bloodbag')) {
             return;
         }
         this.inventoryManager.addItemToInventory(source, 'bloodbag');
@@ -200,7 +200,7 @@ export class LSMCProvider {
         }
 
         if (!organ && player.metadata.organ) {
-            if (!this.inventoryManager.removeItemFromInventory(source, player.metadata.organ)) {
+            if (!this.inventoryManager.removeNotExpiredItem(source, player.metadata.organ)) {
                 return;
             }
         } else {

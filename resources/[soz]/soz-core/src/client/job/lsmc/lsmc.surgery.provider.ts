@@ -66,10 +66,6 @@ export class LSMCSurgeryProvider {
                 blackoutGlobal: true,
                 blackoutJob: JobType.LSMC,
                 canInteract: async entity => {
-                    if (!this.playerService.isOnDuty()) {
-                        return false;
-                    }
-
                     if (!IsEntityPlayingAnim(entity, 'anim@gangops@morgue@table@', 'body_search', 3)) {
                         return false;
                     }
@@ -114,10 +110,6 @@ export class LSMCSurgeryProvider {
                 blackoutGlobal: true,
                 blackoutJob: JobType.LSMC,
                 canInteract: async entity => {
-                    if (!this.playerService.isOnDuty()) {
-                        return false;
-                    }
-
                     if (!IsEntityPlayingAnim(entity, 'anim@gangops@morgue@table@', 'body_search', 3)) {
                         return false;
                     }
@@ -162,10 +154,6 @@ export class LSMCSurgeryProvider {
                 blackoutGlobal: true,
                 blackoutJob: JobType.LSMC,
                 canInteract: async entity => {
-                    if (!this.playerService.isOnDuty()) {
-                        return false;
-                    }
-
                     if (!IsEntityPlayingAnim(entity, 'anim@gangops@morgue@table@', 'body_search', 3)) {
                         return false;
                     }
@@ -211,11 +199,10 @@ export class LSMCSurgeryProvider {
                 blackoutJob: 'lsmc',
                 canInteract: entity => {
                     return (
-                        this.playerService.isOnDuty() &&
                         IsEntityPlayingAnim(entity, 'anim@gangops@morgue@table@', 'body_search', 3) &&
                         surgery.isPointInside(GetEntityCoords(entity) as Vector3) &&
                         !!organ &&
-                        this.inventoryManager.hasEnoughItem(organ)
+                        this.inventoryManager.hasEnoughItem(organ, 1, true)
                     );
                 },
                 action: async entity => {
