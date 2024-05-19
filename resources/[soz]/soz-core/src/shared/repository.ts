@@ -4,6 +4,7 @@ import { Configuration } from '@public/shared/configuration';
 import { Field } from '@public/shared/field';
 import { Fine } from '@public/shared/job/police';
 import { ZoneTyped } from '@public/shared/polyzone/box.zone';
+import { Scene, WorldEvent } from '@public/shared/scene';
 import { SenateParty } from '@public/shared/senate';
 
 import { Billboard } from './billboard';
@@ -48,6 +49,8 @@ export enum RepositoryType {
     Zone = 'zone',
     Gang = 'gang',
     Door = 'door',
+    Scene = 'scene',
+    WorldEvent = 'worldEvent',
 }
 
 export type RepositoryMapping = {
@@ -78,6 +81,8 @@ export type RepositoryMapping = {
     [RepositoryType.Zone]: ZoneTyped;
     [RepositoryType.Gang]: Gang;
     [RepositoryType.Door]: Door;
+    [RepositoryType.Scene]: Scene;
+    [RepositoryType.WorldEvent]: WorldEvent;
 };
 
 export interface RepositoryConfig extends Record<keyof RepositoryMapping, any> {
@@ -97,6 +102,8 @@ export interface RepositoryConfig extends Record<keyof RepositoryMapping, any> {
     [RepositoryType.Zone]: Record<number, ZoneTyped>;
     [RepositoryType.Gang]: Record<number, Gang>;
     [RepositoryType.Door]: Record<string, Door>;
+    [RepositoryType.Scene]: Record<string, Scene>;
+    [RepositoryType.WorldEvent]: Record<string, WorldEvent>;
     // Not implemented
     [RepositoryType.Billboard]: Record<number, Billboard>;
     [RepositoryType.ChargerUpw]: Record<number, UpwCharger>;

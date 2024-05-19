@@ -1,9 +1,10 @@
 import { Module } from '../../core/decorators/module';
-import { BlipFactory } from '../blip';
+import { WorldEventProvider } from './world.event.provider';
 import { EarthquakeProvider } from './earthquake.provider';
 import { MeteorProvider } from './meteor.provider';
 import { OceanProvider } from './ocean.provider';
+
 @Module({
-    providers: [BlipFactory, MeteorProvider, OceanProvider, EarthquakeProvider],
+    providers: [WorldEventProvider, MeteorProvider, OceanProvider, EarthquakeProvider],
 })
 export class WorldModule {}

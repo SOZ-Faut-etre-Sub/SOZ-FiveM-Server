@@ -44,6 +44,7 @@ import { ObjectModule } from './client/object/object.module';
 import { PlayerModule } from './client/player/player.module';
 import { RaceModule } from './client/race/race.module';
 import { RepositoryModule } from './client/repository/repository.module';
+import { SceneModule } from './client/scene/scene.module';
 import { ShopModule } from './client/shop/shop.module';
 import { store } from './client/store/store';
 import { StoreModule } from './client/store/store.module';
@@ -129,6 +130,7 @@ async function bootstrap() {
         UtilsModule,
         CameraModule,
         DoorModule,
+        SceneModule,
         ...PrivateModules
     );
 

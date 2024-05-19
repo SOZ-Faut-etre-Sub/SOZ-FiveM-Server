@@ -1,3 +1,5 @@
+import './world.event.repository';
+
 import { DrugSeedlingRepository } from '@private/server/resources/drug.seedling.repository';
 import { DrugSellLocationRepository } from '@private/server/resources/drug.sell.location.repository';
 

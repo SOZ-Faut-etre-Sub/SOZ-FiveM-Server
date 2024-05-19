@@ -49,6 +49,7 @@ import { ProgressApp } from './Progress/ProgressApp';
 import { RaceApp } from './Race/RaceApp';
 import { RadioApp } from './Radio/RadioApp';
 import { RadioVehicleApp } from './Radio/RadioVehicleApp';
+import { SceneSearchPropApp } from './Scene/SceneSearchPropApp';
 import { StateApp } from './StateApp';
 import { TaxiHorodateurApp } from './Taxi/TaxiHorodateurApp';
 import { Meteor } from './World/Meteor';
@@ -94,6 +95,7 @@ export const App: FunctionComponent = () => {
             <div className={classes}>
                 <ProgressApp />
                 <PanelApp />
+                <SceneSearchPropApp />
                 <RepairApp />
                 <MissiveApp />
                 <DrugContractApp />

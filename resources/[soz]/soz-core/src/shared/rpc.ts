@@ -65,6 +65,8 @@ export enum RpcServerEvent {
     CLOTHING_GET_WARM_SCORE = 'soz-core:clothing:gwarm-score',
     CLOTHING_GET_SHOP = 'soz-core:clothing:get-shop',
 
+    SCENE_GET_LOADED = 'soz-core:rpc:scene:get-loaded-scenes',
+
     STORY_HALLOWEEN_SCENARIO1 = 'soz-story:server:halloween1',
     STORY_HALLOWEEN_SCENARIO2 = 'soz-story:server:halloween2',
     STORY_HALLOWEEN_SCENARIO3 = 'soz-story:server:halloween3',
@@ -251,6 +253,9 @@ export enum RpcServerEvent {
     GANG_SMUGGLING_HARVEST_LOCATION = 'soz-core:server:gang:smuggling:harvest:location',
     GANG_SMUGGLING_CONVOY_INIT = 'soz-core:server:gang:smuggling:convoy:init',
     GANG_SMUGGLING_GET_OPENED_RESALERS = 'soz-core:server:gang:smuggling:resalers:opened',
+
+    WORLD_EVENT_GET_INFO = 'soz-core:server:world-event:get-info',
+    WORLD_EVENT_START = 'soz-core:server:world-event:start',
 }
 
 export enum RpcClientEvent {

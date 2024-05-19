@@ -1,5 +1,4 @@
 import { DnDCallback } from '@public/client/inventory/inventory.draganddrop.provider';
-import { TargetOptions } from '@public/client/target/target.factory';
 import { JobType } from '@public/shared/job';
 
 import { Vfx } from './animation';
@@ -26,14 +25,16 @@ export type WorldObject = {
     position: Vector4;
     rotation?: Vector3;
     placeOnGround?: boolean;
-    matrix?: Float32Array;
+    matrix?: number[];
     noCollision?: boolean;
     invisible?: boolean;
-    targets?: TargetOptions[];
     metadata?: WorldObjectMetadata;
     vfx?: Vfx;
     growth?: WorldObjectGrowth;
     dragAndDrop?: DnDCallback[];
+    highlight?: boolean;
+    inventoryId?: string;
+    permanent?: boolean;
 };
 
 export type WorldPlacedProp = {
@@ -47,7 +48,7 @@ export type DebugProp = {
     id: string;
     model: string;
     collection?: string;
-    matrix: Float32Array;
+    matrix: number[];
     collision: boolean;
     position: Vector4;
     entity: number;
@@ -100,8 +101,12 @@ export type ObjectEditorOptions = {
     allowScale: boolean;
     allowToggleCollision: boolean;
     allowToggleSnap: boolean;
+    allowTogglePermanent: boolean;
+    allowAddEffect: boolean;
     context: ObjectEditorContext;
     collision: boolean;
+    permanent: boolean;
+    vfx: Vfx | null;
     snapToGround: boolean;
 };
 

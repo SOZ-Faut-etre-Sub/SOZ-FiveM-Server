@@ -28,6 +28,7 @@ export enum StorageType {
     MetalIncinerator = 'metal_incinerator',
     MetalStorage = 'metal_storage',
     LsCustomStorage = 'ls_custom_storage',
+    ObjectStorage = 'object_storage',
 }
 
 export type Storage = {

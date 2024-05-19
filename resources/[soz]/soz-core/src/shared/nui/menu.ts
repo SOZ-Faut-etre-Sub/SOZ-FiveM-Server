@@ -53,6 +53,7 @@ export type SetMenuType = {
     data: any;
     useMouse?: boolean;
     subMenuId?: string;
+    originMenuType?: MenuType;
 };
 
 export enum MenuType {
@@ -205,3 +206,5 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.SafeStorage]: MenuSafeStorageData;
     [MenuType.SmugglingBlackMarketPrices]: string[];
 }
+
+export const ALLOWED_MENU_NAVIGATE: MenuType[] = [MenuType.AdminMenu, MenuType.PropPlacementMenu];

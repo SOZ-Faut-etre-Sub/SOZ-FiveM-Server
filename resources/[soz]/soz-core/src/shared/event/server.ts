@@ -51,6 +51,13 @@ export enum ServerEvent {
     ADMIN_OCEAN_WATER_LEVEL = 'soz-core:server:admin:ocean:water-level',
     ADMIN_OCEAN_WATER_HIGH_WAVE = 'soz-core:server:admin:ocean:high-wave',
     ADMIN_EARTHQUAKE = 'soz-core:server:admin:earthquake',
+    ADMIN_EVENT_CREATE = 'soz-core:server:admin:event:create',
+    ADMIN_EVENT_DELETE = 'soz-core:server:admin:event:delete',
+    ADMIN_EVENT_ADD_REWARD = 'soz-core:server:admin:event:add-reward',
+    ADMIN_EVENT_REMOVE_REWARD = 'soz-core:server:admin:event:remove-reward',
+    ADMIN_EVENT_SET_REWARD_CHANCE = 'soz-core:server:admin:event:set-reward-chance',
+    ADMIN_EVENT_SET_REWARD_MIN = 'soz-core:server:admin:event:set-reward-min',
+    ADMIN_EVENT_SET_REWARD_MAX = 'soz-core:server:admin:event:set-reward-max',
 
     BASE_ENTERED_VEHICLE = 'baseevents:enteredVehicle',
     BASE_LEFT_VEHICLE = 'baseevents:leftVehicle',
@@ -230,6 +237,17 @@ export enum ServerEvent {
 
     PROP_REQUEST_DELETE_PROP = 'soz-core:server:prop:request-delete',
     PROP_REQUEST_EDIT_PROP = 'soz-core:server:prop:request-edit',
+
+    SCENE_CREATE = 'soz-core:server:scene:create',
+    SCENE_DELETE = 'soz-core:server:scene:delete',
+    SCENE_LOAD = 'soz-core:server:scene:load',
+    SCENE_UNLOAD = 'soz-core:server:scene:unload',
+    SCENE_ADD_ENTITY = 'soz-core:server:scene:add-entity',
+    SCENE_REMOVE_ENTITY = 'soz-core:server:scene:remove-entity',
+    SCENE_UPDATE_ENTITY = 'soz-core:server:scene:update-entity',
+    SCENE_SET_ENTITY_INVENTORY = 'soz-core:server:scene:set-entity-inventory',
+    SCENE_SET_PERSISTENT = 'soz-core:server:scene:set-persistent',
+    SCENE_SET_NAME = 'soz-core:server:scene:set-name',
 
     STORY_HALLOWEEN_2023_SCENARIO_1 = 'soz-core:server:halloween:scenario1',
     STORY_HALLOWEEN_2023_SCENARIO_2 = 'soz-core:server:halloween:scenario2',
@@ -570,4 +588,6 @@ export enum ServerEvent {
     ADMIN_MAPPER_REMOVE_ZONE = 'soz-core:admin:mapper:remove-zone',
     ADMIN_MAPPER_RENAME_ZONE = 'soz-core:admin:mapper:rename-zone',
     ADMIN_MAPPER_UPDATE_ZONE = 'soz-core:admin:mapper:update-zone',
+
+    WORLD_EVENT_STOP = 'soz-core:server:world-event:stop',
 }

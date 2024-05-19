@@ -1218,6 +1218,10 @@ function GetOrCreateInventory(storageType, invID, ctx)
         if targetInv == nil then
             targetInv = Inventory.Create(invID, invID, storageType, storageConfig.slot, storageConfig.weight, ctx.entity)
         end
+    elseif storageType == "object_storage" then
+        if targetInv == nil then
+            targetInv = Inventory.Create(invID, invID, storageType, storageConfig.slot, storageConfig.weight, invID)
+        end
     end
 
     return targetInv

@@ -1,3 +1,4 @@
+import { EventSubMenu } from '@public/nui/components/Admin/EventSubMenu';
 import { FunctionComponent } from 'react';
 
 import { AdminMenuData } from '../../../shared/admin/admin';
@@ -48,6 +49,9 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
                     <MenuItemSubMenuLink disabled={!isStaffOrAdmin} id="meteor">
                         ☄️ Météorite
                     </MenuItemSubMenuLink>
+                    <MenuItemSubMenuLink disabled={!isStaffOrAdminOrGM} id="event">
+                        📅 Gestion des evenements HC
+                    </MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="developer">🛠 Outils pour développeur</MenuItemSubMenuLink>
                 </MenuContent>
             </MainMenu>
@@ -58,6 +62,7 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
             <VehicleSubMenu banner={data.banner} permission={data.permission} state={data.state.vehicule} />
             <PlayerSubMenu banner={data.banner} permission={data.permission} parties={data.parties} />
             <DeveloperSubMenu banner={data.banner} state={data.state.developer} />
+            <EventSubMenu banner={data.banner} event={data.event} />
             <CharacterSubMenu banner={data.banner} characters={data.characters} />
             <MeteorSubMenu banner={data.banner} state={data.state.meteor} />
         </Menu>

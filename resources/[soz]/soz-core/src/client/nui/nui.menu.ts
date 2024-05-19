@@ -16,6 +16,7 @@ type OpenMenuConfig = {
     useMouse?: boolean;
     subMenuId?: string;
     position?: MenuPosition;
+    originMenuType?: MenuType;
 };
 
 @Provider()
@@ -35,6 +36,7 @@ export class NuiMenu {
             data,
             useMouse: config?.useMouse || false,
             subMenuId: config?.subMenuId,
+            originMenuType: config?.originMenuType,
         });
     }
 
@@ -81,5 +83,9 @@ export class NuiMenu {
 
     getOpened(): MenuType | null {
         return this.dispatcher.getMenuOpened();
+    }
+
+    goBack() {
+        this.dispatcher.dispatch('menu', 'Backspace');
     }
 }

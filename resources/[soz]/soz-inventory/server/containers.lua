@@ -565,6 +565,43 @@ Container["recycler_processing"] = InventoryContainer:new({
     end,
 })
 
+Container["object_storage"] = InventoryContainer:new({
+    type = "object_storage",
+    allowedTypes = {
+        "item",
+        "fishing_rod",
+        "fishing_garbage",
+        "fishing_bait",
+        "fish",
+        "drug",
+        "food",
+        "drink",
+        "cocktail",
+        "item_illegal",
+        "organ",
+        "oil",
+        "oil_and_item",
+        "log",
+        "sawdust",
+        "plank",
+        "flavor",
+        "furniture",
+        "liquor",
+        "outfit",
+        "crate",
+        "drug_pot",
+        "tool",
+        "energy",
+        "metal",
+        "weapon",
+        "weapon_ammo",
+        "evidence",
+        "veh_biz_piece",
+        "smuggling_export",
+        "smuggling_convoy_export",
+    },
+})
+
 Container["distillery"] = InventoryContainer:new({
     type = "distillery",
     allowedItems = {"smuggling_flower_zoublon"},

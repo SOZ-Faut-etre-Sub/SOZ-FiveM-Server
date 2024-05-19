@@ -179,6 +179,9 @@ export enum ClientEvent {
     REPOSITORY_PATCH_DATA = 'soz-core:client:repository:patch-data',
     REPOSITORY_DELETE_DATA = 'soz-core:client:repository:delete-data',
 
+    SCENE_LOAD = 'soz-core:client:scene:load',
+    SCENE_UNLOAD = 'soz-core:client:scene:unload',
+
     STATE_UPDATE_GLOBAL = 'soz-core:client:state:update-global',
     STATE_UPDATE_TIME = 'soz-core:client:state:update-time',
 
@@ -378,4 +381,7 @@ export enum ClientEvent {
     GANG_SMUGGLING_SPAWN_GUARD_RESALER = 'soz-core:client:gang:smuggling:spawn-guard-resalers',
 
     GANG_CARTEL_CONTAINER_USE = 'soz-core:client:gang:container-use',
+
+    WORLD_EVENT_START = 'soz-core:client:world-event:start',
+    WORLD_EVENT_END = 'soz-core:client:world-event:end',
 }

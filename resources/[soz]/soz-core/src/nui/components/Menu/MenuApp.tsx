@@ -95,12 +95,13 @@ export const MenuApp: FunctionComponent = () => {
 
 const MenuRouter: FunctionComponent = () => {
     const location = useLocation();
-    const state = location.state as { data: any; skipCloseEvent?: boolean } | undefined;
+    const state = location.state as { data: any; skipCloseEvent?: boolean; originMenuType?: MenuType } | undefined;
     const menuData = state?.data || null;
     const prevData = usePrevious(menuData);
     const navigate = useNavigate();
     const [menuType, setMenuType] = useState<MenuType>(null);
     const prevMenuType = usePrevious(menuType);
+    const prevOriginMenuType = usePrevious(state?.originMenuType);
     const [useFocus, setFocus] = useState(false);
     const [visibility, setVisibility] = useState(true);
 
@@ -122,24 +123,31 @@ const MenuRouter: FunctionComponent = () => {
 
     useLayoutEffect(() => {
         if (menuType !== null && !location.pathname.startsWith(`/${menuType}`)) {
+            let nextMenuType = location.pathname.split('/')[1] as MenuType;
+
+            if (prevOriginMenuType !== nextMenuType) {
+                nextMenuType = null;
+            }
+
             fetchNui(NuiEvent.MenuClosed, {
                 menuType,
-                nextMenu: null,
+                nextMenu: nextMenuType,
                 menuData: prevData,
             });
 
-            setMenuType(null);
-            setFocus(false);
+            setMenuType(nextMenuType);
 
-            navigate('/', {
-                state: {
-                    skipCloseEvent: true,
-                    data: null,
-                },
-            });
-        }
+            if (nextMenuType === null) {
+                setFocus(false);
 
-        if (prevMenuType !== null && prevMenuType !== menuType) {
+                navigate('/', {
+                    state: {
+                        skipCloseEvent: true,
+                        data: null,
+                    },
+                });
+            }
+        } else if (prevMenuType !== null && prevMenuType !== menuType) {
             setFocus(false);
 
             if (!state?.skipCloseEvent) {
@@ -162,7 +170,7 @@ const MenuRouter: FunctionComponent = () => {
         }
     }, [location, menuType]);
 
-    useMenuNuiEvent('SetMenuType', ({ menuType, data, subMenuId }) => {
+    useMenuNuiEvent('SetMenuType', ({ menuType, data, subMenuId, originMenuType }) => {
         let path = `/`;
 
         if (menuType) {
@@ -176,6 +184,7 @@ const MenuRouter: FunctionComponent = () => {
         navigate(path, {
             state: {
                 data,
+                originMenuType,
             },
         });
 

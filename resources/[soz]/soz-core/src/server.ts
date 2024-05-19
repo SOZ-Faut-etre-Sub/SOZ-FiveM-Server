@@ -45,6 +45,7 @@ import { PropsModule } from './server/props/props.module';
 import { RaceModule } from './server/race/race.module';
 import { RebootModule } from './server/reboot/reboot.module';
 import { RepositoryModule } from './server/repository/repository.module';
+import { SceneModule } from './server/scene/scene.module';
 import { ShopModule } from './server/shop/shop.module';
 import { SoundModule } from './server/sound/sound.module';
 import { store } from './server/store/store';
@@ -122,6 +123,8 @@ async function bootstrap() {
         GarbageModule,
         WorldModule,
         DoorModule,
+        SceneModule,
+        WorldModule,
         ...PrivateModules
     );
 

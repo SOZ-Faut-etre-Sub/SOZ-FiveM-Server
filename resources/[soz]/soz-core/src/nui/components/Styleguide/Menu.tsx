@@ -661,6 +661,29 @@ export const useMenuNavigate = (id: string): (() => void) => {
         });
 };
 
+export const useCurrentMenu = (): [MenuType, string | null] => {
+    const type = useContext(MenuTypeContext);
+    const location = useLocation();
+
+    if (type === null) {
+        return [null, null];
+    }
+
+    const subPath = location.pathname.replace(`/${type}/`, '');
+
+    if (subPath === '') {
+        return [type, null];
+    }
+
+    return [type, subPath];
+};
+
+export const useIsInSubMenu = (id: string): boolean => {
+    const [, subPath] = useCurrentMenu();
+
+    return subPath === id;
+};
+
 export const MenuItemSubMenuLink: FunctionComponent<MenuItemSubMenuLinkProps> = ({
     children,
     id,

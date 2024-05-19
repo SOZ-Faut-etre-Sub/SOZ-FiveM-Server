@@ -10,6 +10,7 @@ import { ClientEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { PlayerCharInfo } from '../../shared/player';
 import { RpcServerEvent } from '../../shared/rpc';
+import { EventInfo } from '../../shared/scene';
 import { ClothingService } from '../clothing/clothing.service';
 import { HudMinimapProvider } from '../hud/hud.minimap.provider';
 import { NuiMenu } from '../nui/nui.menu';
@@ -86,12 +87,14 @@ export class AdminMenuProvider {
         const ped = PlayerPedId();
         const characters = await emitRpc<Record<string, PlayerCharInfo>>(RpcServerEvent.ADMIN_GET_CHARACTERS);
         const meteorState = await emitRpc<MeteorSubMenuState>(RpcServerEvent.ADMIN_METEOR_STATE);
+        const eventInfo = await emitRpc<EventInfo>(RpcServerEvent.WORLD_EVENT_GET_INFO);
 
         this.nuiMenu.openMenu<MenuType.AdminMenu>(
             MenuType.AdminMenu,
             {
                 banner,
                 characters,
+                event: eventInfo,
                 permission: permission as SozRole,
                 parties: this.senateRepository.get(),
                 state: {

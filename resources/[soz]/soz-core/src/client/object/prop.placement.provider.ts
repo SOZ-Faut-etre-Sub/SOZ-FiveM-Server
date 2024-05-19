@@ -421,13 +421,14 @@ export class PropPlacementProvider {
 
         DisableAllControlActions(0);
 
-        const matrixBuffer = this.makeEntityMatrix(entity);
-        const changed = DrawGizmo(matrixBuffer as any, `Gismo_editor_${entity}`);
+        const matrixAsFloat = new Float32Array(this.makeEntityMatrix(entity));
+        const changed = DrawGizmo(matrixAsFloat as any, `Gismo_editor_${entity}`);
+
         if (changed) {
             if (this.debugProp.collision === false) {
-                this.objectProvider.applyEntityMatrix(entity, matrixBuffer);
+                this.objectProvider.applyEntityMatrix(entity, Array.from(matrixAsFloat));
             } else {
-                this.applyEntityNormalizedMatrix(entity, matrixBuffer);
+                this.applyEntityNormalizedMatrix(entity, Array.from(matrixAsFloat));
             }
         }
 
@@ -760,7 +761,7 @@ export class PropPlacementProvider {
         return this.isEditorModeOn;
     }
 
-    public applyEntityNormalizedMatrix = (entity: number, matrix: Float32Array) => {
+    public applyEntityNormalizedMatrix = (entity: number, matrix: number[]) => {
         const norm_F = Math.sqrt(matrix[0] ** 2 + matrix[1] ** 2);
         SetEntityMatrix(
             entity,
@@ -779,10 +780,10 @@ export class PropPlacementProvider {
         );
     };
 
-    public makeEntityMatrix(entity: number): Float32Array {
+    public makeEntityMatrix(entity: number): number[] {
         const [f, r, u, a] = GetEntityMatrix(entity);
 
-        return new Float32Array([r[0], r[1], r[2], 0, f[0], f[1], f[2], 0, u[0], u[1], u[2], 0, a[0], a[1], a[2], 1]);
+        return [r[0], r[1], r[2], 0, f[0], f[1], f[2], 0, u[0], u[1], u[2], 0, a[0], a[1], a[2], 1];
     }
 
     // Debug Prop Managment

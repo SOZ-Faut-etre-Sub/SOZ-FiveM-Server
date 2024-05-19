@@ -70,6 +70,7 @@ Config.StorageCapacity = {
     ["metal_storage"] = {slot = 100, weight = 10000000},
     --- LS Custom
     ["ls_custom_storage"] = {slot = 1, weight = 800000}, -- 400 ls_custom_upgrade_part maximum
+    ["object_storage"] = {slot = 100, weight = 10000000},
 }
 
 Config.ErrorMessage = {

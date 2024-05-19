@@ -1579,7 +1579,7 @@ export type PoliceClue = {
     position: Vector4;
     noCollision: boolean;
     invisible: boolean;
-    matrix?: Float32Array;
+    matrix?: number[];
     placeOnGround: boolean;
     type: 'evidence_bullet' | 'evidence_blood' | 'evidence_glass';
     information: string;

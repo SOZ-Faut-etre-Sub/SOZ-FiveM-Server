@@ -8,6 +8,7 @@ import { NuiItemMethodMap } from '@public/shared/nui/item';
 import { NuiMissiveMethodMap } from '@public/shared/nui/missive';
 import { NuiRadioMethodMap, NuiRadioVehicleMethodMap } from '@public/shared/nui/radio';
 import { NuiRepositoryMethodMap } from '@public/shared/nui/repository';
+import { NuiSceneSearchMethodMap } from '@public/shared/nui/scene';
 import { NuiTalentMethodMap } from '@public/shared/nui/talent';
 
 import { NuiAdminPlayerSubMenuMethodMap } from '../../nui/components/Admin/PlayerSubMenu';
@@ -90,6 +91,7 @@ export interface NuiMethodMap {
     hacking_device: NuiHackingDeviceMethodMap;
     minigame_arrows: NuiArrowMiniGameMethodMap;
     minigame_grid: NuiGridMiniGameMethodMap;
+    scene: NuiSceneSearchMethodMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(

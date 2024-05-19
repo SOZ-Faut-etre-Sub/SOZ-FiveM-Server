@@ -1,7 +1,8 @@
+import { SozRole } from '@core/permissions';
 import { PlayerCharInfo } from '@public/shared/player';
+import { EventInfo } from '@public/shared/scene';
 import { SenateParty, SenatePartyMember } from '@public/shared/senate';
 
-import { SozRole } from '../../core/permissions';
 import { Component, Outfit, Prop } from '../cloth';
 
 export const MONEY_OPTIONS = [
@@ -84,6 +85,7 @@ export type MeteorSubMenuState = {
 export type AdminMenuData = {
     banner: string;
     permission: SozRole;
+    event: EventInfo;
     characters: Record<string, PlayerCharInfo>;
     parties: SenateParty[];
     state: {

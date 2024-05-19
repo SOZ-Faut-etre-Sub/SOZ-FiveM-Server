@@ -3,6 +3,7 @@ import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { uuidv4, wait } from '@public/core/utils';
+import { ObjectEffects } from '@public/shared/animation';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import { InventoryItem } from '@public/shared/item';
 import { ObjectEditorOptions, WorldObject } from '@public/shared/object';
@@ -68,14 +69,34 @@ export class ObjectEditorProvider {
             ? existingObject?.position
             : ([...(GetOffsetFromEntityInWorldCoords(ped, 0, 2.0, 0) as Vector3), 0] as Vector4);
 
+        const editorOptions: ObjectEditorOptions = {
+            onDrawCallback: () => {},
+            maxDistance: PROP_MAX_DISTANCE,
+            allowDelete: false,
+            allowRotation: true,
+            allowScale: true,
+            allowToggleCollision: false,
+            allowToggleSnap: false,
+            allowAddEffect: false,
+            allowTogglePermanent: false,
+            vfx: existingObject?.vfx || null,
+            context: 'hammer',
+            collision: !existingObject?.noCollision || false,
+            snapToGround: existingObject?.placeOnGround || false,
+            permanent: existingObject?.permanent || false,
+            ...options,
+        };
+
         const initialObject: WorldObject = {
             model,
             position,
             id: existingObject?.id || uuidv4(),
-            placeOnGround: existingObject?.placeOnGround || options.snapToGround,
-            noCollision: true,
+            placeOnGround: editorOptions.snapToGround,
+            noCollision: editorOptions.collision,
             matrix: existingObject?.matrix,
             invisible: false,
+            vfx: editorOptions.vfx,
+            permanent: editorOptions.permanent,
             rotation: existingObject?.rotation,
         };
 
@@ -85,27 +106,13 @@ export class ObjectEditorProvider {
             return existingObject;
         }
 
-        const editorOptions: ObjectEditorOptions = {
-            onDrawCallback: () => {},
-            maxDistance: PROP_MAX_DISTANCE,
-            allowDelete: false,
-            allowRotation: true,
-            allowScale: true,
-            allowToggleCollision: false,
-            allowToggleSnap: false,
-            context: 'hammer',
-            collision: !existingObject?.noCollision || false,
-            snapToGround: existingObject?.placeOnGround || false,
-            ...options,
-        };
-
         const promise = new Promise<WorldObject>(resolver => {
             this.currentObject = {
                 edited: !!existingObject,
                 position,
                 entity: objectEntity,
                 model,
-                matrix: this.getEntityMatrix(objectEntity),
+                matrix: this.objectService.getEntityMatrix(objectEntity),
                 options: editorOptions,
                 startingObject: initialObject,
                 previousPosition: position,
@@ -121,15 +128,12 @@ export class ObjectEditorProvider {
                 this.currentObject.entity = null;
             }
 
-            if (this.nuiMenu.getOpened() === MenuType.ObjectEditor) {
-                this.nuiMenu.closeMenu();
-            }
-
             this.circularCamera.deleteCamera();
             this.currentObject = null;
         });
 
         SetEntityAlpha(objectEntity, 200, false);
+        SetEntityCollision(objectEntity, false, false);
 
         await wait(0);
 
@@ -139,7 +143,9 @@ export class ObjectEditorProvider {
 
         this.circularCamera.createCamera([position[0], position[1], position[2]]);
 
-        this.nuiMenu.openMenu(MenuType.ObjectEditor, editorOptions);
+        this.nuiMenu.openMenu(MenuType.ObjectEditor, editorOptions, {
+            originMenuType: this.nuiMenu.getOpened(),
+        });
 
         return promise;
     }
@@ -156,15 +162,17 @@ export class ObjectEditorProvider {
 
         DisableAllControlActions(0);
 
-        const matrix = this.getEntityMatrix(this.currentObject.entity);
+        const matrix = this.objectService.getEntityMatrix(this.currentObject.entity);
         const changed = DrawGizmo(matrix as any, `Gismo_editor_${this.currentObject.entity}`);
 
+        if (!this.currentObject.options.collision) {
+            this.applyEntityMatrix(this.currentObject.entity, matrix);
+        } else {
+            this.applyEntityNormalizedMatrix(this.currentObject.entity, matrix);
+        }
+
         if (changed) {
-            if (!this.currentObject.options.collision) {
-                this.applyEntityMatrix(this.currentObject.entity, matrix);
-            } else {
-                this.applyEntityNormalizedMatrix(this.currentObject.entity, matrix);
-            }
+            this.applyEntityMatrix(this.currentObject.entity, matrix);
         }
 
         const position = GetEntityCoords(this.currentObject.entity) as Vector3;
@@ -306,11 +314,30 @@ export class ObjectEditorProvider {
         }
 
         this.currentObject.options.collision = collision;
+    }
 
-        // Really needed ?
-        SetEntityRotation(this.currentObject.entity, 0, 0, 0, 0, false);
-        const rot = GetEntityRotation(this.currentObject.entity);
-        SetEntityRotation(this.currentObject.entity, rot[0], rot[1], rot[2], 0, false);
+    @OnNuiEvent(NuiEvent.ObjectEditorTogglePermanent)
+    public async togglePermanent({ permanent }: { permanent: boolean }) {
+        if (!this.currentObject) {
+            return;
+        }
+
+        this.currentObject.options.permanent = permanent;
+    }
+
+    @OnNuiEvent(NuiEvent.ObjectEditorSetEffect)
+    public async setObjectEffect({ effect }: { effect: null | keyof typeof ObjectEffects }) {
+        if (!this.currentObject) {
+            return;
+        }
+
+        if (!effect) {
+            this.currentObject.options.vfx = null;
+        } else {
+            this.currentObject.options.vfx = ObjectEffects[effect]?.fx;
+        }
+
+        await this.objectService.updateObject(this.currentObject.entity, this.getWorldObject(this.currentObject));
     }
 
     @OnNuiEvent(NuiEvent.ObjectEditorToggleSnap)
@@ -330,15 +357,17 @@ export class ObjectEditorProvider {
         const position = GetEntityCoords(currentObject.entity) as Vector3;
         const heading = GetEntityHeading(currentObject.entity);
         const rotation = GetEntityRotation(currentObject.entity);
-        const matrix = this.getEntityMatrix(currentObject.entity);
+        const matrix = this.objectService.getEntityMatrix(currentObject.entity);
 
         return {
             id: currentObject.startingObject.id,
             model: currentObject.model,
             position: [position[0], position[1], position[2], heading],
             rotation: [rotation[0], rotation[1], rotation[2]],
-            matrix,
-            placeOnGround: currentObject.options.snapToGround,
+            matrix: Array.from(matrix),
+            placeOnGround: false,
+            permanent: currentObject.options.permanent,
+            vfx: currentObject.options.vfx,
             noCollision: !currentObject.options.collision,
         };
     }
@@ -352,7 +381,7 @@ export class ObjectEditorProvider {
         const heading = GetEntityHeading(this.currentObject.entity);
 
         this.currentObject.position = [position[0], position[1], position[2], heading];
-        this.currentObject.matrix = this.getEntityMatrix(this.currentObject.entity);
+        this.currentObject.matrix = this.objectService.getEntityMatrix(this.currentObject.entity);
     }
 
     private applyEntityMatrix(entity: number, matrix: Float32Array) {
@@ -374,28 +403,21 @@ export class ObjectEditorProvider {
     }
 
     private applyEntityNormalizedMatrix(entity: number, matrix: Float32Array) {
-        const norm_F = Math.sqrt(matrix[0] ** 2 + matrix[1] ** 2);
         SetEntityMatrix(
             entity,
-            -matrix[1] / norm_F,
-            matrix[0] / norm_F,
-            0, // Right
-            matrix[0] / norm_F,
-            matrix[1] / norm_F,
-            0, // Forward
-            0,
-            0,
-            1, // Up
+            matrix[4],
+            1.0,
+            matrix[6], // Right
+            1.0,
+            matrix[1],
+            matrix[2], // Forward
+            matrix[8],
+            matrix[9],
+            1.0, // Up
             matrix[12],
             matrix[13],
             matrix[14] // Position
         );
-    }
-
-    private getEntityMatrix(entity: number): Float32Array {
-        const [f, r, u, a] = GetEntityMatrix(entity);
-
-        return new Float32Array([r[0], r[1], r[2], 0, f[0], f[1], f[2], 0, u[0], u[1], u[2], 0, a[0], a[1], a[2], 1]);
     }
 
     @OnEvent(ClientEvent.OBJECT_PLACE_ITEM)

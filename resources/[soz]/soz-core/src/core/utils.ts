@@ -3,8 +3,12 @@ import PCancelable from 'p-cancelable';
 export const wait = (ms: number): PCancelable<boolean> => {
     return new PCancelable((resolve, r, onCancel) => {
         onCancel.shouldReject = false;
+        const timeout = setTimeout(() => resolve(true), ms);
 
-        setTimeout(() => resolve(true), ms);
+        onCancel(() => {
+            clearTimeout(timeout);
+            resolve(false);
+        });
     });
 };
 

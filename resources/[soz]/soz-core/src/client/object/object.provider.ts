@@ -4,9 +4,10 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { Rpc } from '@core/decorators/rpc';
 import { emitRpc } from '@core/rpc';
+import { InventoryManager } from '@public/client/inventory/inventory.manager';
 import { ObjectService } from '@public/client/object/object.service';
 import { getProperGroundPositionForObject } from '@public/client/object/object.utils';
-import { TargetFactory } from '@public/client/target/target.factory';
+import { TargetFactory, TargetOptions } from '@public/client/target/target.factory';
 import { Command } from '@public/core/decorators/command';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { wait } from '@public/core/utils';
@@ -21,6 +22,12 @@ import { InventoryDragAndDropProvider } from '../inventory/inventory.draganddrop
 type SpawnedObject = {
     entity: number;
     object: WorldObject;
+    targets: TargetOptions[];
+};
+
+type SpawnableObject = {
+    object: WorldObject;
+    targets: TargetOptions[];
 };
 
 @Provider()
@@ -34,9 +41,12 @@ export class ObjectProvider {
     @Inject(InventoryDragAndDropProvider)
     private inventoryDragAndDropProvider: InventoryDragAndDropProvider;
 
+    @Inject(InventoryManager)
+    private inventoryManager: InventoryManager;
+
     private loadedObjects: Record<string, SpawnedObject> = {};
 
-    private objectsByChunk = new Map<number, WorldObject[]>();
+    private objectsByChunk = new Map<number, SpawnableObject[]>();
 
     private currentChunks: number[] = [];
 
@@ -62,7 +72,7 @@ export class ObjectProvider {
 
         for (const chunk of this.objectsByChunk.values()) {
             for (const object of chunk) {
-                if (!filter || filter(object)) {
+                if (!filter || filter(object.object)) {
                     objects.push(object);
                 }
             }
@@ -120,24 +130,35 @@ export class ObjectProvider {
     }
 
     @OnEvent(ClientEvent.OBJECT_CREATE)
-    public async createObjects(objects: WorldObject[]) {
+    public async createObjects(objects: WorldObject[], targets: TargetOptions[] = []) {
         for (const object of objects) {
-            await this.createObject(object);
+            await this.createObject(object, targets);
         }
     }
 
     @Exportable('CreateObject')
-    public async createObject(object: WorldObject): Promise<string> {
+    public async createObject(object: WorldObject, targets: TargetOptions[] = []): Promise<string> {
+        const spawnableObject = {
+            object,
+            targets,
+        };
+
+        if (object.permanent) {
+            await this.spawnObject(spawnableObject);
+
+            return object.id;
+        }
+
         const chunk = getChunkId(object.position);
 
         if (!this.objectsByChunk.has(chunk)) {
             this.objectsByChunk.set(chunk, []);
         }
 
-        this.objectsByChunk.get(chunk).push(object);
+        this.objectsByChunk.get(chunk).push(spawnableObject);
 
         if (this.currentChunks.includes(chunk)) {
-            await this.spawnObject(object);
+            await this.spawnObject(spawnableObject);
         }
 
         return object.id;
@@ -146,15 +167,16 @@ export class ObjectProvider {
     @OnEvent(ClientEvent.OBJECT_EDIT)
     public async editObject(object: WorldObject) {
         this.deleteObject(object.id);
+
         await wait(0);
-        this.createObject(object);
+        await this.createObject(object);
     }
 
     @Exportable('GetObjectIdFromEntity')
     public getIdFromEntity(entity: number): string | null {
-        for (const object of Object.values(this.loadedObjects)) {
-            if (object.entity === entity) {
-                return object.object.id;
+        for (const spawnedObject of Object.values(this.loadedObjects)) {
+            if (spawnedObject.entity === entity) {
+                return spawnedObject.object.id;
             }
         }
 
@@ -179,13 +201,13 @@ export class ObjectProvider {
     }
 
     public deleteObject(id: string): void {
-        for (const [chunk, objects] of this.objectsByChunk.entries()) {
+        for (const [chunk, spawnableObjects] of this.objectsByChunk.entries()) {
             this.objectsByChunk.set(
                 chunk,
-                objects.filter(object => object.id !== id)
+                spawnableObjects.filter(spawnableObject => spawnableObject.object.id !== id)
             );
 
-            if (Object.keys(objects).length === 0) {
+            if (Object.keys(spawnableObjects).length === 0) {
                 this.objectsByChunk.delete(chunk);
             }
         }
@@ -207,8 +229,8 @@ export class ObjectProvider {
         // Unload objects from removed chunks
         for (const chunk of removedChunks) {
             if (this.objectsByChunk.has(chunk)) {
-                for (const object of this.objectsByChunk.get(chunk)) {
-                    this.unspawnObject(object.id);
+                for (const spawnableObject of this.objectsByChunk.get(chunk)) {
+                    this.unspawnObject(spawnableObject.object.id);
                 }
             }
         }
@@ -216,59 +238,74 @@ export class ObjectProvider {
         // Load objects from added chunks
         for (const chunk of addedChunks) {
             if (this.objectsByChunk.has(chunk)) {
-                for (const object of this.objectsByChunk.get(chunk)) {
-                    await this.spawnObject(object);
+                for (const spawnableObject of this.objectsByChunk.get(chunk)) {
+                    await this.spawnObject(spawnableObject);
                 }
             }
         }
     }
 
-    private async spawnObject(object: WorldObject) {
-        if (this.loadedObjects[object.id]) {
+    private async spawnObject(spawnableObject: SpawnableObject) {
+        if (this.loadedObjects[spawnableObject.object.id]) {
             return;
         }
 
-        const entity = await this.objectService.createObject(object);
+        const entity = await this.objectService.createObject(spawnableObject.object);
 
         if (!entity) {
             return;
         }
 
-        this.loadedObjects[object.id] = {
+        this.loadedObjects[spawnableObject.object.id] = {
             entity,
-            object,
+            object: spawnableObject.object,
+            targets: spawnableObject.targets,
         };
 
-        if (object.targets) {
-            this.targetFactory.createForEntity(entity, object.targets);
+        const targets = spawnableObject.targets || [];
+
+        if (spawnableObject.object.inventoryId) {
+            targets.push({
+                label: 'Ouvrir',
+                icon: 'c:inventory/ouvrir_le_stockage.png',
+                canInteract: () => true,
+                action: () => {
+                    this.inventoryManager.openInventory('object_storage', spawnableObject.object.inventoryId);
+                },
+            });
         }
 
-        if (object.dragAndDrop) {
-            this.inventoryDragAndDropProvider.registerEntity(entity, object.dragAndDrop);
+        if (targets.length > 0) {
+            console.log('Creating targets for entity', entity, JSON.stringify(targets.map(target => target.label)));
+            this.targetFactory.createForEntity(entity, targets);
+        }
+
+        if (spawnableObject.object.dragAndDrop) {
+            this.inventoryDragAndDropProvider.registerEntity(entity, spawnableObject.object.dragAndDrop);
         }
 
         await wait(0);
     }
 
     private unspawnObject(id: string): void {
-        const object = this.loadedObjects[id];
+        const spawnedObject = this.loadedObjects[id];
 
-        if (!object) {
+        if (!spawnedObject) {
             return;
         }
 
-        if (object.object.targets) {
+        if (spawnedObject.targets) {
             this.targetFactory.removeForEntity(
-                [object.entity],
-                object.object.targets.map(target => target.label)
+                [spawnedObject.entity],
+                spawnedObject.targets.map(target => target.label)
             );
         }
 
-        if (object.object.dragAndDrop) {
+        if (spawnedObject.object.dragAndDrop) {
             this.inventoryDragAndDropProvider.unregisterEntity(object.entity);
         }
 
-        if (!this.objectService.deleteObject(object.entity, object.object)) {
+        if (!this.objectService.deleteObject(spawnedObject.entity, spawnedObject.object)) {
             return;
         }
 
@@ -312,7 +349,7 @@ export class ObjectProvider {
         this.loadedObjects = {};
     }
 
-    public applyEntityMatrix(entity: number, matrix: Float32Array) {
+    public applyEntityMatrix(entity: number, matrix: number[]) {
         SetEntityMatrix(
             entity,
             matrix[4],
@@ -341,11 +378,15 @@ export class ObjectProvider {
 
     @Tick(30000, 'object-spawn-check')
     public async objectSpawnCheck() {
-        for (const obj of Object.values(this.loadedObjects)) {
-            if (!DoesEntityExist(obj.entity)) {
-                console.log('object-spawn-check: missing entity, trying to fix it', obj.object.id);
-                delete this.loadedObjects[obj.object.id];
-                this.spawnObject(obj.object);
+        for (const spawnedObject of Object.values(this.loadedObjects)) {
+            if (!DoesEntityExist(spawnedObject.entity)) {
+                console.log('object-spawn-check: missing entity, trying to fix it', spawnedObject.object.id);
+                delete this.loadedObjects[spawnedObject.object.id];
+
+                this.spawnObject({
+                    object: spawnedObject.object,
+                    targets: spawnedObject.targets,
+                });
             }
         }
     }

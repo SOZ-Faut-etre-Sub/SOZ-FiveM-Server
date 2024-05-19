@@ -40,3 +40,23 @@ export const NumberValidator: ValidateInput<number> = (input: string) => {
 
     return Ok(inputNumber);
 };
+
+export const NumberValidatorFactory = (min?: number, max?: number): ValidateInput<number> => {
+    return (input: string) => {
+        const inputNumber = Number(input);
+
+        if (isNaN(inputNumber)) {
+            return Err(`Veuillez entrer un nombre.`);
+        }
+
+        if (min && inputNumber < min) {
+            return Err(`La valeur doit être supérieure ou égale à ${min}.`);
+        }
+
+        if (max && inputNumber > max) {
+            return Err(`La valeur doit être inférieure ou égale à ${max}.`);
+        }
+
+        return Ok(inputNumber);
+    };
+};

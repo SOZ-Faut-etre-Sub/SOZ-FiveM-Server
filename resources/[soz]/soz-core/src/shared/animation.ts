@@ -139,6 +139,47 @@ export type AnimationOptions = {
     cancellable?: boolean;
 };
 
+type ObjectEffect = {
+    name: string;
+    fx: Vfx;
+};
+
+export const ObjectEffects: Record<string, ObjectEffect> = {
+    red_smoke: {
+        name: 'Fumée rouge',
+        fx: {
+            dictionary: 'scr_oddjobtraffickingground',
+            name: 'scr_drug_traffic_flare',
+            scale: 1.0,
+            position: [0, 0, 0],
+            rotation: [0, 0, 0],
+            rgb: [1.0, 0.0, 0.0],
+        },
+    },
+    blue_smoke: {
+        name: 'Fumée bleue',
+        fx: {
+            dictionary: 'scr_oddjobtraffickingground',
+            name: 'scr_drug_traffic_flare',
+            scale: 1.0,
+            position: [0, 0, 0],
+            rotation: [0, 0, 0],
+            rgb: [0.0, 0.0, 1.0],
+        },
+    },
+    green_smoke: {
+        name: 'Fumée verte',
+        fx: {
+            dictionary: 'scr_oddjobtraffickingground',
+            name: 'scr_drug_traffic_flare',
+            scale: 1.0,
+            position: [0, 0, 0],
+            rotation: [0, 0, 0],
+            rgb: [0.0, 1.0, 0.0],
+        },
+    },
+};
+
 export const animationFlagsToOptions = (flags: number): AnimationOptions => {
     return {
         repeat: (flags & 1) > 0,

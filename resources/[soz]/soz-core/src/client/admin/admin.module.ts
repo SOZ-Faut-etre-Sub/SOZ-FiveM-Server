@@ -1,6 +1,7 @@
 import { Module } from '../../core/decorators/module';
 import { AdminMenuCharacterProvider } from './admin.menu.character.provider';
 import { AdminMenuDeveloperProvider } from './admin.menu.developer.provider';
+import { AdminMenuEventProvider } from './admin.menu.event.provider';
 import { AdminMenuGameMasterProvider } from './admin.menu.game-master.provider';
 import { AdminMenuInteractiveProvider } from './admin.menu.interactive.provider';
 import { AdminMenuJobProvider } from './admin.menu.job.provider';
@@ -15,17 +16,18 @@ import { AdminZoneProvider } from './admin.zone.provider';
 
 @Module({
     providers: [
+        AdminMenuCharacterProvider,
+        AdminMenuDeveloperProvider,
+        AdminMenuEventProvider,
         AdminMenuGameMasterProvider,
         AdminMenuInteractiveProvider,
         AdminMenuJobProvider,
         AdminMenuMapperProvider,
-        AdminMenuSkinProvider,
         AdminMenuPlayerProvider,
-        AdminMenuDeveloperProvider,
-        AdminMenuVehicleProvider,
         AdminMenuProvider,
+        AdminMenuSkinProvider,
+        AdminMenuVehicleProvider,
         AdminSpectateProvider,
-        AdminMenuCharacterProvider,
         AdminMenuMeteorProvider,
         AdminZoneProvider,
     ],

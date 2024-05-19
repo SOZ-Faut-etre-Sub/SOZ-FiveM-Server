@@ -92,6 +92,10 @@ export class ObjectService {
             PlaceObjectOnGroundProperly(entity);
         }
 
+        if (object.rotation) {
+            SetEntityRotation(entity, object.rotation[0], object.rotation[1], object.rotation[2], 0, false);
+        }
+
         if (object.matrix) {
             if (object.placeOnGround) {
                 const [success, z] = GetGroundZFor_3dCoord_2(
@@ -104,17 +108,22 @@ export class ObjectService {
                     object.matrix[14] = z + 0.01;
                 }
             }
-            this.applyEntityMatrix(entity, object.matrix);
+
+            this.applyEntityMatrix(entity, new Float32Array(object.matrix));
         } else if (object.growth) {
             this.computeGrowth(entity, object);
         }
 
-        if (object.rotation) {
-            SetEntityRotation(entity, object.rotation[0], object.rotation[1], object.rotation[2], 0, false);
-        }
-
         if (object.invisible) {
             SetEntityVisible(entity, false, false);
+        }
+
+        if (object.highlight) {
+            SetEntityDrawOutlineColor(0, 180, 0, 255);
+            SetEntityDrawOutlineShader(1);
+            SetEntityDrawOutline(entity, true);
+        } else {
+            SetEntityDrawOutline(entity, false);
         }
 
         SetEntityCollision(entity, !object.noCollision, false);

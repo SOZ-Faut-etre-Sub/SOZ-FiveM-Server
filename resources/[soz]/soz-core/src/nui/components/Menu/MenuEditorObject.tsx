@@ -1,5 +1,7 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
+import { ObjectEffects } from '../../../shared/animation';
 import { NuiEvent } from '../../../shared/event/nui';
 import { JobType } from '../../../shared/job';
 import { MenuType } from '../../../shared/nui/menu';
@@ -11,6 +13,8 @@ import {
     MenuContent,
     MenuItemButton,
     MenuItemCheckbox,
+    MenuItemSelect,
+    MenuItemSelectOption,
     MenuItemText,
     MenuTitle,
 } from '../Styleguide/Menu';
@@ -20,6 +24,9 @@ type MenuAlbumProps = {
 };
 
 export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) => {
+    const navigate = useNavigate();
+    const [collision, setCollision] = useState(data.collision);
+
     if (!data) {
         return null;
     }
@@ -40,6 +47,7 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
                     <MenuItemButton
                         onConfirm={() => {
                             fetchNui(NuiEvent.ObjectEditorSave);
+                            navigate(-1);
                         }}
                     >
                         ✔️ Valider le placement
@@ -47,6 +55,7 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
                     <MenuItemButton
                         onConfirm={() => {
                             fetchNui(NuiEvent.ObjectEditorCancel);
+                            navigate(-1);
                         }}
                     >
                         ❌ Annuler
@@ -55,6 +64,7 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
                         <MenuItemButton
                             onConfirm={() => {
                                 fetchNui(NuiEvent.ObjectEditorDelete);
+                                navigate(-1);
                             }}
                         >
                             ❌ Supprimer l'objet
@@ -74,13 +84,43 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
                     {data.allowToggleCollision && (
                         <MenuItemCheckbox
                             onChange={value => {
-                                fetchNui(NuiEvent.ObjectEditorToggleCollision, { value });
+                                fetchNui(NuiEvent.ObjectEditorToggleCollision, { collision: value });
+                                setCollision(value);
                             }}
-                            checked={data.collision}
+                            checked={collision}
                             description="Active ou désactive la collision du prop. Si la collision est désactivée, le prop peut être agrandi, réduit, et tourné dans tous les sens."
                         >
                             Activer la collision
                         </MenuItemCheckbox>
+                    )}
+                    {data.allowTogglePermanent && (
+                        <MenuItemCheckbox
+                            onChange={value => {
+                                fetchNui(NuiEvent.ObjectEditorTogglePermanent, { permanent: value });
+                            }}
+                            checked={data.permanent}
+                            description="Active ou désactive la permanence d'un objet. Si activée, l'objet sera chargé tous le temps."
+                        >
+                            Objet permanent
+                        </MenuItemCheckbox>
+                    )}
+                    {data.allowAddEffect && (
+                        <MenuItemSelect
+                            onChange={(_, value) => {
+                                fetchNui(NuiEvent.ObjectEditorSetEffect, { effect: value });
+                            }}
+                            description="Permet de définir un effet sur l'objet."
+                            title="Définir un effet"
+                        >
+                            <MenuItemSelectOption value={null}>Aucun</MenuItemSelectOption>
+                            {Object.keys(ObjectEffects).map(key => {
+                                return (
+                                    <MenuItemSelectOption key={key} value={key}>
+                                        {ObjectEffects[key].name}
+                                    </MenuItemSelectOption>
+                                );
+                            })}
+                        </MenuItemSelect>
                     )}
                     <MenuItemButton
                         onConfirm={() => {
@@ -113,7 +153,8 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
                     <MenuTitle>Contrôle du mode editeur</MenuTitle>
                     <MenuItemText> Mode Translation : T</MenuItemText>
                     <MenuItemText> Mode Rotation : R</MenuItemText>
-                    <MenuItemText> Mode Scale : S</MenuItemText>
+                    {collision && <MenuItemText> Scale impossible si collision activé</MenuItemText>}
+                    {!collision && <MenuItemText> Mode Scale : S</MenuItemText>}
                     <MenuItemText> Coordonnées locales : L</MenuItemText>
                     <MenuItemText> Rotation Camera : Clic Droit</MenuItemText>
                 </MenuContent>

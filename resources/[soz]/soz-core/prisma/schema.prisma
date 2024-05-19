@@ -206,6 +206,35 @@ model persistent_prop {
   position String  @db.LongText
 }
 
+model event {
+  id          String          @id @default(uuid())
+  name        String          @db.VarChar(255)
+  reward      Json
+  scenes      scene[]
+}
+
+model scene {
+  id          String          @id @default(uuid())
+  name        String          @db.VarChar(255)
+  entities    scene_entity[]
+  persistant  Boolean         @default(false)
+  created_at  DateTime        @default(now()) @db.Timestamp(0)
+  creator_id  String          @db.VarChar(255)
+  creator     player          @relation(fields: [creator_id], references: [citizenid], onDelete: Cascade, map: "FK_collection_creator")
+  event_id    String?
+  event       event?          @relation(fields: [event_id], references: [id], onDelete: Cascade, map: "FK_scene_event")
+}
+
+model scene_entity {
+  id           String          @id @default(uuid())
+  model        String
+  object       Json
+  inventory_id String?
+  created_at   DateTime        @default(now()) @db.Timestamp(0)
+  scene_id     String
+  scene        scene           @relation(fields: [scene_id], references: [id], onDelete: Cascade, map: "FK_scene_entity_scene")
+}
+
 model collection_prop {
   id         BigInt        @id @default(autoincrement())
   name       String        @unique @db.VarChar(50)
@@ -369,6 +398,7 @@ model player {
   criminal_actions        criminal_action[]        @relation("criminal_actions")
   radar_speed_records     radar[]                  @relation("radar_speed_record")
   SenatePartyMember       SenatePartyMember?
+  scenes                  scene[]
 
   @@index([id], map: "id")
   @@index([last_updated], map: "last_updated")
@@ -905,7 +935,7 @@ model loot_item {
   metadata       String?    @db.Text
   max            Int
   chance         Int
-  
+
   @@index([type])
 }
 
