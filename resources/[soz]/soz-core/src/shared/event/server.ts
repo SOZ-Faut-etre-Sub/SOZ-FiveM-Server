@@ -538,7 +538,7 @@ export enum ServerEvent {
     GANG_SMUGGLING_ALCOHOL_DISTILLERY_DESTROY = 'soz-core:server:gang:smuggling:distillery-destroy',
     GANG_SMUGGLING_ALCOHOL_DISTILLERY_SETUP = 'soz-core:server:gang:smuggling:distillery-setup',
     GANG_SMUGGLING_EXPORT = 'soz-core:server:gang:smuggling:export',
-    GANG_SMUGGLING_ALCOHOL_EXPORT_CLOSE = 'soz-core:server:gang:smuggling:export-close',
+    GANG_SMUGGLING_EXPORT_CLOSE = 'soz-core:server:gang:smuggling:export-close',
     GANG_SMUGGLING_SECRET_STASH_USE = 'soz-core:server:gang:smuggling:secret-stash-use',
     GANG_SMUGGLING_SECRET_STASH_REMOVE = 'soz-core:server:gang:smuggling:secret-stash-remove',
     GANG_SMUGGLING_PRINTER_USE = 'soz-core:server:gang:smuggling:printer-use',
@@ -549,6 +549,9 @@ export enum ServerEvent {
     GANG_SMUGGLING_PRINTER_REMOVE = 'soz-core:server:gang:smuggling:printer-remove',
     GANG_SMUGGLING_MINE_PUT_C4 = 'soz-core:server:gang:smuggling:mine-putting-c4',
     GANG_SMUGGLING_GETTING_ORE = 'soz-core:server:gang:smuggling:mine-getting-ore',
+    GANG_SMUGGLING_ZONE_EDIT_CREATE = 'soz-core:server:gang:smuggling:zone-edit:create',
+    GANG_SMUGGLING_ZONE_EDIT_DELETE = 'soz-core:server:gang:smuggling:zone-edit:delete',
+    GANG_SMUGGLING_ZONE_EDIT_UPDATE = 'soz-core:server:gang:smuggling:zone-edit:update',
 
     DOOR_ADD_UPDATE = 'soz-core:server:door:add-update',
     DOOR_DELETE = 'soz-core:server:door:delete',

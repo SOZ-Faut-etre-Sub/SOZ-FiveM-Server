@@ -1,7 +1,7 @@
-import { Provider } from '@public/core/decorators/provider';
+import { Injectable } from '@public/core/decorators/injectable';
 
-@Provider()
-export class PropHighlightProvider {
+@Injectable()
+export class PropHighlightService {
     private highlightedEntities: number[] = [];
 
     public highlightEntities(entities: number[]) {

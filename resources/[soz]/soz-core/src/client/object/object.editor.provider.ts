@@ -171,8 +171,8 @@ export class ObjectEditorProvider {
 
         if (this.currentObject.options.snapToGround && getDistance(position, this.currentObject.position) > 0.001) {
             PlaceObjectOnGroundProperly(this.currentObject.entity);
-            this.refreshObjectPositionFromGame();
         }
+        this.refreshObjectPositionFromGame();
 
         // Check distance between the object and the player
         if (IsDisabledControlJustReleased(0, Control.Attack)) {
@@ -278,7 +278,7 @@ export class ObjectEditorProvider {
             return;
         }
 
-        this.currentObject.resolver(this.currentObject.edited ? this.currentObject.startingObject : null);
+        this.currentObject.resolver(null);
     }
 
     @OnNuiEvent(NuiEvent.ObjectEditorDelete)

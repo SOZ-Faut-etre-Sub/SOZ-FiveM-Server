@@ -3,6 +3,7 @@ import { DrugGardenMenu } from '@private/nui/drug/MenuDrugGarden';
 import { ContainerOrderMenu } from '@private/nui/gang/BusinessSmuggling/MenuContainerOrder';
 import { SmugglingMenu } from '@private/nui/gang/BusinessSmuggling/MenuSmuggling';
 import { MenuSmugglingPrices } from '@private/nui/gang/BusinessSmuggling/MenuSmugglingPrice';
+import { MenuSmugglingEditZone } from '@private/nui/gang/BusinessSmuggling/MenuSmugglingZoneEdit';
 import { MenuGangAdmin } from '@private/nui/gang/MenuGangAdmin';
 import { MenuGangMember } from '@private/nui/gang/MenuGangMember';
 import { MenuHubEntryAdmin } from '@private/nui/hub/MenuHubEntryAdmin';
@@ -287,6 +288,7 @@ const MenuRouter: FunctionComponent = () => {
             />
             <Route path={`/${MenuType.SmugglingContainerOrderMenu}/*`} element={<ContainerOrderMenu />} />
             <Route path={`/${MenuType.SmugglingMenu}/*`} element={<SmugglingMenu />} />
+            <Route path={`/${MenuType.SmugglingZoneEditMenu}/*`} element={<MenuSmugglingEditZone />} />
         </Routes>
     );
 };

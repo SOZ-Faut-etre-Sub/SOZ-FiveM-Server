@@ -34,7 +34,7 @@ import { ProgressService } from '../progress.service';
 import { ResourceLoader } from '../repository/resource.loader';
 import { CircularCameraProvider } from './circular.camera.provider';
 import { ObjectProvider } from './object.provider';
-import { PropHighlightProvider } from './prop.highlight.provider';
+import { PropHighlightService } from './prop.highlight.service';
 
 export const PROP_MAX_DISTANCE = 50.0;
 
@@ -49,8 +49,8 @@ export class PropPlacementProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @Inject(PropHighlightProvider)
-    private highlightProvider: PropHighlightProvider;
+    @Inject(PropHighlightService)
+    private propHighlightService: PropHighlightService;
 
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
@@ -157,7 +157,7 @@ export class PropPlacementProvider {
             this.despawnDebugPropsOfCollection(this.currentCollection);
         }
         this.resetEditortState();
-        this.highlightProvider.unhighlightAllEntities();
+        this.propHighlightService.unhighlightAllEntities();
     }
 
     @OnNuiEvent(NuiEvent.RequestCreatePropCollection)
@@ -272,8 +272,8 @@ export class PropPlacementProvider {
             };
         }
 
-        this.highlightProvider.unhighlightAllEntities();
-        this.highlightProvider.highlightEntities(
+        this.propHighlightService.unhighlightAllEntities();
+        this.propHighlightService.highlightEntities(
             Object.values(this.debugProps)
                 .filter(prop => prop.collection == collectionName)
                 .map(prop => prop.entity)
@@ -330,8 +330,8 @@ export class PropPlacementProvider {
         if (!prop) {
             return;
         }
-        this.highlightProvider.unhighlightAllEntities();
-        this.highlightProvider.highlightEntities([prop.entity]);
+        this.propHighlightService.unhighlightAllEntities();
+        this.propHighlightService.highlightEntities([prop.entity]);
     }
 
     private async spawnNewDebug(propToCreate: PlacementProp) {
@@ -467,7 +467,7 @@ export class PropPlacementProvider {
         }
 
         if (this.currentCollection) {
-            this.highlightProvider.highlightEntities(
+            this.propHighlightService.highlightEntities(
                 Object.values(this.currentCollection.props)
                     .filter(prop => this.debugProps[prop.object.id])
                     .map(prop => this.debugProps[prop.object.id].entity)
@@ -576,7 +576,7 @@ export class PropPlacementProvider {
             matrix: debugProp.matrix,
         };
 
-        this.highlightProvider.unhighlightAllEntities();
+        this.propHighlightService.unhighlightAllEntities();
 
         // Request edit for other clients.
         TriggerServerEvent(ServerEvent.PROP_REQUEST_EDIT_PROP, worldObject, debugProp.state == PropState.loaded);
@@ -589,7 +589,7 @@ export class PropPlacementProvider {
             object: worldObject,
         };
 
-        this.highlightProvider.highlightEntities([debugProp.entity]);
+        this.propHighlightService.highlightEntities([debugProp.entity]);
         this.debugProp = null;
         await this.onLeaveEditorMode();
 
@@ -615,7 +615,7 @@ export class PropPlacementProvider {
         const collections = await emitRpc<PropCollectionData[]>(RpcServerEvent.PROP_GET_COLLECTIONS_DATA);
         await this.refreshPropPlacementMenuData(collections, this.currentCollection);
         await this.onLeaveEditorMode();
-        this.highlightProvider.highlightEntities([debugProp.entity]);
+        this.propHighlightService.highlightEntities([debugProp.entity]);
 
         return Ok(true);
     }
@@ -689,10 +689,10 @@ export class PropPlacementProvider {
         const hitEntDebug = SelectEntityAtCursor(6 | (1 << 5), true);
         const obj = Object.values(this.debugProps).find(prop => prop.entity === hitEntDebug);
         if (!obj) {
-            this.highlightProvider.unhighlightAllEntities();
+            this.propHighlightService.unhighlightAllEntities();
             return;
         }
-        this.highlightProvider.highlightEntities([hitEntDebug]);
+        this.propHighlightService.highlightEntities([hitEntDebug]);
         if (IsDisabledControlJustPressed(0, 24)) {
             if (this.isMouseSelectionOn) {
                 this.debugProp = obj;
@@ -731,7 +731,7 @@ export class PropPlacementProvider {
             value
         );
 
-        this.highlightProvider.unhighlightAllEntities();
+        this.propHighlightService.unhighlightAllEntities();
         this.despawnAllDebugProps();
 
         await this.loadCurrentCollection();
