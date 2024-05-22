@@ -108,7 +108,7 @@ function InventoryContainer:SyncInventory(inv)
     end
 end
 
-function InventoryContainer:ItemIsAllowed(item)
+function InventoryContainer:ItemIsAllowed(item, inv)
     if self.type == "player" then
         return true
     end

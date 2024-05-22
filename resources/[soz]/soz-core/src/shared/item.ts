@@ -37,7 +37,8 @@ export type ItemType =
     | 'energy'
     | 'veh_biz_piece'
     | 'smuggling_export'
-    | 'smuggling_convoy_export';
+    | 'smuggling_convoy_export'
+    | 'smuggling_ore';
 
 type BaseItem = {
     name: string;
@@ -301,6 +302,7 @@ export type InventoryItemMetadata = {
     keyid?: string;
     storageElements?: InventoryItem[];
     printed?: boolean;
+    value?: number;
 };
 
 export type Inventory = {

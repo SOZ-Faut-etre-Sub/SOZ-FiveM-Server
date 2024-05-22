@@ -249,6 +249,7 @@ export enum RpcServerEvent {
     GANG_SMUGGLING_HARVEST_ZONE_LOCATION_UPDATE = 'soz-core:server:gang:smuggling:harvest:location-update',
     GANG_SMUGGLING_HARVEST_LOCATION = 'soz-core:server:gang:smuggling:harvest:location',
     GANG_SMUGGLING_CONVOY_INIT = 'soz-core:server:gang:smuggling:convoy:init',
+    GANG_SMUGGLING_GET_OPENED_RESALERS = 'soz-core:server:gang:smuggling:resalers:opened',
 }
 
 export enum RpcClientEvent {

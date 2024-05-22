@@ -60,7 +60,7 @@ function InventoryDatastore:SyncInventory(inv)
     --- Keep this function empty, it's only used by the InventoryContainer class
 end
 
-function InventoryDatastore:ItemIsAllowed(item)
+function InventoryDatastore:ItemIsAllowed(item, inv)
     if self.type == "player" then
         return true
     end

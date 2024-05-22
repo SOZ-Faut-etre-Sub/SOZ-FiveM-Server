@@ -145,6 +145,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
         } else if (item?.metadata?.type && !item?.metadata?.label) {
             itemExtraLabel += ` [${item?.metadata?.type}]`
         }
+        
         if (item?.type === 'evidence' && item.name != 'scientist_photo' && item.metadata?.expiration) {
             const currentTime = new Date().getTime();
             const expiration = new Date(item.metadata['expiration']).getTime();
@@ -212,6 +213,20 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
             if (item.name === 'outfit' || item.name === 'armor') {
                 illustrator = item.illustrator[item?.metadata?.type || ''] || '';
             }
+        }
+
+        if(item?.metadata?.value){
+            secondaryDescription += '<div style="display:flex;flex-direction:column;margin-top:0.5rem;align-items:flex-end">'
+            secondaryDescription += `<span><b>Valeur estimée :</b> ${item?.metadata?.value * item.amount} $ </span>`
+            secondaryDescription += `</div>`
+        }
+
+        if(item?.storageItemType === 'smuggling_ore' && item?.metadata?.storageElements?.length){
+            let totalElementValue = 0
+            item?.metadata?.storageElements.map(element => totalElementValue += element?.metadata?.value ? element?.metadata?.value * element?.amount : 0)
+            secondaryDescription += '<div style="display:flex;flex-direction:column;margin-top:0.5rem;align-items:flex-end">'
+            secondaryDescription += `<span><b>Valeur estimée cumulée :</b> ${totalElementValue} $ </span>`
+            secondaryDescription += `</div>`
         }
 
         onItemHover?.(`

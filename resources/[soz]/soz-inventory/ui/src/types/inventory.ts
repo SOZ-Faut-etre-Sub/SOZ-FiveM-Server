@@ -69,7 +69,8 @@ export type ItemType =
     | 'fishing_garbage'
     | 'tool'
     | 'card'
-    | 'evidence';
+    | 'evidence'
+    | 'smuggling_ore';
 
 export type MealMetadata = {
         name: string;
@@ -129,6 +130,8 @@ export type InventoryItemMetadata = {
     evidenceInfos?: EvidenceMetadata;
     photoUrl?: string;
     printed?: boolean;
+    value?: number;
+    storageElements?: InventoryItem[];
 };
 
 

@@ -73,7 +73,24 @@ function InventoryItemStorage:SyncInventory(inv)
     _G.Container[playerInv.type]:SyncInventory(playerInv)
 end
 
-function InventoryItemStorage:ItemIsAllowed(item)
+function InventoryItemStorage:ItemIsAllowed(item, inv, metadata)
+
+    local playerInv = Inventory(inv.owner)
+    if playerInv.type ~= "player" then
+        return
+    end
+    local storageItem = playerInv.items[inv.slot]
+    if not storageItem then
+        return
+    end
+    local itemDef = QBCore.Shared.Items[storageItem.name]
+
+    if itemDef.storageItemMandatoryMetadata then
+        if not metadata[itemDef.storageItemMandatoryMetadata] then
+            return false
+        end
+    end
+
     return self.allowedTypes[item.type or ""] or self.allowedItems[item.name or ""] or false
 end
 

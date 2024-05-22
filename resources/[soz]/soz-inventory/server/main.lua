@@ -372,7 +372,7 @@ function Inventory.FilterItems(inv, target)
                 local insertId = #items + 1
                 items[insertId] = table.deepclone(v)
 
-                if disabled or not _G.Container[target.type]:ItemIsAllowed(v) or
+                if disabled or not _G.Container[target.type]:ItemIsAllowed(v, target, v.metadata) or
                     (target.type == "player" and inv.type == "player" and QBCore.Shared.Items[v.name]["not_searchable"]) then
                     items[insertId].disabled = true
                 end
@@ -848,7 +848,7 @@ function Inventory.TransfertItem(source, invSource, invTarget, item, amount, met
         return
     end
 
-    if not _G.Container[invTarget.type]:ItemIsAllowed(item) then
+    if not _G.Container[invTarget.type]:ItemIsAllowed(item, invTarget, metadata) then
         cb(false, "not_allowed_item")
         return
     end
