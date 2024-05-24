@@ -36,7 +36,8 @@ export type ItemType =
     | 'drug_pot'
     | 'energy'
     | 'veh_biz_piece'
-    | 'smuggling_export';
+    | 'smuggling_export'
+    | 'smuggling_convoy_export';
 
 type BaseItem = {
     name: string;

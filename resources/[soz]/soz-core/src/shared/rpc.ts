@@ -248,6 +248,7 @@ export enum RpcServerEvent {
     GANG_SMUGGLING_HARVEST_ZONE_LOCATION_REMOVE = 'soz-core:server:gang:smuggling:harvest:location-remove',
     GANG_SMUGGLING_HARVEST_ZONE_LOCATION_UPDATE = 'soz-core:server:gang:smuggling:harvest:location-update',
     GANG_SMUGGLING_HARVEST_LOCATION = 'soz-core:server:gang:smuggling:harvest:location',
+    GANG_SMUGGLING_CONVOY_INIT = 'soz-core:server:gang:smuggling:convoy:init',
 }
 
 export enum RpcClientEvent {

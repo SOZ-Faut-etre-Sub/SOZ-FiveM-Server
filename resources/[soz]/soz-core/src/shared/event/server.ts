@@ -552,6 +552,7 @@ export enum ServerEvent {
     GANG_SMUGGLING_ZONE_EDIT_CREATE = 'soz-core:server:gang:smuggling:zone-edit:create',
     GANG_SMUGGLING_ZONE_EDIT_DELETE = 'soz-core:server:gang:smuggling:zone-edit:delete',
     GANG_SMUGGLING_ZONE_EDIT_UPDATE = 'soz-core:server:gang:smuggling:zone-edit:update',
+    GANG_SMUGGLING_CONVOY_START = 'soz-core:server:gang:smuggling:convoy:start',
 
     DOOR_ADD_UPDATE = 'soz-core:server:door:add-update',
     DOOR_DELETE = 'soz-core:server:door:delete',

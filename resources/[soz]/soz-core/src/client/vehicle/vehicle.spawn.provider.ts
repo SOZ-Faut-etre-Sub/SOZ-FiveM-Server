@@ -366,4 +366,20 @@ export class VehicleSpawnProvider {
 
         return true;
     }
+
+    @OnEvent(ClientEvent.VEHICLE_RELEASE)
+    async releaseVehicle(netId: number) {
+        if (!NetworkDoesNetworkIdExist(netId)) {
+            return;
+        }
+
+        const vehicle = NetworkGetEntityFromNetworkId(netId);
+
+        if (!DoesEntityExist(vehicle)) {
+            return;
+        }
+
+        SetEntityAsNoLongerNeeded(vehicle);
+        return;
+    }
 }

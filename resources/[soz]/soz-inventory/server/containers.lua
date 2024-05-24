@@ -78,6 +78,7 @@ Container["trunk"] = InventoryContainer:new({
         "tool",
         "veh_biz_piece",
         "smuggling_export",
+        "smuggling_convoy_export",
     },
 })
 
@@ -110,6 +111,7 @@ Container["temporary_trunk"] = InventoryDatastore:new({
         "tool",
         "veh_biz_piece",
         "smuggling_export",
+        "smuggling_convoy_export",
     },
 })
 
@@ -146,6 +148,7 @@ Container["trash"] = InventoryContainer:new({
         "drug_pot",
         "veh_biz_piece",
         "smuggling_export",
+        "smuggling_convoy_export",
     },
 })
 
@@ -184,6 +187,7 @@ Container["seizure"] = InventoryContainer:new({
         "evidence",
         "veh_biz_piece",
         "smuggling_export",
+        "smuggling_convoy_export",
     },
     inventoryPermissionCallback = playerHaveStorageAccessAndDuty,
 })
@@ -245,6 +249,7 @@ Container["bin"] = InventoryDatastore:new({
         "metal",
         "veh_biz_piece",
         "smuggling_export",
+        "smuggling_convoy_export",
     },
     populateDatastoreCallback = function()
         local inventory = {}
@@ -300,6 +305,7 @@ Container["house_stash"] = InventoryContainer:new({
         "edvidence",
         "veh_biz_piece",
         "smuggling_export",
+        "smuggling_convoy_export",
     },
 })
 Container["house_fridge"] = InventoryContainer:new({
@@ -403,6 +409,7 @@ Container["smuggling_box"] = InventoryDatastore:new({
         "evidence",
         "veh_biz_piece",
         "smuggling_export",
+        "smuggling_convoy_export",
     },
 })
 
@@ -439,6 +446,7 @@ Container["smuggling_blackmarket"] = InventoryContainer:new({
         "evidence",
         "veh_biz_piece",
         "smuggling_export",
+        "smuggling_convoy_export",
     },
 })
 
@@ -475,6 +483,7 @@ Container["smuggling_connected"] = InventoryContainer:new({
         "evidence",
         "veh_biz_piece",
         "smuggling_export",
+        "smuggling_convoy_export",
     },
 })
 

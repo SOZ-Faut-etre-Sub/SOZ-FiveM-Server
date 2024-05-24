@@ -1163,6 +1163,16 @@ function GetOrCreateInventory(storageType, invID, ctx)
 
             targetInv = Inventory.Create("trunk_" .. invID, invID, storageType, trunkConfig.slot, maxWeight, invID)
         end
+    elseif storageType == "temporary_trunk" then
+        targetInv = Inventory("trunk_" .. invID)
+
+        if targetInv == nil then
+            if not ctx then
+                return
+            end
+
+            targetInv = Inventory.Create("trunk_" .. invID, invID, storageType, storageConfig.slot, ctx.model, invID)
+        end
     elseif storageType == "stash" then
         targetInv = Inventory("stash_" .. invID)
 
@@ -1200,7 +1210,7 @@ function GetOrCreateInventory(storageType, invID, ctx)
         end
     elseif storageType == "smuggling_box" or storageType == "smuggling_blackmarket" or storageType == "smuggling_connected" or storageType == "smuggling_export" then
         if targetInv == nil then
-            targetInv = Inventory.Create(invID, invID, storageType, storageConfig.slot, ctx.model or storageConfig.weight,
+            targetInv = Inventory.Create(invID, invID, storageType, storageConfig.slot, ctx and ctx.model or storageConfig.weight,
                                          ctx and "gang_" .. ctx.entity or invID)
         end
     elseif storageType == "distillery" then
