@@ -5001,7 +5001,7 @@
         </Item>
         <Item>
             <modelName>Predator</modelName>
-            <colors itemType="CVehicleModelColorIndices">
+            <colors>
                 <Item>
                     <indices>
                         111
@@ -5019,10 +5019,10 @@
             <kits />
             <windowsWithExposedEdges />
             <plateProbabilities>
-                <Probabilities itemType="LicensePlateProbabilityNamed" />
+                <Probabilities />
             </plateProbabilities>
             <lightSettings value="1" />
-            <sirenSettings value="6869" />
+            <sirenSettings value="5014" />
         </Item>
     </variationData>
 </CVehicleModelInfoVariation>
