@@ -370,7 +370,8 @@ export enum ClientEvent {
 
     GANG_SMUGGLING_CONNECTED_REFRESH = 'soz-core:client:gang:smuggling:connected-refresh',
     GANG_SMUGGLING_EXPORT_POSITION = 'soz-core:client:gang:smuggling:export-position',
-    GANG_SMUGGLING_MINE_DETONATION = 'soz-core:client:gang:smuggling:c4-detonation',
+    GANG_SMUGGLING_MINE_DETONATION = 'soz-core:client:gang:smuggling:mine-c4-detonation',
+    GANG_SMUGGLING_ELECTRONIC_DETONATION = 'soz-core:client:gang:smuggling:electronic-c4-detonation',
 
     GANG_SMUGGLING_UPDATE_OPENED_RESALERS = 'soz-core:client:gang:smuggling:update-resalers',
     GANG_SMUGGLING_SPAWN_GUARD_RESALER = 'soz-core:client:gang:smuggling:spawn-guard-resalers',

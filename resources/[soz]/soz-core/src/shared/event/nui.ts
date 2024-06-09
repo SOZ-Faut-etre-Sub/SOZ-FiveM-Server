@@ -492,6 +492,8 @@ export enum NuiEvent {
     BusinessSmugglingEditZoneTogglePipette = 'soz-core:client:business:smuggling:edit-zone:pipette',
     BusinessSmugglingEditZoneSelectPropToRemove = 'soz-core:client:business:smuggling:edit-zone:select-remove',
     BusinessSmugglingConvoyInit = 'soz-core:client:business:smuggling:convoy-init',
+    BusinessSmugglingElectronicResalerPosition = 'soz-core:client:business:smuggling-electronic-resaler-position',
+    BusinessSmugglingGoldResalerPosition = 'soz-core:client:business:smuggling-mine-resaler-position',
 
     AdminDoorSetState = 'soz-core:client:door:set-state',
     AdminDoorAddSub = 'soz-core:client:door:add-subdoor',

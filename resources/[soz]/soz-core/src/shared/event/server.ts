@@ -555,8 +555,12 @@ export enum ServerEvent {
     GANG_SMUGGLING_CONVOY_START = 'soz-core:server:gang:smuggling:convoy:start',
     GANG_SMUGGLING_MINE_ESTIMATION = 'soz-core:server:gang:smuggling:mine-estimation',
     GANG_SMUGGLING_MINE_ESTIMATION_FAILED = 'soz-core:server:gang:smuggling:mine-estimation-failed',
+    GANG_SMUGGLING_ELECTRONIC_ESTIMATION = 'soz-core:server:gang:smuggling:electronic-estimation',
+    GANG_SMUGGLING_ElECTRONIC_ESTIMATION_FAILED = 'soz-core:server:gang:smuggling:electronic-estimation-failed',
     GANG_SMUGGLING_DELETE_GUARD = 'soz-core:server:gang:smuggling:delete-guard',
     GANG_SMUGGLING_MINE_CLOSING_JEWELRY_RESALER = 'soz-core:server:gang:smuggling:delete-jewelry-resaler',
+    GANG_SMUGGLING_ELECTRONIC_PUT_C4 = 'soz-core:server:gang:smuggling:electronic-putting-c4',
+    GANG_SMUGGLING_GETTING_ELECTRONIC_PARTS = 'soz-core:server:gang:smuggling:getting-electronic-parts',
 
     DOOR_ADD_UPDATE = 'soz-core:server:door:add-update',
     DOOR_DELETE = 'soz-core:server:door:delete',
