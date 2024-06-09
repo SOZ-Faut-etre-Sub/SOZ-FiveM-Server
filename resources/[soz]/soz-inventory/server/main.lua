@@ -369,12 +369,13 @@ function Inventory.FilterItems(inv, target)
         local disabled = not _G.Container[inv.type]:CanGetContentInInventory(inv) or not _G.Container[target.type]:CanPutContentInInventory(target)
         if inv.items ~= nil then
             for _, v in pairs(inv.items) do
-                local insertId = #items + 1
-                items[insertId] = table.deepclone(v)
+                if target.type ~= "player" or inv.type ~= "player" or not QBCore.Shared.Items[v.name]["not_searchable"] then
+                    local insertId = #items + 1
+                    items[insertId] = table.deepclone(v)
 
-                if disabled or not _G.Container[target.type]:ItemIsAllowed(v, target, v.metadata) or
-                    (target.type == "player" and inv.type == "player" and QBCore.Shared.Items[v.name]["not_searchable"]) then
-                    items[insertId].disabled = true
+                    if disabled or not _G.Container[target.type]:ItemIsAllowed(v, target, v.metadata) then
+                        items[insertId].disabled = true
+                    end
                 end
             end
         end

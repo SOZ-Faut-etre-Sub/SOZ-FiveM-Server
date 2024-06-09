@@ -22,10 +22,26 @@ export class InventoryDragAndDropProvider {
 
     private models = new Map<number, DnDCallback[]>();
     private zones: ZoneCbs[] = [];
+    private entities = new Map<number, DnDCallback[]>();
 
     @Exportable('DragAndDrop')
-    public async dragAndDrop(entityHit: number, entityType: number, endCoords: Vector3, invItem: InventoryItem) {
+    public async dragAndDrop(
+        npc: boolean,
+        entityHit: number,
+        entityType: number,
+        endCoords: Vector3,
+        invItem: InventoryItem
+    ) {
         const hitpoint: Vector3 = endCoords;
+
+        const entityCBs = this.entities.get(entityHit);
+        if (entityCBs) {
+            for (const cb of entityCBs) {
+                if (await cb(invItem, entityHit, hitpoint)) {
+                    return true;
+                }
+            }
+        }
 
         let model = 0;
         try {
@@ -38,7 +54,7 @@ export class InventoryDragAndDropProvider {
             const cbs = this.models.get(model) || [];
             for (const cb of cbs) {
                 if (await cb(invItem, entityHit, hitpoint)) {
-                    return;
+                    return true;
                 }
             }
         }
@@ -47,13 +63,18 @@ export class InventoryDragAndDropProvider {
             if (zone.zone.isPointInside(hitpoint)) {
                 for (const cb of zone.cbs) {
                     if (await cb(invItem, entityHit, hitpoint)) {
-                        return;
+                        return true;
                     }
                 }
             }
         }
 
-        this.notifier.error("Personne n'est à portée de vous");
+        if (npc) {
+            this.notifier.error("Vous n'êtes pas dans une zone de revente");
+        } else {
+            this.notifier.error("Personne n'est à portée de vous");
+        }
+        return false;
     }
 
     public registerModelTarget(model: number, cbs: DnDCallback[]) {
@@ -78,5 +99,15 @@ export class InventoryDragAndDropProvider {
         if (index >= 0) {
             this.zones.splice(index, 1);
         }
+    }
+
+    public registerEntity(entity: number, cbs: DnDCallback[]) {
+        const existing = this.entities.get(entity) || [];
+        existing.push(...cbs);
+        this.entities.set(entity, existing);
+    }
+
+    public unregisterEntity(entity: number) {
+        this.entities.delete(entity);
     }
 }

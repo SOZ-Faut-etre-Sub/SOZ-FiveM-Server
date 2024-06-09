@@ -16,6 +16,7 @@ import { RpcClientEvent, RpcServerEvent } from '@public/shared/rpc';
 
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { WorldObject } from '../../shared/object';
+import { InventoryDragAndDropProvider } from '../inventory/inventory.draganddrop.provider';
 
 type SpawnedObject = {
     entity: number;
@@ -29,6 +30,9 @@ export class ObjectProvider {
 
     @Inject(TargetFactory)
     private targetFactory: TargetFactory;
+
+    @Inject(InventoryDragAndDropProvider)
+    private inventoryDragAndDropProvider: InventoryDragAndDropProvider;
 
     private loadedObjects: Record<string, SpawnedObject> = {};
 
@@ -239,6 +243,10 @@ export class ObjectProvider {
             this.targetFactory.createForEntity(entity, object.targets);
         }
 
+        if (object.dragAndDrop) {
+            this.inventoryDragAndDropProvider.registerEntity(entity, object.dragAndDrop);
+        }
+
         await wait(0);
     }
 
@@ -254,6 +262,10 @@ export class ObjectProvider {
                 [object.entity],
                 object.object.targets.map(target => target.label)
             );
+        }
+
+        if (object.object.dragAndDrop) {
+            this.inventoryDragAndDropProvider.unregisterEntity(object.entity);
         }
 
         if (!this.objectService.deleteObject(object.entity, object.object)) {

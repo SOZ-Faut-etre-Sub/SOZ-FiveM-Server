@@ -2,8 +2,9 @@ import { JobType } from '@public/shared/job';
 import { PolygonZone } from '@public/shared/polyzone/polygon.zone';
 
 import { Inject, Injectable } from '../../core/decorators/injectable';
-import { Zone } from '../../shared/polyzone/box.zone';
+import { BoxZone, Zone } from '../../shared/polyzone/box.zone';
 import { Ped, PedFactory } from '../factory/ped.factory';
+import { DnDCallback, InventoryDragAndDropProvider } from '../inventory/inventory.draganddrop.provider';
 
 export type TargetOptions = {
     label: string;
@@ -29,12 +30,16 @@ export type PedOptions = Ped & {
         options: TargetOptions[];
         distance: number;
     };
+    dragAndDrop?: DnDCallback[];
 };
 
 const DEFAULT_DISTANCE = 2.5;
 
 @Injectable()
 export class TargetFactory {
+    @Inject(InventoryDragAndDropProvider)
+    private inventoryDragAndDropProvider: InventoryDragAndDropProvider;
+
     private zones: { [id: string]: any } = {};
     private players: { [id: string]: any } = {};
     private vehicles: { [id: string]: any } = {};
@@ -127,19 +132,23 @@ export class TargetFactory {
     public async createForPed(ped: PedOptions) {
         const id = await this.pedFactory.createPedOnGrid(ped);
 
-        this.createForBoxZone(
-            `entity_${id}`,
-            {
-                center: [ped.coords.x, ped.coords.y, ped.coords.z],
-                heading: ped.coords.w,
-                width: ped.width || 0.8,
-                length: ped.length || 0.8,
-                minZ: ped.coords.z - 1,
-                maxZ: ped.coords.z + 2,
-                debugPoly: ped.debugPoly,
-            },
-            ped.target.options
-        );
+        const zone: Zone<any> = {
+            center: [ped.coords.x, ped.coords.y, ped.coords.z],
+            heading: ped.coords.w,
+            width: ped.width || 0.8,
+            length: ped.length || 0.8,
+            minZ: ped.coords.z - 1,
+            maxZ: ped.coords.z + 2,
+            debugPoly: ped.debugPoly,
+        };
+        this.createForBoxZone(`entity_${id}`, zone, ped.target.options);
+        if (ped.dragAndDrop) {
+            this.inventoryDragAndDropProvider.registerZoneTarget(
+                'dnd_ped_' + id,
+                BoxZone.fromZone(zone),
+                ped.dragAndDrop
+            );
+        }
 
         return id;
     }

@@ -159,38 +159,49 @@ RegisterNUICallback("player/giveItemToTarget", function(data, cb)
         cb(true)
     end
 
-    if hit == 1 and entityType == 1 then
-        local amount = data.amount
+    local dist = #(GetEntityCoords(PlayerPedId()) - endCoords)
 
-        if tonumber(amount) > 1 then
-            amount = tostring(exports["soz-core"]:Input("Quantité", 5, data.amount))
-            if tonumber(amount, 10) == nil then
-                exports["soz-core"]:DrawNotification("Vous devez entrer un nombre entier", "error")
-                cb(true)
-                return
-            end
+    if dist > 2 then
+        exports["soz-core"]:DrawNotification("Personne n'est à portée de vous", "error")
+        cb(true)
+    end
+
+    local amount = data.amount
+
+    if tonumber(amount) > 1 then
+        amount = tostring(exports["soz-core"]:Input("Quantité", 5, data.amount))
+        if tonumber(amount, 10) == nil then
+            exports["soz-core"]:DrawNotification("Vous devez entrer un nombre entier", "error")
+            cb(true)
+            return
         end
+    end
 
-        if amount and tonumber(amount) > 0 then
-            local playerIdx = NetworkGetPlayerIndexFromPed(entityHit)
-            if playerIdx == -1 then -- Is NPC
-                if currentResellZone ~= nil then
-                    TriggerServerEvent("inventory:server:ResellItem", data, tonumber(amount), currentResellZone)
-                else
-                    exports["soz-core"]:DrawNotification("Vous n'êtes pas dans une zone de revente", "error")
-                end
+    if not amount or tonumber(amount) <= 0 then
+        return
+    end
+
+    if hit == 1 and entityType == 1 then
+        local playerIdx = NetworkGetPlayerIndexFromPed(entityHit)
+        if playerIdx == -1 then -- Is NPC
+            if currentResellZone ~= nil then
+                TriggerServerEvent("inventory:server:ResellItem", data, tonumber(amount), currentResellZone)
             else
-                local playerState = exports["soz-core"]:GetPlayerState()
+                data.amount = amount
+                exports["soz-core"]:DragAndDrop(true, entityHit, entityType, {endCoords.x, endCoords.y, endCoords.z}, data)
+            end
+        else
+            local playerState = exports["soz-core"]:GetPlayerState()
 
-                if playerState.isInHub then
-                    exports["soz-core"]:DrawNotification("Pas d'échange dans le Hub", "error")
-                else
-                    TriggerServerEvent("inventory:server:GiveItem", GetPlayerServerId(playerIdx), data, tonumber(amount))
-                end
+            if playerState.isInHub then
+                exports["soz-core"]:DrawNotification("Pas d'échange dans le Hub", "error")
+            else
+                TriggerServerEvent("inventory:server:GiveItem", GetPlayerServerId(playerIdx), data, tonumber(amount))
             end
         end
     else
-        exports["soz-core"]:DragAndDrop(entityHit, entityType, {endCoords.x, endCoords.y, endCoords.z}, data)
+        data.amount = amount
+        exports["soz-core"]:DragAndDrop(false, entityHit, entityType, {endCoords.x, endCoords.y, endCoords.z}, data)
     end
 
     cb(true)

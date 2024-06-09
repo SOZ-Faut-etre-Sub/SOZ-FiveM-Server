@@ -1,3 +1,4 @@
+import { DnDCallback } from '@public/client/inventory/inventory.draganddrop.provider';
 import { TargetOptions } from '@public/client/target/target.factory';
 import { JobType } from '@public/shared/job';
 
@@ -32,6 +33,7 @@ export type WorldObject = {
     metadata?: WorldObjectMetadata;
     vfx?: Vfx;
     growth?: WorldObjectGrowth;
+    dragAndDrop?: DnDCallback[];
 };
 
 export type WorldPlacedProp = {

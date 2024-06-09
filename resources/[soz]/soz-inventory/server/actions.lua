@@ -48,13 +48,9 @@ end)
 RegisterServerEvent("inventory:server:GiveItem", function(target, item, amount)
     local Player = QBCore.Functions.GetPlayer(source)
     local Target = QBCore.Functions.GetPlayer(tonumber(target))
-    local dist = #(GetEntityCoords(GetPlayerPed(Player.PlayerData.source)) - GetEntityCoords(GetPlayerPed(Target.PlayerData.source)))
 
     if Player.PlayerData.source == Target.PlayerData.source then
         return
-    end
-    if dist > 2 then
-        return TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Personne n'est à portée de vous", "error")
     end
 
     if amount <= item.amount then
@@ -192,7 +188,7 @@ RegisterServerEvent("inventory:server:ResellItem", function(item, amount, resell
     end
 
     if resellZone.ZoneName == "Resell:hub" then
-        TriggerEvent("soz-core:server:hub:shop-resell", source, item, amount)
+        TriggerEvent("soz-core:server:hub:shop-resell", source, item, amount, false)
         return
     end
 

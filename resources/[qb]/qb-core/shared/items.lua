@@ -10286,7 +10286,7 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['unique'] = false,
         ['combinable'] = nil,
-        ['carrybox'] = 'prop_box_wood04a',
+        ['carrybox'] = 'prop_drug_package',
         ['description'] = "",
         ['illustrator'] = ''
     },
@@ -10395,7 +10395,7 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['unique'] = false,
         ['combinable'] = nil,
-        ['carrybox'] = 'prop_box_wood03a',
+        ['carrybox'] = 'prop_drug_package',
         ['description'] = "",
         ['illustrator'] = ''
     },
