@@ -18509,10 +18509,10 @@
             <id value="5014"/>
             <name>predator</name>
             <timeMultiplier value="1" />
-            <lightFalloffMax value="10" />
-            <lightFalloffExponent value="10" />
-            <lightInnerConeAngle value="2.29061" />
-            <lightOuterConeAngle value="70" />
+            <lightFalloffMax value="120.00000000"/>
+            <lightFalloffExponent value="120.00000000"/>
+            <lightInnerConeAngle value="2.29061000"/>
+            <lightOuterConeAngle value="70.00000000"/>
             <lightOffset value="0" />
             <textureName>vehiclelight_sirenlight</textureName>
             <sequencerBpm value="220" />
@@ -18555,7 +18555,7 @@
                     </flashiness>
                     <corona>
                         <intensity value="50" />
-                        <size value="1.1" />
+                        <size value="4" />
                         <pull value="0.2" />
                         <faceCamera value="false" />
                     </corona>
@@ -18591,7 +18591,7 @@
                     </flashiness>
                     <corona>
                         <intensity value="50" />
-                        <size value="1.1" />
+                        <size value="4" />
                         <pull value="0.2" />
                         <faceCamera value="false" />
                     </corona>
@@ -18627,7 +18627,7 @@
                     </flashiness>
                     <corona>
                         <intensity value="50" />
-                        <size value="1.1" />
+                        <size value="4" />
                         <pull value="0.2" />
                         <faceCamera value="false" />
                     </corona>
