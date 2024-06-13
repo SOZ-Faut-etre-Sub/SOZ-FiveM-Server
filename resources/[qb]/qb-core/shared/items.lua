@@ -10253,7 +10253,7 @@ QBShared.Items = {
     },
     ['cartel_hub'] = {
         ['name'] = 'cartel_hub',
-        ['label'] = "Conteneur de Gang",
+        ['label'] = "Conteneur de Cartel",
         ['weight'] = 10000,
         ['useable'] = true,
         ['type'] = 'item_illegal',
