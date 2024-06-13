@@ -546,6 +546,12 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                                                 id: zone.data.id,
                                             });
                                         }
+
+                                        if (action === 'update') {
+                                            fetchNui(NuiEvent.AdminMenuMapperUpdateZone, {
+                                                id: zone.data.id,
+                                            });
+                                        }
                                     }}
                                 >
                                     <MenuItemSelectOption value="teleport">Téléporter</MenuItemSelectOption>
@@ -553,6 +559,7 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                                     <MenuItemSelectOption value="hide">Cacher</MenuItemSelectOption>
                                     <MenuItemSelectOption value="delete">Supprimer</MenuItemSelectOption>
                                     <MenuItemSelectOption value="rename">Renommer</MenuItemSelectOption>
+                                    <MenuItemSelectOption value="update">Modifier</MenuItemSelectOption>
                                 </MenuItemSelect>
                             ))}
                     </MenuContent>

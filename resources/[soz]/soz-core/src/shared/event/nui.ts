@@ -31,6 +31,7 @@ export enum NuiEvent {
     AdminMenuMapperDeleteZone = 'soz-core:nui:admin:mapper:delete-zone',
     AdminMenuMapperShowZone = 'soz-core:nui:admin:mapper:show-zone',
     AdminMenuMapperRenameZone = 'soz-core:nui:admin:mapper:rename-zone',
+    AdminMenuMapperUpdateZone = 'soz-core:nui:admin:mapper:update-zone',
     AdminMenuMapperAddPropertyCulling = 'soz-core:nui:admin:mapper:add-property-culling',
     AdminMenuMapperRemovePropertyCulling = 'soz-core:nui:admin:mapper:remove-property-culling',
     AdminMenuMapperSetSenateParty = 'soz-core:nui:admin:mapper:set-senate-party',

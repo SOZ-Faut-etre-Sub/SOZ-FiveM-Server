@@ -368,7 +368,7 @@ export class TemporaryProvider {
         TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, outfit);
 
         const vehicleNetId = await emitRpc<number>(
-            RpcServerEvent.VEHICLE_SPAWN_TEMPORARY,
+            RpcServerEvent.VEHICLE_SPAWN_JOB_TEMPORARY,
             job.vehicleModel,
             job.vehicleSpawn
         );
@@ -503,7 +503,7 @@ export class TemporaryProvider {
 
         if (!this.jobVehicle || !DoesEntityExist(NetworkGetEntityFromNetworkId(this.jobVehicle))) {
             this.jobVehicle = await emitRpc<number>(
-                RpcServerEvent.VEHICLE_SPAWN_TEMPORARY,
+                RpcServerEvent.VEHICLE_SPAWN_JOB_TEMPORARY,
                 job.vehicleModel,
                 job.vehicleSpawn
             );

@@ -154,6 +154,17 @@ export class AdminMenuMapperProvider {
         this.zoneRepository.updateZone(zone);
     }
 
+    @OnEvent(ServerEvent.ADMIN_MAPPER_UPDATE_ZONE)
+    public async updateZone(source: number, id: number, zoneLocation: Zone) {
+        let zone = await this.zoneRepository.find(id);
+        zone = {
+            ...zone,
+            ...zoneLocation,
+        };
+
+        this.zoneRepository.updateZone(zone);
+    }
+
     @Rpc(RpcServerEvent.ADMIN_MAPPER_SET_SENATE_PARTY)
     public async setSenateParty(
         source: number,

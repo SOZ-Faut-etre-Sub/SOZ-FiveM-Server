@@ -568,4 +568,5 @@ export enum ServerEvent {
     ADMIN_MAPPER_ADD_ZONE = 'soz-core:admin:mapper:add-zone',
     ADMIN_MAPPER_REMOVE_ZONE = 'soz-core:admin:mapper:remove-zone',
     ADMIN_MAPPER_RENAME_ZONE = 'soz-core:admin:mapper:rename-zone',
+    ADMIN_MAPPER_UPDATE_ZONE = 'soz-core:admin:mapper:update-zone',
 }

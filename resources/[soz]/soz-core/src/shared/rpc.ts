@@ -96,6 +96,7 @@ export enum RpcServerEvent {
     VEHICLE_PITSTOP_DATA = 'soz-core:rpc:vehicle:pitstop:data',
     VEHICLE_PITSTOP_PRICES = 'soz-core:rpc:vehicle:pitstop:price',
     VEHICLE_PITSTOP_PRICES_UPDATE = 'soz-core:rpc:vehicle:pitstop:price-update',
+    VEHICLE_SPAWN_JOB_TEMPORARY = 'soz-core:rpc:vehicle:spawn-job-temporary',
     VEHICLE_SPAWN_TEMPORARY = 'soz-core:rpc:vehicle:spawn-temporary',
 
     VEHICLE_ORDER_GET = 'soz-core:vehicle:orders-get',

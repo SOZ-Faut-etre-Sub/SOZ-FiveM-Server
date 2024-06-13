@@ -229,7 +229,7 @@ export class VehicleSpawner {
         }
     }
 
-    @Rpc(RpcServerEvent.VEHICLE_SPAWN_TEMPORARY)
+    @Rpc(RpcServerEvent.VEHICLE_SPAWN_JOB_TEMPORARY)
     private async spawnTemporaryJobVehicle(source: number, model: string, position: Vector4) {
         const player = this.playerService.getPlayer(source);
 
@@ -249,6 +249,40 @@ export class VehicleSpawner {
                 isPlayerVehicle: true,
                 owner: player.citizenid,
                 open: true,
+                model: model,
+            },
+            getDefaultVehicleCondition()
+        );
+
+        if (!vehicleNetId) {
+            return null;
+        }
+
+        this.vehicleStateService.handleVehicleOpenChange(vehicleNetId);
+
+        return vehicleNetId;
+    }
+
+    @Rpc(RpcServerEvent.VEHICLE_SPAWN_TEMPORARY)
+    private async onSpawnTemporaryVehicle(source: number, model: string, position: Vector4) {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return null;
+        }
+
+        const vehicleNetId = await this.spawn(
+            source,
+            {
+                hash: GetHashKey(model),
+                model,
+                position,
+                warp: false,
+            },
+            {
+                isPlayerVehicle: false,
+                owner: null,
+                open: false,
                 model: model,
             },
             getDefaultVehicleCondition()

@@ -597,6 +597,44 @@ export class AdminMenuMapperProvider {
         TriggerServerEvent(ServerEvent.ADMIN_MAPPER_RENAME_ZONE, id, name);
     }
 
+    @OnNuiEvent(NuiEvent.AdminMenuMapperUpdateZone)
+    public async updateZone({ id }: { id: number }) {
+        const zone = this.zoneRepository.find(id);
+
+        let newZone: Zone = null;
+        if (ZoneProps[zone.data.type]) {
+            const object = await this.objectEditorProvider.createOrUpdateObject(
+                ZoneProps[zone.data.type],
+                {
+                    snapToGround: true,
+                    allowToggleSnap: true,
+                    allowScale: false,
+                    context: 'admin',
+                },
+                {
+                    model: ZoneProps[zone.data.type],
+                    position: [zone.center[0], zone.center[1], zone.center[2], zone.heading],
+                    id: id.toString(),
+                }
+            );
+            if (!object) {
+                return;
+            }
+            newZone = {
+                center: object.position,
+                heading: object.position[3],
+            };
+        } else {
+            newZone = await this.nuiZoneProvider.askZone(zone as Zone);
+        }
+
+        if (!newZone) {
+            return;
+        }
+
+        TriggerServerEvent(ServerEvent.ADMIN_MAPPER_UPDATE_ZONE, id, newZone);
+    }
+
     @OnNuiEvent(NuiEvent.AdminMenuMapperShowZone)
     public async showZone({ id, show }: { id: number; show: boolean }): Promise<void> {
         const showId = `zone-${id}`;
