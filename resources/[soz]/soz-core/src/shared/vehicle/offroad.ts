@@ -1,11 +1,15 @@
 export const RefreshProcessSurfaceCalculation = 150; //ms -- RefreshProcessSurfaceCalculation must be between 100 and 500ms
 export const RefreshHandleLossVehControl = 40; //ms
-export const RefreshCalcTractionWithUpgrade = 150; //ms
+export const RefreshCalcTractionEffect = 150; //ms
 
 export const GeneralControleDifficulty = 1.5;
 export const GeneralSinkageSpeed = 2;
 export const GeneralTractionLoss = 1.5;
-export const GeneralTractionSpeedLoss = 1;
+
+export const MinSpeedForSpeedFactor = 6.944444 as const; // 25km/h
+export const MaxSpeedForSpeedFactor = 27.777778 as const; // 100km/h
+export const MaxPossibleDepth = 500 as const;
+export const DepthConversion = 0.001 as const;
 
 export const SuspensionRefresh = true;
 
@@ -54,6 +58,10 @@ export const VehicleZoneDefinition: Record<string, string> = {
     MTGORDO: 'mountains',
     MTJOSE: 'mountains',
     PALHIGH: 'mountains',
+    DESRT: 'mountains',
+    BHAMCA: 'mountains',
+    GREATC: 'mountains',
+    SANCHIA: 'mountains',
     LAGO: 'zancudo_swamp',
     ZANCUDO: 'zancudo_swamp',
     PALETO: 'popular',
@@ -81,7 +89,7 @@ export const VehicleZoneModifier = {
     },
     mountains: {
         name: 'Mountains',
-        depthMultiplier: 1.25,
+        depthMultiplier: 1.75,
         tractionMultiplier: 1.1,
     },
     zancudo_swamp: {
@@ -151,8 +159,8 @@ export const VehicleSurfaceData = {
     9: {
         name: 'Sandstone',
         traction: 80,
-        depth: 0,
-        softness: 0,
+        depth: 50,
+        softness: 10,
     },
     10: {
         name: 'Rock',
@@ -385,7 +393,7 @@ export const UnknowVehWheelType = {
     tractionOnSoft: 0,
     tractionOnHard: 0,
     sinkageSpeed: 1,
-    driftThreshold: 1.3,
+    driftThreshold: 0.65,
 };
 
 // upgradeRating: Effect of the wheel ability to get out of mood. 0 neutral - Negative more difficult - Positive easier
@@ -399,56 +407,56 @@ export const VehWheelTypeData = {
         tractionOnSoft: 0,
         tractionOnHard: 0,
         sinkageSpeed: 1,
-        driftThreshold: 1.3,
+        driftThreshold: 0.65,
     },
     0: {
         rating: -20,
         tractionOnSoft: -15,
         tractionOnHard: 0,
         sinkageSpeed: 1.25,
-        driftThreshold: 1.1,
+        driftThreshold: 0.55,
     },
     1: {
         rating: 25,
         tractionOnSoft: 10,
         tractionOnHard: 0,
         sinkageSpeed: 0.9,
-        driftThreshold: 1.4,
+        driftThreshold: 0.7,
     },
     2: {
         rating: 0,
         tractionOnSoft: 0,
         tractionOnHard: 0,
         sinkageSpeed: 1,
-        driftThreshold: 1.3,
+        driftThreshold: 0.65,
     },
     3: {
         rating: 25,
         tractionOnSoft: 10,
         tractionOnHard: 0,
         sinkageSpeed: 0.9,
-        driftThreshold: 1.4,
+        driftThreshold: 0.7,
     },
     4: {
         rating: 50,
         tractionOnSoft: 20,
         tractionOnHard: -10,
         sinkageSpeed: 0.7,
-        driftThreshold: 1.7,
+        driftThreshold: 0.85,
     },
     5: {
         rating: -20,
         tractionOnSoft: -15,
         tractionOnHard: 0,
         sinkageSpeed: 1.25,
-        driftThreshold: 1.1,
+        driftThreshold: 0.55,
     },
     6: {
         rating: 0,
         tractionOnSoft: 0,
         tractionOnHard: 0,
         sinkageSpeed: 1,
-        driftThreshold: 1.3,
+        driftThreshold: 0.65,
     },
     7: {
         rating: -20,
@@ -462,35 +470,35 @@ export const VehWheelTypeData = {
         tractionOnSoft: 0,
         tractionOnHard: 0,
         sinkageSpeed: 1,
-        driftThreshold: 1.3,
+        driftThreshold: 0.65,
     },
     9: {
         rating: 0,
         tractionOnSoft: 0,
         tractionOnHard: 0,
         sinkageSpeed: 1,
-        driftThreshold: 1.3,
+        driftThreshold: 0.65,
     },
     10: {
         rating: 0,
         tractionOnSoft: 0,
         tractionOnHard: 0,
         sinkageSpeed: 1,
-        driftThreshold: 1.3,
+        driftThreshold: 0.65,
     },
     11: {
         rating: 0,
         tractionOnSoft: 0,
         tractionOnHard: 0,
         sinkageSpeed: 1,
-        driftThreshold: 1.3,
+        driftThreshold: 0.65,
     },
     12: {
         rating: 0,
         tractionOnSoft: 0,
         tractionOnHard: 0,
         sinkageSpeed: 1,
-        driftThreshold: 1.3,
+        driftThreshold: 0.65,
     },
 };
 
@@ -523,320 +531,258 @@ export const UnknownVehData = {
 };
 
 // rating: Effect of the wheel ability to get out of mood. 0 neutral - Negative more difficult - Positive easier
-// tractionSpeedLostOnSoft: Affect the max speed of the vehicle on soft surface. 100 neutral - <100 lower max speed - >100 do nothing
-// tractionSpeedLostOnHard: Affect the max speed of the vehicle on hard surface. 100 neutral - <100 lower max speed - >100 do nothing
+// tractionSpeedLostOnSoft: Affect the max speed of the vehicle on soft surface
 export const VehData = {
     models: {
         seminole2: {
             rating: 20,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         sandking: {
             rating: 20,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         sandking2: {
             rating: 20,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         issi2: {
             rating: -10,
-            tractionSpeedLostOnSoft: 95,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: true,
         },
         panto: {
             rating: -20,
-            tractionSpeedLostOnSoft: 85,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: true,
         },
         comet4: {
             rating: 30,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
 
         // Bicycle
         bmx: {
             rating: 50,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         inductor: {
             rating: 80,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         scorcher: {
             rating: 80,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
 
         // dirt bikes
         avarus: {
             rating: 40,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         bcso30: {
             rating: 70,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         bf400: {
             rating: 70,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         blazer: {
             rating: 65,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         blazer2: {
             rating: 65,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         blazer3: {
             rating: 50,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         blazer4: {
             rating: 40,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         blazer5: {
             rating: 40,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         cliffhanger: {
             rating: 60,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         deamon: {
             rating: 50,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         deamon2: {
             rating: 50,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         enduro: {
             rating: 60,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         esskey: {
             rating: 60,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         gargoyle: {
             rating: 70,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         hexer: {
             rating: 50,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         innovation: {
             rating: 50,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         manchez: {
             rating: 60,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         manchez3: {
             rating: 60,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         manchez2: {
             rating: 60,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         nemesis: {
             rating: 40,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         nightblade: {
             rating: 40,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         pcj: {
             rating: 40,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         powersurge: {
             rating: 40,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         ratbike: {
             rating: 50,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         rrocket: {
             rating: 60,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         sanchez: {
             rating: 60,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         sanchez2: {
             rating: 60,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         sanctus: {
             rating: 60,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         sovereign: {
             rating: 60,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         stryder: {
             rating: 60,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         vader: {
             rating: 70,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         verus: {
             rating: 70,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         wolfsbane: {
             rating: 50,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         zombiea: {
             rating: 50,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
         zombie2: {
             rating: 50,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         },
     },
     classes: {
         0: {
             rating: 5,
-            tractionSpeedLostOnSoft: 95,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: true,
         }, // Compacts
         1: {
             rating: -5,
-            tractionSpeedLostOnSoft: 90,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: true,
         }, // Sedans
         2: {
             rating: 15,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         }, // SUVs
         3: {
             rating: 0,
-            tractionSpeedLostOnSoft: 90,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: true,
         }, // Coupes
         4: {
             rating: -5,
-            tractionSpeedLostOnSoft: 90,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: true,
         }, // Muscle
         5: {
             rating: 5,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         }, // Sports Classics
         6: {
             rating: 5,
-            tractionSpeedLostOnSoft: 75,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: true,
         }, // Sports
         7: {
             rating: 5,
-            tractionSpeedLostOnSoft: 75,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: true,
         }, // Super
         8: {
             rating: -10,
-            tractionSpeedLostOnSoft: 85,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: true,
         }, // Motorcycles
         9: {
             rating: 35,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         }, // Off-road
         10: {
             rating: -10,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         }, // Industrial
         11: {
             rating: -10,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         }, // Utility
         12: {
             rating: -5,
-            tractionSpeedLostOnSoft: 90,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: true,
         }, // Vans
         17: {
             rating: 10,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         }, // Service
         18: {
             rating: 10,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         }, // Emergency
         19: {
             rating: 15,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         }, // Military
         20: {
             rating: -5,
-            tractionSpeedLostOnSoft: 100,
-            tractionSpeedLostOnHard: 100,
+            tractionSpeedLostOnSoft: false,
         }, // Commercial
     },
 };

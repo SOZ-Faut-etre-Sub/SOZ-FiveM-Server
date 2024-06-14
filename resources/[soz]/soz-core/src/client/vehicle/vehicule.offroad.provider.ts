@@ -1,4 +1,3 @@
-import { VehicleLockProvider } from '@public/client/vehicle/vehicle.lock.provider';
 import { wait } from '@public/core/utils';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 
@@ -9,11 +8,14 @@ import { Tick, TickInterval } from '../../core/decorators/tick';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import {
     AwdRatingBonus,
+    DepthConversion,
     GeneralControleDifficulty,
     GeneralSinkageSpeed,
     GeneralTractionLoss,
-    GeneralTractionSpeedLoss,
-    RefreshCalcTractionWithUpgrade,
+    MaxPossibleDepth,
+    MaxSpeedForSpeedFactor,
+    MinSpeedForSpeedFactor,
+    RefreshCalcTractionEffect,
     RefreshHandleLossVehControl,
     RefreshProcessSurfaceCalculation,
     ResetVehicleTireColiderSideStep,
@@ -41,7 +43,6 @@ import { VehicleStateService } from './vehicle.state.service';
 export class VehicleOffroadProvider {
     public displayDebugSurface = false;
     private controlLossTimeDebug = 0;
-    private debugMaxSpeed = 0;
 
     private allWheels = [
         { boneName: 'wheel_lf', wheelIdx: 0 },
@@ -67,10 +68,11 @@ export class VehicleOffroadProvider {
     private filteredWheelData = {};
 
     private noSurfaceCalc = false;
-    private isEnteringVehicleOrChangingSeat = false;
+    private freezeSurfaceCalculation = false;
 
     private sinkDepth: Record<number, Array<number>> = {};
     private wheelDepth: Record<number, Array<number>> = {};
+    private wheelSurfaceIdx: number[] = [];
 
     private averageDepth = 0;
     private averageTraction = 100;
@@ -92,9 +94,6 @@ export class VehicleOffroadProvider {
 
     @Inject(VehicleStateService)
     private vehicleStateService: VehicleStateService;
-
-    @Inject(VehicleLockProvider)
-    private vehicleLockProvider: VehicleLockProvider;
 
     @OnNuiEvent(NuiEvent.AdminToggleNoSurfaceCalc)
     public async setNoSurfaceCalc(value: boolean): Promise<void> {
@@ -132,7 +131,7 @@ export class VehicleOffroadProvider {
 
     @Tick(RefreshProcessSurfaceCalculation)
     public async processSurfaceCalculationTick() {
-        if (this.isEnteringVehicleOrChangingSeat) {
+        if (this.freezeSurfaceCalculation) {
             await wait(1000);
             return;
         }
@@ -149,7 +148,9 @@ export class VehicleOffroadProvider {
             return;
         }
 
+        this.freezeSurfaceCalculation = true;
         await this.processSurfaceCalculation(playerVeh);
+        this.freezeSurfaceCalculation = false;
     }
 
     public async processSurfaceCalculation(playerVeh: number) {
@@ -189,10 +190,8 @@ export class VehicleOffroadProvider {
 
         const rainLevel = GetRainLevel();
         const vehMass = GetVehicleHandlingFloat(playerVeh, 'CHandlingData', 'fMass');
-        const vehSpeed = GetEntitySpeed(playerVeh);
+        const vehSpeed = Math.abs(GetEntitySpeed(playerVeh));
         const wheelType = GetVehicleWheelType(playerVeh);
-
-        let anyChanges = false;
 
         let averageDepth = 0;
         let averageWheelSizes = 0;
@@ -201,7 +200,8 @@ export class VehicleOffroadProvider {
 
         const wheelCount = GetVehicleNumberOfWheels(playerVeh);
         for (let wheelIdx = 0; wheelIdx < wheelCount; wheelIdx++) {
-            const [, surfaceData] = this.getVehicleWheelSurfaceIdAndData(playerVeh, wheelIdx);
+            const [surfaceId, surfaceData] = this.getVehicleWheelSurfaceIdAndData(playerVeh, wheelIdx);
+            this.wheelSurfaceIdx[wheelIdx] = surfaceId;
 
             const vehRealWheelSize = await this.getRealVehicleWheelTireColliderSize(playerVeh, wheelIdx);
 
@@ -213,7 +213,7 @@ export class VehicleOffroadProvider {
                 continue;
             }
 
-            let realDepth = surfaceData.depth * 0.001;
+            let realDepth = surfaceData.depth * DepthConversion;
 
             if (this.isZoneBlacklisted()) {
                 realDepth = 0;
@@ -233,17 +233,23 @@ export class VehicleOffroadProvider {
                 this.sinkDepth[playerVeh][wheelIdx] || Entity(playerVeh).state[`${sinkDepthStateKey}${wheelIdx}`] || 0;
             this.sinkDepth[playerVeh][wheelIdx] ??= 0;
 
+            const wheelSpeed = Math.abs(GetVehicleWheelSpeed(playerVeh, wheelIdx));
             const sinkageSpeed = this.calcSinkageSpeed(
                 playerVeh,
                 wheelIdx,
                 rainLevel,
                 vehMass,
                 vehSpeed,
+                wheelSpeed,
                 wheelType,
                 surfaceData
             );
 
-            if (realDepth > currentSinkDepth || sinkageSpeed < 0) {
+            if (
+                (wheelSpeed < MinSpeedForSpeedFactor && currentSinkDepth <= realDepth / 2) ||
+                (wheelSpeed >= MinSpeedForSpeedFactor && realDepth > currentSinkDepth) ||
+                sinkageSpeed < 0
+            ) {
                 currentSinkDepth = Math.max(0, currentSinkDepth + realDepth * sinkageSpeed);
             }
 
@@ -270,17 +276,13 @@ export class VehicleOffroadProvider {
             this.wheelDepth[playerVeh][wheelIdx] ??= 0;
 
             if (Math.abs(this.wheelDepth[playerVeh][wheelIdx] - realWheelDepth) > 0.001) {
-                anyChanges = true;
-
                 Entity(playerVeh).state.set(`${WheelColliderSizeStateKey}${wheelIdx}`, realWheelDepth, true);
             }
 
             this.wheelDepth[playerVeh][wheelIdx] = realWheelDepth;
         }
 
-        if (anyChanges) {
-            await this.handleVehicleDepth(playerVeh, true);
-        }
+        await this.handleVehicleDepth(playerVeh, true);
 
         if (wheelCount !== 0) {
             averageDepth /= wheelCount;
@@ -292,6 +294,7 @@ export class VehicleOffroadProvider {
         this.averageWheelsize = averageWheelSizes;
         this.averageTraction = averageTraction;
         this.averageSoftness = averageSoftness;
+        await this.calcTractionWithUpgrade(playerVeh);
 
         if (shouldAddSleepTime) {
             await wait(RefreshProcessSurfaceCalculation);
@@ -339,11 +342,6 @@ export class VehicleOffroadProvider {
         }
 
         this.controlLossTimeDebug = controlLossTime;
-
-        if (Math.abs(GetVehicleThrottleOffset(playerVeh)) > 0.1) {
-            SetVehicleDirtLevel(playerVeh, GetVehicleDirtLevel(playerVeh) + 0.1);
-        }
-
         if (GetVehicleClass(playerVeh) == 8) {
             SetVehicleHandbrake(playerVeh, true);
             await wait(Math.min(200, controlLossTime));
@@ -355,28 +353,6 @@ export class VehicleOffroadProvider {
             if (controlLossTime > 250) {
                 SetVehicleBurnout(playerVeh, true);
             }
-        }
-    }
-
-    @Tick(RefreshCalcTractionWithUpgrade)
-    public async calcTractionWithUpgradeTick() {
-        const [playerPed, playerVeh] = this.getPlayerPedAndPlayerVeh();
-
-        if (!playerPed || !playerVeh || this.featureDisableForAdmin()) {
-            await wait(1000);
-            return;
-        }
-
-        if (this.isVehBlacklisted(playerVeh) || this.isZoneBlacklisted()) {
-            await wait(500);
-            return;
-        }
-
-        await this.calcTractionWithUpgrade(playerVeh);
-
-        if (this.tractionWithUpgrade > 95) {
-            await wait(500);
-            return;
         }
     }
 
@@ -399,113 +375,86 @@ export class VehicleOffroadProvider {
         this.tractionWithUpgrade = vehTraction;
     }
 
-    @Tick(RefreshCalcTractionWithUpgrade)
+    @Tick(RefreshCalcTractionEffect)
     public async handleTractionVehLossTick() {
         const [playerPed, playerVeh] = this.getPlayerPedAndPlayerVeh();
 
-        if (!playerPed || !playerVeh) {
-            await wait(1000);
-            return;
-        }
-
-        if (this.getNoSurfaceCalc() || this.tractionWithUpgrade > 95) {
+        if (!playerPed || !playerVeh || this.getNoSurfaceCalc() || this.tractionWithUpgrade >= 100) {
             await wait(500);
             return;
         }
 
-        const wheelData = this.getWheelData(GetVehicleWheelType(playerVeh));
-        if (
-            this.getVehicleDrift(playerVeh) > wheelData.driftThreshold &&
-            (Math.abs(GetVehicleThrottleOffset(playerVeh)) > 0.1 || GetEntitySpeed(playerVeh) > 5.0) &&
-            Math.abs(GetVehicleSteeringAngle(playerVeh)) > 0.2
-        ) {
-            if (this.tractionWithUpgrade > 80) {
-                await wait(100);
-            }
+        if (this.averageSoftness > 0 && this.isVehDrifting(playerVeh)) {
+            const softnessMulitplier = this.averageSoftness / 25;
             SetVehicleReduceTraction(playerVeh, 1);
             SetVehicleReduceGrip(playerVeh, true);
-            await wait(200 - this.averageTraction * GeneralTractionLoss);
+            await wait(Math.min(175, 100 * softnessMulitplier * GeneralTractionLoss));
             SetVehicleReduceTraction(playerVeh, 0);
             SetVehicleReduceGrip(playerVeh, false);
-        } else {
-            await wait(500);
-        }
-    }
 
-    @Tick(RefreshCalcTractionWithUpgrade)
-    public async handleTractionVehMaxTick() {
-        const [playerPed, playerVeh] = this.getPlayerPedAndPlayerVeh();
-
-        if (!playerPed || !playerVeh) {
-            await wait(1000);
-            return;
-        }
-
-        await this.handleTractionVehMax(playerVeh);
-    }
-
-    public async handleTractionVehMax(playerVeh: number) {
-        if (this.getNoSurfaceCalc()) {
-            await wait(500);
-            return;
-        }
-
-        if (this.tractionWithUpgrade > 95) {
-            this.debugMaxSpeed = 0;
-            await this.tryUpdateSpeedLimit(playerVeh, 0);
-            await wait(500);
-            return;
-        }
-
-        const vehData = this.getVehData(playerVeh);
-        const tractionSpeedLoss = this.isSurfaceSoft(this.averageSoftness)
-            ? vehData.tractionSpeedLostOnSoft
-            : vehData.tractionSpeedLostOnHard;
-        if (tractionSpeedLoss < 100) {
-            const maxSpeed =
-                Math.pow(
-                    GetVehicleHandlingFloat(playerVeh, 'CHandlingData', 'fInitialDriveMaxFlatVel'),
-                    Math.min(Math.max(25, this.tractionWithUpgrade) / GeneralTractionSpeedLoss, 100) / 100
-                ) *
-                (tractionSpeedLoss / 100);
-            this.debugMaxSpeed = maxSpeed;
-            if (maxSpeed > 0 && GetEntitySpeed(playerVeh) >= maxSpeed) {
-                SetVehicleHandbrake(playerVeh, true);
-
-                while (GetEntitySpeed(playerVeh) >= maxSpeed) {
-                    await wait(10);
-                }
-
-                SetVehicleHandbrake(playerVeh, false);
+            if (this.tractionWithUpgrade >= 85) {
+                await wait(100);
             }
-            await this.tryUpdateSpeedLimit(playerVeh, maxSpeed);
         } else {
-            this.debugMaxSpeed = 0;
-            await this.tryUpdateSpeedLimit(playerVeh, 0);
             await wait(500);
         }
+    }
+
+    private isVehDrifting(playerVeh: number) {
+        const wheelData = this.getWheelData(GetVehicleWheelType(playerVeh));
+        return (
+            this.getVehicleDriftAverage(playerVeh) > wheelData.driftThreshold &&
+            (Math.abs(GetVehicleThrottleOffset(playerVeh)) > 0.1 ||
+                GetEntitySpeed(playerVeh) > MinSpeedForSpeedFactor) &&
+            Math.abs(GetVehicleSteeringAngle(playerVeh)) > 0.2
+        );
     }
 
     @OnEvent(ClientEvent.BASE_ENTERED_VEHICLE)
     @OnEvent(ClientEvent.BASE_CHANGE_VEHICLE_SEAT)
     async applyCurrentPhysicsIfPlayerEnteringMainSeat(playerVeh: number, playerSeat: VehicleSeat) {
         if (playerVeh && VehicleSeat.Driver === playerSeat) {
-            this.isEnteringVehicleOrChangingSeat = true;
+            this.freezeSurfaceCalculation = true;
             await wait(1);
 
             this.sinkDepth[playerVeh] = [];
             await this.calculateVehEffect(playerVeh);
-            this.isEnteringVehicleOrChangingSeat = false;
+            this.freezeSurfaceCalculation = false;
+        }
+    }
+
+    @Tick()
+    async applyCurrentPhysicsOnSurfaceChange() {
+        if (this.freezeSurfaceCalculation) {
+            return;
+        }
+
+        const [playerPed, playerVeh] = this.getPlayerPedAndPlayerVeh();
+        if (!playerPed || !playerVeh || this.getNoSurfaceCalc()) {
+            await wait(500);
+            return;
+        }
+
+        let needToCalcSurfaceEffet = false;
+        const wheelCount = GetVehicleNumberOfWheels(playerVeh);
+        for (let wheelIdx = 0; wheelIdx < wheelCount; wheelIdx++) {
+            const [surfaceId] = this.getVehicleWheelSurfaceIdAndData(playerVeh, wheelIdx);
+            if (this.wheelSurfaceIdx[wheelIdx] != surfaceId) {
+                needToCalcSurfaceEffet = true;
+                break;
+            }
+        }
+
+        if (needToCalcSurfaceEffet) {
+            this.freezeSurfaceCalculation = true;
+            await this.calculateVehEffect(playerVeh);
+            this.freezeSurfaceCalculation = false;
         }
     }
 
     async calculateVehEffect(playerVeh: number) {
         await this.processSurfaceCalculation(playerVeh);
-        await this.calcTractionWithUpgrade(playerVeh);
-
         await this.handleLossVehControl(playerVeh);
-        // No need to call handleTractionVehLoss there, has it has no real effect on a stopped car
-        await this.handleTractionVehMax(playerVeh);
     }
 
     @Tick(TickInterval.EVERY_FRAME)
@@ -553,8 +502,8 @@ export class VehicleOffroadProvider {
                         playerVeh
                     )}\n~r~Wheel: ${await this.getRealVehicleWheelTireColliderSize(
                         playerVeh,
-                        1
-                    )}\n~r~Colider: ${GetVehicleWheelTireColliderSize(playerVeh, 1)}`
+                        wheelData.wheelIdx
+                    )}\n~r~Colider: ${GetVehicleWheelTireColliderSize(playerVeh, wheelData.wheelIdx)}`
                 );
             } else {
                 this.draw.drawText3d(
@@ -579,7 +528,7 @@ export class VehicleOffroadProvider {
         );
         this.draw.drawText3d(
             [playerVehCoords[0], playerVehCoords[1], playerVehCoords[2] + 1.6],
-            `~w~controlLossTimeDebug: ${this.controlLossTimeDebug}\n~w~TractionWithUpgrade: ${this.tractionWithUpgrade}\n~w~debugMaxSpeed: ${this.debugMaxSpeed}`
+            `~w~controlLossTimeDebug: ${this.controlLossTimeDebug}\n~w~TractionWithUpgrade: ${this.tractionWithUpgrade}`
         );
     }
 
@@ -686,7 +635,7 @@ export class VehicleOffroadProvider {
         }
     }
 
-    private getFilteredWheelData(playerVeh: number) {
+    private getFilteredWheelData(playerVeh: number): { boneName: string; wheelIdx: number; tireIdx: number }[] {
         if (!this.filteredWheelData[playerVeh]) {
             this.filteredWheelData[playerVeh] ??= [];
 
@@ -754,7 +703,9 @@ export class VehicleOffroadProvider {
         return [surfaceId, surfaceData];
     }
 
-    private getZoneNameAndData(playerVehCoords: number[]) {
+    private getZoneNameAndData(
+        playerVehCoords: number[]
+    ): [string, { name: string; depthMultiplier: number; tractionMultiplier: number }] {
         const vehZoneName = GetNameOfZone(playerVehCoords[0], playerVehCoords[1], playerVehCoords[2]);
         const zoneData = VehicleZoneModifier?.[VehicleZoneDefinition[vehZoneName]];
 
@@ -767,16 +718,16 @@ export class VehicleOffroadProvider {
         rainLevel: number,
         vehMass: number,
         vehSpeed: number,
+        wheelSpeed: number,
         wheelType: number,
         surfaceData: any
     ) {
-        let sinkageSpeed = 0.003 * (rainLevel * 2 + 1) * (1 + surfaceData.softness / 25);
-        const realWheelSpeed = GetVehicleWheelSpeed(playerVeh, wheelIdx) - vehSpeed;
-        sinkageSpeed *= Math.max(1, realWheelSpeed) * (Math.max(600, Math.min(2200, vehMass)) / 2000);
+        let sinkageSpeed = 0.003 * Math.min(rainLevel * 2 + 1, 2) * (1 + surfaceData.softness / 50);
+        sinkageSpeed *= Math.min(Math.max(1, wheelSpeed - vehSpeed), 3);
+        sinkageSpeed *= Math.max(600, Math.min(2200, vehMass)) / 2000;
 
-        if (realWheelSpeed < 1 && vehSpeed > 4) {
-            sinkageSpeed -= 0.01 * (vehSpeed / 2);
-        }
+        sinkageSpeed *= this.getSinkageSpeedVehSpeedFactor(wheelSpeed);
+        sinkageSpeed *= this.getSinkageSpeedCurrentDepthFactor(playerVeh, wheelIdx, surfaceData);
 
         sinkageSpeed *= RefreshProcessSurfaceCalculation / 200;
 
@@ -788,6 +739,23 @@ export class VehicleOffroadProvider {
         }
 
         return sinkageSpeed;
+    }
+
+    getSinkageSpeedVehSpeedFactor(vehSpeed: number) {
+        const speedRatio = Math.max((vehSpeed - MinSpeedForSpeedFactor) / MaxSpeedForSpeedFactor, 0.01);
+        return 4.5 * (1 - Math.exp(-2 * speedRatio));
+    }
+
+    getSinkageSpeedCurrentDepthFactor(playerVeh: number, wheelIdx: number, surfaceData: any) {
+        const currenWheelDepth = this.sinkDepth[playerVeh][wheelIdx];
+        const surfaceDiff = surfaceData.depth * DepthConversion - currenWheelDepth;
+
+        let currentDepthRatio = surfaceDiff / (MaxPossibleDepth * DepthConversion);
+        if (surfaceDiff > 0) {
+            currentDepthRatio = Math.max(currentDepthRatio, 0.3);
+        }
+
+        return 1.5 * (1 - Math.exp(-2 * currentDepthRatio));
     }
 
     private getVehicleUpgradesRating(playerVeh: number) {
@@ -815,11 +783,27 @@ export class VehicleOffroadProvider {
         return Math.max(0, GetVehicleNumberOfWheels(playerVeh) - 4) * 9;
     }
 
-    private getVehicleDrift(playerVeh: number) {
-        return (
-            Math.abs(GetVehicleWheelTractionVectorLength(playerVeh, 3)) +
-            Math.abs(GetVehicleWheelTractionVectorLength(playerVeh, 2))
-        );
+    private getVehicleDriftAverage(playerVeh: number) {
+        let wheelData = this.getFilteredWheelData(playerVeh);
+        if (this.isVehPropulsion(playerVeh)) {
+            wheelData = [...wheelData].reverse();
+        }
+
+        const wheelCount = GetVehicleNumberOfWheels(playerVeh);
+        let count = 0;
+        let drift = 0;
+
+        const fromWheel = this.isVehAwd(playerVeh) ? 0 : Math.floor(wheelCount / 2);
+        for (const wheel of wheelData.slice(fromWheel, wheelCount)) {
+            drift += Math.abs(GetVehicleWheelTractionVectorLength(playerVeh, wheel.wheelIdx));
+            count++;
+        }
+
+        if (count > 0) {
+            return drift / count;
+        } else {
+            return 0;
+        }
     }
 
     private massRating(playerVeh: number) {
@@ -858,7 +842,11 @@ export class VehicleOffroadProvider {
 
     private isVehAwd(playerVeh: number) {
         const fDriveBiasFront = GetVehicleHandlingFloat(playerVeh, 'CHandlingData', 'fDriveBiasFront');
-        return fDriveBiasFront > 0.3 && fDriveBiasFront < 0.7;
+        return fDriveBiasFront > 0.15 && fDriveBiasFront < 0.85;
+    }
+
+    private isVehPropulsion(playerVeh: number) {
+        return GetVehicleHandlingFloat(playerVeh, 'CHandlingData', 'fDriveBiasFront') >= 0.85;
     }
 
     private isVehBlacklisted(playerVeh: number) {
@@ -918,7 +906,6 @@ export class VehicleOffroadProvider {
         await this.handleVehicleDepth(playerVeh, playerVeh == currentPlayerVeh);
 
         SetVehicleBurnout(playerVeh, false);
-        await this.tryUpdateSpeedLimit(playerVeh, 0);
     }
 
     private resetCurrentAndDebugValue() {
@@ -927,8 +914,8 @@ export class VehicleOffroadProvider {
         this.tractionWithUpgrade = 100;
         this.averageWheelsize = 0;
         this.averageSoftness = 0;
+        this.wheelSurfaceIdx = [];
 
-        this.debugMaxSpeed = 0;
         this.controlLossTimeDebug = 0;
     }
 
@@ -974,18 +961,5 @@ export class VehicleOffroadProvider {
 
     private featureDisableForAdmin() {
         return this.getNoSurfaceCalc() || this.noClipProvider.IsNoClipMode();
-    }
-
-    private async tryUpdateSpeedLimit(playerVeh: number, speedLimitToSet: number) {
-        const state = await this.vehicleStateService.getVehicleState(playerVeh);
-
-        const speedLimiterLimit = state.speedLimit ? state.speedLimit / 3.6 - 0.25 : 0;
-        if (speedLimitToSet === 0) {
-            speedLimitToSet = speedLimiterLimit || 0;
-        } else if (speedLimiterLimit && speedLimiterLimit > 0) {
-            speedLimitToSet = Math.min(speedLimiterLimit, speedLimitToSet);
-        }
-
-        SetVehicleMaxSpeed(playerVeh, speedLimitToSet);
     }
 }
