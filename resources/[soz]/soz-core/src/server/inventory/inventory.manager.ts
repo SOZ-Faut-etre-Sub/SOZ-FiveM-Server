@@ -398,10 +398,6 @@ export class InventoryManager {
         };
     }
 
-    public errorMessage(reason: string) {
-        this.sozInventory.ErrorMessage(reason);
-    }
-
     public clearInv(id: string) {
         this.sozInventory.Clear(id);
     }
