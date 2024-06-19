@@ -1,4 +1,3 @@
-import { DnDCallback } from '@public/client/inventory/inventory.draganddrop.provider';
 import { JobType } from '@public/shared/job';
 
 import { Vfx } from './animation';
@@ -31,7 +30,6 @@ export type WorldObject = {
     metadata?: WorldObjectMetadata;
     vfx?: Vfx;
     growth?: WorldObjectGrowth;
-    dragAndDrop?: DnDCallback[];
     highlight?: boolean;
     inventoryId?: string;
     permanent?: boolean;

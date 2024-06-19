@@ -17,17 +17,19 @@ import { RpcClientEvent, RpcServerEvent } from '@public/shared/rpc';
 
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { WorldObject } from '../../shared/object';
-import { InventoryDragAndDropProvider } from '../inventory/inventory.draganddrop.provider';
+import { DnDCallback, InventoryDragAndDropProvider } from '../inventory/inventory.draganddrop.provider';
 
 type SpawnedObject = {
     entity: number;
     object: WorldObject;
     targets: TargetOptions[];
+    dragAndDropCallbacks: DnDCallback[];
 };
 
 type SpawnableObject = {
     object: WorldObject;
     targets: TargetOptions[];
+    dragAndDropCallbacks: DnDCallback[];
 };
 
 @Provider()
@@ -130,17 +132,26 @@ export class ObjectProvider {
     }
 
     @OnEvent(ClientEvent.OBJECT_CREATE)
-    public async createObjects(objects: WorldObject[], targets: TargetOptions[] = []) {
+    public async createObjects(
+        objects: WorldObject[],
+        targets: TargetOptions[] = [],
+        dragAndDropCallbacks: DnDCallback[] = []
+    ) {
         for (const object of objects) {
-            await this.createObject(object, targets);
+            await this.createObject(object, targets, dragAndDropCallbacks);
         }
     }
 
     @Exportable('CreateObject')
-    public async createObject(object: WorldObject, targets: TargetOptions[] = []): Promise<string> {
+    public async createObject(
+        object: WorldObject,
+        targets: TargetOptions[] = [],
+        dragAndDropCallbacks: DnDCallback[] = []
+    ): Promise<string> {
         const spawnableObject = {
             object,
             targets,
+            dragAndDropCallbacks,
         };
 
         if (object.permanent) {
@@ -260,6 +271,7 @@ export class ObjectProvider {
             entity,
             object: spawnableObject.object,
             targets: spawnableObject.targets,
+            dragAndDropCallbacks: spawnableObject.dragAndDropCallbacks,
         };
 
         const targets = spawnableObject.targets || [];
@@ -280,8 +292,8 @@ export class ObjectProvider {
             this.targetFactory.createForEntity(entity, targets);
         }
 
-        if (spawnableObject.object.dragAndDrop) {
-            this.inventoryDragAndDropProvider.registerEntity(entity, spawnableObject.object.dragAndDrop);
+        if (spawnableObject.dragAndDropCallbacks) {
+            this.inventoryDragAndDropProvider.registerEntity(entity, spawnableObject.dragAndDropCallbacks);
         }
 
         await wait(0);
@@ -301,8 +313,8 @@ export class ObjectProvider {
             );
         }
 
-        if (spawnedObject.object.dragAndDrop) {
-            this.inventoryDragAndDropProvider.unregisterEntity(object.entity);
+        if (spawnedObject.dragAndDropCallbacks) {
+            this.inventoryDragAndDropProvider.unregisterEntity(spawnedObject.entity);
         }
 
         if (!this.objectService.deleteObject(spawnedObject.entity, spawnedObject.object)) {
@@ -386,6 +398,7 @@ export class ObjectProvider {
                 this.spawnObject({
                     object: spawnedObject.object,
                     targets: spawnedObject.targets,
+                    dragAndDropCallbacks: spawnedObject.dragAndDropCallbacks,
                 });
             }
         }
