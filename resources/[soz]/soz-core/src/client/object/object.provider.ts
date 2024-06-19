@@ -70,12 +70,12 @@ export class ObjectProvider {
     }
 
     public getObjects(filter?: (object: WorldObject) => boolean): WorldObject[] {
-        const objects = [];
+        const objects: WorldObject[] = [];
 
         for (const chunk of this.objectsByChunk.values()) {
             for (const object of chunk) {
                 if (!filter || filter(object.object)) {
-                    objects.push(object);
+                    objects.push(object.object);
                 }
             }
         }
