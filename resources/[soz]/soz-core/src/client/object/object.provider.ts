@@ -274,7 +274,7 @@ export class ObjectProvider {
             dragAndDropCallbacks: spawnableObject.dragAndDropCallbacks,
         };
 
-        const targets = spawnableObject.targets || [];
+        const targets = [...spawnableObject.targets];
 
         if (spawnableObject.object.inventoryId) {
             targets.push({
@@ -288,7 +288,6 @@ export class ObjectProvider {
         }
 
         if (targets.length > 0) {
-            console.log('Creating targets for entity', entity, JSON.stringify(targets.map(target => target.label)));
             this.targetFactory.createForEntity(entity, targets);
         }
 
@@ -319,6 +318,17 @@ export class ObjectProvider {
 
         if (!this.objectService.deleteObject(spawnedObject.entity, spawnedObject.object)) {
             return;
+        }
+
+        if (spawnedObject.targets) {
+            this.targetFactory.removeForEntity(
+                [spawnedObject.entity],
+                spawnedObject.targets.map(target => target.label)
+            );
+        }
+
+        if (spawnedObject.object.inventoryId) {
+            this.targetFactory.removeForEntity([spawnedObject.entity], ['Ouvrir']);
         }
 
         delete this.loadedObjects[id];

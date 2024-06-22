@@ -12,6 +12,7 @@ import { getRandomInt, getRandomItem } from '../../shared/random';
 import { RpcServerEvent } from '../../shared/rpc';
 import { EventInfo, Scene, WorldEvent } from '../../shared/scene';
 import { InventoryManager } from '../inventory/inventory.manager';
+import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
 import { SceneRepository } from '../repository/scene.repository';
 import { WorldEventRepository } from '../repository/world.event.repository';
@@ -40,6 +41,9 @@ export class WorldEventProvider {
 
     @Inject(Notifier)
     private readonly notifier: Notifier;
+
+    @Inject(ItemService)
+    private readonly itemService: ItemService;
 
     private currentEvent: CurrentEvent = null;
 
@@ -175,8 +179,19 @@ export class WorldEventProvider {
                 }
 
                 const amount = getRandomInt(reward.min, reward.max);
+                const item = this.itemService.getItem(reward.item);
 
-                this.inventoryManager.addItemToInventory(inventoryId, reward.item, amount);
+                if (!item) {
+                    continue;
+                }
+
+                if (item.unique) {
+                    for (let i = 0; i < amount; i++) {
+                        this.inventoryManager.addItemToInventory(inventoryId, reward.item, 1);
+                    }
+                } else {
+                    this.inventoryManager.addItemToInventory(inventoryId, reward.item, amount);
+                }
             }
         }
 

@@ -111,6 +111,7 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
                             }}
                             description="Permet de définir un effet sur l'objet."
                             title="Définir un effet"
+                            value={data.effect}
                         >
                             <MenuItemSelectOption value={null}>Aucun</MenuItemSelectOption>
                             {Object.keys(ObjectEffects).map(key => {

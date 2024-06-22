@@ -20,9 +20,10 @@ import {
 export type SubMenuSceneProps = {
     scene: Scene;
     context: ObjectEditorContext;
+    allowLoad?: boolean;
 };
 
-export const SubMenuScene: FunctionComponent<SubMenuSceneProps> = ({ scene, context }) => {
+export const SubMenuScene: FunctionComponent<SubMenuSceneProps> = ({ scene, context, allowLoad = false }) => {
     const subMenuId = `scene-${scene.id}`;
     const inSubMenu = useIsInSubMenu(subMenuId);
     const player = usePlayer();
@@ -70,26 +71,30 @@ export const SubMenuScene: FunctionComponent<SubMenuSceneProps> = ({ scene, cont
                     >
                         ➕ Ajouter une entité
                     </MenuItemButton>
-                    <MenuItemButton
-                        onConfirm={async () => {
-                            await fetchNui(NuiEvent.SceneLoad, {
-                                sceneId: scene.id,
-                            });
-                        }}
-                        onSelected={() => fetchNui(NuiEvent.SceneSetEntityHighlighted, { objectId: null })}
-                    >
-                        ⚡ Charger la collection
-                    </MenuItemButton>
-                    <MenuItemButton
-                        onConfirm={async () => {
-                            await fetchNui(NuiEvent.SceneUnload, {
-                                sceneId: scene.id,
-                            });
-                        }}
-                        onSelected={() => fetchNui(NuiEvent.SceneSetEntityHighlighted, { objectId: null })}
-                    >
-                        🌬️ Décharger la collection
-                    </MenuItemButton>
+                    {allowLoad && (
+                        <>
+                            <MenuItemButton
+                                onConfirm={async () => {
+                                    await fetchNui(NuiEvent.SceneLoad, {
+                                        sceneId: scene.id,
+                                    });
+                                }}
+                                onSelected={() => fetchNui(NuiEvent.SceneSetEntityHighlighted, { objectId: null })}
+                            >
+                                ⚡ Charger la collection
+                            </MenuItemButton>
+                            <MenuItemButton
+                                onConfirm={async () => {
+                                    await fetchNui(NuiEvent.SceneUnload, {
+                                        sceneId: scene.id,
+                                    });
+                                }}
+                                onSelected={() => fetchNui(NuiEvent.SceneSetEntityHighlighted, { objectId: null })}
+                            >
+                                🌬️ Décharger la collection
+                            </MenuItemButton>
+                        </>
+                    )}
                     <MenuItemButton
                         onConfirm={async () => {
                             await fetchNui(NuiEvent.SceneSetName, {
@@ -141,6 +146,9 @@ export const SubMenuScene: FunctionComponent<SubMenuSceneProps> = ({ scene, cont
                             title={entity.model}
                             key={entity.id}
                             onSelected={() => fetchNui(NuiEvent.SceneSetEntityHighlighted, { objectId: entity.id })}
+                            description={
+                                <div>Inventaire: {entity.inventoryId ? entity.inventoryId : 'Non défini'}</div>
+                            }
                             onConfirm={(i, value) => {
                                 switch (value) {
                                     case 'edit':

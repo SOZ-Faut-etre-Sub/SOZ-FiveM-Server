@@ -28,6 +28,7 @@ export type WorldObject = {
     noCollision?: boolean;
     invisible?: boolean;
     metadata?: WorldObjectMetadata;
+    effect?: string;
     vfx?: Vfx;
     growth?: WorldObjectGrowth;
     highlight?: boolean;
@@ -104,6 +105,7 @@ export type ObjectEditorOptions = {
     context: ObjectEditorContext;
     collision: boolean;
     permanent: boolean;
+    effect: string | null;
     vfx: Vfx | null;
     snapToGround: boolean;
 };

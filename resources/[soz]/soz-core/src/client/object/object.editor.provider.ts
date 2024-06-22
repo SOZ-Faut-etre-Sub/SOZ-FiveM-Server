@@ -79,6 +79,7 @@ export class ObjectEditorProvider {
             allowToggleSnap: false,
             allowAddEffect: false,
             allowTogglePermanent: false,
+            effect: existingObject?.effect || null,
             vfx: existingObject?.vfx || null,
             context: 'hammer',
             collision: !existingObject?.noCollision || false,
@@ -95,6 +96,7 @@ export class ObjectEditorProvider {
             noCollision: editorOptions.collision,
             matrix: existingObject?.matrix,
             invisible: false,
+            effect: editorOptions.effect,
             vfx: editorOptions.vfx,
             permanent: editorOptions.permanent,
             rotation: existingObject?.rotation,
@@ -333,8 +335,10 @@ export class ObjectEditorProvider {
 
         if (!effect) {
             this.currentObject.options.vfx = null;
+            this.currentObject.options.effect = null;
         } else {
             this.currentObject.options.vfx = ObjectEffects[effect]?.fx;
+            this.currentObject.options.effect = effect;
         }
 
         await this.objectService.updateObject(this.currentObject.entity, this.getWorldObject(this.currentObject));
@@ -367,6 +371,7 @@ export class ObjectEditorProvider {
             matrix: Array.from(matrix),
             placeOnGround: false,
             permanent: currentObject.options.permanent,
+            effect: currentObject.options.effect,
             vfx: currentObject.options.vfx,
             noCollision: !currentObject.options.collision,
         };
