@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect';
+import { createSelector, lruMemoize } from 'reselect';
 
 import { Injectable } from '../../core/decorators/injectable';
 import { emitRpc } from '../../core/rpc';
@@ -113,9 +113,15 @@ export class VehicleStateService {
         method: (...data) => void
     ): void {
         this.selectorCreators.push(vehicleEntityId => {
-            return createSelector(selectors, (...data) => {
-                return method(vehicleEntityId, ...data);
-            });
+            return createSelector(
+                selectors,
+                (...data) => {
+                    return method(vehicleEntityId, ...data);
+                },
+                {
+                    memoize: lruMemoize,
+                }
+            );
         });
     }
 }
