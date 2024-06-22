@@ -152,6 +152,12 @@ export class ObjectService {
             }
             this.resourceLoader.unloadPtfxAsset(object.vfx.dictionary);
         }
+
+        if (object.permanent) {
+            SetEntityLodDist(entity, 0xfff);
+        } else {
+            SetEntityLodDist(entity, 0x200);
+        }
     }
 
     public deleteObject(entity: number, object: WorldObject) {
