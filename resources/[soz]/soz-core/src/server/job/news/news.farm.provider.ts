@@ -3,6 +3,7 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ClientEvent, ServerEvent } from '../../../shared/event';
 import { JobType } from '../../../shared/job';
+import { Vector3 } from '../../../shared/polyzone/vector';
 import { getRandomInt } from '../../../shared/random';
 import { BankService } from '../../bank/bank.service';
 import { InventoryManager } from '../../inventory/inventory.manager';
@@ -78,16 +79,11 @@ export class NewsFarmProvider {
 
         this.notifier.notify(source, `Vous avez récupéré ~g~${amount} journaux.`);
 
-        this.monitor.publish(
-            'job_news_print_newspaper',
-            {
-                player_source: source,
-            },
-            {
-                quantity: amount,
-                position: GetEntityCoords(GetPlayerPed(source)),
-            }
-        );
+        this.monitor.traceEvent('job_news_print_newspaper', {
+            player_source: source,
+            amount: amount,
+            position: GetEntityCoords(GetPlayerPed(source)) as Vector3,
+        });
     }
 
     @OnEvent(ServerEvent.NEWS_NEWSPAPER_SOLD)
@@ -150,15 +146,10 @@ export class NewsFarmProvider {
 
         TriggerClientEvent(ClientEvent.NEWS_NEWSPAPER_SOLD, source);
 
-        this.monitor.publish(
-            'job_news_sell_newspaper',
-            {
-                player_source: source,
-            },
-            {
-                quantity: amount,
-                position: GetEntityCoords(GetPlayerPed(source)),
-            }
-        );
+        this.monitor.traceEvent('job_news_sell_newspaper', {
+            player_source: source,
+            amount: amount,
+            position: GetEntityCoords(GetPlayerPed(source)) as Vector3,
+        });
     }
 }

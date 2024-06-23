@@ -74,14 +74,9 @@ export class VoiceProvider {
             this.nuiDispatch.dispatch('hud', 'UpdateVoiceActive', false);
 
             if (notify) {
-                this.monitor.publish(
-                    'voip_restart',
-                    {},
-                    {
-                        reason,
-                    },
-                    true
-                );
+                this.monitor.traceEvent('voip_restart', {
+                    reason,
+                });
 
                 this.notifier.notify('Arret de la voip...');
             }

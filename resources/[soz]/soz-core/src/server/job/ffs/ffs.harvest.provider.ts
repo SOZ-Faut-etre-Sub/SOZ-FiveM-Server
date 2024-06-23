@@ -58,17 +58,12 @@ export class FightForStyleHarvestProvider {
                 return;
             }
 
-            this.monitor.publish(
-                'job_ffs_harvest',
-                {
-                    item_id: SewingRawMaterial.COTTON_BALE,
-                    player_source: source,
-                },
-                {
-                    quantity: 1,
-                    position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-                }
-            );
+            this.monitor.traceEvent('job_ffs_harvest', {
+                item_id: SewingRawMaterial.COTTON_BALE,
+                player_source: source,
+                amount: 1,
+                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+            });
 
             this.notifier.notify(source, `Vous avez récolté une balle de coton.`);
         }

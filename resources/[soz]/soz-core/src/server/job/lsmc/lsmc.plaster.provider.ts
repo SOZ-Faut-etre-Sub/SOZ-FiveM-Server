@@ -49,17 +49,12 @@ export class LSMCPlasterProvider {
             this.notifier.notify(source, 'Vous avez ~g~posé~s~ une plâtre sur ' + plasterConfig.label);
         }
 
-        this.monitor.publish(
-            'lsmc_plaster',
-            {
-                player_source: source,
-                target_source: target,
-            },
-            {
-                location: location,
-                remove: index != -1,
-            }
-        );
+        this.monitor.traceEvent('lsmc_plaster', {
+            player_source: source,
+            target_source: target,
+            plaster_location: location,
+            plaster_remove: index != -1,
+        });
 
         this.playerService.setPlayerMetadata(target, 'plaster', player.metadata.plaster);
     }

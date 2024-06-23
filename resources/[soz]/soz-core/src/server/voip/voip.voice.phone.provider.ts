@@ -75,9 +75,6 @@ export class VoipVoicePhoneProvider {
 
         TriggerClientEvent(ClientEvent.VOIP_VOICE_START_CALL, caller.source, receiver.source);
         TriggerClientEvent(ClientEvent.VOIP_VOICE_START_CALL, receiver.source, caller.source);
-
-        this.monitor.publish('voip_call', { player_source: caller.source, call_type: 'emitter' }, call);
-        this.monitor.publish('voip_call', { player_source: receiver.source, call_type: 'receiver' }, call);
     }
 
     @OnEvent(ServerEvent.VOIP_PHONE_CALL_END)
@@ -112,9 +109,6 @@ export class VoipVoicePhoneProvider {
 
         TriggerClientEvent(ClientEvent.VOIP_VOICE_END_CALL, call.callerId);
         TriggerClientEvent(ClientEvent.VOIP_VOICE_END_CALL, call.receiverId);
-
-        this.monitor.publish('voip_call', { player_source: call.callerId, type: 'ended' }, call);
-        this.monitor.publish('voip_call', { player_source: call.receiverId, type: 'ended' }, call);
 
         this.calls.delete(call.id);
     }

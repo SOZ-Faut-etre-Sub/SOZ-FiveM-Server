@@ -78,19 +78,12 @@ export class VehicleStateProvider {
                     },
                 });
 
-                this.monitor.publish(
-                    'vehicle_despawn',
-                    {
-                        vehicle_id: state.volatile.id || null,
-                        vehicle_net_id: netId,
-                        vehicle_plate: state.volatile.plate || null,
-                    },
-                    {
-                        owner: state.owner || null,
-                        condition: state.condition || null,
-                        position: toVector3Object(state.position || [0, 0, 0]),
-                    }
-                );
+                this.monitor.traceEvent('vehicle_despawn', {
+                    vehicle_plate: state.volatile.plate || null,
+                    player_source: state.owner || null,
+                    vehicle_condition: JSON.stringify(state.condition),
+                    position: toVector3Object(state.position || [0, 0, 0]),
+                });
 
                 continue;
             }
@@ -106,23 +99,17 @@ export class VehicleStateProvider {
                 this.vehicleStateService.switchOwner(netId, owner);
                 const previousOwner = this.playerService.getPlayer(state.owner);
 
-                this.monitor.publish(
-                    'vehicle_condition_switch_owner',
-                    {
-                        vehicle_id: state.volatile.id || null,
-                        vehicle_net_id: netId,
-                        vehicle_plate: state.volatile.plate,
-                        player_source: owner,
-                    },
-                    {
-                        previous_owner: previousOwner?.citizenid,
-                        previous_owner_name: previousOwner?.charinfo.firstname + ' ' + previousOwner?.charinfo.lastname,
-                        previous_owner_source: state.owner,
-                        owner: owner,
-                        condition: state.condition || null,
-                        position: toVector3Object(state.position || [0, 0, 0]),
-                    }
-                );
+                this.monitor.traceEvent('vehicle_condition_switch_owner', {
+                    vehicle_id: state.volatile.id || null,
+                    vehicle_net_id: netId,
+                    vehicle_plate: state.volatile.plate,
+                    player_source: owner,
+                    vehicle_previous_owner_id: previousOwner?.citizenid,
+                    vehicle_previous_owner_name:
+                        previousOwner?.charinfo.firstname + ' ' + previousOwner?.charinfo.lastname,
+                    vehicle_condition: JSON.stringify(state.condition || null),
+                    position: toVector3Object(state.position || [0, 0, 0]),
+                });
             }
 
             const attachedTo = GetEntityAttachedTo(entityId);
@@ -137,20 +124,13 @@ export class VehicleStateProvider {
                     this.vehicleStateService.updateVehicleVolatileState(attachedToNetId, {
                         flatbedAttachedVehicle: netId,
                     });
-                    this.monitor.publish(
-                        'vehicle_fix_attached',
-                        {
-                            vehicle_plate: state.volatile.plate,
-                            player_source: owner,
-                        },
-                        {
-                            vehicle_id: state.volatile.id,
-                            vehicle_net_id: netId,
-                            attachedTo: attachedTo,
-                            attachedToNetId: attachedToNetId,
-                            owner: owner,
-                        }
-                    );
+                    this.monitor.traceEvent('vehicle_fix_attached', {
+                        vehicle_plate: state.volatile.plate,
+                        player_source: owner,
+                        vehicle_id: state.volatile.id,
+                        vehicle_net_id: netId,
+                        vehicle_attached_net_id: attachedToNetId,
+                    });
                 }
             }
         }

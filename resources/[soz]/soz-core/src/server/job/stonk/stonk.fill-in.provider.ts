@@ -76,19 +76,14 @@ export class StonkFillInProvider {
             const [hasResold, fillAmount] = await this.doFillIn(source, item, maxBalance, accountName);
 
             if (hasResold) {
-                this.monitor.publish(
-                    'job_stonk_fill_account',
-                    {
-                        item_id: item,
-                        player_source: source,
-                        account_type: 'bank',
-                    },
-                    {
-                        item_label: outputItemLabel,
-                        amount: fillAmount,
-                        position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-                    }
-                );
+                this.monitor.traceEvent('job_stonk_fill_account', {
+                    item_id: item,
+                    player_source: source,
+                    account_type: 'bank',
+                    item_label: outputItemLabel,
+                    amount: fillAmount,
+                    position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+                });
 
                 const transfer = await this.bankService.transferBankMoney(
                     StonkConfig.bankAccount.bankRefill,

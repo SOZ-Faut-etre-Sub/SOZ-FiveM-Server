@@ -5,10 +5,8 @@ import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
 import { LogChainHandler, Logger, LogLevel } from '../../core/logger';
 import { ServerEvent } from '../../shared/event';
-import { Vector3 } from '../../shared/polyzone/vector';
-import { PlayerPositionProvider } from '../player/player.position.provider';
+import { MonitorEvent } from '../../shared/monitor';
 import { PlayerService } from '../player/player.service';
-import { ServerStateService } from '../server.state.service';
 import { LokiLoggerHandler } from './loki.logger.handler';
 import { Monitor } from './monitor';
 
@@ -20,17 +18,11 @@ export class MonitorLokiProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
-    @Inject(ServerStateService)
-    private serverStateService: ServerStateService;
-
     @Inject(LogChainHandler)
     private logChainHandler: LogChainHandler;
 
     @Inject(LokiLoggerHandler)
     private lokiLoggerHandler: LokiLoggerHandler;
-
-    @Inject(PlayerPositionProvider)
-    private playerPositionProvider: PlayerPositionProvider;
 
     @Inject(Monitor)
     private monitor: Monitor;
@@ -40,53 +32,18 @@ export class MonitorLokiProvider {
         this.logChainHandler.addHandler(this.lokiLoggerHandler);
     }
 
-    @Tick(5000)
-    public async sendLokiBuffer() {
-        await this.monitor.flush();
-    }
-
-    @Tick(5000)
-    public async addPlayerPositionToLoki() {
-        const players = this.serverStateService.getPlayers();
-
-        for (const player of players) {
-            const ped = GetPlayerPed(player.source);
-            const position = GetEntityCoords(ped) as Vector3;
-            const vehicle = GetVehiclePedIsIn(ped, false);
-
-            this.playerPositionProvider.updatePosition(player.source, position);
-
-            this.monitor.publish(
-                'player_position',
-                {
-                    player_citizen_id: player.citizenid,
-                    player_name: player.charinfo.firstname + ' ' + player.charinfo.lastname,
-                    player_job: player.job.id,
-                    vehicle_type: vehicle ? GetVehicleType(vehicle) : null,
-                },
-                {
-                    vehicle_plate: vehicle ? GetVehicleNumberPlateText(vehicle) : null,
-                    x: position[0],
-                    y: position[1],
-                    z: position[2],
-                }
-            );
-        }
-    }
-
-    @OnEvent(ServerEvent.MONITOR_ADD_EVENT)
-    public onAddEvent(
-        source: number,
-        name: string,
-        indexed: Record<string, any>,
-        content: Record<string, any>,
-        addPlayerData = false
-    ) {
+    @OnEvent(ServerEvent.MONITOR_TRACE_EVENT)
+    public onTraceEvent(source: number, type: string, event: MonitorEvent, addPlayerData = true) {
         if (addPlayerData) {
-            indexed.player_source = source;
+            event.player_source = source;
         }
 
-        this.monitor.publish(name, indexed, content);
+        this.monitor.traceEvent(type, event);
+    }
+
+    @Tick(1000)
+    public async onTick() {
+        await this.monitor.flush();
     }
 
     @OnEvent(ServerEvent.MONITOR_LOG)
@@ -115,8 +72,8 @@ export class MonitorLokiProvider {
         this.logger.log(level, message, JSON.stringify(content));
     }
 
-    @Exportable('Event')
-    private handleEvent(name: string, indexes: Record<string, string>, content: Record<string, any>) {
-        this.monitor.publish(name, indexes, content);
+    @Exportable('TraceEvent')
+    private handleEvent(type: string, event: MonitorEvent) {
+        this.monitor.traceEvent(type, event);
     }
 }

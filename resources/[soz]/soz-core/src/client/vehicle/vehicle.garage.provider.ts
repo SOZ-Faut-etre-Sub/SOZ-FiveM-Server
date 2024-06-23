@@ -428,17 +428,12 @@ export class VehicleGarageProvider {
         const networkId = NetworkGetNetworkIdFromEntity(vehicle);
         const plate = GetVehicleNumberPlateText(vehicle).trim();
 
-        this.monitor.publish(
-            'vehicle_garage_in_client_start',
-            {
-                vehicle_plate: plate,
-            },
-            {
-                garage: id,
-                garage_type: garage.type,
-                position: toVector3Object(GetEntityCoords(PlayerPedId()) as Vector3),
-            }
-        );
+        this.monitor.traceEvent('vehicle_garage_in_client_start', {
+            vehicle_plate: plate,
+            garage_id: id,
+            garage_type: garage.type,
+            position: toVector3Object(GetEntityCoords(PlayerPedId()) as Vector3),
+        });
         TriggerServerEvent(ServerEvent.VEHICLE_GARAGE_STORE, id, garage, networkId, delai, cost);
     }
 

@@ -78,15 +78,10 @@ export class BankProvider {
                     'CHAR_BANK_MAZE'
                 );
 
-                this.monitor.publish(
-                    'paycheck',
-                    {
-                        player_source: player.source,
-                    },
-                    {
-                        amount: payment,
-                    }
-                );
+                this.monitor.traceEvent('paycheck', {
+                    player_source: player.source,
+                    amount: payment,
+                });
             }
         }
 
@@ -106,15 +101,10 @@ export class BankProvider {
                         'CHAR_BANK_MAZE'
                     );
 
-                    this.monitor.publish(
-                        'senator_paycheck',
-                        {
-                            player_source: player.source,
-                        },
-                        {
-                            amount: SENATOR_SALARY,
-                        }
-                    );
+                    this.monitor.traceEvent('senator_paycheck', {
+                        player_source: player.source,
+                        amount: SENATOR_SALARY,
+                    });
                 }
             }
         }

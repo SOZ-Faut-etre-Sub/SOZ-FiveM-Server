@@ -101,18 +101,13 @@ export class EasterShopProvider {
 
         const itemData = this.itemService.getItem(item.id);
 
-        this.monitor.publish(
-            'easter_shop_buy',
-            {
-                item_id: item.id,
-                player_source: source,
-            },
-            {
-                item_label: itemData.label,
-                quantity: 1,
-                price: item.price,
-            }
-        );
+        this.monitor.traceEvent('easter_shop_buy', {
+            item_id: item.id,
+            player_source: source,
+            item_label: itemData.label,
+            item_count: 1,
+            money: item.price,
+        });
 
         this.inventoryManager.addItemToInventory(source, item.id, 1, item.metadata || {});
         const taxed = await this.priceService.getPrice(item.price, TaxType.SUPPLY);

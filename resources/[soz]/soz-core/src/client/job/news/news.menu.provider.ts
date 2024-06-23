@@ -74,15 +74,10 @@ export class NewsMenuProvider {
             }
         );
 
-        this.monitor.publish(
-            'job_news_create_flash',
-            {
-                flash_type: type,
-            },
-            {
-                message,
-                position: toVector3Object(GetEntityCoords(PlayerPedId(), false) as Vector3),
-            }
-        );
+        this.monitor.traceEvent('job_news_create_flash', {
+            flash_type: type,
+            message,
+            position: toVector3Object(GetEntityCoords(PlayerPedId(), false) as Vector3),
+        });
     }
 }

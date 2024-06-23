@@ -77,9 +77,8 @@ export class ClothingShopProvider {
             return;
         }
 
-        const { shop: shop_content, content: shop_categories } = await this.clothingShopRepository.getShopContent(
-            brand
-        );
+        const { shop: shop_content, content: shop_categories } =
+            await this.clothingShopRepository.getShopContent(brand);
 
         if (!shop_content) {
             this.logger.error(`Shop ${brand} not initialized`);

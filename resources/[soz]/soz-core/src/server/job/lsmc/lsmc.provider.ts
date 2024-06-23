@@ -14,6 +14,7 @@ import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
 
+import { Monitor } from '../../monitor/monitor';
 import { LSMCDamageProvider } from './lsmc.damage.provider';
 
 @Provider()
@@ -38,6 +39,9 @@ export class LSMCProvider {
 
     @Inject(ItemService)
     private itemService: ItemService;
+
+    @Inject(Monitor)
+    private monitor: Monitor;
 
     @Rpc(RpcServerEvent.LSMC_CAN_REMOVE_ITT)
     public canRemoveITT(source: number, target: number) {
@@ -113,6 +117,15 @@ export class LSMCProvider {
         }
 
         this.LSMCDamageProvider.removeDamages(player.source);
+
+        const target = this.playerService.getPlayer(id);
+
+        this.monitor.traceEvent('job_lsmc_heal', {
+            player_source: source,
+            target_source: id,
+            before_health: target?.metadata.health,
+            position: GetEntityCoords(GetPlayerPed(player.source)) as Vector3,
+        });
 
         TriggerClientEvent(ClientEvent.LSMC_HEAL, player.source, 100);
     }

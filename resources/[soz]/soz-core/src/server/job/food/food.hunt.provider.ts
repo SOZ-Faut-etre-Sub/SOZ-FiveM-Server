@@ -96,19 +96,13 @@ export class FoodHuntProvider {
 
                     this.notifier.notify(source, `Vous avez récupéré ${quantity} ${item.label}`, 'success');
 
-                    this.monitor.publish(
-                        'job_cm_food_hunting',
-                        {
-                            player_source: source,
-                            item_id: itemId,
-                            on_duty: player.job.onduty,
-                        },
-                        {
-                            quantity: quantity,
-                            item_label: item.label,
-                            position,
-                        }
-                    );
+                    this.monitor.traceEvent('job_cm_food_hunting', {
+                        player_source: source,
+                        item_id: itemId,
+                        amount: quantity,
+                        item_label: item.label,
+                        position,
+                    });
                 }
             }
         }
@@ -143,15 +137,10 @@ export class FoodHuntProvider {
             this.zonesDespawnTime[zoneId] = Date.now() + FoodHuntConfig.noSpawnDelay;
             TriggerClientEvent(ClientEvent.FOOD_HUNT_SYNC, -1, zoneId, this.zonesDespawnTime[zoneId]);
 
-            this.monitor.publish(
-                'food_hunt_no_spawn',
-                {
-                    zoneId: zoneId,
-                },
-                {
-                    endDate: new Date(this.zonesDespawnTime[zoneId]).toString(),
-                }
-            );
+            this.monitor.traceEvent('food_hunt_no_spawn', {
+                zone_id: zoneId,
+                end_date: new Date(this.zonesDespawnTime[zoneId]).getTime(),
+            });
         }
     }
 

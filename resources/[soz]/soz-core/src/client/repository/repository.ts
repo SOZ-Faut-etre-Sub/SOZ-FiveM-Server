@@ -9,7 +9,7 @@ import { RpcServerEvent } from '../../shared/rpc';
 export abstract class Repository<
     T extends keyof RepositoryMapping,
     K extends keyof RepositoryConfig[T] = keyof RepositoryConfig[T],
-    V = RepositoryMapping[T]
+    V = RepositoryMapping[T],
 > {
     @Inject(RepositoryLoader)
     private repositoryLoader: RepositoryLoader;

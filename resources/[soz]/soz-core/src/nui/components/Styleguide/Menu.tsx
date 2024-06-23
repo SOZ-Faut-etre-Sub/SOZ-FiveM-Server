@@ -689,8 +689,8 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
                 onSelected
                     ? onSelected
                     : onSelectedValue
-                    ? () => onSelectedValue(activeOptionIndex, activeValue)
-                    : undefined
+                      ? () => onSelectedValue(activeOptionIndex, activeValue)
+                      : undefined
             }
             onConfirm={onItemConfirm}
             disabled={disabled}

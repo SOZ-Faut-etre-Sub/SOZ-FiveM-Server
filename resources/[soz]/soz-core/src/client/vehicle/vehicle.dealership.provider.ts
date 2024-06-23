@@ -627,7 +627,7 @@ export class VehicleDealershipProvider {
         TaskCombatPed(guardNPC, playerPed, 0, 16);
 
         this.currentGuardNet = PedToNet(guardNPC);
-        this.monitor.publish('luxury_guard_spawn', {}, {});
+        this.monitor.traceEvent('luxury_guard_spawn', {});
         TriggerServerEvent(ServerEvent.LUXURY_CREATED_GUARD, this.currentGuardNet);
     }
 

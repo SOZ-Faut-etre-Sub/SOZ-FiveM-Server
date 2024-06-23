@@ -221,12 +221,11 @@ function Account.TransfertMoney(accSource, accTarget, money, cb, allowOverflow)
 
                     success = true
 
-                    exports["soz-core"]:Event("transfer_money", {
-                        source_owner = accSource.owner,
-                        target_owner = accTarget.owner,
-                        source_id = accSource.id,
-                        target_id = accTarget.id,
-                    }, {money = money})
+                    exports["soz-core"]:TraceEvent("transfer_money", {
+                        source_account = accSource.id,
+                        target_account = accTarget.id,
+                        money = money,
+                    })
                 else
                     success, reason = false, "transfert_failed"
                 end

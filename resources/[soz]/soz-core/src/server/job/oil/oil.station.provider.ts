@@ -216,18 +216,13 @@ export class OilStationProvider {
                 },
             });
 
-            this.monitor.publish(
-                'job_mtp_refill_station',
-                {
-                    player_source: source,
-                    station: stationId,
-                    station_type: 'essence',
-                },
-                {
-                    quantity: reallyRefilled,
-                    position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-                }
-            );
+            this.monitor.traceEvent('job_mtp_refill_station', {
+                player_source: source,
+                station_id: stationId,
+                station_type: 'essence',
+                amount: reallyRefilled,
+                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+            });
 
             TriggerClientEvent('jobs:client:fueler:CancelTankerRefill', source);
         });
@@ -294,18 +289,13 @@ export class OilStationProvider {
             },
         });
 
-        this.monitor.publish(
-            'job_mtp_refill_station',
-            {
-                player_source: source,
-                station: stationId,
-                station_type: 'kerosene',
-            },
-            {
-                quantity: refilled,
-                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-            }
-        );
+        this.monitor.traceEvent('job_mtp_refill_station', {
+            player_source: source,
+            station_id: stationId,
+            station_type: 'kerosene',
+            amount: refilled,
+            position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+        });
     }
 
     @OnEvent(ServerEvent.OIL_DECREMENT_STATION)

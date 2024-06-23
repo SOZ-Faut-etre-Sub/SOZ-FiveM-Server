@@ -38,16 +38,11 @@ export class TaxiProvider {
             );
         }
 
-        this.monitor.publish(
-            'job_carljr_npc_course',
-            {
-                player_source: source,
-            },
-            {
-                amount: amount,
-                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-            }
-        );
+        this.monitor.traceEvent('job_carljr_npc_course', {
+            player_source: source,
+            money: amount,
+            position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+        });
     }
 
     @OnEvent(ServerEvent.BUS_NPC_PAY)
@@ -68,15 +63,10 @@ export class TaxiProvider {
             );
         }
 
-        this.monitor.publish(
-            'job_carljr_bus_npc_course',
-            {
-                player_source: source,
-            },
-            {
-                amount: amount,
-                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-            }
-        );
+        this.monitor.traceEvent('job_carljr_bus_npc_course', {
+            player_source: source,
+            money: amount,
+            position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+        });
     }
 }

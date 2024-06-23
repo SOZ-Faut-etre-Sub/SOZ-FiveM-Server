@@ -92,14 +92,13 @@ export class VehicleDealershipProvider {
 
         const selectedVehicles = getRandomItems(vehicles, 2);
 
-        this.monitor.publish(
-            'vehicle_luxury_selected',
-            {},
-            {
-                model1: selectedVehicles[0].name,
-                model2: selectedVehicles[1].name,
-            }
-        );
+        this.monitor.traceEvent('vehicle_luxury_selected', {
+            vehicle_name: selectedVehicles[0].name,
+        });
+
+        this.monitor.traceEvent('vehicle_luxury_selected', {
+            vehicle_name: selectedVehicles[1].name,
+        });
 
         for (const index in AuctionZones) {
             const auctionZone = AuctionZones[index];
@@ -570,18 +569,13 @@ export class VehicleDealershipProvider {
                     },
                 });
 
-                this.monitor.publish(
-                    'vehicle_buy',
-                    {
-                        player_source: source,
-                        buy_type: dealershipId === DealershipType.Job ? 'job' : 'citizen',
-                    },
-                    {
-                        price: vehicle.price,
-                        vehicle_model: vehicle.model,
-                        vehicle_plate: playerVehicle.plate,
-                    }
-                );
+                this.monitor.traceEvent('vehicle_buy', {
+                    player_source: source,
+                    buy_type: dealershipId === DealershipType.Job ? 'job' : 'citizen',
+                    money: vehicle.price,
+                    vehicle_model: vehicle.model,
+                    vehicle_plate: playerVehicle.plate,
+                });
 
                 await this.prismaService.player_purchases.create({
                     data: {

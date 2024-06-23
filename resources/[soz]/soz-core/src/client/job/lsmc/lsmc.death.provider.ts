@@ -451,7 +451,7 @@ export class LSMCDeathProvider {
         const ped = PlayerPedId();
         const player = this.playerService.getPlayer();
 
-        this.monitor.publish('lsmx_uhu', {}, {});
+        this.monitor.traceEvent('lsmx_uhu', {});
 
         this.playerService.setTempClothes(PatientClothes[player.skin.Model.Hash]['Patient']);
         this.weaponDrawingProvider.refreshDrawWeapons();
@@ -517,15 +517,6 @@ export class LSMCDeathProvider {
             false,
             false,
             bloodbag
-        );
-        this.monitor.publish(
-            bloodbag ? 'job_lsmc_revive_bloodbag' : 'job_lsmc_revive_defibrillator',
-            {},
-            {
-                target_source: GetPlayerServerId(NetworkGetPlayerIndexFromPed(target)),
-                position: GetEntityCoords(target),
-            },
-            true
         );
     }
 

@@ -155,13 +155,6 @@ export class PolicePlayerProvider {
                             ) {
                                 const playerId = GetPlayerServerId(player);
                                 TriggerServerEvent(ServerEvent.CUFF_PLAYER, playerId, false);
-                                TriggerServerEvent(
-                                    ServerEvent.MONITOR_ADD_EVENT,
-                                    'job_police_cuff_player',
-                                    {},
-                                    { target_source: playerId, position: GetEntityCoords(GetPlayerPed(player)) },
-                                    true
-                                );
                             } else {
                                 this.notifier.error('Vous ne pouvez pas menotter une personne dans un véhicule');
                             }
@@ -198,13 +191,6 @@ export class PolicePlayerProvider {
                             ) {
                                 const playerId = GetPlayerServerId(player);
                                 TriggerServerEvent(ServerEvent.UNCUFF_PLAYER, playerId);
-                                TriggerServerEvent(
-                                    ServerEvent.MONITOR_ADD_EVENT,
-                                    'job_police_uncuff_player',
-                                    {},
-                                    { target_source: playerId, position: GetEntityCoords(GetPlayerPed(player)) },
-                                    true
-                                );
                                 await wait(500);
                             } else {
                                 this.notifier.error('Vous ne pouvez pas démenotter une personne dans un véhicule');
@@ -579,13 +565,6 @@ export class PolicePlayerProvider {
             (this.escortingAnimation.crimi && !IsEntityPlayingAnim(ped, 'anim@gangops@hostage@', 'perp_idle', 3))
         ) {
             TriggerServerEvent(ServerEvent.REMOVE_ESCORT_PLAYER, this.escortingAnimation.target);
-            TriggerServerEvent(
-                ServerEvent.MONITOR_ADD_EVENT,
-                'job_police_deescort_player',
-                {},
-                { targetSource: player.source, position: GetEntityCoords(GetPlayerPed(player.source)) },
-                true
-            );
             if (this.escortingAnimation.animation) {
                 this.escortingAnimation.animation.cancel();
             }

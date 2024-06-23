@@ -161,8 +161,12 @@ RegisterServerEvent("inventory:server:GiveMoney", function(target, moneyType, am
         giveAnimation(Player.PlayerData.source)
         giveAnimation(Target.PlayerData.source)
 
-        exports["soz-core"]:Event("give_money", {player_source = source, target = Target.PlayerData.citizenid},
-                                  {money = moneyTake, marked_money = markedMoneyTake})
+        exports["soz-core"]:TraceEvent("give_money", {
+            player_source = Player.PlayerData.source,
+            target_source = Target.PlayerData.source,
+            money = moneyTake,
+            money_marked = markedMoneyTake,
+        })
     else
         TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous ne possédez pas l'argent requis pour le transfert", "error")
     end

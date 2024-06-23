@@ -23,8 +23,6 @@ export class FieldRepository extends Repository<RepositoryType.Field> {
             },
         });
 
-        console.log('createField', field.identifier);
-
         if (databaseField) {
             this.data[field.identifier] = { ...field, ...JSON.parse(databaseField.data) };
 

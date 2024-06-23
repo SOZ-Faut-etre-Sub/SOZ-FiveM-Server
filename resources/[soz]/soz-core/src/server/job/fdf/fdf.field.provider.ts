@@ -265,17 +265,12 @@ export class FDFFieldProvider {
                 );
             }
 
-            this.monitor.publish(
-                'fdf_plant',
-                {
-                    player_source: source,
-                },
-                {
-                    type: type,
-                    coords: coords,
-                    field: field,
-                }
-            );
+            this.monitor.traceEvent('fdf_plant', {
+                player_source: source,
+                type: type,
+                position: coords,
+                field: field,
+            });
         } catch (error) {
             console.error(error);
         }
@@ -306,18 +301,13 @@ export class FDFFieldProvider {
         for (const cropId of cropsIdToHill) {
             const currentCrop = this.crops.get(cropId);
 
-            this.monitor.publish(
-                'job_fdf_field_hilling',
-                {
-                    player_source: source,
-                    type: crop.type,
-                },
-                {
-                    field: crop.field,
-                    id: cropId,
-                    position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-                }
-            );
+            this.monitor.traceEvent('job_fdf_field_hilling', {
+                player_source: source,
+                type: crop.type,
+                field: crop.field,
+                id: cropId,
+                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+            });
 
             currentCrop.hilled = true;
 
@@ -383,19 +373,14 @@ export class FDFFieldProvider {
             this.dateBeforePlow.set(crop.field, Date.now() + FDFConfig.plowDelay);
         }
 
-        this.monitor.publish(
-            'job_fdf_field_harvest',
-            {
-                player_source: source,
-                type: crop.type,
-            },
-            {
-                field: crop.field,
-                id: id,
-                count: nbItem,
-                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-            }
-        );
+        this.monitor.traceEvent('job_fdf_field_harvest', {
+            player_source: source,
+            type: crop.type,
+            field: crop.field,
+            id: id,
+            amount: nbItem,
+            position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+        });
 
         await this.prismaService.fdf_crops.delete({
             where: {
@@ -469,18 +454,14 @@ export class FDFFieldProvider {
         this.crops.delete(id);
         this.cropsPerField.get(crop.field).delete(id);
 
-        this.monitor.publish(
-            'job_fdf_field_destroy',
-            {
-                player_source: source,
-                type: crop.type,
-            },
-            {
-                field: crop.field,
-                id: id,
-                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-            }
-        );
+        this.monitor.traceEvent('job_fdf_field_destroy', {
+            player_source: source,
+            type: crop.type,
+            field: crop.field,
+            id: id,
+            position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+        });
+
         await this.prismaService.fdf_crops.delete({
             where: {
                 id: id,
@@ -499,16 +480,11 @@ export class FDFFieldProvider {
             `Vous avez terminé de ~g~labourer~s~ champ, il est maintenant prêt pour accueillir les plantations.`
         );
 
-        this.monitor.publish(
-            'job_fdf_field_plow',
-            {
-                player_source: source,
-                field: name,
-            },
-            {
-                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-            }
-        );
+        this.monitor.traceEvent('job_fdf_field_plow', {
+            player_source: source,
+            field: name,
+            position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+        });
     }
 
     @Rpc(RpcServerEvent.FDF_PLOW_STATUS)

@@ -1,170 +1,97 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
-import { Logger } from '@core/logger';
-import axios from 'axios';
-import { Counter, Histogram } from 'prom-client';
+import { Tick } from '@core/decorators/tick';
+import { ClickhouseService } from '@public/server/clickhouse/clickhouse.service';
+import { Vector3 } from '@public/shared/polyzone/vector';
 
-import { LokiEvent } from '../../shared/monitor';
+import { MonitorEvent, MonitorTraceEvent } from '../../shared/monitor';
 import { PlayerService } from '../player/player.service';
-import { LokiLoggerHandler } from './loki.logger.handler';
-
-export const flattenObject = (obj: any, parentKey?: string) => {
-    let result = {};
-
-    if (obj === null || obj === undefined) {
-        return obj;
-    }
-
-    Object.keys(obj).forEach(key => {
-        const value = obj[key];
-        const _key = parentKey ? parentKey + '_' + key : key;
-
-        if (value === null || value === undefined) {
-            return;
-        }
-
-        if (typeof value === 'object') {
-            result = { ...result, ...flattenObject(value, _key) };
-        } else {
-            result[_key] = value;
-        }
-    });
-
-    return result;
-};
 
 @Injectable()
 export class Monitor {
-    @Inject(LokiLoggerHandler)
-    private lokiLoggerHandler: LokiLoggerHandler;
-
-    @Inject(Logger)
-    private logger: Logger;
-
     @Inject(PlayerService)
     private playerService: PlayerService;
 
-    private buffer: LokiEvent[] = [];
+    @Inject(ClickhouseService)
+    private clickhouse: ClickhouseService;
 
-    private lokiEndpoint: string = GetConvar('log_handler_loki', '');
-
-    private callDurationHistogram: Histogram<string> = new Histogram({
-        name: 'soz_core_call',
-        help: 'Specific call execution histogram',
-        labelNames: ['name'],
-    });
-
-    private lokiEventSent: Counter<string> = new Counter({
-        name: 'soz_core_event_sent',
-        help: 'Number of loki event sents',
-    });
-
-    public async doCall<T>(name: string, callback: () => T | Promise<T>): Promise<T> {
-        const end = this.callDurationHistogram.startTimer({
-            name,
-        });
-        const result = await callback();
-
-        end();
-
-        return result;
-    }
+    private eventBuffer: MonitorTraceEvent[] = [];
 
     public async flush() {
-        if (this.lokiEndpoint === '') {
+        if (this.eventBuffer.length === 0) {
             return;
         }
 
-        const buffer = this.buffer;
-        this.buffer = [];
+        const events = this.eventBuffer.splice(0, this.eventBuffer.length);
 
-        const logBuffer = this.lokiLoggerHandler.flush();
+        await this.clickhouse.insert({
+            table: 'trace_events',
+            values: events,
+            format: 'JSONEachRow',
+        });
+    }
 
-        if (logBuffer.length > 0) {
-            buffer.push(...logBuffer);
-        }
+    public traceEvent(type: string, event: MonitorEvent): void {
+        const filteredEvent = this.createTraceEvent(type, event);
 
-        this.lokiEventSent.inc(buffer.length);
-
-        if (buffer.length === 0) {
+        if (!filteredEvent) {
             return;
         }
 
-        const json = await this.doCall('monitor_flush_json', () =>
-            JSON.stringify({
-                streams: buffer,
-            })
-        );
-
-        const response = await this.doCall(
-            'monitor_flush_http_call',
-            async () =>
-                await axios.post(this.lokiEndpoint, json, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    validateStatus: () => true,
-                })
-        );
-
-        if (response.status !== 204) {
-            this.logger.error('failed to send logs to Loki', response.data);
-        }
+        this.eventBuffer.push(filteredEvent);
     }
 
-    public publish(name: string, indexed: Record<string, any>, data: Record<string, any>): void {
-        if (this.lokiEndpoint === '') {
-            return;
-        }
+    private createTraceEvent(type: string, event: MonitorEvent): MonitorTraceEvent | null {
+        const traceEvent = {
+            citizen_id: '',
+            ...event,
+            event: type,
+            timestamp: Date.now(),
+            position: null,
+        } as MonitorTraceEvent;
 
-        const event = this.formatLokiEvent(name, this.filterAndReplace(indexed), this.filterAndReplace(data));
-        this.buffer.push(event);
-    }
-
-    private formatLokiEvent(
-        name: string,
-        indexes: Record<string, string>,
-        content: Record<string, any> = {}
-    ): LokiEvent {
-        const flatten = flattenObject(content || {});
-        const timestamp = Date.now() * 1_000_000;
-
-        return {
-            stream: {
-                ...indexes,
-                emitter: GetInvokingResource() || 'soz-core',
-                agent: 'fivem',
-                type: 'event',
-                event: name,
-            },
-            values: [[String(timestamp), JSON.stringify(flatten)]],
-        };
-    }
-
-    private filterAndReplace(content: Record<string, any>): Record<string, any> {
-        if (content.target_source) {
-            const player = this.playerService.getPlayer(content.target_source);
-
-            if (player) {
-                content.target_citizen_id = player.citizenid;
-                content.target_name = player.charinfo.firstname + ' ' + player.charinfo.lastname;
-                content.target_job = player.job.id;
-
-                delete content.target_source;
+        if (event.position) {
+            if (Array.isArray(event.position)) {
+                traceEvent.position = [event.position[0], event.position[1]];
+                traceEvent.z = event.position[2];
+            } else {
+                traceEvent.position = [event.position.x, event.position.y];
+                traceEvent.z = event.position.z;
             }
         }
 
-        if (content.player_source) {
-            const player = this.playerService.getPlayer(content.player_source);
+        if (event.player_source) {
+            const player = this.playerService.getPlayer(event.player_source);
 
             if (player) {
-                content.player_citizen_id = player.citizenid;
-                content.player_name = player.charinfo.firstname + ' ' + player.charinfo.lastname;
-                content.player_job = player.job.id;
+                traceEvent.citizen_id = player.citizenid;
+                traceEvent.player_name = player.charinfo.firstname + ' ' + player.charinfo.lastname;
+                traceEvent.player_job = player.job.id;
+                traceEvent.player_on_duty = player.job.onduty;
+            }
 
-                delete content.player_source;
+            if (!event.position) {
+                const position = GetEntityCoords(GetPlayerPed(event.player_source)) as Vector3;
+
+                traceEvent.position = [position[0], position[1]];
+                traceEvent.z = position[2];
+            }
+
+            if (!event.heading) {
+                traceEvent.heading = GetEntityHeading(GetPlayerPed(event.player_source));
             }
         }
 
-        return content;
+        if (event.target_source) {
+            const target = this.playerService.getPlayer(event.target_source);
+
+            if (target) {
+                traceEvent.target_citizen_id = target.citizenid;
+                traceEvent.target_name = target.charinfo.firstname + ' ' + target.charinfo.lastname;
+                traceEvent.target_job = target.job.id;
+                traceEvent.target_on_duty = target.job.onduty;
+            }
+        }
+
+        return traceEvent as MonitorTraceEvent;
     }
 }

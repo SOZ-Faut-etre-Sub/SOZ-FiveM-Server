@@ -109,11 +109,17 @@ export class ShopProvider {
             'success'
         );
 
-        this.monitor.publish(
-            'Shop Buy',
-            { player_source: source },
-            { cartContent: cartContent, cartPrice: cartAmount, taxType: taxType }
-        );
+        this.monitor.traceEvent('shop_buy', {
+            player_source: source,
+            money: cartAmount,
+            tax_type: taxType,
+            cart_items: cartContent.map(item => {
+                return {
+                    item_id: item.name,
+                    amount: item.amount,
+                };
+            }),
+        });
     }
 
     @OnEvent(ServerEvent.SHOP_BUY)

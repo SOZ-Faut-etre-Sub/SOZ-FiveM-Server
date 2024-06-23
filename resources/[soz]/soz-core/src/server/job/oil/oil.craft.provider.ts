@@ -123,15 +123,10 @@ export class OilCraftProvider {
         );
 
         if (oilCraftingMonitorEventsMap[itemIdToAdd]) {
-            this.monitor.publish(
-                oilCraftingMonitorEventsMap[itemIdToAdd],
-                {
-                    player_source: source,
-                },
-                {
-                    quantity: addAmount,
-                }
-            );
+            this.monitor.traceEvent(oilCraftingMonitorEventsMap[itemIdToAdd], {
+                player_source: source,
+                amount: addAmount,
+            });
         }
     }
 }

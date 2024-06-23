@@ -213,18 +213,13 @@ export class VehicleLockProvider {
             }
         }
 
-        this.monitor.publish(
-            'vehicle_lockpick',
-            {
-                player_source: source,
-            },
-            {
-                item: inventoryItem.name,
-                location: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-                vehicle_plate: GetVehicleNumberPlateText(vehicleEntityId),
-                player_vehicle: vehicleState.volatile.isPlayerVehicle,
-            }
-        );
+        this.monitor.traceEvent('vehicle_lockpick', {
+            player_source: source,
+            item_id: inventoryItem.name,
+            position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+            vehicle_plate: GetVehicleNumberPlateText(vehicleEntityId),
+            vehicle_player: vehicleState.volatile.isPlayerVehicle,
+        });
 
         this.vehicleStateService.updateVehicleVolatileState(vehicleNetworkId, {
             forced: true,

@@ -4,6 +4,7 @@ import { MonitorFieldProvider } from './monitor.field.provider';
 import { MonitorLokiProvider } from './monitor.loki.provider';
 import { MonitorPawlProvider } from './monitor.pawl.provider';
 import { MonitorPlayerProvider } from './monitor.player.provider';
+import { MonitorPositionProvider } from './monitor.position.provider';
 import { MonitorProvider } from './monitor.provider';
 import { MonitorTraceProvider } from './monitor.trace.provider';
 import { MonitorUpwProvider } from './monitor.upw.provider';
@@ -16,6 +17,7 @@ import { MonitorUpwProvider } from './monitor.upw.provider';
         MonitorPawlProvider,
         MonitorFieldProvider,
         MonitorPlayerProvider,
+        MonitorPositionProvider,
         MonitorTraceProvider,
         MonitorLokiProvider,
     ],

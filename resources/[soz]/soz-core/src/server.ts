@@ -11,6 +11,7 @@ import { AdminModule } from './server/admin/admin.module';
 import { AfkModule } from './server/afk/afk.module';
 import { ApiModule } from './server/api/api.module';
 import { BankModule } from './server/bank/bank.module';
+import { ClickhouseModule } from './server/clickhouse/clickhouse.module';
 import { CraftModule } from './server/craft/craft.module';
 import { DatabaseModule } from './server/database/database.module';
 import { DrivingSchoolModule } from './server/driving-school/ds.module';
@@ -72,6 +73,7 @@ async function bootstrap() {
         MonitorModule,
         StoreModule,
         DatabaseModule,
+        ClickhouseModule,
         RepositoryModule,
         ApiModule,
         ObjectModule,

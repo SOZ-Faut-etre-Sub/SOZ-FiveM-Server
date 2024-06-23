@@ -1,3 +1,4 @@
+import { Monitor } from '@public/client/monitor/monitor';
 import { Inject, Injectable } from '@public/core/decorators/injectable';
 import { ServerEvent } from '@public/shared/event';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
@@ -20,6 +21,9 @@ export class JobInteractionService {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(Monitor)
+    private monitor: Monitor;
 
     public async searchPlayer(entity: number) {
         const player = NetworkGetPlayerIndexFromPed(entity);
@@ -55,16 +59,11 @@ export class JobInteractionService {
             if (getDistance(plyCoords, pos) < 2.5) {
                 StopAnimTask(ped, 'random@shop_robbery', 'robbery_action_b', 1.0);
                 TriggerServerEvent('inventory:server:openInventory', 'player', playerId);
-                TriggerServerEvent(
-                    ServerEvent.MONITOR_ADD_EVENT,
-                    'job_police_search_player',
-                    {},
-                    {
-                        target_source: playerId,
-                        position: plyCoords,
-                    },
-                    true
-                );
+
+                this.monitor.traceEvent('job_police_search_player', {
+                    target_source: playerId,
+                    position: plyCoords,
+                });
             } else {
                 this.notifier.error("Personne n'est à portée de vous");
                 return;
@@ -86,17 +85,6 @@ export class JobInteractionService {
         ) {
             const playerId = GetPlayerServerId(player);
             TriggerServerEvent(ServerEvent.ESCORT_PLAYER, playerId, crimi);
-            TriggerServerEvent(
-                ServerEvent.MONITOR_ADD_EVENT,
-                'job_police_escort_player',
-                {},
-                {
-                    target_source: playerId,
-                    crimi: crimi,
-                    position: GetEntityCoords(GetPlayerPed(player)),
-                },
-                true
-            );
         }
     }
 }

@@ -67,18 +67,13 @@ export class StonkResellProvider {
             const [hasResold, resellAmount] = await this.doResell(source, item);
 
             if (hasResold) {
-                this.monitor.publish(
-                    'job_stonk_resale_bag',
-                    {
-                        item_id: item,
-                        player_source: source,
-                    },
-                    {
-                        item_label: outputItemLabel,
-                        quantity: resellAmount,
-                        position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-                    }
-                );
+                this.monitor.traceEvent('job_stonk_resale_bag', {
+                    item_id: item,
+                    player_source: source,
+                    item_label: outputItemLabel,
+                    money: resellAmount,
+                    position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+                });
 
                 const transfer = await this.bankService.transferBankMoney(
                     StonkConfig.bankAccount.farm,
