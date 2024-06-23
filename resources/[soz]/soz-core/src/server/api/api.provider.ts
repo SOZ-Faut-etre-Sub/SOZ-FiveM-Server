@@ -179,11 +179,58 @@ export class ApiProvider {
         return Response.json(this.FDFFieldProvider.exportData());
     }
 
-    @Post('/gang')
-    public async gang(request: Request): Promise<Response> {
+    @Post('/set-player-gang')
+    public async gangPlayer(request: Request): Promise<Response> {
         const data = JSON.parse(await request.body);
-        this.gangProvider.gangApiUpdate(data.player, data.gangId, data.boss);
+        this.gangProvider.gangApiPlayer(data.citizenId, data.gangId, data.isBoss);
 
         return Response.ok();
+    }
+
+    @Post('/create-gang')
+    public async createGang(request: Request): Promise<Response> {
+        try {
+            const data = JSON.parse(await request.body);
+            const [gangId, msg] = await this.gangProvider.createAPIGang(
+                data.name,
+                data.type,
+                data.business1,
+                data.business2,
+                data.universalBusiness
+            );
+
+            return Response.ok(
+                JSON.stringify({
+                    gangId: gangId,
+                    msg,
+                })
+            );
+        } catch (error) {
+            return Response.internalServerError(error);
+        }
+    }
+
+    @Post('/update-gang')
+    public async update(request: Request): Promise<Response> {
+        try {
+            const data = JSON.parse(await request.body);
+            const [success, msg] = await this.gangProvider.updateAPIGang(
+                data.id,
+                data.name,
+                data.type,
+                data.business1,
+                data.business2,
+                data.universalBusiness
+            );
+
+            return Response.ok(
+                JSON.stringify({
+                    success,
+                    msg,
+                })
+            );
+        } catch (error) {
+            return Response.internalServerError(error);
+        }
     }
 }
