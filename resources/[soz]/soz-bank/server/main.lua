@@ -84,7 +84,8 @@ QBCore.Functions.CreateCallback("banking:server:TransferMoney", function(source,
             if Player.Functions.RemoveMoney("money", amount) then
                 Account.AddMoney(accountTarget, amount)
 
-                exports["soz-core"]:TraceEvent("transfer_money", {
+                exports["soz-core"]:TraceEvent("transfer_money",
+                                               {
                     player_source = source,
                     source_account = accountSource,
                     target_account = accountTarget,
@@ -101,7 +102,8 @@ QBCore.Functions.CreateCallback("banking:server:TransferMoney", function(source,
             if Player.Functions.AddMoney("money", amount) then
                 Account.RemoveMoney(accountSource, amount)
 
-                exports["soz-core"]:TraceEvent("transfer_money", {
+                exports["soz-core"]:TraceEvent("transfer_money",
+                                               {
                     player_source = source,
                     source_account = accountSource,
                     target_account = accountTarget,
@@ -154,7 +156,8 @@ RegisterNetEvent("banking:server:SafeStorageDeposit", function(money_type, safeS
             if Player.Functions.RemoveMoney(money_type, amount) then
                 local added = Account.AddMoney(safeStorage, amount, money_type)
                 if added ~= false then
-                    exports["soz-core"]:TraceEvent("safe_deposit", {
+                    exports["soz-core"]:TraceEvent("safe_deposit",
+                                                   {
                         player_source = source,
                         target_account = safeStorage,
                         money_type = money_type,

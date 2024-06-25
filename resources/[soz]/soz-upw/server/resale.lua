@@ -17,7 +17,8 @@ QBCore.Functions.CreateCallback("soz-upw:server:ResaleEnergy", function(source, 
             TriggerEvent("banking:server:TransferMoney", Config.Upw.Accounts.FarmAccount, Config.Upw.Accounts.SafeAccount,
                          Config.Upw.Resale.EnergyCellPrice[item.name] or 0)
 
-            exports["soz-core"]:TraceEvent("job_upw_energy_resale", {
+            exports["soz-core"]:TraceEvent("job_upw_energy_resale",
+                                           {
                 player_source = source,
                 item_id = item.name,
                 amount = 1,

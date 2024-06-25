@@ -50,7 +50,8 @@ QBCore.Functions.CreateCallback("pawl:server:harvestTree", function(source, cb, 
                     end
                 end)
             end
-            exports["soz-core"]:TraceEvent("job_pawl_harvest_tree", {
+            exports["soz-core"]:TraceEvent("job_pawl_harvest_tree",
+                                           {
                 player_source = Player.PlayerData.source,
                 field = identifier,
                 position = position,
