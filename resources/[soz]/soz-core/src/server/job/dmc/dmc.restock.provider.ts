@@ -74,7 +74,7 @@ export class DmcRestockProvider {
         TriggerEvent(ServerEvent.BANKING_TRANSFER_MONEY, 'farm_dmc', 'safe_dmc', totalAmount);
 
         this.monitor.traceEvent('job_dmc_restock', {
-            item_id: item.metadata.id,
+            item_id: item.name,
             player_source: source,
             item_label: item.label,
             amount: toAddAmount,

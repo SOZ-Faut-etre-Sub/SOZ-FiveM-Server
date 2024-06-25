@@ -123,12 +123,16 @@ export class MigrationTraceEvent implements ClickhouseMigration {
                     death_ejection Nullable(Boolean),
                     death_frozen Nullable(Boolean),
                     shop_id Nullable(String),
-                    jackpot Nullable(Boolean)
+                    jackpot Nullable(Boolean),
+                    facility_id Nullable(String),
+                    facility_type Nullable(String),
+                    facility_scope Nullable(String),
+                    facility_job Nullable(String)
                 )
                 ENGINE = MergeTree()
                 PRIMARY KEY (event)
                 ORDER BY (event, timestamp)
-                PARTITION BY (event, toYYYYMM(timestamp))
+                PARTITION BY (toYYYYMM(timestamp))
             `,
         });
     }

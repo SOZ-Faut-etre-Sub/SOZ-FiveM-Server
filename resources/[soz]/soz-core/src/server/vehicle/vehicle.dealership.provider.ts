@@ -93,11 +93,7 @@ export class VehicleDealershipProvider {
         const selectedVehicles = getRandomItems(vehicles, 2);
 
         this.monitor.traceEvent('vehicle_luxury_selected', {
-            vehicle_name: selectedVehicles[0].name,
-        });
-
-        this.monitor.traceEvent('vehicle_luxury_selected', {
-            vehicle_name: selectedVehicles[1].name,
+            vehicle_name: selectedVehicles[0].name + ', ' + selectedVehicles[1].name,
         });
 
         for (const index in AuctionZones) {

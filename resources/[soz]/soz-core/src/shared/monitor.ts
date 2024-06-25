@@ -129,6 +129,10 @@ export type MonitorTraceEvent = {
     death_frozen?: boolean;
     shop_id?: string;
     jackpot?: boolean;
+    facility_id?: string;
+    facility_type?: string;
+    facility_scope?: string;
+    facility_job?: string;
 };
 
 export type MonitorEvent = {
@@ -244,4 +248,8 @@ export type MonitorEvent = {
     death_frozen?: boolean;
     shop_id?: string;
     jackpot?: boolean;
+    facility_id?: string;
+    facility_type?: string;
+    facility_scope?: string;
+    facility_job?: string;
 };

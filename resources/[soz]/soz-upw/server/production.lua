@@ -187,14 +187,16 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
                          Config.Upw.Resale.EnergyCellPriceGlobal[firstItem.item.name] or 0)
         end
 
-        TriggerEvent("soz-core:server:monitor:add-event", "job_upw_energy_restock",
-                     {item_id = item, player_citizen_id = Player.PlayerData.citizenid, facility_job = facility.job}, {
-            item_label = item.label,
-            quantity = 1,
-            resale_price = Config.Upw.Resale.EnergyCellPriceGlobal[item] or 0,
-            scope = facility.scope,
-            terminal_position = facility.zone.coords,
-        }, true)
+        exports["soz-core"]:TraceEvent("job_upw_energy_restock", {
+            player_source = source,
+            item_id = item,
+            amount = 1,
+            money = Config.Upw.Resale.EnergyCellPriceGlobal[item] or 0,
+            facility_id = identifier,
+            facility_type = facility.type,
+            facility_scope = facility.scope,
+            facility_job = facility.job,
+        })
 
         p:resolve(true, nil)
     else
@@ -207,13 +209,15 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
         exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, item, count, nil, nil, function(success, reason)
             p:resolve(success, reason)
 
-            TriggerEvent("soz-core:server:monitor:add-event", "job_upw_energy_collect",
-                         {item_id = sharedItem.name, player_citizen_id = Player.PlayerData.citizenid},
-                         {
-                item_label = sharedItem.label,
-                quantity = count,
-                terminal_position = facility.zones.energyZone.coords,
-            }, true)
+            exports["soz-core"]:TraceEvent("job_upw_energy_collect", {
+                player_source = source,
+                item_id = sharedItem.name,
+                amount = count,
+                facility_id = identifier,
+                facility_type = facility.type,
+                facility_scope = facility.scope,
+                facility_job = facility.job,
+            })
         end)
     end
 

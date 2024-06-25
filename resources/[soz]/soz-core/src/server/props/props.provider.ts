@@ -319,6 +319,7 @@ export class PropsProvider {
         this.monitor.traceEvent('hammer_delete_prop', {
             player_source: source,
             prop_id: propId,
+            collection_name: propCollectionName,
         });
 
         delete this.collectionOfProp[propId];

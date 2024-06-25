@@ -88,7 +88,7 @@ QBCore.Functions.CreateCallback("banking:server:TransferMoney", function(source,
                     player_source = source,
                     source_account = accountSource,
                     target_account = accountTarget,
-                    amount = amount,
+                    money = amount,
                 })
 
                 cb(true)

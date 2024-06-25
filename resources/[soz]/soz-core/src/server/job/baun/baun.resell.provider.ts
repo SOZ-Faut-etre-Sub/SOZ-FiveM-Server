@@ -54,7 +54,7 @@ export class BaunResellProvider {
         TriggerEvent(ServerEvent.BANKING_TRANSFER_MONEY, 'farm_baun', 'safe_baun', totalAmount);
 
         this.monitor.traceEvent('job_baun_resell', {
-            item_id: item.metadata.id,
+            item_id: item.name,
             player_source: source,
             item_label: item.label,
             amount: item.amount,

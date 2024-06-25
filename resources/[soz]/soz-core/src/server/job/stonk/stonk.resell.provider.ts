@@ -71,7 +71,7 @@ export class StonkResellProvider {
                     item_id: item,
                     player_source: source,
                     item_label: outputItemLabel,
-                    money: resellAmount,
+                    amount: resellAmount,
                     position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
                 });
 
