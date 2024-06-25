@@ -2,6 +2,7 @@ local CurrentResourceName = GetCurrentResourceName()
 local Config, Types, Players, Entities, Models, Zones, nuiData, sendData, sendDistance = Config, {{}, {}, {}}, {}, {}, {}, {}, {}, {}, {}
 local playerPed, targetActive, hasFocus, success, PedsReady, AllowTarget = PlayerPedId(), false, false, false, false, true
 local screen = {}
+local position = nil
 local table_wipe = table.wipe
 local pairs = pairs
 local CheckOptions
@@ -43,7 +44,7 @@ local function RaycastCamera(flag, playerCoords, mouseRatioPosition)
 	if not playerPed then playerPed = PlayerPedId() end
 	if not mouseRatioPosition then mouseRatioPosition = {0, 0} end
 	local rayPos, rayDir = ScreenPositionToCameraRay(mouseRatioPosition)
-	local destination = rayPos + 10000 * rayDir
+	local destination = rayPos + 100000 * rayDir
 	local rayHandle = StartShapeTestLosProbe(rayPos.x, rayPos.y, rayPos.z, destination.x, destination.y, destination.z, flag or -1, playerPed, 0)
 	while true do
 		local result, hit, endCoords, _, entityHit = GetShapeTestResult(rayHandle)
@@ -150,7 +151,7 @@ local function CheckEntity(hit, datatable, entity, distance)
 			SendNUIMessage({response = "foundTarget", data = nuiData})
 			DrawOutlineEntity(entity, true)
 			while targetActive and success do
-				local _, _, dist, entity2, _ = RaycastCamera(hit, GetEntityCoords(playerPed))
+				local _, _, dist, entity2, _ = RaycastCamera(hit, position or GetEntityCoords(playerPed))
 				if entity ~= entity2 then
 					LeftTarget()
 					DrawOutlineEntity(entity, false)
@@ -235,7 +236,7 @@ local function EnableTarget()
 
 		while targetActive do
 			local sleep = 0
-			local hit, coords, distance, entity, entityType = RaycastCamera(curFlag, GetEntityCoords(playerPed))
+			local hit, coords, distance, entity, entityType = RaycastCamera(curFlag, position or GetEntityCoords(playerPed))
 			if curFlag == 30 then curFlag = -1 else curFlag = 30 end
 			if distance <= Config.MaxDistance then
 				if entityType > 0 then
@@ -434,7 +435,7 @@ end
 	center = type(center) == 'table' and vector3(center.x, center.y, center.z) or center
 	Zones[name] = CircleZone:Create(center, radius, options)
 	RegisterZoneCallback(Zones[name], options)
-	targetoptions.distance = targetoptions.distance or Config.MaxDistance
+	targetoptions.distance = targetoptions.distance or Config.DefaultDistance
 	Zones[name].targetoptions = targetoptions
 end
 
@@ -444,7 +445,7 @@ local function AddBoxZone(name, center, length, width, options, targetoptions)
 	center = type(center) == 'table' and vector3(center.x, center.y, center.z) or center
 	Zones[name] = BoxZone:Create(center, length, width, options)
 	RegisterZoneCallback(Zones[name], options)
-	targetoptions.distance = targetoptions.distance or Config.MaxDistance
+	targetoptions.distance = targetoptions.distance or Config.DefaultDistance
 	Zones[name].targetoptions = targetoptions
 end
 
@@ -459,7 +460,7 @@ local function AddPolyZone(name, points, options, targetoptions)
 	end
 	Zones[name] = PolyZone:Create(#_points > 0 and _points or points, options)
 	RegisterZoneCallback(Zones[name], options)
-	targetoptions.distance = targetoptions.distance or Config.MaxDistance
+	targetoptions.distance = targetoptions.distance or Config.DefaultDistance
 	Zones[name].targetoptions = targetoptions
 end
 
@@ -467,14 +468,14 @@ exports("AddPolyZone", AddPolyZone)
 
 local function AddComboZone(zones, options, targetoptions)
 	Zones[options.name] = ComboZone:Create(zones, options)
-	targetoptions.distance = targetoptions.distance or Config.MaxDistance
+	targetoptions.distance = targetoptions.distance or Config.DefaultDistance
 	Zones[options.name].targetoptions = targetoptions
 end
 
 exports("AddComboZone", AddComboZone)
 
 local function AddTargetBone(bones, parameters)
-	local distance, options = parameters.distance or Config.MaxDistance, parameters.options
+	local distance, options = parameters.distance or Config.DefaultDistance, parameters.options
 	if type(bones) == 'table' then
 		for _, bone in pairs(bones) do
 			if not Bones.Options[bone] then Bones.Options[bone] = {} end
@@ -495,7 +496,7 @@ end
 exports("AddTargetBone", AddTargetBone)
 
 local function AddTargetEntity(entities, parameters)
-	local distance, options = parameters.distance or Config.MaxDistance, parameters.options
+	local distance, options = parameters.distance or Config.DefaultDistance, parameters.options
 	if type(entities) == 'table' then
 		for _, entity in pairs(entities) do
 			entity = NetworkGetEntityIsNetworked(entity) and NetworkGetNetworkIdFromEntity(entity) or entity
@@ -523,14 +524,14 @@ exports("AddTargetEntity", AddTargetEntity)
 
 local function AddEntityZone(name, entity, options, targetoptions)
 	Zones[name] = EntityZone:Create(entity, options)
-	targetoptions.distance = targetoptions.distance or Config.MaxDistance
+	targetoptions.distance = targetoptions.distance or Config.DefaultDistance
 	Zones[name].targetoptions = targetoptions
 end
 
 exports("AddEntityZone", AddEntityZone)
 
 local function AddTargetModel(models, parameters)
-	local distance, options = parameters.distance or Config.MaxDistance, parameters.options
+	local distance, options = parameters.distance or Config.DefaultDistance, parameters.options
 	if type(models) == 'table' then
 		for _, model in pairs(models) do
 			if type(model) == 'string' then model = GetHashKey(model) end
@@ -667,7 +668,7 @@ end
 exports("RemoveTargetEntity", RemoveTargetEntity)
 
 local function AddGlobalType(type, parameters)
-	local distance, options = parameters.distance or Config.MaxDistance, parameters.options
+	local distance, options = parameters.distance or Config.DefaultDistance, parameters.options
 	for k, v in pairs(options) do
 		if not v.distance or v.distance > distance then v.distance = distance end
 		Types[type][v.label] = v
@@ -689,7 +690,7 @@ local function AddGlobalObject(parameters) AddGlobalType(3, parameters) end
 exports("AddGlobalObject", AddGlobalObject)
 
 local function AddGlobalPlayer(parameters)
-	local distance, options = parameters.distance or Config.MaxDistance, parameters.options
+	local distance, options = parameters.distance or Config.DefaultDistance, parameters.options
 	for k, v in pairs(options) do
 		if not v.distance or v.distance > distance then v.distance = distance end
 		local key = v.label .. (v.job or "") .. (v.color or "")
@@ -1150,6 +1151,16 @@ AddEventHandler('onResourceStop', function(resource)
 		DeletePeds()
 	end
 end)
+
+local function SetPosition(x, y, z)
+	if x == nil then
+		position = nil
+	else
+		position = vec3(x, y, z)
+	end
+end
+
+exports("SetPosition", SetPosition)
 
 -- Debug Option
 

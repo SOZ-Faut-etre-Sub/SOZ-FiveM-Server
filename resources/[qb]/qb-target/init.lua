@@ -18,7 +18,8 @@ end
 Config = {}
 
 -- It's possible to interact with entities through walls so this should be low
-Config.MaxDistance = 5.0
+Config.MaxDistance = 100.0
+Config.DefaultDistance = 5.0
 
 -- Enable debug options
 Config.Debug = false

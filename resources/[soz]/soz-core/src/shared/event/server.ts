@@ -581,6 +581,9 @@ export enum ServerEvent {
     GANG_SMUGGLING_ELECTRONIC_PUT_C4 = 'soz-core:server:gang:smuggling:electronic-putting-c4',
     GANG_SMUGGLING_GETTING_ELECTRONIC_PARTS = 'soz-core:server:gang:smuggling:getting-electronic-parts',
 
+    GANG_CYBER_HACK_VEHICLE = 'soz-core:server:gang:cyber:hack-vehicle',
+    GANG_CYBER_HACK_PED = 'soz-core:server:gang:cyber:hack-ped',
+
     DOOR_ADD_UPDATE = 'soz-core:server:door:add-update',
     DOOR_DELETE = 'soz-core:server:door:delete',
 

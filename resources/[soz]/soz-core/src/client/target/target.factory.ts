@@ -1,5 +1,6 @@
 import { JobType } from '@public/shared/job';
 import { PolygonZone } from '@public/shared/polyzone/polygon.zone';
+import { Vector3 } from '@public/shared/polyzone/vector';
 
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { BoxZone, Zone } from '../../shared/polyzone/box.zone';
@@ -215,6 +216,18 @@ export class TargetFactory {
             options: targets,
             distance: distance,
         });
+    }
+
+    public isActive() {
+        return exports['qb-target'].IsTargetSuccess();
+    }
+
+    public setPosition(position: Vector3) {
+        if (position) {
+            exports['qb-target'].SetPosition(position[0], position[1], position[2]);
+        } else {
+            exports['qb-target'].SetPosition(null);
+        }
     }
 
     public raycastFromMousePosition(flag: number) {
