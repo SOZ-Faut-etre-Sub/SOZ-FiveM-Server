@@ -254,6 +254,7 @@ export type InventoryItemMetadata = {
     photosInDetectiveBoard?: string[];
     photoUrl?: string;
     evidenceInfos?: EvidenceMetadata;
+    storageElements?: InventoryItem[];
 };
 
 export type Inventory = {
