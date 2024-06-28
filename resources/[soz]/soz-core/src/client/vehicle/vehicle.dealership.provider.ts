@@ -119,6 +119,10 @@ export class VehicleDealershipProvider {
                 continue;
             }
 
+            if (!config.ped) {
+                continue;
+            }
+
             this.blipFactory.create(`dealership_${dealership}`, {
                 name: config.blip.name,
                 sprite: config.blip.sprite,
@@ -361,7 +365,7 @@ export class VehicleDealershipProvider {
     @OnNuiEvent<{ vehicle: Vehicle; dealershipId: string; dealership: DealershipConfigItem }>(
         NuiEvent.VehicleDealershipBuyVehicle
     )
-    public async buyVehicle({ vehicle, dealershipId, dealership }): Promise<void> {
+    public async buyVehicle({ vehicle, dealershipId }): Promise<void> {
         let parkingPlace = null;
 
         if (dealershipId === DealershipType.Job) {
@@ -396,13 +400,7 @@ export class VehicleDealershipProvider {
             parkingPlace = getRandomItem(freePlaces);
         }
 
-        const bought = await emitRpc(
-            RpcServerEvent.VEHICLE_DEALERSHIP_BUY,
-            vehicle,
-            dealershipId,
-            dealership,
-            parkingPlace
-        );
+        const bought = await emitRpc(RpcServerEvent.VEHICLE_DEALERSHIP_BUY, vehicle, dealershipId, parkingPlace);
 
         if (bought) {
             this.clearMenu();

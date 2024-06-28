@@ -45,7 +45,6 @@ export const MenuVehicleDealership: FunctionComponent<MenuVehicleDealershipProps
         fetchNui(NuiEvent.VehicleDealershipBuyVehicle, {
             vehicle,
             dealershipId: data.dealershipId,
-            dealership: data.dealership,
         });
     };
 

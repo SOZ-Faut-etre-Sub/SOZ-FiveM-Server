@@ -5,7 +5,7 @@ import { PlayerData } from '@public/shared/player';
 import { formatDuration } from '@public/shared/utils/timeformat';
 import { add, addSeconds } from 'date-fns';
 
-import { AuctionZones, DealershipConfigItem, DealershipType } from '../../config/dealership';
+import { AuctionZones, DealershipConfig, DealershipType } from '../../config/dealership';
 import { GarageList } from '../../config/garage';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -422,7 +422,8 @@ export class VehicleDealershipProvider {
         let playerVehicleCount = 0;
         for (const veh of playerVehicles) {
             const vehDef = await this.vehicleRepository.findByModel(veh.vehicle);
-            if (vehDef.dealershipId && vehDef.dealershipId !== DealershipType.Cycle) {
+
+            if (vehDef && vehDef.dealershipId && vehDef.dealershipId !== DealershipType.Cycle) {
                 playerVehicleCount++;
             }
         }
@@ -444,10 +445,10 @@ export class VehicleDealershipProvider {
         source: number,
         vehicle: Vehicle,
         dealershipId: DealershipType,
-        dealership?: DealershipConfigItem,
         parkingPlace?: Zone
     ): Promise<boolean> {
         const player = this.playerService.getPlayer(source);
+        const dealership = DealershipConfig[dealershipId];
 
         if (!player) {
             return false;

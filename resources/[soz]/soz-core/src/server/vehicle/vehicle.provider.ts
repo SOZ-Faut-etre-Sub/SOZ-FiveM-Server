@@ -45,7 +45,19 @@ export class VehicleProvider {
             return;
         }
 
-        const garage = vehClass == VehicleClass.Boats ? 'docks_boat' : 'airport_public';
+        let garage = 'airport_public';
+        switch (vehClass) {
+            case VehicleClass.Boats:
+                garage = 'docks_boat';
+                break;
+            case VehicleClass.Planes:
+            case VehicleClass.Helicopters:
+                garage = 'airport_public_air';
+                break;
+            default:
+                garage = 'airport_public';
+                break;
+        }
 
         await this.prismaService.playerVehicle.create({
             data: {

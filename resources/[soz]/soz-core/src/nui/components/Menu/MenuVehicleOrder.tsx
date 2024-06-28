@@ -5,7 +5,12 @@ import { NuiEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
 import { RepositoryType } from '@public/shared/repository';
 import { formatDuration } from '@public/shared/utils/timeformat';
-import { VehicleOrder, VehicleOrderCostMuliplier, VehicleOrderMenuData } from '@public/shared/vehicle/vehicle';
+import {
+    VehicleCategory,
+    VehicleOrder,
+    VehicleOrderCostMuliplier,
+    VehicleOrderMenuData,
+} from '@public/shared/vehicle/vehicle';
 import { FunctionComponent, useState } from 'react';
 
 import {
@@ -72,7 +77,7 @@ export const VehicleOrderMenu: FunctionComponent<VehicleOrderMenuProps> = ({ dat
                     {sortedCategories.map((category, index) => {
                         return (
                             <MenuItemSubMenuLink id={`category_${index}`} key={index}>
-                                {category}
+                                {VehicleCategory[category]}
                             </MenuItemSubMenuLink>
                         );
                     })}
@@ -98,7 +103,11 @@ export const VehicleOrderMenu: FunctionComponent<VehicleOrderMenuProps> = ({ dat
                                         <div className="pr-2 flex items-center justify-between">
                                             <span> {vehicle.name} </span>
                                             <span>
-                                                💸 {Math.ceil(vehicle.price * VehicleOrderCostMuliplier[data.mode])}{' '}
+                                                💸{' '}
+                                                {Math.ceil(
+                                                    vehicle.price * VehicleOrderCostMuliplier[data.mode]
+                                                ).toLocaleString('fr-FR')}{' '}
+                                                $
                                             </span>
                                         </div>
                                     </MenuItemButton>

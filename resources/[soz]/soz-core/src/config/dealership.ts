@@ -13,6 +13,7 @@ export enum DealershipType {
     Luxury = 'luxury',
     Electric = 'electric',
     Armored = 'armored',
+    Cartel = 'cartel',
 }
 
 export type DealershipConfigItem = {
@@ -82,6 +83,17 @@ export const DealershipConfig: Partial<Record<DealershipType, DealershipConfigIt
         },
         //daysBeforeNextPurchase: 7,
         garageName: 'airport_public',
+    },
+    [DealershipType.Cartel]: {
+        position: null,
+        blip: {
+            name: 'Concessionnaire Avion',
+            sprite: null,
+            color: null,
+        },
+        ped: null,
+        showroom: null,
+        garageName: 'airport_public_air',
     },
     [DealershipType.Cycle]: {
         position: [-1222.26, -1494.83, 3.34, 120.0],

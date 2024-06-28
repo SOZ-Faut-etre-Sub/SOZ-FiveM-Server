@@ -580,6 +580,7 @@ export type VehicleOrder = {
 export enum VehicleOrderMode {
     Job = 'job',
     Crimi = 'crimi',
+    Cartel = 'cartel',
 }
 
 export type VehicleOrderMenuData = {
@@ -598,4 +599,5 @@ export type VehicleOrderConfig = {
 export const VehicleOrderCostMuliplier: Record<VehicleOrderMode, number> = {
     [VehicleOrderMode.Crimi]: VehicleBusinessImportConf.CostMuliplier,
     [VehicleOrderMode.Job]: 0.01,
+    [VehicleOrderMode.Cartel]: 1,
 };
