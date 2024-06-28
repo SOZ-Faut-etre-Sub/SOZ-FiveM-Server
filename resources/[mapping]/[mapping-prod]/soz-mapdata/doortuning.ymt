@@ -295,7 +295,7 @@
         <BreakableByVehicle value="false" />
         <BreakingImpulse value="0.000000" />
         <ShouldLatchShut value="true" />
-        <MassMultiplier value="5.000000" />
+        <MassMultiplier value="15.000000" />
         <WeaponImpulseMultiplier value="5.000000" />
         <RotationLimitAngle value="0.000000" />
         <TorqueAngularVelocityLimit value="5.000000" />
