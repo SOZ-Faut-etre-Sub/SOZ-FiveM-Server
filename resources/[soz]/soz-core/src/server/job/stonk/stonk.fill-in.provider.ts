@@ -92,12 +92,11 @@ export class StonkFillInProvider {
                 );
                 if (!transfer) {
                     this.logger.error(
-                        'Failed to transfer money to safe',
-                        JSON.stringify({
+                        `Failed to transfer money to safe ${JSON.stringify({
                             account_source: StonkConfig.bankAccount.bankRefill,
                             account_destination: accountName,
                             amount: StonkConfig.collection[item].refill_value * fillAmount,
-                        })
+                        })}`
                     );
                 }
 
@@ -108,12 +107,11 @@ export class StonkFillInProvider {
                 );
                 if (!transferSociety) {
                     this.logger.error(
-                        'Failed to transfer money to safe',
-                        JSON.stringify({
+                        `Failed to transfer money to safe ${JSON.stringify({
                             account_source: StonkConfig.bankAccount.farm,
                             account_destination: StonkConfig.bankAccount.safe,
                             amount: StonkConfig.collection[item].society_gain * fillAmount,
-                        })
+                        })}`
                     );
                 }
 

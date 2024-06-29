@@ -119,7 +119,7 @@ export class FightForStyleRestockProvider {
         const category = this.garmentToCategory(garment);
 
         if (category == -1) {
-            this.logger.error('Invalid category for item ', garment);
+            this.logger.error(`Invalid category for item ${garment}`);
             return;
         }
 

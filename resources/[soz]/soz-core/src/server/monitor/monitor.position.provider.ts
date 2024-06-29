@@ -36,7 +36,7 @@ export class MonitorPositionProvider {
                 vehicle_type: vehicle ? GetVehicleType(vehicle) : null,
                 vehicle_plate: vehicle ? GetVehicleNumberPlateText(vehicle) : null,
                 position: [position[0], position[1]],
-                orientation: GetEntityHeading(ped),
+                heading: GetEntityHeading(ped),
                 z: position[2],
             });
         }

@@ -1,3 +1,5 @@
+import { LogEvent } from '@public/shared/monitor';
+
 import { SOZ_CORE_IS_PRODUCTION } from '../globals';
 import { Inject, Injectable } from './decorators/injectable';
 
@@ -30,7 +32,7 @@ export const shouldLog = (level: LogLevel, minLevel: LogLevel): boolean => {
 };
 
 export interface LogHandler {
-    write(level: LogLevel, ...message: string[]): void;
+    write(level: LogLevel, message: string, extra: Partial<LogEvent>): void;
 }
 
 @Injectable()
@@ -47,9 +49,9 @@ export class LogConsoleHandler implements LogHandler {
         return `^${color.valueOf().toString()}[${new Date().toISOString()}] ${message.join(' ')}^7`;
     }
 
-    public write(level: LogLevel, ...message: string[]): void {
+    public write(level: LogLevel, message: string, extra: Partial<LogEvent>): void {
         if (shouldLog(level, this.level)) {
-            console.log(this.format(levelToColors[level], ...message));
+            console.log(this.format(levelToColors[level], message, JSON.stringify(extra)));
         }
     }
 }
@@ -66,9 +68,9 @@ export class LogChainHandler implements LogHandler {
         this.handlers.push(handler);
     }
 
-    public write(level: LogLevel, ...message: string[]): void {
+    public write(level: LogLevel, message: string, extra: Partial<LogEvent>): void {
         for (const handler of this.handlers) {
-            handler.write(level, ...message);
+            handler.write(level, message, extra);
         }
     }
 }
@@ -85,28 +87,32 @@ export class Logger {
     @Inject(LogChainHandler)
     private handler: LogChainHandler;
 
-    public info(...message: string[]): void {
-        this.write(LogLevel.Info, ...message);
+    public format(...message: string[]): string {
+        return message.join(' ');
     }
 
-    public debug(...message: string[]): void {
-        this.write(LogLevel.Debug, ...message);
+    public info(message: string, extra: Partial<LogEvent> = {}): void {
+        this.write(LogLevel.Info, message, extra);
     }
 
-    public warn(...message: string[]): void {
-        this.write(LogLevel.Warn, ...message);
+    public debug(message: string, extra: Partial<LogEvent> = {}): void {
+        this.write(LogLevel.Debug, message, extra);
     }
 
-    public error(...message: string[]): void {
-        this.write(LogLevel.Error, ...message);
+    public warn(message: string, extra: Partial<LogEvent> = {}): void {
+        this.write(LogLevel.Warn, message, extra);
     }
 
-    public log(level: LogLevel, ...message: string[]): void {
-        this.write(level, ...message);
+    public error(message: string, extra: Partial<LogEvent> = {}): void {
+        this.write(LogLevel.Error, message, extra);
     }
 
-    private write(level: LogLevel, ...message: string[]) {
-        this.handler.write(level, ...message);
+    public log(level: LogLevel, message: string, extra: Partial<LogEvent> = {}): void {
+        this.write(level, message, extra);
+    }
+
+    private write(level: LogLevel, message: string, extra: Partial<LogEvent> = {}): void {
+        this.handler.write(level, message, extra);
     }
 }
 

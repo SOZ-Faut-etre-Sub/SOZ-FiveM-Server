@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
 import { Tick } from '@core/decorators/tick';
 import { ClickhouseService } from '@public/server/clickhouse/clickhouse.service';
+import { ClickhouseLoggerHandler } from '@public/server/monitor/clickhouse.logger.handler';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
 import { MonitorEvent, MonitorTraceEvent } from '../../shared/monitor';
@@ -14,20 +15,31 @@ export class Monitor {
     @Inject(ClickhouseService)
     private clickhouse: ClickhouseService;
 
+    @Inject(ClickhouseLoggerHandler)
+    private clickhouseLoggerHandler: ClickhouseLoggerHandler;
+
     private eventBuffer: MonitorTraceEvent[] = [];
 
     public async flush() {
-        if (this.eventBuffer.length === 0) {
-            return;
-        }
-
         const events = this.eventBuffer.splice(0, this.eventBuffer.length);
 
-        await this.clickhouse.insert({
-            table: 'trace_events',
-            values: events,
-            format: 'JSONEachRow',
-        });
+        if (events.length > 0) {
+            await this.clickhouse.insert({
+                table: 'trace_events',
+                values: events,
+                format: 'JSONEachRow',
+            });
+        }
+
+        const logs = this.clickhouseLoggerHandler.flush();
+
+        if (logs.length > 0) {
+            await this.clickhouse.insert({
+                table: 'logs',
+                values: logs,
+                format: 'JSONEachRow',
+            });
+        }
     }
 
     public traceEvent(type: string, event: MonitorEvent): void {

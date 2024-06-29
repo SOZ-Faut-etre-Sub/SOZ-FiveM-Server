@@ -5,13 +5,14 @@ import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
 import { LogChainHandler, Logger, LogLevel } from '../../core/logger';
 import { ServerEvent } from '../../shared/event';
-import { MonitorEvent } from '../../shared/monitor';
+import { LogEvent, MonitorEvent } from '../../shared/monitor';
+import { ClickhouseService } from '../clickhouse/clickhouse.service';
 import { PlayerService } from '../player/player.service';
-import { LokiLoggerHandler } from './loki.logger.handler';
+import { ClickhouseLoggerHandler } from './clickhouse.logger.handler';
 import { Monitor } from './monitor';
 
 @Provider()
-export class MonitorLokiProvider {
+export class MonitorClickhouseProvider {
     @Inject(Logger)
     private logger: Logger;
 
@@ -21,15 +22,15 @@ export class MonitorLokiProvider {
     @Inject(LogChainHandler)
     private logChainHandler: LogChainHandler;
 
-    @Inject(LokiLoggerHandler)
-    private lokiLoggerHandler: LokiLoggerHandler;
+    @Inject(ClickhouseLoggerHandler)
+    private clickhouseLoggerHandler: ClickhouseLoggerHandler;
 
     @Inject(Monitor)
     private monitor: Monitor;
 
     @Once()
     onLokiProviderStart() {
-        this.logChainHandler.addHandler(this.lokiLoggerHandler);
+        this.logChainHandler.addHandler(this.clickhouseLoggerHandler);
     }
 
     @OnEvent(ServerEvent.MONITOR_TRACE_EVENT)
@@ -47,29 +48,31 @@ export class MonitorLokiProvider {
     }
 
     @OnEvent(ServerEvent.MONITOR_LOG)
-    public onAddLog(source: number, level: LogLevel, message: string, content: Record<string, any> = {}) {
+    public onAddLog(source: number, level: LogLevel, message: string, extra: Partial<LogEvent>) {
         const player = this.playerService.getPlayer(source);
 
         if (player) {
-            content = {
-                ...content,
-                player: {
-                    citizen_id: player.citizenid,
-                    name: player.charinfo.firstname + ' ' + player.charinfo.lastname,
-                    job: player.job.id,
-                    license: player.license,
-                },
+            extra = {
+                citizen_id: player.citizenid,
+                player_name: player.charinfo.firstname + ' ' + player.charinfo.lastname,
+                player_job: player.job.id,
+                player_on_duty: player.job.onduty,
+                ...extra,
             };
-
-            message = `[Player ${player.citizenid}] ${message}`;
         }
 
-        this.handleLog(level, message, content);
+        extra = {
+            player_source: source,
+            ...extra,
+            origin: 'client',
+        };
+
+        this.handleLog(level, message, extra);
     }
 
     @Exportable('Log')
-    private handleLog(level: LogLevel, message: string, content: Record<string, any> = {}) {
-        this.logger.log(level, message, JSON.stringify(content));
+    private handleLog(level: LogLevel, message: string, content: Partial<LogEvent>) {
+        this.logger.log(level, message, content);
     }
 
     @Exportable('TraceEvent')

@@ -10,17 +10,17 @@ export class MigrationPlayerPosition implements ClickhouseMigration {
     async migrate(): Promise<void> {
         await this.clickhouseService.exec({
             query: `
-                CREATE TABLE IF NOT EXISTS player_position
+                CREATE TABLE IF NOT EXISTS logs
                 (
-                    citizen_id String,
-                    player_name String,
-                    player_job LowCardinality(String),
-                    vehicle_type LowCardinality(Nullable(String)),
-                    vehicle_plate Nullable(String),
-                    position Point,
-                    z Float64,
-                    heading Float64,
-                    timestamp DateTime64 DEFAULT now64()
+                    level LowCardinality(String),
+                    message String,
+                    timestamp DateTime64 DEFAULT now64(),
+                    origin LowCardinality(String),
+                    citizen_id Nullable(String),
+                    player_name Nullable(String),
+                    player_job LowCardinality(Nullable(String)),
+                    player_source Nullable(Int64),
+                    player_on_duty Nullable(Boolean)
                 )
                 ENGINE = MergeTree()
                 ORDER BY (timestamp)
@@ -30,7 +30,7 @@ export class MigrationPlayerPosition implements ClickhouseMigration {
     }
 
     get name(): string {
-        return 'add_player_position_table';
+        return 'add_log_table';
     }
 
     get priority(): number {

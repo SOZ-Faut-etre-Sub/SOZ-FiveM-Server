@@ -1,17 +1,17 @@
+import { LogLevel } from '@core/logger';
 import { Vector2, Vector3 } from '@public/shared/polyzone/vector';
 
-export type LokiEvent = {
-    stream: Record<string, any>;
-    values: [string, string][];
+export type LogEvent = {
+    timestamp: number;
+    level: LogLevel;
+    message: string;
+    origin: 'server' | 'client' | 'cheat';
+    citizen_id?: string;
+    player_source?: number;
+    player_name?: string;
+    player_job?: string;
+    player_on_duty?: boolean;
 };
-
-export type MonitorEventType =
-    | 'paycheck'
-    | 'news_tax'
-    | 'senator_paycheck'
-    | 'job_onduty'
-    | 'job_offduty'
-    | 'job_baun_resell';
 
 export type MonitorTraceEvent = {
     event: string;

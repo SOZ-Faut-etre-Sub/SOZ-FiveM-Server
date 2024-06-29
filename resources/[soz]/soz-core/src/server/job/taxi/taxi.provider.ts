@@ -29,12 +29,11 @@ export class TaxiProvider {
         );
         if (!transfer) {
             this.logger.error(
-                'Failed to transfer money to safe',
-                JSON.stringify({
+                `Failed to transfer money to safe: ${JSON.stringify({
                     account_source: TaxiConfig.bankAccount.farm,
                     account_destination: TaxiConfig.bankAccount.safe,
                     amount: amount,
-                })
+                })}`
             );
         }
 
@@ -54,12 +53,11 @@ export class TaxiProvider {
         );
         if (!transfer) {
             this.logger.error(
-                'Failed to transfer money to safe',
-                JSON.stringify({
+                `Failed to transfer money to safe: ${JSON.stringify({
                     account_source: TaxiConfig.bankAccount.farm,
                     account_destination: TaxiConfig.bankAccount.safe,
                     amount: amount,
-                })
+                })}`
             );
         }
 

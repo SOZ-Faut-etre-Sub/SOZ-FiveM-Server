@@ -29,7 +29,7 @@ export class UpwChargerRepository extends RepositoryLegacy<Record<number, UpwCha
                     active: station.active == 1,
                 };
             } catch (e) {
-                this.logger.error('cannot load charger: ', station.station, e);
+                this.logger.error(`cannot load charger: ${station.station} ${e}`);
             }
         }
 

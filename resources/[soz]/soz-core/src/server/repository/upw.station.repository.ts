@@ -32,7 +32,7 @@ export class UpwStationRepository extends RepositoryLegacy<Record<string, UpwSta
                     job: station.job,
                 };
             } catch (e) {
-                this.logger.error('cannot load station: ', station.station, e);
+                this.logger.error(`cannot load station: ${station.station} ${e}`);
             }
         }
 

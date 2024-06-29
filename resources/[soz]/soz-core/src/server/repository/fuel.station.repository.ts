@@ -77,7 +77,7 @@ export class FuelStationRepository extends RepositoryLegacy<Record<string, FuelS
                     job: station.owner ? (station.owner as JobType) : null,
                 };
             } catch (e) {
-                this.logger.error('cannot load station: ', station.station, e);
+                this.logger.error(`cannot load station: ${station.station} ${e}`);
             }
         }
 

@@ -26,7 +26,7 @@ export class ApiClient {
         });
 
         if (response.status !== 201) {
-            this.logger.error('error when adding reboot message, status:', String(response.status), response.data);
+            this.logger.error(`error when adding reboot message, status: ${String(response.status)} ${response.data}`);
         }
     }
 
@@ -34,7 +34,9 @@ export class ApiClient {
         const response = await this.post('/discord/delete-reboot-message', {});
 
         if (response.status !== 201) {
-            this.logger.error('error when removing reboot message, status:', String(response.status), response.data);
+            this.logger.error(
+                `error when removing reboot message, status: ${String(response.status)} ${response.data}`
+            );
         }
     }
 }
