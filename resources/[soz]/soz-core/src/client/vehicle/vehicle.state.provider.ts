@@ -93,11 +93,7 @@ export class VehicleStateProvider {
 
                     SetVehicleMaxSpeed(vehicle, speedLimit / 3.6 - 0.25);
                 } else {
-                    const maxSpeed = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fInitialDriveMaxFlatVel');
-                    SetVehicleMaxSpeed(vehicle, maxSpeed);
-
-                    const passengerCount = Math.max(0, GetVehicleNumberOfPassengers(vehicle) - 1);
-                    ModifyVehicleTopSpeed(vehicle, 1 - passengerCount * 0.02);
+                    SetVehicleMaxSpeed(vehicle, 0);
                 }
             })
         );

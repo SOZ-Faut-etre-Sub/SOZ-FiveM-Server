@@ -113,7 +113,7 @@ export class VehicleSeatbeltProvider {
             return;
         }
 
-        if (GetEntitySpeed(vehicle) * 3.6 > 75) {
+        if (GetEntitySpeed(vehicle) * 3.6 > 75 && !this.isSeatbeltOn) {
             this.notifier.notify('Vous allez trop vite pour faire ça.', 'error');
 
             return;
