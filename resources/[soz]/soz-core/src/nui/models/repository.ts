@@ -9,7 +9,7 @@ export const repository = createModel<RootModel>()({
         set<
             T extends keyof RepositoryConfig,
             K extends keyof RepositoryConfig[T] = keyof RepositoryConfig[T],
-            V extends RepositoryConfig[T][K] = RepositoryConfig[T][K],
+            V extends RepositoryConfig[T][K] = RepositoryConfig[T][K]
         >(state, type: T, data: Record<K, V>) {
             return { ...state, [type]: data };
         },

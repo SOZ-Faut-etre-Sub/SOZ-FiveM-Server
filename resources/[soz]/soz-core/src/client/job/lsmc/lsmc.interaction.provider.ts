@@ -329,8 +329,9 @@ export class LSMCInteractionProvider {
                     return !hasRescuerLicense;
                 },
                 action: async entity => {
-                    const completed =
-                        await this.policeLicenceProvider.playLicenceAnimation('Enregistrement du diplôme...');
+                    const completed = await this.policeLicenceProvider.playLicenceAnimation(
+                        'Enregistrement du diplôme...'
+                    );
                     if (!completed) {
                         return;
                     }
@@ -359,8 +360,9 @@ export class LSMCInteractionProvider {
                     return !!hasRescuerLicense;
                 },
                 action: async entity => {
-                    const completed =
-                        await this.policeLicenceProvider.playLicenceAnimation('Suppression du diplôme...');
+                    const completed = await this.policeLicenceProvider.playLicenceAnimation(
+                        'Suppression du diplôme...'
+                    );
                     if (!completed) {
                         return;
                     }

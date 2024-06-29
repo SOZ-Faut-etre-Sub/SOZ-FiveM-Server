@@ -111,10 +111,10 @@ const doAnimation = async (
     const duration = animation.duration
         ? animation.duration
         : forceDuration
-          ? 1000
-          : animation.options?.repeat
-            ? -1
-            : GetAnimDuration(animation.dictionary, animation.name) * 1000;
+        ? 1000
+        : animation.options?.repeat
+        ? -1
+        : GetAnimDuration(animation.dictionary, animation.name) * 1000;
 
     const blendInSpeed = animation.blendInSpeed ? animation.blendInSpeed : 8.0;
     const blendOutSpeed = animation.blendOutSpeed ? animation.blendOutSpeed : -8.0;

@@ -59,7 +59,7 @@ export class TattooShopProvider {
                 ({
                     ...product,
                     Name: product.LocalizedName != null ? product.LocalizedName : GetLabelText(product.Name),
-                }) as TattooShopItem
+                } as TattooShopItem)
         );
 
         await this.setupShop(brand, shop);

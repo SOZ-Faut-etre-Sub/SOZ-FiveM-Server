@@ -1,5 +1,4 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
-import { Tick } from '@core/decorators/tick';
 import { ClickhouseService } from '@public/server/clickhouse/clickhouse.service';
 import { ClickhouseLoggerHandler } from '@public/server/monitor/clickhouse.logger.handler';
 import { Vector3 } from '@public/shared/polyzone/vector';

@@ -44,8 +44,8 @@ export class DmcRestockProvider {
             availableAmount == 0
                 ? 'Aucune pièce ajoutée au stock LS Custom. Le stock est déjà plein.'
                 : maxAmount > availableAmount
-                  ? `${toAddAmount} pièce(s) ajoutée(s) au stock LS Custom. Le stock est maintenant plein.`
-                  : `${toAddAmount} pièce(s) ajoutée(s) au stock LS Custom.`;
+                ? `${toAddAmount} pièce(s) ajoutée(s) au stock LS Custom. Le stock est maintenant plein.`
+                : `${toAddAmount} pièce(s) ajoutée(s) au stock LS Custom.`;
 
         if (toAddAmount == 0) {
             this.notifier.notify(source, msg, 'error');

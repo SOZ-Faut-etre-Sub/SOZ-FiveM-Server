@@ -7,7 +7,7 @@ import { RootState } from '../store';
 export const useRepository = <
     T extends keyof RepositoryConfig,
     K extends keyof RepositoryConfig[T] = keyof RepositoryConfig[T],
-    V extends RepositoryConfig[T][K] = RepositoryConfig[T][K],
+    V extends RepositoryConfig[T][K] = RepositoryConfig[T][K]
 >(
     type: T
 ): Record<K, V> => {

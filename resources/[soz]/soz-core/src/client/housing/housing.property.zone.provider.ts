@@ -168,8 +168,8 @@ export class HousingPropertyZoneProvider {
             const name = hasPropertyAccess
                 ? 'Habitation - Résidence'
                 : category === 'building'
-                  ? 'Habitation - Immeuble'
-                  : 'Habitation - Maison';
+                ? 'Habitation - Immeuble'
+                : 'Habitation - Maison';
 
             if (this.blipFactory.exist(id)) {
                 this.blipFactory.update(id, {

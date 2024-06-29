@@ -6,7 +6,6 @@ import { Tick } from '../../core/decorators/tick';
 import { LogChainHandler, Logger, LogLevel } from '../../core/logger';
 import { ServerEvent } from '../../shared/event';
 import { LogEvent, MonitorEvent } from '../../shared/monitor';
-import { ClickhouseService } from '../clickhouse/clickhouse.service';
 import { PlayerService } from '../player/player.service';
 import { ClickhouseLoggerHandler } from './clickhouse.logger.handler';
 import { Monitor } from './monitor';

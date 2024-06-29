@@ -133,8 +133,8 @@ export class HudVehicleProvider {
                 ? hasHighBeam
                     ? VehicleLightState.HighBeam
                     : lightOn
-                      ? VehicleLightState.LowBeam
-                      : VehicleLightState.Off
+                    ? VehicleLightState.LowBeam
+                    : VehicleLightState.Off
                 : VehicleLightState.Off,
         });
     }
