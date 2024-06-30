@@ -11,7 +11,7 @@ export class ClickhouseService extends NodeClickHouseClient {
             database: 'soz',
             url: GetConvar('clickhouse_connection_string', ''),
             log: {
-                level: ClickHouseLogLevel.DEBUG,
+                level: ClickHouseLogLevel.WARN,
             },
             clickhouse_settings: {
                 async_insert: 1,
