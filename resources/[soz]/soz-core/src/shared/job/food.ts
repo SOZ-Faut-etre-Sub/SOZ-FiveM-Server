@@ -311,10 +311,10 @@ export const FoodCloakroom: WardrobeConfig = {
                 [5]: { Drawable: 86, Texture: 9, Palette: 0 },
                 [6]: { Drawable: 10, Texture: 0, Palette: 0 },
                 [7]: { Drawable: 31, Texture: 2, Palette: 0 },
-                [8]: { Drawable: 147, Texture: 10, Palette: 0 },
+                [8]: { Drawable: 148, Texture: 10, Palette: 0 },
                 [9]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [10]: { Drawable: 0, Texture: 0, Palette: 0 },
-                [11]: { Drawable: 32, Texture: 4, Palette: 0 },
+                [11]: { Drawable: 31, Texture: 4, Palette: 0 },
             },
             Props: {
                 [Prop.Hat]: {
