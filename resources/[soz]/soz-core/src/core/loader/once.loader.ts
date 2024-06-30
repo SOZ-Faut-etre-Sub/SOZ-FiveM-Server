@@ -51,9 +51,7 @@ export class OnceLoader {
                     await method(...args);
                 } catch (e) {
                     this.logger.error(
-                        `Error on executing step ${step} in method ${methodName} of provider ${provider.constructor.name}`,
-                        e,
-                        e.stack
+                        `Error on executing step ${step} in method ${methodName} of provider ${provider.constructor.name}: ${e} ${e.stack}`
                     );
                 }
             };

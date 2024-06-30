@@ -67,18 +67,13 @@ export class StonkResellProvider {
             const [hasResold, resellAmount] = await this.doResell(source, item);
 
             if (hasResold) {
-                this.monitor.publish(
-                    'job_stonk_resale_bag',
-                    {
-                        item_id: item,
-                        player_source: source,
-                    },
-                    {
-                        item_label: outputItemLabel,
-                        quantity: resellAmount,
-                        position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-                    }
-                );
+                this.monitor.traceEvent('job_stonk_resale_bag', {
+                    item_id: item,
+                    player_source: source,
+                    item_label: outputItemLabel,
+                    amount: resellAmount,
+                    position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+                });
 
                 const transfer = await this.bankService.transferBankMoney(
                     StonkConfig.bankAccount.farm,
@@ -87,12 +82,11 @@ export class StonkResellProvider {
                 );
                 if (!transfer) {
                     this.logger.error(
-                        'Failed to transfer money to safe',
-                        JSON.stringify({
+                        `Failed to transfer money to safe ${JSON.stringify({
                             account_source: StonkConfig.bankAccount.farm,
                             account_destination: StonkConfig.bankAccount.safe,
                             amount: StonkConfig.collection[item].society_gain * resellAmount,
-                        })
+                        })}`
                     );
                 }
 

@@ -124,15 +124,10 @@ export class PropsProvider {
             };
             this.notifier.notify(source, `La collection ${collection_name} a été créée`, 'success');
 
-            this.monitor.publish(
-                'hammer_create_collection',
-                {
-                    player_source: source,
-                },
-                {
-                    collection_name: collection_name,
-                }
-            );
+            this.monitor.traceEvent('hammer_create_collection', {
+                player_source: source,
+                collection_name: collection_name,
+            });
         }
 
         return this.getCollectionData(source);
@@ -172,16 +167,11 @@ export class PropsProvider {
             this.collections[newName].name = newName;
             this.notifier.notify(source, `La collection ~r~${oldName}~s~ a été renommé en ~g~${newName}~s~`, 'success');
 
-            this.monitor.publish(
-                'hammer_rename_collection',
-                {
-                    player_source: source,
-                },
-                {
-                    oldName: oldName,
-                    newName: newName,
-                }
-            );
+            this.monitor.traceEvent('hammer_rename_collection', {
+                player_source: source,
+                collection_old_name: oldName,
+                collection_new_name: newName,
+            });
         }
 
         return this.getCollectionData(source);
@@ -202,15 +192,10 @@ export class PropsProvider {
             delete this.collections[collectionName];
             this.notifier.notify(source, `La collection ${collectionName} a été supprimée`, 'success');
 
-            this.monitor.publish(
-                'hammer_delete_collection',
-                {
-                    player_source: source,
-                },
-                {
-                    collection_name: collectionName,
-                }
-            );
+            this.monitor.traceEvent('hammer_delete_collection', {
+                player_source: source,
+                collection_name: collectionName,
+            });
         }
         return this.getCollectionData(source);
     }
@@ -245,16 +230,11 @@ export class PropsProvider {
                 this.notifier.notify(source, `La collection n'est plus persistée`);
             }
 
-            this.monitor.publish(
-                'hammer_persist_collection',
-                {
-                    player_source: source,
-                },
-                {
-                    collection_name: collectionName,
-                    value: persist,
-                }
-            );
+            this.monitor.traceEvent('hammer_persist_collection', {
+                player_source: source,
+                collection_name: collectionName,
+                collection_persist: persist,
+            });
         }
         return this.getCollectionData(source);
     }
@@ -299,15 +279,12 @@ export class PropsProvider {
         this.collections[prop.collection].size++;
         this.collectionOfProp[prop.id] = prop.collection;
 
-        this.monitor.publish(
-            'hammer_create_prop',
-            {
-                player_source: source,
-            },
-            {
-                prop: prop,
-            }
-        );
+        this.monitor.traceEvent('hammer_create_prop', {
+            player_source: source,
+            collection_name: prop.collection,
+            prop_model: prop.model,
+            prop_id: prop.id,
+        });
 
         this.notifier.notify(source, 'Le prop a bien été créé !', 'success');
 
@@ -339,15 +316,11 @@ export class PropsProvider {
             },
         });
 
-        this.monitor.publish(
-            'hammer_delete_prop',
-            {
-                player_source: source,
-            },
-            {
-                prop: this.collectionOfProp[propId],
-            }
-        );
+        this.monitor.traceEvent('hammer_delete_prop', {
+            player_source: source,
+            prop_id: propId,
+            collection_name: propCollectionName,
+        });
 
         delete this.collectionOfProp[propId];
         delete this.collections[propCollectionName].props[propId];
@@ -386,15 +359,11 @@ export class PropsProvider {
             this.editPropToAllClients(prop);
         }
 
-        this.monitor.publish(
-            'hammer_edit_prop',
-            {
-                player_source: source,
-            },
-            {
-                prop: prop,
-            }
-        );
+        this.monitor.traceEvent('hammer_edit_prop', {
+            player_source: source,
+            prop_id: prop.id,
+            collection_name: collectionName,
+        });
 
         this.notifier.notify(source, `L'objet ${prop.id} a été modifié`, 'success');
     }
@@ -415,16 +384,11 @@ export class PropsProvider {
             this.unloadCollection(this.collections[collectionName]);
         }
 
-        this.monitor.publish(
-            'hammer_load_unload_collection',
-            {
-                player_source: source,
-            },
-            {
-                collection_name: collectionName,
-                loading: value,
-            }
-        );
+        this.monitor.traceEvent('hammer_load_unload_collection', {
+            player_source: source,
+            collection_name: collectionName,
+            collection_load: value,
+        });
 
         return await this.getCollection(source, collectionName);
     }

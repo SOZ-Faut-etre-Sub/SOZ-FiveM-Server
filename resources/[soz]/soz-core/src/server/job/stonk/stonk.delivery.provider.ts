@@ -177,12 +177,11 @@ export class StonkDeliveryProvider {
             );
             if (!transfer) {
                 this.logger.error(
-                    'Failed to transfer money to safe',
-                    JSON.stringify({
+                    `Failed to transfer money to safe: ${JSON.stringify({
                         account_source: StonkConfig.bankAccount.farm,
                         account_destination: StonkConfig.bankAccount.safe,
                         amount: StonkConfig.delivery.society_gain,
-                    })
+                    })}`
                 );
             }
         } else {

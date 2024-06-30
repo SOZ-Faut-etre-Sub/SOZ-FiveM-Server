@@ -190,14 +190,10 @@ export class VehicleGarageProvider {
             }
         }
 
-        this.monitor.publish(
-            'vehicle_init_move',
-            {},
-            {
-                pound: toPound.join(','),
-                destroyed: toVoid.join(','),
-            }
-        );
+        this.monitor.traceEvent('vehicle_init_move', {
+            vehicle_pounds: toPound.join(','),
+            vehicle_destroyed: toVoid.join(','),
+        });
 
         if (toVoid.length) {
             await this.prismaService.playerVehicle.updateMany({
@@ -789,22 +785,17 @@ export class VehicleGarageProvider {
         }
 
         if (await this.vehicleSpawner.delete(vehicleNetworkId)) {
-            this.monitor.publish(
-                'vehicle_garage_in',
-                {
-                    player_source: source,
-                    vehicle_plate: vehicle.plate,
-                },
-                {
-                    garage: id,
-                    garage_type: garage.type,
-                    condition: vehicleState.condition,
-                    position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-                    state: state,
-                    delay: delay,
-                    pound_price: cost,
-                }
-            );
+            this.monitor.traceEvent('vehicle_garage_in', {
+                player_source: source,
+                vehicle_plate: vehicle.plate,
+                garage_id: id,
+                garage_type: garage.type,
+                vehicle_condition: JSON.stringify(vehicleState.condition),
+                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+                vehicle_state: state,
+                duration: delay,
+                money: cost,
+            });
 
             // Only sync if vehicle was in correct state otherwise, do not update
             if (vehicle.state === PlayerVehicleState.Out) {
@@ -826,21 +817,16 @@ export class VehicleGarageProvider {
                 this.notifier.notify(source, 'Le véhicule a été rangé dans le garage.', 'success');
             }
         } else {
-            this.monitor.publish(
-                'vehicle_garage_error_in',
-                {
-                    player_source: source,
-                    vehicle_plate: vehicle.plate,
-                },
-                {
-                    garage: id,
-                    garage_type: garage.type,
-                    position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-                    state: state,
-                    delay: delay,
-                    pound_price: cost,
-                }
-            );
+            this.monitor.traceEvent('vehicle_garage_error_in', {
+                player_source: source,
+                vehicle_plate: vehicle.plate,
+                garage_id: id,
+                garage_type: garage.type,
+                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+                vehicle_state: state,
+                duration: delay,
+                money: cost,
+            });
             this.notifier.notify(source, '~r~ERREUR~s~ du rangement du véhicule.', 'error');
         }
     }
@@ -1008,34 +994,24 @@ export class VehicleGarageProvider {
                 }
 
                 if (!use_ticket && price !== 0) {
-                    this.monitor.publish(
-                        'pay_vehicle_garage_fee',
-                        {
-                            player_source: source,
-                            vehicle_plate: playerVehicle.plate,
-                            garage: id,
-                        },
-                        {
-                            price,
-                        }
-                    );
+                    this.monitor.traceEvent('pay_vehicle_garage_fee', {
+                        player_source: source,
+                        vehicle_plate: playerVehicle.plate,
+                        garage_id: id,
+                        money: price,
+                    });
                 }
 
                 if (!use_ticket && price !== 0 && garage.type === GarageType.Depot) {
                     const bennysFee = Math.round(vehicle.price * 0.02);
                     await this.playerMoneyService.transfer('farm_bennys', 'safe_bennys', bennysFee);
 
-                    this.monitor.publish(
-                        'pay_vehicle_impound_fee',
-                        {
-                            player_source: source,
-                            vehicle_plate: playerVehicle.plate,
-                            garage: id,
-                        },
-                        {
-                            price: bennysFee,
-                        }
-                    );
+                    this.monitor.traceEvent('pay_vehicle_impound_fee', {
+                        player_source: source,
+                        vehicle_plate: playerVehicle.plate,
+                        garage_id: id,
+                        money: bennysFee,
+                    });
                 }
 
                 const spawnedVehicleId = await this.vehicleSpawner.spawnPlayerVehicle(source, playerVehicle, [
@@ -1053,20 +1029,15 @@ export class VehicleGarageProvider {
 
                     this.vehicleStateService.addVehicleKey(playerVehicle.plate, player.citizenid);
 
-                    this.monitor.publish(
-                        'vehicle_garage_out',
-                        {
-                            player_source: source,
-                            vehicle_plate: playerVehicle.plate,
-                        },
-                        {
-                            garage: id,
-                            garage_type: garage.type,
-                            price,
-                            condition: JSON.parse(playerVehicle.condition),
-                            position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-                        }
-                    );
+                    this.monitor.traceEvent('vehicle_garage_out', {
+                        player_source: source,
+                        vehicle_plate: playerVehicle.plate,
+                        garage_id: id,
+                        garage_type: garage.type,
+                        money: price,
+                        vehicle_condition: playerVehicle.condition,
+                        position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+                    });
 
                     this.notifier.notify(source, 'Vous avez sorti votre véhicule.', 'success');
 
@@ -1156,18 +1127,13 @@ export class VehicleGarageProvider {
                         },
                     },
                 });
-                this.monitor.publish(
-                    'vehicle_softpound_lifelost',
-                    {
-                        player_source: source,
-                        vehicle_plate: veh.plate,
-                    },
-                    {
-                        life_counter_before: veh.life_counter,
-                        life_counter_after: veh.life_counter - 1,
-                        state: newState,
-                    }
-                );
+                this.monitor.traceEvent('vehicle_softpound_lifelost', {
+                    player_source: source,
+                    vehicle_plate: veh.plate,
+                    vehicle_life_count_before: veh.life_counter,
+                    vehicle_life_count_after: veh.life_counter - 1,
+                    vehicle_state: newState,
+                });
             } else {
                 waitTime = Math.min(waitTime, -delta);
             }

@@ -18,6 +18,7 @@
         }
     },
     "include": [
+        "clickhouse.ts",
         "src/**/*",
         "../../../../private/soz-core-src/**/*",
         "private/**/*",

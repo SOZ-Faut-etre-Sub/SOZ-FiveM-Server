@@ -142,10 +142,21 @@ QBCore.Functions.CreateCallback("inventory:server:TransfertMoney", function(sour
             TriggerClientEvent("soz-core:client:notification:draw", TargetPlayer.PlayerData.source, string.format("Vous avez reçu ~g~%s$", amount))
         end
 
-        exports["soz-core"]:Event("give_money", {
-            player_source = SourcePlayer.PlayerData.source,
-            target = TargetPlayer.PlayerData.citizenid,
-        }, {money = moneyTake, marked_money = markedMoneyTake, inverse = inverse})
+        if inverse then
+            exports["soz-core"]:TraceEvent("take_money", {
+                player_source = SourcePlayer.PlayerData.source,
+                target_source = TargetPlayer.PlayerData.source,
+                money = moneyTake,
+                money_marked = markedMoneyTake,
+            })
+        else
+            exports["soz-core"]:TraceEvent("give_money", {
+                player_source = SourcePlayer.PlayerData.source,
+                target_source = TargetPlayer.PlayerData.source,
+                money = moneyTake,
+                money_marked = markedMoneyTake,
+            })
+        end
     else
         TriggerClientEvent("soz-core:client:notification:draw", source, "Pas assez d'argent", "error")
     end

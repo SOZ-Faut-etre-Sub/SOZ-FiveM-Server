@@ -49,17 +49,12 @@ export class FDFTreeProvider {
             `Vous avez ~g~taillé~s~ cet arbre, ses fruits seront prêts à être récoltés d'ici à deux heures.`
         );
 
-        this.monitor.publish(
-            'job_fdf_cut_tree',
-            {
-                player_source: source,
-                type: item,
-            },
-            {
-                id: id,
-                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-            }
-        );
+        this.monitor.traceEvent('job_fdf_cut_tree', {
+            player_source: source,
+            item_id: item,
+            id: id,
+            position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+        });
     }
 
     @OnEvent(ServerEvent.FDF_TREE_WATER)
@@ -77,17 +72,12 @@ export class FDFTreeProvider {
             `Vous avez ~g~arrosé~s~ cet arbre, ses fruits seront prêts à être récoltés un peu plus tôt.`
         );
 
-        this.monitor.publish(
-            'job_fdf_water_tree',
-            {
-                player_source: source,
-                type: tree.item,
-            },
-            {
-                id: id,
-                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-            }
-        );
+        this.monitor.traceEvent('job_fdf_water_tree', {
+            player_source: source,
+            type: tree.item,
+            id: id,
+            position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+        });
     }
 
     @Rpc(RpcServerEvent.FDF_TREE_HARVEST)
@@ -125,18 +115,13 @@ export class FDFTreeProvider {
             this.treeStatus.delete(id);
         }
 
-        this.monitor.publish(
-            'job_fdf_harvest_tree',
-            {
-                player_source: source,
-                type: tree.item,
-            },
-            {
-                id: id,
-                count: nbItem,
-                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-            }
-        );
+        this.monitor.traceEvent('job_fdf_harvest_tree', {
+            player_source: source,
+            type: tree.item,
+            id: id,
+            amount: nbItem,
+            position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+        });
 
         return tree.objectRemaining;
     }

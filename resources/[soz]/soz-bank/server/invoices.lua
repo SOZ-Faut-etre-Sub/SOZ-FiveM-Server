@@ -106,11 +106,10 @@ local function PayInvoice(PlayerData, account, id, marked)
                                ("Votre facture ~b~%s~s~ a été ~g~payée"):format(invoice.label))
         end
 
-        exports["soz-core"]:Event("invoice_pay", {
+        exports["soz-core"]:TraceEvent("invoice_pay", {
             player_source = Player.PlayerData.source,
             invoice_kind = "invoice",
             invoice_job = "",
-        }, {
             target_source = Emitter and Emitter.PlayerData.source or nil,
             id = id,
             amount = tonumber(invoice.amount),
@@ -133,11 +132,10 @@ local function PayInvoice(PlayerData, account, id, marked)
                                        ("Votre facture ~b~%s~s~ a été ~g~payée"):format(invoice.label))
                 end
 
-                exports["soz-core"]:Event("invoice_pay", {
+                exports["soz-core"]:TraceEvent("invoice_pay", {
                     player_source = PlayerData.source,
                     invoice_kind = "invoice",
                     invoice_job = PlayerData.job.id,
-                }, {
                     target_source = Emitter and Emitter.PlayerData.source or nil,
                     id = id,
                     amount = tonumber(invoice.amount),
@@ -180,11 +178,10 @@ local function RejectInvoice(PlayerData, account, id)
                                ("Votre facture ~b~%s~s~ a été ~r~refusée"):format(invoice.label))
         end
 
-        exports["soz-core"]:Event("invoice_refuse", {
+        exports["soz-core"]:TraceEvent("invoice_refuse", {
             player_source = Player.PlayerData.source,
             invoice_kind = "invoice",
             invoice_job = "",
-        }, {
             target_source = Emitter and Emitter.PlayerData.source or nil,
             id = id,
             amount = tonumber(invoice.amount),
@@ -200,11 +197,10 @@ local function RejectInvoice(PlayerData, account, id)
                                ("Votre facture ~b~%s~s~ a été ~r~refusée"):format(invoice.label))
         end
 
-        exports["soz-core"]:Event("invoice_refuse", {
+        exports["soz-core"]:TraceEvent("invoice_refuse", {
             player_source = PlayerData.source,
             invoice_kind = "invoice",
             invoice_job = PlayerData.job.id,
-        }, {
             target_source = Emitter and Emitter.PlayerData.source or nil,
             id = id,
             amount = tonumber(invoice.amount),
@@ -272,11 +268,10 @@ local function CreateInvoice(Emitter, Target, account, targetAccount, label, amo
             invoiceJob = Target.PlayerData.job.id
         end
 
-        exports["soz-core"]:Event("invoice_emit", {
+        exports["soz-core"]:TraceEvent("invoice_emit", {
             player_source = Emitter.PlayerData.source,
             invoice_kind = kind or "invoice",
             invoice_job = invoiceJob,
-        }, {
             target_source = Target.PlayerData.source,
             position = GetEntityCoords(GetPlayerPed(Emitter.PlayerData.source)),
             title = label,

@@ -7,6 +7,9 @@ import { PlayerService } from '@public/server/player/player.service';
 import { PlayerStateService } from '@public/server/player/player.state.service';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 
+import { Vector3 } from '../../../shared/polyzone/vector';
+import { Monitor } from '../../monitor/monitor';
+
 @Provider()
 export class PolicePlayerProvider {
     @Inject(PlayerService)
@@ -17,6 +20,9 @@ export class PolicePlayerProvider {
 
     @Inject(PlayerStateService)
     private playerStateService: PlayerStateService;
+
+    @Inject(Monitor)
+    private monitor: Monitor;
 
     @OnEvent(ServerEvent.CUFF_PLAYER)
     public onCuffPlayer(source: number, targetId: number) {
@@ -33,6 +39,12 @@ export class PolicePlayerProvider {
                 TriggerClientEvent(ClientEvent.POLICE_HANDCUFF_ANIMATION, player.source);
                 TriggerClientEvent(ClientEvent.POLICE_GET_CUFFED, target.source, player.source);
                 TriggerClientEvent('soz-talk:client:PowerOffRadio', target.source);
+
+                this.monitor.traceEvent('job_police_cuff_player', {
+                    player_source: player.source,
+                    target_source: target.source,
+                    position: GetEntityCoords(GetPlayerPed(player.source)) as Vector3,
+                });
             } else {
                 TriggerClientEvent(ClientEvent.NOTIFICATION_DRAW, source, "Vous n'avez pas de ~r~menottes", 'error');
             }
@@ -55,6 +67,12 @@ export class PolicePlayerProvider {
                 this.playerStateService.setClientState(target.source, { isHandcuffed: false });
                 TriggerClientEvent(ClientEvent.POLICE_GET_UNCUFFED, target.source);
                 TriggerClientEvent('soz-talk:client:PowerOnRadio', target.source);
+
+                this.monitor.traceEvent('job_police_uncuff_player', {
+                    player_source: player.source,
+                    target_source: target.source,
+                    position: GetEntityCoords(GetPlayerPed(target.source)) as Vector3,
+                });
             } else {
                 TriggerClientEvent(
                     ClientEvent.NOTIFICATION_DRAW,
@@ -77,6 +95,13 @@ export class PolicePlayerProvider {
 
             TriggerClientEvent(ClientEvent.SET_ESCORTING, player.source, target.source, crimi);
             TriggerClientEvent(ClientEvent.GET_ESCORTED, target.source, player.source, crimi);
+
+            this.monitor.traceEvent('job_police_escort_player', {
+                player_source: player.source,
+                target_source: target.source,
+                criminal_state: crimi ? 1 : 0,
+                position: GetEntityCoords(GetPlayerPed(target.source)) as Vector3,
+            });
         }
     }
 
@@ -89,6 +114,12 @@ export class PolicePlayerProvider {
             this.playerStateService.setClientState(target.source, { isEscorted: false });
             this.playerStateService.setClientState(player.source, { isEscorting: false, escorting: null });
             TriggerClientEvent(ClientEvent.REMOVE_ESCORTED, target.source);
+
+            this.monitor.traceEvent('job_police_deescort_player', {
+                player_source: player.source,
+                target_source: target.source,
+                position: GetEntityCoords(GetPlayerPed(target.source)) as Vector3,
+            });
         }
     }
 }

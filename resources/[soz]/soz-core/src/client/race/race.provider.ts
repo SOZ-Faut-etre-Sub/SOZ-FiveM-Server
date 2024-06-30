@@ -613,18 +613,12 @@ export class RaceProvider {
         SetPlayerInvincible(PlayerId(), false);
         SetFollowPedCamViewMode(view);
 
-        this.monitor.publish(
-            'race_finish',
-            {
-                race: race.id,
-            },
-            {
-                name: race.name,
-                time: result != null ? result[0][result[0].length - 1] : 0,
-                duration: Date.now() - start,
-                complete: !test && result,
-            }
-        );
+        this.monitor.traceEvent('race_finish', {
+            race_id: race.id,
+            race_name: race.name,
+            race_time: result != null ? result[0][result[0].length - 1] : 0,
+            duration: Date.now() - start,
+        });
 
         if (!test && result) {
             TriggerServerEvent(ServerEvent.RACE_FINISH, raceId, result);

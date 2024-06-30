@@ -225,20 +225,9 @@ export class LSMCInteractionProvider {
                         return;
                     }
 
-                    const beforeHealth = GetEntityHealth(entity);
                     const serverId = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-                    TriggerServerEvent(ServerEvent.LSMC_HEAL, serverId);
 
-                    this.monitor.publish(
-                        'job_lsmc_heal',
-                        {},
-                        {
-                            before_health: beforeHealth,
-                            target_source: serverId,
-                            position: GetEntityCoords(entity),
-                        },
-                        true
-                    );
+                    TriggerServerEvent(ServerEvent.LSMC_HEAL, serverId);
                 },
                 item: 'firstaid',
             },
@@ -316,15 +305,10 @@ export class LSMCInteractionProvider {
                         ServerEvent.LSMC_GIVE_BLOOD,
                         GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
                     );
-                    this.monitor.publish(
-                        'job_lsmc_bloodbag',
-                        {},
-                        {
-                            target_source: GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)),
-                            position: GetEntityCoords(entity),
-                        },
-                        true
-                    );
+                    this.monitor.traceEvent('job_lsmc_bloodbag', {
+                        target_source: GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)),
+                        position: GetEntityCoords(entity) as Vector3,
+                    });
                 },
                 item: 'empty_bloodbag',
             },

@@ -815,17 +815,20 @@ function Inventory.TransfertItem(source, invSource, invTarget, item, amount, met
         Inventory.AddItem(source, invTarget, item, amount, metadata, targetSlot, function(s, r)
             if not s then
                 Inventory.AddItem(source, invSource, item, amount, metadata, slot)
+            else
+                exports["soz-core"]:TraceEvent("transfer_item", {
+                    player_source = source,
+                    item_id = item.name,
+                    item_label = item.label,
+                    amount = amount,
+                    inventory_source_owner = invSource.owner,
+                    inventory_source_id = invSource.type,
+                    inventory_target_owner = invTarget.owner,
+                    inventory_target_id = invTarget.type,
+                })
             end
             success, reason = s, r
         end)
-
-        exports["soz-core"]:Event("transfer_item", {
-            source_owner = invSource.owner,
-            source_id = invSource.type,
-            target_owner = invTarget.owner,
-            target_id = invTarget.type,
-            player_source = source,
-        }, {item = item.name, itemLabel = item.label, amount = amount})
 
         _G.Container[invSource.type]:SyncInventory(invSource)
         _G.Container[invTarget.type]:SyncInventory(invTarget)

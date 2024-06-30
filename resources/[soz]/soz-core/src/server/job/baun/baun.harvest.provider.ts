@@ -2,6 +2,7 @@ import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event/server';
+import { Vector3 } from '../../../shared/polyzone/vector';
 import { InventoryManager } from '../../inventory/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { Monitor } from '../../monitor/monitor';
@@ -75,17 +76,12 @@ export class BaunHarvestProvider {
 
             this.notifier.notify(source, `Vous avez récolté ${itemData.label}.`, 'success');
 
-            this.monitor.publish(
-                'job_baun_harvest',
-                {
-                    itemId: item,
-                    player_source: source,
-                },
-                {
-                    amount: 1,
-                    position: GetEntityCoords(GetPlayerPed(source)),
-                }
-            );
+            this.monitor.traceEvent('job_baun_harvest', {
+                item_id: item,
+                player_source: source,
+                amount: 1,
+                position: GetEntityCoords(GetPlayerPed(source)) as Vector3,
+            });
         }
     }
 }

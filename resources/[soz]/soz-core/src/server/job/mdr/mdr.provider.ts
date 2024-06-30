@@ -74,13 +74,9 @@ export class MdrProvider {
             const completed = await this.doWash(source);
 
             if (completed) {
-                this.monitor.publish(
-                    'mdr_wash',
-                    {
-                        player_source: source,
-                    },
-                    {}
-                );
+                this.monitor.traceEvent('mdr_wash', {
+                    player_source: source,
+                });
 
                 this.notifier.notify(source, `Vous avez réhabilité ~r~1000$~s~ en ~g~$400~s~.`);
             } else {

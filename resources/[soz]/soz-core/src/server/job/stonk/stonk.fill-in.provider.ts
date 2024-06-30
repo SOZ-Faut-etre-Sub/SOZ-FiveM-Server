@@ -76,19 +76,14 @@ export class StonkFillInProvider {
             const [hasResold, fillAmount] = await this.doFillIn(source, item, maxBalance, accountName);
 
             if (hasResold) {
-                this.monitor.publish(
-                    'job_stonk_fill_account',
-                    {
-                        item_id: item,
-                        player_source: source,
-                        account_type: 'bank',
-                    },
-                    {
-                        item_label: outputItemLabel,
-                        amount: fillAmount,
-                        position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-                    }
-                );
+                this.monitor.traceEvent('job_stonk_fill_account', {
+                    item_id: item,
+                    player_source: source,
+                    account_type: 'bank',
+                    item_label: outputItemLabel,
+                    amount: fillAmount,
+                    position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+                });
 
                 const transfer = await this.bankService.transferBankMoney(
                     StonkConfig.bankAccount.bankRefill,
@@ -97,12 +92,11 @@ export class StonkFillInProvider {
                 );
                 if (!transfer) {
                     this.logger.error(
-                        'Failed to transfer money to safe',
-                        JSON.stringify({
+                        `Failed to transfer money to safe ${JSON.stringify({
                             account_source: StonkConfig.bankAccount.bankRefill,
                             account_destination: accountName,
                             amount: StonkConfig.collection[item].refill_value * fillAmount,
-                        })
+                        })}`
                     );
                 }
 
@@ -113,12 +107,11 @@ export class StonkFillInProvider {
                 );
                 if (!transferSociety) {
                     this.logger.error(
-                        'Failed to transfer money to safe',
-                        JSON.stringify({
+                        `Failed to transfer money to safe ${JSON.stringify({
                             account_source: StonkConfig.bankAccount.farm,
                             account_destination: StonkConfig.bankAccount.safe,
                             amount: StonkConfig.collection[item].society_gain * fillAmount,
-                        })
+                        })}`
                     );
                 }
 

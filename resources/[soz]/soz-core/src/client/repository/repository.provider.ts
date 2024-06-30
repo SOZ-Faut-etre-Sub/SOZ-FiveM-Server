@@ -102,7 +102,7 @@ export class RepositoryProvider {
 
             this.nuiDispatch.dispatch('repository', 'Set', { type, data });
         } catch (e) {
-            this.logger.error(`Error while patching repository ${type}`, e, JSON.stringify(patch));
+            this.logger.error(`Error while patching repository ${type} ${e} ${JSON.stringify(patch)}`);
         }
     }
 

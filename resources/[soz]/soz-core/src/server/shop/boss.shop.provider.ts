@@ -64,17 +64,12 @@ export class BossShopProvider {
         const item = this.itemService.getItem(itemId);
         this.notifier.notify(source, 'Vous avez commandé un ~g~' + item.label);
 
-        this.monitor.publish(
-            'boss_shop_order',
-            {
-                player_source: source,
-                inv: inv,
-            },
-            {
-                item: item.name,
-                price: price,
-            }
-        );
+        this.monitor.traceEvent('boss_shop_order', {
+            player_source: source,
+            inventory_id: inv,
+            item_id: item.name,
+            money: price,
+        });
     }
 
     @Tick(TickInterval.EVERY_MINUTE)
@@ -84,16 +79,11 @@ export class BossShopProvider {
         for (const order of this.orders) {
             if (order.date < delayDate) {
                 this.inventoryManager.addItemToInventoryNotPlayer(order.inv, order.item);
-                this.monitor.publish(
-                    'boss_shop_deliver_order',
-                    {
-                        player_source: source,
-                        inv: order.inv,
-                    },
-                    {
-                        item: order.item,
-                    }
-                );
+                this.monitor.traceEvent('boss_shop_deliver_order', {
+                    player_source: source,
+                    inventory_id: order.inv,
+                    item_id: order.item,
+                });
 
                 const player = this.playerService.getPlayerByCitizenId(order.citizenId);
                 if (player && player.source) {

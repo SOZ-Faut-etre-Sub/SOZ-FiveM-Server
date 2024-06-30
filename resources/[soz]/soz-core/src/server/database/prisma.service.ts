@@ -4,6 +4,7 @@ import { Provider } from '@core/decorators/provider';
 import { OnceLoader } from '@core/loader/once.loader';
 import { Logger } from '@core/logger';
 import { Prisma, PrismaClient } from '@prisma/client';
+
 @Provider()
 export class PrismaService extends PrismaClient<Prisma.PrismaClientOptions, 'query' | 'error' | 'warn' | 'info'> {
     @Inject(OnceLoader)
@@ -30,7 +31,7 @@ export class PrismaService extends PrismaClient<Prisma.PrismaClientOptions, 'que
             if (e.duration >= 50) {
                 this.logger.warn(`[Prisma] [slow query] [${e.duration}ms] ${e.query.trim()} ${e.params} `);
             } else {
-                this.logger.debug(`[Prisma] [${e.duration}ms] ${e.query.trim()} ${e.params}`);
+                // this.logger.debug(`[Prisma] [${e.duration}ms] ${e.query.trim()} ${e.params}`);
             }
         });
         this.$on('error', e => this.logger.error(`[Prisma] [${e.target}] ${e.message}`));

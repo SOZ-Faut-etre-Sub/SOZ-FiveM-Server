@@ -18,7 +18,7 @@ export class ApiNewsProvider {
         const response = await this.apiClient.post('/news/add-flash', news);
 
         if (response.status !== 201) {
-            this.logger.error('error when adding flash news, status:', String(response.status), response.data);
+            this.logger.error(`error when adding flash news, status: ${String(response.status)} ${response.data}`);
         }
     }
 }

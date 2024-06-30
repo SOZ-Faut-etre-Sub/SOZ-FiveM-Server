@@ -157,7 +157,11 @@ export class WeatherProvider {
             const currentForecast = this.incomingForecasts[0];
 
             this.store.dispatch.global.update({ weather: currentForecast.weather });
-            this.monitor.publish('weather_update', {}, { weather: currentForecast });
+            this.monitor.traceEvent('weather_update', {
+                weather: currentForecast.weather,
+                duration: currentForecast.duration,
+                weather_temperature: currentForecast.temperature,
+            });
 
             TriggerClientEvent(ClientEvent.PHONE_APP_WEATHER_UPDATE_FORECASTS, -1);
 
@@ -201,7 +205,7 @@ export class WeatherProvider {
 
         TriggerClientEvent(ClientEvent.PHONE_APP_WEATHER_UPDATE_FORECASTS, -1);
 
-        this.monitor.publish('weather_update', {}, { weather: weather });
+        this.monitor.traceEvent('weather_update', { weather: weather });
     }
 
     @Command('block_weather', { role: 'admin' })

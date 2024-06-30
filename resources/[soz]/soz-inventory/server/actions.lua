@@ -161,8 +161,12 @@ RegisterServerEvent("inventory:server:GiveMoney", function(target, moneyType, am
         giveAnimation(Player.PlayerData.source)
         giveAnimation(Target.PlayerData.source)
 
-        exports["soz-core"]:Event("give_money", {player_source = source, target = Target.PlayerData.citizenid},
-                                  {money = moneyTake, marked_money = markedMoneyTake})
+        exports["soz-core"]:TraceEvent("give_money", {
+            player_source = Player.PlayerData.source,
+            target_source = Target.PlayerData.source,
+            money = moneyTake,
+            money_marked = markedMoneyTake,
+        })
     else
         TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous ne possédez pas l'argent requis pour le transfert", "error")
     end
@@ -241,8 +245,10 @@ RegisterServerEvent("inventory:server:ResellItem", function(item, amount, resell
     TriggerEvent("banking:server:TransferMoney", resellZone.SourceAccount, resellZone.TargetAccount, math.ceil(price) * amount)
     TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, string.format("Vous avez vendu ~o~%s ~b~%s", amount, itemSpec.label))
 
-    TriggerEvent("soz-core:server:monitor:add-event", "job_resell", {
-        item_id = item.name,
+    exports["soz-core"]:TraceEvent("job_resell", {
         player_source = Player.PlayerData.source,
-    }, {itemSpec = itemSpec.label, quantity = amount}, false)
+        item_id = item.name,
+        item_label = itemSpec.label,
+        amount = amount,
+    })
 end)

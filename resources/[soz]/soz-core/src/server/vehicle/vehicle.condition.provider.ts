@@ -256,17 +256,12 @@ export class VehicleConditionProvider {
             },
         });
 
-        this.monitor.publish(
-            'vehicle_destroy',
-            {
-                player_source: source,
-                vehicle_plate: vehicle.plate,
-            },
-            {
-                reason,
-                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-            }
-        );
+        this.monitor.traceEvent('vehicle_destroy', {
+            player_source: source,
+            vehicle_plate: vehicle.plate,
+            reason,
+            position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+        });
     }
 
     @OnEvent(ServerEvent.VEHICLE_WASH)

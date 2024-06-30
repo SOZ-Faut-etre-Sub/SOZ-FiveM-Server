@@ -166,20 +166,15 @@ export class CraftProvider {
 
         this.notifier.notify(source, `Vous avez confectionné ~y~${recipe.amount}~s~ ~g~${item.label}~s~.`, 'success');
 
-        this.monitor.publish(
-            crafts[category].event,
-            {
-                item_id: itemId,
-                player_source: source,
-            },
-            {
-                item_label: item.label,
-                quantity: recipe.amount,
-                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-                type: type,
-                category: category,
-            }
-        );
+        this.monitor.traceEvent(crafts[category].event, {
+            item_id: itemId,
+            player_source: source,
+            item_label: item.label,
+            amount: recipe.amount,
+            position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+            type: type,
+            category: category,
+        });
 
         return await this.getTransformRecipes(source, type);
     }

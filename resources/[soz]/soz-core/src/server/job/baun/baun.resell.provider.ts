@@ -53,18 +53,13 @@ export class BaunResellProvider {
         const totalAmount = item.amount * BaunConfig.Resell.reward;
         TriggerEvent(ServerEvent.BANKING_TRANSFER_MONEY, 'farm_baun', 'safe_baun', totalAmount);
 
-        this.monitor.publish(
-            'job_baun_resell',
-            {
-                item_id: item.metadata.id,
-                player_source: source,
-            },
-            {
-                item_label: item.label,
-                quantity: item.amount,
-                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-            }
-        );
+        this.monitor.traceEvent('job_baun_resell', {
+            item_id: item.name,
+            player_source: source,
+            item_label: item.label,
+            amount: item.amount,
+            position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+        });
 
         this.notifier.notify(source, 'Vous avez ~r~terminé~s~ de revendre.', 'success');
     }

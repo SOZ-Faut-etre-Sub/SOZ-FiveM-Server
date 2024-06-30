@@ -83,18 +83,13 @@ export class StonkCollectProvider {
         const hasCollected = await this.doCollect(source, shop, item);
 
         if (hasCollected) {
-            this.monitor.publish(
-                'job_stonk_collect_bag',
-                {
-                    item_id: item,
-                    player_source: source,
-                },
-                {
-                    item_label: outputItemLabel,
-                    quantity: StonkConfig.resell.amount,
-                    position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-                }
-            );
+            this.monitor.traceEvent('job_stonk_collect_bag', {
+                item_id: item,
+                player_source: source,
+                item_label: outputItemLabel,
+                amount: StonkConfig.resell.amount,
+                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+            });
 
             this.notifier.notify(source, `Vous avez collecté ${StonkConfig.resell.amount} ~g~${outputItemLabel}~s~.`);
         } else {

@@ -5,7 +5,6 @@ import { UpwConfig, UpwOrder, UpwOrderMenuData } from '@public/shared/job/upw';
 import { MenuType } from '@public/shared/nui/menu';
 import { FunctionComponent, useState } from 'react';
 
-import { TaxType } from '../../../shared/bank';
 import { useGetPrice } from '../../hook/price';
 import {
     MainMenu,

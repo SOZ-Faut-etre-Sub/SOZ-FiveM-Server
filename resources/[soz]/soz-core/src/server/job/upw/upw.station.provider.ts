@@ -169,19 +169,14 @@ export class UpwStationProvider {
         });
 
         const item = this.itemService.getItem(cell);
-        this.monitor.publish(
-            'job_upw_station_restock',
-            {
-                player_source: source,
-                item_id: item.name,
-            },
-            {
-                item_label: item.label,
-                station_position: currentStation.position,
-                station_name: currentStation.station,
-                price: restockPrice,
-            }
-        );
+        this.monitor.traceEvent('job_upw_station_restock', {
+            player_source: source,
+            item_id: item.name,
+            item_label: item.label,
+            station_id: currentStation.id,
+            station_type: 'electric',
+            money: restockPrice,
+        });
     }
 
     @OnEvent(ServerEvent.UPW_SET_CHARGER_PRICE)

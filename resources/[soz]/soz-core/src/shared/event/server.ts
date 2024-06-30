@@ -158,6 +158,7 @@ export enum ServerEvent {
     MISSIVE_COMPLETE = 'soz-core:server:missive:complete',
 
     MONITOR_ADD_EVENT = 'soz-core:server:monitor:add-event',
+    MONITOR_TRACE_EVENT = 'soz-core:server:monitor:trace-event',
     MONITOR_LOG = 'soz-core:server:monitor:log',
 
     NEWS_ADD_FLASH = 'soz-core:server:news:add-flash',

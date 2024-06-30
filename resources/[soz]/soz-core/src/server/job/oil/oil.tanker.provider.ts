@@ -186,16 +186,11 @@ export class OilTankerProvider {
 
                 this.notifier.notify(source, `Vous avez ~g~rempli~s~ ${HARVEST_AMOUNT}L de pétrole.`);
 
-                this.monitor.publish(
-                    'job_mtp_fill_oil_tanker',
-                    {
-                        player_source: source,
-                    },
-                    {
-                        quantity: HARVEST_AMOUNT,
-                        position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-                    }
-                );
+                this.monitor.traceEvent('job_mtp_fill_oil_tanker', {
+                    player_source: source,
+                    amount: HARVEST_AMOUNT,
+                    position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+                });
             }
         } finally {
             this.tankerUsed.delete(source);
@@ -304,16 +299,11 @@ export class OilTankerProvider {
 
                 this.notifier.notify(source, `Vous avez ~g~raffiné~s~ ${HARVEST_AMOUNT}L de pétrole.`);
 
-                this.monitor.publish(
-                    'job_mtp_refining_oil',
-                    {
-                        player_source: source,
-                    },
-                    {
-                        quantity: HARVEST_AMOUNT,
-                        position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-                    }
-                );
+                this.monitor.traceEvent('job_mtp_refining_oil', {
+                    player_source: source,
+                    amount: HARVEST_AMOUNT,
+                    position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+                });
             }
         } finally {
             this.tankerUsed.delete(source);
@@ -371,33 +361,23 @@ export class OilTankerProvider {
             if (this.inventoryManager.removeItemFromInventory(inventory.id, 'essence', 10)) {
                 await this.bankService.transferBankMoney('farm_mtp', 'safe_oil', 500);
 
-                this.monitor.publish(
-                    'job_mtp_sell_oil',
-                    {
-                        player_source: source,
-                        type: 'essence',
-                    },
-                    {
-                        quantity: 10,
-                        position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-                    }
-                );
+                this.monitor.traceEvent('job_mtp_sell_oil', {
+                    player_source: source,
+                    type: 'essence',
+                    amount: 10,
+                    position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+                });
 
                 this.notifier.notify(source, "Vous avez ~g~revendu~s~ 100L d'essence.");
             } else if (this.inventoryManager.removeItemFromInventory(inventory.id, 'kerosene', 10)) {
                 await this.bankService.transferBankMoney('farm_mtp', 'safe_oil', 500);
 
-                this.monitor.publish(
-                    'job_mtp_sell_oil',
-                    {
-                        player_source: source,
-                        type: 'kerosene',
-                    },
-                    {
-                        quantity: 10,
-                        position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-                    }
-                );
+                this.monitor.traceEvent('job_mtp_sell_oil', {
+                    player_source: source,
+                    type: 'kerosene',
+                    amount: 10,
+                    position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+                });
 
                 this.notifier.notify(source, 'Vous avez ~g~revendu~s~ 100L de kérosène.');
             }

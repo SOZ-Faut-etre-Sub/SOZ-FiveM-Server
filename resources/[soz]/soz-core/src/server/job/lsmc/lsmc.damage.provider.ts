@@ -98,13 +98,9 @@ export class LSMCDamageProvider {
             },
         });
 
-        this.monitor.publish(
-            'job_lsmc_damageremove',
-            {
-                player_source: source,
-            },
-            {}
-        );
+        this.monitor.traceEvent('job_lsmc_damageremove', {
+            player_source: source,
+        });
     }
 
     @Command('damageshow', {

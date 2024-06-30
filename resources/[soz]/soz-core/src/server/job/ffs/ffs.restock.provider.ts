@@ -103,18 +103,13 @@ export class FightForStyleRestockProvider {
         const totalAmount = item.amount * FfsConfig.restock.getRewardFromDeliveredGarment(garment);
         TriggerEvent(ServerEvent.BANKING_TRANSFER_MONEY, 'farm_ffs', 'safe_ffs', totalAmount);
 
-        this.monitor.publish(
-            'job_ffs_restock',
-            {
-                item_id: item.metadata.id,
-                player_source: source,
-            },
-            {
-                item_label: item.label,
-                quantity: item.amount,
-                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-            }
-        );
+        this.monitor.traceEvent('job_ffs_restock', {
+            item_id: item.metadata.id,
+            player_source: source,
+            item_label: item.label,
+            amount: item.amount,
+            position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+        });
 
         this.notifier.notify(source, 'Vous avez ~r~terminé~s~ de restocker le magasin de vêtements.', 'success');
     }
@@ -124,7 +119,7 @@ export class FightForStyleRestockProvider {
         const category = this.garmentToCategory(garment);
 
         if (category == -1) {
-            this.logger.error('Invalid category for item ', garment);
+            this.logger.error(`Invalid category for item ${garment}`);
             return;
         }
 

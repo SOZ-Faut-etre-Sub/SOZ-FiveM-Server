@@ -113,17 +113,12 @@ export class VehiclePitStopProvider {
             `Le prix du Pit Stop pour les ${VehicleCategory[category]} est maintenant de ~g~${price}~s~`
         );
 
-        this.monitor.publish(
-            'vehicle_pitstop_price_update',
-            {
-                player_source: source,
-            },
-            {
-                price: price,
-                category: category,
-                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-            }
-        );
+        this.monitor.traceEvent('vehicle_pitstop_price_update', {
+            player_source: source,
+            money: price,
+            category: category,
+            position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+        });
 
         return this.getPrices();
     }
@@ -154,16 +149,11 @@ export class VehiclePitStopProvider {
         this.notifier.notify(source, 'Le véhicule a été réparé', 'success');
 
         const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
-        this.monitor.publish(
-            'vehicle_pitstop',
-            {
-                player_source: source,
-                vehicle_plate: state.volatile.plate,
-            },
-            {
-                price: price,
-                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-            }
-        );
+        this.monitor.traceEvent('vehicle_pitstop', {
+            player_source: source,
+            vehicle_plate: state.volatile.plate,
+            money: price,
+            position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+        });
     }
 }

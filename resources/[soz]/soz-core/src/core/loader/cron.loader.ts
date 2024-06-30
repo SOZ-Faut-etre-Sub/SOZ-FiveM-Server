@@ -36,9 +36,7 @@ export class CronLoader {
                     await method(...args);
                 } catch (e) {
                     this.logger.error(
-                        `Error on executing cron at ${metadata.hour}:${metadata.minute} in method ${methodName} of provider ${provider.constructor.name}`,
-                        e,
-                        e.stack
+                        `Error on executing cron at ${metadata.hour}:${metadata.minute} in method ${methodName} of provider ${provider.constructor.name}: ${e} ${e.stack}`
                     );
                 }
             };

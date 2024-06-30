@@ -78,17 +78,12 @@ export class BankTaxProvider {
                         this.logger.info(`Paiement du ${jobAccount} pour le compte ${acc} de ${newsIncome}`);
                     }
 
-                    this.monitor.publish(
-                        'news_tax',
-                        {
-                            source_account: acc,
-                            target_account: jobAccount,
-                        },
-                        {
-                            amount: newsIncome,
-                            percentage,
-                        }
-                    );
+                    this.monitor.traceEvent('news_tax', {
+                        source_account: acc,
+                        target_account: jobAccount,
+                        amount: newsIncome,
+                        percentage,
+                    });
                 }
 
                 const gouvIncome = tax - 2 * newsIncome;
@@ -100,17 +95,12 @@ export class BankTaxProvider {
                     this.logger.info(`Paiement du gouvernement pour le compte ${acc} de ${gouvIncome}`);
                 }
 
-                this.monitor.publish(
-                    'gouv_tax',
-                    {
-                        source_account: acc,
-                        target_account: 'gouv',
-                    },
-                    {
-                        amount: gouvIncome,
-                        percentage,
-                    }
-                );
+                this.monitor.traceEvent('gouv_tax', {
+                    source_account: acc,
+                    target_account: 'gouv',
+                    amount: gouvIncome,
+                    percentage,
+                });
             }
         }
     }

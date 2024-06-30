@@ -4,7 +4,7 @@ AddEventHandler('playerDropped', function(reason)
     local src = source
     if QBCore.Players[src] then
         local Player = QBCore.Players[src]
-        exports['soz-core']:Event('player_disconnect', { player_source = src }, {reason = reason, source = src})
+        exports['soz-core']:TraceEvent('player_disconnect', { player_source = src, reason = reason })
         Player.Functions.Save()
         _G.Player_Buckets[Player.PlayerData.license] = nil
         TriggerEvent('inventory:DropPlayerInventory', src)
@@ -163,7 +163,7 @@ end)
 RegisterNetEvent('QBCore:GetEmployOnDuty', function()
     local player = QBCore.Functions.GetPlayer(source)
     local player_names = QBCore.Functions.GetPlayerNamesOnDuty(player.PlayerData.job.id)
-    
+
     TriggerClientEvent('soz-job:client:OpenOnDutyMenu', source, player_names, player.PlayerData.job.id)
 end)
 

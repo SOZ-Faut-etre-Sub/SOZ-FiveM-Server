@@ -108,19 +108,14 @@ export class DmcHarvestProvider {
                 const itemInfo = this.itemService.getItem(item.name);
                 this.notifier.notify(source, `Vous avez récolté ~b~${item.amount} ~b~${itemInfo.label}.`);
 
-                this.monitor.publish(
-                    'job_dmc_harvest',
-                    {
-                        item_id: item.name,
-                        player_source: source,
-                    },
-                    {
-                        item_label: itemInfo.label,
-                        quantity: item.amount,
-                        position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-                        field: field,
-                    }
-                );
+                this.monitor.traceEvent('job_dmc_harvest', {
+                    item_id: item.name,
+                    player_source: source,
+                    item_label: itemInfo.label,
+                    amount: item.amount,
+                    position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+                    field: field,
+                });
             } else if (reason == 'invalid_weight') {
                 this.notifier.notify(source, 'Vos poches sont pleines...', 'error');
                 return false;

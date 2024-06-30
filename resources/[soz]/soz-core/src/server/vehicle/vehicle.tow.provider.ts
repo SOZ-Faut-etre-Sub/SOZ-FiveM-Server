@@ -32,31 +32,12 @@ export class VehicleTowProvider {
         this.towRopeRepository.addRope(towRope);
 
         this.notifier.notify(source, 'Le cable de remorquage a été ~g~installé~s~');
-
-        this.monitor.publish(
-            'tow_rope_add',
-            {
-                player_source: source,
-            },
-            {
-                data: towRope,
-            }
-        );
     }
 
     public async unregister(vehNetId: number) {
         const towRopes = await this.towRopeRepository.get(rope => rope.netId1 == vehNetId || rope.netId2 == vehNetId);
         for (const towRope of towRopes) {
             this.towRopeRepository.delete(towRope.id);
-            this.monitor.publish(
-                'tow_rope_remove',
-                {
-                    player_source: source,
-                },
-                {
-                    data: towRope,
-                }
-            );
         }
     }
 
@@ -72,15 +53,5 @@ export class VehicleTowProvider {
 
         const owner2 = NetworkGetEntityOwner(NetworkGetEntityFromNetworkId(towRope.netId2));
         TriggerClientEvent(ClientEvent.VEH_FEATURE_SURFACE_RESET, owner2, towRope.netId2);
-
-        this.monitor.publish(
-            'tow_rope_remove',
-            {
-                player_source: source,
-            },
-            {
-                data: towRope,
-            }
-        );
     }
 }

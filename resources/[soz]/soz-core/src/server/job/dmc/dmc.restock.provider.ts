@@ -73,18 +73,13 @@ export class DmcRestockProvider {
         const totalAmount = toAddAmount * DmcResellconfig.resell_price;
         TriggerEvent(ServerEvent.BANKING_TRANSFER_MONEY, 'farm_dmc', 'safe_dmc', totalAmount);
 
-        this.monitor.publish(
-            'job_dmc_restock',
-            {
-                item_id: item.metadata.id,
-                player_source: source,
-            },
-            {
-                item_label: item.label,
-                quantity: toAddAmount,
-                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-            }
-        );
+        this.monitor.traceEvent('job_dmc_restock', {
+            item_id: item.name,
+            player_source: source,
+            item_label: item.label,
+            amount: toAddAmount,
+            position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+        });
 
         this.notifier.notify(source, msg, 'success');
     }

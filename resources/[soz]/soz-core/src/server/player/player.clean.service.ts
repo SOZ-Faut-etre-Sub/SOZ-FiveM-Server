@@ -113,15 +113,6 @@ export class PlayerCleanService {
             },
         });
 
-        this.monitor.publish(
-            'house_owner_cleanup',
-            {},
-            {
-                cititzenIds: JSON.stringify(disabledCitizenIds),
-                house: JSON.stringify(housingOwnerIdentifiers.map(h => h.identifier)),
-            }
-        );
-
         return [housingOwnerUpdated.count, housingRoommateUpdated.count];
     }
 }

@@ -57,16 +57,11 @@ export class GarbageProvider {
 
                 await this.bankService.transferBankMoney('farm_garbage', 'safe_garbage', totalMoney);
 
-                this.monitor.publish(
-                    'job_bluebird_recycling_garbage_bag',
-                    {
-                        item: item.item.name,
-                    },
-                    {
-                        quantity: amountToProcess,
-                        price: totalMoney,
-                    }
-                );
+                this.monitor.traceEvent('job_bluebird_recycling_garbage_bag', {
+                    item_id: item.item.name,
+                    item_count: amountToProcess,
+                    money: totalMoney,
+                });
 
                 itemLeftToProcess -= amountToProcess;
 

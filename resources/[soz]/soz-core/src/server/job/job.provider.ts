@@ -30,15 +30,10 @@ export class JobProvider {
 
     @OnEvent(ServerEvent.QBCORE_SET_DUTY, false)
     public onToggleDuty(jobid: JobType, onDuty: boolean, source: number) {
-        this.monitor.publish(
-            onDuty ? 'job_onduty' : 'job_offduty',
-            {
-                player_source: source,
-            },
-            {
-                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-            }
-        );
+        this.monitor.traceEvent(onDuty ? 'job_onduty' : 'job_offduty', {
+            player_source: source,
+            position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+        });
     }
 
     @Exportable('HasJobPermission')

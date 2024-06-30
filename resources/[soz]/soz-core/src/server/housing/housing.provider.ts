@@ -292,16 +292,11 @@ export class HousingProvider {
 
         await this.housingRepository.setApartmentOwner(player.citizenid, apartment.id);
 
-        this.monitor.publish(
-            'house_buy',
-            {
-                player_source: player.source,
-            },
-            {
-                house_id: apartment.identifier,
-                amount: apartment.price,
-            }
-        );
+        this.monitor.traceEvent('house_buy', {
+            player_source: player.source,
+            house_id: apartment.identifier,
+            amount: apartment.price,
+        });
 
         this.playerService.setPlayerApartment(player.source, apartment, property);
 
@@ -501,16 +496,11 @@ export class HousingProvider {
 
         await this.clearApartment(property, apartment, true);
 
-        this.monitor.publish(
-            'house_sell',
-            {
-                player_source: player.source,
-            },
-            {
-                house_id: apartment.identifier,
-                amount: resellPrice,
-            }
-        );
+        this.monitor.traceEvent('house_sell', {
+            player_source: player.source,
+            house_id: apartment.identifier,
+            amount: resellPrice,
+        });
 
         this.notifier.notify(
             player.source,
@@ -594,17 +584,12 @@ export class HousingProvider {
             'success'
         );
 
-        this.monitor.publish(
-            'house_upgrade',
-            {
-                player_source: player.source,
-            },
-            {
-                house_id: apartment.identifier,
-                tier: tier,
-                amount: price,
-            }
-        );
+        this.monitor.traceEvent('house_upgrade', {
+            player_source: player.source,
+            house_id: apartment.identifier,
+            tier: tier,
+            amount: price,
+        });
 
         if (apartment.roommate) {
             const roommate = this.playerService.getPlayerByCitizenId(apartment.roommate);

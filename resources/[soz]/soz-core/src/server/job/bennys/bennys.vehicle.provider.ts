@@ -60,17 +60,12 @@ export class BennysVehicleProvider {
             engineHealth: 1000,
         });
 
-        this.monitor.publish(
-            'job_bennys_repair_vehicle',
-            {
-                player_source: source,
-                repair_type: 'engine',
-            },
-            {
-                vehicle_plate: state.volatile.plate,
-                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-            }
-        );
+        this.monitor.traceEvent('job_bennys_repair_vehicle', {
+            player_source: source,
+            repair_type: 'engine',
+            vehicle_plate: state.volatile.plate,
+            position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+        });
     }
 
     @OnEvent(ServerEvent.BENNYS_REPAIR_VEHICLE_BODY)
@@ -100,17 +95,12 @@ export class BennysVehicleProvider {
             dirtLevel: 0,
         });
 
-        this.monitor.publish(
-            'job_bennys_repair_vehicle',
-            {
-                player_source: source,
-                repair_type: 'body',
-            },
-            {
-                vehicle_plate: state.volatile.plate,
-                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-            }
-        );
+        this.monitor.traceEvent('job_bennys_repair_vehicle', {
+            player_source: source,
+            repair_type: 'body',
+            vehicle_plate: state.volatile.plate,
+            position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+        });
     }
 
     @OnEvent(ServerEvent.BENNYS_REPAIR_VEHICLE_TANK)
@@ -137,17 +127,12 @@ export class BennysVehicleProvider {
             tankHealth: 1000,
         });
 
-        this.monitor.publish(
-            'job_bennys_repair_vehicle',
-            {
-                player_source: source,
-                repair_type: 'tank',
-            },
-            {
-                vehicle_plate: state.volatile.plate,
-                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-            }
-        );
+        this.monitor.traceEvent('job_bennys_repair_vehicle', {
+            player_source: source,
+            repair_type: 'tank',
+            vehicle_plate: state.volatile.plate,
+            position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+        });
     }
 
     @OnEvent(ServerEvent.BENNYS_REPAIR_VEHICLE_WHEEL)
@@ -198,17 +183,12 @@ export class BennysVehicleProvider {
             tireBurstState: {},
         });
 
-        this.monitor.publish(
-            'job_bennys_repair_vehicle',
-            {
-                player_source: source,
-                repair_type: 'wheel',
-            },
-            {
-                vehicle_plate: state.volatile.plate,
-                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-            }
-        );
+        this.monitor.traceEvent('job_bennys_repair_vehicle', {
+            player_source: source,
+            repair_type: 'wheel',
+            vehicle_plate: state.volatile.plate,
+            position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+        });
     }
 
     private async doRepairVehicle(
@@ -283,15 +263,10 @@ export class BennysVehicleProvider {
             dirtLevel: 0,
         });
 
-        this.monitor.publish(
-            'job_bennys_clean_vehicle',
-            {
-                player_source: source,
-            },
-            {
-                vehicle_plate: state.volatile.plate,
-                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-            }
-        );
+        this.monitor.traceEvent('job_bennys_clean_vehicle', {
+            player_source: source,
+            vehicle_plate: state.volatile.plate,
+            position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+        });
     }
 }

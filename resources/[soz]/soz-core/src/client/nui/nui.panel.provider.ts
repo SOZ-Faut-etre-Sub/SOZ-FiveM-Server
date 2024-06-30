@@ -1,9 +1,10 @@
+import { AnimationRunner } from '@public/client/animation/animation.factory';
+
 import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent, NuiEvent } from '../../shared/event';
 import { AnimationService } from '../animation/animation.service';
-import { AnimationRunner } from '@public/client/animation/animation.factory';
 import { NuiDispatch } from './nui.dispatch';
 
 @Provider()

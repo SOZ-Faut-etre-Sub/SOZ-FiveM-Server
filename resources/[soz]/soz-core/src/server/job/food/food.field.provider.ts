@@ -155,18 +155,13 @@ export class FoodFieldProvider {
                     this.notifier.notify(source, `Vous avez récolté ${item.amount} ${itemData.label}`);
                 }
 
-                this.monitor.publish(
-                    'job_cm_food_collect',
-                    {
-                        player_source: source,
-                        item_id: item.name,
-                    },
-                    {
-                        item_label: itemData.label,
-                        quantity: item.amount,
-                        position: toVector3Object(position),
-                    }
-                );
+                this.monitor.traceEvent('job_cm_food_collect', {
+                    player_source: source,
+                    item_id: item.name,
+                    item_label: itemData.label,
+                    amount: item.amount,
+                    position: toVector3Object(position),
+                });
             }
         }
 
@@ -233,18 +228,13 @@ export class FoodFieldProvider {
 
             this.notifier.notify(player.source, `Vous avez récolté ${amountToHarvest} ${itemData.label}`);
 
-            this.monitor.publish(
-                'job_cm_food_collect',
-                {
-                    player_source: source,
-                    item_id: item,
-                },
-                {
-                    item_label: itemData.label,
-                    quantity: amountToHarvest,
-                    position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-                }
-            );
+            this.monitor.traceEvent('job_cm_food_collect', {
+                player_source: source,
+                item_id: item,
+                item_label: itemData.label,
+                amount: amountToHarvest,
+                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+            });
         }
     }
 }

@@ -23,7 +23,7 @@ export class RpcLoader {
             const method = provider[methodName].bind(provider);
 
             if (this.rpcList[rpcName]) {
-                this.logger.error('RPC already exists', rpcName);
+                this.logger.error(`RPC ${rpcName} already exists`);
 
                 continue;
             }

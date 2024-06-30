@@ -8,6 +8,7 @@ import { RpcServerEvent } from '@public/shared/rpc';
 import axios from 'axios';
 
 import { TaxType } from '../../shared/bank';
+import { Vector3 } from '../../shared/polyzone/vector';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
 import { Monitor } from '../monitor/monitor';
@@ -124,10 +125,10 @@ export class UtilsProvider {
             );
         }
 
-        this.monitor.publish(
-            'zone_intrusion',
-            { player_source: source, zone: zone },
-            { position: GetEntityCoords(GetPlayerPed(source)) }
-        );
+        this.monitor.traceEvent('zone_intrusion', {
+            player_source: source,
+            zone_id: zone,
+            position: GetEntityCoords(GetPlayerPed(source)) as Vector3,
+        });
     }
 }

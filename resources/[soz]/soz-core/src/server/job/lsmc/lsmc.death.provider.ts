@@ -101,6 +101,12 @@ export class LSMCDeathProvider {
             TriggerClientEvent(ClientEvent.LSMC_REVIVE_DOC, source, isRPdeath);
         }
 
+        this.monitor.traceEvent(bloodbag ? 'job_lsmc_revive_bloodbag' : 'job_lsmc_revive_defibrillator', {
+            player_source: source,
+            target_source: targetid,
+            position: GetEntityCoords(GetPlayerPed(targetid)) as Vector3,
+        });
+
         if (!isRPdeath) {
             datas.hunger = this.playerService.getIncrementedMetadata(player, 'hunger', 30, 0, 100);
             datas.thirst = this.playerService.getIncrementedMetadata(player, 'thirst', 30, 0, 100);
@@ -162,7 +168,7 @@ export class LSMCDeathProvider {
     public deathReason(source: number, reason: string) {
         const deathDescription = reason ? reason : '';
         this.playerService.setPlayerMetadata(source, 'mort', deathDescription);
-        this.monitor.publish('player_dead', { player_source: source }, { reason: deathDescription });
+        this.monitor.traceEvent('player_dead', { player_source: source, reason: deathDescription });
     }
 
     @OnEvent(ServerEvent.LSMC_NEW_URGENCY)
