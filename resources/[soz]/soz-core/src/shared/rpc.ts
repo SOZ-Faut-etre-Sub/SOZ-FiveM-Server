@@ -42,6 +42,9 @@ export enum RpcServerEvent {
     INVENTORY_SEARCH = 'soz-core:inventory:search',
 
     HOUSING_GET_TEMPORARY_ACCESS = 'soz-core:server:housing:get-temporary-access',
+    HOUSING_GET_FOURNITURE = 'soz-core:server:housing:get-fourniture',
+    HOUSING_EDIT_FOURNITURE = 'soz-core:server:housing:edit-fourniture',
+    HOUSING_SET_SHELL = 'soz-core:server:housing:set-shell',
 
     JOBS_USE_WORK_CLOTHES = 'soz-core:server:job:use-work-clothes',
 

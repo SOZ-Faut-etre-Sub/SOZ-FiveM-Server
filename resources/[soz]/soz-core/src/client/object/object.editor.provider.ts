@@ -49,7 +49,7 @@ export class ObjectEditorProvider {
         RegisterKeyMapping('+gizmoSelect', 'Gizmo : Sélectionner un axe.', 'MOUSE_BUTTON', 'MOUSE_LEFT');
         RegisterKeyMapping('+gizmoTranslation', 'Gizmo : Mode Translation', 'keyboard', 'T');
         RegisterKeyMapping('+gizmoRotation', 'Gizmo : Mode Rotation', 'keyboard', 'R');
-        RegisterKeyMapping('+gizmoScale', 'Giszmo : Mode Scale', 'keyboard', 'S');
+        RegisterKeyMapping('+gizmoScale', 'Gizmo : Mode Scale', 'keyboard', 'S');
         RegisterKeyMapping('+gizmoLocal', 'Gizmo : Coordonnées locales', 'keyboard', 'L');
     }
 

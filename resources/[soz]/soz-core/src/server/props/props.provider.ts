@@ -5,6 +5,7 @@ import { Provider } from '@public/core/decorators/provider';
 import { Rpc } from '@public/core/decorators/rpc';
 import { Vfx } from '@public/shared/animation';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
+import { isPlayerInsideApartment } from '@public/shared/housing/housing';
 import {
     DebugProp,
     PropCollection,
@@ -13,6 +14,7 @@ import {
     WorldObject,
     WorldPlacedProp,
 } from '@public/shared/object';
+import { isStaff } from '@public/shared/player';
 import { Err } from '@public/shared/result';
 import { RpcServerEvent } from '@public/shared/rpc';
 
@@ -488,6 +490,21 @@ export class PropsProvider {
     }
 
     private async onUseSozHammer(source: number) {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        if (isPlayerInsideApartment(player) && !isStaff(player)) {
+            this.notifier.notify(
+                source,
+                "Attend, tu as vraiment voulu utiliser ton pouvoir dans ton habitation ? Tu n'es pas assez riche comme cela ? Respecte toi un peu et va donc acheter tes meubles au ZKEA.",
+                'error'
+            );
+            return;
+        }
+
         TriggerClientEvent(ClientEvent.PROP_OPEN_MENU, source);
     }
 

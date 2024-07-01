@@ -25,7 +25,7 @@ import { GarageMenuData } from '../vehicle/garage';
 import { VehicleCustomMenuData } from '../vehicle/modification';
 import { VehicleAuctionMenuData, VehicleDealershipMenuData, VehicleMenuData } from '../vehicle/vehicle';
 import { WeaponsMenuData } from '../weapons/weapon';
-import { PropPlacementMenuData } from './prop_placement';
+import { HousingPropPlacementMenuData, PropPlacementMenuData } from './prop_placement';
 
 export interface NuiMenuMethodMap {
     ArrowDown: never;
@@ -39,6 +39,7 @@ export interface NuiMenuMethodMap {
     SetMenuType: SetMenuType;
     ToggleFocus: never;
     SetMenuVisibility: boolean;
+    Shift: never;
 }
 
 export type SetMenuType = {
@@ -88,6 +89,7 @@ export enum MenuType {
     TaxiJobMenu = 'taxi_job',
     PlayerPersonal = 'player_personal',
     PropPlacementMenu = 'prop_placement_menu',
+    HousingPropPlacementMenu = 'housing_prop_placement_menu',
     LsmcJobMenu = 'lsmc_job_menu',
     JobOnDutyMenu = 'job_on_duty',
     Album = 'album',
@@ -95,6 +97,7 @@ export enum MenuType {
     DrugGarden = 'drug_garden',
     DrugAdmin = 'drug_admin',
     RentBoat = 'rent_boat',
+    RentMule = 'rent_mule',
     RaceAdmin = 'RaceAdmin',
     RaceRank = 'RaceRank',
     GouvJobMenu = 'gouv_job',
@@ -116,6 +119,7 @@ export enum MenuType {
     HousingAddRoommateMenu = 'housing_add_roommate_menu',
     HousingRemoveRoommateMenu = 'housing_remove_roommate_menu',
     HousingCloakroomMenu = 'housing_cloakroom_menu',
+    ZkeaFournitureMenu = 'zkea_fourniture_menu',
     LsmcPlaster = 'lsmc_plaster',
 }
 
@@ -156,11 +160,13 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.Album]: { tracks: Record<string, string>; volume: number };
     [MenuType.DrugShop]: ShopProduct[];
     [MenuType.DrugAdmin]: never;
-    [MenuType.RentBoat]: any;
+    [MenuType.RentBoat]: never;
+    [MenuType.RentMule]: never;
     [MenuType.RaceAdmin]: Race[];
     [MenuType.RaceRank]: { id: number; name: string };
     [MenuType.GouvJobMenu]: { onDuty: boolean; displayRadar: boolean };
     [MenuType.PropPlacementMenu]: PropPlacementMenuData;
+    [MenuType.HousingPropPlacementMenu]: HousingPropPlacementMenuData;
     [MenuType.FDFJobMenu]: any;
     [MenuType.JobNews]: { job: JobType };
     [MenuType.DmcJobMenu]: DmcJobMenuData;
@@ -180,6 +186,7 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.HousingCloakroomMenu]: {
         items: PlayerCloakroomItem[];
     };
+    [MenuType.ZkeaFournitureMenu]: never;
     [MenuType.LsmcPlaster]: PlasterMenuData;
     [MenuType.ObjectEditor]: EditorMenuData;
 }

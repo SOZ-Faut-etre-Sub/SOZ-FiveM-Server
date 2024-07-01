@@ -20,7 +20,7 @@ local glm_rayPicking = glm.rayPicking
 local glm_up = glm.up()
 local glm_forward = glm.forward()
 
-local function ScreenPositionToCameraRay()
+local function ScreenPositionToCameraRay(mouseRatioPosition)
     local pos = GetFinalRenderedCamCoord()
     local rot = glm_rad(GetFinalRenderedCamRot(2))
 
@@ -28,20 +28,21 @@ local function ScreenPositionToCameraRay()
     return pos, glm_rayPicking(
         q * glm_forward,
         q * glm_up,
-        glm_rad(screen.fov),
-        screen.ratio,
+        glm_rad(screen.fov or GetFinalRenderedCamFov()),
+        screen.ratio or GetAspectRatio(true),
         0.10000, -- GetFinalRenderedCamNearClip(),
         10000.0, -- GetFinalRenderedCamFarClip(),
-        0, 0
+        mouseRatioPosition[1], mouseRatioPosition[2]
     )
 end
 ---------------------------------------
 
 -- Functions
 
-local function RaycastCamera(flag, playerCoords)
+local function RaycastCamera(flag, playerCoords, mouseRatioPosition)
 	if not playerPed then playerPed = PlayerPedId() end
-	local rayPos, rayDir = ScreenPositionToCameraRay()
+	if not mouseRatioPosition then mouseRatioPosition = {0, 0} end
+	local rayPos, rayDir = ScreenPositionToCameraRay(mouseRatioPosition)
 	local destination = rayPos + 10000 * rayDir
 	local rayHandle = StartShapeTestLosProbe(rayPos.x, rayPos.y, rayPos.z, destination.x, destination.y, destination.z, flag or -1, playerPed, 0)
 	while true do
@@ -60,6 +61,18 @@ local function RaycastCamera(flag, playerCoords)
 end
 
 exports('RaycastCamera', RaycastCamera)
+
+local function RaycastFromMousePosition(flag)
+	local cursorX, cursorY = GetNuiCursorPosition();
+	local screenX, screenY = GetActiveScreenResolution();
+
+	local relativeX = (cursorX - screenX / 2) / (screenX / 2)
+	local relativeY = (cursorY - screenY / 2) / (screenY / 2)
+
+	return RaycastCamera(flag, GetEntityCoords(PlayerPedId()), {relativeX, relativeY})
+end
+
+exports('RaycastFromMousePosition', RaycastFromMousePosition)
 
 local function DisableNUI()
 	SetNuiFocus(false, false)
@@ -234,6 +247,14 @@ local function EnableTarget()
 						end
 					end
 
+					-- Local entity targets
+					if not NetworkGetEntityIsNetworked(entity) then
+						local data = Entities[entity]
+						if data ~= nil then
+							CheckEntity(hit, data, entity, distance)
+						end
+					end
+
 					-- Player and Ped targets
 					if entityType == 1 then
 						local data = Models[GetEntityModel(entity)]
@@ -260,7 +281,7 @@ local function EnableTarget()
 								table_wipe(nuiData)
 								local slot = 0
 								for o, data in pairs(datatable) do
-									if CheckOptions(data, entity, #(coords - closestPos)) then
+									if CheckOptions(data, entity, distance) then
 										slot += 1
 										sendData[slot] = data
 										sendData[slot].entity = entity
@@ -477,7 +498,7 @@ local function AddTargetEntity(entities, parameters)
 	local distance, options = parameters.distance or Config.MaxDistance, parameters.options
 	if type(entities) == 'table' then
 		for _, entity in pairs(entities) do
-			entity = NetworkGetEntityIsNetworked(entity) and NetworkGetNetworkIdFromEntity(entity) or false
+			entity = NetworkGetEntityIsNetworked(entity) and NetworkGetNetworkIdFromEntity(entity) or entity
 			if entity then
 				if not Entities[entity] then Entities[entity] = {} end
 				for k, v in pairs(options) do
@@ -487,7 +508,7 @@ local function AddTargetEntity(entities, parameters)
 			end
 		end
 	elseif type(entities) == 'number' then
-		local entity = NetworkGetEntityIsNetworked(entities) and NetworkGetNetworkIdFromEntity(entities) or false
+		local entity = NetworkGetEntityIsNetworked(entities) and NetworkGetNetworkIdFromEntity(entities) or entities
 		if entity then
 			if not Entities[entity] then Entities[entity] = {} end
 			for k, v in pairs(options) do
@@ -610,7 +631,7 @@ exports("RemoveTargetModel", RemoveTargetModel)
 local function RemoveTargetEntity(entities, labels)
 	if type(entities) == 'table' then
 		for _, entity in pairs(entities) do
-			entity = NetworkGetEntityIsNetworked(entity) and NetworkGetNetworkIdFromEntity(entity) or false
+			entity = NetworkGetEntityIsNetworked(entity) and NetworkGetNetworkIdFromEntity(entity) or entity
 			if entity then
 				if type(labels) == 'table' then
 					for k, v in pairs(labels) do
@@ -626,7 +647,7 @@ local function RemoveTargetEntity(entities, labels)
 			end
 		end
 	elseif type(entities) == 'string' then
-		local entity = NetworkGetEntityIsNetworked(entities) and NetworkGetNetworkIdFromEntity(entities) or false
+		local entity = NetworkGetEntityIsNetworked(entities) and NetworkGetNetworkIdFromEntity(entities) or entities
 		if entity then
 			if type(labels) == 'table' then
 				for k, v in pairs(labels) do

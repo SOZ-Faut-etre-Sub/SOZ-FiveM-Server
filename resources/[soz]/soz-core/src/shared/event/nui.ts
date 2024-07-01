@@ -269,12 +269,14 @@ export enum NuiEvent {
     HousingBuy = 'soz-core:nui:housing:buy',
     HousingEnter = 'soz-core:nui:housing:enter',
     HousingRemoveRoommate = 'soz-core:nui:housing:remove-roommate',
+    HousingStore = 'soz-core:nui:housing:store-fourniture',
     HousingSell = 'soz-core:nui:housing:sell',
     HousingVisit = 'soz-core:nui:housing:visit',
     HousingCloakroomApply = 'soz-core:nui:housing:cloakroom:apply',
     HousingCloakroomSave = 'soz-core:nui:housing:cloakroom:save',
     HousingCloakroomRename = 'soz-core:nui:housing:cloakroom:rename',
     HousingCloakroomDelete = 'soz-core:nui:housing:cloakroom:delete',
+    HousingFournitureRemove = 'soz-core:nui:housing:fourniture:remove',
 
     RedCallMendatory = 'soz-core:client:mendatory:red-call',
     ToggleRadar = 'soz-core:client:police:radar:toggle',
@@ -317,6 +319,8 @@ export enum NuiEvent {
 
     BoatRent = 'soz-core:client:fishing:rent-boat',
     BoatReturn = 'soz-core:client:fishing:return-boat',
+    MuleRent = 'soz-core:client:fishing:rent-mule',
+    MuleReturn = 'soz-core:client:fishing:return-mule',
     SozedexClosed = 'soz-core:nui:sozedex:closed',
 
     DrugSkillTreeBuy = 'soz-core:client:drug:skill-buy',
@@ -361,6 +365,7 @@ export enum NuiEvent {
     GouvFineSetMinPrice = 'soz-core:nui:gouv:fine-set-min-price',
     GouvFineSetMaxPrice = 'soz-core:nui:gouv:fine-set-max-price',
 
+    // #soz_hammer
     SelectPlacedProp = 'soz-core:client:placement:select-placed-prop',
     SelectPropToCreate = 'soz-core:client:placement:select-prop-to-create',
     ChoosePropToCreate = 'soz-core:client:placement:choose-prop-to-create',
@@ -383,6 +388,24 @@ export enum NuiEvent {
     RequestDeleteProp = 'soz-core:client:placement:delete-prop',
     PlacementCollectionRename = 'soz-core:client:placement:rename-collection',
 
+    // #housing
+    SelectHousingPlacedProp = 'soz-core:client:placement:select-housing-placed-prop',
+    SelectHousingPropToCreate = 'soz-core:client:placement:select-housing-prop-to-create',
+    ChooseHousingPropToCreate = 'soz-core:client:placement:choose-housing-prop-to-create',
+    ChooseHousingPlacedPropToEdit = 'soz-core:client:placement:choose-housing-placed-prop-to-edit',
+    LeaveHousingEditorMode = 'soz-core:client:placement:leave-housing-mode',
+    ValidateHousingPlacement = 'soz-core:client:placement:housing-validate',
+    RequestDeleteHousingCurrentProp = 'soz-core:client:placement:request-delete-housing-current-prop',
+    PropPlacementHousingReset = 'soz-core:client:placement:housing-reset',
+    PropPlacementHousingSnap = 'soz-core:client:placement:housing-snap',
+    RequestHousingDeleteProp = 'soz-core:client:placement:housing-delete-prop',
+    HousingUpdateDebugStorageType = 'soz-core:client:placement:housing-update-debug-storage-type',
+    ToggleDispatchToggleFocus = 'soz-core:client:dispatch:toggle-focus',
+    ToggleDispatchTargetFocus = 'soz-core:client:dispatch:target-focus',
+    HousingUpdatePosition = 'soz-core:client:dispatch:update-position',
+    HousingSelectEntityOnClick = 'soz-core:client:dispatch:select-entity-on-click',
+    SetHousingShell = 'soz-core:client:dispatch:set-shell',
+
     CraftDoRecipe = 'soz-core:client:craft:do-recipe',
     CraftCancel = 'soz-core:client:craft:cancel',
 
@@ -396,4 +419,7 @@ export enum NuiEvent {
     HubEntryAdminMenuOpen = 'soz-core:client:hub:entry-open-menu',
 
     PoliceUploadScientistPhoto = 'soz-core:client:job:police:upload-photo',
+
+    ZkeaFournitureShow = 'soz-core:nui:zkea:fourniture:show',
+    ZkeaFourniturePurchase = 'soz-core:nui:zkea:fourniture:purchase',
 }

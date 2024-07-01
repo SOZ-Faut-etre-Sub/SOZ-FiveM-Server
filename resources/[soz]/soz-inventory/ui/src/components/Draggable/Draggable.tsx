@@ -123,6 +123,16 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
             
             itemExtraLabel = `[${crateWeight/1000}/12 Kg]`
             
+        } else if( item.type === 'zkea_crate' && item.metadata?.zkeaCrateElements?.length){
+            if(item.metadata.label){
+                itemLabel = `${item.label}`
+            }
+            item.metadata.zkeaCrateElements.map(fourniture => {
+                secondaryDescription += `<br>- ${fourniture.name}`
+                crateWeight = crateWeight + 2000
+            })
+            
+            itemExtraLabel = `[${crateWeight/1000}/40 Kg]`
         } else if (item?.metadata?.expiration) {
             const currentTime = new Date().getTime();
             const expiration = new Date(item.metadata['expiration'])

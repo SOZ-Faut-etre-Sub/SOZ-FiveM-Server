@@ -64,6 +64,7 @@ export type ItemType =
     | 'fishing_rod'
     | 'fishing_bait'
     | 'crate'
+    | 'zkea_crate'
     | 'fish'
     | 'fishing_garbage'
     | 'tool'
@@ -76,6 +77,12 @@ export type MealMetadata = {
         amount: number;
         label: string;
         weight: number;
+};
+
+export type ZkeaFournitureMetadata = {
+    type: string;
+    name: string;
+    model: string;
 };
 
 export type BaitMetadata = {
@@ -110,6 +117,7 @@ export type InventoryItemMetadata = {
     attachments?: Record<string, string | null>;
     crafted?: boolean;
     crateElements?: MealMetadata[];
+    zkeaCrateElements?: ZkeaFournitureMetadata[];
     bait?: BaitMetadata;
     fuel?: number;
     weight?: number;

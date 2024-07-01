@@ -444,6 +444,11 @@ export class AdminMenuMapperProvider {
             const zoneField = `entryZone`;
             const id = `apartment-${property.id}-entry`;
 
+            if (!property[zoneField]) {
+                console.warn(`La propriété ${property.identifier} (${property.id}) n'a pas de zone d'entrée définie.`);
+                continue;
+            }
+
             this.zonesDrawn.push({
                 zone: BoxZone.fromZone(property[zoneField]),
                 id,
@@ -661,12 +666,16 @@ export class AdminMenuMapperProvider {
     public async setTier({
         propertyId,
         apartmentId,
+        type,
         tier,
     }: {
         propertyId: number;
         apartmentId: number;
+        type: string;
         tier: number;
     }): Promise<Property[]> {
-        return await emitRpc<Property[]>(RpcServerEvent.ADMIN_MAPPER_SET_APARTMENT_TIER, propertyId, apartmentId, tier);
+        return await emitRpc<Property[]>(RpcServerEvent.ADMIN_MAPPER_SET_APARTMENT_TIER, propertyId, apartmentId, {
+            [type]: tier,
+        });
     }
 }

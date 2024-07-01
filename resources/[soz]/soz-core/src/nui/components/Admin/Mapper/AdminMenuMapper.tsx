@@ -1,3 +1,4 @@
+import { TYPE_LABEL } from '@public/shared/housing/upgrades';
 import { Fragment, FunctionComponent, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -445,23 +446,33 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                                         ❌ Enlever le propriétaire ({apartment.owner})
                                     </MenuItemButton>
                                 )}
-                                <MenuItemSelect
-                                    value={apartment.tier}
-                                    title="Tier de l'appartement"
-                                    onConfirm={(_, value) => {
-                                        fetchNui(NuiEvent.AdminMenuMapperSetApartmentTier, {
-                                            propertyId: property.id,
-                                            apartmentId: apartment.id,
-                                            tier: value,
-                                        });
-                                    }}
-                                >
-                                    <MenuItemSelectOption value={0}>Tier 0</MenuItemSelectOption>
-                                    <MenuItemSelectOption value={1}>Tier 1</MenuItemSelectOption>
-                                    <MenuItemSelectOption value={2}>Tier 2</MenuItemSelectOption>
-                                    <MenuItemSelectOption value={3}>Tier 3</MenuItemSelectOption>
-                                    <MenuItemSelectOption value={4}>Tier 4</MenuItemSelectOption>
-                                </MenuItemSelect>
+                                {Object.entries(TYPE_LABEL).map(([type, label]) => {
+                                    return (
+                                        <MenuItemSelect
+                                            value={apartment[type]}
+                                            title={label}
+                                            onConfirm={(_, value) => {
+                                                fetchNui(NuiEvent.AdminMenuMapperSetApartmentTier, {
+                                                    propertyId: property.id,
+                                                    apartmentId: apartment.id,
+                                                    type: type,
+                                                    tier: value,
+                                                });
+                                            }}
+                                        >
+                                            <MenuItemSelectOption value={0}>Tier 1</MenuItemSelectOption>
+                                            <MenuItemSelectOption value={1}>Tier 2</MenuItemSelectOption>
+                                            <MenuItemSelectOption value={2}>Tier 3</MenuItemSelectOption>
+                                            <MenuItemSelectOption value={3}>Tier 4</MenuItemSelectOption>
+                                            <MenuItemSelectOption value={4}>Tier 5</MenuItemSelectOption>
+                                            <MenuItemSelectOption value={5}>Tier 6</MenuItemSelectOption>
+                                            <MenuItemSelectOption value={6}>Tier 7</MenuItemSelectOption>
+                                            <MenuItemSelectOption value={7}>Tier 8</MenuItemSelectOption>
+                                            <MenuItemSelectOption value={8}>Tier 9</MenuItemSelectOption>
+                                            <MenuItemSelectOption value={9}>Tier 10</MenuItemSelectOption>
+                                        </MenuItemSelect>
+                                    );
+                                })}
                             </MenuContent>
                         </SubMenu>
                     ))}

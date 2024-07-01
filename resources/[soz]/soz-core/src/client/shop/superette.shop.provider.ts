@@ -38,25 +38,27 @@ export class SuperetteShopProvider {
     private logger: Logger;
 
     public openShop(brand: ShopBrand, shop: string) {
-        if (brand != ShopBrand.Zkea && brand != ShopBrand.Ammunation) {
+        if (brand != ShopBrand.Ammunation) {
             const superetteContent: SuperetteItem[] = [];
             for (let i = 0; i < ShopsContent[brand].length; i++) {
                 const sharedItem = {
                     ...this.itemService.getItem(ShopsContent[brand][i].id),
                     price: ShopsContent[brand][i].price,
                     amount: 2000,
-                    slot: i,
+                    slot: i + 1,
                 } as SuperetteItem;
                 superetteContent.push(sharedItem);
             }
 
-            this.inventoryManager.openShopInventory(
-                superetteContent,
-                'menu_shop_supermarket',
-                brand === ShopBrand.Supermarket247Cayo ? null : TaxType.FOOD
-            );
+            let taxes = null;
+            if (brand === ShopBrand.Zkea) {
+                taxes = TaxType.SERVICE;
+            } else if (brand !== ShopBrand.Supermarket247Cayo) {
+                taxes = TaxType.FOOD;
+            }
+            this.inventoryManager.openShopInventory(superetteContent, 'menu_shop_supermarket', taxes);
         } else {
-            // Zkea and Ammunation are handled by soz-core here
+            // Ammunation are handled by soz-core here
             const licences = this.playerService.getPlayer().metadata.licences;
             const products = ShopsContent[brand]
                 .filter(product => !product.requiredLicense || licences[product.requiredLicense])

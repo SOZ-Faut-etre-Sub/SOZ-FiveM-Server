@@ -51,7 +51,7 @@ export class BankService {
 
     public openHouseSafe(apartment: Apartment) {
         TriggerEvent('banking:client:openHouseSafe', apartment.identifier, {
-            apartmentTier: apartment.tier,
+            apartmentTier: apartment.money_tier,
         });
     }
 }

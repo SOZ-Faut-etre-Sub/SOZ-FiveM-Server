@@ -1,3 +1,4 @@
+import { InventoryManager } from '@public/client/inventory/inventory.manager';
 import { BrandConfig, BrandsConfig, ShopBrand, ShopsConfig } from '@public/config/shops';
 import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Exportable } from '@public/core/decorators/exports';
@@ -11,7 +12,6 @@ import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 
 import { BlipFactory } from '../blip';
 import { PedFactory } from '../factory/ped.factory';
-import { InventoryManager } from '../inventory/inventory.manager';
 import { JobService } from '../job/job.service';
 import { StonkCollectService } from '../job/stonk/stonk.collect.service';
 import { NuiMenu } from '../nui/nui.menu';
@@ -23,6 +23,7 @@ import { JewelryShopProvider } from './jewelry.shop.provider';
 import { ShopInfo, ShopPedEntity } from './shop.service';
 import { SuperetteShopProvider } from './superette.shop.provider';
 import { TattooShopProvider } from './tattoo.shop.provider';
+import { ZkeaFournitureShopProvider } from './zkea.fourniture.shop.provider';
 
 type shopPedData = {
     entity: number;
@@ -58,17 +59,20 @@ export class ShopProvider {
     @Inject(BarberShopProvider)
     private barberShopProvider: BarberShopProvider;
 
+    @Inject(ZkeaFournitureShopProvider)
+    private zkeaFournitureShopProvider: ZkeaFournitureShopProvider;
+
     @Inject(PlayerService)
     private playerService: PlayerService;
-
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
 
     @Inject(JobService)
     private jobService: JobService;
 
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
+
+    @Inject(InventoryManager)
+    private inventoryManager: InventoryManager;
 
     private currentShop: string = null;
     private currentShopBrand: ShopBrand = null;
@@ -132,6 +136,25 @@ export class ShopProvider {
                         TriggerServerEvent(ServerEvent.LSC_CHECK_STOCK);
                         break;
                 }
+            },
+        },
+        {
+            icon: 'fa fa-shopping-basket',
+            label: "Accéder à l'entrepôt",
+            canInteract: () => {
+                return this.currentShop !== null && this.currentShopBrand === ShopBrand.Zkea;
+            },
+            blackoutGlobal: true,
+            action: async () => await this.zkeaFournitureShopProvider.openShop(),
+        },
+        {
+            label: 'Location de camion de déménagement',
+            icon: 'fas fa-truck',
+            canInteract: () => {
+                return this.currentShop !== null && this.currentShopBrand === ShopBrand.Zkea;
+            },
+            action: async () => {
+                this.nuiMenu.openMenu(MenuType.RentMule);
             },
         },
         {

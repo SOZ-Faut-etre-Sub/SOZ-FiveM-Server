@@ -20,4 +20,30 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
 
         return property.apartments.find(apartment => apartment.id === apartmentId) ?? null;
     }
+
+    public async findApartmentFromCollision(entity: number): Promise<Apartment | null> {
+        const targetInterior = GetInteriorFromEntity(entity);
+
+        if (!targetInterior) {
+            return null;
+        }
+
+        const allProperties = this.get();
+        for (const property of allProperties) {
+            for (const apartment of property.apartments) {
+                if (apartment.position) {
+                    const interior = GetInteriorFromCollision(
+                        apartment.position[0],
+                        apartment.position[1],
+                        apartment.position[2]
+                    );
+                    if (targetInterior === interior) {
+                        return apartment;
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
 }

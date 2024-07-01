@@ -22,7 +22,7 @@ function QBCore.Player.Login(source, citizenid, newData)
         if citizenid then
             local license = QBCore.Functions.GetSozIdentifier(src)
             local PlayerData = exports.oxmysql:singleSync('SELECT * FROM player where citizenid = ?', { citizenid })
-            local apartment = exports.oxmysql:singleSync('SELECT id,property_id,label,price,owner,tier,has_parking_place FROM housing_apartment where ? IN (owner, roommate)', { citizenid })
+            local apartment = exports.oxmysql:singleSync('SELECT id,property_id,label,price,owner,tier,cloth_tier,money_tier,park_tier,shell,has_parking_place FROM housing_apartment where ? IN (owner, roommate)', { citizenid })
             local partyMember = exports.oxmysql:singleSync('SELECT * FROM senate_party_member WHERE citizenId = ?', { citizenid })
             local role = GetConvar("soz_anonymous_default_role", "user")
             local useTestMode = GetConvar("soz_enable_test_auth", "false") == "true"
@@ -97,6 +97,9 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.apartment = PlayerData.apartment or nil
     if PlayerData.apartment then
         PlayerData.apartment.tier = PlayerData.apartment.tier or 0
+        PlayerData.apartment.park_tier = PlayerData.apartment.park_tier or 0
+        PlayerData.apartment.money_tier = PlayerData.apartment.money_tier or 0
+        PlayerData.apartment.cloth_tier = PlayerData.apartment.cloth_tier or 0
     end
     PlayerData.partyMember = PlayerData.partyMember or nil
     -- Charinfo
@@ -622,8 +625,11 @@ function QBCore.Player.CreatePlayer(PlayerData)
         self.Functions.UpdatePlayerData(true)
     end
 
-    self.Functions.SetApartmentTier = function(tier)
-        self.PlayerData.apartment.tier = tier
+    self.Functions.SetApartmentTier = function(apartmentTier)
+        if apartmentTier.tier then self.PlayerData.apartment.tier = apartmentTier.tier end
+        if apartmentTier.money_tier then self.PlayerData.apartment.money_tier = apartmentTier.money_tier end
+        if apartmentTier.park_tier then self.PlayerData.apartment.park_tier = apartmentTier.park_tier end
+        if apartmentTier.cloth_tier then self.PlayerData.apartment.cloth_tier = apartmentTier.cloth_tier end
         self.Functions.UpdatePlayerData(true)
     end
 

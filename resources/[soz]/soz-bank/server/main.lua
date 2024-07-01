@@ -250,11 +250,21 @@ QBCore.Functions.CreateCallback("banking:server:openHouseSafeStorage", function(
     end
 
     if Account.AccessGranted(account, source) then
-        account.max = Config.HouseSafeTiers[apartmentTier]
+        account.max = Config.HouseSafeTiers[apartmentTier.money_tier]
         cb(true, account.money, account.marked_money, account.max)
     else
         cb(false)
     end
+end)
+
+exports("GetSafeMoney", function(safeStorage)
+    local account = Account(safeStorage)
+
+    if account == nil then
+        return 0
+    end
+
+    return account.marked_money
 end)
 
 RegisterNetEvent("banking:server:updatePhoneBalance", function()

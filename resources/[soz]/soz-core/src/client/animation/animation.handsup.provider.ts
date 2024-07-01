@@ -65,7 +65,7 @@ export class AnimationHandsUpProvider {
             return;
         }
 
-        if (!this.playerService.canDoAction()) {
+        if (!this.playerService.canDoAction() || this.playerService.getState().carryBox) {
             return;
         }
 

@@ -148,6 +148,8 @@ export class AdminMenuPlayerProvider {
             exitCoord: false,
             property: null,
         });
+
+        TriggerClientEvent(ClientEvent.HOUSING_TELEPORT, player.id, false, false);
     }
 
     @OnEvent(ServerEvent.ADMIN_SET_AIO)

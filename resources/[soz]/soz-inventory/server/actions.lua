@@ -223,6 +223,11 @@ RegisterServerEvent("inventory:server:ResellItem", function(item, amount, resell
         local zkeaAmount = itemSpec.resellZkeaQty[tier] * amount
         local msg = string.format("%s meuble(s) ajouté(s) au stock Zkea.", zkeaAmount)
 
+        inv = Inventory("cabinet_storage")
+        if inv.maxWeight ~= Config.StorageCapacity["cabinet_storage"].weight then
+            inv.maxWeight = Config.StorageCapacity["cabinet_storage"].weight
+        end
+
         local s, r = Inventory.AddItem(Player.PlayerData.source, "cabinet_storage", item.name, zkeaAmount, {}, nil, nil)
         if not s and r == "invalid_weight" then
             local availableAmount = math.floor(Inventory.CalculateAvailableWeight("cabinet_storage") / itemSpec.weight)

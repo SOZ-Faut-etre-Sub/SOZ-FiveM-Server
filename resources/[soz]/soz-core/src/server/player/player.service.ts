@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@core/decorators/injectable';
 import { ServerStateService } from '@public/server/server.state.service';
 import { ClothConfig } from '@public/shared/cloth';
 import { DrivingSchoolLicense } from '@public/shared/driving-school';
-import { Apartment, Property } from '@public/shared/housing/housing';
+import { ApartementTiers, Apartment, Property } from '@public/shared/housing/housing';
 import { JobType } from '@public/shared/job';
 import { SenatePartyMember } from '@public/shared/senate';
 
@@ -69,14 +69,14 @@ export class PlayerService {
         }
     }
 
-    public setPlayerApartmentTier(source: number, tier: number): void {
+    public setPlayerApartmentTier(source: number, apartmentTier: Partial<ApartementTiers>): void {
         const player = this.QBCore.getPlayer(source);
 
         if (!player) {
             return;
         }
 
-        player.Functions.SetApartmentTier(tier);
+        player.Functions.SetApartmentTier(apartmentTier);
     }
 
     public setPlayerApartmentHasParking(source: number, hasParkingPlace: boolean): void {
@@ -106,6 +106,9 @@ export class PlayerService {
                 price: apartment.price,
                 owner: apartment.owner,
                 tier: apartment.tier,
+                money_tier: apartment.money_tier,
+                park_tier: apartment.park_tier,
+                cloth_tier: apartment.cloth_tier,
             });
         }
     }

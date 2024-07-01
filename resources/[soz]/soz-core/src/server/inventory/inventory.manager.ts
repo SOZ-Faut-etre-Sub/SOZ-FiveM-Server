@@ -339,11 +339,11 @@ export class InventoryManager {
 
     public clearApartment(apartmentIdentifier: string): void {
         this.sozInventory.ClearByOwner(apartmentIdentifier);
-        this.sozInventory.SetHouseStashMaxWeightFromTier(apartmentIdentifier, 0);
+        this.sozInventory.SetHouseStashAndFridgeMaxWeightFromTier(apartmentIdentifier, 0);
     }
 
-    public setHouseStashMaxWeightFromTier(apartmentIdentifier: string, tier: number): void {
-        this.sozInventory.SetHouseStashMaxWeightFromTier(apartmentIdentifier, tier);
+    public setHouseStashAndFridgeMaxWeightFromTier(apartmentIdentifier: string, tier: number): void {
+        this.sozInventory.SetHouseStashAndFridgeMaxWeightFromTier(apartmentIdentifier, tier);
     }
 
     public clear(id: string): void {

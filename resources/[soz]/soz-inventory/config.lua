@@ -23,8 +23,25 @@ Config.StorageCapacity = {
         [2] = {slot = 10, weight = 600000},
         [3] = {slot = 10, weight = 800000},
         [4] = {slot = 10, weight = 1000000},
+        [5] = {slot = 10, weight = 1400000},
+        [6] = {slot = 10, weight = 1800000},
+        [7] = {slot = 10, weight = 2000000},
+        [8] = {slot = 10, weight = 3000000},
+        [9] = {slot = 10, weight = 4000000},
     },
-    ["house_fridge"] = {slot = 10, weight = 100000},
+    ["house_fridge"] = {
+        [-2] = {slot = 10, weight = 1000000000}, -- for GM House
+        [0] = {slot = 10, weight = 200000},
+        [1] = {slot = 10, weight = 400000},
+        [2] = {slot = 10, weight = 600000},
+        [3] = {slot = 10, weight = 800000},
+        [4] = {slot = 10, weight = 1000000},
+        [5] = {slot = 10, weight = 1400000},
+        [6] = {slot = 10, weight = 1800000},
+        [7] = {slot = 10, weight = 2000000},
+        [8] = {slot = 10, weight = 3000000},
+        [9] = {slot = 10, weight = 4000000},
+    },
     --- Jobs PAWL
     ["log_storage"] = {slot = 10, weight = 40000000},
     ["plank_storage"] = {slot = 10, weight = 2000000},
@@ -40,7 +57,7 @@ Config.StorageCapacity = {
     --- Jobs BlueBird
     ["recycler_processing"] = {slot = 100, weight = 800000},
     --- Zkea
-    ["cabinet_storage"] = {slot = 1, weight = 1600000}, -- 400 cabinet_zkea maximum
+    ["cabinet_storage"] = {slot = 1, weight = 8000000}, -- 2000 cabinet_zkea maximum
     --- Smuggling Box
     ["smuggling_box"] = {slot = 100, weight = 250000},
     --- Jobs DMC
@@ -67,6 +84,8 @@ Config.ErrorMessage = {
 }
 
 Config.crateMaxWeight = 12000
+
+Config.zkeaCrateItemWeight = 2000
 
 Config.crateTypeAllowed = {"food", "liquor", "drink", "cocktail"}
 

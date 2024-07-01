@@ -1,6 +1,7 @@
 import { SozRole } from '@core/permissions';
 import { DrugSkill } from '@private/shared/drugs';
 import { Talent } from '@private/shared/talent';
+import { ApartementTiers } from '@public/shared/housing/housing';
 import { SenatePartyMember } from '@public/shared/senate';
 
 import { ClothConfig } from './cloth';
@@ -15,7 +16,7 @@ import { Halloween2022, Halloween2023 } from './story/halloween2022';
 export type QBCorePlayer = {
     Functions: {
         SetApartment: (data: any) => void;
-        SetApartmentTier: (tier: number) => void;
+        SetApartmentTier: (tier: Partial<ApartementTiers>) => void;
         SetPartyMember: (data: SenatePartyMember | null) => void;
         SetApartmentHasParkingPlace: (hasParkingPlace: boolean) => void;
         SetMetaData: (key: string, val: any) => void;
@@ -40,6 +41,9 @@ export type PlayerData = {
               id: number;
               property_id: number;
               tier: number;
+              cloth_tier: number;
+              money_tier: number;
+              park_tier: number;
               price: number;
               owner: string;
           }

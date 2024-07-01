@@ -1,3 +1,4 @@
+import { FOURNITURE_PER_TIER, HousingTiers } from '@public/shared/housing/upgrades';
 import { isGameMaster, PlayerData } from '@public/shared/player';
 
 import { Zone } from '../polyzone/box.zone';
@@ -26,17 +27,22 @@ export type Apartment = {
     stashZone: Zone | null;
     closetZone: Zone | null;
     moneyZone: Zone | null;
-    tier: number;
+    shell: boolean;
     hasParkingPlace: boolean;
     senatePartyId: string | null;
-};
+} & ApartementTiers;
 
 export type ApartmentMenuData = {
     property: Property;
     apartments: Apartment[];
 };
 
-export const UPGRADE_TIER_PERCENT: [number, number, number, number, number] = [0, 20, 45, 70, 100];
+export type ApartementTiers = {
+    tier: number | null;
+    cloth_tier: number | null;
+    money_tier: number | null;
+    park_tier: number | null;
+};
 
 export const isBuilding = (property: Property) => {
     return property.apartments.length > 1;
@@ -145,12 +151,25 @@ export const getResellPrice = (apartment: Apartment, property: Property) => {
         price += price / 2;
     }
 
-    for (let i = 0; i < apartment.tier + 1; i++) {
-        const tierPrice = (apartment.price * UPGRADE_TIER_PERCENT[i]) / 100;
-        price += tierPrice / 2;
+    for (const type of Object.keys(HousingTiers)) {
+        for (let i = 0; i < (apartment[type] | 0) + 1; i++) {
+            const tierPrice = (apartment.price * HousingTiers[type][i].pricePercent) / 100;
+            price += tierPrice / 2;
+        }
     }
 
     return Math.round(price);
+};
+
+export const getMaxFourntiure = (apartment: Apartment): number => {
+    return (
+        ((apartment.tier | 0) +
+            (apartment.money_tier | 0) +
+            (apartment.park_tier | 0) +
+            (apartment.cloth_tier | 0) +
+            4) *
+        FOURNITURE_PER_TIER
+    );
 };
 
 export const getPropertyGarageName = (property: Property) => {
@@ -167,5 +186,39 @@ export const isPlayerInsideApartment = (player: PlayerData): boolean => {
         player.metadata.inside &&
         player.metadata.inside.property &&
         player.metadata.inside.apartment !== false
+    );
+};
+
+const includeHousingApartment = ['v_trailer', 'V_TRAILER', 'house', 'appartements', 'soz_villa'];
+
+export const isApartmentExcludeFromHousing = (apartment: Apartment) => {
+    return !includeHousingApartment.some(k => apartment.identifier.includes(k));
+};
+
+export const canUseHousingInAppartment = (player: PlayerData, apartment: Apartment): boolean => {
+    return (
+        player &&
+        apartment.owner &&
+        (apartment.owner === player.citizenid ||
+            apartment.roommate === player.citizenid ||
+            ['staff', 'admin'].includes(player.role)) &&
+        !isApartmentExcludeFromHousing(apartment)
+    );
+};
+
+export const canUseHousingInAppartmentNoStaff = (player: PlayerData, apartment: Apartment): boolean => {
+    return (
+        player &&
+        apartment.owner &&
+        (apartment.owner === player.citizenid || apartment.roommate === player.citizenid) &&
+        !isApartmentExcludeFromHousing(apartment)
+    );
+};
+
+export const canUseHousingInProperty = (player: PlayerData, property: Property): boolean => {
+    return property.apartments.some(
+        apartment =>
+            (apartment.senatePartyId !== null || apartment.owner !== null) &&
+            canUseHousingInAppartmentNoStaff(player, apartment)
     );
 };

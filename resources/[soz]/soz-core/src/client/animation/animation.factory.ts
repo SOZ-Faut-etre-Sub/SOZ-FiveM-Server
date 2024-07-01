@@ -209,9 +209,12 @@ export class AnimationFactory {
 
             if (animation.props) {
                 for (const prop of animation.props) {
+                    const model = Array.isArray(prop.model)
+                        ? prop.model[Math.floor(Math.random() * prop.model.length)]
+                        : prop.model;
                     const propId = await this.attachedObjectService.attachObjectToPlayer({
                         bone: prop.bone,
-                        model: prop.model,
+                        model: model,
                         position: prop.position,
                         rotation: prop.rotation,
                     });

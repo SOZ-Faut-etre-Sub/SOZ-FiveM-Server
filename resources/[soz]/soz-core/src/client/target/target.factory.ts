@@ -186,10 +186,15 @@ export class TargetFactory {
         exports['qb-target'].RemoveTargetModel(models, labels);
     }
 
+    public removeForEntity(entities: number[], labels: string[]) {
+        exports['qb-target'].RemoveTargetEntity(entities, labels);
+    }
+
     public removeBoxZone(id: string) {
         exports['qb-target'].RemoveZone(id);
     }
 
-    // // @TODO - Implement it when needed
-    // public removeTargetEntity(entities: string[], labels: string[]) {}
+    public raycastFromMousePosition(flag: number) {
+        return exports['qb-target'].RaycastFromMousePosition(flag);
+    }
 }

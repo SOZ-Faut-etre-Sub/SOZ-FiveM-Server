@@ -1,3 +1,5 @@
+import { ProgressService } from '@public/client/progress.service';
+
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -28,6 +30,9 @@ export class HousingMenuProvider {
 
     @Inject(PlayerWardrobe)
     private playerWardrobe: PlayerWardrobe;
+
+    @Inject(ProgressService)
+    private progressService: ProgressService;
 
     @OnNuiEvent(NuiEvent.HousingAddRoommate)
     public async addRoommate({ apartmentId, propertyId }: { apartmentId: number; propertyId: number }) {
@@ -81,7 +86,7 @@ export class HousingMenuProvider {
     @OnNuiEvent(NuiEvent.HousingSell)
     public async sell({ apartmentId, propertyId }: { apartmentId: number; propertyId: number }) {
         const confirm = await this.inputService.askConfirm(
-            'Voulez-vous vraiment vendre cet appartement ? Entrez OUI pour confirmer.'
+            'Voulez-vous vraiment vendre cet habitation ? Entrez OUI pour confirmer.'
         );
 
         if (confirm) {
@@ -163,5 +168,33 @@ export class HousingMenuProvider {
         }
 
         this.nuiMenu.closeMenu();
+    }
+
+    @OnNuiEvent(NuiEvent.HousingStore)
+    public async storeFournitureInApartment({ apartmentId, propretyId }: { apartmentId: number; propretyId: number }) {
+        const { completed } = await this.progressService.progress(
+            'store_fourntiure',
+            'Rangement des meubles...',
+            2500,
+            {
+                dictionary: 'anim@narcotics@trash',
+                name: 'drop_front',
+                options: {
+                    onlyUpperBody: true,
+                },
+            },
+            {
+                disableMovement: true,
+                useWhileDead: false,
+                canCancel: true,
+                disableCarMovement: true,
+                disableMouse: false,
+                disableCombat: true,
+            }
+        );
+        if (!completed) {
+            return;
+        }
+        TriggerServerEvent(ServerEvent.HOUSING_STORE_FOURNITURE, apartmentId, propretyId);
     }
 }

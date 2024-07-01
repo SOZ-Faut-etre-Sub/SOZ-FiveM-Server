@@ -23,12 +23,23 @@ export type WorldPlacedProp = {
 export type DebugProp = {
     id: string;
     model: string;
-    collection: string;
+    collection?: string;
     matrix: Float32Array;
     collision: boolean;
     position: Vector4;
     entity: number;
     state: PropState;
+};
+
+export type HousingDebugProp = {
+    model: string;
+    fourniture_id: number;
+    matrix: Float32Array;
+    position: Vector4;
+    initialPosition: Vector4;
+    entity: number;
+    rotation: Vector3;
+    storageType: string;
 };
 
 export const enum PropState {

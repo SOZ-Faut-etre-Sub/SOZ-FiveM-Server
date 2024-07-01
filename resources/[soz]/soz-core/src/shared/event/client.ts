@@ -48,6 +48,7 @@ export enum ClientEvent {
     HOUSING_REQUEST_ENTER = 'soz-core:client:housing:request-enter',
     HOUSING_ADD_TEMPORARY_ACCESS = 'soz-core:client:housing:add-temporary-access',
     HOUSING_TELEPORT = 'soz-core:client:housing:teleport',
+    HOUSING_SYNC_FOURNITURE = 'soz-core:client:housing:sync',
 
     HALLOWEEN_HAT_TOOGLE = 'soz-core:client:halloween:hat-toggle',
     HALLOWEEN_DEGUISEMENT_USE = 'soz-core:client:halloween:use-deguisement',

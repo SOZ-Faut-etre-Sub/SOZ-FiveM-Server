@@ -1,19 +1,27 @@
-import { Once, OnceStep } from '../../core/decorators/event';
-import { Inject } from '../../core/decorators/injectable';
-import { Provider } from '../../core/decorators/provider';
-import { RepositoryDelete, RepositoryInsert, RepositoryUpdate } from '../../core/decorators/repository';
-import { emitQBRpc } from '../../core/rpc';
-import { PlayerCloakroomItem } from '../../shared/cloth';
-import { ServerEvent } from '../../shared/event/server';
-import { Apartment, isPlayerInsideApartment, Property } from '../../shared/housing/housing';
-import { MenuType } from '../../shared/nui/menu';
-import { RepositoryType } from '../../shared/repository';
-import { BankService } from '../bank/bank.service';
-import { InventoryManager } from '../inventory/inventory.manager';
-import { NuiMenu } from '../nui/nui.menu';
-import { PlayerService } from '../player/player.service';
-import { HousingRepository } from '../repository/housing.repository';
-import { TargetFactory } from '../target/target.factory';
+import { Once, OnceStep } from '@core/decorators/event';
+import { Inject } from '@core/decorators/injectable';
+import { Provider } from '@core/decorators/provider';
+import { RepositoryDelete, RepositoryInsert, RepositoryUpdate } from '@core/decorators/repository';
+import { emitQBRpc } from '@core/rpc';
+import { BankService } from '@public/client/bank/bank.service';
+import { InventoryManager } from '@public/client/inventory/inventory.manager';
+import { NuiMenu } from '@public/client/nui/nui.menu';
+import { PlayerService } from '@public/client/player/player.service';
+import { HousingRepository } from '@public/client/repository/housing.repository';
+import { TargetFactory } from '@public/client/target/target.factory';
+import { PlayerCloakroomItem } from '@public/shared/cloth';
+import { ServerEvent } from '@public/shared/event/server';
+import {
+    Apartment,
+    canUseHousingInAppartment,
+    isApartmentExcludeFromHousing,
+    isPlayerInsideApartment,
+    Property,
+} from '@public/shared/housing/housing';
+import { MenuType } from '@public/shared/nui/menu';
+import { RepositoryType } from '@public/shared/repository';
+
+import { HousingMenuProvider } from './housing.menu.provider';
 
 type PlayerCloakroom = Record<number, PlayerCloakroomItem>;
 
@@ -36,6 +44,9 @@ export class HousingApartmentZoneProvider {
 
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
+
+    @Inject(HousingMenuProvider)
+    private housingMenuProvider: HousingMenuProvider;
 
     @Once(OnceStep.RepositoriesLoaded)
     public onApartmentZoneLoaded() {
@@ -63,6 +74,10 @@ export class HousingApartmentZoneProvider {
 
     public deleteZoneForApartment(apartment: Apartment) {
         this.targetFactory.removeBoxZone(`housing:apartment:${apartment.id}:exit`);
+        this.deleteOtherzoneForApartment(apartment);
+    }
+
+    public deleteOtherzoneForApartment(apartment: Apartment) {
         this.targetFactory.removeBoxZone(`housing:apartment:${apartment.id}:stash`);
         this.targetFactory.removeBoxZone(`housing:apartment:${apartment.id}:fridge`);
         this.targetFactory.removeBoxZone(`housing:apartment:${apartment.id}:money`);
@@ -90,9 +105,40 @@ export class HousingApartmentZoneProvider {
                         TriggerServerEvent(ServerEvent.HOUSING_EXIT_APARTMENT, property.id, apartment.id);
                     },
                 },
+                {
+                    label: 'Stocker les meubles',
+                    icon: 'fa fa-cart-arrow-down',
+                    canInteract: () => {
+                        const player = this.playerService.getPlayer();
+
+                        if (!player) {
+                            return false;
+                        }
+
+                        return (
+                            (apartment.senatePartyId !== null || apartment.owner !== null) &&
+                            canUseHousingInAppartment(player, apartment) &&
+                            this.inventoryManager.hasEnoughItem('zkea_crate')
+                        );
+                    },
+                    action: async () => {
+                        await this.housingMenuProvider.storeFournitureInApartment({
+                            apartmentId: apartment.id,
+                            propretyId: apartment.propertyId,
+                        });
+                    },
+                },
             ]);
         }
 
+        if (!isApartmentExcludeFromHousing(apartment) && !apartment.shell) {
+            return;
+        }
+
+        this.createOtherZoneForApartment(property.id, apartment);
+    }
+
+    public createOtherZoneForApartment(propertyId: number, apartment: Apartment) {
         if (apartment.stashZone) {
             this.targetFactory.createForBoxZone(`housing:apartment:${apartment.id}:stash`, apartment.stashZone, [
                 {
@@ -113,7 +159,7 @@ export class HousingApartmentZoneProvider {
                     action: () => {
                         this.inventoryManager.openInventory('house_stash', apartment.identifier, {
                             apartmentTier: apartment.tier,
-                            propertyId: property.id,
+                            propertyId: propertyId,
                             apartmentId: apartment.id,
                         });
                     },
@@ -125,7 +171,7 @@ export class HousingApartmentZoneProvider {
             this.targetFactory.createForBoxZone(`housing:apartment:${apartment.id}:fridge`, apartment.fridgeZone, [
                 {
                     label: 'Frigo',
-                    icon: 'c:inventory/ouvrir_le_stockage.png',
+                    icon: 'fa fa-carrot',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
 
@@ -139,7 +185,11 @@ export class HousingApartmentZoneProvider {
                         );
                     },
                     action: () => {
-                        this.inventoryManager.openInventory('house_fridge', apartment.identifier);
+                        this.inventoryManager.openInventory('house_fridge', apartment.identifier, {
+                            apartmentTier: apartment.tier,
+                            propertyId: propertyId,
+                            apartmentId: apartment.id,
+                        });
                     },
                 },
             ]);

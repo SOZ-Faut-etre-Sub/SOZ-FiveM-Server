@@ -197,6 +197,12 @@ export type MealMetadata = {
     label: string;
 };
 
+export type ZkeaFournitureMetadata = {
+    type: string;
+    name: string;
+    model: string;
+};
+
 export type EvidenceMetadata = {
     type: string;
     generalInfo: string;
@@ -240,6 +246,7 @@ export type InventoryItemMetadata = {
     id?: string;
     model?: string;
     crateElements?: MealMetadata[];
+    zkeaCrateElements?: ZkeaFournitureMetadata[];
     // Fishing
     weight?: number;
     length?: number;

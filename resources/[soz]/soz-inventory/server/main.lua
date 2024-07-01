@@ -185,7 +185,19 @@ function Inventory.SetHouseStashMaxWeightFromTier(inv, tier)
         inv.maxWeight = Config.StorageCapacity["house_stash"][tier].weight
     end
 end
-exports("SetHouseStashMaxWeightFromTier", Inventory.SetHouseStashMaxWeightFromTier)
+
+function Inventory.SetHouseFridgeMaxWeightFromTier(inv, tier)
+    inv = Inventory("house_fridge_" .. inv)
+    if inv then
+        inv.maxWeight = Config.StorageCapacity["house_fridge"][tier].weight
+    end
+end
+
+function Inventory.SetHouseStashAndFridgeMaxWeightFromTier(inv, tier)
+    Inventory.SetHouseStashMaxWeightFromTier(inv, tier)
+    Inventory.SetHouseFridgeMaxWeightFromTier(inv, tier)
+end
+exports("SetHouseStashAndFridgeMaxWeightFromTier", Inventory.SetHouseStashAndFridgeMaxWeightFromTier)
 
 function Inventory.GetItemWeight(item, metadata, amount)
     if metadata and metadata.weight then
@@ -211,6 +223,10 @@ function Inventory.GetItemWeight(item, metadata, amount)
 
     if item.type == "crate" then
         weight = item.weight + Inventory.getCrateWeight(metadata)
+    end
+
+    if item.type == "zkea_crate" then
+        weight = item.weight + Inventory.getZkeaCrateWeight(metadata)
     end
 
     if metadata.storageElements then
@@ -401,6 +417,17 @@ function Inventory.getCrateWeight(metadata)
         crateTotalWeight = crateTotalWeight + Inventory.GetItemWeight(item, crateItem.metadata, crateItem.amount)
     end
     return crateTotalWeight
+end
+
+function Inventory.getZkeaCrateWeight(metadata)
+    local crateTotalContentWeight = 0
+    if not metadata or not metadata.zkeaCrateElements then
+        return crateTotalContentWeight
+    end
+    for _, crateItem in pairs(metadata.zkeaCrateElements) do
+        crateTotalContentWeight = crateTotalContentWeight + Config.zkeaCrateItemWeight
+    end
+    return crateTotalContentWeight
 end
 
 function Inventory.getItemStorageWeight(metadata)
@@ -1080,7 +1107,12 @@ function GetOrCreateInventory(storageType, invID, ctx)
             local vehicleState = exports["soz-core"]:GetVehicleState(nil, ctx.entity)
 
             if vehicleState.isPlayerVehicle ~= true then
-                storageType = "temporary_trunk"
+                if ctx.model == GetHashKey("mule3") and vehicleState.rentOwner ~= nil then
+                    trunkConfig.weight = 210000
+                    storageType = "zkea_trunk"
+                else
+                    storageType = "temporary_trunk"
+                end
             end
 
             targetInv = Inventory.Create("trunk_" .. invID, invID, storageType, trunkConfig.slot, trunkConfig.weight, invID)
@@ -1091,29 +1123,28 @@ function GetOrCreateInventory(storageType, invID, ctx)
         if targetInv == nil then
             targetInv = Inventory.Create("stash_" .. invID, invID, storageType, storageConfig.slot, storageConfig.weight, invID)
         end
-    elseif storageType == "house_stash" then
-        targetInv = Inventory("house_stash_" .. invID)
+    elseif storageType == "house_stash" or storageType == "house_fridge" then
+        targetInv = Inventory(storageType .. "_" .. invID)
 
-        local tier = 0
+        local apartmentTier = {["tier"] = 0, ["money_tier"] = 0, ["park_tier"] = 0, ["cloth_tier"] = 0}
         if ctx then
-            tier = exports["soz-core"]:GetApartmentTier(ctx.propertyId, ctx.apartmentId)
+            apartmentTier = exports["soz-core"]:GetApartmentTier(ctx.propertyId, ctx.apartmentId)
         end
         if invID == "villa_cayo" then
-            tier = -2
+            apartmentTier.tier = -2
         end
 
         if targetInv == nil then
-            targetInv = Inventory.Create("house_stash_" .. invID, invID, storageType, storageConfig[tier].slot, storageConfig[tier].weight, invID)
+            targetInv = Inventory.Create(storageType .. "_" .. invID, invID, storageType, storageConfig[apartmentTier.tier].slot,
+                                         storageConfig[apartmentTier.tier].weight, invID)
         else
-            if targetInv.maxWeight ~= storageConfig[tier].weight then
-                Inventory.SetHouseStashMaxWeightFromTier(invID, tier)
+            if targetInv.maxWeight ~= storageConfig[apartmentTier.tier].weight then
+                if storageType == "house_stash" then
+                    Inventory.SetHouseStashMaxWeightFromTier(invID, apartmentTier.tier)
+                elseif storageType == "house_fridge" then
+                    Inventory.SetHouseFridgeMaxWeightFromTier(invID, apartmentTier.tier)
+                end
             end
-        end
-    elseif storageType == "house_fridge" then
-        targetInv = Inventory("house_fridge_" .. invID)
-
-        if targetInv == nil then
-            targetInv = Inventory.Create("house_fridge_" .. invID, invID, storageType, storageConfig.slot, storageConfig.weight, invID)
         end
     elseif storageType == "inverter" then
         targetInv = Inventory("inverter_" .. invID)

@@ -392,14 +392,26 @@ export class VehicleSpawner {
     public async spawnRentVehicle(
         source: number,
         model: string,
-        data: { position: Vector4; color: number }
+        data: { position: Vector4; color?: number }
     ): Promise<null | number | object> {
         const player = this.playerService.getPlayer(source);
         const position = data.position;
-        const color = data.color;
 
         if (!player) {
             return null;
+        }
+
+        const modification: VehicleConfiguration = {
+            modification: {},
+            extra: {},
+        };
+        if (data.color) {
+            modification.color = {
+                primary: VehicleColor.MetallicWhite,
+                secondary: data.color,
+                pearlescent: null,
+                rim: null,
+            };
         }
 
         const modelHash = GetHashKey(model);
@@ -418,16 +430,7 @@ export class VehicleSpawner {
                 model,
                 position,
                 warp: false,
-                modification: {
-                    color: {
-                        primary: VehicleColor.MetallicWhite,
-                        secondary: color,
-                        pearlescent: null,
-                        rim: null,
-                    },
-                    modification: {},
-                    extra: {},
-                },
+                modification: modification,
             },
             volatileState,
             condition

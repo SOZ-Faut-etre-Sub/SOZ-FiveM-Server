@@ -32,6 +32,11 @@ export const HouseGarageLimits = {
     2: 6,
     3: 8,
     4: 10,
+    5: 12,
+    6: 14,
+    7: 16,
+    8: 18,
+    9: 20,
 };
 
 export type GarageParkingPlaceData = {

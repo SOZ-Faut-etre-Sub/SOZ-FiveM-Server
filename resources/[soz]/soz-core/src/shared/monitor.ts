@@ -54,6 +54,9 @@ export type MonitorTraceEvent = {
     category?: string;
     house_id?: string;
     tier?: number;
+    money_tier?: number;
+    park_tier?: number;
+    cloth_tier?: number;
     repair_type?: string;
     field?: string;
     id?: string | number;
@@ -252,4 +255,7 @@ export type MonitorEvent = {
     facility_type?: string;
     facility_scope?: string;
     facility_job?: string;
+    apartment_id?: number;
+    fourniture_id?: number;
+    apartment_shell?: boolean;
 };

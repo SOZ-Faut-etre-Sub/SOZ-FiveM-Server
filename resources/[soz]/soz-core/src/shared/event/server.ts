@@ -114,6 +114,7 @@ export enum ServerEvent {
     HOUSING_VISIT_APARTMENT = 'soz-core:server:housing:visit-apartment',
     HOUSING_UPGRADE_APARTMENT_TIER = 'soz-core:server:housing:upgrade-apartment-tier',
     HOUSING_ADD_PARKING_PLACE = 'soz-core:server:housing:add-parking-place',
+    HOUSING_STORE_FOURNITURE = 'soz-core:server:housing:store-fourniture',
 
     STONK_RESELL = 'soz-core:server:job:stonk:resell',
     STONK_COLLECT = 'soz-core:server:job:stonk:collect',
@@ -247,6 +248,8 @@ export enum ServerEvent {
     SHOP_BUY = 'soz-core:server:shop:buy',
     SHOP_TATTOO_RESET = 'soz-core:server:shop:tattoo-reset',
     ZKEA_CHECK_STOCK = 'soz-core:client:shop:zkea:check-stock',
+    ZKEA_RENT_MULE = 'soz-core:client:shop:zkea:rent-mule',
+    ZKEA_RETURN_MULE = 'soz-core:client:shop:zkea:return-mule',
 
     AFK_KICK = 'soz-core:server:afk:kick',
 

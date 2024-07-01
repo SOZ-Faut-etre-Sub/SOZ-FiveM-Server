@@ -291,13 +291,16 @@ export class PedFactory {
         if (ped.animprops) {
             const pedprops = [];
             for (const prop of ped.animprops) {
-                if (!(await this.resourceLoader.loadModel(prop.model))) {
+                const model = Array.isArray(prop.model)
+                    ? prop.model[Math.floor(Math.random() * prop.model.length)]
+                    : prop.model;
+                if (!(await this.resourceLoader.loadModel(model))) {
                     continue;
                 }
 
                 const playerOffset = GetOffsetFromEntityInWorldCoords(pedId, 0.0, 0.0, 0.0) as Vector3;
                 const propId = CreateObject(
-                    GetHashKey(prop.model),
+                    GetHashKey(model),
                     playerOffset[0],
                     playerOffset[1],
                     playerOffset[2],
@@ -306,7 +309,7 @@ export class PedFactory {
                     false
                 );
 
-                this.resourceLoader.unloadModel(prop.model);
+                this.resourceLoader.unloadModel(model);
 
                 AttachEntityToEntity(
                     propId,

@@ -7,6 +7,7 @@ import { JewelryShopProvider } from './jewelry.shop.provider';
 import { ShopProvider } from './shop.provider';
 import { SuperetteShopProvider } from './superette.shop.provider';
 import { TattooShopProvider } from './tattoo.shop.provider';
+import { ZkeaFournitureShopProvider } from './zkea.fourniture.shop.provider';
 
 @Module({
     providers: [
@@ -18,6 +19,7 @@ import { TattooShopProvider } from './tattoo.shop.provider';
         JewelryShopProvider,
         BarberShopProvider,
         EasterShopProvider,
+        ZkeaFournitureShopProvider,
     ],
 })
 export class ShopModule {}

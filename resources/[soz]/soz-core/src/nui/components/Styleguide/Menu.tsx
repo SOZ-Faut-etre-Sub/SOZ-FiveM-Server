@@ -1,7 +1,9 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
 import { CheckIcon } from '@heroicons/react/solid';
+import { fetchNui } from '@public/nui/fetch';
 import { useNuiEvent } from '@public/nui/hook/nui';
 import { slugify } from '@public/nui/utils/slugify';
+import { NuiEvent } from '@public/shared/event';
 import {
     createDescendantContext,
     Descendant,
@@ -13,7 +15,10 @@ import {
 import cn from 'classnames';
 import {
     createContext,
+    DetailedHTMLProps,
+    forwardRef,
     FunctionComponent,
+    InputHTMLAttributes,
     PropsWithChildren,
     ReactNode,
     useCallback,
@@ -56,11 +61,15 @@ const MenuContext = createContext<{
     setActiveIndex: (number: number) => void;
     visibility: boolean;
     setDescription: (desc: string | ReactNode) => void;
+    textFocus: boolean;
+    setTextFocus: (focus: boolean) => void;
 }>({
     activeIndex: 0,
     visibility: true,
     setActiveIndex: () => {},
     setDescription: () => {},
+    textFocus: false,
+    setTextFocus: () => {},
 });
 const MenuSelectedContext = createContext<boolean>(false);
 const MenuItemSelectContext = createContext<{
@@ -82,7 +91,7 @@ const MenuItemSelectContext = createContext<{
     showAllOptions: false,
     equalityFn: (a, b) => a === b,
 });
-const MenuTypeContext = createContext<MenuType | null>(null);
+export const MenuTypeContext = createContext<MenuType | null>(null);
 
 export type MenuProps = {
     type: MenuType;
@@ -148,11 +157,16 @@ export const MenuTitle: FunctionComponent<PropsWithChildren<MenuTitleProps>> = (
     );
 };
 
-export const MenuContent: FunctionComponent<PropsWithChildren> = ({ children }) => {
+type MenuContentProps = PropsWithChildren & {
+    helpPanel?: ReactNode;
+};
+
+export const MenuContent: FunctionComponent<MenuContentProps> = ({ children, helpPanel }) => {
     const [descendants, setDescendants] = useDescendantsInit();
     const [activeIndex, setActiveIndex] = useState(0);
     const [description, setDescription] = useState<string | null | ReactNode>(null);
     const [visibility, setVisibility] = useState(true);
+    const [textFocus, setTextFocus] = useState(false);
     const [pauseMenuActive, setPauseMenuActive] = useState(true);
     const [previousLength, setPreviousLength] = useState(0);
 
@@ -176,14 +190,31 @@ export const MenuContent: FunctionComponent<PropsWithChildren> = ({ children }) 
     return (
         <DescendantProvider context={MenuDescendantContext} items={descendants} set={setDescendants}>
             <MenuContext.Provider
-                value={{ activeIndex, setActiveIndex, setDescription, visibility: visibility && !pauseMenuActive }}
+                value={{
+                    activeIndex,
+                    setActiveIndex,
+                    setDescription,
+                    visibility: visibility && !pauseMenuActive,
+                    textFocus,
+                    setTextFocus,
+                }}
             >
                 <MenuControls>
                     <ul className="bg-black/50 py-1 rounded-b-lg max-h-[40vh] overflow-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
                         {children}
                     </ul>
                     {description && (
-                        <div className="mt-2 p-2 bg-black/50 rounded-b-lg max-h-[20vh] text-white">{description}</div>
+                        <div className="mt-2 p-2 bg-black/50 rounded-lg max-h-[20vh] text-white">{description}</div>
+                    )}
+                    {helpPanel && (
+                        <div
+                            className="mt-2 bg-black/50 rounded-lg max-h-[40vh] text-white"
+                            style={{
+                                pointerEvents: `none`,
+                            }}
+                        >
+                            <ul>{helpPanel}</ul>
+                        </div>
                     )}
                 </MenuControls>
             </MenuContext.Provider>
@@ -192,7 +223,7 @@ export const MenuContent: FunctionComponent<PropsWithChildren> = ({ children }) 
 };
 
 const MenuControls: FunctionComponent<PropsWithChildren> = ({ children }) => {
-    const { activeIndex, setActiveIndex, visibility } = useContext(MenuContext);
+    const { activeIndex, setActiveIndex, visibility, textFocus } = useContext(MenuContext);
     const menuItems = useDescendants(MenuDescendantContext);
     const location = useLocation();
     const navigate = useNavigate();
@@ -206,7 +237,7 @@ const MenuControls: FunctionComponent<PropsWithChildren> = ({ children }) => {
     useArrowDown(() => {
         let newIndex = activeIndex;
 
-        if (!visibility) {
+        if (!visibility || textFocus) {
             return;
         }
 
@@ -234,7 +265,7 @@ const MenuControls: FunctionComponent<PropsWithChildren> = ({ children }) => {
     useArrowUp(() => {
         let newIndex = activeIndex;
 
-        if (!visibility) {
+        if (!visibility || textFocus) {
             return;
         }
 
@@ -260,7 +291,7 @@ const MenuControls: FunctionComponent<PropsWithChildren> = ({ children }) => {
     });
 
     useBackspace(() => {
-        if (!visibility) {
+        if (!visibility || textFocus) {
             return;
         }
 
@@ -272,6 +303,7 @@ const MenuControls: FunctionComponent<PropsWithChildren> = ({ children }) => {
 
 type MenuItemProps = PropsWithChildren<{
     onConfirm?: () => void;
+    onClick?: (event: React.MouseEvent<HTMLElement>) => void;
     onSelected?: () => void;
     disabled?: boolean;
     selectable?: boolean;
@@ -282,6 +314,7 @@ type MenuItemProps = PropsWithChildren<{
 const MenuItemContainer: FunctionComponent<MenuItemProps> = ({
     children,
     onConfirm,
+    onClick,
     onSelected,
     disabled = false,
     selectable = null,
@@ -328,8 +361,13 @@ const MenuItemContainer: FunctionComponent<MenuItemProps> = ({
         onConfirm && onConfirm();
     });
 
-    const onClick = () => {
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         if (disabled || !visibility) {
+            return;
+        }
+
+        if (onClick) {
+            onClick(event);
             return;
         }
 
@@ -354,7 +392,7 @@ const MenuItemContainer: FunctionComponent<MenuItemProps> = ({
                 'cursor-not-allowed': disabled,
                 'cursor-pointer': !disabled,
             })}
-            onClick={onClick}
+            onClick={handleClick}
             onMouseEnter={onOver}
         >
             <MenuSelectedContext.Provider value={isSelected}>{children}</MenuSelectedContext.Provider>
@@ -403,6 +441,175 @@ export const MenuItemText: FunctionComponent<MenuItemTextProps> = ({ children, o
         <MenuItemContainer onSelected={onSelected} disabled={true}>
             <h3 className="text-white cursor-default">{children}</h3>
         </MenuItemContainer>
+    );
+};
+
+type baseItemInputProps = PropsWithChildren<{
+    onConfirm?: () => void;
+    onSelected?: () => void;
+    setChildTextFocus?: (v: boolean) => void;
+    value?: any;
+    name: string;
+    handleOnChange: React.ChangeEventHandler<HTMLInputElement>;
+    onBlur?: () => void;
+}>;
+
+type InputType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
+
+const InputText = forwardRef<HTMLInputElement, InputType>(({ ...props }, ref) => {
+    return <input type="text" {...props} id="targeted-input" ref={ref} />;
+});
+
+type MenuItemNumberInputProps = PropsWithChildren<{
+    setChildTextFocus?: (v: boolean) => void;
+    onSelected?: () => void;
+    value?: number;
+    name: string;
+    onChange: (k: string, v: number) => void;
+    onBlur: () => void;
+    rounding?: number;
+}>;
+
+export const BaseItemInput: FunctionComponent<baseItemInputProps> = ({
+    children,
+    onSelected,
+    setChildTextFocus,
+    value,
+    name,
+    handleOnChange,
+    onBlur,
+}) => {
+    const ref = useRef<HTMLInputElement>(null);
+    const { setTextFocus } = useContext(MenuContext);
+
+    const handleOnFocus = () => {
+        setChildTextFocus && setChildTextFocus(true);
+        setTextFocus(true);
+    };
+
+    const handleBlur = async () => {
+        setChildTextFocus && setChildTextFocus(false);
+        setTextFocus(false);
+        if (typeof onBlur === 'function') {
+            onBlur();
+        }
+    };
+
+    const handleSelect = () => {
+        onSelected && onSelected();
+    };
+
+    const handleConfirm = async () => {
+        if (document.activeElement.id !== ref.current.id) {
+            ref.current.focus();
+            fetchNui(NuiEvent.ToggleDispatchTargetFocus, { target: true });
+        } else {
+            ref.current.blur();
+            fetchNui(NuiEvent.ToggleDispatchTargetFocus, { target: false });
+        }
+    };
+
+    const onClick = (event: React.MouseEvent) => {
+        const target = event.target as InputType;
+        if (document.activeElement.id === ref.current.id && target.id !== ref.current.id) {
+            ref.current.blur();
+        }
+    };
+
+    return (
+        <MenuItemContainer
+            onConfirm={handleConfirm}
+            onClick={onClick}
+            onSelected={handleSelect}
+            description={'Appuyer sur Entrée pour modifier la valeur et pour confirmer.'}
+        >
+            <div className="flex justify-between items-center">
+                <h3>{children}</h3>
+                <div className="border border-white w-50 rounded">
+                    <InputText
+                        className="w-full h-full"
+                        style={{ backgroundColor: 'transparent', textAlign: 'center' }}
+                        tabIndex={-1}
+                        onChange={handleOnChange}
+                        onFocus={handleOnFocus}
+                        onBlur={handleBlur}
+                        value={value}
+                        name={name}
+                        ref={ref}
+                    />
+                </div>
+            </div>
+        </MenuItemContainer>
+    );
+};
+
+export const MenuItemNumberInput: FunctionComponent<MenuItemNumberInputProps> = ({
+    children,
+    setChildTextFocus,
+    value,
+    name,
+    onChange,
+    onBlur,
+    rounding = 3,
+}) => {
+    const handleOnChange: React.ChangeEventHandler<HTMLInputElement> = e => {
+        let valueAsFloat: number;
+        if (!e.currentTarget.value.length) {
+            valueAsFloat = 0;
+        } else {
+            valueAsFloat = parseFloat(e.currentTarget.value);
+        }
+        if (!isNaN(valueAsFloat)) {
+            onChange(e.currentTarget.name, valueAsFloat);
+        }
+    };
+
+    const roundAt = (valueToRound: number): number => {
+        const power = Math.pow(10, rounding);
+        return Math.round(valueToRound * power) / power;
+    };
+
+    return (
+        <BaseItemInput
+            children={children}
+            setChildTextFocus={setChildTextFocus}
+            value={roundAt(value)}
+            name={name}
+            handleOnChange={handleOnChange}
+            onBlur={onBlur}
+        />
+    );
+};
+
+type MenuItemStringInputProps = PropsWithChildren<{
+    setChildTextFocus?: (v: boolean) => void;
+    onSelected?: () => void;
+    value?: string;
+    onChange: (v: string) => void;
+}>;
+
+export const MenuItemStringInput: FunctionComponent<MenuItemStringInputProps> = ({
+    children,
+    onSelected,
+    setChildTextFocus,
+    value,
+    onChange,
+}) => {
+    const handleOnChange: React.ChangeEventHandler<HTMLInputElement> = e => {
+        const text =
+            e.currentTarget.value && e.currentTarget.value.length ? e.currentTarget.value.toLocaleLowerCase() : null;
+        onChange(text);
+    };
+
+    return (
+        <BaseItemInput
+            children={children}
+            setChildTextFocus={setChildTextFocus}
+            onSelected={onSelected}
+            value={value}
+            name={null}
+            handleOnChange={handleOnChange}
+        />
     );
 };
 

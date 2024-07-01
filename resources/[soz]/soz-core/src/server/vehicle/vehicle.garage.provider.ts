@@ -267,7 +267,7 @@ export class VehicleGarageProvider {
         }
 
         if (garage.type === GarageType.House && garage.isTrailerGarage) {
-            return 1;
+            return 2;
         }
 
         if (garage.type === GarageType.House) {
@@ -286,7 +286,7 @@ export class VehicleGarageProvider {
                 return 0;
             }
 
-            return HouseGarageLimits[apartment.tier ?? 0] ?? 0;
+            return HouseGarageLimits[apartment.park_tier ?? 0] ?? 0;
         }
 
         return 60;
@@ -382,11 +382,11 @@ export class VehicleGarageProvider {
         let maxPlaces = HouseGarageLimits[0] ?? 0;
 
         if (apartment) {
-            maxPlaces = HouseGarageLimits[apartment.tier ?? 0] ?? 0;
+            maxPlaces = HouseGarageLimits[apartment.park_tier ?? 0] ?? 0;
         }
 
         if (garage.type === GarageType.House && garage.isTrailerGarage) {
-            maxPlaces = 1;
+            maxPlaces = 2;
         }
 
         return [Math.max(0, maxPlaces - count), maxPlaces];

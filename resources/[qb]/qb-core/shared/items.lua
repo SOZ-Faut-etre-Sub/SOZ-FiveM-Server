@@ -4666,6 +4666,19 @@ QBShared.Items = {
         ['description'] = 'Pour retrouver ton chez toi !',
         ['illustrator'] = '.Smogogo',
     },
+    ['zkea_crate'] = {
+        ['name'] = 'zkea_crate',
+        ['label'] = 'Palette de meubles ZKEA',
+        ['weight'] = 2000,
+        ['type'] = 'zkea_crate',
+        ['unique'] = true,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['carrybox'] = 'prop_pallet_02a',
+        ['description'] = "Palette de meuble contenant :",
+        ['illustrator'] = '.Sniteur',
+    },
 
     -- other
     ['welcome_book'] = {
@@ -4789,10 +4802,10 @@ QBShared.Items = {
             [4] = 6000,
         },
         ['resellZkeaQty'] = {
-            [1] = 1,
-            [2] = 2,
-            [3] = 4,
-            [4] = 10,
+            [1] = 2,
+            [2] = 4,
+            [3] = 8,
+            [4] = 20,
         },
         ['resellZone'] = 'Resell:Zkea',
         ['illustrator'] = '.DrLuck1'

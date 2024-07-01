@@ -106,24 +106,29 @@ model upw_chargers {
 }
 
 model housing_apartment {
-  id                Int              @id @default(autoincrement())
-  property_id       Int
-  senate_party_id   String?
-  identifier        String?          @db.VarChar(50)
-  label             String?          @db.VarChar(50)
-  price             Int?
-  owner             String?          @db.VarChar(50)
-  roommate          String?          @db.VarChar(50)
-  inside_coord      String?          @db.LongText
-  exit_zone         String?          @db.LongText
-  fridge_zone       String?          @db.LongText
-  stash_zone        String?          @db.LongText
-  closet_zone       String?          @db.LongText
-  money_zone        String?          @db.LongText
-  tier              Int?
-  has_parking_place Int?
-  housing_property  housing_property @relation(fields: [property_id], references: [id], onDelete: Cascade, map: "housing_apartment_housing_property_id_fk")
-  senate_party      SenateParty?     @relation(fields: [senate_party_id], references: [id], onDelete: SetNull, map: "housing_apartment_senate_id_fk")
+  id                   Int                    @id @default(autoincrement())
+  property_id          Int
+  senate_party_id      String?
+  identifier           String?                @db.VarChar(50)
+  label                String?                @db.VarChar(50)
+  price                Int?
+  owner                String?                @db.VarChar(50)
+  roommate             String?                @db.VarChar(50)
+  inside_coord         String?                @db.LongText
+  exit_zone            String?                @db.LongText
+  fridge_zone          String?                @db.LongText
+  stash_zone           String?                @db.LongText
+  closet_zone          String?                @db.LongText
+  money_zone           String?                @db.LongText
+  tier                 Int?
+  cloth_tier           Int?                   @default(dbgenerated("(`tier`)"))
+  money_tier           Int?                   @default(dbgenerated("(`tier`)"))
+  park_tier            Int?                   @default(dbgenerated("(`tier`)"))
+  shell                Boolean                @default(true)
+  has_parking_place    Int?
+  housing_property     housing_property       @relation(fields: [property_id], references: [id], onDelete: Cascade, map: "housing_apartment_housing_property_id_fk")
+  senate_party         SenateParty?           @relation(fields: [senate_party_id], references: [id], onDelete: SetNull, map: "housing_apartment_senate_id_fk")
+  apartment_fourniture apartment_fourniture[]
 
   @@index([property_id], map: "housing_apartment_housing_property_id_fk")
 }
@@ -135,6 +140,19 @@ model housing_property {
   garage_zone       String?             @db.LongText
   exterior_culling  String              @default("[]") @db.LongText
   housing_apartment housing_apartment[]
+}
+
+model apartment_fourniture {
+  id                Int            @id @default(autoincrement())
+  apartment_id      Int
+  model             String            @db.VarChar(120)
+  position          String?           @db.LongText
+  matrix            String?           @db.LongText
+  storage_type      String?           @db.VarChar(120)
+  housing_apartment housing_apartment @relation(fields: [apartment_id], references: [id], onDelete: Cascade, map: "housing_apartment_housing_apartment_id_fk")
+
+  @@index([apartment_id], map: "apartment_id")
+  @@index([apartment_id], map: "housing_apartment_housing_apartment_id_fk")
 }
 
 model invoices {
@@ -182,12 +200,12 @@ model persistent_prop {
 }
 
 model collection_prop {
-  id          BigInt          @id @default(autoincrement())
-  name        String          @unique @db.VarChar(50)
-  creator     String          @db.VarChar(50)
-  date        DateTime        @default(now()) @db.Timestamp(0)
-  props       placed_prop[]
-  persistant  Boolean         @default(false)
+  id         BigInt        @id @default(autoincrement())
+  name       String        @unique @db.VarChar(50)
+  creator    String        @db.VarChar(50)
+  date       DateTime      @default(now()) @db.Timestamp(0)
+  props      placed_prop[]
+  persistant Boolean       @default(false)
 }
 
 model placed_prop {
@@ -505,7 +523,7 @@ model investigation_revision {
   citizenid       String         @db.VarChar(255)
   content         String         @db.LongText
   note            String         @default("") @db.LongText
-  prosecutor_note  String        @default("") @db.LongText
+  prosecutor_note String         @default("") @db.LongText
   created_at      DateTime?      @default(now()) @db.Timestamp(0)
   investigation   investigation? @relation(fields: [investigationId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_investigation")
 
@@ -744,25 +762,26 @@ model vandalism_props {
 }
 
 model Zone {
-  id   Int      @id @default(autoincrement())
-  type String   @db.VarChar(50)
-  zone String   @db.LongText
-  name String   @db.VarChar(50)
+  id   Int    @id @default(autoincrement())
+  type String @db.VarChar(50)
+  zone String @db.LongText
+  name String @db.VarChar(50)
 
   @@map("zone")
 }
 
 model player_damage {
-  id         Int      @default(autoincrement())
-  player     player   @relation(fields: [citizenid], references: [citizenid], onDelete: Cascade, map: "FK_damages_player", name: "damages")
-  citizenid  String   @db.VarChar(50)
-  attackerId String   @db.VarChar(50)
+  id         Int       @default(autoincrement())
+  player     player    @relation(fields: [citizenid], references: [citizenid], onDelete: Cascade, map: "FK_damages_player", name: "damages")
+  citizenid  String    @db.VarChar(50)
+  attackerId String    @db.VarChar(50)
   bone       Int
   damageType Int
-  weapon     String   @db.VarChar(50)
+  weapon     String    @db.VarChar(50)
   damageQty  Int
   isFatal    Boolean
-  date       DateTime?  @default(now()) @db.Timestamp(0)
+  date       DateTime? @default(now()) @db.Timestamp(0)
+
   @@id([id, citizenid])
 }
 
@@ -815,22 +834,22 @@ model SenatePartyMember {
 }
 
 model criminal_action {
-  id          Int        @id @default(autoincrement())
-  player      player     @relation(fields: [citizenid], references: [citizenid], onDelete: Cascade, map: "FK_criminal_actions_player", name: "criminal_actions")
-  citizenid   String     @db.VarChar(50)
-  date        DateTime   @default(now()) @db.Timestamp(0)
-  type        String     @db.VarChar(50)
-  data        String     @db.VarChar(100)
+  id        Int      @id @default(autoincrement())
+  player    player   @relation(fields: [citizenid], references: [citizenid], onDelete: Cascade, map: "FK_criminal_actions_player", name: "criminal_actions")
+  citizenid String   @db.VarChar(50)
+  date      DateTime @default(now()) @db.Timestamp(0)
+  type      String   @db.VarChar(50)
+  data      String   @db.VarChar(100)
 }
 
 model hub_entry {
-  id             Int        @id @default(autoincrement())
-  date           DateTime
-  lanternCoords  String     @db.VarChar(100)
-  exitCoords     String     @db.VarChar(100)
+  id            Int      @id @default(autoincrement())
+  date          DateTime
+  lanternCoords String   @db.VarChar(100)
+  exitCoords    String   @db.VarChar(100)
 }
 
 model tax {
-  id          String   @id
-  value       Int      @db.Int
+  id    String @id
+  value Int    @db.Int
 }

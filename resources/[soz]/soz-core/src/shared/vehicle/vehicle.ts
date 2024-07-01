@@ -530,3 +530,13 @@ export const DisableNPCBike = false;
 export const VehicleClassFuelStorageMultiplier: Record<string, number> = {
     [PlayerLicenceType.Moto]: 0.5,
 };
+
+export const VEHICLE_TRUNK_TYPES = {
+    [joaat('tanker')]: 'tanker',
+    [joaat('tanker2')]: 'tanker',
+    [joaat('trailerlogs')]: 'trailerlogs',
+    [joaat('brickade')]: 'brickade',
+    [joaat('brickade1')]: 'brickade',
+    [joaat('trash')]: 'trash',
+    [joaat('tiptruck2')]: 'tiptruck',
+};

@@ -101,7 +101,7 @@ export type Vfx = {
 };
 
 export type AnimationProps = {
-    model: string;
+    model: string | string[];
     bone: number;
     position: Vector3;
     rotation: Vector3;

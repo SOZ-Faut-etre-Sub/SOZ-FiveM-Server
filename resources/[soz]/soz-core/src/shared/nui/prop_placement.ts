@@ -1,4 +1,6 @@
-import { PropCollection, PropCollectionData, PropServerData } from '../object';
+import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
+
+import { HousingDebugProp, PropCollection, PropCollectionData, PropServerData } from '../object';
 
 export type PropPlacementMenuData = {
     props: PlacementPropList;
@@ -14,12 +16,52 @@ export type NuiPlacementPropMethodMap = {
     SetCurrentSearch: string;
 };
 
+export type NuiHousingPlacementPropMethodMap = {
+    SetFourniture: { fournitures: HousingProp[]; max: number; shellEnable: boolean };
+};
+
+export type NuiGizmoMethodMap = {
+    SyncDebug: { debug: HousingDebugProp };
+    setGizmoEntity: { debug: HousingDebugProp };
+    setCameraPosition: { position: Vector3; rotation: Vector3 };
+    handlePlaceObject: never;
+    handleDeleteObject: never;
+    handleSnap: never;
+    handleToggleSpaceMode: never;
+    handleToggleEditorMode: never;
+    ToggleFocus: never;
+};
+
 export type PlacementProp = {
     model: string;
     label?: string;
 };
 
+export type HousingPlacementProp = {
+    entity: number | null;
+    fourniture: HousingProp;
+    targetLabel: string[] | null;
+};
+
+export type HousingProp = {
+    id: number;
+    model: string;
+    label?: string;
+    position?: Vector4;
+    matrix?: number[];
+    storageType?: string;
+    updated: number;
+};
+
+export type HousingPropPlacementMenuData = {
+    fournitures: HousingProp[];
+    shellEnable: boolean;
+    max: number;
+};
+
 export type PlacementPropList = Record<string, PlacementProp[]>;
+
+export type PlacementHousingPropList = Record<string, HousingProp[]>;
 
 export const PLACEMENT_PROP_LIST: PlacementPropList = {
     ['Distributeur & Arcade']: [

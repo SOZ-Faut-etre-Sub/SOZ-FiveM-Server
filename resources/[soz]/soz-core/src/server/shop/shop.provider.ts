@@ -1,5 +1,9 @@
 import { ProperTorsos, ShopBrand, UndershirtCategoryNeedingReplacementTorso } from '@public/config/shops';
+import { PlayerPositionProvider } from '@public/server/player/player.position.provider';
+import { VehicleSpawner } from '@public/server/vehicle/vehicle.spawner';
+import { VehicleStateService } from '@public/server/vehicle/vehicle.state.service';
 import { Component, OutfitItem, Prop } from '@public/shared/cloth';
+import { InventoryItemMetadata } from '@public/shared/item';
 import { TenueIdToHide } from '@public/shared/player';
 import {
     BarberShopItem,
@@ -10,15 +14,25 @@ import {
     TattooShopItem,
 } from '@public/shared/shop';
 import { CartElement } from '@public/shared/shop/superette';
+import {
+    MuleRentPrice,
+    ZkeaFournitureItem,
+    ZkeaRentVehicleType,
+    ZkeaShopZoneEnter,
+    ZkeaShopZoneEnterPosition,
+    ZkeaShopZoneExit,
+    ZkeaShopZoneExitPosition,
+} from '@public/shared/shop/zkea_fourniture';
+import _ from 'lodash';
 
-import { OnEvent } from '../../core/decorators/event';
+import { Once, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Logger } from '../../core/logger';
 import { TaxType } from '../../shared/bank';
 import { CAYO } from '../../shared/cayo';
 import { ClientEvent, ServerEvent } from '../../shared/event';
-import { Vector3 } from '../../shared/polyzone/vector';
+import { Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { PriceService } from '../bank/price.service';
 import { PrismaService } from '../database/prisma.service';
 import { InventoryManager } from '../inventory/inventory.manager';
@@ -51,11 +65,26 @@ export class ShopProvider {
     @Inject(PrismaService)
     private prismaService: PrismaService;
 
+    @Inject(PlayerPositionProvider)
+    private playerPositionProvider: PlayerPositionProvider;
+
+    @Inject(VehicleSpawner)
+    private vehicleSpawner: VehicleSpawner;
+
+    @Inject(VehicleStateService)
+    private vehicleStateService: VehicleStateService;
+
     @Inject(Logger)
     private logger: Logger;
 
     @Inject(PriceService)
     private priceService: PriceService;
+
+    @Once()
+    public onStart() {
+        this.playerPositionProvider.registerZone(ZkeaShopZoneEnter, ZkeaShopZoneEnterPosition);
+        this.playerPositionProvider.registerZone(ZkeaShopZoneExit, ZkeaShopZoneExitPosition);
+    }
 
     @OnEvent(ServerEvent.SHOP_VALIDATE_CART)
     public async onShopBuy(source: number, cartContent: CartElement[], taxType?: TaxType) {
@@ -125,7 +154,13 @@ export class ShopProvider {
     @OnEvent(ServerEvent.SHOP_BUY)
     public async shopBuy(
         source: number,
-        product: ClothingShopItem | TattooShopItem | ShopProduct | JewelryShopItem | BarberShopItem,
+        product:
+            | ClothingShopItem
+            | TattooShopItem
+            | ShopProduct
+            | JewelryShopItem
+            | BarberShopItem
+            | ZkeaFournitureItem,
         brand: string,
         quantity = 1
     ) {
@@ -154,7 +189,11 @@ export class ShopProvider {
                 this.shopGeneralBuy(source, product as ShopProduct, quantity, isInCayo ? null : TaxType.WEAPON);
                 break;
             case ShopBrand.Zkea:
-                this.shopGeneralBuy(source, product as ShopProduct, quantity, isInCayo ? null : TaxType.SUPPLY);
+                if ((product as ZkeaFournitureItem).model) {
+                    this.shopZkeaFournitureBuy(source, product as ZkeaFournitureItem, isInCayo ? null : TaxType.SUPPLY);
+                } else {
+                    this.shopGeneralBuy(source, product as ShopProduct, quantity, isInCayo ? null : TaxType.SUPPLY);
+                }
                 break;
             case ShopBrand.Barber:
                 this.shopBarberBuy(source, product as BarberShopItem, isInCayo);
@@ -471,7 +510,117 @@ export class ShopProvider {
         }
     }
 
+    public async shopZkeaFournitureBuy(source: number, product: ZkeaFournitureItem, taxType: TaxType) {
+        if (this.inventoryManager.getItemCount('cabinet_storage', 'cabinet_zkea') < 1) {
+            this.notifier.error(source, "Achat de meuble impossible car Zkea n'a pas assez de stock.");
+
+            return;
+        }
+        this.inventoryManager.removeItemFromInventory('cabinet_storage', 'cabinet_zkea', 1);
+
+        const crate = this.inventoryManager
+            .getItems(source)
+            .find(
+                inventoryItem =>
+                    inventoryItem.name === 'zkea_crate' && inventoryItem.metadata.zkeaCrateElements.length < 20
+            );
+
+        let newMeta: InventoryItemMetadata;
+        if (crate) {
+            newMeta = _.cloneDeep(crate.metadata);
+            newMeta.zkeaCrateElements.push({ type: product.type, name: product.name, model: product.model });
+            if (
+                !this.inventoryManager.canSwapItems(
+                    source,
+                    [{ name: 'zkea_crate', amount: 1, metadata: crate.metadata }],
+                    [{ name: 'zkea_crate', amount: 1, metadata: newMeta }]
+                )
+            ) {
+                this.notifier.notify(source, `Vous n'avez pas assez de place dans votre inventaire`, 'error');
+                return;
+            }
+        } else {
+            newMeta = { zkeaCrateElements: [{ type: product.type, name: product.name, model: product.model }] };
+            if (!this.inventoryManager.canCarryItem(source, 'zkea_crate', 1, newMeta)) {
+                this.notifier.notify(source, `Vous n'avez pas assez de place dans votre inventaire`, 'error');
+                return;
+            }
+        }
+
+        if (!(await this.shopPay(source, product.price, taxType))) {
+            this.notifier.notify(source, `Ah mais t'es pauvre en fait ! Reviens quand t'auras de quoi payer.`, 'error');
+            return;
+        }
+
+        if (crate) {
+            if (!this.inventoryManager.removeInventoryItem(source, crate, 1)) {
+                this.notifier.notify(source, `Oups, une erreur est survenue... Réessaye !`, 'error');
+                return;
+            }
+        }
+        const addRequest = this.inventoryManager.addItemToInventory(source, 'zkea_crate', 1, newMeta);
+        if (!addRequest.success) {
+            this.notifier.notify(source, `Oups, une erreur est survenue... Réessaye !`, 'error');
+            return;
+        }
+
+        this.notifier.notify(
+            source,
+            `Vous avez acheté ~b~1 ${product.name}~s~ pour ~g~$${await this.priceService.getPrice(
+                product.price,
+                taxType
+            )}`
+        );
+    }
+
     public async shopPay(source: number, price: number, taxType: TaxType | null): Promise<boolean> {
         return this.playerMoneyService.buy(source, price, taxType);
+    }
+
+    @OnEvent(ServerEvent.ZKEA_RENT_MULE)
+    public async onRentMule(source: number, position: Vector4) {
+        if (!(await this.playerMoneyService.buy(source, MuleRentPrice, TaxType.SERVICE))) {
+            this.notifier.notify(source, `Vous n'avez pas assez d'argent.`, 'error');
+            return;
+        }
+
+        const vehiculeNetId = await this.vehicleSpawner.spawnRentVehicle(source, ZkeaRentVehicleType, {
+            position: position,
+        });
+        if (typeof vehiculeNetId == 'number') {
+            const plate = GetVehicleNumberPlateText(NetworkGetEntityFromNetworkId(vehiculeNetId));
+            this.vehicleStateService.addVehicleKey(plate, this.playerService.getPlayer(source).citizenid);
+
+            TriggerClientEvent(ClientEvent.ANIMATION_GIVE, source);
+
+            const taxedPrice = await this.priceService.getPrice(MuleRentPrice, TaxType.SERVICE);
+            this.notifier.notify(source, `Vous avez payé ~r~${taxedPrice}$~s~`, 'info');
+            this.notifier.notify(source, `Tiens, v'la les clés, et m'le casse pas !`, 'success');
+        }
+    }
+
+    @OnEvent(ServerEvent.ZKEA_RETURN_MULE)
+    public async onReturnMule(source: number, networkId: number) {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        const vehicleState = this.vehicleStateService.getVehicleState(networkId);
+        if (!vehicleState.volatile) {
+            this.notifier.notify(source, 'Ce véhicule ne vous appartient pas.', 'error');
+            return;
+        }
+
+        if (vehicleState.volatile.rentOwner == player.citizenid) {
+            if (await this.vehicleSpawner.delete(networkId)) {
+                this.notifier.notify(source, 'Vous avez rendu votre camion de location.', 'success');
+            } else {
+                this.notifier.notify(source, 'Impossible de ranger votre camion.', 'error');
+            }
+        } else {
+            this.notifier.notify(source, 'Ce camion ne vous appartient pas.', 'error');
+        }
     }
 }

@@ -6,7 +6,6 @@ import { Notifier } from '@public/client/notifier';
 import { ObjectProvider } from '@public/client/object/object.provider';
 import { PlayerService } from '@public/client/player/player.service';
 import { ProgressService } from '@public/client/progress.service';
-import { VEHICLE_TRUNK_TYPES } from '@public/client/vehicle/vehicle.lock.provider';
 import { Rpc } from '@public/core/decorators/rpc';
 import { emitRpc } from '@public/core/rpc';
 import { wait } from '@public/core/utils';
@@ -28,6 +27,7 @@ import { PolygonZone } from '@public/shared/polyzone/polygon.zone';
 import { getDistance, Vector2, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { getRandomItems } from '@public/shared/random';
 import { RpcClientEvent, RpcServerEvent } from '@public/shared/rpc';
+import { VEHICLE_TRUNK_TYPES } from '@public/shared/vehicle/vehicle';
 
 import { VehicleClass } from '../../../shared/vehicle/vehicle';
 import { TargetFactory, TargetOptions } from '../../target/target.factory';

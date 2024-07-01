@@ -12,6 +12,8 @@ import {
     Apartment,
     canPlayerAddRoommate,
     canPlayerRemoveRoommate,
+    canUseHousingInAppartmentNoStaff,
+    canUseHousingInProperty,
     hasAccess,
     hasApartmentAccess,
     hasAvailableApartment,
@@ -435,6 +437,24 @@ export class HousingPropertyZoneProvider {
                     this.leavePropertyAsRoommate(property);
                 },
             },
+            {
+                label: 'Stocker les meubles',
+                icon: 'fa fa-cart-arrow-down',
+                canInteract: () => {
+                    const player = this.playerService.getPlayer();
+
+                    if (!player) {
+                        return false;
+                    }
+
+                    return (
+                        canUseHousingInProperty(player, property) && this.inventoryManager.hasEnoughItem('zkea_crate')
+                    );
+                },
+                action: async () => {
+                    await this.storeFournitureInProperty(property);
+                },
+            },
         ]);
     }
 
@@ -464,6 +484,25 @@ export class HousingPropertyZoneProvider {
         }
 
         await this.housingMenuProvider.visit({ apartmentId: apartment.id, propertyId: property.id });
+    }
+
+    public async storeFournitureInProperty(property: Property) {
+        const player = this.playerService.getPlayer();
+
+        if (!player) {
+            return [];
+        }
+
+        const apartment = property.apartments.find(apartment => canUseHousingInAppartmentNoStaff(player, apartment));
+
+        if (!apartment) {
+            return;
+        }
+
+        this.housingMenuProvider.storeFournitureInApartment({
+            apartmentId: apartment.id,
+            propretyId: apartment.propertyId,
+        });
     }
 
     public async enterProperty(property: Property) {

@@ -1,4 +1,5 @@
 import { Command } from '@public/core/decorators/command';
+import { HousingTiers, TYPE_LABEL } from '@public/shared/housing/upgrades';
 
 import { OnEvent } from '../../core/decorators/event';
 import { Exportable } from '../../core/decorators/exports';
@@ -10,10 +11,12 @@ import { TaxType } from '../../shared/bank';
 import { ClientEvent } from '../../shared/event/client';
 import { ServerEvent } from '../../shared/event/server';
 import {
+    ApartementTiers,
     Apartment,
     getApartmentGarageName,
     getPropertyGarageName,
     getResellPrice,
+    isApartmentExcludeFromHousing,
     isTrailer,
     Property,
 } from '../../shared/housing/housing';
@@ -33,6 +36,7 @@ import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../player/progress.service';
 import { HousingRepository } from '../repository/housing.repository';
 import { VehicleService } from '../vehicle/vehicle.service';
+import { HousingFournitureProvider } from './housing.fourniture.provider';
 
 @Provider()
 export class HousingProvider {
@@ -75,6 +79,9 @@ export class HousingProvider {
     @Inject(PriceService)
     private priceService: PriceService;
 
+    @Inject(HousingFournitureProvider)
+    private housingFournitureProvider: HousingFournitureProvider;
+
     private playerTemporaryAccess = new Map<string, Set<number>>();
 
     private giveKey(source: number, target: PlayerData, apartment: Apartment) {
@@ -84,10 +91,10 @@ export class HousingProvider {
 
         this.playerTemporaryAccess.get(target.citizenid).add(apartment.id);
 
-        this.notifier.notify(target.source, `Vous avez reçu un accès temporaire à un appartement.`, 'success');
+        this.notifier.notify(target.source, `Vous avez reçu un accès temporaire à une habitation.`, 'success');
         this.notifier.notify(
             source,
-            `Vous avez donné un accès temporaire à l'appartement ${apartment.label}.`,
+            `Vous avez donné un accès temporaire à l'habitation ${apartment.label}.`,
             'success'
         );
 
@@ -132,7 +139,7 @@ export class HousingProvider {
             apartment.roommate !== player.citizenid &&
             (apartment.senatePartyId === null || apartment.senatePartyId !== player.partyMember?.partyId)
         ) {
-            this.notifier.error(player.source, 'Vous ne possédez pas cet appartement.');
+            this.notifier.error(player.source, 'Vous ne possédez pas cette habitation.');
 
             return;
         }
@@ -165,14 +172,24 @@ export class HousingProvider {
     }
 
     @Exportable('GetApartmentTier')
-    public async getApartmentTier(propertyId: number, apartmentId: number) {
+    public async getApartmentTier(propertyId: number, apartmentId: number): Promise<ApartementTiers> {
         const [, apartment] = await this.housingRepository.getApartment(propertyId, apartmentId);
 
-        if (!apartment || apartment.tier === null) {
-            return 0;
+        if (!apartment) {
+            return {
+                tier: 0,
+                money_tier: 0,
+                park_tier: 0,
+                cloth_tier: 0,
+            };
         }
 
-        return apartment.tier;
+        return {
+            tier: apartment.tier || 0,
+            money_tier: apartment.money_tier || 0,
+            park_tier: apartment.park_tier || 0,
+            cloth_tier: apartment.cloth_tier || 0,
+        };
     }
 
     @OnEvent(ServerEvent.HOUSING_ADD_ROOMMATE)
@@ -211,19 +228,19 @@ export class HousingProvider {
         }
 
         if (apartment.owner !== player.citizenid) {
-            this.notifier.error(player.source, 'Vous ne possédez pas cet appartement.');
+            this.notifier.error(player.source, 'Vous ne possédez pas cette habitation.');
 
             return;
         }
 
         if (apartment.roommate !== null) {
-            this.notifier.error(player.source, 'Cet appartement a déjà un colocataire.');
+            this.notifier.error(player.source, 'Cette habitation a déjà un colocataire.');
 
             return;
         }
 
         if (apartment.senatePartyId !== null) {
-            this.notifier.error(player.source, 'Cet appartement est réservé à un parti politique.');
+            this.notifier.error(player.source, 'Cette habitation est réservé à un parti politique.');
 
             return;
         }
@@ -292,7 +309,7 @@ export class HousingProvider {
         }
 
         if (apartment.owner !== null) {
-            this.notifier.error(player.source, 'Cet appartement est déjà possédé.');
+            this.notifier.error(player.source, 'Cette habitation est déjà possédé.');
 
             return;
         }
@@ -324,7 +341,7 @@ export class HousingProvider {
             `Vous venez ~g~d'acquérir~s~ une maison pour ~b~$${await this.priceService.getPrice(
                 apartment.price,
                 TaxType.HOUSING
-            )}.`,
+            )}.${isApartmentExcludeFromHousing(apartment) ? `` : `~s~<br>Entrez dans votre logement et consultez les plans d'aménagement de vos meubles à l'aide du Menu ~g~H~s~ !`}`,
             'success'
         );
     }
@@ -397,7 +414,7 @@ export class HousingProvider {
             exitCoord: player.metadata.inside.exitCoord, //keep exitCoord for command player-tp-entrance
         });
 
-        TriggerClientEvent(ClientEvent.HOUSING_TELEPORT, player.source, false);
+        TriggerClientEvent(ClientEvent.HOUSING_TELEPORT, player.source, false, false);
     }
 
     @OnEvent(ServerEvent.HOUSING_REMOVE_ROOMMATE)
@@ -415,13 +432,13 @@ export class HousingProvider {
         }
 
         if (apartment.owner !== player.citizenid && apartment.roommate !== player.citizenid) {
-            this.notifier.error(player.source, 'Vous ne possédez pas cet appartement.');
+            this.notifier.error(player.source, 'Vous ne possédez pas cette habitation.');
 
             return;
         }
 
         if (apartment.roommate === null) {
-            this.notifier.error(player.source, "Cet appartement n'a pas de colocataire.");
+            this.notifier.error(player.source, "Cette habitation n'a pas de colocataire.");
 
             return;
         }
@@ -470,7 +487,7 @@ export class HousingProvider {
                 if (notify) {
                     this.notifier.notify(
                         roommate.source,
-                        `Votre colocataire vient de vendre votre appartement.`,
+                        `Votre colocataire vient de vendre votre habitation.`,
                         'info'
                     );
                 }
@@ -478,6 +495,7 @@ export class HousingProvider {
         }
 
         await this.vehicleService.transferToAirport(getApartmentGarageName(apartment));
+        await this.housingFournitureProvider.clearFourniture(apartment.id);
         await this.housingRepository.clearApartment(apartment.id);
     }
 
@@ -496,7 +514,7 @@ export class HousingProvider {
         }
 
         if (apartment.owner !== player.citizenid) {
-            this.notifier.error(player.source, 'Vous ne possédez pas cet appartement.');
+            this.notifier.error(player.source, 'Vous ne possédez pas cette habitation.');
 
             return;
         }
@@ -552,8 +570,7 @@ export class HousingProvider {
     }
 
     @OnEvent(ServerEvent.HOUSING_UPGRADE_APARTMENT_TIER)
-    public async upgradeTier(source: number, tier: number, price: number, zkeaAmount: number) {
-        // @TODO Price client side
+    public async upgradeTier(source: number, apartmentTier: Partial<ApartementTiers>) {
         const player = this.playerService.getPlayer(source);
 
         if (!player) {
@@ -561,7 +578,7 @@ export class HousingProvider {
         }
 
         if (!player.apartment) {
-            this.notifier.error(player.source, "Vous n'avez pas d'appartement.");
+            this.notifier.error(player.source, "Vous n'avez pas d'habitation.");
 
             return;
         }
@@ -573,6 +590,13 @@ export class HousingProvider {
 
         if (!property || !apartment) {
             return;
+        }
+
+        let zkeaAmount = 0;
+        let price = 0;
+        for (const [type, upgrade] of Object.entries(apartmentTier)) {
+            zkeaAmount += HousingTiers[type][upgrade].zkeaPrice;
+            price += (apartment.price * HousingTiers[type][upgrade].pricePercent) / 100;
         }
 
         if (this.inventoryManager.getItemCount('cabinet_storage', 'cabinet_zkea') < zkeaAmount) {
@@ -589,39 +613,42 @@ export class HousingProvider {
 
         this.inventoryManager.removeItemFromInventory('cabinet_storage', 'cabinet_zkea', zkeaAmount);
 
-        this.inventoryManager.setHouseStashMaxWeightFromTier(apartment.identifier, tier);
-        this.playerService.setPlayerApartmentTier(player.source, tier);
+        if (apartmentTier.tier !== undefined) {
+            this.inventoryManager.setHouseStashAndFridgeMaxWeightFromTier(apartment.identifier, apartmentTier.tier);
+        }
+        this.playerService.setPlayerApartmentTier(player.source, apartmentTier);
 
-        await this.housingRepository.setApartmentTier(apartment.id, tier);
+        await this.housingRepository.setApartmentTier(apartment.id, apartmentTier);
 
+        const priceWithTaxes = await this.priceService.getPrice(price, TaxType.HOUSING);
         this.notifier.notify(
             player.source,
-            `Vous venez ~g~d'améliorer~s~ votre appartement au palier ~g~${tier}~s~ pour ~b~$${await this.priceService.getPrice(
-                price,
-                TaxType.HOUSING
-            )}~s~.`,
+            `Vous venez ~g~d'améliorer~s~ votre habitation pour ~b~$${priceWithTaxes}~s~:<br>- ${Object.keys(
+                apartmentTier
+            )
+                .map(tier => `${TYPE_LABEL[tier]} au palier ~g~${apartmentTier[tier] + 1}~s~`)
+                .join('<br>- ')}`,
             'success'
         );
 
         this.monitor.traceEvent('house_upgrade', {
             player_source: player.source,
             house_id: apartment.identifier,
-            tier: tier,
-            amount: price,
+            ...apartmentTier,
+            amount: priceWithTaxes,
         });
 
         if (apartment.roommate) {
             const roommate = this.playerService.getPlayerByCitizenId(apartment.roommate);
 
             if (roommate) {
-                this.playerService.setPlayerApartmentTier(roommate.source, tier);
+                this.playerService.setPlayerApartmentTier(roommate.source, apartmentTier);
             }
         }
     }
 
     @OnEvent(ServerEvent.HOUSING_ADD_PARKING_PLACE)
-    public async addParkingPlace(source: number, hasParking: boolean, price: number) {
-        // @TODO Price client side
+    public async addParkingPlace(source: number, hasParking: boolean) {
         const player = this.playerService.getPlayer(source);
 
         if (!player) {
@@ -629,7 +656,7 @@ export class HousingProvider {
         }
 
         if (!player.apartment) {
-            this.notifier.error(player.source, "Vous n'avez pas d'appartement.");
+            this.notifier.error(player.source, "Vous n'avez pas d'habitation.");
 
             return;
         }
@@ -646,6 +673,8 @@ export class HousingProvider {
         if (!isTrailer(property)) {
             return;
         }
+
+        const price = hasParking ? apartment.price * 0.5 : 0;
 
         if (!(await this.playerMoneyService.buy(player.source, price, TaxType.HOUSING))) {
             this.notifier.error(player.source, "Vous n'avez pas assez d'argent.");
@@ -746,6 +775,6 @@ export class HousingProvider {
             },
         });
 
-        TriggerClientEvent(ClientEvent.HOUSING_TELEPORT, player.source, apartment.id);
+        TriggerClientEvent(ClientEvent.HOUSING_TELEPORT, player.source, apartment.id, property.id);
     }
 }

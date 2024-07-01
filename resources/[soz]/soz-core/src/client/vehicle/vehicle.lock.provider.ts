@@ -16,6 +16,7 @@ import {
     DoorType,
     LockPickAlertMessage,
     SEATS_CONFIG,
+    VEHICLE_TRUNK_TYPES,
     VehicleClass,
     VehicleLockStatus,
     VehicleSeat,
@@ -29,16 +30,6 @@ import { SoundService } from '../sound.service';
 import { VehicleSeatbeltProvider } from './vehicle.seatbelt.provider';
 import { VehicleService } from './vehicle.service';
 import { VehicleStateService } from './vehicle.state.service';
-
-export const VEHICLE_TRUNK_TYPES = {
-    [GetHashKey('tanker')]: 'tanker',
-    [GetHashKey('tanker2')]: 'tanker',
-    [GetHashKey('trailerlogs')]: 'trailerlogs',
-    [GetHashKey('brickade')]: 'brickade',
-    [GetHashKey('brickade1')]: 'brickade',
-    [GetHashKey('trash')]: 'trash',
-    [GetHashKey('tiptruck2')]: 'tiptruck',
-};
 
 // A list of vehicles using exlusively seat bones, as the native GetEntryPositionOfDoor has a bad behavior with them. Fill in more vehicles if needed.
 const VEHICLE_FORCE_USE_BONES = {

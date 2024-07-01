@@ -1,7 +1,7 @@
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
-import { Property } from '../../shared/housing/housing';
+import { ApartementTiers, Property } from '../../shared/housing/housing';
 import { Zone, ZoneTyped } from '../../shared/polyzone/box.zone';
 import { RpcServerEvent } from '../../shared/rpc';
 import { HousingProvider } from '../housing/housing.provider';
@@ -206,15 +206,22 @@ export class AdminMenuMapperProvider {
     }
 
     @Rpc(RpcServerEvent.ADMIN_MAPPER_SET_APARTMENT_TIER)
-    public async setTier(source: number, propertyId: number, apartmentId: number, tier: number): Promise<Property[]> {
+    public async setTier(
+        source: number,
+        propertyId: number,
+        apartmentId: number,
+        apartementTier: Partial<ApartementTiers>
+    ): Promise<Property[]> {
         const [property, apartment] = await this.housingRepository.getApartment(propertyId, apartmentId);
 
         if (!property || !apartment) {
             return this.housingRepository.get();
         }
 
-        this.inventoryManager.setHouseStashMaxWeightFromTier(apartment.identifier, tier);
-        await this.housingRepository.setApartmentTier(apartment.id, tier);
+        if (apartementTier.tier !== undefined) {
+            this.inventoryManager.setHouseStashAndFridgeMaxWeightFromTier(apartment.identifier, apartementTier.tier);
+        }
+        await this.housingRepository.setApartmentTier(apartment.id, apartementTier);
 
         return this.housingRepository.get();
     }

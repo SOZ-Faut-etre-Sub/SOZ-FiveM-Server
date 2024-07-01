@@ -86,4 +86,8 @@ export class BankService {
     public getAccountMoney(accountName: string, type: 'money' | 'marked_money' = 'money'): number {
         return exports['soz-bank'].GetAccountMoney(accountName, type);
     }
+
+    public getSafeMoney(identifier: string): number {
+        return exports['soz-bank'].GetSafeMoney(identifier);
+    }
 }

@@ -104,6 +104,7 @@ Container["temporary_trunk"] = InventoryDatastore:new({
     },
 })
 
+Container["zkea_trunk"] = InventoryContainer:new({type = "temporary_trunk", allowedTypes = {"zkea_crate"}})
 Container["tanker"] = InventoryContainer:new({type = "trunk", allowedTypes = {"oil", "oil_and_item"}})
 Container["brickade"] = InventoryContainer:new({type = "trunk", allowedTypes = {"energy"}})
 Container["trailerlogs"] = InventoryContainer:new({type = "trunk", allowedTypes = {"log"}})

@@ -12,13 +12,14 @@ export type CircularCameraState = {
     polarAngleDeg: number;
     azimuthAngleDeg: number;
     radius: number;
+    maxRadius: number;
 };
 
 @Provider()
 export class CircularCameraProvider {
     private cameraState: CircularCameraState = null;
 
-    public createCamera(target: Vector3) {
+    public createCamera(target: Vector3, maxRadius: number = 20) {
         const cam = CreateCamWithParams(
             'DEFAULT_SCRIPTED_CAMERA',
             target[0],
@@ -41,7 +42,8 @@ export class CircularCameraProvider {
             targetBuffer: [],
             polarAngleDeg: 0,
             azimuthAngleDeg: 100,
-            radius: 5,
+            radius: Math.min(5, maxRadius),
+            maxRadius: maxRadius,
         };
 
         return cam;
@@ -89,7 +91,7 @@ export class CircularCameraProvider {
             this.cameraState.radius = Math.max(this.cameraState.radius - 1.0, 1);
         }
         if (IsDisabledControlJustPressed(0, Control.CursorScrollDown)) {
-            this.cameraState.radius = Math.min(this.cameraState.radius + 1.0, 20);
+            this.cameraState.radius = Math.min(this.cameraState.radius + 1.0, this.cameraState.maxRadius);
         }
     }
 

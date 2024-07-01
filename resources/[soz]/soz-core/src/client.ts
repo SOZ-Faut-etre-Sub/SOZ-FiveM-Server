@@ -9,6 +9,7 @@ import { AnimationModule } from './client/animation/animation.module';
 import { BankModule } from './client/bank/bank.module';
 import { BillboardModule } from './client/billboard/billboard.module';
 import { BinocularsModule } from './client/binoculars/binoculars.module';
+import { CameraModule } from './client/camera/camera.module';
 import { ClothingModule } from './client/clothing/clothing.module';
 import { CraftModule } from './client/craft/craft.module';
 import { DrivingSchoolModule } from './client/driving-school/ds.module';
@@ -125,6 +126,7 @@ async function bootstrap() {
         DMCModule,
         JobTemporaryModule,
         UtilsModule,
+        CameraModule,
         ...PrivateModules
     );
 
