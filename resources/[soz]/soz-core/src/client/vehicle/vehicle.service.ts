@@ -458,6 +458,20 @@ export class VehicleService {
         return condition;
     }
 
+    public getPartialClientVehiculeCondition(
+        vehicle: number,
+        state: VehicleVolatileState,
+        conditionType: Array<keyof VehicleCondition>
+    ): Partial<VehicleCondition> {
+        const condition = {};
+
+        for (const key of conditionType) {
+            condition[key] = VehicleConditionHelpers[key]?.get(vehicle, state);
+        }
+
+        return condition;
+    }
+
     public getClientVehicleConfiguration(vehicle: number): VehicleConfiguration {
         return this.vehicleModificationService.getVehicleConfiguration(vehicle);
     }
