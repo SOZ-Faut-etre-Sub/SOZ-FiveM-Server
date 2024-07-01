@@ -132,6 +132,19 @@ AddEventHandler('InteractSound_CL:PlayWithinDistanceRatioLoop', function(locatio
 	end
 end)
 
+RegisterNetEvent('InteractSound_CL:PlayLoop')
+AddEventHandler('InteractSound_CL:PlayLoop', function(soundFile, soundVolume)
+	if hasPlayerLoaded then
+        local volume = soundVolume or standardVolumeOutput
+
+        SendNUIMessage({
+            transactionType = 'playLoopSound',
+            transactionFile  = soundFile,
+            transactionVolume = volume,
+        })
+	end
+end)
+
 RegisterNetEvent('InteractSound_CL:Stoploop')
 AddEventHandler('InteractSound_CL:Stoploop', function()
     loop = false

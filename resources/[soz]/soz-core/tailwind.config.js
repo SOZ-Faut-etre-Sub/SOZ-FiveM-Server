@@ -63,6 +63,7 @@ module.exports = {
                 defilement: 'defilement 7s infinite linear',
                 'display-in': 'display-in 3s',
                 'display-persist': 'display-persist 1s',
+                'display-in-long': 'display-in 5s',
             },
             fontSize: {
                 '2xs': '.6rem',

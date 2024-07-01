@@ -8,6 +8,7 @@ import { DeveloperSubMenu } from './DeveloperSubMenu';
 import { GameMasterSubMenu } from './GamemasterSubMenu';
 import { InteractiveSubMenu } from './InteractiveSubMenu';
 import { JobSubMenu } from './JobSubMenu';
+import { MeteorSubMenu } from './MeteorSubMenu';
 import { PlayerSubMenu } from './PlayerSubMenu';
 import { SkinSubMenu } from './SkinSubMenu';
 import { VehicleSubMenu } from './VehicleSubMenu';
@@ -44,6 +45,9 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
                     <MenuItemSubMenuLink disabled={!isStaffOrAdminOrGM} id="character">
                         👨‍💼 Gestion des personnages
                     </MenuItemSubMenuLink>
+                    <MenuItemSubMenuLink disabled={!isStaffOrAdmin} id="meteor">
+                        ☄️ Météorite
+                    </MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="developer">🛠 Outils pour développeur</MenuItemSubMenuLink>
                 </MenuContent>
             </MainMenu>
@@ -55,6 +59,7 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
             <PlayerSubMenu banner={data.banner} permission={data.permission} parties={data.parties} />
             <DeveloperSubMenu banner={data.banner} state={data.state.developer} />
             <CharacterSubMenu banner={data.banner} characters={data.characters} />
+            <MeteorSubMenu banner={data.banner} state={data.state.meteor} />
         </Menu>
     );
 };

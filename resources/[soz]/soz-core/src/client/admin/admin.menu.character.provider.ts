@@ -3,24 +3,16 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { NuiEvent, ServerEvent } from '../../shared/event';
 import { NotEmptyStringValidator } from '../../shared/nui/input';
-import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
-import { PlayerService } from '../player/player.service';
 
 @Provider()
 export class AdminMenuCharacterProvider {
-    @Inject(Notifier)
-    private notifier: Notifier;
-
     @Inject(InputService)
     private inputService: InputService;
 
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
-
-    @Inject(PlayerService)
-    private playerService: PlayerService;
 
     @OnNuiEvent(NuiEvent.AdminMenuCharacterCreateNew)
     public async createNewCharacter(): Promise<void> {

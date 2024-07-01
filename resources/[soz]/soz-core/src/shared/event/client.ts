@@ -325,4 +325,7 @@ export enum ClientEvent {
     VANDALISM_UPDATE_PROP = 'soz-core:client:vandalism:update-prop',
 
     ANIMATION_FX = 'soz-core:client:animation:fx',
+
+    METEOR_START = 'soz-core:client:meteor:start',
+    METEOR_MUSIC_ACTIVATE = 'soz-core:client:meteor:music-activate',
 }

@@ -20,6 +20,7 @@ export enum RpcServerEvent {
     ADMIN_MAPPER_SET_OWNER = 'soz-core:admin:mapper:set-owner',
     ADMIN_MAPPER_CLEAR_OWNER = 'soz-core:admin:mapper:clear-owner',
     ADMIN_MAPPER_SET_APARTMENT_TIER = 'soz-core:admin:mapper:set-apartment-tier',
+    ADMIN_METEOR_SIREN = 'soz-core:admin:meteor:siren',
 
     ADMIN_MAPPER_ADD_ZONE = 'soz-core:admin:mapper:add-zone',
     ADMIN_MAPPER_REMOVE_ZONE = 'soz-core:admin:mapper:remove-zone',

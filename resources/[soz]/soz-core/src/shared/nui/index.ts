@@ -23,6 +23,7 @@ import { NuiHoodMethodMap } from './hood';
 import { NuiInputMethodMap } from './input';
 import { NuiMedicalDiagMethodMap } from './medical_diag';
 import { NuiMenuMethodMap } from './menu';
+import { NuiMeteorMap } from './meteor';
 import { NuiPanelMethodMap } from './panel';
 import { NuiPLayerMethodMap } from './player';
 import { NuiPoliceMethodMap } from './police';
@@ -78,6 +79,7 @@ export interface NuiMethodMap {
     cold: NuiColdMethodMap;
     medicalDiag: NuiMedicalDiagMethodMap;
     repository: NuiRepositoryMethodMap;
+    meteor: NuiMeteorMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(

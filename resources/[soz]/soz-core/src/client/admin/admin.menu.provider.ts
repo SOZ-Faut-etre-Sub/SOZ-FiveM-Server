@@ -116,6 +116,9 @@ export class AdminMenuProvider {
                         noBurstTyres: this.adminMenuVehicleProvider.getNoBurstTyres(),
                         noSurfaceCalc: this.vehicleOffroadProvider.getNoSurfaceCalc(),
                     },
+                    meteor: {
+                        siren: await emitRpc<boolean>(RpcServerEvent.ADMIN_METEOR_SIREN),
+                    },
                 },
             },
             { subMenuId }

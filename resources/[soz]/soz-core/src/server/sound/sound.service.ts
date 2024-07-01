@@ -3,8 +3,8 @@ import { Vector3 } from '@public/shared/polyzone/vector';
 
 type GlobalSound = {
     name: string;
-    location: Vector3;
-    maxDistance: number;
+    location?: Vector3;
+    maxDistance?: number;
     volume?: number;
 };
 
@@ -14,14 +14,22 @@ export class SoundService {
 
     public playGlobal(sound: GlobalSound) {
         this.globalSound = sound;
-        TriggerClientEvent(
-            'InteractSound_CL:PlayWithinDistanceRatioLoop',
-            -1,
-            sound.location,
-            sound.maxDistance,
-            sound.name,
-            sound.volume
-        );
+        if (sound.location && sound.maxDistance) {
+            TriggerClientEvent(
+                'InteractSound_CL:PlayWithinDistanceRatioLoop',
+                -1,
+                this.globalSound.location,
+                this.globalSound.maxDistance,
+                this.globalSound.name,
+                this.globalSound.volume
+            );
+        } else {
+            TriggerClientEvent('InteractSound_CL:PlayLoop', -1, this.globalSound.name, this.globalSound.volume);
+        }
+    }
+
+    public getGlobal(): GlobalSound {
+        return this.globalSound;
     }
 
     public stopGlobal() {
