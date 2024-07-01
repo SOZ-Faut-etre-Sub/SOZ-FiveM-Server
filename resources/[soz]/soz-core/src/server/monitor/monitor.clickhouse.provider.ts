@@ -28,7 +28,7 @@ export class MonitorClickhouseProvider {
     private monitor: Monitor;
 
     @Once()
-    onLokiProviderStart() {
+    onClickhouseProviderStart() {
         this.logChainHandler.addHandler(this.clickhouseLoggerHandler);
     }
 
