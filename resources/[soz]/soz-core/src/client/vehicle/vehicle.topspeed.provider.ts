@@ -41,8 +41,12 @@ export class VehicleTopSpeedProvider {
         }
 
         const passengerCount = Math.max(0, GetVehicleNumberOfPassengers(vehicle) - 1);
+        let topSpeedModifier = passengerCount * 2;
+
         const wheelCount = Math.min(GetVehicleNumberOfWheels(vehicle), 6);
-        const topSpeedModifier = passengerCount * 2 + Math.min(80, (80 / (wheelCount * 2)) * count);
+        if (wheelCount > 0) {
+            topSpeedModifier += Math.min(80, (80 / (wheelCount * 2)) * count);
+        }
 
         ModifyVehicleTopSpeed(vehicle, -topSpeedModifier);
     }
