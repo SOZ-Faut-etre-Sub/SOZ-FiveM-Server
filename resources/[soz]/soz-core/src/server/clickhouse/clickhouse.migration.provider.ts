@@ -18,7 +18,7 @@ export class ClickhouseMigrationProvider {
     async migrateDatabase() {
         await this.createMigrationTable();
 
-        const sortedMigrations = this.migrations.sort((a, b) => a.priority - b.priority);
+        const sortedMigrations = this.migrations.sort((a, b) => b.priority - a.priority);
 
         for (const migration of sortedMigrations) {
             const start = Date.now();

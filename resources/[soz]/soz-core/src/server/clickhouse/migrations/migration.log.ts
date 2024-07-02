@@ -3,7 +3,7 @@ import { ClickhouseService } from '../clickhouse.service';
 import { ClickhouseMigration } from './migration.interface';
 
 @Injectable('ClickhouseMigration')
-export class MigrationPlayerPosition implements ClickhouseMigration {
+export class MigrationLog implements ClickhouseMigration {
     @Inject(ClickhouseService)
     private clickhouseService: ClickhouseService;
 
