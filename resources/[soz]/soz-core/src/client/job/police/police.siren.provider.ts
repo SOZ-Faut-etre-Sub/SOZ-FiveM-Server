@@ -1,3 +1,5 @@
+import { PlayerService } from '@public/client/player/player.service';
+
 import { Command } from '../../../core/decorators/command';
 import { Once } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
@@ -65,6 +67,9 @@ export class PoliceSirenProvider {
     @Inject(VehicleStateService)
     private vehicleStateService: VehicleStateService;
 
+    @Inject(PlayerService)
+    private playerService: PlayerService;
+
     @Once()
     public initStateSelector() {
         this.vehicleStateService.addVehicleStateSelector(
@@ -126,6 +131,11 @@ export class PoliceSirenProvider {
         keys: [{ mapper: 'keyboard', key: 'UP' }],
     })
     public async onToggleSirens() {
+        const player = this.playerService.getPlayer();
+        if (player.metadata.ishandcuffed || player.metadata.isdead) {
+            return;
+        }
+
         const ped = PlayerPedId();
         const vehicle = GetVehiclePedIsIn(ped, false);
 
