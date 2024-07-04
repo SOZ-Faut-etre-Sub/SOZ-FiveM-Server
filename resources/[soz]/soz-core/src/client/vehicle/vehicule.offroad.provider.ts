@@ -320,6 +320,11 @@ export class VehicleOffroadProvider {
     }
 
     public async handleLossVehControl(playerVeh: number) {
+        if (this.averageDepth <= 0.05) {
+            SetVehicleBurnout(playerVeh, false);
+            return;
+        }
+
         let upgradeRating =
             this.getVehicleUpgradesRating(playerVeh) +
             this.getTurningRating(playerVeh) +
