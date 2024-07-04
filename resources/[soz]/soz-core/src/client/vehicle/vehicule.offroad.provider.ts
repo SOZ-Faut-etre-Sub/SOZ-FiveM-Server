@@ -342,17 +342,21 @@ export class VehicleOffroadProvider {
         }
 
         this.controlLossTimeDebug = controlLossTime;
-        if (GetVehicleClass(playerVeh) == 8) {
-            SetVehicleHandbrake(playerVeh, true);
-            await wait(Math.min(200, controlLossTime));
-            SetVehicleHandbrake(playerVeh, false);
-        } else {
-            SetVehicleBurnout(playerVeh, true);
-            await wait(controlLossTime);
-            SetVehicleBurnout(playerVeh, false);
-            if (controlLossTime > 250) {
+        if (controlLossTime > 0) {
+            if (GetVehicleClass(playerVeh) == 8) {
+                SetVehicleHandbrake(playerVeh, true);
+                await wait(Math.min(200, controlLossTime));
+                SetVehicleHandbrake(playerVeh, false);
+            } else {
                 SetVehicleBurnout(playerVeh, true);
+                await wait(controlLossTime);
+                SetVehicleBurnout(playerVeh, false);
+                if (controlLossTime > 250) {
+                    SetVehicleBurnout(playerVeh, true);
+                }
             }
+        } else {
+            SetVehicleBurnout(playerVeh, false);
         }
     }
 
