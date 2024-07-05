@@ -1,5 +1,3 @@
-import { AnimationRunner } from '@public/client/animation/animation.factory';
-
 import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';

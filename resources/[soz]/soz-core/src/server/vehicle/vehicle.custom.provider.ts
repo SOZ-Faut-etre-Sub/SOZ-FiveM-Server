@@ -149,20 +149,13 @@ export class VehicleCustomProvider {
 
         this.vehicleStateService.updateVehicleConfiguration(vehicleNetworkId, mods);
 
-        this.monitor.publish(
-            'vehicle_update_config',
-            {
-                player_source: source,
-                vehicle_plate: state.volatile.plate,
-            },
-            {
-                mode: mode,
-                price: price,
-                crimiPrice: crimiPrice,
-                mods: JSON.stringify(mods),
-                orig: JSON.stringify(originalConfiguration),
-            }
-        );
+        this.monitor.traceEvent('vehicle_update_config', {
+            player_source: source,
+            vehicle_plate: state.volatile.plate,
+            type: mode,
+            money: price,
+            message: JSON.stringify(mods),
+        });
 
         return mods;
     }

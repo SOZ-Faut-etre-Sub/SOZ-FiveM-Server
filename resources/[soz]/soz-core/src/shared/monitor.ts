@@ -136,11 +136,14 @@ export type MonitorTraceEvent = {
     facility_type?: string;
     facility_scope?: string;
     facility_job?: string;
+    gang?: string;
+    old_plate?: string;
 };
 
 export type MonitorEvent = {
     player_source?: number;
     target_source?: number;
+    target_job?: string;
     position?:
         | {
               x: number;
@@ -258,4 +261,6 @@ export type MonitorEvent = {
     apartment_id?: number;
     fourniture_id?: number;
     apartment_shell?: boolean;
+    gang?: string;
+    old_plate?: string;
 };

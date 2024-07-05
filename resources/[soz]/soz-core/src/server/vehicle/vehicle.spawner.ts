@@ -182,7 +182,9 @@ export class VehicleSpawner {
         }
 
         for (const dealership of Object.values(DealershipConfig)) {
-            noSpawnZones.push(BoxZone.default(dealership.showroom.position, 10, 10));
+            if (dealership.showroom) {
+                noSpawnZones.push(BoxZone.default(dealership.showroom.position, 10, 10));
+            }
         }
 
         noSpawnZones.push(frontBCSO);

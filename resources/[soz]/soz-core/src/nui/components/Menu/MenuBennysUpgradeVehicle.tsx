@@ -390,8 +390,8 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
         data.mode != LSCustomMode.CrimiCusto
             ? 0
             : config
-            ? getVehicleCustomPrice(data.vehiclePrice, data.options, data.currentConfiguration, config)
-            : 0;
+              ? getVehicleCustomPrice(data.vehiclePrice, data.options, data.currentConfiguration, config)
+              : 0;
 
     return (
         <Menu type={MenuType.BennysUpgradeVehicle}>
