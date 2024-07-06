@@ -49,7 +49,7 @@ export class MeteorProvider {
     @OnEvent(ServerEvent.ADMIN_METEOR_KICK_PLAYERS)
     public kickPlayers() {
         this.rebootProvider.kickAll(
-            "L'impact de la météorite vous a assommé, vous pourrez vous réveillez dans quelques minutes..."
+            "L'impact de la météorite vous a assommé, vous pourrez vous réveiller dans quelques minutes..."
         );
     }
 }

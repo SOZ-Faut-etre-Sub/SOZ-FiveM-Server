@@ -26,6 +26,7 @@ export const Meteor: FunctionComponent = () => {
         () => {
             setWhite(false);
             const audioElement = document.querySelector('#meteor') as HTMLMediaElement;
+            audioElement.volume = 0.5;
             if (!meteortrack.current) {
                 meteortrack.current = audioCtx.current.createMediaElementSource(audioElement);
                 meteortrack.current.connect(audioCtx.current.destination);
@@ -79,7 +80,6 @@ export const Meteor: FunctionComponent = () => {
             audioElement.play();
         }
 
-        console.log(id, current, value / 10);
         const now = audioCtx.current.currentTime;
         gain.current.gain.setValueAtTime(current, now);
         gain.current.gain.linearRampToValueAtTime(value / 10, now + 3.0);
