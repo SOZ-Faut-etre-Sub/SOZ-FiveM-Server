@@ -5,6 +5,7 @@ import { Provider } from '@public/core/decorators/provider';
 import { Tick } from '@public/core/decorators/tick';
 import { wait } from '@public/core/utils';
 import { ClientEvent } from '@public/shared/event';
+import { Control } from '@public/shared/input';
 import {
     add2Vector3,
     getDistance,
@@ -189,6 +190,12 @@ export class MeteorProvider {
             return;
         }
 
+        DisableAllControlActions(0);
+        DisableAllControlActions(2);
+
+        EnableControlAction(0, Control.PushToTalk, true);
+        EnableControlAction(0, Control.MpTextChatAll, true);
+
         const coords = GetEntityCoords(this.entity) as Vector3;
 
         const diff = sub2Vector3(dest, coords);
@@ -274,34 +281,9 @@ export class MeteorProvider {
         }
         ClearFocus();
 
-        this.nuiDispatch.dispatch('meteor', 'end');
-
         this.playerHealthProvider.setNutritionDisabled(false);
         this.hudStateProvider.setHudVisible(true);
         this.hudStateProvider.setCinematicMode(false);
-    }
-
-    @Tick(100)
-    public async audioPositions() {
-        if (!this.entity) {
-            return;
-        }
-
-        const customCam = IsCamActive(this.fixedCam)
-            ? this.fixedCam
-            : IsCamActive(this.meteorCam)
-              ? this.meteorCam
-              : null;
-
-        const coords = (customCam ? GetCamCoord(customCam) : GetGameplayCamCoord()) as Vector3;
-        const heading = ((customCam ? GetCamRot(customCam, 2) : GetGameplayCamRot(2))[2] / 180) * Math.PI;
-        const meteorCoords = GetEntityCoords(this.entity) as Vector3;
-
-        this.nuiDispatch.dispatch('meteor', 'update', {
-            heading: heading,
-            playerPosition: coords,
-            meteorPostion: meteorCoords,
-        });
     }
 
     @OnEvent(ClientEvent.METEOR_MUSIC_ACTIVATE)
