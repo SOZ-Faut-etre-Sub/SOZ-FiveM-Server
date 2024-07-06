@@ -20,22 +20,18 @@ export class MeteorProvider {
     @Inject(Notifier)
     public notifier: Notifier;
 
+    private siren = 0;
+    private music = 0;
+
     @Rpc(RpcServerEvent.ADMIN_METEOR_SIREN)
     public isMeteorSirenRunning() {
-        const sound = this.soundService.getGlobal();
-
-        return sound && sound.name == 'system/reboot';
+        return [this.siren, this.music];
     }
 
-    @OnEvent(ServerEvent.ADMIN_METEOR_SIREN_TOOGLE)
-    public toggleMetorSiren(source: number, value: boolean) {
-        this.soundService.stopGlobal();
-        if (value) {
-            this.soundService.playGlobal({
-                name: 'system/reboot',
-                volume: 0.05,
-            });
-        }
+    @OnEvent(ServerEvent.ADMIN_METEOR_SIREN)
+    public toggleMetorSiren(source: number, value: number) {
+        this.siren = value;
+        TriggerClientEvent(ClientEvent.METEOR_SIREN, -1, value);
     }
 
     @OnEvent(ServerEvent.ADMIN_METEOR_ACTIVATE)
@@ -44,9 +40,10 @@ export class MeteorProvider {
         this.notifier.notify(source, 'Lancement météorite...');
     }
 
-    @OnEvent(ServerEvent.ADMIN_METEOR_MUSIC_ACTIVATE)
-    public activateMusic(source: number, value: boolean) {
-        TriggerClientEvent(ClientEvent.METEOR_MUSIC_ACTIVATE, -1, value);
+    @OnEvent(ServerEvent.ADMIN_METEOR_MUSIC)
+    public activateMusic(source: number, value: number) {
+        this.music = value;
+        TriggerClientEvent(ClientEvent.METEOR_MUSIC, -1, value);
     }
 
     @OnEvent(ServerEvent.ADMIN_METEOR_KICK_PLAYERS)

@@ -1,5 +1,7 @@
 export interface NuiMeteorMap {
+    load: never;
     start: never;
     white: never;
-    music: boolean;
+    siren: number;
+    music: number;
 }

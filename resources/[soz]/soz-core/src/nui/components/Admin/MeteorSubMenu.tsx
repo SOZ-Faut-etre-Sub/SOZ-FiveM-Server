@@ -3,7 +3,14 @@ import { FunctionComponent } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
 import { fetchNui } from '../../fetch';
-import { MenuContent, MenuItemButton, MenuItemCheckbox, MenuTitle, SubMenu } from '../Styleguide/Menu';
+import {
+    MenuContent,
+    MenuItemButton,
+    MenuItemSelect,
+    MenuItemSelectOption,
+    MenuTitle,
+    SubMenu,
+} from '../Styleguide/Menu';
 
 export type MeteorSubMenuProps = {
     banner: string;
@@ -15,34 +22,42 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner, s
         <SubMenu id="meteor">
             <MenuTitle banner={banner}>Juste un rond ...</MenuTitle>
             <MenuContent>
-                <MenuItemCheckbox
-                    checked={state.siren}
-                    onChange={async value => {
-                        await fetchNui(NuiEvent.AdminMenuMeteorToggleSiren, value);
+                <MenuItemSelect
+                    title={`Sirène`}
+                    value={state.siren}
+                    onConfirm={async index => {
+                        await fetchNui(NuiEvent.AdminMenuMeteorSiren, index);
                     }}
                 >
-                    Activer la sirène
-                </MenuItemCheckbox>
+                    {Array(11)
+                        .fill(0)
+                        .map((_, index) => (
+                            <MenuItemSelectOption value={index} key={`siren_${index}`}>
+                                {index}
+                            </MenuItemSelectOption>
+                        ))}
+                </MenuItemSelect>
+                <MenuItemSelect
+                    title={`Musique`}
+                    value={state.music}
+                    onConfirm={async index => {
+                        await fetchNui(NuiEvent.AdminMenuMeteorMusic, index);
+                    }}
+                >
+                    {Array(11)
+                        .fill(0)
+                        .map((_, index) => (
+                            <MenuItemSelectOption value={index} key={`music_${index}`}>
+                                {index}
+                            </MenuItemSelectOption>
+                        ))}
+                </MenuItemSelect>
                 <MenuItemButton
                     onConfirm={async () => {
-                        await fetchNui(NuiEvent.AdminMenuMeteorActivateMeteor);
+                        await fetchNui(NuiEvent.AdminMenuMeteorActivate);
                     }}
                 >
                     Lancement du Météore
-                </MenuItemButton>
-                <MenuItemButton
-                    onConfirm={async () => {
-                        await fetchNui(NuiEvent.AdminMenuMeteorActivateMusic, true);
-                    }}
-                >
-                    Lancement Musique
-                </MenuItemButton>
-                <MenuItemButton
-                    onConfirm={async () => {
-                        await fetchNui(NuiEvent.AdminMenuMeteorActivateMusic, false);
-                    }}
-                >
-                    Arret Musique
                 </MenuItemButton>
                 <MenuItemButton
                     onConfirm={async () => {

@@ -47,11 +47,16 @@ export class MeteorProvider {
 
     @OnEvent(ClientEvent.METEOR_START)
     public async meteorStart() {
+        this.nuiDispatch.dispatch('meteor', 'load');
+
+        const rock = GetHashKey('soz_prop_rock_m');
+        await this.resourceLoader.loadPtfxAsset('scr_ar_planes');
+        await this.resourceLoader.loadPtfxAsset('core');
+        await this.resourceLoader.loadModel(rock);
+
         this.nuiDispatch.dispatch('meteor', 'start');
         await wait(5000);
 
-        const rock = GetHashKey('soz_prop_rock_m');
-        await this.resourceLoader.loadModel(rock);
         this.entity = CreateObject(rock, start[0], start[1], start[2], true, true, false);
         AddBlipForEntity(this.entity);
         SetEntityLodDist(this.entity, 0xffff);
@@ -59,9 +64,7 @@ export class MeteorProvider {
         SetEntityCollision(this.entity, false, true);
         SetEntityCompletelyDisableCollision(this.entity, true, true);
         //ApplyForceToEntity(this.entity, 1, 0.02, 0.0, 0.0, 0.02, 0.0, 0.0, 0, false, true, true, false, true);
-        this.resourceLoader.unloadModel(rock);
 
-        await this.resourceLoader.loadPtfxAsset('scr_ar_planes');
         UseParticleFxAsset('scr_ar_planes');
         const fx = StartParticleFxLoopedOnEntity(
             'scr_ar_trail_smoke',
@@ -80,11 +83,8 @@ export class MeteorProvider {
         SetParticleFxLoopedColour(fx, 0, 0, 0, false);
         SetParticleFxLoopedFarClipDist(fx, 0xfff);
 
-        this.resourceLoader.unloadPtfxAsset('scr_ar_planes');
-
         await wait(0);
 
-        await this.resourceLoader.loadPtfxAsset('core');
         UseParticleFxAsset('core');
         const fx2 = StartParticleFxLoopedOnEntity(
             'proj_flare_trail',
@@ -122,6 +122,8 @@ export class MeteorProvider {
         SetParticleFxLoopedFarClipDist(fx3, 0xfff);
 
         this.resourceLoader.unloadPtfxAsset('core');
+        this.resourceLoader.unloadPtfxAsset('scr_ar_planes');
+        this.resourceLoader.unloadModel(rock);
 
         await wait(2_000);
         this.playerHealthProvider.setNutritionDisabled(true);
@@ -286,8 +288,13 @@ export class MeteorProvider {
         this.hudStateProvider.setCinematicMode(false);
     }
 
-    @OnEvent(ClientEvent.METEOR_MUSIC_ACTIVATE)
-    public async meteorMusicActivate(value: boolean) {
+    @OnEvent(ClientEvent.METEOR_MUSIC)
+    public async meteorMusic(value: number) {
         this.nuiDispatch.dispatch('meteor', 'music', value);
+    }
+
+    @OnEvent(ClientEvent.METEOR_SIREN)
+    public async meteorSiren(value: number) {
+        this.nuiDispatch.dispatch('meteor', 'siren', value);
     }
 }

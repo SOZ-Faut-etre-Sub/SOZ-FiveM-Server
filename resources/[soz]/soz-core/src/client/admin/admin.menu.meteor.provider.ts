@@ -1,31 +1,22 @@
 import { OnNuiEvent } from '../../core/decorators/event';
-import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { NuiEvent, ServerEvent } from '../../shared/event';
-import { InputService } from '../nui/input.service';
-import { NuiMenu } from '../nui/nui.menu';
 
 @Provider()
 export class AdminMenuMeteorProvider {
-    @Inject(InputService)
-    private inputService: InputService;
-
-    @Inject(NuiMenu)
-    private nuiMenu: NuiMenu;
-
-    @OnNuiEvent(NuiEvent.AdminMenuMeteorToggleSiren)
-    public async toggleSiren(value: boolean): Promise<void> {
-        TriggerServerEvent(ServerEvent.ADMIN_METEOR_SIREN_TOOGLE, value);
+    @OnNuiEvent(NuiEvent.AdminMenuMeteorSiren)
+    public async toggleSiren(value: number): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_METEOR_SIREN, value);
     }
 
-    @OnNuiEvent(NuiEvent.AdminMenuMeteorActivateMeteor)
+    @OnNuiEvent(NuiEvent.AdminMenuMeteorActivate)
     public async activateMeteor(): Promise<void> {
         TriggerServerEvent(ServerEvent.ADMIN_METEOR_ACTIVATE);
     }
 
-    @OnNuiEvent(NuiEvent.AdminMenuMeteorActivateMusic)
-    public async activateMeteorMusic(value: boolean): Promise<void> {
-        TriggerServerEvent(ServerEvent.ADMIN_METEOR_MUSIC_ACTIVATE, value);
+    @OnNuiEvent(NuiEvent.AdminMenuMeteorMusic)
+    public async activateMeteorMusic(value: number): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_METEOR_MUSIC, value);
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuMeteorKickPlayers)

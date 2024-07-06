@@ -39,9 +39,9 @@ export enum ServerEvent {
     ADMIN_PLAYER_SET_ZOMBIE = 'soz-core:server:admin:player:set-zombie',
     ADMIN_PLAYER_SET_SENATE_PARTY = 'soz-core:server:admin:player:set-senate-party',
     ADMIN_PLAYER_SET_VOIP_DEBUG = 'soz-core:server:admin:player:set-voip-debug',
-    ADMIN_METEOR_SIREN_TOOGLE = 'soz-core:server:admin:meteor:siren-toggle',
+    ADMIN_METEOR_SIREN = 'soz-core:server:admin:meteor:siren',
     ADMIN_METEOR_ACTIVATE = 'soz-core:server:admin:meteor:activate',
-    ADMIN_METEOR_MUSIC_ACTIVATE = 'soz-core:server:admin:meteor:activate-music',
+    ADMIN_METEOR_MUSIC = 'soz-core:server:admin:meteor:music',
     ADMIN_METEOR_KICK_PLAYERS = 'soz-core:server:admin:meteor:players-kick',
 
     BASE_ENTERED_VEHICLE = 'baseevents:enteredVehicle',
