@@ -278,7 +278,9 @@ local playersToSync = {}
 CreateThread(function()
     while true do
         for player, _ in pairs(playersToSync) do
-            TriggerClientEvent('QBCore:Player:SetPlayerData', player, QBCore.Players[player].PlayerData)
+            if QBCore.Players[player] then
+                TriggerClientEvent('QBCore:Player:SetPlayerData', player, QBCore.Players[player].PlayerData)
+            end
         end
         playersToSync = {}
 
