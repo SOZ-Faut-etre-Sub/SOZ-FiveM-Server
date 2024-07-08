@@ -49,6 +49,8 @@ QBShared.Trunks = {
     [GetHashKey('lspd50')] = { slot = 5, weight = 80000 },
     [GetHashKey('lspd51')] = { slot = 5, weight = 80000 },
     [GetHashKey('polmav')] = { slot = 5, weight = 200000 },
+    [GetHashKey('policet')] = { slot = 5, weight = 500000 },
+    [GetHashKey('riot')] = { slot = 5, weight = 500000 },
 
     --- BCSO
     [GetHashKey('sheriff')] = { slot = 5, weight = 60000 },
@@ -120,6 +122,7 @@ QBShared.Trunks = {
 
     -- FBI
     [GetHashKey('polgauntlet')] = { slot = 5, weight = 80000 },
+    [GetHashKey('fbi2')] = { slot = 5, weight = 200000 },
 
     -- FFS
     [GetHashKey('rumpo4')] = { slot = 10, weight = 200000 },
