@@ -819,6 +819,14 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         recoil: 0.1,
         ammo: 'ammo_07',
         drawPosition: { model: 'w_ar_heavyrifleh', ...DrawPositions['AR'] },
+        attachments: [
+            { label: 'Grand chargeur', component: 'COMPONENT_HEAVYRIFLE_CLIP_02', type: WeaponComponentType.Clip },
+            { label: 'Lampe torche', component: 'COMPONENT_AT_AR_FLSH', type: WeaponComponentType.Flashlight },
+            { label: 'Poignée', component: 'COMPONENT_AT_AR_AFGRIP', type: WeaponComponentType.Grip },
+            { label: 'Silencieux', component: 'COMPONENT_AT_AR_SUPP', type: WeaponComponentType.Suppressor },
+            { label: 'Viseur', component: 'COMPONENT_AT_SCOPE_MEDIUM', type: WeaponComponentType.Scope },
+            { label: 'Families', component: 'COMPONENT_HEAVYRIFLE_CAMO1', type: WeaponComponentType.PrimarySkin },
+        ],
     },
     [WeaponName.TACTICALRIFLE]: {
         recoil: 0.1,
