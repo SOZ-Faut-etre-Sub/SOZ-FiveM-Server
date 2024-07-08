@@ -111,10 +111,10 @@ const doAnimation = async (
     const duration = animation.duration
         ? animation.duration
         : forceDuration
-        ? 1000
-        : animation.options?.repeat
-        ? -1
-        : GetAnimDuration(animation.dictionary, animation.name) * 1000;
+          ? 1000
+          : animation.options?.repeat
+            ? -1
+            : GetAnimDuration(animation.dictionary, animation.name) * 1000;
 
     const blendInSpeed = animation.blendInSpeed ? animation.blendInSpeed : 8.0;
     const blendOutSpeed = animation.blendOutSpeed ? animation.blendOutSpeed : -8.0;
@@ -146,6 +146,7 @@ const doAnimation = async (
     });
 
     return new Promise<AnimationStopReason>(resolve => {
+        SetPedConfigFlag(ped, 104, false);
         if (duration > 0) {
             wait(duration).then(() => {
                 resolve(AnimationStopReason.Finished);
@@ -166,6 +167,7 @@ const doAnimation = async (
             waitUntilPromise.cancel();
         }
 
+        SetPedConfigFlag(ped, 104, true);
         if (IsEntityPlayingAnim(ped, animation.dictionary, animation.name, 3)) {
             StopAnimTask(ped, animation.dictionary, animation.name, 3);
         }

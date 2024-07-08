@@ -136,14 +136,14 @@ function ActionStart()
             if isDoingAction then
                 if not isAnim then
                     if Action.animation ~= nil then
+                        local player = PlayerPedId();
                         if Action.animation.task ~= nil then
-                            TaskStartScenarioInPlace(PlayerPedId(), Action.animation.task, 0, true)
+                            TaskStartScenarioInPlace(player, Action.animation.task, 0, true)
                         elseif Action.animation.animDict ~= nil and Action.animation.anim ~= nil then
                             if Action.animation.flags == nil then
                                 Action.animation.flags = 1
                             end
 
-                            local player = PlayerPedId()
                             if (DoesEntityExist(player) and not IsEntityDead(player)) then
                                 loadAnimDict(Action.animation.animDict)
                                 TaskPlayAnim(player, Action.animation.animDict, Action.animation.anim, 3.0, 3.0, -1, Action.animation.flags, 0, 0, 0, 0)
@@ -151,6 +151,7 @@ function ActionStart()
                         else
                             --TaskStartScenarioInPlace(PlayerPedId(), 'PROP_HUMAN_BUM_BIN', 0, true)
                         end
+                        SetPedConfigFlag(player, 104, false);
                     end
 
                     isAnim = true
@@ -268,6 +269,7 @@ function ActionCleanup()
         else
             ClearPedTasks(ped)
         end
+        SetPedConfigFlag(ped, 104, true);
     end
 
     for _, v in pairs(playerProps) do

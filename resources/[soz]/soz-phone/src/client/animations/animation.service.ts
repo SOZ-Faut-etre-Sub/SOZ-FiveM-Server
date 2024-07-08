@@ -61,6 +61,7 @@ export class AnimationService {
         } else {
             this.handleOpenNormalAnim(playerPed);
         }
+        SetPedConfigFlag(PlayerPedId(), 104, false);
     }
 
     private handleCallEndAnimation(playerPed: number) {
@@ -79,6 +80,7 @@ export class AnimationService {
     }
 
     private async handleCloseAnimation(playerPed: number) {
+        SetPedConfigFlag(PlayerPedId(), 104, true);
         if (IsPedInAnyVehicle(playerPed, true)) {
             await this.handleCloseVehicleAnim(playerPed);
         } else {
