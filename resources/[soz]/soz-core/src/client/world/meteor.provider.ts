@@ -57,6 +57,7 @@ export class MeteorProvider {
 
         await wait(2000);
         this.nuiDispatch.dispatch('meteor', 'start');
+        await wait(5000);
 
         this.entity = CreateObject(rock, start[0], start[1], start[2], false, false, false);
         AddBlipForEntity(this.entity);

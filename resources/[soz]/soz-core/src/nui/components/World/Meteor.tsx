@@ -47,6 +47,17 @@ export const Meteor: FunctionComponent = () => {
             gainMusic.current.gain.setValueAtTime(gainMusic.current.gain.value, now);
             gainMusic.current.gain.linearRampToValueAtTime(0, now + 3.0);
             setTimeout(() => audioElementMusic.pause(), 3000);
+
+            const audioElementSiren = document.querySelector('#siren') as HTMLMediaElement;
+            if (!gainSiren.current) {
+                const track = audioCtx.current.createMediaElementSource(audioElementSiren);
+                gainSiren.current = audioCtx.current.createGain();
+                track.connect(gainSiren.current).connect(audioCtx.current.destination);
+            }
+
+            gainSiren.current.gain.setValueAtTime(gainSiren.current.gain.value, now);
+            gainSiren.current.gain.linearRampToValueAtTime(0, now + 3.0);
+            setTimeout(() => audioElementSiren.pause(), 3000);
         },
         [audioCtx]
     );
@@ -82,7 +93,7 @@ export const Meteor: FunctionComponent = () => {
 
         const now = audioCtx.current.currentTime;
         gain.current.gain.setValueAtTime(current, now);
-        gain.current.gain.linearRampToValueAtTime(value / 10, now + 3.0);
+        gain.current.gain.linearRampToValueAtTime(value / 50, now + 3.0);
 
         if (value == 0) {
             setTimeout(() => audioElement.pause(), 3000);
