@@ -20,6 +20,13 @@ export class SnowProvider {
         ForceSnowPass(applySnow);
         SetForceVehicleTrails(applySnow);
         SetForcePedFootstepsTracks(applySnow);
+        if (applySnow) {
+            RequestScriptAudioBank('ICE_FOOTSTEPS', false);
+            RequestScriptAudioBank('SNOW_FOOTSTEPS', false);
+        } else {
+            ReleaseNamedScriptAudioBank('ICE_FOOTSTEPS');
+            ReleaseNamedScriptAudioBank('SNOW_FOOTSTEPS');
+        }
 
         if (applySnow) {
             await this.resourceLoader.loadPtfxAsset('core_snow');

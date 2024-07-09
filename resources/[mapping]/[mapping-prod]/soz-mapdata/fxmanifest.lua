@@ -7,7 +7,8 @@ replace_level_meta 'gta5'
 files {
     'gta5.meta',
     'doortuning.ymt',
-    'water.xml',
+
+    'water/*',
 
     'weather.xml',
     'w_snow.xml',
@@ -19,10 +20,10 @@ files {
     'snowheavy_render_mist.xml',
     'snowlight_emitter_drop.xml',
     'snowlight_render_drop.xml',
+    'sandstorm_emitter_drop.xml',
+    'sandstorm_render_drop.xml',
     'snowheavy_emitter_ground.xml',
     'snowheavy_render_ground.xml',
-    
-
 
     'soz_game.dat151.rel',
     'soz_mix.dat15.rel'

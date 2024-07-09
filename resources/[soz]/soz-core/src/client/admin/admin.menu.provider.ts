@@ -18,6 +18,7 @@ import { SenateRepository } from '../repository/senate.repository';
 import { VehicleDamageProvider } from '../vehicle/vehicle.damage.provider';
 import { VehiclePoliceLocator } from '../vehicle/vehicle.police.locator.provider';
 import { VehicleOffroadProvider } from '../vehicle/vehicule.offroad.provider';
+import { OceanProvider } from '../world/ocean.provider';
 import { AdminMenuDeveloperProvider } from './admin.menu.developer.provider';
 import { AdminMenuInteractiveProvider } from './admin.menu.interactive.provider';
 import { AdminMenuVehicleProvider } from './admin.menu.vehicle.provider';
@@ -56,6 +57,9 @@ export class AdminMenuProvider {
 
     @Inject(AdminMenuVehicleProvider)
     private adminMenuVehicleProvider: AdminMenuVehicleProvider;
+
+    @Inject(OceanProvider)
+    private oceanProvider: OceanProvider;
 
     @OnEvent(ClientEvent.ADMIN_OPEN_MENU)
     @Command('admin', {

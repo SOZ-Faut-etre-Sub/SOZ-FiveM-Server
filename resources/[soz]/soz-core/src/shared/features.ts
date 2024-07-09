@@ -16,6 +16,7 @@ export enum Feature {
     EasterFood = 'EasterFood',
     NewHorizon = 'NewHorizon',
     Bunkers = 'Bunkers',
+    SummerHeat = 'SummerHeat',
 }
 
 export type Environment = 'development' | 'production' | 'test';
@@ -102,6 +103,11 @@ const FeatureConfig: Record<Feature, { [P in Environment]?: boolean }> = {
         test: false,
     },
     [Feature.NewHorizon]: {
+        production: true,
+        development: true,
+        test: true,
+    },
+    [Feature.SummerHeat]: {
         production: true,
         development: true,
         test: true,

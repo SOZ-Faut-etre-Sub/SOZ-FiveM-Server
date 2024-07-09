@@ -9,6 +9,7 @@ import { Notifier } from '@public/client/notifier';
 import { InputService } from '@public/client/nui/input.service';
 import { NuiMenu } from '@public/client/nui/nui.menu';
 import { PhoneService } from '@public/client/phone/phone.service';
+import { PlayerHeatProvider } from '@public/client/player/player.heat.provider';
 import { PlayerInOutService } from '@public/client/player/player.inout.service';
 import { PlayerService } from '@public/client/player/player.service';
 import { PlayerSnowProvider } from '@public/client/player/player.snow.provider';
@@ -193,6 +194,9 @@ export class LSMCDeathProvider {
     @Inject(PlayerSnowProvider)
     private playerSnowProvider: PlayerSnowProvider;
 
+    @Inject(PlayerHeatProvider)
+    private playerHeatProvider: PlayerHeatProvider;
+
     private IsDead = false;
     private doFeeze = false;
     private hungerThristDeath = false;
@@ -303,7 +307,7 @@ export class LSMCDeathProvider {
                 killerveh: killVehData,
                 ejection: Date.now() - this.vehicleSeatbeltProvider.getLastEjectTime() < 10000,
                 hungerThristDeath: this.hungerThristDeath,
-                frozenDeath: this.playerSnowProvider.isFrozenDeath(),
+                frozenDeath: this.playerSnowProvider.isFrozenDeath() || this.playerHeatProvider.isHeatDeath(),
             };
             this.hungerThristDeath = false;
 

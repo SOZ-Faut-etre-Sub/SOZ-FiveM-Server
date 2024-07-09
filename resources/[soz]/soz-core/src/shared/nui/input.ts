@@ -30,3 +30,13 @@ export const PositiveNumberValidator: ValidateInput<number> = (input: string) =>
 
     return Ok(inputNumber);
 };
+
+export const NumberValidator: ValidateInput<number> = (input: string) => {
+    const inputNumber = Number(input);
+
+    if (isNaN(inputNumber)) {
+        return Err('Veuillez entrer un nombre');
+    }
+
+    return Ok(inputNumber);
+};

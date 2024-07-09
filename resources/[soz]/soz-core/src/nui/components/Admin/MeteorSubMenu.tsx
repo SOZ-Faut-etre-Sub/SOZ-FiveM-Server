@@ -1,5 +1,6 @@
+import { __ } from '@headlessui/react/dist/types';
 import { MeteorSubMenuState } from '@public/shared/admin/admin';
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
 import { fetchNui } from '../../fetch';
@@ -19,6 +20,18 @@ export type MeteorSubMenuProps = {
 };
 
 export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner, state }) => {
+    const [waterLevel, setWaterLevel] = useState<[number, number]>([0, 0]);
+
+    useEffect(() => {
+        // Use setTimeout to update the message after 2000 milliseconds (2 seconds)
+        const timeoutId = setInterval(() => {
+            fetchNui<__, [number, number]>(NuiEvent.AdminMenuOceanGetWaterLevel).then(data => setWaterLevel(data));
+        }, 2000);
+
+        // Cleanup function to clear the timeout if the component unmounts
+        return () => clearInterval(timeoutId);
+    }, []);
+
     return (
         <SubMenu id="meteor">
             <MenuTitle banner={banner}>Juste un rond ...</MenuTitle>
@@ -89,6 +102,31 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner, s
                     }}
                 >
                     Désactiver le spawn de PNJ
+                </MenuItemCheckbox>
+                <MenuTitle>
+                    Niveau de l'eau {waterLevel[0].toFixed(3)}/{waterLevel[1]}
+                </MenuTitle>
+                <MenuItemButton
+                    onConfirm={async () => {
+                        await fetchNui(NuiEvent.AdminMenuOceanSetWaterLevel);
+                    }}
+                >
+                    Changer global
+                </MenuItemButton>
+                <MenuItemButton
+                    onConfirm={async () => {
+                        await fetchNui(NuiEvent.AdminMenuOceanSetWaterDebugLevel);
+                    }}
+                >
+                    Changer debug
+                </MenuItemButton>
+                <MenuItemCheckbox
+                    checked={state.highWave}
+                    onChange={async value => {
+                        await fetchNui(NuiEvent.AdminMenuOceanSetHighWave, value);
+                    }}
+                >
+                    Grosses vagues
                 </MenuItemCheckbox>
             </MenuContent>
         </SubMenu>

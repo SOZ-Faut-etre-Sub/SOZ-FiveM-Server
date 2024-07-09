@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<rage__ptxgpuDropRenderSettings>
+  <useAlphaThreshold value="false" />
+  <useMistMap value="false" />
+  <useTopViewSwitch value="false" />
+  <transitionFade value="false" />
+  <textureRowsColsStartEnd x="1.000000" y="4.000000" z="5.000000" w="4.000000" />
+  <textureAnimRateScaleOverLifeStart2End2 x="0.000000" y="0.000000" z="0.000000" w="3.000000" />
+  <sizeMinMax x="0.010000" y="0.200000" z="0.003000" w="0.800000" />
+  <startFrameMin_Max x="0.000000" y="0.000000" />
+  <animLoopRate_MaxLoops x="0.000000" y="0.000000" />
+  <rateBasedOnParticleLife value="false" />
+  <directionalFlipUV x="0.000000" y="0.000000" />
+  <colour x="0.800000" y="0.500000" z="0.200000" w="0.500000" />
+  <alphaVariation value="0.200000" />
+  <fadeInOut x="0.050000" y="0.100000" />
+  <fadeNearFar x="10.000000" y="1000.000000" />
+  <fadeGrdOffLoHi x="0.000000" y="-10.000000" z="2.000000" w="100.000000" />
+  <rotSpeedMinMax x="-1.000000" y="1.000000" />
+  <rotStartMinMax x="0.000000" y="360.000000" />
+  <uvFlipChance x="0.100000" y="0.200000" />
+  <directionalZOffsetMinMax x="0.500000" y="0.000000" z="0.000000" />
+  <directionalZSizeRangeSpeedRange x="1.000000" y="500.000000" z="0.100000" w="1.000000" />
+  <dirVelAddCamSpeedMinMaxMult x="20.000000" y="100.000000" z="0.800000" />
+  <edgeSoftness value="0.800000" />
+  <particleColorPercentage value="3.000000" />
+  <backgroundDistortionVisibilityPercentage value="5.000000" />
+  <backgroundDistortionAlphaBooster value="1.800000" />
+  <backgroundDistortionAmount value="80.000000" />
+  <backgroundDistortionBlurLevel value="3" />
+  <directionalAndAmbientMultiplier value="2.500000" />
+  <localLightsMultiplier value="0.800000" />
+  <directionalLightShadowAmount value="1.200000" />
+  <translucency value="0.900000" />
+  <wrapLightingTerm value="1.200000" />
+  <lightFalloffBiasModifier value="3.000000" />
+  <dofAlphaOutputMultiplier value="50.000000" />
+  <dofOutputMode>DOF_OUTPUT_COLOR_WITH_ALPHA</dofOutputMode>
+  <timeModifiers>
+    <enabled value="true" />
+    <sizeMultiplier x="3.000000" y="0.100000" z="3.000000" w="0.200000" />
+    <distortionMultiplier value="2.500000" />
+    <bloomMultiplier value="0.000000" />
+  </timeModifiers>
+</rage__ptxgpuDropRenderSettings>

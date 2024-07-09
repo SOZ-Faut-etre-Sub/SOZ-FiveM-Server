@@ -101,6 +101,10 @@ export enum NuiEvent {
     AdminMenuMeteorMusic = 'soz-core:nui:admin:meteor:music',
     AdminMenuMeteorDisableNpc = 'soz-core:nui:admin:meteor:disable-npc',
     AdminMenuMeteorKickPlayers = 'soz-core:nui:admin:meteor:kick-players',
+    AdminMenuOceanSetWaterLevel = 'soz-core:nui:admin:ocean:water-level',
+    AdminMenuOceanSetWaterDebugLevel = 'soz-core:nui:admin:ocean:water-level-debug',
+    AdminMenuOceanGetWaterLevel = 'soz-core:nui:admin:ocean:get-water-level',
+    AdminMenuOceanSetHighWave = 'soz-core:nui:admin:ocean:high-wave',
 
     GetAPIConfig = 'soz-core:nui:get-api-config',
     GetJWTToken = 'soz-core:nui:get-jwt-token',

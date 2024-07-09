@@ -5,13 +5,9 @@ import { ServerEvent } from '../../shared/event';
 import { PrismaService } from '../database/prisma.service';
 import { Notifier } from '../notifier';
 import { PermissionService } from '../permission.service';
-import { PlayerService } from '../player/player.service';
 
 @Provider()
 export class VehicleAdminProvider {
-    @Inject(PlayerService)
-    private playerService: PlayerService;
-
     @Inject(Notifier)
     private notifier: Notifier;
 

@@ -4,6 +4,18 @@
   <VersionNumber value="1.000000"/>
   <WeatherGpuFx>
     <Item>
+      <Name>SANDSTORM_DROP</Name>
+      <SystemType>SYSTEM_TYPE_DROP</SystemType>
+      <diffuseName>rain</diffuseName>
+      <distortionTexture>distortion_rain_n</distortionTexture>
+      <diffuseSplashName>rain_anim</diffuseSplashName>
+      <driveType>DRIVE_TYPE_RAIN</driveType>
+      <windInfluence value="0.40"/>
+      <gravity value="-10.000000"/>
+      <emitterSettingsName>resources:/soz-mapdata/sandstorm_emitter_drop</emitterSettingsName>
+      <renderSettingsName>resources:/soz-mapdata/sandstorm_render_drop</renderSettingsName>
+    </Item>
+    <Item>
       <Name>RAINSTORM_DROP</Name>
       <SystemType>SYSTEM_TYPE_DROP</SystemType>
       <diffuseName>rain</diffuseName>
@@ -741,6 +753,7 @@
     <TimeCycleFilename>resources:/soz-mapdata/W_SNOW.XML</TimeCycleFilename>
     <CloudSettingsName>SUNNYclouds</CloudSettingsName>
   </Item>
+  <!--
   <Item>
     <Name>BLIZZARD</Name>
     <Sun value="0"/>
@@ -780,6 +793,48 @@
     <GroundSettingName>BLIZZARD_GROUND</GroundSettingName>
 	<TimeCycleFilename>resources:/soz-mapdata/W_BLIZZARD.XML</TimeCycleFilename>
     <CloudSettingsName>SUNNYclouds</CloudSettingsName>
+  </Item>
+  In summer Replace BLIZZARD by a SANDSTORM
+  -->
+  <Item>
+    <Name>BLIZZARD</Name>
+    <Sun value="0.89"/>
+    <Cloud value="1.000000"/>
+    <WindMin value="1.0"/>
+    <WindMax value="1.0"/>
+ 	  <Rain value="0.000000"/>
+	  <Wetness value="0.100000"/>
+    <Snow value="1.000000"/>
+    <SnowMist value="1.000000"/>
+    <Fog value="1.000000"/>
+    <RippleBumpiness value="0.420000" />
+    <RippleMinBumpiness value="0.150000" />
+    <RippleMaxBumpiness value="0.600000" />
+    <RippleBumpinessWindScale value="0.500000" />
+    <RippleScale value="0.030000" />
+    <RippleSpeed value="20.000000" />
+    <RippleVelocityTransfer value="0.400000" />
+    <OceanBumpiness value="0.250000" />
+    <DeepOceanScale value="1.00000" />
+    <OceanNoiseMinAmplitude value="13.00000" />
+    <OceanWaveAmplitude value="1.500000" />
+    <ShoreWaveAmplitude value="2.000000" />
+    <OceanWaveWindScale value="0.700000" />
+    <ShoreWaveWindScale value="0.700000" />
+    <OceanWaveMinAmplitude value="0.000000" />
+    <ShoreWaveMinAmplitude value="0.000000" />
+    <OceanWaveMaxAmplitude value="0.500000" />
+    <ShoreWaveMaxAmplitude value="4.500000" />
+    <OceanFoamIntensity value="0.140000" />
+    <OceanFoamScale value="0.050000" />
+    <RippleDisturb value="0.035000" />
+    <Lightning value="false"/>
+    <Sandstorm value="true"/>
+    <DropSettingName>SANDSTORM_DROP</DropSettingName>
+    <MistSettingName>VFX_SNOW_HEAVY_MIST</MistSettingName>
+    <GroundSettingName>DESERT_GROUND_HEAVY</GroundSettingName>
+	  <TimeCycleFilename>resources:/soz-mapdata/W_BLIZZARD.XML</TimeCycleFilename>
+    <CloudSettingsName>HEAVYclouds</CloudSettingsName>
   </Item>
   <Item>
     <Name>SNOWLIGHT</Name>

@@ -76,6 +76,7 @@ export type MeteorSubMenuState = {
     siren: number;
     music: number;
     chronos: number;
+    highWave: boolean;
 };
 
 export type AdminMenuData = {
