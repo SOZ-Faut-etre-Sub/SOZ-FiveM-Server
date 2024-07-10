@@ -288,6 +288,7 @@ const MenuAnimation: FunctionComponent<MenuAnimationProps> = ({ shortcuts: intia
 };
 
 const MenuAnimationList: FunctionComponent = () => {
+    const [animationsFind, setAnimationsFind] = useState<AnimationConfigItem[]>([]);
     const elements = [];
     const subMenus = [];
 
@@ -297,6 +298,11 @@ const MenuAnimationList: FunctionComponent = () => {
         elements.push(element);
         subMenus.push(...newSubMenus);
     }
+
+    const searchAnimation = async () => {
+        const animations = ((await fetchNui(NuiEvent.PlayerMenuAnimationSearch)) as AnimationConfigItem[]) || [];
+        setAnimationsFind(animations);
+    };
 
     return (
         <>
@@ -310,9 +316,20 @@ const MenuAnimationList: FunctionComponent = () => {
                     >
                         🛑 Stopper l'animation
                     </MenuItemButton>
-                    {elements.map((element, index) => {
-                        return <Fragment key={index}>{element}</Fragment>;
-                    })}
+
+                    <MenuItemButton onConfirm={() => searchAnimation()}>🔍 Recherche par nom</MenuItemButton>
+                    {animationsFind.length > 0 ? (
+                        <Fragment>
+                            <MenuItemButton onConfirm={() => setAnimationsFind([])}>
+                                💃 Toutes les animations
+                            </MenuItemButton>
+                            {animationsFind.map(animation => createAnimationLeafItem(animation))}
+                        </Fragment>
+                    ) : (
+                        elements.map((element, index) => {
+                            return <Fragment key={index}>{element}</Fragment>;
+                        })
+                    )}
                 </MenuContent>
             </SubMenu>
             {subMenus.map((element, index) => {
