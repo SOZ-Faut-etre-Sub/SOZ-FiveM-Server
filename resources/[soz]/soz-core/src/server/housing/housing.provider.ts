@@ -1,3 +1,5 @@
+import { Command } from '@public/core/decorators/command';
+
 import { OnEvent } from '../../core/decorators/event';
 import { Exportable } from '../../core/decorators/exports';
 import { Inject } from '../../core/decorators/injectable';
@@ -75,6 +77,36 @@ export class HousingProvider {
 
     private playerTemporaryAccess = new Map<string, Set<number>>();
 
+    private giveKey(source: number, target: PlayerData, apartment: Apartment) {
+        if (!this.playerTemporaryAccess.has(target.citizenid)) {
+            this.playerTemporaryAccess.set(target.citizenid, new Set());
+        }
+
+        this.playerTemporaryAccess.get(target.citizenid).add(apartment.id);
+
+        this.notifier.notify(target.source, `Vous avez reçu un accès temporaire à un appartement.`, 'success');
+        this.notifier.notify(
+            source,
+            `Vous avez donné un accès temporaire à l'appartement ${apartment.label}.`,
+            'success'
+        );
+
+        TriggerClientEvent(ClientEvent.HOUSING_ADD_TEMPORARY_ACCESS, target.source, apartment.id);
+    }
+
+    @Command('givekey', { role: 'admin' })
+    public async giveKeyCommand(source: number, targetSource: number, apartmentId: string) {
+        const target = this.playerService.getPlayer(targetSource);
+
+        if (!target) {
+            this.notifier.notify(source, 'Pas de joueur avec cet id');
+            return;
+        }
+
+        const apartment = await this.housingRepository.getApartmentByIdentifier(apartmentId);
+        this.giveKey(source, target, apartment);
+    }
+
     @OnEvent(ServerEvent.HOUSING_ADD_TEMPORARY_ACCESS)
     public async addTemporaryAccess(source: number, propertyId: number, apartmentId: number, targetSource: number) {
         const player = this.playerService.getPlayer(source);
@@ -105,20 +137,7 @@ export class HousingProvider {
             return;
         }
 
-        if (!this.playerTemporaryAccess.has(target.citizenid)) {
-            this.playerTemporaryAccess.set(target.citizenid, new Set());
-        }
-
-        this.playerTemporaryAccess.get(target.citizenid).add(apartmentId);
-
-        this.notifier.notify(target.source, `Vous avez reçu un accès temporaire à un appartement.`, 'success');
-        this.notifier.notify(
-            player.source,
-            `Vous avez donné un accès temporaire à l'appartement ${apartment.label}.`,
-            'success'
-        );
-
-        TriggerClientEvent(ClientEvent.HOUSING_ADD_TEMPORARY_ACCESS, target.source, apartmentId);
+        this.giveKey(source, target, apartment);
     }
 
     @Rpc(RpcServerEvent.HOUSING_GET_TEMPORARY_ACCESS)
