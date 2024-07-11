@@ -89,6 +89,7 @@ export class WeaponProvider {
 
     @Once(OnceStep.PlayerLoaded)
     async setupWeaponDamageModifier() {
+        StatSetInt(`MP0_SHOOTING_ABILITY`, 100, true); //setmaxammo to 9999
         SetWeaponsNoAutoswap(true);
 
         await this.weapon.clear();
