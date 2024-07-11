@@ -1,9 +1,15 @@
+import { Inject } from '@public/core/decorators/injectable';
+
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Provider } from '../../core/decorators/provider';
 import { NuiEvent, ServerEvent } from '../../shared/event';
+import { InputService } from '../nui/input.service';
 
 @Provider()
 export class AdminMenuMeteorProvider {
+    @Inject(InputService)
+    public inputService: InputService;
+
     @OnNuiEvent(NuiEvent.AdminMenuMeteorSiren)
     public async toggleSiren(value: number): Promise<void> {
         TriggerServerEvent(ServerEvent.ADMIN_METEOR_SIREN, value);
@@ -11,6 +17,12 @@ export class AdminMenuMeteorProvider {
 
     @OnNuiEvent(NuiEvent.AdminMenuMeteorActivate)
     public async activateMeteor(): Promise<void> {
+        const confirm = await this.inputService.askConfirm(`Êtes-vous sûr lancer le météor ? (OUI)`);
+
+        if (!confirm) {
+            return;
+        }
+
         TriggerServerEvent(ServerEvent.ADMIN_METEOR_ACTIVATE);
     }
 

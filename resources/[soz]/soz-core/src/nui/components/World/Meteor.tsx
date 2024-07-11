@@ -106,9 +106,9 @@ export const Meteor: FunctionComponent = () => {
     return (
         <div>
             {white && <div className="w-full h-full grid h-screen bg-white animate-display-in-long opacity-0"></div>}
-            <audio id="meteor" src="sounds/meteor.mp3"></audio>
-            <audio id="music-event" src="sounds/meteor-musique-v4.mp3"></audio>
-            <audio id="siren" src="sounds/reboot.mp3"></audio>
+            <audio id="meteor" src="https://cfx-nui-soz-sounds/meteor/meteor.mp3"></audio>
+            <audio id="music-event" src="https://cfx-nui-soz-sounds/meteor/ambiance.mp3"></audio>
+            <audio id="siren" src="https://cfx-nui-interact-sound/client/html/sounds/system/reboot.ogg"></audio>
         </div>
     );
 };

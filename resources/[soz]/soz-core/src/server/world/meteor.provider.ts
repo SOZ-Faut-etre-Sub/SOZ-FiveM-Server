@@ -38,6 +38,8 @@ export class MeteorProvider {
     public activate(source: number) {
         TriggerClientEvent(ClientEvent.METEOR_START, -1);
         this.notifier.notify(source, 'Lancement météorite...');
+        this.music = 0;
+        this.siren = 0;
     }
 
     @OnEvent(ServerEvent.ADMIN_METEOR_MUSIC)

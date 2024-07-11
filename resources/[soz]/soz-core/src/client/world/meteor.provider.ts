@@ -50,14 +50,13 @@ export class MeteorProvider {
     public async meteorStart() {
         this.nuiDispatch.dispatch('meteor', 'load');
 
-        const rock = GetHashKey('soz_prop_rock_m');
+        const rock = GetHashKey('soz_prop_meteor');
         await this.resourceLoader.loadPtfxAsset('scr_ar_planes');
         await this.resourceLoader.loadPtfxAsset('core');
         await this.resourceLoader.loadModel(rock);
 
         await wait(2000);
         this.nuiDispatch.dispatch('meteor', 'start');
-        await wait(5000);
 
         this.entity = CreateObject(rock, start[0], start[1], start[2], false, false, false);
         AddBlipForEntity(this.entity);
