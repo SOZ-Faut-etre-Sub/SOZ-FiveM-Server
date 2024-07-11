@@ -90,10 +90,10 @@ export class MeteorProvider {
         const fx2 = StartParticleFxLoopedOnEntity(
             'proj_flare_trail',
             this.entity,
-            5.0,
-            12.0,
-            8.0,
             0.0,
+            10.0,
+            0.0,
+            90.0,
             0.0,
             0.0,
             150.0,
