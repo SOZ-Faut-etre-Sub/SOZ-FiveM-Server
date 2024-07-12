@@ -42,6 +42,7 @@ export class MeteorProvider {
 
     private entity: number = null;
     private inEnd = false;
+    private inExplosion = false;
     private prevPos: Vector3 = null;
     private meteorCam: number = null;
     private fixedCam: number = null;
@@ -128,7 +129,7 @@ export class MeteorProvider {
 
         this.playerHealthProvider.setNutritionDisabled(true);
         this.hudStateProvider.setHudVisible(false);
-        this.hudStateProvider.setCinematicMode(true);
+        this.hudStateProvider.setCinematicMode(true, 3000);
 
         const coords = GetGameplayCamCoord() as Vector3;
         const rots = GetGameplayCamRot(2);
@@ -137,7 +138,7 @@ export class MeteorProvider {
             'DEFAULT_SCRIPTED_CAMERA',
             coords[0],
             coords[1],
-            coords[2] + 100,
+            coords[2] + 300,
             -80,
             rots[1],
             rots[2],
@@ -267,8 +268,36 @@ export class MeteorProvider {
         if (dist < 350.0) {
             this.end();
         }
+        if (dist < 200.0) {
+            this.explosion(coords);
+        }
 
         this.prevPos = coords;
+    }
+
+    async explosion(coords: Vector3) {
+        if (this.inExplosion) {
+            return;
+        }
+        await this.resourceLoader.loadPtfxAsset('des_gas_station');
+        UseParticleFxAsset('des_gas_station');
+        StartParticleFxNonLoopedAtCoord(
+            'ent_ray_paleto_gas_explosion',
+            coords[0],
+            coords[1],
+            coords[2],
+            0.0,
+            0.0,
+            0.0,
+            50.0,
+            false,
+            false,
+            false
+        );
+        this.resourceLoader.unloadPtfxAsset('des_gas_station');
+        await wait(5000);
+
+        this.inExplosion = false;
     }
 
     private async end() {
@@ -276,7 +305,12 @@ export class MeteorProvider {
             return;
         }
         this.inEnd = true;
+
+        SetEntityCollision(this.entity, false, false);
+        SetEntityCompletelyDisableCollision(this.entity, true, false);
+
         this.nuiDispatch.dispatch('meteor', 'white');
+
         await wait(2500);
         DeleteEntity(this.entity);
         this.entity = null;
@@ -317,7 +351,7 @@ export class MeteorProvider {
         await wait(3000);
         DoScreenFadeOut(2000);
 
-        await wait(10_000);
+        await wait(30_000);
         DoScreenFadeIn(100);
 
         this.playerHealthProvider.setNutritionDisabled(false);

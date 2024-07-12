@@ -33,6 +33,12 @@ export class AdminMenuMeteorProvider {
 
     @OnNuiEvent(NuiEvent.AdminMenuMeteorKickPlayers)
     public async kickPlayers(): Promise<void> {
+        const confirm = await this.inputService.askConfirm(`Êtes-vous sûr de kick les joueurs ? (OUI)`);
+
+        if (!confirm) {
+            return;
+        }
+
         TriggerServerEvent(ServerEvent.ADMIN_METEOR_KICK_PLAYERS);
     }
 }
