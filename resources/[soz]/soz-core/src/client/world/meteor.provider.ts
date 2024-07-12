@@ -1,8 +1,8 @@
-import { Command } from '@public/core/decorators/command';
-import { OnEvent } from '@public/core/decorators/event';
+import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { Tick } from '@public/core/decorators/tick';
+import { emitRpc } from '@public/core/rpc';
 import { wait } from '@public/core/utils';
 import { ClientEvent } from '@public/shared/event';
 import { Control } from '@public/shared/input';
@@ -14,6 +14,7 @@ import {
     toVectorNorm,
     Vector3,
 } from '@public/shared/polyzone/vector';
+import { RpcServerEvent } from '@public/shared/rpc';
 import { VehicleSeat } from '@public/shared/vehicle/vehicle';
 
 import { HudStateProvider } from '../hud/hud.state.provider';
@@ -46,6 +47,13 @@ export class MeteorProvider {
     private prevPos: Vector3 = null;
     private meteorCam: number = null;
     private fixedCam: number = null;
+
+    @Once(OnceStep.NuiLoaded)
+    public async init() {
+        const [siren, music] = await emitRpc<[number, number]>(RpcServerEvent.ADMIN_METEOR_SIREN);
+        this.nuiDispatch.dispatch('meteor', 'siren', siren);
+        this.nuiDispatch.dispatch('meteor', 'music', music);
+    }
 
     @OnEvent(ClientEvent.METEOR_START)
     public async meteorStart() {
@@ -275,7 +283,7 @@ export class MeteorProvider {
         this.prevPos = coords;
     }
 
-    async explosion(coords: Vector3) {
+    private async explosion(coords: Vector3) {
         if (this.inExplosion) {
             return;
         }
@@ -359,23 +367,6 @@ export class MeteorProvider {
         this.hudStateProvider.setCinematicMode(false);
 
         this.inEnd = false;
-    }
-
-    @Command('delm')
-    d() {
-        RenderScriptCams(false, true, 100, true, false);
-        DestroyCam(this.fixedCam, false);
-        DestroyCam(this.meteorCam, false);
-
-        if (this.entity) {
-            DeleteEntity(this.entity);
-            this.entity = null;
-        }
-        ClearFocus();
-
-        this.playerHealthProvider.setNutritionDisabled(false);
-        this.hudStateProvider.setHudVisible(true);
-        this.hudStateProvider.setCinematicMode(false);
     }
 
     @OnEvent(ClientEvent.METEOR_MUSIC)

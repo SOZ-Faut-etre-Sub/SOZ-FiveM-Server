@@ -7,13 +7,9 @@ import { RpcServerEvent } from '@public/shared/rpc';
 
 import { Notifier } from '../notifier';
 import { RebootProvider } from '../reboot/reboot.provider';
-import { SoundService } from '../sound/sound.service';
 
 @Provider()
 export class MeteorProvider {
-    @Inject(SoundService)
-    public soundService: SoundService;
-
     @Inject(RebootProvider)
     public rebootProvider: RebootProvider;
 
