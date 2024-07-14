@@ -141,8 +141,8 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                                         {collection.loaded_size == 0 || collection.loaded_size > collection.size
                                             ? '🔴'
                                             : collection.loaded_size < collection.size
-                                            ? '🔵'
-                                            : '🟢'}{' '}
+                                              ? '🔵'
+                                              : '🟢'}{' '}
                                         {collection.name}
                                     </span>
                                     <span>
@@ -165,8 +165,8 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                         {collection.loaded_size == 0
                             ? '🔴 Déchargée'
                             : collection.loaded_size < collection.size
-                            ? '🔵 Partiellement chargée'
-                            : '🟢 Complètement chargée'}
+                              ? '🔵 Partiellement chargée'
+                              : '🟢 Complètement chargée'}
                     </MenuTitle>
                     <MenuItemSubMenuLink id={`collection/props`}>
                         📝 Voir la liste des props de la collection

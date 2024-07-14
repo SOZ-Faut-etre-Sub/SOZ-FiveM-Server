@@ -1,3 +1,4 @@
+import { waitUntil } from '@core/utils';
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { Exportable } from '@public/core/decorators/exports';
 import { Inject } from '@public/core/decorators/injectable';
@@ -473,14 +474,21 @@ export class PropPlacementProvider {
             );
         }
 
-        if (this.isEditorModeOn) {
+        if ((this.isMouseSelectionOn || this.isPipetteOn) && !this.isEditorModeOn) {
+            this.isMouseSelectionOn = false;
+            this.isPipetteOn = false;
+            EnableAllControlActions(0);
+            await waitUntil(async () => !IsControlPressed(0, 194) && !IsControlPressed(0, 18));
+            LeaveCursorMode();
+        } else if (this.isEditorModeOn) {
             this.circularCamera.deleteCamera();
 
-            EnableAllControlActions(0);
-            LeaveCursorMode();
             this.isEditorModeOn = false;
             this.isMouseSelectionOn = false;
             this.isPipetteOn = false;
+            EnableAllControlActions(0);
+            await waitUntil(async () => !IsControlPressed(0, 194) && !IsControlPressed(0, 18));
+            LeaveCursorMode();
         }
     }
 
