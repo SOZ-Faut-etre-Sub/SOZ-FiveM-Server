@@ -6,6 +6,7 @@ import { HudNotificationsProvider } from './hud.notifications.provider';
 import { HudStateProvider } from './hud.state.provider';
 import { HudStreetNameProvider } from './hud.streetname.provider';
 import { HudVehicleProvider } from './hud.vehicle.provider';
+import { HudWeatherIconProvider } from './hud.weathericon.provider';
 
 @Module({
     providers: [
@@ -16,6 +17,7 @@ import { HudVehicleProvider } from './hud.vehicle.provider';
         HudStateProvider,
         HudStreetNameProvider,
         HudVehicleProvider,
+        HudWeatherIconProvider,
     ],
 })
 export class HudModule {}

@@ -1,6 +1,8 @@
 import { OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
+import { Rpc } from '@public/core/decorators/rpc';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
+import { RpcServerEvent } from '@public/shared/rpc';
 
 import { Provider } from '../../core/decorators/provider';
 import { PermissionService } from '../permission.service';
@@ -10,8 +12,23 @@ export class OceanProvider {
     @Inject(PermissionService)
     private permissionService: PermissionService;
 
+    private waterCurrentLevel = 0;
     private waterLevel = 0;
     private highWave = false;
+
+    @Rpc(RpcServerEvent.ADMIN_OCEAN)
+    public async getOceanInfo() {
+        return [this.waterCurrentLevel, this.waterLevel, this.highWave];
+    }
+
+    @OnEvent(ServerEvent.ADMIN_OCEAN_WATER_CURRENT_LEVEL)
+    public async setWaterCurrentLevel(source: number, targetLevel: number) {
+        if (!this.permissionService.isStaff(source)) {
+            return;
+        }
+
+        this.waterCurrentLevel = targetLevel;
+    }
 
     @OnEvent(ServerEvent.ADMIN_OCEAN_WATER_LEVEL)
     public async flood(source: number, targetLevel: number) {
@@ -20,7 +37,7 @@ export class OceanProvider {
         }
 
         this.waterLevel = targetLevel;
-        TriggerLatentClientEvent(ClientEvent.OCEAN_WATER_LEVEL, -1, 1024, this.waterLevel);
+        TriggerLatentClientEvent(ClientEvent.OCEAN_WATER_LEVEL, -1, 1024, this.waterLevel, source);
     }
 
     @OnEvent(ServerEvent.ADMIN_OCEAN_WATER_HIGH_WAVE)

@@ -35,7 +35,7 @@ local function ApplyPedHair(ped, hair)
 end
 
 local function ApplyPedFaceTrait(ped, faceTrait, model)
-    if MaskResetFace[GetEntityModel(ped)] and MaskResetFace[GetEntityModel(ped)][mask] then
+    if MaskResetFace[mask] then
         SetPedHeadBlendData(ped, 0, 0, 0, model.Father, model.Mother, 0, (model.ShapeMix or 0) + 0.0, (model.SkinMix or 0) + 0.0, 0, false);
     else
         SetPedHeadBlendData(ped, model.Father, model.Mother, 0, model.Father, model.Mother, 0, (model.ShapeMix or 0) + 0.0, (model.SkinMix or 0) + 0.0, 0, false);
@@ -51,7 +51,7 @@ local function ApplyPedFaceTrait(ped, faceTrait, model)
 
     SetPedFaceFeature(ped, FaceFeatureType.EyesOpening, (faceTrait.EyesOpening or 0) + 0.0);
 
-    if MaskResetFace[GetEntityModel(ped)] and MaskResetFace[GetEntityModel(ped)][mask] then
+    if MaskResetFace[mask] then
         SetPedFaceFeature(ped, FaceFeatureType.EyebrowHigh, 0.0);
         SetPedFaceFeature(ped, FaceFeatureType.EyebrowForward, 0.0);
         SetPedFaceFeature(ped, FaceFeatureType.CheeksBoneHigh, -1.0);
@@ -154,7 +154,13 @@ end
 
 local function ApplyPedClothSet(ped, clothSet)
     for componentId, component in pairs(clothSet.Components) do
-        SetPedComponentVariation(ped, tonumber(componentId), component.Drawable, component.Texture or 0, component.Palette or 0);
+        local comp = tonumber(componentId);
+        local drawable = component.Drawable
+        if comp == ComponentType.Mask and drawable >= 190 and GetEntityModel(ped) == GetHashKey("mp_f_freemode_01") then
+            drawable = drawable + 1
+        end
+
+        SetPedComponentVariation(ped, comp, drawable, component.Texture or 0, component.Palette or 0);
     end
 
     for _, propId in pairs(PropType) do

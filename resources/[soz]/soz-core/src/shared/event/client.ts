@@ -336,4 +336,5 @@ export enum ClientEvent {
 
     OCEAN_WATER_LEVEL = 'soz-core:client:ocean:water-level',
     OCEAN_WATER_HIGH_WAVE = 'soz-core:client:ocean:high-wave',
+    EARTHQUAKE = 'soz-core:client:eathquake',
 }

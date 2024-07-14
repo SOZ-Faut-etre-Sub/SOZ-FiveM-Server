@@ -11,6 +11,7 @@ import { CAYO } from '@public/shared/cayo';
 import { Component, GlovesItem } from '@public/shared/cloth';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
+import { PlayerPedHash } from '@public/shared/player';
 import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { ClothingShopID, ClothingShopItem } from '@public/shared/shop';
 
@@ -77,9 +78,8 @@ export class ClothingShopProvider {
             return;
         }
 
-        const { shop: shop_content, content: shop_categories } = await this.clothingShopRepository.getShopContent(
-            brand
-        );
+        const { shop: shop_content, content: shop_categories } =
+            await this.clothingShopRepository.getShopContent(brand);
 
         if (!shop_content) {
             this.logger.error(`Shop ${brand} not initialized`);
@@ -145,8 +145,17 @@ export class ClothingShopProvider {
         }
         if (product.components && !product.correspondingDrawables) {
             for (const [compId, comp] of Object.entries(product.components)) {
-                const drawable = comp.Drawable;
+                let drawable = comp.Drawable;
                 const texture = comp.Texture;
+
+                if (
+                    Number(compId) == Component.Mask &&
+                    drawable >= 190 &&
+                    GetEntityModel(ped) == PlayerPedHash.Female
+                ) {
+                    drawable = drawable + 1;
+                }
+
                 SetPedComponentVariation(ped, parseInt(compId), drawable, texture, 0);
                 if (Number(compId) == Component.Mask) {
                     const hair = this.clothingService.displayHairWithMask(drawable)

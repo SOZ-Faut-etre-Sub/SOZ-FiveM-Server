@@ -2,11 +2,11 @@ import { FunctionComponent, useState } from 'react';
 
 import { useNuiEvent } from '../../hook/nui';
 
-export const ColdOverlay: FunctionComponent = () => {
-    const [coldMode, setColdMode] = useState(false);
-    useNuiEvent('cold', 'cold', setColdMode);
+export const WeatherIcon: FunctionComponent = () => {
+    const [icon, setIcon] = useState<string>(null);
+    useNuiEvent('weather', 'icon', setIcon);
 
-    if (!coldMode) {
+    if (!icon) {
         return null;
     }
 
@@ -16,9 +16,10 @@ export const ColdOverlay: FunctionComponent = () => {
                 <div
                     className="w-24 h-24 breathing-icon bg-no-repeat bg-contain"
                     style={{
-                        backgroundImage: 'url(/public/images/hud/snowflake.webp)',
+                        backgroundImage: 'url(/public/images/hud/weather/' + icon + '.webp)',
                     }}
                 />
+                <div className="breathing-icon-shadow"></div>
             </div>
         </div>
     );

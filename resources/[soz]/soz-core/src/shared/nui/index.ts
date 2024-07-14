@@ -34,7 +34,7 @@ import { NuiRepairMethodMap } from './repair';
 import { NuiSozedexMethodMap } from './sozedex';
 import { NuiTaxiMethodMap } from './taxi';
 import { NuiUpwOrderMenuMethodMap } from './upw_order_menu';
-import { NuiColdMethodMap } from './xmas';
+import { NuiWeatherMethodMap } from './wheather';
 
 export interface NuiGlobalMethodMap {
     PauseMenuActive: boolean;
@@ -76,7 +76,7 @@ export interface NuiMethodMap {
     placement_prop: NuiPlacementPropMethodMap;
     craft: NuiCraftMethodMap;
     zombie: NuiZombieMethodMap;
-    cold: NuiColdMethodMap;
+    weather: NuiWeatherMethodMap;
     medicalDiag: NuiMedicalDiagMethodMap;
     repository: NuiRepositoryMethodMap;
     meteor: NuiMeteorMap;

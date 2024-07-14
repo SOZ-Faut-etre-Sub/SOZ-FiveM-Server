@@ -113,13 +113,6 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner, s
                 >
                     Changer global
                 </MenuItemButton>
-                <MenuItemButton
-                    onConfirm={async () => {
-                        await fetchNui(NuiEvent.AdminMenuOceanSetWaterDebugLevel);
-                    }}
-                >
-                    Changer debug
-                </MenuItemButton>
                 <MenuItemCheckbox
                     checked={state.highWave}
                     onChange={async value => {
@@ -128,6 +121,14 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner, s
                 >
                     Grosses vagues
                 </MenuItemCheckbox>
+                <MenuTitle>Tremblement de terre</MenuTitle>
+                <MenuItemButton
+                    onConfirm={async () => {
+                        await fetchNui(NuiEvent.AdminMenuEarthquake);
+                    }}
+                >
+                    Lancer
+                </MenuItemButton>
             </MenuContent>
         </SubMenu>
     );

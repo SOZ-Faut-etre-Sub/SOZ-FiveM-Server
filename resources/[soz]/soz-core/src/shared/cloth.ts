@@ -142,6 +142,15 @@ export const KeepHairWithMask = {
     [204]: true,
     [206]: true,
     [207]: true,
+    [209]: true,
+    [216]: true,
+    [217]: true,
+    [218]: true,
+    [219]: true,
+    [220]: true,
+    [230]: true,
+    [234]: true,
+    [235]: true,
 };
 
 export type PlayerCloakroomItem = {
@@ -149,3 +158,32 @@ export type PlayerCloakroomItem = {
     name: string;
     cloth: Outfit;
 };
+
+export const WarmClothCategory = [
+    4, //'Manteaux',
+    5, //'Sweats & Hoodies',
+    6, //'Costumes',
+    9, //'Pulls',
+    10, //'Deguisements',
+    11, //'Gilets',
+    12, //'Vestes',
+    16, //'Pantalons',
+    19, //'Jeans',
+    20, //'Déguisements'
+    28, //'Bottes/Bottines'
+    29, //'Baskets'
+    30, //'Chaussures plates'
+    31, //'Déguisements'
+    32, //'Hiver'
+    63, //'Déguisements'
+    64, //'Pulls'
+    35, //'Bandana'
+    37, //'Intégral'
+    38, //'Costume'
+    39, //'Cagoule'
+];
+
+export const ColdClothCategory = [
+    21, //'Sous-vêtements',
+    24, //'Maillots de bain',
+];

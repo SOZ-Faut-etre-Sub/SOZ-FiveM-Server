@@ -7,6 +7,7 @@ import { ClothConfig } from './cloth';
 import { Disease, Organ } from './disease';
 import { DrivingSchoolLicenseType } from './driving-school';
 import { InventoryItem } from './item';
+import { joaat } from './joaat';
 import { JobType } from './job';
 import { PlasterLocation } from './job/lsmc';
 import { Halloween2022, Halloween2023 } from './story/halloween2022';
@@ -113,8 +114,8 @@ export type Skin = {
 };
 
 export const PlayerPedHash = {
-    Male: 1885233650,
-    Female: -1667301416,
+    Male: joaat('mp_m_freemode_01'),
+    Female: joaat('mp_f_freemode_01'),
 };
 
 export const TenueComponents = {

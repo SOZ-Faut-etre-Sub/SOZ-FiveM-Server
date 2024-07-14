@@ -1,10 +1,11 @@
 import { Provider } from '@core/decorators/provider';
 import { FemaleJewelryItems, MaleJewelryItems } from '@public/config/jewelry';
-import { On, Once, OnceStep } from '@public/core/decorators/event';
+import { On } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { emitRpc } from '@public/core/rpc';
-import { Component, Outfit } from '@public/shared/cloth';
+import { ColdClothCategory, Component, Outfit, WarmClothCategory } from '@public/shared/cloth';
+import { Feature, isFeatureEnabled } from '@public/shared/features';
 import { joaat } from '@public/shared/joaat';
 import { JobType } from '@public/shared/job';
 import { HAZMAT_OUTFIT_NAME, LsmcCloakroom } from '@public/shared/job/lsmc';
@@ -15,39 +16,12 @@ import { RpcServerEvent } from '@public/shared/rpc';
 import { Weather } from '@public/shared/weather';
 
 import { ClothingService } from '../clothing/clothing.service';
+import { HudWeatherIconProvider } from '../hud/hud.weathericon.provider';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { Store } from '../store/store';
 import { PlayerService } from './player.service';
 
 const ColdWeather: Weather[] = ['BLIZZARD', 'SNOW', 'SNOWLIGHT', 'XMAS'];
-const WarmClothCategory = [
-    4, //'Manteaux',
-    5, //'Sweats & Hoodies',
-    6, //'Costumes',
-    9, //'Pulls',
-    10, //'Deguisements',
-    11, //'Gilets',
-    12, //'Vestes',
-    16, //'Pantalons',
-    19, //'Jeans',
-    20, //'Déguisements'
-    28, //'Bottes/Bottines'
-    29, //'Baskets'
-    30, //'Chaussures plates'
-    31, //'Déguisements'
-    32, //'Hiver'
-    63, //'Déguisements'
-    64, //'Pulls'
-    35, //'Bandana'
-    37, //'Intégral'
-    38, //'Costume'
-    39, //'Cagoule'
-];
-
-const ColdClothCategory = [
-    21, //'Sous-vêtements',
-    24, //'Maillots de bain',
-];
 
 const ExtraWarnCloths: Record<number, Outfit[]> = {
     [joaat('mp_m_freemode_01')]: [
@@ -113,11 +87,13 @@ export class PlayerSnowProvider {
     @Inject(ClothingService)
     public clothingService: ClothingService;
 
+    @Inject(HudWeatherIconProvider)
+    public hudWeatherIconProvider: HudWeatherIconProvider;
+
     private lastSlipDate = 0;
     private cold = false;
     private coldProtected = false;
     private blizzardProtected = false;
-    private nuiReady = false;
     private frozenDeath = false;
 
     @Tick(TickInterval.EVERY_MINUTE)
@@ -160,6 +136,10 @@ export class PlayerSnowProvider {
 
     @On('soz-character:Client:Cloth:Applied')
     async onClothUpdate(outfit: Outfit): Promise<void> {
+        if (isFeatureEnabled(Feature.SummerHeat)) {
+            return;
+        }
+
         const player = this.playerService.getPlayer();
         if (!player) {
             return;
@@ -253,16 +233,13 @@ export class PlayerSnowProvider {
         this.blizzardProtected = this.blizzardProtected && coldScore >= 5;
     }
 
-    @Once(OnceStep.NuiLoaded)
-    public nuiloaded() {
-        this.nuiReady = true;
-    }
-
     private setCold(cold: boolean) {
-        if (this.cold != cold && this.nuiReady) {
-            this.nuiDispatch.dispatch('cold', 'cold', cold);
-            this.cold = cold;
+        if (cold) {
+            this.hudWeatherIconProvider.add('snowflake');
+        } else {
+            this.hudWeatherIconProvider.remove('snowflake');
         }
+        this.cold = cold;
     }
 
     @Tick(TickInterval.EVERY_SECOND)

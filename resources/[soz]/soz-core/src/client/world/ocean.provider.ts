@@ -1,9 +1,10 @@
-import { Command } from '@public/core/decorators/command';
 import { Once, OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Tick } from '@public/core/decorators/tick';
+import { emitRpc } from '@public/core/rpc';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import { NumberValidator } from '@public/shared/nui/input';
+import { RpcServerEvent } from '@public/shared/rpc';
 
 import { Provider } from '../../core/decorators/provider';
 import { InputService } from '../nui/input.service';
@@ -16,15 +17,15 @@ export class OceanProvider {
 
     private targetLevel = 0;
     private currentLevel = 0;
-    private debug = false;
+    private playerUpdatingServer = 0;
     private highWave = false;
     private configLoaded: number = null;
 
     @Once()
-    public init() {
-        WaterOverrideSetShorewaveamplitude(1.8);
-        WaterOverrideSetShorewaveminamplitude(2.0);
-        WaterOverrideSetShorewavemaxamplitude(1.5);
+    public async init() {
+        WaterOverrideSetShorewaveamplitude(3 * 1.8);
+        WaterOverrideSetShorewaveminamplitude(3 * 2.0);
+        WaterOverrideSetShorewavemaxamplitude(3 * 1.5);
 
         WaterOverrideSetOceannoiseminamplitude(20.55);
         WaterOverrideSetOceanwaveamplitude(2.03);
@@ -35,24 +36,25 @@ export class OceanProvider {
         WaterOverrideSetRippleminbumpiness(0.25);
         WaterOverrideSetRipplemaxbumpiness(0.5);
         WaterOverrideSetRippledisturb(0.05);
+
+        const data = await emitRpc<[number, number, boolean]>(RpcServerEvent.ADMIN_OCEAN);
+        this.currentLevel = data[0];
+        this.flood(data[1], 0);
+        this.setWaterQuadsLevel();
+        this.setHighWave(data[2]);
     }
 
     @OnEvent(ClientEvent.OCEAN_WATER_LEVEL)
-    public async flood(targetLevel: number) {
+    public async flood(targetLevel: number, playerUpdatingServer: number) {
         this.targetLevel = targetLevel;
+        this.playerUpdatingServer = playerUpdatingServer;
     }
 
     @Tick(100)
     public waterLevelLoop() {
-        if (this.debug) {
-            return;
-        }
-
         if (this.currentLevel == this.targetLevel) {
             return;
         }
-
-        const waterQuadCount = GetWaterQuadCount();
 
         if (this.currentLevel > this.targetLevel) {
             this.currentLevel = Math.max(this.targetLevel, this.currentLevel - increaseRate);
@@ -60,6 +62,15 @@ export class OceanProvider {
             this.currentLevel = Math.min(this.targetLevel, this.currentLevel + increaseRate);
         }
 
+        if (GetPlayerServerId(PlayerId()) == this.playerUpdatingServer) {
+            TriggerServerEvent(ServerEvent.ADMIN_OCEAN_WATER_CURRENT_LEVEL, this.currentLevel);
+        }
+
+        this.setWaterQuadsLevel();
+    }
+
+    private setWaterQuadsLevel() {
+        const waterQuadCount = GetWaterQuadCount();
         const currentLevelRouned = Math.round(this.currentLevel);
         if (this.currentLevel > 0 && this.configLoaded != currentLevelRouned) {
             LoadWaterFromPath('soz-mapdata', 'water/water' + currentLevelRouned + '.xml');
@@ -78,6 +89,7 @@ export class OceanProvider {
 
         for (let i = 0; i < waterQuadCount; i++) {
             const [, z] = GetWaterQuadLevel(i);
+            //Do not update Quad levels in altitude
             if (Math.abs(z - 30) > 0.1 && Math.abs(z - 160.339) > 0.1 && Math.abs(z - 196.41) > 0.1) {
                 SetWaterQuadLevel(i, this.currentLevel);
             }
@@ -106,30 +118,6 @@ export class OceanProvider {
         TriggerServerEvent(ServerEvent.ADMIN_OCEAN_WATER_LEVEL, level);
     }
 
-    @OnNuiEvent(NuiEvent.AdminMenuOceanSetWaterDebugLevel)
-    public async setWaterLevelDebug(): Promise<void> {
-        let level = await this.inputService.askInput(
-            {
-                title: "Hauteur de l'eau (Debug)",
-                defaultValue: this.targetLevel.toString(),
-            },
-            NumberValidator
-        );
-
-        this.debug = true;
-        if (!level) {
-            this.debug = false;
-            level = this.targetLevel;
-            return;
-        }
-
-        const waterQuadCount = GetWaterQuadCount();
-
-        for (let i = 1; i <= waterQuadCount; i++) {
-            SetWaterQuadLevel(i, level);
-        }
-    }
-
     @OnNuiEvent(NuiEvent.AdminMenuOceanGetWaterLevel)
     public async getWaterLevel(): Promise<[number, number]> {
         return [this.currentLevel, this.targetLevel];
@@ -137,7 +125,6 @@ export class OceanProvider {
 
     @OnEvent(ClientEvent.OCEAN_WATER_HIGH_WAVE)
     public setHighWave(value: boolean) {
-        console.log('ADMIN_OCEAN_WATER_HIGH_WAVE', value);
         if (this.highWave == value) {
             return;
         }
@@ -148,15 +135,6 @@ export class OceanProvider {
             WaterOverrideFadeOut(10);
         }
         this.highWave = value;
-    }
-
-    @Command('deep')
-    deep(source, valueStr: string) {
-        console.log(GetWaterQuadBounds(0));
-        console.log(GetWaterQuadBounds(GetWaterQuadCount()));
-        const value = parseFloat(valueStr);
-        console.log(valueStr);
-        SetDeepOceanScaler(value);
     }
 
     public isHighWaves() {
