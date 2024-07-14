@@ -10,6 +10,7 @@ import { VehicleConfiguration } from '../../shared/vehicle/modification';
 import { VehicleCondition, VehicleVolatileState } from '../../shared/vehicle/vehicle';
 import { PlayerService } from '../player/player.service';
 import { Qbcore } from '../qbcore';
+import { BlurService } from '../utils/blur.service';
 import { VehicleModificationService } from './vehicle.modification.service';
 
 type ClosestVehicleConfig = {
@@ -274,6 +275,9 @@ export class VehicleService {
     @Inject(Logger)
     private logger: Logger;
 
+    @Inject(BlurService)
+    private blurService: BlurService;
+
     public async getVehicleOwnership(vehicle: number, vehicleNetworkId: number, context: string): Promise<boolean> {
         let tryCount = 0;
 
@@ -524,21 +528,15 @@ export class VehicleService {
         return players;
     }
 
-    public onBlur(duration: number) {
-        const blurAction = async () => {
-            SetGameplayCamShakeAmplitude(2.0);
-            TriggerScreenblurFadeIn(500);
-            await wait(duration);
-            TriggerScreenblurFadeOut(1000);
-            for (let u = 0; u < 100; u++) {
-                await wait(10);
-                SetGameplayCamShakeAmplitude((2.0 * (100 - u)) / 100);
-            }
-            SetGameplayCamShakeAmplitude(0.0);
-        };
-
-        if (GetScreenblurFadeCurrentTime() == 0) {
-            blurAction();
+    public async onBlur(duration: number) {
+        SetGameplayCamShakeAmplitude(2.0);
+        this.blurService.add('accident', 500);
+        await wait(duration);
+        this.blurService.remove('accident', 1000);
+        for (let u = 0; u < 100; u++) {
+            await wait(10);
+            SetGameplayCamShakeAmplitude((2.0 * (100 - u)) / 100);
         }
+        SetGameplayCamShakeAmplitude(0.0);
     }
 }

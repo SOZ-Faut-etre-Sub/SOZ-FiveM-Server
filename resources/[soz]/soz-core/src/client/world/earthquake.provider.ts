@@ -19,27 +19,34 @@ export class EarthquakeProvider {
 
     private async shakeCam() {
         for (let i = 0; i < 10; i++) {
-            ShakeGameplayCam('MEDIUM_EXPLOSION_SHAKE', 0.5);
+            ShakeGameplayCam('SMALL_EXPLOSION_SHAKE', 0.4);
             await wait(500);
         }
-        for (let i = 0; i < 5; i++) {
-            ShakeGameplayCam('MEDIUM_EXPLOSION_SHAKE', 0.5 - 0.1 * i);
+        for (let i = 0; i <= 5; i++) {
+            ShakeGameplayCam('SMALL_EXPLOSION_SHAKE', 0.4 - 0.08 * i);
             await wait(500);
         }
-        ShakeGameplayCam('MEDIUM_EXPLOSION_SHAKE', 0.0);
     }
 
     @OnEvent(ClientEvent.EARTHQUAKE)
     public async earthquake() {
         this.soundService.play('earthquake/earthquake', 0.5);
-        await wait(2000);
+        await wait(1000);
 
+        const peds = GetGamePool('CPed');
         const cars = GetGamePool('CVehicle');
         const objs = GetGamePool('CObject');
+
+        const playerPed = PlayerPedId();
+        for (const ped of peds) {
+            if (NetworkHasControlOfEntity(ped) && !IsPedAPlayer(ped)) {
+                TaskReactAndFleePed(ped, playerPed);
+            }
+        }
         for (const obj of objs) {
             if (!NetworkGetEntityIsNetworked(obj)) {
                 BreakObjectFragmentChild(obj, 0, false);
-                ApplyForceToEntityCenterOfMass(obj, 1, 0, 0.0, 10.0, false, false, true, false);
+                ApplyForceToEntityCenterOfMass(obj, 1, 0, 0.0, 5.0, false, false, true, false);
             }
         }
         for (const veh of cars) {
@@ -50,12 +57,13 @@ export class EarthquakeProvider {
                 } else {
                     const driver = GetPedInVehicleSeat(veh, VehicleSeat.Driver);
                     if (driver && !IsPedAPlayer(driver)) {
-                        SetVehicleOutOfControl(veh, true, false);
+                        SetVehicleOutOfControl(veh, false, false);
                     }
                 }
             }
         }
         this.shakeCam();
+        this.shakeVehs(cars, 5000);
 
         for (let i = 0; i < 50; i++) {
             await wait(100);
@@ -73,6 +81,19 @@ export class EarthquakeProvider {
                         true,
                         false
                     );
+                }
+            }
+        }
+    }
+
+    private async shakeVehs(cars: number[], duration) {
+        const waitTime = 300;
+        for (let i = 0; i < duration / waitTime; i++) {
+            await wait(waitTime);
+            const force = 3 * (i % 2 == 0 ? 1 : -1);
+            for (const veh of cars) {
+                if (NetworkGetEntityIsNetworked(veh) && NetworkHasControlOfEntity(veh)) {
+                    ApplyForceToEntity(veh, 1, force, 0, 0, 0, 0, 0, 1, true, true, true, false, false);
                 }
             }
         }

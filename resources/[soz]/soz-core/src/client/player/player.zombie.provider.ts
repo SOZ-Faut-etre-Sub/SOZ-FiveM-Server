@@ -15,6 +15,7 @@ import { Notifier } from '../notifier';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { SkinService } from '../skin/skin.service';
 import { TargetFactory } from '../target/target.factory';
+import { BlurService } from '../utils/blur.service';
 import { PlayerWalkstyleProvider } from './player.walkstyle.provider';
 
 const ZOMBIE_SCREEN_EFFECT = 'SwitchOpenTrevorIn';
@@ -36,6 +37,9 @@ export class PlayerZombieProvider {
 
     @Inject(Notifier)
     private readonly notifier: Notifier;
+
+    @Inject(BlurService)
+    private readonly blurService: BlurService;
 
     @Inject(PhoneService)
     private readonly phoneService: PhoneService;
@@ -195,11 +199,7 @@ export class PlayerZombieProvider {
                 return;
             }
 
-            if (IsScreenblurFadeRunning()) {
-                DisableScreenblurFade();
-            }
-
-            TriggerScreenblurFadeOut(1000);
+            this.blurService.remove(null, 1000);
 
             await this.zombieTransform();
 

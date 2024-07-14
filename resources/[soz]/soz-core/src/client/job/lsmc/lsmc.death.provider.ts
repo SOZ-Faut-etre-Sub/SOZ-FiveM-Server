@@ -15,6 +15,7 @@ import { PlayerService } from '@public/client/player/player.service';
 import { PlayerSnowProvider } from '@public/client/player/player.snow.provider';
 import { PlayerWalkstyleProvider } from '@public/client/player/player.walkstyle.provider';
 import { SoundService } from '@public/client/sound.service';
+import { BlurService } from '@public/client/utils/blur.service';
 import { VehicleSeatbeltProvider } from '@public/client/vehicle/vehicle.seatbelt.provider';
 import { WeaponDrawingProvider } from '@public/client/weapon/weapon.drawing.provider';
 import { OnEvent } from '@public/core/decorators/event';
@@ -197,6 +198,9 @@ export class LSMCDeathProvider {
     @Inject(PlayerHeatProvider)
     private playerHeatProvider: PlayerHeatProvider;
 
+    @Inject(BlurService)
+    private blurService: BlurService;
+
     private IsDead = false;
     private doFeeze = false;
     private hungerThristDeath = false;
@@ -252,7 +256,7 @@ export class LSMCDeathProvider {
                 return;
             }
 
-            TriggerScreenblurFadeIn(5);
+            this.blurService.add('dead', 5);
             StartScreenEffect('DeathFailOut', 0, true);
 
             const playerid = PlayerId();
@@ -431,9 +435,9 @@ export class LSMCDeathProvider {
             }
         }
 
+        this.blurService.remove('dead', 1000);
         if (rpDeath) {
             this.IsDead = true;
-            TriggerScreenblurFadeOut(1000);
         } else {
             this.notifier.notify('Vous êtes réanimé!');
             await this.voipService.mutePlayer(false);

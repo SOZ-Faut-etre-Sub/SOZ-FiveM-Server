@@ -18,6 +18,7 @@ import { HudWeatherIconProvider } from '../hud/hud.weathericon.provider';
 import { Notifier } from '../notifier';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { Store } from '../store/store';
+import { BlurService } from '../utils/blur.service';
 import { PlayerService } from './player.service';
 
 const ExtraWarnCloths: Record<number, Outfit[]> = {
@@ -73,6 +74,9 @@ export class PlayerHeatProvider {
 
     @Inject(HudWeatherIconProvider)
     public hudWeatherIconProvider: HudWeatherIconProvider;
+
+    @Inject(BlurService)
+    public blurService: BlurService;
 
     private heatDeath = false;
     private damage = false;
@@ -178,6 +182,7 @@ export class PlayerHeatProvider {
         if (weather == 'BLIZZARD') {
             this.hudWeatherIconProvider.remove('heat');
             this.heat = false;
+            this.blurService.remove('heat', 1000);
             if (!this.sandStormProtected) {
                 this.damage = true;
                 if (!this.sandstorm) {
@@ -202,9 +207,11 @@ export class PlayerHeatProvider {
                 }
                 this.hudWeatherIconProvider.add('heat');
                 this.heat = true;
+                this.blurService.add('heat', 1000);
             } else {
                 this.hudWeatherIconProvider.remove('heat');
                 this.heat = false;
+                this.blurService.remove('heat', 1000);
             }
         }
     }

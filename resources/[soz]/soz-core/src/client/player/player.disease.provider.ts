@@ -10,6 +10,7 @@ import { PollutionLevel } from '../../shared/pollution';
 import { AnimationService } from '../animation/animation.service';
 import { Notifier } from '../notifier';
 import { Pollution } from '../pollution';
+import { BlurService } from '../utils/blur.service';
 import { PlayerService } from './player.service';
 
 const DISEASE_RANGE: Record<PollutionLevel, number> = {
@@ -32,6 +33,9 @@ export class PlayerDiseaseProvider {
     @Inject(Pollution)
     private pollution: Pollution;
 
+    @Inject(BlurService)
+    private blurService: BlurService;
+
     private currentDisease: Disease = false;
 
     private currentDiseaseLoop: Promise<void> | null = null;
@@ -52,7 +56,7 @@ export class PlayerDiseaseProvider {
 
     private async commonColdLoop(): Promise<void> {
         while (this.currentDisease === 'rhume') {
-            TriggerScreenblurFadeIn(100);
+            this.blurService.add('rhume', 100);
 
             await this.animationService.playAnimation(
                 {
@@ -71,7 +75,7 @@ export class PlayerDiseaseProvider {
                 }
             );
 
-            TriggerScreenblurFadeOut(100);
+            this.blurService.remove('rhume', 100);
 
             await wait(1000 * 10);
         }
@@ -133,7 +137,8 @@ export class PlayerDiseaseProvider {
     @OnEvent(ClientEvent.LSMC_DISEASE_APPLY_CURRENT_EFFECT)
     public applyCurrentDiseaseEffect(disease: Disease) {
         if (!disease) {
-            TriggerScreenblurFadeOut(120);
+            this.blurService.remove('grippe', 120);
+            this.blurService.remove('rhume', 120);
             ClearPedTasks(PlayerPedId());
 
             this.currentDisease = false;
@@ -154,7 +159,7 @@ export class PlayerDiseaseProvider {
         }
 
         if (disease === 'grippe') {
-            TriggerScreenblurFadeIn(100);
+            this.blurService.add('grippe', 100);
 
             this.notifier.notify('Vous avez la grippe.');
             this.currentDiseaseLoop = this.fluLoop();

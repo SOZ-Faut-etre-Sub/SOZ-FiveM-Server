@@ -18,6 +18,7 @@ import { LSMCDeathProvider } from '../job/lsmc/lsmc.death.provider';
 import { Notifier } from '../notifier';
 import { ProgressService } from '../progress.service';
 import { ZoneRepository } from '../repository/zone.repository';
+import { BlurService } from '../utils/blur.service';
 import { PlayerService } from './player.service';
 import { PlayerWalkstyleProvider } from './player.walkstyle.provider';
 import { PlayerZombieProvider } from './player.zombie.provider';
@@ -86,6 +87,9 @@ export class PlayerStressProvider {
 
     @Inject(PlayerZombieProvider)
     private playerZombieProvider: PlayerZombieProvider;
+
+    @Inject(BlurService)
+    private blurService: BlurService;
 
     private isStressUpdated = false;
     private wasDead = false;
@@ -369,15 +373,9 @@ export class PlayerStressProvider {
             return;
         }
 
-        const blurAction = async () => {
-            TriggerScreenblurFadeIn(500);
-            await wait(2000);
-            TriggerScreenblurFadeOut(500);
-        };
-
-        if (GetScreenblurFadeCurrentTime() == 0) {
-            blurAction();
-        }
+        this.blurService.add('stress', 500);
+        await wait(2000);
+        this.blurService.remove('stress', 500);
 
         if (player.metadata.stress_level <= 60) {
             await wait(1000 * 60 * 5);
