@@ -340,6 +340,7 @@ export const Notifications: FunctionComponent = () => {
                     height: `calc((100vh * ${minimap.height}) * 4)`,
                     width: `calc(100vw * ${minimap.width})`,
                     zIndex: 20,
+                    pointerEvents: `none`,
                 }}
             >
                 {notifications.map(
