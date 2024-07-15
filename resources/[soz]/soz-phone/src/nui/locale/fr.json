@@ -154,17 +154,13 @@
         },
         "MESSAGES": {
             "MESSAGES": {
-                "MESSAGE_CONVERSATION_CREATE_ALL_NUMBERS_FAILED": "Aucun des numéros n'ont été trouvés!",
-                "UNREAD_MESSAGES": "Vous avez {{ count }} message(s) non lu(s)",
-                "MESSAGE_GROUP_CREATE_SOME_NUMBERS_FAILED": "({{ numbers }}) ne sont pas attribués."
+                "UNREAD_MESSAGES": "Vous avez {{ count }} message(s) non lu(s)"
             },
             "FEEDBACK": {
-                "CONVERSATION_CREATE_ONE_NUMBER_FAILED": "{{ number }} n'est pas un numéro attribués",
+                "CONVERSATION_CREATE_ONE_NUMBER_FAILED": "{{ number }} n'est pas un numéro attribué",
                 "NEW_MESSAGE_FAILED": "Erreur d'envoi",
                 "INVALID_PHONE_NUMBER": "Numéro de téléphone invalide",
                 "MESSAGE_CONVERSATION_DUPLICATE": "Cette conversation existe déjà!",
-                "MESSAGE_GROUP_CREATE_FAILED": "Erreur lors de la création du groupe",
-                "MESSAGE_GROUP_CREATE_MINE": "Vous ne pouvez pas vous ajouter vous-même !",
                 "FETCHED_MESSAGES_FAILED": "Impossible de retrouver les messages",
                 "DELETE_CONVERSATION_FAILED": "Impossible de supprimer la conversation"
             },
