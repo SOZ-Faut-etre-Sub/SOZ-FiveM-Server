@@ -4,13 +4,40 @@ import React from 'react';
 
 import { useEmergency } from '../../../../nui/hooks/useEmergency';
 import { useNotifications } from '../hooks/useNotifications';
+import { MessageEvents } from '@typings/messages';
+import { fetchNui } from '@utils/fetchNui';
+
+const getAddress = async (input: string) => {
+    const position = /vec3\((-?[0-9.]+),(-?[0-9.]+),(-?[0-9.]+)\)/g.exec(input);
+    const street_name = await fetchNui(MessageEvents.GET_STREET_NAME, {
+        x: position[1],
+        y: position[2],
+        z: position[3],
+    });
+    return street_name.data;
+};
 
 export const NotificationAlert = () => {
     const { currentAlert } = useNotifications();
     const emergency = useEmergency();
-
+    const [address, setAddress] = React.useState('');
     // TODO: improve notification hook
-    const isPosition = /vec2\((-?[\d.]+),(-?[\d.]+)\)/g.test(currentAlert?.content.toString());
+    const isOldPosition = /vec2\((-?[\d.]+),(-?[\d.]+)\)/g.test(currentAlert?.content.toString());
+    const isPosition = /vec3\((-?[\d.]+),(-?[\d.]+),(-?[\d.]+)\)/g.test(currentAlert?.content.toString());
+    React.useEffect(() => {
+        const getAddressAsync = async () => {
+            try {
+                const address = await getAddress(currentAlert?.content.toString());
+                setAddress(address);
+            } catch (error) {
+                console.error(error);
+                setAddress('Destination');
+            }
+        };
+        if (isPosition) {
+            getAddressAsync();
+        }
+    }, [currentAlert?.content.toString()]);
 
     if (!currentAlert || emergency) {
         return null;
@@ -28,8 +55,8 @@ export const NotificationAlert = () => {
             leaveFrom="translate-y-0"
             leaveTo="-translate-y-full"
         >
-            <Alert onClick={e => currentAlert?.onClickAlert(e)} icon={currentAlert?.notificationIcon || undefined}>
-                {isPosition ? 'Destination' : currentAlert?.content}
+            <Alert onClick={(e) => currentAlert?.onClickAlert(e)} icon={currentAlert?.notificationIcon || undefined}>
+                {isPosition ? address : isOldPosition ? 'Destination' : currentAlert?.content}
             </Alert>
         </Transition>
     );

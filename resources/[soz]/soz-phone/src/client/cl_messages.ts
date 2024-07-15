@@ -29,17 +29,27 @@ RegisterNuiCB<void>(MessageEvents.DELETE_WAYPOINT, async (any, cb) => {
 });
 
 RegisterNuiCB<void>(MessageEvents.GET_POSITION, async (position: any, cb) => {
-    const [posX, posY] = GetEntityCoords(PlayerPedId(), true);
-    cb({ data: { x: posX, y: posY } });
+    const [posX, posY, posZ] = GetEntityCoords(PlayerPedId(), true);
+    cb({ data: { x: posX, y: posY, z: posZ } });
 });
 
 RegisterNuiCB<void>(MessageEvents.GET_DESTINATION, async (position: any, cb) => {
-    const [posX, posY] = GetBlipInfoIdCoord(GetFirstBlipInfoId(8));
-    cb({ data: { x: posX, y: posY } });
+    const [posX, posY, posZ] = GetBlipInfoIdCoord(GetFirstBlipInfoId(8));
+    cb({ data: { x: posX, y: posY, z: posZ } });
 });
 
 RegisterNuiCB<void>(SocietyEvents.SEND_CLIENT_POLICE_NOTIFICATION, async (message: any, cb) => {
     cb(exports['soz-core'].SendPoliceNotification(message));
+});
+
+RegisterNuiCB<void>(MessageEvents.GET_STREET_NAME, async (position: any, cb) => {
+    const [streetA, streetB] = GetStreetNameAtCoord(Number(position.x), Number(position.y), Number(position.z));
+    var street = `${GetStreetNameFromHashKey(streetA)}`;
+
+    if (streetB && streetA !== streetB) {
+        street += ` & ${GetStreetNameFromHashKey(streetB)}`;
+    }
+    cb({ data: street });
 });
 
 onNet(MessageEvents.SEND_MESSAGE_SUCCESS, (messageDto: PreDBMessage) => {

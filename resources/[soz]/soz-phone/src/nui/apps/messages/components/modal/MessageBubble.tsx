@@ -15,12 +15,26 @@ import { setClipboard } from '../../../../os/phone/hooks/useClipboard';
 import Emoji from '../../../../ui/components/Emoji';
 import { Button } from '../../../../ui/old_components/Button';
 
-const isImage = url => {
+const isImage = (url) => {
     return /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png|jpeg|gif)/g.test(url);
 };
 
-const isPosition = url => {
+const isOldPosition = (url) => {
     return /vec2\((-?[0-9.]+),(-?[0-9.]+)\)/g.test(url);
+};
+
+const isPosition = (url) => {
+    return /vec3\((-?[0-9.]+),(-?[0-9.]+),(-?[0-9.]+)\)/g.test(url);
+};
+
+const getAddress = async (input: string) => {
+    const position = /vec3\((-?[0-9.]+),(-?[0-9.]+),(-?[0-9.]+)\)/g.exec(input);
+    const street_name = await fetchNui(MessageEvents.GET_STREET_NAME, {
+        x: position[1],
+        y: position[2],
+        z: position[3],
+    });
+    return street_name.data;
 };
 
 interface MessageBubbleProps {
@@ -30,15 +44,30 @@ interface MessageBubbleProps {
 export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
     const config = useConfig();
     const myNumber = usePhoneNumber();
-
+    const [address, setAddress] = React.useState('');
     const setWaypoint = () => {
-        const position = /vec2\((-?[0-9.]+),(-?[0-9.]+)\)/g.exec(message.message);
+        const position = /vec3\((-?[0-9.]+),(-?[0-9.]+),(-?[0-9.]+)\)/g.exec(message.message);
+        const oldPosition = /vec2\((-?[0-9.]+),(-?[0-9.]+)\)/g.exec(message.message);
 
         fetchNui<ServerPromiseResp<void>>(MessageEvents.SET_WAYPOINT, {
-            x: position[1],
-            y: position[2],
+            x: position ? position[1] : oldPosition[1],
+            y: position ? position[2] : oldPosition[2],
         });
     };
+    React.useEffect(() => {
+        const getAddressAsync = async () => {
+            try {
+                const address = await getAddress(message.message);
+                setAddress(address);
+            } catch (error) {
+                console.error(error);
+                setAddress('Destination');
+            }
+        };
+        if (isPosition(message.message)) {
+            getAddressAsync();
+        }
+    }, [message.message]);
 
     const isMine = message.author === myNumber;
 
@@ -64,10 +93,15 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
                 )}
                 {isPosition(message.message) && (
                     <span className="flex items-center cursor-pointer" onClick={setWaypoint}>
+                        <LocationMarkerIcon className="h-5 w-5 mr-2" /> {address}
+                    </span>
+                )}
+                {isOldPosition(message.message) && (
+                    <span className="flex items-center cursor-pointer" onClick={setWaypoint}>
                         <LocationMarkerIcon className="h-5 w-5 mr-2" /> Destination
                     </span>
                 )}
-                {!isImage(message.message) && !isPosition(message.message) && (
+                {!isImage(message.message) && !isPosition(message.message) && !isOldPosition(message.message) && (
                     <Menu.Button className="left-0 h-full w-full text-left">
                         <p
                             className={cn('break-words text-ellipsis w-full select-text whitespace-pre-wrap', {
