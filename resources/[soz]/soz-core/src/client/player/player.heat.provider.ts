@@ -40,8 +40,8 @@ const maskEyesProtected = [
     9, 10, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28, 29, 31, 33, 38, 39, 40, 41, 42, 43, 44, 45, 46, 59, 60, 61, 63,
     64, 65, 66, 67, 68, 70, 71, 72, 74, 75, 79, 80, 81, 82, 83, 84, 87, 89, 91, 92, 93, 94, 97, 98, 100, 102, 103, 105,
     106, 108, 110, 123, 125, 129, 130, 131, 132, 134, 135, 136, 137, 138, 139, 140, 141, 143, 144, 146, 147, 149, 150,
-    151, 152, 153, 154, 155, 156, 157, 158, 159, 162, 163, 166, 175, 177, 179, 180, 181, 182, 183, 184, 189, 193, 194,
-    195, 196, 197, 198, 201, 202, 203, 205, 206, 208, 210, 214, 215, 223, 225, 229, 236,
+    151, 152, 153, 154, 155, 156, 157, 158, 159, 162, 163, 175, 177, 179, 180, 181, 182, 183, 184, 189, 193, 194, 195,
+    196, 197, 198, 201, 202, 203, 205, 206, 208, 210, 214, 215, 223, 225, 229, 236,
 ];
 
 const maskMouthNotProtected = [0, 11, 12, 27, 32, 37, 47, 57, 58, 73, 77, 109, 114, 117, 119, 120, 121, 122, 145, 148];
@@ -106,7 +106,7 @@ export class PlayerHeatProvider {
 
         this.heatScore = 0;
 
-        [Component.Tops, Component.Legs, Component.Shoes].forEach(component => {
+        [Component.Tops, Component.Legs, Component.Shoes, Component.Mask].forEach(component => {
             if (data[component] == null) {
                 const extra = ExtraWarnCloths[player.skin.Model.Hash].find(
                     item =>
@@ -117,22 +117,18 @@ export class PlayerHeatProvider {
                 if (extra) {
                     this.heatScore++;
                 }
-            }
-        });
-
-        for (const cat of Object.values(data)) {
-            if (WarmClothCategory.includes(cat)) {
+            } else if (WarmClothCategory.includes(data[component])) {
                 this.heatScore++;
             }
-        }
+        });
 
         if (this.clothingService.checkWearingGloves()) {
             this.heatScore++;
         }
 
         const jewels = player.skin.Model.Hash == PlayerPedHash.Male ? MaleJewelryItems : FemaleJewelryItems;
-        const helmetJewels = jewels['Casques'];
-        const helmets = Object.keys(helmetJewels.items['Casques']).map(item => Number(item));
+        const helmetJewels = jewels['Chapeaux'];
+        const helmets = Object.keys(helmetJewels.items['Bonnets']).map(item => Number(item));
         const headProtected = helmets.includes(outfit.Props[helmetJewels.propId]?.Drawable);
         if (headProtected) {
             this.heatScore++;
@@ -166,6 +162,7 @@ export class PlayerHeatProvider {
             this.heat = false;
             this.hudWeatherIconProvider.remove('sandstorm');
             this.sandstorm = false;
+            this.blurService.remove('heat', 1000);
             return;
         }
 
@@ -175,6 +172,7 @@ export class PlayerHeatProvider {
             this.heat = false;
             this.hudWeatherIconProvider.remove('sandstorm');
             this.sandstorm = false;
+            this.blurService.remove('heat', 1000);
             return;
         }
 

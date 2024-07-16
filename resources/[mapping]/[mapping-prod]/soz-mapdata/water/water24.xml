@@ -2,9 +2,9 @@
 <WaterData>
   <WaterQuads>
     <Item>
-      <minX value="-12000" />
-      <maxX value="12000" />
-      <minY value="-12000" />
+      <minX value="-4000" />
+      <maxX value="4500" />
+      <minY value="-4000" />
       <maxY value="-114" />
       <Type value="0" />
       <IsInvisible value="false" />
@@ -18,7 +18,7 @@
       <NoStencil value="false" />
     </Item>
     <Item>
-      <minX value="-12000" />
+      <minX value="-4000" />
       <maxX value="-384" />
       <minY value="-114" />
       <maxY value="988" />
@@ -50,8 +50,8 @@
       <NoStencil value="false" />
     </Item>
     <Item>
-      <minX value="2088" />
-      <maxX value="12000" />
+      <minX value="2089" />
+      <maxX value="4500" />
       <minY value="-114" />
       <maxY value="988" />
       <Type value="0" />
@@ -66,8 +66,8 @@
       <NoStencil value="false" />
     </Item>
     <Item>
-      <minX value="-12000" />
-      <maxX value="12000" />
+      <minX value="-4000" />
+      <maxX value="4500" />
       <minY value="988" />
       <maxY value="3428" />
       <Type value="0" />
@@ -82,7 +82,7 @@
       <NoStencil value="false" />
     </Item>
     <Item>
-      <minX value="-12000" />
+      <minX value="-4000" />
       <maxX value="-396" />
       <minY value="3428" />
       <maxY value="4676" />
@@ -98,7 +98,7 @@
       <NoStencil value="false" />
     </Item>
     <Item>
-      <minX value="-12000" />
+      <minX value="-4000" />
       <maxX value="-396" />
       <minY value="2432" />
       <maxY value="12000" />
@@ -114,8 +114,8 @@
       <NoStencil value="false" />
     </Item>
     <Item>
-      <minX value="-12000" />
-      <maxX value="12000" />
+      <minX value="-4000" />
+      <maxX value="4500" />
       <minY value="4676" />
       <maxY value="12000" />
       <Type value="0" />

@@ -244,6 +244,10 @@ export class PlayerSnowProvider {
 
     @Tick(TickInterval.EVERY_SECOND)
     public onColdCheckTick() {
+        if (isFeatureEnabled(Feature.SummerHeat)) {
+            return;
+        }
+
         const player = this.playerService.getPlayer();
         if (!player) {
             return;

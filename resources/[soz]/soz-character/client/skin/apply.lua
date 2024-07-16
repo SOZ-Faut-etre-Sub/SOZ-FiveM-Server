@@ -231,7 +231,7 @@ function ClothConfigComputeToClothSet(clothConfig)
 
         clothSet = MergeClothSet(clothSet, override)
     elseif clothConfig.Config.HideHead then
-        local override = {Props = {[PropType.Head] = {Clear = true}}}
+        local override = {Props = {[PropType.Head] = {Clear = true}, [PropType.Helmet] = {Clear = true}}}
 
         clothSet = MergeClothSet(clothSet, override)
     else

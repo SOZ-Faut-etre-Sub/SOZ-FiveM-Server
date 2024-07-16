@@ -17,9 +17,11 @@ export class OceanProvider {
 
     private targetLevel = 0;
     private currentLevel = 0;
+    private reload = true;
     private playerUpdatingServer = 0;
     private highWave = false;
     private configLoaded: number = null;
+    private dryVolume = null;
 
     @Once()
     public async init() {
@@ -40,6 +42,7 @@ export class OceanProvider {
         const data = await emitRpc<[number, number, boolean]>(RpcServerEvent.ADMIN_OCEAN);
         this.currentLevel = data[0];
         this.flood(data[1], 0);
+        this.reload = true;
         this.setWaterQuadsLevel();
         this.setHighWave(data[2]);
     }
@@ -52,9 +55,10 @@ export class OceanProvider {
 
     @Tick(100)
     public waterLevelLoop() {
-        if (this.currentLevel == this.targetLevel) {
+        if (this.currentLevel == this.targetLevel && !this.reload) {
             return;
         }
+        this.reload = false;
 
         if (this.currentLevel > this.targetLevel) {
             this.currentLevel = Math.max(this.targetLevel, this.currentLevel - increaseRate);
@@ -72,7 +76,7 @@ export class OceanProvider {
     private setWaterQuadsLevel() {
         const waterQuadCount = GetWaterQuadCount();
         const currentLevelRouned = Math.round(this.currentLevel);
-        if (this.currentLevel > 0 && this.configLoaded != currentLevelRouned) {
+        if (this.currentLevel > 0 && currentLevelRouned <= 300 && this.configLoaded != currentLevelRouned) {
             LoadWaterFromPath('soz-mapdata', 'water/water' + currentLevelRouned + '.xml');
             this.configLoaded = currentLevelRouned;
         } else if (currentLevelRouned > 300 && this.configLoaded != 300) {
@@ -85,6 +89,13 @@ export class OceanProvider {
             ResetWater();
             this.configLoaded = null;
             return;
+        }
+
+        if (this.dryVolume) {
+            RemoveDryVolume(this.dryVolume);
+        }
+        if (this.currentLevel > 0) {
+            this.dryVolume = CreateDryVolume(-4000, -4000, 0, 4500, 8000, this.currentLevel);
         }
 
         for (let i = 0; i < waterQuadCount; i++) {
