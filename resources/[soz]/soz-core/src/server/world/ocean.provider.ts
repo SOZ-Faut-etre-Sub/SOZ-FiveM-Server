@@ -16,7 +16,7 @@ export class OceanProvider {
     private waterLevel = 0;
     private highWave = false;
 
-    @Rpc(RpcServerEvent.ADMIN_OCEAN)
+    @Rpc(RpcServerEvent.METEOR_OCEAN)
     public async getOceanInfo() {
         return [this.waterCurrentLevel, this.waterLevel, this.highWave];
     }
@@ -31,13 +31,17 @@ export class OceanProvider {
     }
 
     @OnEvent(ServerEvent.ADMIN_OCEAN_WATER_LEVEL)
-    public async flood(source: number, targetLevel: number) {
+    public async flood(source: number, targetLevel: number, force: boolean) {
         if (!this.permissionService.isStaff(source)) {
             return;
         }
 
         this.waterLevel = targetLevel;
-        TriggerLatentClientEvent(ClientEvent.OCEAN_WATER_LEVEL, -1, 1024, this.waterLevel, source);
+        if (force) {
+            this.waterCurrentLevel = targetLevel;
+        }
+
+        TriggerLatentClientEvent(ClientEvent.OCEAN_WATER_LEVEL, -1, 1024, this.waterLevel, source, force);
     }
 
     @OnEvent(ServerEvent.ADMIN_OCEAN_WATER_HIGH_WAVE)

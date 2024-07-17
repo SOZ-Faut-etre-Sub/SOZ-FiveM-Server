@@ -94,6 +94,7 @@ export class ClothingShopRepository extends RepositoryLegacy<ClothingShopReposit
                     id: shopCategory.category_id,
                     name: shopCategory.category.name,
                     parentId: shopCategory.category.parent_id,
+                    warmScore: shopCategory.category.warm_score,
                 };
                 repository.shopNameById[shop.id] = shop.name;
                 repository.shops[shop.name] = clothingShop;
@@ -114,6 +115,7 @@ export class ClothingShopRepository extends RepositoryLegacy<ClothingShopReposit
                         name: category.name,
                         parentId: category.parent_id,
                         content: {},
+                        warmScore: category.warm_score,
                     };
                 }
             }

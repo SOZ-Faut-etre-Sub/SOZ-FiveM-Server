@@ -39,18 +39,22 @@ export class OceanProvider {
         WaterOverrideSetRipplemaxbumpiness(0.5);
         WaterOverrideSetRippledisturb(0.05);
 
-        const data = await emitRpc<[number, number, boolean]>(RpcServerEvent.ADMIN_OCEAN);
-        this.currentLevel = data[0];
-        this.flood(data[1], 0);
+        const data = await emitRpc<[number, number, boolean]>(RpcServerEvent.METEOR_OCEAN);
+        this.targetLevel = data[1];
         this.reload = true;
-        this.setWaterQuadsLevel();
+        this.currentLevel = data[0];
         this.setHighWave(data[2]);
     }
 
     @OnEvent(ClientEvent.OCEAN_WATER_LEVEL)
-    public async flood(targetLevel: number, playerUpdatingServer: number) {
+    public async flood(targetLevel: number, playerUpdatingServer: number, force: boolean) {
         this.targetLevel = targetLevel;
         this.playerUpdatingServer = playerUpdatingServer;
+
+        if (force) {
+            this.currentLevel = targetLevel;
+            this.reload = true;
+        }
     }
 
     @Tick(100)
@@ -113,7 +117,7 @@ export class OceanProvider {
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuOceanSetWaterLevel)
-    public async setWaterLevel(): Promise<void> {
+    public async setWaterLevel(force: boolean): Promise<void> {
         const level = await this.inputService.askInput(
             {
                 title: "Hauteur de l'eau",
@@ -126,7 +130,7 @@ export class OceanProvider {
             return;
         }
 
-        TriggerServerEvent(ServerEvent.ADMIN_OCEAN_WATER_LEVEL, level);
+        TriggerServerEvent(ServerEvent.ADMIN_OCEAN_WATER_LEVEL, level, force);
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuOceanGetWaterLevel)

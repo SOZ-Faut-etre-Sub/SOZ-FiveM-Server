@@ -5,4 +5,5 @@ export interface NuiMeteorMap {
     siren: number;
     chronos: number;
     music: number;
+    earthquake: boolean;
 }

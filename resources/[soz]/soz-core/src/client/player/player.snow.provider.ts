@@ -4,7 +4,7 @@ import { On } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { emitRpc } from '@public/core/rpc';
-import { ColdClothCategory, Component, Outfit, WarmClothCategory } from '@public/shared/cloth';
+import { Component, Outfit } from '@public/shared/cloth';
 import { Feature, isFeatureEnabled } from '@public/shared/features';
 import { joaat } from '@public/shared/joaat';
 import { JobType } from '@public/shared/job';
@@ -153,7 +153,7 @@ export class PlayerSnowProvider {
         }
 
         const data = await emitRpc<Partial<Record<Component, number>>>(
-            RpcServerEvent.CLOTHING_GET_CATEGORY,
+            RpcServerEvent.CLOTHING_GET_WARM_SCORE,
             outfit.Components
         );
         if (!data) {
@@ -175,14 +175,12 @@ export class PlayerSnowProvider {
             }
         });
 
-        for (const cat of Object.values(data)) {
-            if (WarmClothCategory.includes(cat)) {
-                coldScore++;
-            }
-            if (ColdClothCategory.includes(cat)) {
+        for (const score of Object.values(data)) {
+            if (score == 0) {
                 this.coldProtected = false;
                 return;
             }
+            coldScore + score;
         }
 
         if (this.clothingService.checkWearingGloves()) {
@@ -215,9 +213,7 @@ export class PlayerSnowProvider {
             bonnets.includes(outfit.Props[hatJewels.propId]?.Drawable) ||
             helmets.includes(outfit.Props[helmetJewels.propId]?.Drawable) ||
             !!hasCustomCagoule ||
-            data[Component.Mask] == 39 ||
-            data[Component.Mask] == 37 ||
-            data[Component.Mask] == 35;
+            data[Component.Mask] > 1;
         if (headProtected) {
             coldScore++;
         }
@@ -229,8 +225,8 @@ export class PlayerSnowProvider {
             this.blizzardProtected = false;
         }
 
-        this.coldProtected = coldScore >= 3;
-        this.blizzardProtected = this.blizzardProtected && coldScore >= 5;
+        this.coldProtected = coldScore >= 6;
+        this.blizzardProtected = this.blizzardProtected && coldScore >= 9;
     }
 
     private setCold(cold: boolean) {

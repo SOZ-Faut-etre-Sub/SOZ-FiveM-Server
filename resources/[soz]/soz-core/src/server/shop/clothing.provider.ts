@@ -49,7 +49,7 @@ export class ClothingProvider {
         };
     }
 
-    @Rpc(RpcServerEvent.CLOTHING_GET_CATEGORY)
+    @Rpc(RpcServerEvent.CLOTHING_GET_WARM_SCORE)
     public async getClothCategory(
         source: number,
         outfit: Partial<Record<Component, OutfitItem>>
@@ -68,6 +68,10 @@ export class ClothingProvider {
 
         for (const compString of Object.keys(outfit)) {
             const component = Number(compString) as Component;
+            if (component == Component.Torso) {
+                continue;
+            }
+
             for (const shopContent of Object.values(shop.categories[player.skin.Model.Hash])) {
                 const cat = Object.values(shopContent).find(category => {
                     return !!Object.values(category.content).find(item => {
@@ -80,7 +84,7 @@ export class ClothingProvider {
                     });
                 });
                 if (cat) {
-                    ret[component] = cat.id;
+                    ret[component] = cat.warmScore;
                     break;
                 }
             }

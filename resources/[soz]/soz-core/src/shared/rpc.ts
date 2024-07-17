@@ -63,7 +63,7 @@ export enum RpcServerEvent {
     CRAFTING_DO_CRAFT = 'soz-core:crafting:do-craft',
     CRAFTING_DO_SALVAGE = 'soz-core:crafting:do-salvage',
 
-    CLOTHING_GET_CATEGORY = 'soz-core:clothing:get-category',
+    CLOTHING_GET_WARM_SCORE = 'soz-core:clothing:gwarm-score',
     CLOTHING_GET_SHOP = 'soz-core:clothing:get-shop',
 
     STORY_HALLOWEEN_SCENARIO1 = 'soz-story:server:halloween1',
@@ -205,6 +205,9 @@ export enum RpcServerEvent {
     CURRENT_PLAYERS = 'soz-core:server:utils:getnbplayers',
 
     FOOD_HUNT_INIT = 'soz-core:server:food:hunt-init',
+
+    METEOR_OCEAN = 'soz-core:meteor:ocean',
+    METEOR_EARTHQUAKE = 'soz-core:meteor:earthquake',
 }
 
 export enum RpcClientEvent {

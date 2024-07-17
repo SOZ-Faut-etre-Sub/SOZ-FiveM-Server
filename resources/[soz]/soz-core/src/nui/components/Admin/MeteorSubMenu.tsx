@@ -108,10 +108,17 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner, s
                 </MenuTitle>
                 <MenuItemButton
                     onConfirm={async () => {
-                        await fetchNui(NuiEvent.AdminMenuOceanSetWaterLevel);
+                        await fetchNui(NuiEvent.AdminMenuOceanSetWaterLevel, false);
                     }}
                 >
-                    Changer global
+                    Changer niveau de l'eau progressivement
+                </MenuItemButton>
+                <MenuItemButton
+                    onConfirm={async () => {
+                        await fetchNui(NuiEvent.AdminMenuOceanSetWaterLevel, true);
+                    }}
+                >
+                    Changer niveau de l'eau instantanément
                 </MenuItemButton>
                 <MenuItemCheckbox
                     checked={state.highWave}
@@ -122,13 +129,14 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner, s
                     Grosses vagues
                 </MenuItemCheckbox>
                 <MenuTitle>Tremblement de terre</MenuTitle>
-                <MenuItemButton
-                    onConfirm={async () => {
-                        await fetchNui(NuiEvent.AdminMenuEarthquake);
+                <MenuItemCheckbox
+                    checked={state.earthQuake}
+                    onChange={async value => {
+                        await fetchNui(NuiEvent.AdminMenuEarthquake, value);
                     }}
                 >
-                    Lancer
-                </MenuItemButton>
+                    Tremblement de terre
+                </MenuItemCheckbox>
             </MenuContent>
         </SubMenu>
     );

@@ -461,6 +461,7 @@ model category {
   id              Int               @id @default(autoincrement())
   name            String            @db.VarChar(255)
   parent_id       Int?
+  warm_score      Int               @default(0)
   category        category?         @relation("categoryTocategory_parent_id", fields: [parent_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "category_ibfk_1")
   other_category  category[]        @relation("categoryTocategory_parent_id")
   shop_categories shop_categories[]

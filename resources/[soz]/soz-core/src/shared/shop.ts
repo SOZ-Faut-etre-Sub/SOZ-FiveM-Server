@@ -52,6 +52,7 @@ export type ClothingShopCategory = {
     name: string;
     parentId?: number;
     content?: Record<string, ClothingShopItem[]>; // Map modelLabel -> list of items
+    warmScore: number;
 };
 
 export type ClothingShopItem = {

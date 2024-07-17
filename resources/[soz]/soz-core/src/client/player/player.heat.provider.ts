@@ -4,7 +4,7 @@ import { On } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { emitRpc } from '@public/core/rpc';
-import { Component, Outfit, Prop, WarmClothCategory } from '@public/shared/cloth';
+import { Component, Outfit, Prop } from '@public/shared/cloth';
 import { Feature, isFeatureEnabled } from '@public/shared/features';
 import { JobType } from '@public/shared/job';
 import { LsmcCloakroom } from '@public/shared/job/lsmc';
@@ -97,7 +97,7 @@ export class PlayerHeatProvider {
         }
 
         const data = await emitRpc<Partial<Record<Component, number>>>(
-            RpcServerEvent.CLOTHING_GET_CATEGORY,
+            RpcServerEvent.CLOTHING_GET_WARM_SCORE,
             outfit.Components
         );
         if (!data) {
@@ -115,10 +115,10 @@ export class PlayerHeatProvider {
                         item.Components[component].Drawable == outfit.Components[component].Drawable
                 );
                 if (extra) {
-                    this.heatScore++;
+                    this.heatScore += 3;
                 }
-            } else if (WarmClothCategory.includes(data[component])) {
-                this.heatScore++;
+            } else {
+                this.heatScore += data[component];
             }
         });
 
@@ -127,6 +127,13 @@ export class PlayerHeatProvider {
         }
 
         const jewels = player.skin.Model.Hash == PlayerPedHash.Male ? MaleJewelryItems : FemaleJewelryItems;
+        const neckJewels = jewels['Cou'];
+        const scarfs = Object.keys(neckJewels.items['Echarpes']).map(item => Number(item));
+        const neckProtected = scarfs.includes(outfit.Components[neckJewels.componentId].Drawable);
+        if (neckProtected) {
+            this.heatScore++;
+        }
+
         const helmetJewels = jewels['Chapeaux'];
         const helmets = Object.keys(helmetJewels.items['Bonnets']).map(item => Number(item));
         const headProtected = helmets.includes(outfit.Props[helmetJewels.propId]?.Drawable);
@@ -198,7 +205,7 @@ export class PlayerHeatProvider {
         } else {
             this.hudWeatherIconProvider.remove('sandstorm');
             this.sandstorm = false;
-            if (this.heatScore >= 3) {
+            if (this.heatScore >= 6) {
                 this.damage = true;
                 if (!this.heat) {
                     this.notifier.notify('Vous commencez à transpirer due à la forte chaleur', 'warning');
