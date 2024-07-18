@@ -292,10 +292,13 @@ export const ShopsConfig: Record<string, ShopConfig> = {
         brand: ShopBrand.Supermarket247North,
         location: [549.52, 2669.55, 42.16, 98.65],
     },
+    //meteor
+    /*
     ['247supermarket7']: {
         brand: ShopBrand.Supermarket247North,
         location: [2676.47, 3280.02, 55.24, 333.41],
     },
+    */
     ['247supermarket10']: {
         brand: ShopBrand.Supermarket247North,
         location: [-2539.01, 2312.01, 33.41, 94.82],
@@ -382,7 +385,7 @@ export const ShopsConfig: Record<string, ShopConfig> = {
     },
     ['zkea']: {
         brand: ShopBrand.Zkea,
-        location: [2748.29, 3472.55, 55.68, 254.93],
+        location: [-57.81, 6523.1, 31.49, 317.51],
     },
     ['tattooshop']: {
         brand: ShopBrand.Tattoo,

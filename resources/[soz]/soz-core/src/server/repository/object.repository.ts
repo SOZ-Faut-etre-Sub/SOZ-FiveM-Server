@@ -13,6 +13,11 @@ export class ObjectRepository extends RepositoryLegacy<WorldObject[]> {
         const objectList = [];
 
         for (const prop of props) {
+            //meteor
+            if ([156, 49, 150, 155, 148, 56, 52, 59, 149].includes(Number(prop.id))) {
+                continue;
+            }
+
             const position = JSON.parse(prop.position);
 
             objectList.push({

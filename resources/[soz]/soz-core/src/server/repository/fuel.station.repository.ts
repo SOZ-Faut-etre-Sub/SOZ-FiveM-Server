@@ -45,6 +45,11 @@ export class FuelStationRepository extends RepositoryLegacy<Record<string, FuelS
         const fuelStations: Record<string, FuelStation> = {};
 
         for (const station of stations) {
+            //meteor
+            if (station.station == 'Station6') {
+                continue;
+            }
+
             try {
                 const stationPosition = JSON.parse(station.position) as { x: number; y: number; z: number; w?: number };
                 const stationZone = JSON.parse(station.zone) as DatabaseZone;

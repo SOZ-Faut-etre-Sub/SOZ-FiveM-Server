@@ -25,15 +25,21 @@ export class UpwObjectProvider {
 
         const model = joaat('upwcarcharger');
 
-        const objects: WorldObject[] = upwChargers.map(prop => {
+        const objects: WorldObject[] = [];
+        for (const prop of upwChargers) {
+            //meteor
+            if (prop.station == 'station20') {
+                continue;
+            }
+
             const position = JSON.parse(prop.position);
 
-            return {
+            objects.push({
                 id: `upw_charger_${prop.station}_${prop.id}`,
                 model,
                 position: [position.x, position.y, position.z, position.w] as Vector4,
-            };
-        });
+            });
+        }
 
         this.objectProvider.addObjects(objects);
     }

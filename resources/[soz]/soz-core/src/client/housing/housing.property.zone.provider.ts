@@ -168,8 +168,8 @@ export class HousingPropertyZoneProvider {
             const name = hasPropertyAccess
                 ? 'Habitation - Résidence'
                 : category === 'building'
-                ? 'Habitation - Immeuble'
-                : 'Habitation - Maison';
+                  ? 'Habitation - Immeuble'
+                  : 'Habitation - Maison';
 
             if (this.blipFactory.exist(id)) {
                 this.blipFactory.update(id, {
@@ -204,6 +204,23 @@ export class HousingPropertyZoneProvider {
         this.updateBlips();
 
         if (!property.entryZone) {
+            return;
+        }
+
+        //meteor
+        if (
+            [
+                'v_trailer_11',
+                'v_trailer_12',
+                'v_trailer_14',
+                'v_trailer_15',
+                'v_trailer_16',
+                'v_trailer_17',
+                'v_trailer_18',
+                'v_trailer_24',
+                'v_trailer_25',
+            ].includes(property.identifier)
+        ) {
             return;
         }
 

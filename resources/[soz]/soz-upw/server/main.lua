@@ -18,9 +18,13 @@ local facilities = {
 local function GetFacilitiesFromDb(types)
     local query, args = "SELECT * FROM upw_facility", nil
 
+    --meteor
     if types then
-        query = query .. " WHERE type IN (@types)"
-        args = {["@types"] = types}
+        query = query .. " WHERE type IN (@types) AND identifier <> @exclude"
+        args = {["@types"] = types, ["@exclude"] = "inverter1656975380"}
+    else
+        query = query .. " WHERE identifier <> @exclude"
+        args = {["@exclude"] = "inverter1656975380"}
     end
 
     local res = MySQL.Sync.fetchAll(query, args)

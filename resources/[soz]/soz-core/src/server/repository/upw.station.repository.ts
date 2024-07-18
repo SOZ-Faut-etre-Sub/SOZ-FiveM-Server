@@ -19,6 +19,11 @@ export class UpwStationRepository extends RepositoryLegacy<Record<string, UpwSta
         const upwCharger: Record<number, UpwStation> = {};
 
         for (const station of stations) {
+            //meteor
+            if (station.station == 'station20') {
+                continue;
+            }
+
             try {
                 const position = JSON.parse(station.position) as { x: number; y: number; z: number; w: number };
                 const vectorPosition: Vector4 = [position.x, position.y, position.z, position.w];
