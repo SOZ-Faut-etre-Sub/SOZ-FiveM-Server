@@ -42,6 +42,7 @@ export enum ServerEvent {
     ADMIN_METEOR_SIREN = 'soz-core:server:admin:meteor:siren',
     ADMIN_METEOR_ACTIVATE = 'soz-core:server:admin:meteor:activate',
     ADMIN_METEOR_MUSIC = 'soz-core:server:admin:meteor:music',
+    ADMIN_METEOR_DISABLE_NPC = 'soz-core:server:admin:meteor:disble-npc',
     ADMIN_METEOR_KICK_PLAYERS = 'soz-core:server:admin:meteor:players-kick',
 
     BASE_ENTERED_VEHICLE = 'baseevents:enteredVehicle',

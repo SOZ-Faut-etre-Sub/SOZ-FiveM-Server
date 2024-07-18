@@ -6,6 +6,7 @@ import { fetchNui } from '../../fetch';
 import {
     MenuContent,
     MenuItemButton,
+    MenuItemCheckbox,
     MenuItemSelect,
     MenuItemSelectOption,
     MenuTitle,
@@ -66,6 +67,14 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner, s
                 >
                     Expulser les joueurs
                 </MenuItemButton>
+                <MenuItemCheckbox
+                    checked={state.disableNpc}
+                    onChange={async value => {
+                        await fetchNui(NuiEvent.AdminMenuMeteorDisableNpc, value);
+                    }}
+                >
+                    Désactiver le spawn de PNJ
+                </MenuItemCheckbox>
             </MenuContent>
         </SubMenu>
     );

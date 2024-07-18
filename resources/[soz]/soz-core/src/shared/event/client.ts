@@ -237,6 +237,8 @@ export enum ClientEvent {
     HEIST_GUARD = 'soz-core:client:heist:guard',
     HEIST_PLAY_ANIM = 'soz-core:client:heist:play-anim',
 
+    NPC_DENSITY_UPDATE = 'soz-core:client:npc:density-update',
+
     INJURY_DEATH = 'soz-core:client:injury:death',
 
     TAKE_DOWN = 'soz-core:client:player:animation:takedown',

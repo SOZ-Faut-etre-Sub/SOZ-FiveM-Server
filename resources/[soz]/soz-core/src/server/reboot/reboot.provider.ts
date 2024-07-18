@@ -63,8 +63,7 @@ export class RebootProvider {
                 state: PlayerVehicleState.Out,
             },
             data: {
-                state: PlayerVehicleState.InGarage,
-                garage: 'fourriere',
+                state: PlayerVehicleState.Destroyed,
                 parkingtime: Math.round(Date.now() / 1000),
             },
         });

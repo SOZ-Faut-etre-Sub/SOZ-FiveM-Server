@@ -4,6 +4,7 @@ import { Provider } from '@public/core/decorators/provider';
 import { Tick } from '@public/core/decorators/tick';
 import { emitRpc } from '@public/core/rpc';
 import { wait } from '@public/core/utils';
+import { MeteorSubMenuState } from '@public/shared/admin/admin';
 import { ClientEvent } from '@public/shared/event';
 import { Control } from '@public/shared/input';
 import {
@@ -50,9 +51,9 @@ export class MeteorProvider {
 
     @Once(OnceStep.NuiLoaded)
     public async init() {
-        const [siren, music] = await emitRpc<[number, number]>(RpcServerEvent.ADMIN_METEOR_SIREN);
-        this.nuiDispatch.dispatch('meteor', 'siren', siren);
-        this.nuiDispatch.dispatch('meteor', 'music', music);
+        const data = await emitRpc<MeteorSubMenuState>(RpcServerEvent.ADMIN_METEOR_STATE);
+        this.nuiDispatch.dispatch('meteor', 'siren', data.siren);
+        this.nuiDispatch.dispatch('meteor', 'music', data.music);
     }
 
     @OnEvent(ClientEvent.METEOR_START)
@@ -68,7 +69,6 @@ export class MeteorProvider {
         this.nuiDispatch.dispatch('meteor', 'start');
 
         this.entity = CreateObject(rock, start[0], start[1], start[2], false, false, false);
-        AddBlipForEntity(this.entity);
         SetEntityLodDist(this.entity, 0xffff);
         ActivatePhysics(this.entity);
         SetEntityCollision(this.entity, false, true);

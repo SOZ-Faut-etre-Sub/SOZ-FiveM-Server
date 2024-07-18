@@ -20,7 +20,7 @@ export enum RpcServerEvent {
     ADMIN_MAPPER_SET_OWNER = 'soz-core:admin:mapper:set-owner',
     ADMIN_MAPPER_CLEAR_OWNER = 'soz-core:admin:mapper:clear-owner',
     ADMIN_MAPPER_SET_APARTMENT_TIER = 'soz-core:admin:mapper:set-apartment-tier',
-    ADMIN_METEOR_SIREN = 'soz-core:admin:meteor:siren',
+    ADMIN_METEOR_STATE = 'soz-core:admin:meteor:state',
 
     ADMIN_MAPPER_ADD_ZONE = 'soz-core:admin:mapper:add-zone',
     ADMIN_MAPPER_REMOVE_ZONE = 'soz-core:admin:mapper:remove-zone',
@@ -72,6 +72,8 @@ export enum RpcServerEvent {
 
     REPOSITORY_GET_DATA = 'soz-core:repository:get-data',
     REPOSITORY_GET_DATA_2 = 'soz-core:repository:get-data-2',
+
+    GET_DISABLE_NPC = 'soz-core:utils:get-disable-npc',
 
     VEHICLE_CUSTOM_GET_MODS = 'soz-core:vehicle:custom:get-mods',
     VEHICLE_CUSTOM_SET_MODS = 'soz-core:vehicle:custom:set-mods',

@@ -72,6 +72,7 @@ export type VehicleSubMenuState = {
 };
 
 export type MeteorSubMenuState = {
+    disableNpc: boolean;
     siren: number;
     music: number;
 };

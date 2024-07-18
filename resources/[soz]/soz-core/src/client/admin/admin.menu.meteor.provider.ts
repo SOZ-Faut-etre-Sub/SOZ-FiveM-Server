@@ -41,4 +41,9 @@ export class AdminMenuMeteorProvider {
 
         TriggerServerEvent(ServerEvent.ADMIN_METEOR_KICK_PLAYERS);
     }
+
+    @OnNuiEvent(NuiEvent.AdminMenuMeteorDisableNpc)
+    public async disableNPC(value: boolean): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_METEOR_DISABLE_NPC, value);
+    }
 }
