@@ -324,7 +324,7 @@ export class JobDutyProvider {
                     if (!Bunkers.map(b => b.interiorId).includes(intId)) {
                         return false;
                     }
-                    return !this.playerService.isOnDuty();
+                    return !player.job.onduty;
                 },
             },
         ];

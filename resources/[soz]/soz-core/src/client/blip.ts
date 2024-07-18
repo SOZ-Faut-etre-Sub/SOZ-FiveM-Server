@@ -180,7 +180,7 @@ export class BlipFactory {
             SetBlipRouteColour(gameId, blip.routeColor);
         }
 
-        if (blip.scale !== undefined) {
+        if (blip.scale !== undefined && blip.type != BlipType.Radius) {
             SetBlipScale(gameId, blip.scale);
         }
 
