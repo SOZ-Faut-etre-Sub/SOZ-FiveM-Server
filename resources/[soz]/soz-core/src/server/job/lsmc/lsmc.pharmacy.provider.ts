@@ -3,12 +3,14 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { BankService } from '@public/server/bank/bank.service';
 import { InventoryManager } from '@public/server/inventory/inventory.manager';
+import { Monitor } from '@public/server/monitor/monitor';
 import { Notifier } from '@public/server/notifier';
 import { PlayerMoneyService } from '@public/server/player/player.money.service';
 import { PlayerService } from '@public/server/player/player.service';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { JobType } from '@public/shared/job';
 import { PHARMACY_PRICES } from '@public/shared/job/lsmc';
+import { Vector3 } from '@public/shared/polyzone/vector';
 
 import { TaxType } from '../../../shared/bank';
 import { PriceService } from '../../bank/price.service';
@@ -30,6 +32,9 @@ export class LSMCPharmacyProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
+    @Inject(Monitor)
+    private monitor: Monitor;
+
     @Inject(PriceService)
     private priceService: PriceService;
 
@@ -50,6 +55,11 @@ export class LSMCPharmacyProvider {
             }
 
             TriggerClientEvent(ClientEvent.LSMC_HEAL, source, 100);
+
+            this.monitor.traceEvent('job_lsmc_npc_heal', {
+                player_source: source,
+                position: GetEntityCoords(GetPlayerPed(player.source)) as Vector3,
+            });
         } else {
             this.notifier.notify(
                 source,
