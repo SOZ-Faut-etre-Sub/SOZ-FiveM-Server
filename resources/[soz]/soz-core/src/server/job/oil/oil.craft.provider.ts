@@ -38,22 +38,22 @@ export class OilCraftProvider {
 
     @OnEvent(ServerEvent.OIL_CRAFT_ESSENCE)
     public async onCraftEssence(source: number) {
-        await this.craft(source, 'petroleum_refined', 'essence', 1, 1000);
+        await this.craft(source, 'petroleum_refined', 'essence', 1, 500);
     }
 
     @OnEvent(ServerEvent.OIL_CRAFT_ESSENCE_JERRYCAN)
     public async onCraftEssenceJerrycan(source: number) {
-        await this.craft(source, 'essence', 'essence_jerrycan', 3, 60000, true);
+        await this.craft(source, 'essence', 'essence_jerrycan', 3, 30000, true);
     }
 
     @OnEvent(ServerEvent.OIL_CRAFT_KEROSENE)
     public async onCraftKerosene(source: number) {
-        await this.craft(source, 'petroleum_refined', 'kerosene', 4, 500);
+        await this.craft(source, 'petroleum_refined', 'kerosene', 4, 250);
     }
 
     @OnEvent(ServerEvent.OIL_CRAFT_KEROSENE_JERRYCAN)
     public async onCraftKeroseneJerrycan(source: number) {
-        await this.craft(source, 'kerosene', 'kerosene_jerrycan', 1, 60000, true);
+        await this.craft(source, 'kerosene', 'kerosene_jerrycan', 1, 30000, true);
     }
 
     private async craft(
