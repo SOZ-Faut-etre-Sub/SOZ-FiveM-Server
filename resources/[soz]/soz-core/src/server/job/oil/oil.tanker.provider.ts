@@ -152,7 +152,7 @@ export class OilTankerProvider {
                     source,
                     'fill_tanker',
                     'Vous remplissez...',
-                    24000,
+                    12000,
                     {
                         dictionary: 'timetable@gardener@filling_can',
                         name: 'gar_ig_5_filling_can',
@@ -241,7 +241,7 @@ export class OilTankerProvider {
                     source,
                     'refine_tanker',
                     'Vous raffinez...',
-                    20000,
+                    10000,
                     {
                         dictionary: 'timetable@gardener@filling_can',
                         name: 'gar_ig_5_filling_can',
