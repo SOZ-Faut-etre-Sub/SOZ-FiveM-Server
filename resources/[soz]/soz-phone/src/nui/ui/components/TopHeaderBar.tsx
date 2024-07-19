@@ -95,7 +95,10 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
                 leaveFrom="translate-y-0"
                 leaveTo="-translate-y-full"
             >
-                <div className="h-full bg-ios-800 bg-opacity-90 text-white flex flex-col items-center">
+                <div
+                    className="h-full bg-ios-800 bg-opacity-90 text-white flex flex-col items-center"
+                    onClick={() => setBarUncollapsed(false)}
+                >
                     <div className="my-20 font-light text-6xl">{time}</div>
                     <ul className="divide-y divide-gray-600 w-4/5 overflow-y-scroll">
                         {callModal && (
