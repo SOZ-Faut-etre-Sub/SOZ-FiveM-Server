@@ -73,55 +73,59 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({
         });
     };
 
-    const GetRootCategories = Object.values(shop_content.categories).filter(category => {
-        if (category.parentId) {
-            return false;
-        }
-
-        // Check if the category is not empty
-
-        if (
-            Object.values(shopCategories[category.id].content).length == 0 &&
-            Object.values(shopCategories).filter(childCat => childCat.parentId == category.id).length == 0
-        ) {
-            return false;
-        }
-        // Check if the category is not an undershirt or if it is, check if the player can where undershirts with his top
-
-        if (category.id != ClothingCategoryID.UNDERSHIRTS) {
-            return true;
-        }
-
-        return (
-            playerData.cloth_config.BaseClothSet.TopID != null &&
-            under_types[playerData.cloth_config.BaseClothSet.TopID] &&
-            under_types[playerData.cloth_config.BaseClothSet.TopID].length > 0
-        );
-    });
-
-    const GetChildrenCategoriesNotEmpty = cat => {
-        return Object.values(shopCategories).filter(childCat => {
-            // is child
-            if (!childCat.parentId) {
+    const GetRootCategories = Object.values(shop_content.categories)
+        .filter(category => {
+            if (category.parentId) {
                 return false;
             }
 
+            // Check if the category is not empty
+
+            if (
+                Object.values(shopCategories[category.id].content).length == 0 &&
+                Object.values(shopCategories).filter(childCat => childCat.parentId == category.id).length == 0
+            ) {
+                return false;
+            }
+            // Check if the category is not an undershirt or if it is, check if the player can where undershirts with his top
+
+            if (category.id != ClothingCategoryID.UNDERSHIRTS) {
+                return true;
+            }
+
             return (
-                childCat.parentId == cat.id &&
-                // has sub category
-                (Object.values(shopCategories).filter(childchildCat => childchildCat.parentId == childCat.id).length >
-                    0 || // or has items
-                    Object.values(childCat.content).filter(
-                        product =>
-                            !product[0].undershirtType ||
-                            (playerData.cloth_config.BaseClothSet.TopID != null &&
-                                under_types[playerData.cloth_config.BaseClothSet.TopID] &&
-                                under_types[playerData.cloth_config.BaseClothSet.TopID]?.includes(
-                                    product[0].undershirtType
-                                ))
-                    ).length > 0)
+                playerData.cloth_config.BaseClothSet.TopID != null &&
+                under_types[playerData.cloth_config.BaseClothSet.TopID] &&
+                under_types[playerData.cloth_config.BaseClothSet.TopID].length > 0
             );
-        });
+        })
+        .sort((a, b) => a.name.localeCompare(b.name));
+
+    const GetChildrenCategoriesNotEmpty = cat => {
+        return Object.values(shopCategories)
+            .filter(childCat => {
+                // is child
+                if (!childCat.parentId) {
+                    return false;
+                }
+
+                return (
+                    childCat.parentId == cat.id &&
+                    // has sub category
+                    (Object.values(shopCategories).filter(childchildCat => childchildCat.parentId == childCat.id)
+                        .length > 0 || // or has items
+                        Object.values(childCat.content).filter(
+                            product =>
+                                !product[0].undershirtType ||
+                                (playerData.cloth_config.BaseClothSet.TopID != null &&
+                                    under_types[playerData.cloth_config.BaseClothSet.TopID] &&
+                                    under_types[playerData.cloth_config.BaseClothSet.TopID]?.includes(
+                                        product[0].undershirtType
+                                    ))
+                        ).length > 0)
+                );
+            })
+            .sort((a, b) => a.name.localeCompare(b.name));
     };
 
     return (
@@ -183,14 +187,14 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({
                                         keyDescendant={modelLabel}
                                         key={items[0].id}
                                         title={modelLabel}
-                                        titleWidth={60}
+                                        titleWidth={50}
                                         value={items[0]}
                                         onConfirm={buyItem}
                                         onSelectedValue={async (_, item) =>
                                             await fetchNui(NuiEvent.ClothingShopPreview, item)
                                         }
                                         descriptionValue={item =>
-                                            `💸 Prix : $${getPrice(
+                                            `${items.length} Coloris -  Prix : $${getPrice(
                                                 item.price,
                                                 isInCayo ? null : TaxType.SUPPLY
                                             )} - 📦 Stock : ${item.stock}`

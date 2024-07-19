@@ -1,6 +1,6 @@
 -- Zkea PolyZone Locations
 Locations["zkea"] = {
-    --meteor
+    -- meteor
     [1] = BoxZone:Create(vector3(-57.81, 6523.10, 31.49), 4.0, 8.4, {
         name = "zkea",
         heading = 247,

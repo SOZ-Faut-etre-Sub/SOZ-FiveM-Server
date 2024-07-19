@@ -36,6 +36,11 @@ export class AdminMenuMeteorProvider {
         TriggerServerEvent(ServerEvent.ADMIN_METEOR_MUSIC, value);
     }
 
+    @OnNuiEvent(NuiEvent.AdminMenuSandstormMusic)
+    public async activateSandstormMusic(value: number): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_SANDSTORM_MUSIC, value);
+    }
+
     @OnNuiEvent(NuiEvent.AdminMenuMeteorKickPlayers)
     public async kickPlayers(): Promise<void> {
         const confirm = await this.inputService.askConfirm(`Êtes-vous sûr de kick les joueurs ? (OUI)`);

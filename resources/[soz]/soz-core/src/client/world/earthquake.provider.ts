@@ -1,10 +1,8 @@
-import { Once, OnEvent, OnNuiEvent } from '@public/core/decorators/event';
+import { OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Tick } from '@public/core/decorators/tick';
-import { emitRpc } from '@public/core/rpc';
 import { wait } from '@public/core/utils';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
-import { RpcServerEvent } from '@public/shared/rpc';
 import { VehicleSeat } from '@public/shared/vehicle/vehicle';
 
 import { Provider } from '../../core/decorators/provider';
@@ -19,12 +17,6 @@ export class EarthquakeProvider {
     private inverse = false;
     private ramp = 0;
     private shaking = false;
-
-    @Once()
-    public async init() {
-        const value = await emitRpc<boolean>(RpcServerEvent.METEOR_EARTHQUAKE);
-        this.onEarthquake(value);
-    }
 
     @OnNuiEvent(NuiEvent.AdminMenuEarthquake)
     public async onAdminEarthQuake(value: boolean): Promise<void> {

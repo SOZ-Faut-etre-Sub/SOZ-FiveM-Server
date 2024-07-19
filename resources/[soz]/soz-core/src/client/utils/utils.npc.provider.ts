@@ -56,6 +56,11 @@ const DisableSpawn: Vector2[][] = [
         [1980.99, 3033.43],
         [2010.96, 3068.37],
     ],
+    [
+        //meteor
+        [2093.61, 3023.75],
+        [2831.6, 3558.2],
+    ],
 ];
 
 const disabledPickups = [

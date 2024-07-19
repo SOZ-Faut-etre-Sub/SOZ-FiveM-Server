@@ -207,7 +207,6 @@ export enum RpcServerEvent {
     FOOD_HUNT_INIT = 'soz-core:server:food:hunt-init',
 
     METEOR_OCEAN = 'soz-core:meteor:ocean',
-    METEOR_EARTHQUAKE = 'soz-core:meteor:earthquake',
 }
 
 export enum RpcClientEvent {

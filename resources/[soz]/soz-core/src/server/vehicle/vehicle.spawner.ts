@@ -142,6 +142,11 @@ const lsmcMlo = new BoxZone([347.75, -1412.87, 29.43], 92.8, 87.0, {
     maxZ: 70.43,
 });
 
+//Meteor
+const meteor = new BoxZone([2462.6, 3290, 29.43], 400.0, 300.0, {
+    heading: 0,
+});
+
 const VEHICLE_INVERTED_SPAWN = ['raketrailer'];
 
 @Provider()
@@ -181,6 +186,7 @@ export class VehicleSpawner {
         noSpawnZones.push(frontBCSO);
         noSpawnZones.push(lsmcParking);
         noSpawnZones.push(lsmcMlo);
+        noSpawnZones.push(meteor);
 
         this.noSpawnZone = new MultiZone<BoxZone>(noSpawnZones);
     }

@@ -14,6 +14,8 @@ import { PlayerAppearanceService } from '../player/player.appearance.service';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../player/progress.service';
 import { RebootProvider } from '../reboot/reboot.provider';
+import { EarthquakeProvider } from './earthquake.provider';
+import { OceanProvider } from './ocean.provider';
 
 @Provider()
 export class MeteorProvider {
@@ -22,6 +24,12 @@ export class MeteorProvider {
 
     @Inject(RebootProvider)
     public rebootProvider: RebootProvider;
+
+    @Inject(EarthquakeProvider)
+    public earthquakeProvider: EarthquakeProvider;
+
+    @Inject(OceanProvider)
+    public oceanProvider: OceanProvider;
 
     @Inject(Notifier)
     public notifier: Notifier;
@@ -41,6 +49,7 @@ export class MeteorProvider {
     private siren = 0;
     private music = 0;
     private chronos = 0;
+    private sandstormmusic = 0;
     private disabledNpc = false;
 
     @Once()
@@ -87,6 +96,9 @@ export class MeteorProvider {
             music: this.music,
             siren: this.siren,
             chronos: this.chronos,
+            earthQuake: this.earthquakeProvider.isEarthQuake(),
+            highWave: this.oceanProvider.getHighWave(),
+            sandstormmusic: this.sandstormmusic,
         };
     }
 
@@ -130,6 +142,16 @@ export class MeteorProvider {
 
         this.chronos = value;
         TriggerClientEvent(ClientEvent.METEOR_CHONOS_MUSIC, -1, value);
+    }
+
+    @OnEvent(ServerEvent.ADMIN_SANDSTORM_MUSIC)
+    public activateSandstormMusic(source: number, value: number) {
+        if (!this.permissionService.isStaff(source)) {
+            return;
+        }
+
+        this.sandstormmusic = value;
+        TriggerClientEvent(ClientEvent.METEOR_SANDSTORM_MUSIC, -1, value);
     }
 
     @OnEvent(ServerEvent.ADMIN_METEOR_KICK_PLAYERS)

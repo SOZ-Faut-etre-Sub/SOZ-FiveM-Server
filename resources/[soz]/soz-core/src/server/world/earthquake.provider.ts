@@ -1,8 +1,6 @@
 import { OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
-import { Rpc } from '@public/core/decorators/rpc';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
-import { RpcServerEvent } from '@public/shared/rpc';
 
 import { Provider } from '../../core/decorators/provider';
 import { Notifier } from '../notifier';
@@ -18,7 +16,6 @@ export class EarthquakeProvider {
 
     private earthQuake = false;
 
-    @Rpc(RpcServerEvent.METEOR_EARTHQUAKE)
     public isEarthQuake() {
         return this.earthQuake;
     }

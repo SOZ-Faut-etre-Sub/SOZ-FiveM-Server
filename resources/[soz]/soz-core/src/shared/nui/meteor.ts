@@ -6,4 +6,5 @@ export interface NuiMeteorMap {
     chronos: number;
     music: number;
     earthquake: boolean;
+    sandstorm: number;
 }

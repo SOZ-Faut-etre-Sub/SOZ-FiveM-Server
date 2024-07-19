@@ -17,8 +17,12 @@ export class OceanProvider {
     private highWave = false;
 
     @Rpc(RpcServerEvent.METEOR_OCEAN)
-    public async getOceanInfo() {
+    public getOceanInfo() {
         return [this.waterCurrentLevel, this.waterLevel, this.highWave];
+    }
+
+    public getHighWave() {
+        return this.highWave;
     }
 
     @OnEvent(ServerEvent.ADMIN_OCEAN_WATER_CURRENT_LEVEL)

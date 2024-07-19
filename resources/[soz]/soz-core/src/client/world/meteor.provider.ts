@@ -26,6 +26,7 @@ import { NuiDispatch } from '../nui/nui.dispatch';
 import { PlayerHealthProvider } from '../player/player.health.provider';
 import { PlayerService } from '../player/player.service';
 import { ResourceLoader } from '../repository/resource.loader';
+import { EarthquakeProvider } from './earthquake.provider';
 
 const start: Vector3 = [-2334.91, -12000.5, 2500.0];
 const dest: Vector3 = [2538.05, 3306.49, 52.85];
@@ -49,6 +50,9 @@ export class MeteorProvider {
     @Inject(Monitor)
     public monitor: Monitor;
 
+    @Inject(EarthquakeProvider)
+    public earthquakeProvider: EarthquakeProvider;
+
     @Inject(PlayerService)
     private playerService: PlayerService;
 
@@ -65,6 +69,8 @@ export class MeteorProvider {
         const data = await emitRpc<MeteorSubMenuState>(RpcServerEvent.ADMIN_METEOR_STATE);
         this.nuiDispatch.dispatch('meteor', 'siren', data.siren);
         this.nuiDispatch.dispatch('meteor', 'music', data.music);
+        this.nuiDispatch.dispatch('meteor', 'sandstorm', data.sandstormmusic);
+        this.earthquakeProvider.onEarthquake(data.earthQuake);
     }
 
     @OnEvent(ClientEvent.METEOR_START)
@@ -431,5 +437,10 @@ export class MeteorProvider {
             this.playerService.setTempClothes(fullScarf);
         }
         this.isWearingFullScarf = !this.isWearingFullScarf;
+    }
+
+    @OnEvent(ClientEvent.METEOR_SANDSTORM_MUSIC)
+    public async sandstormMusic(value: number) {
+        this.nuiDispatch.dispatch('meteor', 'sandstorm', value);
     }
 }

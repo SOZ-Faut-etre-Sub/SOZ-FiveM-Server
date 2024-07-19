@@ -99,6 +99,7 @@ export enum NuiEvent {
     AdminMenuMeteorActivate = 'soz-core:nui:admin:meteor:activate',
     AdminMenuMeteorChronosMusic = 'soz-core:nui:admin:meteor:chonos-music',
     AdminMenuMeteorMusic = 'soz-core:nui:admin:meteor:music',
+    AdminMenuSandstormMusic = 'soz-core:nui:admin:meteor:sandstorm-music',
     AdminMenuMeteorDisableNpc = 'soz-core:nui:admin:meteor:disable-npc',
     AdminMenuMeteorKickPlayers = 'soz-core:nui:admin:meteor:kick-players',
     AdminMenuOceanSetWaterLevel = 'soz-core:nui:admin:ocean:water-level',

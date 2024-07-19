@@ -137,6 +137,21 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner, s
                 >
                     Tremblement de terre
                 </MenuItemCheckbox>
+                <MenuItemSelect
+                    title={`Tempête de Sable`}
+                    value={state.siren}
+                    onConfirm={async index => {
+                        await fetchNui(NuiEvent.AdminMenuSandstormMusic, index);
+                    }}
+                >
+                    {Array(11)
+                        .fill(0)
+                        .map((_, index) => (
+                            <MenuItemSelectOption value={index} key={`sandstorm_${index}`}>
+                                {index}
+                            </MenuItemSelectOption>
+                        ))}
+                </MenuItemSelect>
             </MenuContent>
         </SubMenu>
     );

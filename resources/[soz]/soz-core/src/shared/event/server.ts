@@ -43,6 +43,7 @@ export enum ServerEvent {
     ADMIN_METEOR_ACTIVATE = 'soz-core:server:admin:meteor:activate',
     ADMIN_METEOR_CHONOS_MUSIC = 'soz-core:server:admin:meteor:chonos-music',
     ADMIN_METEOR_MUSIC = 'soz-core:server:admin:meteor:music',
+    ADMIN_SANDSTORM_MUSIC = 'soz-core:server:admin:meteor:sandsorm-music',
     ADMIN_METEOR_DISABLE_NPC = 'soz-core:server:admin:meteor:disble-npc',
     ADMIN_METEOR_KICK_PLAYERS = 'soz-core:server:admin:meteor:players-kick',
     ADMIN_OCEAN_WATER_CURRENT_LEVEL = 'soz-core:server:admin:ocean:water-current-level',

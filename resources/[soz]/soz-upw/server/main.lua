@@ -18,7 +18,7 @@ local facilities = {
 local function GetFacilitiesFromDb(types)
     local query, args = "SELECT * FROM upw_facility", nil
 
-    --meteor
+    -- meteor
     if types then
         query = query .. " WHERE type IN (@types) AND identifier <> @exclude"
         args = {["@types"] = types, ["@exclude"] = "inverter1656975380"}
