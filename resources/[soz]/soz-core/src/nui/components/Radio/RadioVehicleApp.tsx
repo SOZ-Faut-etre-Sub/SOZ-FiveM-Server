@@ -48,7 +48,17 @@ export const RadioVehicleApp: FunctionComponent = () => {
         radio !== null,
         radio !== null,
         radio !== null,
-        radio !== null ? [Control.Attack, Control.NextCamera] : []
+        radio !== null
+            ? [
+                  Control.Attack,
+                  Control.Aim,
+                  Control.VehicleAim,
+                  Control.VehicleAttack,
+                  Control.VehiclePassengerAttack,
+                  Control.VehiclePassengerAim,
+                  Control.NextCamera,
+              ]
+            : []
     );
 
     useEffect(() => {
