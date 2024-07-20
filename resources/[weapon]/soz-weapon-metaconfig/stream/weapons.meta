@@ -557,6 +557,275 @@
         </Item>
       </Tints>
     </Item>
+    <Item>
+      <Name>TINT_GUNRUNNING</Name>
+       <Tints>
+        <Item>
+          <SpecFresnel value="0.80000" />
+          <SpecFalloffMult value="40.000000" />
+          <SpecIntMult value="0.500000" />
+          <Spec2Factor value="20.000000" />
+          <Spec2ColorInt value="1.000000" />
+          <Spec2Color value="0x00000000e7e3d1" />
+        </Item>
+        <Item>
+          <SpecFresnel value="0.80000" />
+          <SpecFalloffMult value="40.000000" />
+          <SpecIntMult value="0.500000" />
+          <Spec2Factor value="20.000000" />
+          <Spec2ColorInt value="1.000000" />
+          <Spec2Color value="0x0000000061605b" />
+        </Item>
+        <Item>
+          <SpecFresnel value="0.80000" />
+          <SpecFalloffMult value="40.000000" />
+          <SpecIntMult value="0.500000" />
+          <Spec2Factor value="20.000000" />
+          <Spec2ColorInt value="1.000000" />
+          <Spec2Color value="0x0000000061605b" />
+        </Item>
+        <Item>
+          <SpecFresnel value="0.80000" />
+          <SpecFalloffMult value="40.000000" />
+          <SpecIntMult value="0.7500000" />
+          <Spec2Factor value="20.000000" />
+          <Spec2ColorInt value="2.000000" />
+          <Spec2Color value="0x00000000469bbd" />
+        </Item>
+        <Item>
+          <SpecFresnel value="0.80000" />
+          <SpecFalloffMult value="40.000000" />
+          <SpecIntMult value="0.500000" />
+          <Spec2Factor value="20.000000" />
+          <Spec2ColorInt value="1.000000" />
+          <Spec2Color value="0x000000009d8e68" />
+        </Item>
+        <Item>
+          <SpecFresnel value="0.80000" />
+          <SpecFalloffMult value="40.000000" />
+          <SpecIntMult value="0.500000" />
+          <Spec2Factor value="20.000000" />
+          <Spec2ColorInt value="1.000000" />
+          <Spec2Color value="0x00000000536941" />
+        </Item>
+        <Item>
+         <SpecFresnel value="0.80000" />
+          <SpecFalloffMult value="40.000000" />
+          <SpecIntMult value="0.500000" />
+          <Spec2Factor value="20.000000" />
+          <Spec2ColorInt value="1.000000" />
+          <Spec2Color value="0x00000000cfe7fc" />
+        </Item>
+        <Item>
+          <SpecFresnel value="0.75000" />
+          <SpecFalloffMult value="60.000000" />
+          <SpecIntMult value="0.750000" />
+          <Spec2Factor value="20.000000" />
+          <Spec2ColorInt value="1.000000" />
+          <Spec2Color value="0x00000000736548" />
+        </Item>
+        <Item>
+          <SpecFresnel value="0.80000" />
+          <SpecFalloffMult value="40.000000" />
+          <SpecIntMult value="0.500000" />
+          <Spec2Factor value="20.000000" />
+          <Spec2ColorInt value="1.000000" />
+          <Spec2Color value="0x00000000736548" />
+        </Item>
+        <Item>
+          <SpecFresnel value="0.75000" />
+          <SpecFalloffMult value="60.000000" />
+          <SpecIntMult value="0.800000" />
+          <Spec2Factor value="20.000000" />
+          <Spec2ColorInt value="1.000000" />
+          <Spec2Color value="0x00000000a62828" />
+        </Item>
+        <Item>
+          <SpecFresnel value="0.75000" />
+          <SpecFalloffMult value="60.000000" />
+          <SpecIntMult value="0.800000" />
+          <Spec2Factor value="20.000000" />
+          <Spec2ColorInt value="1.000000" />
+          <Spec2Color value="0x000000006d28a6" />
+        </Item>
+        <Item>
+          <SpecFresnel value="0.75000" />
+          <SpecFalloffMult value="60.000000" />
+          <SpecIntMult value="0.800000" />
+          <Spec2Factor value="20.000000" />
+          <Spec2ColorInt value="1.000000" />
+          <Spec2Color value="0x000000008a7848" />
+        </Item>
+        <Item>
+          <SpecFresnel value="0.75000" />
+          <SpecFalloffMult value="60.000000" />
+          <SpecIntMult value="0.800000" />
+          <Spec2Factor value="20.000000" />
+          <Spec2ColorInt value="1.000000" />
+          <Spec2Color value="0x00000000fbefde" />
+        </Item>
+        <Item>
+          <SpecFresnel value="0.75000" />
+          <SpecFalloffMult value="60.000000" />
+          <SpecIntMult value="0.750000" />
+          <Spec2Factor value="20.000000" />
+          <Spec2ColorInt value="1.000000" />
+          <Spec2Color value="0x00000000de2c8e" />
+        </Item>
+        <Item>
+          <SpecFresnel value="0.75000" />
+          <SpecFalloffMult value="60.000000" />
+          <SpecIntMult value="0.750000" />
+          <Spec2Factor value="20.000000" />
+          <Spec2ColorInt value="1.000000" />
+          <Spec2Color value="0x000000003052b8" />
+        </Item>
+        <Item>
+         <SpecFresnel value="0.75000" />
+          <SpecFalloffMult value="60.000000" />
+          <SpecIntMult value="0.7500000" />
+          <Spec2Factor value="20.000000" />
+          <Spec2ColorInt value="1.000000" />
+          <Spec2Color value="0x00000000de802c" />
+        </Item>
+        <Item>
+         <SpecFresnel value="0.75000" />
+          <SpecFalloffMult value="60.000000" />
+          <SpecIntMult value="0.7500000" />
+          <Spec2Factor value="20.000000" />
+          <Spec2ColorInt value="1.000000" />
+          <Spec2Color value="0x00000000b330b8" />
+        </Item>
+        <Item>
+         <SpecFresnel value="0.80000" />
+          <SpecFalloffMult value="40.000000" />
+          <SpecIntMult value="0.5000000" />
+          <Spec2Factor value="20.000000" />
+          <Spec2ColorInt value="1.000000" />
+          <Spec2Color value="0x00000000593f3f" />
+        </Item>
+        <Item>
+          <SpecFresnel value="0.80000" />
+          <SpecFalloffMult value="40.000000" />
+          <SpecIntMult value="0.500000" />
+          <Spec2Factor value="20.000000" />
+          <Spec2ColorInt value="1.000000" />
+          <Spec2Color value="0x000000003f5946" />
+        </Item>
+        <Item>
+          <SpecFresnel value="0.80000" />
+          <SpecFalloffMult value="40.000000" />
+          <SpecIntMult value="0.500000" />
+          <Spec2Factor value="20.000000" />
+          <Spec2ColorInt value="1.000000" />
+          <Spec2Color value="0x000000003f5659" />
+        </Item>
+        <Item>
+         <SpecFresnel value="0.80000" />
+          <SpecFalloffMult value="40.000000" />
+          <SpecIntMult value="0.5000000" />
+          <Spec2Factor value="20.000000" />
+          <Spec2ColorInt value="1.000000" />
+          <Spec2Color value="0x0000000058593f" />
+        </Item>
+        <Item>
+         <SpecFresnel value="0.75000" />
+          <SpecFalloffMult value="60.000000" />
+          <SpecIntMult value="0.7500000" />
+          <Spec2Factor value="20.000000" />
+          <Spec2ColorInt value="1.000000" />
+          <Spec2Color value="0x00000000c22929" />
+        </Item>
+        <Item>
+         <SpecFresnel value="0.75000" />
+          <SpecFalloffMult value="60.000000" />
+          <SpecIntMult value="0.7500000" />
+          <Spec2Factor value="20.000000" />
+          <Spec2ColorInt value="1.000000" />
+          <Spec2Color value="0x00000000298ac2" />
+        </Item>
+        <Item>
+          <SpecFresnel value="0.950000" />
+          <SpecFalloffMult value="100.000000" />
+          <SpecIntMult value="1" />
+          <Spec2Factor value="20.000000" />
+          <Spec2ColorInt value="2.000000" />
+          <Spec2Color value="0x00000000b08100" />
+        </Item>
+        <Item>
+          <SpecFresnel value="0.950000" />
+          <SpecFalloffMult value="100.000000" />
+          <SpecIntMult value="1.000000" />
+          <Spec2Factor value="20.000000" />
+          <Spec2ColorInt value="2.000000" />
+          <Spec2Color value="0x00000000d9f7ff" />
+        </Item>
+        <Item>
+          <SpecFresnel value="0.950000" />
+          <SpecFalloffMult value="100.000000" />
+          <SpecIntMult value="1.000000" />
+          <Spec2Factor value="115.000000" />
+          <Spec2ColorInt value="3.000000" />
+          <Spec2Color value="0x00000000f576b7" />
+        </Item>
+        <Item>
+          <SpecFresnel value="0.950000" />
+          <SpecFalloffMult value="100.000000" />
+          <SpecIntMult value="1" />
+          <Spec2Factor value="45.000000" />
+          <Spec2ColorInt value="3.000000" />
+          <Spec2Color value="0x0000000075fa00" />
+        </Item>
+        <Item>
+          <SpecFresnel value="0.950000" />
+          <SpecFalloffMult value="100.000000" />
+          <SpecIntMult value="1" />
+          <Spec2Factor value="115.000000" />
+          <Spec2ColorInt value="3.000000" />
+          <Spec2Color value="0x00000000ff3300" />
+        </Item>
+        <Item>
+          <SpecFresnel value="0.950000" />
+          <SpecFalloffMult value="100.000000" />
+          <SpecIntMult value="1" />
+          <Spec2Factor value="115.000000" />
+          <Spec2ColorInt value="3.000000" />
+          <Spec2Color value="0x0000000043f0b9" />
+        </Item>
+        <Item>
+          <SpecFresnel value="0.950000" />
+          <SpecFalloffMult value="100.000000" />
+          <SpecIntMult value="1" />
+          <Spec2Factor value="115.000000" />
+          <Spec2ColorInt value="3.000000" />
+          <Spec2Color value="0x0000000010b4e6" />
+        </Item>
+        <Item>
+          <SpecFresnel value="0.950000" />
+          <SpecFalloffMult value="100.000000" />
+          <SpecIntMult value="1" />
+          <Spec2Factor value="52.000000" />
+          <Spec2ColorInt value="4.000000" />
+          <Spec2Color value="0x0000000000ffd9" />
+        </Item>
+         <Item>
+          <SpecFresnel value="0.95000" />
+          <SpecFalloffMult value="100.000000" />
+          <SpecIntMult value="1.000000" />
+          <Spec2Factor value="52.000000" />
+          <Spec2ColorInt value="4.000000" />
+          <Spec2Color value="0x00000000ff6200" />
+        </Item>
+          <Item>
+          <SpecFresnel value="0.80000" />
+          <SpecFalloffMult value="40.000000" />
+          <SpecIntMult value="0.500000" />
+          <Spec2Factor value="20.000000" />
+          <Spec2ColorInt value="1.000000" />
+          <Spec2Color value="0x00000000e7e3d1" />
+        </Item>
+      </Tints>
+    </Item>
   </TintSpecValues>
   <FiringPatternAliases>
     <Item>
