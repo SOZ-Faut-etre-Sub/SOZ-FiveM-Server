@@ -126,8 +126,10 @@ export class LSMCPlasterProvider {
     }
 
     public enablePlaster() {
-        const player = this.playerService.getPlayer();
-        this.playerPlasterLoaded(player);
+        if (!this.plasters) {
+            const player = this.playerService.getPlayer();
+            this.playerPlasterLoaded(player);
+        }
     }
 
     @Command('plaster')
