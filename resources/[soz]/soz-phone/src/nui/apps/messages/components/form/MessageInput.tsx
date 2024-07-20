@@ -1,13 +1,14 @@
+import i18n from '@emoji-mart/data/i18n/fr.json';
 import data from '@emoji-mart/data/sets/14/apple.json';
 import Picker from '@emoji-mart/react';
 import { EmojiHappyIcon, PaperClipIcon } from '@heroicons/react/outline';
 import cn from 'classnames';
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useConfig } from '../../../../hooks/usePhone';
 import { SendIcon } from '../../../../ui/assets/send';
-import { TextareaField } from '../../../../ui/old_components/Input';
+import { TextareaField, toggleKeys } from '../../../../ui/old_components/Input';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
 
 interface IProps {
@@ -24,6 +25,7 @@ const MessageInput: FunctionComponent<IProps> = ({ messageConversationId, onAddI
     const [message, setMessage] = useState('');
     const [emojiKeyboard, setEmojiKeyboard] = useState(false);
     const { sendMessage } = useMessageAPI();
+    const [intermediaryFocus, setIntermediaryFocus] = useState<boolean>(true);
 
     const handleSubmit = async () => {
         if (message.trim()) {
@@ -40,24 +42,42 @@ const MessageInput: FunctionComponent<IProps> = ({ messageConversationId, onAddI
         }
     };
 
+    useEffect(() => {
+        toggleKeys(intermediaryFocus);
+    }, [intermediaryFocus]);
+
+    addEventListener('beforeinput', event => {
+        if (event?.path[0]?.computedRole === 'searchbox' && intermediaryFocus) {
+            if (intermediaryFocus) {
+                setIntermediaryFocus(false);
+            }
+        }
+    });
+    addEventListener('focusout', () => {
+        if (!intermediaryFocus) {
+            setIntermediaryFocus(true);
+        }
+    });
+
     const handleEmojiAppend = async (emojiData: { shortcodes: string }) => {
         setMessage(prev => prev + emojiData.shortcodes + ' ');
     };
 
     if (!messageConversationId) return null;
-
     return (
         <div className="flex h-14 mt-1 items-center">
             {emojiKeyboard && (
                 <div className="absolute w-full z-10 bottom-[150px] left-[25px] right-0 opacity-90">
                     <Picker
+                        id={'search-emoji-input'}
                         data={data}
                         set="apple"
                         onEmojiSelect={handleEmojiAppend}
                         navPosition="bottom"
                         previewPosition="none"
-                        searchPosition="none"
+                        searchPosition="top"
                         className="w-full"
+                        i18n={i18n}
                     />
                 </div>
             )}
