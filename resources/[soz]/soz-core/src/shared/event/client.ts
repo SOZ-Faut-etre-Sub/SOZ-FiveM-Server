@@ -386,6 +386,7 @@ export enum ClientEvent {
     OCEAN_WATER_LEVEL = 'soz-core:client:ocean:water-level',
     OCEAN_WATER_HIGH_WAVE = 'soz-core:client:ocean:high-wave',
     EARTHQUAKE = 'soz-core:client:eathquake',
+    TORNADO = 'soz-core:client:tornado',
 
     BANK_ATM_CREATED = 'soz-core:client:bank:atm:created',
     BANK_SAFE_OPEN_UI = 'soz-core:client:bank:safe:openui',

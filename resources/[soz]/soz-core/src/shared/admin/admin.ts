@@ -84,6 +84,7 @@ export type MeteorSubMenuState = {
     highWave: boolean;
     earthQuake: boolean;
     sandstormmusic: number;
+    tornado: boolean;
 };
 
 export type CeremonySubMenuState = {

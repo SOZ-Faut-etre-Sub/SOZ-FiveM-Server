@@ -7,6 +7,7 @@ import { MeteorProvider } from './meteor.provider';
 import { OceanProvider } from './ocean.provider';
 import { SpotlightProvider } from './spotlight.provider';
 import { ThunderProvider } from './thunder.provider';
+import { TornadoProvider } from './tornado.provider';
 import { WhatIfProvider } from './whatif.provider';
 import { WorldEventProvider } from './world.event.provider';
 
@@ -20,6 +21,7 @@ import { WorldEventProvider } from './world.event.provider';
         FireworkProvider,
         SpotlightProvider,
         WhatIfProvider,
+        TornadoProvider,
         ThunderProvider,
         FireProvider,
     ],

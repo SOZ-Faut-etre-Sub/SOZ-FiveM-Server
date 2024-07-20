@@ -51,6 +51,8 @@ export enum ServerEvent {
     ADMIN_OCEAN_WATER_LEVEL = 'soz-core:server:admin:ocean:water-level',
     ADMIN_OCEAN_WATER_HIGH_WAVE = 'soz-core:server:admin:ocean:high-wave',
     ADMIN_EARTHQUAKE = 'soz-core:server:admin:earthquake',
+    ADMIN_TORNADO = 'soz-core:server:admin:tornado',
+    ADMIN_TORNADO_MOVE = 'soz-core:server:admin:tornado-move',
     ADMIN_EVENT_CREATE = 'soz-core:server:admin:event:create',
     ADMIN_EVENT_DELETE = 'soz-core:server:admin:event:delete',
     ADMIN_EVENT_ADD_REWARD = 'soz-core:server:admin:event:add-reward',
@@ -827,4 +829,6 @@ export enum ServerEvent {
 
     ADMIN_STAR_NEW_FIRE_PIT = 'soz-core:admin:star:new-fire-pit',
     ADMIN_FORCE_PIT_EXTINGUISH = 'soz-core:admin:star:force-pit-extinguish',
+
+    TORNADO = 'soz-core:server:tornado',
 }

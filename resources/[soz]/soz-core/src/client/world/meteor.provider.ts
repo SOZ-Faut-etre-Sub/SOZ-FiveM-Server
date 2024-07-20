@@ -543,4 +543,15 @@ export class MeteorProvider {
                 'Alerte Inondation - Suite à de fortes pluies, une importante montée des eaux à été détéctée. Nous vous invitons à éviter les endroits à risques.',
         });
     }
+
+    @OnNuiEvent(NuiEvent.AdminMenuTornadoFlash)
+    public async tornadoFlash() {
+        await emitRpc(RpcServerEvent.PHONE_APP_NEWS_CREATE, {
+            type: 'tornado',
+            reporterId: '',
+            job: '',
+            message:
+                "Une tornade a été détectée dans votre secteur. Mettez-vous immédiatement à l’abri dans un endroit sûr (sous-sol ou pièce sans fenêtre). Évitez les déplacements. Restez à l'écoute des consignes des autorités.",
+        });
+    }
 }

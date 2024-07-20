@@ -18,6 +18,7 @@ import { RebootProvider } from '../reboot/reboot.provider';
 import { NpcProvider } from '../utils/npc.provider';
 import { EarthquakeProvider } from './earthquake.provider';
 import { OceanProvider } from './ocean.provider';
+import { TornadoProvider } from './tornado.provider';
 
 @Provider()
 export class MeteorProvider {
@@ -53,6 +54,9 @@ export class MeteorProvider {
 
     @Inject(FeatureProvider)
     private featureProvider: FeatureProvider;
+
+    @Inject(TornadoProvider)
+    private tornadoProvider: TornadoProvider;
 
     private siren = 0;
     private music = 0;
@@ -97,7 +101,7 @@ export class MeteorProvider {
     }
 
     @Rpc(RpcServerEvent.ADMIN_METEOR_STATE)
-    public getMEteorSate(): MeteorSubMenuState {
+    public getMeteorSate(): MeteorSubMenuState {
         return {
             disableNpc: this.npcProvider.isDisabled(),
             music: this.music,
@@ -106,6 +110,7 @@ export class MeteorProvider {
             earthQuake: this.earthquakeProvider.isEarthQuake(),
             highWave: this.oceanProvider.getHighWave(),
             sandstormmusic: this.sandstormmusic,
+            tornado: this.tornadoProvider.isRunning(),
         };
     }
 
