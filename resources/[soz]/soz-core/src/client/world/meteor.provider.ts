@@ -370,12 +370,15 @@ export class MeteorProvider {
         await wait(3000);
         DoScreenFadeOut(2000);
 
+        await wait(2000);
+        this.hudStateProvider.setHudVisible(true);
+        this.hudStateProvider.setCinematicMode(false);
+
         await wait(30_000);
         DoScreenFadeIn(100);
 
         this.playerHealthProvider.setNutritionDisabled(false);
-        this.hudStateProvider.setHudVisible(true);
-        this.hudStateProvider.setCinematicMode(false);
+
 
         this.inEnd = false;
     }
