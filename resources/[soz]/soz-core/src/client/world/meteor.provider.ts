@@ -379,8 +379,12 @@ export class MeteorProvider {
 
         this.playerHealthProvider.setNutritionDisabled(false);
 
-
         this.inEnd = false;
+    }
+
+    @OnEvent(ClientEvent.METEOR_CHONOS_MUSIC)
+    public async meteorChonosMusic(value: number) {
+        this.nuiDispatch.dispatch('meteor', 'chronos', value);
     }
 
     @OnEvent(ClientEvent.METEOR_MUSIC)

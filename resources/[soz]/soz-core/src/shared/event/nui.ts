@@ -97,6 +97,7 @@ export enum NuiEvent {
     AdminMenuPlayerSetVoipDebug = 'soz-core:nui:admin:player:set-voip-debug',
     AdminMenuMeteorSiren = 'soz-core:nui:admin:meteor:siren',
     AdminMenuMeteorActivate = 'soz-core:nui:admin:meteor:activate',
+    AdminMenuMeteorChronosMusic = 'soz-core:nui:admin:meteor:chonos-music',
     AdminMenuMeteorMusic = 'soz-core:nui:admin:meteor:music',
     AdminMenuMeteorDisableNpc = 'soz-core:nui:admin:meteor:disable-npc',
     AdminMenuMeteorKickPlayers = 'soz-core:nui:admin:meteor:kick-players',

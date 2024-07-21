@@ -24,6 +24,7 @@ export class MeteorProvider {
 
     private siren = 0;
     private music = 0;
+    private chronos = 0;
     private disabledNpc = false;
 
     @Rpc(RpcServerEvent.ADMIN_METEOR_STATE)
@@ -32,6 +33,7 @@ export class MeteorProvider {
             disableNpc: this.disabledNpc,
             music: this.music,
             siren: this.siren,
+            chronos: this.chronos,
         };
     }
 
@@ -65,6 +67,16 @@ export class MeteorProvider {
 
         this.music = value;
         TriggerClientEvent(ClientEvent.METEOR_MUSIC, -1, value);
+    }
+
+    @OnEvent(ServerEvent.ADMIN_METEOR_CHONOS_MUSIC)
+    public activateChonosMusic(source: number, value: number) {
+        if (!this.permissionService.isStaff(source)) {
+            return;
+        }
+
+        this.chronos = value;
+        TriggerClientEvent(ClientEvent.METEOR_CHONOS_MUSIC, -1, value);
     }
 
     @OnEvent(ServerEvent.ADMIN_METEOR_KICK_PLAYERS)

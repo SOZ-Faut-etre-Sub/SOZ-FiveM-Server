@@ -3,5 +3,6 @@ export interface NuiMeteorMap {
     start: never;
     white: never;
     siren: number;
+    chronos: number;
     music: number;
 }

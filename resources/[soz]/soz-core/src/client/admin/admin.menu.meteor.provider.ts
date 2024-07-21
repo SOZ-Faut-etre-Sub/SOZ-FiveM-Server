@@ -26,6 +26,11 @@ export class AdminMenuMeteorProvider {
         TriggerServerEvent(ServerEvent.ADMIN_METEOR_ACTIVATE);
     }
 
+    @OnNuiEvent(NuiEvent.AdminMenuMeteorChronosMusic)
+    public async activateMeteorChonosMusic(value: number): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_METEOR_CHONOS_MUSIC, value);
+    }
+
     @OnNuiEvent(NuiEvent.AdminMenuMeteorMusic)
     public async activateMeteorMusic(value: number): Promise<void> {
         TriggerServerEvent(ServerEvent.ADMIN_METEOR_MUSIC, value);

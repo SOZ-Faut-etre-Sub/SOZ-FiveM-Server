@@ -75,6 +75,7 @@ export type MeteorSubMenuState = {
     disableNpc: boolean;
     siren: number;
     music: number;
+    chronos: number;
 };
 
 export type AdminMenuData = {

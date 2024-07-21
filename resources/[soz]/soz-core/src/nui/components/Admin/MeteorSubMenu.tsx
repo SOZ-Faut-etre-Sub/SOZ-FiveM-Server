@@ -39,6 +39,21 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner, s
                         ))}
                 </MenuItemSelect>
                 <MenuItemSelect
+                    title={`Chonos`}
+                    value={state.music}
+                    onConfirm={async index => {
+                        await fetchNui(NuiEvent.AdminMenuMeteorChronosMusic, index);
+                    }}
+                >
+                    {Array(11)
+                        .fill(0)
+                        .map((_, index) => (
+                            <MenuItemSelectOption value={index} key={`music_${index}`}>
+                                {index}
+                            </MenuItemSelectOption>
+                        ))}
+                </MenuItemSelect>
+                <MenuItemSelect
                     title={`Musique`}
                     value={state.music}
                     onConfirm={async index => {

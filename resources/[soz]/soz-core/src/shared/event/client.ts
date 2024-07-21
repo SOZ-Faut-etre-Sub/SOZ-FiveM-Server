@@ -331,4 +331,5 @@ export enum ClientEvent {
     METEOR_START = 'soz-core:client:meteor:start',
     METEOR_MUSIC = 'soz-core:client:meteor:music',
     METEOR_SIREN = 'soz-core:client:meteor:siren',
+    METEOR_CHONOS_MUSIC = 'soz-core:client:meteor:chronos-music',
 }

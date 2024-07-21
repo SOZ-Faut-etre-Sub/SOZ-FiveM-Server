@@ -4,6 +4,7 @@ import { useNuiEvent } from '../../hook/nui';
 
 export const Meteor: FunctionComponent = () => {
     const audioCtx = useRef<AudioContext>(new AudioContext());
+    const gainChronos = useRef<GainNode>(null);
     const gainMusic = useRef<GainNode>(null);
     const gainSiren = useRef<GainNode>(null);
     const meteortrack = useRef<MediaElementAudioSourceNode>(null);
@@ -100,12 +101,14 @@ export const Meteor: FunctionComponent = () => {
         }
     }
 
+    useNuiEvent('meteor', 'chronos', value => handleVolume('#chronos', gainChronos, value), [audioCtx, gainChronos]);
     useNuiEvent('meteor', 'music', value => handleVolume('#music-event', gainMusic, value), [audioCtx, gainMusic]);
     useNuiEvent('meteor', 'siren', value => handleVolume('#siren', gainSiren, value), [audioCtx, gainSiren]);
 
     return (
         <div>
             {white && <div className="w-full h-full grid h-screen bg-white animate-display-in-long opacity-0"></div>}
+            <audio id="chronos" src="https://cfx-nui-soz-sounds/meteor/chronos.mp3"></audio>
             <audio id="meteor" src="https://cfx-nui-soz-sounds/meteor/meteor.mp3"></audio>
             <audio id="music-event" src="https://cfx-nui-soz-sounds/meteor/ambiance.mp3"></audio>
             <audio id="siren" src="https://cfx-nui-interact-sound/client/html/sounds/system/reboot.ogg"></audio>
