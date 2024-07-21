@@ -79,7 +79,7 @@ export class PlayerPositionProvider {
         DoScreenFadeOut(this.fadeDelay);
         await wait(this.fadeDelay);
 
-        this.weaponDrawingProvider.undrawWeapons();
+        await this.weaponDrawingProvider.undrawWeapons();
         this.LSMCPlasterProvider.disablePlaster();
         this.attachedObjectService.detachAll();
 

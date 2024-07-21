@@ -4,7 +4,7 @@ import { On, Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { wait } from '../../core/utils';
-import { ClientEvent, ServerEvent } from '../../shared/event';
+import { ClientEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
 import { PlayerData } from '../../shared/player';
 import { WeaponDrawPosition, Weapons } from '../../shared/weapons/weapon';
@@ -73,10 +73,7 @@ export class WeaponDrawingProvider {
 
     private async undrawWeapon() {
         Object.values(this.weaponAttached).forEach(weapon => {
-            SetEntityAsMissionEntity(weapon, true, true);
-            const netId = ObjToNet(weapon);
-            TriggerServerEvent(ServerEvent.OBJECT_ATTACHED_UNREGISTER, netId);
-            DeleteObject(weapon);
+            this.attachedObjectService.detachObjectToPlayer(weapon);
         });
         this.weaponAttached = {};
     }
@@ -132,8 +129,10 @@ export class WeaponDrawingProvider {
 
     @OnEvent(ClientEvent.BASE_LEFT_VEHICLE)
     public async drawWeapons() {
-        this.shouldDrawWeapon = true;
-        await this.drawWeapon();
+        if (!this.shouldDrawWeapon) {
+            this.shouldDrawWeapon = true;
+            await this.drawWeapon();
+        }
     }
 
     async refreshDrawWeapons() {
