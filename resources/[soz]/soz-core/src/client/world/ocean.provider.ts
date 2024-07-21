@@ -1,4 +1,3 @@
-import { Command } from '@public/core/decorators/command';
 import { Once, OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Tick } from '@public/core/decorators/tick';
