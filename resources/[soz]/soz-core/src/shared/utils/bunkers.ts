@@ -13,7 +13,7 @@ type Bunker = {
 export const Bunkers: Bunker[] = [
     {
         model: 'soz_bunker_5',
-        label: 'Bunker 5',
+        label: 'Shelter 5',
         insideCoords: [-1507.6, -3017.18, -79.24, 357.96],
         exitInteractionZone: new BoxZone([-1508.82, -3016.25, -79.14], 0.2, 0.4, {
             heading: 178.96,
@@ -24,7 +24,7 @@ export const Bunkers: Bunker[] = [
     },
     {
         model: 'soz_bunker_16',
-        label: 'Bunker 16',
+        label: 'Shelter 16',
         insideCoords: [2155.08, 2921.08, -61.9, 88.33],
         exitInteractionZone: new BoxZone([2154.99, 2922.45, -61.95], 0.2, 0.2, {
             heading: 269.33,
@@ -35,7 +35,7 @@ export const Bunkers: Bunker[] = [
     },
     {
         model: 'soz_bunker_20',
-        label: 'Bunker 20',
+        label: 'Shelter 20',
         insideCoords: [482.89, 4811.03, -58.38, 12],
         exitInteractionZone: new BoxZone([487.53, 4820.08, -58.03], 0.2, 0.4, {
             heading: 101.29,
@@ -46,7 +46,7 @@ export const Bunkers: Bunker[] = [
     },
     {
         model: 'soz_bunker_22',
-        label: 'Bunker 22',
+        label: 'Shelter 22',
         insideCoords: [520.3, 5902.69, -158.08, 316.84],
         exitInteractionZone: new BoxZone([518.4, 5900.55, -158.08], 1.0, 3.6, {
             heading: 317.86,
