@@ -9957,6 +9957,18 @@ QBShared.Items = {
         ['description'] = "Un certificat autorisant la création d'un utilitaire de police.",
         ['illustrator'] = '.Smogogo'
     },
+    ['full_scarf'] = {
+        ['name'] = 'full_scarf',
+        ['label'] = "Foulard intégral",
+        ['weight'] = 500,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Deviens le ninja des sables et protège-toi des tempêtes du désert ! Élégance, mystère et protection UV inclus. Parfait pour éviter le bronzage Zébré !",
+        ['illustrator'] = '.Sniteur'
+    },
 
     --- Fishing Items
     ['basic_rod'] = {
