@@ -1,3 +1,4 @@
+import { Command } from '@public/core/decorators/command';
 import { Once, OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Tick } from '@public/core/decorators/tick';
@@ -5,6 +6,7 @@ import { emitRpc } from '@public/core/rpc';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import { NumberValidator } from '@public/shared/nui/input';
 import { RpcServerEvent } from '@public/shared/rpc';
+import { Bunkers } from '@public/shared/utils/bunkers';
 
 import { Provider } from '../../core/decorators/provider';
 import { InputService } from '../nui/input.service';
@@ -22,6 +24,7 @@ export class OceanProvider {
     private highWave = false;
     private configLoaded: number = null;
     private dryVolume = null;
+    private inBunker = false;
 
     @Once()
     public async init() {
@@ -59,6 +62,24 @@ export class OceanProvider {
 
     @Tick(100)
     public waterLevelLoop() {
+        const intId = GetInteriorFromEntity(PlayerPedId());
+        if (
+            Bunkers.filter(b => b.interiorId == 271873)
+                .map(b => b.interiorId)
+                .includes(intId)
+        ) {
+            if (this.configLoaded != -100) {
+                LoadWaterFromPath('soz-mapdata', 'water/water-100.xml');
+                this.configLoaded = -100;
+            }
+            this.inBunker = true;
+        } else {
+            if (this.inBunker) {
+                this.reload = true;
+            }
+            this.inBunker = false;
+        }
+
         if (this.currentLevel == this.targetLevel && !this.reload) {
             return;
         }
@@ -74,7 +95,9 @@ export class OceanProvider {
             TriggerServerEvent(ServerEvent.ADMIN_OCEAN_WATER_CURRENT_LEVEL, this.currentLevel);
         }
 
-        this.setWaterQuadsLevel();
+        if (!this.inBunker) {
+            this.setWaterQuadsLevel();
+        }
     }
 
     private setWaterQuadsLevel() {

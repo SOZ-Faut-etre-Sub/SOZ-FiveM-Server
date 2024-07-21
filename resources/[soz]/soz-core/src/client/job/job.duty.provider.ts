@@ -1,3 +1,5 @@
+import { Bunkers } from '@public/shared/utils/bunkers';
+
 import { Once, OnceStep } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -123,6 +125,8 @@ const DutyZoneConfig: Zone<JobType>[] = [
         maxZ: 46.45,
         heading: 200,
     },
+    //meteor
+    /*
     {
         data: JobType.Food,
         center: [-1876.2, 2059.5, 141.0],
@@ -132,6 +136,7 @@ const DutyZoneConfig: Zone<JobType>[] = [
         maxZ: 141.5,
         heading: 70.25,
     },
+    */
     {
         data: JobType.Baun,
         center: [-1388.11, -606.23, 30.32],
@@ -233,6 +238,8 @@ const DutyZoneConfig: Zone<JobType>[] = [
     },
 ];
 
+const BunkerDutyZone = ['xm_prop_base_staff_desk_01', 'v_corp_officedesk'];
+
 const DutyPedConfig: Partial<Record<JobType, number>> = {};
 
 @Provider()
@@ -258,6 +265,16 @@ export class JobDutyProvider {
 
         for (const [job, ped] of Object.entries(DutyPedConfig)) {
             this.targetFactory.createForModel(ped, this.getDutyZoneTarget(job as JobType));
+        }
+
+        for (const duty of DutyZoneConfig) {
+            this.targetFactory.createForBoxZone(`job:duty:${duty.data}:${i}`, duty, this.getDutyZoneTarget(duty.data));
+
+            i++;
+        }
+
+        for (const model of BunkerDutyZone) {
+            this.targetFactory.createForModel(model, this.getBunkerDutyZoneTarget());
         }
     }
 
@@ -297,6 +314,30 @@ export class JobDutyProvider {
                     );
                 },
                 job,
+            },
+        ];
+    }
+
+    getBunkerDutyZoneTarget(): TargetOptions[] {
+        return [
+            {
+                type: 'server',
+                event: 'QBCore:ToggleDuty',
+                icon: 'fas fa-sign-in-alt',
+                label: 'Prise de service',
+                canInteract: () => {
+                    const player = this.playerService.getPlayer();
+                    if (!player || player.job.id == JobType.Food) {
+                        return;
+                    }
+
+                    const intId = GetInteriorFromEntity(PlayerPedId());
+
+                    if (!Bunkers.map(b => b.interiorId).includes(intId)) {
+                        return false;
+                    }
+                    return !this.playerService.isOnDuty();
+                },
             },
         ];
     }
