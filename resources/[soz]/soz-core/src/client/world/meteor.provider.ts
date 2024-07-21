@@ -16,9 +16,11 @@ import {
     Vector3,
 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
+import { Bunkers } from '@public/shared/utils/bunkers';
 import { VehicleSeat } from '@public/shared/vehicle/vehicle';
 
 import { HudStateProvider } from '../hud/hud.state.provider';
+import { Monitor } from '../monitor/monitor';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { PlayerHealthProvider } from '../player/player.health.provider';
 import { ResourceLoader } from '../repository/resource.loader';
@@ -42,6 +44,9 @@ export class MeteorProvider {
     @Inject(PlayerHealthProvider)
     public playerHealthProvider: PlayerHealthProvider;
 
+    @Inject(Monitor)
+    public monitor: Monitor;
+
     private entity: number = null;
     private inEnd = false;
     private inExplosion = false;
@@ -59,6 +64,12 @@ export class MeteorProvider {
     @OnEvent(ClientEvent.METEOR_START)
     public async meteorStart() {
         this.nuiDispatch.dispatch('meteor', 'load');
+
+        const intId = GetInteriorFromEntity(PlayerPedId());
+
+        if (!Bunkers.map(b => b.interiorId).includes(intId)) {
+            this.monitor.traceEvent('meteor_outside', {});
+        }
 
         const rock = GetHashKey('soz_prop_meteor');
         await this.resourceLoader.loadPtfxAsset('scr_ar_planes');

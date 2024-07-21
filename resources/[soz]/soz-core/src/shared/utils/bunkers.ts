@@ -8,6 +8,7 @@ type Bunker = {
     insideCoords: Vector4;
     outsideCoods: Vector4;
     intermediate?: Vector4;
+    interiorId: number;
 };
 
 export const Bunkers: Bunker[] = [
@@ -21,6 +22,7 @@ export const Bunkers: Bunker[] = [
             maxZ: -78.64,
         }),
         outsideCoods: [-387.41, -2139.15, 10.46, 191.15],
+        interiorId: 271873,
     },
     {
         model: 'soz_bunker_16',
@@ -32,6 +34,7 @@ export const Bunkers: Bunker[] = [
             maxZ: -61.55,
         }),
         outsideCoods: [926.32, 3525.7, 34.22, 354.69],
+        interiorId: 270081,
     },
     {
         model: 'soz_bunker_20',
@@ -43,6 +46,7 @@ export const Bunkers: Bunker[] = [
             maxZ: -57.83,
         }),
         outsideCoods: [2597.23, 3559.32, 52.24, 217.7],
+        interiorId: 269313,
     },
     {
         model: 'soz_bunker_22',
@@ -55,5 +59,6 @@ export const Bunkers: Bunker[] = [
         }),
         outsideCoods: [-291.61, 6444.05, 12.45, 41.31],
         intermediate: [-354.32, 4825.37, 144.3, 137.8],
+        interiorId: 268289,
     },
 ];
