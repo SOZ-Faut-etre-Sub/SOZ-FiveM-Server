@@ -308,6 +308,8 @@ export class PlayerHealthProvider {
 
     private disableSprint = false;
 
+    private disableNutrition = false;
+
     @Tick(50)
     private async updateNuiHealth(): Promise<void> {
         const health = GetEntityHealth(PlayerPedId());
@@ -316,9 +318,13 @@ export class PlayerHealthProvider {
         this.nuiDispatch.dispatch('player', 'UpdatePlayerStats', [health, armor]);
     }
 
+    public setNutritionDisabled(value: boolean) {
+        this.disableNutrition = value;
+    }
+
     @Tick(TickInterval.EVERY_MINUTE)
     private async nutritionLoop(): Promise<void> {
-        if (this.playerService.isLoggedIn()) {
+        if (this.playerService.isLoggedIn() && !this.disableNutrition) {
             TriggerServerEvent(ServerEvent.PLAYER_NUTRITION_LOOP);
         }
     }

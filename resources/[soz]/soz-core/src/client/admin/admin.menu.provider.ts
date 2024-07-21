@@ -1,3 +1,5 @@
+import { MeteorSubMenuState } from '@public/shared/admin/admin';
+
 import { Command } from '../../core/decorators/command';
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -79,6 +81,7 @@ export class AdminMenuProvider {
         const banner = 'https://nui-img/soz/menu_admin_' + permission;
         const ped = PlayerPedId();
         const characters = await emitRpc<Record<string, PlayerCharInfo>>(RpcServerEvent.ADMIN_GET_CHARACTERS);
+        const meteorState = await emitRpc<MeteorSubMenuState>(RpcServerEvent.ADMIN_METEOR_STATE);
 
         this.nuiMenu.openMenu<MenuType.AdminMenu>(
             MenuType.AdminMenu,
@@ -116,6 +119,7 @@ export class AdminMenuProvider {
                         noBurstTyres: this.adminMenuVehicleProvider.getNoBurstTyres(),
                         noSurfaceCalc: this.vehicleOffroadProvider.getNoSurfaceCalc(),
                     },
+                    meteor: meteorState,
                 },
             },
             { subMenuId }

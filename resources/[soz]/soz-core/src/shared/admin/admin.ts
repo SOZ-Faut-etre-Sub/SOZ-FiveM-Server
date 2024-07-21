@@ -71,6 +71,12 @@ export type VehicleSubMenuState = {
     noSurfaceCalc: boolean;
 };
 
+export type MeteorSubMenuState = {
+    disableNpc: boolean;
+    siren: number;
+    music: number;
+};
+
 export type AdminMenuData = {
     banner: string;
     permission: SozRole;
@@ -82,6 +88,7 @@ export type AdminMenuData = {
         skin: SkinSubMenuState;
         developer: DeveloperSubMenuState;
         vehicule: VehicleSubMenuState;
+        meteor: MeteorSubMenuState;
     };
 };
 

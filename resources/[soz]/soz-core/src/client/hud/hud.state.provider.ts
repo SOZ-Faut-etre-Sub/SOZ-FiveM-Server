@@ -27,6 +27,8 @@ export class HudStateProvider {
     private isHudVisible = true;
 
     private isCinematicMode = false;
+    private cinematicModeTransitionEnd = 0;
+    private cinematicModeTransitionStart = 0;
 
     private isPhoneCameraMode = false;
 
@@ -54,8 +56,10 @@ export class HudStateProvider {
         this.updateHudState();
     }
 
-    public setCinematicMode(enabled: boolean): void {
+    public setCinematicMode(enabled: boolean, transitionTime = 0): void {
         this.isCinematicMode = enabled;
+        this.cinematicModeTransitionStart = Date.now();
+        this.cinematicModeTransitionEnd = this.cinematicModeTransitionStart + transitionTime;
         this.updateHudState();
     }
 
@@ -104,8 +108,19 @@ export class HudStateProvider {
         }
 
         if (this.isCinematicMode) {
-            DrawRect(0.5, 0.05, 1.0, 0.1, 0, 0, 0, 255);
-            DrawRect(0.5, 0.95, 1.0, 0.1, 0, 0, 0, 255);
+            const transaitionDuration = this.cinematicModeTransitionEnd - this.cinematicModeTransitionStart;
+            let h = 1.0;
+            if (transaitionDuration) {
+                h = (Date.now() - this.cinematicModeTransitionStart) / transaitionDuration;
+                if (h > 1.0) {
+                    this.cinematicModeTransitionStart = 0;
+                    this.cinematicModeTransitionEnd = 0;
+                    h = 1.0;
+                }
+            }
+
+            DrawRect(0.5, h / 20, 1.0, h / 10, 0, 0, 0, 255);
+            DrawRect(0.5, 1 - h / 20, 1.0, h / 10, 0, 0, 0, 255);
         }
 
         // handle reticle

@@ -1,7 +1,6 @@
 import { Module } from '../../core/decorators/module';
-import { BlipFactory } from '../blip';
 import { MeteorProvider } from './meteor.provider';
 @Module({
-    providers: [BlipFactory, MeteorProvider],
+    providers: [MeteorProvider],
 })
 export class WorldModule {}

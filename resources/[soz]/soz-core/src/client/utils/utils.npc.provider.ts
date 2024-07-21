@@ -1,6 +1,10 @@
-import { On, Once } from '@public/core/decorators/event';
+import { On, Once, OnEvent } from '@public/core/decorators/event';
 import { Tick } from '@public/core/decorators/tick';
+import { emitRpc } from '@public/core/rpc';
+import { ClientEvent } from '@public/shared/event';
 import { Vector2 } from '@public/shared/polyzone/vector';
+import { RpcServerEvent } from '@public/shared/rpc';
+import { DefaultPedDensity, PedDensityType } from '@public/shared/utils/npc';
 
 import { Provider } from '../../core/decorators/provider';
 
@@ -182,16 +186,10 @@ const disabledPickups = [
 
 @Provider()
 export class UtilsNPCProvider {
-    private density = {
-        parked: 1.0,
-        vehicle: 1.0,
-        multiplier: 1.0,
-        peds: 1.0,
-        scenario: 1.0, //Walking NPC Density
-    };
+    private density = DefaultPedDensity;
 
     @Once()
-    public onStart() {
+    public async onStart() {
         const relationshipTypesLike = ['CIVMALE', 'CIVFEMALE', 'COP', 'SECURITY_GUARD', 'PRIVATE_SECURITY'];
 
         const relationshipTypesRespect = [
@@ -298,6 +296,11 @@ export class UtilsNPCProvider {
         for (const hash of disabledPickups) {
             ToggleUsePickupsForPlayer(playerId, hash, false);
         }
+
+        const densities = await emitRpc<Partial<Record<PedDensityType, number>>>(RpcServerEvent.GET_DISABLE_NPC);
+        for (const [type, value] of Object.entries(densities)) {
+            this.density[type] = value;
+        }
     }
 
     @Tick()
@@ -315,8 +318,11 @@ export class UtilsNPCProvider {
         DisablePlayerVehicleRewards(PlayerId());
     }
 
-    public updateDensity(type: string, value: number) {
-        this.density[type] = value;
+    @OnEvent(ClientEvent.NPC_DENSITY_UPDATE)
+    public updateDensity(densities: Partial<Record<PedDensityType, number>>) {
+        for (const [type, value] of Object.entries(densities)) {
+            this.density[type] = value;
+        }
     }
 
     @On('populationPedCreating')

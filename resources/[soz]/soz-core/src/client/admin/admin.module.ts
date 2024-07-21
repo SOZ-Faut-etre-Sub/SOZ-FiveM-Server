@@ -5,6 +5,7 @@ import { AdminMenuGameMasterProvider } from './admin.menu.game-master.provider';
 import { AdminMenuInteractiveProvider } from './admin.menu.interactive.provider';
 import { AdminMenuJobProvider } from './admin.menu.job.provider';
 import { AdminMenuMapperProvider } from './admin.menu.mapper.provider';
+import { AdminMenuMeteorProvider } from './admin.menu.meteor.provider';
 import { AdminMenuPlayerProvider } from './admin.menu.player.provider';
 import { AdminMenuProvider } from './admin.menu.provider';
 import { AdminMenuSkinProvider } from './admin.menu.skin.provider';
@@ -24,6 +25,7 @@ import { AdminSpectateProvider } from './admin.spectate.provider';
         AdminMenuProvider,
         AdminSpectateProvider,
         AdminMenuCharacterProvider,
+        AdminMenuMeteorProvider,
     ],
 })
 export class AdminModule {}

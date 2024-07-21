@@ -55,6 +55,26 @@ export class RebootProvider {
         deferrals.done();
     }
 
+    public async kickAll(message: string) {
+        this.isClosed = true;
+
+        await this.prismaService.playerVehicle.updateMany({
+            where: {
+                state: PlayerVehicleState.Out,
+            },
+            data: {
+                state: PlayerVehicleState.Destroyed,
+                parkingtime: Math.round(Date.now() / 1000),
+            },
+        });
+
+        const players = this.qbCore.getPlayersSources();
+
+        for (const source of players) {
+            DropPlayer(source.toString(), message);
+        }
+    }
+
     @Command('reboot', {
         role: 'admin',
     })

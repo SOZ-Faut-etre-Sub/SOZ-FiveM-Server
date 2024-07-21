@@ -42,6 +42,7 @@ import { RadioApp } from './Radio/RadioApp';
 import { RadioVehicleApp } from './Radio/RadioVehicleApp';
 import { StateApp } from './StateApp';
 import { TaxiHorodateurApp } from './Taxi/TaxiHorodateurApp';
+import { Meteor } from './World/Meteor';
 
 export const App: FunctionComponent = () => {
     const [pauseMenuActive, setPauseMenuActive] = useState(false);
@@ -111,6 +112,7 @@ export const App: FunctionComponent = () => {
                 <InputApp />
                 <MedicalApp />
             </div>
+            <Meteor />
         </Provider>
     );
 };
