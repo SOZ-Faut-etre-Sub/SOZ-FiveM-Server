@@ -76,6 +76,7 @@ export class MeteorProvider {
         await this.resourceLoader.loadPtfxAsset('core');
         await this.resourceLoader.loadModel(rock);
 
+        DoScreenFadeOut(2200);
         await wait(2000);
         this.nuiDispatch.dispatch('meteor', 'start');
 
@@ -156,7 +157,7 @@ export class MeteorProvider {
         this.fixedCam = CreateCamWithParams(
             'DEFAULT_SCRIPTED_CAMERA',
             coords[0],
-            coords[1],
+            coords[1] > 1500 ? coords[1] - 800 : coords[1],
             coords[2] + 700,
             -80,
             rots[1],
@@ -166,11 +167,10 @@ export class MeteorProvider {
             2
         );
         RenderScriptCams(true, true, 3_000, true, false);
-        DoScreenFadeOut(200);
-        await wait(2_800);
+        await wait(2_200);
 
-        DoScreenFadeIn(200);
-        await wait(200);
+        DoScreenFadeIn(800);
+        await wait(800);
 
         this.meteorCam = CreateCam('DEFAULT_SCRIPTED_CAMERA', true);
         AttachCamToEntity(this.meteorCam, this.entity, 200, -200, 200, false);
