@@ -1,4 +1,5 @@
 import { On, Once, OnEvent } from '@public/core/decorators/event';
+import { Inject } from '@public/core/decorators/injectable';
 import { Tick } from '@public/core/decorators/tick';
 import { emitRpc } from '@public/core/rpc';
 import { ClientEvent } from '@public/shared/event';
@@ -7,6 +8,7 @@ import { RpcServerEvent } from '@public/shared/rpc';
 import { DefaultPedDensity, PedDensityType } from '@public/shared/utils/npc';
 
 import { Provider } from '../../core/decorators/provider';
+import { OceanProvider } from '../world/ocean.provider';
 
 const DisableSpawn: Vector2[][] = [
     [
@@ -193,6 +195,9 @@ const disabledPickups = [
 export class UtilsNPCProvider {
     private density = DefaultPedDensity;
 
+    @Inject(OceanProvider)
+    public oceanProvider: OceanProvider;
+
     @Once()
     public async onStart() {
         const relationshipTypesLike = ['CIVMALE', 'CIVFEMALE', 'COP', 'SECURITY_GUARD', 'PRIVATE_SECURITY'];
@@ -332,6 +337,12 @@ export class UtilsNPCProvider {
 
     @On('populationPedCreating')
     public async onPopulationPedCreating(x: number, y: number, z: number) {
+        const waterLevel = this.oceanProvider.getCurrent();
+        if (waterLevel > 0 && 0 < z && z < this.oceanProvider.getCurrent() + 2) {
+            CancelEvent();
+            return;
+        }
+
         for (const zone of DisableSpawn) {
             const Px = {
                 min: null,

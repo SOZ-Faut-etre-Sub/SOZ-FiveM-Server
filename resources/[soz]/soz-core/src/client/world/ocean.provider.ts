@@ -174,7 +174,7 @@ export class OceanProvider {
         this.highWave = value;
     }
 
-    public isHighWaves() {
-        return this.highWave;
+    public getCurrent() {
+        return this.currentLevel;
     }
 }
