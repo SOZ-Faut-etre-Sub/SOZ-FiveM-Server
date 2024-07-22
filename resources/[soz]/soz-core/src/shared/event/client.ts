@@ -291,6 +291,7 @@ export enum ClientEvent {
     FISHING_BAIT_TOGGLE = 'soz-core:server:fishing:toggle-bait',
 
     EASTER_EAR_TOGGLE = 'soz-core:client:easter:toogle-ear',
+    FULL_SCARF_TOGGLE = 'soz-core:client:easter:toggle-full-scarf',
 
     BINOCULARS_TOGGLE = 'items:binoculars:toggle',
     BINOCULARS_SET = 'items:binoculars:set',

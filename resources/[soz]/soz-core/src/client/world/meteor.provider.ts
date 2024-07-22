@@ -15,6 +15,7 @@ import {
     toVectorNorm,
     Vector3,
 } from '@public/shared/polyzone/vector';
+import { getRandomInt } from '@public/shared/random';
 import { RpcServerEvent } from '@public/shared/rpc';
 import { Bunkers } from '@public/shared/utils/bunkers';
 import { VehicleSeat } from '@public/shared/vehicle/vehicle';
@@ -23,6 +24,7 @@ import { HudStateProvider } from '../hud/hud.state.provider';
 import { Monitor } from '../monitor/monitor';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { PlayerHealthProvider } from '../player/player.health.provider';
+import { PlayerService } from '../player/player.service';
 import { ResourceLoader } from '../repository/resource.loader';
 
 const start: Vector3 = [-2334.91, -12000.5, 2500.0];
@@ -47,6 +49,10 @@ export class MeteorProvider {
     @Inject(Monitor)
     public monitor: Monitor;
 
+    @Inject(PlayerService)
+    private playerService: PlayerService;
+
+    private isWearingFullScarf = false;
     private entity: number = null;
     private inEnd = false;
     private inExplosion = false;
@@ -395,5 +401,31 @@ export class MeteorProvider {
     @OnEvent(ClientEvent.METEOR_SIREN)
     public async meteorSiren(value: number) {
         this.nuiDispatch.dispatch('meteor', 'siren', value);
+    }
+
+    private readonly skin: any = {
+        [GetHashKey('mp_m_freemode_01')]: {
+            Components: {
+                [1]: { Drawable: 115, Texture: 0, Palette: 0 },
+            },
+        },
+        [GetHashKey('mp_f_freemode_01')]: {
+            Components: {
+                [1]: { Drawable: 115, Texture: 0, Palette: 0 },
+            },
+        },
+    };
+
+    @OnEvent(ClientEvent.FULL_SCARF_TOGGLE)
+    public onToggleFullScarf() {
+        const player = this.playerService.getPlayer();
+        if (this.isWearingFullScarf) {
+            this.playerService.setTempClothes(null);
+        } else {
+            const fullScarf = this.skin[player.skin.Model.Hash];
+            fullScarf.Components[1].Texture = getRandomInt(0, 25);
+            this.playerService.setTempClothes(fullScarf);
+        }
+        this.isWearingFullScarf = !this.isWearingFullScarf;
     }
 }
