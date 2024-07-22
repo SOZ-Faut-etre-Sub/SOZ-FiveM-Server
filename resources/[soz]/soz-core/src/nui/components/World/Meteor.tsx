@@ -27,14 +27,13 @@ export const Meteor: FunctionComponent = () => {
         () => {
             setWhite(false);
             const audioElement = document.querySelector('#meteor') as HTMLMediaElement;
-            audioElement.volume = 0.5;
+            audioElement.volume = 0.36;
             if (!meteortrack.current) {
                 meteortrack.current = audioCtx.current.createMediaElementSource(audioElement);
                 meteortrack.current.connect(audioCtx.current.destination);
             }
 
             audioElement.currentTime = 0.0;
-            audioElement.volume = 0.7;
             audioElement.load();
             audioElement.play();
 
