@@ -4,7 +4,7 @@ import { Provider } from '@core/decorators/provider';
 import { Rpc } from '@public/core/decorators/rpc';
 import { emitClientRpc } from '@public/core/rpc';
 import { PrismaService } from '@public/server/database/prisma.service';
-import { InventoryManager } from '@public/server/inventory/inventory.manager';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { ItemService } from '@public/server/item/item.service';
 import { Monitor } from '@public/server/monitor/monitor';
 import { Notifier } from '@public/server/notifier';
@@ -12,7 +12,7 @@ import { ObjectProvider } from '@public/server/object/object.provider';
 import { PlayerService } from '@public/server/player/player.service';
 import { ProgressService } from '@public/server/player/progress.service';
 import { ServerEvent } from '@public/shared/event';
-import { InventoryItem, Item } from '@public/shared/item';
+import { Item } from '@public/shared/item';
 import { JobType } from '@public/shared/job';
 import {
     canCropBeHarvest,
@@ -32,12 +32,16 @@ import { getDistance, toVector3Object, Vector3 } from '@public/shared/polyzone/v
 import { RpcClientEvent, RpcServerEvent } from '@public/shared/rpc';
 import { formatDuration } from '@public/shared/utils/timeformat';
 
+import { InventoryItem } from '../../../shared/inventory';
+import { isOk } from '../../../shared/result';
 import { VehicleClass } from '../../../shared/vehicle/vehicle';
+import { Inventory } from '../../inventory/inventory';
+import { VehicleStateService } from '../../vehicle/vehicle.state.service';
 
 @Provider()
 export class FDFFieldProvider {
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(Notifier)
     private notifier: Notifier;
@@ -56,6 +60,9 @@ export class FDFFieldProvider {
 
     @Inject(PrismaService)
     private prismaService: PrismaService;
+
+    @Inject(VehicleStateService)
+    private vehicleStateService: VehicleStateService;
 
     @Inject(Monitor)
     private monitor: Monitor;
@@ -102,14 +109,20 @@ export class FDFFieldProvider {
     }
 
     @OnEvent(ServerEvent.FDF_FIELD_PLANT)
-    public onCropPlant(source: number, name: string) {
-        const invItem = this.inventoryManager.findItem(source, item => item.name == name);
+    public async onCropPlant(source: number, name: string) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+        const invItem = inventory.getItem(name);
         const item = this.itemService.getItem(name);
 
-        this.plantSeed(source, item, invItem);
+        await this.plantSeed(source, item, invItem, inventory);
     }
 
-    public async plantSeed(source: number, item: Item, inventoryItem: InventoryItem): Promise<void> {
+    public async plantSeed(
+        source: number,
+        item: Item,
+        inventoryItem: InventoryItem,
+        inventory: Inventory
+    ): Promise<void> {
         try {
             const type = Object.values(FDFCropType).find(type => FDFCropConfig[type].seed == item.name);
             const config = FDFCropConfig[type];
@@ -215,7 +228,7 @@ export class FDFFieldProvider {
 
                 const date = new Date();
 
-                if (!this.inventoryManager.removeInventoryItem(source, inventoryItem)) {
+                if (!inventory.removeAtSlot(inventoryItem.slot, 1)) {
                     this.notifier.notify(source, "Tu n'as pas assez de graines.", 'error');
                     break;
                 }
@@ -325,27 +338,21 @@ export class FDFFieldProvider {
     }
 
     @Rpc(RpcServerEvent.FDF_CROP_WITH_TRACTOR)
-    public async onCropTractorHarvest(
-        source: number,
-        id: string,
-        trailerPlate: string,
-        context: { model: string; class: VehicleClass; entity: number },
-        trunkType: string
-    ) {
+    public async onCropTractorHarvest(source: number, id: string, vehicleNetId: number, vehicleClass: VehicleClass) {
         const crop = this.crops.get(id);
         if (!crop) {
             return FDFHarvestStatus.UNKNOW_CROP;
         }
 
-        await this.inventoryManager.getOrCreateInventory(trunkType, trailerPlate, context);
+        const state = this.vehicleStateService.getVehicleState(vehicleNetId);
+        const inventory = await this.inventoryFactory.getVehicleInventory(vehicleNetId, vehicleClass, state);
+
         const nbItem = FDFCropConfig[crop.type].harvestCount;
-        const { success } = this.inventoryManager.addItemToInventoryNotPlayer(
-            'trunk_' + trailerPlate,
-            crop.type,
-            nbItem
-        );
-        if (success) {
-            this.removeCrop(source, crop, nbItem, id);
+
+        const result = inventory.add(crop.type, nbItem);
+
+        if (isOk(result)) {
+            await this.removeCrop(source, crop, nbItem, id);
             this.notifier.notify(
                 source,
                 `Vous avez récolté ~y~${nbItem}~s~ ~g~${this.itemService.getItem(crop.type).label}~s~.`
@@ -405,10 +412,13 @@ export class FDFFieldProvider {
 
         let harvestCount = 0;
         let removedCrops = 0;
+
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
         for (const cropId of cropsIdToRemove) {
             const currentCrop = this.crops.get(cropId);
             const nbItem = FDFCropConfig[currentCrop.type].harvestCount;
-            if (!this.inventoryManager.canCarryItem(source, currentCrop.type, nbItem)) {
+            if (!inventory.canCarryItem(currentCrop.type, nbItem)) {
                 this.notifier.notify(
                     source,
                     `Vous ne possédez pas suffisamment de place dans votre inventaire pour récolter.`,
@@ -417,7 +427,7 @@ export class FDFFieldProvider {
                 return 0;
             }
 
-            this.inventoryManager.addItemToInventory(source, currentCrop.type, nbItem);
+            inventory.add(currentCrop.type, nbItem);
             harvestCount += nbItem;
             removedCrops += 1;
             this.removeCrop(source, currentCrop, nbItem, cropId);

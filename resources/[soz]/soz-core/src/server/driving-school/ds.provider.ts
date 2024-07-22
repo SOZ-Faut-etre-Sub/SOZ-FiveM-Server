@@ -87,7 +87,6 @@ export class DrivingSchoolProvider {
 
     @On(ServerEvent.DRIVING_SCHOOL_UPDATE_VEHICLE_LIMIT)
     public async updateVehicleLimit(source: number, limit: number, price: number) {
-        // @TODO Price client side
         if (!(await this.playerMoneyService.buy(source, price, TaxType.VEHICLE))) {
             this.notifier.notify(source, "Vous n'avez pas assez d'argent", 'error');
             return;

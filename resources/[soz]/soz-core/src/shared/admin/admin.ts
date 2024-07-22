@@ -65,6 +65,7 @@ export type DeveloperSubMenuState = {
     noClip: boolean;
     displayCoords: boolean;
     displayMileage: boolean;
+    displayMouseDebug: boolean;
     doors: boolean;
 };
 

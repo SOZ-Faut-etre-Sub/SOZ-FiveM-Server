@@ -117,7 +117,7 @@ QBCore.Functions.CreateCallback("soz-upw:server:PrecheckHarvest", function(sourc
     end
 
     if harvestType == "terminal-in" then
-        local items = exports["soz-inventory"]:GetItemsByType(Player.PlayerData.source, "energy")
+        local items = exports["soz-core"]:GetPlayerItemsByType(Player.PlayerData.source, "energy")
         local amount = 0
 
         for _, itemSlot in pairs(items) do
@@ -130,7 +130,7 @@ QBCore.Functions.CreateCallback("soz-upw:server:PrecheckHarvest", function(sourc
         end
     else
         -- Can item be stored in inventory
-        local canCarry = exports["soz-inventory"]:CanCarryItem(Player.PlayerData.source, item, 1)
+        local canCarry = exports["soz-core"]:CanPlayerCarryItem(Player.PlayerData.source, item, 1)
 
         if not canCarry then
             cb({false, "Vos poches sont pleines..."})
@@ -168,7 +168,7 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
     local p = promise:new()
 
     if harvestType == "terminal-in" then
-        local items = exports["soz-inventory"]:GetItemsByType(Player.PlayerData.source, "energy")
+        local items = exports["soz-core"]:GetPlayerItemsByType(Player.PlayerData.source, "energy")
         local firstItem = items[1]
 
         if not firstItem then
@@ -179,7 +179,7 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
         item = firstItem.item.name
 
         -- Remove energy cell from inventory
-        local invChanged = exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, firstItem.item.name, 1)
+        local invChanged = exports["soz-core"]:RemovePlayerItem(Player.PlayerData.source, firstItem.item.name, 1)
 
         if invChanged and facility.scope == "default" then
             -- Add payment from San Andreas State on default terminals only
@@ -206,19 +206,17 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
             count = 3
         end
 
-        exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, item, count, nil, nil, function(success, reason)
-            p:resolve(success, reason)
+        exports["soz-core"]:AddPlayerItem(Player.PlayerData.source, item, count)
 
-            exports["soz-core"]:TraceEvent("job_upw_energy_collect", {
-                player_source = source,
-                item_id = sharedItem.name,
-                amount = count,
-                facility_id = identifier,
-                facility_type = facility.type,
-                facility_scope = facility.scope,
-                facility_job = facility.job,
-            })
-        end)
+        exports["soz-core"]:TraceEvent("job_upw_energy_collect", {
+            player_source = source,
+            item_id = sharedItem.name,
+            amount = count,
+            facility_id = identifier,
+            facility_type = facility.type,
+            facility_scope = facility.scope,
+            facility_job = facility.job,
+        })
     end
 
     local success, reason = Citizen.Await(p)

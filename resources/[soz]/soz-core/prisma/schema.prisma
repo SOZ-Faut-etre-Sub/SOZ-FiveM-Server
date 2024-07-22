@@ -486,6 +486,13 @@ model storages {
     @@index([name, type, owner], name: "storageTypeOwner")
 }
 
+model inventories {
+    id              String  @id @db.VarChar(255)
+    type            String  @db.VarChar(50)
+    configuration   Json
+    items           Json
+}
+
 model upw_facility {
     id         Int     @id @default(autoincrement())
     type       String  @db.VarChar(50)

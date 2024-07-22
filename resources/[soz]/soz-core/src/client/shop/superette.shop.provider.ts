@@ -6,12 +6,11 @@ import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { TaxType } from '@public/shared/bank';
 import { NuiEvent, ServerEvent } from '@public/shared/event';
-import { ShopItem } from '@public/shared/item';
 import { PositiveNumberValidator } from '@public/shared/nui/input';
 import { MenuType } from '@public/shared/nui/menu';
 import { Vector4 } from '@public/shared/polyzone/vector';
 import { ShopProduct } from '@public/shared/shop';
-import { ShopsContent } from '@public/shared/shop/superette';
+import { ShopItem, ShopsContent } from '@public/shared/shop/superette';
 
 import { ItemService } from '../item/item.service';
 import { InputService } from '../nui/input.service';
@@ -42,12 +41,10 @@ export class SuperetteShopProvider {
         if (brand != ShopBrand.Ammunation) {
             const superetteContent: ShopItem[] = [];
             for (let i = 0; i < ShopsContent[brand].length; i++) {
-                const sharedItem: ShopItem = {
+                const sharedItem = {
                     ...this.itemService.getItem(ShopsContent[brand][i].id),
                     price: ShopsContent[brand][i].price,
-                    amount: 0,
-                    slot: i + 1,
-                };
+                } as ShopItem;
                 superetteContent.push(sharedItem);
             }
 

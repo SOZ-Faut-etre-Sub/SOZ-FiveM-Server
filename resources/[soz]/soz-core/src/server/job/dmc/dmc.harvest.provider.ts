@@ -2,7 +2,7 @@ import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { FieldProvider } from '@public/server/farm/field.provider';
-import { InventoryManager } from '@public/server/inventory/inventory.manager';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { ItemService } from '@public/server/item/item.service';
 import { Monitor } from '@public/server/monitor/monitor';
 import { Notifier } from '@public/server/notifier';
@@ -11,6 +11,9 @@ import { ServerEvent } from '@public/shared/event';
 import { FieldItem, getAmount } from '@public/shared/field';
 import { DMC_FIELDS } from '@public/shared/job/dmc';
 import { toVector3Object, Vector3 } from '@public/shared/polyzone/vector';
+
+import { ADD_ERROR_MESSAGE } from '../../../shared/inventory';
+import { isOk } from '../../../shared/result';
 
 const fieldMessage = {
     dmc_iron_field: 'de fer et charbon',
@@ -23,8 +26,8 @@ export class DmcHarvestProvider {
     @Inject(ProgressService)
     private progressService: ProgressService;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(FieldProvider)
     private fieldService: FieldProvider;
@@ -93,7 +96,9 @@ export class DmcHarvestProvider {
             items.push({ name: fieldItem.name, amount });
         }
 
-        if (!this.inventoryManager.canCarryItems(source, items)) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!inventory.canCarryItems(items)) {
             this.notifier.notify(
                 source,
                 `Vous ne possédez pas suffisamment de place dans votre inventaire pour récolter.`
@@ -102,8 +107,8 @@ export class DmcHarvestProvider {
         }
 
         for (const item of items) {
-            const { success, reason } = this.inventoryManager.addItemToInventory(source, item.name, item.amount);
-            if (success) {
+            const result = inventory.add(item.name, item.amount);
+            if (isOk(result)) {
                 const itemInfo = this.itemService.getItem(item.name);
                 this.notifier.notify(source, `Vous avez récolté ~b~${item.amount} ~b~${itemInfo.label}.`);
 
@@ -115,11 +120,11 @@ export class DmcHarvestProvider {
                     position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
                     field: field,
                 });
-            } else if (reason == 'invalid_weight') {
+            } else if (result.err == 'not_enough_space') {
                 this.notifier.notify(source, 'Vos poches sont pleines...', 'error');
                 return false;
             } else {
-                this.notifier.notify(source, `Il y a eu une erreur: ${item} ${reason}`, 'error');
+                this.notifier.notify(source, `Il y a eu une erreur: ${item} ${ADD_ERROR_MESSAGE[result.err]}`, 'error');
                 return false;
             }
         }

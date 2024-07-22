@@ -131,8 +131,6 @@ export class RebootProvider {
         });
 
         exports['soz-upw'].saveUpw();
-        exports['soz-inventory'].saveInventories();
-        exports['soz-inventory'].stopSyncInventories();
 
         const ids = await this.playerCleanService.getPlayerToCleans();
         const [houseOwnerCount, houseRoommateCount] = await this.playerCleanService.cleanPlayerHouses(ids);

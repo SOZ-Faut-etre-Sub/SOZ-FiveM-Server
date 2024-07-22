@@ -21,6 +21,8 @@ import {
 import { MenuType } from '@public/shared/nui/menu';
 import { RepositoryType } from '@public/shared/repository';
 
+import { InventoryType } from '../../shared/inventory';
+import { Vector3 } from '../../shared/polyzone/vector';
 import { HousingMenuProvider } from './housing.menu.provider';
 
 type PlayerCloakroom = Record<number, PlayerCloakroomItem>;
@@ -161,11 +163,11 @@ export class HousingApartmentZoneProvider {
                         );
                     },
                     action: () => {
-                        this.inventoryManager.openInventory('house_stash', apartment.identifier, {
-                            apartmentTier: apartment.tier,
-                            propertyId: propertyId,
-                            apartmentId: apartment.id,
-                        });
+                        this.inventoryManager.openInventory(
+                            InventoryType.HouseStash,
+                            `house_stash_${apartment.identifier}`,
+                            GetEntityCoords(PlayerPedId()) as Vector3
+                        );
                     },
                 },
             ]);
@@ -190,11 +192,11 @@ export class HousingApartmentZoneProvider {
                         );
                     },
                     action: () => {
-                        this.inventoryManager.openInventory('house_fridge', apartment.identifier, {
-                            apartmentTier: apartment.tier,
-                            propertyId: propertyId,
-                            apartmentId: apartment.id,
-                        });
+                        this.inventoryManager.openInventory(
+                            InventoryType.HouseFridge,
+                            `house_fridge_${apartment.identifier}`,
+                            GetEntityCoords(PlayerPedId()) as Vector3
+                        );
                     },
                 },
             ]);

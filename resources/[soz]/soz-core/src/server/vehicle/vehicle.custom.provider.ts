@@ -1,4 +1,5 @@
 import { VehicleBusinessCustomPrice } from '@private/shared/business.vehicle';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { LSCustomMode } from '@public/shared/vehicle/vehicle';
 
 import { Inject } from '../../core/decorators/injectable';
@@ -13,7 +14,6 @@ import {
 } from '../../shared/vehicle/modification';
 import { PriceService } from '../bank/price.service';
 import { PrismaService } from '../database/prisma.service';
-import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
 import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
@@ -36,8 +36,8 @@ export class VehicleCustomProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(PriceService)
     private priceService: PriceService;
@@ -59,11 +59,11 @@ export class VehicleCustomProvider {
         mode = LSCustomMode.LsCustom,
         crimiPrice: Record<string, number>
     ) {
-        // @TODO Price client side
         const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
         const taxedPrice = await this.priceService.getPrice(price ?? 0, TaxType.VEHICLE);
 
         const playerVehicle = state.volatile.isPlayerVehicle;
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
 
         if (mode == LSCustomMode.LsCustom && taxedPrice && this.playerMoneyService.get(source) < taxedPrice) {
             this.notifier.notify(source, "Vous n'avez pas assez d'argent", 'error');
@@ -73,12 +73,7 @@ export class VehicleCustomProvider {
         if (
             mode == LSCustomMode.CrimiCusto &&
             price &&
-            !this.inventoryManager.hasEnoughItem(
-                source,
-                'veh_strip_piece_std',
-                Math.ceil(price / VehicleBusinessCustomPrice),
-                true
-            )
+            !inventory.hasEnoughItem('veh_strip_piece_std', Math.ceil(price / VehicleBusinessCustomPrice), true)
         ) {
             const item = this.itemService.getItem('veh_strip_piece_std');
             this.notifier.notify(source, `Vous n'avez pas assez de  ~r~${item.label}.`, 'error');
@@ -89,7 +84,7 @@ export class VehicleCustomProvider {
         if (mode == LSCustomMode.CrimiPerfo && crimiPrice) {
             let message = '';
             for (const itemName of Object.keys(crimiPrice)) {
-                if (!this.inventoryManager.hasEnoughItem(source, itemName, crimiPrice[itemName], true)) {
+                if (!inventory.hasEnoughItem(itemName, crimiPrice[itemName], true)) {
                     const item = this.itemService.getItem(itemName);
                     message += `~b~${crimiPrice[itemName]}~s~ ~r~${item.label}~s~~n~`;
                 }
@@ -110,14 +105,7 @@ export class VehicleCustomProvider {
             // LS Custom upgrade parts
             const upgradedParts = this.getLSCustomUpgradedPart(originalConfiguration, mods);
 
-            if (
-                upgradedParts > 0 &&
-                !this.inventoryManager.removeItemFromInventory(
-                    'ls_custom_storage',
-                    'ls_custom_upgrade_part',
-                    upgradedParts
-                )
-            ) {
+            if (upgradedParts > 0 && !inventory.remove('ls_custom_upgrade_part', upgradedParts)) {
                 this.notifier.notify(
                     source,
                     `Le stock du LS Custom n'est pas suffisant. Impossible d'améliorer votre véhicule !`,
@@ -132,14 +120,10 @@ export class VehicleCustomProvider {
                 return originalConfiguration;
             }
         } else if (price && mode == LSCustomMode.CrimiCusto) {
-            this.inventoryManager.removeNotExpiredItem(
-                source,
-                'veh_strip_piece_std',
-                Math.ceil(price / VehicleBusinessCustomPrice)
-            );
+            inventory.remove('veh_strip_piece_std', Math.ceil(price / VehicleBusinessCustomPrice), false);
         } else if (crimiPrice && mode == LSCustomMode.CrimiPerfo) {
             for (const itemName of Object.keys(crimiPrice)) {
-                this.inventoryManager.removeNotExpiredItem(source, itemName, crimiPrice[itemName]);
+                inventory.remove(itemName, crimiPrice[itemName], false);
             }
         }
 

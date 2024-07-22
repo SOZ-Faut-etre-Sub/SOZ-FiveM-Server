@@ -1,5 +1,6 @@
 import { AnimationConfigItem } from '@public/shared/animation';
 import { Invoice } from '@public/shared/bank';
+import { InventoryConfiguration, InventoryItem } from '@public/shared/inventory';
 import { Job } from '@public/shared/job';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
@@ -18,6 +19,10 @@ export interface NuiPLayerMethodMap {
     UpdatePlayerStats: PlayerStats;
     UpdateAnimationShortcuts: Record<string, Shortcut>;
     UpdateInvoices: Invoice[];
+    UpdateInventory: {
+        configuration: InventoryConfiguration;
+        items: Record<number, InventoryItem>;
+    };
 }
 
 export type Shortcut = {

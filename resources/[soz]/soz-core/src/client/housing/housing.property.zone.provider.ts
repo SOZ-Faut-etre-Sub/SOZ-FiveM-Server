@@ -1,4 +1,4 @@
-import { PlayerUpdate } from '@public/core/decorators/player';
+import { PlayerInventoryUpdate, PlayerUpdate } from '@public/core/decorators/player';
 
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Exportable } from '../../core/decorators/exports';
@@ -78,7 +78,7 @@ export class HousingPropertyZoneProvider {
     private temporaryAccess = new Set<number>();
 
     @Exportable('GetPlayerApartmentAccess')
-    public getPlayerAccess() {
+    public getPlayerAccess(): Record<number, Record<number, Apartment>> {
         const access = {};
 
         const player = this.playerService.getPlayer();
@@ -129,7 +129,7 @@ export class HousingPropertyZoneProvider {
         this.updateBlips();
     }
 
-    @PlayerUpdate()
+    @PlayerInventoryUpdate()
     public updateBlips() {
         const player = this.playerService.getPlayer();
 

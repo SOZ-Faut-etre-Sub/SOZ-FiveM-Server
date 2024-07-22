@@ -16,7 +16,6 @@ import { DMC_CRAFT_ZONES, DmcConverterState } from '@public/shared/job/dmc';
 import { MenuType } from '@public/shared/nui/menu';
 import { RpcServerEvent } from '@public/shared/rpc';
 
-import { BoxZone } from '../../../shared/polyzone/box.zone';
 import { PedFactory } from '../../factory/ped.factory';
 import { FeatureProvider } from '../../feature/feature.provider';
 import { PlayerInOutService } from '../../player/player.inout.service';
@@ -232,25 +231,15 @@ export class DmcProvider {
             invincible: true,
             blockevents: true,
             scenario: 'WORLD_HUMAN_CLIPBOARD',
+            dropItemCallback: (inventoryId, inventoryItem, amount) => {
+                TriggerServerEvent(
+                    ServerEvent.JOB_RESELL_ITEM,
+                    inventoryId,
+                    inventoryItem,
+                    amount,
+                    'Resell:LSPort:Dmc'
+                );
+            },
         });
-
-        this.playerInOutService.add(
-            'Resell:LSPort:Dmc',
-            new BoxZone([-132.7, -2383.92, 5.0], 3.0, 3.0, {
-                minZ: 4.0,
-                maxZ: 8.0,
-            }),
-            isInside => {
-                if (isInside) {
-                    TriggerEvent('player/setCurrentResellZone', {
-                        ZoneName: 'Resell:LSPort:Dmc',
-                        SourceAccount: 'farm_dmc',
-                        TargetAccount: 'safe_dmc',
-                    });
-                } else {
-                    TriggerEvent('player/setCurrentResellZone', null);
-                }
-            }
-        );
     }
 }

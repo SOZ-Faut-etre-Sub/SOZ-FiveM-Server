@@ -1,19 +1,37 @@
 import { Command } from '../../core/decorators/command';
+import { OnNuiEvent } from '../../core/decorators/event';
+import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
-import { ServerEvent } from '../../shared/event';
-import { InventoryItem } from '../../shared/item';
+import { NuiEvent, ServerEvent } from '../../shared/event';
+import { InventoryItem } from '../../shared/inventory';
 import { RpcServerEvent } from '../../shared/rpc';
+import { PlayerService } from '../player/player.service';
 
 @Provider()
 export class InventoryUsageProvider {
+    @Inject(PlayerService)
+    private playerService: PlayerService;
+
+    @OnNuiEvent(NuiEvent.InventorySetShortcut)
+    public async onInventoryActionUse({ shortcut, slot }: { shortcut: number; slot: number | null }) {
+        TriggerServerEvent(ServerEvent.INVENTORY_SET_ITEM_SHORTCUT, shortcut, slot);
+    }
+
     private async useItem(shortcut: number) {
         const item = await emitRpc<InventoryItem | null>(RpcServerEvent.INVENTORY_GET_ITEM_BY_SHORTCUT, shortcut);
         if (!item) {
             return;
         }
 
-        TriggerServerEvent(ServerEvent.INVENTORY_USE_ITEM, item.slot);
+        const player = this.playerService.getPlayer();
+
+        if (!player) {
+            return;
+        }
+
+        const inventoryId = `player_${player.citizenid}`;
+        TriggerServerEvent(ServerEvent.INVENTORY_USE_ITEM, inventoryId, item.slot);
     }
 
     @Command('inventory.use.1', {

@@ -4,6 +4,7 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { Rpc } from '@core/decorators/rpc';
 import { Tick } from '@core/decorators/tick';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { ObjectProvider } from '@public/server/object/object.provider';
 import { PlayerPositionProvider } from '@public/server/player/player.position.provider';
 import { Gauge } from 'prom-client';
@@ -11,7 +12,6 @@ import { Gauge } from 'prom-client';
 import { ClientEvent } from '../../shared/event/client';
 import { ServerEvent } from '../../shared/event/server';
 import { RpcServerEvent } from '../../shared/rpc';
-import { InventoryManager } from '../inventory/inventory.manager';
 import { Notifier } from '../notifier';
 import { PlayerService } from './player.service';
 import { ProgressService } from './progress.service';
@@ -27,8 +27,8 @@ export class PlayerZombieProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(PlayerPositionProvider)
     private playerPositionProvider: PlayerPositionProvider;
@@ -85,7 +85,9 @@ export class PlayerZombieProvider {
             return;
         }
 
-        if (this.inventoryManager.removeNotExpiredItem(source, 'halloween_zombie_serum')) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (inventory.remove('halloween_zombie_serum', 1, false)) {
             this.removeZombiePlayer(target);
         } else {
             this.notifier.notify(source, "Vous n'avez plus de sérum...");

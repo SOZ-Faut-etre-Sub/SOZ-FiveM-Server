@@ -1,9 +1,11 @@
-import { Inject, Injectable } from '@public/core/decorators/injectable';
+import { Inject, Injectable } from '@core/decorators/injectable';
+import { Inventory } from '@public/server/inventory/inventory';
+import { Notifier } from '@public/server/notifier';
 import { VampireGameStateProvider } from '@public/server/story/vampire.game.state.provider';
 import { ClientEvent } from '@public/shared/event/client';
+import { getItemsWeight, InventoryItem, InventoryItemMetadata, isInventoryItemExpired } from '@public/shared/inventory';
 
-import { InventoryItem, Item, ItemType } from '../../shared/item';
-import { Notifier } from '../notifier';
+import { Item, ItemType } from '../../shared/item';
 import { QBCore } from '../qbcore';
 
 const BypassExpirationCheckType: ItemType[] = ['food', 'drink', 'cocktail', 'liquor'];
@@ -20,6 +22,12 @@ export class ItemService {
     private vampireGameStateProvider: VampireGameStateProvider;
 
     private showCallbacks = new Map<string, (source: number, target: number, item: InventoryItem) => void>();
+    private usingItems = new Set<number>();
+
+    private useCallbacks = new Map<
+        string,
+        (player: number, item: Item, inventoryItem: InventoryItem, inventory: Inventory) => Promise<void> | void
+    >();
 
     public getItems<T extends Item = Item>(type?: ItemType): Record<string, T> {
         return this.qbcore.getItems(type);
@@ -29,30 +37,44 @@ export class ItemService {
         return this.qbcore.getItem<T>(id);
     }
 
-    public isItemExpired(item: InventoryItem): boolean {
-        if (item.metadata && item.metadata.expiration) {
-            return new Date().getTime() > new Date(item.metadata.expiration).getTime();
+    public getItemsWeight(items: { name: string; amount?: number; metadata?: InventoryItemMetadata | null }[]): number {
+        return getItemsWeight(items, (id: string) => this.getItem(id));
+    }
+
+    public async useItem(source: number, item: InventoryItem, inventory: Inventory): Promise<boolean> {
+        const cb = this.useCallbacks.get(item.name);
+
+        if (cb) {
+            if (this.usingItems.has(source)) {
+                this.notifier.error(source, "Un objet est déjà en cours d'utilisation.");
+
+                return false;
+            }
+
+            this.usingItems.add(source);
+            await cb(source, this.qbcore.getItem(item.name), item, inventory);
+            this.usingItems.delete(source);
         }
 
-        return false;
+        return true;
     }
 
     public setItemUseCallback<T extends Item = Item>(
         itemId: string,
-        callback: (player: number, item: T, inventoryItem: InventoryItem) => void
+        callback: (player: number, item: T, inventoryItem: InventoryItem, inventory: Inventory) => Promise<void> | void
     ) {
-        this.qbcore.createUseableItem(itemId, (player: number, item: InventoryItem) => {
-            const itemDef = this.getItem<T>(itemId);
-            if (!BypassExpirationCheckType.includes(itemDef.type) && this.isItemExpired(item)) {
-                this.notifier.notify(player, `${itemDef.label} est périmé(e).`, 'error');
+        this.useCallbacks.set(itemId, (player: number, item: T, inventoryItem: InventoryItem, inventory: Inventory) => {
+            if (!BypassExpirationCheckType.includes(item.type) && isInventoryItemExpired(inventoryItem)) {
+                this.notifier.notify(player, `${item.label} est périmé(e).`, 'error');
 
                 return;
             }
+
             if (this.vampireGameStateProvider.isGameStarted()) {
                 return;
             }
 
-            return callback(player, itemDef, item);
+            return callback(player, item, inventoryItem, inventory);
         });
     }
 

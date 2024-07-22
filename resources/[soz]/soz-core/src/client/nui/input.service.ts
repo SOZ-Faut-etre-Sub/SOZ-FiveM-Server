@@ -19,6 +19,8 @@ export class InputService {
     private currentInputValidate: ValidateInput<any> | null = null;
 
     public async askInput<T = string>(input: AskInput, validate: ValidateInput<T> | null = null): Promise<T | null> {
+        await wait(100);
+
         const promise = new Promise<T>(resolve => {
             this.currentInputResolve = resolve;
         });

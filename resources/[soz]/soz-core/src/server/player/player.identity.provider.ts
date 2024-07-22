@@ -53,6 +53,6 @@ export class PlayerIdentityProvider {
             },
         ];
 
-        TriggerClientEvent('inventory:client:openPlayerWalletInventory', source, cards);
+        TriggerClientEvent(ClientEvent.INVENTORY_OPEN_WALLET, source, cards);
     }
 }

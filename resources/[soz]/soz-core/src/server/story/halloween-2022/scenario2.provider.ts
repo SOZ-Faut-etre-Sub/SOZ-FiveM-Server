@@ -1,12 +1,14 @@
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
+
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { Rpc } from '../../../core/decorators/rpc';
 import { Feature } from '../../../shared/features';
+import { ADD_ERROR_MESSAGE } from '../../../shared/inventory';
 import { RpcServerEvent } from '../../../shared/rpc';
 import { Halloween2022Scenario2 } from '../../../shared/story/halloween-2022/scenario2';
 import { Dialog, ScenarioState } from '../../../shared/story/story';
 import { FeatureProvider } from '../../feature/feature.provider';
-import { InventoryManager } from '../../inventory/inventory.manager';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
 
@@ -20,14 +22,16 @@ export class Halloween2022Scenario2Provider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(FeatureProvider)
     private featureProvider: FeatureProvider;
 
     @Rpc(RpcServerEvent.STORY_HALLOWEEN_SCENARIO2)
-    public onScenario2(source: number): Dialog | null {
+    public async onScenario2(source: number): Promise<Dialog | null> {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
         if (!this.featureProvider.isFeatureEnabled(Feature.HalloweenScenario2)) {
             return;
         }
@@ -57,7 +61,7 @@ export class Halloween2022Scenario2Provider {
                 });
                 return Halloween2022Scenario2.dialog['part2'];
             case 'part3':
-                if (this.inventoryManager.removeNotExpiredItem(source, 'horror_cauldron')) {
+                if (inventory.remove('horror_cauldron', 1, false)) {
                     this.playerService.setPlayerMetadata(source, 'halloween2022', {
                         ...player.metadata.halloween2022,
                         scenario2: {
@@ -80,8 +84,8 @@ export class Halloween2022Scenario2Provider {
                 });
                 return Halloween2022Scenario2.dialog['part4'];
             case 'part5':
-                if (this.inventoryManager.canCarryItem(source, 'old_relic', 1)) {
-                    this.inventoryManager.addItemToInventory(source, 'old_relic', 1);
+                if (inventory.canCarryItem('old_relic', 1)) {
+                    inventory.add('old_relic', 1);
                     this.notifier.notify(
                         source,
                         `Une ancienne relique ? Je devrais la ramener au vieux monsieur pour lui raconter la vraie histoire !`,
@@ -97,12 +101,17 @@ export class Halloween2022Scenario2Provider {
                     });
                     return;
                 }
-                this.notifier.notify(source, `Tu n’as pas assez de place dans ton inventaire.`, 'error');
+                this.notifier.notify(source, ADD_ERROR_MESSAGE['not_enough_space'], 'error');
                 return;
             case 'part6':
-                if (this.inventoryManager.canSwapItem(source, 'old_relic', 1, 'halloween2022_story', 1)) {
-                    this.inventoryManager.removeNotExpiredItem(source, 'old_relic');
-                    this.inventoryManager.addItemToInventory(source, 'halloween2022_story', 1);
+                if (
+                    inventory.canSwapItems(
+                        [{ name: 'old_relic', amount: 1 }],
+                        [{ name: 'halloween2022_story', amount: 1 }]
+                    ) &&
+                    inventory.remove('old_relic', 1, false)
+                ) {
+                    inventory.add('halloween2022_story', 1);
 
                     this.playerService.setPlayerMetadata(source, 'halloween2022', {
                         ...player.metadata.halloween2022,

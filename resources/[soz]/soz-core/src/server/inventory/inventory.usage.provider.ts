@@ -3,31 +3,33 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { ServerEvent } from '../../shared/event';
-import { InventoryItem } from '../../shared/item';
+import { InventoryItem } from '../../shared/inventory';
 import { RpcServerEvent } from '../../shared/rpc';
 import { Notifier } from '../notifier';
 import { QBCore } from '../qbcore';
-import { InventoryManager } from './inventory.manager';
+import { InventoryFactory } from './inventory.factory';
 
 @Provider()
 export class InventoryUsageProvider {
     @Inject(QBCore)
     private QBCore: QBCore;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(Notifier)
     private notifier: Notifier;
 
     @OnEvent(ServerEvent.INVENTORY_SET_ITEM_SHORTCUT)
-    setItemUsage(source: number, shortcut: number, slot: number) {
+    async setItemUsage(source: number, shortcut: number, slot: number) {
         const player = this.QBCore.getPlayer(source);
         if (!player) {
             return;
         }
 
-        const item = this.inventoryManager.getSlot(source, slot);
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+        const item = inventory.getItemAtSlot(slot);
+
         if (!item) {
             return;
         }
@@ -41,19 +43,26 @@ export class InventoryUsageProvider {
             }
         });
 
-        player.PlayerData.metadata.shortcuts[shortcut] = {
-            name: item.name,
-            metadata: {
-                serial: item.metadata.serial,
-            },
-        };
+        if (shortcut !== null) {
+            player.PlayerData.metadata.shortcuts[shortcut] = {
+                name: item.name,
+                metadata: {
+                    serial: item.metadata.serial,
+                },
+            };
+        }
 
-        player.Functions.SetMetaData('shortcuts', player.PlayerData.metadata.shortcuts);
-        this.notifier.notify(source, `Vous avez changé l'objet lié au raccourcis ~b~#${shortcut}`, 'info');
+        player.Functions.SetMetaData('shortcuts', { ...player.PlayerData.metadata.shortcuts });
+
+        if (shortcut !== null) {
+            this.notifier.notify(source, `Vous avez changé l'objet lié au raccourci ~b~#${shortcut}`, 'info');
+        } else {
+            this.notifier.notify(source, `Vous avez supprimé l'objet lié au raccourci`, 'info');
+        }
     }
 
     @Rpc(RpcServerEvent.INVENTORY_GET_ITEM_BY_SHORTCUT)
-    getItemByShortcut(source: number, shortcut: number): InventoryItem | null {
+    async getItemByShortcut(source: number, shortcut: number): Promise<InventoryItem | null> {
         const player = this.QBCore.getPlayer(source);
         if (!player) {
             return;
@@ -64,7 +73,9 @@ export class InventoryUsageProvider {
             return;
         }
 
-        const item = this.inventoryManager.findItem(source, item => {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        const item = inventory.findItem(item => {
             if (shortcutItem.metadata.serial) {
                 return item.name === shortcutItem.name && item.metadata.serial === shortcutItem.metadata.serial;
             }

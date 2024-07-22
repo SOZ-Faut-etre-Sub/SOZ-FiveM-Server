@@ -1,7 +1,7 @@
 import { OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
-import { InventoryManager } from '@public/server/inventory/inventory.manager';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { ObjectProvider } from '@public/server/object/object.provider';
 import { PlayerService } from '@public/server/player/player.service';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
@@ -20,8 +20,8 @@ export class PoliceSpeedZoneProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(ObjectProvider)
     private objectProvider: ObjectProvider;
@@ -45,8 +45,9 @@ export class PoliceSpeedZoneProvider {
             return;
         }
 
-        if (this.inventoryManager.getItemCount(player.source, speedzoneItemName) >= 1) {
-            this.inventoryManager.removeItemFromInventory(player.source, speedzoneItemName, 1);
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (inventory.remove(speedzoneItemName, 1)) {
             TriggerClientEvent(ClientEvent.POLICE_REQUEST_ADD_SPEEDZONE, player.source, LANE_RADIUS * distance, speed);
         } else {
             this.notifier.notify(source, `Vous ne possédez pas cet objet.`, 'error');

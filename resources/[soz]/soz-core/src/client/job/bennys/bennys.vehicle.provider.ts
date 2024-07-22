@@ -414,7 +414,7 @@ export class BennysVehicleProvider {
                 blackoutGlobal: true,
                 category: 'society',
                 canInteract: () => {
-                    return this.jobService.hasPermission(JobType.Bennys, JobPermission.BennysOrder);
+                    return this.jobService.hasPermission(JobType.Bennys, JobPermission.Order);
                 },
                 action: async () => {
                     this.nuiMenu.openMenu(

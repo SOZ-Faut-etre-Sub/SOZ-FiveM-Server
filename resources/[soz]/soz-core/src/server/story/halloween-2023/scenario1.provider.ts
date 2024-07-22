@@ -1,13 +1,14 @@
 import { OnEvent } from '@public/core/decorators/event';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { ServerEvent } from '@public/shared/event';
 import { Halloween2023Scenario1Alcool } from '@public/shared/story/halloween-2023/scenario1';
 
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { Feature } from '../../../shared/features';
+import { ADD_ERROR_MESSAGE } from '../../../shared/inventory';
 import { ScenarioState } from '../../../shared/story/story';
 import { FeatureProvider } from '../../feature/feature.provider';
-import { InventoryManager } from '../../inventory/inventory.manager';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
 
@@ -19,14 +20,16 @@ export class Halloween2023Scenario1Provider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(FeatureProvider)
     private featureProvider: FeatureProvider;
 
     @OnEvent(ServerEvent.STORY_HALLOWEEN_2023_SCENARIO_1)
-    public onScenario1(source: number, step?: number) {
+    public async onScenario1(source: number, step?: number) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
         if (!this.featureProvider.isFeatureEnabled(Feature.Halloween2023Scenario1)) {
             return;
         }
@@ -54,11 +57,11 @@ export class Halloween2023Scenario1Provider {
                 });
                 break;
             case 3:
-                if (!this.inventoryManager.canCarryItem(source, 'halloween_prehistoric_blood_analysis', 1)) {
-                    this.notifier.notify(source, `Tu n'as pas assez de place dans ton inventaire.`, 'error');
+                if (!inventory.canCarryItem('halloween_prehistoric_blood_analysis', 1)) {
+                    this.notifier.notify(source, ADD_ERROR_MESSAGE['not_enough_space'], 'error');
                     return;
                 }
-                this.inventoryManager.addItemToInventory(source, 'halloween_prehistoric_blood_analysis', 1);
+                inventory.add('halloween_prehistoric_blood_analysis', 1);
                 this.notifier.notify(
                     source,
                     `Cette baleine a l'air là depuis très longtemps… Cette échantillon devrait apporter des informations. Retournons voir la scientifique avec les poissons.`,
@@ -75,11 +78,11 @@ export class Halloween2023Scenario1Provider {
 
                 break;
             case 4:
-                this.inventoryManager.removeNotExpiredItem(source, 'halloween_prehistoric_blood_analysis');
+                inventory.remove('halloween_prehistoric_blood_analysis', 1, false);
 
                 for (let i = 0; i < 20; i++) {
-                    const onefish = this.inventoryManager.findItem(source, item => item.type === 'fish');
-                    this.inventoryManager.removeInventoryItem(source, onefish);
+                    const onefish = inventory.findItem(item => item.type === 'fish');
+                    inventory.removeAtSlot(source, onefish.slot);
                 }
 
                 this.playerService.setPlayerMetadata(source, 'halloween2023', {
@@ -92,11 +95,11 @@ export class Halloween2023Scenario1Provider {
                 });
                 break;
             case 5:
-                if (!this.inventoryManager.canCarryItem(source, 'beer', 1)) {
-                    this.notifier.notify(source, `Tu n'as pas assez de place dans ton inventaire.`, 'error');
+                if (!inventory.canCarryItem('beer', 1)) {
+                    this.notifier.notify(source, ADD_ERROR_MESSAGE['not_enough_space'], 'error');
                     return;
                 }
-                this.inventoryManager.addItemToInventory(source, 'beer', 1);
+                inventory.add('beer', 1);
 
                 this.playerService.setPlayerMetadata(source, 'halloween2023', {
                     ...player.metadata.halloween2023,
@@ -119,10 +122,8 @@ export class Halloween2023Scenario1Provider {
                 break;
             case 7:
                 {
-                    const cocktail = this.inventoryManager.findItem(source, item =>
-                        Halloween2023Scenario1Alcool.includes(item.name)
-                    );
-                    this.inventoryManager.removeInventoryItem(source, cocktail);
+                    const cocktail = inventory.findItem(item => Halloween2023Scenario1Alcool.includes(item.name));
+                    inventory.removeAtSlot(cocktail.slot);
 
                     this.playerService.setPlayerMetadata(source, 'halloween2023', {
                         ...player.metadata.halloween2023,
@@ -135,11 +136,11 @@ export class Halloween2023Scenario1Provider {
                 }
                 break;
             case 8:
-                if (!this.inventoryManager.canCarryItem(source, 'halloween2023_story', 1)) {
-                    this.notifier.notify(source, `Tu n'as pas assez de place dans ton inventaire.`, 'error');
+                if (!inventory.canCarryItem('halloween2023_story', 1)) {
+                    this.notifier.notify(source, ADD_ERROR_MESSAGE['not_enough_space'], 'error');
                     return;
                 }
-                this.inventoryManager.addItemToInventory(source, 'halloween2023_story', 1);
+                inventory.add('halloween2023_story', 1);
 
                 this.playerService.setPlayerMetadata(source, 'halloween2023', {
                     ...player.metadata.halloween2023,

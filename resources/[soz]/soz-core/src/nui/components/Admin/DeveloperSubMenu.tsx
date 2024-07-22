@@ -62,6 +62,14 @@ export const DeveloperSubMenu: FunctionComponent<DeveloperSubMenuProps> = ({ ban
                 >
                     Afficher le kilométrage
                 </MenuItemCheckbox>
+                <MenuItemCheckbox
+                    checked={state.displayMouseDebug}
+                    onChange={async value => {
+                        await fetchNui(NuiEvent.AdminToggleShowMouseDebug, value);
+                    }}
+                >
+                    Debug entité sous le curseur
+                </MenuItemCheckbox>
                 <MenuItemSelect
                     title="📋 Copier les coords"
                     onConfirm={async selectedIndex => {

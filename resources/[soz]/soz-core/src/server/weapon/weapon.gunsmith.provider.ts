@@ -1,3 +1,5 @@
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
+
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
@@ -6,22 +8,22 @@ import { RpcServerEvent } from '../../shared/rpc';
 import { REPAIR_HEALTH_REDUCER, WEAPON_CUSTOM_PRICE, WeaponComponentType } from '../../shared/weapons/attachment';
 import { WeaponMk2TintColor, WeaponTintColor } from '../../shared/weapons/tint';
 import { GlobalWeaponConfig } from '../../shared/weapons/weapon';
-import { InventoryManager } from '../inventory/inventory.manager';
 import { PlayerMoneyService } from '../player/player.money.service';
 
 const WEAPON_NAME_REGEX = /([^a-z0-9 ._-]+)/gi;
 
 @Provider()
 export class WeaponGunsmithProvider {
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(PlayerMoneyService)
     private playerMoneyService: PlayerMoneyService;
 
     @Rpc(RpcServerEvent.WEAPON_SET_LABEL)
     async renameWeapon(source: number, slot: number, label: string): Promise<boolean> {
-        const weapon = this.inventoryManager.getSlot(source, slot);
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+        const weapon = inventory.getItemAtSlot(slot);
         if (!weapon) {
             return false;
         }
@@ -35,7 +37,7 @@ export class WeaponGunsmithProvider {
         }
 
         if (await this.playerMoneyService.buy(source, WEAPON_CUSTOM_PRICE.label, TaxType.WEAPON)) {
-            this.inventoryManager.updateMetadata(source, slot, { label: label.replace(WEAPON_NAME_REGEX, '') });
+            inventory.updateMetadataAtSlot(slot, { label: label.replace(WEAPON_NAME_REGEX, '') });
             return true;
         }
 
@@ -44,7 +46,8 @@ export class WeaponGunsmithProvider {
 
     @Rpc(RpcServerEvent.WEAPON_REPAIR)
     async repairWeapon(source: number, slot: number): Promise<boolean> {
-        const weapon = this.inventoryManager.getSlot(source, slot);
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+        const weapon = inventory.getItemAtSlot(slot);
         if (!weapon) {
             return false;
         }
@@ -68,7 +71,7 @@ export class WeaponGunsmithProvider {
         if (await this.playerMoneyService.buy(source, price, TaxType.WEAPON)) {
             const heal = maxHealth * REPAIR_HEALTH_REDUCER;
 
-            this.inventoryManager.updateMetadata(source, slot, { maxHealth: heal, health: heal });
+            inventory.updateMetadataAtSlot(slot, { maxHealth: heal, health: heal });
             return true;
         }
 
@@ -77,7 +80,8 @@ export class WeaponGunsmithProvider {
 
     @Rpc(RpcServerEvent.WEAPON_SET_TINT)
     async applyTint(source: number, slot: number, tint: WeaponTintColor | WeaponMk2TintColor): Promise<boolean> {
-        const weapon = this.inventoryManager.getSlot(source, slot);
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+        const weapon = inventory.getItemAtSlot(slot);
         if (!weapon) {
             return false;
         }
@@ -91,7 +95,7 @@ export class WeaponGunsmithProvider {
         }
 
         if (await this.payUpgrade(source, WEAPON_CUSTOM_PRICE.tint, Number(tint) === weapon.metadata.tint)) {
-            this.inventoryManager.updateMetadata(source, slot, { tint: Number(tint) });
+            inventory.updateMetadataAtSlot(slot, { tint: Number(tint) });
 
             return true;
         }
@@ -106,7 +110,8 @@ export class WeaponGunsmithProvider {
         attachmentType: WeaponComponentType,
         attachment: string
     ): Promise<boolean> {
-        const weapon = this.inventoryManager.getSlot(source, slot);
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+        const weapon = inventory.getItemAtSlot(slot);
         if (!weapon) {
             return false;
         }
@@ -128,7 +133,7 @@ export class WeaponGunsmithProvider {
                 };
             }
 
-            this.inventoryManager.updateMetadata(source, slot, {
+            inventory.updateMetadataAtSlot(slot, {
                 attachments: { ...weapon.metadata.attachments, [attachmentType]: attachment },
             });
             return true;

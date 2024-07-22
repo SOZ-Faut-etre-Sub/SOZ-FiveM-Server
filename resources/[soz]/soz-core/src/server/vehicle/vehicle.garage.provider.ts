@@ -2,6 +2,7 @@ import { PlayerVehicle, Prisma } from '@prisma/client';
 import { GangService } from '@private/server/gang/gang.service';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { wait } from '@public/core/utils';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { Feature } from '@public/shared/features';
 
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
@@ -35,7 +36,6 @@ import { PriceService } from '../bank/price.service';
 import { PrismaService } from '../database/prisma.service';
 import { FeatureProvider } from '../feature/feature.provider';
 import { HousingProvider } from '../housing/housing.provider';
-import { InventoryManager } from '../inventory/inventory.manager';
 import { JobService } from '../job.service';
 import { LockService } from '../lock.service';
 import { Monitor } from '../monitor/monitor';
@@ -98,8 +98,8 @@ export class VehicleGarageProvider {
     @Inject(VehicleRepository)
     private vehicleRepository: VehicleRepository;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(Monitor)
     private monitor: Monitor;
@@ -604,10 +604,12 @@ export class VehicleGarageProvider {
                 price = Math.min(200, hours * 20);
             }
 
+            const inventory = await this.inventoryFactory.getVehicleInventoryByPlate(playerVehicle.plate);
+
             playerVehiclesMapped.push({
                 vehicle: playerVehicle,
                 price,
-                weight: await this.inventoryManager.getVehicleStorageWeight(playerVehicle.plate),
+                weight: inventory ? inventory.weight() : 0,
                 name: vehiclesByModel[playerVehicle.modelName]?.name || null,
             } as GarageVehicle);
         }
@@ -873,7 +875,9 @@ export class VehicleGarageProvider {
             return;
         }
 
-        if (use_ticket && !this.inventoryManager.hasEnoughItem(source, 'parking_ticket_fake', 1, true)) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (use_ticket && !inventory.hasEnoughItem('parking_ticket_fake', 1, true)) {
             this.notifier.notify(source, "Vous n'avez pas de ticket de parking.", 'error');
 
             return;
@@ -1070,7 +1074,7 @@ export class VehicleGarageProvider {
                     this.notifier.notify(source, 'Vous avez sorti votre véhicule.', 'success');
 
                     if (use_ticket) {
-                        this.inventoryManager.removeNotExpiredItem(source, 'parking_ticket_fake', 1);
+                        inventory.remove('parking_ticket_fake', 1, false);
                     }
                 } else {
                     this.notifier.notify(
@@ -1106,7 +1110,9 @@ export class VehicleGarageProvider {
             return;
         }
 
-        const weight = await this.inventoryManager.getVehicleStorageWeight(playerVehicle.plate);
+        const inventory = await this.inventoryFactory.getVehicleInventoryByPlate(playerVehicle.plate);
+        const weight = inventory ? inventory.weight() : 0;
+
         const transferPrice = getTransferPrice(weight);
 
         if (!(await this.playerMoneyService.buy(source, transferPrice, TaxType.TRAVEL))) {

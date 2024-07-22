@@ -8,7 +8,7 @@ import { ClientEvent } from '../../shared/event/client';
 import { ServerEvent } from '../../shared/event/server';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
-import { InventoryManager } from '../inventory/inventory.manager';
+import { InventoryFactory } from '../inventory/inventory.factory';
 import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
@@ -26,8 +26,8 @@ export class BankInvoiceProvider {
     @Inject(Monitor)
     private monitor: Monitor;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(BankInvoiceService)
     private bankInvoiceService: BankInvoiceService;
@@ -67,7 +67,13 @@ export class BankInvoiceProvider {
             return false;
         }
 
-        if (!this.inventoryManager.removeItemFromInventory(source, 'paper')) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!inventory) {
+            return false;
+        }
+
+        if (!inventory.remove('paper', 1)) {
             this.notifier.error(source, "Vous n'avez pas de papier sur vous.");
             return false;
         }

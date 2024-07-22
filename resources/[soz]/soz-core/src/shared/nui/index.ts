@@ -7,6 +7,7 @@ import { NuiCraftingMethodMap } from '@public/shared/nui/crafting';
 import { NuiFeatureMethodMap } from '@public/shared/nui/feature';
 import { NuiHalloweenMethodMap, NuiZombieMethodMap } from '@public/shared/nui/halloween';
 import { NuiHudMethodMap } from '@public/shared/nui/hud';
+import { NuiInventoryMethodMap } from '@public/shared/nui/inventory';
 import { NuiItemMethodMap } from '@public/shared/nui/item';
 import { NuiMissiveMethodMap } from '@public/shared/nui/missive';
 import { NuiRadioMethodMap, NuiRadioVehicleMethodMap } from '@public/shared/nui/radio';
@@ -65,6 +66,7 @@ export interface NuiMethodMap {
     police: NuiPoliceMethodMap;
     crafting: NuiCraftingMethodMap;
     fishing: NuiFishingMethodMap;
+    inventory: NuiInventoryMethodMap;
     item: NuiItemMethodMap;
     hood: NuiHoodMethodMap;
     taxi: NuiTaxiMethodMap;

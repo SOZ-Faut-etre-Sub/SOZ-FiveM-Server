@@ -69,6 +69,13 @@ export enum ClientEvent {
     HALLOWEEN_SUCK_PLAYER_START = 'soz-core:client:halloween:halloween:player-suck-start',
     HALLOWEEN_SUCK_PLAYER_END = 'soz-core:client:halloween:player-suck-end',
 
+    INVENTORY_OPEN = 'soz-core:client:inventory:open',
+    INVENTORY_LOCK = 'soz-core:client:inventory:lock',
+    INVENTORY_OPEN_KEYS = 'soz-core:client:inventory:open-keys',
+    INVENTORY_OPEN_WALLET = 'soz-core:client:inventory:open-wallet',
+    INVENTORY_UPDATE = 'soz-core:client:inventory:update',
+    INVENTORY_CLOSE = 'soz-core:client:inventory:close',
+
     ITEM_USE = 'soz-core:client:item:use',
     ITEM_ALBUM_USE = 'soz-core:client:item:album:toggle',
     ITEM_PROTEST_SIGN_TOGGLE = 'soz-core:client:item:protest-sign:toggle',

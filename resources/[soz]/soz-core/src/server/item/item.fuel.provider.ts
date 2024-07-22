@@ -7,8 +7,9 @@ import {
 import { Once } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { CommonItem, InventoryItem } from '../../shared/item';
-import { InventoryManager } from '../inventory/inventory.manager';
+import { InventoryItem } from '../../shared/inventory';
+import { CommonItem } from '../../shared/item';
+import { Inventory } from '../inventory/inventory';
 import { Notifier } from '../notifier';
 import { ProgressService } from '../player/progress.service';
 import { VehicleRepository } from '../repository/vehicle.repository';
@@ -22,9 +23,6 @@ export const BATTERY_FUEL_AMOUNT = 33;
 export class ItemFuelProvider {
     @Inject(ItemService)
     private item: ItemService;
-
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
 
     @Inject(ProgressService)
     private progressService: ProgressService;
@@ -41,7 +39,12 @@ export class ItemFuelProvider {
     @Inject(VehicleRepository)
     private vehicleRepository: VehicleRepository;
 
-    public async useEssenceJerrycan(source: number, item: CommonItem, inventoryItem: InventoryItem) {
+    public async useEssenceJerrycan(
+        source: number,
+        item: CommonItem,
+        inventoryItem: InventoryItem,
+        inventory: Inventory
+    ) {
         const closestVehicle = await this.vehicleSpawner.getClosestVehicle(source);
 
         if (!closestVehicle) {
@@ -87,7 +90,7 @@ export class ItemFuelProvider {
             return;
         }
 
-        if (!this.inventoryManager.removeInventoryItem(source, inventoryItem)) {
+        if (!inventory.removeAtSlot(inventoryItem.slot, 1)) {
             return;
         }
 
@@ -121,7 +124,12 @@ export class ItemFuelProvider {
         this.notifier.notify(source, "Vous avez ~g~utilisé~s~ un jerrycan d'essence.", 'success');
     }
 
-    public async useKeroseneJerrycan(source: number, item: CommonItem, inventoryItem: InventoryItem) {
+    public async useKeroseneJerrycan(
+        source: number,
+        item: CommonItem,
+        inventoryItem: InventoryItem,
+        inventory: Inventory
+    ) {
         const closestVehicle = await this.vehicleSpawner.getClosestVehicle(source);
 
         if (!closestVehicle) {
@@ -152,7 +160,7 @@ export class ItemFuelProvider {
             return;
         }
 
-        if (!this.inventoryManager.removeInventoryItem(source, inventoryItem)) {
+        if (!inventory.removeAtSlot(inventoryItem.slot, 1)) {
             return;
         }
 
@@ -186,7 +194,7 @@ export class ItemFuelProvider {
         this.notifier.notify(source, 'Vous avez ~g~utilisé~s~ un jerrycan de kérosène.', 'success');
     }
 
-    public async useOilJerrycan(source: number, item: CommonItem, inventoryItem: InventoryItem) {
+    public async useOilJerrycan(source: number, item: CommonItem, inventoryItem: InventoryItem, inventory: Inventory) {
         const closestVehicle = await this.vehicleSpawner.getClosestVehicle(source);
 
         if (!closestVehicle) {
@@ -209,7 +217,7 @@ export class ItemFuelProvider {
 
         const vehicleState = this.vehicleStateService.getVehicleState(closestVehicle.vehicleNetworkId);
 
-        if (!this.inventoryManager.removeInventoryItem(source, inventoryItem)) {
+        if (!inventory.removeAtSlot(inventoryItem.slot, 1)) {
             return;
         }
 
@@ -239,7 +247,12 @@ export class ItemFuelProvider {
         this.notifier.notify(source, "Vous avez ~g~utilisé~s~ un bidon d'huile.", 'success');
     }
 
-    public async usePortableBattery(source: number, item: CommonItem, inventoryItem: InventoryItem) {
+    public async usePortableBattery(
+        source: number,
+        item: CommonItem,
+        inventoryItem: InventoryItem,
+        inventory: Inventory
+    ) {
         const closestVehicle = await this.vehicleSpawner.getClosestVehicle(source);
 
         if (!closestVehicle) {
@@ -265,7 +278,7 @@ export class ItemFuelProvider {
             return;
         }
 
-        if (!this.inventoryManager.removeInventoryItem(source, inventoryItem)) {
+        if (!inventory.removeAtSlot(inventoryItem.slot, 1)) {
             return;
         }
 

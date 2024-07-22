@@ -7,7 +7,6 @@ AddEventHandler('playerDropped', function(reason)
         exports['soz-core']:TraceEvent('player_disconnect', { player_source = src, reason = reason })
         Player.Functions.Save()
         _G.Player_Buckets[Player.PlayerData.license] = nil
-        TriggerEvent('inventory:DropPlayerInventory', src)
         TriggerEvent('QBCore:Server:PlayerUnload', src)
         QBCore.Players[src] = nil
     end
@@ -167,13 +166,6 @@ RegisterNetEvent('QBCore:GetEmployOnDuty', function()
     TriggerClientEvent('soz-job:client:OpenOnDutyMenu', source, player_names, player.PlayerData.job.id)
 end)
 
--- Items
-RegisterNetEvent('QBCore:Server:RemoveItem', function(itemName, amount, slot)
-    local Player = QBCore.Functions.GetPlayer(source)
-    exports['soz-core']:Log('ERROR', 'DEPRECATED use of QBCore:Server:RemoveItem ! item: '.. itemName, Player)
-    exports['soz-inventory']:RemoveItem(Player.PlayerData.source, itemName, amount, false, slot)
-end)
-
 -- Non-Chat Command Calling (ex: qb-adminmenu)
 
 RegisterNetEvent('QBCore:CallCommand', function(command, args)
@@ -193,67 +185,4 @@ RegisterNetEvent('QBCore:CallCommand', function(command, args)
             end
         end
     end
-end)
-
--- Has Item Callback (can also use client function - QBCore.Functions.HasItem(item))
-
-QBCore.Functions.CreateCallback('QBCore:HasItem', function(source, cb, items, amount)
-    local src = source
-    local retval = false
-    local Player = QBCore.Functions.GetPlayer(src)
-    if Player then
-        if type(items) == 'table' then
-            local count = 0
-            local finalcount = 0
-            for k, v in pairs(items) do
-                if type(k) == 'string' then
-                    finalcount = 0
-                    for i, _ in pairs(items) do
-                        if i then
-                            finalcount = finalcount + 1
-                        end
-                    end
-                    local item = Player.Functions.GetItemByName(k)
-                    if item then
-                        if item.amount >= v then
-                            count = count + 1
-                            if count == finalcount then
-                                retval = true
-                            end
-                        end
-                    end
-                else
-                    finalcount = #items
-                    local item = Player.Functions.GetItemByName(v)
-                    if item then
-                        if amount then
-                            if item.amount >= amount then
-                                count = count + 1
-                                if count == finalcount then
-                                    retval = true
-                                end
-                            end
-                        else
-                            count = count + 1
-                            if count == finalcount then
-                                retval = true
-                            end
-                        end
-                    end
-                end
-            end
-        else
-            local item = Player.Functions.GetItemByName(items)
-            if item then
-                if amount then
-                    if item.amount >= amount then
-                        retval = true
-                    end
-                else
-                    retval = true
-                end
-            end
-        end
-    end
-    cb(retval)
 end)

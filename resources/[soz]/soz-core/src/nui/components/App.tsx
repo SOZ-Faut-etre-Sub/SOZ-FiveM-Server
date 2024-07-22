@@ -45,6 +45,11 @@ import { FieldHealthApp } from './Field/FieldHealthApp';
 import { FieldZoneHealthApp } from './Field/FieldZoneHealthApp';
 import { HudApp } from './Hud/HudApp';
 import { InputApp } from './Input/InputApp';
+import { InventoryApp } from './Inventory/InventoryApp';
+import { KeychainApp } from './Inventory/KeychainApp';
+import { PlayerInventoryApp } from './Inventory/PlayerInventoryApp';
+import { ShopCartApp } from './Inventory/ShopCartApp';
+import { WalletApp } from './Inventory/WalletApp';
 import { MedicalApp } from './LSMC/DiagnosticPad/MedicalApp';
 import { MenuApp } from './Menu/MenuApp';
 import { PanelApp } from './Panel/PanelApp';
@@ -104,6 +109,11 @@ export const App: FunctionComponent = () => {
             </div>
             <div className={menuClasses}>
                 <MenuApp />
+                <PlayerInventoryApp />
+                <InventoryApp />
+                <KeychainApp />
+                <WalletApp />
+                <ShopCartApp />
             </div>
             <div className={classes}>
                 <PanelApp />
@@ -132,7 +142,6 @@ export const App: FunctionComponent = () => {
                 <FieldHealthApp />
                 <FieldZoneHealthApp />
                 <CraftApp />
-                <InputApp />
                 <MedicalApp />
                 <BankApp />
                 <AtmApp />
@@ -148,6 +157,7 @@ export const App: FunctionComponent = () => {
                 <BusinessVehicleMappingApp />
                 <CyberReportApp />
                 <PincrakerMinigameApp />
+                <InputApp />
             </div>
             <Meteor />
             <BlipApp />

@@ -8,10 +8,11 @@ import { Once, OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
-import { MedicalMetadata } from '@public/shared/item';
 import { JobType } from '@public/shared/job';
 import { LSMCConfig } from '@public/shared/job/lsmc';
 import { Vector3 } from '@public/shared/polyzone/vector';
+
+import { MedicalMetadata } from '../../../shared/inventory';
 
 @Provider()
 export class LSMCMedicalDiagProvider {

@@ -1,3 +1,5 @@
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
+
 import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
@@ -5,7 +7,8 @@ import { ServerEvent } from '../../../shared/event';
 import { JobPermission, JobType } from '../../../shared/job';
 import { StonkBagType, StonkConfig } from '../../../shared/job/stonk';
 import { toVector3Object, Vector3 } from '../../../shared/polyzone/vector';
-import { InventoryManager } from '../../inventory/inventory.manager';
+import { isOk } from '../../../shared/result';
+import { Inventory } from '../../inventory/inventory';
 import { ItemService } from '../../item/item.service';
 import { JobService } from '../../job.service';
 import { Monitor } from '../../monitor/monitor';
@@ -18,8 +21,8 @@ export class StonkCollectProvider {
     @Inject(ItemService)
     private itemService: ItemService;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(PlayerService)
     private playerService: PlayerService;
@@ -67,7 +70,9 @@ export class StonkCollectProvider {
             return;
         }
 
-        if (!this.inventoryManager.canCarryItem(source, item, StonkConfig.resell.amount)) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!inventory.canCarryItem(item, StonkConfig.resell.amount)) {
             this.notifier.notify(source, `Vous n'avez pas ~r~assez~s~ de place dans vos poches.`);
             return;
         }
@@ -80,7 +85,7 @@ export class StonkCollectProvider {
         this.notifier.notify(source, 'Vous ~g~commencez~s~ à collecter.', 'success');
 
         const outputItemLabel = this.itemService.getItem(item).label;
-        const hasCollected = await this.doCollect(source, shop, item);
+        const hasCollected = await this.doCollect(source, inventory, shop, item);
 
         if (hasCollected) {
             this.monitor.traceEvent('job_stonk_collect_bag', {
@@ -111,7 +116,7 @@ export class StonkCollectProvider {
         return lastCollect + StonkConfig.collection[item].timeout <= Date.now();
     }
 
-    private async doCollect(source: number, shop: string, item: StonkBagType): Promise<boolean> {
+    private async doCollect(source: number, inventory: Inventory, shop: string, item: StonkBagType): Promise<boolean> {
         const player = this.playerService.getPlayer(source);
         if (!player) {
             return;
@@ -138,13 +143,17 @@ export class StonkCollectProvider {
             return false;
         }
 
-        const addRequest = this.inventoryManager.addItemToInventory(source, item, StonkConfig.resell.amount);
+        const addRequest = inventory.add(item, StonkConfig.resell.amount);
+
+        if (!isOk(addRequest)) {
+            return false;
+        }
 
         if (this.collectBagHistory[shop] === undefined) {
             this.collectBagHistory[shop] = new Map();
         }
         this.collectBagHistory[shop].set(player.citizenid, Date.now());
 
-        return addRequest.success;
+        return true;
     }
 }

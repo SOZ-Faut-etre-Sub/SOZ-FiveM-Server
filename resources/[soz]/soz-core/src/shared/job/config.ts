@@ -212,8 +212,8 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
         canInvoice: true,
         permissions: {
             ...BasePermissions,
-            [JobPermission.FoodHarvest]: { label: 'Récolter des ingrédients' },
-            [JobPermission.FoodCraft]: { label: 'Cuisiner' },
+            [JobPermission.Harvest]: { label: 'Récolter des ingrédients' },
+            [JobPermission.Craft]: { label: 'Cuisiner' },
         },
         resell: {
             coords: [-57.01, -2448.4, 7.24, 145.77],
@@ -355,7 +355,7 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
         permissions: {
             ...BasePermissions,
             [JobPermission.BennysEstimate]: { label: 'Estimer les véhicules' },
-            [JobPermission.BennysOrder]: { label: "Commander un véhicule d'essai" },
+            [JobPermission.Order]: { label: "Commander un véhicule d'essai" },
             [JobPermission.BennysResell]: { label: 'Revendre un véhicule' },
             [JobPermission.BennysPitStopPrice]: { label: 'Changer le prix du Pit Stop' },
         },
@@ -385,7 +385,7 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
         canInvoice: true,
         permissions: {
             ...BasePermissions,
-            [JobPermission.UpwOrder]: { label: 'Commander des véhicules éléctriques' },
+            [JobPermission.Order]: { label: 'Commander des véhicules éléctriques' },
         },
         bossZones: [
             {
@@ -441,9 +441,9 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
         canInvoice: true,
         permissions: {
             ...BasePermissions,
-            [JobPermission.BaunHarvest]: { label: 'Récolter des ingrédients' },
-            [JobPermission.BaunRestock]: { label: 'Réapprovisionner le matériel' },
-            [JobPermission.BaunCraft]: { label: 'Fabriquer un cocktail' },
+            [JobPermission.Harvest]: { label: 'Récolter des ingrédients' },
+            [JobPermission.Restock]: { label: 'Réapprovisionner le matériel' },
+            [JobPermission.Craft]: { label: 'Fabriquer un cocktail' },
         },
         bossZones: [
             {
@@ -474,9 +474,9 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
         canInvoice: true,
         permissions: {
             ...BasePermissions,
-            [JobPermission.FfsHarvest]: { label: 'Récolter des matériaux' },
-            [JobPermission.FfsRestock]: { label: "Réapprovisionner l'atelier" },
-            [JobPermission.FfsCraft]: { label: 'Coudre un vêtement' },
+            [JobPermission.Harvest]: { label: 'Récolter des matériaux' },
+            [JobPermission.Restock]: { label: "Réapprovisionner l'atelier" },
+            [JobPermission.Craft]: { label: 'Coudre un vêtement' },
         },
         bossZones: [
             {

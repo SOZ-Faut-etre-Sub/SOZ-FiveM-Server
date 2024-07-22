@@ -1,4 +1,5 @@
 import { GarageList } from '@public/config/garage';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { VehicleHandlingType } from '@public/shared/vehicle/modification';
 import { VehicleClass } from '@public/shared/vehicle/vehicle';
 
@@ -6,8 +7,9 @@ import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent, ServerEvent } from '../../shared/event';
+import { ADD_ERROR_MESSAGE } from '../../shared/inventory';
+import { isErr } from '../../shared/result';
 import { PrismaService } from '../database/prisma.service';
-import { InventoryManager } from '../inventory/inventory.manager';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { VehicleRepository } from '../repository/vehicle.repository';
@@ -31,8 +33,8 @@ export class VehicleProvider {
     @Inject(VehicleStateService)
     private vehicleStateService: VehicleStateService;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(VehicleRepository)
     private vehicleRepository: VehicleRepository;
@@ -82,11 +84,13 @@ export class VehicleProvider {
     @OnEvent(ServerEvent.VEHICLE_COLLECT_FINGERPRINT)
     public async collectFingerprint(source: number, vehicleNetworkId: number, zone: string, model: string) {
         const fingerprint = this.vehicleStateService.getVehicleState(vehicleNetworkId).volatile.fingerprint;
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
         if (!fingerprint) {
             this.notifier.error(source, "Aucune empreinte n'a été trouvée sur ce véhicule.");
             return;
         }
-        const { success, reason } = this.inventoryManager.addItemToInventory(source, 'evidence_fingerprint', 1, {
+        const result = inventory.add('evidence_fingerprint', 1, {
             evidenceInfos: {
                 generalInfo: `Empreinte de ${fingerprint}`,
                 type: 'evidence_fingerprint',
@@ -95,8 +99,8 @@ export class VehicleProvider {
                 quantity: 1,
             },
         });
-        if (!success) {
-            this.notifier.error(source, reason);
+        if (isErr(result)) {
+            this.notifier.error(source, ADD_ERROR_MESSAGE[result.err]);
             return;
         }
         this.notifier.notify(source, 'Empreinte récupérée.');
@@ -108,11 +112,12 @@ export class VehicleProvider {
     @OnEvent(ServerEvent.VEHICLE_COLLECT_DRUG)
     public async collectDrug(source: number, vehicleNetworkId: number, zone: string, model: string) {
         const drugTypes = this.vehicleStateService.getVehicleState(vehicleNetworkId).volatile.lastDrugTrace;
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
         if (!drugTypes || drugTypes.length == 0) {
             this.notifier.error(source, "Aucune trace de drogue n'a été trouvée sur ce véhicule.");
             return;
         }
-        const { success, reason } = this.inventoryManager.addItemToInventory(source, 'evidence_drug', 1, {
+        const result = inventory.add('evidence_drug', 1, {
             evidenceInfos: {
                 generalInfo: `Trace de ${drugTypes.join(', ')}`,
                 type: 'evidence_drug',
@@ -121,8 +126,8 @@ export class VehicleProvider {
                 quantity: 1,
             },
         });
-        if (!success) {
-            this.notifier.error(source, reason);
+        if (isErr(result)) {
+            this.notifier.error(source, ADD_ERROR_MESSAGE[result.err]);
             return;
         }
         this.notifier.notify(source, 'Échantillon de drogue récupéré.');

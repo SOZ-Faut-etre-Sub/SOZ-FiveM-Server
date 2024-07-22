@@ -2,13 +2,14 @@ import { OnEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { Rpc } from '@public/core/decorators/rpc';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { Monitor } from '@public/server/monitor/monitor';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { FoodHuntConfig } from '@public/shared/job/food';
 import { RpcServerEvent } from '@public/shared/rpc';
 
 import { toVector3Object, Vector3 } from '../../../shared/polyzone/vector';
-import { InventoryManager } from '../../inventory/inventory.manager';
+import { isOk } from '../../../shared/result';
 import { ItemService } from '../../item/item.service';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
@@ -30,8 +31,8 @@ export class FoodHuntProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(ProgressService)
     private progressService: ProgressService;
@@ -80,6 +81,8 @@ export class FoodHuntProvider {
         const position = toVector3Object(GetEntityCoords(entity) as Vector3);
         let rewardSuccess = false;
 
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
         for (const itemId of Object.keys(HUNTING_REWARD)) {
             const item = this.itemService.getItem(itemId);
 
@@ -91,7 +94,7 @@ export class FoodHuntProvider {
             const quantity = Math.floor(Math.random() * (reward.max - reward.min + 1)) + reward.min;
 
             if (quantity > 0) {
-                if (this.inventoryManager.addItemToInventory(source, itemId, quantity)) {
+                if (isOk(inventory.add(itemId, quantity))) {
                     rewardSuccess = true;
 
                     this.notifier.notify(source, `Vous avez récupéré ${quantity} ${item.label}`, 'success');

@@ -77,7 +77,7 @@ export class ProgressService {
                 isInventoryBusy: true,
             });
             exports['soz-phone'].setPhoneVisible(false);
-            TriggerEvent('inventory:client:closeInventory');
+            this.nuiDispatch.closeEverything();
         }
 
         if (options.headingEntity) {

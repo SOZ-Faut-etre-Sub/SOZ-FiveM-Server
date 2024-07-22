@@ -273,7 +273,6 @@ function QBCore.Player.Logout(source)
     end
 
     Wait(200)
-    TriggerEvent("inventory:DropPlayerInventory", src)
     TriggerEvent("QBCore:Server:PlayerUnload", src)
     QBCore.Players[src] = nil
 end
@@ -432,15 +431,6 @@ function QBCore.Player.CreatePlayer(PlayerData)
         return false
     end
 
-    self.Functions.RemoveItem = function(item, amount, slot)
-        return exports["soz-inventory"]:RemoveItem(self.PlayerData.source, item, amount, false, slot)
-    end
-
-    self.Functions.SetInventory = function(items)
-        self.PlayerData.items = items
-        self.Functions.UpdatePlayerData(true)
-    end
-
     self.Functions.SetSkin = function(skin, skipApply)
         self.PlayerData.skin = skin
         self.Functions.UpdatePlayerData(true)
@@ -485,7 +475,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
             baseWeight = baseWeight + 40000
         end
 
-        exports["soz-inventory"]:SetMaxWeight(self.PlayerData.source, math.floor(baseWeight))
+        exports["soz-core"]:SetPlayerInventoryMaxWeight(self.PlayerData.source, math.floor(baseWeight))
     end
 
     self.Functions.UpdateArmour = function()
@@ -528,54 +518,12 @@ function QBCore.Player.CreatePlayer(PlayerData)
         })
     end
 
-    self.Functions.GetItemByName = function(item)
-        local item = tostring(item):lower()
-        local slot = QBCore.Player.GetFirstSlotByItem(self.PlayerData.items, item)
-        if slot then
-            return self.PlayerData.items[slot]
-        end
-        return nil
-    end
-
-    self.Functions.GetItemsByName = function(item)
-        local item = tostring(item):lower()
-        local items = {}
-        local slots = QBCore.Player.GetSlotsByItem(self.PlayerData.items, item)
-        for _, slot in pairs(slots) do
-            if slot then
-                items[#items + 1] = self.PlayerData.items[slot]
-            end
-        end
-        return items
-    end
-
     self.Functions.SetCreditCard = function(cardNumber)
         self.PlayerData.charinfo.card = cardNumber
         self.Functions.UpdatePlayerData(true)
     end
 
-    self.Functions.GetCardSlot = function(cardNumber, cardType)
-        local item = tostring(cardType):lower()
-        local slots = QBCore.Player.GetSlotsByItem(self.PlayerData.items, item)
-        for _, slot in pairs(slots) do
-            if slot then
-                if self.PlayerData.items[slot].metadata.cardNumber == cardNumber then
-                    return slot
-                end
-            end
-        end
-        return nil
-    end
-
-    self.Functions.GetItemBySlot = function(slot)
-        local slot = tonumber(slot)
-        if self.PlayerData.items[slot] then
-            return self.PlayerData.items[slot]
-        end
-        return nil
-    end
-
-    self.Functions.SetLicence = function(licence, points)
+    self.Functions.SetLicence = function (licence, points)
         local licences = self.PlayerData.metadata.licences
         if licences[licence] ~= nil then
             licences[licence] = tonumber(points)
@@ -629,7 +577,6 @@ function QBCore.Player.CreatePlayer(PlayerData)
     end
 
     QBCore.Players[self.PlayerData.source] = self
-    exports["soz-inventory"]:CreatePlayerInventory(self.PlayerData)
 
     -- At this point we are safe to emit new instance to third party resource for load handling
     TriggerEvent("QBCore:Server:PlayerLoaded", self)
@@ -714,39 +661,6 @@ function QBCore.Player.DeleteCharacter(source, citizenid)
 end
 
 -- Util Functions
-
-function QBCore.Player.GetTotalWeight(items)
-    local weight = 0
-    if items then
-        for slot, item in pairs(items) do
-            weight = weight + (item.weight * item.amount)
-        end
-    end
-    return tonumber(weight)
-end
-
-function QBCore.Player.GetSlotsByItem(items, itemName)
-    local slotsFound = {}
-    if items then
-        for slot, item in pairs(items) do
-            if item.name:lower() == itemName:lower() then
-                slotsFound[#slotsFound + 1] = slot
-            end
-        end
-    end
-    return slotsFound
-end
-
-function QBCore.Player.GetFirstSlotByItem(items, itemName)
-    if items then
-        for slot, item in pairs(items) do
-            if item.name:lower() == itemName:lower() then
-                return tonumber(slot)
-            end
-        end
-    end
-    return nil
-end
 
 function QBCore.Player.CreateCitizenId()
     local UniqueFound = false

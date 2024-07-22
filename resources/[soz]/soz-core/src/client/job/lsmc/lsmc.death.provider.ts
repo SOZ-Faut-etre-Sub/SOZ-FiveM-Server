@@ -37,6 +37,7 @@ import { RpcServerEvent } from '@public/shared/rpc';
 import { VehicleSeat } from '@public/shared/vehicle/vehicle';
 
 import { Animation } from '../../../shared/animation';
+import { NuiDispatch } from '../../nui/nui.dispatch';
 import { PlayerZombieProvider } from '../../player/player.zombie.provider';
 import { VampireGameProvider } from '../../story/vampire.game.provider';
 import { VampireGameStateProvider } from '../../story/vampire.game.state.provider';
@@ -209,6 +210,9 @@ export class LSMCDeathProvider {
     @Inject(VampireGameStateProvider)
     private vampireGameStateProvider: VampireGameStateProvider;
 
+    @Inject(NuiDispatch)
+    private nuiDispatch: NuiDispatch;
+
     private IsDead = false;
     private doFeeze = false;
     private hungerThristDeath = false;
@@ -252,8 +256,8 @@ export class LSMCDeathProvider {
         if (!this.IsDead) {
             this.IsDead = true;
 
-            this.nuiMenu.closeAll(false);
-            this.voipService.mutePlayer(true);
+            this.nuiDispatch.closeEverything();
+            await this.voipService.mutePlayer(true);
 
             // Skip death process during vampire game
             if (this.vampireGameStateProvider.isGameRunning()) {

@@ -3,16 +3,18 @@ import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { Rpc } from '@public/core/decorators/rpc';
 import { emitClientRpc } from '@public/core/rpc';
-import { InventoryManager } from '@public/server/inventory/inventory.manager';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { ItemService } from '@public/server/item/item.service';
 import { Notifier } from '@public/server/notifier';
 import { PlayerService } from '@public/server/player/player.service';
 import { ProgressService } from '@public/server/player/progress.service';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
-import { InventoryItem, Item } from '@public/shared/item';
+import { Item } from '@public/shared/item';
 import { JobLabel } from '@public/shared/job';
 import { RpcClientEvent, RpcServerEvent } from '@public/shared/rpc';
 
+import { InventoryItem } from '../../../shared/inventory';
+import { Inventory } from '../../inventory/inventory';
 import { PlayerStateService } from '../../player/player.state.service';
 
 @Provider()
@@ -20,8 +22,8 @@ export class PoliceProvider {
     @Inject(ItemService)
     public itemService: ItemService;
 
-    @Inject(InventoryManager)
-    public inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    public inventoryFactory: InventoryFactory;
 
     @Inject(PlayerService)
     private playerService: PlayerService;
@@ -50,7 +52,7 @@ export class PoliceProvider {
         TriggerClientEvent(ClientEvent.TAKE_DOWN_TARGET, target);
     }
 
-    public async useArmor(source: number, unused: Item, item: InventoryItem): Promise<void> {
+    public async useArmor(source: number, unused: Item, item: InventoryItem, inventory: Inventory): Promise<void> {
         const player = this.playerService.getPlayer(source);
 
         if (!player) {
@@ -86,9 +88,11 @@ export class PoliceProvider {
             return;
         }
 
-        if (this.inventoryManager.removeInventoryItem(source, item)) {
+        if (inventory.removeAtSlot(item.slot, 1)) {
             const itemDef = this.itemService.getItem(item.name);
+
             this.playerService.setPlayerMetadata(source, 'armor', { current: 100, hidden: true });
+
             TriggerClientEvent(
                 ClientEvent.POLICE_SETUP_ARMOR,
                 source,
@@ -123,20 +127,22 @@ export class PoliceProvider {
             return;
         }
 
-        if (this.inventoryManager.removeItemFromInventory(source, item.name, 1, item.metadata)) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (inventory.removeAtSlot(item.slot, 1)) {
             TriggerClientEvent(ClientEvent.POLICE_ANIMATE_ARMOR_PLATE, source);
             TriggerClientEvent(ClientEvent.POLICE_SETUP_ARMOR_PLATE, source);
         }
     }
 
-    public useOutfit(source: number, it: Item, item: InventoryItem): Promise<void> {
+    public async useOutfit(source: number, it: Item, item: InventoryItem, inventory: Inventory): Promise<void> {
         const player = this.playerService.getPlayer(source);
 
         if (!player) {
             return;
         }
 
-        if (!this.inventoryManager.removeNotExpiredItem(player.source, item.name, 1, item.metadata)) {
+        if (!inventory.removeAtSlot(item.slot, 1)) {
             return;
         }
 
@@ -173,20 +179,34 @@ export class PoliceProvider {
     }
 
     @Rpc(RpcServerEvent.POLICE_ALCOOLLEVEL)
-    public getAlcoolLevel(source: number, target: number) {
-        if (!this.inventoryManager.removeNotExpiredItem(source, 'breathanalyzer')) {
+    public async getAlcoolLevel(source: number, target: number) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!inventory) {
             return;
         }
+
+        if (!inventory.remove('breathanalyzer', 1, false)) {
+            return;
+        }
+
         const targetPlayer = this.playerService.getPlayer(target);
         TriggerClientEvent(ClientEvent.POLICE_BREATHANALYZER_TARGET, targetPlayer.source);
         return targetPlayer.metadata.alcohol;
     }
 
     @Rpc(RpcServerEvent.POLICE_DRUGLEVEL_AND_TYPE)
-    public getDrugLevel(source: number, target: number) {
-        if (!this.inventoryManager.removeNotExpiredItem(source, 'screening_test')) {
+    public async getDrugLevel(source: number, target: number) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!inventory) {
             return;
         }
+
+        if (!inventory.remove('screening_test', 1, false)) {
+            return;
+        }
+
         const targetPlayer = this.playerService.getPlayer(target);
         TriggerClientEvent(ClientEvent.POLICE_BREATHANALYZER_TARGET, targetPlayer.source);
         return { level: targetPlayer.metadata.drug, type: targetPlayer.metadata.last_drug_eaten };

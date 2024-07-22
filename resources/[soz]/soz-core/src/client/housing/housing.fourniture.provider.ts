@@ -41,6 +41,7 @@ import { RepositoryType } from '@public/shared/repository';
 import { Err, Ok } from '@public/shared/result';
 import { RpcServerEvent } from '@public/shared/rpc';
 
+import { InventoryType } from '../../shared/inventory';
 import { ScreenService } from '../screen.service';
 
 @Provider()
@@ -323,11 +324,11 @@ export class HousingFournitureProvider {
                         );
                     },
                     action: () => {
-                        this.inventoryManager.openInventory('house_stash', apartment.identifier, {
-                            apartmentTier: apartment.tier,
-                            propertyId: apartment.propertyId,
-                            apartmentId: apartment.id,
-                        });
+                        this.inventoryManager.openInventory(
+                            InventoryType.HouseStash,
+                            `house_stash_${apartment.identifier}`,
+                            GetEntityCoords(PlayerPedId()) as Vector3
+                        );
                     },
                 },
             ]);
@@ -375,11 +376,11 @@ export class HousingFournitureProvider {
                         );
                     },
                     action: () => {
-                        this.inventoryManager.openInventory('house_fridge', apartment.identifier, {
-                            apartmentTier: apartment.tier,
-                            propertyId: apartment.propertyId,
-                            apartmentId: apartment.id,
-                        });
+                        this.inventoryManager.openInventory(
+                            InventoryType.HouseFridge,
+                            `house_fridge_${apartment.identifier}`,
+                            GetEntityCoords(PlayerPedId()) as Vector3
+                        );
                     },
                 },
             ]);
@@ -414,7 +415,7 @@ export class HousingFournitureProvider {
 
     private removeTargetZone(placementProp: HousingPlacementProp) {
         if (placementProp.targetLabel.length) {
-            this.targetFactory.removeForEntity([placementProp.entity], placementProp.targetLabel);
+            this.targetFactory.removeForEntity([placementProp.entity]);
         }
         placementProp.targetLabel = null;
     }
@@ -581,7 +582,7 @@ export class HousingFournitureProvider {
             return newPosition;
         }
 
-        const position: Vector3 = [
+        return [
             this.lastInterior !==
             this.getInteriorFromCollision([newPosition[0], previousPosition[1], previousPosition[2]])
                 ? previousPosition[0]
@@ -594,9 +595,7 @@ export class HousingFournitureProvider {
             this.getInteriorFromCollision([previousPosition[0], previousPosition[1], newPosition[2] - 0.8])
                 ? previousPosition[2]
                 : newPosition[2],
-        ];
-
-        return position;
+        ] as Vector3;
     }
 
     @OnNuiEvent<{ menuType: MenuType }>(NuiEvent.MenuClosed)
@@ -617,20 +616,13 @@ export class HousingFournitureProvider {
         }
 
         this.menu.closeMenu(false);
+
         if (type === 'storage') {
-            this.inventoryManager.openInventory('house_stash', this.lastApartment.identifier, {
-                apartmentTier: this.lastApartment.tier,
-                propertyId: this.lastApartment.propertyId,
-                apartmentId: this.lastApartment.id,
-            });
+            this.inventoryManager.openInventory(InventoryType.HouseStash, this.lastApartment.identifier, null);
         } else if (type === 'safe') {
             this.bankService.openHouseSafe(this.lastApartment);
         } else if (type === 'fridge') {
-            this.inventoryManager.openInventory('house_fridge', this.lastApartment.identifier, {
-                apartmentTier: this.lastApartment.tier,
-                propertyId: this.lastApartment.propertyId,
-                apartmentId: this.lastApartment.id,
-            });
+            this.inventoryManager.openInventory(InventoryType.HouseFridge, this.lastApartment.identifier, null);
         }
     }
 

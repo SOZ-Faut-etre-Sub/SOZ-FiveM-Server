@@ -4,12 +4,12 @@ import { Talent } from '@private/shared/talent';
 import { BankMoneyType } from '@public/shared/bank';
 import { VampireGameRole } from '@public/shared/halloween';
 import { ApartementTiers } from '@public/shared/housing/housing';
+import { InventoryItem } from '@public/shared/inventory';
 import { SenatePartyMember } from '@public/shared/senate';
 
 import { ClothConfig } from './cloth';
 import { Disease, Organ } from './disease';
 import { DrivingSchoolLicenseType } from './driving-school';
-import { InventoryItem } from './item';
 import { joaat } from './joaat';
 import { JobType } from './job';
 import { PlasterLocation } from './job/lsmc';
@@ -68,7 +68,6 @@ export type PlayerData = {
     role: SozRole;
     metadata: PlayerMetadata;
     job: PlayerJob;
-    items: Record<string, InventoryItem> | InventoryItem[];
     skin: Skin;
     cloth_config: ClothConfig;
     source: number;

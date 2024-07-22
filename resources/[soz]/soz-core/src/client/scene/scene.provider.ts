@@ -10,6 +10,7 @@ import { uuidv4 } from '../../core/utils';
 import { ClientEvent } from '../../shared/event/client';
 import { NuiEvent } from '../../shared/event/nui';
 import { ServerEvent } from '../../shared/event/server';
+import { InventoryType } from '../../shared/inventory';
 import { FDO, JobType } from '../../shared/job';
 import { NotEmptyStringValidator } from '../../shared/nui/input';
 import { MenuType } from '../../shared/nui/menu';
@@ -713,7 +714,11 @@ export class SceneProvider {
                     category: 'criminal',
                     canInteract: () => true,
                     action: () => {
-                        this.inventoryManager.openInventory('object_storage', entity.inventoryId);
+                        this.inventoryManager.openInventory(
+                            InventoryType.ObjectStorage,
+                            entity.inventoryId,
+                            entity.object.position
+                        );
                     },
                 });
 

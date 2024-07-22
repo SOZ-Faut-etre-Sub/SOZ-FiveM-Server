@@ -1,8 +1,7 @@
 import { OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
-import { InventoryManager } from '@public/server/inventory/inventory.manager';
-import { ItemService } from '@public/server/item/item.service';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { Monitor } from '@public/server/monitor/monitor';
 import { Notifier } from '@public/server/notifier';
 import { ProgressService } from '@public/server/player/progress.service';
@@ -10,12 +9,14 @@ import { ServerEvent } from '@public/shared/event';
 import { DmcResellconfig } from '@public/shared/job/dmc';
 import { toVector3Object, Vector3 } from '@public/shared/polyzone/vector';
 
+import { isInventoryItemExpired } from '../../../shared/inventory';
 import { BankService } from '../../bank/bank.service';
+import { ItemService } from '../../item/item.service';
 
 @Provider()
 export class DmcRestockProvider {
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(ProgressService)
     private progressService: ProgressService;
@@ -34,9 +35,10 @@ export class DmcRestockProvider {
 
     @OnEvent(ServerEvent.DMC_RESTOCK)
     public async onDmcRestock(source: number) {
-        const item = this.inventoryManager.findItem(
-            source,
-            item => item.name == DmcResellconfig.resell_item && !this.itemService.isItemExpired(item)
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+        const lsCustomStorage = await this.inventoryFactory.get('ls_custom_storage');
+        const item = inventory.findItem(
+            item => item.name == DmcResellconfig.resell_item && !isInventoryItemExpired(item)
         );
 
         if (!item) {
@@ -45,7 +47,7 @@ export class DmcRestockProvider {
 
         const maxAmount = item.amount;
         const itemWeight = this.itemService.getItem(DmcResellconfig.resell_item).weight;
-        const availableWeight = await this.inventoryManager.getAvailableWeight('ls_custom_storage');
+        const availableWeight = lsCustomStorage.weight() || 0;
         const availableAmount = Math.floor(availableWeight / itemWeight);
         const toAddAmount = Math.min(maxAmount, availableAmount);
         const msg =
@@ -71,15 +73,11 @@ export class DmcRestockProvider {
             return;
         }
 
-        if (!this.inventoryManager.removeNotExpiredItem(source, DmcResellconfig.resell_item, toAddAmount)) {
+        if (!inventory.remove(DmcResellconfig.resell_item, toAddAmount, false)) {
             return;
         }
 
-        this.inventoryManager.addItemToInventoryNotPlayer(
-            'ls_custom_storage',
-            DmcResellconfig.resell_item,
-            toAddAmount
-        );
+        lsCustomStorage.add(DmcResellconfig.resell_item, toAddAmount);
 
         const totalAmount = toAddAmount * DmcResellconfig.resell_price;
         await this.bankService.transferFarmMoney(source, 'farm_dmc', 'safe_dmc', totalAmount);
@@ -87,7 +85,6 @@ export class DmcRestockProvider {
         this.monitor.traceEvent('job_dmc_restock', {
             item_id: item.name,
             player_source: source,
-            item_label: item.label,
             amount: toAddAmount,
             position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
         });

@@ -14,6 +14,7 @@ import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiZoneProvider } from '../nui/nui.zone.provider';
 import { ObjectProvider } from '../object/object.provider';
+import { ScreenService } from '../screen.service';
 import { NoClipProvider } from '../utils/noclip.provider';
 import { VehicleConditionProvider } from '../vehicle/vehicle.condition.provider';
 import { VehicleOffroadProvider } from '../vehicle/vehicle.offroad.provider';
@@ -47,9 +48,16 @@ export class AdminMenuDeveloperProvider {
     @Inject(VehicleOffroadProvider)
     public vehicleOffroadProvider: VehicleOffroadProvider;
 
+    @Inject(ScreenService)
+    public screenService: ScreenService;
+
     public showCoordinates = false;
 
     public showMileage = false;
+
+    public showMouseDebug = false;
+
+    private _mouseDebugLastState = null;
 
     @OnNuiEvent(NuiEvent.AdminCreateZone)
     public async createZone(): Promise<void> {
@@ -103,9 +111,51 @@ export class AdminMenuDeveloperProvider {
         });
     }
 
+    @Tick(100)
+    public async showMouseDebugLoop(): Promise<void> {
+        if (!this.showMouseDebug) {
+            this._mouseDebugLastState = null;
+
+            return;
+        }
+
+        this._mouseDebugLastState = await this.screenService.getEntityOnMousePosition();
+    }
+
+    @Tick()
+    public async drawMouseDebug() {
+        if (this._mouseDebugLastState === null) {
+            return;
+        }
+
+        const [entity, position] = this._mouseDebugLastState;
+
+        const heading = GetEntityHeading(entity).toFixed(2);
+        const entityType = GetEntityType(entity);
+
+        const x = position[0].toFixed(2);
+        const y = position[1].toFixed(2);
+        const z = position[2].toFixed(2);
+
+        this.draw.drawText(
+            `~w~Entité ${entity}, Type: ${entityType}, :~b~ vector4(${x}, ${y}, ${z}, ${heading})`,
+            [0.4, 0.115],
+            {
+                font: Font.ChaletComprimeCologne,
+                size: 0.4,
+                color: [66, 182, 245, 255],
+            }
+        );
+    }
+
     @OnNuiEvent(NuiEvent.AdminToggleShowMileage)
     public async toggleShowMileage(active: boolean): Promise<void> {
         this.showMileage = active;
+    }
+
+    @OnNuiEvent(NuiEvent.AdminToggleShowMouseDebug)
+    public async toggleShowMouseDebug(active: boolean): Promise<void> {
+        this.showMouseDebug = active;
     }
 
     @Tick()

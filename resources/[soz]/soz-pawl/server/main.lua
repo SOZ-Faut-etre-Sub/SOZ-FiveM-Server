@@ -34,22 +34,18 @@ QBCore.Functions.CreateCallback("pawl:server:harvestTree", function(source, cb, 
         return
     end
 
-    if exports["soz-inventory"]:CanCarryItems(Player.PlayerData.source, Config.Harvest.RewardItems) then
+    if exports["soz-core"]:CanPlayerCarryItems(Player.PlayerData.source, Config.Harvest.RewardItems) then
         local harvest = field:Harvest(position)
         if harvest then
-            local cbSent = false
             for _, item in pairs(Config.Harvest.RewardItems) do
-                if cbSent then
+                local result = exports["soz-core"]:AddPlayerItem(Player.PlayerData.source, item.name, item.amount)
+
+                if not result.ok then
+                    cb(false)
                     return
                 end
-                exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, item.name, item.amount, nil, nil, function(success,
-                                                                                                                                                reason)
-                    if not success then
-                        cb(false)
-                        cbSent = true
-                    end
-                end)
             end
+
             exports["soz-core"]:TraceEvent("job_pawl_harvest_tree",
                                            {
                 player_source = Player.PlayerData.source,
@@ -81,22 +77,20 @@ QBCore.Functions.CreateCallback("pawl:server:harvestTreeSap", function(source, c
         return
     end
 
-    if exports["soz-inventory"]:CanCarryItems(Player.PlayerData.source, Config.Harvest.SecondaryRewardItems) then
+    if exports["soz-core"]:CanPlayerCarryItems(Player.PlayerData.source, Config.Harvest.SecondaryRewardItems) then
         local harvest = field:TreeExistAtPosition(position)
+
         if harvest then
-            local cbSent = false
             for _, item in pairs(Config.Harvest.SecondaryRewardItems) do
-                if cbSent then
+                local result = exports["soz-core"]:AddPlayerItem(Player.PlayerData.source, item.name, item.amount, nil, nil)
+
+                if result.ok then
+                    cb(false)
+
                     return
                 end
-                exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, item.name, item.amount, nil, nil, function(success,
-                                                                                                                                                reason)
-                    if not success then
-                        cb(false)
-                        cbSent = true
-                    end
-                end)
             end
+
             exports["soz-core"]:TraceEvent("job_pawl_sap_tree", {
                 player_source = Player.PlayerData.source,
                 field = identifier,
@@ -107,6 +101,7 @@ QBCore.Functions.CreateCallback("pawl:server:harvestTreeSap", function(source, c
             cb(true)
             return
         end
+
         cb(false)
     else
         TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous ne pouvez pas recevoir d'objet !", "error")
@@ -167,12 +162,12 @@ RegisterNetEvent("pawl:server:startProcessingTree", function(data)
         return
     end
 
-    if not exports["soz-inventory"]:CanCarryItem(Config.Processing.PlankStorage, Config.Processing.PlankItem, Config.Processing.PlankAmount) then
+    if not exports["soz-core"]:CanCarryItem(Config.Processing.PlankStorage, Config.Processing.PlankItem, Config.Processing.PlankAmount) then
         TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Le stockage de planches est plein !", "error")
         return
     end
 
-    if not exports["soz-inventory"]:CanCarryItem(Config.Processing.SawdustStorage, Config.Processing.SawdustItem, Config.Processing.SawdustAmount) then
+    if not exports["soz-core"]:CanCarryItem(Config.Processing.SawdustStorage, Config.Processing.SawdustItem, Config.Processing.SawdustAmount) then
         TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Le stockage de sciure est plein !", "error")
         return
     end
@@ -192,11 +187,11 @@ RegisterNetEvent("pawl:server:startProcessingTree", function(data)
             end
 
             if GetGameTimer() - Processing.StartedAt >= Config.Processing.Duration then
-                if exports["soz-inventory"]:RemoveItem(Config.Processing.ProcessingStorage, Config.Processing.ProcessingItem, Config.Processing.ProcessingAmount) then
-                    exports["soz-inventory"]:AddItem(source, Config.Processing.PlankStorage, Config.Processing.PlankItem, Config.Processing.PlankAmount)
-                    exports["soz-inventory"]:AddItem(source, Config.Processing.SawdustStorage, Config.Processing.SawdustItem, Config.Processing.SawdustAmount)
+                if exports["soz-core"]:RemoveItem(Config.Processing.ProcessingStorage, Config.Processing.ProcessingItem, Config.Processing.ProcessingAmount) then
+                    exports["soz-core"]:AddItem(Config.Processing.PlankStorage, Config.Processing.PlankItem, Config.Processing.PlankAmount)
+                    exports["soz-core"]:AddItem(Config.Processing.SawdustStorage, Config.Processing.SawdustItem, Config.Processing.SawdustAmount)
 
-                    if exports["soz-inventory"]:GetItem(Config.Processing.ProcessingStorage, Config.Processing.ProcessingItem, nil, true) >= 1 then
+                    if exports["soz-core"]:GetItemCount(Config.Processing.ProcessingStorage, Config.Processing.ProcessingItem) >= 1 then
                         Processing.StartedAt = GetGameTimer()
                     else
                         Processing.StartedAt = 0

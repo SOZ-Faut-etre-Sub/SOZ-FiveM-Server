@@ -1,10 +1,11 @@
 import { Exportable } from '@public/core/decorators/exports';
-import { InventoryItem, Item } from '@public/shared/item';
+import { Item } from '@public/shared/item';
 
 import { Once } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent } from '../../shared/event';
+import { InventoryItem, isInventoryItemExpired } from '../../shared/inventory';
 import { ObjectProvider } from '../object/object.provider';
 import { PlayerService } from '../player/player.service';
 import { ItemService } from './item.service';
@@ -58,6 +59,6 @@ export class ItemToolsProvider {
 
     @Exportable('ItemIsExpired')
     public itemIsExpired(item: InventoryItem) {
-        return this.item.isItemExpired(item);
+        return isInventoryItemExpired(item);
     }
 }

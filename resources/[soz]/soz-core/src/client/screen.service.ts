@@ -6,8 +6,6 @@ import { add2Vector3, multVector3, sub2Vector3, Vector2, Vector3 } from '../shar
 
 @Injectable()
 export class ScreenService {
-    private intersectEverything = false;
-
     public world3DToScreen2D(world3D: Vector3): Vector2 {
         const screenCorrd = GetScreenCoordFromWorldCoord(world3D[0], world3D[1], world3D[2]);
         return [screenCorrd[1], screenCorrd[2]];
@@ -58,6 +56,7 @@ export class ScreenService {
         const posY = GetControlNormal(0, Control.CursorY);
 
         const cursor = [posX, posY] as Vector2;
+
         return this.getEntityOnPosition(cursor);
     }
 
@@ -75,6 +74,15 @@ export class ScreenService {
 
         const [cam3DPos, forwardDir] = this.getScreenToWorldPosition(coords, rotations, cursor);
         const direction = add2Vector3(coords, multVector3(forwardDir, 1000.0));
+
+        return this.testShapeTestLosProbe(cam3DPos, direction);
+    }
+
+    private async testShapeTestLosProbe(
+        cam3DPos: Vector3,
+        direction: Vector3,
+        intersectEverything = false
+    ): Promise<[number, Vector3]> {
         const rayHandle = StartShapeTestLosProbe(
             cam3DPos[0],
             cam3DPos[1],
@@ -82,7 +90,7 @@ export class ScreenService {
             direction[0],
             direction[1],
             direction[2],
-            this.intersectEverything ? -1 : 30,
+            intersectEverything ? -1 : 30,
             PlayerPedId(),
             0
         );
@@ -92,14 +100,20 @@ export class ScreenService {
             const [result, , endCoords, , entity] = GetShapeTestResult(rayHandle);
 
             if (result === 2) {
+                if (entity === 0 && !intersectEverything) {
+                    return await this.testShapeTestLosProbe(cam3DPos, direction, true);
+                }
+
                 return [entity, endCoords as Vector3];
             }
 
             if (result !== 1) {
+                if (!intersectEverything) {
+                    return await this.testShapeTestLosProbe(cam3DPos, direction, true);
+                }
+
                 return [null, null];
             }
-
-            this.intersectEverything = !this.intersectEverything;
 
             await wait(0);
         }

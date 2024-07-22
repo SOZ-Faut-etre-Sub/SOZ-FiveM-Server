@@ -13,6 +13,7 @@ import { Command } from '@public/core/decorators/command';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { wait } from '@public/core/utils';
 import { getChunkId, getGridChunks } from '@public/shared/grid';
+import { InventoryType } from '@public/shared/inventory';
 import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { RpcClientEvent, RpcServerEvent } from '@public/shared/rpc';
 import { TargetOption } from '@public/shared/target';
@@ -301,7 +302,11 @@ export class ObjectProvider {
                 category: 'citizen',
                 canInteract: () => true,
                 action: () => {
-                    this.inventoryManager.openInventory('object_storage', spawnableObject.object.inventoryId);
+                    this.inventoryManager.openInventory(
+                        InventoryType.ObjectStorage,
+                        spawnableObject.object.inventoryId,
+                        spawnableObject.object.position
+                    );
                 },
             });
         }
@@ -325,10 +330,7 @@ export class ObjectProvider {
         }
 
         if (spawnedObject.targets) {
-            this.targetFactory.removeForEntity(
-                [spawnedObject.entity],
-                spawnedObject.targets.map(target => target.label)
-            );
+            this.targetFactory.removeForEntity([spawnedObject.entity]);
         }
 
         if (spawnedObject.dragAndDropCallbacks) {
@@ -340,14 +342,11 @@ export class ObjectProvider {
         }
 
         if (spawnedObject.targets) {
-            this.targetFactory.removeForEntity(
-                [spawnedObject.entity],
-                spawnedObject.targets.map(target => target.label)
-            );
+            this.targetFactory.removeForEntity([spawnedObject.entity]);
         }
 
         if (spawnedObject.object.inventoryId) {
-            this.targetFactory.removeForEntity([spawnedObject.entity], ['Ouvrir']);
+            this.targetFactory.removeForEntity([spawnedObject.entity]);
         }
 
         delete this.loadedObjects[id];

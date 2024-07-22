@@ -1,10 +1,10 @@
 import { OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { TowRope } from '@public/shared/vehicle/tow.rope';
 
-import { InventoryManager } from '../inventory/inventory.manager';
 import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
 import { TowRopeRepository } from '../repository/tow.rope.repository';
@@ -14,8 +14,8 @@ export class VehicleTowProvider {
     @Inject(TowRopeRepository)
     public towRopeRepository: TowRopeRepository;
 
-    @Inject(InventoryManager)
-    public inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    public inventoryFactory: InventoryFactory;
 
     @Inject(Notifier)
     public notifier: Notifier;
@@ -24,8 +24,10 @@ export class VehicleTowProvider {
     public monitor: Monitor;
 
     @OnEvent(ServerEvent.VEHICLE_TOW_ROPE_ADD)
-    public addTowRope(source: number, towRope: TowRope) {
-        if (!this.inventoryManager.removeNotExpiredItem(source, 'tow_cable')) {
+    public async addTowRope(source: number, towRope: TowRope) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!inventory.remove('tow_cable', 1, false)) {
             return;
         }
 

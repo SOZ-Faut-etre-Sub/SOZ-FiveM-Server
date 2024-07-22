@@ -1,10 +1,10 @@
 import { Tick, TickInterval } from '@public/core/decorators/tick';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { ServerEvent } from '@public/shared/event/server';
 
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
 import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
@@ -26,8 +26,8 @@ export class BossShopProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(PlayerMoneyService)
     private playerMoneyService: PlayerMoneyService;
@@ -73,12 +73,19 @@ export class BossShopProvider {
     }
 
     @Tick(TickInterval.EVERY_MINUTE)
-    public shopOrderTick() {
+    public async shopOrderTick() {
         const delay = GetConvar('soz_core_environment', 'development') == 'production' ? prdDelay : tstDelay;
         const delayDate = Date.now() - delay;
+
         for (const order of this.orders) {
+            const inventory = await this.inventoryFactory.get(order.inv);
+
+            if (!inventory) {
+                continue;
+            }
+
             if (order.date < delayDate) {
-                this.inventoryManager.addItemToInventoryNotPlayer(order.inv, order.item);
+                inventory.add(order.item);
                 this.monitor.traceEvent('boss_shop_deliver_order', {
                     player_source: source,
                     inventory_id: order.inv,

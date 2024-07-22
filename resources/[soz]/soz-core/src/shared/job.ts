@@ -69,8 +69,6 @@ export enum JobPermission {
     CashTransfer_CollectSecure = 'collect-secure',
     CashTransfer_ResaleBags = 'resale-bags',
     CashTransfer_FillIn = 'fill-in',
-    FoodHarvest = 'harvest',
-    FoodCraft = 'craft',
     FuelerChangePrice = 'fueler-change-price',
     CriminalRecord = 'criminal-record',
     VehicleRegistrar = 'vehicle-registrar',
@@ -88,19 +86,15 @@ export enum JobPermission {
     MedicalPatientHistoryEdit = 'medical-patient-history-edit',
     MedicalPatientHistoryDelete = 'medical-patient-history-delete',
     MedicalPatientHistoryAccess = 'medical-patient-history-access',
-    BaunHarvest = 'harvest',
-    BaunRestock = 'restock',
-    BaunCraft = 'craft',
-    FfsHarvest = 'harvest',
-    FfsRestock = 'restock',
-    FfsCraft = 'craft',
+    Harvest = 'harvest',
+    Restock = 'restock',
+    Craft = 'craft',
     BennysEstimate = 'estimate',
     BennysResell = 'resell',
-    BennysOrder = 'order',
+    Order = 'order',
     MdrViewOtherJobs = 'view-other-jobs',
     MdrViewCitizenData = 'view-citizen-data',
     MdrMarkedMoneyCleaning = 'marked-money-cleaning',
-    UpwOrder = 'order',
     UpwChangePrice = 'upw-change-price',
     FDOFedPound = 'fdo-fed-pound',
     OnDutyView = 'view-employe-on-duty',
@@ -170,9 +164,36 @@ export type JobGrade = {
     permissions: JobPermission[];
 };
 
-export type JobCloakroomZoneData = {
-    id: string;
-    event: string;
-    job: JobType;
-    storage: string;
+export type ResellZone = {
+    source_account: string;
+    target_account: string;
+    inventory_id?: string;
+};
+
+export const JobResellZones: Record<string, ResellZone> = {
+    'Resell:LSPort:Dmc': {
+        source_account: 'farm_dmc',
+        target_account: 'safe_dmc',
+    },
+    'Resell:LSPort:Pawl': {
+        source_account: 'farm_pawl',
+        target_account: 'safe_pawl',
+    },
+    'Resell:LSPort:Food': {
+        source_account: 'farm_food',
+        target_account: 'safe_food',
+    },
+    'Resell:FDF:Silo': {
+        source_account: 'farm_fdf',
+        target_account: 'safe_fdf',
+    },
+    'Resell:FDF:Bell-Farm': {
+        source_account: 'farm_fdf',
+        target_account: 'safe_fdf',
+    },
+    'Resell:Zkea': {
+        source_account: 'farm_pawl',
+        target_account: 'safe_pawl',
+        inventory_id: 'cabinet_storage',
+    },
 };

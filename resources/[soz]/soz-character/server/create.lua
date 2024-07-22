@@ -21,7 +21,7 @@ QBCore.Functions.CreateCallback("soz-character:server:CreatePlayer", function(so
         exports["soz-core"]:TraceEvent("player_login", {player_source = source})
 
         for _, item in pairs(Config.NewPlayerDefaultItems) do
-            exports["soz-inventory"]:AddItem(source, source, item.name, item.quantity, false, false)
+            exports["soz-core"]:AddPlayerItem(source, item.name, item.quantity)
         end
 
         Wait(1)

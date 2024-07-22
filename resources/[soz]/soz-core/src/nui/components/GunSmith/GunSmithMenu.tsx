@@ -3,12 +3,13 @@ import { useSelector } from 'react-redux';
 
 import { TaxType } from '../../../shared/bank';
 import { NuiEvent } from '../../../shared/event';
-import { InventoryItem } from '../../../shared/item';
+import { InventoryItem } from '../../../shared/inventory';
 import { MenuType } from '../../../shared/nui/menu';
 import { WEAPON_CUSTOM_PRICE, WeaponAttachment, WeaponComponentType } from '../../../shared/weapons/attachment';
 import { WeaponTintColor, WeaponTintColorChoiceItem } from '../../../shared/weapons/tint';
 import { WeaponConfiguration, WeaponsMenuData } from '../../../shared/weapons/weapon';
 import { fetchNui } from '../../fetch';
+import { useItems } from '../../hook/data';
 import { useGetPrice } from '../../hook/price';
 import { RootState } from '../../store';
 import {
@@ -213,17 +214,22 @@ const MenuWeaponComponentSelect: FunctionComponent<{
 
 export const MenuGunSmith: FunctionComponent<MenuGunSmithStateProps> = ({ data: { weapons, tints, attachments } }) => {
     const banner = 'https://nui-img/soz/menu_job_gunsmith';
+    const items = useItems();
 
     return (
         <Menu type={MenuType.GunSmith}>
             <MainMenu>
                 <MenuTitle banner={banner}></MenuTitle>
                 <MenuContent>
-                    {weapons.map((weapon, id) => (
-                        <MenuItemSubMenuLink key={`gunsmith_${id}`} id={`gunsmith_${id}`}>
-                            {weapon.metadata.label ? weapon.metadata.label + ` (${weapon.label})` : weapon.label}
-                        </MenuItemSubMenuLink>
-                    ))}
+                    {weapons.map((weapon, id) => {
+                        const item = items.find(i => i.name === weapon.name);
+
+                        return (
+                            <MenuItemSubMenuLink key={`gunsmith_${id}`} id={`gunsmith_${id}`}>
+                                {weapon.metadata.label ? weapon.metadata.label + ` (${item?.label})` : item?.label}
+                            </MenuItemSubMenuLink>
+                        );
+                    })}
                 </MenuContent>
             </MainMenu>
             {weapons.map((weapon, id) => (

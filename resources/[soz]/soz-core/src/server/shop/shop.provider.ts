@@ -1,11 +1,11 @@
 import { ItemService } from '@public/client/item/item.service';
 import { ProperTorsos, ShopBrand, UndershirtCategoryNeedingReplacementTorso } from '@public/config/shops';
 import { BankService } from '@public/server/bank/bank.service';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { PlayerPositionProvider } from '@public/server/player/player.position.provider';
 import { VehicleSpawner } from '@public/server/vehicle/vehicle.spawner';
 import { VehicleStateService } from '@public/server/vehicle/vehicle.state.service';
 import { Component, OutfitItem, Prop } from '@public/shared/cloth';
-import { InventoryItemMetadata } from '@public/shared/item';
 import { TenueIdToHide } from '@public/shared/player';
 import {
     BarberShopItem,
@@ -31,14 +31,17 @@ import _ from 'lodash';
 import { Once, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { Rpc } from '../../core/decorators/rpc';
 import { Logger } from '../../core/logger';
 import { BankMoneyType, TaxType } from '../../shared/bank';
 import { CAYO } from '../../shared/cayo';
 import { ClientEvent, ServerEvent } from '../../shared/event';
+import { ADD_ERROR_MESSAGE, InventoryItemMetadata } from '../../shared/inventory';
 import { Vector3, Vector4 } from '../../shared/polyzone/vector';
+import { isErr, isOk } from '../../shared/result';
+import { RpcServerEvent } from '../../shared/rpc';
 import { PriceService } from '../bank/price.service';
 import { PrismaService } from '../database/prisma.service';
-import { InventoryManager } from '../inventory/inventory.manager';
 import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
 import { PlayerMoneyService } from '../player/player.money.service';
@@ -50,8 +53,8 @@ export class ShopProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(PlayerService)
     private playerService: PlayerService;
@@ -95,12 +98,20 @@ export class ShopProvider {
         this.playerPositionProvider.registerZone(ZkeaShopZoneExit, ZkeaShopZoneExitPosition);
     }
 
-    @OnEvent(ServerEvent.SHOP_VALIDATE_CART)
-    public async onShopMaskBuy(source: number, cartContent: CartElement[], moneytype: string, taxType?: TaxType) {
+    @Rpc(RpcServerEvent.INVENTORY_SHOP_VALIDATE_CART)
+    public async onShopBuy(
+        source: number,
+        cartContent: CartElement[],
+        moneyType: 'money' | 'marked_money' | string,
+        taxType?: TaxType
+    ) {
         const player = this.playerService.getPlayer(source);
+
         if (!player) {
-            return;
+            return false;
         }
+
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
 
         let cartAmount = 0;
         let cartWeight = 0;
@@ -110,47 +121,51 @@ export class ShopProvider {
             cartWeight = cartWeight + item.amount * item.weight;
         });
 
-        const canCarryCart = this.inventoryManager.canCarryItems(source, cartContent);
+        const canCarryCart = inventory.canCarryItems(cartContent);
         TriggerClientEvent(ClientEvent.ANIMATION_GIVE, source);
 
         if (!canCarryCart) {
             this.notifier.notify(source, 'Vous ne pouvez pas porter cette quantité...', 'error');
-            return;
+
+            return false;
         }
 
-        if (['money', 'marked_money'].includes(moneytype)) {
+        if (['money', 'marked_money'].includes(moneyType)) {
             const hasRemovedMoney = taxType
                 ? await this.playerMoneyService.buy(source, cartAmount, taxType)
-                : this.playerMoneyService.remove(source, cartAmount, moneytype as BankMoneyType);
+                : this.playerMoneyService.remove(source, cartAmount, moneyType as BankMoneyType);
 
             if (!hasRemovedMoney) {
                 this.notifier.notify(source, "Vous n'avez pas assez d'argent", 'error');
 
-                return;
+                return false;
             }
         } else {
-            if (!this.inventoryManager.removeNotExpiredItem(source, moneytype, cartAmount)) {
-                const itemDef = this.itemService.getItem(moneytype);
+            const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+            if (!inventory.remove(moneyType, cartAmount, false)) {
+                const itemDef = this.itemService.getItem(moneyType);
+
                 if (!itemDef) {
-                    return;
+                    return false;
                 }
 
                 this.notifier.notify(source, `Vous n'avez pas assez de ${itemDef.label}`, 'error');
-                return;
+                return false;
             }
         }
 
         cartContent.map(item => {
             if (!item.unique) {
-                this.inventoryManager.addItemToInventory(source, item.name, item.amount, item.metadata);
+                inventory.add(item.name, item.amount, item.metadata);
             } else {
                 for (let i = 0; i < item.amount; i++) {
-                    this.inventoryManager.addItemToInventory(source, item.name, 1, item.metadata);
+                    inventory.add(item.name, 1, item.metadata);
                 }
             }
         });
 
-        if (['money', 'marked_money'].includes(moneytype)) {
+        if (['money', 'marked_money'].includes(moneyType)) {
             this.notifier.notify(
                 source,
                 `Votre achat a bien été validé ! Merci. Prix : ~g~$${await this.priceService.getPrice(
@@ -160,13 +175,11 @@ export class ShopProvider {
                 'success'
             );
         } else {
-            const itemDef = this.itemService.getItem(moneytype);
-            if (!itemDef) {
-                return;
-            }
+            const itemDef = this.itemService.getItem(moneyType);
+
             this.notifier.notify(
                 source,
-                `Votre achat a bien été validé ! Merci. Prix : ~g~${cartAmount}~s~ ~b~${itemDef.label}~s~`,
+                `Votre achat a bien été validé ! Merci. Prix : ~g~${cartAmount}~s~ ~b~${itemDef?.label || moneyType}~s~`,
                 'success'
             );
         }
@@ -175,7 +188,7 @@ export class ShopProvider {
             player_source: source,
             money: cartAmount,
             tax_type: taxType,
-            money_type: moneytype,
+            money_type: moneyType,
             cart_items: cartContent.map(item => {
                 return {
                     item_id: item.name,
@@ -183,6 +196,8 @@ export class ShopProvider {
                 };
             }),
         });
+
+        return true;
     }
 
     @OnEvent(ServerEvent.SHOP_BUY)
@@ -243,13 +258,16 @@ export class ShopProvider {
 
     @OnEvent(ServerEvent.ZKEA_CHECK_STOCK)
     public async zkeaCheckStock(source: number) {
-        const amount = this.inventoryManager.getItemCount('cabinet_storage', 'cabinet_zkea');
+        const inventory = await this.inventoryFactory.get('cabinet_storage');
+        const amount = inventory.getItemCount('cabinet_zkea');
+
         this.notifier.notify(source, `Il reste ${amount} ~b~meubles Zkea~s~ en stock.`, 'info');
     }
 
     @OnEvent(ServerEvent.LSC_CHECK_STOCK)
     public async lscCheckStock(source: number) {
-        const amount = this.inventoryManager.getItemCount('ls_custom_storage', 'ls_custom_upgrade_part');
+        const inventory = await this.inventoryFactory.get('ls_custom_storage');
+        const amount = inventory.getItemCount('ls_custom_upgrade_part');
         this.notifier.notify(
             source,
             `Il reste ${amount || 0} ~b~Pièces d'amélioration certifiées~s~ en stock.`,
@@ -518,20 +536,25 @@ export class ShopProvider {
         if (quantity < 1) {
             return;
         }
+
         const player = this.playerService.getPlayer(source);
+
         if (product.requiredLicense && !player.metadata.licences[product.requiredLicense]) {
             this.notifier.notify(source, "Vous n'avez pas le permis nécessaire", 'error');
             return;
         }
-        if (!this.inventoryManager.canCarryItem(source, product.id, quantity)) {
-            this.notifier.notify(source, `Vous n'avez pas assez de place dans votre inventaire`, 'error');
+
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!inventory.canCarryItem(product.id, quantity)) {
+            this.notifier.notify(source, ADD_ERROR_MESSAGE['not_enough_space'], 'error');
             return;
         }
         if (!(await this.shopPay(source, product.price * quantity, taxType))) {
             this.notifier.notify(source, `Ah mais t'es pauvre en fait ! Reviens quand t'auras de quoi payer.`, 'error');
             return;
         }
-        if (this.inventoryManager.addItemToInventory(source, product.id, quantity, product.metadata)) {
+        if (isOk(inventory.add(product.id, quantity, product.metadata))) {
             this.notifier.notify(
                 source,
                 `Vous avez acheté ~b~${quantity} ${product.item.label}~s~ pour ~g~$${await this.priceService.getPrice(
@@ -545,38 +568,38 @@ export class ShopProvider {
     }
 
     public async shopZkeaFournitureBuy(source: number, product: ZkeaFournitureItem, taxType: TaxType) {
-        if (this.inventoryManager.getItemCount('cabinet_storage', 'cabinet_zkea') < 1) {
+        const cabinetStorageInventory = await this.inventoryFactory.get('cabinet_storage');
+        const playerInventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (cabinetStorageInventory.getItemCount('cabinet_zkea') < 1) {
             this.notifier.error(source, "Achat de meuble impossible car Zkea n'a pas assez de stock.");
 
             return;
         }
-        this.inventoryManager.removeItemFromInventory('cabinet_storage', 'cabinet_zkea', 1);
 
-        const crate = this.inventoryManager
-            .getItems(source)
-            .find(
-                inventoryItem =>
-                    inventoryItem.name === 'zkea_crate' && inventoryItem.metadata.zkeaCrateElements.length < 20
-            );
+        cabinetStorageInventory.remove('cabinet_zkea', 1);
+
+        const crate = Object.values(playerInventory.items()).find(
+            inventoryItem => inventoryItem.name === 'zkea_crate' && inventoryItem.metadata.zkeaCrateElements.length < 20
+        );
 
         let newMeta: InventoryItemMetadata;
         if (crate) {
             newMeta = _.cloneDeep(crate.metadata);
             newMeta.zkeaCrateElements.push({ type: product.type, name: product.name, model: product.model });
             if (
-                !this.inventoryManager.canSwapItems(
-                    source,
+                !playerInventory.canSwapItems(
                     [{ name: 'zkea_crate', amount: 1, metadata: crate.metadata }],
                     [{ name: 'zkea_crate', amount: 1, metadata: newMeta }]
                 )
             ) {
-                this.notifier.notify(source, `Vous n'avez pas assez de place dans votre inventaire`, 'error');
+                this.notifier.notify(source, ADD_ERROR_MESSAGE['not_enough_space'], 'error');
                 return;
             }
         } else {
             newMeta = { zkeaCrateElements: [{ type: product.type, name: product.name, model: product.model }] };
-            if (!this.inventoryManager.canCarryItem(source, 'zkea_crate', 1, newMeta)) {
-                this.notifier.notify(source, `Vous n'avez pas assez de place dans votre inventaire`, 'error');
+            if (!playerInventory.canCarryItem('zkea_crate', 1, newMeta)) {
+                this.notifier.notify(source, ADD_ERROR_MESSAGE['not_enough_space'], 'error');
                 return;
             }
         }
@@ -587,13 +610,14 @@ export class ShopProvider {
         }
 
         if (crate) {
-            if (!this.inventoryManager.removeInventoryItem(source, crate, 1)) {
+            if (!playerInventory.removeAtSlot(crate.slot, 1)) {
                 this.notifier.notify(source, `Oups, une erreur est survenue... Réessaye !`, 'error');
                 return;
             }
         }
-        const addRequest = this.inventoryManager.addItemToInventory(source, 'zkea_crate', 1, newMeta);
-        if (!addRequest.success) {
+        const addRequest = playerInventory.add('zkea_crate', 1, newMeta);
+
+        if (isErr(addRequest)) {
             this.notifier.notify(source, `Oups, une erreur est survenue... Réessaye !`, 'error');
             return;
         }

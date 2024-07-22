@@ -1,6 +1,6 @@
 import { Exportable } from '@public/core/decorators/exports';
 import { ScubaOutfit } from '@public/shared/cloth';
-import { InventoryItem } from '@public/shared/item';
+import { InventoryItem } from '@public/shared/inventory';
 import { PlayerData } from '@public/shared/player';
 
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';

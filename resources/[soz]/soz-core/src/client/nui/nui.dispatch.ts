@@ -21,4 +21,17 @@ export class NuiDispatch {
     getMenuOpened(): MenuType | null {
         return this.menuOpened;
     }
+
+    closeEverything() {
+        if (this.menuOpened) {
+            this.dispatch('menu', 'CloseMenu', false);
+            this.menuOpened = null;
+        }
+
+        this.dispatch('inventory', 'SetOpen', false);
+        this.dispatch('inventory', 'CloseInventory');
+        this.dispatch('inventory', 'CloseKeychain');
+        this.dispatch('inventory', 'CloseWallet');
+        this.dispatch('inventory', 'CloseShop');
+    }
 }

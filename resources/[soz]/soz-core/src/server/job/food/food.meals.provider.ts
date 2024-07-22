@@ -1,9 +1,11 @@
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
+
 import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ClientEvent, ServerEvent } from '../../../shared/event';
+import { ADD_ERROR_MESSAGE } from '../../../shared/inventory';
 import { BankService } from '../../bank/bank.service';
-import { InventoryManager } from '../../inventory/inventory.manager';
 import { Notifier } from '../../notifier';
 import { ProgressService } from '../../player/progress.service';
 
@@ -26,8 +28,8 @@ export class FoodMealsProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(BankService)
     private bankService: BankService;
@@ -142,6 +144,8 @@ export class FoodMealsProvider {
             return false;
         }
 
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
         if (this.orderReadyDate.getTime() > new Date().getTime()) {
             const minutesLeft = Math.round(
                 ((this.orderReadyDate.getTime() - (new Date().getTime() % 86400000)) % 3600000) / 60000
@@ -153,11 +157,11 @@ export class FoodMealsProvider {
                 }~s~.`
             );
             return;
-        } else if (!this.inventoryManager.canCarryItem(source, this.MEAL_BOX_ITEM, this.MEAL_BOXES_PER_ORDER)) {
-            this.notifier.notify(source, `Vous n'avez ~r~pas assez de place~s~ dans votre inventaire.`);
+        } else if (!inventory.canCarryItem(this.MEAL_BOX_ITEM, this.MEAL_BOXES_PER_ORDER)) {
+            this.notifier.notify(source, ADD_ERROR_MESSAGE['not_enough_space']);
             return;
         }
-        this.inventoryManager.addItemToInventory(source, this.MEAL_BOX_ITEM, this.MEAL_BOXES_PER_ORDER);
+        inventory.add(this.MEAL_BOX_ITEM, this.MEAL_BOXES_PER_ORDER);
         this.notifier.notify(source, `Vous avez ~g~récupéré~s~ votre commande. Bon appétit !`);
 
         this.updateOrderInProgress(false);

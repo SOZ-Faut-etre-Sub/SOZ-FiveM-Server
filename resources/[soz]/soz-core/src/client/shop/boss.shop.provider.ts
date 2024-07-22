@@ -27,13 +27,11 @@ export class BossShopProvider {
     private jobService: JobService;
 
     public getHydratedProducts(products: ShopProduct[]) {
-        const hydratedProducts = products.map((product, id) => ({
+        return products.map(product => ({
             ...this.itemService.getItem(product.id),
-            ...product,
-            slot: id + 1,
-            amount: 0,
+            price: product.price,
+            metadata: product.metadata,
         }));
-        return hydratedProducts;
     }
 
     private getOrders(shop: ShopConfig & { job: JobType }): TargetOption[] {

@@ -1,8 +1,10 @@
 import { DrugNuiZone } from '@private/shared/drugs';
 import { HudState, HudTheme } from '@public/shared/hud';
+import { InventoryConfiguration, InventoryItem } from '@public/shared/inventory';
 import { Item } from '@public/shared/item';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { VehicleHud } from '@public/shared/vehicle/vehicle';
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 import { PlayerData } from '../../shared/player';
@@ -16,8 +18,30 @@ export const usePlayerPosition = (): Vector3 => {
     return useSelector((state: RootState) => state.playerPosition);
 };
 
+export const usePlayerInventoryConfiguration = (): InventoryConfiguration => {
+    return useSelector((state: RootState) => state.playerInventory.configuration);
+};
+
+export const usePlayerInventoryItems = (): Record<number, InventoryItem> => {
+    return useSelector((state: RootState) => state.playerInventory.items);
+};
+
 export const useItems = (): Item[] => {
     return useSelector((state: RootState) => state.item);
+};
+
+export const useItemResolver = (): ((id: string) => Item) => {
+    const items = useItems();
+
+    return useMemo(() => {
+        const indexedItems = new Map<string, Item>();
+
+        for (const item of items) {
+            indexedItems.set(item.name, item);
+        }
+
+        return (name: string) => indexedItems.get(name);
+    }, [items]);
 };
 
 export const useItem = (id: string): Item | null => {

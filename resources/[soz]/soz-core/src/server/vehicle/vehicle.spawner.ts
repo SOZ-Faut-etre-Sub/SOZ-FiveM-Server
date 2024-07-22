@@ -176,10 +176,12 @@ export class VehicleSpawner {
     @Once(OnceStep.RepositoriesLoaded)
     public async onInit() {
         const garages = await this.garageRepository.get();
-        const noSpawnZones = [];
+        const noSpawnZones: BoxZone[] = [];
 
         for (const garage of Object.values(garages)) {
-            noSpawnZones.push(...garage.parkingPlaces);
+            for (const parkingPlace of garage.parkingPlaces) {
+                noSpawnZones.push(BoxZone.fromZone(parkingPlace) as BoxZone);
+            }
         }
 
         for (const dealership of Object.values(DealershipConfig)) {

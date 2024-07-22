@@ -200,13 +200,14 @@ onNet('QBCore:Client:OnPlayerLoaded', async () => {
 });
 
 onNet('QBCore:Player:SetPlayerData', async (playerData: PlayerData) => {
-    if (typeof playerData.items === 'object') playerData.items = Object.values(playerData.items);
-    global.isPlayerHasItem = !!playerData.items.find(item => item.name === 'phone');
-    global.isPlayerHasDongle = !!playerData.items.find(item => item.name === 'cyber_darkweb_module');
-
     updateAvailability();
     sendMessage('PHONE', EmergencyEvents.SET_EMERGENCY, playerData.metadata['isdead']);
     sendMessage('PHONE', PhoneEvents.SET_DARKWEB, global.isPlayerHasDongle);
+});
+
+on('soz-phone:client:phone:setHasPhone', async (hasPhone: boolean) => {
+    global.isPlayerHasItem = hasPhone;
+    updateAvailability();
 });
 
 onNet('ems:client:onDeath', () => {

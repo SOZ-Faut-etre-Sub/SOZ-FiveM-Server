@@ -1,13 +1,22 @@
 import { ShopBrand } from '@public/config/shops';
+import { InventoryItem, InventoryItemMetadata } from '@public/shared/inventory';
+import { Item } from '@public/shared/item';
 
-import { InventoryItem } from '../item';
 import { PlayerLicenceType } from '../player';
 import { ShopProduct } from '../shop';
 
 export type ShopContent = ShopProduct[];
 
+export type ShopItem = Item & {
+    price: number;
+    amount?: number;
+    metadata?: Partial<InventoryItemMetadata>;
+};
+
 export type CartElement = InventoryItem & {
     price: number;
+    weight: number;
+    unique: boolean;
 };
 
 const SuperetteContent: ShopContent = [

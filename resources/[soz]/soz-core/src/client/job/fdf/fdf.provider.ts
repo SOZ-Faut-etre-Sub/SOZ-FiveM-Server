@@ -80,18 +80,9 @@ export class FDFProvider {
                 invincible: true,
                 blockevents: true,
                 scenario: 'WORLD_HUMAN_STAND_IMPATIENT',
-            });
-            this.playerInOutService.add(zone.name, zone.zone, isInside => {
-                TriggerEvent(
-                    'player/setCurrentResellZone',
-                    isInside
-                        ? {
-                              ZoneName: zone.name,
-                              SourceAccount: 'farm_fdf',
-                              TargetAccount: 'safe_fdf',
-                          }
-                        : null
-                );
+                dropItemCallback: (inventoryId, inventoryItem, amount) => {
+                    TriggerServerEvent(ServerEvent.JOB_RESELL_ITEM, inventoryId, inventoryItem, amount, zone.name);
+                },
             });
 
             this.blipFactory.create('fdfResellBlip' + index, {

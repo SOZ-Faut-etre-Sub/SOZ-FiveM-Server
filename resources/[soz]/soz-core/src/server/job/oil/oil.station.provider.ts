@@ -1,3 +1,5 @@
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
+
 import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
@@ -9,7 +11,6 @@ import { toVector3Object, Vector3, Vector4 } from '../../../shared/polyzone/vect
 import { RpcServerEvent } from '../../../shared/rpc';
 import { BankService } from '../../bank/bank.service';
 import { PrismaService } from '../../database/prisma.service';
-import { InventoryManager } from '../../inventory/inventory.manager';
 import { JobService } from '../../job.service';
 import { LockService } from '../../lock.service';
 import { Monitor } from '../../monitor/monitor';
@@ -27,8 +28,8 @@ export class OilStationProvider {
     @Inject(VehicleStateService)
     private vehicleStateService: VehicleStateService;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(Notifier)
     private notifier: Notifier;
@@ -157,7 +158,13 @@ export class OilStationProvider {
 
         const itemCount = Math.ceil(amount / 10);
         const plate = state.volatile.plate || GetVehicleNumberPlateText(vehicleEntityId);
-        const availableCount = this.inventoryManager.getItemCount(`trunk_` + plate, 'essence');
+        const inventory = await this.inventoryFactory.getVehicleInventoryByPlate(plate);
+
+        if (!inventory) {
+            return;
+        }
+
+        const availableCount = inventory.getItemCount('essence');
         const duration = itemCount * 500;
 
         if (itemCount > availableCount) {
@@ -197,7 +204,7 @@ export class OilStationProvider {
             const reallyRefilled = Math.max(0, Math.min(refilled, 3000 - station.stock));
             const itemUsed = Math.ceil(reallyRefilled / 10);
 
-            if (!this.inventoryManager.removeItemFromInventory(`trunk_` + plate, 'essence', itemUsed)) {
+            if (!inventory.remove('essence', itemUsed)) {
                 this.notifier.notify(source, "Vous n'avez pas assez d'essence dans la citerne.");
 
                 return;
@@ -235,7 +242,8 @@ export class OilStationProvider {
     @OnEvent(ServerEvent.OIL_REFILL_KEROSENE_STATION)
     public async refillKeroseneStation(source: number, stationId: number, amount: number): Promise<void> {
         const itemCount = Math.ceil(amount / 10);
-        const availableCount = this.inventoryManager.getItemCount(source, 'kerosene');
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+        const availableCount = inventory.getItemCount('kerosene');
 
         if (itemCount > availableCount) {
             this.notifier.notify(source, "Vous n'avez pas assez de kérosène.");
@@ -264,7 +272,7 @@ export class OilStationProvider {
         const refilled = Math.floor(amount * progress);
         const itemUsed = Math.ceil(refilled / 10);
 
-        if (!this.inventoryManager.removeItemFromInventory(source, 'kerosene', itemUsed)) {
+        if (!inventory.remove('kerosene', itemUsed)) {
             this.notifier.notify(source, "Vous n'avez pas assez de kérosène.");
 
             return;

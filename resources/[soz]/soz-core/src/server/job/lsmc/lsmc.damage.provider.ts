@@ -6,8 +6,9 @@ import { PrismaService } from '@public/server/database/prisma.service';
 import { Monitor } from '@public/server/monitor/monitor';
 import { PlayerService } from '@public/server/player/player.service';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
-import { MedicalMetadata } from '@public/shared/item';
 import { DamageData, DamageServerData } from '@public/shared/job/lsmc';
+
+import { MedicalMetadata } from '../../../shared/inventory';
 
 @Provider()
 export class LSMCDamageProvider {

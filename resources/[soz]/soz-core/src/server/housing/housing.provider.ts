@@ -1,4 +1,5 @@
 import { Command } from '@public/core/decorators/command';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { HousingTiers, TYPE_LABEL } from '@public/shared/housing/upgrades';
 
 import { OnEvent } from '../../core/decorators/event';
@@ -20,12 +21,12 @@ import {
     isTrailer,
     Property,
 } from '../../shared/housing/housing';
+import { HOUSE_FRIDGE_TIER_WEIGHTS, HOUSE_STORAGE_TIER_WEIGHTS } from '../../shared/inventory';
 import { PlayerData } from '../../shared/player';
 import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import { BankService } from '../bank/bank.service';
 import { PriceService } from '../bank/price.service';
-import { InventoryManager } from '../inventory/inventory.manager';
 import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
 import { PlayerAppearanceService } from '../player/player.appearance.service';
@@ -58,8 +59,8 @@ export class HousingProvider {
     @Inject(Monitor)
     private monitor: Monitor;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(BankService)
     private bankService: BankService;
@@ -463,7 +464,9 @@ export class HousingProvider {
     }
 
     public async clearApartment(property: Property, apartment: Apartment, notify = true) {
-        this.inventoryManager.clearApartment(apartment.identifier);
+        const inventory = await this.inventoryFactory.get(apartment.identifier);
+        inventory?.clear();
+
         await this.bankService.clearAccount(apartment.identifier);
 
         if (apartment.owner !== null) {
@@ -605,7 +608,11 @@ export class HousingProvider {
             }
         }
 
-        if (this.inventoryManager.getItemCount('cabinet_storage', 'cabinet_zkea') < zkeaAmount) {
+        const inventory = await this.inventoryFactory.get('cabinet_storage');
+        const apartmentInventory = await this.inventoryFactory.get(`house_stash_${apartment.identifier}`);
+        const apartmentFridge = await this.inventoryFactory.get(`house_fridge_${apartment.identifier}`);
+
+        if (inventory.getItemCount('cabinet_zkea') < zkeaAmount) {
             this.notifier.error(player.source, "Amélioration de palier impossible car Zkea n'a pas assez de stock.");
 
             return;
@@ -617,11 +624,17 @@ export class HousingProvider {
             return;
         }
 
-        this.inventoryManager.removeItemFromInventory('cabinet_storage', 'cabinet_zkea', zkeaAmount);
+        inventory.remove('cabinet_zkea', zkeaAmount);
 
         if (apartmentTier.tier !== undefined) {
-            this.inventoryManager.setHouseStashAndFridgeMaxWeightFromTier(apartment.identifier, apartmentTier.tier);
+            apartmentInventory?.updateConfiguration({
+                maxWeight: HOUSE_STORAGE_TIER_WEIGHTS[apartment.tier] || HOUSE_STORAGE_TIER_WEIGHTS[0],
+            });
+            apartmentFridge?.updateConfiguration({
+                maxWeight: HOUSE_FRIDGE_TIER_WEIGHTS[apartment.tier] || HOUSE_FRIDGE_TIER_WEIGHTS[0],
+            });
         }
+
         this.playerService.setPlayerApartmentTier(player.source, apartmentTier);
 
         await this.housingRepository.setApartmentTier(apartment.id, apartmentTier);

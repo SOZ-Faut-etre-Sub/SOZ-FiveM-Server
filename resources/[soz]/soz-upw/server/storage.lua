@@ -15,7 +15,7 @@ RegisterNetEvent("soz-upw:server:FacilityCapacity", function(data)
 end)
 
 QBCore.Functions.CreateCallback("soz-upw:server:GetInverterStorage", function(source, cb, identifier)
-    local items = exports["soz-inventory"]:GetItemsByType("inverter_" .. identifier, "energy")
+    local items = exports["soz-core"]:GetItemsByType("inverter_" .. identifier, "energy")
     local weight = 0
     for _, item in pairs(items) do
         weight = weight + item.item.weight * item.amount

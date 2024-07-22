@@ -1,9 +1,9 @@
+import { Inject, Injectable } from '@core/decorators/injectable';
+import { InventoryManager } from '@public/client/inventory/inventory.manager';
+import { InventoryItem } from '@public/shared/inventory';
 import { VehicleSeat } from '@public/shared/vehicle/vehicle';
 
-import { Inject, Injectable } from '../../core/decorators/injectable';
-import { InventoryItem } from '../../shared/item';
 import { GlobalWeaponConfig, WeaponConfig, WeaponName, Weapons } from '../../shared/weapons/weapon';
-import { PlayerService } from '../player/player.service';
 
 const MONEY_CASE_HASH = GetHashKey('WEAPON_BRIEFCASE');
 
@@ -43,13 +43,11 @@ export class WeaponService {
     private currentWeapon: InventoryItem | null = null;
     private disabledReasons = new Set<string>();
 
-    @Inject(PlayerService)
-    private playerService: PlayerService;
+    @Inject(InventoryManager)
+    private inventoryManager: InventoryManager;
 
     getWeaponFromSlot(slot: number): InventoryItem | null {
-        return Object.values(this.playerService.getPlayer().items).find(
-            item => item.type === 'weapon' && item.slot === slot
-        );
+        return this.inventoryManager.getItemAtSlot(slot);
     }
 
     getCurrentWeapon(): InventoryItem | null {

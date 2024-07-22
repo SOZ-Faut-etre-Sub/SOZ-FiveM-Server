@@ -6,10 +6,11 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { ApartementTiers, Property } from '../../shared/housing/housing';
+import { HOUSE_FRIDGE_TIER_WEIGHTS, HOUSE_STORAGE_TIER_WEIGHTS } from '../../shared/inventory';
 import { Zone } from '../../shared/polyzone/box.zone';
 import { RpcServerEvent } from '../../shared/rpc';
 import { HousingProvider } from '../housing/housing.provider';
-import { InventoryManager } from '../inventory/inventory.manager';
+import { InventoryFactory } from '../inventory/inventory.factory';
 import { Notifier } from '../notifier';
 import { PlayerAppearanceService } from '../player/player.appearance.service';
 import { PlayerService } from '../player/player.service';
@@ -34,8 +35,8 @@ export class AdminMenuMapperProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(PlayerAppearanceService)
     private playerAppearanceService: PlayerAppearanceService;
@@ -240,14 +241,22 @@ export class AdminMenuMapperProvider {
         apartementTier: Partial<ApartementTiers>
     ): Promise<Property[]> {
         const [property, apartment] = await this.housingRepository.getApartment(propertyId, apartmentId);
+        const inventory = await this.inventoryFactory.get(`house_stash_${apartment.identifier}`);
+        const fridge = await this.inventoryFactory.get(`house_fridge_${apartment.identifier}`);
 
         if (!property || !apartment) {
             return this.housingRepository.get();
         }
 
         if (apartementTier.tier !== undefined) {
-            this.inventoryManager.setHouseStashAndFridgeMaxWeightFromTier(apartment.identifier, apartementTier.tier);
+            inventory?.updateConfiguration({
+                maxWeight: HOUSE_STORAGE_TIER_WEIGHTS[apartementTier.tier] || HOUSE_STORAGE_TIER_WEIGHTS[0],
+            });
+            fridge?.updateConfiguration({
+                maxWeight: HOUSE_FRIDGE_TIER_WEIGHTS[apartementTier.tier] || HOUSE_FRIDGE_TIER_WEIGHTS[0],
+            });
         }
+
         if (apartementTier.cloth_tier !== undefined) {
             if (apartment.owner !== null) {
                 this.playerAppearanceService.trunckateCloakroom(apartment.owner, apartementTier.cloth_tier);

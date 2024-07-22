@@ -10,11 +10,12 @@ import { Request } from '../../core/http/request';
 import { Response } from '../../core/http/response';
 import { ClientEvent } from '../../shared/event/client';
 import { ServerEvent } from '../../shared/event/server';
+import { InventoryType } from '../../shared/inventory';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { getRandomInt, getRandomItem } from '../../shared/random';
 import { RpcServerEvent } from '../../shared/rpc';
 import { EventInfo, Scene, WorldEvent } from '../../shared/scene';
-import { InventoryManager } from '../inventory/inventory.manager';
+import { InventoryFactory } from '../inventory/inventory.factory';
 import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
 import { SceneRepository } from '../repository/scene.repository';
@@ -41,8 +42,8 @@ export class WorldEventProvider {
     @Inject(SceneRepository)
     private readonly sceneRepository: SceneRepository;
 
-    @Inject(InventoryManager)
-    private readonly inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private readonly inventoryFactory: InventoryFactory;
 
     @Inject(Notifier)
     private readonly notifier: Notifier;
@@ -105,7 +106,12 @@ export class WorldEventProvider {
         for (const object of objects) {
             if (object.inventoryId === inventoryId) {
                 this.notifier.notify(source, `Le contenu a été signalé`);
-                this.inventoryManager.clearInv(object.inventoryId);
+                const inventory = await this.inventoryFactory.get(object.inventoryId);
+
+                if (inventory) {
+                    inventory.clear();
+                }
+
                 this.currentEvent.signaledInvs.add(object.inventoryId);
                 TriggerClientEvent(
                     ClientEvent.WORLD_EVENT_SIGNAL_INVENTORY,
@@ -148,8 +154,12 @@ export class WorldEventProvider {
         const objects = Object.values(this.currentEvent.scene.entities);
 
         for (const object of objects) {
-            if (object.inventoryId && this.inventoryManager.getAllItems(object.inventoryId).length > 0) {
-                return;
+            if (object.inventoryId) {
+                const inventory = await this.inventoryFactory.get(object.inventoryId);
+
+                if (inventory && inventory.weight() > 0) {
+                    return;
+                }
             }
         }
 
@@ -246,7 +256,11 @@ export class WorldEventProvider {
         for (const entity of Object.values(scene.entities)) {
             if (entity.inventoryId) {
                 inventories.push(entity.inventoryId);
-                this.inventoryManager.getOrCreateInventory('object_storage', entity.inventoryId, null);
+
+                await this.inventoryFactory.getOrCreate(entity.inventoryId, InventoryType.ObjectStorage, {
+                    persistent: false,
+                    maxWeight: 250_000,
+                });
             }
         }
 
@@ -254,8 +268,10 @@ export class WorldEventProvider {
 
         for (const reward of event.reward) {
             for (const inventoryId of inventories) {
-                if (this.inventoryManager.getWeight(inventoryId) > 250_000) {
-                    break;
+                const inventory = await this.inventoryFactory.get(inventoryId);
+
+                if (!inventory) {
+                    continue;
                 }
 
                 const shouldAddItem = Math.random() * 100 <= reward.chance;
@@ -271,13 +287,7 @@ export class WorldEventProvider {
                     continue;
                 }
 
-                if (item.unique) {
-                    for (let i = 0; i < amount; i++) {
-                        this.inventoryManager.addItemToInventory(inventoryId, reward.item, 1);
-                    }
-                } else {
-                    this.inventoryManager.addItemToInventory(inventoryId, reward.item, amount);
-                }
+                inventory.add(reward.item, amount);
             }
         }
 
@@ -330,7 +340,11 @@ export class WorldEventProvider {
 
         for (const entity of Object.values(scene.entities)) {
             if (entity.inventoryId) {
-                this.inventoryManager.clearInv(entity.inventoryId);
+                const inventory = await this.inventoryFactory.get(entity.inventoryId);
+
+                if (inventory) {
+                    inventory.clear();
+                }
             }
         }
 

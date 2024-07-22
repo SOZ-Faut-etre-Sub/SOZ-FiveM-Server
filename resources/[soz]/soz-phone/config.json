@@ -1,8 +1,8 @@
 {
   "PhoneAsItem": {
     "enabled": true,
-    "exportResource": "soz-inventory",
-    "exportFunction": "hasPhone"
+    "exportResource": "soz-core",
+    "exportFunction": "hasPlayerPhone"
   },
   "general": {
     "toggleKey": "L",

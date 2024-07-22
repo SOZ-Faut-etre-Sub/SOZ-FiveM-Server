@@ -5,7 +5,7 @@ import { PlayerListenerMetadataKey } from '../decorators/player';
 import { getMethodMetadata } from '../decorators/reflect';
 import { Logger } from '../logger';
 
-type Listener = (data) => void | Promise<void>;
+type Listener = (data: PlayerData) => void | Promise<void>;
 
 @Injectable()
 export class PlayerLoader {

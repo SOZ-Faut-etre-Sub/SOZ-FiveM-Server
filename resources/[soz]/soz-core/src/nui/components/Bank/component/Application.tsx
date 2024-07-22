@@ -28,9 +28,9 @@ export const ApplicationContainer: FunctionComponent<PropsWithChildren<Applicati
         down: event => {
             if (!onClickOutside) return;
 
-            let el = event.target;
+            let el = event.target as HTMLElement;
             while (el.parentNode) {
-                el = el.parentNode;
+                el = el.parentNode as HTMLElement;
                 if (el.getAttribute && el.getAttribute('data-ignore-click-outside')) return;
             }
 

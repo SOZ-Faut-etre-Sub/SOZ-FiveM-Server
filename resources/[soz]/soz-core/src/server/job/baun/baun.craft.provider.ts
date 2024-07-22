@@ -1,17 +1,17 @@
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { ItemService } from '@public/server/item/item.service';
 
 import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
-import { InventoryItem } from '../../../shared/item';
-import { InventoryManager } from '../../inventory/inventory.manager';
+import { ADD_ERROR_MESSAGE, InventoryItem, isInventoryItemExpired } from '../../../shared/inventory';
 import { Notifier } from '../../notifier';
 
 @Provider()
 export class BaunCraftProvider {
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(ItemService)
     private item: ItemService;
@@ -23,12 +23,13 @@ export class BaunCraftProvider {
     private itemService: ItemService;
 
     @OnEvent(ServerEvent.BAUN_CREATE_COCKTAIL_BOX)
-    public craftCocktailBox(source: number) {
+    public async craftCocktailBox(source: number) {
         let remaining = 10;
 
         const toRemove: { item: InventoryItem; amount: number }[] = [];
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
 
-        for (const inventoryItem of this.inventoryManager.getItems(source)) {
+        for (const inventoryItem of Object.values(inventory.items())) {
             if (inventoryItem.type !== 'cocktail') {
                 continue;
             }
@@ -37,7 +38,7 @@ export class BaunCraftProvider {
                 continue;
             }
 
-            if (this.item.isItemExpired(inventoryItem)) {
+            if (isInventoryItemExpired(inventoryItem)) {
                 continue;
             }
 
@@ -61,8 +62,7 @@ export class BaunCraftProvider {
         }
 
         if (
-            !this.inventoryManager.canSwapItems(
-                source,
+            !inventory.canSwapItems(
                 toRemove.map(remove => {
                     return {
                         name: remove.item.name,
@@ -79,32 +79,32 @@ export class BaunCraftProvider {
                 ]
             )
         ) {
-            this.notifier.notify(source, `Vous n'avez pas assez de place dans votre inventaire.`, 'error');
+            this.notifier.notify(source, ADD_ERROR_MESSAGE['not_enough_space'], 'error');
 
             return;
         }
 
         for (const remove of toRemove) {
-            this.inventoryManager.removeInventoryItem(source, remove.item, remove.amount);
+            inventory.removeAtSlot(remove.item.slot, remove.amount);
         }
 
-        this.inventoryManager.addItemToInventory(source, 'cocktail_box', 1);
+        inventory.add('cocktail_box', 1);
 
         this.notifier.notify(source, `Vous avez créé un assortiment de cocktails.`, 'success');
     }
 
     @OnEvent(ServerEvent.BAUN_ICE_CUBE)
-    public onIceCube(source: number, count: number) {
+    public async onIceCube(source: number, count: number) {
         if (!count) {
             this.notifier.notify(source, 'Une erreur est survenue lors du choix de la quantité.', 'error');
             return;
         }
 
         const iceCount = count * 6;
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
 
         if (
-            !this.inventoryManager.canSwapItems(
-                source,
+            !inventory.canSwapItems(
                 [{ name: 'ice_cube', amount: iceCount, metadata: null }],
                 [{ name: 'water_bottle', amount: count, metadata: null }]
             )
@@ -116,11 +116,12 @@ export class BaunCraftProvider {
         const dstItem = this.itemService.getItem('ice_cube');
         const secItem = this.itemService.getItem('water_bottle');
 
-        if (!this.inventoryManager.removeNotExpiredItem(source, 'water_bottle', count)) {
+        if (!inventory.remove('water_bottle', count, false)) {
             this.notifier.notify(source, `Vous n'avez pas assez de ${secItem.label}.`, 'error');
             return;
         }
-        this.inventoryManager.addItemToInventory(source, 'ice_cube', iceCount);
+
+        inventory.add('ice_cube', iceCount);
 
         this.notifier.notify(
             source,

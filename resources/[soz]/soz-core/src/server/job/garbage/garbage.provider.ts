@@ -1,8 +1,9 @@
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
+
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { Tick, TickInterval } from '../../../core/decorators/tick';
 import { BankService } from '../../bank/bank.service';
-import { InventoryManager } from '../../inventory/inventory.manager';
 import { Monitor } from '../../monitor/monitor';
 import { Store } from '../../store/store';
 
@@ -23,8 +24,8 @@ export class GarbageProvider {
     @Inject('Store')
     private store: Store;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(BankService)
     private bankService: BankService;
@@ -40,7 +41,13 @@ export class GarbageProvider {
             return;
         }
 
-        const processingItems = this.inventoryManager.getAllItems(PROCESSING_STORAGE);
+        const inventory = await this.inventoryFactory.get(PROCESSING_STORAGE);
+
+        if (!inventory) {
+            return;
+        }
+
+        const processingItems = Object.values(inventory.items());
 
         if (processingItems.length == 0) {
             return;
@@ -51,22 +58,14 @@ export class GarbageProvider {
         for (const item of processingItems) {
             const amountToProcess = Math.min(itemLeftToProcess, item.amount);
 
-            if (
-                this.inventoryManager.removeItemFromInventory(
-                    PROCESSING_STORAGE,
-                    item.item.name,
-                    amountToProcess,
-                    item.metadata,
-                    item.slot
-                )
-            ) {
-                const sellPrice = SELL_PRICE[item.item.name] || DEFAULT_SELL_PRICE;
+            if (inventory.removeAtSlot(item.slot, amountToProcess)) {
+                const sellPrice = SELL_PRICE[item.name] || DEFAULT_SELL_PRICE;
                 const totalMoney = amountToProcess * sellPrice;
 
                 await this.bankService.transferFarmMoney(0, 'farm_garbage', 'safe_garbage', totalMoney);
 
                 this.monitor.traceEvent('job_bluebird_recycling_garbage_bag', {
-                    item_id: item.item.name,
+                    item_id: item.name,
                     item_count: amountToProcess,
                     money: totalMoney,
                 });

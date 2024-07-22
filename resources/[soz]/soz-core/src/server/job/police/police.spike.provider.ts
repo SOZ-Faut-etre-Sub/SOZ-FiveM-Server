@@ -1,7 +1,7 @@
 import { OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
-import { InventoryManager } from '@public/server/inventory/inventory.manager';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { PlayerService } from '@public/server/player/player.service';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { JobType } from '@public/shared/job';
@@ -15,8 +15,8 @@ export class PoliceSpikeProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     private spikes: { [id: string]: Vector4 } = {};
 
@@ -30,7 +30,9 @@ export class PoliceSpikeProvider {
             return;
         }
 
-        if (this.inventoryManager.removeNotExpiredItem(player.source, item)) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (inventory.remove(item, 1, false)) {
             TriggerClientEvent(ClientEvent.POLICE_REQUEST_ADD_SPIKE, player.source);
         } else {
             TriggerClientEvent(

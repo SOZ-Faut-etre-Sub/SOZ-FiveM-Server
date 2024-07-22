@@ -1,3 +1,5 @@
+import { PlayerSyringeProvider } from '@private/server/player/player.syringe.provider';
+import { Talent } from '@private/shared/talent';
 import { BankMoneyType } from '@public/shared/bank';
 import axios from 'axios';
 
@@ -6,6 +8,7 @@ import { Exportable } from '../../core/decorators/exports';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
+import { CommandLoader } from '../../core/loader/command.loader';
 import { Permissions } from '../../core/permissions';
 import { ServerEvent } from '../../shared/event';
 import {
@@ -16,6 +19,7 @@ import {
     PlayerServerState,
 } from '../../shared/player';
 import { RpcServerEvent } from '../../shared/rpc';
+import { InventoryFactory } from '../inventory/inventory.factory';
 import { QBCore } from '../qbcore';
 import { ServerStateService } from '../server.state.service';
 import { PlayerListStateService } from './player.list.state.service';
@@ -46,6 +50,15 @@ export class PlayerProvider {
     @Inject(PlayerMoneyService)
     private playerMoneyService: PlayerMoneyService;
 
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
+
+    @Inject(CommandLoader)
+    private commandLoader: CommandLoader;
+
+    @Inject(PlayerSyringeProvider)
+    private playerSyringeProvider: PlayerSyringeProvider;
+
     private jwtTokenCache: Record<string, string> = {};
 
     @On('QBCore:Server:PlayerLoaded', false)
@@ -61,14 +74,58 @@ export class PlayerProvider {
             isDead: player.metadata.isdead,
         });
         this.playerListStateService.handlePlayer(player, this.playerStateService.getClientState(player.source));
+        this.sendSuggestions(player);
 
         TriggerEvent(ServerEvent.PLAYER_LOADED, player.source, player);
     }
 
     @On('QBCore:Server:PlayerUpdate', false)
-    onPlayerUpdate(player: PlayerData) {
+    async onPlayerUpdate(player: PlayerData) {
         this.serverStateService.updatePlayer(player);
         this.playerListStateService.handlePlayer(player, this.playerStateService.getClientState(player.source));
+
+        const playerInventory = await this.inventoryFactory.getPlayerInventory(player.source);
+
+        if (!playerInventory) {
+            return;
+        }
+
+        const strengthMultiplier = player.metadata.strength / 100;
+        let weight = 20000 * strengthMultiplier;
+
+        if (player.metadata.criminal_talents.includes(Talent.UpgradeWeight)) {
+            weight += 10000;
+        }
+
+        if (this.playerSyringeProvider.hasTemporaryCrimiWeight(player.source)) {
+            weight += 40000;
+        }
+
+        const baseBag = player.cloth_config.BaseClothSet?.Components?.['5']?.Drawable || 0;
+        const jobBag = player.cloth_config.JobClothSet?.Components?.['5']?.Drawable || 0;
+
+        if ((baseBag !== 0 || jobBag !== 0) && !player.cloth_config.Config.HideBag) {
+            weight += 40000;
+        }
+
+        if (playerInventory.maxWeight() !== weight) {
+            console.log(
+                'set weight to',
+                weight,
+                'for',
+                player.source,
+                'from',
+                playerInventory.maxWeight(),
+                'to',
+                weight
+            );
+
+            playerInventory.updateConfiguration({
+                maxWeight: weight,
+            });
+
+            await playerInventory.observe();
+        }
     }
 
     @On('QBCore:Server:PlayerUnload', false)
@@ -93,6 +150,7 @@ export class PlayerProvider {
 
             // Trigger client event to existing clieant (only useful for dev)
             TriggerClientEvent('QBCore:Client:OnPlayerLoaded', player.PlayerData.source);
+            this.sendSuggestions(player.PlayerData);
         }
     }
 
@@ -166,5 +224,30 @@ export class PlayerProvider {
             return false;
         }
         return player.job.onduty;
+    }
+
+    private sendSuggestions(player: PlayerData) {
+        const commands = this.commandLoader.getCommands();
+        const suggestions = commands
+            .filter(command => {
+                if (!command.role) {
+                    return true;
+                }
+
+                if (Array.isArray(command.role)) {
+                    return command.role.includes(player.role);
+                }
+
+                return command.role === player.role;
+            })
+            .map(command => {
+                return {
+                    name: '/' + command.name,
+                    help: command.description,
+                    params: command.arguments,
+                };
+            });
+
+        TriggerClientEvent('chat:addSuggestions', player.source, suggestions);
     }
 }

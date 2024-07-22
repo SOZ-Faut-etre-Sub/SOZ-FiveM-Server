@@ -1,10 +1,11 @@
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
+
 import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event/server';
 import { JobPermission, JobType } from '../../../shared/job';
 import { Vector4 } from '../../../shared/polyzone/vector';
-import { InventoryManager } from '../../inventory/inventory.manager';
 import { JobService } from '../../job.service';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
@@ -25,8 +26,8 @@ export class GouvRadarProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(ProgressService)
     private progressService: ProgressService;
@@ -43,7 +44,9 @@ export class GouvRadarProvider {
             return;
         }
 
-        if (!this.inventoryManager.removeNotExpiredItem(source, 'radar')) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!inventory.remove('radar', 1, false)) {
             this.notifier.notify(source, `Vous n'avez pas de radar sur vous.`);
 
             return;

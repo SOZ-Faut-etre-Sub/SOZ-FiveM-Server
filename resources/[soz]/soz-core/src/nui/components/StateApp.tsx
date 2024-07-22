@@ -113,6 +113,10 @@ export const StateApp: FunctionComponent = () => {
         dispatch.playerStats.update(stats);
     });
 
+    useNuiEvent('player', 'UpdateInventory', ({ configuration, items }) => {
+        dispatch.playerInventory.update(configuration, items);
+    });
+
     useNuiEvent('drug', 'SetLocations', data => {
         dispatch.drugLocation.setZones(data);
     });

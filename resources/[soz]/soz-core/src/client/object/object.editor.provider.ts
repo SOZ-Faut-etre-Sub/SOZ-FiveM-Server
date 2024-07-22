@@ -5,7 +5,7 @@ import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { uuidv4, wait } from '@public/core/utils';
 import { ObjectEffects } from '@public/shared/animation';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
-import { InventoryItem } from '@public/shared/item';
+import { InventoryItem } from '@public/shared/inventory';
 import { ObjectEditorOptions, WorldObject } from '@public/shared/object';
 import { getDistance, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 

@@ -1,4 +1,5 @@
 import { waitUntil } from '@public/core/utils';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { Monitor } from '@public/server/monitor/monitor';
 import { getDistance, toVector3Object, Vector3 } from '@public/shared/polyzone/vector';
 import { LockPickAlertChance } from '@public/shared/vehicle/vehicle';
@@ -8,10 +9,11 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { ClientEvent, ServerEvent } from '../../shared/event';
-import { InventoryItem, Item } from '../../shared/item';
+import { InventoryItem } from '../../shared/inventory';
+import { Item } from '../../shared/item';
 import { getRandomInt } from '../../shared/random';
 import { RpcServerEvent } from '../../shared/rpc';
-import { InventoryManager } from '../inventory/inventory.manager';
+import { Inventory } from '../inventory/inventory';
 import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
@@ -30,8 +32,8 @@ export class VehicleLockProvider {
     @Inject(ItemService)
     private item: ItemService;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(VehicleSpawner)
     private vehicleSpawner: VehicleSpawner;
@@ -44,8 +46,6 @@ export class VehicleLockProvider {
 
     @Inject(Monitor)
     private monitor: Monitor;
-
-    private trunkOpened: Record<number, Set<number>> = {};
 
     @Once()
     public onStart() {
@@ -77,10 +77,17 @@ export class VehicleLockProvider {
 
     @OnEvent(ServerEvent.VEHICLE_LOCKPICK)
     public async onLockpick(source: number, item: InventoryItem, vehNetId: number) {
-        await this.onLockpickInternal(source, item, NetworkGetEntityFromNetworkId(vehNetId), vehNetId);
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        await this.onLockpickInternal(source, item, NetworkGetEntityFromNetworkId(vehNetId), vehNetId, inventory);
     }
 
-    public async useLockpick(source: number, item: Item, inventoryItem: InventoryItem): Promise<void> {
+    public async useLockpick(
+        source: number,
+        item: Item,
+        inventoryItem: InventoryItem,
+        inventory: Inventory
+    ): Promise<void> {
         const closestVehicle = await this.vehicleSpawner.getClosestVehicle(source);
         if (null === closestVehicle || closestVehicle.distance > 3) {
             this.notifier.notify(source, 'Aucun véhicule à proximité', 'error');
@@ -92,7 +99,8 @@ export class VehicleLockProvider {
             source,
             inventoryItem,
             closestVehicle.vehicleEntityId,
-            closestVehicle.vehicleNetworkId
+            closestVehicle.vehicleNetworkId,
+            inventory
         );
     }
 
@@ -100,7 +108,8 @@ export class VehicleLockProvider {
         source: number,
         inventoryItem: InventoryItem,
         vehicleEntityId: number,
-        vehicleNetworkId: number
+        vehicleNetworkId: number,
+        inventory: Inventory
     ) {
         const lockPickDuration = 10000; // 10 seconds
         const percentages = {
@@ -141,7 +150,7 @@ export class VehicleLockProvider {
             return;
         }
 
-        if (!this.inventoryManager.removeInventoryItem(source, inventoryItem)) {
+        if (!inventory.removeAtSlot(inventoryItem.slot)) {
             this.notifier.notify(source, 'Aucun lockpick', 'error');
 
             return;
@@ -222,38 +231,6 @@ export class VehicleLockProvider {
         this.vehicleStateService.handleVehicleOpenChange(vehicleNetworkId);
 
         this.notifier.notify(source, 'Le véhicule a été forcé.', 'success');
-    }
-
-    @OnEvent(ServerEvent.VEHICLE_SET_TRUNK_STATE)
-    async onSetTrunkState(source: number, vehicleNetworkId: number, state: boolean) {
-        const set = this.trunkOpened[vehicleNetworkId] || new Set();
-
-        if (state) {
-            set.add(source);
-        } else {
-            set.delete(source);
-        }
-
-        this.trunkOpened[vehicleNetworkId] = set;
-
-        const entityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
-
-        if (!entityId) {
-            return;
-        }
-
-        const owner = NetworkGetEntityOwner(entityId);
-
-        if (!owner) {
-            return;
-        }
-
-        if (set.size > 0) {
-            TriggerClientEvent(ClientEvent.VEHICLE_SET_TRUNK_STATE, owner, vehicleNetworkId, true);
-        } else {
-            TriggerClientEvent(ClientEvent.VEHICLE_SET_TRUNK_STATE, owner, vehicleNetworkId, false);
-            delete this.trunkOpened[vehicleNetworkId];
-        }
     }
 
     @OnEvent(ServerEvent.VEHICLE_TAKE_OWNER)

@@ -36,7 +36,10 @@ export enum RpcServerEvent {
 
     DMC_GET_CONVERTER_STATE = 'soz-core:server:job:dmc:get-converter-state',
 
-    INVENTORY_SEARCH = 'soz-core:inventory:search',
+    INVENTORY_SELF_FETCH = 'soz-core:inventory:self-fetch',
+    INVENTORY_GET_ITEM_COUNT = 'soz-core:inventory:search',
+    INVENTORY_SHOP_VALIDATE_CART = 'soz-core:inventory:shop-validate-cart',
+    INVENTORY_GANG_SMUGGLING_BLACK_MARKET_VALIDATE_CART = 'soz-core:inventory:gang:smuggling:black-market-validate-cart',
 
     HOUSING_GET_TEMPORARY_ACCESS = 'soz-core:server:housing:get-temporary-access',
     HOUSING_GET_FOURNITURE = 'soz-core:server:housing:get-fourniture',

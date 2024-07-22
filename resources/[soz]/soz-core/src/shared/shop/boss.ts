@@ -253,7 +253,7 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
             { id: 'radio', type: 'item', price: 80 },
             { id: 'fingerprint_collector', type: 'item', price: 50 },
             { id: 'scientist_camera', type: 'item', price: 50 },
-            { id: 'detective_board', type: 'item', price: 20 },
+            { id: 'detective_board', metadata: { originalDetectiveBoard: true }, type: 'item', price: 20 },
             { id: 'breathanalyzer', type: 'item', price: 5 },
             { id: 'screening_test', type: 'item', price: 5 },
             { id: 'weapon_uvflashlight', type: 'item', price: 50 },

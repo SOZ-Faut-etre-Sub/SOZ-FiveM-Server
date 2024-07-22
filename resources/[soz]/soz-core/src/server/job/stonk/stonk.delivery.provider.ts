@@ -1,3 +1,5 @@
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
+
 import { Once, OnceStep, OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
@@ -6,9 +8,9 @@ import { ClientEvent, ServerEvent } from '../../../shared/event';
 import { JobPermission, JobType } from '../../../shared/job';
 import { StonkConfig } from '../../../shared/job/stonk';
 import { NamedZone } from '../../../shared/polyzone/box.zone';
+import { isOk } from '../../../shared/result';
 import { BankService } from '../../bank/bank.service';
 import { FieldProvider } from '../../farm/field.provider';
-import { InventoryManager } from '../../inventory/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { JobService } from '../../job.service';
 import { Notifier } from '../../notifier';
@@ -20,8 +22,8 @@ export class StonkDeliveryProvider {
     @Inject(ItemService)
     private itemService: ItemService;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(PlayerService)
     private playerService: PlayerService;
@@ -96,7 +98,9 @@ export class StonkDeliveryProvider {
             return;
         }
 
-        if (!this.inventoryManager.canCarryItem(source, StonkConfig.delivery.item, 1)) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!inventory.canCarryItem(StonkConfig.delivery.item, 1)) {
             this.notifier.notify(source, `Vous n'avez pas ~r~assez~s~ de place dans vos poches.`, 'error');
             return false;
         }
@@ -129,8 +133,8 @@ export class StonkDeliveryProvider {
             return false;
         }
 
-        const addRequest = this.inventoryManager.addItemToInventory(source, StonkConfig.delivery.item, 1);
-        if (addRequest.success) {
+        const addRequest = inventory.add(StonkConfig.delivery.item, 1);
+        if (isOk(addRequest)) {
             this.notifier.notify(source, `Vous avez ~g~récupéré~s~ une caisse.`);
         } else {
             this.notifier.notify(source, `Impossible de ~r~récupérer~s~ une caisse.`, 'error');
@@ -167,7 +171,9 @@ export class StonkDeliveryProvider {
             return false;
         }
 
-        if (this.inventoryManager.removeNotExpiredItem(source, StonkConfig.delivery.item)) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (inventory.remove(StonkConfig.delivery.item, 1, false)) {
             this.notifier.notify(source, `Vous avez ~g~déposé~s~ une caisse.`);
 
             const transfer = await this.bankService.transferFarmMoney(

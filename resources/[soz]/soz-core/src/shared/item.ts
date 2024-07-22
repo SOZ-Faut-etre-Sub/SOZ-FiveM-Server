@@ -1,13 +1,3 @@
-import { DBSearch } from '@private/shared/business.cyber';
-import { DrugContractInfo } from '@private/shared/drugs';
-import { MissiveType } from '@private/shared/missive';
-import { HudTheme } from '@public/shared/hud';
-
-import { DamageServerData } from './job/lsmc';
-import { FakeId, PlayerCharInfo, PlayerJob, PlayerMetadata } from './player';
-import { WeaponComponentType } from './weapons/attachment';
-import { WeaponMk2TintColor, WeaponTintColor } from './weapons/tint';
-
 export type ItemType =
     | 'item'
     | 'weapon'
@@ -40,7 +30,10 @@ export type ItemType =
     | 'veh_biz_piece'
     | 'smuggling_export'
     | 'smuggling_convoy_export'
-    | 'smuggling_ore';
+    | 'smuggling_ore'
+    | 'smuggling_electronic'
+    | 'zkea_crate'
+    | 'card';
 
 type BaseItem = {
     name: string;
@@ -52,6 +45,24 @@ type BaseItem = {
     useable: boolean;
     carrybox: string;
     maxplates?: number;
+    expiresIn?: number;
+    durability?: number;
+    storageItemType?: ItemType;
+    onlyone?: boolean;
+    illustrator?: Record<string, string> | string;
+    canShow?: boolean;
+    throwable?: boolean;
+    openStorageLabel?: string;
+    resellPrice?: number | number[];
+    resellZone?: string;
+    resellItemTierMultiplier?: number[];
+    drug_pot?: {
+        target: string;
+        ingredient: string;
+        nbIngredient: number;
+    };
+    maxStack?: number;
+    notSearchable?: boolean;
 };
 
 export type Nutrition = {
@@ -68,11 +79,11 @@ export type Nutrition = {
 };
 
 export type WeaponItem = BaseItem & {
-    type: 'item';
+    type: 'weapon';
 };
 
 export type AmmoItem = BaseItem & {
-    type: 'item';
+    type: 'weapon_ammo';
 };
 
 export type CommonItem = BaseItem & {
@@ -164,6 +175,22 @@ export type OutfitItem = BaseItem & {
     type: 'outfit';
 };
 
+export type CrateItem = BaseItem & {
+    type: 'crate';
+};
+
+export type CardItem = BaseItem & {
+    type: 'card';
+};
+
+export type EvidenceItem = BaseItem & {
+    type: 'evidence';
+};
+
+export type SmugglingElectronic = BaseItem & {
+    type: 'smuggling_electronic';
+};
+
 type AnimationItem = {
     name: string;
     dictionary: string;
@@ -203,146 +230,13 @@ export type DrugItem = BaseItem & {
     nutrition: Nutrition;
 };
 
-export type MealMetadata = {
-    name: string;
-    metadata: InventoryItemMetadata;
-    amount: number;
-    label: string;
-};
-
-type ZkeaFournitureType =
-    | 'Arcade & Jeu'
-    | 'Audiovisuel & Hi-Fi'
-    | 'Chaises & Fauteuils'
-    | 'Cuisine'
-    | 'Décoration Murale'
-    | 'Décoration'
-    | 'Divers'
-    | 'Drapeau & Logo'
-    | 'Éclairages'
-    | 'Figurine & Statue'
-    | 'Informatique & Bureautique'
-    | 'Chambre à coucher'
-    | 'Sensualité'
-    | 'Meubles & Rangement'
-    | 'Nourriture & Boissons'
-    | 'Salle de bains'
-    | 'Fitness & Sport'
-    | 'Tables & Bureaux'
-    | 'Tapis'
-    | 'Nature & Végétal'
-    | 'Sacs & Valises'
-    | 'Vacances à la Plage'
-    | 'Boîtes & Caisses'
-    | 'Construction & Bâtiments'
-    | 'Bijoux & Accessoires'
-    | 'Exclusif';
-
-export type ZkeaFournitureMetadata = {
-    type: ZkeaFournitureType;
-    name: string;
-    model: string;
-};
-
-export type EvidenceMetadata = {
-    type: string;
-    generalInfo: string;
-    quantity?: number;
-    zone?: string;
-    support?: string;
-    isAnalyzed?: boolean;
-    dateAnalyzed?: string;
-};
-
-export type MedicalMetadata = {
-    damages: DamageServerData[];
-    patient: {
-        charinfo: PlayerCharInfo;
-        job: PlayerJob;
-        metadata: PlayerMetadata;
-        hash: number;
+export type DrugPotItem = BaseItem & {
+    type: 'drug_pot';
+    drug_pot: {
+        target: string;
+        ingredient: string;
+        nbIngredient: number;
     };
-    date: number;
-};
-
-export type InventoryItemMetadata = {
-    label?: string;
-    type?: string;
-    expiration?: string;
-    creation?: string;
-    player?: number;
-    // Weapom
-    serial?: string;
-    health?: number;
-    maxHealth?: number;
-    ammo?: number;
-    tint?: WeaponTintColor | WeaponMk2TintColor;
-    missiveType?: MissiveType;
-    missiveChoice1?: number;
-    missiveChoice2?: number;
-    missiveChoice3?: number;
-    attachments?: Record<WeaponComponentType, string | null>;
-    tier?: number;
-    crafted?: boolean;
-    id?: string;
-    model?: string;
-    crateElements?: MealMetadata[];
-    zkeaCrateElements?: ZkeaFournitureMetadata[];
-    // Fishing
-    weight?: number;
-    length?: number;
-    bait?: any;
-    fuel?: number;
-    drugContract?: DrugContractInfo;
-    fakeIdData?: FakeId;
-    // Weapon certificate (DMC)
-    craftCertificate?: string;
-    serializedDetectiveBoard?: any;
-    originalDetectiveBoard?: boolean;
-    photosInDetectiveBoard?: string[];
-    photoUrl?: string;
-    evidenceInfos?: EvidenceMetadata;
-    storageElements?: Record<string, InventoryItem> | InventoryItem[];
-    keyid?: string;
-    printed?: boolean;
-    value?: number;
-    notSearchable?: boolean;
-    cyberDBSearch?: DBSearch;
-    // Watch
-    theme?: HudTheme;
-    showDateTime?: boolean;
-    showWeather?: boolean;
-    showCompass?: boolean;
-    showStreetName?: boolean;
-    // Armor
-    plates?: number;
-};
-
-export type Inventory = {
-    id: string;
-    label: string;
-    type: string;
-    slots: number;
-    weight: number;
-    maxWeight: number;
-    owner: number;
-    items: InventoryItem[];
-    changed: boolean;
-    users: number[];
-    time: number;
-};
-
-export type InventoryItem = {
-    name: string;
-    label: string;
-    description: string;
-    weight: number;
-    slot: number;
-    useable: boolean;
-    unique: boolean;
-    type: ItemType;
-    amount: number;
-    metadata?: InventoryItemMetadata;
 };
 
 export type Item =
@@ -369,14 +263,9 @@ export type Item =
     | FishItem
     | FishingGarbageItem
     | ToolItem
-    | MetalItem;
-
-export type ShopItem = {
-    name: string;
-    label: string;
-    description: string;
-    slot: number;
-    amount: number;
-    metadata?: InventoryItemMetadata;
-    price: number;
-};
+    | MetalItem
+    | CrateItem
+    | DrugPotItem
+    | CardItem
+    | EvidenceItem
+    | SmugglingElectronic;

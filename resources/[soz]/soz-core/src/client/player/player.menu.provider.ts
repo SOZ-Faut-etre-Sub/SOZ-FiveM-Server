@@ -1,13 +1,11 @@
 import { wait } from '@public/core/utils';
-import { CardType } from '@public/shared/nui/card';
-import { Vector3 } from '@public/shared/polyzone/vector';
 
 import { Command } from '../../core/decorators/command';
-import { Once, OnEvent, OnNuiEvent } from '../../core/decorators/event';
+import { Once, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClothConfig } from '../../shared/cloth';
-import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
+import { NuiEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { AnimationService } from '../animation/animation.service';
 import { HudMinimapProvider } from '../hud/hud.minimap.provider';
@@ -97,69 +95,6 @@ export class PlayerMenuProvider {
             deguisement: this.playerService.hasDeguisement(),
             naked: this.playerService.getPlayer().cloth_config.Config.Naked,
             arachnophobe: this.halloweenSpiderService.isArachnophobeMode(),
-        });
-    }
-
-    @Command('openPlayerKeyInventory', {
-        description: 'Ouvrir le trousseau de clés',
-        keys: [{ mapper: 'keyboard', key: '' }],
-    })
-    @OnNuiEvent(NuiEvent.PlayerMenuOpenKeys)
-    public async openKeys() {
-        TriggerServerEvent(ServerEvent.VEHICLE_OPEN_KEYS);
-
-        this.menu.closeMenu();
-    }
-
-    @OnEvent(ClientEvent.PLAYER_CARD_SHOW)
-    @OnNuiEvent(NuiEvent.PlayerMenuCardShow)
-    public async onPlayerMenuCardShow(type, accountId?: string) {
-        await this.showCard(type, accountId);
-    }
-
-    public async showCard(type: CardType, accountId?: string) {
-        const position = GetEntityCoords(PlayerPedId()) as Vector3;
-        const players = this.playerService.getPlayersAround(position, 3.0);
-
-        if (players.length <= 1) {
-            this.notifier.notify("Il n'y a personne à proximité", 'error');
-            return;
-        }
-
-        const player = this.playerService.getId();
-        await this.animationService.playAnimation({
-            base: {
-                dictionary: 'mp_common',
-                name: 'givetake2_a',
-                blendInSpeed: 8.0,
-                blendOutSpeed: 8.0,
-                options: {
-                    enablePlayerControl: true,
-                    onlyUpperBody: true,
-                },
-            },
-        });
-
-        TriggerServerEvent(ServerEvent.PLAYER_SHOW_IDENTITY, type, players, player, accountId);
-    }
-
-    @OnEvent(ClientEvent.PLAYER_CARD_SEE)
-    @OnNuiEvent(NuiEvent.PlayerMenuCardSee)
-    public async seeCard({ type }) {
-        const player = this.playerService.getId();
-        let iban = '';
-        if (!player) {
-            return;
-        }
-
-        if (type === 'bank') {
-            iban = player.charinfo.account;
-        }
-
-        this.dispatcher.dispatch('card', 'addCard', {
-            type,
-            player,
-            iban,
         });
     }
 

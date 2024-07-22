@@ -12,6 +12,7 @@ import { WeaponMk2TintColorChoices, WeaponTintColorChoices } from '../../shared/
 import { WeaponConfiguration } from '../../shared/weapons/weapon';
 import { AnimationService } from '../animation/animation.service';
 import { InventoryManager } from '../inventory/inventory.manager';
+import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
@@ -36,6 +37,9 @@ export class WeaponGunsmithProvider {
 
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
+
+    @Inject(ItemService)
+    private itemService: ItemService;
 
     @Inject(Notifier)
     private notifier: Notifier;
@@ -166,12 +170,14 @@ export class WeaponGunsmithProvider {
 
         let customValidated = true;
 
+        const item = this.itemService.getItem(weapon.name);
+
         if (label) {
             const weaponLabel = await this.inputService.askInput(
                 {
                     title: `Nom de l'arme`,
                     maxCharacters: 30,
-                    defaultValue: weapon.metadata?.label ?? weapon.label,
+                    defaultValue: weapon.metadata?.label ?? item.label,
                 },
                 value => {
                     if (value.length < 2) {
@@ -192,7 +198,7 @@ export class WeaponGunsmithProvider {
         if (repair) {
             const applied = await emitRpc<boolean>(RpcServerEvent.WEAPON_REPAIR, weapon.slot);
             if (applied) {
-                this.notifier.notify(`Vous avez réparé votre arme (~b~${weapon.label}~s~)`);
+                this.notifier.notify(`Vous avez réparé votre arme (~b~${item.label}~s~)`);
             } else {
                 customValidated = false;
             }

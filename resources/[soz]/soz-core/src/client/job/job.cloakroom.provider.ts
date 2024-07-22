@@ -1,4 +1,4 @@
-import { WardrobeConfig } from '@public/shared/cloth';
+import { Component, WardrobeConfig } from '@public/shared/cloth';
 import { JobType } from '@public/shared/job';
 import { BaunCloakroom } from '@public/shared/job/baun';
 import { NewGarrayCloakroom } from '@public/shared/job/bennys';
@@ -16,11 +16,12 @@ import { PawlCloakroom } from '@public/shared/job/pawl';
 import { StonkCloakroom } from '@public/shared/job/stonk';
 import { UpwCloakroom } from '@public/shared/job/upw';
 
-import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
-import { ClientEvent, ServerEvent } from '../../shared/event';
+import { VanillaComponentDrawableIndexMaxValue } from '../../shared/drawable';
+import { ServerEvent } from '../../shared/event';
+import { POLICE_CLOAKROOM, RankOutfit } from '../../shared/job/police';
 import { RpcServerEvent } from '../../shared/rpc';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
@@ -60,8 +61,7 @@ export class JobCloakroomProvider {
     @Inject(PlayerWardrobe)
     private playerWardrobe: PlayerWardrobe;
 
-    @OnEvent(ClientEvent.JOBS_CHECK_CLOAKROOM_STORAGE)
-    public async onCheckCloakroomStorage(storageId: string) {
+    public async checkCloakroomStorage(storageId: string) {
         const { completed } = await this.progressService.progress(
             'check-cloakroom',
             'Vérification du vestiaire',
@@ -75,15 +75,18 @@ export class JobCloakroomProvider {
         if (!completed) {
             return;
         }
-        const result = await emitRpc(RpcServerEvent.INVENTORY_SEARCH, storageId, 'work_clothes');
-        if (!result) {
+
+        const result = await emitRpc<number>(RpcServerEvent.INVENTORY_GET_ITEM_COUNT, storageId, 'work_clothes');
+
+        if (result <= 0) {
             this.notifier.notify(`Il n'y a pas de tenue de travail dans le vestiaire.`, 'error');
             return;
         }
+
         this.notifier.notify(`Il reste ${result} tenues de travail dans le vestiaire.`);
     }
 
-    public async openCloakroom(storageIdToSave: string, config: WardrobeConfig, customLabel?: string) {
+    private async openCloakroom(storageIdToSave: string, config: WardrobeConfig, customLabel?: string) {
         if (!config) {
             return;
         }
@@ -121,8 +124,31 @@ export class JobCloakroomProvider {
         }
     }
 
-    @OnEvent(ClientEvent.JOB_OPEN_CLOAKROOM)
-    public async openJobCloakroom(storageIdToSave: string, job: string) {
+    public async openJobCloakroom(storageIdToSave: string, job: JobType) {
+        const player = this.playerService.getPlayer();
+        const model = GetEntityModel(PlayerPedId());
+
+        if (POLICE_CLOAKROOM[player.job.id]) {
+            const configs = POLICE_CLOAKROOM[player.job.id];
+
+            if (RankOutfit[player.job.id]) {
+                for (const outfitName of Object.keys(RankOutfit[player.job.id])) {
+                    configs[model][outfitName].Components[Component.Decals] = { Drawable: 0, Texture: 0, Palette: 0 };
+                    if (RankOutfit[player.job.id][outfitName][player.job.grade]) {
+                        configs[model][outfitName].Components[Component.Decals] = {
+                            Drawable:
+                                VanillaComponentDrawableIndexMaxValue[model][Component.Decals] +
+                                RankOutfit[player.job.id][outfitName][player.job.grade][0],
+                            Texture: RankOutfit[player.job.id][outfitName][player.job.grade][1],
+                            Palette: 0,
+                        };
+                    }
+                }
+            }
+
+            return await this.openCloakroom(storageIdToSave, configs);
+        }
+
         await this.openCloakroom(storageIdToSave, jobStorage[job]);
     }
 }

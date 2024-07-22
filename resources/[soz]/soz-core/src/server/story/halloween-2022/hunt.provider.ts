@@ -1,5 +1,6 @@
 import { Exportable } from '@public/core/decorators/exports';
 import { Rpc } from '@public/core/decorators/rpc';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { RpcServerEvent } from '@public/shared/rpc';
 
 import { On } from '../../../core/decorators/event';
@@ -7,11 +8,11 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
 import { Feature } from '../../../shared/features';
+import { ADD_ERROR_MESSAGE } from '../../../shared/inventory';
 import { doLooting, Loot } from '../../../shared/loot';
 import { Vector3 } from '../../../shared/polyzone/vector';
 import { PrismaService } from '../../database/prisma.service';
 import { FeatureProvider } from '../../feature/feature.provider';
-import { InventoryManager } from '../../inventory/inventory.manager';
 import { Notifier } from '../../notifier';
 import { PlayerMoneyService } from '../../player/player.money.service';
 import { PlayerService } from '../../player/player.service';
@@ -36,8 +37,8 @@ export class HuntProvider {
     @Inject(ProgressService)
     private progressService: ProgressService;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(FeatureProvider)
     private featureProvider: FeatureProvider;
@@ -119,7 +120,9 @@ export class HuntProvider {
             });
         }
 
-        if (!this.inventoryManager.canCarryItems(source, itemsToAdd)) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!inventory.canCarryItems(itemsToAdd)) {
             this.notifier.notify(source, "Vous n'avez pas assez de place dans votre inventaire", 'error');
             return;
         }
@@ -132,10 +135,10 @@ export class HuntProvider {
             },
         });
 
-        this.inventoryManager.addItemToInventory(source, 'halloween_blood_cup', 1);
+        inventory.add('halloween_blood_cup', 1);
 
         if (loot.type === 'item') {
-            this.inventoryManager.addItemToInventory(source, loot.value as string, 1);
+            inventory.add(loot.value as string, 1);
             this.notifier.notify(source, 'Vous avez trouvé une coupe avec un objet', 'success');
         } else if (loot.type === 'money') {
             this.playerMoneyService.add(source, loot.value as number);

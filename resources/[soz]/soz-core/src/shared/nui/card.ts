@@ -10,4 +10,4 @@ export type CardData = {
     iban?: string;
 };
 
-export type CardType = 'identity' | 'license' | 'health';
+export type CardType = 'identity' | 'license' | 'health' | 'bank';

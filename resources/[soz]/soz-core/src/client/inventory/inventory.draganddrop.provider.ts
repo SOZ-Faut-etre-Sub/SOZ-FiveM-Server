@@ -1,7 +1,8 @@
+import { Once, OnceStep } from '@core/decorators/event';
 import { Exportable } from '@public/core/decorators/exports';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
-import { InventoryItem } from '@public/shared/item';
+import { InventoryItem } from '@public/shared/inventory';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
@@ -25,13 +26,7 @@ export class InventoryDragAndDropProvider {
     private entities = new Map<number, DnDCallback[]>();
 
     @Exportable('DragAndDrop')
-    public async dragAndDrop(
-        npc: boolean,
-        entityHit: number,
-        entityType: number,
-        endCoords: Vector3,
-        invItem: InventoryItem
-    ) {
+    public async dragAndDrop(entityHit: number, endCoords: Vector3, invItem: InventoryItem) {
         const hitpoint: Vector3 = endCoords;
 
         const entityCBs = this.entities.get(entityHit);
@@ -69,11 +64,6 @@ export class InventoryDragAndDropProvider {
             }
         }
 
-        if (npc) {
-            this.notifier.error("Vous n'êtes pas dans une zone de revente");
-        } else {
-            this.notifier.error("Personne n'est à portée de vous");
-        }
         return false;
     }
 
@@ -109,5 +99,12 @@ export class InventoryDragAndDropProvider {
 
     public unregisterEntity(entity: number) {
         this.entities.delete(entity);
+    }
+
+    @Once(OnceStep.Stop)
+    public async stop() {
+        this.models.clear();
+        this.entities.clear();
+        this.zones = [];
     }
 }

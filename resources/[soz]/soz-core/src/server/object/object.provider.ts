@@ -5,11 +5,12 @@ import { Provider } from '@core/decorators/provider';
 import { Rpc } from '@core/decorators/rpc';
 import { emitClientRpc } from '@core/rpc';
 import { uuidv4 } from '@core/utils';
-import { InventoryManager } from '@public/server/inventory/inventory.manager';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { Notifier } from '@public/server/notifier';
 import { ProgressService } from '@public/server/player/progress.service';
 import { joaat } from '@public/shared/joaat';
 import { Vector4 } from '@public/shared/polyzone/vector';
+import { isErr } from '@public/shared/result';
 
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { WorldObject } from '../../shared/object';
@@ -28,8 +29,8 @@ export class ObjectProvider {
     @Inject(ProgressService)
     private progressService: ProgressService;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(Notifier)
     private notifier: Notifier;
@@ -64,7 +65,9 @@ export class ObjectProvider {
 
     @OnEvent(ServerEvent.OBJECT_PLACE)
     public async onPlaceObject(source: number, item: string, object: string, position: Vector4) {
-        if (!this.inventoryManager.removeNotExpiredItem(source, item)) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!inventory.remove(item, 1, false)) {
             this.notifier.error(source, 'Vous ne possédez pas cet objet.');
 
             return;
@@ -91,7 +94,7 @@ export class ObjectProvider {
         );
 
         if (!completed) {
-            this.inventoryManager.addItemToInventory(source, item);
+            inventory.add(item);
 
             return;
         }
@@ -137,7 +140,9 @@ export class ObjectProvider {
             return;
         }
 
-        if (!this.inventoryManager.addItemToInventory(source, item, 1)) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (isErr(inventory.add(item, 1))) {
             this.notifier.error(source, 'Vous ne pouvez pas récupérer cet objet');
 
             return;

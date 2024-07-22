@@ -12,7 +12,7 @@ import { Vector3 } from '@public/shared/polyzone/vector';
 import { getRandomItem } from '@public/shared/random';
 
 import { ClientEvent, GameEvent, ServerEvent } from '../../shared/event';
-import { InventoryItem } from '../../shared/item';
+import { InventoryItem } from '../../shared/inventory';
 import { RpcServerEvent } from '../../shared/rpc';
 import { VehicleSeat } from '../../shared/vehicle/vehicle';
 import {

@@ -1,6 +1,7 @@
 import { PoliceClueDBProvider } from '@private/server/police/police.cluedb.provider';
 import { PoliceScientistProvider } from '@private/server/police/police.scientist.provider';
 import { uuidv4 } from '@public/core/utils';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { joaat } from '@public/shared/joaat';
 import { getDistance, toVector3Object, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 
@@ -9,10 +10,9 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { ClientEvent, ServerEvent } from '../../shared/event';
-import { InventoryItem } from '../../shared/item';
+import { InventoryItem, isInventoryItemExpired } from '../../shared/inventory';
 import { RpcServerEvent } from '../../shared/rpc';
 import { excludeExplosionAlert, GlobalWeaponConfig, WeaponConfig, Weapons } from '../../shared/weapons/weapon';
-import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
@@ -27,8 +27,8 @@ export class WeaponProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(PlayerStateService)
     private playerStateService: PlayerStateService;
@@ -103,19 +103,26 @@ export class WeaponProvider {
         playerAmmo: number,
         isWearingGloves: boolean
     ) {
-        const weapon = this.inventoryManager.getSlot(source, weaponSlot);
+        const playerInventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!playerInventory) {
+            return;
+        }
+
+        const weapon = playerInventory.getItemAtSlot(weaponSlot);
+
         if (!weapon) {
             return;
         }
 
         if (weaponGroup == GetHashKey('GROUP_THROWN') && weapon.metadata.ammo <= 1) {
-            this.inventoryManager.removeItemFromInventory(source, weapon.name, 1, weapon.metadata, weaponSlot);
+            playerInventory.removeAtSlot(weaponSlot);
         } else if (weaponGroup == GetHashKey('GROUP_FIREEXTINGUISHER')) {
-            this.inventoryManager.updateMetadata(source, weapon.slot, {
+            playerInventory.updateMetadataAtSlot(weaponSlot, {
                 ammo: playerAmmo || 0,
             });
         } else {
-            this.inventoryManager.updateMetadata(source, weapon.slot, {
+            playerInventory.updateMetadataAtSlot(weaponSlot, {
                 ammo: weapon.metadata.ammo > 0 ? weapon.metadata.ammo - 1 : 0,
                 health: weapon.metadata.health > 0 ? weapon.metadata.health - 1 : 0,
             });
@@ -235,10 +242,13 @@ export class WeaponProvider {
         if (!playerData) {
             return;
         }
+
+        const weaponItem = this.item.getItem(weapon.name);
+
         if (!isWearingGloves) {
             this.policeScientistProvider.setPlayerPowder(source, {
                 last_identified_shot: Date.now(),
-                last_weapon_used: weapon.label,
+                last_weapon_used: weaponItem?.label ?? weapon.name,
             });
         }
     }
@@ -281,15 +291,20 @@ export class WeaponProvider {
         ammoName: string,
         ammoInClip: number
     ): Promise<InventoryItem | null> {
-        const weapon = this.inventoryManager.getSlot(source, weaponSlot);
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!inventory) {
+            return;
+        }
+
+        const weapon = inventory.getItemAtSlot(weaponSlot);
+
         if (!weapon) {
             return;
         }
 
-        const ammo = this.inventoryManager.findItem(
-            source,
-            item => item.name == ammoName && !this.item.isItemExpired(item)
-        );
+        const ammo = inventory.findItem(item => item.name == ammoName && !isInventoryItemExpired(item));
+
         if (!ammo) {
             return;
         }
@@ -304,34 +319,42 @@ export class WeaponProvider {
             return;
         }
 
-        if (!this.inventoryManager.removeInventoryItem(source, ammo)) {
+        if (!inventory.removeAtSlot(ammo.slot, 1)) {
             return;
         }
 
-        this.inventoryManager.updateMetadata(source, weaponSlot, {
+        inventory.updateMetadataAtSlot(weaponSlot, {
             ammo: (weapon.metadata.ammo || 0) + ammoInClip,
         });
-        return this.inventoryManager.getSlot(source, weaponSlot);
+
+        return inventory.getItemAtSlot(weaponSlot);
     }
 
     @OnEvent(ServerEvent.WEAPON_GET_SNOW)
-    public snow(source: number) {
+    public async snow(source: number) {
         if (!this.store.getState().global.snow) {
             this.notifier.notify(source, 'Où tu as vu de la neige ???', 'error');
             return;
         }
 
-        const weapon = this.inventoryManager.getFirstItemInventory(source, 'weapon_snowball');
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!inventory) {
+            return;
+        }
+
+        const weapon = inventory.getItem('weapon_snowball');
+
         if (weapon) {
             if (weapon.metadata.ammo >= 10) {
                 this.notifier.notify(source, 'Tu as trop de boules de neige sur toi !', 'error');
                 return;
             }
-            this.inventoryManager.updateMetadata(source, weapon.slot, {
+            inventory.updateMetadataAtSlot(weapon.slot, {
                 ammo: weapon.metadata.ammo + 1,
             });
         } else {
-            this.inventoryManager.addItemToInventory(source, 'weapon_snowball', 1, { ammo: 1 });
+            inventory.add('weapon_snowball', 1, { ammo: 1 });
         }
         this.notifier.notify(source, 'Tu as ramassé une boule de neige');
     }

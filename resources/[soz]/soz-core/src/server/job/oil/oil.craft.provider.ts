@@ -1,8 +1,9 @@
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
+
 import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event/server';
-import { InventoryManager } from '../../inventory/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { Monitor } from '../../monitor/monitor';
 import { Notifier } from '../../notifier';
@@ -21,8 +22,8 @@ export class OilCraftProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(ProgressService)
     private progressService: ProgressService;
@@ -77,7 +78,8 @@ export class OilCraftProvider {
             return;
         }
 
-        const baseRemoveAmount = this.inventoryManager.getItemCount(source, itemToRemove.name);
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+        const baseRemoveAmount = inventory.getItemCount(itemToRemove.name);
 
         if (baseRemoveAmount < multiplier) {
             this.notifier.notify(source, `Vous n'avez pas assez de ${itemToRemove.label}.`, 'error');
@@ -107,16 +109,22 @@ export class OilCraftProvider {
             return;
         }
 
-        if (!this.inventoryManager.canSwapItem(source, itemIdToRemove, removeAmount, itemIdToAdd, addAmount)) {
+        if (
+            !inventory.canSwapItems(
+                [{ name: itemIdToRemove, amount: removeAmount }],
+                [{ name: itemIdToAdd, amount: addAmount }]
+            )
+        ) {
             this.notifier.notify(source, `Vous êtes trop chargé.`, 'error');
 
             return;
         }
 
-        if (!this.inventoryManager.removeNotExpiredItem(source, itemIdToRemove, removeAmount)) {
+        if (!inventory.remove(itemIdToRemove, removeAmount, false)) {
             return;
         }
-        this.inventoryManager.addItemToInventory(source, itemIdToAdd, addAmount);
+
+        inventory.add(itemIdToAdd, addAmount);
 
         this.notifier.notify(
             source,

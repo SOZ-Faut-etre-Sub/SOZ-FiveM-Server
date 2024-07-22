@@ -119,8 +119,9 @@ export class AdminMenuProvider {
                     },
                     developer: {
                         noClip: this.adminMenuDeveloperProvider.isIsNoClipMode(),
-                        displayCoords: this.adminMenuDeveloperProvider.showCoordinates !== null,
-                        displayMileage: this.adminMenuDeveloperProvider.showMileage !== null,
+                        displayCoords: this.adminMenuDeveloperProvider.showCoordinates,
+                        displayMileage: this.adminMenuDeveloperProvider.showMileage,
+                        displayMouseDebug: this.adminMenuDeveloperProvider.showMouseDebug,
                         doors: this.doorProvider.isAdminEnabled(),
                     },
                     vehicule: {

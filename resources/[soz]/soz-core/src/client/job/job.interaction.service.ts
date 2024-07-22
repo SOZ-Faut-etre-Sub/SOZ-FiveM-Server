@@ -1,73 +1,28 @@
-import { Monitor } from '@public/client/monitor/monitor';
 import { Inject, Injectable } from '@public/core/decorators/injectable';
 import { ServerEvent } from '@public/shared/event';
-import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 
-import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { PlayerStateProvider } from '../player/player.state.provider';
-import { ProgressService } from '../progress.service';
 
 @Injectable()
 export class JobInteractionService {
-    @Inject(ProgressService)
-    private progressService: ProgressService;
-
-    @Inject(Notifier)
-    private notifier: Notifier;
-
     @Inject(PlayerStateProvider)
     private playerStateProvider: PlayerStateProvider;
 
     @Inject(PlayerService)
     private playerService: PlayerService;
 
-    @Inject(Monitor)
-    private monitor: Monitor;
-
     public async searchPlayer(entity: number) {
         const player = NetworkGetPlayerIndexFromPed(entity);
-        const ped = PlayerPedId();
+
         const playerPed = GetPlayerPed(player);
         const playerId = GetPlayerServerId(player);
+
         if (
             IsEntityPlayingAnim(playerPed, 'missminuteman_1ig_2', 'handsup_base', 3) ||
             IsEntityPlayingAnim(playerPed, 'mp_arresting', 'idle', 3)
         ) {
-            const { completed } = await this.progressService.progress(
-                'police-search',
-                'Fouille en cours...',
-                Math.floor(Math.random() * (7000 - 5000 + 1) + 5000),
-                {
-                    dictionary: 'anim@gangops@morgue@table@',
-                    name: 'player_search',
-                    options: { repeat: true },
-                },
-                {
-                    disableMovement: true,
-                    disableCarMovement: true,
-                    disableMouse: false,
-                    disableCombat: true,
-                }
-            );
-            if (!completed) {
-                this.notifier.error('Fouille annulée');
-                return;
-            }
-            const plyCoords = GetEntityCoords(playerPed) as Vector3;
-            const pos = GetEntityCoords(ped) as Vector3;
-            if (getDistance(plyCoords, pos) < 2.5) {
-                StopAnimTask(ped, 'random@shop_robbery', 'robbery_action_b', 1.0);
-                TriggerServerEvent('inventory:server:openInventory', 'player', playerId);
-
-                this.monitor.traceEvent('job_police_search_player', {
-                    target_source: playerId,
-                    position: plyCoords,
-                });
-            } else {
-                this.notifier.error("Personne n'est à portée de vous");
-                return;
-            }
+            TriggerServerEvent(ServerEvent.INVENTORY_OPEN_TARGET, playerId, true);
         }
     }
 

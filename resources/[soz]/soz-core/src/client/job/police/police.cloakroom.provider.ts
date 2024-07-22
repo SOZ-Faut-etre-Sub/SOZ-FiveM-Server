@@ -10,14 +10,7 @@ import { Component } from '@public/shared/cloth';
 import { VanillaComponentDrawableIndexMaxValue } from '@public/shared/drawable';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { JobType } from '@public/shared/job';
-import {
-    Armors,
-    DUTY_OUTFIT_NAME,
-    ObjectOutFits,
-    POLICE_CLOAKROOM,
-    PrisonerClothes,
-    RankOutfit,
-} from '@public/shared/job/police';
+import { Armors, DUTY_OUTFIT_NAME, ObjectOutFits, PrisonerClothes, RankOutfit } from '@public/shared/job/police';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
 import { JobCloakroomProvider } from '../job.cloakroom.provider';
@@ -89,29 +82,6 @@ export class PoliceCloakRoomProvider {
                 2.5
             );
         }
-    }
-
-    @OnEvent(ClientEvent.POLICE_OPEN_CLOAKROOM)
-    public async openCloakroom(storageIdToSave: string) {
-        const player = this.playerService.getPlayer();
-        const model = GetEntityModel(PlayerPedId());
-        const configs = POLICE_CLOAKROOM[player.job.id];
-        if (RankOutfit[player.job.id]) {
-            for (const outfitName of Object.keys(RankOutfit[player.job.id])) {
-                configs[model][outfitName].Components[Component.Decals] = { Drawable: 0, Texture: 0, Palette: 0 };
-                if (RankOutfit[player.job.id][outfitName][player.job.grade]) {
-                    configs[model][outfitName].Components[Component.Decals] = {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[model][Component.Decals] +
-                            RankOutfit[player.job.id][outfitName][player.job.grade][0],
-                        Texture: RankOutfit[player.job.id][outfitName][player.job.grade][1],
-                        Palette: 0,
-                    };
-                }
-            }
-        }
-
-        await this.jobCloakroomProvider.openCloakroom(storageIdToSave, configs, 'Tenue Personnalisée');
     }
 
     @OnEvent(ClientEvent.POLICE_APPLY_OUTFIT)

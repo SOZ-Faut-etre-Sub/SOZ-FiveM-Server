@@ -4,19 +4,17 @@ import { Provider } from '@public/core/decorators/provider';
 import { ItemService } from '@public/server/item/item.service';
 import { ProgressService } from '@public/server/player/progress.service';
 import { ClientEvent } from '@public/shared/event';
-import { InventoryItem, Item } from '@public/shared/item';
+import { Item } from '@public/shared/item';
 import { DeguisementMapping } from '@public/shared/story/halloween2022';
 
-import { InventoryManager } from '../inventory/inventory.manager';
+import { InventoryItem } from '../../shared/inventory';
+import { Inventory } from '../inventory/inventory';
 import { Notifier } from '../notifier';
 import { PlayerAppearanceService } from '../player/player.appearance.service';
 import { PlayerService } from '../player/player.service';
 
 @Provider()
 export class ItemHalloweenProvider {
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
-
     @Inject(ItemService)
     private item: ItemService;
 
@@ -32,7 +30,7 @@ export class ItemHalloweenProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    private async useDeguisement(source: number, item: Item, inventoryItem: InventoryItem) {
+    private async useDeguisement(source: number, item: Item, inventoryItem: InventoryItem, inventory: Inventory) {
         const progress = await this.progressService.progress(
             source,
             'switch_clothes',
@@ -57,7 +55,7 @@ export class ItemHalloweenProvider {
             return;
         }
 
-        this.inventoryManager.removeInventoryItem(source, inventoryItem);
+        inventory.removeAtSlot(inventoryItem.slot, 1);
         TriggerClientEvent(ClientEvent.HALLOWEEN_DEGUISEMENT_USE, source, item.name);
     }
 

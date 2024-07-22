@@ -8,7 +8,8 @@ import { PlayerMoneyService } from '@public/server/player/player.money.service';
 import { PlayerService } from '@public/server/player/player.service';
 import { ProgressService } from '@public/server/player/progress.service';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
-import { InventoryItem } from '@public/shared/item';
+
+import { InventoryItem } from '../../../shared/inventory';
 
 const FORMAT_LOCALIZED: Intl.DateTimeFormatOptions = {
     day: 'numeric',

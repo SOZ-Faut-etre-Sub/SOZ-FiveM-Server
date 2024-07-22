@@ -287,6 +287,14 @@ export type VehicleVolatileState = {
     nitroReloadStart: number;
 };
 
+export type VehicleState = {
+    volatile: VehicleVolatileState;
+    condition: VehicleCondition;
+    configuration: VehicleConfiguration;
+    position: Vector4 | null;
+    owner: number;
+};
+
 export enum VehicleClass {
     Compacts = 0,
     Sedans = 1,
@@ -322,7 +330,6 @@ export enum VehicleType {
     Submarine = 'submarine',
     Trailer = 'trailer',
     Train = 'train',
-    OpenWheel = 'OpenWheel',
 }
 
 export const getDefaultVehicleCondition = (): VehicleCondition => ({
@@ -515,7 +522,7 @@ export const VehicleTypeFromClass: Record<VehicleClass, VehicleType> = {
     [VehicleClass.Military]: VehicleType.Automobile,
     [VehicleClass.Commercial]: VehicleType.Automobile,
     [VehicleClass.Trains]: VehicleType.Train,
-    [VehicleClass.OpenWheel]: VehicleType.OpenWheel,
+    [VehicleClass.OpenWheel]: VehicleType.Automobile,
 };
 
 export const PushableVehicleClass: Record<VehicleClass, boolean> = {

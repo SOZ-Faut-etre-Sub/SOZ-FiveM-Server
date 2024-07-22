@@ -1,9 +1,11 @@
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
+
 import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event/server';
 import { Vector3 } from '../../../shared/polyzone/vector';
-import { InventoryManager } from '../../inventory/inventory.manager';
+import { isErr } from '../../../shared/result';
 import { ItemService } from '../../item/item.service';
 import { Monitor } from '../../monitor/monitor';
 import { Notifier } from '../../notifier';
@@ -11,8 +13,8 @@ import { ProgressService } from '../../player/progress.service';
 
 @Provider()
 export class BaunHarvestProvider {
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(Notifier)
     private notifier: Notifier;
@@ -29,10 +31,11 @@ export class BaunHarvestProvider {
     @OnEvent(ServerEvent.BAUN_HARVEST)
     public async onHarvest(source: number, item: string) {
         const itemData = this.itemService.getItem(item);
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
 
         // eslint-disable-next-line no-constant-condition
         while (true) {
-            if (!this.inventoryManager.canCarryItem(source, item, 1)) {
+            if (!inventory.canCarryItem(item, 1)) {
                 this.notifier.notify(source, `Vous ne pouvez pas porter plus de ${itemData.label}.`, 'error');
 
                 return;
@@ -62,12 +65,12 @@ export class BaunHarvestProvider {
                 return;
             }
 
-            const add = this.inventoryManager.addItemToInventory(source, item, 1);
+            const result = inventory.add(item, 1);
 
-            if (!add.success) {
+            if (isErr(result)) {
                 this.notifier.notify(
                     source,
-                    `Vous ne pouvez pas porter plus de ${itemData.label} : ${add.reason}.`,
+                    `Vous ne pouvez pas porter plus de ${itemData.label} : ${result.err}.`,
                     'error'
                 );
 

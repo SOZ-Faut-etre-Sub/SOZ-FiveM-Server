@@ -28,6 +28,9 @@ export class NuiMenu {
 
     public openMenu<K extends keyof MenuTypeMap>(menuType: K, data?: MenuTypeMap[K], config?: OpenMenuConfig) {
         this.dispatcher.setMenuOpen(menuType);
+        this.dispatcher.dispatch('inventory', 'SetOpen', false);
+        this.dispatcher.dispatch('inventory', 'UpdateInventory', { configuration: null, items: [], id: null });
+
         exports['menuv'].SendNUIMessage({ action: 'KEY_CLOSE_ALL' });
 
         this.menuPosition = config?.position || null;

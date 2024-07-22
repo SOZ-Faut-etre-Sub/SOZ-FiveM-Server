@@ -3,7 +3,7 @@ import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { Rpc } from '@public/core/decorators/rpc';
 import { PrismaService } from '@public/server/database/prisma.service';
-import { InventoryManager } from '@public/server/inventory/inventory.manager';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { ItemService } from '@public/server/item/item.service';
 import { JobService } from '@public/server/job.service';
 import { Monitor } from '@public/server/monitor/monitor';
@@ -41,8 +41,8 @@ export class UpwStationProvider {
     @Inject(ItemService)
     private itemService: ItemService;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(ProgressService)
     private progressService: ProgressService;
@@ -72,7 +72,13 @@ export class UpwStationProvider {
 
     @OnEvent(ServerEvent.UPW_CREATE_CHARGER)
     public async createCharger(source: number, charger: UpwCharger) {
-        if (!this.inventoryManager.removeNotExpiredItem(source, 'car_charger')) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!inventory) {
+            return;
+        }
+
+        if (!inventory.remove('car_charger', 1, false)) {
             this.notifier.notify(source, "Vous n'avez pas de chargeur de voiture.", 'error');
 
             return;
@@ -143,10 +149,14 @@ export class UpwStationProvider {
             this.notifier.notify(source, 'La station est pleine !', 'success');
             return;
         }
-        if (!this.inventoryManager.removeNotExpiredItem(source, cell)) {
+
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!inventory.remove(cell, 1, false)) {
             this.notifier.notify(source, "Une erreur s'est produite lors de la recharge.", 'error');
             return;
         }
+
         const newStock = Math.min(stationToRefill.stock + UPW_CHARGER_REFILL_VALUES[cell], stationToRefill.max_stock);
 
         await this.prismaService.upw_stations.update({

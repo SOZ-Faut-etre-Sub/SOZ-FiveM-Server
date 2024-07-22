@@ -1,14 +1,15 @@
 import { OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { ServerEvent } from '@public/shared/event/server';
 import { Feature } from '@public/shared/features';
 import { doLooting, Loot } from '@public/shared/loot';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
+import { ADD_ERROR_MESSAGE } from '../../shared/inventory';
 import { PrismaService } from '../database/prisma.service';
 import { FeatureProvider } from '../feature/feature.provider';
-import { InventoryManager } from '../inventory/inventory.manager';
 import { Notifier } from '../notifier';
 import { PlayerMoneyService } from '../player/player.money.service';
 import { PlayerService } from '../player/player.service';
@@ -31,8 +32,8 @@ export class EasterHuntProvider {
     @Inject(ProgressService)
     private progressService: ProgressService;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(FeatureProvider)
     private featureProvider: FeatureProvider;
@@ -107,13 +108,14 @@ export class EasterHuntProvider {
 
         this.notifier.notify(source, `Vous avez fouillé ~b~${count}~s~ panier(s)`, 'success');
         const loot = doLooting(this.loots);
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
 
         if (loot.type === 'item') {
-            if (this.inventoryManager.canCarryItem(source, loot.value.toString(), 1)) {
-                this.inventoryManager.addItemToInventory(source, loot.value as string, 1);
+            if (inventory.canCarryItem(loot.value.toString(), 1)) {
+                inventory.add(loot.value as string, 1);
                 return this.notifier.notify(source, 'Vous avez trouvé un objet', 'success');
             } else {
-                return this.notifier.notify(source, "Vous n'avez pas assez de place dans votre inventaire", 'error');
+                return this.notifier.notify(source, ADD_ERROR_MESSAGE['not_enough_space'], 'error');
             }
         } else if (loot.type === 'money') {
             this.playerMoneyService.add(source, loot.value as number);

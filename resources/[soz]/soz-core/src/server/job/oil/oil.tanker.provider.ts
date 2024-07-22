@@ -1,3 +1,5 @@
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
+
 import { Once, OnceStep, OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
@@ -6,15 +8,16 @@ import { ServerEvent } from '../../../shared/event/server';
 import { JobType } from '../../../shared/job';
 import { OIL_FIELDS } from '../../../shared/job/oil';
 import { toVector3Object, Vector3 } from '../../../shared/polyzone/vector';
+import { isErr } from '../../../shared/result';
 import { RpcServerEvent } from '../../../shared/rpc';
 import { VehicleClass } from '../../../shared/vehicle/vehicle';
 import { BankService } from '../../bank/bank.service';
 import { FieldProvider } from '../../farm/field.provider';
-import { InventoryManager } from '../../inventory/inventory.manager';
 import { Monitor } from '../../monitor/monitor';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
 import { ProgressService } from '../../player/progress.service';
+import { VehicleStateService } from '../../vehicle/vehicle.state.service';
 
 const MAX_PEOPLE_BY_TANKER = 2;
 const HARVEST_AMOUNT = 11;
@@ -24,8 +27,8 @@ export class OilTankerProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(ProgressService)
     private progressService: ProgressService;
@@ -41,6 +44,9 @@ export class OilTankerProvider {
 
     @Inject(Monitor)
     private monitor: Monitor;
+
+    @Inject(VehicleStateService)
+    private vehicleStateService: VehicleStateService;
 
     private lockedTankers = new Map<number, Set<number>>();
 
@@ -109,19 +115,9 @@ export class OilTankerProvider {
     }
 
     @OnEvent(ServerEvent.OIL_REFILL_TANKER)
-    public async onRefillTanker(
-        source: number,
-        entityNetId: number,
-        model: number,
-        vehicleClass: VehicleClass,
-        field: string
-    ) {
-        const tanker = NetworkGetEntityFromNetworkId(entityNetId) as number;
-        const plate = GetVehicleNumberPlateText(tanker);
-        const inventory = this.inventoryManager.getOrCreateInventory('tanker', plate, {
-            class: vehicleClass,
-            model,
-        });
+    public async onRefillTanker(source: number, entityNetId: number, vehicleClass: VehicleClass, field: string) {
+        const state = await this.vehicleStateService.getVehicleState(entityNetId);
+        const inventory = await this.inventoryFactory.getVehicleInventory(entityNetId, vehicleClass, state);
 
         if (!inventory) {
             this.notifier.error(source, "Le tanker n'a pas d'inventaire.");
@@ -140,7 +136,7 @@ export class OilTankerProvider {
 
             // eslint-disable-next-line no-constant-condition
             while (true) {
-                const canRefillTanker = this.inventoryManager.canCarryItem(inventory.id, 'petroleum', HARVEST_AMOUNT);
+                const canRefillTanker = inventory.canCarryItem('petroleum', HARVEST_AMOUNT);
 
                 if (!canRefillTanker) {
                     this.notifier.notify(source, 'Le tanker est plein.');
@@ -178,7 +174,7 @@ export class OilTankerProvider {
                     break;
                 }
 
-                if (!this.inventoryManager.addItemToInventoryNotPlayer(inventory.id, 'petroleum', HARVEST_AMOUNT)) {
+                if (isErr(inventory.add('petroleum', HARVEST_AMOUNT))) {
                     this.notifier.error(source, 'Votre remorque ~r~ne peut plus~s~ recevoir de pétrole.');
 
                     break;
@@ -198,13 +194,9 @@ export class OilTankerProvider {
     }
 
     @OnEvent(ServerEvent.OIL_REFINE_TANKER)
-    public async onRefineTanker(source: number, entityNetId: number, model: number, vehicleClass: VehicleClass) {
-        const tanker = NetworkGetEntityFromNetworkId(entityNetId) as number;
-        const plate = GetVehicleNumberPlateText(tanker);
-        const inventory = this.inventoryManager.getOrCreateInventory('tanker', plate, {
-            class: vehicleClass,
-            model,
-        });
+    public async onRefineTanker(source: number, entityNetId: number, vehicleClass: VehicleClass) {
+        const state = await this.vehicleStateService.getVehicleState(entityNetId);
+        const inventory = await this.inventoryFactory.getVehicleInventory(entityNetId, vehicleClass, state);
 
         if (!inventory) {
             this.notifier.error(source, "Le tanker n'a pas d'inventaire.");
@@ -218,7 +210,7 @@ export class OilTankerProvider {
             return;
         }
 
-        if (this.inventoryManager.getItemCount(inventory.id, 'petroleum') < HARVEST_AMOUNT) {
+        if (inventory.getItemCount('petroleum') < HARVEST_AMOUNT) {
             this.notifier.notify(source, 'Votre remorque ~r~ne contient pas~s~ assez de pétrole.');
 
             return;
@@ -231,7 +223,7 @@ export class OilTankerProvider {
 
             // eslint-disable-next-line no-constant-condition
             while (true) {
-                if (this.inventoryManager.getItemCount(inventory.id, 'petroleum') < HARVEST_AMOUNT) {
+                if (inventory.getItemCount('petroleum') < HARVEST_AMOUNT) {
                     this.notifier.notify(source, 'Votre remorque ~r~ne contient pas~s~ assez de pétrole.');
 
                     return;
@@ -260,8 +252,7 @@ export class OilTankerProvider {
                 }
 
                 if (
-                    !this.inventoryManager.canSwapItems(
-                        inventory.id,
+                    !inventory.canSwapItems(
                         [
                             {
                                 name: 'petroleum',
@@ -288,14 +279,14 @@ export class OilTankerProvider {
                     return;
                 }
 
-                if (!this.inventoryManager.removeItemFromInventory(inventory.id, 'petroleum', HARVEST_AMOUNT)) {
+                if (!inventory.remove('petroleum', HARVEST_AMOUNT)) {
                     this.notifier.notify(source, 'Votre remorque ~r~ne peut plus~s~ recevoir de pétrole raffiné.');
 
                     return;
                 }
 
-                this.inventoryManager.addItemToInventory(inventory.id, 'petroleum_refined', 3 * HARVEST_AMOUNT);
-                this.inventoryManager.addItemToInventory(inventory.id, 'petroleum_residue', HARVEST_AMOUNT);
+                inventory.add('petroleum_refined', 3 * HARVEST_AMOUNT);
+                inventory.add('petroleum_residue', HARVEST_AMOUNT);
 
                 this.notifier.notify(source, `Vous avez ~g~raffiné~s~ ${HARVEST_AMOUNT}L de pétrole.`);
 
@@ -311,13 +302,9 @@ export class OilTankerProvider {
     }
 
     @OnEvent(ServerEvent.OIL_RESELL_TANKER)
-    public async onResellTanker(source: number, entityNetId: number, model: number, vehicleClass: VehicleClass) {
-        const tanker = NetworkGetEntityFromNetworkId(entityNetId) as number;
-        const plate = GetVehicleNumberPlateText(tanker);
-        const inventory = this.inventoryManager.getOrCreateInventory('tanker', plate, {
-            class: vehicleClass,
-            model,
-        });
+    public async onResellTanker(source: number, entityNetId: number, vehicleClass: VehicleClass) {
+        const state = await this.vehicleStateService.getVehicleState(entityNetId);
+        const inventory = await this.inventoryFactory.getVehicleInventory(entityNetId, vehicleClass, state);
 
         if (!inventory) {
             this.notifier.error(source, "Le tanker n'a pas d'inventaire.");
@@ -327,8 +314,8 @@ export class OilTankerProvider {
 
         // eslint-disable-next-line no-constant-condition
         while (true) {
-            const essenceItemAmount = this.inventoryManager.getItemCount(inventory.id, 'essence');
-            const keroseneItemAmount = this.inventoryManager.getItemCount(inventory.id, 'kerosene');
+            const essenceItemAmount = inventory.getItemCount('essence');
+            const keroseneItemAmount = inventory.getItemCount('kerosene');
 
             if (essenceItemAmount < 10 && keroseneItemAmount < 10) {
                 this.notifier.error(source, "Vous n'avez pas de carburant à vendre.");
@@ -358,7 +345,7 @@ export class OilTankerProvider {
                 return;
             }
 
-            if (this.inventoryManager.removeItemFromInventory(inventory.id, 'essence', 10)) {
+            if (inventory.remove('essence', 10)) {
                 await this.bankService.transferFarmMoney(source, 'farm_mtp', 'safe_oil', 500);
 
                 this.monitor.traceEvent('job_mtp_sell_oil', {
@@ -369,7 +356,7 @@ export class OilTankerProvider {
                 });
 
                 this.notifier.notify(source, "Vous avez ~g~revendu~s~ 100L d'essence.");
-            } else if (this.inventoryManager.removeItemFromInventory(inventory.id, 'kerosene', 10)) {
+            } else if (inventory.remove('kerosene', 10)) {
                 await this.bankService.transferFarmMoney(source, 'farm_mtp', 'safe_oil', 500);
 
                 this.monitor.traceEvent('job_mtp_sell_oil', {

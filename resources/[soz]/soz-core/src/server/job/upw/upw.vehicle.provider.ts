@@ -1,7 +1,7 @@
 import { OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
-import { InventoryManager } from '@public/server/inventory/inventory.manager';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { Notifier } from '@public/server/notifier';
 import { ProgressService } from '@public/server/player/progress.service';
 import { ServerEvent } from '@public/shared/event';
@@ -15,8 +15,8 @@ export class UpwVehicleProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(ProgressService)
     private progressService: ProgressService;
@@ -67,15 +67,26 @@ export class UpwVehicleProvider {
             return;
         }
 
-        if (!this.inventoryManager.removeNotExpiredItem(source, 'lithium_battery')) {
-            this.notifier.notify(source, "~r~Vous n'avez pas de batterie Lithium-ion.~s~", 'error');
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (
+            !inventory.canSwapItems(
+                [{ name: 'lithium_battery', amount: 1 }],
+                [{ name: 'empty_lithium_battery', amount: 1 }]
+            )
+        ) {
+            this.notifier.notify(source, 'Impossible de ~r~changer~s~ la batterie.', 'error');
+
             return;
         }
 
-        if (!this.inventoryManager.addItemToInventory(source, 'empty_lithium_battery', 1).success) {
-            this.notifier.notify(source, 'Vous êtes ~r~trop chargé~s~ pour récupérer la batterie vide.', 'error');
+        if (!inventory.remove('lithium_battery', 1, false)) {
+            this.notifier.notify(source, "~r~Vous n'avez pas de batterie Lithium-ion.~s~", 'error');
+
             return;
         }
+
+        inventory.add('empty_lithium_battery', 1);
 
         this.vehicleStateService.updateVehicleCondition(vehicleNetworkId, {
             oilLevel: 100.0,

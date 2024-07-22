@@ -2,7 +2,7 @@ import { WardrobeConfig } from '../cloth';
 import { CraftCategory } from '../craft/craft';
 import { Environment, Feature } from '../features';
 import { joaat } from '../joaat';
-import { BoxZone, NamedZone } from '../polyzone/box.zone';
+import { NamedZone } from '../polyzone/box.zone';
 import { PolygonZone } from '../polyzone/polygon.zone';
 import { Vector3, Vector4 } from '../polyzone/vector';
 import { ProgressAnimation } from '../progress';
@@ -596,21 +596,11 @@ export const FDFConfig = {
     resellZones: [
         {
             name: 'Resell:FDF:Silo',
-            zone: new BoxZone([2892.55, 4391.29, 50.35], 4.4, 4.6, {
-                heading: 23.57,
-                minZ: 49.35,
-                maxZ: 51.35,
-            }),
             npcCoord: [2890.95, 4391.49, 49.34, 250.01] as Vector4,
             npcModel: 'a_m_m_farmer_01',
         },
         {
             name: 'Resell:FDF:Bell-Farm',
-            zone: new BoxZone([90.2, 6363.95, 31.23], 6.0, 5.0, {
-                heading: 204.35,
-                minZ: 30.23,
-                maxZ: 32.23,
-            }),
             npcCoord: [91.34, 6361.86, 30.23, 25.42] as Vector4,
             npcModel: 'a_m_m_farmer_01',
         },

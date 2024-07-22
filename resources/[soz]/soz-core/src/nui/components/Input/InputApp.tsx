@@ -1,5 +1,14 @@
 import classNames from 'classnames';
-import { ChangeEvent, FormEvent, FunctionComponent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
+import {
+    ChangeEvent,
+    FormEvent,
+    FunctionComponent,
+    KeyboardEvent,
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+} from 'react';
 import { useDispatch } from 'react-redux';
 import colors from 'tailwindcss/colors';
 
@@ -105,7 +114,7 @@ export const InputApp: FunctionComponent = () => {
                             <input
                                 className={inputClassnames}
                                 type="text"
-                                autoFocus={true}
+                                autoFocus
                                 value={value}
                                 onChange={handleChange}
                                 maxLength={askInput.maxCharacters}
@@ -113,7 +122,7 @@ export const InputApp: FunctionComponent = () => {
                         ) : (
                             <textarea
                                 className={inputClassnames}
-                                autoFocus={true}
+                                autoFocus
                                 value={value}
                                 onChange={handleChange}
                                 onKeyDown={onEnterPress}

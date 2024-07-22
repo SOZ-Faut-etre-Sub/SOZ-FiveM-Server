@@ -1,11 +1,12 @@
+import { Once, OnceStep } from '@core/decorators/event';
+import { Inject } from '@core/decorators/injectable';
+import { Provider } from '@core/decorators/provider';
 import { uuidv4 } from '@core/utils';
 import { AnimationProps } from '@public/shared/animation';
 import { getChunkId } from '@public/shared/grid';
+import { InventoryItem } from '@public/shared/inventory';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
-import { Once, OnceStep } from '../../core/decorators/event';
-import { Inject } from '../../core/decorators/injectable';
-import { Provider } from '../../core/decorators/provider';
 import { ResourceLoader } from '../repository/resource.loader';
 
 export type Ped = {
@@ -33,6 +34,7 @@ export type Ped = {
     animprops?: AnimationProps[];
     weapon?: string;
     alpha?: number;
+    dropItemCallback?: (inventoryId: string, inventoryItem: InventoryItem, amount: number) => void | Promise<void>;
 };
 
 export type GridPed = Ped & {
@@ -85,17 +87,26 @@ type SpawnedPed = {
 
 @Provider()
 export class PedFactory {
-    private peds: { [id: number]: any } = {};
-    private pedprops = new Map<number, number[]>();
-
-    @Inject(ResourceLoader)
-    private resourceLoader: ResourceLoader;
+    private pedProps = new Map<number, number[]>();
 
     private loadedPeds: Record<string, SpawnedPed> = {};
 
     private pedsByChunk = new Map<number, GridPed[]>();
 
     private currentChunks: number[] = [];
+
+    @Inject(ResourceLoader)
+    private resourceLoader: ResourceLoader;
+
+    public getPedByEntity(entity: number): GridPed | null {
+        for (const ped of Object.values(this.loadedPeds)) {
+            if (ped.entity === entity) {
+                return ped.ped;
+            }
+        }
+
+        return null;
+    }
 
     public async createPedOnGrid(ped: Ped): Promise<string> {
         const position = [ped.coords.x, ped.coords.y, ped.coords.z] as Vector3;
@@ -169,13 +180,15 @@ export class PedFactory {
             return;
         }
 
-        const props = this.pedprops.get(spawned.entity);
+        const props = this.pedProps.get(spawned.entity);
+
         if (props) {
             for (const prop of props) {
                 DeleteObject(prop);
             }
         }
-        this.pedprops.delete(spawned.entity);
+
+        this.pedProps.delete(spawned.entity);
 
         DeletePed(spawned.entity);
         delete this.loadedPeds[id];
@@ -374,9 +387,10 @@ export class PedFactory {
                 );
                 pedprops.push(propId);
             }
-            this.pedprops.set(pedId, pedprops);
+            this.pedProps.set(pedId, pedprops);
         }
 
+<<<<<<< HEAD
         if (ped.weapon) {
             GiveWeaponToPed(pedId, ped.weapon, 0, false, true);
             SetCurrentPedWeapon(pedId, ped.weapon, true);
@@ -387,19 +401,17 @@ export class PedFactory {
         }
 
         this.peds[pedId] = true;
+=======
+        return pedId;
+>>>>>>> a8abbb5f7f (feat(inventory): move inventory to core)
     }
 
     @Once(OnceStep.Stop)
     public async onServerStop() {
-        for (const [, props] of this.pedprops) {
-            for (const prop of props) {
-                DeleteObject(prop);
-            }
+        for (const ped of Object.keys(this.loadedPeds)) {
+            this.unspawnPed(ped);
         }
-        this.pedprops.clear();
-        for (const pedId in this.peds) {
-            DeletePed(Number(pedId));
-        }
-        this.peds = {};
+
+        this.loadedPeds = {};
     }
 }

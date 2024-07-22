@@ -1,3 +1,4 @@
+import { InventoryConfiguration, InventoryItem } from '@public/shared/inventory';
 import { PlayerStats } from '@public/shared/nui/player';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { createModel } from '@rematch/core';
@@ -35,6 +36,24 @@ export const playerPosition = createModel<RootModel>()({
     reducers: {
         update(state, position: Vector3) {
             return position;
+        },
+    },
+    effects: () => ({}),
+});
+
+export const playerInventory = createModel<RootModel>()({
+    state: {
+        configuration: {
+            maxWeight: 1000,
+        },
+        items: {},
+    } as {
+        configuration: InventoryConfiguration;
+        items: Record<number, InventoryItem>;
+    },
+    reducers: {
+        update(state, configuration: InventoryConfiguration, items: Record<number, InventoryItem>) {
+            return { configuration, items };
         },
     },
     effects: () => ({}),

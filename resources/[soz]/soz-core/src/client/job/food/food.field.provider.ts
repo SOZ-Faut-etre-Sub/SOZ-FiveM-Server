@@ -46,7 +46,7 @@ export class FoodFieldProvider {
                         canInteract: entity =>
                             !IsEntityAVehicle(entity) &&
                             !IsEntityAPed(entity) &&
-                            this.jobService.hasPermission(JobType.Food, JobPermission.FoodHarvest),
+                            this.jobService.hasPermission(JobType.Food, JobPermission.Harvest),
                         action: () => {
                             this.collectIngredients(type as FoodFieldType, index);
                         },

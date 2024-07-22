@@ -1,19 +1,20 @@
-import { PlayerUpdate } from '@public/core/decorators/player';
+import { PlayerInventoryUpdate } from '@public/core/decorators/player';
 import { Tick } from '@public/core/decorators/tick';
-import { PlayerData } from '@public/shared/player';
 
 import { Provider } from '../../core/decorators/provider';
+import { ServerEvent } from '../../shared/event/server';
+import { InventoryItem } from '../../shared/inventory';
 
 @Provider()
 export class ItemParachuteProvider {
     private hasConsumedParachute = false;
 
-    @PlayerUpdate()
-    public onPlayerUpdate(player: PlayerData) {
+    @PlayerInventoryUpdate()
+    public onPlayerUpdate(items: Record<number, InventoryItem>) {
         const ped = PlayerPedId();
         const parachuteWeapon = GetHashKey('GADGET_PARACHUTE');
 
-        for (const item of Object.values(player.items)) {
+        for (const item of Object.values(items)) {
             if (item.name == 'parachute') {
                 if (!HasPedGotWeapon(ped, parachuteWeapon, false)) {
                     GiveWeaponToPed(ped, parachuteWeapon, 1, false, false);
@@ -31,7 +32,7 @@ export class ItemParachuteProvider {
     public onParachuteTick() {
         const playerPed = PlayerPedId();
         if (!this.hasConsumedParachute && GetPedParachuteState(playerPed) == 1) {
-            TriggerServerEvent('inventory:server:RemoveItem', GetPlayerServerId(PlayerId()), 'parachute', 1);
+            TriggerServerEvent(ServerEvent.INVENTORY_REMOVE_PLAYER_ITEM, 'parachute', 1);
             this.hasConsumedParachute = true;
         } else if (this.hasConsumedParachute && [0, 3].includes(GetPedParachuteState(playerPed))) {
             this.hasConsumedParachute = false;

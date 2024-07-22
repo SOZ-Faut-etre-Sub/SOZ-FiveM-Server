@@ -54,6 +54,8 @@
         "@citizenfx/client": "^2.0.10230-1",
         "@citizenfx/server": "^2.0.10230-1",
         "@clickhouse/client": "^1.2.0",
+        "@dnd-kit/core": "^6.1.0",
+        "@dnd-kit/utilities": "^3.2.2",
         "@egoist/router": "^1.2.3",
         "@headlessui/react": "^1.7.19",
         "@heroicons/react": "^1.0.6",

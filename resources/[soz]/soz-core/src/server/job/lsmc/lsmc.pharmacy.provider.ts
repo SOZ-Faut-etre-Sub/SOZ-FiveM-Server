@@ -2,7 +2,7 @@ import { OnEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { BankService } from '@public/server/bank/bank.service';
-import { InventoryManager } from '@public/server/inventory/inventory.manager';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { Monitor } from '@public/server/monitor/monitor';
 import { Notifier } from '@public/server/notifier';
 import { PlayerMoneyService } from '@public/server/player/player.money.service';
@@ -17,8 +17,8 @@ import { PriceService } from '../../bank/price.service';
 
 @Provider()
 export class LSMCPharmacyProvider {
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(PlayerService)
     private playerService: PlayerService;
@@ -75,10 +75,12 @@ export class LSMCPharmacyProvider {
     @OnEvent(ServerEvent.LSMC_BUY_ITEM)
     public async onLsmcBuyItem(source: number, item: string) {
         const price = PHARMACY_PRICES[item];
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
         if (price) {
             if (this.playerMoneyService.remove(source, price)) {
                 this.notifier.notify(source, `Merci pour ton achat !`);
-                this.inventoryManager.addItemToInventory(source, item, 1);
+                inventory.add(item, 1);
             } else {
                 this.notifier.notify(
                     source,

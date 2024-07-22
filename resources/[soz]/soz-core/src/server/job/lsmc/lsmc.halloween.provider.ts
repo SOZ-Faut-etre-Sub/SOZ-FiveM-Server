@@ -1,9 +1,10 @@
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
+
 import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
 import { doLooting, Loot } from '../../../shared/loot';
-import { InventoryManager } from '../../inventory/inventory.manager';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
 import { PlayerStateService } from '../../player/player.state.service';
@@ -14,8 +15,8 @@ export class LsmcHalloweenProvider {
     @Inject(ProgressService)
     private progressService: ProgressService;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(PlayerService)
     private playerService: PlayerService;
@@ -58,11 +59,13 @@ export class LsmcHalloweenProvider {
             return;
         }
 
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
         this.playerStateService.setClientState(targetPlayerSource, {
             isLooted: true,
         });
 
-        this.inventoryManager.addItemToInventory(source, doLooting(this.loots).value.toString(), 1);
+        inventory.add(doLooting(this.loots).value.toString(), 1);
 
         this.notifier.notify(source, `Vous avez récupéré le contenu des poches de ${targetPlayer.name} !`, 'success');
     }

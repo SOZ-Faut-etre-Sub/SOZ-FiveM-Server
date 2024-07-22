@@ -29,7 +29,7 @@ export class VehicleKeysProvider {
 
         const keys = this.vehicleStateService.getVehicleKeys(player.citizenid);
 
-        TriggerClientEvent('inventory:client:openPlayerKeyInventory', source, keys);
+        TriggerClientEvent(ClientEvent.INVENTORY_OPEN_KEYS, source, keys);
     }
 
     @OnEvent(ServerEvent.VEHICLE_GIVE_KEY)

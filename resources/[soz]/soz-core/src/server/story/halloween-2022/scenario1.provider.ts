@@ -1,12 +1,14 @@
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
+
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { Rpc } from '../../../core/decorators/rpc';
 import { Feature } from '../../../shared/features';
+import { ADD_ERROR_MESSAGE } from '../../../shared/inventory';
 import { RpcServerEvent } from '../../../shared/rpc';
 import { Halloween2022Scenario1 } from '../../../shared/story/halloween-2022/scenario1';
 import { Dialog, ScenarioState } from '../../../shared/story/story';
 import { FeatureProvider } from '../../feature/feature.provider';
-import { InventoryManager } from '../../inventory/inventory.manager';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
 
@@ -20,18 +22,19 @@ export class Halloween2022Scenario1Provider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(FeatureProvider)
     private featureProvider: FeatureProvider;
 
     @Rpc(RpcServerEvent.STORY_HALLOWEEN_SCENARIO1)
-    public onScenario1(source: number, zoneName?: string): Dialog | null {
+    public async onScenario1(source: number, zoneName?: string): Promise<Dialog | null> {
         if (!this.featureProvider.isFeatureEnabled(Feature.HalloweenScenario1)) {
             return;
         }
 
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
         const player = this.playerService.getPlayer(source);
 
         const parts = Object.entries(player.metadata.halloween2022?.scenario1 ?? {}).find(
@@ -48,8 +51,8 @@ export class Halloween2022Scenario1Provider {
                 return Halloween2022Scenario1.dialog['part1'];
             case 'part1':
                 if (zoneName === 'trash3') {
-                    if (this.inventoryManager.canCarryItem(source, 'bloody_knife', 1)) {
-                        this.inventoryManager.addItemToInventory(source, 'bloody_knife', 1);
+                    if (inventory.canCarryItem('bloody_knife', 1)) {
+                        inventory.add('bloody_knife', 1);
                         this.notifier.notify(
                             source,
                             `Du sang frais recouvre cette poubelle… Oh, un couteau ensanglanté. Cela doit être l’arme du crime. Retournons voir la dame.`,
@@ -64,7 +67,7 @@ export class Halloween2022Scenario1Provider {
                             },
                         });
                     } else {
-                        this.notifier.notify(source, `Tu n’as pas assez de place dans ton inventaire.`, 'error');
+                        this.notifier.notify(source, ADD_ERROR_MESSAGE['not_enough_space'], 'error');
                     }
                 } else {
                     this.notifier.notify(
@@ -85,7 +88,7 @@ export class Halloween2022Scenario1Provider {
                 });
                 return Halloween2022Scenario1.dialog['part2'];
             case 'part3':
-                if (this.inventoryManager.removeNotExpiredItem(source, 'bloody_knife')) {
+                if (inventory.remove('bloody_knife', 1, false)) {
                     this.playerService.setPlayerMetadata(source, 'halloween2022', {
                         ...player.metadata.halloween2022,
                         scenario1: {
@@ -98,7 +101,7 @@ export class Halloween2022Scenario1Provider {
                 }
                 return;
             case 'part4':
-                if (this.inventoryManager.removeNotExpiredItem(source, 'small_coffin')) {
+                if (inventory.remove('small_coffin', 1, false)) {
                     this.playerService.setPlayerMetadata(source, 'halloween2022', {
                         ...player.metadata.halloween2022,
                         scenario1: {
@@ -112,8 +115,8 @@ export class Halloween2022Scenario1Provider {
                 return;
             case 'part5':
                 if (zoneName === 'doghouse') {
-                    if (this.inventoryManager.canCarryItem(source, 'bag_kibble', 1)) {
-                        this.inventoryManager.addItemToInventory(source, 'bag_kibble', 1);
+                    if (inventory.canCarryItem('bag_kibble', 1)) {
+                        inventory.add('bag_kibble', 1);
                         this.notifier.notify(
                             source,
                             `Oh bordel... Cette niche est dégueulasse ! Pourquoi il a déposé son sac de croquettes directement dans la niche ?!`,
@@ -129,14 +132,14 @@ export class Halloween2022Scenario1Provider {
                         });
                         return;
                     } else {
-                        this.notifier.notify(source, `Tu n’as pas assez de place dans ton inventaire.`, 'error');
+                        this.notifier.notify(source, ADD_ERROR_MESSAGE['not_enough_space'], 'error');
                         return;
                     }
                     return;
                 }
                 return Halloween2022Scenario1.dialog['part5'];
             case 'part6':
-                if (this.inventoryManager.removeNotExpiredItem(source, 'bag_kibble')) {
+                if (inventory.remove('bag_kibble', 1, false)) {
                     this.playerService.setPlayerMetadata(source, 'halloween2022', {
                         ...player.metadata.halloween2022,
                         scenario1: {
@@ -149,9 +152,14 @@ export class Halloween2022Scenario1Provider {
                 }
                 return;
             case 'part7':
-                if (this.inventoryManager.canSwapItem(source, 'pumpkin_soup', 1, 'halloween2022_story', 1)) {
-                    this.inventoryManager.removeNotExpiredItem(source, 'pumpkin_soup');
-                    this.inventoryManager.addItemToInventory(source, 'halloween2022_story', 1);
+                if (
+                    inventory.canSwapItems(
+                        [{ name: 'pumpkin_soup', amount: 1 }],
+                        [{ name: 'halloween2022_story', amount: 1 }]
+                    ) &&
+                    inventory.remove('pumpkin_soup', 1, false)
+                ) {
+                    inventory.add('halloween2022_story', 1);
 
                     this.playerService.setPlayerMetadata(source, 'halloween2022', {
                         ...player.metadata.halloween2022,

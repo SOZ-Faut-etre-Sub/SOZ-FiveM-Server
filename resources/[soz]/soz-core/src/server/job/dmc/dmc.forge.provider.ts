@@ -4,7 +4,8 @@ import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { Rpc } from '@public/core/decorators/rpc';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
-import { InventoryManager } from '@public/server/inventory/inventory.manager';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
+import { InventoryOpenProvider } from '@public/server/inventory/inventory.open.provider';
 import { Notifier } from '@public/server/notifier';
 import { StateGlobalProvider } from '@public/server/store/state.global.provider';
 import { ServerEvent } from '@public/shared/event';
@@ -17,11 +18,14 @@ export class DmcForgeProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(StateGlobalProvider)
     private stateGlobalProvider: StateGlobalProvider;
+
+    @Inject(InventoryOpenProvider)
+    private inventoryOpenProvider: InventoryOpenProvider;
 
     private converterState: DmcConverterState = {
         enabled: false,
@@ -57,7 +61,7 @@ export class DmcForgeProvider {
         );
 
         if (temperature != this.converterState.temperature) {
-            TriggerEvent('inventory:server:closeInventoryAllUsers', DmcConverterConfig.converterStorage);
+            this.inventoryOpenProvider.closeInventory(DmcConverterConfig.converterStorage);
         }
     }
 
@@ -81,8 +85,14 @@ export class DmcForgeProvider {
     }
 
     @Tick(DmcConverterConfig.converterDelay)
-    public handleConverterItems() {
+    public async handleConverterItems() {
         if (!this.converterState.enabled) {
+            return;
+        }
+
+        const inventory = await this.inventoryFactory.get(DmcConverterConfig.converterStorage);
+
+        if (!inventory) {
             return;
         }
 
@@ -96,7 +106,7 @@ export class DmcForgeProvider {
             let canCraft = true;
             for (const input_item of Object.keys(recipe.input)) {
                 const amount = recipe.input[input_item];
-                const itemCount = this.inventoryManager.getItemCount(DmcConverterConfig.converterStorage, input_item);
+                const itemCount = inventory.getItemCount(input_item);
                 if (itemCount < amount) {
                     canCraft = false;
                     break;
@@ -111,15 +121,11 @@ export class DmcForgeProvider {
             // Remove input items
             for (const input_item of Object.keys(recipe.input)) {
                 const amount = recipe.input[input_item];
-                this.inventoryManager.removeItemFromInventory(DmcConverterConfig.converterStorage, input_item, amount);
+                inventory.remove(input_item, amount);
             }
+
             // Add output items
-            this.inventoryManager.addItemToInventoryNotPlayer(
-                DmcConverterConfig.converterStorage,
-                output_item,
-                recipe.outputAmount,
-                null
-            );
+            inventory.add(output_item, recipe.outputAmount);
 
             // Only 1 recipe by cycle, so we break here
             return;
@@ -127,28 +133,29 @@ export class DmcForgeProvider {
     }
 
     @Tick(DmcIncineratorConfig.incineratorDelay)
-    public handleIncineratorItems() {
+    public async handleIncineratorItems() {
         const globalState = this.stateGlobalProvider.getGlobalState();
         if (globalState.blackoutLevel > 3 || globalState.blackout || globalState.jobEnergy.dmc < 1) {
             return;
         }
-        const allItems = this.inventoryManager.getAllItems(DmcIncineratorConfig.incineratorStorage);
+        const inventory = await this.inventoryFactory.get(DmcIncineratorConfig.incineratorStorage);
+        const itemsToProcess = [];
         let remainingItemsToProcess = DmcIncineratorConfig.incineratorProcessingAmount;
-        for (const item of allItems) {
+
+        for (const item of Object.values(inventory.items())) {
             if (remainingItemsToProcess == 0) {
                 break;
             }
             const amountToProcess = Math.min(item.amount, remainingItemsToProcess);
-
-            this.inventoryManager.removeItemFromInventory(
-                DmcIncineratorConfig.incineratorStorage,
-                item.item.name,
-                item.amount,
-                item.metadata,
-                item.slot
-            );
-
+            itemsToProcess.push({
+                ...item,
+                amount: amountToProcess,
+            });
             remainingItemsToProcess -= amountToProcess;
+        }
+
+        for (const item of itemsToProcess) {
+            inventory.removeAtSlot(item.item.slot, item.amount);
         }
     }
 

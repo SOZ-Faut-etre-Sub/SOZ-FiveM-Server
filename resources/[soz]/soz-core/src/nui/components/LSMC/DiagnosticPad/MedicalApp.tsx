@@ -6,7 +6,6 @@ import { useNuiEvent, useNuiFocus } from '@public/nui/hook/nui';
 import { useOutside } from '@public/nui/hook/outside';
 import { NuiEvent } from '@public/shared/event/nui';
 import { healthLevelToLabel, stressLevelToLabel } from '@public/shared/health';
-import { MedicalMetadata } from '@public/shared/item';
 import {
     bones,
     DamageConfigs,
@@ -19,6 +18,8 @@ import { PlayerCriminalState, PlayerMetadata, PlayerPedHash } from '@public/shar
 import { getRandomInt } from '@public/shared/random';
 import { format } from 'date-fns';
 import { FunctionComponent, useEffect, useState } from 'react';
+
+import { MedicalMetadata } from '../../../../shared/inventory';
 
 type ConstantMedicalProps = {
     medicalDatas: MedicalMetadata;
@@ -410,7 +411,7 @@ export const MedicalApp: FunctionComponent = () => {
         const topPopup = screenY;
         return (
             <div
-                className={`flex flex-col absolute min-w-[40vh] max-w-[60vh] rounded-[2vh] bg-[black] 
+                className={`flex flex-col absolute min-w-[40vh] max-w-[60vh] rounded-[2vh] bg-[black]
             border-2 p-2 bg-opacity-100 scale-[0.9]`}
                 style={{
                     boxShadow: `0 1px 12px ${styleByGravity}`,

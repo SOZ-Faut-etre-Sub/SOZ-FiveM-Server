@@ -1,7 +1,7 @@
 import { OnEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
-import { InventoryManager } from '@public/server/inventory/inventory.manager';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { Notifier } from '@public/server/notifier';
 import { PlayerService } from '@public/server/player/player.service';
 import { ProgressService } from '@public/server/player/progress.service';
@@ -14,8 +14,8 @@ export class LSMCCheckHealthProvider {
     @Inject(ProgressService)
     private progressService: ProgressService;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(PlayerService)
     private playerService: PlayerService;
@@ -23,8 +23,14 @@ export class LSMCCheckHealthProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    private async doAnalyze(source: number, label: string, item_id: string) {
-        const inventoryItem = this.inventoryManager.getFirstItemInventory(source, item_id);
+    async doAnalyze(source: number, label: string, item_id: string) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!inventory) {
+            return;
+        }
+
+        const inventoryItem = inventory.getItem(item_id);
 
         if (!inventoryItem) {
             return null;
@@ -52,7 +58,7 @@ export class LSMCCheckHealthProvider {
             return null;
         }
 
-        this.inventoryManager.removeInventoryItem(source, inventoryItem);
+        inventory.removeAtSlot(inventoryItem.slot, 1);
 
         return targetPlayer;
     }

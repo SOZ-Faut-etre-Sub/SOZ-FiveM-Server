@@ -65,7 +65,7 @@ export class UpwVehicleProvider {
                 category: 'society',
                 blackoutJob: JobType.Upw,
                 blackoutGlobal: true,
-                canInteract: () => this.jobService.hasPermission(JobType.Upw, JobPermission.UpwOrder),
+                canInteract: () => this.jobService.hasPermission(JobType.Upw, JobPermission.Order),
                 action: () => {
                     this.nuiMenu.openMenu(
                         MenuType.VehicleOrderMenu,

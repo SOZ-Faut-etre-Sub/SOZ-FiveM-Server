@@ -5,7 +5,6 @@ import { Provider } from '@public/core/decorators/provider';
 import { Rpc } from '@public/core/decorators/rpc';
 import { BankService } from '@public/server/bank/bank.service';
 import { PrismaService } from '@public/server/database/prisma.service';
-import { InventoryManager } from '@public/server/inventory/inventory.manager';
 import { Monitor } from '@public/server/monitor/monitor';
 import { Notifier } from '@public/server/notifier';
 import { PlayerService } from '@public/server/player/player.service';
@@ -25,6 +24,8 @@ import {
 } from '@public/shared/shop/zkea_fourniture';
 import { isEqual } from 'lodash';
 
+import { InventoryFactory } from '../inventory/inventory.factory';
+
 @Provider()
 export class HousingFournitureProvider {
     @Inject(PrismaService)
@@ -39,8 +40,8 @@ export class HousingFournitureProvider {
     @Inject(BankService)
     private bankService: BankService;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(Monitor)
     public monitor: Monitor;
@@ -68,7 +69,13 @@ export class HousingFournitureProvider {
     @OnEvent(ServerEvent.HOUSING_STORE_FOURNITURE)
     public async onStoreFourniture(source: number, apartmentId: number, propertyId: number) {
         await this.createBaseFourntiureIfNeeded(source, apartmentId, propertyId);
-        const crates = this.inventoryManager.getItems(source).filter(item => item.name === 'zkea_crate');
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!inventory) {
+            return;
+        }
+
+        const crates = Object.values(inventory.items()).filter(item => item.metadata.zkeaCrateElements);
 
         if (!crates) {
             return;
@@ -84,7 +91,8 @@ export class HousingFournitureProvider {
                 });
                 fournitureLabel.push(ZkeaFourniture[item.model].name);
             }
-            this.inventoryManager.removeInventoryItem(source, crate);
+
+            inventory.removeAtSlot(crate.slot, 1);
         }
 
         if (!fournituresDB.length) {
@@ -421,13 +429,15 @@ export class HousingFournitureProvider {
 
             if (currentFourniture.storageType !== null || currentFourniture.storageType !== 'cloth_stock') {
                 if (currentFourniture.storageType === 'stock') {
-                    const items = this.inventoryManager.getAllItems(`house_stash_${apartement.identifier}`);
-                    if (items && items.length) {
+                    const inventory = await this.inventoryFactory.get(`house_stash_${apartement.identifier}`);
+
+                    if (Object.values(inventory.items()).length) {
                         message = `Attention, tu essaies de ~r~supprimer~s~ un coffre avec des objets à l'intérieur ! Si tu souhaites faire cela, il est nécessaire de vider ton ~p~${ZkeaFourniture[currentFourniture.model].name}~s~.`;
                     }
                 } else if (currentFourniture.storageType === 'food_stock') {
-                    const items = this.inventoryManager.getAllItems(`house_fridge_${apartement.identifier}`);
-                    if (items && items.length) {
+                    const inventory = await this.inventoryFactory.get(`house_fridge_${apartement.identifier}`);
+
+                    if (Object.values(inventory.items()).length) {
                         message = `Attention, tu essaies de ~r~supprimer~s~ un coffre avec des objets à l'intérieur ! Si tu souhaites faire cela, il est nécessaire de vider ton ~p~${ZkeaFourniture[currentFourniture.model].name}~s~.`;
                     }
                 } else if (currentFourniture.storageType === 'cash_stock') {

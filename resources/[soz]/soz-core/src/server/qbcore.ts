@@ -15,10 +15,6 @@ export class QBCore {
         this.QBCore.Player.Logout(source);
     }
 
-    public createUseableItem(name, action: (player: number, item: any) => void) {
-        this.QBCore.Functions.CreateUseableItem(name, action);
-    }
-
     public getItem<T extends Item = Item>(name: string): T | null {
         return (this.QBCore.Shared.Items[name] as T) || null;
     }

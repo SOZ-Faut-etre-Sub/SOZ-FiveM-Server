@@ -5,7 +5,6 @@ import { NuiDispatch } from '@public/client/nui/nui.dispatch';
 import { NuiMenu } from '@public/client/nui/nui.menu';
 import { AttachedObjectService } from '@public/client/object/attached.object.service';
 import { PlayerService } from '@public/client/player/player.service';
-import { ResourceLoader } from '@public/client/repository/resource.loader';
 import { VehicleRadarProvider } from '@public/client/vehicle/vehicle.radar.provider';
 import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
@@ -35,9 +34,6 @@ const stations = {
 export class PoliceProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
-
-    @Inject(ResourceLoader)
-    private resourceLoader: ResourceLoader;
 
     @Inject(NuiDispatch)
     private dispatcher: NuiDispatch;

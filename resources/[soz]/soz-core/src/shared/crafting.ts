@@ -1,5 +1,5 @@
 import { Talent } from '@private/shared/talent';
-import { InventoryItem, InventoryItemMetadata } from '@public/shared/item';
+import { InventoryItem, InventoryItemMetadata } from '@public/shared/inventory';
 
 import { Feature } from './features';
 

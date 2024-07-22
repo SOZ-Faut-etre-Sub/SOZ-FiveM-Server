@@ -1,13 +1,16 @@
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
+
 import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { Logger } from '../../../core/logger';
 import { ServerEvent } from '../../../shared/event';
+import { isInventoryItemExpired } from '../../../shared/inventory';
 import { JobPermission, JobType } from '../../../shared/job';
 import { StonkBagType, StonkConfig } from '../../../shared/job/stonk';
 import { toVector3Object, Vector3 } from '../../../shared/polyzone/vector';
 import { BankService } from '../../bank/bank.service';
-import { InventoryManager } from '../../inventory/inventory.manager';
+import { Inventory } from '../../inventory/inventory';
 import { ItemService } from '../../item/item.service';
 import { JobService } from '../../job.service';
 import { Monitor } from '../../monitor/monitor';
@@ -20,8 +23,8 @@ export class StonkFillInProvider {
     @Inject(ItemService)
     private itemService: ItemService;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(PlayerService)
     private playerService: PlayerService;
@@ -71,9 +74,11 @@ export class StonkFillInProvider {
 
         this.notifier.notify(source, 'Vous ~g~commencez~s~ à remplir.', 'success');
 
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
         do {
             const outputItemLabel = this.itemService.getItem(item).label;
-            const [hasResold, fillAmount] = await this.doFillIn(source, item, maxBalance, accountName);
+            const [hasResold, fillAmount] = await this.doFillIn(source, inventory, item, maxBalance, accountName);
 
             if (hasResold) {
                 this.monitor.traceEvent('job_stonk_fill_account', {
@@ -122,7 +127,7 @@ export class StonkFillInProvider {
                 this.notifier.notify(source, 'Vous avez ~r~arrêté~s~ de remplir.');
                 return;
             }
-        } while (await this.canFillIn(source, item, maxBalance, accountName));
+        } while (await this.canFillIn(inventory, item, maxBalance, accountName));
     }
 
     private async numberOfItemsRequired(item: StonkBagType, maxBalance: number, accountName: string): Promise<number> {
@@ -131,19 +136,19 @@ export class StonkFillInProvider {
     }
 
     private async canFillIn(
-        source: number,
+        inventory: Inventory,
         item: StonkBagType,
         maxBalance: number,
         accountName: string
     ): Promise<boolean> {
         return (
-            this.inventoryManager.getFirstItemInventory(source, item) !== null &&
-            (await this.numberOfItemsRequired(item, maxBalance, accountName)) > 0
+            inventory.getItem(item) !== null && (await this.numberOfItemsRequired(item, maxBalance, accountName)) > 0
         );
     }
 
     private async doFillIn(
         source: number,
+        inventory: Inventory,
         item: StonkBagType,
         maxBalance: number,
         accountName: string
@@ -169,13 +174,10 @@ export class StonkFillInProvider {
             return [false, 0];
         }
 
-        const items = this.inventoryManager.findItem(
-            source,
-            elem => elem.name == item && !this.itemService.isItemExpired(elem)
-        );
+        const inventoryItem = inventory.findItem(elem => elem.name == item && !isInventoryItemExpired(elem));
         let fillInAmount = await this.numberOfItemsRequired(item, maxBalance, accountName);
 
-        if (!items || fillInAmount == 0) {
+        if (!inventoryItem || fillInAmount == 0) {
             return [false, 0];
         }
 
@@ -183,11 +185,11 @@ export class StonkFillInProvider {
             fillInAmount = StonkConfig.resell.amount;
         }
 
-        if (fillInAmount > items.amount) {
-            fillInAmount = items.amount;
+        if (fillInAmount > inventoryItem.amount) {
+            fillInAmount = inventoryItem.amount;
         }
 
-        const removeRequest = this.inventoryManager.removeNotExpiredItem(source, item, fillInAmount);
+        const removeRequest = inventory.removeAtSlot(inventoryItem.slot, fillInAmount);
 
         return [removeRequest, fillInAmount];
     }

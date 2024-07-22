@@ -3,13 +3,14 @@ import { On, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { Rpc } from '@public/core/decorators/rpc';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { ServerEvent } from '@public/shared/event/server';
 import { RpcServerEvent } from '@public/shared/rpc';
 import axios from 'axios';
 
 import { TaxType } from '../../shared/bank';
+import { ADD_ERROR_MESSAGE } from '../../shared/inventory';
 import { Vector3 } from '../../shared/polyzone/vector';
-import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
 import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
@@ -25,8 +26,8 @@ export class UtilsProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(ServerStateService)
     private serverStateService: ServerStateService;
@@ -42,13 +43,15 @@ export class UtilsProvider {
 
     @OnEvent(ServerEvent.DISPENSER_BUY)
     public async onDispenserBuy(source: number, price: number, item: string, quantity: number) {
-        if (!this.inventoryManager.canCarryItem(source, item, quantity)) {
-            this.notifier.notify(source, `Vous n'avez pas assez de place dans votre inventaire`, 'error');
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!inventory.canCarryItem(item, quantity)) {
+            this.notifier.notify(source, ADD_ERROR_MESSAGE['not_enough_space'], 'error');
             return;
         }
 
         if (await this.playerMoneyService.buy(source, price * quantity, TaxType.FOOD)) {
-            this.inventoryManager.addItemToInventory(source, item, quantity);
+            inventory.add(item, quantity);
 
             const itemFull = this.itemService.getItem(item);
             this.notifier.notify(source, `Vous avez acheté ~g~${quantity}~s~ ~b~${itemFull.label}~s~.`, 'success');

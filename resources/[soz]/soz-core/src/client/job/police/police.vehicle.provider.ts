@@ -161,7 +161,8 @@ export class PoliceVehicleProvider {
                         if (!completed) {
                             return;
                         }
-                        this.vehicleLockProvider.openVehiclePolice(entity);
+
+                        await this.vehicleLockProvider.openVehicle(entity);
                     },
                 },
                 {

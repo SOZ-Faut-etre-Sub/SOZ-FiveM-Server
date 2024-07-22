@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
+import { InventoryItem, isInventoryItemExpired } from '@public/shared/inventory';
 
-import { InventoryItem, Item } from '../../shared/item';
+import { Item } from '../../shared/item';
 import { Qbcore } from '../qbcore';
 
 @Injectable()
@@ -17,9 +18,6 @@ export class ItemService {
     }
 
     public isExpired(item: InventoryItem): boolean {
-        if (item && item.metadata && item.metadata.expiration) {
-            return new Date().getTime() > new Date(item.metadata.expiration).getTime();
-        }
-        return false;
+        return isInventoryItemExpired(item);
     }
 }

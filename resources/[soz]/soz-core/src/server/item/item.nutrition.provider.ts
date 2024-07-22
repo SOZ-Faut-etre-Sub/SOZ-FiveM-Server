@@ -4,10 +4,11 @@ import { Provider } from '@core/decorators/provider';
 import { ClientEvent } from '@public/shared/event';
 
 import { Feature } from '../../shared/features';
-import { CocktailItem, DrinkItem, FoodItem, InventoryItem, Item, LiquorItem } from '../../shared/item';
+import { InventoryItem, isInventoryItemExpired } from '../../shared/inventory';
+import { CocktailItem, DrinkItem, FoodItem, Item, LiquorItem } from '../../shared/item';
 import { PlayerMetadata } from '../../shared/player';
 import { FeatureProvider } from '../feature/feature.provider';
-import { InventoryManager } from '../inventory/inventory.manager';
+import { Inventory } from '../inventory/inventory';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../player/progress.service';
@@ -20,9 +21,6 @@ const DYSPEPSIA_NUTRITION_MALUS = -2;
 export class ItemNutritionProvider {
     @Inject(ItemService)
     private item: ItemService;
-
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
 
     @Inject(ProgressService)
     private progressService: ProgressService;
@@ -41,12 +39,9 @@ export class ItemNutritionProvider {
     private async useFoodOrDrink(
         source: number,
         item: FoodItem | DrinkItem | CocktailItem | LiquorItem,
-        inventoryItem: InventoryItem
+        inventoryItem: InventoryItem,
+        inventory: Inventory
     ): Promise<void> {
-        if (!this.inventoryManager.removeInventoryItem(source, inventoryItem)) {
-            return;
-        }
-
         const name = item.type === 'food' ? 'eat_something' : 'drink_something';
         const prop =
             item.prop ||
@@ -87,6 +82,14 @@ export class ItemNutritionProvider {
             allowExistingAnimation: true,
         });
 
+        if (!completed && progress === 0) {
+            return;
+        }
+
+        if (!inventory.removeAtSlot(inventoryItem.slot, 1)) {
+            return;
+        }
+
         if (completed) {
             TriggerClientEvent(ClientEvent.ITEM_USE, source, item.name, item);
         }
@@ -111,7 +114,7 @@ export class ItemNutritionProvider {
             }
         }
 
-        let intoxicated = this.item.isItemExpired(inventoryItem) && Math.random() * 100 <= 75;
+        let intoxicated = isInventoryItemExpired(inventoryItem) && Math.random() * 100 <= 75;
         const dyspepsia = item.type === 'food' && Math.random() * 100 <= dyspepsiaLuck;
 
         if (intoxicated) {
@@ -177,14 +180,17 @@ export class ItemNutritionProvider {
         this.lastItemEatByPlayer[player.citizenid] = item.name;
     }
 
-    private useLunchbox(source: number, item: Item, itemInv: InventoryItem) {
-        if (!this.inventoryManager.removeInventoryItem(source, itemInv)) {
+    private async useLunchbox(source: number, item: Item, itemInv: InventoryItem, inventory: Inventory) {
+        if (!inventory.removeAtSlot(itemInv.slot, 1)) {
             return;
         }
+
         itemInv.metadata.crateElements.map(meal => {
-            this.inventoryManager.addItemToInventory(source, meal.name, meal.amount, { ...meal.metadata });
+            inventory.add(meal.name, meal.amount, { ...meal.metadata });
         });
+
         let notificationLunchboxLabel = item.label;
+
         if (itemInv.metadata.label) {
             notificationLunchboxLabel = item.label + ' "' + itemInv.metadata.label + '"';
         }

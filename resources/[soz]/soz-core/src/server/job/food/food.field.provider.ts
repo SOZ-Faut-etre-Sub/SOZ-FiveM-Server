@@ -1,14 +1,17 @@
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
+
 import { Once, OnceStep, OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event/server';
 import { getAmount } from '../../../shared/field';
+import { ADD_ERROR_MESSAGE } from '../../../shared/inventory';
 import { JobType } from '../../../shared/job';
 import { FoodFields, FoodFieldType } from '../../../shared/job/food';
 import { PollutionLevel } from '../../../shared/pollution';
 import { toVector3Object, Vector3 } from '../../../shared/polyzone/vector';
+import { isErr } from '../../../shared/result';
 import { FieldProvider } from '../../farm/field.provider';
-import { InventoryManager } from '../../inventory/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { Monitor } from '../../monitor/monitor';
 import { Notifier } from '../../notifier';
@@ -27,8 +30,8 @@ export class FoodFieldProvider {
     @Inject(ProgressService)
     private progressService: ProgressService;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(FieldProvider)
     private fieldService: FieldProvider;
@@ -87,8 +90,6 @@ export class FoodFieldProvider {
             return;
         }
 
-        // @TODO Show Field health
-
         // eslint-disable-next-line no-constant-condition
         while (true) {
             const { completed } = await this.progressService.progress(
@@ -134,8 +135,10 @@ export class FoodFieldProvider {
                 }
             }
 
-            if (!this.inventoryManager.canCarryItems(source, items)) {
-                this.notifier.error(player.source, "Vous n'avez pas assez de place dans votre inventaire");
+            const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+            if (!inventory.canCarryItems(items)) {
+                this.notifier.error(player.source, ADD_ERROR_MESSAGE['not_enough_space']);
 
                 return;
             }
@@ -145,7 +148,7 @@ export class FoodFieldProvider {
             for (const item of items) {
                 const itemData = this.itemService.getItem(item.name);
 
-                this.inventoryManager.addItemToInventory(source, item.name, item.amount);
+                inventory.add(item.name, item.amount);
 
                 if (!(await this.fieldService.harvestField(fieldIdentifier, item.amount))) {
                     this.notifier.error(source, 'Le champ est vide');
@@ -164,8 +167,6 @@ export class FoodFieldProvider {
                 });
             }
         }
-
-        // @TODO Hide Field health
     }
 
     @OnEvent(ServerEvent.FOOD_MILK_COLLECT)
@@ -216,9 +217,9 @@ export class FoodFieldProvider {
                 item = 'skimmed_milk';
             }
 
-            const { success } = this.inventoryManager.addItemToInventory(source, item, amountToHarvest);
+            const inventory = await this.inventoryFactory.getPlayerInventory(source);
 
-            if (!success) {
+            if (isErr(inventory.add(item, amountToHarvest))) {
                 this.notifier.error(player.source, 'Vos poches sont pleines...');
 
                 return;

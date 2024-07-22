@@ -1,12 +1,13 @@
 import { Once, OnEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { EasterShopContent } from '@public/shared/shop/easter';
 
 import { TaxType } from '../../shared/bank';
 import { ClientEvent, ServerEvent } from '../../shared/event';
+import { ADD_ERROR_MESSAGE } from '../../shared/inventory';
 import { PriceService } from '../bank/price.service';
-import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
 import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
@@ -23,8 +24,8 @@ export class EasterShopProvider {
     @Inject(PlayerMoneyService)
     private playerMoneyService: PlayerMoneyService;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(ItemService)
     private itemService: ItemService;
@@ -87,13 +88,13 @@ export class EasterShopProvider {
         if (!item) {
             return;
         }
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
 
-        if (!this.inventoryManager.canCarryItem(source, item.id, 1)) {
-            this.notifier.notify(source, "Vous n'avez pas assez de place dans votre inventaire", 'error');
+        if (!inventory.canCarryItem(item.id, 1)) {
+            this.notifier.notify(source, ADD_ERROR_MESSAGE['not_enough_space'], 'error');
             return;
         }
 
-        // @TODO Price client side
         if (!(await this.playerMoneyService.buy(source, item.price, TaxType.SUPPLY))) {
             this.notifier.notify(source, "Vous avez n'avez pas assez d'argent.", 'error');
             return;
@@ -109,7 +110,7 @@ export class EasterShopProvider {
             money: item.price,
         });
 
-        this.inventoryManager.addItemToInventory(source, item.id, 1, item.metadata || {});
+        inventory.add(item.id, 1, item.metadata || {});
         const taxed = await this.priceService.getPrice(item.price, TaxType.SUPPLY);
         this.notifier.notify(
             source,

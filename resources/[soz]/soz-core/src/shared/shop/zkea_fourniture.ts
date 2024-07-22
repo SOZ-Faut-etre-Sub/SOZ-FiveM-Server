@@ -1,4 +1,4 @@
-import { ZkeaFournitureMetadata } from '@public/shared/item';
+import { ZkeaFournitureMetadata } from '@public/shared/inventory';
 import { Vector4 } from '@public/shared/polyzone/vector';
 
 export type ZkeaFournitureItem = ZkeaFournitureMetadata & {

@@ -2,7 +2,7 @@ import { On, Once, OnEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { PlayerInjuryProvider } from '@private/server/player/player.injuries.provider';
-import { InventoryManager } from '@public/server/inventory/inventory.manager';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { Monitor } from '@public/server/monitor/monitor';
 import { Notifier } from '@public/server/notifier';
 import { PlayerPositionProvider } from '@public/server/player/player.position.provider';
@@ -30,8 +30,8 @@ export class LSMCDeathProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(ServerStateService)
     private serverStateService: ServerStateService;
@@ -62,13 +62,15 @@ export class LSMCDeathProvider {
             targetid = source;
         }
 
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
         if (!admin && !uniteHU) {
-            if (!this.inventoryManager.removeNotExpiredItem(source, bloodbag ? 'bloodbag' : 'defibrillator')) {
+            if (!inventory.remove(bloodbag ? 'bloodbag' : 'defibrillator', 1, false)) {
                 return;
             }
 
             if (bloodbag) {
-                this.inventoryManager.addItemToInventory(source, 'used_bloodbag');
+                inventory.add('used_bloodbag');
             }
         }
 

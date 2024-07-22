@@ -2,7 +2,7 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { Once, OnEvent } from '@public/core/decorators/event';
 import { Rpc } from '@public/core/decorators/rpc';
-import { InventoryManager } from '@public/server/inventory/inventory.manager';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { ItemService } from '@public/server/item/item.service';
 import { Notifier } from '@public/server/notifier';
 import { PlayerService } from '@public/server/player/player.service';
@@ -10,9 +10,12 @@ import { PlayerStateService } from '@public/server/player/player.state.service';
 import { ProgressService } from '@public/server/player/progress.service';
 import { VehicleStateService } from '@public/server/vehicle/vehicle.state.service';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
-import { InventoryItem, Item } from '@public/shared/item';
+import { Item } from '@public/shared/item';
 import { StretcherFoldedModel, StretcherModel, WheelChairModel } from '@public/shared/job/lsmc';
 import { RpcServerEvent } from '@public/shared/rpc';
+
+import { ADD_ERROR_MESSAGE, InventoryItem, isInventoryItemExpired } from '../../../shared/inventory';
+import { Inventory } from '../../inventory/inventory';
 
 @Provider()
 export class LSMCItemProvider {
@@ -25,8 +28,8 @@ export class LSMCItemProvider {
     @Inject(ItemService)
     private item: ItemService;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(PlayerStateService)
     private playerStateService: PlayerStateService;
@@ -52,10 +55,10 @@ export class LSMCItemProvider {
         this.item.setItemUseCallback('morphine', this.useMorphine.bind(this));
     }
 
-    private async useTissue(source: number, _item: Item, inventoryItem: InventoryItem) {
+    private async useTissue(source: number, _item: Item, inventoryItem: InventoryItem, inventory: Inventory) {
         const player = this.playerService.getPlayer(source);
 
-        if (this.inventoryManager.removeInventoryItem(source, inventoryItem)) {
+        if (inventory.removeAtSlot(inventoryItem.slot, 1)) {
             if (player.metadata.disease == 'rhume') {
                 this.notifier.notify(source, 'Vous utilisez un mouchoir et vous vous sentez mieux !');
                 this.playerService.setPlayerDisease(source, false);
@@ -65,10 +68,10 @@ export class LSMCItemProvider {
         }
     }
 
-    private async useAntibiotic(source: number, _item: Item, inventoryItem: InventoryItem) {
+    private async useAntibiotic(source: number, _item: Item, inventoryItem: InventoryItem, inventory: Inventory) {
         const player = this.playerService.getPlayer(source);
 
-        if (this.inventoryManager.removeInventoryItem(source, inventoryItem)) {
+        if (inventory.removeAtSlot(inventoryItem.slot, 1)) {
             if (player.metadata.disease == 'intoxication') {
                 this.notifier.notify(source, 'Vous utilisez un antibiotique et vous vous sentez mieux !');
                 this.playerService.setPlayerDisease(source, false);
@@ -78,10 +81,10 @@ export class LSMCItemProvider {
         }
     }
 
-    private async usePainkiller(source: number, _item: Item, inventoryItem: InventoryItem) {
+    private async usePainkiller(source: number, _item: Item, inventoryItem: InventoryItem, inventory: Inventory) {
         const player = this.playerService.getPlayer(source);
 
-        if (this.inventoryManager.removeInventoryItem(source, inventoryItem)) {
+        if (inventory.removeAtSlot(inventoryItem.slot, 1)) {
             if (player.metadata.disease == 'backpain') {
                 this.notifier.notify(source, 'Vous utilisez un anti-douleur et vous vous sentez mieux !');
                 this.playerService.setPlayerDisease(source, false);
@@ -92,9 +95,12 @@ export class LSMCItemProvider {
     }
 
     private async useIfaks(source: number, _item: Item, inventoryItem: InventoryItem) {
-        if (!this.inventoryManager.removeInventoryItem(source, inventoryItem)) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!inventory.removeAtSlot(inventoryItem.slot, 1)) {
             return;
         }
+
         this.playerService.setPlayerMetaDatas(source, {
             hunger: 100,
             thirst: 100,
@@ -103,7 +109,7 @@ export class LSMCItemProvider {
         TriggerClientEvent(ClientEvent.LSMC_HEAL, source, 100);
     }
 
-    private async useStretcher(source: number, _item: Item, inventoryItem: InventoryItem) {
+    private async useStretcher(source: number, _item: Item, inventoryItem: InventoryItem, inventory: Inventory) {
         const { completed } = await this.progressService.progress(
             source,
             'use_stretcher',
@@ -126,15 +132,17 @@ export class LSMCItemProvider {
             return;
         }
 
-        if (this.inventoryManager.removeInventoryItem(source, inventoryItem)) {
+        if (inventory.removeAtSlot(inventoryItem.slot, 1)) {
             TriggerClientEvent(ClientEvent.LSMC_STRETCHER_USE, source);
         }
     }
 
     @OnEvent(ServerEvent.LSMC_STRETCHER_RETRIEVE)
-    public onStretcherRetrieve(source: number, netId: number) {
-        if (!this.inventoryManager.canCarryItem(source, 'stretcher', 1)) {
-            this.notifier.notify(source, `Tu n'as pas assez de place dans ton inventaire.`, 'error');
+    public async onStretcherRetrieve(source: number, netId: number) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!inventory.canCarryItem('stretcher', 1)) {
+            this.notifier.notify(source, ADD_ERROR_MESSAGE['not_enough_space'], 'error');
             return;
         }
 
@@ -144,7 +152,7 @@ export class LSMCItemProvider {
         }
 
         DeleteEntity(entity);
-        this.inventoryManager.addItemToInventory(source, 'stretcher', 1);
+        inventory.add('stretcher', 1);
 
         this.notifier.notify(source, 'Tu as ramassé un brancard');
     }
@@ -219,7 +227,7 @@ export class LSMCItemProvider {
         return this.vehicleStateService.getVehicleState(vehicleNetworkId).volatile.ambulanceAttachedStretcher;
     }
 
-    private async useWheelChair(source: number, _item: Item, inventoryItem: InventoryItem) {
+    private async useWheelChair(source: number, _item: Item, inventoryItem: InventoryItem, inventory: Inventory) {
         const { completed } = await this.progressService.progress(
             source,
             'use_wheelchair',
@@ -242,15 +250,17 @@ export class LSMCItemProvider {
             return;
         }
 
-        if (this.inventoryManager.removeInventoryItem(source, inventoryItem)) {
+        if (inventory.removeAtSlot(inventoryItem.slot, 1)) {
             TriggerClientEvent(ClientEvent.LSMC_WHEELCHAIR_USE, source);
         }
     }
 
     @OnEvent(ServerEvent.LSMC_WHEELCHAIR_RETRIEVE)
-    public onWheelChairRetrieve(source: number, netId: number) {
-        if (!this.inventoryManager.canCarryItem(source, 'wheelchair', 1)) {
-            this.notifier.notify(source, `Tu n'as pas assez de place dans ton inventaire.`, 'error');
+    public async onWheelChairRetrieve(source: number, netId: number) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!inventory.canCarryItem('wheelchair', 1)) {
+            this.notifier.notify(source, ADD_ERROR_MESSAGE['not_enough_space'], 'error');
             return;
         }
 
@@ -260,12 +270,17 @@ export class LSMCItemProvider {
         }
 
         DeleteEntity(entity);
-        this.inventoryManager.addItemToInventory(source, 'wheelchair', 1);
+        inventory.add('wheelchair', 1);
 
         this.notifier.notify(source, 'Tu as ramassé une chaisse roulante');
     }
 
-    public async useNaloxone(source: number, item: Item, inventoryItem: InventoryItem): Promise<void> {
+    public async useNaloxone(
+        source: number,
+        item: Item,
+        inventoryItem: InventoryItem,
+        inventory: Inventory
+    ): Promise<void> {
         const player = this.playerService.getPlayer(source);
 
         if (!player) {
@@ -300,7 +315,7 @@ export class LSMCItemProvider {
         }
 
         this.playerService.setPlayerMetadata(source, 'drug', Math.max(0, player.metadata.drug - 50));
-        this.inventoryManager.removeInventoryItem(source, inventoryItem, 1);
+        inventory.removeAtSlot(inventoryItem.slot, 1);
 
         this.notifier.notify(
             source,
@@ -337,7 +352,9 @@ export class LSMCItemProvider {
             return;
         }
 
-        if (!this.inventoryManager.removeNotExpiredItem(source, 'naloxone')) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!inventory.remove('naloxone', 1, false)) {
             return;
         }
 
@@ -348,22 +365,24 @@ export class LSMCItemProvider {
         this.notifier.notify(target, 'Vous recu une dose de ~g~Naloxone~s~, vous êtes désormais désintoxiqué.');
     }
 
-    public async useMorphine(source: number, item: Item, inventoryItem: InventoryItem): Promise<void> {
-        this.onMorphine(source, source, inventoryItem);
+    public async useMorphine(
+        source: number,
+        item: Item,
+        inventoryItem: InventoryItem,
+        inventory: Inventory
+    ): Promise<void> {
+        await this.onMorphine(source, source, inventoryItem, inventory);
     }
 
     @OnEvent(ServerEvent.LSMC_MORPHINE)
-    public async onMorphine(source: number, target: number, item: InventoryItem) {
+    public async onMorphine(source: number, target: number, item: InventoryItem, inventory: Inventory | null) {
         const player = this.playerService.getPlayer(target);
         if (!player) {
             return;
         }
 
         if (!item) {
-            item = this.inventoryManager.findItem(
-                source,
-                item => item.name == 'morphine' && !this.item.isItemExpired(item)
-            );
+            item = inventory.findItem(item => item.name == 'morphine' && !isInventoryItemExpired(item));
             if (!item) {
                 return;
             }
@@ -396,7 +415,11 @@ export class LSMCItemProvider {
             return;
         }
 
-        if (!this.inventoryManager.removeInventoryItem(source, item)) {
+        if (!inventory) {
+            inventory = await this.inventoryFactory.getPlayerInventory(source);
+        }
+
+        if (!inventory.removeAtSlot(item.slot, 1)) {
             return;
         }
 

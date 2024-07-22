@@ -1,6 +1,6 @@
 import { AnimationInfo } from '../animation';
 import { Feature } from '../features';
-import { InventoryItemMetadata } from '../item';
+import { InventoryItemMetadata } from '../inventory';
 import { JobType } from '../job';
 import { BaunCraftsLists } from '../job/baun';
 import { DmcCraftsLists } from '../job/dmc';

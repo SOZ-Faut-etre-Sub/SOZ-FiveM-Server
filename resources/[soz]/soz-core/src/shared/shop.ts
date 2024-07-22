@@ -1,7 +1,8 @@
+import { InventoryItemMetadata } from '@public/shared/inventory';
 import { TargetOption } from '@public/shared/target';
 
 import { Component, GlovesItem, OutfitItem, Prop } from './cloth';
-import { InventoryItemMetadata, Item, ItemType } from './item';
+import { Item, ItemType } from './item';
 import { JobType } from './job';
 import { PlayerLicenceType } from './player';
 import { Zone } from './polyzone/box.zone';

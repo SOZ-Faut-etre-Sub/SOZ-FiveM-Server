@@ -27,7 +27,6 @@ import { PolygonZone } from '@public/shared/polyzone/polygon.zone';
 import { getDistance, Vector2, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { getRandomItems } from '@public/shared/random';
 import { RpcClientEvent, RpcServerEvent } from '@public/shared/rpc';
-import { VEHICLE_TRUNK_TYPES } from '@public/shared/vehicle/vehicle';
 
 import { TargetOption } from '../../../shared/target';
 import { VehicleClass } from '../../../shared/vehicle/vehicle';
@@ -349,21 +348,14 @@ export class FDFFieldProvider {
             for (const [cropId, crop] of Object.entries(cropsToHarvest)) {
                 const distance = crop.type === FDFCropType.corn ? 5 : 2;
                 if (getDistance(crop.coords, coords) < distance && canCropBeHarvest(crop)) {
-                    const vehicleModel = GetEntityModel(trailer);
                     const vehicleClass = GetVehicleClass(trailer) as VehicleClass;
-                    const trunkType = VEHICLE_TRUNK_TYPES[vehicleModel] || 'trunk';
                     const vehicleNetworkId = NetworkGetNetworkIdFromEntity(trailer);
 
                     const cropped = await emitRpc<FDFHarvestStatus>(
                         RpcServerEvent.FDF_CROP_WITH_TRACTOR,
                         cropId,
-                        GetVehicleNumberPlateText(trailer).trim(),
-                        {
-                            model: vehicleModel,
-                            class: vehicleClass,
-                            entity: vehicleNetworkId,
-                        },
-                        trunkType
+                        vehicleNetworkId,
+                        vehicleClass
                     );
                     if (cropped === FDFHarvestStatus.SUCCESS) {
                         delete cropsToHarvest[cropId];

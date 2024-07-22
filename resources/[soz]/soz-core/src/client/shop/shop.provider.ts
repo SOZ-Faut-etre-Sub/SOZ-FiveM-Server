@@ -70,9 +70,6 @@ export class ShopProvider {
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
-
     @Inject(FeatureProvider)
     private featureProvider: FeatureProvider;
 
@@ -251,6 +248,18 @@ export class ShopProvider {
                     invincible: true,
                     blockevents: true,
                     scenario: 'WORLD_HUMAN_STAND_IMPATIENT',
+                    dropItemCallback:
+                        config.brand !== ShopBrand.Zkea
+                            ? undefined
+                            : (inventoryId, inventoryItem, amount) => {
+                                  TriggerServerEvent(
+                                      ServerEvent.JOB_RESELL_ITEM,
+                                      inventoryId,
+                                      inventoryItem,
+                                      amount,
+                                      'Resell:Zkea'
+                                  );
+                              },
                 });
                 this.shopsPedEntity[shop] = { entity: pedId, location: config.location } as shopPedData;
             }

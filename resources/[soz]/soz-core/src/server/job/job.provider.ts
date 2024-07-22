@@ -1,4 +1,5 @@
 import { OnEvent } from '@public/core/decorators/event';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { ServerEvent } from '@public/shared/event';
 import { Job, JobPermission, JobType } from '@public/shared/job';
 
@@ -8,14 +9,13 @@ import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { toVector3Object, Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
-import { InventoryManager } from '../inventory/inventory.manager';
 import { JobService } from '../job.service';
 import { Monitor } from '../monitor/monitor';
 
 @Provider()
 export class JobProvider {
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(Monitor)
     private monitor: Monitor;
@@ -25,7 +25,13 @@ export class JobProvider {
 
     @Rpc(RpcServerEvent.JOBS_USE_WORK_CLOTHES)
     public async useWorkClothes(source: number, storageId: string) {
-        return this.inventoryManager.removeItemFromInventory(storageId, 'work_clothes', 1);
+        const inventory = await this.inventoryFactory.get(storageId);
+
+        if (!inventory) {
+            return;
+        }
+
+        return inventory.remove('work_clothes', 1);
     }
 
     @OnEvent(ServerEvent.QBCORE_SET_DUTY, false)

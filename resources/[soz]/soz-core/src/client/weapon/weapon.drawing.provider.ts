@@ -1,12 +1,11 @@
-import { PlayerUpdate } from '@public/core/decorators/player';
+import { On, Once, OnceStep, OnEvent } from '@core/decorators/event';
+import { Inject } from '@core/decorators/injectable';
+import { Provider } from '@core/decorators/provider';
+import { wait } from '@core/utils';
+import { PlayerInventoryUpdate } from '@public/core/decorators/player';
+import { InventoryItem } from '@public/shared/inventory';
 
-import { On, Once, OnceStep, OnEvent } from '../../core/decorators/event';
-import { Inject } from '../../core/decorators/injectable';
-import { Provider } from '../../core/decorators/provider';
-import { wait } from '../../core/utils';
 import { ClientEvent } from '../../shared/event';
-import { InventoryItem } from '../../shared/item';
-import { PlayerData } from '../../shared/player';
 import { WeaponDrawPosition, Weapons } from '../../shared/weapons/weapon';
 import { AttachedObjectService } from '../object/attached.object.service';
 import { WeaponService } from './weapon.service';
@@ -25,7 +24,7 @@ export class WeaponDrawingProvider {
     @Inject(WeaponService)
     private weaponService: WeaponService;
 
-    private async updateWeaponDrawList(playerItem: Record<string, InventoryItem> | InventoryItem[]) {
+    private async updateWeaponDrawList(playerItem: Record<number, InventoryItem>) {
         const weaponToDraw = Object.values(playerItem)
             .filter(
                 item =>
@@ -78,25 +77,17 @@ export class WeaponDrawingProvider {
         this.weaponAttached = {};
     }
 
-    @Once(OnceStep.PlayerLoaded, true)
-    async setupPlayerWeaponsDraw(player: PlayerData) {
+    @PlayerInventoryUpdate()
+    async setupPlayerWeaponsDraw(items: Record<number, InventoryItem>) {
         this.shouldDrawWeapon = true;
         this.playerLoaded = true;
-        await this.updateWeaponDrawList(player.items);
-    }
 
-    @PlayerUpdate()
-    async onPlayerUpdate(player: PlayerData) {
-        if (!this.playerLoaded) {
-            return;
-        }
-
-        await this.updateWeaponDrawList(player.items);
+        await this.updateWeaponDrawList(items);
         const weapon = this.weaponService.getCurrentWeapon();
 
         if (weapon) {
             if (
-                !Object.values(player.items)
+                !Object.values(items)
                     .map(i => i.slot)
                     .includes(weapon.slot)
             ) {

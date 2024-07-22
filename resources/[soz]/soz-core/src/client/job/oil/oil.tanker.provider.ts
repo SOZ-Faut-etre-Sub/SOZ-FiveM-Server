@@ -233,14 +233,13 @@ export class OilTankerProvider {
         }
 
         const field = zone.data;
-        const entityModel = GetEntityModel(this.currentTankerAttached);
         const entityClass = GetVehicleClass(this.currentTankerAttached) as VehicleClass;
         const vehicleNetId = NetworkGetNetworkIdFromEntity(this.currentTankerAttached);
 
         TaskTurnPedToFaceEntity(PlayerPedId(), entity, 500);
         await wait(500);
 
-        TriggerServerEvent(ServerEvent.OIL_REFILL_TANKER, vehicleNetId, entityModel, entityClass, field);
+        TriggerServerEvent(ServerEvent.OIL_REFILL_TANKER, vehicleNetId, entityClass, field);
     }
 
     public refineTanker() {
@@ -248,11 +247,10 @@ export class OilTankerProvider {
             return;
         }
 
-        const entityModel = GetEntityModel(this.currentTankerAttached);
         const entityClass = GetVehicleClass(this.currentTankerAttached) as VehicleClass;
         const vehicleNetId = NetworkGetNetworkIdFromEntity(this.currentTankerAttached);
 
-        TriggerServerEvent(ServerEvent.OIL_REFINE_TANKER, vehicleNetId, entityModel, entityClass);
+        TriggerServerEvent(ServerEvent.OIL_REFINE_TANKER, vehicleNetId, entityClass);
     }
 
     public tankerResell() {
@@ -260,10 +258,9 @@ export class OilTankerProvider {
             return;
         }
 
-        const entityModel = GetEntityModel(this.currentTankerAttached);
         const entityClass = GetVehicleClass(this.currentTankerAttached) as VehicleClass;
         const vehicleNetId = NetworkGetNetworkIdFromEntity(this.currentTankerAttached);
 
-        TriggerServerEvent(ServerEvent.OIL_RESELL_TANKER, vehicleNetId, entityModel, entityClass);
+        TriggerServerEvent(ServerEvent.OIL_RESELL_TANKER, vehicleNetId, entityClass);
     }
 }

@@ -122,3 +122,5 @@ export type HudWeaponAmmo = {
     ammo: number;
     maxAmmo: number;
 };
+
+export type ScreenSelectMode = 'closest' | 'screen' | 'screen_fallback_closest';

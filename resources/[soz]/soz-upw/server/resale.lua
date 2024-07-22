@@ -8,12 +8,12 @@ QBCore.Functions.CreateCallback("soz-upw:server:ResaleEnergy", function(source, 
             return
         end
 
-        local count = exports["soz-inventory"]:GetItem(Player.PlayerData.source, item.name, nil, true)
+        local count = exports["soz-core"]:GetPlayerItem(Player.PlayerData.source, item.name, nil, true)
         if count == 0 then
             goto continue
         end
 
-        if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, item.name, 1) then
+        if exports["soz-core"]:RemovePlayerItem(Player.PlayerData.source, item.name, 1) then
             exports["soz-core"]:TransferFarmMoney(Player.PlayerData.source, Config.Upw.Accounts.FarmAccount, Config.Upw.Accounts.SafeAccount,
                                                   Config.Upw.Resale.EnergyCellPrice[item.name] or 0)
 

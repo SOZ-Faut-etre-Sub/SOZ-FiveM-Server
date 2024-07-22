@@ -1,10 +1,12 @@
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
+
 import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
 import { SewingRawMaterial } from '../../../shared/job/ffs';
 import { toVector3Object, Vector3 } from '../../../shared/polyzone/vector';
-import { InventoryManager } from '../../inventory/inventory.manager';
+import { Inventory } from '../../inventory/inventory';
 import { Monitor } from '../../monitor/monitor';
 import { Notifier } from '../../notifier';
 import { ProgressService } from '../../player/progress.service';
@@ -14,8 +16,8 @@ export class FightForStyleHarvestProvider {
     @Inject(ProgressService)
     private progressService: ProgressService;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(Notifier)
     private notifier: Notifier;
@@ -23,7 +25,7 @@ export class FightForStyleHarvestProvider {
     @Inject(Monitor)
     private monitor: Monitor;
 
-    async doHarvest(source: number, label: string) {
+    async doHarvest(source: number, inventory: Inventory, label: string) {
         const { completed } = await this.progressService.progress(source, 'ffs_harvest', label, 5000, {
             name: 'base',
             dictionary: 'amb@prop_human_bum_bin@base',
@@ -34,14 +36,20 @@ export class FightForStyleHarvestProvider {
             return false;
         }
 
-        this.inventoryManager.addItemToInventory(source, SewingRawMaterial.COTTON_BALE, 1);
+        inventory.add(SewingRawMaterial.COTTON_BALE, 1);
 
         return true;
     }
 
     @OnEvent(ServerEvent.FFS_HARVEST)
     async onHarvest(source: number) {
-        if (!this.inventoryManager.canCarryItem(source, SewingRawMaterial.COTTON_BALE, 1)) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!inventory) {
+            return;
+        }
+
+        if (!inventory.canCarryItem(SewingRawMaterial.COTTON_BALE, 1)) {
             this.notifier.notify(
                 source,
                 `Vous ne possédez pas suffisamment de place dans votre inventaire pour récolter.`
@@ -51,8 +59,8 @@ export class FightForStyleHarvestProvider {
 
         this.notifier.notify(source, 'Vous ~g~commencez~s~ à récolter');
 
-        while (this.inventoryManager.canCarryItem(source, SewingRawMaterial.COTTON_BALE, 1, {})) {
-            const hasHarvested = await this.doHarvest(source, 'Vous récoltez une balle de coton.');
+        while (inventory.canCarryItem(SewingRawMaterial.COTTON_BALE, 1, {})) {
+            const hasHarvested = await this.doHarvest(source, inventory, 'Vous récoltez une balle de coton.');
             if (!hasHarvested) {
                 this.notifier.notify(source, `Vous avez ~r~arrêté~s~ de récolter.`, 'error');
                 return;

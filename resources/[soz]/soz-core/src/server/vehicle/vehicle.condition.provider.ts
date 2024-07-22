@@ -1,4 +1,5 @@
 import { VehicleBusinessProvider } from '@private/server/gang/business.vehicle.provider';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -9,7 +10,6 @@ import { toVector3Object, Vector3 } from '../../shared/polyzone/vector';
 import { ProgressAnimation, ProgressOptions } from '../../shared/progress';
 import { PlayerVehicleState } from '../../shared/vehicle/player.vehicle';
 import { PrismaService } from '../database/prisma.service';
-import { InventoryManager } from '../inventory/inventory.manager';
 import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
 import { PlayerMoneyService } from '../player/player.money.service';
@@ -33,8 +33,8 @@ export class VehicleConditionProvider {
     @Inject(ProgressService)
     private progressService: ProgressService;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(Monitor)
     private monitor: Monitor;
@@ -44,7 +44,9 @@ export class VehicleConditionProvider {
 
     @OnEvent(ServerEvent.VEHICLE_USE_REPAIR_KIT)
     public async onVehicleUseRepairKit(source: number, vehicleNetworkId: number) {
-        if (!this.inventoryManager.removeNotExpiredItem(source, 'repairkit')) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!inventory.remove('repairkit', 1, false)) {
             this.notifier.notify(source, "Vous n'avez pas de kit de réparation.");
 
             return;
@@ -70,7 +72,9 @@ export class VehicleConditionProvider {
 
     @OnEvent(ServerEvent.VEHICLE_USE_BODY_REPAIR_KIT)
     public async onVehicleUseBodyRepairKit(source: number, vehicleNetworkId: number) {
-        if (!this.inventoryManager.removeNotExpiredItem(source, 'bodyrepairkit')) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!inventory.remove('bodyrepairkit', 1, false)) {
             this.notifier.notify(source, "Vous n'avez pas de kit de réparation carosserie.");
 
             return;
@@ -97,7 +101,9 @@ export class VehicleConditionProvider {
 
     @OnEvent(ServerEvent.VEHICLE_USE_CLEANING_KIT)
     public async onVehicleUseCleaningKit(source: number, vehicleNetworkId: number) {
-        if (!this.inventoryManager.removeNotExpiredItem(source, 'cleaningkit')) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!inventory.remove('cleaningkit', 1, false)) {
             this.notifier.notify(source, "Vous n'avez pas de kit de nettoyage.");
 
             return;
@@ -155,7 +161,9 @@ export class VehicleConditionProvider {
             return;
         }
 
-        if (!this.inventoryManager.removeNotExpiredItem(source, 'wheel_kit')) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!inventory.remove('wheel_kit', 1, false)) {
             this.notifier.notify(source, "Vous n'avez pas de kit anti crevaison.");
 
             return;

@@ -56,7 +56,8 @@ module.exports = {
             sm: '1680px',
             md: '1920px',
             lg: '2560px',
-            xl: '3440px',
+            xl: '3079px',
+            xxl: '5000px',
         },
         fontFamily: {
             sans: ['Inter var', ...defaultTheme.fontFamily.sans],
@@ -112,6 +113,7 @@ module.exports = {
             fontSize: {
                 '2xs': '.6rem',
                 xsm: '.8rem',
+                lsm: '0.925rem',
                 '2.5xl': [
                     '2.75rem',
                     {

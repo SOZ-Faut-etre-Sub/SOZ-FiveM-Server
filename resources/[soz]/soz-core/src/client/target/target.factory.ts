@@ -117,7 +117,7 @@ export class TargetFactory {
         }
     }
 
-    public removeForEntity(entities: number[], labels: string[]) {
+    public removeForEntity(entities: number[]) {
         const targetsEntity = this.targetStore.entities.find(([, value]) => entities.includes(value.entity));
         for (const [key] of targetsEntity) {
             this.targetStore.entities.remove(key);

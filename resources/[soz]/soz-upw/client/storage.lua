@@ -18,10 +18,7 @@ function CreateInverterZone(identifier, data)
                 return OnDuty()
             end,
             action = function()
-                TriggerEvent("inventory:client:qTargetOpenInventory", {
-                    storage = {type = "inverter"},
-                    storageID = identifier,
-                })
+                exports["soz-core"]:OpenInventory("inverter", identifier)
             end,
         },
     }

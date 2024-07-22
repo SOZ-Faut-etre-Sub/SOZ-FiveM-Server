@@ -84,6 +84,10 @@ export class CommandLoader {
         }
     }
 
+    public getCommands(): CommandMetadata[] {
+        return this.commands;
+    }
+
     public unload(): void {
         this.commands = [];
     }

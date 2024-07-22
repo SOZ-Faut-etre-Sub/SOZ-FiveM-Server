@@ -2,7 +2,7 @@ fx_version "cerulean"
 games {"gta5"}
 lua54 "yes"
 
-shared_scripts {"config.lua", "@soz-inventory/shared/table.lua"}
+shared_scripts {"config.lua", "table.lua"}
 
 client_scripts {
     "@PolyZone/client.lua",
@@ -16,4 +16,4 @@ client_scripts {
 
 server_scripts {"@oxmysql/lib/MySQL.lua", "server/field.lua", "server/main.lua", "server/degradation.lua"}
 
-dependencies {"oxmysql", "qb-core", "menuv", "soz-inventory", "soz-core"}
+dependencies {"oxmysql", "qb-core", "menuv", "soz-core"}

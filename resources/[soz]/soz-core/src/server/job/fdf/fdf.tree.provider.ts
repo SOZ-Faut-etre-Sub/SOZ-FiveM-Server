@@ -2,7 +2,7 @@ import { OnEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { Rpc } from '@public/core/decorators/rpc';
-import { InventoryManager } from '@public/server/inventory/inventory.manager';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { ItemService } from '@public/server/item/item.service';
 import { Monitor } from '@public/server/monitor/monitor';
 import { Notifier } from '@public/server/notifier';
@@ -15,8 +15,8 @@ import { formatDuration } from '@public/shared/utils/timeformat';
 
 @Provider()
 export class FDFTreeProvider {
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(Notifier)
     private notifier: Notifier;
@@ -81,18 +81,20 @@ export class FDFTreeProvider {
     }
 
     @Rpc(RpcServerEvent.FDF_TREE_HARVEST)
-    public onHarvestTree(source: number, id: number): number {
+    public async onHarvestTree(source: number, id: number): Promise<number> {
         const tree = this.treeStatus.get(id);
         if (!canTreeBeHarvest(tree)) {
             this.notifier.notify(source, `Il n'y a plus de fruit mûr sur l'arbre.`);
             return 0;
         }
 
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
         const nbItem = Math.min(
             getRandomInt(FDFConfig.treeHarvestItemCount[0], FDFConfig.treeHarvestItemCount[1]),
             tree.objectRemaining
         );
-        if (!this.inventoryManager.canCarryItem(source, tree.item, nbItem)) {
+        if (!inventory.canCarryItem(tree.item, nbItem)) {
             this.notifier.notify(
                 source,
                 `Vous ne possédez pas suffisamment de place dans votre inventaire pour récolter.`,
@@ -101,7 +103,7 @@ export class FDFTreeProvider {
             return 0;
         }
 
-        this.inventoryManager.addItemToInventory(source, tree.item, nbItem);
+        inventory.add(tree.item, nbItem);
 
         this.notifier.notify(
             source,

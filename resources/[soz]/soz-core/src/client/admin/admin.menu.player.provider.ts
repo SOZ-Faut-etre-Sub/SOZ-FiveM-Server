@@ -5,6 +5,7 @@ import { emitRpc } from '../../core/rpc';
 import { AdminPlayer, HEALTH_OPTIONS, MOVEMENT_OPTIONS, VOCAL_OPTIONS } from '../../shared/admin/admin';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { VampireGameRole } from '../../shared/halloween';
+import { InventoryType } from '../../shared/inventory';
 import { PositiveNumberValidator } from '../../shared/nui/input';
 import { Err, Ok } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
@@ -267,8 +268,8 @@ export class AdminMenuPlayerProvider {
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuPlayerSearch)
-    public async handleResePlayerSearch(player: AdminPlayer): Promise<void> {
-        TriggerServerEvent('inventory:server:openInventory', 'player', player.id);
+    public async handleResetPlayerSearch(player: AdminPlayer): Promise<void> {
+        TriggerServerEvent(ServerEvent.INVENTORY_OPEN, InventoryType.Player, 'player_' + player.citizenId);
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuPlayerSetSenateParty)

@@ -3,13 +3,13 @@ import { GangProvider } from '@private/server/gang/gang.provider';
 import { Inject } from '@public/core/decorators/injectable';
 import { Rpc } from '@public/core/decorators/rpc';
 import { CraftCategory, Crafts, CraftsList } from '@public/shared/craft/craft';
-import { InventoryItemMetadata } from '@public/shared/item';
 import { toVector3Object, Vector3 } from '@public/shared/polyzone/vector';
 import { getRandomKeyWeighted } from '@public/shared/random';
 import { RpcServerEvent } from '@public/shared/rpc';
 
+import { ADD_ERROR_MESSAGE, InventoryItemMetadata } from '../../shared/inventory';
 import { FeatureProvider } from '../feature/feature.provider';
-import { InventoryManager } from '../inventory/inventory.manager';
+import { InventoryFactory } from '../inventory/inventory.factory';
 import { ItemService } from '../item/item.service';
 import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
@@ -21,8 +21,8 @@ export class CraftProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(ItemService)
     private itemService: ItemService;
@@ -53,6 +53,12 @@ export class CraftProvider {
     @Rpc(RpcServerEvent.CRAFT_GET_RECIPES)
     public async getTransformRecipes(source: number, type: string, cancelled?: boolean): Promise<CraftsList> {
         const crafts = { ...(await this.getCrafts(source, type)) };
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!inventory) {
+            return;
+        }
+
         for (const category of Object.keys(crafts)) {
             const categoryList = crafts[category];
 
@@ -69,13 +75,7 @@ export class CraftProvider {
                 recipe.canCraft = true;
 
                 for (const [inputItem, input] of Object.entries(recipe.inputs)) {
-                    input.check = this.inventoryManager.hasEnoughItem(
-                        source,
-                        inputItem,
-                        input.count,
-                        true,
-                        input.metadata
-                    );
+                    input.check = inventory.hasEnoughItem(inputItem, input.count, true, input.metadata);
                     recipe.canCraft = recipe.canCraft && input.check;
                 }
             }
@@ -104,9 +104,10 @@ export class CraftProvider {
             return await this.getTransformRecipes(source, type, true);
         }
 
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
         if (
-            !this.inventoryManager.canSwapItems(
-                source,
+            !inventory.canSwapItems(
                 Object.entries(recipe.inputs).map(([name, input]) => {
                     return {
                         name: name,
@@ -123,14 +124,14 @@ export class CraftProvider {
                 ]
             )
         ) {
-            this.notifier.notify(source, "Vous n'avez pas assez de place dans votre inventaire", 'error');
+            this.notifier.notify(source, ADD_ERROR_MESSAGE['not_enough_space'], 'error');
             return await this.getTransformRecipes(source, type, true);
         }
 
         for (const requiredItemId of Object.keys(recipe.inputs)) {
             const input = recipe.inputs[requiredItemId];
 
-            if (!this.inventoryManager.hasEnoughItem(source, requiredItemId, input.count, true, input.metadata)) {
+            if (!inventory.hasEnoughItem(requiredItemId, input.count, true, input.metadata)) {
                 const requiredItem = this.itemService.getItem(requiredItemId);
 
                 this.notifier.error(
@@ -163,7 +164,7 @@ export class CraftProvider {
 
         for (const requiredItemId of Object.keys(recipe.inputs)) {
             const input = recipe.inputs[requiredItemId];
-            this.inventoryManager.removeNotExpiredItem(source, requiredItemId, input.count, input.metadata);
+            inventory.remove(requiredItemId, input.count, false, input.metadata);
         }
 
         const metadata: InventoryItemMetadata = {};
@@ -179,7 +180,7 @@ export class CraftProvider {
             metadata.label = rewardName;
         }
 
-        this.inventoryManager.addItemToInventory(source, itemId, recipe.amount, metadata);
+        inventory.add(itemId, recipe.amount, metadata);
 
         this.notifier.notify(source, `Vous avez confectionné ~y~${recipe.amount}~s~ ~g~${item.label}~s~.`, 'success');
 
