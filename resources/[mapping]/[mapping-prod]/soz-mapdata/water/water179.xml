@@ -25,7 +25,7 @@
       <maxX value="0" />
       <minY value="-8000" />
       <maxY value="0" />
-      <Amplitude value="0.1" />
+      <Amplitude value="1.0" />
       <XDirection value="0.5" />
       <YDirection value="0.5" />
     </Item>
@@ -34,7 +34,7 @@
       <maxX value="8000" />
       <minY value="-8000" />
       <maxY value="0" />
-      <Amplitude value="0.1" />
+      <Amplitude value="1.0" />
       <XDirection value="-0.5" />
       <YDirection value="0.5" />
     </Item>
@@ -43,7 +43,7 @@
       <maxX value="8000" />
       <minY value="0" />
       <maxY value="12000" />
-      <Amplitude value="0.1" />
+      <Amplitude value="1.0" />
       <XDirection value="-0.5" />
       <YDirection value="-0.5" />
     </Item>
@@ -52,7 +52,7 @@
       <maxX value="0" />
       <minY value="0" />
       <maxY value="12000" />
-      <Amplitude value="0.1" />
+      <Amplitude value="1.0" />
       <XDirection value="0.5" />
       <YDirection value="-0.5" />
     </Item>
