@@ -163,7 +163,7 @@ export class MeteorProvider {
             'DEFAULT_SCRIPTED_CAMERA',
             coords[0],
             coords[1],
-            coords[2] + 300,
+            coords[2] + 700,
             -80,
             rots[1],
             rots[2],
@@ -172,7 +172,11 @@ export class MeteorProvider {
             2
         );
         RenderScriptCams(true, true, 3_000, true, false);
-        await wait(3_000);
+        DoScreenFadeOut(200);
+        await wait(2_800);
+
+        DoScreenFadeIn(200);
+        await wait(200);
 
         this.meteorCam = CreateCam('DEFAULT_SCRIPTED_CAMERA', true);
         AttachCamToEntity(this.meteorCam, this.entity, 200, -200, 200, false);

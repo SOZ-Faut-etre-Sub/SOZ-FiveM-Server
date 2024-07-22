@@ -77,14 +77,15 @@ export class BunkerProvider {
             await wait(10);
         }
 
-        const playerPed = PlayerPedId();
-        SetEntityVisible(playerPed, false, false);
         const bunker = Bunkers.find(b => b.interiorId == 268289);
         const playerPedId = PlayerPedId();
         const coords = [...GetEntityCoords(PlayerPedId()), GetEntityHeading(playerPedId)] as Vector4;
         if (coords[2] > -150 || coords[1] < 3000) {
             return;
         }
+
+        const playerPed = PlayerPedId();
+        SetEntityVisible(playerPed, false, false);
 
         await this.playerPositionProvider.teleportPlayerToPosition('inter:' + bunker.label, async () => {
             await this.playerPositionProvider.teleportPlayerToPosition(bunker.label, async () => {

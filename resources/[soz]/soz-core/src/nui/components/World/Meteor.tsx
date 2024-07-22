@@ -34,6 +34,7 @@ export const Meteor: FunctionComponent = () => {
             }
 
             audioElement.currentTime = 0.0;
+            audioElement.volume = 0.7;
             audioElement.load();
             audioElement.play();
 
@@ -59,6 +60,17 @@ export const Meteor: FunctionComponent = () => {
             gainSiren.current.gain.setValueAtTime(gainSiren.current.gain.value, now);
             gainSiren.current.gain.linearRampToValueAtTime(0, now + 3.0);
             setTimeout(() => audioElementSiren.pause(), 3000);
+
+            const audioElementChronos = document.querySelector('#chronos') as HTMLMediaElement;
+            if (!gainChronos.current) {
+                const track = audioCtx.current.createMediaElementSource(audioElementChronos);
+                gainChronos.current = audioCtx.current.createGain();
+                track.connect(gainChronos.current).connect(audioCtx.current.destination);
+            }
+
+            gainChronos.current.gain.setValueAtTime(gainChronos.current.gain.value, now);
+            gainChronos.current.gain.linearRampToValueAtTime(0, now + 3.0);
+            setTimeout(() => audioElementChronos.pause(), 3000);
         },
         [audioCtx]
     );
