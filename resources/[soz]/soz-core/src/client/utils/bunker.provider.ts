@@ -1,7 +1,8 @@
-import { Once } from '@public/core/decorators/event';
+import { Once, OnceStep } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
+import { wait } from '@public/core/utils';
 import { Feature, isFeatureEnabled } from '@public/shared/features';
-import { toVector3Object } from '@public/shared/polyzone/vector';
+import { toVector3Object, Vector4 } from '@public/shared/polyzone/vector';
 import { Bunkers } from '@public/shared/utils/bunkers';
 
 import { Provider } from '../../core/decorators/provider';
@@ -64,5 +65,32 @@ export class BunkerProvider {
                 sprite: 565,
             });
         }
+    }
+
+    @Once(OnceStep.PlayerLoaded)
+    public async onloaded() {
+        if (!isFeatureEnabled(Feature.Bunkers)) {
+            return;
+        }
+
+        while (IsScreenFadedOut() || IsScreenFadedIn()) {
+            await wait(10);
+        }
+
+        const playerPed = PlayerPedId();
+        SetEntityVisible(playerPed, false, false);
+        const bunker = Bunkers.find(b => b.interiorId == 268289);
+        const playerPedId = PlayerPedId();
+        const coords = [...GetEntityCoords(PlayerPedId()), GetEntityHeading(playerPedId)] as Vector4;
+        if (coords[2] > -150 || coords[1] < 3000) {
+            return;
+        }
+
+        await this.playerPositionProvider.teleportPlayerToPosition('inter:' + bunker.label, async () => {
+            await this.playerPositionProvider.teleportPlayerToPosition(bunker.label, async () => {
+                await this.playerPositionProvider.teleportAdminToPosition(coords);
+            });
+        });
+        SetEntityVisible(playerPed, true, false);
     }
 }
