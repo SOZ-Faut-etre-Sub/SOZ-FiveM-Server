@@ -6,10 +6,6 @@ import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { emitRpc } from '@public/core/rpc';
 import { Component, Outfit, Prop } from '@public/shared/cloth';
 import { Feature, isFeatureEnabled } from '@public/shared/features';
-import { JobType } from '@public/shared/job';
-import { LsmcCloakroom } from '@public/shared/job/lsmc';
-import { POLICE_CLOAKROOM } from '@public/shared/job/police';
-import { StonkCloakroom } from '@public/shared/job/stonk';
 import { PlayerPedHash } from '@public/shared/player';
 import { RpcServerEvent } from '@public/shared/rpc';
 
@@ -23,16 +19,20 @@ import { PlayerService } from './player.service';
 
 const ExtraWarnCloths: Record<number, Outfit[]> = {
     [PlayerPedHash.Male]: [
+        /*
         POLICE_CLOAKROOM[JobType.LSPD][PlayerPedHash.Male]['Tenue Hiver'],
         POLICE_CLOAKROOM[JobType.BCSO][PlayerPedHash.Male]['Tenue Hiver'],
         LsmcCloakroom[PlayerPedHash.Male]['Tenue Hiver'],
         StonkCloakroom[PlayerPedHash.Male]['Tenue Hiver'],
+        */
     ],
     [PlayerPedHash.Female]: [
+        /*
         POLICE_CLOAKROOM[JobType.LSPD][PlayerPedHash.Female]['Tenue Hiver'],
         POLICE_CLOAKROOM[JobType.BCSO][PlayerPedHash.Female]['Tenue Hiver'],
         LsmcCloakroom[PlayerPedHash.Female]['Tenue Hiver'],
         StonkCloakroom[PlayerPedHash.Female]['Tenue Hiver'],
+        */
     ],
 };
 

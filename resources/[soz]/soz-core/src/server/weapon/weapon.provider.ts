@@ -46,6 +46,7 @@ export class WeaponProvider {
     private store: Store;
 
     private lastAlertByZone: Record<string, number> = {};
+    private disableExplosionAlert = false;
 
     @OnEvent(ServerEvent.FIVEM_WEAPON_DAMAGE_EVENT)
     public onWeaponDamageEvent(source: number, sender: number, data: any) {
@@ -358,7 +359,7 @@ export class WeaponProvider {
 
     @On('explosionEvent')
     public onExplosion(unk: any, source: number, explosionData) {
-        if (excludeExplosionAlert.includes(explosionData.explosionType)) {
+        if (excludeExplosionAlert.includes(explosionData.explosionType) || this.disableExplosionAlert) {
             return;
         }
 
@@ -372,5 +373,9 @@ export class WeaponProvider {
                 explosionData.explosionType
             );
         }
+    }
+
+    public setDisableExplosionAlert(value: boolean) {
+        this.disableExplosionAlert = value;
     }
 }

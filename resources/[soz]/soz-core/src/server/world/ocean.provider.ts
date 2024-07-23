@@ -12,8 +12,8 @@ export class OceanProvider {
     @Inject(PermissionService)
     private permissionService: PermissionService;
 
-    private waterCurrentLevel = 0;
-    private waterLevel = 0;
+    private waterCurrentLevel = 10;
+    private waterLevel = 10;
     private highWave = false;
 
     @Rpc(RpcServerEvent.METEOR_OCEAN)
