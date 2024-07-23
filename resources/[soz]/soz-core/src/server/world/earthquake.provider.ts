@@ -5,6 +5,7 @@ import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { Provider } from '../../core/decorators/provider';
 import { Notifier } from '../notifier';
 import { PermissionService } from '../permission.service';
+import { WeaponProvider } from '../weapon/weapon.provider';
 
 @Provider()
 export class EarthquakeProvider {
@@ -13,6 +14,9 @@ export class EarthquakeProvider {
 
     @Inject(Notifier)
     public notifier: Notifier;
+
+    @Inject(WeaponProvider)
+    public weaponProvider: WeaponProvider;
 
     private earthQuake = false;
 
@@ -31,6 +35,7 @@ export class EarthquakeProvider {
         } else {
             this.notifier.notify(source, 'Arret du temblement de terre...');
         }
+        this.weaponProvider.setDisableExplosionAlert(this.earthQuake);
 
         TriggerLatentClientEvent(ClientEvent.EARTHQUAKE, -1, 1024, value);
     }

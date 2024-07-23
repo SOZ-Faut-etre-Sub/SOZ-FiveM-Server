@@ -267,12 +267,6 @@ export class JobDutyProvider {
             this.targetFactory.createForModel(ped, this.getDutyZoneTarget(job as JobType));
         }
 
-        for (const duty of DutyZoneConfig) {
-            this.targetFactory.createForBoxZone(`job:duty:${duty.data}:${i}`, duty, this.getDutyZoneTarget(duty.data));
-
-            i++;
-        }
-
         for (const model of BunkerDutyZone) {
             this.targetFactory.createForModel(model, this.getBunkerDutyZoneTarget());
         }

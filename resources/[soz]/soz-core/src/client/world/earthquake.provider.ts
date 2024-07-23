@@ -7,11 +7,15 @@ import { VehicleSeat } from '@public/shared/vehicle/vehicle';
 
 import { Provider } from '../../core/decorators/provider';
 import { NuiDispatch } from '../nui/nui.dispatch';
+import { FuelStationRepository } from '../repository/fuel.station.repository';
 
 @Provider()
 export class EarthquakeProvider {
     @Inject(NuiDispatch)
     public nuiDispatch: NuiDispatch;
+
+    @Inject(FuelStationRepository)
+    private fuelStationRepository: FuelStationRepository;
 
     private earthquake = false;
     private inverse = false;
@@ -39,12 +43,17 @@ export class EarthquakeProvider {
 
         const playerPed = PlayerPedId();
         for (const ped of peds) {
-            if (NetworkHasControlOfEntity(ped) && !IsPedAPlayer(ped)) {
+            if (NetworkHasControlOfEntity(ped) && !IsPedAPlayer(ped) && !IsEntityPositionFrozen(ped)) {
                 TaskReactAndFleePed(ped, playerPed);
             }
         }
         for (const obj of objs) {
             if (!NetworkGetEntityIsNetworked(obj)) {
+                const model = GetEntityModel(obj);
+                if (this.fuelStationRepository.getModels().includes(model)) {
+                    continue;
+                }
+
                 BreakObjectFragmentChild(obj, 0, false);
                 ApplyForceToEntityCenterOfMass(obj, 1, 0, 0.0, 5.0, false, false, true, false);
             }
@@ -77,6 +86,10 @@ export class EarthquakeProvider {
         const rand = Math.random() * 2 * Math.PI;
         for (const obj of objs) {
             if (!NetworkGetEntityIsNetworked(obj)) {
+                const model = GetEntityModel(obj);
+                if (this.fuelStationRepository.getModels().includes(model)) {
+                    continue;
+                }
                 ApplyForceToEntityCenterOfMass(
                     obj,
                     1,
