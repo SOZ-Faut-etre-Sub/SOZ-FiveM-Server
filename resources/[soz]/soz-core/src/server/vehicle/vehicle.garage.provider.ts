@@ -1,6 +1,7 @@
 import { PlayerVehicle, Prisma } from '@prisma/client';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { wait } from '@public/core/utils';
+import { Feature, isFeatureEnabled } from '@public/shared/features';
 
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -148,76 +149,78 @@ export class VehicleGarageProvider {
             },
         });
 
-        const garages = await this.garageRepository.get();
-        const toPound: number[] = [];
-        const toVoid: number[] = [];
+        if (!isFeatureEnabled(Feature.SummerHeat)) {
+            const garages = await this.garageRepository.get();
+            const toPound: number[] = [];
+            const toVoid: number[] = [];
 
-        for (const vehicle of vehicles) {
-            const parkingTime = new Date(vehicle.parkingtime * 1000);
-            const days = (Date.now() - parkingTime.getTime()) / (1000 * 60 * 60 * 24);
+            for (const vehicle of vehicles) {
+                const parkingTime = new Date(vehicle.parkingtime * 1000);
+                const days = (Date.now() - parkingTime.getTime()) / (1000 * 60 * 60 * 24);
 
-            let garageId = vehicle.garage;
+                let garageId = vehicle.garage;
 
-            if (garageId && garageId.startsWith('property_')) {
-                garageId = garageId.substring(9);
-            }
+                if (garageId && garageId.startsWith('property_')) {
+                    garageId = garageId.substring(9);
+                }
 
-            if (garageId && garageId.startsWith('apartment_')) {
-                const apartmentIdentifier = garageId.substring(10);
-                const apartment = await this.housingRepository.getApartmentByIdentifier(apartmentIdentifier);
+                if (garageId && garageId.startsWith('apartment_')) {
+                    const apartmentIdentifier = garageId.substring(10);
+                    const apartment = await this.housingRepository.getApartmentByIdentifier(apartmentIdentifier);
 
-                if (apartment) {
-                    const property = await this.housingRepository.find(apartment.propertyId);
+                    if (apartment) {
+                        const property = await this.housingRepository.find(apartment.propertyId);
 
-                    if (property) {
-                        garageId = property.identifier;
+                        if (property) {
+                            garageId = property.identifier;
+                        }
                     }
+                }
+
+                const garage = garageId
+                    ? garages[garageId] || Object.values(garages).find(g => g.legacyId === garageId)
+                    : null;
+
+                if (!garage && vehicle.state !== PlayerVehicleState.Missing) {
+                    toPound.push(vehicle.id);
+                } else if (vehicle.state === PlayerVehicleState.Missing && days > 2) {
+                    toVoid.push(vehicle.id);
+                } else if (garage && garage.type === GarageType.Depot && days > 7) {
+                    toVoid.push(vehicle.id);
+                } else if ((!garage || garage.type !== GarageType.Job || !vehicle.job) && days > 21) {
+                    toPound.push(vehicle.id);
                 }
             }
 
-            const garage = garageId
-                ? garages[garageId] || Object.values(garages).find(g => g.legacyId === garageId)
-                : null;
+            this.monitor.traceEvent('vehicle_init_move', {
+                vehicle_pounds: toPound.join(','),
+                vehicle_destroyed: toVoid.join(','),
+            });
 
-            if (!garage && vehicle.state !== PlayerVehicleState.Missing) {
-                toPound.push(vehicle.id);
-            } else if (vehicle.state === PlayerVehicleState.Missing && days > 2) {
-                toVoid.push(vehicle.id);
-            } else if (garage && garage.type === GarageType.Depot && days > 7) {
-                toVoid.push(vehicle.id);
-            } else if ((!garage || garage.type !== GarageType.Job || !vehicle.job) && days > 21) {
-                toPound.push(vehicle.id);
+            if (toVoid.length) {
+                await this.prismaService.playerVehicle.updateMany({
+                    where: {
+                        id: { in: toVoid },
+                    },
+                    data: {
+                        state: PlayerVehicleState.Destroyed,
+                        parkingtime: Math.round(Date.now() / 1000),
+                    },
+                });
             }
-        }
 
-        this.monitor.traceEvent('vehicle_init_move', {
-            vehicle_pounds: toPound.join(','),
-            vehicle_destroyed: toVoid.join(','),
-        });
-
-        if (toVoid.length) {
-            await this.prismaService.playerVehicle.updateMany({
-                where: {
-                    id: { in: toVoid },
-                },
-                data: {
-                    state: PlayerVehicleState.Destroyed,
-                    parkingtime: Math.round(Date.now() / 1000),
-                },
-            });
-        }
-
-        if (toPound.length) {
-            await this.prismaService.playerVehicle.updateMany({
-                where: {
-                    id: { in: toPound },
-                },
-                data: {
-                    state: PlayerVehicleState.InPound,
-                    garage: 'pound',
-                    parkingtime: Math.round(Date.now() / 1000),
-                },
-            });
+            if (toPound.length) {
+                await this.prismaService.playerVehicle.updateMany({
+                    where: {
+                        id: { in: toPound },
+                    },
+                    data: {
+                        state: PlayerVehicleState.InPound,
+                        garage: 'pound',
+                        parkingtime: Math.round(Date.now() / 1000),
+                    },
+                });
+            }
         }
 
         const playerVehicles = await this.prismaService.playerVehicle.findMany();
