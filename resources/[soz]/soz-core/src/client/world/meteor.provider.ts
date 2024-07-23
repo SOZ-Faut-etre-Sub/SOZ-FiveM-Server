@@ -1,11 +1,11 @@
-import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
+import { Once, OnceStep, OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { Tick } from '@public/core/decorators/tick';
 import { emitRpc } from '@public/core/rpc';
-import { wait } from '@public/core/utils';
+import { uuidv4, wait } from '@public/core/utils';
 import { MeteorSubMenuState } from '@public/shared/admin/admin';
-import { ClientEvent } from '@public/shared/event';
+import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import { Control } from '@public/shared/input';
 import {
     add2Vector3,
@@ -442,5 +442,33 @@ export class MeteorProvider {
     @OnEvent(ClientEvent.METEOR_SANDSTORM_MUSIC)
     public async sandstormMusic(value: number) {
         this.nuiDispatch.dispatch('meteor', 'sandstorm', value);
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuSandstormFlash)
+    public async sandstormFlash() {
+        TriggerServerEvent(
+            ServerEvent.PHONE_APP_NEWS_CREATE_BROADCAST,
+            'phone:app:news:createNewsBroadcast:' + uuidv4(),
+            {
+                type: 'sandstorm',
+                reporterId: '',
+                job: '',
+                message: '',
+            }
+        );
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuEarthquakeFlash)
+    public async earthquakeFlash() {
+        TriggerServerEvent(
+            ServerEvent.PHONE_APP_NEWS_CREATE_BROADCAST,
+            'phone:app:news:createNewsBroadcast:' + uuidv4(),
+            {
+                type: 'earthquake',
+                reporterId: '',
+                job: '',
+                message: '',
+            }
+        );
     }
 }
