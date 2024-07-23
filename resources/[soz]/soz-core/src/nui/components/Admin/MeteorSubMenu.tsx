@@ -152,6 +152,21 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner, s
                             </MenuItemSelectOption>
                         ))}
                 </MenuItemSelect>
+                <MenuTitle>Annonces</MenuTitle>
+                <MenuItemButton
+                    onConfirm={async () => {
+                        await fetchNui(NuiEvent.AdminMenuEarthquakeFlash, false);
+                    }}
+                >
+                    Tremblement de terre
+                </MenuItemButton>
+                <MenuItemButton
+                    onConfirm={async () => {
+                        await fetchNui(NuiEvent.AdminMenuSandstormFlash, false);
+                    }}
+                >
+                    Tempête de sable
+                </MenuItemButton>
             </MenuContent>
         </SubMenu>
     );

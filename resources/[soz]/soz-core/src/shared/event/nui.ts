@@ -106,6 +106,8 @@ export enum NuiEvent {
     AdminMenuOceanGetWaterLevel = 'soz-core:nui:admin:ocean:get-water-level',
     AdminMenuOceanSetHighWave = 'soz-core:nui:admin:ocean:high-wave',
     AdminMenuEarthquake = 'soz-core:nui:admin:earthquake',
+    AdminMenuEarthquakeFlash = 'soz-core:nui:admin:earthquake-flash',
+    AdminMenuSandstormFlash = 'soz-core:nui:admin:sandstorm-flash',
 
     GetAPIConfig = 'soz-core:nui:get-api-config',
     GetJWTToken = 'soz-core:nui:get-jwt-token',

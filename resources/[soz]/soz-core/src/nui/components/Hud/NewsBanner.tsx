@@ -85,6 +85,13 @@ const Banner: FunctionComponent<BannerProps> = ({ index, news, onDelete }) => {
         case 'reboot_15':
             backgroundImage = 'https://soz.zerator.com/static/images/reboot_15.png';
             break;
+        case 'sandstorm':
+            backgroundImage = '/public/images/twitch-news/sandstorm.webp';
+            break;
+        case 'earthquake':
+            backgroundImage = '/public/images/twitch-news/earthquake.webp';
+
+            break;
         default:
             if (news.job === JobType.YouNews) {
                 backgroundImage = '/public/images/twitch-news/younews.webp';
@@ -104,7 +111,9 @@ const Banner: FunctionComponent<BannerProps> = ({ index, news, onDelete }) => {
                 aspectRatio: '2.5',
             }}
         >
-            <h3 className="flex h-[25%] justify-end text-4xl items-center pr-4 uppercase">{newsTitle(news.type)}</h3>
+            <h3 className="flex h-[25%] justify-end text-4xl items-center pr-4 uppercase">
+                {!['sandstorm', 'earthquake'].includes(news.type) && newsTitle(news.type)}
+            </h3>
             <div className="pl-[28%] h-[62%] text-[0.91rem] lg:text-lg">
                 {['lspd', 'bcso', 'sasp'].includes(news.type) ? (
                     <p className="flex flex-col justify-between p-2 h-full overflow-hidden break-words">
@@ -121,9 +130,11 @@ const Banner: FunctionComponent<BannerProps> = ({ index, news, onDelete }) => {
                         {!news.type.includes('reboot') && (
                             <div className="flex flex-col justify-between p-1 h-full">
                                 <p className="max-h-40 overflow-hidden break-words text-[1.35vh]">{news.message}</p>
-                                <p className="text-right pr-4 text-lg">
-                                    {authorType} <strong>{news.reporter}</strong>
-                                </p>
+                                {news.reporter && (
+                                    <p className="text-right pr-4 text-lg">
+                                        {authorType} <strong>{news.reporter}</strong>
+                                    </p>
+                                )}
                             </div>
                         )}
                     </>
