@@ -108,6 +108,7 @@ export enum NuiEvent {
     AdminMenuEarthquake = 'soz-core:nui:admin:earthquake',
     AdminMenuEarthquakeFlash = 'soz-core:nui:admin:earthquake-flash',
     AdminMenuSandstormFlash = 'soz-core:nui:admin:sandstorm-flash',
+    AdminMenuFloodFlash = 'soz-core:nui:admin:flood-flash',
 
     GetAPIConfig = 'soz-core:nui:get-api-config',
     GetJWTToken = 'soz-core:nui:get-jwt-token',
