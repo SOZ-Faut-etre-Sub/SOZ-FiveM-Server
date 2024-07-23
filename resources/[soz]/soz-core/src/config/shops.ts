@@ -275,10 +275,10 @@ export const ShopsConfig: Record<string, ShopConfig> = {
     },
     ['mask']: {
         brand: ShopBrand.Mask,
-        location: [-1335.76, -1278.67, 4.86, 316.75],
-        positionInShop: [-1337.08, -1279.66, 4.85, 316.75],
-        cameraInShop: [-1336.26, -1278.35, 5.65, 316.75],
-        cameraTarget: [-1337.08, -1279.66, 5.05],
+        location: [348.93, 167.5, 103.1, 331.57], // location: [-1335.76, -1278.67, 4.86, 316.75],
+        positionInShop: [348.82, 166.26, 103.12, 339.97], // positionInShop: [-1337.08, -1279.66, 4.85, 316.75],
+        cameraInShop: [349.61, 168.36, 104.22, 157.28], // cameraInShop: [-1336.26, -1278.35, 5.65, 316.75],
+        cameraTarget: [349.26, 167.1, 103.74, 155.27], // cameraTarget: [-1337.08, -1279.66, 5.05],
     },
     ['247supermarket4']: {
         brand: ShopBrand.Supermarket247North,

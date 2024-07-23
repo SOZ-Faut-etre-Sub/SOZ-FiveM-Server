@@ -214,17 +214,26 @@ export class ShopProvider {
                 this.shopsPedEntity[shop] = { entity: pedId, location: config.location } as shopPedData;
             }
         }
+
         // Special for mask shop
         this.targetFactory.createForBoxZone(
             'shops:mask',
             {
                 center: ShopsConfig[ShopBrand.Mask].location as Vector3,
-                length: 1.6,
-                width: 0.8,
-                minZ: 3.86,
-                maxZ: 5.26,
-                heading: 20,
+                length: 3.0,
+                width: 3.2,
+                minZ: 102.11,
+                maxZ: 104.11,
+                heading: 159.76,
             },
+            // { OLD
+            //     center: ShopsConfig[ShopBrand.Mask].location as Vector3,
+            //     length: 1.6,
+            //     width: 0.8,
+            //     minZ: 3.86,
+            //     maxZ: 5.26,
+            //     heading: 20,
+            // },
             [
                 {
                     label: 'Acheter un masque',
