@@ -96,7 +96,7 @@ export class PlayerHeatProvider {
             return;
         }
 
-        this.heatScore = 0;
+        let newheatScore = 0;
         if (player.metadata.scuba) {
             return;
         }
@@ -118,15 +118,15 @@ export class PlayerHeatProvider {
                         item.Components[component].Drawable == outfit.Components[component].Drawable
                 );
                 if (extra) {
-                    this.heatScore += 3;
+                    newheatScore += 3;
                 }
             } else {
-                this.heatScore += data[component];
+                newheatScore += data[component];
             }
         });
 
         if (this.clothingService.checkWearingGloves()) {
-            this.heatScore++;
+            newheatScore++;
         }
 
         const jewels = player.skin.Model.Hash == PlayerPedHash.Male ? MaleJewelryItems : FemaleJewelryItems;
@@ -134,14 +134,14 @@ export class PlayerHeatProvider {
         const scarfs = Object.keys(neckJewels.items['Echarpes']).map(item => Number(item));
         const neckProtected = scarfs.includes(outfit.Components[neckJewels.componentId].Drawable);
         if (neckProtected) {
-            this.heatScore++;
+            newheatScore++;
         }
 
         const helmetJewels = jewels['Chapeaux'];
         const helmets = Object.keys(helmetJewels.items['Bonnets']).map(item => Number(item));
         const headProtected = helmets.includes(outfit.Props[helmetJewels.propId]?.Drawable);
         if (headProtected) {
-            this.heatScore++;
+            newheatScore++;
         }
 
         this.sandStormProtected = false;
@@ -157,6 +157,8 @@ export class PlayerHeatProvider {
         ) {
             this.sandStormProtected = true;
         }
+
+        this.heatScore = newheatScore;
     }
 
     @Tick(TickInterval.EVERY_SECOND)

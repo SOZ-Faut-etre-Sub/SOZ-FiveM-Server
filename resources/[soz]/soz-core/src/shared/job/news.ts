@@ -79,6 +79,16 @@ export const NewsCloakroom: WardrobeConfig = {
             },
             Props: { [0]: { Drawable: 19, Texture: 0, Palette: 0 } },
         },
+        ["Tenue d'été"]: {
+            Components: {
+                '3': { Drawable: 0, Texture: 0, Palette: 0 },
+                '4': { Drawable: 17, Texture: 5, Palette: 0 },
+                '6': { Drawable: 99, Texture: 0, Palette: 0 },
+                '8': { Drawable: 15, Texture: 0, Palette: 0 },
+                '11': { Drawable: 9, Texture: 7, Palette: 0 },
+            },
+            Props: {},
+        },
     },
     [GetHashKey('mp_f_freemode_01')]: {
         ['Tenue habillée']: {
@@ -153,6 +163,16 @@ export const NewsCloakroom: WardrobeConfig = {
                 [11]: { Drawable: 47, Texture: 0, Palette: 0 },
             },
             Props: { [0]: { Drawable: 19, Texture: 0, Palette: 0 } },
+        },
+        ["Tenue d'été"]: {
+            Components: {
+                [3]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [4]: { Drawable: 14, Texture: 8, Palette: 0 },
+                [6]: { Drawable: 4, Texture: 2, Palette: 0 },
+                [8]: { Drawable: 14, Texture: 0, Palette: 0 },
+                [11]: { Drawable: 358, Texture: 4, Palette: 0 },
+            },
+            Props: {},
         },
     },
 };

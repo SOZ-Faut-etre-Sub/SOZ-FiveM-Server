@@ -193,12 +193,18 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({
                                         onSelectedValue={async (_, item) =>
                                             await fetchNui(NuiEvent.ClothingShopPreview, item)
                                         }
-                                        descriptionValue={item =>
-                                            `${items.length} Coloris -  Prix : $${getPrice(
-                                                item.price,
-                                                isInCayo ? null : TaxType.SUPPLY
-                                            )} - 📦 Stock : ${item.stock}`
-                                        }
+                                        descriptionValue={item => {
+                                            return (
+                                                <>
+                                                    <div>{modelLabel}</div>
+                                                    <div>
+                                                        ${items.length} Coloris - Prix : $$
+                                                        {getPrice(item.price, isInCayo ? null : TaxType.SUPPLY)} - 📦
+                                                        Stock : ${item.stock}
+                                                    </div>
+                                                </>
+                                            );
+                                        }}
                                     >
                                         {items.map(item => (
                                             <MenuItemSelectOption
@@ -212,6 +218,7 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({
                                                 onSelected={async () =>
                                                     await fetchNui(NuiEvent.ClothingShopPreview, item)
                                                 }
+                                                helper={item.colorLabel}
                                             >
                                                 {item.colorLabel}
                                             </MenuItemSelectOption>

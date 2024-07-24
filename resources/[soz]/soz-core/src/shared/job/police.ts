@@ -181,7 +181,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             [MOTO]: {
                 Components: {
-                    [Component.Torso]: { Drawable: 22, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: {
                         Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Legs] + 3,
                         Texture: 0,
@@ -214,6 +214,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Palette: 0,
                     },
                 },
+                GlovesID: 56000,
             },
             ['Equipement seulement']: {
                 Components: {
@@ -371,7 +372,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             [MOTO]: {
                 Components: {
-                    [Component.Torso]: { Drawable: 23, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
                     [Component.Legs]: {
                         Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Legs] + 3,
                         Texture: 0,
@@ -404,6 +405,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Palette: 0,
                     },
                 },
+                GlovesID: 55000,
             },
             ['Equipement seulement']: {
                 Components: {

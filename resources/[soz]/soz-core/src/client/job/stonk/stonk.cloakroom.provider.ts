@@ -27,21 +27,29 @@ export class StonkCloakRoomProvider {
     public wearVIPClothes() {
         const ped = PlayerPedId();
 
-        for (const [id, component] of Object.entries(StonkCloakroom[GetEntityModel(ped)]['Tenue VIP'].Components)) {
-            const numberId = Number(id);
-            const drawable = GetPedDrawableVariation(ped, Number(numberId));
+        for (const vip of ['Tenue VIP', "Tenue VIP d'été"]) {
+            let match = true;
+            for (const [id, component] of Object.entries(StonkCloakroom[GetEntityModel(ped)][vip].Components)) {
+                const numberId = Number(id);
+                const drawable = GetPedDrawableVariation(ped, Number(numberId));
 
-            // We skip the Torso because it's modified when user wear his own gloves and make this function return false
-            // even if he wear the VIP clothes
-            if (numberId == Component.Torso) {
-                continue;
+                // We skip the Torso because it's modified when user wear his own gloves and make this function return false
+                // even if he wear the VIP clothes
+                if (numberId == Component.Torso) {
+                    continue;
+                }
+
+                if (drawable != component.Drawable) {
+                    match = false;
+                    break;
+                }
             }
 
-            if (drawable != component.Drawable) {
-                return false;
+            if (match) {
+                return true;
             }
         }
 
-        return true;
+        return false;
     }
 }

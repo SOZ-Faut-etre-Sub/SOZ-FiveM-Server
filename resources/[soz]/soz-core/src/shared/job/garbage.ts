@@ -131,7 +131,7 @@ export const GarbageCloakroom: WardrobeConfig = {
             Components: {
                 [1]: { Drawable: 107, Texture: 10, Palette: 0 },
                 [3]: { Drawable: 11, Texture: 0, Palette: 0 },
-                [4]: { Drawable: 91, Texture: 0, Palette: 0 },
+                [4]: { Drawable: 91, Texture: 10, Palette: 0 },
                 [5]: { Drawable: 82, Texture: 1, Palette: 0 },
                 [6]: { Drawable: 60, Texture: 2, Palette: 0 },
                 [8]: { Drawable: 14, Texture: 0, Palette: 0 },
