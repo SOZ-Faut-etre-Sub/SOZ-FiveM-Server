@@ -121,7 +121,7 @@ export class OceanProvider {
             RemoveDryVolume(this.dryVolume);
         }
         if (this.currentLevel > 0) {
-            this.dryVolume = CreateDryVolume(-4000, -4000, 0, 4500, 8000, this.currentLevel);
+            this.dryVolume = CreateDryVolume(-4000, -4000, 0, 4500, 8000, this.currentLevel + 10);
         }
 
         for (let i = 0; i < waterQuadCount; i++) {
