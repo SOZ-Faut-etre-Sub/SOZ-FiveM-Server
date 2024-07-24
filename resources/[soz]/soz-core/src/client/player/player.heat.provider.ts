@@ -96,6 +96,11 @@ export class PlayerHeatProvider {
             return;
         }
 
+        this.heatScore = 0;
+        if (player.metadata.scuba) {
+            return;
+        }
+
         const data = await emitRpc<Partial<Record<Component, number>>>(
             RpcServerEvent.CLOTHING_GET_WARM_SCORE,
             outfit.Components
@@ -103,8 +108,6 @@ export class PlayerHeatProvider {
         if (!data) {
             return;
         }
-
-        this.heatScore = 0;
 
         [Component.Tops, Component.Legs, Component.Shoes, Component.Mask].forEach(component => {
             if (data[component] == null) {
