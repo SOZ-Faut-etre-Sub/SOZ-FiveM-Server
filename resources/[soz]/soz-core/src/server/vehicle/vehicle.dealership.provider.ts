@@ -319,7 +319,7 @@ export class VehicleDealershipProvider {
                     hash: auction.vehicle.hash.toString(),
                     mods: JSON.stringify(getDefaultVehicleConfiguration()),
                     condition: JSON.stringify(condition),
-                    garage: 'airport_public',
+                    garage: 'bell_farms',
                     plate,
                     category: auction.vehicle.category,
                     state: PlayerVehicleState.InGarage,
