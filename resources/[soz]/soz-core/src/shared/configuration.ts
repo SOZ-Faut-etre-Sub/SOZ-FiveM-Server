@@ -10,8 +10,13 @@ export type JobTaxTier = {
     Tier5Percentage: number;
 };
 
+export type Water = {
+    level: number;
+};
+
 export type Configuration = {
     JobTaxTier: JobTaxTier;
+    Water: Water;
 };
 
 export const DEFAULT_CONFIGURATION: Configuration = {
@@ -25,5 +30,8 @@ export const DEFAULT_CONFIGURATION: Configuration = {
         Tier3Percentage: 8,
         Tier4Percentage: 12,
         Tier5Percentage: 16,
+    },
+    Water: {
+        level: 10,
     },
 };
