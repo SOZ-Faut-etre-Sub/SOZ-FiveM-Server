@@ -7,7 +7,7 @@ export const OilCloakroom: WardrobeConfig = {
     [joaat('mp_m_freemode_01')]: {
         ["Tenue de pompiste d'été"]: {
             Components: {
-                [3]: { Drawable: 21, Texture: 0, Palette: 0 },
+                [3]: { Drawable: 2, Texture: 0, Palette: 0 },
                 [4]: { Drawable: 98, Texture: 16, Palette: 0 },
                 [5]: { Drawable: 86, Texture: 18, Palette: 0 },
                 [6]: { Drawable: 71, Texture: 16, Palette: 0 },
@@ -17,6 +17,7 @@ export const OilCloakroom: WardrobeConfig = {
                 [11]: { Drawable: 247, Texture: 15, Palette: 0 },
             },
             Props: {},
+            GlovesID: 56000,
         },
         ["Tenue de pompiste d'hiver"]: {
             Components: {
@@ -33,7 +34,7 @@ export const OilCloakroom: WardrobeConfig = {
         },
         ["Tenue de responsable d'été"]: {
             Components: {
-                [3]: { Drawable: 19, Texture: 0, Palette: 0 },
+                [3]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [4]: { Drawable: 97, Texture: 16, Palette: 0 },
                 [5]: { Drawable: 86, Texture: 18, Palette: 0 },
                 [6]: { Drawable: 70, Texture: 16, Palette: 0 },
@@ -43,6 +44,7 @@ export const OilCloakroom: WardrobeConfig = {
                 [11]: { Drawable: 345, Texture: 0, Palette: 0 },
             },
             Props: {},
+            GlovesID: 56000,
         },
         ["Tenue de responsable d'hiver"]: {
             Components: {
@@ -61,7 +63,7 @@ export const OilCloakroom: WardrobeConfig = {
     [joaat('mp_f_freemode_01')]: {
         ["Tenue de pompiste d'été"]: {
             Components: {
-                [3]: { Drawable: 24, Texture: 0, Palette: 0 },
+                [3]: { Drawable: 11, Texture: 0, Palette: 0 },
                 [4]: { Drawable: 101, Texture: 16, Palette: 0 },
                 [5]: { Drawable: 86, Texture: 18, Palette: 0 },
                 [6]: { Drawable: 74, Texture: 16, Palette: 0 },
@@ -71,6 +73,7 @@ export const OilCloakroom: WardrobeConfig = {
                 [11]: { Drawable: 255, Texture: 15, Palette: 0 },
             },
             Props: {},
+            GlovesID: 55000,
         },
         ["Tenue de pompiste d'hiver"]: {
             Components: {
@@ -87,7 +90,7 @@ export const OilCloakroom: WardrobeConfig = {
         },
         ["Tenue de responsable d'été"]: {
             Components: {
-                [3]: { Drawable: 31, Texture: 0, Palette: 0 },
+                [3]: { Drawable: 14, Texture: 0, Palette: 0 },
                 [4]: { Drawable: 100, Texture: 16, Palette: 0 },
                 [5]: { Drawable: 86, Texture: 18, Palette: 0 },
                 [6]: { Drawable: 73, Texture: 16, Palette: 0 },
@@ -97,6 +100,7 @@ export const OilCloakroom: WardrobeConfig = {
                 [11]: { Drawable: 141, Texture: 2, Palette: 0 },
             },
             Props: {},
+            GlovesID: 55000,
         },
         ["Tenue de responsable d'hiver"]: {
             Components: {

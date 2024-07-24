@@ -148,6 +148,18 @@ export const NewGarrayCloakroom: WardrobeConfig = {
             },
             Props: {},
         },
+        ["Tenue d'été"]: {
+            Components: {
+                [Component.Torso]: { Drawable: 5, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 9, Texture: 7, Palette: 0 },
+                [Component.Shoes]: { Drawable: 4, Texture: 1, Palette: 0 },
+                [Component.Bag]: { Drawable: 45, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 238, Texture: 1, Palette: 0 },
+            },
+            Props: {},
+            GlovesID: 56000,
+        },
     },
     [joaat('mp_f_freemode_01')]: {
         ['Direction']: {
@@ -197,6 +209,18 @@ export const NewGarrayCloakroom: WardrobeConfig = {
                 [Component.Tops]: { Drawable: 103, Texture: 3, Palette: 0 },
             },
             Props: {},
+        },
+        ["Tenue d'été"]: {
+            Components: {
+                [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 135, Texture: 1, Palette: 0 },
+                [Component.Shoes]: { Drawable: 10, Texture: 0, Palette: 0 },
+                [Component.Bag]: { Drawable: 45, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 118, Texture: 1, Palette: 0 },
+            },
+            Props: {},
+            GlovesID: 55000,
         },
     },
 };

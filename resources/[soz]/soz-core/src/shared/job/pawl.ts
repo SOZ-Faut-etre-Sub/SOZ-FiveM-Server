@@ -74,6 +74,16 @@ export const PawlCloakroom: WardrobeConfig = {
             },
             Props: {},
         },
+        ['Ifécho']: {
+            Components: {
+                [Component.Torso]: { Drawable: 184, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 98, Texture: 2, Palette: 0 },
+                [Component.Shoes]: { Drawable: 59, Texture: 22, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 346, Texture: 19, Palette: 0 },
+            },
+            Props: {},
+        },
     },
     [GetHashKey('mp_f_freemode_01')]: {
         ['Tenue Bucheron']: {
@@ -112,6 +122,16 @@ export const PawlCloakroom: WardrobeConfig = {
                 [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Tops]: { Drawable: 259, Texture: 2, Palette: 0 },
+            },
+            Props: {},
+        },
+        ['Ifécho']: {
+            Components: {
+                [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 101, Texture: 2, Palette: 0 },
+                [Component.Shoes]: { Drawable: 62, Texture: 22, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 151, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 364, Texture: 19, Palette: 0 },
             },
             Props: {},
         },

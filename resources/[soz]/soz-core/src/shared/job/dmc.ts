@@ -628,6 +628,19 @@ export const DmcCloakroom: WardrobeConfig = {
                 '0': { Drawable: 145, Texture: 0 },
             },
         },
+        ["Tenue d'été"]: {
+            Components: {
+                '3': { Drawable: 0, Texture: 0, Palette: 0 },
+                '4': { Drawable: 125, Texture: 4, Palette: 0 },
+                '5': { Drawable: 82, Texture: 0, Palette: 0 },
+                '6': { Drawable: 2, Texture: 0, Palette: 0 },
+                '8': { Drawable: 15, Texture: 0, Palette: 0 },
+                '11': { Drawable: 0, Texture: 2, Palette: 0 },
+            },
+            Props: {
+                '0': { Drawable: 145, Texture: 0 },
+            },
+        },
     },
     [GetHashKey('mp_f_freemode_01')]: {
         ['Tenue de Sidérurgie']: {
@@ -679,6 +692,19 @@ export const DmcCloakroom: WardrobeConfig = {
                 '6': { Drawable: 115, Texture: 0, Palette: 0 },
                 '8': { Drawable: 14, Texture: 0, Palette: 0 },
                 '11': { Drawable: 333, Texture: 0, Palette: 0 },
+            },
+            Props: {
+                '0': { Drawable: 144, Texture: 0 },
+            },
+        },
+        ["Tenue d'été"]: {
+            Components: {
+                '3': { Drawable: 4, Texture: 0, Palette: 0 },
+                '4': { Drawable: 131, Texture: 4, Palette: 0 },
+                '5': { Drawable: 82, Texture: 0, Palette: 0 },
+                '6': { Drawable: 103, Texture: 3, Palette: 0 },
+                '8': { Drawable: 14, Texture: 0, Palette: 0 },
+                '11': { Drawable: 118, Texture: 1, Palette: 0 },
             },
             Props: {
                 '0': { Drawable: 144, Texture: 0 },

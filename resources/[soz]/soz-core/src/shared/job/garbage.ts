@@ -56,6 +56,23 @@ export const GarbageCloakroom: WardrobeConfig = {
             },
             Props: {},
         },
+        ['BurnBird']: {
+            Components: {
+                [1]: { Drawable: 107, Texture: 10, Palette: 0 },
+                [3]: { Drawable: 5, Texture: 0, Palette: 0 },
+                [4]: { Drawable: 88, Texture: 10, Palette: 0 },
+                [5]: { Drawable: 82, Texture: 1, Palette: 0 },
+                [6]: { Drawable: 32, Texture: 8, Palette: 0 },
+                [8]: { Drawable: 14, Texture: 0, Palette: 0 },
+                [9]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [10]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [11]: { Drawable: 247, Texture: 13, Palette: 0 },
+            },
+            Props: {
+                Helmet: { Drawable: 75, Texture: 13, Palette: 0 },
+            },
+            GlovesID: 56032,
+        },
     },
     [GetHashKey('mp_f_freemode_01')]: {
         ['Essai']: {
@@ -109,6 +126,23 @@ export const GarbageCloakroom: WardrobeConfig = {
                 [11]: { Drawable: 230, Texture: 0, Palette: 0 },
             },
             Props: {},
+        },
+        ['BurnBird']: {
+            Components: {
+                [1]: { Drawable: 107, Texture: 10, Palette: 0 },
+                [3]: { Drawable: 11, Texture: 0, Palette: 0 },
+                [4]: { Drawable: 91, Texture: 0, Palette: 0 },
+                [5]: { Drawable: 82, Texture: 1, Palette: 0 },
+                [6]: { Drawable: 60, Texture: 2, Palette: 0 },
+                [8]: { Drawable: 14, Texture: 0, Palette: 0 },
+                [9]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [10]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [11]: { Drawable: 255, Texture: 13, Palette: 0 },
+            },
+            Props: {
+                Helmet: { Drawable: 74, Texture: 13, Palette: 0 },
+            },
+            GlovesID: 55032,
         },
     },
 };

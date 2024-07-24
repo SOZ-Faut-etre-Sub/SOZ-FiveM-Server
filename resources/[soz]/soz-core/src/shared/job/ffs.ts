@@ -555,6 +555,17 @@ export const FfsCloakroom: WardrobeConfig = {
             },
             Props: {},
         },
+        ['Tenue Employé été']: {
+            Components: {
+                [3]: { Drawable: 11, Texture: 0, Palette: 0 },
+                [4]: { Drawable: 143, Texture: 0, Palette: 0 },
+                [5]: { Drawable: 82, Texture: 0, Palette: 0 },
+                [6]: { Drawable: 114, Texture: 0, Palette: 0 },
+                [8]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [11]: { Drawable: 234, Texture: 11, Palette: 0 },
+            },
+            Props: {},
+        },
     },
     [GetHashKey('mp_f_freemode_01')]: {
         ['Tenue Employée']: {
@@ -606,6 +617,17 @@ export const FfsCloakroom: WardrobeConfig = {
                 [9]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [10]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [11]: { Drawable: 255, Texture: 2, Palette: 0 },
+            },
+            Props: {},
+        },
+        ['Tenue Employée été']: {
+            Components: {
+                [3]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [4]: { Drawable: 150, Texture: 0, Palette: 0 },
+                [5]: { Drawable: 82, Texture: 0, Palette: 0 },
+                [6]: { Drawable: 118, Texture: 0, Palette: 0 },
+                [8]: { Drawable: 14, Texture: 0, Palette: 0 },
+                [11]: { Drawable: 244, Texture: 11, Palette: 0 },
             },
             Props: {},
         },

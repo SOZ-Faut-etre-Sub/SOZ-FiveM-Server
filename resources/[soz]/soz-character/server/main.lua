@@ -72,6 +72,9 @@ RegisterNetEvent("soz-character:server:SetPlayerJobClothes", function(clothes, m
             end
         end
         clothConfig["JobClothSet"].GlovesID = clothes.GlovesID
+        if clothes.GlovesID and clothes.GlovesID > 0 then
+            clothConfig.Config.HideGloves = false
+        end
     end
 
     if not merge then

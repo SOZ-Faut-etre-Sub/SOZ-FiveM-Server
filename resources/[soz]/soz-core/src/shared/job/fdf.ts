@@ -916,6 +916,18 @@ export const FDFCloakroom: WardrobeConfig = {
             },
             Props: { [0]: { Drawable: 13, Texture: 1, Palette: 0 } },
         },
+        ['Tenue été']: {
+            Components: {
+                [3]: { Drawable: 5, Texture: 0, Palette: 0 },
+                [4]: { Drawable: 89, Texture: 18, Palette: 0 },
+                [5]: { Drawable: 44, Texture: 0, Palette: 0 },
+                [6]: { Drawable: 59, Texture: 23, Palette: 0 },
+                [8]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [11]: { Drawable: 237, Texture: 1, Palette: 0 },
+            },
+            Props: { [0]: { Drawable: 13, Texture: 1, Palette: 0 } },
+            GlovesID: 56039,
+        },
     },
     [joaat('mp_f_freemode_01')]: {
         ['Métayer']: {
@@ -978,6 +990,20 @@ export const FDFCloakroom: WardrobeConfig = {
             Props: {
                 [0]: { Drawable: 20, Texture: 0, Palette: 0 },
             },
+        },
+        ['Tenue été']: {
+            Components: {
+                [3]: { Drawable: 4, Texture: 0, Palette: 0 },
+                [4]: { Drawable: 92, Texture: 18, Palette: 0 },
+                [5]: { Drawable: 44, Texture: 0, Palette: 0 },
+                [6]: { Drawable: 62, Texture: 23, Palette: 0 },
+                [8]: { Drawable: 14, Texture: 0, Palette: 0 },
+                [11]: { Drawable: 247, Texture: 18, Palette: 0 },
+            },
+            Props: {
+                [0]: { Drawable: 20, Texture: 1, Palette: 0 },
+            },
+            GlovesID: 55039,
         },
     },
 };

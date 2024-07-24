@@ -65,6 +65,17 @@ export const CjrCloakroom: WardrobeConfig = {
             },
             Props: {},
         },
+        ["Tenue d'été"]: {
+            Components: {
+                [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 13, Texture: 0, Palette: 0 },
+                [Component.Shoes]: { Drawable: 10, Texture: 0, Palette: 0 },
+                [Component.Accessories]: { Drawable: 23, Texture: 5, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 13, Texture: 0, Palette: 0 },
+            },
+            Props: {},
+        },
     },
     [joaat('mp_f_freemode_01')]: {
         ['Tenue de service']: {
