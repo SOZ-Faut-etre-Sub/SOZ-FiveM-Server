@@ -90,7 +90,9 @@ const Banner: FunctionComponent<BannerProps> = ({ index, news, onDelete }) => {
             break;
         case 'earthquake':
             backgroundImage = '/public/images/twitch-news/earthquake.webp';
-
+            break;
+        case 'flood':
+            backgroundImage = '/public/images/twitch-news/flood.webp';
             break;
         default:
             if (news.job === JobType.YouNews) {
@@ -112,34 +114,36 @@ const Banner: FunctionComponent<BannerProps> = ({ index, news, onDelete }) => {
             }}
         >
             <h3 className="flex h-[25%] justify-end text-4xl items-center pr-4 uppercase">
-                {!['sandstorm', 'earthquake'].includes(news.type) && newsTitle(news.type)}
+                {!['sandstorm', 'earthquake', 'flood'].includes(news.type) && newsTitle(news.type)}
             </h3>
-            <div className="pl-[28%] h-[62%] text-[0.91rem] lg:text-lg">
-                {['lspd', 'bcso', 'sasp'].includes(news.type) ? (
-                    <p className="flex flex-col justify-between p-2 h-full overflow-hidden break-words">
-                        <p>
-                            Les forces de l'ordre sont à la recherche de <strong>{news.message}</strong>.
+            {!['flood', 'earthquake', 'sandstorm'].includes(news.type) && (
+                <div className="pl-[28%] h-[62%] text-[0.91rem] lg:text-lg">
+                    {['lspd', 'bcso', 'sasp'].includes(news.type) ? (
+                        <p className="flex flex-col justify-between p-2 h-full overflow-hidden break-words">
+                            <p>
+                                Les forces de l'ordre sont à la recherche de <strong>{news.message}</strong>.
+                            </p>
+                            <p>
+                                Si vous avez des informations sur cette personne, veuillez les communiquer au{' '}
+                                <strong style={{ textTransform: 'uppercase' }}>555-{news.type}</strong>.
+                            </p>
                         </p>
-                        <p>
-                            Si vous avez des informations sur cette personne, veuillez les communiquer au{' '}
-                            <strong style={{ textTransform: 'uppercase' }}>555-{news.type}</strong>.
-                        </p>
-                    </p>
-                ) : (
-                    <>
-                        {!news.type.includes('reboot') && (
-                            <div className="flex flex-col justify-between p-1 h-full">
-                                <p className="max-h-40 overflow-hidden break-words text-[1.35vh]">{news.message}</p>
-                                {news.reporter && (
-                                    <p className="text-right pr-4 text-lg">
-                                        {authorType} <strong>{news.reporter}</strong>
-                                    </p>
-                                )}
-                            </div>
-                        )}
-                    </>
-                )}
-            </div>
+                    ) : (
+                        <>
+                            {!news.type.includes('reboot') && (
+                                <div className="flex flex-col justify-between p-1 h-full">
+                                    <p className="max-h-40 overflow-hidden break-words text-[1.35vh]">{news.message}</p>
+                                    {news.reporter && (
+                                        <p className="text-right pr-4 text-lg">
+                                            {authorType} <strong>{news.reporter}</strong>
+                                        </p>
+                                    )}
+                                </div>
+                            )}
+                        </>
+                    )}
+                </div>
+            )}
         </div>
     );
 };

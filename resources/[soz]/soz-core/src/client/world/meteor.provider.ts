@@ -453,7 +453,7 @@ export class MeteorProvider {
                 type: 'sandstorm',
                 reporterId: '',
                 job: '',
-                message: '',
+                message: `Alerte Tempête - Une épaisse tempête de sable va fouetter l'entiereté de l'île dans les prochaines minutes. Nous vous invitons à protéger votre visage du sable.`,
             }
         );
     }
@@ -467,7 +467,22 @@ export class MeteorProvider {
                 type: 'earthquake',
                 reporterId: '',
                 job: '',
-                message: '',
+                message: `Alerte Séisme - Un ou plusieurs tremblements de terre de magnitude élevée vont toucher l'île. Nous vous invitons à vous mettre à l'abri, loin de tout objet explosif.`,
+            }
+        );
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuFloodFlash)
+    public async floodFlash() {
+        TriggerServerEvent(
+            ServerEvent.PHONE_APP_NEWS_CREATE_BROADCAST,
+            'phone:app:news:createNewsBroadcast:' + uuidv4(),
+            {
+                type: 'flood',
+                reporterId: '',
+                job: '',
+                message:
+                    'Alerte Inondation - Suite à de fortes pluies, une importante montée des eaux à été détéctée. Nous vous invitons à éviter les endroits à risques.',
             }
         );
     }
