@@ -20,13 +20,13 @@ QBCore.Functions.CreateCallback("banking:getBankingInformation", function(source
         local banking = {
             ["name"] = Player.Functions.GetName(),
             ["accountinfo"] = account.id,
-            ["bankbalance"] = QBCore.Shared.GroupDigits(account.money) .. "$",
-            ["money"] = QBCore.Shared.GroupDigits(QBCore.Shared.Round(Player.PlayerData.money["money"])) .. "$",
+            ["bankbalance"] = account.money,
+            ["money"] = QBCore.Shared.Round(Player.PlayerData.money["money"]),
         }
 
         local offshore = Account("offshore_" .. account.id)
         if offshore ~= nil then
-            banking["offshore"] = QBCore.Shared.GroupDigits(offshore.marked_money) .. "$"
+            banking["offshore"] = offshore.marked_money
         end
 
         cb(banking)
@@ -85,12 +85,12 @@ QBCore.Functions.CreateCallback("banking:server:TransferMoney", function(source,
                 Account.AddMoney(accountTarget, amount)
 
                 exports["soz-core"]:TraceEvent("transfer_money",
-                                               {
-                    player_source = source,
-                    source_account = accountSource,
-                    target_account = accountTarget,
-                    money = amount,
-                })
+                    {
+                        player_source = source,
+                        source_account = accountSource,
+                        target_account = accountTarget,
+                        money = amount,
+                    })
 
                 cb(true)
                 return
@@ -103,12 +103,12 @@ QBCore.Functions.CreateCallback("banking:server:TransferMoney", function(source,
                 Account.RemoveMoney(accountSource, amount)
 
                 exports["soz-core"]:TraceEvent("transfer_money",
-                                               {
-                    player_source = source,
-                    source_account = accountSource,
-                    target_account = accountTarget,
-                    money = amount,
-                })
+                    {
+                        player_source = source,
+                        source_account = accountSource,
+                        target_account = accountTarget,
+                        money = amount,
+                    })
 
                 cb(true)
                 return
@@ -125,8 +125,8 @@ QBCore.Functions.CreateCallback("banking:server:TransferMoney", function(source,
 
                 if Target then
                     TriggerClientEvent("soz-core:client:notification:draw-advanced", Target.PlayerData.source, "Maze Banque", "Mouvement bancaire",
-                                       "Un virement de ~g~" .. amount .. "$~s~ de ~g~" .. origin .. "~s~ vient d'être versé sur votre compte",
-                                       "CHAR_BANK_MAZE")
+                        "Un virement de ~g~" .. amount .. "$~s~ de ~g~" .. origin .. "~s~ vient d'être versé sur votre compte",
+                        "CHAR_BANK_MAZE")
                 end
             end
 
@@ -157,12 +157,12 @@ RegisterNetEvent("banking:server:SafeStorageDeposit", function(money_type, safeS
                 local added = Account.AddMoney(safeStorage, amount, money_type)
                 if added ~= false then
                     exports["soz-core"]:TraceEvent("safe_deposit",
-                                                   {
-                        player_source = source,
-                        target_account = safeStorage,
-                        money_type = money_type,
-                        amount = amount,
-                    })
+                        {
+                            player_source = source,
+                            target_account = safeStorage,
+                            money_type = money_type,
+                            amount = amount,
+                        })
 
                     TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, ("Vous avez déposé ~g~$%s"):format(amount))
                 else
@@ -278,5 +278,5 @@ exports("GetPlayerAccount", function(source)
     local Player = QBCore.Functions.GetPlayer(source)
     local account = Account(Player.PlayerData.charinfo.account)
 
-    return {name = Player.Functions.GetName(), account = account.id, balance = account.money}
+    return { name = Player.Functions.GetName(), account = account.id, balance = account.money }
 end)

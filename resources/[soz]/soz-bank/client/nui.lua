@@ -33,6 +33,14 @@ local function openBankScreen(account, isATM, bankAtmAccountId, atmType, atmName
                 atmName = atmName,
                 bankAtmAccount = bankAtmAccountId,
             })
+
+            TriggerEvent("soz-core:client:bank:openui", {
+                accounts = banking,
+                isATM = isATM,
+                atmType = atmType,
+                atmName = atmName,
+                bankAtmAccount = bankAtmAccountId,
+            })
         end
     end, account)
 end
@@ -56,7 +64,7 @@ end)
 
 RegisterNUICallback("NUIFocusOff", function(data, cb)
     SetNuiFocus(false, false)
-    SendNUIMessage({status = "closebank"})
+    SendNUIMessage({ status = "closebank" })
     playAnimation()
 end)
 
@@ -178,7 +186,7 @@ RegisterNUICallback("doTransfer", function(data, cb)
         QBCore.Functions.TriggerCallback("banking:server:TransferMoney", function(success, reason)
             if success then
                 exports["soz-core"]:DrawAdvancedNotification("Maze Banque", "Transfert: ~r~" .. amount .. "$",
-                                                             "Vous avez transféré de l'argent sur un compte", "CHAR_BANK_MAZE")
+                    "Vous avez transféré de l'argent sur un compte", "CHAR_BANK_MAZE")
             else
                 exports["soz-core"]:DrawNotification(Config.ErrorMessage[reason], "error")
             end

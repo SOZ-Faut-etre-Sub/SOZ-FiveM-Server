@@ -43,6 +43,7 @@ import { RadioVehicleApp } from './Radio/RadioVehicleApp';
 import { StateApp } from './StateApp';
 import { TaxiHorodateurApp } from './Taxi/TaxiHorodateurApp';
 import { Meteor } from './World/Meteor';
+import { BankApp } from './Bank/BankApp';
 
 export const App: FunctionComponent = () => {
     const [pauseMenuActive, setPauseMenuActive] = useState(false);
@@ -111,6 +112,7 @@ export const App: FunctionComponent = () => {
                 <CraftApp />
                 <InputApp />
                 <MedicalApp />
+                <BankApp />
             </div>
             <Meteor />
         </Provider>
