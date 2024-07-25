@@ -87,15 +87,15 @@ const markers: Record<string, Marker> = {
 
 const finalCheckpoints: Record<string, Checkpoint> = {
     landVehicle: {
-        coords: [-1606.08, -592.91, 31.85], // [-763.07, -1322.39, 3.42],
+        coords: [-1606.08, -592.91, 31.85], //METEOR coords: [-763.07, -1322.39, 3.42],
         message: 'Tu es arrivé au bout. Bien joué !',
     },
     airVehicle: {
-        coords: [-1391.45, -472.52, 90.25], // coords: [-745.25, -1468.67, 4.0],
+        coords: [-1391.45, -472.52, 90.25], //METEOR coords: [-745.25, -1468.67, 4.0],
         message: 'Très beau vol. Bien joué !',
     },
     boatVehicle: {
-        coords: [-1899.45, -838.83, 12.39], // [-765.47, -1366.62, 0.0]
+        coords: [-1899.45, -838.83, 12.39], //METEOR [-765.47, -1366.62, 0.0]
         message: 'Belle navigation. Bien joué !',
     },
 };
@@ -113,7 +113,7 @@ const licenses: Record<DrivingSchoolLicenseType, DrivingSchoolLicense> = {
                 [-1518.56, -546.45, 33.13, 216.63],
                 [-1515.86, -545.01, 33.08, 215.18],
             ],
-            // spawnPoints: [
+            //METEOR spawnPoints: [
             //     [-809.18, -1319.61, 4.49, 170.42],
             //     [-814.58, -1296.18, 4.65, 170.07],
             //     [-798.43, -1315.28, 4.65, 351.13],
@@ -145,7 +145,7 @@ const licenses: Record<DrivingSchoolLicenseType, DrivingSchoolLicense> = {
                 [-1525.81, -571.96, 33.42, 35.56],
                 [-1491.54, -506.49, 32.81, 215.44],
             ],
-            // spawnPoints: [
+            //METEOR spawnPoints: [
             //     [-828.87, -1264.37, 4.57, 139.59],
             //     [-853.91, -1257.2, 4.9, 229.32],
             //     [-807.63, -1276.53, 4.9, 171.22],
@@ -180,7 +180,7 @@ const licenses: Record<DrivingSchoolLicenseType, DrivingSchoolLicense> = {
                 [-1518.56, -546.45, 33.13, 216.63],
                 [-1515.86, -545.01, 33.08, 215.18],
             ],
-            // spawnPoints: [
+            //METEOR spawnPoints: [
             //     [-805.25, -1336.23, 4.62, 315.04],
             //     [-780.41, -1341.65, 4.63, 7.65],
             //     [-833.34, -1331.21, 4.63, 320.92],
@@ -208,7 +208,7 @@ const licenses: Record<DrivingSchoolLicenseType, DrivingSchoolLicense> = {
         vehicle: {
             model: 'seasparrow2',
             spawnPoints: [[-1582.03, -569.67, 116.32, 78.33]],
-            // spawnPoints: [
+            //METEOR spawnPoints: [
             //     [-744.84, -1434.05, 4.0, 234.75],
             //     [-762.31, -1453.83, 4.0, 234.75],
             //     [-724.99, -1444.38, 4.0, 134.21],
@@ -230,7 +230,7 @@ const licenses: Record<DrivingSchoolLicenseType, DrivingSchoolLicense> = {
         vehicle: {
             model: 'squalo',
             spawnPoints: [[-1855.25, -763.23, 15.55, 128.35]],
-            // spawnPoints: [
+            //METEOR spawnPoints: [
             //     [-769.37, -1378.84, 0.0, 224.94],
             //     [-775.01, -1385.08, 0.0, 229.44],
             //     [-779.65, -1391.83, 0.0, 227.5],
@@ -252,7 +252,7 @@ const licenses: Record<DrivingSchoolLicenseType, DrivingSchoolLicense> = {
 export const DrivingSchoolConfig = {
     fadeDelay: 500, // in ms
     playerDefaultLocationName: 'PERMIS_LOCATION_BACK',
-    playerDefaultLocation: <Vector4>[-1580.48, -549.81, 35.09, 127.72], // playerDefaultLocation: <Vector4>[-806.57, -1344.53, 5.5, 150.0],
+    playerDefaultLocation: <Vector4>[-1580.48, -549.81, 35.09, 127.72], //METEOR playerDefaultLocation: <Vector4>[-806.57, -1344.53, 5.5, 150.0],
     vehiclePlateText: 'P3RM15',
     maxGracePeriod: 4000, // in ms
     gracePeriodIncrement: 200, // in ms
@@ -269,7 +269,7 @@ export const DrivingSchoolConfig = {
         },
         secretary: {
             model: 'u_f_y_princess',
-            coords: { x: -1581.81, y: -557.5, z: 33.96, w: 34.19 }, // coords: { x: -815.99, y: -1357.3, z: 4.15, w: 309.49 },
+            coords: { x: -1581.81, y: -557.5, z: 33.96, w: 34.19 }, //METEOR coords: { x: -815.99, y: -1357.3, z: 4.15, w: 309.49 },
         },
     },
     startSpeeches: [
@@ -347,7 +347,7 @@ export const Checkpoints: Checkpoint[] = [
         message: 'L\'affiche dit : "ZLAN le 12, 13 et 14 Mai 2023."',
         licenses: [DrivingSchoolLicenseType.Car, DrivingSchoolLicenseType.Truck, DrivingSchoolLicenseType.Moto],
     },
-    // {
+    //METEOR {
     //     coords: [-1028.3, -871.1, 5.83],
     //     message: 'Los Santos Police Department ! De chouettes types !',
     //     licenses: [DrivingSchoolLicenseType.Car, DrivingSchoolLicenseType.Truck, DrivingSchoolLicenseType.Moto],
@@ -404,12 +404,12 @@ export const Checkpoints: Checkpoint[] = [
     { coords: [722.25, 1198.04, 350.88], message: 'Zerawood, baby !', licenses: [DrivingSchoolLicenseType.Heli] },
     { coords: [592.46, -1021.0, 21.91], licenses: [DrivingSchoolLicenseType.Heli] },
 
-    { coords: [-1986.2, -2678.73, 10.0], licenses: [DrivingSchoolLicenseType.Boat] }, //     { coords: [-1986.2, -2678.73, 0.0], licenses: [DrivingSchoolLicenseType.Boat] },
-    { coords: [-297.91, -2338.16, 10.0], licenses: [DrivingSchoolLicenseType.Boat] }, //     { coords: [-297.91, -2338.16, 0.0], licenses: [DrivingSchoolLicenseType.Boat] },
-    { coords: [663.57, -1858.29, 8.5], licenses: [DrivingSchoolLicenseType.Boat] }, //     { coords: [663.57, -1858.29, 8.5], licenses: [DrivingSchoolLicenseType.Boat] },
-    { coords: [1289.3, -2962.45, 10.0], licenses: [DrivingSchoolLicenseType.Boat] }, //     { coords: [1289.3, -2962.45, 0.0], licenses: [DrivingSchoolLicenseType.Boat] },
-    { coords: [521.78, -3475.37, 10.0], licenses: [DrivingSchoolLicenseType.Boat] }, //     { coords: [521.78, -3475.37, 0.0], licenses: [DrivingSchoolLicenseType.Boat] },
-    { coords: [-1994.94, -920.9, 10.0], licenses: [DrivingSchoolLicenseType.Boat] }, //     { coords: [-1994.94, -920.9, 0.0], licenses: [DrivingSchoolLicenseType.Boat] },
-    { coords: [-3116.32, -77.52, 10.0], licenses: [DrivingSchoolLicenseType.Boat] }, //     { coords: [-3116.32, -77.52, 0.0], licenses: [DrivingSchoolLicenseType.Boat] },
-    { coords: [-993.82, -932.68, 10.0], licenses: [DrivingSchoolLicenseType.Boat] }, //     { coords: [-993.82, -932.68, 0.0], licenses: [DrivingSchoolLicenseType.Boat] },
+    { coords: [-1986.2, -2678.73, 10.0], licenses: [DrivingSchoolLicenseType.Boat] }, //METEOR     { coords: [-1986.2, -2678.73, 0.0], licenses: [DrivingSchoolLicenseType.Boat] },
+    { coords: [-297.91, -2338.16, 10.0], licenses: [DrivingSchoolLicenseType.Boat] }, //METEOR     { coords: [-297.91, -2338.16, 0.0], licenses: [DrivingSchoolLicenseType.Boat] },
+    { coords: [663.57, -1858.29, 8.5], licenses: [DrivingSchoolLicenseType.Boat] }, //METEOR     { coords: [663.57, -1858.29, 8.5], licenses: [DrivingSchoolLicenseType.Boat] },
+    { coords: [1289.3, -2962.45, 10.0], licenses: [DrivingSchoolLicenseType.Boat] }, //METEOR     { coords: [1289.3, -2962.45, 0.0], licenses: [DrivingSchoolLicenseType.Boat] },
+    { coords: [521.78, -3475.37, 10.0], licenses: [DrivingSchoolLicenseType.Boat] }, //METEOR     { coords: [521.78, -3475.37, 0.0], licenses: [DrivingSchoolLicenseType.Boat] },
+    { coords: [-1994.94, -920.9, 10.0], licenses: [DrivingSchoolLicenseType.Boat] }, //METEOR     { coords: [-1994.94, -920.9, 0.0], licenses: [DrivingSchoolLicenseType.Boat] },
+    { coords: [-3116.32, -77.52, 10.0], licenses: [DrivingSchoolLicenseType.Boat] }, //METEOR     { coords: [-3116.32, -77.52, 0.0], licenses: [DrivingSchoolLicenseType.Boat] },
+    { coords: [-993.82, -932.68, 10.0], licenses: [DrivingSchoolLicenseType.Boat] }, //METEOR     { coords: [-993.82, -932.68, 0.0], licenses: [DrivingSchoolLicenseType.Boat] },
 ];
