@@ -83,6 +83,7 @@ export const PawlCloakroom: WardrobeConfig = {
                 [Component.Tops]: { Drawable: 346, Texture: 19, Palette: 0 },
             },
             Props: {},
+            GlovesID: 56031,
         },
     },
     [GetHashKey('mp_f_freemode_01')]: {
@@ -134,6 +135,7 @@ export const PawlCloakroom: WardrobeConfig = {
                 [Component.Tops]: { Drawable: 364, Texture: 19, Palette: 0 },
             },
             Props: {},
+            GlovesID: 55031,
         },
     },
 };

@@ -625,7 +625,7 @@ type MenuItemSelectProps = PropsWithChildren<{
     description?: string | ReactNode;
     useGrid?: boolean;
     alignRight?: boolean;
-    descriptionValue?: (value: any) => string;
+    descriptionValue?: (value: any) => string | ReactNode;
     equalityFn?: (a: any, b: any) => boolean;
 }>;
 
@@ -689,8 +689,8 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
                 onSelected
                     ? onSelected
                     : onSelectedValue
-                    ? () => onSelectedValue(activeOptionIndex, activeValue)
-                    : undefined
+                      ? () => onSelectedValue(activeOptionIndex, activeValue)
+                      : undefined
             }
             onConfirm={onItemConfirm}
             disabled={disabled}

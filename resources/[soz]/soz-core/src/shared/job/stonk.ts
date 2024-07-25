@@ -226,6 +226,18 @@ export const StonkCloakroom: WardrobeConfig = {
             },
             Props: {},
         },
+        ["Tenue VIP d'été"]: {
+            Components: {
+                [1]: { Drawable: 121, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 25, Texture: 0, Palette: 0 },
+                [Component.Shoes]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [Component.Accessories]: { Drawable: 29, Texture: 2, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 6, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 11, Texture: 1, Palette: 0 },
+            },
+            Props: {},
+        },
         ['Tenue Direction']: {
             Components: {
                 [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
@@ -318,10 +330,21 @@ export const StonkCloakroom: WardrobeConfig = {
                 [Component.Legs]: { Drawable: 133, Texture: 0, Palette: 0 },
                 [Component.Shoes]: { Drawable: 29, Texture: 0, Palette: 0 },
                 [Component.Accessories]: { Drawable: 22, Texture: 0, Palette: 0 },
-                [Component.Undershirt]: { Drawable: 216, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 38, Texture: 0, Palette: 0 },
                 [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Tops]: { Drawable: 339, Texture: 0, Palette: 0 },
+            },
+            Props: {},
+        },
+        ["Tenue VIP d'été"]: {
+            Components: {
+                [1]: { Drawable: 121, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 133, Texture: 0, Palette: 0 },
+                [Component.Shoes]: { Drawable: 29, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 185, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 334, Texture: 1, Palette: 0 },
             },
             Props: {},
         },
