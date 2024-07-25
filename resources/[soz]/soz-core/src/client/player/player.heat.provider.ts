@@ -152,8 +152,8 @@ export class PlayerHeatProvider {
         ) {
             this.sandStormProtected = true;
         } else if (
-            !maskMouthNotProtected.includes(outfit.Components[Component.Mask]?.Drawable) &&
-            outfit.Props[Prop.Glasses]?.Drawable > 0
+            !maskMouthNotProtected.includes(outfit.Components[Component.Mask]?.Drawable)
+            //&& outfit.Props[Prop.Glasses]?.Drawable > 0
         ) {
             this.sandStormProtected = true;
         }
