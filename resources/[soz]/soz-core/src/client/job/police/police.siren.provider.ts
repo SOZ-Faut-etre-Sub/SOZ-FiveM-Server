@@ -132,7 +132,7 @@ export class PoliceSirenProvider {
     })
     public async onToggleSirens() {
         const player = this.playerService.getPlayer();
-        if (player.metadata.ishandcuffed || player.metadata.isdead) {
+        if (!player || player.metadata.ishandcuffed || player.metadata.isdead) {
             return;
         }
 

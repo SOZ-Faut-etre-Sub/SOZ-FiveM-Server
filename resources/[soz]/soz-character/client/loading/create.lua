@@ -76,6 +76,14 @@ function CharacterCreate(SpawnId, charInfo, character)
     --                                                                        {Drawable = 98, Texture = 0, Palette = 0} or
     --                                                                        {Drawable = 97, Texture = 0, Palette = 0}
 
+    -- Meteor
+    character.ClothConfig.BaseClothSet.Components[tostring(ComponentType.Mask)] = {
+        Drawable = 175,
+        Texture = 0,
+        Palette = 0,
+    }
+    character.ClothConfig.Config.HideMask = true
+
     local connected = QBCore.Functions.TriggerRpc("soz-character:server:CreatePlayer", charInfo, character.Skin, character.ClothConfig);
 
     if connected then
