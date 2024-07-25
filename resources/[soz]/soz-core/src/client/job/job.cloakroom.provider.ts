@@ -1,4 +1,4 @@
-import { Component, WardrobeConfig } from '@public/shared/cloth';
+import { WardrobeConfig } from '@public/shared/cloth';
 import { JobType } from '@public/shared/job';
 import { BaunCloakroom } from '@public/shared/job/baun';
 import { NewGarrayCloakroom } from '@public/shared/job/bennys';
@@ -9,7 +9,7 @@ import { FfsCloakroom } from '@public/shared/job/ffs';
 import { FoodCloakroom } from '@public/shared/job/food';
 import { GarbageCloakroom } from '@public/shared/job/garbage';
 import { GouvCloakroom } from '@public/shared/job/gouv';
-import { HAZMAT_OUTFIT_NAME, LsmcCloakroom } from '@public/shared/job/lsmc';
+import { LsmcCloakroom } from '@public/shared/job/lsmc';
 import { NewsCloakroom, YouNewsCloakroom } from '@public/shared/job/news';
 import { OilCloakroom } from '@public/shared/job/oil';
 import { PawlCloakroom } from '@public/shared/job/pawl';
@@ -107,22 +107,6 @@ export class JobCloakroomProvider {
 
         if (outfitSelection.outfit) {
             TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, outfitSelection.outfit);
-
-            const ped = PlayerPedId();
-            let hazmat = true;
-            for (const [componentkey, item] of Object.entries(
-                LsmcCloakroom[GetEntityModel(ped)][HAZMAT_OUTFIT_NAME].Components
-            )) {
-                const component = Number(componentkey) as Component;
-                if (
-                    !outfitSelection.outfit.Components[component] ||
-                    outfitSelection.outfit.Components[component].Drawable != item.Drawable
-                ) {
-                    hazmat = false;
-                    break;
-                }
-            }
-            TriggerServerEvent(ServerEvent.LSMC_SET_HAZMAT, hazmat);
         } else {
             TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, null);
         }

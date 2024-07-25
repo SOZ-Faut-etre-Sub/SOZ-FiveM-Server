@@ -113,10 +113,10 @@ export type Skin = {
     }[];
 };
 
-export const PlayerPedHash = {
-    Male: joaat('mp_m_freemode_01'),
-    Female: joaat('mp_f_freemode_01'),
-};
+export enum PlayerPedHash {
+    Male = joaat('mp_m_freemode_01'),
+    Female = joaat('mp_f_freemode_01'),
+}
 
 export const TenueComponents = {
     [1]: { label: 'Chapeau', propId: 0, value: 'HideHead' },

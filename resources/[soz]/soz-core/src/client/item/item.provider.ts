@@ -1,4 +1,5 @@
 import { Exportable } from '@public/core/decorators/exports';
+import { ScubaOutfit } from '@public/shared/cloth';
 import { InventoryItem } from '@public/shared/item';
 import { PlayerData } from '@public/shared/player';
 
@@ -147,28 +148,7 @@ export class ItemProvider {
     public async onScubaToogle(scuba: boolean) {
         const player = this.playerService.getPlayer();
 
-        const skin = {
-            [GetHashKey('mp_m_freemode_01')]: {
-                Components: {
-                    [3]: { Drawable: 4, Texture: 0, Palette: 0 },
-                    [4]: { Drawable: 94, Texture: 0, Palette: 0 },
-                    [6]: { Drawable: 67, Texture: 0, Palette: 0 },
-                    [8]: { Drawable: 151, Texture: 0, Palette: 0 },
-                    [11]: { Drawable: 243, Texture: 0, Palette: 0 },
-                },
-                Props: {},
-            },
-            [GetHashKey('mp_f_freemode_01')]: {
-                Components: {
-                    [3]: { Drawable: 5, Texture: 0, Palette: 0 },
-                    [4]: { Drawable: 97, Texture: 0, Palette: 0 },
-                    [6]: { Drawable: 70, Texture: 0, Palette: 0 },
-                    [8]: { Drawable: 187, Texture: 0, Palette: 0 },
-                    [11]: { Drawable: 251, Texture: 0, Palette: 0 },
-                },
-                Props: {},
-            },
-        };
+        const skin = ScubaOutfit;
 
         const { completed } = await this.playerWardrobe.waitProgress(false);
         if (!completed) {
