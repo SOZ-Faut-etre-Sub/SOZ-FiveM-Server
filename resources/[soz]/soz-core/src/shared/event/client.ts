@@ -342,4 +342,5 @@ export enum ClientEvent {
 
     BANK_OPEN_UI = 'soz-core:client:bank:openui',
     BANK_SAFE_OPEN_UI = 'soz-core:client:bank:safe:openui',
+    BANK_SAFE_HOUSE_OPEN_UI = 'soz-core:client:bank:safe:house:openui',
 }

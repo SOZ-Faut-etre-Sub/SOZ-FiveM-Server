@@ -1,3 +1,5 @@
+import { HousingRepository } from '@public/server/repository/housing.repository';
+
 import { HouseSafeStorageTiers, SafeStorageMaxCapacity, SocietySafeStorage } from '../../config/bank';
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { BankAccount } from '../../shared/bank';
@@ -16,13 +18,16 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
     @Inject(JobService)
     private jobService: JobService;
 
+    @Inject(HousingRepository)
+    private housingRepository: HousingRepository;
+
     public type = RepositoryType.BankAccount;
 
     protected async load(): Promise<Record<string, BankAccount>> {
         const result = await this.prismaService.bank_accounts.findMany();
         const accounts = {};
 
-        result.forEach(account => {
+        for (const account of result) {
             let accountId = account.accountid;
             let accountType = String(account.account_type);
             let accountLabel = account.citizenid;
@@ -38,10 +43,12 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
                     break;
                 case 'safestorages':
                     if (account.houseid) {
+                        const apartment = await this.housingRepository.getApartmentByIdentifier(account.houseid);
+
                         accountId = account.houseid;
                         accountType = 'house_safe';
-                        accountLabel = account.houseid;
-                        accountMaxCapacity = HouseSafeStorageTiers[0];
+                        accountLabel = apartment.label;
+                        accountMaxCapacity = HouseSafeStorageTiers[apartment.tier ?? 0];
                         break;
                     }
                     accountId = account.businessid;
@@ -66,7 +73,7 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
                 maxCapacity: accountMaxCapacity,
                 coords: account.coords ? [coords.x, coords.y] : null,
             };
-        });
+        }
 
         return accounts;
     }
@@ -133,6 +140,8 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
         switch (account.type) {
             case 'safestorages':
                 return { businessid: account.id };
+            case 'house_safe':
+                return { houseid: account.id };
             default:
                 throw new Error('Invalid account type');
         }

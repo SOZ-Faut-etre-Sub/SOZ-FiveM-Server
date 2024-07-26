@@ -1,6 +1,5 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 PlayerData = QBCore.Functions.GetPlayerData()
-local safeHouseStorageMenu = MenuV:CreateMenu(nil, "", "menu_inventory", "soz", "safe-house-storage")
 local isInsideEntrepriseBankZone = false
 
 local currentBank = {}
@@ -170,80 +169,4 @@ RegisterNetEvent("banking:client:displayAtmBlips", function(newAtmCoords)
     for atmAccount, coords in pairs(newAtmCoords) do
         CreateAtmBlip(atmAccount, coords)
     end
-end)
-
-local function SafeStorageDeposit(money_type, safeStorage)
-    local amount = exports["soz-core"]:Input("Quantité", 12)
-
-    if amount and tonumber(amount) > 0 then
-        TriggerServerEvent("banking:server:SafeStorageDeposit", money_type, safeStorage, tonumber(amount))
-    end
-end
-
-local function SafeStorageDepositAll(money_type, safeStorage)
-    if PlayerData.money[money_type] and PlayerData.money[money_type] > 0 then
-        TriggerServerEvent("banking:server:SafeStorageDeposit", money_type, safeStorage, PlayerData.money[money_type])
-    end
-end
-
-local function SafeStorageWithdraw(money_type, safeStorage)
-    local amount = exports["soz-core"]:Input("Quantité", 12)
-
-    if amount and tonumber(amount) > 0 then
-        TriggerServerEvent("banking:server:SafeStorageWithdraw", money_type, safeStorage, tonumber(amount))
-    end
-end
-
-local function OpenHouseSafeStorageMenu(safeStorage, money, black_money, maxSafeWeight)
-    safeHouseStorageMenu:ClearItems()
-
-    local markedMoneyMenu = MenuV:InheritMenu(safeHouseStorageMenu, {
-        subtitle = ("Gestion de l'argent marqué ($%s)"):format(black_money),
-    })
-    local markedMoneyDeposit = markedMoneyMenu:AddButton({ label = "Déposer" })
-    local markedMoneyDepositAll = markedMoneyMenu:AddButton({ label = "Tout déposer" })
-    local markedMoneyWithdraw = markedMoneyMenu:AddButton({ label = "Retirer" })
-
-    markedMoneyDeposit:On("select", function()
-        SafeStorageDeposit("marked_money", safeStorage)
-        MenuV:CloseAll()
-    end)
-    markedMoneyDepositAll:On("select", function()
-        SafeStorageDepositAll("marked_money", safeStorage)
-        MenuV:CloseAll()
-    end)
-    markedMoneyWithdraw:On("select", function()
-        SafeStorageWithdraw("marked_money", safeStorage)
-        MenuV:CloseAll()
-    end)
-
-    safeHouseStorageMenu:AddButton({
-        label = "Argent Marqué",
-        value = markedMoneyMenu,
-        rightLabel = "~r~$" .. black_money .. "/$" .. maxSafeWeight,
-    })
-
-    safeHouseStorageMenu:Open()
-end
-
-RegisterNetEvent("banking:client:qTargetOpenSafe", function(data)
-    if data.safe.owner == nil or (PlayerData.job ~= nil and PlayerData.job.id == data.safe.owner) then
-        QBCore.Functions.TriggerCallback("banking:server:openSafeStorage", function(isAllowed, money, black_money)
-            if isAllowed then
-                OpenSafeStorageMenu(data.SafeId, money, black_money)
-            else
-                exports["soz-core"]:DrawNotification("Vous n'avez pas accès à ce coffre", "error")
-            end
-        end, data.SafeId)
-    end
-end)
-
-RegisterNetEvent("banking:client:openHouseSafe", function(houseid)
-    QBCore.Functions.TriggerCallback("banking:server:openHouseSafeStorage", function(isAllowed, money, black_money, max)
-        if isAllowed then
-            OpenHouseSafeStorageMenu(houseid, money, black_money, max)
-        else
-            exports["soz-core"]:DrawNotification("Vous n'avez pas accès à ce coffre", "error")
-        end
-    end, houseid)
 end)

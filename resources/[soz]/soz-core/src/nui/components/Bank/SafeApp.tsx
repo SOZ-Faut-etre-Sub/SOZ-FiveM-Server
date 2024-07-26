@@ -8,6 +8,7 @@ import { wait } from '../../../core/utils';
 import { BankAccount } from '../../../shared/bank';
 import { NuiEvent } from '../../../shared/event/nui';
 import { fetchNui } from '../../fetch';
+import { usePlayer } from '../../hook/data';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 import { useOutside } from '../../hook/outside';
 import LoadingIcon from '../../icons/loading.svg';
@@ -21,6 +22,8 @@ type SafeAppInputs = {
 };
 
 export const SafeApp: FunctionComponent = () => {
+    const player = usePlayer();
+
     const [appShow, setAppShow] = useState<boolean>(false);
     const [appLoading, setAppLoading] = useState<boolean>(true);
     const [appClosing, setAppClosing] = useState<boolean>(false);
@@ -153,7 +156,9 @@ export const SafeApp: FunctionComponent = () => {
                         <form onSubmit={handleSubmit(submitForm)} className="flex flex-col w-full justify-around">
                             <div className="flex flex-col justify-center items-center gap-4">
                                 <BsSafe className="h-32 w-32 text-white/50" />
-                                <span className="text-white font-semibold text-lg">{account.label}</span>
+                                <div className="flex flex-col items-center">
+                                    <span className="text-white font-semibold text-lg">{account.label}</span>
+                                </div>
                             </div>
 
                             <div className="space-y-6">
@@ -164,35 +169,50 @@ export const SafeApp: FunctionComponent = () => {
                                     </Tab.List>
                                 </Tab.Group>
 
-                                <Card>
-                                    <div className="flex justify-between mb-4">
-                                        <span className="text-white font-semibold">Argent</span>
-                                        <span className="text-sm text-green-500/70">
-                                            {account.money.toLocaleString('en-US', FORMAT_CURRENCY)}
-                                        </span>
-                                    </div>
-                                    <input
-                                        {...register('money', { min: 0, max: account.money })}
-                                        type="number"
-                                        className="bg-white/5 ring-1 ring-inset ring-white/10 w-full rounded-md py-1.5 px-2 text-gray-100 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-500/20"
-                                        placeholder="42"
-                                        disabled={!!watch('markedMoney')}
-                                    />
-                                    {errors.money && (
-                                        <span className="text-red-400 text-sm">
-                                            {inputErrorMessage(errors.money.type)}
-                                        </span>
-                                    )}
-                                </Card>
+                                {account.type !== 'house_safe' && (
+                                    <Card>
+                                        <div className="flex justify-between mb-4">
+                                            <span className="text-white font-semibold">Argent</span>
+                                            <span className="text-sm text-green-500/70">
+                                                {account.money.toLocaleString('en-US', FORMAT_CURRENCY)}
+                                            </span>
+                                        </div>
+                                        <input
+                                            {...register('money', {
+                                                min: 0,
+                                                max: action === 0 ? account.money : player.money.money,
+                                            })}
+                                            type="number"
+                                            className="bg-white/5 ring-1 ring-inset ring-white/10 w-full rounded-md py-1.5 px-2 text-gray-100 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-500/20"
+                                            placeholder="42"
+                                            disabled={!!watch('markedMoney')}
+                                        />
+                                        {errors.money && (
+                                            <span className="text-red-400 text-sm">
+                                                {inputErrorMessage(errors.money.type)}
+                                            </span>
+                                        )}
+                                    </Card>
+                                )}
+
                                 <Card>
                                     <div className="flex justify-between mb-4">
                                         <span className="text-white font-semibold">Argent marqué</span>
                                         <span className="text-sm text-red-400/70">
                                             {account.marked_money.toLocaleString('en-US', FORMAT_CURRENCY)}
+                                            {account.type === 'house_safe' && (
+                                                <span>
+                                                    {' '}
+                                                    / {account.maxCapacity.toLocaleString('en-US', FORMAT_CURRENCY)}
+                                                </span>
+                                            )}
                                         </span>
                                     </div>
                                     <input
-                                        {...register('markedMoney', { min: 0, max: account.marked_money })}
+                                        {...register('markedMoney', {
+                                            min: 0,
+                                            max: action === 0 ? account.marked_money : player.money.marked_money,
+                                        })}
                                         type="number"
                                         className="bg-white/5 ring-1 ring-inset ring-white/10 w-full rounded-md py-1.5 px-2 text-gray-100 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-500/20"
                                         placeholder="42"
