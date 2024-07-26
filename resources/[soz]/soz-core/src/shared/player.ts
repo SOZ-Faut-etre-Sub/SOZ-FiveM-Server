@@ -212,6 +212,7 @@ export type PlayerClientState = {
     isInShop: boolean;
     isInHospital: boolean;
     isInHub: boolean;
+    isInSportClothes: boolean;
     disableMoneyCase: boolean;
     hasPrisonerClothes: boolean;
     isWearingPatientOutfit: boolean;
