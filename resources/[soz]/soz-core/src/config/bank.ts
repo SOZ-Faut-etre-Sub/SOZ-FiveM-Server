@@ -1,6 +1,15 @@
 import { JobType } from '../shared/job';
 import { Zone } from '../shared/polyzone/box.zone';
 
+export const SafeStorageMaxCapacity = 900_000;
+export const HouseSafeStorageTiers = {
+    0: 10000,
+    1: 20000,
+    2: 40000,
+    3: 60000,
+    4: 100000,
+};
+
 export const SocietySafeStorage: Partial<Record<JobType, { label: string; zone: Zone }>> = {
     [JobType.CashTransfer]: {
         label: 'Coffre STONK Security',

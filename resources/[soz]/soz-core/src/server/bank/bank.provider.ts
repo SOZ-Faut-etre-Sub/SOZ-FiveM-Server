@@ -15,6 +15,5 @@ export class BankProvider {
     @Tick(5000, 'bank:pawl:metrics')
     public async onTick() {
         const accounts = await this.bankAccountRepository.get();
-        console.log(accounts);
     }
 }

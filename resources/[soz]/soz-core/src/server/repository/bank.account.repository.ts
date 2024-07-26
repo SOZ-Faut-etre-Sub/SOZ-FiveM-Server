@@ -1,3 +1,4 @@
+import { HouseSafeStorageTiers, SafeStorageMaxCapacity, SocietySafeStorage } from '../../config/bank';
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { BankAccount } from '../../shared/bank';
 import { JobType } from '../../shared/job';
@@ -5,6 +6,7 @@ import { RepositoryType } from '../../shared/repository';
 import { PrismaService } from '../database/prisma.service';
 import { JobService } from '../job.service';
 import { Repository } from './repository';
+import { bank_accountsWhereUniqueInput } from '.prisma/client';
 
 @Injectable(BankAccountRepository, Repository)
 export class BankAccountRepository extends Repository<RepositoryType.BankAccount> {
@@ -22,26 +24,35 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
 
         result.forEach(account => {
             let accountId = account.accountid;
-            let accountType = account.account_type;
+            let accountType = String(account.account_type);
             let accountLabel = account.citizenid;
+            let accountMaxCapacity = null;
             const coords = JSON.parse(account.coords) as { x: number; y: number };
 
-            accounts[accountId] = {};
+            const safeStorage = SocietySafeStorage[account.businessid?.replace('safe_', '')];
 
             switch (account.account_type) {
                 case 'business':
                     accountId = account.businessid;
-                    accountLabel = this.jobService.getJob(accountId as JobType).label;
+                    accountLabel = this.jobService.getJob(accountId as JobType)?.label ?? accountId;
                     break;
                 case 'safestorages':
                     if (account.houseid) {
                         accountId = account.houseid;
                         accountType = 'house_safe';
                         accountLabel = account.houseid;
+                        accountMaxCapacity = HouseSafeStorageTiers[0];
                         break;
                     }
                     accountId = account.businessid;
-                    accountLabel = 'Coffre-fort';
+                    accountLabel = safeStorage?.label ?? accountId;
+                    accountMaxCapacity = SafeStorageMaxCapacity;
+                    break;
+                case 'offshore':
+                    accountId = account.businessid;
+                    accountLabel = safeStorage?.label ?? accountId;
+                    break;
+                case 'bank_atm':
                     break;
             }
 
@@ -50,12 +61,80 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
                 type: accountType,
                 label: accountLabel,
                 owner: accountId,
-                money: Number(account.money),
-                markedMoney: Number(account.marked_money),
+                money: Number(account.money ?? 0),
+                marked_money: Number(account.marked_money ?? 0),
+                maxCapacity: accountMaxCapacity,
                 coords: account.coords ? [coords.x, coords.y] : null,
             };
         });
 
         return accounts;
+    }
+
+    public async addMoney(
+        accountId: string,
+        money: number,
+        moneyType: 'money' | 'marked_money' = 'money',
+        allowOverflow: boolean = false
+    ): Promise<boolean> {
+        const account = this.data[accountId];
+        if (!account) {
+            return;
+        }
+
+        if (
+            !allowOverflow &&
+            (account.type === 'house_safe' || account.type === 'safestorages') &&
+            account[moneyType] + money > account.maxCapacity
+        ) {
+            return false;
+        }
+
+        const bank_account = await this.prismaService.bank_accounts.update({
+            where: this.getDatabaseCondition(account),
+            data: {
+                [moneyType]: { increment: money },
+            },
+        });
+
+        this.data[accountId][moneyType] = Number(bank_account[moneyType]);
+
+        return true;
+    }
+
+    public async removeMoney(
+        accountId: string,
+        money: number,
+        moneyType: 'money' | 'marked_money' = 'money',
+        allowOverflow: boolean = false
+    ): Promise<boolean> {
+        const account = this.data[accountId];
+        if (!account) {
+            return;
+        }
+
+        if (!allowOverflow && account[moneyType] - money < 0) {
+            return false;
+        }
+
+        const bank_account = await this.prismaService.bank_accounts.update({
+            where: this.getDatabaseCondition(account),
+            data: {
+                [moneyType]: { decrement: money },
+            },
+        });
+
+        this.data[accountId][moneyType] = Number(bank_account[moneyType]);
+
+        return true;
+    }
+
+    protected getDatabaseCondition(account: BankAccount): bank_accountsWhereUniqueInput {
+        switch (account.type) {
+            case 'safestorages':
+                return { businessid: account.id };
+            default:
+                throw new Error('Invalid account type');
+        }
     }
 }

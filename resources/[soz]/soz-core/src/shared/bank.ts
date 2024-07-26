@@ -6,7 +6,8 @@ export type BankAccount = {
     label: string;
     owner: string;
     money: number;
-    markedMoney: number;
+    marked_money: number;
+    maxCapacity: number | null;
     coords: Vector2 | null;
 };
 

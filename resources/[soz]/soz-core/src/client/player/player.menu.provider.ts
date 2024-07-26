@@ -153,7 +153,7 @@ export class PlayerMenuProvider {
         }
 
         if (type === 'bank') {
-            iban = await emitRpc<string>(RpcServerEvent.BANK_GET_ACCOUNT, player.citizenid);
+            iban = await emitRpc<string>(RpcServerEvent.BANK_GET_ACCOUNTID, player.citizenid);
         }
 
         this.dispatcher.dispatch('card', 'addCard', {

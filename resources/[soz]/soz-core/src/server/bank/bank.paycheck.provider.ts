@@ -31,7 +31,7 @@ export class BankPaycheckProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @Rpc(RpcServerEvent.BANK_GET_ACCOUNT)
+    @Rpc(RpcServerEvent.BANK_GET_ACCOUNTID)
     public async getBankAccount(source: number, citizenId): Promise<string> {
         return await this.bankService.getAccountid(citizenId);
     }

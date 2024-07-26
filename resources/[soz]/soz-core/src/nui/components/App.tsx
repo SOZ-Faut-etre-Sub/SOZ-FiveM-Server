@@ -22,6 +22,8 @@ import { fetchNui } from '../fetch';
 import { useNuiEvent } from '../hook/nui';
 import { store } from '../store';
 import { AudioApp } from './Audio/AudioApp';
+import { BankApp } from './Bank/BankApp';
+import { SafeApp } from './Bank/SafeApp';
 import { RepairApp } from './Bennys/RepairApp';
 import { BookApp } from './Book/BookApp';
 import { CardApp } from './Card/CardApp';
@@ -43,7 +45,6 @@ import { RadioVehicleApp } from './Radio/RadioVehicleApp';
 import { StateApp } from './StateApp';
 import { TaxiHorodateurApp } from './Taxi/TaxiHorodateurApp';
 import { Meteor } from './World/Meteor';
-import { BankApp } from './Bank/BankApp';
 
 export const App: FunctionComponent = () => {
     const [pauseMenuActive, setPauseMenuActive] = useState(false);
@@ -113,6 +114,7 @@ export const App: FunctionComponent = () => {
                 <InputApp />
                 <MedicalApp />
                 <BankApp />
+                <SafeApp />
             </div>
             <Meteor />
         </Provider>

@@ -11,7 +11,7 @@ export const DashboardPage: FunctionComponent<BankAppPayload> = ({ accounts: { a
     const [quickAction, setQuickAction] = useState<number>(0);
 
     const tabClass = (tab: any) => {
-        return classnames('p-1 rounded-md', { 'bg-white/10': tab.selected });
+        return classnames('p-1 rounded-md focus:ring-0 ', { 'bg-white/10': tab.selected });
     };
 
     return (

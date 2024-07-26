@@ -1,6 +1,5 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 PlayerData = QBCore.Functions.GetPlayerData()
-local safeStorageMenu = MenuV:CreateMenu(nil, "", "menu_inv_safe", "soz", "safe-storage")
 local safeHouseStorageMenu = MenuV:CreateMenu(nil, "", "menu_inventory", "soz", "safe-house-storage")
 local isInsideEntrepriseBankZone = false
 
@@ -9,17 +8,9 @@ exports("GetCurrentBank", function()
     return currentBank
 end)
 
-RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
-    PlayerData = QBCore.Functions.GetPlayerData()
-end)
-
-RegisterNetEvent("QBCore:Player:SetPlayerData", function(data)
-    PlayerData = data
-end)
-
 AddEventHandler("locations:zone:enter", function(bankType, bankName)
     if Config.BankPedLocations[bankName] ~= nil then
-        currentBank = {bank = bankName, type = string.match(bankName, "%a+")}
+        currentBank = { bank = bankName, type = string.match(bankName, "%a+") }
     end
 end)
 
@@ -58,7 +49,7 @@ CreateThread(function()
         },
     }
 
-    for _, item in pairs({"small_moneybag", "medium_moneybag", "big_moneybag"}) do
+    for _, item in pairs({ "small_moneybag", "medium_moneybag", "big_moneybag" }) do
         table.insert(bankActions, {
             label = "Remplir avec " .. QBCore.Shared.Items[item].label,
             icon = "c:stonk/remplir.png",
@@ -93,7 +84,7 @@ CreateThread(function()
                     scale = 1.0,
                 })
             elseif string.match(bank, "fleeca%d+") then
-                QBCore.Functions.CreateBlip("bank_" .. bank, {name = "Banque", coords = coords, sprite = 108, color = 2})
+                QBCore.Functions.CreateBlip("bank_" .. bank, { name = "Banque", coords = coords, sprite = 108, color = 2 })
             end
         end
         local model = "ig_bankman"
@@ -106,7 +97,7 @@ CreateThread(function()
                 invincible = true,
                 blockevents = true,
                 scenario = "WORLD_HUMAN_CLIPBOARD",
-                target = {options = bankActions, distance = 3.0},
+                target = { options = bankActions, distance = 3.0 },
             },
         })
     end
@@ -203,66 +194,15 @@ local function SafeStorageWithdraw(money_type, safeStorage)
     end
 end
 
-local function OpenSafeStorageMenu(safeStorage, money, black_money)
-    safeStorageMenu:ClearItems()
-
-    local moneyMenu = MenuV:InheritMenu(safeStorageMenu, {subtitle = ("Gestion de l'argent (%s$)"):format(money)})
-    local moneyDeposit = moneyMenu:AddButton({label = "Déposer"})
-    local moneyDepositAll = moneyMenu:AddButton({label = "Tout déposer"})
-    local moneyWithdraw = moneyMenu:AddButton({label = "Retirer"})
-
-    moneyDeposit:On("select", function()
-        SafeStorageDeposit("money", safeStorage)
-        MenuV:CloseAll()
-    end)
-    moneyDepositAll:On("select", function()
-        SafeStorageDepositAll("money", safeStorage)
-        MenuV:CloseAll()
-    end)
-    moneyWithdraw:On("select", function()
-        SafeStorageWithdraw("money", safeStorage)
-        MenuV:CloseAll()
-    end)
-
-    local markedMoneyMenu = MenuV:InheritMenu(safeStorageMenu, {
-        subtitle = ("Gestion de l'argent marqué (%s$)"):format(black_money),
-    })
-    local markedMoneyDeposit = markedMoneyMenu:AddButton({label = "Déposer"})
-    local markedMoneyDepositAll = markedMoneyMenu:AddButton({label = "Tout déposer"})
-    local markedMoneyWithdraw = markedMoneyMenu:AddButton({label = "Retirer"})
-
-    markedMoneyDeposit:On("select", function()
-        SafeStorageDeposit("marked_money", safeStorage)
-        MenuV:CloseAll()
-    end)
-    markedMoneyDepositAll:On("select", function()
-        SafeStorageDepositAll("marked_money", safeStorage)
-        MenuV:CloseAll()
-    end)
-    markedMoneyWithdraw:On("select", function()
-        SafeStorageWithdraw("marked_money", safeStorage)
-        MenuV:CloseAll()
-    end)
-
-    safeStorageMenu:AddButton({label = "Argent", value = moneyMenu, rightLabel = "~g~" .. money .. "$"})
-    safeStorageMenu:AddButton({
-        label = "Argent Marqué",
-        value = markedMoneyMenu,
-        rightLabel = "~r~" .. black_money .. "$",
-    })
-
-    safeStorageMenu:Open()
-end
-
 local function OpenHouseSafeStorageMenu(safeStorage, money, black_money, maxSafeWeight)
     safeHouseStorageMenu:ClearItems()
 
     local markedMoneyMenu = MenuV:InheritMenu(safeHouseStorageMenu, {
         subtitle = ("Gestion de l'argent marqué ($%s)"):format(black_money),
     })
-    local markedMoneyDeposit = markedMoneyMenu:AddButton({label = "Déposer"})
-    local markedMoneyDepositAll = markedMoneyMenu:AddButton({label = "Tout déposer"})
-    local markedMoneyWithdraw = markedMoneyMenu:AddButton({label = "Retirer"})
+    local markedMoneyDeposit = markedMoneyMenu:AddButton({ label = "Déposer" })
+    local markedMoneyDepositAll = markedMoneyMenu:AddButton({ label = "Tout déposer" })
+    local markedMoneyWithdraw = markedMoneyMenu:AddButton({ label = "Retirer" })
 
     markedMoneyDeposit:On("select", function()
         SafeStorageDeposit("marked_money", safeStorage)
@@ -285,30 +225,6 @@ local function OpenHouseSafeStorageMenu(safeStorage, money, black_money, maxSafe
 
     safeHouseStorageMenu:Open()
 end
-
-CreateThread(function()
-    for id, safe in pairs(Config.SafeStorages) do
-        exports["qb-target"]:AddBoxZone("safe:" .. id, safe.position, safe.size and safe.size.x or 1.0, safe.size and safe.size.y or 1.0, {
-            name = "safe:" .. id,
-            heading = safe.heading or 0.0,
-            minZ = safe.position.z - (safe.offsetDownZ or 1.0),
-            maxZ = safe.position.z + (safe.offsetUpZ or 1.0),
-            debugPoly = safe.debug or false,
-        }, {
-            options = {
-                {
-                    label = "Ouvrir",
-                    icon = "c:bank/compte_safe.png",
-                    event = "banking:client:qTargetOpenSafe",
-                    SafeId = id,
-                    safe = safe,
-                    job = safe.owner,
-                },
-            },
-            distance = 2.5,
-        })
-    end
-end)
 
 RegisterNetEvent("banking:client:qTargetOpenSafe", function(data)
     if data.safe.owner == nil or (PlayerData.job ~= nil and PlayerData.job.id == data.safe.owner) then

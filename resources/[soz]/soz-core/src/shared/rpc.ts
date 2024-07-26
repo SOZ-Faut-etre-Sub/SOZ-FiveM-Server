@@ -60,7 +60,7 @@ export enum RpcServerEvent {
     PLAYER_TELEPORT = 'soz-core:player:teleport',
     PLAYER_GET_JOB = 'soz-core:player:get-job',
 
-    BANK_GET_ACCOUNT = 'soz-core:bank:get-account',
+    BANK_GET_ACCOUNTID = 'soz-core:bank:get-account',
 
     CRAFTING_GET_RECIPES = 'soz-core:crafting:get-recipes',
     CRAFTING_DO_CRAFT = 'soz-core:crafting:do-craft',
@@ -210,6 +210,9 @@ export enum RpcServerEvent {
     FOOD_HUNT_INIT = 'soz-core:server:food:hunt-init',
 
     METEOR_OCEAN = 'soz-core:meteor:ocean',
+
+    BANK_SAFE_GET_ACCOUNT = 'soz-core:server:bank:safe:get-account',
+    BANK_SAFE_TRANSFER_ACTION = 'soz-core:server:bank:safe:transfer-action',
 }
 
 export enum RpcClientEvent {
