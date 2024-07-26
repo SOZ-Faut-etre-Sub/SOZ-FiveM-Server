@@ -53,8 +53,6 @@ export class ItemToolsProvider {
         const player = this.playerService.getPlayer(source);
 
         const scuba = player.metadata.scuba;
-        this.playerService.setPlayerMetadata(source, 'scuba', !scuba);
-
         TriggerClientEvent(ClientEvent.ITEM_SCUBA_TOOGLE, source, !scuba);
     }
 

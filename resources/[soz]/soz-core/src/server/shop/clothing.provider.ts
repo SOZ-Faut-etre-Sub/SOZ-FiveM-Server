@@ -1,7 +1,10 @@
 import { Provider } from '@core/decorators/provider';
+import { OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Rpc } from '@public/core/decorators/rpc';
-import { Component, OutfitItem } from '@public/shared/cloth';
+import { Component, Outfit, OutfitItem, ScubaOutfit } from '@public/shared/cloth';
+import { ServerEvent } from '@public/shared/event';
+import { HAZMAT_OUTFIT_NAME, LsmcCloakroom } from '@public/shared/job/lsmc';
 import { RpcServerEvent } from '@public/shared/rpc';
 import { ClothingShop, ClothingShopCategory, ClothingShopRepositoryData } from '@public/shared/shop';
 
@@ -91,5 +94,47 @@ export class ClothingProvider {
         }
 
         return ret;
+    }
+
+    @OnEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES)
+    public setJobClothes(source: number, outfit: Outfit) {
+        const player = this.playerService.getPlayer(source);
+        if (!player) {
+            return;
+        }
+
+        if (!outfit) {
+            this.playerService.setPlayerMetaDatas(source, {
+                hazmat: false,
+                scuba: false,
+            });
+            return;
+        }
+
+        let scuba = true;
+        let hazmat = true;
+
+        for (const [componentkey, item] of Object.entries(
+            LsmcCloakroom[player.skin.Model.Hash][HAZMAT_OUTFIT_NAME].Components
+        )) {
+            const component = Number(componentkey) as Component;
+            if (!outfit.Components[component] || outfit.Components[component].Drawable != item.Drawable) {
+                hazmat = false;
+                break;
+            }
+        }
+
+        for (const [componentkey, item] of Object.entries(ScubaOutfit[player.skin.Model.Hash].Components)) {
+            const component = Number(componentkey) as Component;
+            if (!outfit.Components[component] || outfit.Components[component].Drawable != item.Drawable) {
+                scuba = false;
+                break;
+            }
+        }
+
+        this.playerService.setPlayerMetaDatas(source, {
+            hazmat,
+            scuba,
+        });
     }
 }

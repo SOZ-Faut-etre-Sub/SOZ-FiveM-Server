@@ -98,6 +98,8 @@ export class PlayerHeatProvider {
 
         let newheatScore = 0;
         if (player.metadata.scuba) {
+            this.heatScore = newheatScore;
+            this.sandStormProtected = true;
             return;
         }
 

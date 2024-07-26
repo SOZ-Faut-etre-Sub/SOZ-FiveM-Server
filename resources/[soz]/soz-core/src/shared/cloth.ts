@@ -1,3 +1,5 @@
+import { PlayerPedHash } from '@public/shared/player';
+
 export enum Component {
     Mask = 1,
     Hair = 2,
@@ -157,4 +159,27 @@ export type PlayerCloakroomItem = {
     id: number;
     name: string;
     cloth: Outfit;
+};
+
+export const ScubaOutfit: Record<PlayerPedHash, Outfit> = {
+    [PlayerPedHash.Male]: {
+        Components: {
+            [3]: { Drawable: 4, Texture: 0, Palette: 0 },
+            [4]: { Drawable: 94, Texture: 0, Palette: 0 },
+            [6]: { Drawable: 67, Texture: 0, Palette: 0 },
+            [8]: { Drawable: 151, Texture: 0, Palette: 0 },
+            [11]: { Drawable: 243, Texture: 0, Palette: 0 },
+        },
+        Props: {},
+    },
+    [PlayerPedHash.Female]: {
+        Components: {
+            [3]: { Drawable: 5, Texture: 0, Palette: 0 },
+            [4]: { Drawable: 97, Texture: 0, Palette: 0 },
+            [6]: { Drawable: 70, Texture: 0, Palette: 0 },
+            [8]: { Drawable: 187, Texture: 0, Palette: 0 },
+            [11]: { Drawable: 251, Texture: 0, Palette: 0 },
+        },
+        Props: {},
+    },
 };
