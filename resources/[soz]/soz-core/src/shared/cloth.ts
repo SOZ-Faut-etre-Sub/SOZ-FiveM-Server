@@ -42,6 +42,7 @@ export type Outfit = {
     Props: Partial<Record<Prop, OutfitItem>>;
     GlovesID?: number;
     TopID?: number;
+    type?: 'SPORT' | null;
 };
 
 export type ClothConfig = {

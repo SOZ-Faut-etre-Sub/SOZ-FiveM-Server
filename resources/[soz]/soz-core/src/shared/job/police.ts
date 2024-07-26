@@ -250,6 +250,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     },
                 },
                 Props: {},
+                type: 'SPORT',
             },
         },
         [joaat('mp_f_freemode_01')]: {
@@ -441,6 +442,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     },
                 },
                 Props: {},
+                type: 'SPORT',
             },
         },
     },
@@ -616,6 +618,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     },
                 },
                 Props: {},
+                type: 'SPORT',
             },
         },
         [joaat('mp_f_freemode_01')]: {
@@ -788,6 +791,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     },
                 },
                 Props: {},
+                type: 'SPORT',
             },
         },
     },

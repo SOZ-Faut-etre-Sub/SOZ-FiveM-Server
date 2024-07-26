@@ -229,6 +229,7 @@ const GymWardrobeConfig: WardrobeConfig = {
                 [Component.Tops]: { Drawable: 15, Texture: 0, Palette: 0 },
             },
             Props: {},
+            type: 'SPORT',
         },
         'Homme sport': {
             Components: {
@@ -242,6 +243,7 @@ const GymWardrobeConfig: WardrobeConfig = {
                 [Component.Tops]: { Drawable: 237, Texture: 0, Palette: 13 },
             },
             Props: {},
+            type: 'SPORT',
         },
     },
     [GetHashKey('mp_f_freemode_01')]: {
@@ -257,6 +259,7 @@ const GymWardrobeConfig: WardrobeConfig = {
                 [Component.Tops]: { Drawable: 18, Texture: 0, Palette: 0 },
             },
             Props: {},
+            type: 'SPORT',
         },
         'Femme sport': {
             Components: {
@@ -270,6 +273,7 @@ const GymWardrobeConfig: WardrobeConfig = {
                 [Component.Tops]: { Drawable: 284, Texture: 4, Palette: 0 },
             },
             Props: {},
+            type: 'SPORT',
         },
     },
 };
@@ -723,25 +727,6 @@ export class PlayerHealthProvider {
             },
         ];
 
-        const outdoor_gym_targets = [
-            {
-                icon: 'c:jobs/habiller.png',
-                label: 'Changer de tenue',
-                canInteract: () => {
-                    const player = this.playerService.getPlayer();
-
-                    if (!player) {
-                        return false;
-                    } else {
-                        return true;
-                    }
-                },
-                action: async () => {
-                    await puttingSportClothes(true);
-                },
-            },
-        ];
-
         const puttingSportClothes = async (sportOnly?: boolean) => {
             const gymConfig = sportOnly ? OotdoorGymWardrobeConfig : GymWardrobeConfig;
 
@@ -841,7 +826,7 @@ export class PlayerHealthProvider {
                 minZ: 34.71,
                 maxZ: 37.31,
             },
-            outdoor_gym_targets
+            gym_targets
         );
 
         this.targetFactory.createForBoxZone(
@@ -854,7 +839,33 @@ export class PlayerHealthProvider {
                 minZ: 3.41,
                 maxZ: 6.01,
             },
-            outdoor_gym_targets
+            gym_targets
+        );
+
+        this.targetFactory.createForBoxZone(
+            'lsmc_gym_1',
+            {
+                center: [309.59, -1426.12, 38.44],
+                heading: -220.57,
+                width: 1,
+                length: 5.6,
+                minZ: 36.99,
+                maxZ: 39.59,
+            },
+            gym_targets
+        );
+
+        this.targetFactory.createForBoxZone(
+            'lsmc_gym_2',
+            {
+                center: [316.07, -1431.44, 37.99],
+                heading: 140.57,
+                width: 1,
+                length: 6.1,
+                minZ: 36.99,
+                maxZ: 39.59,
+            },
+            gym_targets
         );
 
         this.targetFactory.createForPed({

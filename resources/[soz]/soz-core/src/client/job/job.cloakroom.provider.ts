@@ -23,6 +23,7 @@ import { emitRpc } from '../../core/rpc';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { RpcServerEvent } from '../../shared/rpc';
 import { Notifier } from '../notifier';
+import { PlayerService } from '../player/player.service';
 import { PlayerWardrobe } from '../player/player.wardrobe';
 import { ProgressService } from '../progress.service';
 
@@ -52,6 +53,9 @@ export class JobCloakroomProvider {
 
     @Inject(ProgressService)
     private progressService: ProgressService;
+
+    @Inject(PlayerService)
+    private playerService: PlayerService;
 
     @Inject(PlayerWardrobe)
     private playerWardrobe: PlayerWardrobe;
@@ -98,7 +102,6 @@ export class JobCloakroomProvider {
             this.notifier.notify("Il n'y a pas de tenue de travail dans le vestiaire.", 'error');
             return;
         }
-
         const progress = await this.playerWardrobe.waitProgress(false);
 
         if (!progress.completed) {
@@ -107,8 +110,14 @@ export class JobCloakroomProvider {
 
         if (outfitSelection.outfit) {
             TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, outfitSelection.outfit);
+            if (outfitSelection.outfit.type === 'SPORT') {
+                this.playerService.updateState({ isInSportClothes: true });
+            } else {
+                this.playerService.updateState({ isInSportClothes: false });
+            }
         } else {
             TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, null);
+            this.playerService.updateState({ isInSportClothes: false });
         }
     }
 
