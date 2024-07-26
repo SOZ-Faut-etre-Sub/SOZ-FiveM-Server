@@ -773,7 +773,7 @@ export const MenuItemSelectHelperItem: FunctionComponent<MenuItemSelectHelperIte
     const { activeOptionIndex, setActiveOptionIndex } = useContext(MenuItemSelectContext);
     const ref = useRef(null);
     const onScreen = useOnScreen(ref);
-    const classes = cn('px-2 py-0', {
+    const classes = cn('px-2 py-0 capitalize', {
         'bg-white/10': index === activeOptionIndex,
     });
 

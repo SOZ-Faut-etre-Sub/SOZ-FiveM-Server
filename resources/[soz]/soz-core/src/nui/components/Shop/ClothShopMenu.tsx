@@ -198,9 +198,9 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({
                                                 <>
                                                     <div>{modelLabel}</div>
                                                     <div>
-                                                        ${items.length} Coloris - Prix : $$
+                                                        {items.length} Coloris - Prix : $
                                                         {getPrice(item.price, isInCayo ? null : TaxType.SUPPLY)} - 📦
-                                                        Stock : ${item.stock}
+                                                        Stock : {item.stock}
                                                     </div>
                                                 </>
                                             );
@@ -220,7 +220,7 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({
                                                 }
                                                 helper={item.colorLabel}
                                             >
-                                                {item.colorLabel}
+                                                <span className="capitalize">{item.colorLabel}</span>
                                             </MenuItemSelectOption>
                                         ))}
                                     </MenuItemSelect>
