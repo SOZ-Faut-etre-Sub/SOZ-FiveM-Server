@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@public/core/decorators/injectable';
+import { FemaleLSPDGlovesId, MaleLSPDGlovesId } from '@public/shared/job/police';
 import { ClothingShopID, ClothingShopItemData, GloveShopRepositoryData } from '@public/shared/shop';
 
 import { PrismaService } from '../database/prisma.service';
@@ -37,6 +38,22 @@ export class GloveShopRepository extends RepositoryLegacy<GloveShopRepositoryDat
                 texture: metadata.components[3].Texture,
             };
         }
+
+        gloves[MaleLSPDGlovesId] = {
+            id: MaleLSPDGlovesId,
+            correspondingDrawables: {
+                4: 96,
+            },
+            texture: 0,
+        };
+
+        gloves[FemaleLSPDGlovesId] = {
+            id: FemaleLSPDGlovesId,
+            correspondingDrawables: {
+                3: 111,
+            },
+            texture: 0,
+        };
 
         return gloves;
     }
