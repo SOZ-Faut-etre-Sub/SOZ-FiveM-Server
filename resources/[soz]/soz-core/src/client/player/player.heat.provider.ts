@@ -149,7 +149,6 @@ export class PlayerHeatProvider {
         this.sandStormProtected = false;
         if (
             hatProtected[player.skin.Model.Hash].includes(outfit.Props[Prop.Hat]?.Drawable) ||
-            hatProtected[player.skin.Model.Hash].includes(outfit.Props[Prop.Helmet]?.Drawable) ||
             maskEyesProtected.includes(outfit.Components[Component.Mask]?.Drawable)
         ) {
             this.sandStormProtected = true;
