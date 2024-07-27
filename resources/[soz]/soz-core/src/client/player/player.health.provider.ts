@@ -731,15 +731,7 @@ export class PlayerHealthProvider {
             {
                 icon: 'c:jobs/habiller.png',
                 label: 'Changer de tenue',
-                canInteract: () => {
-                    const player = this.playerService.getPlayer();
-
-                    if (!player) {
-                        return false;
-                    }
-
-                    return true;
-                },
+                canInteract: () => true,
                 action: async () => {
                     await puttingSportClothes();
                 },
