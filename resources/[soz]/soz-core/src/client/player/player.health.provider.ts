@@ -727,6 +727,25 @@ export class PlayerHealthProvider {
             },
         ];
 
+        const gym_targets_free = [
+            {
+                icon: 'c:jobs/habiller.png',
+                label: 'Changer de tenue',
+                canInteract: () => {
+                    const player = this.playerService.getPlayer();
+
+                    if (!player) {
+                        return false;
+                    }
+
+                    return true;
+                },
+                action: async () => {
+                    await puttingSportClothes();
+                },
+            },
+        ];
+
         const puttingSportClothes = async (sportOnly?: boolean) => {
             const gymConfig = sportOnly ? OotdoorGymWardrobeConfig : GymWardrobeConfig;
 
@@ -826,7 +845,7 @@ export class PlayerHealthProvider {
                 minZ: 34.71,
                 maxZ: 37.31,
             },
-            gym_targets
+            gym_targets_free
         );
 
         this.targetFactory.createForBoxZone(
@@ -839,7 +858,7 @@ export class PlayerHealthProvider {
                 minZ: 3.41,
                 maxZ: 6.01,
             },
-            gym_targets
+            gym_targets_free
         );
 
         this.targetFactory.createForBoxZone(
@@ -852,7 +871,7 @@ export class PlayerHealthProvider {
                 minZ: 36.99,
                 maxZ: 39.59,
             },
-            gym_targets
+            gym_targets_free
         );
 
         this.targetFactory.createForBoxZone(
@@ -865,7 +884,7 @@ export class PlayerHealthProvider {
                 minZ: 36.99,
                 maxZ: 39.59,
             },
-            gym_targets
+            gym_targets_free
         );
 
         this.targetFactory.createForPed({
