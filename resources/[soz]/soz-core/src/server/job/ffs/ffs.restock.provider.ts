@@ -10,6 +10,7 @@ import { ServerEvent } from '../../../shared/event';
 import { FfsConfig, Garment, LuxuryGarment } from '../../../shared/job/ffs';
 import { toVector3Object, Vector3 } from '../../../shared/polyzone/vector';
 import { ClothingBrand, ClothingShopItem } from '../../../shared/shop';
+import { BankService } from '../../bank/bank.service';
 import { PrismaService } from '../../database/prisma.service';
 import { InventoryManager } from '../../inventory/inventory.manager';
 import { Monitor } from '../../monitor/monitor';
@@ -23,6 +24,9 @@ export class FightForStyleRestockProvider {
 
     @Inject(PrismaService)
     private prismaService: PrismaService;
+
+    @Inject(BankService)
+    private bankService: BankService;
 
     @Inject(ProgressService)
     private progressService: ProgressService;
@@ -42,7 +46,9 @@ export class FightForStyleRestockProvider {
     @Once(OnceStep.DatabaseConnected)
     public async onOnceStart() {
         await this.prismaService.$queryRaw(
-            Prisma.sql`UPDATE shop_content SET shop_content.stock = CEIL(shop_content.stock * 0.95) WHERE shop_content.shop_id IN (1, 2, 3)`
+            Prisma.sql`UPDATE shop_content
+                       SET shop_content.stock = CEIL(shop_content.stock * 0.95)
+                       WHERE shop_content.shop_id IN (1, 2, 3)`
         );
     }
 
@@ -101,7 +107,7 @@ export class FightForStyleRestockProvider {
         await this.restockLoop(brand, garment, item.amount);
 
         const totalAmount = item.amount * FfsConfig.restock.getRewardFromDeliveredGarment(garment);
-        TriggerEvent(ServerEvent.BANKING_TRANSFER_MONEY, 'farm_ffs', 'safe_ffs', totalAmount);
+        await this.bankService.transferFarmMoney(source, 'farm_ffs', 'safe_ffs', totalAmount);
 
         this.monitor.traceEvent('job_ffs_restock', {
             item_id: item.metadata.id,

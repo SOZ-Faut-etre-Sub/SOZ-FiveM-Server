@@ -67,6 +67,13 @@ export const fromVector4Object = ({ x, y, z, w }: { x: number; y: number; z: num
     return [x, y, z, w];
 };
 
+export const toVector2Object = (vector: Vector2 | Vector3 | Vector4) => {
+    return {
+        x: vector[0],
+        y: vector[1],
+    };
+};
+
 export const toVector3Object = (vector: Vector3 | Vector4) => {
     return {
         x: vector[0],

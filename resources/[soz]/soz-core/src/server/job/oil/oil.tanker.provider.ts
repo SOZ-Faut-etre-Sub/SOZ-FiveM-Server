@@ -359,7 +359,7 @@ export class OilTankerProvider {
             }
 
             if (this.inventoryManager.removeItemFromInventory(inventory.id, 'essence', 10)) {
-                await this.bankService.transferBankMoney('farm_mtp', 'safe_oil', 500);
+                await this.bankService.transferFarmMoney(source, 'farm_mtp', 'safe_oil', 500);
 
                 this.monitor.traceEvent('job_mtp_sell_oil', {
                     player_source: source,
@@ -370,7 +370,7 @@ export class OilTankerProvider {
 
                 this.notifier.notify(source, "Vous avez ~g~revendu~s~ 100L d'essence.");
             } else if (this.inventoryManager.removeItemFromInventory(inventory.id, 'kerosene', 10)) {
-                await this.bankService.transferBankMoney('farm_mtp', 'safe_oil', 500);
+                await this.bankService.transferFarmMoney(source, 'farm_mtp', 'safe_oil', 500);
 
                 this.monitor.traceEvent('job_mtp_sell_oil', {
                     player_source: source,

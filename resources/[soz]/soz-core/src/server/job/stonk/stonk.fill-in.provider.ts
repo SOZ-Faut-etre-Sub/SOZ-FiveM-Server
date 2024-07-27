@@ -85,7 +85,8 @@ export class StonkFillInProvider {
                     position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
                 });
 
-                const transfer = await this.bankService.transferBankMoney(
+                const transfer = await this.bankService.transferFarmMoney(
+                    source,
                     StonkConfig.bankAccount.bankRefill,
                     accountName,
                     StonkConfig.collection[item].refill_value * fillAmount
@@ -100,7 +101,8 @@ export class StonkFillInProvider {
                     );
                 }
 
-                const transferSociety = await this.bankService.transferBankMoney(
+                const transferSociety = await this.bankService.transferFarmMoney(
+                    source,
                     StonkConfig.bankAccount.farm,
                     StonkConfig.bankAccount.safe,
                     StonkConfig.collection[item].society_gain * fillAmount

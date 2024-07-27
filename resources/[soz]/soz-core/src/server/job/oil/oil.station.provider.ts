@@ -7,6 +7,7 @@ import { FuelStation, FuelStationType, FuelType } from '../../../shared/fuel';
 import { JobPermission, JobType } from '../../../shared/job';
 import { toVector3Object, Vector3, Vector4 } from '../../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../../shared/rpc';
+import { BankService } from '../../bank/bank.service';
 import { PrismaService } from '../../database/prisma.service';
 import { InventoryManager } from '../../inventory/inventory.manager';
 import { JobService } from '../../job.service';
@@ -49,6 +50,9 @@ export class OilStationProvider {
 
     @Inject(LockService)
     private lockService: LockService;
+
+    @Inject(BankService)
+    private bankService: BankService;
 
     @Rpc(RpcServerEvent.OIL_GET_STATION)
     public async getStation(source: number, stationId: number): Promise<FuelStation | null> {
@@ -200,7 +204,7 @@ export class OilStationProvider {
             }
 
             if (station && station.type === FuelStationType.Public) {
-                await this.playerMoneyService.transfer('farm_mtp', 'safe_oil', reallyRefilled * 3);
+                await this.bankService.transferFarmMoney(source, 'farm_mtp', 'safe_oil', reallyRefilled * 3);
             }
 
             this.notifier.notify(source, `Vous avez ~g~ajouté~s~ ${reallyRefilled}L d'essence dans la station.`);
@@ -273,7 +277,7 @@ export class OilStationProvider {
         });
 
         if (station && station.type === FuelStationType.Public) {
-            await this.playerMoneyService.transfer('farm_mtp', 'safe_oil', refilled * 3);
+            await this.bankService.transferFarmMoney(source, 'farm_mtp', 'safe_oil', refilled * 3);
         }
 
         this.notifier.notify(source, `Vous avez ~g~ajouté~s~ ${refilled}L de kérosène dans la station.`);

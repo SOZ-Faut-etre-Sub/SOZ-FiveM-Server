@@ -5,7 +5,6 @@ import { Rpc } from '../../../core/decorators/rpc';
 import { Tick, TickInterval } from '../../../core/decorators/tick';
 import { uuidv4 } from '../../../core/utils';
 import { BennysConfig, BennysOrder } from '../../../shared/job/bennys';
-import { isErr } from '../../../shared/result';
 import { RpcServerEvent } from '../../../shared/rpc';
 import {
     getDefaultVehicleCondition,
@@ -78,9 +77,10 @@ export class BennysOrderProvider {
             return;
         }
         const vehiclePrice = Math.ceil(vehicle.price * 0.01);
-        const transferred = await this.bankService.transferBankMoney('bennys', 'farm_bennys', vehiclePrice);
+        // todo: safe account check
+        const transferred = await this.bankService.transferFarmMoney(source, 'farm_bennys', 'bennys', vehiclePrice);
 
-        if (isErr(transferred)) {
+        if (transferred) {
             this.notifier.notify(
                 source,
                 `Il faut ~r~${vehiclePrice.toLocaleString()}$~s~ sur le compte de l'entreprise.`

@@ -1,8 +1,10 @@
 import { Vector2 } from '@public/shared/polyzone/vector';
 
+export type BankAccountType = 'player' | 'house_safe' | 'business' | 'safestorages' | 'offshore' | 'bank_atm';
+
 export type BankAccount = {
     id: string;
-    type: 'player' | 'house_safe' | 'business' | 'safestorages' | 'offshore' | 'bank-atm';
+    type: BankAccountType;
     label: string;
     owner: string;
     money: number;
@@ -10,6 +12,28 @@ export type BankAccount = {
     maxCapacity: number | null;
     coords: Vector2 | null;
 };
+
+export type BankUiData = {
+    accounts: {
+        personal: BankAccount;
+        enterprise: BankAccount;
+        offshore: BankAccount;
+    };
+};
+
+export type BankAtm = {
+    accountId: string;
+    coords: Vector2;
+    hideBlip?: boolean;
+};
+
+export enum AtmType {
+    PACIFIC = 'pacific',
+    FLEECA = 'fleeca',
+    BIG = 'big',
+    SMALL = 'small',
+    ENTERPRISE = 'ent',
+}
 
 export type Invoice = {
     id: number;

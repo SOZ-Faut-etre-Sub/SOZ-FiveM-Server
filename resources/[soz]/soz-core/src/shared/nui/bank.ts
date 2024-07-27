@@ -1,7 +1,7 @@
-import { BankAccount } from '@public/shared/bank';
+import { BankAccount, BankUiData } from '@public/shared/bank';
 
 export interface NuiBankMethodMap {
-    ShowAccount: undefined;
+    ShowAccount: BankUiData;
 }
 
 export interface NuiBankSafeMethodMap {

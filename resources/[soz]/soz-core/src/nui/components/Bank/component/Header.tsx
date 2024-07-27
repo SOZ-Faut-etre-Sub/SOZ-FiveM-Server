@@ -1,8 +1,9 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useMemo } from 'react';
 import { FaMoneyBillWave } from 'react-icons/fa';
 
 import { usePlayer } from '../../../hook/data';
 import { Mugshot } from '../../Player/Mugshot';
+import { FORMAT_CURRENCY } from '../utils/format';
 
 type HeaderProps = {
     title: string;
@@ -10,6 +11,12 @@ type HeaderProps = {
 
 export const Header: FunctionComponent<HeaderProps> = ({ title }) => {
     const player = usePlayer();
+
+    const playerMoney = useMemo<number>(() => {
+        if (!player) return 0;
+
+        return Number(player.money.money) + Number(player.money.marked_money);
+    }, [player.money]);
 
     return (
         <div className="flex justify-between items-end">
@@ -24,8 +31,8 @@ export const Header: FunctionComponent<HeaderProps> = ({ title }) => {
                     <span>
                         {player?.charinfo?.firstname || 'John'} {player?.charinfo?.lastname || 'Doe'}
                     </span>
-                    <span className="flex items-center gap-2 text-sm">
-                        <FaMoneyBillWave /> 512
+                    <span className="flex items-center gap-2 text-sm text-white/70">
+                        <FaMoneyBillWave /> {playerMoney.toLocaleString('en-US', FORMAT_CURRENCY)}
                     </span>
                 </div>
             </span>

@@ -21,6 +21,7 @@ import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
 
 import { joaat } from '../../../shared/joaat';
+import { BankService } from '../../bank/bank.service';
 import { ObjectProvider } from '../../object/object.provider';
 
 @Provider()
@@ -60,6 +61,9 @@ export class UpwStationProvider {
 
     @Inject(Monitor)
     private monitor: Monitor;
+
+    @Inject(BankService)
+    private bankService: BankService;
 
     @Once(OnceStep.Start)
     public async onStart() {
@@ -157,7 +161,7 @@ export class UpwStationProvider {
         });
         const restockPrice = UPW_CHARGER_REFILL_VALUES[cell] * 3;
         if (station) {
-            await this.playerMoneyService.transfer('farm_upw', 'safe_upw', restockPrice);
+            await this.bankService.transferFarmMoney(source, 'farm_upw', 'safe_upw', restockPrice);
         }
 
         this.notifier.notify(source, `Charge... ~b~${newStock}/${stationToRefill.max_stock} kWh`);

@@ -5,31 +5,19 @@ import { FaArrowRightFromBracket, FaHouse, FaMoneyBillTransfer } from 'react-ico
 import { GiPalmTree } from 'react-icons/gi';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 
+import { BankUiData } from '../../../shared/bank';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 import { useOutside } from '../../hook/outside';
 import { MenuGroup } from './component/MenuGroup';
 import { MenuLink } from './component/MenuLink';
 import { DashboardPage } from './pages/DashboardPage';
 import { HistoryPage } from './pages/HistoryPage';
-import { LogoutPage } from './pages/LogoutPage';
 import { OffshorePage } from './pages/OffshorePage';
-import { SettingsPage } from './pages/SettingsPage';
 import { TransferPage } from './pages/TransferPage';
-
-export interface BankAppPayload {
-    bankAtmAccount: string;
-    isATM: boolean;
-    accounts: {
-        name: string;
-        money: string;
-        accountinfo: string;
-        bankbalance: string;
-    };
-}
 
 export const BankApp: FunctionComponent = () => {
     const [showApp, setShowApp] = useState<boolean>(false);
-    const [account, setAccount] = useState<BankAppPayload | null>(null);
+    const [account, setAccount] = useState<BankUiData>({} as BankUiData);
 
     const refOutside = useOutside({
         click: () => setShowApp(false),
@@ -43,10 +31,9 @@ export const BankApp: FunctionComponent = () => {
 
     useNuiFocus(showApp, showApp, showApp, [], showApp);
 
-    useNuiEvent('bank', 'ShowAccount', (data: BankAppPayload) => {
-        setShowApp(true);
+    useNuiEvent('bank', 'ShowAccount', (data: BankUiData) => {
         setAccount(data);
-        console.log(data);
+        setShowApp(true);
     });
 
     useEffect(() => {
@@ -81,40 +68,40 @@ export const BankApp: FunctionComponent = () => {
                                 <MenuLink to="/" title="Tableau de bord" icon={<FaHouse className="h-4 w-4" />} />
                                 <MenuGroup title="Compte personnel">
                                     <MenuLink
-                                        to="/transfer"
+                                        to="/personal/transfer"
                                         title="Transfert"
                                         icon={<FaMoneyBillTransfer className="h-4 w-4" />}
                                     />
                                     <MenuLink
-                                        to="/history"
+                                        to="/personal/history"
                                         title="Historique"
                                         icon={<FaBookOpen className="h-4 w-4" />}
                                     />
                                 </MenuGroup>
 
-                                <MenuGroup title="Compte société">
-                                    <MenuLink
-                                        to="/transfer"
-                                        title="Transfert"
-                                        icon={<FaMoneyBillTransfer className="h-4 w-4" />}
-                                    />
-                                    <MenuLink
-                                        to="/history"
-                                        title="Historique"
-                                        icon={<FaBookOpen className="h-4 w-4" />}
-                                    />
-                                    <MenuLink
-                                        to="/offshore"
-                                        title="Compte OffShore"
-                                        icon={<GiPalmTree className="h-4 w-4" />}
-                                    />
-                                </MenuGroup>
-                                {/*<Divider />*/}
-                                {/*<MenuLink to="/settings" title="Paramètres" icon={<FaGear className="h-4 w-4" />} />*/}
+                                {account?.accounts?.enterprise && (
+                                    <MenuGroup title="Compte société">
+                                        <MenuLink
+                                            to="/enterprise/transfer"
+                                            title="Transfert"
+                                            icon={<FaMoneyBillTransfer className="h-4 w-4" />}
+                                        />
+                                        <MenuLink
+                                            to="/enterprise/history"
+                                            title="Historique"
+                                            icon={<FaBookOpen className="h-4 w-4" />}
+                                        />
+                                        <MenuLink
+                                            to="/enterprise/offshore"
+                                            title="Compte OffShore"
+                                            icon={<GiPalmTree className="h-4 w-4" />}
+                                        />
+                                    </MenuGroup>
+                                )}
                             </div>
                             <MenuLink
                                 title="Se déconnecter"
-                                to="/logout"
+                                onClick={() => setShowApp(false)}
                                 icon={<FaArrowRightFromBracket className="h-4 w-4" />}
                                 className="hover:bg-red-500/50"
                             />
@@ -122,11 +109,12 @@ export const BankApp: FunctionComponent = () => {
                         <div className="w-5/6 p-10 bg-white/5 rounded-xl">
                             <Routes>
                                 <Route index path="/" element={<DashboardPage {...account} />} />
-                                <Route path="/transfer" element={<TransferPage {...account} />} />
-                                <Route path="/history" element={<HistoryPage {...account} />} />
+                                <Route path="/personal/transfer" element={<TransferPage {...account} />} />
+                                <Route path="/personal/history" element={<HistoryPage {...account} />} />
                                 <Route path="/offshore" element={<OffshorePage {...account} />} />
-                                <Route path="/settings" element={<SettingsPage {...account} />} />
-                                <Route path="/logout" element={<LogoutPage {...account} />} />
+                                <Route path="/enterprise/transfer" element={<TransferPage {...account} />} />
+                                <Route path="/enterprise/history" element={<HistoryPage {...account} />} />
+                                <Route path="/enterprise/offshore" element={<OffshorePage {...account} />} />
                             </Routes>
                         </div>
                     </MemoryRouter>

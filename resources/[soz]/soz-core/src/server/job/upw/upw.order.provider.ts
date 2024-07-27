@@ -1,7 +1,6 @@
 import { Vehicle } from '@prisma/client';
 import { UpwConfig, UpwOrder } from '@public/shared/job/upw';
 
-import { BankService } from '../../../client/bank/bank.service';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { Rpc } from '../../../core/decorators/rpc';
@@ -10,6 +9,7 @@ import { uuidv4 } from '../../../core/utils';
 import { BennysConfig } from '../../../shared/job/bennys';
 import { RpcServerEvent } from '../../../shared/rpc';
 import { getDefaultVehicleCondition } from '../../../shared/vehicle/vehicle';
+import { BankService } from '../../bank/bank.service';
 import { PrismaService } from '../../database/prisma.service';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
@@ -85,7 +85,8 @@ export class UpwOrderProvider {
             return;
         }
         const vehiclePrice = Math.ceil(vehicle.price * 0.01);
-        const [transferred] = await this.bankService.transferBankMoney('upw', 'farm_upw', vehiclePrice);
+        // todo: check safe account
+        const transferred = await this.bankService.transferFarmMoney(source, 'farm_upw', 'upw', vehiclePrice);
 
         if (!transferred) {
             this.notifier.notify(

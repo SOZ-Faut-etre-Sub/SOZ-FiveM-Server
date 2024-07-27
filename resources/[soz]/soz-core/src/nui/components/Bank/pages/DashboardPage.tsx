@@ -2,12 +2,12 @@ import { Tab } from '@headlessui/react';
 import classnames from 'classnames';
 import { FunctionComponent, useState } from 'react';
 
-import { BankAppPayload } from '../BankApp';
+import { BankUiData } from '../../../../shared/bank';
 import { Card } from '../component/Card';
 import { Header } from '../component/Header';
 import { HistoryTable } from '../component/HistoryTable';
 
-export const DashboardPage: FunctionComponent<BankAppPayload> = ({ accounts: { accountinfo, bankbalance } }) => {
+export const DashboardPage: FunctionComponent<BankUiData> = ({ accounts: { personal } }) => {
     const [quickAction, setQuickAction] = useState<number>(0);
 
     const tabClass = (tab: any) => {
@@ -23,9 +23,9 @@ export const DashboardPage: FunctionComponent<BankAppPayload> = ({ accounts: { a
                 <div className="w-4/6 space-y-10">
                     <Card className="space-y-6">
                         <h2 className="uppercase text-sm font-light text-gray-300">Solde bancaire actuel</h2>
-                        <p className="text-center font-semibold text-6xl">$ {bankbalance}</p>
+                        <p className="text-center font-semibold text-6xl">$ {personal.money}</p>
                         <div className="text-sm">
-                            IBAN: <span className="font-semibold">{accountinfo}</span>
+                            IBAN: <span className="font-semibold">{personal.id}</span>
                         </div>
                     </Card>
 

@@ -75,7 +75,8 @@ export class StonkResellProvider {
                     position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
                 });
 
-                const transfer = await this.bankService.transferBankMoney(
+                const transfer = await this.bankService.transferFarmMoney(
+                    source,
                     StonkConfig.bankAccount.farm,
                     StonkConfig.bankAccount.safe,
                     StonkConfig.collection[item].society_gain * resellAmount

@@ -1,40 +1,5 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 
-QBCore.Functions.CreateCallback("banking:getBankingInformation", function(source, cb, account)
-    local Player = QBCore.Functions.GetPlayer(source)
-
-    if Player then
-        if account == nil then
-            account = Account(Player.PlayerData.charinfo.account)
-        else
-            if string.find(account, "%d%d%d%u%d%d%d%d%u%d%d%d") then
-                account = Account(account)
-            elseif exports["soz-core"]:HasJobPermission(account, Player.PlayerData.job.id, Player.PlayerData.job.grade, "society-bank-account") then
-                account = Account(account)
-            else
-                cb(nil)
-                return
-            end
-        end
-
-        local banking = {
-            ["name"] = Player.Functions.GetName(),
-            ["accountinfo"] = account.id,
-            ["bankbalance"] = account.money,
-            ["money"] = QBCore.Shared.Round(Player.PlayerData.money["money"]),
-        }
-
-        local offshore = Account("offshore_" .. account.id)
-        if offshore ~= nil then
-            banking["offshore"] = offshore.marked_money
-        end
-
-        cb(banking)
-    else
-        cb(nil)
-    end
-end)
-
 QBCore.Functions.CreateCallback("banking:server:createOffshoreAccount", function(source, cb, account)
     local Player = QBCore.Functions.GetPlayer(source)
     local offshore = Account("offshore_" .. account)

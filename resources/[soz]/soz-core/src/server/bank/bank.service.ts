@@ -3,6 +3,7 @@ import { Logger } from '@core/logger';
 import { Monitor } from '@public/server/monitor/monitor';
 import { Notifier } from '@public/server/notifier';
 import { BankAccountRepository } from '@public/server/repository/bank.account.repository';
+import { BankFarmRepository } from '@public/server/repository/bank.farm.repository';
 import { Invoice } from '@public/shared/bank';
 import { Err, Ok, Result } from '@public/shared/result';
 
@@ -19,6 +20,9 @@ export class BankService {
 
     @Inject(BankAccountRepository)
     private bankAccountRepository: BankAccountRepository;
+
+    @Inject(BankFarmRepository)
+    private bankFarmRepository: BankFarmRepository;
 
     @Inject(Notifier)
     private notifier: Notifier;
@@ -84,6 +88,50 @@ export class BankService {
             target_account: safe,
             money_type: moneyType,
             amount: amount,
+        });
+
+        return true;
+    }
+
+    public async transferFarmMoney(
+        source: number,
+        farm: string,
+        safe: string,
+        amount: number = 0,
+        moneyType: 'money' | 'marked_money' = 'money'
+    ): Promise<boolean> {
+        const farmAccount = await this.bankFarmRepository.find(farm);
+        if (!farmAccount) {
+            this.logger.error(`Farm account ${farm} not found`);
+            return false;
+        }
+
+        const safeAccount = await this.bankAccountRepository.find(safe);
+        if (!safeAccount) {
+            this.logger.error(`Safe account ${safe} not found`);
+            return false;
+        }
+
+        let moneyToTransfer = amount;
+        if (farmAccount[moneyType] - amount < 0) {
+            moneyToTransfer = farmAccount[moneyType];
+        }
+
+        if (!this.bankFarmRepository.removeMoney(farmAccount.id, moneyToTransfer, moneyType)) {
+            this.logger.error(`Failed to remove money from farm account ${farm}`);
+            return false;
+        }
+
+        if (!(await this.bankAccountRepository.addMoney(safeAccount.id, moneyToTransfer, moneyType, false))) {
+            this.logger.error(`Failed to add money to safe account ${safe}`);
+            return false;
+        }
+
+        this.monitor.traceEvent('transfer_money', {
+            player_source: source,
+            source_account: farmAccount.id,
+            target_account: safeAccount.id,
+            money: moneyToTransfer,
         });
 
         return true;

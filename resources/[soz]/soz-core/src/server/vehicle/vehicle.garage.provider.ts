@@ -28,6 +28,7 @@ import {
 import { getDefaultVehicleConfiguration } from '../../shared/vehicle/modification';
 import { PlayerServerVehicle, PlayerVehicleState } from '../../shared/vehicle/player.vehicle';
 import { getDefaultVehicleCondition, VehicleCategory } from '../../shared/vehicle/vehicle';
+import { BankService } from '../bank/bank.service';
 import { PriceService } from '../bank/price.service';
 import { PrismaService } from '../database/prisma.service';
 import { HousingProvider } from '../housing/housing.provider';
@@ -112,6 +113,9 @@ export class VehicleGarageProvider {
 
     @Inject(PriceService)
     private priceService: PriceService;
+
+    @Inject(BankService)
+    private bankService: BankService;
 
     @Once(OnceStep.RepositoriesLoaded)
     public async init(): Promise<void> {
@@ -1007,7 +1011,7 @@ export class VehicleGarageProvider {
 
                 if (!use_ticket && price !== 0 && garage.type === GarageType.Depot) {
                     const bennysFee = Math.round(vehicle.price * 0.02);
-                    await this.playerMoneyService.transfer('farm_bennys', 'safe_bennys', bennysFee);
+                    await this.bankService.transferFarmMoney(source, 'farm_bennys', 'safe_bennys', bennysFee);
 
                     this.monitor.traceEvent('pay_vehicle_impound_fee', {
                         player_source: source,

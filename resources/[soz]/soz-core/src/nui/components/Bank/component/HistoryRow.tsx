@@ -2,6 +2,8 @@ import { MinusIcon, PlusIcon } from '@heroicons/react/solid';
 import classnames from 'classnames';
 import React, { FunctionComponent } from 'react';
 
+import { FORMAT_CURRENCY } from '../utils/format';
+
 export interface HistoryRowProps {
     type: 'deposit' | 'withdraw';
     accountId: string;
@@ -29,7 +31,7 @@ export const HistoryRow: FunctionComponent<HistoryRowProps> = ({ type, accountNa
                 <span className="text-sm">{description}</span>
             </div>
 
-            <span>$ {Number(amount).toLocaleString()}</span>
+            <span>$ {Number(amount).toLocaleString('en-US', FORMAT_CURRENCY)}</span>
         </div>
     );
 };

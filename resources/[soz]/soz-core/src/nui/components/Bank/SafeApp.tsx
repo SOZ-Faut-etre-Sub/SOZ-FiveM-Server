@@ -53,7 +53,7 @@ export const SafeApp: FunctionComponent = () => {
 
         setTimeout(() => {
             resetApp();
-        }, 2000);
+        }, 1000);
     };
 
     const refOutside = useOutside({
@@ -74,7 +74,7 @@ export const SafeApp: FunctionComponent = () => {
     const submitForm: SubmitHandler<SafeAppInputs> = async data => {
         setAppClosing(true);
 
-        await wait(2000);
+        await wait(1000);
 
         const moneyType = data.money > 0 ? 'money' : 'marked_money';
         const amount = moneyType === 'money' ? data.money : data.markedMoney;
@@ -98,7 +98,7 @@ export const SafeApp: FunctionComponent = () => {
 
         setTimeout(() => {
             setAppLoading(false);
-        }, 3000);
+        }, 1500);
     }, [appShow]);
 
     useEffect(() => {

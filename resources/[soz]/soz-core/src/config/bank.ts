@@ -1,5 +1,14 @@
+import { AtmType } from '@public/shared/bank';
+import { Vector4 } from '@public/shared/polyzone/vector';
+
 import { JobType } from '../shared/job';
-import { Zone } from '../shared/polyzone/box.zone';
+import { BoxZone, Zone } from '../shared/polyzone/box.zone';
+
+export const PacificBankZone: BoxZone = new BoxZone([246.43, 223.79, 106.29], 2.0, 15.0, {
+    heading: 340,
+    minZ: 105.29,
+    maxZ: 108.29,
+});
 
 export const SafeStorageMaxCapacity = 900_000;
 export const HouseSafeStorageTiers = {
@@ -8,6 +17,59 @@ export const HouseSafeStorageTiers = {
     2: 40000,
     3: 60000,
     4: 100000,
+};
+
+export const BankPedLocations: Record<string, Vector4> = {
+    pacific1: [243.63, 226.24, 105.29, 158.33],
+    pacific2: [247.04, 224.99, 105.29, 157.44],
+    pacific3: [252.19, 223.16, 105.29, 160.18],
+    fleeca1: [149.42, -1042.15, 28.37, 340.3],
+    fleeca2: [313.79, -280.53, 53.16, 341.82],
+    fleeca3: [-351.3, -51.3, 48.04, 342.4],
+    fleeca4: [-1211.96, -331.94, 36.78, 23.77],
+    fleeca5: [-2961.13, 482.98, 14.7, 85.95],
+    fleeca6: [1175.01, 2708.3, 37.09, 176.68],
+    fleeca7: [-112.26, 6471.04, 30.63, 132.8],
+    fleeca8: [5057.64, -5193.98, 1.48, 99.1],
+};
+
+export const AtmModels: Record<string, AtmType> = {
+    prop_atm_01: AtmType.SMALL,
+    soz_prop_atm_01_hs2: AtmType.SMALL,
+    prop_atm_02: AtmType.BIG,
+    soz_prop_atm_02_hs2: AtmType.BIG,
+    prop_atm_03: AtmType.BIG,
+    soz_prop_atm_03_hs2: AtmType.BIG,
+    prop_fleeca_atm: AtmType.BIG,
+    soz_prop_fleeca_atm_hs2: AtmType.BIG,
+    soz_atm_entreprise: AtmType.ENTERPRISE,
+};
+
+export const AtmConfig: Record<AtmType, { maxMoney: number; maxWithdrawal?: number; limit?: number }> = {
+    [AtmType.PACIFIC]: { maxMoney: 6_000_000 },
+    [AtmType.FLEECA]: { maxMoney: 500_000, maxWithdrawal: 100_000, limit: 10 * 60 * 1000 },
+    [AtmType.BIG]: { maxMoney: 30_000, maxWithdrawal: 10_000, limit: 10 * 60 * 1000 },
+    [AtmType.SMALL]: { maxMoney: 15_000, maxWithdrawal: 5_000, limit: 10 * 60 * 1000 },
+    [AtmType.ENTERPRISE]: { maxMoney: 30_000, maxWithdrawal: 10_000, limit: 15 * 60 * 1000 },
+};
+
+export const FarmAccount: Record<string, { money: number; marked_money?: number }> = {
+    bank_refill: { money: 100_000_000 },
+    bennys_reseller: { money: 100_000_000 },
+    farm_bennys: { money: 300_000 },
+    farm_news: { money: 300_000 },
+    'farm_you-news': { money: 300_000 },
+    farm_stonk: { money: 300_000 },
+    farm_mtp: { money: 300_000 },
+    farm_garbage: { money: 300_000 },
+    farm_taxi: { money: 300_000 },
+    farm_food: { money: 300_000 },
+    farm_upw: { money: 300_000 },
+    farm_pawl: { money: 300_000 },
+    farm_baun: { money: 300_000 },
+    farm_ffs: { money: 300_000 },
+    farm_fdf: { money: 300_000 },
+    farm_dmc: { money: 300_000 },
 };
 
 export const SocietySafeStorage: Partial<Record<JobType, { label: string; zone: Zone }>> = {
