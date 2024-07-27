@@ -549,7 +549,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             [MOTO]: {
                 Components: {
-                    [Component.Torso]: { Drawable: 20, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: {
                         Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Legs] + 3,
                         Texture: 1,
@@ -582,6 +582,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Palette: 0,
                     },
                 },
+                GlovesID: 56000,
             },
             ['Equipement seulement']: {
                 Components: {
@@ -723,7 +724,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             [MOTO]: {
                 Components: {
-                    [Component.Torso]: { Drawable: 23, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
                     [Component.Legs]: {
                         Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Legs] + 3,
                         Texture: 1,
@@ -756,6 +757,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Palette: 0,
                     },
                 },
+                GlovesID: 55000,
             },
             ['Equipement seulement']: {
                 Components: {
@@ -1251,6 +1253,9 @@ export const Armors = {
     },
 };
 
+export const MaleLSPDGlovesId = 100_000;
+export const FemaleLSPDGlovesId = 100_001;
+
 export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
     [JobType.LSPD]: {
         [joaat('mp_m_freemode_01')]: {
@@ -1258,7 +1263,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
             ['light_intervention_outfit']: {
                 Components: {
                     [Component.Mask]: { Drawable: 185, Texture: 0, Palette: 0 },
-                    [Component.Torso]: { Drawable: 96, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: {
                         Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Legs] + 6,
                         Texture: 0,
@@ -1290,11 +1295,12 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Helmet]: { Drawable: 150, Texture: 0, Palette: 0 },
                     [Prop.Glasses]: { Drawable: 40, Texture: 0, Palette: 0 },
                 },
+                GlovesID: MaleLSPDGlovesId,
             },
             ['heavy_antiriot_outfit']: {
                 Components: {
                     [Component.Mask]: { Drawable: 52, Texture: 0, Palette: 0 },
-                    [Component.Torso]: { Drawable: 96, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: {
                         Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Legs] + 7,
                         Texture: 0,
@@ -1325,6 +1331,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                 Props: {
                     [Prop.Helmet]: { Drawable: 125, Texture: 0, Palette: 0 },
                 },
+                GlovesID: MaleLSPDGlovesId,
             },
         },
         [joaat('mp_f_freemode_01')]: {
@@ -1332,7 +1339,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
             ['light_intervention_outfit']: {
                 Components: {
                     [Component.Mask]: { Drawable: 185, Texture: 0, Palette: 0 },
-                    [Component.Torso]: { Drawable: 111, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
                     [Component.Legs]: {
                         Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Legs] + 6,
                         Texture: 0,
@@ -1364,11 +1371,12 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Helmet]: { Drawable: 149, Texture: 0, Palette: 0 },
                     [Prop.Glasses]: { Drawable: 42, Texture: 0, Palette: 0 },
                 },
+                GlovesID: FemaleLSPDGlovesId,
             },
             ['heavy_antiriot_outfit']: {
                 Components: {
                     [Component.Mask]: { Drawable: 52, Texture: 0, Palette: 0 },
-                    [Component.Torso]: { Drawable: 111, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
                     [Component.Legs]: {
                         Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Legs] + 7,
                         Texture: 0,
@@ -1399,6 +1407,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                 Props: {
                     [Prop.Helmet]: { Drawable: 124, Texture: 0, Palette: 0 },
                 },
+                GlovesID: FemaleLSPDGlovesId,
             },
         },
     },
@@ -1408,7 +1417,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
             ['light_intervention_outfit']: {
                 Components: {
                     [Component.Mask]: { Drawable: 185, Texture: 20, Palette: 0 },
-                    [Component.Torso]: { Drawable: 96, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: {
                         Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Legs] + 6,
                         Texture: 1,
@@ -1440,11 +1449,12 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Helmet]: { Drawable: 150, Texture: 1, Palette: 0 },
                     [Prop.Glasses]: { Drawable: 40, Texture: 7, Palette: 0 },
                 },
+                GlovesID: MaleLSPDGlovesId,
             },
             ['heavy_antiriot_outfit']: {
                 Components: {
                     [Component.Mask]: { Drawable: 52, Texture: 4, Palette: 0 },
-                    [Component.Torso]: { Drawable: 96, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: {
                         Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Legs] + 7,
                         Texture: 1,
@@ -1475,6 +1485,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                 Props: {
                     [Prop.Helmet]: { Drawable: 125, Texture: 0, Palette: 0 },
                 },
+                GlovesID: MaleLSPDGlovesId,
             },
         },
         [joaat('mp_f_freemode_01')]: {
@@ -1482,7 +1493,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
             ['light_intervention_outfit']: {
                 Components: {
                     [Component.Mask]: { Drawable: 185, Texture: 20, Palette: 0 },
-                    [Component.Torso]: { Drawable: 111, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
                     [Component.Legs]: {
                         Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Legs] + 6,
                         Texture: 1,
@@ -1514,11 +1525,12 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Helmet]: { Drawable: 149, Texture: 1, Palette: 0 },
                     [Prop.Glasses]: { Drawable: 42, Texture: 7, Palette: 0 },
                 },
+                GlovesID: FemaleLSPDGlovesId,
             },
             ['heavy_antiriot_outfit']: {
                 Components: {
                     [Component.Mask]: { Drawable: 52, Texture: 4, Palette: 0 },
-                    [Component.Torso]: { Drawable: 111, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
                     [Component.Legs]: {
                         Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Legs] + 7,
                         Texture: 1,
@@ -1549,6 +1561,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                 Props: {
                     [Prop.Helmet]: { Drawable: 124, Texture: 0, Palette: 0 },
                 },
+                GlovesID: FemaleLSPDGlovesId,
             },
         },
     },
