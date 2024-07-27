@@ -1,8 +1,11 @@
 import { AtmType } from '@public/shared/bank';
 import { Vector4 } from '@public/shared/polyzone/vector';
+import { getRandomInt } from '@public/shared/random';
 
 import { JobType } from '../shared/job';
 import { BoxZone, Zone } from '../shared/polyzone/box.zone';
+
+export const OffShoreMaxWashAmount = getRandomInt(50_000, 150_000);
 
 export const PacificBankZone: BoxZone = new BoxZone([246.43, 223.79, 106.29], 2.0, 15.0, {
     heading: 340,

@@ -1,7 +1,5 @@
 Config = {}
 
-Config.OffShoreMaxWashAmount = math.random(50000, 150000)
-
 Config.ErrorMessage = {
     ["unknown"] = "Erreur de la banque !",
     ["action_forbidden"] = "Vous n'avez pas le droit de faire cette action !",
