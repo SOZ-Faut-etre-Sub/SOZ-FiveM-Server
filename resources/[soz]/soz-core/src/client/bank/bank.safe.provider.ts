@@ -7,7 +7,6 @@ import { BankAccount } from '../../shared/bank';
 import { ClientEvent } from '../../shared/event/client';
 import { NuiEvent } from '../../shared/event/nui';
 import { BoxZone } from '../../shared/polyzone/box.zone';
-import { Ok } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { TargetFactory } from '../target/target.factory';
@@ -59,8 +58,7 @@ export class BankSafeProvider {
         moneyType: 'money' | 'marked_money';
         amount: number;
     }) {
-        const isDone = await emitRpc<boolean>(RpcServerEvent.BANK_SAFE_TRANSFER_ACTION, type, safe, moneyType, amount);
-        return Ok(isDone);
+        return await emitRpc<boolean>(RpcServerEvent.BANK_SAFE_TRANSFER_ACTION, type, safe, moneyType, amount);
     }
 
     @OnEvent(ClientEvent.BANK_SAFE_HOUSE_OPEN_UI)

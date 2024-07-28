@@ -79,26 +79,6 @@ RegisterNetEvent("banking:server:RemoveLiquidity", function(accountId, amount)
     Account.RemoveMoney(accountId, amount, "money")
 end)
 
-QBCore.Functions.CreateCallback("banking:server:needRefill", function(source, cb, data)
-    local maxMoney, account
-    if data.bank ~= nil then
-        -- BANK
-        local bankType = string.match(string.match(data.bank, "%a+%d"), "%a+")
-        maxMoney = Config.BankAtmDefault[bankType].maxMoney
-        account = getBankAccount(data.bank)
-    else
-        -- ATM
-        maxMoney = Config.BankAtmDefault[data.atmType].maxMoney
-        account = GetAtmAccount(data.atmType, data.coords)
-    end
-    cb({
-        needRefill = account.money < maxMoney,
-        currentAmount = account.money,
-        missingAmount = maxMoney - account.money,
-        accountId = account.id,
-    })
-end)
-
 RegisterNetEvent("banking:server:RemoveAtmLiquidityRatio", function(coords, atmType, value)
     if (type(coords) ~= "vector3") then
         coords = vector3(coords.x, coords.y, coords.z)

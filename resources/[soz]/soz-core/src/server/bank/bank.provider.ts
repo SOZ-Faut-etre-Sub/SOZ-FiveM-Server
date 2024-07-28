@@ -9,6 +9,7 @@ import { RpcServerEvent } from '../../shared/rpc';
 import { JobService } from '../job.service';
 import { PlayerService } from '../player/player.service';
 import { BankAccountRepository } from '../repository/bank.account.repository';
+import { BankService } from './bank.service';
 
 @Provider()
 export class BankProvider {
@@ -18,11 +19,14 @@ export class BankProvider {
     @Inject(JobService)
     private jobService: JobService;
 
+    @Inject(BankService)
+    private bankService: BankService;
+
     @Inject(BankAccountRepository)
     private bankAccountRepository: BankAccountRepository;
 
     @Rpc(RpcServerEvent.BANK_GET_ACCOUNT_UI)
-    public async getSafeAccount(source: number): Promise<BankUiData> {
+    public async getAccountUiData(source: number): Promise<BankUiData> {
         const position = GetEntityCoords(GetPlayerPed(source), false) as Vector3;
 
         const player = this.playerService.getPlayer(source);
@@ -51,5 +55,14 @@ export class BankProvider {
         }
 
         return accountPayload;
+    }
+
+    @Rpc(RpcServerEvent.BANK_GET_ACCOUNT_MONEY)
+    public async getAccountMoney(
+        source: number,
+        accountId: string,
+        type: 'money' | 'marked_money' = 'money'
+    ): Promise<number> {
+        return this.bankService.getAccountMoney(accountId, type);
     }
 }

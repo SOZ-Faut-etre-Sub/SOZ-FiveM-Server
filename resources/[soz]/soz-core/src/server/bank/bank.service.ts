@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
+import { Rpc } from '@core/decorators/rpc';
 import { Logger } from '@core/logger';
 import { Monitor } from '@public/server/monitor/monitor';
 import { Notifier } from '@public/server/notifier';
@@ -6,6 +7,7 @@ import { BankAccountRepository } from '@public/server/repository/bank.account.re
 import { BankFarmRepository } from '@public/server/repository/bank.farm.repository';
 import { Invoice } from '@public/shared/bank';
 import { Err, Ok, Result } from '@public/shared/result';
+import { RpcServerEvent } from '@public/shared/rpc';
 
 import { PrismaService } from '../database/prisma.service';
 import { QBCore } from '../qbcore';
@@ -211,8 +213,12 @@ export class BankService {
         exports['soz-bank'].ClearAccount(targetAccount);
     }
 
-    public getAccountMoney(accountName: string, type: 'money' | 'marked_money' = 'money'): number {
-        return exports['soz-bank'].GetAccountMoney(accountName, type);
+    @Rpc(RpcServerEvent.BANK_GET_ACCOUNT_MONEY)
+    public async getAccountMoney(accountId: string, type: 'money' | 'marked_money' = 'money'): Promise<number> {
+        const account = await this.bankAccountRepository.find(accountId);
+        if (!account) return;
+
+        return account[type];
     }
 
     public getSafeMoney(identifier: string): number {

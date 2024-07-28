@@ -37,7 +37,7 @@ MySQL.ready(function()
                         Account.Create(v.houseid, v.houseid, "house_safe", v.houseid, v.money, v.marked_money)
                     else
                         Account.Create(v.businessid, Config.SafeStorages[v.businessid] and Config.SafeStorages[v.businessid].label or v.name, v.account_type,
-                                       v.businessid, v.money, v.marked_money)
+                            v.businessid, v.money, v.marked_money)
                         EnterpriseSafeNotLoaded[v.businessid] = nil
                     end
                 elseif v.account_type == "offshore" then
@@ -257,7 +257,7 @@ function Account.AccessGranted(acc, playerId)
 end
 
 --- Create Player account
-RegisterNetEvent("QBCore:Server:PlayerLoaded", function(player --[[PlayerData]] )
+RegisterNetEvent("QBCore:Server:PlayerLoaded", function(player --[[PlayerData]])
     local account = Account(player.PlayerData.charinfo.account)
     if account == nil then
         account = Account.Create(player.PlayerData.charinfo.account, player.Functions.GetName(), "player", player.PlayerData.citizenid)
@@ -291,54 +291,4 @@ end)
 exports("saveAccounts", saveAccounts)
 
 _G.AccountType = {}
-
-local function GetMetrics()
-    local metrics = {}
-
-    for _, acc in pairs(Accounts) do
-        table.insert(metrics, {
-            id = acc.id,
-            label = acc.label,
-            type = acc.type,
-            owner = acc.owner,
-            money = acc.money,
-            marked_money = acc.marked_money,
-        })
-    end
-
-    return metrics
-end
-
-exports("GetMetrics", GetMetrics)
-
---- Capacity
-local function GetAccountCapacity(account)
-    local acc = Account(account)
-    local capacity = 0
-
-    if not acc then
-        return -1
-    end
-
-    for k, v in pairs(Config.BankAtmDefault) do
-        if string.find(acc.id, k) then
-            capacity = v.maxMoney
-        end
-    end
-
-    for k, v in pairs(Config.AtmLocations) do
-        if acc.id == v.accountId then
-            local type = "small"
-            if string.sub(acc.id, 4, 7) == "big" then
-                type = "big"
-            end
-
-            capacity = capacity + Config.BankAtmDefault[type].maxMoney
-        end
-    end
-
-    return capacity
-end
-
-exports("GetAccountCapacity", GetAccountCapacity)
 exports("AddAccountMoney", Account.AddMoney)

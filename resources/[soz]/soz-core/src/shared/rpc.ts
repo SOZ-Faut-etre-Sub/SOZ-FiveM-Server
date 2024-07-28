@@ -211,6 +211,7 @@ export enum RpcServerEvent {
 
     METEOR_OCEAN = 'soz-core:meteor:ocean',
 
+    BANK_GET_ACCOUNT_MONEY = 'soz-core:server:bank:get-account-money',
     BANK_GET_ACCOUNT_UI = 'soz-core:server:bank:get-account-ui',
     BANK_SAFE_GET_ACCOUNT = 'soz-core:server:bank:safe:get-account',
     BANK_SAFE_TRANSFER_ACTION = 'soz-core:server:bank:safe:transfer-action',

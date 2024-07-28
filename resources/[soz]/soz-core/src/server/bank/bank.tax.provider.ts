@@ -46,7 +46,7 @@ export class BankTaxProvider {
             let societyMoney = 0;
 
             for (const acc of account) {
-                societyMoney += this.bankService.getAccountMoney(acc);
+                societyMoney += await this.bankService.getAccountMoney(acc);
             }
 
             let percentage = 0;
@@ -65,7 +65,7 @@ export class BankTaxProvider {
             }
 
             for (const acc of account) {
-                const tax = Math.round(this.bankService.getAccountMoney(acc) * percentage);
+                const tax = Math.round((await this.bankService.getAccountMoney(acc)) * percentage);
 
                 const newsIncome = Math.round((6 * tax) / 100);
 

@@ -73,23 +73,28 @@ export class BankProvider {
             bankActions.push({
                 label: `Remplir avec ${this.itemService.getItem(item).label}`,
                 icon: 'c:stonk/remplir.png',
-                canInteract: () => {
-                    // if currentBank.bank and currentBank.type then
-                    // local currentMoney = QBCore.Functions.TriggerRpc("banking:server:getBankMoney", currentBank.bank)
-                    // if currentMoney < Config.BankAtmDefault[currentBank.type].maxMoney then
-                    // return PlayerData.job.onduty
-                    // end
-                    // return false
-                    // end
-                    // end
-                    return true;
+                canInteract: async () => {
+                    if (!this.currentBank) return;
+
+                    const currentMoney = await emitRpc<number>(
+                        RpcServerEvent.BANK_GET_ACCOUNT_MONEY,
+                        `bank_${this.currentBank.bank}`
+                    );
+                    if (currentMoney < AtmConfig[this.currentBank.type].maxMoney) {
+                        return this.playerService.isOnDuty();
+                    }
+
+                    return false;
                 },
                 action: () => {
-                    // local maxMoney = Config.BankAtmDefault[currentBank.type].maxMoney
-                    // TriggerServerEvent("soz-core:server:job:stonk:fill-in", "bank_" .. currentBank.bank, item, maxMoney)
+                    if (!this.currentBank) return;
+
+                    const maxMoney = AtmConfig[this.currentBank.type].maxMoney;
+                    TriggerServerEvent(ServerEvent.STONK_FILL_IN, `bank_${this.currentBank.bank}`, item, maxMoney);
                 },
                 blackoutGlobal: true,
                 blackoutJob: JobType.CashTransfer,
+                job: JobType.CashTransfer,
                 item,
             });
         });
@@ -145,10 +150,13 @@ export class BankProvider {
                 model,
                 [
                     {
-                        label: 'Compte Personnel',
+                        label: 'Accéder aux comptes',
                         icon: 'c:bank/compte_personal.png',
-                        event: 'banking:openATMScreen',
-                        // atmType: type,
+                        action: async () => {
+                            const accountUiData = await emitRpc<BankUiData>(RpcServerEvent.BANK_GET_ACCOUNT_UI);
+                            this.nuiDispatch.dispatch('bank', 'ShowAccount', accountUiData);
+                        },
+                        blackoutGlobal: true,
                     },
                     this.createAtmRefillAction(type, 'small_moneybag'),
                     this.createAtmRefillAction(type, 'medium_moneybag'),

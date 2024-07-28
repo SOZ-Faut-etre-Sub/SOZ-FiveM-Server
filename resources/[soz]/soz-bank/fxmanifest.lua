@@ -5,12 +5,7 @@ lua54 "yes"
 shared_scripts { "config.lua" }
 
 client_scripts {
-    "@PolyZone/client.lua",
-    "@PolyZone/BoxZone.lua",
-    "@menuv/menuv.lua",
-    "client/main.lua",
     "client/nui.lua",
-    "client/invoices.lua",
 }
 
 server_scripts {
@@ -19,7 +14,6 @@ server_scripts {
     "server/main.lua",
     "server/accounts.lua",
     "server/invoices.lua",
-    "server/taxes.lua",
     "server/bank-atm.lua",
 
     "server/accounts/base.lua",
@@ -31,7 +25,4 @@ server_scripts {
     "server/accounts/safestorages.lua",
     "server/accounts/bank-atm.lua",
 }
-
-files { "ui/images/logo.png", "ui/bootstrap.min.css", "ui/soz.css", "ui/style.css", "ui/index.html", "ui/qb-banking.js" }
-
-dependencies { "oxmysql", "cron", "qb-core", "menuv", "PolyZone" }
+dependencies { "oxmysql", "qb-core" }

@@ -23,7 +23,7 @@ export class BankAtmProvider {
 
         let account = await this.bankAccountRepository.find(atmAccountId);
         if (!account) {
-            account = await this.bankAccountRepository.create(atmAccountId, 'bank-atm', type, coords);
+            account = await this.bankAccountRepository.create(atmAccountId, 'bank_atm', type, coords);
         }
 
         return account;
