@@ -595,7 +595,7 @@
             <txdName>bcso40</txdName>
             <handlingId>bcso40</handlingId>
             <gameName>bcso40</gameName>
-            <vehicleMakeName>CHV</vehicleMakeName>
+            <vehicleMakeName/>
             <expressionDictName>null</expressionDictName>
             <expressionName>null</expressionName>
             <animConvRoofDictName>null</animConvRoofDictName>

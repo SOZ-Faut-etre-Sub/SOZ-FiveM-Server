@@ -4,8 +4,20 @@ Citizen.CreateThread(function()
 
     AddTextEntryByHash(GetHashKey("ambcar"), "Granger du LSMC")
     AddTextEntryByHash(GetHashKey("lspd10"), "Buffalo STX Police")
+    AddTextEntryByHash(GetHashKey("lspd20"), "Vapid Scout")
+    AddTextEntryByHash(GetHashKey("lspd30"), "Moto de Police")
+    AddTextEntryByHash(GetHashKey("lspd40"), "eHSU")
+    AddTextEntryByHash(GetHashKey("lspd50"), "Lampadati Felo Banalisé")
+    AddTextEntryByHash(GetHashKey("lspd51"), "Sultan Banalisé")
     AddTextEntryByHash(GetHashKey("paragonfbi"), "Paragon FBI")
     AddTextEntryByHash(GetHashKey("cogfbi"), "Cognoscenti FBI")
+    AddTextEntryByHash(GetHashKey("bcso10"), "Bravado Sheriff")
+    AddTextEntryByHash(GetHashKey("bcso20"), "Vapid 4x4 Caracara")
+    AddTextEntryByHash(GetHashKey("bcso40"), "Coil eCoquette")
+    AddTextEntryByHash(GetHashKey("bcso50"), "Buffalo Gresley Banalisé")
+    AddTextEntryByHash(GetHashKey("bcso51"), "Cheval Fugitive Banalisé")
+    AddTextEntryByHash(GetHashKey("dodgebana"), "Buffalo STX Banalisé")
+
 
     -- Enterprises
 
@@ -118,7 +130,12 @@ Citizen.CreateThread(function()
     AddTextEntryByHash(GetHashKey('CALLSIGN_C8'), "8")
     AddTextEntryByHash(GetHashKey('CALLSIGN_C9'), "9")
 
+    --Vehicles Custom
 
-
+    AddTextEntryByHash(GetHashKey("argento"), "Argento")
+    AddTextEntryByHash(GetHashKey("asteropers"), "Asterope RS")
+    AddTextEntryByHash(GetHashKey("elegyr"), "Elegy R")
+    AddTextEntryByHash(GetHashKey("oracxsle"), "Oracle XS-LE")
+    AddTextEntryByHash(GetHashKey("rumpo4"), "Bravado Rumpo")
 
 end)
