@@ -319,7 +319,7 @@ export class TaxiMissionService {
                     );
 
                     if (!deliveryLocation) {
-                        this.notifier.notify("Il n'y'a actuellement pas de client.", 'error');
+                        this.notifier.notify('Le client ne sait pas où aller, laisse tomber cette mission.', 'error');
                         return;
                     }
 
