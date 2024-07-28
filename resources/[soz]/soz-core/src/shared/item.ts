@@ -302,6 +302,7 @@ export type InventoryItemMetadata = {
     keyid?: string;
     printed?: boolean;
     value?: number;
+    notSearchable?: boolean;
 };
 
 export type Inventory = {

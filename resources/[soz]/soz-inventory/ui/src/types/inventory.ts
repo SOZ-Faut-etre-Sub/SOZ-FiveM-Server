@@ -132,6 +132,7 @@ export type InventoryItemMetadata = {
     printed?: boolean;
     value?: number;
     storageElements?: InventoryItem[];
+    notSearchable?: boolean;
 };
 
 

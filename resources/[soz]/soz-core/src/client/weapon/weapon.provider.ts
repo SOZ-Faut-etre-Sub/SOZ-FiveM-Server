@@ -266,59 +266,48 @@ export class WeaponProvider {
             Math.random() < 0.6 &&
             Date.now() - this.lastPoliceCall > 60000
         ) {
-            const coords = GetEntityCoords(player);
-
-            const zoneID = GetNameOfZone(coords[0], coords[1], coords[2]);
-
-            if ('ARMYB' != zoneID && 'ISHEIST' != zoneID) {
-                const zone = GetLabelText(zoneID);
-                const [street, street2] = GetStreetNameAtCoord(coords[0], coords[1], coords[2]);
-
-                const name = `${GetStreetNameFromHashKey(street)}${
-                    street2 ? ` et ${GetStreetNameFromHashKey(street2)}` : ''
-                }`;
-                const nameHtml = `<span {class}>${GetStreetNameFromHashKey(street)}</span>${
-                    street2 ? ` et <span {class}>${GetStreetNameFromHashKey(street2)}</span>` : ''
-                }`;
-
-                this.lastPoliceCall = Date.now();
-
-                const message = getRandomItem(GunShotMessage);
-
-                TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
-                    anonymous: true,
-                    number: '555-POLICE',
-                    message: `${zone}: ${message.replace('${0}', name)}`,
-                    htmlMessage: `${zone}: ${message.replace('${0}', nameHtml)}`,
-                    position: true,
-                    info: { type: 'shooting' },
-                    overrideIdentifier: 'System',
-                });
-            }
+            this.lastPoliceCall = Date.now();
+            this.sendShootingAlert();
         }
         await this.weapon.recoil();
     }
 
+    public sendShootingAlert() {
+        const player = PlayerPedId();
+        const coords = GetEntityCoords(player);
+
+        const zoneID = GetNameOfZone(coords[0], coords[1], coords[2]);
+
+        if ('ARMYB' != zoneID && 'ISHEIST' != zoneID) {
+            const zone = GetLabelText(zoneID);
+            const [street, street2] = GetStreetNameAtCoord(coords[0], coords[1], coords[2]);
+
+            const name = `${GetStreetNameFromHashKey(street)}${
+                street2 ? ` et ${GetStreetNameFromHashKey(street2)}` : ''
+            }`;
+            const nameHtml = `<span {class}>${GetStreetNameFromHashKey(street)}</span>${
+                street2 ? ` et <span {class}>${GetStreetNameFromHashKey(street2)}</span>` : ''
+            }`;
+
+            const message = getRandomItem(GunShotMessage);
+
+            TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
+                anonymous: true,
+                number: '555-POLICE',
+                message: `${zone}: ${message.replace('${0}', name)}`,
+                htmlMessage: `${zone}: ${message.replace('${0}', nameHtml)}`,
+                position: true,
+                info: { type: 'shooting' },
+                overrideIdentifier: 'System',
+            });
+        }
+    }
+
     @OnEvent(ClientEvent.WEAPON_EXPLOSION)
     async onExplosion(x: number, y: number, z: number, type: number) {
+        this.sendExplosionAlert(x, y, z);
         const zoneID = GetNameOfZone(x, y, z);
-        if (zoneID == 'ISHEIST') {
-            return;
-        }
         const zone = GetLabelText(zoneID);
-
-        const message = getRandomItem(ExplosionMessage);
-
-        TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
-            anonymous: true,
-            number: '555-POLICE',
-            message: message.replace('${0}', zone),
-            htmlMessage: message.replace('${0}', `<span {class}>${zone}</span>`),
-            position: false,
-            info: { type: 'explosion' },
-            overrideIdentifier: 'System',
-            pedPosition: JSON.stringify({ x: x, y: y, z: z }),
-        });
 
         if (type == ExplosionType.PETROL_PUMP) {
             const stations = this.fuelStationRepository.get();
@@ -339,6 +328,27 @@ export class WeaponProvider {
                 }
             }
         }
+    }
+
+    public sendExplosionAlert(x: number, y: number, z: number) {
+        const zoneID = GetNameOfZone(x, y, z);
+        if (zoneID == 'ISHEIST') {
+            return;
+        }
+        const zone = GetLabelText(zoneID);
+
+        const message = getRandomItem(ExplosionMessage);
+
+        TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
+            anonymous: true,
+            number: '555-POLICE',
+            message: message.replace('${0}', zone),
+            htmlMessage: message.replace('${0}', `<span {class}>${zone}</span>`),
+            position: false,
+            info: { type: 'explosion' },
+            overrideIdentifier: 'System',
+            pedPosition: JSON.stringify({ x: x, y: y, z: z }),
+        });
     }
 
     @Tick(TickInterval.EVERY_SECOND)

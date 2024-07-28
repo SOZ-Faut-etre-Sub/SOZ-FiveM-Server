@@ -40,9 +40,10 @@ export class VoipVoicePhoneProvider {
 
     @OnEvent(ServerEvent.VOIP_PHONE_CALL_START)
     public startCall(_source: number, callerPhone: string, receiverPhone: string) {
+        const blackout = this.store.getState().global.blackout;
         const blackoutLevel = this.store.getState().global.blackoutLevel;
 
-        if (blackoutLevel > 2) {
+        if (blackout || blackoutLevel > 2) {
             return;
         }
 

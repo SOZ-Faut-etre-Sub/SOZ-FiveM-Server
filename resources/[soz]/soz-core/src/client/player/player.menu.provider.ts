@@ -240,10 +240,6 @@ export class PlayerMenuProvider {
             return;
         }
 
-        if (!progress.completed) {
-            return;
-        }
-
         TriggerServerEvent('soz-character:server:UpdateClothConfig', 'Naked', false);
     }
 }

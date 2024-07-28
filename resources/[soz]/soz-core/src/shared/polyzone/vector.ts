@@ -135,3 +135,11 @@ export const planeEquationCoeffs = (p1: Point3D, p2: Point3D, p3: Point3D): [num
 
     return [normal[0], normal[1], normal[2], D];
 };
+
+export const clampMagnitudeVector3 = (v: Vector3, max: number) => {
+    const norm = toVectorNorm(v);
+    if (norm > max) {
+        return multVector3(v, max / norm);
+    }
+    return v;
+};

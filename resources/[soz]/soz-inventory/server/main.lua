@@ -369,7 +369,7 @@ function Inventory.FilterItems(inv, target)
         local disabled = not _G.Container[inv.type]:CanGetContentInInventory(inv) or not _G.Container[target.type]:CanPutContentInInventory(target)
         if inv.items ~= nil then
             for _, v in pairs(inv.items) do
-                if target.type ~= "player" or inv.type ~= "player" or not QBCore.Shared.Items[v.name]["not_searchable"] then
+                if target.type ~= "player" or inv.type ~= "player" or not (QBCore.Shared.Items[v.name]["notSearchable"] or v.metadata.notSearchable) then
                     local insertId = #items + 1
                     items[insertId] = table.deepclone(v)
 

@@ -153,7 +153,7 @@ export const WeaponAmmo: {[key: string]: string} = {
     [WeaponName.HOMINGLAUNCHER]: 'AIM-9X',
     [WeaponName.COMPACTLAUNCHER]: '40x46mm M381',
     [WeaponName.RAYMINIGUN]: 'Munition Alien',
-    [WeaponName.EMPLAUNCHER]: 'Munition Alien',
+    [WeaponName.EMPLAUNCHER]: 'Munition IEM',
     [WeaponName.RAILGUNXM3]: 'Munition Alien',
     [WeaponName.SNIPERRIFLE]: '.50 BMG',
     [WeaponName.HEAVYSNIPER]: '.50 BMG',

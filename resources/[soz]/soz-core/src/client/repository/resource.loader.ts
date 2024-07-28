@@ -85,6 +85,48 @@ export class ResourceLoader {
         return scaleform;
     }
 
+    public scaleformPushString(scaleform: number, method: string, val: string) {
+        PushScaleformMovieFunction(scaleform, method);
+        PushScaleformMovieFunctionParameterString(val);
+        PopScaleformMovieFunctionVoid();
+    }
+
+    public scaleformPushArgInt(scaleform: number, method: string, val: number) {
+        PushScaleformMovieFunction(scaleform, method);
+        PushScaleformMovieFunctionParameterInt(val);
+        PopScaleformMovieFunctionVoid();
+    }
+
+    public scaleformPushArgFloat(scaleform: number, method: string, val: number) {
+        PushScaleformMovieFunction(scaleform, method);
+        PushScaleformMovieFunctionParameterFloat(val);
+        PopScaleformMovieFunctionVoid();
+    }
+
+    public scaleformPushArgBool(scaleform: number, method: string, val: boolean) {
+        PushScaleformMovieFunction(scaleform, method);
+        PushScaleformMovieFunctionParameterBool(val);
+        PopScaleformMovieFunctionVoid();
+    }
+
+    public scaleformPushArgMulti(scaleform: number, method: string, vals: any[]) {
+        PushScaleformMovieFunction(scaleform, method);
+        for (const val of vals) {
+            if (typeof val == 'string') {
+                PushScaleformMovieFunctionParameterString(val);
+            } else if (typeof val == 'boolean') {
+                PushScaleformMovieFunctionParameterBool(val);
+            } else if (typeof val == 'number') {
+                if (Number.isInteger(val)) {
+                    PushScaleformMovieFunctionParameterInt(val);
+                } else {
+                    PushScaleformMovieFunctionParameterFloat(val);
+                }
+            }
+        }
+        PopScaleformMovieFunctionVoid();
+    }
+
     async loadStreamedTextureDict(name: string): Promise<void> {
         if (!HasStreamedTextureDictLoaded(name)) {
             RequestStreamedTextureDict(name, true);

@@ -62,7 +62,8 @@ export type WeaponConfig = {
         | 'ammo_14'
         | 'ammo_15'
         | 'ammo_16'
-        | 'ammo_17';
+        | 'ammo_17'
+        | 'ammo_18';
     drawPosition?: WeaponDrawPosition;
     attachments?: WeaponAttachment[];
 };
@@ -1027,7 +1028,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.EMPLAUNCHER]: {
         recoil: 0.4,
-        ammo: 'ammo_14',
+        ammo: 'ammo_18',
     },
     [WeaponName.RAILGUNXM3]: {
         recoil: 0.4,

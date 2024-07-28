@@ -145,6 +145,10 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
         } else if (item?.metadata?.type && !item?.metadata?.label) {
             itemExtraLabel += ` [${item?.metadata?.type}]`
         }
+
+        if (item?.metadata?.notSearchable) {
+            itemExtraLabel += `[Caché]`
+        }
         
         if (item?.type === 'evidence' && item.name != 'scientist_photo' && item.metadata?.expiration) {
             const currentTime = new Date().getTime();

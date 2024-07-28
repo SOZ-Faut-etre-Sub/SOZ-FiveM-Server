@@ -55,9 +55,10 @@ export class VoipVoiceRadioProvider {
         channelType: RadioChannelType,
         position: Vector3
     ) {
+        const blackout = this.store.getState().global.blackout;
         const blackoutLevel = this.store.getState().global.blackoutLevel;
 
-        if (blackoutLevel > 1) {
+        if (blackout || blackoutLevel > 1) {
             return [];
         }
 

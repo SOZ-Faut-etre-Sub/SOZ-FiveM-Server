@@ -62,19 +62,17 @@ export class PoliceJobMenuProvider {
         const coords = GetEntityCoords(ped);
         const [street, street2] = GetStreetNameAtCoord(coords[0], coords[1], coords[2]);
 
-        if (IsWarningMessageActive() || GetWarningMessageTitleHash() != 1246147334) {
-            let name = GetStreetNameFromHashKey(street);
-            if (street2) {
-                name += ' et ' + GetStreetNameFromHashKey(street2);
-            }
-
-            TriggerEvent(
-                ClientEvent.POLICE_RED_CALL,
-                '555-POLICE',
-                `Code Rouge !!! Un agent a besoin d'aide vers ${name}`,
-                `Code Rouge !!! Un agent a besoin d'aide vers <span {class}>${name}</span>`
-            );
+        let name = GetStreetNameFromHashKey(street);
+        if (street2) {
+            name += ' et ' + GetStreetNameFromHashKey(street2);
         }
+
+        TriggerEvent(
+            ClientEvent.POLICE_RED_CALL,
+            '555-POLICE',
+            `Code Rouge !!! Un agent a besoin d'aide vers ${name}`,
+            `Code Rouge !!! Un agent a besoin d'aide vers <span {class}>${name}</span>`
+        );
 
         return;
     }

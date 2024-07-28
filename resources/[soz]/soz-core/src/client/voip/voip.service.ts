@@ -38,6 +38,8 @@ export class VoipService {
 
     private ready = false;
 
+    private radioJammed = false;
+
     public getVoiceClickVolume(radioType: RadioType, channelType: RadioChannelType) {
         return this.voiceRadioProvider.getVoiceClickVolume(radioType, channelType);
     }
@@ -170,5 +172,20 @@ export class VoipService {
 
     public setReady(value: boolean) {
         this.ready = value;
+    }
+
+    public setRadioJammed(value: boolean) {
+        if (value == this.radioJammed) {
+            return;
+        }
+        this.radioJammed = value;
+        for (const frequency of this.voiceRadioProvider.frequencyTransmission.keys()) {
+            if (value) {
+                this.disconnectRadio(frequency);
+            } else {
+                this.connectRadio(frequency);
+            }
+        }
+        this.voiceRadioProvider.setJammed(this.radioJammed);
     }
 }

@@ -380,9 +380,15 @@ export enum ClientEvent {
     GANG_SMUGGLING_SPAWN_GUARD_RESALER = 'soz-core:client:gang:smuggling:spawn-guard-resalers',
 
     GANG_CYBER_HACK_VEHICLE = 'soz-core:server:gang:cyber:hack-vehicle',
+    GANG_CYBER_ALERT_INJECTOR_USE = 'soz-core:server:gang:cyber:use-alert-injector',
+    GANG_CYBER_SCANNER_USE = 'soz-core:server:gang:cyber:use-scanner',
+    GANG_CYBER_TRACKER_UPDATE = 'soz-core:server:gang:cyber:tracker-update',
+    GANG_CYBER_VISION_USE = 'soz-core:server:gang:cyber:vision-use',
 
     GANG_CARTEL_CONTAINER_USE = 'soz-core:client:gang:container-use',
 
     WORLD_EVENT_START = 'soz-core:client:world-event:start',
     WORLD_EVENT_END = 'soz-core:client:world-event:end',
+
+    DRONE_USE = 'soz-core:client:drone-use',
 }
