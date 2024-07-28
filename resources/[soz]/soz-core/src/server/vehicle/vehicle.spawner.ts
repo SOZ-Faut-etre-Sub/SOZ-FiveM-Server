@@ -27,7 +27,6 @@ import {
     VehicleType,
     VehicleVolatileState,
 } from '../../shared/vehicle/vehicle';
-import { PrismaService } from '../database/prisma.service';
 import { PlayerService } from '../player/player.service';
 import { VehicleStateService } from './vehicle.state.service';
 
@@ -143,8 +142,14 @@ const lsmcMlo = new BoxZone([347.75, -1412.87, 29.43], 92.8, 87.0, {
 });
 
 //Meteor
-const meteor = new BoxZone([2462.6, 3290, 29.43], 400.0, 300.0, {
-    heading: 0,
+const meteor = new BoxZone([2462.6, 3290, 29.43], 400.0, 800.0, {
+    heading: 45,
+});
+
+const gouv = new BoxZone([-464.79, -619.69, 31.32], 18.45, 19.4, {
+    heading: 180.09,
+    minZ: 29.92,
+    maxZ: 32.52,
 });
 
 const VEHICLE_INVERTED_SPAWN = ['raketrailer'];
@@ -156,9 +161,6 @@ export class VehicleSpawner {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
-
-    @Inject(PrismaService)
-    private prismaService: PrismaService;
 
     @Inject(Logger)
     private logger: Logger;
@@ -187,6 +189,7 @@ export class VehicleSpawner {
         noSpawnZones.push(lsmcParking);
         noSpawnZones.push(lsmcMlo);
         noSpawnZones.push(meteor);
+        noSpawnZones.push(gouv);
 
         this.noSpawnZone = new MultiZone<BoxZone>(noSpawnZones);
     }
