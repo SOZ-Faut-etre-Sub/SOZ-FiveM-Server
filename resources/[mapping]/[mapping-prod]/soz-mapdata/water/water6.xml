@@ -172,6 +172,21 @@
       <a4 value="26" />
       <NoStencil value="false" />
     </Item>
+    <Item>
+      <minX value="-396" />
+      <maxX value="0" />
+      <minY value="6000" />
+      <maxY value="6400" />
+      <Type value="0" />
+      <IsInvisible value="false" />
+      <HasLimitedDepth value="false" />
+      <z value="6" />
+      <a1 value="26" />
+      <a2 value="26" />
+      <a3 value="26" />
+      <a4 value="26" />
+      <NoStencil value="false" />
+    </Item>
 
     <Item>
       <minX value="-4000" />
