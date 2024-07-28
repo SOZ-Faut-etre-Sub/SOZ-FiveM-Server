@@ -1510,7 +1510,7 @@
             <txdName>lspd50</txdName>
             <handlingId>FELON</handlingId>
             <gameName>lspd50</gameName>
-            <vehicleMakeName>lspd50</vehicleMakeName>
+            <vehicleMakeName/>
             <expressionDictName>null</expressionDictName>
             <expressionName>null</expressionName>
             <animConvRoofDictName>null</animConvRoofDictName>
@@ -1739,7 +1739,7 @@
             <txdName>bcso50</txdName>
             <handlingId>GRESLEY</handlingId>
             <gameName>bcso50</gameName>
-            <vehicleMakeName>bcso50</vehicleMakeName>
+            <vehicleMakeName/>
             <expressionDictName>null</expressionDictName>
             <expressionName>null</expressionName>
             <animConvRoofDictName>null</animConvRoofDictName>
@@ -1856,7 +1856,7 @@
             <txdName>bcso51</txdName>
             <handlingId>FUGITIVE</handlingId>
             <gameName>bcso51</gameName>
-            <vehicleMakeName>bcso51</vehicleMakeName>
+            <vehicleMakeName/>
             <expressionDictName>null</expressionDictName>
             <expressionName>null</expressionName>
             <animConvRoofDictName>null</animConvRoofDictName>
