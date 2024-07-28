@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@core/decorators/injectable';
 import { PedFactory } from '@public/client/factory/ped.factory';
 import { Notifier } from '@public/client/notifier';
 import { NuiDispatch } from '@public/client/nui/nui.dispatch';
+import { OceanProvider } from '@public/client/world/ocean.provider';
 import { wait } from '@public/core/utils';
 import { ServerEvent } from '@public/shared/event';
 import {
@@ -28,6 +29,9 @@ export class TaxiMissionService {
 
     @Inject(NuiDispatch)
     private dispatcher: NuiDispatch;
+
+    @Inject(OceanProvider)
+    public oceanProvider: OceanProvider;
 
     private state: TaxiStatus = {
         horodateurDisplayed: false,
@@ -213,8 +217,15 @@ export class TaxiMissionService {
         this.updateState({
             taxiMissionInProgress: true,
         });
+        const currentWaterLevel = await this.oceanProvider.getWaterLevel().then(data => data);
+        const targetNPCLocation = this.savedNpcPosition
+            ? this.savedNpcPosition
+            : getRandomItem(NPCTakeLocations.filter(location => location[2] > currentWaterLevel[1]));
 
-        const targetNPCLocation = this.savedNpcPosition ? this.savedNpcPosition : getRandomItem(NPCTakeLocations);
+        if (!targetNPCLocation) {
+            this.notifier.notify("Il n'y'a actuellement pas de client.", 'error');
+            return;
+        }
         this.savedNpcPosition = targetNPCLocation;
 
         const model = GetHashKey(getRandomItem(NpcSkins));
@@ -302,7 +313,15 @@ export class TaxiMissionService {
                         RemoveBlip(this.NpcBlip);
                         this.NpcBlip = 0;
                     }
-                    const deliveryLocation = getRandomItem(NPCDeliverLocations);
+                    const currentWaterLevel = await this.oceanProvider.getWaterLevel().then(data => data);
+                    const deliveryLocation = getRandomItem(
+                        NPCDeliverLocations.filter(location => location[2] > currentWaterLevel[1])
+                    );
+
+                    if (!deliveryLocation) {
+                        this.notifier.notify("Il n'y'a actuellement pas de client.", 'error');
+                        return;
+                    }
 
                     if (this.DeliveryBlip) {
                         RemoveBlip(this.DeliveryBlip);
