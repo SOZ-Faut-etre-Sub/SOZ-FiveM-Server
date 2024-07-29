@@ -4,69 +4,12 @@ local lib, anim = "anim@mp_atm@enter", "enter"
 -- This is used to limit chained money withdrawals (withdrawal only)
 local UsedBankAtm = {}
 
-local function playAnimation()
-    if not IsNuiFocused() then
-        QBCore.Functions.RequestAnimDict(lib)
-        TaskPlayAnim(PlayerPedId(), lib, anim, 8.0, -8.0, -1, 0, 0.0, true, true, true)
-        Wait(3000)
-    end
-end
-
 local function getATMOrBankAccount(atm, bank)
     if atm and string.match(atm, "atm_ent_%w+") then
         return atm
     end
     return bank
 end
-
-local function openBankScreen(account, isATM, bankAtmAccountId, atmType, atmName)
-    QBCore.Functions.TriggerCallback("banking:getBankingInformation", function(banking)
-        if banking ~= nil then
-            playAnimation()
-
-            SetNuiFocus(true, true)
-            SendNUIMessage({
-                status = "openbank",
-                information = banking,
-                isATM = isATM,
-                atmType = atmType,
-                atmName = atmName,
-                bankAtmAccount = bankAtmAccountId,
-            })
-
-            TriggerEvent("soz-core:client:bank:openui", {
-                accounts = banking,
-                isATM = isATM,
-                atmType = atmType,
-                atmName = atmName,
-                bankAtmAccount = bankAtmAccountId,
-            })
-        end
-    end, account)
-end
-
-RegisterNetEvent("banking:openBankScreen", function()
-    local currentBank = exports["soz-bank"]:GetCurrentBank()
-    local accountId = QBCore.Functions.TriggerRpc("banking:server:getBankAccount", currentBank.bank)
-    openBankScreen(nil, false, accountId)
-end)
-
-RegisterNetEvent("banking:openATMScreen", function(data)
-    local atm = QBCore.Functions.TriggerRpc("banking:server:getAtmAccount", data.atmType, GetEntityCoords(data.entity))
-    openBankScreen(nil, true, atm.account, data.atmType, atm.name)
-end)
-
-RegisterNetEvent("banking:openSocietyBankScreen", function()
-    local currentBank = exports["soz-bank"]:GetCurrentBank()
-    local accountId = QBCore.Functions.TriggerRpc("banking:server:getBankAccount", currentBank.bank)
-    openBankScreen(PlayerData.job.id, false, accountId)
-end)
-
-RegisterNUICallback("NUIFocusOff", function(data, cb)
-    SetNuiFocus(false, false)
-    SendNUIMessage({ status = "closebank" })
-    playAnimation()
-end)
 
 RegisterNUICallback("createOffshoreAccount", function(data, cb)
     QBCore.Functions.TriggerCallback("banking:server:createOffshoreAccount", function(success, reason)
@@ -77,21 +20,6 @@ RegisterNUICallback("createOffshoreAccount", function(data, cb)
         end
         openBankScreen(data.account)
     end, data.account)
-end)
-
-RegisterNUICallback("doDeposit", function(data, cb)
-    local amount = tonumber(data.amount)
-
-    if amount ~= nil and amount > 0 then
-        QBCore.Functions.TriggerCallback("banking:server:TransferMoney", function(success, reason)
-            if success then
-                exports["soz-core"]:DrawAdvancedNotification("Maze Banque", "Dépot: ~g~" .. amount .. "$", "Vous avez déposé de l'argent", "CHAR_BANK_MAZE")
-            else
-                exports["soz-core"]:DrawNotification(Config.ErrorMessage[reason], "error")
-            end
-            openBankScreen(data.account, data.isATM, data.bankAtmAccount, data.atmType, data.atmName)
-        end, "player", data.account, amount)
-    end
 end)
 
 RegisterNUICallback("doOffshoreDeposit", function(data, cb)

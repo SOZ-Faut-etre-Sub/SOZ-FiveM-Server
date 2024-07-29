@@ -4,7 +4,7 @@ import { toVector2Object, Vector3 } from '@public/shared/polyzone/vector';
 
 import { AtmConfig, HouseSafeStorageTiers, SafeStorageMaxCapacity, SocietySafeStorage } from '../../config/bank';
 import { Inject, Injectable } from '../../core/decorators/injectable';
-import { AtmType, BankAccount, BankAccountType } from '../../shared/bank';
+import { AtmType, BankAccount, BankAccountType, BankAtmConfig } from '../../shared/bank';
 import { JobType } from '../../shared/job';
 import { RepositoryType } from '../../shared/repository';
 import { PrismaService } from '../database/prisma.service';
@@ -30,7 +30,6 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
 
         for (const account of result) {
             const serializedData = await this.serializeFromDatabase(account);
-
             accounts[serializedData.id] = serializedData;
         }
 
@@ -45,10 +44,10 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
     ): Promise<BankAccount> {
         const data = await this.prismaService.bank_accounts.create({
             data: {
-                ...this.getDatabaseCondition({ id: accountId, type: accountType } as any),
+                accountid: accountId,
                 account_type: accountType as any,
                 money: this.getDefaultMoney(accountType, atmType),
-                coords: JSON.stringify(toVector2Object(coords)),
+                coords: coords ? JSON.stringify(toVector2Object(coords)) : null,
             },
         });
 
@@ -70,14 +69,14 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
 
         if (
             !allowOverflow &&
-            (account.type === 'house_safe' || account.type === 'safestorages') &&
+            (account.type === 'housestorages' || account.type === 'safestorages') &&
             account[moneyType] + money > account.maxCapacity
         ) {
             return false;
         }
 
         const bank_account = await this.prismaService.bank_accounts.update({
-            where: this.getDatabaseCondition(account),
+            where: { accountid: accountId },
             data: {
                 [moneyType]: { increment: money },
             },
@@ -104,7 +103,7 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
         }
 
         const bank_account = await this.prismaService.bank_accounts.update({
-            where: this.getDatabaseCondition(account),
+            where: { accountid: accountId },
             data: {
                 [moneyType]: { decrement: money },
             },
@@ -115,17 +114,26 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
         return true;
     }
 
-    protected getDatabaseCondition(account: BankAccount) {
-        switch (account.type) {
-            case 'bank_atm':
-                return { businessid: account.id };
-            case 'safestorages':
-                return { businessid: account.id };
-            case 'house_safe':
-                return { houseid: account.id };
-            default:
-                throw new Error('Invalid account type');
+    public async removeMoneyRatio(
+        accountId: string,
+        ratio: number,
+        moneyType: 'money' | 'marked_money' = 'money'
+    ): Promise<boolean> {
+        const account = this.data[accountId];
+        if (!account) {
+            return;
         }
+
+        const bank_account = await this.prismaService.bank_accounts.update({
+            where: { accountid: accountId },
+            data: {
+                [moneyType]: { multiply: ratio },
+            },
+        });
+
+        this.data[accountId][moneyType] = Number(bank_account[moneyType]);
+
+        return true;
     }
 
     protected getDefaultMoney(type: BankAccountType, atmType?: AtmType): number {
@@ -141,53 +149,63 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
         }
     }
 
+    protected getAtmConfig(accountId: string): BankAtmConfig {
+        const bankType = accountId.match(/bank_(\D+)/)?.[1] as string;
+        const atmType = accountId.match(/atm_(\w+)_(\w+)/)?.[1] as string;
+
+        if (bankType) {
+            return AtmConfig[bankType];
+        }
+
+        if (atmType) {
+            return AtmConfig[atmType];
+        }
+
+        return null;
+    }
+
     protected async serializeFromDatabase(data: bank_accounts): Promise<BankAccount> {
-        let accountId = data.accountid;
         let accountType: BankAccountType = data.account_type as any;
-        let accountLabel = data.citizenid;
+        let accountLabel = data.accountid;
         let accountMaxCapacity = null;
 
         const coords = JSON.parse(data.coords) as { x: number; y: number };
-        const safeStorage = SocietySafeStorage[data.businessid?.replace('safe_', '')];
+        const safeStorage = SocietySafeStorage[data.accountid?.replace('safe_', '')];
+        const apartment = await this.housingRepository.getApartmentByIdentifier(data.accountid);
 
         switch (data.account_type) {
             case 'business':
-                accountId = data.businessid;
-                accountLabel = this.jobService.getJob(accountId as JobType)?.label ?? accountId;
+                accountLabel = this.jobService.getJob(data.accountid as JobType)?.label ?? data.accountid;
                 break;
-            case 'safestorages':
-                if (data.houseid) {
-                    const apartment = await this.housingRepository.getApartmentByIdentifier(data.houseid);
-
-                    accountId = data.houseid;
-                    accountType = 'house_safe';
+            case 'housestorages':
+                if (apartment) {
                     accountLabel = apartment.label;
                     accountMaxCapacity = HouseSafeStorageTiers[apartment.tier ?? 0];
-                    break;
                 }
-                accountId = data.businessid;
-                accountLabel = safeStorage?.label ?? accountId;
+
+                break;
+            case 'safestorages':
+                accountLabel = safeStorage?.label ?? data.accountid;
                 accountMaxCapacity = SafeStorageMaxCapacity;
                 break;
             case 'offshore':
-                accountId = data.businessid;
-                accountLabel = safeStorage?.label ?? accountId;
+                accountLabel = safeStorage?.label ?? data.accountid;
                 break;
             case 'bank_atm':
-                accountId = data.businessid;
                 accountType = 'bank_atm';
-                accountLabel = safeStorage?.label ?? accountId;
+                accountLabel = safeStorage?.label ?? data.accountid;
                 break;
         }
 
         return {
-            id: accountId,
+            id: data.accountid,
             type: accountType,
             label: accountLabel,
-            owner: accountId,
+            owner: data.accountid,
             money: Number(data.money ?? 0),
             marked_money: Number(data.marked_money ?? 0),
             maxCapacity: accountMaxCapacity,
+            config: this.getAtmConfig(data.accountid),
             coords: data.coords ? [coords.x, coords.y] : null,
         };
     }

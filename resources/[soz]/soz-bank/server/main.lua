@@ -136,16 +136,6 @@ exports("TransferCashMoney", function(source, target, amount, cb)
     end
 end)
 
-QBCore.Functions.CreateCallback("banking:server:openSafeStorage", function(source, cb, safeStorage)
-    local account = Account(safeStorage)
-
-    if account and Account.AccessGranted(account, source) then
-        cb(true, account.money, account.marked_money)
-    else
-        cb(false)
-    end
-end)
-
 RegisterNetEvent("banking:server:updatePhoneBalance", function()
     local Player = QBCore.Functions.GetPlayer(source)
     local account = Account(Player.PlayerData.charinfo.account)

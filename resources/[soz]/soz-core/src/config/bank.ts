@@ -1,4 +1,4 @@
-import { AtmType } from '@public/shared/bank';
+import { AtmType, BankAtmConfig } from '@public/shared/bank';
 import { Vector4 } from '@public/shared/polyzone/vector';
 import { getRandomInt } from '@public/shared/random';
 
@@ -48,7 +48,7 @@ export const AtmModels: Record<string, AtmType> = {
     soz_atm_entreprise: AtmType.ENTERPRISE,
 };
 
-export const AtmConfig: Record<AtmType, { maxMoney: number; maxWithdrawal?: number; limit?: number }> = {
+export const AtmConfig: Record<AtmType, BankAtmConfig> = {
     [AtmType.PACIFIC]: { maxMoney: 6_000_000 },
     [AtmType.FLEECA]: { maxMoney: 500_000, maxWithdrawal: 100_000, limit: 10 * 60 * 1000 },
     [AtmType.BIG]: { maxMoney: 30_000, maxWithdrawal: 10_000, limit: 10 * 60 * 1000 },

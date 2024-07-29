@@ -2,7 +2,7 @@ import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
-import { isErr, isOk } from '../../../shared/result';
+import { isErr } from '../../../shared/result';
 import { VehicleConfiguration } from '../../../shared/vehicle/modification';
 import { BankService } from '../../bank/bank.service';
 import { PrismaService } from '../../database/prisma.service';
@@ -69,7 +69,13 @@ export class BennysResellProvider {
         const sellPrice = result.ok / 2;
         const gainPrice = result.ok * 0.1;
 
-        const cashTransferResult = await this.bankService.transferCashMoney('bennys_reseller', source, sellPrice);
+        const cashTransferResult = await this.bankService.transferCashMoney(
+            source,
+            'bennys_reseller',
+            'withdraw',
+            'money',
+            sellPrice
+        );
         const bennysGain = await this.bankService.transferFarmMoney(
             source,
             'bennys_reseller',
@@ -77,7 +83,7 @@ export class BennysResellProvider {
             gainPrice
         );
 
-        if (isOk(cashTransferResult) && bennysGain) {
+        if (cashTransferResult && bennysGain) {
             this.notifier.notify(source, `Vous avez vendu ce véhicule pour ~g~$${sellPrice.toLocaleString()}~s~.`);
             DeleteEntity(entity);
             await this.prismaService.playerVehicle.delete({

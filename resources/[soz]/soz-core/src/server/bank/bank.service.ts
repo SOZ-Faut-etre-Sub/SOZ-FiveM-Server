@@ -5,7 +5,7 @@ import { Monitor } from '@public/server/monitor/monitor';
 import { Notifier } from '@public/server/notifier';
 import { BankAccountRepository } from '@public/server/repository/bank.account.repository';
 import { BankFarmRepository } from '@public/server/repository/bank.farm.repository';
-import { Invoice } from '@public/shared/bank';
+import { BankActionType, Invoice } from '@public/shared/bank';
 import { Err, Ok, Result } from '@public/shared/result';
 import { RpcServerEvent } from '@public/shared/rpc';
 
@@ -35,10 +35,10 @@ export class BankService {
     @Inject(Monitor)
     private monitor: Monitor;
 
-    public async transferSafeMoney(
+    public async transferCashMoney(
         source: number,
-        safe: string,
-        type: 'deposit' | 'withdraw',
+        accountId: string,
+        type: BankActionType,
         moneyType: 'money' | 'marked_money',
         amount: number = 0,
         allowOverflow = false
@@ -49,32 +49,59 @@ export class BankService {
             return false;
         }
 
-        const safeAccount = await this.bankAccountRepository.find(safe);
-        if (!safeAccount) {
-            this.logger.error(`Safe account ${safe} not found`);
+        const bankAccount = await this.bankAccountRepository.find(accountId);
+        if (!bankAccount) {
+            this.logger.error(`Bank account ${accountId} not found`);
             return false;
         }
 
         const playerMoney = player.Functions.GetMoney(moneyType);
         if (type === 'deposit' && Number(playerMoney) < amount) {
-            this.notifier.error(source, "Vous n'avez pas assez d'argent sur vous");
+            this.notifier.advancedNotify(
+                source,
+                'Maze Banque',
+                `Dépot: ~r~$${amount}`,
+                'Fond insuffisant',
+                'CHAR_BANK_MAZE',
+                'error'
+            );
             return false;
         }
 
         if (type === 'deposit') {
             if (!player.Functions.RemoveMoney(moneyType, amount)) {
-                this.notifier.error(source, "Vous n'avez pas assez d'argent sur vous");
+                this.notifier.advancedNotify(
+                    source,
+                    'Maze Banque',
+                    `Dépot: ~r~$${amount}`,
+                    'Fond insuffisant',
+                    'CHAR_BANK_MAZE',
+                    'error'
+                );
                 return false;
             }
 
-            if (!(await this.bankAccountRepository.addMoney(safe, amount, moneyType, allowOverflow))) {
+            if (!(await this.bankAccountRepository.addMoney(bankAccount.id, amount, moneyType, allowOverflow))) {
                 return false;
             }
 
-            this.notifier.notify(source, `Vous avez déposé $${amount} dans le coffre`);
+            this.notifier.advancedNotify(
+                source,
+                'Maze Banque',
+                `Dépot: ~g~$${amount}`,
+                "Vous avez déposé de l'argent",
+                'CHAR_BANK_MAZE'
+            );
         } else {
-            if (!(await this.bankAccountRepository.removeMoney(safe, amount, moneyType, allowOverflow))) {
-                this.notifier.error(source, "Le coffre n'a pas assez d'argent");
+            if (!(await this.bankAccountRepository.removeMoney(bankAccount.id, amount, moneyType, allowOverflow))) {
+                this.notifier.advancedNotify(
+                    source,
+                    'Maze Banque',
+                    `Retrait: ~r~$${amount}`,
+                    'Fond insuffisant',
+                    'CHAR_BANK_MAZE',
+                    'error'
+                );
                 return false;
             }
 
@@ -82,12 +109,18 @@ export class BankService {
                 return false;
             }
 
-            this.notifier.notify(source, `Vous avez retiré $${amount} du coffre`);
+            this.notifier.advancedNotify(
+                source,
+                'Maze Banque',
+                `Retrait: ~r~$${amount}`,
+                "Vous avez retiré de l'argent",
+                'CHAR_BANK_MAZE'
+            );
         }
 
         this.monitor.traceEvent(`safe_${type}`, {
             player_source: source,
-            target_account: safe,
+            target_account: bankAccount.id,
             money_type: moneyType,
             amount: amount,
         });
@@ -162,18 +195,6 @@ export class BankService {
         });
     }
 
-    public transferCashMoney(source: string, target: number, amount: number): Promise<Result<boolean, string>> {
-        return new Promise(resolve => {
-            exports['soz-bank'].TransferCashMoney(source, target, amount, (success, reason) => {
-                if (success) {
-                    resolve(Ok(true));
-                } else {
-                    resolve(Err(reason));
-                }
-            });
-        });
-    }
-
     public addAccountMoney(
         account: any,
         amount: number,
@@ -194,7 +215,7 @@ export class BankService {
     public async getAccountid(citizenId) {
         const bankAccount = await this.prismaService.bank_accounts.findFirst({
             where: {
-                citizenid: citizenId,
+                accountid: citizenId,
             },
         });
         return bankAccount.accountid;

@@ -28,6 +28,8 @@ export class BankWashMoneyProvider {
         const maxWashMoney = Math.ceil(OffShoreMaxWashAmount / accounts.length);
 
         for (const account of accounts) {
+            this.logger.info(`[BankWashMoneyProvider] Washing money for ${account.id}`);
+
             const targetAccount = await this.bankAccountRepository.find(account.id.replace('offshore_', ''));
             if (!targetAccount) {
                 this.logger.error(`[BankWashMoneyProvider] Standard account for ${account.id} not found`);
@@ -42,8 +44,13 @@ export class BankWashMoneyProvider {
 
             const markedTransfer = await this.bankAccountRepository.removeMoney(account.id, toWash, 'marked_money');
             if (markedTransfer) {
+                this.logger.info(
+                    `[BankWashMoneyProvider] Transfered ${toWash} from ${account.id} to ${targetAccount.id}`
+                );
                 await this.bankAccountRepository.addMoney(targetAccount.id, toWash, 'money');
             }
+
+            this.logger.info(`[BankWashMoneyProvider] Finished washing money for ${account.id}`);
         }
     }
 }

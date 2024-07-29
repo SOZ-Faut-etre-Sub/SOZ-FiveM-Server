@@ -23,9 +23,9 @@ export const DashboardPage: FunctionComponent<BankUiData> = ({ accounts: { perso
                 <div className="w-4/6 space-y-10">
                     <Card className="space-y-6">
                         <h2 className="uppercase text-sm font-light text-gray-300">Solde bancaire actuel</h2>
-                        <p className="text-center font-semibold text-6xl">$ {personal.money}</p>
+                        <p className="text-center font-semibold text-6xl">$ {personal?.money}</p>
                         <div className="text-sm">
-                            IBAN: <span className="font-semibold">{personal.id}</span>
+                            IBAN: <span className="font-semibold">{personal?.id}</span>
                         </div>
                     </Card>
 

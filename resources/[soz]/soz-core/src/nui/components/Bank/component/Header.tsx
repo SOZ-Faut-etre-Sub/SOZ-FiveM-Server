@@ -1,15 +1,16 @@
-import React, { FunctionComponent, useMemo } from 'react';
-import { FaMoneyBillWave } from 'react-icons/fa';
+import React, { FunctionComponent, ReactNode, useMemo } from 'react';
+import { FaMoneyBillWave, FaPiggyBank } from 'react-icons/fa';
 
 import { usePlayer } from '../../../hook/data';
 import { Mugshot } from '../../Player/Mugshot';
 import { FORMAT_CURRENCY } from '../utils/format';
 
 type HeaderProps = {
-    title: string;
+    title: ReactNode;
+    bankMoney?: number;
 };
 
-export const Header: FunctionComponent<HeaderProps> = ({ title }) => {
+export const Header: FunctionComponent<HeaderProps> = ({ title, bankMoney }) => {
     const player = usePlayer();
 
     const playerMoney = useMemo<number>(() => {
@@ -19,7 +20,7 @@ export const Header: FunctionComponent<HeaderProps> = ({ title }) => {
     }, [player.money]);
 
     return (
-        <div className="flex justify-between items-end">
+        <div className="flex justify-between items-center">
             <span className="text-3xl font-semibold">{title}</span>
             <span className="flex items-center gap-3 text-md">
                 <Mugshot
@@ -32,6 +33,11 @@ export const Header: FunctionComponent<HeaderProps> = ({ title }) => {
                         {player?.charinfo?.firstname || 'John'} {player?.charinfo?.lastname || 'Doe'}
                     </span>
                     <span className="flex items-center gap-2 text-sm text-white/70">
+                        {bankMoney && (
+                            <>
+                                <FaPiggyBank /> {bankMoney.toLocaleString('en-US', FORMAT_CURRENCY)}
+                            </>
+                        )}
                         <FaMoneyBillWave /> {playerMoney.toLocaleString('en-US', FORMAT_CURRENCY)}
                     </span>
                 </div>

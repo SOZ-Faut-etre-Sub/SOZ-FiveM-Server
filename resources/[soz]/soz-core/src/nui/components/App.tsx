@@ -22,6 +22,7 @@ import { fetchNui } from '../fetch';
 import { useNuiEvent } from '../hook/nui';
 import { store } from '../store';
 import { AudioApp } from './Audio/AudioApp';
+import { AtmApp } from './Bank/AtmApp';
 import { BankApp } from './Bank/BankApp';
 import { SafeApp } from './Bank/SafeApp';
 import { RepairApp } from './Bennys/RepairApp';
@@ -114,6 +115,7 @@ export const App: FunctionComponent = () => {
                 <InputApp />
                 <MedicalApp />
                 <BankApp />
+                <AtmApp />
                 <SafeApp />
             </div>
             <Meteor />

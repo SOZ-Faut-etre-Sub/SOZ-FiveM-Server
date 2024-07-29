@@ -13,10 +13,6 @@ datasource db {
 model bank_accounts {
     id           BigInt                     @id @default(autoincrement())
     accountid    String?                    @unique(map: "accountid") @db.VarChar(50)
-    citizenid    String?                    @unique(map: "citizenid") @db.VarChar(50)
-    businessid   String?                    @unique(map: "businessid") @db.VarChar(50)
-    houseid      String?                    @unique(map: "houseid") @db.VarChar(50)
-    gangid       String?                    @unique(map: "gangid") @db.VarChar(50)
     money        BigInt                     @default(0)
     marked_money BigInt                     @default(0)
     account_type bank_accounts_account_type @default(player)
@@ -600,10 +596,11 @@ model snake_score {
 
 enum bank_accounts_account_type {
     player
+    housestorages
     business
     safestorages
     offshore
-    bank_atm     @map("bank-atm")
+    bank_atm      @map("bank-atm")
     gang
 }
 

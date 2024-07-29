@@ -421,6 +421,7 @@ export enum NuiEvent {
 
     PoliceUploadScientistPhoto = 'soz-core:client:job:police:upload-photo',
 
+    BankAtmAction = 'soz-core:nui:bank-atm:action',
     BankSafeTransferAction = 'soz-core:nui:bank-safe:transfer-action',
 
     ZkeaFournitureShow = 'soz-core:nui:zkea:fourniture:show',

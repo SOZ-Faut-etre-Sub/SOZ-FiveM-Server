@@ -3,7 +3,7 @@ import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
-import { BankAccount } from '../../shared/bank';
+import { BankAccount, BankActionType } from '../../shared/bank';
 import { ClientEvent } from '../../shared/event/client';
 import { NuiEvent } from '../../shared/event/nui';
 import { BoxZone } from '../../shared/polyzone/box.zone';
@@ -30,10 +30,7 @@ export class BankSafeProvider {
                         label: 'Ouvrir',
                         icon: 'c:bank/compte_safe.png',
                         action: async () => {
-                            const safe = await emitRpc<BankAccount>(
-                                RpcServerEvent.BANK_SAFE_GET_ACCOUNT,
-                                `safe_${job}`
-                            );
+                            const safe = await emitRpc<BankAccount>(RpcServerEvent.BANK_GET_ACCOUNT, `safe_${job}`);
                             if (!safe) return;
 
                             this.nuiDispatch.dispatch('bank_safe', 'ShowSafe', safe);
@@ -53,17 +50,17 @@ export class BankSafeProvider {
         moneyType,
         amount = 0,
     }: {
-        type: 'deposit' | 'withdraw';
+        type: BankActionType;
         safe: string;
         moneyType: 'money' | 'marked_money';
         amount: number;
     }) {
-        return await emitRpc<boolean>(RpcServerEvent.BANK_SAFE_TRANSFER_ACTION, type, safe, moneyType, amount);
+        return await emitRpc<boolean>(RpcServerEvent.BANK_CASH_TRANSFER_ACTION, type, safe, moneyType, amount);
     }
 
     @OnEvent(ClientEvent.BANK_SAFE_HOUSE_OPEN_UI)
     public async onHouseOpenUI(identifier: string) {
-        const safe = await emitRpc<BankAccount>(RpcServerEvent.BANK_SAFE_GET_ACCOUNT, identifier);
+        const safe = await emitRpc<BankAccount>(RpcServerEvent.BANK_GET_ACCOUNT, identifier);
         if (!safe) return;
 
         this.nuiDispatch.dispatch('bank_safe', 'ShowSafe', safe);

@@ -1,6 +1,9 @@
 import { Vector2 } from '@public/shared/polyzone/vector';
 
-export type BankAccountType = 'player' | 'house_safe' | 'business' | 'safestorages' | 'offshore' | 'bank_atm';
+export type BankAccountType = 'player' | 'housestorages' | 'business' | 'safestorages' | 'offshore' | 'bank_atm';
+export type BankActionType = 'deposit' | 'withdraw';
+
+export type BankAtmConfig = { maxMoney: number; maxWithdrawal?: number; limit?: number };
 
 export type BankAccount = {
     id: string;
@@ -10,7 +13,14 @@ export type BankAccount = {
     money: number;
     marked_money: number;
     maxCapacity: number | null;
+    config: BankAtmConfig | null;
     coords: Vector2 | null;
+};
+
+export type AtmUiData = {
+    account: BankAccount;
+    atm: BankAccount;
+    atmAccountId: string;
 };
 
 export type BankUiData = {

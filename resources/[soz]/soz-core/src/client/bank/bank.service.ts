@@ -1,5 +1,6 @@
 import { Injectable } from '@core/decorators/injectable';
 import { ClientEvent } from '@public/shared/event/client';
+import { ServerEvent } from '@public/shared/event/server';
 import { Apartment } from '@public/shared/housing/housing';
 import { getLocationHash } from '@public/shared/locationhash';
 import { Vector3 } from '@public/shared/polyzone/vector';
@@ -29,10 +30,6 @@ export class BankService {
         });
     }
 
-    public getBank() {
-        return exports['soz-bank'].GetCurrentBank();
-    }
-
     public getAtmName(entity: number, type: string) {
         const coords = GetEntityCoords(entity) as Vector3;
         const coordsHash = getLocationHash(coords);
@@ -42,12 +39,7 @@ export class BankService {
 
     public removeLiquidityRatio(entity: number, type: string, value: number) {
         const coords = GetEntityCoords(entity);
-        TriggerServerEvent(
-            'banking:server:RemoveAtmLiquidityRatio',
-            { x: coords[0], y: coords[1], z: coords[2] },
-            type,
-            value
-        );
+        TriggerServerEvent(ServerEvent.BANK_REMOVE_ATM_LIQUIDITY_RATIO, coords, type, value);
     }
 
     public openHouseSafe(apartment: Apartment) {

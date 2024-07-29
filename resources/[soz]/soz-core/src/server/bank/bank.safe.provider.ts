@@ -1,7 +1,7 @@
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
-import { BankAccount } from '../../shared/bank';
+import { BankAccount, BankActionType } from '../../shared/bank';
 import { JobPermission, JobType } from '../../shared/job';
 import { RpcServerEvent } from '../../shared/rpc';
 import { JobService } from '../job.service';
@@ -47,27 +47,26 @@ export class BankSafeProvider {
         return true;
     }
 
-    @Rpc(RpcServerEvent.BANK_SAFE_GET_ACCOUNT)
-    public async getSafeAccount(source: number, safe: string): Promise<BankAccount> {
-        if (!(await this.hasAccessToSafe(source, safe))) {
+    @Rpc(RpcServerEvent.BANK_GET_ACCOUNT)
+    public async getAccount(source: number, accountId: string): Promise<BankAccount> {
+        if (!(await this.hasAccessToSafe(source, accountId))) {
             return null;
         }
-
-        return await this.bankAccountRepository.find(safe);
+        return await this.bankAccountRepository.find(accountId);
     }
 
-    @Rpc(RpcServerEvent.BANK_SAFE_TRANSFER_ACTION)
+    @Rpc(RpcServerEvent.BANK_CASH_TRANSFER_ACTION)
     public async transferSafeMoney(
         source: number,
-        type: 'deposit' | 'withdraw',
-        safe: string,
+        type: BankActionType,
+        accountId: string,
         moneyType: 'money' | 'marked_money',
         amount: number = 0
     ): Promise<boolean> {
-        if (!(await this.hasAccessToSafe(source, safe))) {
+        if (!(await this.hasAccessToSafe(source, accountId))) {
             return null;
         }
 
-        return this.bankService.transferSafeMoney(source, safe, type, moneyType, amount);
+        return this.bankService.transferCashMoney(source, accountId, type, moneyType, amount);
     }
 }

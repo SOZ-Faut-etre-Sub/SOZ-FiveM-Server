@@ -483,4 +483,6 @@ export enum ServerEvent {
 
     LUXURY_DELETE_GUARD = 'soz-core:server:luxury:delete-guard',
     LUXURY_CREATED_GUARD = 'soz-core:server:luxury:created-guard',
+
+    BANK_REMOVE_ATM_LIQUIDITY_RATIO = 'soz-core:server:bank:remove-atm-liquidity-ratio',
 }

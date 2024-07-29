@@ -256,39 +256,5 @@ function Account.AccessGranted(acc, playerId)
     return _G.AccountType[acc.type]:AccessAllowed(owner, playerId)
 end
 
---- Create Player account
-RegisterNetEvent("QBCore:Server:PlayerLoaded", function(player --[[PlayerData]])
-    local account = Account(player.PlayerData.charinfo.account)
-    if account == nil then
-        account = Account.Create(player.PlayerData.charinfo.account, player.Functions.GetName(), "player", player.PlayerData.citizenid)
-    end
-end)
-
---- Loops
-local function saveAccounts(loop)
-    for _, acc in pairs(Accounts) do
-        if acc.changed then
-            if _G.AccountType[acc.type]:save(acc.id, acc.owner, acc.money, acc.marked_money) then
-                acc.changed = false
-            end
-        end
-    end
-
-    if loop then
-        SetTimeout(60000, saveAccounts)
-    end
-end
-
-saveAccounts(true)
-
--- Events
-AddEventHandler("onResourceStop", function(resource)
-    if resource == GetCurrentResourceName() then
-        saveAccounts()
-    end
-end)
-
-exports("saveAccounts", saveAccounts)
-
 _G.AccountType = {}
 exports("AddAccountMoney", Account.AddMoney)

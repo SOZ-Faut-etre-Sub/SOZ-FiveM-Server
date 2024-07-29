@@ -1,22 +1,32 @@
-/*
-  Warnings:
-
-  - A unique constraint covering the columns `[businessid]` on the table `bank_accounts` will be added. If there are existing duplicate values, this will fail.
-  - A unique constraint covering the columns `[houseid]` on the table `bank_accounts` will be added. If there are existing duplicate values, this will fail.
-  - A unique constraint covering the columns `[gangid]` on the table `bank_accounts` will be added. If there are existing duplicate values, this will fail.
-
-*/
 -- DropIndex
 DROP INDEX `businessid` ON `bank_accounts`;
-
--- DropIndex
+DROP INDEX `citizenid` ON `bank_accounts`;
 DROP INDEX `gangid` ON `bank_accounts`;
 
--- CreateIndex
-CREATE UNIQUE INDEX `businessid` ON `bank_accounts`(`businessid`);
+-- UpdateColumn
+alter table bank_accounts
+    modify account_type enum ('player', 'housestorages', 'business', 'safestorages', 'offshore', 'bank-atm', 'gang') default 'player' not null;
 
--- CreateIndex
-CREATE UNIQUE INDEX `houseid` ON `bank_accounts`(`houseid`);
+-- Migration
+update `bank_accounts`
+set accountid=businessid
+where account_type in ('business', 'safestorages', 'offshore', 'bank-atm')
+  and `businessid` is not null;
 
--- CreateIndex
-CREATE UNIQUE INDEX `gangid` ON `bank_accounts`(`gangid`);
+update `bank_accounts`
+set accountid=houseid,
+    account_type='housestorages'
+where account_type in ('safestorages')
+  and `houseid` is not null;
+
+update `bank_accounts`
+set accountid=gangid
+where account_type in ('gang')
+  and `gangid` is not null;
+
+-- AlterTable
+ALTER TABLE `bank_accounts`
+    DROP COLUMN `businessid`,
+    DROP COLUMN `citizenid`,
+    DROP COLUMN `gangid`,
+    DROP COLUMN `houseid`;

@@ -2,10 +2,11 @@ import { MinusIcon, PlusIcon } from '@heroicons/react/solid';
 import classnames from 'classnames';
 import React, { FunctionComponent } from 'react';
 
+import { BankActionType } from '../../../../shared/bank';
 import { FORMAT_CURRENCY } from '../utils/format';
 
 export interface HistoryRowProps {
-    type: 'deposit' | 'withdraw';
+    type: BankActionType;
     accountId: string;
     accountName: string;
     description: string;

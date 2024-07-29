@@ -14,7 +14,7 @@ import { useOutside } from '../../hook/outside';
 import LoadingIcon from '../../icons/loading.svg';
 import { AppContainer } from './component/AppContainer';
 import { Card } from './component/Card';
-import { FORMAT_CURRENCY } from './utils/format';
+import { FORMAT_CURRENCY, inputErrorMessage } from './utils/format';
 
 type SafeAppInputs = {
     money: number;
@@ -115,15 +115,6 @@ export const SafeApp: FunctionComponent = () => {
         });
     };
 
-    const inputErrorMessage = (type: string): string => {
-        switch (type) {
-            case 'min':
-                return 'Le montant doit être supérieur à 0';
-            case 'max':
-                return "Le montant doit être inférieur à l'argent disponible";
-        }
-    };
-
     if (!appShow) return null;
 
     return (
@@ -169,7 +160,7 @@ export const SafeApp: FunctionComponent = () => {
                                     </Tab.List>
                                 </Tab.Group>
 
-                                {account.type !== 'house_safe' && (
+                                {account.type !== 'housestorages' && (
                                     <Card>
                                         <div className="flex justify-between mb-4">
                                             <span className="text-white font-semibold">Argent</span>
@@ -200,7 +191,7 @@ export const SafeApp: FunctionComponent = () => {
                                         <span className="text-white font-semibold">Argent marqué</span>
                                         <span className="text-sm text-red-400/70">
                                             {account.marked_money.toLocaleString('en-US', FORMAT_CURRENCY)}
-                                            {account.type === 'house_safe' && (
+                                            {account.type === 'housestorages' && (
                                                 <span>
                                                     {' '}
                                                     / {account.maxCapacity.toLocaleString('en-US', FORMAT_CURRENCY)}
