@@ -212,7 +212,7 @@ export class VehicleFuelProvider {
             },
             {
                 label: 'État de la station',
-                icon: 'c:fuel/pistolet.png',
+                icon: 'c:fuel/check.png',
                 event: 'fuel:client:GetFuelLevel',
                 action: (entity: number) => {
                     this.getStationFuelLevel(entity);
