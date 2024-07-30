@@ -14,7 +14,7 @@ import { Feature, isFeatureEnabled } from '@public/shared/features';
 import { JobType } from '@public/shared/job';
 import { DMC_CRAFT_ZONES, DmcConverterState } from '@public/shared/job/dmc';
 import { MenuType } from '@public/shared/nui/menu';
-import { toVector4Object } from '@public/shared/polyzone/vector';
+import { toVector3Object, toVector4Object } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
 
 import { BoxZone } from '../../../shared/polyzone/box.zone';
@@ -87,7 +87,8 @@ export class DmcProvider {
             sprite: 478,
             color: 28,
             scale: 0.9,
-            coords: { x: -132.7, y: -2383.92, z: 6.0 },
+            //meteor coords: { x: -132.7, y: -2383.92, z: 6.0 },
+            coords: toVector3Object([-334.31, -1314.83, 31.4]),
         });
         this.blipFactory.hide('job:dmc:aluminium_mine', true);
         this.blipFactory.hide('job:dmc:iron_mine', true);
