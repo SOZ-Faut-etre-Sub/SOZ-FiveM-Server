@@ -14,6 +14,7 @@ import { Feature, isFeatureEnabled } from '@public/shared/features';
 import { JobType } from '@public/shared/job';
 import { DMC_CRAFT_ZONES, DmcConverterState } from '@public/shared/job/dmc';
 import { MenuType } from '@public/shared/nui/menu';
+import { toVector4Object } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
 
 import { BoxZone } from '../../../shared/polyzone/box.zone';
@@ -232,7 +233,8 @@ export class DmcProvider {
         // Resell zone
         this.pedFactory.createPedOnGrid({
             model: 's_m_y_dockwork_01',
-            coords: { x: -132.7, y: -2383.92, z: 5.0, w: 174.18 },
+            //meteor coords: { x: -132.7, y: -2383.92, z: 5.0, w: 174.18 },
+            coords: toVector4Object([-334.31, -1314.83, 30.4, 88.04]),
             freeze: true,
             invincible: true,
             blockevents: true,
@@ -241,9 +243,15 @@ export class DmcProvider {
 
         this.playerInOutService.add(
             'Resell:LSPort:Dmc',
+            //meteor
+            /*
             new BoxZone([-132.7, -2383.92, 5.0], 3.0, 3.0, {
                 minZ: 4.0,
                 maxZ: 8.0,
+            }),*/
+            new BoxZone([-334.31, -1314.83, 31.4, 88.04], 3.0, 3.0, {
+                minZ: 28.0,
+                maxZ: 32.0,
             }),
             isInside => {
                 if (isInside) {

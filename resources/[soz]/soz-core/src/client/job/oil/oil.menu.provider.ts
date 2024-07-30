@@ -62,7 +62,8 @@ export class OilMenuProvider {
             'oil_reseller',
             {
                 name: 'Point de vente',
-                position: [263.41, -2979.47, 4.93],
+                //meteor position: [263.41, -2979.47, 4.93],
+                position: [532.82, -632.97, 24.97],
                 sprite: 436,
                 scale: 0.9,
             },

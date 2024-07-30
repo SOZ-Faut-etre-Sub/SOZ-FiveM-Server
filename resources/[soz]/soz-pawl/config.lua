@@ -2,7 +2,8 @@ Config = {}
 
 Config.Resell = {
     primary = {
-        coords = vector4(-272.22, -2496.57, 7.3, 186.72), -- Must be vec4
+        -- meteor coords = vector4(-272.22, -2496.57, 7.3, 186.72), -- Must be vec4
+        coords = vector4(955.87, -2176.36, 31.15, 90.14),
         ZoneName = "Resell:LSPort:Pawl",
         SourceAccount = "farm_pawl",
         TargetAccount = "safe_pawl",

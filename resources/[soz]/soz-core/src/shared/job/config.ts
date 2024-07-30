@@ -408,7 +408,8 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
         },
         resell: {
             primary: {
-                coords: [-272.22, -2496.57, 7.3, 186.72],
+                //meteor coords: [-272.22, -2496.57, 7.3, 186.72],
+                coords: [955.87, -2176.36, 30.15, 90.14],
                 ZoneName: 'Resell:LSPort:Pawl',
                 SourceAccount: 'farm_pawl',
                 TargetAccount: 'safe_pawl',
@@ -613,7 +614,8 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
         canReceiveSocietyInvoice: true,
         resell: {
             primary: {
-                coords: [-132.7, -2383.92, 6.0, 174.18],
+                //coords: [-132.7, -2383.92, 6.0, 174.18],
+                coords: [-334.31, -1314.83, 31.4, 87.04],
                 ZoneName: 'Resell:LSPort:Dmc',
                 SourceAccount: 'farm_dmc',
                 TargetAccount: 'safe_dmc',
