@@ -3,6 +3,7 @@ import { Inject } from '@public/core/decorators/injectable';
 import { Tick } from '@public/core/decorators/tick';
 import { wait } from '@public/core/utils';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
+import { Control } from '@public/shared/input';
 import { VehicleSeat } from '@public/shared/vehicle/vehicle';
 
 import { Provider } from '../../core/decorators/provider';
@@ -21,6 +22,7 @@ export class EarthquakeProvider {
     private inverse = false;
     private ramp = 0;
     private shaking = false;
+    private steer = null;
 
     @OnNuiEvent(NuiEvent.AdminMenuEarthquake)
     public async onAdminEarthQuake(value: boolean): Promise<void> {
@@ -116,7 +118,7 @@ export class EarthquakeProvider {
         const cars = GetGamePool('CVehicle');
         const force = 3 * (this.inverse ? 1 : -1);
         for (const veh of cars) {
-            if (NetworkGetEntityIsNetworked(veh) && NetworkHasControlOfEntity(veh)) {
+            if (NetworkGetEntityIsNetworked(veh) && NetworkHasControlOfEntity(veh) && !IsEntityInAir(veh)) {
                 ApplyForceToEntity(veh, 1, force, 0, 0, 0, 0, 0, 1, true, true, true, false, false);
             }
         }
@@ -127,12 +129,39 @@ export class EarthquakeProvider {
             SetPedToRagdoll(playerPed, 2000, 2000, 0, false, false, false);
         }
 
+        const veh = GetVehiclePedIsIn(playerPed, false);
+        if (veh && IsControlPressed(0, Control.MoveUpOnly)) {
+            const model = GetEntityModel(veh);
+            this.steer = null;
+            if (IsThisModelABike(model) || IsThisModelABicycle(model) || IsThisModelAQuadbike(model)) {
+                const velocity = GetEntityVelocity(veh);
+                SetPedToRagdoll(playerPed, 5511, 5511, 0, false, false, false);
+                SetEntityVelocity(playerPed, velocity[0], velocity[1], velocity[2]);
+            } else if (!IsThisModelAPlane(model) && !IsThisModelAHeli(model)) {
+                this.steer = GetVehicleSteeringAngle(veh);
+            }
+        }
+
         await wait(300);
     }
 
     @Tick(0)
+    private async lockVehSteer() {
+        if (this.earthquake && this.steer != null) {
+            const playerPed = PlayerPedId();
+            const veh = GetVehiclePedIsIn(playerPed, false);
+            if (veh) {
+                SetVehicleSteerBias(veh, this.steer);
+            }
+        }
+    }
+
+    @Tick(0)
     private async shakeCam() {
-        if (!this.earthquake) {
+        const playerPed = PlayerPedId();
+        const veh = GetVehiclePedIsIn(playerPed, false);
+
+        if (!this.earthquake || (veh && IsEntityInAir(veh))) {
             if (this.ramp > 0) {
                 this.ramp -= 2;
                 SetGameplayCamShakeAmplitude(this.ramp * 0.5);

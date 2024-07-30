@@ -233,6 +233,18 @@ export class PlayerHeatProvider {
             return;
         }
 
+        const playerPed = PlayerPedId();
+        const veh = GetVehiclePedIsIn(playerPed, false);
+        if (veh) {
+            const weather = this.store.getState().global.weather;
+            if (weather == 'BLIZZARD') {
+                const model = GetEntityModel(veh);
+                if (IsThisModelAHeli(model) && IsVehicleEngineOn(veh)) {
+                    SetVehicleEngineHealth(veh, GetVehicleEngineHealth(veh) - 20.0);
+                }
+            }
+        }
+
         if (!this.damage) {
             return;
         }
@@ -250,7 +262,6 @@ export class PlayerHeatProvider {
             return;
         }
 
-        const playerPed = PlayerPedId();
         const newHealth = GetEntityHealth(playerPed) - 1;
         this.heatDeath = newHealth <= 100;
         SetEntityHealth(playerPed, newHealth);
