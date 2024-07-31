@@ -1,6 +1,6 @@
 import { BankService } from '@public/server/bank/bank.service';
 import { TaxRepository } from '@public/server/repository/tax.repository';
-import { TaxType } from '@public/shared/bank';
+import { BankMoneyType, TaxType } from '@public/shared/bank';
 
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { QBCore } from '../qbcore';
@@ -16,7 +16,7 @@ export class PlayerMoneyService {
     @Inject(BankService)
     private bankService: BankService;
 
-    public add(source: number, money: number, type: 'money' | 'marked_money' = 'money'): boolean {
+    public add(source: number, money: number, type: BankMoneyType = 'money'): boolean {
         if (isNaN(money)) {
             return;
         }
@@ -28,7 +28,7 @@ export class PlayerMoneyService {
      *
      * All prices should be transferred without Tax, the tax will be added automatically and only the display can be changed to display it
      */
-    public async buy(source: number, money: number, tax: TaxType, type: 'money' | 'marked_money' = 'money') {
+    public async buy(source: number, money: number, tax: TaxType, type: BankMoneyType = 'money') {
         if (isNaN(money)) {
             return false;
         }
@@ -50,14 +50,14 @@ export class PlayerMoneyService {
         return moneyRemoved;
     }
 
-    public remove(source: number, money: number, type: 'money' | 'marked_money' = 'money'): boolean {
+    public remove(source: number, money: number, type: BankMoneyType = 'money'): boolean {
         if (isNaN(money)) {
             return;
         }
         return this.QBCore.getPlayer(source).Functions.RemoveMoney(type, money);
     }
 
-    public get(source: number, type: 'money' | 'marked_money' = 'money'): number {
+    public get(source: number, type: BankMoneyType = 'money'): number {
         return this.QBCore.getPlayer(source).Functions.GetMoney(type);
     }
 

@@ -1,7 +1,7 @@
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
-import { BankAccount, BankActionType } from '../../shared/bank';
+import { BankAccount, BankActionType, BankMoneyType } from '../../shared/bank';
 import { JobPermission, JobType } from '../../shared/job';
 import { RpcServerEvent } from '../../shared/rpc';
 import { JobService } from '../job.service';
@@ -60,7 +60,7 @@ export class BankSafeProvider {
         source: number,
         type: BankActionType,
         accountId: string,
-        moneyType: 'money' | 'marked_money',
+        moneyType: BankMoneyType,
         amount: number = 0
     ): Promise<boolean> {
         if (!(await this.hasAccessToSafe(source, accountId))) {

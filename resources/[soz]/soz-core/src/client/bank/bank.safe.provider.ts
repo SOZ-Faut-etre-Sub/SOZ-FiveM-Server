@@ -3,7 +3,7 @@ import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
-import { BankAccount, BankActionType } from '../../shared/bank';
+import { BankAccount, BankActionType, BankMoneyType } from '../../shared/bank';
 import { ClientEvent } from '../../shared/event/client';
 import { NuiEvent } from '../../shared/event/nui';
 import { BoxZone } from '../../shared/polyzone/box.zone';
@@ -52,7 +52,7 @@ export class BankSafeProvider {
     }: {
         type: BankActionType;
         safe: string;
-        moneyType: 'money' | 'marked_money';
+        moneyType: BankMoneyType;
         amount: number;
     }) {
         return await emitRpc<boolean>(RpcServerEvent.BANK_CASH_TRANSFER_ACTION, type, safe, moneyType, amount);

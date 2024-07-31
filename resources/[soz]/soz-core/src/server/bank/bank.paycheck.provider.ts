@@ -5,7 +5,6 @@ import { RpcServerEvent } from '@public/shared/rpc';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
-import { isOk } from '../../shared/result';
 import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
 import { JobGradeRepository } from '../repository/job.grade.repository';
@@ -65,9 +64,15 @@ export class BankPaycheckProvider {
                 payment = Math.ceil(payment * 0.3);
             }
 
-            const result = await this.bankService.transferBankMoney(player.job.id, player.charinfo.account, payment);
+            const result = await this.bankService.transferBankMoney(
+                null,
+                player.job.id,
+                player.charinfo.account,
+                'money',
+                payment
+            );
 
-            if (isOk(result)) {
+            if (result) {
                 this.notifier.advancedNotify(
                     player.source,
                     'Maze Banque',
@@ -88,11 +93,13 @@ export class BankPaycheckProvider {
         for (const player of players) {
             if (player.metadata.is_senator) {
                 const result = await this.bankService.transferBankMoney(
+                    null,
                     'gouv',
                     player.charinfo.account,
+                    'money',
                     SENATOR_SALARY
                 );
-                if (isOk(result)) {
+                if (result) {
                     this.notifier.advancedNotify(
                         player.source,
                         'Maze Banque',

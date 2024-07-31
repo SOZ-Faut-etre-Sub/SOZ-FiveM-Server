@@ -2,37 +2,37 @@ import { MinusIcon, PlusIcon } from '@heroicons/react/solid';
 import classnames from 'classnames';
 import React, { FunctionComponent } from 'react';
 
-import { BankActionType } from '../../../../shared/bank';
-import { FORMAT_CURRENCY } from '../utils/format';
+import { BankAccount, BankStatement } from '../../../../shared/bank';
+import { moneyFormat } from '../utils/format';
 
-export interface HistoryRowProps {
-    type: BankActionType;
-    accountId: string;
-    accountName: string;
-    description: string;
-    amount: number;
+interface HistoryRowProps {
+    account: BankAccount;
+    history: BankStatement;
 }
 
-export const HistoryRow: FunctionComponent<HistoryRowProps> = ({ type, accountName, description, amount }) => {
-    const Icon = type === 'deposit' ? PlusIcon : MinusIcon;
-    const title = type === 'deposit' ? 'Virement de' : 'Paiement à';
+export const HistoryRow: FunctionComponent<HistoryRowProps> = ({ account, history }) => {
+    const isSource = history.source_accountid === account.id;
+
+    const Icon = isSource ? MinusIcon : PlusIcon;
+    const title = isSource ? 'Paiement à' : 'Virement de';
+    const target = isSource ? history.target_accountid : history.source_accountid;
 
     return (
         <div className="flex items-center gap-4">
             <Icon
                 className={classnames('text-gray-300 border shadow-xl rounded-xl h-10 w-10 p-3', {
-                    'bg-red-300/5 border-red-500/50': type === 'withdraw',
-                    'bg-green-300/5 border-green-500/50': type === 'deposit',
+                    'bg-red-300/5 border-red-500/50': isSource,
+                    'bg-green-300/5 border-green-500/50': !isSource,
                 })}
             />
             <div className="flex flex-col grow">
                 <span>
-                    {title} <strong className="font-semibold">{accountName}</strong>
+                    {title} <strong className="font-semibold">{target}</strong>
                 </span>
-                <span className="text-sm">{description}</span>
+                <span className="text-sm">{history.reason}</span>
             </div>
 
-            <span>$ {Number(amount).toLocaleString('en-US', FORMAT_CURRENCY)}</span>
+            <span>{moneyFormat(history.amount)}</span>
         </div>
     );
 };

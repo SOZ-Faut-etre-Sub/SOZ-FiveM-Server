@@ -2,14 +2,16 @@ import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import React, { FunctionComponent } from 'react';
 
-import { HistoryRow, HistoryRowProps } from './HistoryRow';
+import { BankAccount, BankStatement } from '../../../../shared/bank';
+import { HistoryRow } from './HistoryRow';
 
 interface HistoryTableProps {
-    rows: Array<HistoryRowProps & { date: Date }>;
+    account: BankAccount;
+    history: BankStatement[];
 }
 
-export const HistoryTable: FunctionComponent<HistoryTableProps> = ({ rows }) => {
-    const historyByDays: Record<string, HistoryRowProps[]> = rows.reduce((acc, row) => {
+export const HistoryTable: FunctionComponent<HistoryTableProps> = ({ account, history = [] }) => {
+    const historyByDays: Record<string, BankStatement[]> = history.reduce((acc, row) => {
         const date = format(row.date, 'eeee dd MMMMMM yyyy', { locale: fr });
         if (!acc[date]) {
             acc[date] = [];
@@ -21,23 +23,21 @@ export const HistoryTable: FunctionComponent<HistoryTableProps> = ({ rows }) => 
     return (
         <>
             {Object.entries(historyByDays).map(([day, history]) => (
-                <div className="p-3 space-y-4">
+                <div key={day} className="p-3 space-y-4">
                     <div className="font-semibold capitalize">
                         {day}
                         <div className="bg-gradient-to-r from-white/10 via-70% via-transparent h-0.5"></div>
                     </div>
 
-                    {history.map(row => (
-                        <HistoryRow
-                            type={row.type}
-                            accountId={row.accountId}
-                            accountName={row.accountName}
-                            description={row.description}
-                            amount={row.amount}
-                        />
+                    {history.map((row, id) => (
+                        <HistoryRow key={id} account={account} history={row} />
                     ))}
                 </div>
             ))}
+
+            {history.length === 0 && (
+                <div className="p-3 text-center text-white/50">Aucun historique pour ce compte</div>
+            )}
         </>
     );
 };

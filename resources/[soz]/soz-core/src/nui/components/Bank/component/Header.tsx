@@ -3,7 +3,7 @@ import { FaMoneyBillWave, FaPiggyBank } from 'react-icons/fa';
 
 import { usePlayer } from '../../../hook/data';
 import { Mugshot } from '../../Player/Mugshot';
-import { FORMAT_CURRENCY } from '../utils/format';
+import { moneyFormat } from '../utils/format';
 
 type HeaderProps = {
     title: ReactNode;
@@ -35,10 +35,10 @@ export const Header: FunctionComponent<HeaderProps> = ({ title, bankMoney }) => 
                     <span className="flex items-center gap-2 text-sm text-white/70">
                         {bankMoney && (
                             <>
-                                <FaPiggyBank /> {bankMoney.toLocaleString('en-US', FORMAT_CURRENCY)}
+                                <FaPiggyBank /> {moneyFormat(bankMoney)}
                             </>
                         )}
-                        <FaMoneyBillWave /> {playerMoney.toLocaleString('en-US', FORMAT_CURRENCY)}
+                        <FaMoneyBillWave /> {moneyFormat(playerMoney)}
                     </span>
                 </div>
             </span>

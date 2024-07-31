@@ -1,7 +1,8 @@
 import { AtmUiData, BankAccount, BankUiData } from '@public/shared/bank';
 
 export interface NuiBankMethodMap {
-    ShowAccount: BankUiData;
+    ShowAccount: boolean;
+    UpdateAccountData: BankUiData;
 }
 
 export interface NuiBankAtmMethodMap {

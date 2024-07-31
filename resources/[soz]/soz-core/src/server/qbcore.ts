@@ -14,6 +14,7 @@ export class QBCore {
     public logout(source: number): void {
         this.QBCore.Player.Logout(source);
     }
+
     public createUseableItem(name, action: (player: number, item: any) => void) {
         this.QBCore.Functions.CreateUseableItem(name, action);
     }
@@ -46,6 +47,11 @@ export class QBCore {
 
     public getPlayerByPhone(phone: string): QBCorePlayer | null {
         return this.QBCore.Functions.GetPlayerByPhone(phone);
+    }
+
+    public getPlayerByBankAccount(account: string): QBCorePlayer | null {
+        console.log(account);
+        return this.QBCore.Functions.GetPlayerByBankAccount(account);
     }
 
     public getPlayer(source: number): QBCorePlayer {

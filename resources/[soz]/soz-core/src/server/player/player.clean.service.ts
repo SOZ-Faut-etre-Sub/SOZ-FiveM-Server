@@ -17,7 +17,8 @@ export class PlayerCleanService {
                       INNER JOIN soz_fivem.housing_apartment h ON h.owner = p.citizenId
                       INNER JOIN soz_api.account_identities i ON i.identityId = p.license
                       INNER JOIN soz_api.accounts a ON i.accountId = a.id
-             WHERE p.last_updated < DATE_SUB(CURDATE(),INTERVAL 30 DAY) and a.role NOT IN ('STAFF', 'ADMIN')`
+             WHERE p.last_updated < DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+               and a.role NOT IN ('STAFF', 'ADMIN')`
         )) as { citizenId: string }[];
 
         const ids = [];
@@ -29,8 +30,8 @@ export class PlayerCleanService {
         const deletedPlayersToClean = (await this.prismaService.$queryRawUnsafe(
             `SELECT p.citizenId
              FROM soz_fivem.player p
-                LEFT JOIN soz_api.account_identities ai ON p.license = ai.identityId AND ai.identityType = 'STEAM'
-                INNER JOIN soz_fivem.housing_apartment h ON h.owner = p.citizenId
+                      LEFT JOIN soz_api.account_identities ai ON p.license = ai.identityId AND ai.identityType = 'STEAM'
+                      INNER JOIN soz_fivem.housing_apartment h ON h.owner = p.citizenId
              WHERE ai.identityType IS NULL`
         )) as { citizenId: string }[];
 
@@ -104,9 +105,10 @@ export class PlayerCleanService {
 
         await this.prismaService.bank_accounts.updateMany({
             where: {
-                houseid: {
+                accountid: {
                     in: housingOwnerIdentifiers.map(h => h.identifier),
                 },
+                account_type: 'housestorages',
             },
             data: {
                 money: 0,

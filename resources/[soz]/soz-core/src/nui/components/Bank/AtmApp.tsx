@@ -48,7 +48,7 @@ export const AtmApp: FunctionComponent = () => {
         if (event.key === 'Escape') resetApp();
     };
 
-    useNuiFocus(showApp, showApp, showApp, [], showApp);
+    useNuiFocus(showApp, showApp, false);
 
     useNuiEvent('bank_atm', 'ShowAtm', (data: AtmUiData) => {
         setAccount(data);
@@ -80,6 +80,8 @@ export const AtmApp: FunctionComponent = () => {
             window.removeEventListener('keyup', onKeyUpReceived);
         };
     }, [onKeyUpReceived]);
+
+    if (!showApp) return null;
 
     return (
         <div className="absolute h-full w-full flex justify-center items-center font-sans z-30">

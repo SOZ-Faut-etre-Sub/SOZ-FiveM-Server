@@ -4,7 +4,7 @@ import { toVector2Object, Vector3 } from '@public/shared/polyzone/vector';
 
 import { AtmConfig, HouseSafeStorageTiers, SafeStorageMaxCapacity, SocietySafeStorage } from '../../config/bank';
 import { Inject, Injectable } from '../../core/decorators/injectable';
-import { AtmType, BankAccount, BankAccountType, BankAtmConfig } from '../../shared/bank';
+import { AtmType, BankAccount, BankAccountType, BankAtmConfig, BankMoneyType } from '../../shared/bank';
 import { JobType } from '../../shared/job';
 import { RepositoryType } from '../../shared/repository';
 import { PrismaService } from '../database/prisma.service';
@@ -59,7 +59,7 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
     public async addMoney(
         accountId: string,
         money: number,
-        moneyType: 'money' | 'marked_money' = 'money',
+        moneyType: BankMoneyType = 'money',
         allowOverflow: boolean = false
     ): Promise<boolean> {
         const account = this.data[accountId];
@@ -90,7 +90,7 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
     public async removeMoney(
         accountId: string,
         money: number,
-        moneyType: 'money' | 'marked_money' = 'money',
+        moneyType: BankMoneyType = 'money',
         allowOverflow: boolean = false
     ): Promise<boolean> {
         const account = this.data[accountId];
@@ -117,7 +117,7 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
     public async removeMoneyRatio(
         accountId: string,
         ratio: number,
-        moneyType: 'money' | 'marked_money' = 'money'
+        moneyType: BankMoneyType = 'money'
     ): Promise<boolean> {
         const account = this.data[accountId];
         if (!account) {
@@ -170,7 +170,8 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
         let accountMaxCapacity = null;
 
         const coords = JSON.parse(data.coords) as { x: number; y: number };
-        const safeStorage = SocietySafeStorage[data.accountid?.replace('safe_', '')];
+        const society = this.jobService.getJob(data.accountid?.replace(/[a-z]+_/, '') as JobType);
+        const safeStorage = SocietySafeStorage[data.accountid?.replace(/safe_/, '')];
         const apartment = await this.housingRepository.getApartmentByIdentifier(data.accountid);
 
         switch (data.account_type) {
@@ -189,7 +190,7 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
                 accountMaxCapacity = SafeStorageMaxCapacity;
                 break;
             case 'offshore':
-                accountLabel = safeStorage?.label ?? data.accountid;
+                accountLabel = society?.label ?? data.accountid;
                 break;
             case 'bank_atm':
                 accountType = 'bank_atm';

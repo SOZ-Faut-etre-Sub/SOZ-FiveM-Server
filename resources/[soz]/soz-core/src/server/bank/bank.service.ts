@@ -1,13 +1,10 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
-import { Rpc } from '@core/decorators/rpc';
 import { Logger } from '@core/logger';
 import { Monitor } from '@public/server/monitor/monitor';
 import { Notifier } from '@public/server/notifier';
 import { BankAccountRepository } from '@public/server/repository/bank.account.repository';
 import { BankFarmRepository } from '@public/server/repository/bank.farm.repository';
-import { BankActionType, Invoice } from '@public/shared/bank';
-import { Err, Ok, Result } from '@public/shared/result';
-import { RpcServerEvent } from '@public/shared/rpc';
+import { BankActionType, BankMoneyType, Invoice } from '@public/shared/bank';
 
 import { PrismaService } from '../database/prisma.service';
 import { QBCore } from '../qbcore';
@@ -39,7 +36,7 @@ export class BankService {
         source: number,
         accountId: string,
         type: BankActionType,
-        moneyType: 'money' | 'marked_money',
+        moneyType: BankMoneyType,
         amount: number = 0,
         allowOverflow = false
     ): Promise<boolean> {
@@ -133,7 +130,7 @@ export class BankService {
         farm: string,
         safe: string,
         amount: number = 0,
-        moneyType: 'money' | 'marked_money' = 'money'
+        moneyType: BankMoneyType = 'money'
     ): Promise<boolean> {
         const farmAccount = await this.bankFarmRepository.find(farm);
         if (!farmAccount) {
@@ -172,33 +169,53 @@ export class BankService {
         return true;
     }
 
-    public transferBankMoney(
-        source: string,
-        target: string,
+    public async transferBankMoney(
+        source: number,
+        accountSource: string,
+        accountTarget: string,
+        moneyType: BankMoneyType,
         amount: number,
         allowOverflow = false
-    ): Promise<Result<boolean, string>> {
-        return new Promise(resolve => {
-            exports['soz-bank'].TransferMoney(
-                source,
-                target,
-                amount,
-                (success, reason) => {
-                    if (success) {
-                        resolve(Ok(true));
-                    } else {
-                        resolve(Err(reason));
-                    }
-                },
-                allowOverflow
-            );
+    ): Promise<boolean> {
+        const sourceAccount = await this.bankAccountRepository.find(accountSource);
+        if (!sourceAccount) {
+            this.logger.error(`Account ${accountSource} not found`);
+            return false;
+        }
+
+        const targetAccount = await this.bankAccountRepository.find(accountTarget);
+        if (!targetAccount) {
+            this.logger.error(`Account ${accountTarget} not found`);
+            return false;
+        }
+
+        if (!(await this.bankAccountRepository.removeMoney(sourceAccount.id, amount, moneyType))) {
+            this.logger.error(`Failed to remove money from account ${sourceAccount.id}`);
+            return false;
+        }
+
+        if (!(await this.bankAccountRepository.addMoney(targetAccount.id, amount, moneyType, allowOverflow))) {
+            await this.bankAccountRepository.addMoney(sourceAccount.id, amount, moneyType, allowOverflow);
+            this.logger.error(`Failed to add money to account ${targetAccount.id}`);
+            return false;
+        }
+
+        await this.prismaService.bank_statements.create({
+            data: {
+                source_accountid: sourceAccount.id,
+                target_accountid: targetAccount.id,
+                amount: amount,
+                reason: '',
+            },
         });
+
+        return true;
     }
 
     public addAccountMoney(
         account: any,
         amount: number,
-        type: 'money' | 'marked_money' = 'money',
+        type: BankMoneyType = 'money',
         allowOverflow = false
     ): boolean {
         return exports['soz-bank'].AddAccountMoney(account, amount, type, allowOverflow);
@@ -221,12 +238,7 @@ export class BankService {
         return bankAccount.accountid;
     }
 
-    public addMoney(
-        targetAccount: string,
-        amount: number,
-        type: 'money' | 'marked_money' = 'money',
-        allowOverflow = false
-    ) {
+    public addMoney(targetAccount: string, amount: number, type: BankMoneyType = 'money', allowOverflow = false) {
         exports['soz-bank'].AddMoney(targetAccount, amount, type, allowOverflow);
     }
 
@@ -234,8 +246,7 @@ export class BankService {
         exports['soz-bank'].ClearAccount(targetAccount);
     }
 
-    @Rpc(RpcServerEvent.BANK_GET_ACCOUNT_MONEY)
-    public async getAccountMoney(accountId: string, type: 'money' | 'marked_money' = 'money'): Promise<number> {
+    public async getAccountMoney(accountId: string, type: BankMoneyType = 'money'): Promise<number> {
         const account = await this.bankAccountRepository.find(accountId);
         if (!account) return;
 

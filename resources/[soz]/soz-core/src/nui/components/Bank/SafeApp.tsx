@@ -64,7 +64,7 @@ export const SafeApp: FunctionComponent = () => {
         if (event.key === 'Escape') closeApp();
     };
 
-    useNuiFocus(appShow, appShow, appShow, [], appShow);
+    useNuiFocus(appShow, appShow, false);
 
     useNuiEvent('bank_safe', 'ShowSafe', (data: BankAccount) => {
         setAccount(data);

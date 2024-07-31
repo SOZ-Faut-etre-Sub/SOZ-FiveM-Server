@@ -59,7 +59,8 @@ export class BankProvider {
                 icon: 'c:bank/compte_personal.png',
                 action: async () => {
                     const accountUiData = await emitRpc<BankUiData>(RpcServerEvent.BANK_GET_ACCOUNT_UI);
-                    this.nuiDispatch.dispatch('bank', 'ShowAccount', accountUiData);
+                    this.nuiDispatch.dispatch('bank', 'UpdateAccountData', accountUiData);
+                    this.nuiDispatch.dispatch('bank', 'ShowAccount', true);
                 },
                 blackoutGlobal: true,
             },

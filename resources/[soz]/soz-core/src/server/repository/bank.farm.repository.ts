@@ -1,6 +1,6 @@
 import { FarmAccount } from '../../config/bank';
 import { Injectable } from '../../core/decorators/injectable';
-import { BankAccount } from '../../shared/bank';
+import { BankAccount, BankMoneyType } from '../../shared/bank';
 import { RepositoryType } from '../../shared/repository';
 import { Repository } from './repository';
 
@@ -22,7 +22,7 @@ export class BankFarmRepository extends Repository<RepositoryType.BankFarmAccoun
         return accounts;
     }
 
-    public removeMoney(accountId: string, money: number, moneyType: 'money' | 'marked_money' = 'money'): boolean {
+    public removeMoney(accountId: string, money: number, moneyType: BankMoneyType = 'money'): boolean {
         const account = this.data[accountId];
         if (!account) {
             return false;
