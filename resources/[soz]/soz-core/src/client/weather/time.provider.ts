@@ -52,6 +52,7 @@ export class TimeProvider {
             minute: GetClockMinutes(),
             second: GetClockSeconds(),
         };
+        const curCorrected: Time = { ...cur };
 
         const estimatedServerTime = { ...this.serverTime };
         addSecondstoTime(
@@ -61,7 +62,13 @@ export class TimeProvider {
             )
         );
 
-        let timeDiff = convertTimetoSeconds(estimatedServerTime) - convertTimetoSeconds(cur);
+        if (cur.hour == 0 && estimatedServerTime.hour == 23) {
+            curCorrected.hour = 24;
+        } else if (cur.hour == 23 && estimatedServerTime.hour == 0) {
+            estimatedServerTime.hour = 24;
+        }
+
+        let timeDiff = convertTimetoSeconds(estimatedServerTime) - convertTimetoSeconds(curCorrected);
 
         const absTimeDiff = Math.abs(timeDiff);
         if (absTimeDiff < 20) {
