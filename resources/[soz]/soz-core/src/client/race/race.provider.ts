@@ -518,7 +518,7 @@ export class RaceProvider {
         const [bestRun, bestSplits] = await emitRpc<[number[], number[]]>(RpcServerEvent.RACE_GET_SPLITS, race.id);
 
         this.inRace = true;
-        const view = GetFollowPedCamViewMode();
+        const view = GetCamViewModeForContext(1);
         if (race.fps) {
             this.firstPersonCheck();
         }
@@ -611,7 +611,7 @@ export class RaceProvider {
 
         SetEntityInvincible(ped, false);
         SetPlayerInvincible(PlayerId(), false);
-        SetFollowPedCamViewMode(view);
+        SetCamViewModeForContext(1, view);
 
         this.monitor.traceEvent('race_finish', {
             race_id: race.id,
@@ -626,10 +626,10 @@ export class RaceProvider {
     }
 
     private async firstPersonCheck() {
-        SetFollowPedCamViewMode(4);
+        SetCamViewModeForContext(1, 4);
         while (this.inRace) {
-            if (GetFollowPedCamViewMode() != 4) {
-                SetFollowPedCamViewMode(4);
+            if (GetCamViewModeForContext(1) != 4) {
+                SetCamViewModeForContext(1, 4);
             }
 
             DisableControlAction(0, Control.NextCamera, true);
