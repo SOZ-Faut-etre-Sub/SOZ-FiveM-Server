@@ -12,6 +12,7 @@ import { wait } from '../../core/utils';
 import { ClientEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import {
+    addSecondstoTime,
     DayDurationInMinutes,
     Forecast,
     ForecastWithTemperature,
@@ -95,25 +96,7 @@ export class WeatherProvider {
 
     @Tick(TickInterval.EVERY_SECOND * UPDATE_TIME_INTERVAL, 'weather:time:advance', true)
     async advanceTime() {
-        this.currentTime.second += (IRLDayDurationInMinutes / DayDurationInMinutes) * UPDATE_TIME_INTERVAL;
-
-        if (this.currentTime.second >= 60) {
-            const incrementMinutes = Math.floor(this.currentTime.second / 60);
-
-            this.currentTime.minute += incrementMinutes;
-            this.currentTime.second %= 60;
-
-            if (this.currentTime.minute >= 60) {
-                const incrementHours = Math.floor(this.currentTime.minute / 60);
-
-                this.currentTime.hour += incrementHours;
-                this.currentTime.minute %= 60;
-
-                if (this.currentTime.hour >= 24) {
-                    this.currentTime.hour %= 24;
-                }
-            }
-        }
+        addSecondstoTime(this.currentTime, (IRLDayDurationInMinutes / DayDurationInMinutes) * UPDATE_TIME_INTERVAL);
 
         if (isFeatureEnabled(Feature.Halloween)) {
             if (this.currentTime.hour >= 2 || this.currentTime.hour < 1) {
