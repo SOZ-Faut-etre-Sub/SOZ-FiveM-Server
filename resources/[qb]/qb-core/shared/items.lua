@@ -9969,6 +9969,18 @@ QBShared.Items = {
         ['description'] = "Deviens le ninja des sables et protège-toi des tempêtes du désert ! Élégance, mystère et protection UV inclus. Parfait pour éviter le bronzage Zébré !",
         ['illustrator'] = '.Sniteur'
     },
+    ['flood_ticket'] = {
+        ['name'] = 'flood_ticket',
+        ['label'] = "Ticket inondation",
+        ['weight'] = 50,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Si ton toit est sous l'eau, ce ticket peut t'aider !",
+        ['illustrator'] = '.Sniteur'
+    },
 
     --- Fishing Items
     ['basic_rod'] = {
