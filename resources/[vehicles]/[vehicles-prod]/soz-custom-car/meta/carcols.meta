@@ -18604,7 +18604,7 @@
                     <scale value="true" />
                     <scaleFactor value="2" />
                     <flash value="true" />
-                    <light value="false" />
+                    <light value="true" />
                     <spotLight value="true" />
                     <castShadows value="false" />
                 </Item>
@@ -18722,7 +18722,7 @@
                 <!-- siren6 -->
                 <Item>
                     <rotation>
-                        <delta value="-1.57079633" />
+                        <delta value="1.57079633" />
                         <start value="0" />
                         <speed value="3" />
                         <sequencer value="-1" />
@@ -18752,7 +18752,7 @@
                     <scale value="true" />
                     <scaleFactor value="2" />
                     <flash value="true" />
-                    <light value="false" />
+                    <light value="true" />
                     <spotLight value="true" />
                     <castShadows value="false" />
                 </Item>
