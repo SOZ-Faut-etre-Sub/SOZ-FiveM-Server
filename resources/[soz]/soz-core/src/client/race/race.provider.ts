@@ -39,6 +39,7 @@ import { InputService } from '../nui/input.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { NuiMenu } from '../nui/nui.menu';
 import { ObjectProvider } from '../object/object.provider';
+import { PlayerHealthProvider } from '../player/player.health.provider';
 import { PlayerPositionProvider } from '../player/player.position.provider';
 import { RaceRepository } from '../repository/race.repository';
 import { ResourceLoader } from '../repository/resource.loader';
@@ -99,6 +100,9 @@ export class RaceProvider {
 
     @Inject(ObjectProvider)
     private objectProvider: ObjectProvider;
+
+    @Inject(PlayerHealthProvider)
+    private playerHealthProvider: PlayerHealthProvider;
 
     private inRace = false;
     private preRace = false;
@@ -527,6 +531,7 @@ export class RaceProvider {
 
         SetEntityInvincible(ped, true);
         SetPlayerInvincible(PlayerId(), true);
+        this.playerHealthProvider.setNutritionDisabled(true);
 
         let vehicle = null;
         if (race.carModel != 'ped') {
@@ -611,6 +616,7 @@ export class RaceProvider {
 
         SetEntityInvincible(ped, false);
         SetPlayerInvincible(PlayerId(), false);
+        this.playerHealthProvider.setNutritionDisabled(false);
         SetCamViewModeForContext(1, view);
 
         this.monitor.traceEvent('race_finish', {

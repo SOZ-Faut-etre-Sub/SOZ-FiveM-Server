@@ -69,10 +69,10 @@ export const RaceSubMenu: FunctionComponent<MenuRaceSubProps> = ({ data }) => {
             <SubMenu id={data.id.toString()}>
                 <MenuTitle banner={banner}>{data.name}</MenuTitle>
                 <MenuContent>
-                    <MenuItemButton onConfirm={() => fetchNui(NuiEvent.RaceDelete, data.id)}>Supprimer</MenuItemButton>
                     <MenuItemButton onConfirm={() => fetchNui(NuiEvent.RaceRename, data.id)}>
                         Renommer la course
                     </MenuItemButton>
+                    <MenuItemButton onConfirm={() => fetchNui(NuiEvent.RaceDelete, data.id)}>Supprimer</MenuItemButton>
                     <MenuItemCheckbox
                         checked={data.enabled}
                         onChange={value => fetchNui(NuiEvent.RaceEnable, { raceId: data.id, enabled: value })}

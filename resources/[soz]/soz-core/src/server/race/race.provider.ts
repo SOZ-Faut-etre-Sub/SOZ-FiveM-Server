@@ -8,6 +8,7 @@ import { RpcServerEvent } from '@public/shared/rpc';
 
 import { PrismaService } from '../database/prisma.service';
 import { Notifier } from '../notifier';
+import { ObjectAttachedProvider } from '../object/object.attached.provider';
 import { PlayerService } from '../player/player.service';
 import { RaceRepository } from '../repository/race.repository';
 
@@ -24,6 +25,9 @@ export class RaceProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(ObjectAttachedProvider)
+    private objectAttachedProvider: ObjectAttachedProvider;
 
     @OnEvent(ServerEvent.RACE_ADD)
     public async onRaceAdd(source: number, race: Race) {
@@ -160,6 +164,7 @@ export class RaceProvider {
         SetRoutingBucketEntityLockdownMode(source, 'strict');
         SetPlayerRoutingBucket(String(source), source);
         SetRoutingBucketPopulationEnabled(source, false);
+        this.objectAttachedProvider.onDropped(source);
         return true;
     }
 

@@ -273,19 +273,20 @@ function ActionCleanup()
     end
 
     for _, v in pairs(playerProps) do
-        TriggerServerEvent("soz-core:client:object:attached:unregister", ObjToNet(v))
+        if NetworkGetEntityIsNetworked(v) then
+            TriggerServerEvent("soz-core:client:object:attached:unregister", ObjToNet(v))
+        end
         DeleteEntity(v)
     end
     playerProps = {}
-    playerHasProp = false
 
     if prop_net and NetworkDoesNetworkIdExist(prop_net) then
-        DetachEntity(NetToObj(prop_net), 1, 1)
+        DetachEntity(NetToObj(prop_net), true, true)
         TriggerServerEvent("soz-core:client:object:attached:unregister", prop_net)
         DeleteEntity(NetToObj(prop_net))
     end
     if propTwo_net and NetworkDoesNetworkIdExist(propTwo_net) then
-        DetachEntity(NetToObj(propTwo_net), 1, 1)
+        DetachEntity(NetToObj(propTwo_net), true, true)
         TriggerServerEvent("soz-core:client:object:attached:unregister", propTwo_net)
         DeleteEntity(NetToObj(propTwo_net))
     end

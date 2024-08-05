@@ -211,6 +211,10 @@ export class VehicleCustomProvider {
             return;
         }
 
+        if (!NetworkGetEntityIsNetworked(vehicleEntityId)) {
+            return;
+        }
+
         let i = 0;
 
         while (!NetworkHasControlOfEntity(vehicleEntityId) && i < 20) {
