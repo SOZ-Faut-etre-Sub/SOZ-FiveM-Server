@@ -13,3 +13,4 @@ import './bank/bank.controller';
 import './weather/weather.controller';
 import './tetris/tetris.controller';
 import './snake/snake.controller';
+import './darkweb/darkweb.controller';

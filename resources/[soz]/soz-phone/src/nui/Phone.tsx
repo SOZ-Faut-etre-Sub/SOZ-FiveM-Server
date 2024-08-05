@@ -10,6 +10,7 @@ import { NotificationAlert } from './os/notifications/components/NotificationAle
 import { PhoneSnackbar } from './os/snackbar/components/PhoneSnackbar';
 import PhoneWrapper from './PhoneWrapper';
 import { useAppBankService } from './services/app/useAppBankService';
+import { useAppDarkWebService } from './services/app/useAppDarkwebService';
 import { useAppNotesService } from './services/app/useAppNotesService';
 import { useAppSnakeLeaderboardService } from './services/app/useAppSnakeLeaderboardService';
 import { useAppSocietyService } from './services/app/useAppSocietyService';
@@ -60,6 +61,7 @@ function Phone() {
     useAppWeatherService();
     useAppTetrisLeaderboardService();
     useAppSnakeLeaderboardService();
+    useAppDarkWebService();
 
     if (config.wallpaper === undefined) {
         return null;

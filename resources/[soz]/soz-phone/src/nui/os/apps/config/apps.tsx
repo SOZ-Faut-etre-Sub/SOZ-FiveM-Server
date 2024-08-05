@@ -7,6 +7,8 @@ import CameraApp from '../../../apps/camera/components/CameraApp';
 import CameraIcon from '../../../apps/camera/icon';
 import { ContactsApp } from '../../../apps/contacts';
 import ContactIcon from '../../../apps/contacts/icon';
+import { DarkWebApp } from '../../../apps/darkweb';
+import DarkWebIcon from '../../../apps/darkweb/icon';
 import { DialerApp } from '../../../apps/dialer';
 import DialerIcon from '../../../apps/dialer/icon';
 import GameTetris from '../../../apps/game-tetris';
@@ -156,5 +158,12 @@ export const APPS: IAppConfig[] = [
         path: '/snake',
         component: <SnakeApp />,
         icon: SnakeIcon,
+    },
+    {
+        id: 'darkweb',
+        nameLocale: 'APPS_DARKWEB',
+        path: '/darkweb',
+        component: <DarkWebApp />,
+        icon: DarkWebIcon,
     },
 ];

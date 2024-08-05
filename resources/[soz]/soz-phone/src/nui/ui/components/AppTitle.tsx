@@ -24,12 +24,14 @@ export const AppTitle: React.FC<AppTitleProps> = ({ app, title, subtitle, isBigH
             className={cn('px-5 transition-all duration-300 ease-in-out pb-2', {
                 'bg-ios-800': config.theme.value === 'dark' || pathname.includes('/camera'),
                 'bg-ios-50': config.theme.value === 'light' && !pathname.includes('/camera'),
+                'bg-transparent': pathname.includes('/darkweb'),
             })}
         >
             <h2
                 className={cn('grid grid-cols-4 font-semibold tracking-wide transition-all duration-300 ease-in-out', {
                     'text-gray-200': config.theme.value === 'dark',
                     'text-black': config.theme.value === 'light',
+                    'text-teal-400': pathname.includes('/darkweb'),
                     'pt-8 text-3xl': isBigHeader,
                     'pt-3 text-2xl': !isBigHeader,
                     'text-xl': children,

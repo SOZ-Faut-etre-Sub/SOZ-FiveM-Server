@@ -44,7 +44,7 @@
                 },
                 "HAND_FREE": "Kit mains libres",
                 "PLANE_MODE": "Mode avion",
-                "PLANE_MODE_ACTIVATED":"Mode avion activé",
+                "PLANE_MODE_ACTIVATED": "Mode avion activé",
                 "DYNAMIC_ALERTS": "Alertes dynamiques",
                 "DYNAMIC_ALERTS_VOLUME": "Volume des alertes dynamiques",
                 "DYNAMIC_ALERTS_DURATION": "Durée des alertes dynamiques",
@@ -204,9 +204,9 @@
             }
         },
         "SNAKE": {
-          "FEEDBACK": {
-            "UPDATE_HIGHSCORE_FAILED": "Erreur lors de la mise à jour du high score!"
-          }
+            "FEEDBACK": {
+                "UPDATE_HIGHSCORE_FAILED": "Erreur lors de la mise à jour du high score!"
+            }
         },
         "WEATHER": {
             "ALERT": {
@@ -235,6 +235,13 @@
                 "SANDSTORM": "Tempête de sable"
             },
             "LOADING": "Récupération de la météo..."
+        },
+        "DARKWEB": {
+            "LOADING": "Récupération des rooms ...",
+            "FEEDBACK": {
+                "CONVERSATION_CREATE_ONE_NUMBER_FAILED": "Impossible de créer la conversation",
+                "EDIT_PARTITIPANT_ROLE": "Impossible de modifier ce participant"
+            }
         },
         "RELATIVE_TIME": {
             "future": "dans %s",
@@ -287,6 +294,7 @@
         "APPS_TWITCH_NEWS": "San Andreas News",
         "APPS_ZUTOM": "Zutom",
         "APPS_WEATHER": "Météo",
+        "APPS_DARKWEB": "????",
         "APPS_TETRIS": "Zetris",
         "APPS_SNAKE": "Snake",
         "GENERIC_CLICK_TO_REVEAL": "Cliquer pour révéler",

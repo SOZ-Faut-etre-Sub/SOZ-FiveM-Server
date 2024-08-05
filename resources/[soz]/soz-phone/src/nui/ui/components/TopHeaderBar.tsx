@@ -43,6 +43,8 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
             return 'text-white';
         } else if (pathname.includes('/camera')) {
             return 'bg-black text-white';
+        } else if (['/darkweb'].includes(pathname)) {
+            return 'text-teal-500';
         } else {
             return config.theme.value === 'dark' ? 'text-white' : 'text-black';
         }

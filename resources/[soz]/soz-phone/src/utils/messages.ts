@@ -45,3 +45,7 @@ export function sendWeatherEvent(method: string, data: any = {}): void {
 export function sendSnakeEvent(method: string, data: any = {}): void {
     sendMessage(apps.SNAKE, method, data);
 }
+
+export function sendDarkwebEvent(method: string, data: any = {}): void {
+    return sendMessage(apps.DARKWEB, method, data);
+}

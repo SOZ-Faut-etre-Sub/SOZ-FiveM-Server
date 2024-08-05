@@ -4,6 +4,7 @@ import { api } from './api';
 import { appBank } from './app/bank';
 import { appBankContacts } from './app/bank_contacts';
 import { appBankStatements } from './app/bank_statements';
+import { appDarkweb } from './app/darkweb';
 import { appInvoices } from './app/invoices';
 import { appNotes } from './app/notes';
 import { appSnakeLeaderboard } from './app/snakeLeaderboard';
@@ -43,6 +44,7 @@ export interface RootModel extends Models<RootModel> {
     appWeather: typeof appWeather;
     appTetrisLeaderboard: typeof appTetrisLeaderboard;
     appSnakeLeaderboard: typeof appSnakeLeaderboard;
+    appDarkweb: typeof appDarkweb;
 }
 
 export const models: RootModel = {
@@ -64,4 +66,5 @@ export const models: RootModel = {
     emergency,
     appTetrisLeaderboard,
     appSnakeLeaderboard,
+    appDarkweb,
 };

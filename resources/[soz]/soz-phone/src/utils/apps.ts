@@ -12,4 +12,5 @@ export default {
     WEATHER: 'WEATHER',
     TETRIS: 'TETRIS',
     SNAKE: 'SNAKE',
+    DARKWEB: 'DARKWEB',
 };

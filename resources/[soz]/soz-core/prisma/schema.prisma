@@ -946,3 +946,41 @@ model smuggling_business_harvest_zone {
   type           String     @db.VarChar(100)
   data           String     @db.Text
 }
+
+model darkweb_messages {
+  id              Int      @id @default(autoincrement())
+  message         String   @db.VarChar(512)
+  user_identifier String   @db.VarChar(48)
+  conversation_id Int      @db.Int()
+  phoneNumber     String   @db.VarChar(128)
+  isRead          Int      @default(0) @db.TinyInt
+  createdAt       DateTime @default(now()) @db.Timestamp(0)
+  updatedAt       DateTime @default(now()) @db.Timestamp(0)
+  @@index([user_identifier], map: "user_identifier")
+  @@index([conversation_id], map: "conversation_id")
+}
+
+model darkweb_conversations {
+  id                     Int      @id @default(autoincrement())
+  password               String   @db.VarChar(128)
+  user_identifier        String   @db.VarChar(8)
+  label                  String?  @default("") @db.VarChar(60)
+  unread                 Int      @default(0)
+  masked                 Boolean  @default(false)
+  createdAt              DateTime @default(now()) @db.Timestamp(0)
+  updatedAt              DateTime @default(now()) @db.Timestamp(0)
+  @@index([user_identifier], map: "user_identifier")
+}
+
+model darkweb_participants {
+    conversation_id        Int      @db.Int()
+    user_identifier        String   @db.VarChar(8)
+    masked                 Boolean  @default(false)
+    unread                 Boolean  @default(true)
+    notification           Boolean  @default(false)
+    joinedAt               DateTime @default(now()) @db.Timestamp(0)
+    role                   String   @db.VarChar(128)
+    @@id([user_identifier, conversation_id])
+    @@index([user_identifier], map: "user_identifier")
+    @@index([conversation_id], map: "conversation_id")
+}

@@ -15,6 +15,7 @@ import './apps/societies';
 import './apps/weather';
 import './apps/tetris';
 import './apps/snake';
+import './apps/darkweb';
 
 import ClientUtils from './cl_utils';
 

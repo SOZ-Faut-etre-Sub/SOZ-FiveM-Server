@@ -9214,6 +9214,15 @@ QBShared.Items = {
         ['description'] = "Ce bijou de technologie est capable de faire disparaitre n'importe quel véhicule des forces de l'ordre du radar durant environ une heure.",
         ['illustrator'] = '.Poulpito',
     },
+    ['darkweb_module'] = {
+        ['name'] = 'darkweb_module',
+        ['label'] = "Dongle USB-C",
+        ['useable'] = false,
+        ['weight'] = 500,
+        ['type'] = 'item',
+        ['description'] = "Un dongle USB-C étrange.",
+        ['illustrator'] = '.Poulpito',
+    },
 
     --- PAWL
     ['chainsaw'] = {
