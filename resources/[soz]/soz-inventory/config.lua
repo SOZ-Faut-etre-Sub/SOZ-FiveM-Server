@@ -57,7 +57,7 @@ Config.StorageCapacity = {
     --- Jobs BlueBird
     ["recycler_processing"] = {slot = 100, weight = 800000},
     --- Zkea
-    ["cabinet_storage"] = {slot = 1, weight = 8000000}, -- 2000 cabinet_zkea maximum
+    ["cabinet_storage"] = {slot = 1, weight = 24000000}, -- 6000 cabinet_zkea maximum
     --- Smuggling Box
     ["smuggling_box"] = {slot = 100, weight = 250000},
     --- Jobs DMC
