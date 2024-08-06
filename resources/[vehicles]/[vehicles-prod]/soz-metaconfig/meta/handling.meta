@@ -1383,5 +1383,90 @@
                 <Item type="NULL" />
             </SubHandlingData>
         </Item>
+        <Item type="CHandlingData">
+            <handlingName>PREDATOR</handlingName>
+            <fMass value="7000.000000" />
+            <fInitialDragCoeff value="1.000000" />
+            <fPercentSubmerged value="65.000000" />
+            <vecCentreOfMassOffset x="0.000000" y="-0.500000" z="-0.500000" />
+            <vecInertiaMultiplier x="1.000000" y="1.000000" z="1.000000" />
+            <fDriveBiasFront value="0.000000" />
+            <nInitialDriveGears value="1" />
+            <fInitialDriveForce value="18.000000" />
+            <fDriveInertia value="1.400000" />
+            <fClutchChangeRateScaleUpShift value="1.300000" />
+            <fClutchChangeRateScaleDownShift value="1.300000" />
+            <fInitialDriveMaxFlatVel value="140.000000" />
+            <fBrakeForce value="0.400000" />
+            <fBrakeBiasFront value="0.600000" />
+            <fHandBrakeForce value="0.700000" />
+            <fSteeringLock value="35.000000" />
+            <fTractionCurveMax value="0.000000" />
+            <fTractionCurveMin value="0.000000" />
+            <fTractionCurveLateral value="6.000000" />
+            <fTractionSpringDeltaMax value="0.100000" />
+            <fLowSpeedTractionLossMult value="0.000000" />
+            <fCamberStiffnesss value="0.000000" />
+            <fTractionBiasFront value="0.950000" />
+            <fTractionLossMult value="1.000000" />
+            <fSuspensionForce value="1.000000" />
+            <fSuspensionCompDamp value="3.000000" />
+            <fSuspensionReboundDamp value="0.000000" />
+            <fSuspensionUpperLimit value="0.100000" />
+            <fSuspensionLowerLimit value="0.100000" />
+            <fSuspensionRaise value="0.000000" />
+            <fSuspensionBiasFront value="0.000000" />
+            <fAntiRollBarForce value="0.000000" />
+            <fAntiRollBarBiasFront value="0.000000" />
+            <fRollCentreHeightFront value="0.000000" />
+            <fRollCentreHeightRear value="0.000000" />
+            <fCollisionDamageMult value="0.500000" />
+            <fWeaponDamageMult value="1.000000" />
+            <fDeformationDamageMult value="0.800000" />
+            <fEngineDamageMult value="1.500000" />
+            <fPetrolTankVolume value="10.000000" />
+            <fOilVolume value="3.000000" />
+            <fSeatOffsetDistX value="0.000000" />
+            <fSeatOffsetDistY value="0.000000" />
+            <fSeatOffsetDistZ value="0.000000" />
+            <nMonetaryValue value="40000" />
+            <strModelFlags>8000000</strModelFlags>
+            <strHandlingFlags>0</strHandlingFlags>
+            <strDamageFlags>20</strDamageFlags>
+            <AIHandling>AVERAGE</AIHandling>
+            <SubHandlingData>
+                <Item type="CBoatHandlingData">
+                    <fBoxFrontMult value="1.100000" />
+                    <fBoxRearMult value="0.400000" />
+                    <fBoxSideMult value="0.500000" />
+                    <fSampleTop value="0.100000" />
+                    <fSampleBottom value="0.350000" />
+                    <fAquaplaneForce value="5.000000" />
+                    <fAquaplanePushWaterMult value="0.300000" />
+                    <fAquaplanePushWaterCap value="3.000000" />
+                    <fAquaplanePushWaterApply value="0.002000" />
+                    <fRudderForce value="1.800000" />
+                    <fRudderOffsetSubmerge value="0.000000" />
+                    <fRudderOffsetForce value="0.000000" />
+                    <fRudderOffsetForceZMult value="1.000000" />
+                    <fWaveAudioMult value="4.000000" />
+                    <vecMoveResistance x="11.000000" y="520.000000" z="200.000000" />
+                    <vecTurnResistance x="2.040000" y="1.100000" z="0.040000" />
+                    <fLook_L_R_CamHeight value="4.000000" />
+                    <fDragCoefficient value="8.000000" />
+                    <fKeelSphereSize value="0.000000" />
+                    <fPropRadius value="0.200000" />
+                    <fLowLodAngOffset value="0.12224501" />
+                    <fLowLodDraughtOffset value="0.30227712" />
+                    <fImpellerOffset value="0.600000" />
+                    <fImpellerForceMult value="0.100000" />
+                    <fDinghySphereBuoyConst value="5.000000" />
+                    <fProwRaiseMult value="0.100000" />
+                    <fDeepWaterSampleBuoyancyMult value="10.0" />
+                </Item>
+                <Item type="NULL" />
+                <Item type="NULL" />
+            </SubHandlingData>
+        </Item>
     </HandlingData>
 </CHandlingDataMgr>
