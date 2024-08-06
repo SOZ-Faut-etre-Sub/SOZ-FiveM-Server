@@ -1,7 +1,9 @@
 import { Prisma } from '@prisma/client';
 
 import { PacificBankZone } from '../../config/bank';
+import { Command } from '../../core/decorators/command';
 import { On } from '../../core/decorators/event';
+import { Exportable } from '../../core/decorators/exports';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
@@ -32,6 +34,14 @@ export class BankProvider {
 
     @Inject(BankAccountRepository)
     private bankAccountRepository: BankAccountRepository;
+
+    @Command('transfermoney', {
+        description: 'Transfer money between two accounts',
+        role: 'admin',
+    })
+    public async transferMoneyCommand(source: number, accountSource: string, accountTarget: string, amount: number) {
+        await this.bankService.transferBankMoney(accountSource, accountTarget, 'money', amount, false);
+    }
 
     @On('QBCore:Server:PlayerLoaded', false)
     async onPlayerLoaded(data: any) {
@@ -101,7 +111,35 @@ export class BankProvider {
         moneyType: BankMoneyType,
         amount: number
     ): Promise<boolean> {
-        return this.bankService.transferBankMoney(source, accountSource, accountTarget, moneyType, amount, false);
+        return this.bankService.transferBankMoney(accountSource, accountTarget, moneyType, amount, false);
+    }
+
+    @Exportable('TransferFarmMoney')
+    public async transferFarmMoney(
+        source: number,
+        farm: string,
+        safe: string,
+        amount: number = 0,
+        moneyType: BankMoneyType = 'money'
+    ) {
+        return this.bankService.transferFarmMoney(source, farm, safe, amount, moneyType);
+    }
+
+    @Exportable('GetPlayerAccount')
+    public async getPlayerAccount(source: number) {
+        const player = this.playerService.getPlayer(source);
+        if (!player) {
+            return;
+        }
+
+        const account = await this.bankAccountRepository.find(player.charinfo.account);
+        if (!account) return;
+
+        return {
+            name: `${player.charinfo.firstname} ${player.charinfo.lastname}`,
+            account: account.id,
+            balance: account.money,
+        };
     }
 
     protected async getAccountHistory(accountId: string): Promise<BankStatement[]> {

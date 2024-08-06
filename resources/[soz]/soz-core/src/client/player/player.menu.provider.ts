@@ -1,9 +1,7 @@
-import { emitRpc } from '@public/core/rpc';
 import { wait } from '@public/core/utils';
 import { Feature, isFeatureEnabled } from '@public/shared/features';
 import { CardType } from '@public/shared/nui/card';
 import { Vector3 } from '@public/shared/polyzone/vector';
-import { RpcServerEvent } from '@public/shared/rpc';
 
 import { Command } from '../../core/decorators/command';
 import { Once, OnEvent, OnNuiEvent } from '../../core/decorators/event';
@@ -153,7 +151,7 @@ export class PlayerMenuProvider {
         }
 
         if (type === 'bank') {
-            iban = await emitRpc<string>(RpcServerEvent.BANK_GET_ACCOUNTID, player.citizenid);
+            iban = player.charinfo.account;
         }
 
         this.dispatcher.dispatch('card', 'addCard', {

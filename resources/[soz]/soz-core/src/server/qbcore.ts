@@ -50,7 +50,6 @@ export class QBCore {
     }
 
     public getPlayerByBankAccount(account: string): QBCorePlayer | null {
-        console.log(account);
         return this.QBCore.Functions.GetPlayerByBankAccount(account);
     }
 

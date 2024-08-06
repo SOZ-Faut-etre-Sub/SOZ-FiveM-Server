@@ -45,6 +45,16 @@ export class PlayerService {
         return null;
     }
 
+    public getPlayerByBankAccount(accountId: string): PlayerData | null {
+        const player = this.QBCore.getPlayerByBankAccount(accountId);
+
+        if (player) {
+            return player.PlayerData;
+        }
+
+        return null;
+    }
+
     public getPlayer(source: number): PlayerData | null {
         const player = this.serverStateService.getPlayer(source);
 

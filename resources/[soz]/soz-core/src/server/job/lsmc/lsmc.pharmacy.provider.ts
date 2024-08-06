@@ -48,7 +48,7 @@ export class LSMCPharmacyProvider {
         }
 
         if (await this.playerMoneyService.buy(source, price, TaxType.SERVICE)) {
-            this.bankService.addMoney('safe_' + JobType.LSMC, Math.round(price / 2));
+            await this.bankService.addAccountMoney('safe_' + JobType.LSMC, Math.round(price / 2));
             if (player.metadata.disease == 'grippe') {
                 this.playerService.setPlayerDisease(player.source, false);
                 this.notifier.notify(player.source, 'Vous êtes guéri!');

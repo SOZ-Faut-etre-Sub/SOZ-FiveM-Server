@@ -1,5 +1,7 @@
 import { bank_accounts } from '@prisma/client';
+import { PlayerService } from '@public/server/player/player.service';
 import { HousingRepository } from '@public/server/repository/housing.repository';
+import { ClientEvent } from '@public/shared/event/client';
 import { toVector2Object, Vector3 } from '@public/shared/polyzone/vector';
 
 import { AtmConfig, HouseSafeStorageTiers, SafeStorageMaxCapacity, SocietySafeStorage } from '../../config/bank';
@@ -15,6 +17,9 @@ import { Repository } from './repository';
 export class BankAccountRepository extends Repository<RepositoryType.BankAccount> {
     @Inject(PrismaService)
     private prismaService: PrismaService;
+
+    @Inject(PlayerService)
+    private playerService: PlayerService;
 
     @Inject(JobService)
     private jobService: JobService;
@@ -82,8 +87,9 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
             },
         });
 
-        this.data[accountId][moneyType] = Number(bank_account[moneyType]);
+        this.updatePlayerBalanceApp(bank_account);
 
+        this.data[accountId][moneyType] = Number(bank_account[moneyType]);
         return true;
     }
 
@@ -109,8 +115,30 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
             },
         });
 
-        this.data[accountId][moneyType] = Number(bank_account[moneyType]);
+        this.updatePlayerBalanceApp(bank_account);
 
+        this.data[accountId][moneyType] = Number(bank_account[moneyType]);
+        return true;
+    }
+
+    public async clear(accountId: string): Promise<boolean> {
+        const account = this.data[accountId];
+        if (!account) {
+            return;
+        }
+
+        const bank_account = await this.prismaService.bank_accounts.update({
+            where: { accountid: accountId },
+            data: {
+                money: 0,
+                marked_money: 0,
+            },
+        });
+
+        this.updatePlayerBalanceApp(bank_account);
+
+        this.data[accountId].money = 0;
+        this.data[accountId].marked_money = 0;
         return true;
     }
 
@@ -162,6 +190,21 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
         }
 
         return null;
+    }
+
+    protected updatePlayerBalanceApp(account: bank_accounts): void {
+        if (account.account_type !== 'player') return;
+
+        const player = this.playerService.getPlayerByBankAccount(account.accountid);
+        if (player) {
+            TriggerClientEvent(
+                ClientEvent.PHONE_APP_BANK_UPDATE_BALANCE,
+                player.source,
+                `${player.charinfo.firstname} ${player.charinfo.lastname}`,
+                account.accountid,
+                Number(account.money)
+            );
+        }
     }
 
     protected async serializeFromDatabase(data: bank_accounts): Promise<BankAccount> {

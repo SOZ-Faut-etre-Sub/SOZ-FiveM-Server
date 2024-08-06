@@ -1,6 +1,4 @@
-import { Rpc } from '@public/core/decorators/rpc';
 import { JobType } from '@public/shared/job';
-import { RpcServerEvent } from '@public/shared/rpc';
 
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -29,11 +27,6 @@ export class BankPaycheckProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
-
-    @Rpc(RpcServerEvent.BANK_GET_ACCOUNTID)
-    public async getBankAccount(source: number, citizenId): Promise<string> {
-        return await this.bankService.getAccountid(citizenId);
-    }
 
     @Tick(20 * 60 * 1000)
     public async paycheckLoop() {
@@ -65,7 +58,6 @@ export class BankPaycheckProvider {
             }
 
             const result = await this.bankService.transferBankMoney(
-                null,
                 player.job.id,
                 player.charinfo.account,
                 'money',
@@ -93,7 +85,6 @@ export class BankPaycheckProvider {
         for (const player of players) {
             if (player.metadata.is_senator) {
                 const result = await this.bankService.transferBankMoney(
-                    null,
                     'gouv',
                     player.charinfo.account,
                     'money',

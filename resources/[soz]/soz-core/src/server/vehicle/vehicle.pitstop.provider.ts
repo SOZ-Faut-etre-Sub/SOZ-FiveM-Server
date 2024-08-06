@@ -144,7 +144,7 @@ export class VehiclePitStopProvider {
             tireBurstState: {},
         });
 
-        this.bankService.addMoney('safe_' + JobType.Bennys, Math.round(price / 2));
+        await this.bankService.addAccountMoney('safe_' + JobType.Bennys, Math.round(price / 2));
 
         this.notifier.notify(source, 'Le véhicule a été réparé', 'success');
 

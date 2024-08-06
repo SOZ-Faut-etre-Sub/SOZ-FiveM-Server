@@ -1,5 +1,6 @@
 import { Module } from '../../core/decorators/module';
 import { BankAtmProvider } from './bank.atm.provider';
+import { BankInvoiceProvider } from './bank.invoice.provider';
 import { BankNuiProvider } from './bank.nui.provider';
 import { BankPaycheckProvider } from './bank.paycheck.provider';
 import { BankProvider } from './bank.provider';
@@ -13,6 +14,7 @@ import { BankWashMoneyProvider } from './bank.washmoney.provider';
         BankNuiProvider,
         BankAtmProvider,
         BankSafeProvider,
+        BankInvoiceProvider,
         BankPaycheckProvider,
         BankTaxProvider,
         BankWashMoneyProvider,

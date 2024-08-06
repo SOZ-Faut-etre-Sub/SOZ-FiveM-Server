@@ -137,6 +137,7 @@ export enum ClientEvent {
 
     PHONE_APP_WEATHER_UPDATE_FORECASTS = 'phone:app:weather:updateForecasts',
     PHONE_APP_WEATHER_UPDATE_STORM_ALERT = 'phone:app:weather:updateStormAlert',
+    PHONE_APP_BANK_UPDATE_BALANCE = 'phone:client:app:bank:updateBalance',
 
     STONK_DELIVER_LOCATION = 'stonk:client:DeliverLocation',
     STONK_APPLY_OUTFIT = 'soz-core:client:stonk:ApplyDutyClothing',
@@ -343,6 +344,8 @@ export enum ClientEvent {
     BANK_ATM_CREATED = 'soz-core:client:bank:atm:created',
     BANK_SAFE_OPEN_UI = 'soz-core:client:bank:safe:openui',
     BANK_SAFE_HOUSE_OPEN_UI = 'soz-core:client:bank:safe:house:openui',
-
+    BANK_PHONE_INVOICE_PAID = 'banking:client:invoicePaid',
+    BANK_PHONE_INVOICE_REJECTED = 'banking:client:invoiceRejected',
+    BANK_PHONE_INVOICE_RECEIVED = 'banking:client:invoiceReceived',
     BANK_INVOICE_RECEIVE = 'soz-core:client:bank:invoice:receive',
 }

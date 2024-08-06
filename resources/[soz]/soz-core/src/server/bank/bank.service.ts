@@ -4,7 +4,7 @@ import { Monitor } from '@public/server/monitor/monitor';
 import { Notifier } from '@public/server/notifier';
 import { BankAccountRepository } from '@public/server/repository/bank.account.repository';
 import { BankFarmRepository } from '@public/server/repository/bank.farm.repository';
-import { BankActionType, BankMoneyType, Invoice } from '@public/shared/bank';
+import { BankActionType, BankMoneyType } from '@public/shared/bank';
 
 import { PrismaService } from '../database/prisma.service';
 import { QBCore } from '../qbcore';
@@ -130,7 +130,8 @@ export class BankService {
         farm: string,
         safe: string,
         amount: number = 0,
-        moneyType: BankMoneyType = 'money'
+        moneyType: BankMoneyType = 'money',
+        isRefund = false
     ): Promise<boolean> {
         const farmAccount = await this.bankFarmRepository.find(farm);
         if (!farmAccount) {
@@ -142,6 +143,32 @@ export class BankService {
         if (!safeAccount) {
             this.logger.error(`Safe account ${safe} not found`);
             return false;
+        }
+
+        if (isRefund) {
+            if (safeAccount[moneyType] - amount < 0) {
+                this.logger.error(`Safe account ${safe} has not enough money`);
+                return false;
+            }
+
+            if (!(await this.bankAccountRepository.removeMoney(safeAccount.id, amount, moneyType, false))) {
+                this.logger.error(`Failed to remove money from safe account ${safe}`);
+                return false;
+            }
+
+            if (!this.bankFarmRepository.addMoney(farmAccount.id, amount, moneyType)) {
+                this.logger.error(`Failed to add money to farm account ${farm}`);
+                return false;
+            }
+
+            this.monitor.traceEvent('transfer_money', {
+                player_source: source,
+                source_account: safeAccount.id,
+                target_account: farmAccount.id,
+                money: amount,
+            });
+
+            return true;
         }
 
         let moneyToTransfer = amount;
@@ -170,7 +197,6 @@ export class BankService {
     }
 
     public async transferBankMoney(
-        source: number,
         accountSource: string,
         accountTarget: string,
         moneyType: BankMoneyType,
@@ -212,38 +238,17 @@ export class BankService {
         return true;
     }
 
-    public addAccountMoney(
+    public async addAccountMoney(
         account: any,
         amount: number,
         type: BankMoneyType = 'money',
         allowOverflow = false
-    ): boolean {
-        return exports['soz-bank'].AddAccountMoney(account, amount, type, allowOverflow);
+    ): Promise<boolean> {
+        return this.bankAccountRepository.addMoney(account.id, amount, type, allowOverflow);
     }
 
-    public getAllInvoicesForPlayer(source: number): Record<string, Invoice> {
-        return exports['soz-bank'].GetAllInvoicesForPlayer(source);
-    }
-
-    public payInvoice(source: number, invoiceId: number, marked: boolean) {
-        return exports['soz-bank'].PayInvoice(source, invoiceId, marked);
-    }
-
-    public async getAccountid(citizenId) {
-        const bankAccount = await this.prismaService.bank_accounts.findFirst({
-            where: {
-                accountid: citizenId,
-            },
-        });
-        return bankAccount.accountid;
-    }
-
-    public addMoney(targetAccount: string, amount: number, type: BankMoneyType = 'money', allowOverflow = false) {
-        exports['soz-bank'].AddMoney(targetAccount, amount, type, allowOverflow);
-    }
-
-    public clearAccount(targetAccount: string) {
-        exports['soz-bank'].ClearAccount(targetAccount);
+    public async clearAccount(targetAccount: string) {
+        return this.bankAccountRepository.clear(targetAccount);
     }
 
     public async getAccountMoney(accountId: string, type: BankMoneyType = 'money'): Promise<number> {

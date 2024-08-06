@@ -78,6 +78,7 @@ export type Invoice = {
     label: string;
     amount: number;
     payed: boolean;
+    kind: string;
     refused: boolean;
     createdAt: number;
 };

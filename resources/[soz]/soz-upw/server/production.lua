@@ -52,35 +52,35 @@ local facilities = {
     ["energy"] = {
         getFacility = GetPlant,
         precheck = "CanEnergyBeHarvested",
-        messages = {precheckError = "Pénurie d'énergie", harvestSuccess = "Vous avez récolté ~g~1 %s"},
+        messages = { precheckError = "Pénurie d'énergie", harvestSuccess = "Vous avez récolté ~g~1 %s" },
         action = "HarvestEnergy",
         item = "energy",
     },
     ["waste"] = {
         getFacility = GetPlant,
         precheck = "CanWasteBeHarvested",
-        messages = {precheckError = "Pas de déchets à collecter", harvestSuccess = "Vous avez récolté ~g~3 %s"},
+        messages = { precheckError = "Pas de déchets à collecter", harvestSuccess = "Vous avez récolté ~g~3 %s" },
         action = "HarvestWaste",
         item = "waste",
     },
     ["inverter-in"] = {
         getFacility = GetInverter,
         precheck = "CanStoreEnergy",
-        messages = {precheckError = "Onduleur plein", harvestSuccess = "Vous avez déposé ~g~1 %s"},
+        messages = { precheckError = "Onduleur plein", harvestSuccess = "Vous avez déposé ~g~1 %s" },
         action = "StoreEnergy",
         item = "energy",
     },
     ["inverter-out"] = {
         getFacility = GetInverter,
         precheck = "CanEnergyBeHarvested",
-        messages = {precheckError = "Pas assez d'énergie", harvestSuccess = "Vous avez récolté ~g~1 %s"},
+        messages = { precheckError = "Pas assez d'énergie", harvestSuccess = "Vous avez récolté ~g~1 %s" },
         action = "HarvestEnergy",
         item = "energy",
     },
     ["terminal-in"] = {
         getFacility = GetTerminal,
         precheck = "CanStoreEnergy",
-        messages = {precheckError = "Borne pleine", harvestSuccess = "Vous avez déposé ~g~1 %s"},
+        messages = { precheckError = "Borne pleine", harvestSuccess = "Vous avez déposé ~g~1 %s" },
         action = "StoreEnergy",
         item = "energy",
     },
@@ -96,7 +96,7 @@ local function GetFacilityData(harvestType)
 end
 
 local function GetItem(identifier, harvestType)
-    local items = {["energy"] = Config.Items.Energy, ["waste"] = {["hydro1"] = Config.Items.Waste.Hydro}}
+    local items = { ["energy"] = Config.Items.Energy, ["waste"] = { ["hydro1"] = Config.Items.Waste.Hydro } }
 
     local facilityData = GetFacilityData(harvestType)
 
@@ -112,7 +112,7 @@ QBCore.Functions.CreateCallback("soz-upw:server:PrecheckHarvest", function(sourc
 
     local item = GetItem(identifier, harvestType)
     if not item then
-        cb({false, "invalid item"})
+        cb({ false, "invalid item" })
         return
     end
 
@@ -125,7 +125,7 @@ QBCore.Functions.CreateCallback("soz-upw:server:PrecheckHarvest", function(sourc
         end
 
         if amount == 0 then
-            cb({false, string.format("Vous n'avez pas l'item requis")})
+            cb({ false, string.format("Vous n'avez pas l'item requis") })
             return
         end
     else
@@ -133,7 +133,7 @@ QBCore.Functions.CreateCallback("soz-upw:server:PrecheckHarvest", function(sourc
         local canCarry = exports["soz-inventory"]:CanCarryItem(Player.PlayerData.source, item, 1)
 
         if not canCarry then
-            cb({false, "Vos poches sont pleines..."})
+            cb({ false, "Vos poches sont pleines..." })
             return
         end
     end
@@ -141,16 +141,16 @@ QBCore.Functions.CreateCallback("soz-upw:server:PrecheckHarvest", function(sourc
     local facilityData = GetFacilityData(harvestType)
     local facility = facilityData.getFacility(identifier)
     if not facility then
-        cb({false, "invalid facility"})
+        cb({ false, "invalid facility" })
         return
     end
 
     if not facility[facilityData.precheck](facility, item) then
-        cb({false, facilityData.messages.precheckError})
+        cb({ false, facilityData.messages.precheckError })
         return
     end
 
-    cb({true})
+    cb({ true })
 end)
 
 QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, identifier, harvestType)
@@ -159,7 +159,7 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
     local facilityData = GetFacilityData(harvestType)
     local facility = facilityData.getFacility(identifier)
     if not facility then
-        cb({false, "invalid facility"})
+        cb({ false, "invalid facility" })
         return
     end
 
@@ -172,7 +172,7 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
         local firstItem = items[1]
 
         if not firstItem then
-            cb({false, string.format("Vous n'avez pas l'item requis")})
+            cb({ false, string.format("Vous n'avez pas l'item requis") })
             return
         end
 
@@ -183,8 +183,12 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
 
         if invChanged and facility.scope == "default" then
             -- Add payment from San Andreas State on default terminals only
-            TriggerEvent("banking:server:TransferMoney", Config.Upw.Accounts.FarmAccount, Config.Upw.Accounts.SafeAccount,
-                         Config.Upw.Resale.EnergyCellPriceGlobal[firstItem.item.name] or 0)
+            exports["soz-core"]:TransferFarmMoney(
+                Player.PlayerData.source,
+                Config.Upw.Accounts.FarmAccount,
+                Config.Upw.Accounts.SafeAccount,
+                Config.Upw.Resale.EnergyCellPriceGlobal[firstItem.item.name] or 0
+            )
         end
 
         exports["soz-core"]:TraceEvent("job_upw_energy_restock", {
@@ -224,13 +228,13 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
     local success, reason = Citizen.Await(p)
 
     if not success then
-        cb({false, reason})
+        cb({ false, reason })
         return
     end
 
     facility[facilityData.action](facility, item)
 
-    cb({true, string.format(facilityData.messages.harvestSuccess, QBCore.Shared.Items[item].label)})
+    cb({ true, string.format(facilityData.messages.harvestSuccess, QBCore.Shared.Items[item].label) })
 end)
 
 QBCore.Functions.CreateCallback("soz-upw:server:GetWaste", function(source, cb, identifier, harvestType)

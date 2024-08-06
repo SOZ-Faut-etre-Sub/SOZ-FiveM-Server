@@ -32,7 +32,7 @@ const InvoiceList = (): any => {
                         })}
                     >
                         {invoices
-                            .sort((a, b) => b.created_at - a.created_at)
+                            .sort((a, b) => b.createdAt - a.createdAt)
                             .map(invoice => (
                                 <Menu
                                     key={invoice.id}
@@ -76,7 +76,7 @@ const InvoiceList = (): any => {
                                                             className="text-gray-400"
                                                             style={{ fontSize: '0.67rem', lineHeight: '1rem' }}
                                                         >
-                                                            <DayAgo timestamp={invoice.created_at} />
+                                                            <DayAgo timestamp={invoice.createdAt} />
                                                         </span>
                                                     </div>
                                                 </div>

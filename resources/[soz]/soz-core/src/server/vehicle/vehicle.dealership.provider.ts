@@ -25,6 +25,7 @@ import {
     Vehicle,
     VehicleClassFuelStorageMultiplier,
 } from '../../shared/vehicle/vehicle';
+import { BankService } from '../bank/bank.service';
 import { PrismaService } from '../database/prisma.service';
 import { LockService } from '../lock.service';
 import { Monitor } from '../monitor/monitor';
@@ -66,6 +67,9 @@ export class VehicleDealershipProvider {
 
     @Inject(Logger)
     private logger: Logger;
+
+    @Inject(BankService)
+    private bankService: BankService;
 
     private auctions: Record<string, AuctionVehicle> = {};
 
@@ -242,7 +246,16 @@ export class VehicleDealershipProvider {
                     return false;
                 }
 
-                if (!(await this.playerMoneyService.transfer(player.charinfo.account, 'luxury_dealership', price))) {
+                if (
+                    !(await this.bankService.transferFarmMoney(
+                        source,
+                        'luxury_dealership',
+                        player.charinfo.account,
+                        price,
+                        'money',
+                        true
+                    ))
+                ) {
                     this.notifier.notify(source, "Vous n'avez pas assez d'argent.", 'error');
 
                     return false;
@@ -250,7 +263,8 @@ export class VehicleDealershipProvider {
 
                 if (
                     auction.bestBid &&
-                    !(await this.playerMoneyService.transfer(
+                    !(await this.bankService.transferFarmMoney(
+                        source,
                         'luxury_dealership',
                         auction.bestBid.account,
                         auction.bestBid.price

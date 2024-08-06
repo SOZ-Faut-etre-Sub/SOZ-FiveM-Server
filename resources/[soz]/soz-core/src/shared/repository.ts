@@ -1,4 +1,4 @@
-import { BankAccount, BankAtm, Tax, TaxType } from '@public/shared/bank';
+import { BankAccount, BankAtm, Invoice, Tax, TaxType } from '@public/shared/bank';
 import { Configuration } from '@public/shared/configuration';
 import { Field } from '@public/shared/field';
 import { Fine } from '@public/shared/job/police';
@@ -22,6 +22,7 @@ export enum RepositoryType {
     BankAccount = 'bankAccount',
     BankAtm = 'bankAtm',
     BankFarmAccount = 'bankFarmAccount',
+    BankInvoice = 'bankInvoice',
     Billboard = 'billboard',
     ChargerUpw = 'chargerUpw',
     Configuration = 'configuration',
@@ -50,6 +51,7 @@ export type RepositoryMapping = {
     [RepositoryType.BankAccount]: BankAccount;
     [RepositoryType.BankAtm]: BankAtm;
     [RepositoryType.BankFarmAccount]: Partial<BankAccount>;
+    [RepositoryType.BankInvoice]: Invoice;
     [RepositoryType.Billboard]: Billboard;
     [RepositoryType.ChargerUpw]: UpwCharger;
     [RepositoryType.Configuration]: any;
@@ -79,6 +81,7 @@ export interface RepositoryConfig extends Record<keyof RepositoryMapping, any> {
     [RepositoryType.BankAccount]: Record<string, BankAccount>;
     [RepositoryType.BankAtm]: Record<string, BankAtm>;
     [RepositoryType.BankFarmAccount]: Record<string, Partial<BankAccount>>;
+    [RepositoryType.BankInvoice]: Record<number, Invoice>;
     [RepositoryType.Configuration]: Configuration;
     [RepositoryType.Field]: Record<string, Field>;
     [RepositoryType.Fine]: Record<number, Fine>;

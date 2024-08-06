@@ -21,7 +21,7 @@ export class PoliceMoneyCheckerProvider {
     private bankService: BankService;
 
     @OnEvent(ServerEvent.POLICE_CONFISCATE_MONEY)
-    public onConfiscateMoney(source: number, targetId: number) {
+    public async onConfiscateMoney(source: number, targetId: number) {
         const player = this.playerService.getPlayer(source);
         const target = this.playerService.getPlayer(targetId);
 
@@ -30,7 +30,7 @@ export class PoliceMoneyCheckerProvider {
                 const markedAmount = target.money.marked_money;
                 if (markedAmount > 0) {
                     this.playerMoneyService.remove(targetId, markedAmount, 'marked_money');
-                    this.bankService.addMoney('safe_' + player.job.id, markedAmount, 'marked_money', true);
+                    await this.bankService.addAccountMoney('safe_' + player.job.id, markedAmount, 'marked_money', true);
                     TriggerClientEvent(
                         ClientEvent.NOTIFICATION_DRAW,
                         player.source,

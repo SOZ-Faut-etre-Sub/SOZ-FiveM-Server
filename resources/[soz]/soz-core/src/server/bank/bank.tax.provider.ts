@@ -4,7 +4,6 @@ import { Cron } from '../../core/decorators/cron';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Logger } from '../../core/logger';
-import { isErr } from '../../shared/result';
 import { JobService } from '../job.service';
 import { Monitor } from '../monitor/monitor';
 import { ConfigurationRepository } from '../repository/configuration.repository';
@@ -70,12 +69,12 @@ export class BankTaxProvider {
                 const newsIncome = Math.round((6 * tax) / 100);
 
                 for (const jobAccount of ['news', 'you-news']) {
-                    const result = await this.bankService.transferBankMoney(acc, jobAccount, newsIncome);
+                    const result = await this.bankService.transferBankMoney(acc, jobAccount, 'money', newsIncome);
 
-                    if (isErr(result)) {
-                        this.logger.error(`Paiement impossible du ${jobAccount} pour le compte ${acc}: ${result.err}`);
-                    } else {
+                    if (result) {
                         this.logger.info(`Paiement du ${jobAccount} pour le compte ${acc} de ${newsIncome}`);
+                    } else {
+                        this.logger.error(`Paiement impossible du ${jobAccount} pour le compte ${acc}: ${result}`);
                     }
 
                     this.monitor.traceEvent('news_tax', {
@@ -87,12 +86,12 @@ export class BankTaxProvider {
                 }
 
                 const gouvIncome = tax - 2 * newsIncome;
-                const result = await this.bankService.transferBankMoney(acc, 'gouv', gouvIncome);
+                const result = await this.bankService.transferBankMoney(acc, 'gouv', 'money', gouvIncome);
 
-                if (isErr(result)) {
-                    this.logger.error(`Paiement impossible du gouvernement pour le compte ${acc}: ${result.err}`);
-                } else {
+                if (result) {
                     this.logger.info(`Paiement du gouvernement pour le compte ${acc} de ${gouvIncome}`);
+                } else {
+                    this.logger.error(`Paiement impossible du gouvernement pour le compte ${acc}: ${result}`);
                 }
 
                 this.monitor.traceEvent('gouv_tax', {

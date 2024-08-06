@@ -2,6 +2,8 @@ import { animated, useSpring } from '@react-spring/web';
 import { FunctionComponent } from 'react';
 
 import { BankAccount, BankContact, BankStatement } from '../../../../shared/bank';
+import { NuiEvent } from '../../../../shared/event/nui';
+import { fetchNui } from '../../../fetch';
 import { Card } from '../component/Card';
 import { Header } from '../component/Header';
 import { HistoryTable } from '../component/HistoryTable';
@@ -15,9 +17,16 @@ export interface DashboardProps {
     contacts: BankContact[];
     history: BankStatement[];
     showIban?: boolean;
+    showCreateOffshoreAccount?: boolean;
 }
 
-export const DashboardPage: FunctionComponent<DashboardProps> = ({ account, contacts, history, showIban }) => {
+export const DashboardPage: FunctionComponent<DashboardProps> = ({
+    account,
+    contacts,
+    history,
+    showIban,
+    showCreateOffshoreAccount,
+}) => {
     const [styles] = useSpring(
         () => ({
             from: { y: 30, opacity: 0 },
@@ -26,6 +35,10 @@ export const DashboardPage: FunctionComponent<DashboardProps> = ({ account, cont
         }),
         [account]
     );
+
+    const createOffshoreAccount = async () => {
+        await fetchNui(NuiEvent.BankCreateOffshoreAccount);
+    };
 
     return (
         <div className="space-y-10">
@@ -63,6 +76,22 @@ export const DashboardPage: FunctionComponent<DashboardProps> = ({ account, cont
                 <div className="w-2/6 space-y-10">
                     <QuickActionForm account={account} />
                     <TransferActionForm account={account} contacts={contacts} />
+
+                    {showCreateOffshoreAccount && (
+                        <Card>
+                            <h2 className="uppercase text-sm font-light text-gray-300">Compte offshore</h2>
+                            <p className="text-sm mt-2">
+                                Créez un compte offshore pour sécuriser vos actifs et bénéficier d'une fiscalité
+                                avantageuse.
+                            </p>
+                            <button
+                                onClick={createOffshoreAccount}
+                                className="border-2 mt-3 border-green-500/50 w-full p-2 rounded-md"
+                            >
+                                Créer un compte
+                            </button>
+                        </Card>
+                    )}
                 </div>
             </animated.div>
         </div>

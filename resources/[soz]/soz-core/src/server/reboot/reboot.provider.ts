@@ -126,7 +126,6 @@ export class RebootProvider {
             },
         });
 
-        exports['soz-bank'].saveAccounts();
         exports['soz-upw'].saveUpw();
         exports['soz-inventory'].saveInventories();
         exports['soz-inventory'].stopSyncInventories();

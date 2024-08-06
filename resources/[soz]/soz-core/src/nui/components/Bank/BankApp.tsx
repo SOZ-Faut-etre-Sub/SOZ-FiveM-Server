@@ -156,6 +156,7 @@ export const BankApp: FunctionComponent = () => {
                                             account={data.accounts.enterprise}
                                             contacts={data.contacts}
                                             history={data.history.enterprise}
+                                            showCreateOffshoreAccount={!data?.accounts?.offshore}
                                         />
                                     }
                                 />

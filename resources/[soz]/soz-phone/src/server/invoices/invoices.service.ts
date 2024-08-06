@@ -1,6 +1,7 @@
 import { InvoiceItem } from '../../../typings/app/invoices';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import { invoicesLogger } from './invoices.utils';
+
 class _InvoicesService {
     constructor() {
         invoicesLogger.debug('Invoices service started');
@@ -8,7 +9,7 @@ class _InvoicesService {
 
     async handleFetchInvoices(reqObj: PromiseRequest<void>, resp: PromiseEventResp<InvoiceItem[]>) {
         try {
-            let invoices = exports['soz-bank'].GetAllInvoicesForPlayer(reqObj.source);
+            let invoices = await exports['soz-core'].GetAllInvoicesForPlayer(reqObj.source);
 
             if (!Array.isArray(invoices)) {
                 invoices = Object.values(invoices);
@@ -23,7 +24,7 @@ class _InvoicesService {
 
     async handlePayInvoice(reqObj: PromiseRequest<number>, resp: PromiseEventResp<void>) {
         try {
-            exports['soz-bank'].PayInvoice(reqObj.source, reqObj.data);
+            exports['soz-core'].PayInvoice(reqObj.source, reqObj.data);
             resp({ status: 'ok' });
         } catch (e) {
             invoicesLogger.error(`Error in handlePayInvoice, ${e.toString()}`);
@@ -33,7 +34,7 @@ class _InvoicesService {
 
     async handleRefuseInvoice(reqObj: PromiseRequest<number>, resp: PromiseEventResp<void>) {
         try {
-            exports['soz-bank'].RejectInvoice(reqObj.source, reqObj.data);
+            exports['soz-core'].RejectInvoice(reqObj.source, reqObj.data);
             resp({ status: 'ok' });
         } catch (e) {
             invoicesLogger.error(`Error in handleRefuseInvoice, ${e.toString()}`);

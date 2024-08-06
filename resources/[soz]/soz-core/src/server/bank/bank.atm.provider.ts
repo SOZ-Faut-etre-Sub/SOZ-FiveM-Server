@@ -6,7 +6,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { AtmType, AtmUiData, BankAccount } from '../../shared/bank';
 import { ServerEvent } from '../../shared/event/server';
-import { joaat } from '../../shared/joaat';
+import { getLocationHash } from '../../shared/locationhash';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import { PlayerService } from '../player/player.service';
@@ -85,12 +85,8 @@ export class BankAtmProvider {
         return `bank_${this.getClosestFleeca(coords)}`;
     }
 
-    protected atmHashByCoords(coords: Vector3): number {
-        return joaat(coords.map(c => Math.floor(c * 100) / 100).join('_'));
-    }
-
     protected atmIdentifier(type: AtmType, coords: Vector3): string {
-        return `atm_${type}_${this.atmHashByCoords(coords)}`;
+        return `atm_${type}_${getLocationHash(coords)}`;
     }
 
     protected getClosestFleeca(coords: Vector3): string {

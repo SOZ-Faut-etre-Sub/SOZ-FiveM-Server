@@ -5,7 +5,7 @@ import { bankLogger } from './bank.utils';
 class _BankService {
     async handleFetchAccount(reqObj: PromiseRequest<void>, resp: PromiseEventResp<IBankCredentials>) {
         try {
-            const account = exports['soz-bank'].GetPlayerAccount(reqObj.source);
+            const account = await exports['soz-core'].GetPlayerAccount(reqObj.source);
             resp({ status: 'ok', data: account });
         } catch (e) {
             bankLogger.error(`Error in handleFetchAccount, ${e.toString()}`);

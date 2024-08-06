@@ -43,7 +43,7 @@ export abstract class RepositoryLegacy<T> {
 export abstract class Repository<
     T extends keyof RepositoryConfig,
     K extends keyof RepositoryConfig[T] = keyof RepositoryConfig[T],
-    V extends RepositoryConfig[T][K] = RepositoryConfig[T][K]
+    V extends RepositoryConfig[T][K] = RepositoryConfig[T][K],
 > {
     public abstract type: RepositoryType;
 
@@ -110,7 +110,7 @@ export abstract class Repository<
         return this.data;
     }
 
-    public async get(predicate?: (value: V, index: number, array: V[]) => boolean): Promise<V[]> {
+    public async get(predicate?: (value: V, index: number, array: V[]) => Promise<boolean> | boolean): Promise<V[]> {
         if (this.loadPromise) {
             await this.loadPromise;
         }

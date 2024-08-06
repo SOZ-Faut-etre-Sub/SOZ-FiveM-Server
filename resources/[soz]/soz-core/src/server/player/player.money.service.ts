@@ -44,7 +44,7 @@ export class PlayerMoneyService {
         const moneyRemoved = this.QBCore.getPlayer(source).Functions.RemoveMoney(type, realMoney);
 
         if (taxMoney > 0 && moneyRemoved) {
-            this.bankService.addAccountMoney('safe_gouv', taxMoney, type, true);
+            await this.bankService.addAccountMoney('safe_gouv', taxMoney, type, true);
         }
 
         return moneyRemoved;
@@ -59,26 +59,5 @@ export class PlayerMoneyService {
 
     public get(source: number, type: BankMoneyType = 'money'): number {
         return this.QBCore.getPlayer(source).Functions.GetMoney(type);
-    }
-
-    public async transfer(
-        sourceAccount: string,
-        targetAccount: string,
-        amount: number,
-        timeout = 10000
-    ): Promise<boolean> {
-        const promise = new Promise<boolean>(resolve => {
-            TriggerEvent('banking:server:TransferMoney', sourceAccount, targetAccount, amount, (success: boolean) => {
-                resolve(success);
-            });
-        });
-
-        const timeoutPromise = new Promise<never>((_, reject) => {
-            setTimeout(() => {
-                reject(new Error('Promise timed out'));
-            }, timeout);
-        });
-
-        return Promise.race([promise, timeoutPromise]);
     }
 }

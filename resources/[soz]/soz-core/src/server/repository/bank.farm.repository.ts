@@ -22,6 +22,16 @@ export class BankFarmRepository extends Repository<RepositoryType.BankFarmAccoun
         return accounts;
     }
 
+    public addMoney(accountId: string, money: number, moneyType: BankMoneyType = 'money'): boolean {
+        const account = this.data[accountId];
+        if (!account) {
+            return false;
+        }
+
+        account[moneyType] += money;
+        return true;
+    }
+
     public removeMoney(accountId: string, money: number, moneyType: BankMoneyType = 'money'): boolean {
         const account = this.data[accountId];
         if (!account) {

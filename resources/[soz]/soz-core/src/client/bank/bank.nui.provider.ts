@@ -37,6 +37,15 @@ export class BankNuiProvider {
         this.nuiDispatch.dispatch('bank', 'UpdateAccountData', accountUiData);
     }
 
+    @OnNuiEvent(NuiEvent.BankCreateOffshoreAccount)
+    public async createOffshoreAccount() {
+        const isCreated = await emitRpc<boolean>(RpcServerEvent.BANK_CREATE_OFFSHORE_ACCOUNT);
+        if (!isCreated) return;
+
+        const accountUiData = await emitRpc<BankUiData>(RpcServerEvent.BANK_GET_ACCOUNT_UI);
+        this.nuiDispatch.dispatch('bank', 'UpdateAccountData', accountUiData);
+    }
+
     @OnNuiEvent(NuiEvent.BankContactAdd)
     public async addContact({ label, iban }: { label: string; iban: string }) {
         const isCreated = await emitRpc(RpcServerEvent.BANK_CONTACT_ADD, label, iban);

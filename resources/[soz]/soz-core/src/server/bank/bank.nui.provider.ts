@@ -4,6 +4,7 @@ import { Rpc } from '../../core/decorators/rpc';
 import { RpcServerEvent } from '../../shared/rpc';
 import { PrismaService } from '../database/prisma.service';
 import { PlayerService } from '../player/player.service';
+import { BankAccountRepository } from '../repository/bank.account.repository';
 
 @Provider()
 export class BankNuiProvider {
@@ -12,6 +13,20 @@ export class BankNuiProvider {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(BankAccountRepository)
+    private bankAccountRepository: BankAccountRepository;
+
+    @Rpc(RpcServerEvent.BANK_CREATE_OFFSHORE_ACCOUNT)
+    public async createOffshoreAccount(source: number): Promise<boolean> {
+        const player = this.playerService.getPlayer(source);
+        if (!player) {
+            return;
+        }
+
+        await this.bankAccountRepository.create(`offshore_${player.job.id}`, 'offshore');
+        return true;
+    }
 
     @Rpc(RpcServerEvent.BANK_CONTACT_ADD)
     public async addContact(source: number, label: string, iban: string): Promise<boolean> {
