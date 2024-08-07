@@ -595,8 +595,12 @@ export class HousingProvider {
         let zkeaAmount = 0;
         let price = 0;
         for (const [type, upgrade] of Object.entries(apartmentTier)) {
-            zkeaAmount += HousingTiers[type][upgrade].zkeaPrice;
-            price += (apartment.price * HousingTiers[type][upgrade].pricePercent) / 100;
+            const currentTier = apartment[type];
+
+            for (let i = currentTier + 1; i <= upgrade; i++) {
+                zkeaAmount += HousingTiers[type][i].zkeaPrice;
+                price += (apartment.price * HousingTiers[type][i].pricePercent) / 100;
+            }
         }
 
         if (this.inventoryManager.getItemCount('cabinet_storage', 'cabinet_zkea') < zkeaAmount) {
