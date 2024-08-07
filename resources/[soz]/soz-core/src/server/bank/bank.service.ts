@@ -264,8 +264,4 @@ export class BankService {
 
         return account[type];
     }
-
-    public getSafeMoney(identifier: string): number {
-        return exports['soz-bank'].GetSafeMoney(identifier);
-    }
 }

@@ -20,6 +20,11 @@ export const HouseSafeStorageTiers = {
     2: 40_000,
     3: 60_000,
     4: 100_000,
+    5: 140_000,
+    6: 180_000,
+    7: 200_000,
+    8: 300_000,
+    9: 400_000,
 };
 
 export const BankPedLocations: Record<string, Vector4> = {
