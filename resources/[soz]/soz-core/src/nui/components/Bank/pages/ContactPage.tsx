@@ -26,7 +26,7 @@ interface AddContactFormInputs {
     accountid: string;
 }
 
-export const ContactPage: FunctionComponent<HistoryProps> = ({ account, contacts, showIban }) => {
+export const ContactPage: FunctionComponent<HistoryProps> = ({ account, contacts }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const styles = useSpring({

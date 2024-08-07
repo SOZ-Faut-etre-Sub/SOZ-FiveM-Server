@@ -95,8 +95,8 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
     const price = data.admin
         ? 0
         : configuration
-        ? getVehicleCustomPrice(data.vehiclePrice, data.options, data.currentConfiguration, configuration)
-        : 0;
+          ? getVehicleCustomPrice(data.vehiclePrice, data.options, data.currentConfiguration, configuration)
+          : 0;
 
     const onConfirm = () => {
         fetchNui(NuiEvent.VehicleCustomConfirmModification, {

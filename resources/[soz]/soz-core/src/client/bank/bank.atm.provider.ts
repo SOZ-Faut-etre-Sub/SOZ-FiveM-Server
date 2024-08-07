@@ -10,6 +10,7 @@ import { ServerEvent } from '../../shared/event/server';
 import { JobType } from '../../shared/job';
 import { toVector2Object, Vector2 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
+import { AnimationService } from '../animation/animation.service';
 import { BlipFactory } from '../blip';
 import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
@@ -17,7 +18,6 @@ import { NuiDispatch } from '../nui/nui.dispatch';
 import { PlayerService } from '../player/player.service';
 import { BankAtmRepository } from '../repository/bank.atm.repository';
 import { TargetFactory, TargetOptions } from '../target/target.factory';
-import { AnimationService } from '../animation/animation.service';
 
 @Provider()
 export class BankAtmProvider {
@@ -69,7 +69,7 @@ export class BankAtmProvider {
                 if (amount > atmAccount.config.maxWithdrawal) {
                     this.notifier.notify(
                         `Vous ne pouvez pas retirer plus de ~b~$${atmAccount.config.maxWithdrawal}~s~ depuis ce terminal`,
-                        'error',
+                        'error'
                     );
                     return;
                 }
@@ -84,13 +84,13 @@ export class BankAtmProvider {
                         if (amountAvailable == 0) {
                             this.notifier.notify(
                                 `Limite de retrait atteinte : max. ~b~$${atmAccount.config.maxWithdrawal}~s~ par tranche de ${atmAccount.config.limit / 60000} minutes. Revenez dans ~b~${Math.ceil(remainingTime / 60000)} minutes~s~.`,
-                                'error',
+                                'error'
                             );
                             return;
                         } else if (amount > amountAvailable) {
                             this.notifier.notify(
                                 `Limite de retrait atteinte : max. ~b~$${atmAccount.config.maxWithdrawal}~s~ par tranche de ${atmAccount.config.limit / 60000} minutes. ~b~$${amountAvailable}~s~ retirables.`,
-                                'error',
+                                'error'
                             );
                             return;
                         }
@@ -101,7 +101,7 @@ export class BankAtmProvider {
             const hasEnoughLiquidity = await emitRpc<boolean>(
                 RpcServerEvent.BANK_ATM_REMOVE_LIQUIDITY,
                 atmIdentifier.includes('atm_ent_') ? atmIdentifier : bankAccount,
-                amount,
+                amount
             );
             if (!hasEnoughLiquidity) {
                 this.notifier.notify('Liquidité insuffisante à ce terminal', 'error');
@@ -114,7 +114,7 @@ export class BankAtmProvider {
             type,
             player.charinfo.account,
             'money',
-            amount,
+            amount
         );
 
         if (type === 'withdraw') {
@@ -150,7 +150,7 @@ export class BankAtmProvider {
                     {
                         label: 'Accéder aux comptes',
                         icon: 'c:bank/compte_personal.png',
-                        action: async (entity) => {
+                        action: async entity => {
                             await this.animationService.playAnimation({
                                 base: {
                                     dictionary: 'anim@mp_atm@enter',
@@ -171,7 +171,7 @@ export class BankAtmProvider {
                             const accountUiData = await emitRpc<AtmUiData>(
                                 RpcServerEvent.BANK_ATM_GET_ACCOUNT_UI,
                                 type,
-                                GetEntityCoords(entity),
+                                GetEntityCoords(entity)
                             );
                             this.nuiDispatch.dispatch('bank_atm', 'ShowAtm', accountUiData);
                         },
@@ -181,7 +181,7 @@ export class BankAtmProvider {
                     this.createAtmRefillAction(type, 'medium_moneybag'),
                     this.createAtmRefillAction(type, 'big_moneybag'),
                 ],
-                1.0,
+                1.0
             );
         });
     }
@@ -190,13 +190,13 @@ export class BankAtmProvider {
         return {
             label: `Remplir avec ${this.itemService.getItem(item).label}`,
             icon: 'c:stonk/remplir.png',
-            canInteract: async (entity) => {
+            canInteract: async entity => {
                 if (type === AtmType.ENTERPRISE) return false;
 
                 const currentMoney = await emitRpc<number>(
                     RpcServerEvent.BANK_ATM_GET_MONEY,
                     type,
-                    GetEntityCoords(entity),
+                    GetEntityCoords(entity)
                 );
                 if (currentMoney < AtmConfig[type].maxMoney) {
                     return this.playerService.isOnDuty();
@@ -204,11 +204,11 @@ export class BankAtmProvider {
 
                 return false;
             },
-            action: async (entity) => {
+            action: async entity => {
                 const account = await emitRpc<BankAccount>(
                     RpcServerEvent.BANK_ATM_GET_ACCOUNT,
                     type,
-                    GetEntityCoords(entity),
+                    GetEntityCoords(entity)
                 );
                 if (!account) return;
 

@@ -32,12 +32,7 @@ export const TransferActionForm: FunctionComponent<TransferActionFormProps> = ({
                       contact.accountid.toLowerCase().includes(query.toLowerCase())
               );
 
-    const {
-        register,
-        handleSubmit,
-        reset,
-        formState: { errors },
-    } = useForm<TransferActionInputs>();
+    const { register, handleSubmit, reset } = useForm<TransferActionInputs>();
 
     const submitForm: SubmitHandler<TransferActionInputs> = async data => {
         if (!selected) return;

@@ -8,7 +8,7 @@ export abstract class RepositoryLegacy<T> {
     private loadResolve: () => void;
 
     public constructor() {
-        this.loadPromise = new Promise((resolve) => {
+        this.loadPromise = new Promise(resolve => {
             this.loadResolve = resolve;
         });
     }
@@ -54,7 +54,7 @@ export abstract class Repository<
     private observer: Observer<Record<K, V>> = null;
 
     public constructor() {
-        this.loadPromise = new Promise((resolve) => {
+        this.loadPromise = new Promise(resolve => {
             this.loadResolve = resolve;
         });
     }

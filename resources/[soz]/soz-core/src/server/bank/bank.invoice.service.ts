@@ -41,7 +41,7 @@ export class BankInvoiceService {
         const invoices = [];
 
         for (const invoice of Object.values(
-            this.bankInvoiceRepository.get((invoice) => !invoice.payed && !invoice.refused),
+            this.bankInvoiceRepository.get(invoice => !invoice.payed && !invoice.refused)
         )) {
             const hasAccess = await this.playerHasPermission(player, invoice);
             if (hasAccess) {
@@ -88,7 +88,7 @@ export class BankInvoiceService {
                     invoice.emitterSafe,
                     'deposit',
                     'money',
-                    moneyTake,
+                    moneyTake
                 );
                 if (!moneyTransaction) {
                     this.notifier.error(source, "Le coffre de destination n'a pas de place pour cette somme");
@@ -100,7 +100,7 @@ export class BankInvoiceService {
                     invoice.emitterSafe,
                     'deposit',
                     'marked_money',
-                    markedMoneyTake,
+                    markedMoneyTake
                 );
                 if (!markedMoneyTransaction) {
                     this.notifier.error(source, "Le coffre de destination n'a pas de place pour cette somme");
@@ -109,7 +109,7 @@ export class BankInvoiceService {
                         invoice.emitterSafe,
                         'withdraw',
                         'money',
-                        moneyTake,
+                        moneyTake
                     );
                     return false;
                 }
@@ -119,7 +119,7 @@ export class BankInvoiceService {
                     invoice.emitterSafe,
                     'deposit',
                     'money',
-                    invoice.amount,
+                    invoice.amount
                 );
                 if (!transaction) {
                     this.notifier.error(source, 'Transaction impossible.');
@@ -138,7 +138,7 @@ export class BankInvoiceService {
                 invoice.targetAccount,
                 invoice.emitterSafe,
                 'money',
-                invoice.amount,
+                invoice.amount
             );
             if (!transaction) {
                 this.notifier.error(source, '~r~Echec~s~ du paiement la facture de la société');
@@ -217,7 +217,7 @@ export class BankInvoiceService {
             invoice.targetAccount as JobType,
             player.job.id,
             Number(player.job.grade),
-            JobPermission.SocietyBankInvoices,
+            JobPermission.SocietyBankInvoices
         );
     }
 }
