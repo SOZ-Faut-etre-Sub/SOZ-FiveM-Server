@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import React, { forwardRef, FunctionComponent, PropsWithChildren } from 'react';
 
-export const AppContainer: FunctionComponent = forwardRef<HTMLDivElement, PropsWithChildren<{ className?: string }>>(
+export const AppContent: FunctionComponent = forwardRef<HTMLDivElement, PropsWithChildren<{ className?: string }>>(
     ({ children, className }, ref) => {
         return (
             <div

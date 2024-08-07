@@ -41,10 +41,10 @@ export const DashboardPage: FunctionComponent<DashboardProps> = ({
     };
 
     return (
-        <div className="space-y-10">
+        <div className="space-y-10 h-full">
             <Header title="Tableau de bord" />
 
-            <animated.div className="flex gap-10" style={styles}>
+            <animated.div className="flex gap-10 h-full" style={styles}>
                 {/* Left pane */}
                 <div className="w-4/6 space-y-10">
                     <Card className="space-y-6">
