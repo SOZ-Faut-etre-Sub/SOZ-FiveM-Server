@@ -51,7 +51,6 @@ export class BankInvoiceRepository extends Repository<RepositoryType.BankInvoice
         });
 
         this.data[data.id] = this.serializeFromDatabase(data);
-
         return this.data[data.id];
     }
 

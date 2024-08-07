@@ -8,7 +8,7 @@ export abstract class RepositoryLegacy<T> {
     private loadResolve: () => void;
 
     public constructor() {
-        this.loadPromise = new Promise(resolve => {
+        this.loadPromise = new Promise((resolve) => {
             this.loadResolve = resolve;
         });
     }
@@ -54,7 +54,7 @@ export abstract class Repository<
     private observer: Observer<Record<K, V>> = null;
 
     public constructor() {
-        this.loadPromise = new Promise(resolve => {
+        this.loadPromise = new Promise((resolve) => {
             this.loadResolve = resolve;
         });
     }
@@ -110,7 +110,7 @@ export abstract class Repository<
         return this.data;
     }
 
-    public async get(predicate?: (value: V, index: number, array: V[]) => Promise<boolean> | boolean): Promise<V[]> {
+    public async get(predicate?: (value: V, index: number, array: V[]) => boolean): Promise<V[]> {
         if (this.loadPromise) {
             await this.loadPromise;
         }

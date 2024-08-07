@@ -235,6 +235,13 @@ export class BankService {
             },
         });
 
+        this.monitor.traceEvent('transfer_money', {
+            player_source: source,
+            source_account: accountSource,
+            target_account: accountTarget,
+            money: amount,
+        });
+
         return true;
     }
 

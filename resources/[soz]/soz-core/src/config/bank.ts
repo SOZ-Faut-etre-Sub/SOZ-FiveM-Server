@@ -15,11 +15,11 @@ export const PacificBankZone: BoxZone = new BoxZone([246.43, 223.79, 106.29], 2.
 
 export const SafeStorageMaxCapacity = 900_000;
 export const HouseSafeStorageTiers = {
-    0: 10000,
-    1: 20000,
-    2: 40000,
-    3: 60000,
-    4: 100000,
+    0: 10_000,
+    1: 20_000,
+    2: 40_000,
+    3: 60_000,
+    4: 100_000,
 };
 
 export const BankPedLocations: Record<string, Vector4> = {

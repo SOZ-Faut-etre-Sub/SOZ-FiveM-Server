@@ -90,11 +90,10 @@ export class BankAtmProvider {
     }
 
     protected getClosestFleeca(coords: Vector3): string {
-        const orderedFleeca = Object.entries(BankPedLocations)
+        return Object.entries(BankPedLocations)
             .filter(([name]) => name.includes('fleeca'))
             .sort(([, a], [, b]) => getDistance(a, coords) - getDistance(b, coords))
-            .map(([name]) => name);
-
-        return orderedFleeca[0];
+            .map(([name]) => name)
+            .pop();
     }
 }

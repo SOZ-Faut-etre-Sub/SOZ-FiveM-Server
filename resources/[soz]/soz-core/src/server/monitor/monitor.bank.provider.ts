@@ -32,10 +32,7 @@ export class MonitorBankProvider {
         const bankAccounts = await this.bankAccountRepository.get();
         const farmAccounts = await this.bankFarmRepository.get();
 
-        for (const account of bankAccounts) {
-            this.updateMetrics(account);
-        }
-        for (const account of farmAccounts) {
+        for (const account of [...bankAccounts, ...farmAccounts]) {
             this.updateMetrics(account);
         }
     }

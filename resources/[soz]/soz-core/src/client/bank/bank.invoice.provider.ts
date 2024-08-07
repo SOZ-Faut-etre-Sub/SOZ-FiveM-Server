@@ -10,10 +10,10 @@ export class BankInvoiceProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @OnEvent(ClientEvent.BANK_INVOICE_RECEIVE)
+    @OnEvent(ClientEvent.BANK_PHONE_INVOICE_RECEIVED)
     public async onInvoiceReceive(invoiceId: string, label: string, amount: number) {
         const confirmed = await this.notifier.notifyWithConfirm(
-            `Vous avez reçu une facture de ~r~$${amount}~n~Raison:${label}.~n~~n~Faites ~g~Y~s~ pour l'accepter ou ~r~N~s~ pour la refuser`
+            `Vous avez reçu une facture de ~r~$${amount}~s~~n~Raison:${label}.~n~~n~Faites ~g~Y~s~ pour l'accepter ou ~r~N~s~ pour la refuser`
         );
 
         if (!confirmed) {

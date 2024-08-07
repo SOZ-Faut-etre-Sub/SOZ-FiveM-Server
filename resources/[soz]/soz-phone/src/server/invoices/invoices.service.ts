@@ -24,7 +24,7 @@ class _InvoicesService {
 
     async handlePayInvoice(reqObj: PromiseRequest<number>, resp: PromiseEventResp<void>) {
         try {
-            exports['soz-core'].PayInvoice(reqObj.source, reqObj.data);
+            await exports['soz-core'].PayInvoice(reqObj.source, reqObj.data);
             resp({ status: 'ok' });
         } catch (e) {
             invoicesLogger.error(`Error in handlePayInvoice, ${e.toString()}`);
@@ -34,7 +34,7 @@ class _InvoicesService {
 
     async handleRefuseInvoice(reqObj: PromiseRequest<number>, resp: PromiseEventResp<void>) {
         try {
-            exports['soz-core'].RejectInvoice(reqObj.source, reqObj.data);
+            await exports['soz-core'].RejectInvoice(reqObj.source, reqObj.data);
             resp({ status: 'ok' });
         } catch (e) {
             invoicesLogger.error(`Error in handleRefuseInvoice, ${e.toString()}`);

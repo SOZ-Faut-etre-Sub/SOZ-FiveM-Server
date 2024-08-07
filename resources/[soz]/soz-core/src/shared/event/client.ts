@@ -347,5 +347,4 @@ export enum ClientEvent {
     BANK_PHONE_INVOICE_PAID = 'banking:client:invoicePaid',
     BANK_PHONE_INVOICE_REJECTED = 'banking:client:invoiceRejected',
     BANK_PHONE_INVOICE_RECEIVED = 'banking:client:invoiceReceived',
-    BANK_INVOICE_RECEIVE = 'soz-core:client:bank:invoice:receive',
 }

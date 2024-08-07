@@ -37,17 +37,16 @@ export class BankWashMoneyProvider {
             }
 
             let toWash = maxWashMoney;
-
             if (account.marked_money < toWash) {
                 toWash = account.marked_money;
             }
 
             const markedTransfer = await this.bankAccountRepository.removeMoney(account.id, toWash, 'marked_money');
             if (markedTransfer) {
-                this.logger.info(
-                    `[BankWashMoneyProvider] Transfered ${toWash} from ${account.id} to ${targetAccount.id}`
-                );
                 await this.bankAccountRepository.addMoney(targetAccount.id, toWash, 'money');
+                this.logger.info(
+                    `[BankWashMoneyProvider] Transferred ${toWash} from ${account.id} to ${targetAccount.id}`
+                );
             }
 
             this.logger.info(`[BankWashMoneyProvider] Finished washing money for ${account.id}`);

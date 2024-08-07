@@ -9,7 +9,6 @@ import { ServerEvent } from '../../shared/event/server';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import { InventoryManager } from '../inventory/inventory.manager';
-import { JobService } from '../job.service';
 import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
@@ -20,9 +19,6 @@ import { BankInvoiceService } from './bank.invoice.service';
 export class BankInvoiceProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
-
-    @Inject(JobService)
-    private jobService: JobService;
 
     @Inject(Notifier)
     private notifier: Notifier;
@@ -89,7 +85,14 @@ export class BankInvoiceProvider {
         if (!invoice) return false;
 
         if (await this.bankInvoiceService.playerHasPermission(playerTarget, invoice)) {
-            TriggerClientEvent(ClientEvent.BANK_INVOICE_RECEIVE, target, invoice.id, invoice.label, invoice.amount);
+            TriggerClientEvent(
+                ClientEvent.BANK_PHONE_INVOICE_RECEIVED,
+                target,
+                invoice.id,
+                invoice.label,
+                invoice.amount,
+                invoice.emitterName
+            );
         }
 
         this.monitor.traceEvent('invoice_emit', {

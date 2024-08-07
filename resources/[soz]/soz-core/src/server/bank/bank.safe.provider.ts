@@ -2,9 +2,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { BankAccount, BankActionType, BankMoneyType } from '../../shared/bank';
-import { JobPermission, JobType } from '../../shared/job';
 import { RpcServerEvent } from '../../shared/rpc';
-import { JobService } from '../job.service';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { BankAccountRepository } from '../repository/bank.account.repository';
@@ -24,35 +22,19 @@ export class BankSafeProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
-    @Inject(JobService)
-    private jobService: JobService;
-
-    protected async hasAccessToSafe(source: number, accountId: string): Promise<boolean> {
-        if (accountId.startsWith('safe_')) {
-            const [playerJob, playerJobGrade] = this.playerService.getPlayerJobAndGrade(source);
-
-            if (
-                !(await this.jobService.hasTargetJobPermission(
-                    accountId.replace('safe_', '') as JobType,
-                    playerJob,
-                    playerJobGrade,
-                    JobPermission.SocietyMoneyStorage
-                ))
-            ) {
-                this.notifier.error(source, "Vous n'avez pas accès à ce coffre.");
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     @Rpc(RpcServerEvent.BANK_GET_ACCOUNT)
     public async getAccount(source: number, accountId: string): Promise<BankAccount> {
-        if (!(await this.hasAccessToSafe(source, accountId))) {
-            return null;
+        const player = this.playerService.getPlayer(source);
+        if (!player) return;
+
+        const account = await this.bankAccountRepository.find(accountId);
+
+        if (!(await this.bankAccountRepository.hasAccessToAccount(player, account))) {
+            this.notifier.error(source, "Vous n'avez pas accès à ce coffre.");
+            return;
         }
-        return await this.bankAccountRepository.find(accountId);
+
+        return account;
     }
 
     @Rpc(RpcServerEvent.BANK_CASH_TRANSFER_ACTION)
@@ -63,8 +45,14 @@ export class BankSafeProvider {
         moneyType: BankMoneyType,
         amount: number = 0
     ): Promise<boolean> {
-        if (!(await this.hasAccessToSafe(source, accountId))) {
-            return null;
+        const player = this.playerService.getPlayer(source);
+        if (!player) return;
+
+        const account = await this.bankAccountRepository.find(accountId);
+
+        if (!(await this.bankAccountRepository.hasAccessToAccount(player, account))) {
+            this.notifier.error(source, "Vous n'avez pas accès à ce coffre.");
+            return;
         }
 
         return this.bankService.transferCashMoney(source, accountId, type, moneyType, amount);

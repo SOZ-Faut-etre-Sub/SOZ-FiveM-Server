@@ -6,7 +6,7 @@ import { ClientEvent } from '@public/shared/event/client';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Invoice } from '../../shared/bank';
-import { JobPermission } from '../../shared/job';
+import { JobPermission, JobType } from '../../shared/job';
 import { PlayerData } from '../../shared/player';
 import { JobService } from '../job.service';
 import { PlayerService } from '../player/player.service';
@@ -38,9 +38,18 @@ export class BankInvoiceService {
             return;
         }
 
-        return this.bankInvoiceRepository.get(async invoice => {
-            return !invoice.payed && !invoice.refused && this.playerHasPermission(player, invoice);
-        });
+        const invoices = [];
+
+        for (const invoice of Object.values(
+            this.bankInvoiceRepository.get((invoice) => !invoice.payed && !invoice.refused),
+        )) {
+            const hasAccess = await this.playerHasPermission(player, invoice);
+            if (hasAccess) {
+                invoices.push(invoice);
+            }
+        }
+
+        return invoices;
     }
 
     public async payInvoice(source: number, invoiceId: number, useMarkedMoney = false): Promise<boolean> {
@@ -79,10 +88,10 @@ export class BankInvoiceService {
                     invoice.emitterSafe,
                     'deposit',
                     'money',
-                    moneyTake
+                    moneyTake,
                 );
                 if (!moneyTransaction) {
-                    this.notifier.error(source, "Le virement n'a pas pu être effectué");
+                    this.notifier.error(source, "Le coffre de destination n'a pas de place pour cette somme");
                     return false;
                 }
 
@@ -91,10 +100,17 @@ export class BankInvoiceService {
                     invoice.emitterSafe,
                     'deposit',
                     'marked_money',
-                    markedMoneyTake
+                    markedMoneyTake,
                 );
                 if (!markedMoneyTransaction) {
-                    this.notifier.error(source, "Le virement n'a pas pu être effectué");
+                    this.notifier.error(source, "Le coffre de destination n'a pas de place pour cette somme");
+                    await this.bankService.transferCashMoney(
+                        source,
+                        invoice.emitterSafe,
+                        'withdraw',
+                        'money',
+                        moneyTake,
+                    );
                     return false;
                 }
             } else {
@@ -103,11 +119,10 @@ export class BankInvoiceService {
                     invoice.emitterSafe,
                     'deposit',
                     'money',
-                    invoice.amount
+                    invoice.amount,
                 );
-
                 if (!transaction) {
-                    this.notifier.error(source, "Vous n'avez pas assez d'argent");
+                    this.notifier.error(source, 'Transaction impossible.');
                     return false;
                 }
             }
@@ -115,29 +130,15 @@ export class BankInvoiceService {
             if (!(await this.bankInvoiceRepository.setPayed(invoiceId))) return false;
 
             this.notifier.notify(source, 'Vous avez ~g~payé~s~ votre facture', 'success');
-
             if (emitter) {
                 this.notifier.notify(emitter.source, `Votre facture ~b~${invoice.label}~s~ a été ~g~payée`, 'success');
             }
-
-            this.monitor.traceEvent('invoice_pay', {
-                player_source: source,
-                invoice_kind: 'invoice',
-                invoice_job: '',
-                target_source: emitter ? emitter.source : null,
-                id: invoice.id,
-                amount: invoice.amount,
-                target_account: invoice.emitterSafe,
-                source_account: invoice.targetAccount,
-            });
-
-            TriggerClientEvent(ClientEvent.BANK_PHONE_INVOICE_PAID, player.source, invoice.id);
         } else {
             const transaction = await this.bankService.transferBankMoney(
                 invoice.targetAccount,
                 invoice.emitterSafe,
                 'money',
-                invoice.amount
+                invoice.amount,
             );
             if (!transaction) {
                 this.notifier.error(source, '~r~Echec~s~ du paiement la facture de la société');
@@ -150,21 +151,20 @@ export class BankInvoiceService {
             if (emitter) {
                 this.notifier.notify(emitter.source, `Votre facture ~b~${invoice.label}~s~ a été ~g~payée`, 'success');
             }
-
-            this.monitor.traceEvent('invoice_pay', {
-                player_source: player.source,
-                invoice_kind: 'invoice',
-                invoice_job: player.job.id,
-                target_source: emitter ? emitter.source : null,
-                id: invoice.id,
-                amount: invoice.amount,
-                target_account: invoice.emitterSafe,
-                source_account: invoice.targetAccount,
-            });
-
-            TriggerClientEvent(ClientEvent.BANK_PHONE_INVOICE_PAID, player.source, invoice.id);
         }
 
+        this.monitor.traceEvent('invoice_pay', {
+            player_source: player.source,
+            invoice_kind: 'invoice',
+            invoice_job: player.charinfo.account === invoice.targetAccount ? '' : player.job.id,
+            target_source: emitter ? emitter.source : null,
+            id: invoice.id,
+            amount: invoice.amount,
+            target_account: invoice.emitterSafe,
+            source_account: invoice.targetAccount,
+        });
+
+        TriggerClientEvent(ClientEvent.BANK_PHONE_INVOICE_PAID, player.source, invoice.id);
         return true;
     }
 
@@ -184,36 +184,24 @@ export class BankInvoiceService {
             if (emitter) {
                 this.notifier.error(emitter.source, `Votre facture ~b~${invoice.label}~s~ a été ~r~refusée`);
             }
-
-            this.monitor.traceEvent('invoice_refuse', {
-                player_source: player.source,
-                invoice_kind: 'invoice',
-                invoice_job: '',
-                target_source: emitter ? emitter.source : null,
-                id: invoice.id,
-                amount: invoice.amount,
-                target_account: invoice.emitterSafe,
-                source_account: invoice.targetAccount,
-                title: invoice.label,
-            });
         } else {
             this.notifier.error(player.source, 'Vous avez ~r~refusé~s~ la facture de la société');
             if (emitter) {
                 this.notifier.error(emitter.source, `Votre facture ~b~${invoice.label}~s~ a été ~r~refusée`);
             }
-
-            this.monitor.traceEvent('invoice_refuse', {
-                player_source: player.source,
-                invoice_kind: 'invoice',
-                invoice_job: player.job.id,
-                target_source: emitter ? emitter.source : null,
-                id: invoice.id,
-                amount: invoice.amount,
-                target_account: invoice.emitterSafe,
-                source_account: invoice.targetAccount,
-                title: invoice.label,
-            });
         }
+
+        this.monitor.traceEvent('invoice_refuse', {
+            player_source: player.source,
+            invoice_kind: 'invoice',
+            invoice_job: player.charinfo.account === invoice.targetAccount ? '' : player.job.id,
+            target_source: emitter ? emitter.source : null,
+            id: invoice.id,
+            amount: invoice.amount,
+            target_account: invoice.emitterSafe,
+            source_account: invoice.targetAccount,
+            title: invoice.label,
+        });
 
         await this.bankInvoiceRepository.setRejected(invoiceId);
         TriggerClientEvent(ClientEvent.BANK_PHONE_INVOICE_REJECTED, player.source, invoice.id);
@@ -225,6 +213,11 @@ export class BankInvoiceService {
         if (invoice.targetAccount === player.charinfo.account) {
             return true;
         }
-        return this.jobService.hasPermission(player, player.job.id, JobPermission.SocietyBankInvoices);
+        return this.jobService.hasTargetJobPermission(
+            invoice.targetAccount as JobType,
+            player.job.id,
+            Number(player.job.grade),
+            JobPermission.SocietyBankInvoices,
+        );
     }
 }

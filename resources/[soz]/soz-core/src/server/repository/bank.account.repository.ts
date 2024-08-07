@@ -2,12 +2,13 @@ import { bank_accounts } from '@prisma/client';
 import { PlayerService } from '@public/server/player/player.service';
 import { HousingRepository } from '@public/server/repository/housing.repository';
 import { ClientEvent } from '@public/shared/event/client';
+import { PlayerData } from '@public/shared/player';
 import { toVector2Object, Vector3 } from '@public/shared/polyzone/vector';
 
 import { AtmConfig, HouseSafeStorageTiers, SafeStorageMaxCapacity, SocietySafeStorage } from '../../config/bank';
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { AtmType, BankAccount, BankAccountType, BankAtmConfig, BankMoneyType } from '../../shared/bank';
-import { JobType } from '../../shared/job';
+import { JobPermission, JobType } from '../../shared/job';
 import { RepositoryType } from '../../shared/repository';
 import { PrismaService } from '../database/prisma.service';
 import { JobService } from '../job.service';
@@ -160,6 +161,23 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
         });
 
         this.data[accountId][moneyType] = Number(bank_account[moneyType]);
+
+        return true;
+    }
+
+    public async hasAccessToAccount(player: PlayerData, account: BankAccount): Promise<boolean> {
+        if (account.type === 'safestorages' || account.type === 'business') {
+            if (
+                !(await this.jobService.hasTargetJobPermission(
+                    account.id.replace('safe_', '') as JobType,
+                    player.job.id,
+                    Number(player.job.grade),
+                    JobPermission.SocietyMoneyStorage
+                ))
+            ) {
+                return false;
+            }
+        }
 
         return true;
     }
