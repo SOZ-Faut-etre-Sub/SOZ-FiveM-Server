@@ -2,6 +2,7 @@ import {
     MainMenu,
     MenuContent,
     MenuItemButton,
+    MenuItemCheckbox,
     MenuItemNumberInput,
     MenuItemSelect,
     MenuItemSelectOption,
@@ -42,6 +43,8 @@ export const MenuPropPlacementHousing: FunctionComponent<MenuPropPlacementProps>
     const [counter, setCounter] = useState(0);
     const [childTextFocus, setChildTextFocus] = useState(false);
 
+    const [highlightDisabledQuantV, setHighlightDisabledQuantV] = useState(false);
+
     const [maxFourntiure, setMaxFourntiure] = useState<number>(data.max);
     const [shell, setShell] = useState<number>(+data.shellEnable);
     const [housingProps, setHousingProps] = useState<HousingProp[]>(data.fournitures);
@@ -79,7 +82,16 @@ export const MenuPropPlacementHousing: FunctionComponent<MenuPropPlacementProps>
         let count = 0;
         for (const type of Object.keys(fourniturePropList)) {
             propPlaced[type] = fourniturePropList[type]
-                .filter(item => item.position && (!textFilter || item.label.toLocaleLowerCase().includes(textFilter)))
+                .filter(
+                    item =>
+                        item.position &&
+                        (!textFilter ||
+                            item.label
+                                .toLocaleLowerCase()
+                                .normalize('NFD')
+                                .replace(/\p{Diacritic}/gu, '')
+                                .includes(textFilter.normalize('NFD').replace(/\p{Diacritic}/gu, '')))
+                )
                 .sort((a, b) => a.label.localeCompare(b.label));
             count += propPlaced[type].length;
         }
@@ -89,7 +101,16 @@ export const MenuPropPlacementHousing: FunctionComponent<MenuPropPlacementProps>
         const propNotPlaced = {};
         for (const type of Object.keys(fourniturePropList)) {
             propNotPlaced[type] = fourniturePropList[type]
-                .filter(item => !item.position && (!textFilter || item.label.toLocaleLowerCase().includes(textFilter)))
+                .filter(
+                    item =>
+                        !item.position &&
+                        (!textFilter ||
+                            item.label
+                                .toLocaleLowerCase()
+                                .normalize('NFD')
+                                .replace(/\p{Diacritic}/gu, '')
+                                .includes(textFilter.normalize('NFD').replace(/\p{Diacritic}/gu, '')))
+                )
                 .sort((a, b) => a.label.localeCompare(b.label));
         }
         setNotPlaced(propNotPlaced);
@@ -184,7 +205,7 @@ export const MenuPropPlacementHousing: FunctionComponent<MenuPropPlacementProps>
             childTextFocus={childTextFocus}
         >
             <MainMenu>
-                <MenuTitle banner={banner}>Housing activé</MenuTitle>
+                <MenuTitle banner={banner}></MenuTitle>
                 <MenuContent helpPanel={HousingHelpPanel}>
                     <MenuItemSelect
                         title={
@@ -221,6 +242,16 @@ export const MenuPropPlacementHousing: FunctionComponent<MenuPropPlacementProps>
                     <MenuItemSubMenuLink id={`collection/propchoose`} disabled={Boolean(shell)}>
                         ➕ Placer un meuble
                     </MenuItemSubMenuLink>
+                    <MenuItemCheckbox
+                        description={`Désactive le highlight des objets afin d'éviter de crash pour tout utilisateur de QuantV.`}
+                        checked={highlightDisabledQuantV}
+                        onChange={async value => {
+                            await fetchNui(NuiEvent.SetHousingHighlightDisabled, value);
+                            setHighlightDisabledQuantV(value);
+                        }}
+                    >
+                        <span style={{ color: 'red' }}>Désactiver le highlight (QuantV)</span>
+                    </MenuItemCheckbox>
                 </MenuContent>
             </MainMenu>
 
@@ -242,6 +273,7 @@ export const MenuPropPlacementHousing: FunctionComponent<MenuPropPlacementProps>
                                 key={propCategory}
                                 id={`collection/props_${propCategory}`}
                                 disabled={placedFiltered[propCategory].length === 0}
+                                selectable={!(placedFiltered[propCategory].length === 0)}
                             >
                                 {propCategory}
                             </MenuItemSubMenuLink>
@@ -317,6 +349,7 @@ export const MenuPropPlacementHousing: FunctionComponent<MenuPropPlacementProps>
                                 key={propCategory}
                                 id={`collection/propchoose_${propCategory}`}
                                 disabled={notPlacedFiltered[propCategory].length === 0}
+                                selectable={!(notPlacedFiltered[propCategory].length === 0)}
                             >
                                 {propCategory}
                             </MenuItemSubMenuLink>

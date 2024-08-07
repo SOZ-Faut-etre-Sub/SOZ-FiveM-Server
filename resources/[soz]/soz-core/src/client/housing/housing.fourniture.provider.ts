@@ -100,6 +100,7 @@ export class HousingFournitureProvider {
         }
     > = {};
     private taregetedFourniture: HousingProp;
+    private highlightDisabled = false;
 
     @Once(OnceStep.RepositoriesLoaded)
     public async onRepositoriesLoaded() {
@@ -468,6 +469,7 @@ export class HousingFournitureProvider {
 
     private async resetEditortState() {
         await this.despawnDebugProp();
+        this.highlightDisabled = false;
         this.isEditorModeOn = false;
     }
 
@@ -626,7 +628,10 @@ export class HousingFournitureProvider {
         if (!founitureObj || !founitureObj.entity) {
             return;
         }
-        this.propHighlightProvider.highlightEntities([founitureObj.entity]);
+
+        if (!this.highlightDisabled) {
+            this.propHighlightProvider.highlightEntities([founitureObj.entity]);
+        }
     }
 
     private async spawnNewDebug(propToCreate: HousingProp) {
@@ -805,9 +810,15 @@ export class HousingFournitureProvider {
     }
 
     @OnNuiEvent(NuiEvent.PropPlacementHousingSnap)
-    public async toggleSnap() {
+    public async handleSnap() {
         if (!this.isEditorModeOn || !this.debugProp || !DoesEntityExist(this.debugProp.entity)) {
             return;
+        }
+
+        const placementProp =
+            this.apartmentFourntiures[this.lastApartment.id].placementProps[this.debugProp.fourniture_id];
+        if (placementProp?.entity) {
+            SetEntityCollision(placementProp.entity, false, false);
         }
 
         PlaceObjectOnGroundProperly_2(this.debugProp.entity);
@@ -815,6 +826,10 @@ export class HousingFournitureProvider {
         this.nuiDispatch.dispatch('gizmo', 'SyncDebug', {
             debug: this.debugProp,
         });
+
+        if (placementProp?.entity) {
+            SetEntityCollision(placementProp.entity, true, false);
+        }
     }
 
     @OnNuiEvent(NuiEvent.ValidateHousingPlacement)
@@ -886,6 +901,11 @@ export class HousingFournitureProvider {
         return changed;
     }
 
+    @OnNuiEvent(NuiEvent.SetHousingHighlightDisabled)
+    public async setHighlightDisable(value: boolean) {
+        this.highlightDisabled = value;
+    }
+
     @OnNuiEvent(NuiEvent.ChooseHousingPlacedPropToEdit)
     public async choosePlacedPropToEdit({ prop }: { prop: HousingProp }) {
         await this.spawnNewDebug(prop);
@@ -941,7 +961,10 @@ export class HousingFournitureProvider {
             this.taregetedFourniture = null;
             return;
         }
-        this.propHighlightProvider.highlightEntities([hitEntDebug]);
+
+        if (!this.highlightDisabled) {
+            this.propHighlightProvider.highlightEntities([hitEntDebug]);
+        }
         this.taregetedFourniture = fourniture;
     }
 

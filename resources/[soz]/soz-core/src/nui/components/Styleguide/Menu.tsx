@@ -654,6 +654,7 @@ type MenuItemSubMenuLinkProps = PropsWithChildren<{
     id: string;
     onSelected?: () => void;
     disabled?: boolean;
+    selectable?: boolean;
     description?: string;
 }>;
 
@@ -679,11 +680,18 @@ export const MenuItemSubMenuLink: FunctionComponent<MenuItemSubMenuLinkProps> = 
     onSelected,
     description = null,
     disabled = false,
+    selectable = null,
 }) => {
     const navigateTo = useMenuNavigate(id);
 
     return (
-        <MenuItemContainer onSelected={onSelected} onConfirm={navigateTo} disabled={disabled} description={description}>
+        <MenuItemContainer
+            onSelected={onSelected}
+            onConfirm={navigateTo}
+            disabled={disabled}
+            selectable={selectable}
+            description={description}
+        >
             <div className="flex items-center justify-between">
                 <div>{children}</div>
                 <div>

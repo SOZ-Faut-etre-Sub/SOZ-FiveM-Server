@@ -38,7 +38,15 @@ export const ZkeaFournitureMenu: FunctionComponent = () => {
         const propList = {};
         for (const type of Object.keys(fournituresByType)) {
             propList[type] = fournituresByType[type]
-                .filter(item => !textFilter || item.name.toLocaleLowerCase().includes(textFilter))
+                .filter(
+                    item =>
+                        !textFilter ||
+                        item.name
+                            .toLocaleLowerCase()
+                            .normalize('NFD')
+                            .replace(/\p{Diacritic}/gu, '')
+                            .includes(textFilter.normalize('NFD').replace(/\p{Diacritic}/gu, ''))
+                )
                 .sort((a, b) => {
                     if (a.price < b.price) {
                         return -1;
@@ -67,6 +75,7 @@ export const ZkeaFournitureMenu: FunctionComponent = () => {
                             id={`zkea_fourniture${type}`}
                             key={`zkea_fourniture${type}`}
                             disabled={fournitures[type].length === 0}
+                            selectable={!(fournitures[type].length === 0)}
                         >
                             {type}
                         </MenuItemSubMenuLink>

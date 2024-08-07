@@ -10,8 +10,7 @@ export class MigrationCreateNewApartmentTrace implements ClickhouseMigration {
     async migrate(): Promise<void> {
         await this.clickhouseService.exec({
             query: `
-                ALTER TABLE soz.trace_events ADD COLUMN ADD COLUMN  money_tier Nullable(Int64), ADD COLUMN  park_tier Nullable(Int64), cloth_tier Nullable(Int64), ADD COLUMN apartment_shell Nullable(Boolean);
-                
+                ALTER TABLE soz.trace_events ADD COLUMN money_tier Nullable(Int64), ADD COLUMN  park_tier Nullable(Int64), cloth_tier Nullable(Int64), ADD COLUMN apartment_shell Nullable(Boolean);
             `,
         });
     }
