@@ -79,7 +79,6 @@ export class BankAtmProvider {
                     const amountAvailable = atmAccount.config.maxWithdrawal - lastUse.withdrawLimit;
                     const remainingTime = atmAccount.config.limit + lastUse.lastUsed.getTime() - Date.now();
 
-                    //todo: a tester
                     if (remainingTime > 0) {
                         if (amountAvailable == 0) {
                             this.notifier.notify(

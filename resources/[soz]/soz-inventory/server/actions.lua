@@ -63,25 +63,25 @@ RegisterServerEvent("inventory:server:GiveItem", function(target, item, amount)
         end
 
         Inventory.TransfertItem(source, Player.PlayerData.source, Target.PlayerData.source, item.name, amount, item.metadata, item.slot,
-            function(success, reason)
-                if success then
-                    TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source,
-                        string.format("Vous avez donné ~o~%s ~b~%s", amount, item.label))
-                    TriggerClientEvent("soz-core:client:notification:draw", Target.PlayerData.source,
-                        string.format("Vous avez reçu ~o~%s ~b~%s", amount, item.label))
+                                function(success, reason)
+            if success then
+                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source,
+                                   string.format("Vous avez donné ~o~%s ~b~%s", amount, item.label))
+                TriggerClientEvent("soz-core:client:notification:draw", Target.PlayerData.source,
+                                   string.format("Vous avez reçu ~o~%s ~b~%s", amount, item.label))
 
-                    giveAnimation(Player.PlayerData.source)
-                    giveAnimation(Target.PlayerData.source)
-                else
-                    TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source,
-                        "Vous ne pouvez pas donner cet objet !" .. Config.ErrorMessage[reason] or reason, "error")
-                    TriggerClientEvent("soz-core:client:notification:draw", Target.PlayerData.source,
-                        "Vous ne pouvez pas recevoir d'objet !" .. Config.ErrorMessage[reason] or reason, "error")
-                end
-            end)
+                giveAnimation(Player.PlayerData.source)
+                giveAnimation(Target.PlayerData.source)
+            else
+                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source,
+                                   "Vous ne pouvez pas donner cet objet !" .. Config.ErrorMessage[reason] or reason, "error")
+                TriggerClientEvent("soz-core:client:notification:draw", Target.PlayerData.source,
+                                   "Vous ne pouvez pas recevoir d'objet !" .. Config.ErrorMessage[reason] or reason, "error")
+            end
+        end)
     else
         TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous ne possédez pas le nombre d'items requis pour le transfert",
-            "error")
+                           "error")
     end
 end)
 
@@ -247,12 +247,7 @@ RegisterServerEvent("inventory:server:ResellItem", function(item, amount, resell
         price = itemSpec.resellPrice[item.metadata.tier] or 1
     end
 
-    exports["soz-core"]:TransferFarmMoney(
-        Player.PlayerData.source,
-        resellZone.SourceAccount,
-        resellZone.TargetAccount,
-        math.ceil(price) * amount
-    )
+    exports["soz-core"]:TransferFarmMoney(Player.PlayerData.source, resellZone.SourceAccount, resellZone.TargetAccount, math.ceil(price) * amount)
     TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, string.format("Vous avez vendu ~o~%s ~b~%s", amount, itemSpec.label))
 
     exports["soz-core"]:TraceEvent("job_resell", {

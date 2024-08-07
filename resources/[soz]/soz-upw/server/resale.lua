@@ -4,7 +4,7 @@ QBCore.Functions.CreateCallback("soz-upw:server:ResaleEnergy", function(source, 
     for _, energyItem in pairs(Config.Items.Energy) do
         local item = QBCore.Shared.Items[energyItem]
         if not item then
-            cb({ false, "invalid item" })
+            cb({false, "invalid item"})
             return
         end
 
@@ -14,30 +14,26 @@ QBCore.Functions.CreateCallback("soz-upw:server:ResaleEnergy", function(source, 
         end
 
         if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, item.name, 1) then
-            exports["soz-core"]:TransferFarmMoney(
-                Player.PlayerData.source,
-                Config.Upw.Accounts.FarmAccount,
-                Config.Upw.Accounts.SafeAccount,
-                Config.Upw.Resale.EnergyCellPrice[item.name] or 0
-            )
+            exports["soz-core"]:TransferFarmMoney(Player.PlayerData.source, Config.Upw.Accounts.FarmAccount, Config.Upw.Accounts.SafeAccount,
+                                                  Config.Upw.Resale.EnergyCellPrice[item.name] or 0)
 
             exports["soz-core"]:TraceEvent("job_upw_energy_resale",
-                {
-                    player_source = source,
-                    item_id = item.name,
-                    amount = 1,
-                    money = Config.Upw.Resale.EnergyCellPrice[item.name] or 0,
-                })
+                                           {
+                player_source = source,
+                item_id = item.name,
+                amount = 1,
+                money = Config.Upw.Resale.EnergyCellPrice[item.name] or 0,
+            })
 
-            cb({ true, "Vous avez vendu ~g~1 " .. item.label })
+            cb({true, "Vous avez vendu ~g~1 " .. item.label})
             return
         else
-            cb({ false, "Vous n'avez rien vendu..." })
+            cb({false, "Vous n'avez rien vendu..."})
             return
         end
 
-        :: continue ::
+        ::continue::
     end
 
-    cb({ false, string.format("Vous n'avez pas l'item requis") })
+    cb({false, string.format("Vous n'avez pas l'item requis")})
 end)
