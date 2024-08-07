@@ -1,6 +1,5 @@
 import { PlayerWardrobe } from '@public/client/player/player.wardrobe';
 import { OnEvent } from '@public/core/decorators/event';
-import { Exportable } from '@public/core/decorators/exports';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { Component } from '@public/shared/cloth';
@@ -23,11 +22,10 @@ export class StonkCloakRoomProvider {
         }
     }
 
-    @Exportable('WearVIPClothes')
     public wearVIPClothes() {
         const ped = PlayerPedId();
 
-        for (const vip of ['Tenue VIP', "Tenue VIP d'été"]) {
+        for (const vip of ['Tenue VIP', "Tenue VIP d'été", DUTY_OUTFIT_NAME, 'Tenue Hiver']) {
             let match = true;
             for (const [id, component] of Object.entries(StonkCloakroom[GetEntityModel(ped)][vip].Components)) {
                 const numberId = Number(id);
