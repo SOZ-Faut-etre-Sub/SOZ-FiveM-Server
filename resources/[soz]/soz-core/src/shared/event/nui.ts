@@ -405,6 +405,7 @@ export enum NuiEvent {
     HousingUpdatePosition = 'soz-core:client:dispatch:update-position',
     HousingSelectEntityOnClick = 'soz-core:client:dispatch:select-entity-on-click',
     SetHousingShell = 'soz-core:client:dispatch:set-shell',
+    SetHousingHighlightDisabled = 'soz-core:client:dispatch:set-highlight-disabled',
 
     CraftDoRecipe = 'soz-core:client:craft:do-recipe',
     CraftCancel = 'soz-core:client:craft:cancel',

@@ -64,8 +64,9 @@ export class ZkeaFournitureShopProvider {
 
     @Once(OnceStep.PlayerLoaded)
     public async onPlayerLoaded() {
-        const coords = GetEntityCoords(PlayerPedId());
-        if (GetInteriorAtCoordsWithType(coords[0], coords[1], coords[2], 'ex_int_warehouse_l_dlc')) {
+        const interior = GetInteriorFromEntity(PlayerPedId());
+        const [, interiorHash] = GetInteriorLocationAndNamehash(interior);
+        if (interiorHash === GetHashKey('ex_int_warehouse_l_dlc')) {
             await this.playerPositionProvider.teleportPlayerToPosition(ZkeaShopZoneExit);
         }
     }
