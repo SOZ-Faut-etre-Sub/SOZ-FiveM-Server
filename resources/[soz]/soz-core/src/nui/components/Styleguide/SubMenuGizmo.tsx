@@ -28,12 +28,12 @@ type GizmoProps = {
     debugProp: HousingDebugProp;
     setPosition: Dispatch<
         SetStateAction<{
-            x: number;
-            y: number;
-            z: number;
-            rotX: number;
-            rotY: number;
-            rotZ: number;
+            x: string;
+            y: string;
+            z: string;
+            rotX: string;
+            rotY: string;
+            rotZ: string;
         }>
     >;
     childTextFocus: boolean;
@@ -90,6 +90,11 @@ const Gizmo: FunctionComponent<GizmoProps> = ({ setDebugProp, debugProp, setPosi
         ];
     };
 
+    const roundAt = (valueToRound: number): number => {
+        const power = Math.pow(10, 3);
+        return Math.round(valueToRound * power) / power;
+    };
+
     useNuiEvent('gizmo', 'setGizmoEntity', ({ debug }) => {
         setDebugProp(debug);
         if (!debug || !debug.entity || !debug.position || !debug.rotation) {
@@ -99,12 +104,12 @@ const Gizmo: FunctionComponent<GizmoProps> = ({ setDebugProp, debugProp, setPosi
         navigate(`/${MenuType.HousingPropPlacementMenu}/editor`, { state: { ...location.state, activeIndex: 0 } });
 
         setPosition({
-            x: debug.position[0],
-            y: debug.position[1],
-            z: debug.position[2],
-            rotX: debug.rotation[0],
-            rotY: debug.rotation[1],
-            rotZ: debug.rotation[2],
+            x: roundAt(debug.position[0]).toString(),
+            y: roundAt(debug.position[1]).toString(),
+            z: roundAt(debug.position[2]).toString(),
+            rotX: roundAt(debug.rotation[0]).toString(),
+            rotY: roundAt(debug.rotation[1]).toString(),
+            rotZ: roundAt(debug.rotation[2]).toString(),
         });
         const [position, rotation] = gameToGizmo(debug.position, debug.rotation);
 
@@ -122,12 +127,12 @@ const Gizmo: FunctionComponent<GizmoProps> = ({ setDebugProp, debugProp, setPosi
             }
             setDebugProp(debug);
             setPosition({
-                x: debug.position[0],
-                y: debug.position[1],
-                z: debug.position[2],
-                rotX: debug.rotation[0],
-                rotY: debug.rotation[1],
-                rotZ: debug.rotation[2],
+                x: roundAt(debug.position[0]).toString(),
+                y: roundAt(debug.position[1]).toString(),
+                z: roundAt(debug.position[2]).toString(),
+                rotX: roundAt(debug.rotation[0]).toString(),
+                rotY: roundAt(debug.rotation[1]).toString(),
+                rotZ: roundAt(debug.rotation[2]).toString(),
             });
 
             if (drag) {
