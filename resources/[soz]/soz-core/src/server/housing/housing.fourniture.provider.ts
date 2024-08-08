@@ -127,9 +127,12 @@ export class HousingFournitureProvider {
         apartmentId: number,
         propertyId: number,
         lastUpdate: number | null
-    ): Promise<HousingProp[]> {
+    ): Promise<{ fournitures: HousingProp[]; newDate: number }> {
+        const newDate = Date.now();
         const created = await this.createBaseFourntiureIfNeeded(source, apartmentId, propertyId);
-        return created ? [] : this.getFilteredFourntiure(apartmentId, lastUpdate);
+        return created
+            ? { fournitures: [], newDate: newDate }
+            : { fournitures: this.getFilteredFourntiure(apartmentId, lastUpdate), newDate: newDate };
     }
 
     private getFilteredFourntiure(apartmentId: number, lastUpdate: number | null): HousingProp[] {

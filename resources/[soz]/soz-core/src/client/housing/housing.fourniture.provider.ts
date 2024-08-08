@@ -164,8 +164,7 @@ export class HousingFournitureProvider {
         };
 
         if (!apartment.shell) {
-            const newDate = Date.now();
-            const fournitures = await emitRpc<HousingProp[]>(
+            const { fournitures, newDate } = await emitRpc<{ fournitures: HousingProp[]; newDate: number }>(
                 RpcServerEvent.HOUSING_GET_FOURNITURE,
                 apartmentId,
                 propertyId,
