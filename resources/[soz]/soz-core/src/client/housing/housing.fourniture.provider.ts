@@ -1077,7 +1077,7 @@ export class HousingFournitureProvider {
             if (!canUseHousingInAppartment(player, apartement)) {
                 return;
             }
-        } else if (isStaff(player) && (!this.lastApartment || !canUseHousingInAppartment(player, this.lastApartment))) {
+        } else if (!isStaff(player) || !this.lastApartment || !canUseHousingInAppartment(player, this.lastApartment)) {
             return;
         }
 
