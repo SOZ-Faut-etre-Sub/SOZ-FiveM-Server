@@ -463,9 +463,9 @@ const InputText = forwardRef<HTMLInputElement, InputType>(({ ...props }, ref) =>
 type MenuItemNumberInputProps = PropsWithChildren<{
     setChildTextFocus?: (v: boolean) => void;
     onSelected?: () => void;
-    value?: number;
+    value?: string;
     name: string;
-    onChange: (k: string, v: number) => void;
+    onChange: (k: string, v: string) => void;
     onBlur: () => void;
     rounding?: number;
 }>;
@@ -550,30 +550,16 @@ export const MenuItemNumberInput: FunctionComponent<MenuItemNumberInputProps> = 
     name,
     onChange,
     onBlur,
-    rounding = 3,
 }) => {
     const handleOnChange: React.ChangeEventHandler<HTMLInputElement> = e => {
-        let valueAsFloat: number;
-        if (!e.currentTarget.value.length) {
-            valueAsFloat = 0;
-        } else {
-            valueAsFloat = parseFloat(e.currentTarget.value);
-        }
-        if (!isNaN(valueAsFloat)) {
-            onChange(e.currentTarget.name, valueAsFloat);
-        }
-    };
-
-    const roundAt = (valueToRound: number): number => {
-        const power = Math.pow(10, rounding);
-        return Math.round(valueToRound * power) / power;
+        onChange(e.currentTarget.name, e.currentTarget.value);
     };
 
     return (
         <BaseItemInput
             children={children}
             setChildTextFocus={setChildTextFocus}
-            value={roundAt(value)}
+            value={value}
             name={name}
             handleOnChange={handleOnChange}
             onBlur={onBlur}

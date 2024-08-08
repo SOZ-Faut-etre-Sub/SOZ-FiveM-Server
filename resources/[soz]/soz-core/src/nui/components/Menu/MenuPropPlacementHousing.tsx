@@ -51,13 +51,13 @@ export const MenuPropPlacementHousing: FunctionComponent<MenuPropPlacementProps>
 
     const [debugProp, setDebugProp] = useState<HousingDebugProp>();
     const [position, setPosition] = useState<{
-        x: number;
-        y: number;
-        z: number;
-        rotX: number;
-        rotY: number;
-        rotZ: number;
-    }>({ x: 0, y: 0, z: 0, rotX: 0, rotY: 0, rotZ: 0 });
+        x: string;
+        y: string;
+        z: string;
+        rotX: string;
+        rotY: string;
+        rotZ: string;
+    }>({ x: '0', y: '0', z: '0', rotX: '0', rotY: '0', rotZ: '0' });
 
     useNuiEvent('housing_placement_prop', 'SetFourniture', async ({ fournitures, max, shellEnable }) => {
         setHousingProps(fournitures);
@@ -161,12 +161,12 @@ export const MenuPropPlacementHousing: FunctionComponent<MenuPropPlacementProps>
 
     const onBlur = async () => {
         await fetchNui(NuiEvent.HousingUpdatePosition, {
-            position: [position.x, position.y, position.z],
-            rotation: [position.rotX, position.rotY, position.rotZ],
+            position: [parseFloat(position.x) || 0, parseFloat(position.y) || 0, parseFloat(position.z) || 0],
+            rotation: [parseFloat(position.rotX) || 0, parseFloat(position.rotY) || 0, parseFloat(position.rotZ) || 0],
         });
     };
 
-    const updateDebugFromInput = async (key: string, value: number) => {
+    const updateDebugFromInput = async (key: string, value: string) => {
         const newPosition = { ...position };
         newPosition[key] = value;
         setPosition(newPosition);

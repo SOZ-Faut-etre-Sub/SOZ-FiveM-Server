@@ -33,6 +33,7 @@ import { Apartment, Property } from '@public/shared/housing/housing';
 import { MenuType } from '@public/shared/nui/menu';
 import { HousingPlacementProp, HousingProp } from '@public/shared/nui/prop_placement';
 import { HousingDebugProp, WorldObject } from '@public/shared/object';
+import { isStaff } from '@public/shared/player';
 import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { RepositoryType } from '@public/shared/repository';
 import { Err, Ok } from '@public/shared/result';
@@ -85,6 +86,7 @@ export class HousingFournitureProvider {
     private camera: number;
 
     private debugProp: HousingDebugProp | null;
+    private debugProps: HousingDebugProp[] = [];
     private isEditorModeOn: boolean = false;
     private previousPosition?: Vector3;
 
@@ -230,6 +232,7 @@ export class HousingFournitureProvider {
             id: `housing_placed_${fourniture.id}`,
         });
 
+        SetEntityLodDist(entity, 40);
         const targetLabel = this.addTargetZone(entity, fourniture, apartment);
 
         this.apartmentFourntiures[apartment.id].placementProps[fourniture.id] = {
@@ -685,6 +688,7 @@ export class HousingFournitureProvider {
             storageType: propToCreate.storageType,
         };
 
+        this.debugProps.push(this.debugProp);
         this.refreshPositionFromGame(this.debugProp);
         this.previousPosition = GetEntityCoords(this.debugProp.entity) as Vector3;
     }
@@ -710,7 +714,7 @@ export class HousingFournitureProvider {
     }
 
     public async enterEditorMode() {
-        if (!this.debugProp?.entity) {
+        if (!this.debugProp?.entity || !this.debugProps.includes(this.debugProp)) {
             return;
         }
 
@@ -724,7 +728,7 @@ export class HousingFournitureProvider {
 
     @Tick(TickInterval.EVERY_FRAME)
     public async handleRefreshCamera() {
-        if (!this.debugProp || !this.isEditorModeOn) {
+        if (!this.debugProp || !this.debugProps.includes(this.debugProp) || !this.isEditorModeOn) {
             return;
         }
         const entity = this.debugProp.entity;
@@ -869,11 +873,8 @@ export class HousingFournitureProvider {
 
     @OnNuiEvent(NuiEvent.RequestDeleteHousingCurrentProp)
     public async requestDeleteCurrentProp() {
-        if (!this.debugProp) {
+        if (!this.debugProp || !this.debugProp.fourniture_id || !this.debugProps.includes(this.debugProp)) {
             return Err(false);
-        }
-        if (!this.debugProp.fourniture_id) {
-            return Err(true);
         }
 
         const fourntiure = this.getAllFournitures().find(fourntiure => fourntiure.id === this.debugProp.fourniture_id);
@@ -932,7 +933,12 @@ export class HousingFournitureProvider {
 
     @OnNuiEvent(NuiEvent.HousingSelectEntityOnClick)
     public async selectEntityOnMouse() {
-        if (!IsNuiFocused() || this.debugProp || !this.taregetedFourniture || this.isEditorModeOn) {
+        if (
+            !IsNuiFocused() ||
+            (this.debugProp && this.debugProps.includes(this.debugProp)) ||
+            !this.taregetedFourniture ||
+            this.isEditorModeOn
+        ) {
             return;
         }
 
@@ -1021,25 +1027,23 @@ export class HousingFournitureProvider {
     }
 
     public async despawnDebugProp(): Promise<void> {
-        if (!this.debugProp) {
-            return;
-        }
+        while (this.debugProps.length !== 0) {
+            const prop = this.debugProps.pop();
 
-        const entity = this.debugProp.entity;
-        const model = this.debugProp.model;
-        if (this.debugProp.entity != 0) {
-            if (DoesEntityExist(entity)) {
-                if (GetEntityModel(entity) == GetHashKey(model)) {
-                    DeleteEntity(entity);
+            const entity = prop.entity;
+            const model = prop.model;
+            if (prop.entity != 0) {
+                if (DoesEntityExist(entity)) {
+                    if (GetEntityModel(entity) == GetHashKey(model)) {
+                        DeleteEntity(entity);
+                    } else {
+                        console.trace('Attemp to delete an debug entity of wrong model', GetEntityModel(entity));
+                    }
                 } else {
-                    console.trace('Attemp to delete an debug entity of wrong model', GetEntityModel(entity));
+                    console.trace('Attemp to delete an non existing debug entity');
                 }
-            } else {
-                console.trace('Attemp to delete an non existing debug entity');
             }
         }
-
-        this.debugProp = null;
     }
 
     private isMenuOpen = () => {
@@ -1053,19 +1057,27 @@ export class HousingFournitureProvider {
     public async openHousingMenu() {
         const player = this.playerService.getPlayer();
 
-        if (!player || !isPlayerInsideApartment(player) || player.metadata.isdead) {
+        if (!player) {
             return;
         }
 
-        const apartement = this.housingRepository.findApartment(
-            player.metadata.inside.property,
-            player.metadata.inside.apartment as number
-        );
-        if (!apartement || this.lastApartment?.id !== apartement.id) {
-            return;
-        }
+        if (!this.noClipProvider.IsNoClipMode()) {
+            if (!isPlayerInsideApartment(player) || player.metadata.isdead) {
+                return;
+            }
 
-        if (!canUseHousingInAppartment(player, apartement)) {
+            const apartement = this.housingRepository.findApartment(
+                player.metadata.inside.property,
+                player.metadata.inside.apartment as number
+            );
+            if (!apartement || this.lastApartment?.id !== apartement.id) {
+                return;
+            }
+
+            if (!canUseHousingInAppartment(player, apartement)) {
+                return;
+            }
+        } else if (isStaff(player) && (!this.lastApartment || !canUseHousingInAppartment(player, this.lastApartment))) {
             return;
         }
 

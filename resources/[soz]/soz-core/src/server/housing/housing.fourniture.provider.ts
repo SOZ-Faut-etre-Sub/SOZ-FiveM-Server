@@ -38,7 +38,6 @@ export class HousingFournitureProvider {
     private housingRepository: HousingRepository;
 
     private fournitures: Record<string, Record<number, HousingProp>> = {};
-    private fournitureCount: Record<string, number> = {};
 
     @Once(OnceStep.DatabaseConnected)
     public async loadFournituresOnStart() {
@@ -46,11 +45,7 @@ export class HousingFournitureProvider {
 
         for (const fourniture of fournitures) {
             this.fournitures[fourniture.apartment_id] ??= {};
-            this.fournitureCount[fourniture.apartment_id] ??= 0;
             this.fournitures[fourniture.apartment_id][fourniture.id] = this.formatFourniture(fourniture);
-            if (fourniture.position) {
-                this.fournitureCount[fourniture.apartment_id]++;
-            }
         }
     }
 
@@ -208,7 +203,7 @@ export class HousingFournitureProvider {
             return false;
         }
 
-        const [validateCount, increment] = await this.validateCount(apartement, currentFourniture, position);
+        const validateCount = await this.validateCount(apartement, currentFourniture, position);
         if (!validateCount) {
             this.notifier.notify(
                 source,
@@ -219,21 +214,18 @@ export class HousingFournitureProvider {
         }
 
         this.fournitures[apartmentId] ??= {};
-        this.fournitureCount[apartmentId] ??= 0;
 
         for (const fourntiureWithSameStorage of fourntiuresWithSameStorage) {
             await this.editFourniture(
                 source,
-                apartmentId,
                 fourntiureWithSameStorage,
                 fourntiureWithSameStorage.position,
                 fourntiureWithSameStorage.matrix,
-                null,
-                0
+                null
             );
         }
 
-        await this.editFourniture(source, apartmentId, currentFourniture, position, matrix, storageType, increment);
+        await this.editFourniture(source, currentFourniture, position, matrix, storageType);
         TriggerClientEvent(ClientEvent.HOUSING_SYNC_FOURNITURE, -1, apartmentId);
 
         return true;
@@ -241,12 +233,10 @@ export class HousingFournitureProvider {
 
     private async editFourniture(
         source: number,
-        apartmentId: number,
         currentFourniture: HousingProp,
         position: Vector4,
         matrix: number[],
-        storageType: string,
-        increment: number
+        storageType: string
     ) {
         const fourniture = await this.prismaService.apartment_fourniture.update({
             where: {
@@ -263,7 +253,6 @@ export class HousingFournitureProvider {
 
         const formatedFourntiure = this.formatFourniture(fourniture);
         this.fournitures[fourniture.apartment_id][fourniture.id] = formatedFourntiure;
-        this.fournitureCount[apartmentId] += increment;
 
         this.notifyPropChange(source, currentFourniture, formatedFourntiure);
     }
@@ -348,26 +337,29 @@ export class HousingFournitureProvider {
         apartement: Apartment,
         currentFourniture: HousingProp,
         position: Vector4
-    ): Promise<[boolean, number]> {
+    ): Promise<boolean> {
         if (!currentFourniture) {
-            return [false, 0];
+            return false;
         }
 
         if (!apartement) {
-            return [false, 0];
+            return false;
         }
 
-        let increment = 0;
         if (currentFourniture && currentFourniture.position === null && position !== null) {
-            if (this.fournitureCount[apartement.id] + 1 > getMaxFourntiure(apartement)) {
-                return [false, 0];
+            let fournitureCount = 0;
+            for (const fourniture of Object.values(this.fournitures[apartement.id])) {
+                if (fourniture.position) {
+                    fournitureCount++;
+                }
             }
-            increment = 1;
-        } else if (currentFourniture && currentFourniture.position !== null && position === null) {
-            increment = -1;
+
+            if (fournitureCount + 1 > getMaxFourntiure(apartement)) {
+                return false;
+            }
         }
 
-        return [true, increment];
+        return true;
     }
 
     public async clearFourniture(apartmentId: number) {
