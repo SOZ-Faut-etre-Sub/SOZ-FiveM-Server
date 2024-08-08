@@ -61,7 +61,7 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
                                 fetchNui<ServerPromiseResp<any>>(MessageEvents.GET_POSITION, {}).then(resp => {
                                     sendMessage({
                                         conversationId: messageGroupId,
-                                        message: `vec2(${resp.data.x},${resp.data.y})`,
+                                        message: `vec3(${resp.data.x},${resp.data.y},${resp.data.z})`,
                                     });
                                     onClose();
                                 });
@@ -78,7 +78,7 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
                                     if (resp.data.x !== 0 && resp.data.y !== 0) {
                                         sendMessage({
                                             conversationId: messageGroupId,
-                                            message: `vec2(${resp.data.x},${resp.data.y})`,
+                                            message: `vec3(${resp.data.x},${resp.data.y},${resp.data.z})`,
                                         });
                                         onClose();
                                     } else {
