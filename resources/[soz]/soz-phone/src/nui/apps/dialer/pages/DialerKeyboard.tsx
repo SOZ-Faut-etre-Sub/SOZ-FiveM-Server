@@ -1,5 +1,5 @@
 import { useQueryParams } from '@common/hooks/useQueryParams';
-import { BackspaceIcon, PhoneIcon, ChatAltIcon} from '@heroicons/react/solid';
+import { BackspaceIcon, ChatAltIcon, PhoneIcon } from '@heroicons/react/solid';
 import cn from 'classnames';
 import React, { useLayoutEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -98,15 +98,15 @@ const DialerKeyboard: React.FC = () => {
                         <DialerButton label={9} onClick={() => add('9')} />
                         <DialerButton label="-" onClick={() => add('-')} />
                         <DialerButton label={0} onClick={() => add('0')} />
-                        <DialerButton label={<BackspaceIcon className="h-8 w-8" />} onClick={removeOne} />                   
+                        <DialerButton label={<BackspaceIcon className="h-8 w-8" />} onClick={removeOne} />
                     </div>
-                    <div className="grid grid-cols-2 justify-items-center mx-8">               
+                    <div className="grid grid-cols-2 justify-items-center mx-8">
                         <DialerButton
                             type="submit"
                             label={<PhoneIcon className="text-white h-8 w-8" />}
                             onClick={handleCall}
                             className="bg-[#2DD158] hover:bg-[#21B147]"
-                        />                            
+                        />
                         <DialerButton
                             type="submit"
                             label={<ChatAltIcon className="text-white h-12 w-12" />}
