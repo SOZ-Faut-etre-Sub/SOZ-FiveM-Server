@@ -32,7 +32,7 @@ export const CardItem: FunctionComponent<CardItemProps> = ({ card }) => {
 
         setTimeout(() => {
             setShow(false);
-        }, 10000);
+        }, 20000);
     }, []);
 
     let rightOffset = '';
