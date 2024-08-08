@@ -1,11 +1,11 @@
 import { Transition } from '@headlessui/react';
+import { MessageEvents } from '@typings/messages';
 import Alert from '@ui/old_components/Alert';
+import { fetchNui } from '@utils/fetchNui';
 import React from 'react';
 
 import { useEmergency } from '../../../../nui/hooks/useEmergency';
 import { useNotifications } from '../hooks/useNotifications';
-import { MessageEvents } from '@typings/messages';
-import { fetchNui } from '@utils/fetchNui';
 
 const getAddress = async (input: string) => {
     const position = /vec3\((-?[0-9.]+),(-?[0-9.]+),(-?[0-9.]+)\)/g.exec(input);
@@ -55,7 +55,7 @@ export const NotificationAlert = () => {
             leaveFrom="translate-y-0"
             leaveTo="-translate-y-full"
         >
-            <Alert onClick={(e) => currentAlert?.onClickAlert(e)} icon={currentAlert?.notificationIcon || undefined}>
+            <Alert onClick={e => currentAlert?.onClickAlert(e)} icon={currentAlert?.notificationIcon || undefined}>
                 {isPosition ? address : isOldPosition ? 'Destination' : currentAlert?.content}
             </Alert>
         </Transition>

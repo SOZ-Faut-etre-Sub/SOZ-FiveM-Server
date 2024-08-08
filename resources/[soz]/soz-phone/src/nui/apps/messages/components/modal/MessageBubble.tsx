@@ -15,15 +15,15 @@ import { setClipboard } from '../../../../os/phone/hooks/useClipboard';
 import Emoji from '../../../../ui/components/Emoji';
 import { Button } from '../../../../ui/old_components/Button';
 
-const isImage = (url) => {
+const isImage = url => {
     return /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png|jpeg|gif)/g.test(url);
 };
 
-const isOldPosition = (url) => {
+const isOldPosition = url => {
     return /vec2\((-?[0-9.]+),(-?[0-9.]+)\)/g.test(url);
 };
 
-const isPosition = (url) => {
+const isPosition = url => {
     return /vec3\((-?[0-9.]+),(-?[0-9.]+),(-?[0-9.]+)\)/g.test(url);
 };
 

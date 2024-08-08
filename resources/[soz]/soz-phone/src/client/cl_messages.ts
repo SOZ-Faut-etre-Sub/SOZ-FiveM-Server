@@ -44,7 +44,7 @@ RegisterNuiCB<void>(SocietyEvents.SEND_CLIENT_POLICE_NOTIFICATION, async (messag
 
 RegisterNuiCB<void>(MessageEvents.GET_STREET_NAME, async (position: any, cb) => {
     const [streetA, streetB] = GetStreetNameAtCoord(Number(position.x), Number(position.y), Number(position.z));
-    var street = `${GetStreetNameFromHashKey(streetA)}`;
+    let street = `${GetStreetNameFromHashKey(streetA)}`;
 
     if (streetB && streetA !== streetB) {
         street += ` & ${GetStreetNameFromHashKey(streetB)}`;
