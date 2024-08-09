@@ -27,6 +27,8 @@ import { SocietyContactsApp } from '../../../apps/society-contacts';
 import SocietyContactIcon from '../../../apps/society-contacts/icon';
 import { SocietyMessagesApp } from '../../../apps/society-messages';
 import SocietyMessagesIcon from '../../../apps/society-messages/icon';
+import { TaxApp } from '../../../apps/tax';
+import TaxIcon from '../../../apps/tax/icon';
 import { TwitchNewsApp } from '../../../apps/twitch-news';
 import TwitchNewsIcon from '../../../apps/twitch-news/icon';
 import { WeatherApp } from '../../../apps/weather';
@@ -165,5 +167,12 @@ export const APPS: IAppConfig[] = [
         path: '/snake',
         component: <SnakeApp />,
         icon: SnakeIcon,
+    },
+    {
+        id: 'tax',
+        nameLocale: 'APPS_TAX',
+        path: '/tax',
+        component: <TaxApp />,
+        icon: TaxIcon,
     },
 ];

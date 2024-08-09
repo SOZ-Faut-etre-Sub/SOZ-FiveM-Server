@@ -14,6 +14,7 @@ import { useAppInvoicesService } from './services/app/useAppInvoicesService';
 import { useAppNotesService } from './services/app/useAppNotesService';
 import { useAppSnakeLeaderboardService } from './services/app/useAppSnakeLeaderboardService';
 import { useAppSocietyService } from './services/app/useAppSocietyService';
+import { useAppTaxService } from './services/app/useAppTaxService';
 import { useAppTetrisLeaderboardService } from './services/app/useAppTetrisLeaderboardService';
 import { useAppTwitchNewsService } from './services/app/useAppTwitchNewsService';
 import { useAppWeatherService } from './services/app/useAppWeatherService';
@@ -62,6 +63,7 @@ function Phone() {
     useAppWeatherService();
     useAppTetrisLeaderboardService();
     useAppSnakeLeaderboardService();
+    useAppTaxService();
 
     if (config.wallpaper === undefined) {
         return null;
@@ -75,7 +77,7 @@ function Phone() {
                 <Route path="/" element={<HomeApp />} />
                 {callModal && <Route path="/call" element={<CallModal />} />}
                 {emergency && <Route path="/emergency" element={<EmergencyModal />} />}
-                {apps.map(app => (
+                {apps.map((app) => (
                     <Route key={app.id} path={app.path + '/*'} element={app.component} />
                 ))}
             </Routes>
