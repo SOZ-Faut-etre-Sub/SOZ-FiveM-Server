@@ -41,6 +41,7 @@ export const QuickActionForm: FunctionComponent<QuickActionFormProps> = ({ accou
             safe: account.id,
             moneyType,
             amount: Number(data.amount),
+            refreshNui: 'bank',
         });
 
         reset();

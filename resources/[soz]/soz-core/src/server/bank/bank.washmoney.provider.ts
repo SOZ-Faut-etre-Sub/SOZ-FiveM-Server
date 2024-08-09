@@ -5,12 +5,16 @@ import { Cron } from '../../core/decorators/cron';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Logger } from '../../core/logger';
+import { PrismaService } from '../database/prisma.service';
 import { BankAccountRepository } from '../repository/bank.account.repository';
 
 @Provider()
 export class BankWashMoneyProvider {
     @Inject(BankAccountRepository)
     private bankAccountRepository: BankAccountRepository;
+
+    @Inject(PrismaService)
+    private prismaService: PrismaService;
 
     @Inject(Logger)
     private logger: Logger;
@@ -48,6 +52,15 @@ export class BankWashMoneyProvider {
                     `[BankWashMoneyProvider] Transferred ${toWash} from ${account.id} to ${targetAccount.id}`
                 );
             }
+
+            await this.prismaService.bank_statements.create({
+                data: {
+                    source_accountid: account.id,
+                    target_accountid: targetAccount.id,
+                    amount: toWash,
+                    reason: 'La lessive est faite',
+                },
+            });
 
             this.logger.info(`[BankWashMoneyProvider] Finished washing money for ${account.id}`);
         }

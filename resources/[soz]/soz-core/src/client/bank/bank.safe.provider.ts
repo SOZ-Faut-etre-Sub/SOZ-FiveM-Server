@@ -3,7 +3,7 @@ import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
-import { BankAccount, BankActionType, BankMoneyType } from '../../shared/bank';
+import { BankAccount, BankActionType, BankMoneyType, BankUiData } from '../../shared/bank';
 import { ClientEvent } from '../../shared/event/client';
 import { NuiEvent } from '../../shared/event/nui';
 import { BoxZone } from '../../shared/polyzone/box.zone';
@@ -49,13 +49,21 @@ export class BankSafeProvider {
         safe,
         moneyType,
         amount = 0,
+        refreshNui,
     }: {
         type: BankActionType;
         safe: string;
         moneyType: BankMoneyType;
         amount: number;
+        refreshNui: 'bank';
     }) {
-        return await emitRpc<boolean>(RpcServerEvent.BANK_CASH_TRANSFER_ACTION, type, safe, moneyType, amount);
+        const result = await emitRpc<boolean>(RpcServerEvent.BANK_CASH_TRANSFER_ACTION, type, safe, moneyType, amount);
+        if (!result) return;
+
+        if (refreshNui !== 'bank') return;
+
+        const accountUiData = await emitRpc<BankUiData>(RpcServerEvent.BANK_GET_ACCOUNT_UI);
+        this.nuiDispatch.dispatch('bank', 'UpdateAccountData', accountUiData);
     }
 
     @OnEvent(ClientEvent.BANK_SAFE_HOUSE_OPEN_UI)

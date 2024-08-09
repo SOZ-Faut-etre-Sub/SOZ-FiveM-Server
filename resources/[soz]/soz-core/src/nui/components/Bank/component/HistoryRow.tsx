@@ -20,16 +20,16 @@ export const HistoryRow: FunctionComponent<HistoryRowProps> = ({ account, histor
     return (
         <div className="flex items-center gap-4">
             <Icon
-                className={classnames('text-gray-300 border shadow-xl rounded-xl h-10 w-10 p-3', {
+                className={classnames('flex-none text-gray-300 border shadow-xl rounded-xl h-10 w-10 p-3', {
                     'bg-red-300/5 border-red-500/50': isSource,
                     'bg-green-300/5 border-green-500/50': !isSource,
                 })}
             />
-            <div className="flex flex-col grow">
+            <div className="flex flex-col min-w-0 grow">
                 <span>
                     {title} <strong className="font-semibold">{target}</strong>
                 </span>
-                <span className="text-sm">{history.reason}</span>
+                <span className="text-sm truncate">{history.reason}</span>
             </div>
 
             <span>{moneyFormat(history.amount)}</span>

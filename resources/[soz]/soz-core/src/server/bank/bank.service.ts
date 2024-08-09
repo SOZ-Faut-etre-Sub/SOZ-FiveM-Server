@@ -115,11 +115,22 @@ export class BankService {
             );
         }
 
-        this.monitor.traceEvent(`safe_${type}`, {
-            player_source: source,
-            target_account: bankAccount.id,
-            money_type: moneyType,
-            amount: amount,
+        if (['housestorages', 'safestorages'].includes(bankAccount.type)) {
+            this.monitor.traceEvent(`safe_${type}`, {
+                player_source: source,
+                target_account: bankAccount.id,
+                money_type: moneyType,
+                amount: amount,
+            });
+        }
+
+        await this.prismaService.bank_statements.create({
+            data: {
+                source_accountid: player.PlayerData.charinfo.account,
+                target_accountid: bankAccount.id,
+                amount: amount,
+                reason: "dépôt d'argent",
+            },
         });
 
         return true;
@@ -201,7 +212,8 @@ export class BankService {
         accountTarget: string,
         moneyType: BankMoneyType,
         amount: number,
-        allowOverflow = false
+        allowOverflow = false,
+        reason = ''
     ): Promise<boolean> {
         const sourceAccount = await this.bankAccountRepository.find(accountSource);
         if (!sourceAccount) {
@@ -231,7 +243,7 @@ export class BankService {
                 source_accountid: sourceAccount.id,
                 target_accountid: targetAccount.id,
                 amount: amount,
-                reason: '',
+                reason,
             },
         });
 

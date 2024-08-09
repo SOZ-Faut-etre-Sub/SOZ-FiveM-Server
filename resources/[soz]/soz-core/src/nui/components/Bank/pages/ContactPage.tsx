@@ -178,8 +178,7 @@ export const ContactPage: FunctionComponent<HistoryProps> = ({ account, contacts
             <animated.div className="flex gap-10 h-[85%]" style={styles}>
                 {/* Left pane */}
                 <div className="w-4/6 space-y-10">
-                    <div className="flex justify-between">
-                        <h2 className="uppercase text-sm font-light text-gray-300">Mes bénéficiaires</h2>
+                    <div className="flex justify-end">
                         <button
                             onClick={openModal}
                             className="flex items-center gap-2 py-1 px-2 cursor-pointer rounded-lg border-2 border-green-500/20 hover:border-green-600/20"

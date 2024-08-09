@@ -109,9 +109,10 @@ export class BankProvider {
         accountSource: string,
         accountTarget: string,
         moneyType: BankMoneyType,
-        amount: number
+        amount: number,
+        reason: string
     ): Promise<boolean> {
-        return this.bankService.transferBankMoney(accountSource, accountTarget, moneyType, amount, false);
+        return this.bankService.transferBankMoney(accountSource, accountTarget, moneyType, amount, false, reason);
     }
 
     @Exportable('TransferFarmMoney')

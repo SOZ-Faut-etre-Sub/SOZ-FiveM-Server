@@ -18,18 +18,21 @@ export class BankNuiProvider {
         accountTarget,
         moneyType,
         amount = 0,
+        reason = '',
     }: {
         accountSource: string;
         accountTarget: string;
         moneyType: BankMoneyType;
         amount: number;
+        reason: string;
     }) {
         const isTransferred = await emitRpc<boolean>(
             RpcServerEvent.BANK_TRANSFER_ACTION,
             accountSource,
             accountTarget,
             moneyType,
-            amount
+            amount,
+            reason
         );
         if (!isTransferred) return;
 

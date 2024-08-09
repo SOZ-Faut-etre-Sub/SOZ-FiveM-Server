@@ -12,6 +12,7 @@ import { Card } from './Card';
 
 type TransferActionInputs = {
     amount: number;
+    reason: string;
 };
 
 interface TransferActionFormProps {
@@ -42,6 +43,7 @@ export const TransferActionForm: FunctionComponent<TransferActionFormProps> = ({
             accountTarget: selected.accountid,
             moneyType: 'money',
             amount: Number(data.amount),
+            reason: data.reason,
         });
 
         reset();
@@ -139,6 +141,13 @@ export const TransferActionForm: FunctionComponent<TransferActionFormProps> = ({
                         placeholder="1000"
                     />
                 </div>
+
+                <input
+                    {...register('reason')}
+                    type="text"
+                    className="block w-full rounded-md border-0 py-1.5 px-3 bg-white/5 text-white ring-1 ring-inset ring-gray-400/50 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-500/50 sm:text-sm sm:leading-6"
+                    placeholder="Libellé du transfert (optionel)"
+                />
 
                 <button className="border-2 border-green-500/50 w-full p-2 rounded-md">Transférer</button>
             </form>
