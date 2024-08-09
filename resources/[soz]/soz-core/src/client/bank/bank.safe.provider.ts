@@ -30,7 +30,11 @@ export class BankSafeProvider {
                         label: 'Ouvrir',
                         icon: 'c:bank/compte_safe.png',
                         action: async () => {
-                            const safe = await emitRpc<BankAccount>(RpcServerEvent.BANK_GET_ACCOUNT, `safe_${job}`);
+                            const safe = await emitRpc<BankAccount>(
+                                RpcServerEvent.BANK_GET_ACCOUNT,
+                                `safe_${job}`,
+                                'safestorages'
+                            );
                             if (!safe) return;
 
                             this.nuiDispatch.dispatch('bank_safe', 'ShowSafe', safe);
@@ -68,7 +72,7 @@ export class BankSafeProvider {
 
     @OnEvent(ClientEvent.BANK_SAFE_HOUSE_OPEN_UI)
     public async onHouseOpenUI(identifier: string) {
-        const safe = await emitRpc<BankAccount>(RpcServerEvent.BANK_GET_ACCOUNT, identifier);
+        const safe = await emitRpc<BankAccount>(RpcServerEvent.BANK_GET_ACCOUNT, identifier, 'housestorages');
         if (!safe) return;
 
         this.nuiDispatch.dispatch('bank_safe', 'ShowSafe', safe);

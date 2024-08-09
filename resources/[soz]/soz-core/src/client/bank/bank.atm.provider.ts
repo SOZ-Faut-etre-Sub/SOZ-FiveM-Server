@@ -62,7 +62,7 @@ export class BankAtmProvider {
         const player = this.playerService.getPlayer();
 
         if (type === 'withdraw') {
-            const atmAccount = await emitRpc<BankAccount>(RpcServerEvent.BANK_GET_ACCOUNT, bankAccount);
+            const atmAccount = await emitRpc<BankAccount>(RpcServerEvent.BANK_GET_ACCOUNT, bankAccount, 'bank_atm');
             if (!atmAccount) return;
 
             if (atmAccount.config.maxWithdrawal) {
