@@ -13,4 +13,5 @@ export default {
     TETRIS: 'TETRIS',
     SNAKE: 'SNAKE',
     DARKWEB: 'DARKWEB',
+    TAX: 'TAX',
 };

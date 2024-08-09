@@ -14,3 +14,4 @@ import './weather/weather.controller';
 import './tetris/tetris.controller';
 import './snake/snake.controller';
 import './darkweb/darkweb.controller';
+import './tax/tax.controller';
