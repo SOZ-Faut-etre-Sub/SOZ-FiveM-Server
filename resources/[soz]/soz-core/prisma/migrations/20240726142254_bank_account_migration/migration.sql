@@ -1,8 +1,3 @@
--- DropIndex
-DROP INDEX `businessid` ON `bank_accounts`;
-DROP INDEX `citizenid` ON `bank_accounts`;
-DROP INDEX `gangid` ON `bank_accounts`;
-
 -- UpdateColumn
 alter table bank_accounts
     modify account_type enum ('player', 'housestorages', 'business', 'safestorages', 'offshore', 'bank-atm', 'gang') default 'player' not null;
@@ -23,10 +18,3 @@ update `bank_accounts`
 set accountid=gangid
 where account_type in ('gang')
   and `gangid` is not null;
-
--- AlterTable
-ALTER TABLE `bank_accounts`
-    DROP COLUMN `businessid`,
-    DROP COLUMN `citizenid`,
-    DROP COLUMN `gangid`,
-    DROP COLUMN `houseid`;
