@@ -121,7 +121,6 @@ async function bootstrap() {
         UtilsModule,
         GouvModule,
         GarbageModule,
-        WorldModule,
         DoorModule,
         SceneModule,
         WorldModule,

@@ -35,7 +35,8 @@ export class AnimationService {
         for (let i = 0; i < duration - interval; i += interval) {
             if (
                 zone.isPointInside(GetEntityCoords(playerPed) as Vector3) &&
-                Math.abs(GetEntityHeading(playerPed) - coords[3]) < 5
+                (Math.abs(GetEntityHeading(playerPed) - coords[3]) < 5 ||
+                    Math.abs(GetEntityHeading(playerPed) - coords[3]) > 355)
             ) {
                 break;
             }

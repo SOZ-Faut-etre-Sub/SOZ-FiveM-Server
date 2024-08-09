@@ -11068,6 +11068,102 @@ QBShared.Items = {
         ['description'] = "",
         ['illustrator'] = ''
     },
+    ['cyber_crypto_station'] = {
+        ['name'] = 'cyber_crypto_station',
+        ['label'] = "Station de récolte de crypto",
+        ['weight'] = 2000,
+        ['useable'] = true,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['cyber_crypto_farm_1'] = {
+        ['name'] = 'cyber_crypto_farm_1',
+        ['label'] = "Ferme à crypto Niveau 1",
+        ['weight'] = 2000,
+        ['useable'] = true,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['cyber_crypto_farm_2'] = {
+        ['name'] = 'cyber_crypto_farm_2',
+        ['label'] = "Ferme à crypto Niveau 2",
+        ['weight'] = 4000,
+        ['useable'] = true,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['cyber_crypto_farm_3'] = {
+        ['name'] = 'cyber_crypto_farm_3',
+        ['label'] = "Ferme à crypto Niveau 3",
+        ['weight'] = 6000,
+        ['useable'] = true,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['cyber_crypto_battery'] = {
+        ['name'] = 'cyber_crypto_battery',
+        ['label'] = "Batterie de ferme à crypto",
+        ['weight'] = 1000,
+        ['useable'] = true,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['cyber_crypto_accelerant_1'] = {
+        ['name'] = 'cyber_crypto_accelerant_1',
+        ['label'] = "Accélerateur de crypto Niveau 1",
+        ['weight'] = 1000,
+        ['useable'] = true,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['cyber_crypto_accelerant_2'] = {
+        ['name'] = 'cyber_crypto_accelerant_2',
+        ['label'] = "Accélerateur de crypto Niveau 2",
+        ['weight'] = 2000,
+        ['useable'] = true,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
+    ['cyber_crypto_wallet'] = {
+        ['name'] = 'cyber_crypto_wallet',
+        ['label'] = "Portefeuille Crypto",
+        ['weight'] = 100,
+        ['useable'] = true,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['illustrator'] = ''
+    },
     
     --- Fishing Items
     ['basic_rod'] = {

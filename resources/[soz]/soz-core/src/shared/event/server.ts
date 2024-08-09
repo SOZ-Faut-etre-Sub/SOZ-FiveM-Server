@@ -586,6 +586,11 @@ export enum ServerEvent {
     GANG_CYBER_JAMMER_USE = 'soz-core:server:gang:cyber:jammer-use',
     GANG_CYBER_TRACKER_SETUP = 'soz-core:server:gang:cyber:tracker-setup',
     GANG_CYBER_RETRIEVE_DRONE = 'soz-core:server:gang:cyber:drone-retieve',
+    GANG_CYBER_CRYPTO_PROP_USE = 'soz-core:server:gang:cyber:prop-use',
+    GANG_CYBER_CRYPO_MAINTENANCE = 'soz-core:server:gang:cyber:maintenance',
+    GANG_CYBER_CRYPTO_DESTROY = 'soz-core:server:gang:cyber:destroy',
+    GANG_CYBER_CRYPTO_ACTIVATE = 'soz-core:server:gang:cyber:activate',
+    GANG_CYBER_CRYPTO_HARVEST = 'soz-core:server:gang:cyber:harvest',
 
     DOOR_ADD_UPDATE = 'soz-core:server:door:add-update',
     DOOR_DELETE = 'soz-core:server:door:delete',

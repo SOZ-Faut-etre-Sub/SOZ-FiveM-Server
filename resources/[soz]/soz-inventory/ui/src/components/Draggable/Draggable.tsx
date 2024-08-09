@@ -233,6 +233,12 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
             secondaryDescription += `</div>`
         }
 
+        if(item?.name === 'cyber_crypto_wallet' && item?.metadata?.value != undefined) {
+            secondaryDescription = '<div style="display:flex;flex-direction:column;margin-top:0.5rem;align-items:flex-end">'
+            secondaryDescription += `<span><b>Crypto-Monnaie :</b> ${item?.metadata?.value}</span>`
+            secondaryDescription += `</div>`
+        }
+
         onItemHover?.(`
             <div><b>${itemLabel}</b> <span>${itemExtraLabel}</span></div>
             <div>${itemDescription}</div>
