@@ -180,7 +180,9 @@ export class BankProvider {
     }
 
     protected async getAccountHistory(accountId: string): Promise<BankStatement[]> {
-        const history = await this.prismaService.bank_statements.findMany({
+        const history = [];
+
+        const rawHistory = await this.prismaService.bank_statements.findMany({
             where: {
                 OR: [{ source_accountid: accountId }, { target_accountid: accountId }],
             },
@@ -190,10 +192,19 @@ export class BankProvider {
             take: 50,
         });
 
-        return history.map(statement => ({
-            ...statement,
-            id: Number(statement.id),
-            date: statement.date.getTime(),
-        }));
+        for (const statement of rawHistory) {
+            const source = await this.bankAccountRepository.find(statement.source_accountid);
+            const target = await this.bankAccountRepository.find(statement.target_accountid);
+
+            history.push({
+                ...statement,
+                id: Number(statement.id),
+                date: statement.date.getTime(),
+                source_label: source?.label,
+                target_label: target?.label,
+            });
+        }
+
+        return history;
     }
 }

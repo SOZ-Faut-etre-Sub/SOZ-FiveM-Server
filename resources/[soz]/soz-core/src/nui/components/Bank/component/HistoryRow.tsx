@@ -11,11 +11,11 @@ interface HistoryRowProps {
 }
 
 export const HistoryRow: FunctionComponent<HistoryRowProps> = ({ account, history }) => {
-    const isSource = history.source_accountid === account.id;
+    const isSource = history.source_accountid === account.id || history.source_accountid === '';
 
     const Icon = isSource ? MinusIcon : PlusIcon;
     const title = isSource ? 'Paiement à' : 'Virement de';
-    const target = isSource ? history.target_accountid : history.source_accountid;
+    const target = isSource ? history.target_label : history.source_label;
 
     return (
         <div className="flex items-center gap-4">
@@ -27,7 +27,7 @@ export const HistoryRow: FunctionComponent<HistoryRowProps> = ({ account, histor
             />
             <div className="flex flex-col min-w-0 grow">
                 {history.source_accountid === '' ? (
-                    <span>Virement éffectué depuis un ATM</span>
+                    <span>Retrait éffectué depuis un ATM</span>
                 ) : (
                     <span>
                         {title} <strong className="font-semibold">{target}</strong>

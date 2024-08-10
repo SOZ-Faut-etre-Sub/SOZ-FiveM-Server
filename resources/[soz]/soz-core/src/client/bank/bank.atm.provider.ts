@@ -1,3 +1,4 @@
+import { AtmLocations } from '../../config/atm';
 import { AtmConfig, AtmModels } from '../../config/bank';
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -16,7 +17,6 @@ import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { PlayerService } from '../player/player.service';
-import { BankAtmRepository } from '../repository/bank.atm.repository';
 import { TargetFactory, TargetOptions } from '../target/target.factory';
 
 @Provider()
@@ -38,9 +38,6 @@ export class BankAtmProvider {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
-
-    @Inject(BankAtmRepository)
-    private bankAtmRepository: BankAtmRepository;
 
     @Inject(AnimationService)
     private animationService: AnimationService;
@@ -145,9 +142,9 @@ export class BankAtmProvider {
         return response;
     }
 
-    @Once(OnceStep.RepositoriesLoaded)
+    @Once(OnceStep.PlayerLoaded)
     public async loadBankAtmBlips() {
-        Object.entries(this.bankAtmRepository.raw()).forEach(([atm, { coords, hideBlip }]) => {
+        Object.entries(AtmLocations).forEach(([atm, { coords, hideBlip }]) => {
             if (hideBlip) return;
 
             this.createAtmBlip(atm, coords);

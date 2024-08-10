@@ -29,7 +29,9 @@ export type BankStatement = {
     id: number;
     date: number;
     source_accountid: string;
+    source_label?: string;
     target_accountid: string;
+    target_label?: string;
     reason: string;
     amount: number;
 };
