@@ -539,6 +539,8 @@ export enum ServerEvent {
     GANG_VEHBIZ_UNIQUE_SPAWN = 'soz-core:server:gang:veh:unique-spawn',
     GANG_VEHBIZ_NPC_REGISTER = 'soz-core:server:gang:veh:npc-register',
     GANG_VEHBIZ_PLATE_CHANGE = 'soz-core:server:gang:veh:plate-change',
+    GANG_VEHBIZ_REFRESH_LIST = 'soz-core:server:gang:vehbiz:refresh-list',
+    GANG_VEHBIZ_COMMAND = 'soz-core:server:gang:veh:command',
 
     GANG_SMUGGLING_BLACK_MARKET_BOX_USE = 'soz-core:server:gang:smuggling:black-market-box-use',
     GANG_SMUGGLING_BLACK_MARKET_PRICE_UPDATE = 'soz-core:server:gang:smuggling:black-market-price',
