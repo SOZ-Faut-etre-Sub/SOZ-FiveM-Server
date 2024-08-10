@@ -41,7 +41,7 @@ export class BankInvoiceService {
         const invoices = [];
 
         for (const invoice of Object.values(
-            this.bankInvoiceRepository.get(invoice => !invoice.payed && !invoice.refused)
+            await this.bankInvoiceRepository.get(invoice => !invoice.payed && !invoice.refused)
         )) {
             const hasAccess = await this.playerHasPermission(player, invoice);
             if (hasAccess) {

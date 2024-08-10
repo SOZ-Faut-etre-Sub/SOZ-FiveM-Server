@@ -8,7 +8,7 @@ import { ClientEvent } from '../../shared/event/client';
 import { NuiEvent } from '../../shared/event/nui';
 import { ServerEvent } from '../../shared/event/server';
 import { JobType } from '../../shared/job';
-import { toVector2Object, Vector2 } from '../../shared/polyzone/vector';
+import { toVector2Object, Vector2, Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import { AnimationService } from '../animation/animation.service';
 import { BlipFactory } from '../blip';
@@ -53,22 +53,33 @@ export class BankAtmProvider {
         bankAccount,
         type,
         amount = 0,
+        atmType,
+        atmCoords,
     }: {
         atmIdentifier: string;
         bankAccount: string;
         type: BankActionType;
         amount: number;
+        atmType: AtmType;
+        atmCoords: Vector3;
     }) {
         const player = this.playerService.getPlayer();
 
         if (type === 'withdraw') {
-            const atmAccount = await emitRpc<BankAccount>(RpcServerEvent.BANK_GET_ACCOUNT, bankAccount, 'bank_atm');
+            const atmAccount = await emitRpc<BankAccount>(
+                RpcServerEvent.BANK_GET_ACCOUNT,
+                bankAccount,
+                'bank_atm',
+                atmType
+            );
             if (!atmAccount) return;
 
-            if (atmAccount.config.maxWithdrawal) {
-                if (amount > atmAccount.config.maxWithdrawal) {
+            const atmConfig = AtmConfig[atmType];
+
+            if (atmConfig.maxWithdrawal) {
+                if (amount > atmConfig.maxWithdrawal) {
                     this.notifier.notify(
-                        `Vous ne pouvez pas retirer plus de ~b~$${atmAccount.config.maxWithdrawal}~s~ depuis ce terminal`,
+                        `Vous ne pouvez pas retirer plus de ~b~$${atmConfig.maxWithdrawal}~s~ depuis ce terminal`,
                         'error'
                     );
                     return;
@@ -76,19 +87,19 @@ export class BankAtmProvider {
 
                 const lastUse = this.lastUsedAtm[atmIdentifier];
                 if (lastUse) {
-                    const amountAvailable = atmAccount.config.maxWithdrawal - lastUse.withdrawLimit;
-                    const remainingTime = atmAccount.config.limit + lastUse.lastUsed.getTime() - Date.now();
+                    const amountAvailable = atmConfig.maxWithdrawal - lastUse.withdrawLimit;
+                    const remainingTime = atmConfig.limit + lastUse.lastUsed.getTime() - Date.now();
 
                     if (remainingTime > 0) {
                         if (amountAvailable == 0) {
                             this.notifier.notify(
-                                `Limite de retrait atteinte : max. ~b~$${atmAccount.config.maxWithdrawal}~s~ par tranche de ${atmAccount.config.limit / 60000} minutes. Revenez dans ~b~${Math.ceil(remainingTime / 60000)} minutes~s~.`,
+                                `Limite de retrait atteinte : max. ~b~$${atmConfig.maxWithdrawal}~s~ par tranche de ${atmConfig.limit / 60000} minutes. Revenez dans ~b~${Math.ceil(remainingTime / 60000)} minutes~s~.`,
                                 'error'
                             );
                             return;
                         } else if (amount > amountAvailable) {
                             this.notifier.notify(
-                                `Limite de retrait atteinte : max. ~b~$${atmAccount.config.maxWithdrawal}~s~ par tranche de ${atmAccount.config.limit / 60000} minutes. ~b~$${amountAvailable}~s~ retirables.`,
+                                `Limite de retrait atteinte : max. ~b~$${atmConfig.maxWithdrawal}~s~ par tranche de ${atmConfig.limit / 60000} minutes. ~b~$${amountAvailable}~s~ retirables.`,
                                 'error'
                             );
                             return;
@@ -99,7 +110,7 @@ export class BankAtmProvider {
 
             const hasEnoughLiquidity = await emitRpc<boolean>(
                 RpcServerEvent.BANK_ATM_REMOVE_LIQUIDITY,
-                atmIdentifier.includes('atm_ent_') ? atmIdentifier : bankAccount,
+                atmIdentifier.startsWith('atm_ent_') ? atmIdentifier : bankAccount,
                 amount
             );
             if (!hasEnoughLiquidity) {
@@ -127,6 +138,9 @@ export class BankAtmProvider {
                 };
             }
         }
+
+        const accountUiData = await emitRpc<AtmUiData>(RpcServerEvent.BANK_ATM_GET_ACCOUNT_UI, atmType, atmCoords);
+        this.nuiDispatch.dispatch('bank_atm', 'ShowAtm', { ...accountUiData, atmCoords });
 
         return response;
     }
@@ -167,12 +181,14 @@ export class BankAtmProvider {
                                 },
                             });
 
+                            const atmCoords = GetEntityCoords(entity) as Vector3;
                             const accountUiData = await emitRpc<AtmUiData>(
                                 RpcServerEvent.BANK_ATM_GET_ACCOUNT_UI,
                                 type,
-                                GetEntityCoords(entity)
+                                atmCoords
                             );
-                            this.nuiDispatch.dispatch('bank_atm', 'ShowAtm', accountUiData);
+
+                            this.nuiDispatch.dispatch('bank_atm', 'ShowAtm', { ...accountUiData, atmCoords });
                         },
                         blackoutGlobal: true,
                     },
@@ -190,14 +206,14 @@ export class BankAtmProvider {
             label: `Remplir avec ${this.itemService.getItem(item).label}`,
             icon: 'c:stonk/remplir.png',
             canInteract: async entity => {
-                if (type === AtmType.ENTERPRISE) return false;
+                if (type !== AtmType.ENTERPRISE) return false;
 
-                const currentMoney = await emitRpc<number>(
-                    RpcServerEvent.BANK_ATM_GET_MONEY,
+                const account = await emitRpc<BankAccount>(
+                    RpcServerEvent.BANK_ATM_GET_ACCOUNT,
                     type,
                     GetEntityCoords(entity)
                 );
-                if (currentMoney < AtmConfig[type].maxMoney) {
+                if (account.money < AtmConfig[account.config.type].maxMoney) {
                     return this.playerService.isOnDuty();
                 }
 

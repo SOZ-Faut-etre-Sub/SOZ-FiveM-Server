@@ -8,15 +8,20 @@ import { moneyFormat } from '../utils/format';
 type HeaderProps = {
     title: ReactNode;
     bankMoney?: number;
+    showMarkedMoney?: boolean;
 };
 
-export const Header: FunctionComponent<HeaderProps> = ({ title, bankMoney }) => {
+export const Header: FunctionComponent<HeaderProps> = ({ title, bankMoney, showMarkedMoney }) => {
     const player = usePlayer();
 
     const playerMoney = useMemo<number>(() => {
         if (!player) return 0;
 
-        return Number(player.money.money) + Number(player.money.marked_money);
+        if (showMarkedMoney) {
+            return Number(player.money.money) + Number(player.money.marked_money);
+        }
+
+        return Number(player.money.money);
     }, [player.money]);
 
     return (

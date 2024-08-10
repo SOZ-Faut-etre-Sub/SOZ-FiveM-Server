@@ -20,6 +20,8 @@ const InvoiceList = (): any => {
     const [t] = useTranslation();
     const config = useConfig();
 
+    console.log(invoices);
+
     if (invoices && invoices.length)
         return (
             <AppContent className="flex flex-col" scrollable={false}>

@@ -14,6 +14,7 @@ import { Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import { PrismaService } from '../database/prisma.service';
 import { JobService } from '../job.service';
+import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { BankAccountRepository } from '../repository/bank.account.repository';
 import { BankService } from './bank.service';
@@ -31,6 +32,9 @@ export class BankProvider {
 
     @Inject(PrismaService)
     private prismaService: PrismaService;
+
+    @Inject(Notifier)
+    private notifier: Notifier;
 
     @Inject(BankAccountRepository)
     private bankAccountRepository: BankAccountRepository;
@@ -112,7 +116,39 @@ export class BankProvider {
         amount: number,
         reason: string
     ): Promise<boolean> {
-        return this.bankService.transferBankMoney(accountSource, accountTarget, moneyType, amount, false, reason);
+        const transfer = this.bankService.transferBankMoney(
+            accountSource,
+            accountTarget,
+            moneyType,
+            amount,
+            false,
+            reason
+        );
+        if (!transfer) {
+            this.notifier.error(source, "Impossible de transférer de l'argent.");
+            return transfer;
+        }
+
+        this.notifier.advancedNotify(
+            source,
+            'Maze Banque',
+            `Transfert: ~r~$${amount}`,
+            "Vous avez transféré de l'argent",
+            'CHAR_BANK_MAZE'
+        );
+
+        const targetPlayer = this.playerService.getPlayerByBankAccount(accountTarget);
+        if (targetPlayer) {
+            this.notifier.advancedNotify(
+                targetPlayer.source,
+                'Maze Banque',
+                `Transfert: ~g~$${amount}`,
+                "Vous avez reçu de l'argent",
+                'CHAR_BANK_MAZE'
+            );
+        }
+
+        return transfer;
     }
 
     @Exportable('TransferFarmMoney')

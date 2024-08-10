@@ -9,6 +9,7 @@ import { ServerEvent } from '../../shared/event/server';
 import { JobType } from '../../shared/job';
 import { toVector4Object } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
+import { AnimationService } from '../animation/animation.service';
 import { BlipFactory } from '../blip';
 import { ItemService } from '../item/item.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
@@ -28,6 +29,9 @@ export class BankProvider {
 
     @Inject(ItemService)
     private itemService: ItemService;
+
+    @Inject(AnimationService)
+    private animationService: AnimationService;
 
     @Inject(PlayerService)
     private playerService: PlayerService;
@@ -58,6 +62,23 @@ export class BankProvider {
                 label: 'Accéder aux comptes',
                 icon: 'c:bank/compte_personal.png',
                 action: async () => {
+                    await this.animationService.playAnimation({
+                        base: {
+                            dictionary: 'anim@mp_atm@enter',
+                            name: 'enter',
+                            blendInSpeed: 8.0,
+                            blendOutSpeed: -8.0,
+                            duration: 3000,
+                            options: {
+                                onlyUpperBody: true,
+                            },
+                            playbackRate: 0,
+                            lockX: false,
+                            lockY: false,
+                            lockZ: false,
+                        },
+                    });
+
                     const accountUiData = await emitRpc<BankUiData>(RpcServerEvent.BANK_GET_ACCOUNT_UI);
                     this.nuiDispatch.dispatch('bank', 'UpdateAccountData', accountUiData);
                     this.nuiDispatch.dispatch('bank', 'ShowAccount', true);
@@ -121,6 +142,7 @@ export class BankProvider {
                 coords: toVector4Object(coords),
                 freeze: true,
                 invincible: true,
+                spawnNow: true,
                 blockevents: true,
                 scenario: 'WORLD_HUMAN_CLIPBOARD',
                 target: {

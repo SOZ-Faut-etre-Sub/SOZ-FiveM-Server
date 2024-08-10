@@ -4,7 +4,7 @@ export type BankMoneyType = 'money' | 'marked_money';
 export type BankAccountType = 'player' | 'housestorages' | 'business' | 'safestorages' | 'offshore' | 'bank_atm';
 export type BankActionType = 'deposit' | 'withdraw';
 
-export type BankAtmConfig = { maxMoney: number; maxWithdrawal?: number; limit?: number };
+export type BankAtmConfig = { type?: AtmType; maxMoney: number; maxWithdrawal?: number; limit?: number };
 
 export type BankAccount = {
     id: string;
@@ -37,6 +37,7 @@ export type BankStatement = {
 export type AtmUiData = {
     account: BankAccount;
     atm: BankAccount;
+    atmType: AtmType;
     atmAccountId: string;
 };
 

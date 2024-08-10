@@ -19,7 +19,9 @@ export class BankInvoiceRepository extends Repository<RepositoryType.BankInvoice
     private jobService: JobService;
 
     protected async load(): Promise<Record<number, Invoice>> {
-        const result = await this.prismaService.invoices.findMany();
+        const result = await this.prismaService.invoices.findMany({
+            where: { payed: false, refused: false },
+        });
         const invoices = {};
 
         for (const invoice of result) {

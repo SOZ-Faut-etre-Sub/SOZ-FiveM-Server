@@ -107,6 +107,12 @@ export class BankInvoiceProvider {
             target_account: invoice.targetAccount,
         });
 
+        if (type === 'society') {
+            this.notifier.notify(source, `Votre facture ~g~Société~s~ a bien été émise`);
+        } else {
+            this.notifier.notify(source, `Votre facture a bien été émise`);
+        }
+
         return true;
     }
 

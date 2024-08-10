@@ -1,14 +1,12 @@
 import { Transition } from '@headlessui/react';
-import classnames from 'classnames';
 import React, { FunctionComponent, KeyboardEvent, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FaArrowRightFromBracket } from 'react-icons/fa6';
 import { MemoryRouter } from 'react-router-dom';
 
-import { AtmUiData } from '../../../shared/bank';
 import { NuiEvent } from '../../../shared/event/nui';
+import { NuiMethodMap } from '../../../shared/nui';
 import { fetchNui } from '../../fetch';
-import { usePlayer } from '../../hook/data';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 import { AppContent } from './component/AppContent';
 import { ApplicationContainer } from './component/Application';
@@ -18,19 +16,15 @@ import { MenuLink } from './component/MenuLink';
 import { inputErrorMessage } from './utils/format';
 
 type AtmAppInputs = {
-    deposit: number;
     withdraw: number;
 };
 
 export const AtmApp: FunctionComponent = () => {
-    const player = usePlayer();
-
     const [showApp, setShowApp] = useState<boolean>(false);
-    const [account, setAccount] = useState<AtmUiData>();
+    const [account, setAccount] = useState<NuiMethodMap['bank_atm']['ShowAtm']>();
 
     const {
         register,
-        watch,
         handleSubmit,
         reset,
         formState: { errors },
@@ -47,26 +41,26 @@ export const AtmApp: FunctionComponent = () => {
 
     useNuiFocus(showApp, showApp, false);
 
-    useNuiEvent('bank_atm', 'ShowAtm', (data: AtmUiData) => {
+    useNuiEvent('bank_atm', 'ShowAtm', data => {
         setAccount(data);
         setShowApp(true);
     });
 
-    const depositIsEnabled = player?.money?.money === 0 || !!watch('withdraw');
+    useNuiEvent('bank', 'CloseInterface', resetApp);
 
     const submitForm: SubmitHandler<AtmAppInputs> = async data => {
-        if (data.deposit === 0 && data.withdraw === 0) return;
-
-        const type = data.deposit > 0 ? 'deposit' : 'withdraw';
+        if (data.withdraw === 0) return;
 
         const result = await fetchNui(NuiEvent.BankAtmAction, {
             atmIdentifier: account.atmAccountId,
             bankAccount: account.atm.id,
-            type: type,
-            amount: Number(type === 'deposit' ? data.deposit : data.withdraw),
+            type: 'withdraw',
+            amount: Number(data.withdraw),
+            atmType: account.atmType,
+            atmCoords: account.atmCoords,
         });
         if (result) {
-            resetApp();
+            reset();
         }
     };
 
@@ -99,84 +93,36 @@ export const AtmApp: FunctionComponent = () => {
                             bankMoney={account?.account?.money}
                         />
 
-                        <div className="flex-grow">
-                            <form onSubmit={handleSubmit(submitForm)} className="h-full grid grid-cols-2 gap-4">
-                                <Card
-                                    className={classnames('flex flex-col justify-between h-full', {
-                                        'opacity-50': !!watch('deposit'),
-                                    })}
-                                >
-                                    <h2 className="uppercase text-sm font-light text-gray-300">Retirer de l'argent</h2>
+                        <form onSubmit={handleSubmit(submitForm)} className="flex-grow">
+                            <Card className="flex flex-col justify-between h-full">
+                                <h2 className="uppercase text-sm font-light text-gray-300">Retirer de l'argent</h2>
 
-                                    <div>
-                                        <div className="relative rounded-md shadow-sm">
-                                            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                                <span className="text-white sm:text-sm">$</span>
-                                            </div>
-                                            <input
-                                                {...register('withdraw', {
-                                                    min: 0,
-                                                    max: account?.atm?.config?.maxMoney,
-                                                })}
-                                                type="number"
-                                                className="block w-full rounded-md border-0 py-1.5 pl-7 pr-12 bg-white/5 text-white ring-1 ring-inset ring-gray-400/50 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-500/50 sm:text-sm sm:leading-6"
-                                                placeholder="1000"
-                                                disabled={!!watch('deposit')}
-                                            />
+                                <div>
+                                    <div className="relative rounded-md shadow-sm">
+                                        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                            <span className="text-white sm:text-sm">$</span>
                                         </div>
-                                        {errors.withdraw && (
-                                            <span className="text-red-400 text-sm">
-                                                {inputErrorMessage(errors.withdraw.type)}
-                                            </span>
-                                        )}
+                                        <input
+                                            {...register('withdraw', {
+                                                min: 1,
+                                                max: account?.atm?.config?.maxMoney,
+                                                required: true,
+                                            })}
+                                            type="number"
+                                            className="block w-full rounded-md border-0 py-1.5 pl-7 pr-12 bg-white/5 text-white ring-1 ring-inset ring-gray-400/50 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-500/50 sm:text-sm sm:leading-6"
+                                            placeholder="1000"
+                                        />
                                     </div>
+                                    {errors.withdraw && (
+                                        <span className="text-red-400 text-sm">
+                                            {inputErrorMessage(errors.withdraw.type)}
+                                        </span>
+                                    )}
+                                </div>
 
-                                    <button
-                                        className="border-2 border-green-500/50 w-full p-2 rounded-md"
-                                        disabled={!!watch('deposit')}
-                                    >
-                                        Retirer
-                                    </button>
-                                </Card>
-                                <Card
-                                    className={classnames('flex flex-col justify-between h-full', {
-                                        'opacity-50': depositIsEnabled,
-                                    })}
-                                >
-                                    <h2 className="uppercase text-sm font-light text-gray-300">Déposer de l'argent</h2>
-
-                                    <div>
-                                        <div className="relative rounded-md shadow-sm">
-                                            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                                <span className="text-white sm:text-sm">$</span>
-                                            </div>
-                                            <input
-                                                {...register('deposit', {
-                                                    min: 0,
-                                                    max: player?.money?.money,
-                                                })}
-                                                type="number"
-                                                className="block w-full rounded-md border-0 py-1.5 pl-7 pr-12 bg-white/5 text-white ring-1 ring-inset ring-gray-400/50 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-500/50 sm:text-sm sm:leading-6"
-                                                placeholder="1000"
-                                                disabled={depositIsEnabled}
-                                            />
-                                        </div>
-                                        {errors.deposit && (
-                                            <span className="text-red-400 text-sm">
-                                                {inputErrorMessage(errors.deposit.type)}
-                                            </span>
-                                        )}
-                                    </div>
-
-                                    <button
-                                        className="border-2 border-green-500/50 w-full p-2 rounded-md"
-                                        disabled={depositIsEnabled}
-                                    >
-                                        Déposer
-                                    </button>
-                                </Card>
-                            </form>
-                        </div>
+                                <button className="border-2 border-green-500/50 w-full p-2 rounded-md">Retirer</button>
+                            </Card>
+                        </form>
 
                         <footer className="flex justify-end">
                             <MenuLink

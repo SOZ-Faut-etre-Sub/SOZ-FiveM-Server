@@ -26,9 +26,13 @@ export const HistoryRow: FunctionComponent<HistoryRowProps> = ({ account, histor
                 })}
             />
             <div className="flex flex-col min-w-0 grow">
-                <span>
-                    {title} <strong className="font-semibold">{target}</strong>
-                </span>
+                {history.source_accountid === '' ? (
+                    <span>Virement éffectué depuis un ATM</span>
+                ) : (
+                    <span>
+                        {title} <strong className="font-semibold">{target}</strong>
+                    </span>
+                )}
                 <span className="text-sm truncate">{history.reason}</span>
             </div>
 

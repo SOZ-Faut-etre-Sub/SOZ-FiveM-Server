@@ -38,7 +38,7 @@ export const QuickActionForm: FunctionComponent<QuickActionFormProps> = ({ accou
     const submitForm: SubmitHandler<QuickActionInputs> = async data => {
         await fetchNui(NuiEvent.BankSafeTransferAction, {
             type: quickAction === 0 ? 'withdraw' : 'deposit',
-            safe: account.id,
+            accountId: account.id,
             moneyType,
             amount: Number(data.amount),
             refreshNui: 'bank',
@@ -64,8 +64,9 @@ export const QuickActionForm: FunctionComponent<QuickActionFormProps> = ({ accou
                     </div>
                     <input
                         {...register('amount', {
-                            min: 0,
+                            min: 1,
                             max: quickAction === 0 ? account[moneyType] : player.money[moneyType],
+                            required: true,
                         })}
                         type="number"
                         className="block w-full rounded-md border-0 py-1.5 pl-7 pr-12 bg-white/5 text-white ring-1 ring-inset ring-gray-400/50 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-500/50 sm:text-sm sm:leading-6"

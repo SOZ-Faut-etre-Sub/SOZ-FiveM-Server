@@ -1,7 +1,7 @@
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
-import { BankAccount, BankAccountType, BankActionType, BankMoneyType } from '../../shared/bank';
+import { AtmType, BankAccount, BankAccountType, BankActionType, BankMoneyType } from '../../shared/bank';
 import { RpcServerEvent } from '../../shared/rpc';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
@@ -23,13 +23,18 @@ export class BankSafeProvider {
     private playerService: PlayerService;
 
     @Rpc(RpcServerEvent.BANK_GET_ACCOUNT)
-    public async getAccount(source: number, accountId: string, accountType: BankAccountType): Promise<BankAccount> {
+    public async getAccount(
+        source: number,
+        accountId: string,
+        accountType: BankAccountType,
+        atmType?: AtmType
+    ): Promise<BankAccount> {
         const player = this.playerService.getPlayer(source);
         if (!player) return;
 
         let account = await this.bankAccountRepository.find(accountId);
         if (!account) {
-            account = await this.bankAccountRepository.create(accountId, accountType);
+            account = await this.bankAccountRepository.create(accountId, accountType, atmType);
         }
 
         if (!(await this.bankAccountRepository.hasAccessToAccount(player, account))) {

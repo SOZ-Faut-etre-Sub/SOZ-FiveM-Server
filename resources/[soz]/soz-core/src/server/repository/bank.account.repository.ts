@@ -200,11 +200,11 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
         const atmType = accountId.match(/atm_(\w+)_(\w+)/)?.[1] as string;
 
         if (bankType) {
-            return AtmConfig[bankType];
+            return { ...AtmConfig[bankType], type: bankType as AtmType };
         }
 
         if (atmType) {
-            return AtmConfig[atmType];
+            return { ...AtmConfig[atmType], type: atmType as AtmType };
         }
 
         return null;
@@ -267,8 +267,8 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
             money: Number(data.money ?? 0),
             marked_money: Number(data.marked_money ?? 0),
             maxCapacity: accountMaxCapacity,
-            config: this.getAtmConfig(data.accountid),
             coords: data.coords ? [coords.x, coords.y] : null,
+            config: this.getAtmConfig(data.accountid),
         };
     }
 }

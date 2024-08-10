@@ -1,8 +1,8 @@
 import { SozRole } from '@core/permissions';
 import { DrugSkill } from '@private/shared/drugs';
 import { Talent } from '@private/shared/talent';
-import { ApartementTiers } from '@public/shared/housing/housing';
 import { BankMoneyType } from '@public/shared/bank';
+import { ApartementTiers } from '@public/shared/housing/housing';
 import { SenatePartyMember } from '@public/shared/senate';
 
 import { ClothConfig } from './cloth';

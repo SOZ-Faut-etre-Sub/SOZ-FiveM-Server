@@ -34,6 +34,7 @@ export class BankAtmProvider {
         return {
             account: await this.bankAccountRepository.find(player.charinfo.account),
             atm: await this.getAtmAccount(source, type, coords),
+            atmType: type,
             atmAccountId: this.atmIdentifier(type, coords),
         };
     }

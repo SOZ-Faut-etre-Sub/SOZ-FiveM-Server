@@ -84,7 +84,10 @@ export const ContactPage: FunctionComponent<HistoryProps> = ({ account, contacts
                     </Transition.Child>
 
                     <div className="fixed inset-0 overflow-y-auto">
-                        <div className="flex min-h-full items-center justify-center p-4 text-center">
+                        <div
+                            className="flex min-h-full items-center justify-center p-4 text-center"
+                            data-ignore-click-outside={true}
+                        >
                             <Transition.Child
                                 as={Fragment}
                                 enter="ease-out duration-300"
@@ -94,8 +97,15 @@ export const ContactPage: FunctionComponent<HistoryProps> = ({ account, contacts
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-[#1c2128] p-6 text-left align-middle shadow-xl transition-all">
-                                    <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-100">
+                                <Dialog.Panel
+                                    className="w-full max-w-md transform overflow-hidden rounded-2xl bg-[#1c2128] p-6 text-left align-middle shadow-xl transition-all"
+                                    data-ignore-click-outside={true}
+                                >
+                                    <Dialog.Title
+                                        as="h3"
+                                        className="text-lg font-medium leading-6 text-gray-100"
+                                        data-ignore-click-outside={true}
+                                    >
                                         Ajouter un bénéficiaire
                                     </Dialog.Title>
 

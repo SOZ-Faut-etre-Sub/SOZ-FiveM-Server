@@ -79,6 +79,15 @@ export class BankService {
             }
 
             if (!(await this.bankAccountRepository.addMoney(bankAccount.id, amount, moneyType, allowOverflow))) {
+                player.Functions.AddMoney(moneyType, amount);
+                this.notifier.advancedNotify(
+                    source,
+                    'Maze Banque',
+                    `Dépôt: ~r~$${amount}`,
+                    'Le coffre est plein',
+                    'CHAR_BANK_MAZE',
+                    'error'
+                );
                 return false;
             }
 
@@ -124,14 +133,16 @@ export class BankService {
             });
         }
 
-        await this.prismaService.bank_statements.create({
-            data: {
-                source_accountid: player.PlayerData.charinfo.account,
-                target_accountid: bankAccount.id,
-                amount: amount,
-                reason: "dépôt d'argent",
-            },
-        });
+        if (!['housestorages'].includes(bankAccount.type)) {
+            await this.prismaService.bank_statements.create({
+                data: {
+                    source_accountid: '',
+                    target_accountid: bankAccount.id,
+                    amount: amount,
+                    reason: "dépôt d'argent",
+                },
+            });
+        }
 
         return true;
     }

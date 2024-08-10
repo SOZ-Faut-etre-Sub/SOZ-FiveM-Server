@@ -36,6 +36,8 @@ export const BankApp: FunctionComponent = () => {
         setData(data);
     });
 
+    useNuiEvent('bank', 'CloseInterface', () => setShowApp(false));
+
     useEffect(() => {
         window.addEventListener('keyup', onKeyUpReceived);
 

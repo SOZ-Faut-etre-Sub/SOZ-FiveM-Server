@@ -25,7 +25,17 @@ export const ApplicationContainer: FunctionComponent<PropsWithChildren<Applicati
     });
 
     const refOutside = useOutside({
-        click: () => onClickOutside && onClickOutside(),
+        down: event => {
+            if (!onClickOutside) return;
+
+            let el = event.target;
+            while (el.parentNode) {
+                el = el.parentNode;
+                if (el.getAttribute && el.getAttribute('data-ignore-click-outside')) return;
+            }
+
+            onClickOutside();
+        },
     });
 
     return (
@@ -36,7 +46,7 @@ export const ApplicationContainer: FunctionComponent<PropsWithChildren<Applicati
                     style={contentStyles}
                     className={cn('h-full w-full mx-auto my-auto', {
                         'max-w-[1536px] max-h-[90vh]': size === 'full',
-                        'max-h-[400px] max-w-[1000px]': size === 'large',
+                        'max-h-[400px] max-w-[700px]': size === 'large',
                         'max-h-[800px] max-w-[536px]': size === 'small',
                     })}
                 >

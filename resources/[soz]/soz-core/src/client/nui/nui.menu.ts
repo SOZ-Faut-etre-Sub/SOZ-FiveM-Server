@@ -64,6 +64,7 @@ export class NuiMenu {
 
     public closeAll(skipCloseEvent = true) {
         exports['menuv'].SendNUIMessage({ action: 'KEY_CLOSE_ALL' });
+        this.dispatcher.dispatch('bank', 'CloseInterface');
         this.closeMenu(skipCloseEvent);
     }
 

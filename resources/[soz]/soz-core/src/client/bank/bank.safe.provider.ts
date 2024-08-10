@@ -3,7 +3,7 @@ import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
-import { BankAccount, BankActionType, BankMoneyType, BankUiData } from '../../shared/bank';
+import { BankAccount, BankAccountType, BankActionType, BankMoneyType, BankUiData } from '../../shared/bank';
 import { ClientEvent } from '../../shared/event/client';
 import { NuiEvent } from '../../shared/event/nui';
 import { BoxZone } from '../../shared/polyzone/box.zone';
@@ -37,7 +37,8 @@ export class BankSafeProvider {
                             );
                             if (!safe) return;
 
-                            this.nuiDispatch.dispatch('bank_safe', 'ShowSafe', safe);
+                            this.nuiDispatch.dispatch('bank_safe', 'UpdateAccountData', safe);
+                            this.nuiDispatch.dispatch('bank_safe', 'ShowSafe', true);
                         },
                         job,
                     },
@@ -50,24 +51,37 @@ export class BankSafeProvider {
     @OnNuiEvent(NuiEvent.BankSafeTransferAction)
     public async onTransferAction({
         type,
-        safe,
+        accountId,
         moneyType,
         amount = 0,
         refreshNui,
     }: {
         type: BankActionType;
-        safe: string;
+        accountId: string;
         moneyType: BankMoneyType;
         amount: number;
-        refreshNui: 'bank';
+        refreshNui: 'bank' | BankAccountType;
     }) {
-        const result = await emitRpc<boolean>(RpcServerEvent.BANK_CASH_TRANSFER_ACTION, type, safe, moneyType, amount);
+        const result = await emitRpc<boolean>(
+            RpcServerEvent.BANK_CASH_TRANSFER_ACTION,
+            type,
+            accountId,
+            moneyType,
+            amount
+        );
         if (!result) return;
 
-        if (refreshNui !== 'bank') return;
+        if (refreshNui === 'bank') {
+            const account = await emitRpc<BankUiData>(RpcServerEvent.BANK_GET_ACCOUNT_UI);
+            if (!account) return;
 
-        const accountUiData = await emitRpc<BankUiData>(RpcServerEvent.BANK_GET_ACCOUNT_UI);
-        this.nuiDispatch.dispatch('bank', 'UpdateAccountData', accountUiData);
+            this.nuiDispatch.dispatch('bank', 'UpdateAccountData', account);
+        } else {
+            const account = await emitRpc<BankAccount>(RpcServerEvent.BANK_GET_ACCOUNT, accountId, refreshNui);
+            if (!account) return;
+
+            this.nuiDispatch.dispatch('bank_safe', 'UpdateAccountData', account);
+        }
     }
 
     @OnEvent(ClientEvent.BANK_SAFE_HOUSE_OPEN_UI)
@@ -75,6 +89,7 @@ export class BankSafeProvider {
         const safe = await emitRpc<BankAccount>(RpcServerEvent.BANK_GET_ACCOUNT, identifier, 'housestorages');
         if (!safe) return;
 
-        this.nuiDispatch.dispatch('bank_safe', 'ShowSafe', safe);
+        this.nuiDispatch.dispatch('bank_safe', 'UpdateAccountData', safe);
+        this.nuiDispatch.dispatch('bank_safe', 'ShowSafe', true);
     }
 }
