@@ -57,67 +57,7 @@ export class BankProvider {
 
     @Once(OnceStep.PlayerLoaded)
     public async loadBankPedModels() {
-        const bankActions: TargetOptions[] = [
-            {
-                label: 'Accéder aux comptes',
-                icon: 'c:bank/compte_personal.png',
-                action: async () => {
-                    await this.animationService.playAnimation({
-                        base: {
-                            dictionary: 'anim@mp_atm@enter',
-                            name: 'enter',
-                            blendInSpeed: 8.0,
-                            blendOutSpeed: -8.0,
-                            duration: 3000,
-                            options: {
-                                onlyUpperBody: true,
-                            },
-                            playbackRate: 0,
-                            lockX: false,
-                            lockY: false,
-                            lockZ: false,
-                        },
-                    });
-
-                    const accountUiData = await emitRpc<BankUiData>(RpcServerEvent.BANK_GET_ACCOUNT_UI);
-                    this.nuiDispatch.dispatch('bank', 'UpdateAccountData', accountUiData);
-                    this.nuiDispatch.dispatch('bank', 'ShowAccount', true);
-                },
-                blackoutGlobal: true,
-            },
-        ];
-
-        ['small_moneybag', 'medium_moneybag', 'big_moneybag'].forEach(item => {
-            bankActions.push({
-                label: `Remplir avec ${this.itemService.getItem(item).label}`,
-                icon: 'c:stonk/remplir.png',
-                canInteract: async () => {
-                    if (!this.currentBank) return;
-
-                    const currentMoney = await emitRpc<number>(
-                        RpcServerEvent.BANK_GET_ACCOUNT_MONEY,
-                        `bank_${this.currentBank.bank}`
-                    );
-                    if (currentMoney < AtmConfig[this.currentBank.type].maxMoney) {
-                        return this.playerService.isOnDuty();
-                    }
-
-                    return false;
-                },
-                action: () => {
-                    if (!this.currentBank) return;
-
-                    const maxMoney = AtmConfig[this.currentBank.type].maxMoney;
-                    TriggerServerEvent(ServerEvent.STONK_FILL_IN, `bank_${this.currentBank.bank}`, item, maxMoney);
-                },
-                blackoutGlobal: true,
-                blackoutJob: JobType.CashTransfer,
-                job: JobType.CashTransfer,
-                item,
-            });
-        });
-
-        Object.entries(BankPedLocations).forEach(([bank, coords]) => {
+        for (const [bank, coords] of Object.entries(BankPedLocations)) {
             if (!this.blipFactory.exist(`bank_${bank}`)) {
                 if (bank === 'pacific1') {
                     this.blipFactory.create(`bank_${bank}`, {
@@ -137,7 +77,7 @@ export class BankProvider {
                 }
             }
 
-            this.targetFactory.createForPed({
+            await this.targetFactory.createForPed({
                 model: 'ig_bankman',
                 coords: toVector4Object(coords),
                 freeze: true,
@@ -146,10 +86,71 @@ export class BankProvider {
                 blockevents: true,
                 scenario: 'WORLD_HUMAN_CLIPBOARD',
                 target: {
-                    options: bankActions,
+                    options: [
+                        {
+                            label: 'Accéder aux comptes',
+                            icon: 'c:bank/compte_personal.png',
+                            action: async () => {
+                                await this.animationService.playAnimation({
+                                    base: {
+                                        dictionary: 'anim@mp_atm@enter',
+                                        name: 'enter',
+                                        blendInSpeed: 8.0,
+                                        blendOutSpeed: -8.0,
+                                        duration: 3000,
+                                        options: {
+                                            onlyUpperBody: true,
+                                        },
+                                        playbackRate: 0,
+                                        lockX: false,
+                                        lockY: false,
+                                        lockZ: false,
+                                    },
+                                });
+
+                                const accountUiData = await emitRpc<BankUiData>(RpcServerEvent.BANK_GET_ACCOUNT_UI);
+                                this.nuiDispatch.dispatch('bank', 'UpdateAccountData', accountUiData);
+                                this.nuiDispatch.dispatch('bank', 'ShowAccount', true);
+                            },
+                            blackoutGlobal: true,
+                        },
+                        this.createBankRefillAction('small_moneybag'),
+                        this.createBankRefillAction('medium_moneybag'),
+                        this.createBankRefillAction('big_moneybag'),
+                    ],
                     distance: 3.0,
                 },
             });
-        });
+        }
+    }
+
+    protected createBankRefillAction(item: string): TargetOptions {
+        return {
+            label: `Remplir avec ${this.itemService.getItem(item).label}`,
+            icon: 'c:stonk/remplir.png',
+            canInteract: async () => {
+                if (!this.currentBank) return;
+
+                const currentMoney = await emitRpc<number>(
+                    RpcServerEvent.BANK_GET_ACCOUNT_MONEY,
+                    `bank_${this.currentBank.bank}`
+                );
+                if (currentMoney < AtmConfig[this.currentBank.type].maxMoney) {
+                    return this.playerService.isOnDuty();
+                }
+
+                return false;
+            },
+            action: () => {
+                if (!this.currentBank) return;
+
+                const maxMoney = AtmConfig[this.currentBank.type].maxMoney;
+                TriggerServerEvent(ServerEvent.STONK_FILL_IN, `bank_${this.currentBank.bank}`, item, maxMoney);
+            },
+            blackoutGlobal: true,
+            blackoutJob: JobType.CashTransfer,
+            job: JobType.CashTransfer,
+            item,
+        };
     }
 }
