@@ -17558,8 +17558,8 @@ QBShared.Items = {
         ["fishman_status"] = "clean",
         ["min_weight"] = 31,
         ["max_weight"] = 114,
-        ["min_length"] = 689,
-        ["max_length"] = 1341,
+        ["min_length"] = 68,
+        ["max_length"] = 341,
         ["sozedex_id"] = 111,
         ["price"] = 32
     },
