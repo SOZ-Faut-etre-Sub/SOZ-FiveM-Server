@@ -12,6 +12,7 @@ import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 import { AppContent } from './component/AppContent';
 import { ApplicationContainer } from './component/Application';
 import { Card } from './component/Card';
+import { Input } from './component/Input';
 import { FORMAT_CURRENCY, inputErrorMessage } from './utils/format';
 
 type SafeAppInputs = {
@@ -34,7 +35,7 @@ export const SafeApp: FunctionComponent = () => {
         handleSubmit,
         reset,
         formState: { errors },
-    } = useForm<SafeAppInputs>();
+    } = useForm<SafeAppInputs>({ mode: 'onChange' });
 
     const resetApp = () => {
         reset();
@@ -123,30 +124,35 @@ export const SafeApp: FunctionComponent = () => {
                         </Tab.Group>
 
                         {account?.type !== 'housestorages' && (
-                            <Card>
+                            <Card
+                                className={classnames({
+                                    'opacity-50': !!watch('markedMoney'),
+                                })}
+                            >
                                 <div className="flex justify-between mb-4">
                                     <span className="text-white font-semibold">Argent</span>
                                     <span className="text-sm text-green-500/70">
                                         {account?.money.toLocaleString('en-US', FORMAT_CURRENCY)}
                                     </span>
                                 </div>
-                                <input
+                                <Input
+                                    type="number"
                                     {...register('money', {
                                         min: 1,
                                         max: action === 0 ? account?.money : player.money.money,
                                     })}
-                                    type="number"
-                                    className="bg-white/5 ring-1 ring-inset ring-white/10 w-full rounded-md py-1.5 px-2 text-gray-100 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-500/20"
-                                    placeholder="42"
+                                    placeholder="1000"
                                     disabled={!!watch('markedMoney')}
+                                    error={errors.money}
                                 />
-                                {errors.money && (
-                                    <span className="text-red-400 text-sm">{inputErrorMessage(errors.money.type)}</span>
-                                )}
                             </Card>
                         )}
 
-                        <Card>
+                        <Card
+                            className={classnames({
+                                'opacity-50': !!watch('money'),
+                            })}
+                        >
                             <div className="flex justify-between mb-4">
                                 <span className="text-white font-semibold">Argent marqué</span>
                                 <span className="text-sm text-red-400/70">
@@ -156,14 +162,13 @@ export const SafeApp: FunctionComponent = () => {
                                     )}
                                 </span>
                             </div>
-                            <input
+                            <Input
+                                type="number"
                                 {...register('markedMoney', {
                                     min: 1,
                                     max: action === 0 ? account?.marked_money : player.money.marked_money,
                                 })}
-                                type="number"
-                                className="bg-white/5 ring-1 ring-inset ring-white/10 w-full rounded-md py-1.5 px-2 text-gray-100 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-500/20"
-                                placeholder="42"
+                                placeholder="1000"
                                 disabled={!!watch('money')}
                             />
                             {errors.markedMoney && (

@@ -10,6 +10,7 @@ import { NuiEvent } from '../../../../shared/event/nui';
 import { fetchNui } from '../../../fetch';
 import { inputErrorMessage } from '../utils/format';
 import { Card } from './Card';
+import { Input } from './Input';
 
 type TransferActionInputs = {
     account: string;
@@ -40,7 +41,7 @@ export const TransferActionForm: FunctionComponent<TransferActionFormProps> = ({
         handleSubmit,
         reset,
         formState: { errors },
-    } = useForm<TransferActionInputs>({ mode: 'onBlur' });
+    } = useForm<TransferActionInputs>({ mode: 'onChange' });
 
     const submitForm: SubmitHandler<TransferActionInputs> = async data => {
         if (!selected) return;
@@ -65,7 +66,7 @@ export const TransferActionForm: FunctionComponent<TransferActionFormProps> = ({
 
                 <div className="relative rounded-md shadow-sm">
                     <Combobox value={selected} onChange={setSelected}>
-                        <div className="relative w-full cursor-default overflow-hidden rounded-md ring-1 ring-inset ring-gray-400/50 text-left focus:outline-none">
+                        <div className="relative w-full cursor-default overflow-hidden rounded-md ring-1 ring-inset ring-gray-500/10 text-left focus:outline-none">
                             <Combobox.Input
                                 className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 bg-white/5 text-gray-100 focus:ring-0"
                                 displayValue={(contact: BankContact) => contact.label}
@@ -102,7 +103,7 @@ export const TransferActionForm: FunctionComponent<TransferActionFormProps> = ({
                                             key={contact.id}
                                             className={({ active }) =>
                                                 classnames(`relative cursor-pointer select-none py-2 pl-10 pr-4`, {
-                                                    'bg-teal-600 text-white': active,
+                                                    'bg-teal-600/50 text-white': active,
                                                     'text-gray-100': !active,
                                                 })
                                             }
@@ -124,7 +125,7 @@ export const TransferActionForm: FunctionComponent<TransferActionFormProps> = ({
                                                                 `absolute inset-y-0 left-0 flex items-center pl-3`,
                                                                 {
                                                                     'text-white': active,
-                                                                    'text-teal-600': !active,
+                                                                    'text-teal-600/50': !active,
                                                                 }
                                                             )}
                                                         >
@@ -144,32 +145,25 @@ export const TransferActionForm: FunctionComponent<TransferActionFormProps> = ({
                     )}
                 </div>
 
-                <div className="relative rounded-md shadow-sm">
-                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                        <span className="text-white sm:text-sm">$</span>
-                    </div>
-                    <input
-                        {...register('amount', {
-                            min: 1,
-                            max: account.money,
-                            required: true,
-                        })}
-                        type="number"
-                        className="block w-full rounded-md border-0 py-1.5 pl-7 pr-12 bg-white/5 text-white ring-1 ring-inset ring-gray-400/50 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-500/50 sm:text-sm sm:leading-6"
-                        placeholder="1000"
-                    />
-                </div>
-                {errors.amount && <span className="text-red-400 text-sm">{inputErrorMessage(errors.amount.type)}</span>}
-
-                <input
+                <Input
+                    type="number"
+                    prefix="$"
+                    {...register('amount', {
+                        min: 1,
+                        max: account.money,
+                        required: true,
+                    })}
+                    placeholder="1000"
+                    error={errors.amount}
+                />
+                <Input
+                    type="text"
                     {...register('reason', {
                         maxLength: 90,
                     })}
-                    type="text"
-                    className="block w-full rounded-md border-0 py-1.5 px-3 bg-white/5 text-white ring-1 ring-inset ring-gray-400/50 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-500/50 sm:text-sm sm:leading-6"
                     placeholder="Libellé du transfert (optionel)"
+                    error={errors.reason}
                 />
-                {errors.reason && <span className="text-red-400 text-sm">{inputErrorMessage(errors.reason.type)}</span>}
 
                 <button className="border-2 border-green-500/50 w-full p-2 rounded-md">Transférer</button>
             </form>

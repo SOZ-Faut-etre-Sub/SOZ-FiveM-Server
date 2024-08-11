@@ -7,8 +7,8 @@ import { BankAccount, BankMoneyType } from '../../../../shared/bank';
 import { NuiEvent } from '../../../../shared/event/nui';
 import { fetchNui } from '../../../fetch';
 import { usePlayer } from '../../../hook/data';
-import { inputErrorMessage } from '../utils/format';
 import { Card } from './Card';
+import { Input } from './Input';
 
 type QuickActionInputs = {
     amount: number;
@@ -33,7 +33,7 @@ export const QuickActionForm: FunctionComponent<QuickActionFormProps> = ({ accou
         handleSubmit,
         reset,
         formState: { errors },
-    } = useForm<QuickActionInputs>();
+    } = useForm<QuickActionInputs>({ mode: 'onChange' });
 
     const submitForm: SubmitHandler<QuickActionInputs> = async data => {
         await fetchNui(NuiEvent.BankSafeTransferAction, {
@@ -58,22 +58,17 @@ export const QuickActionForm: FunctionComponent<QuickActionFormProps> = ({ accou
             </Tab.Group>
 
             <form onSubmit={handleSubmit(submitForm)}>
-                <div className="relative rounded-md shadow-sm">
-                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                        <span className="text-white sm:text-sm">$</span>
-                    </div>
-                    <input
-                        {...register('amount', {
-                            min: 1,
-                            max: quickAction === 0 ? account[moneyType] : player.money[moneyType],
-                            required: true,
-                        })}
-                        type="number"
-                        className="block w-full rounded-md border-0 py-1.5 pl-7 pr-12 bg-white/5 text-white ring-1 ring-inset ring-gray-400/50 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-500/50 sm:text-sm sm:leading-6"
-                        placeholder="1000"
-                    />
-                </div>
-                {errors.amount && <span className="text-red-400 text-sm">{inputErrorMessage(errors.amount.type)}</span>}
+                <Input
+                    type="number"
+                    prefix="$"
+                    {...register('amount', {
+                        min: 1,
+                        max: quickAction === 0 ? account[moneyType] : player.money[moneyType],
+                        required: true,
+                    })}
+                    placeholder="1000"
+                    error={errors.amount}
+                />
 
                 <button className="border-2 mt-3 border-green-500/50 w-full p-2 rounded-md">
                     {quickAction === 0 ? 'Retirer' : 'Déposer'}

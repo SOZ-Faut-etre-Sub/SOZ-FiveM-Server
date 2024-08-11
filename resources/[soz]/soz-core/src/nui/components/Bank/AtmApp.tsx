@@ -12,8 +12,8 @@ import { AppContent } from './component/AppContent';
 import { ApplicationContainer } from './component/Application';
 import { Card } from './component/Card';
 import { Header } from './component/Header';
+import { Input } from './component/Input';
 import { MenuLink } from './component/MenuLink';
-import { inputErrorMessage } from './utils/format';
 
 type AtmAppInputs = {
     withdraw: number;
@@ -28,7 +28,7 @@ export const AtmApp: FunctionComponent = () => {
         handleSubmit,
         reset,
         formState: { errors },
-    } = useForm<AtmAppInputs>();
+    } = useForm<AtmAppInputs>({ mode: 'onChange' });
 
     const resetApp = () => {
         reset();
@@ -97,28 +97,17 @@ export const AtmApp: FunctionComponent = () => {
                             <Card className="flex flex-col justify-between h-full">
                                 <h2 className="uppercase text-sm font-light text-gray-300">Retirer de l'argent</h2>
 
-                                <div>
-                                    <div className="relative rounded-md shadow-sm">
-                                        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                            <span className="text-white sm:text-sm">$</span>
-                                        </div>
-                                        <input
-                                            {...register('withdraw', {
-                                                min: 1,
-                                                max: account?.atm?.config?.maxMoney,
-                                                required: true,
-                                            })}
-                                            type="number"
-                                            className="block w-full rounded-md border-0 py-1.5 pl-7 pr-12 bg-white/5 text-white ring-1 ring-inset ring-gray-400/50 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-500/50 sm:text-sm sm:leading-6"
-                                            placeholder="1000"
-                                        />
-                                    </div>
-                                    {errors.withdraw && (
-                                        <span className="text-red-400 text-sm">
-                                            {inputErrorMessage(errors.withdraw.type)}
-                                        </span>
-                                    )}
-                                </div>
+                                <Input
+                                    type="number"
+                                    prefix="$"
+                                    {...register('withdraw', {
+                                        min: 1,
+                                        max: account?.atm?.config?.maxMoney,
+                                        required: true,
+                                    })}
+                                    placeholder="1000"
+                                    error={errors.withdraw}
+                                />
 
                                 <button className="border-2 border-green-500/50 w-full p-2 rounded-md">Retirer</button>
                             </Card>

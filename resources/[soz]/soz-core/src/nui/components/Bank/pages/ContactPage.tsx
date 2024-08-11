@@ -8,9 +8,9 @@ import { FaPlus, FaTrash } from 'react-icons/fa';
 import { BankAccount, BankContact } from '../../../../shared/bank';
 import { NuiEvent } from '../../../../shared/event/nui';
 import { fetchNui } from '../../../fetch';
-import { InputAlertIcon } from '../component/AlertIcon';
 import { Card } from '../component/Card';
 import { Header } from '../component/Header';
+import { Input } from '../component/Input';
 import { QuickActionForm } from '../component/QuickActionForm';
 import { TextWithCopy } from '../component/TextWithCopy';
 import { moneyFormat } from '../utils/format';
@@ -40,6 +40,7 @@ export const ContactPage: FunctionComponent<HistoryProps> = ({ account, contacts
 
     function closeModal() {
         setIsOpen(false);
+        reset();
     }
 
     const {
@@ -47,7 +48,7 @@ export const ContactPage: FunctionComponent<HistoryProps> = ({ account, contacts
         handleSubmit,
         reset,
         formState: { errors },
-    } = useForm<AddContactFormInputs>();
+    } = useForm<AddContactFormInputs>({ mode: 'onChange' });
 
     const submitForm: SubmitHandler<AddContactFormInputs> = async data => {
         await fetchNui(NuiEvent.BankContactAdd, {
@@ -55,7 +56,6 @@ export const ContactPage: FunctionComponent<HistoryProps> = ({ account, contacts
             iban: data.accountid,
         });
 
-        reset();
         closeModal();
     };
 
@@ -142,15 +142,16 @@ export const ContactPage: FunctionComponent<HistoryProps> = ({ account, contacts
                                                 >
                                                     Nom
                                                 </label>
-                                                <div className="relative">
-                                                    <input
-                                                        {...register('label', { minLength: 2, required: true })}
-                                                        type="text"
-                                                        className="block w-full rounded-md border-0 pl-2 py-1.5 bg-white/5 text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300/5 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-green-600/50 sm:text-sm sm:leading-6"
-                                                        placeholder="Mon compte"
-                                                    />
-                                                    {errors.label && <InputAlertIcon />}
-                                                </div>
+                                                <Input
+                                                    type="text"
+                                                    {...register('label', {
+                                                        minLength: 2,
+                                                        maxLength: 50,
+                                                        required: true,
+                                                    })}
+                                                    placeholder="Mon compte"
+                                                    error={errors.label}
+                                                />
                                             </div>
 
                                             <div>
@@ -160,15 +161,16 @@ export const ContactPage: FunctionComponent<HistoryProps> = ({ account, contacts
                                                 >
                                                     IBAN
                                                 </label>
-                                                <div className="relative">
-                                                    <input
-                                                        {...register('accountid', { minLength: 2, required: true })}
-                                                        type="text"
-                                                        className="block w-full rounded-md border-0 pl-2 py-1.5 bg-white/5 text-gray-200 shadow-sm ring-1 ring-inset ring-gray-300/5 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-green-600/50 sm:text-sm sm:leading-6"
-                                                        placeholder="XXXZXXXXTXXX"
-                                                    />
-                                                    {errors.accountid && <InputAlertIcon />}
-                                                </div>
+                                                <Input
+                                                    type="text"
+                                                    {...register('accountid', {
+                                                        minLength: 2,
+                                                        maxLength: 50,
+                                                        required: true,
+                                                    })}
+                                                    placeholder="XXXZXXXXTXXX"
+                                                    error={errors.accountid}
+                                                />
                                             </div>
                                         </div>
 
