@@ -176,6 +176,7 @@ model invoices {
   refused       Boolean  @default(false)
   created_at    DateTime @default(now()) @db.Timestamp(0)
   updated_at    DateTime @default(now()) @db.Timestamp(0)
+  deleted       Boolean  @default(false)
 
   @@index([citizenid], map: "citizenid")
   @@index([emitter], map: "emitter")

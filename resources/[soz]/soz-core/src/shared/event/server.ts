@@ -593,6 +593,13 @@ export enum ServerEvent {
     GANG_CYBER_CRYPTO_DESTROY = 'soz-core:server:gang:cyber:destroy',
     GANG_CYBER_CRYPTO_ACTIVATE = 'soz-core:server:gang:cyber:activate',
     GANG_CYBER_CRYPTO_HARVEST = 'soz-core:server:gang:cyber:harvest',
+    GANG_CYBER_CRYPTO_DEPOSIT = 'soz-core:server:gang:cyber:crypto-deposit',
+    GANG_CYBER_CRYPTO_WITHDRAW = 'soz-core:server:gang:cyber:crypto-withdraw',
+    GANG_CYBER_CRYPTO_WASH = 'soz-core:server:gang:cyber:crypto-wash',
+    GANG_CYBER_BLACKOUT = 'soz-core:server:gang:cyber:blackout',
+    GANG_CYBER_DB_SEARCH = 'soz-core:server:gang:cyber:db-search',
+    GANG_CYBER_DB_SEARCH_DELETE = 'soz-core:server:gang:cyber:db-search-delete',
+    GANG_CYBER_DB_ERASE = 'soz-core:server:gang:cyber:db-erase',
 
     DOOR_ADD_UPDATE = 'soz-core:server:door:add-update',
     DOOR_DELETE = 'soz-core:server:door:delete',

@@ -244,6 +244,18 @@ export enum PlayerLicenceType {
     Rescuer = 'rescuer',
 }
 
+export const PlayerLicencePointType: Record<PlayerLicenceType, boolean> = {
+    [PlayerLicenceType.Car]: true,
+    [PlayerLicenceType.Truck]: true,
+    [PlayerLicenceType.Moto]: true,
+    [PlayerLicenceType.Boat]: true,
+    [PlayerLicenceType.Heli]: true,
+    [PlayerLicenceType.Weapon]: false,
+    [PlayerLicenceType.Fishing]: false,
+    [PlayerLicenceType.Hunting]: false,
+    [PlayerLicenceType.Rescuer]: false,
+};
+
 export const PlayerLicenceLabels = {
     [PlayerLicenceType.Car]: 'Permis voiture',
     [PlayerLicenceType.Truck]: 'Permis poids lourd',

@@ -507,6 +507,15 @@ export enum NuiEvent {
     BusinessSmugglingElectronicResalerPosition = 'soz-core:client:business:smuggling-electronic-resaler-position',
     BusinessSmugglingGoldResalerPosition = 'soz-core:client:business:smuggling-mine-resaler-position',
 
+    BusinessCyberCryptoDeposit = 'soz-core:client:business:cyber:crypto-deposit',
+    BusinessCyberCryptoWithDraw = 'soz-core:client:business:cyber:crypto-withdraw',
+    BusinessCyberCryptoWash = 'soz-core:client:business:cyber:crypto-wash',
+    BusinessCyberDBSearch = 'soz-core:client:business:cyber:db-search',
+    BusinessCyberDBSearchDisplay = 'soz-core:client:business:cyber:db-search-display',
+    BusinessCyberDBSearchDelete = 'soz-core:client:business:cyber:db-search-delete',
+    BusinessCyberDBRecordErase = 'soz-core:client:business:cyber:db-record-erase',
+    BusinessCyberBlackOut = 'soz-core:client:business:cyber:blackout',
+
     AdminDoorSetState = 'soz-core:client:door:set-state',
     AdminDoorAddSub = 'soz-core:client:door:add-subdoor',
     AdminDoorDelete = 'soz-core:client:door:delete',

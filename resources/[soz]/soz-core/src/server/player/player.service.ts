@@ -364,4 +364,16 @@ export class PlayerService {
 
         return this.namesByAccountId[accountId];
     }
+
+    public async findCitizenIdFromNames(firstname: string, lastname: string) {
+        const playerInfo = await this.prismaService.$queryRaw<
+            any[]
+        >`SELECT citizenId FROM player WHERE JSON_EXTRACT(charinfo, "$.firstname") = ${firstname} AND JSON_EXTRACT(charinfo, "$.lastname") = ${lastname}`;
+
+        if (playerInfo.length == 0) {
+            return null;
+        }
+
+        return playerInfo[0].citizenId;
+    }
 }

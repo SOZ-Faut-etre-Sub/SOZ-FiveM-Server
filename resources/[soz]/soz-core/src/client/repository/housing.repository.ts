@@ -50,4 +50,16 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
 
         return null;
     }
+
+    public findApartementFromIdentifier(identifier: string) {
+        const properties = this.get();
+        for (const property of properties) {
+            const appart = property.apartments.find(ap => ap.identifier == identifier);
+            if (appart) {
+                return appart;
+            }
+        }
+
+        return null;
+    }
 }
