@@ -1,4 +1,6 @@
 import { On, Once } from '@public/core/decorators/event';
+import { PollutionLevel } from '@public/shared/pollution';
+import { getRandomInt, getRandomKeyWeighted } from '@public/shared/random';
 import axios from 'axios';
 import { addMinutes, addSeconds, differenceInSeconds, format } from 'date-fns';
 
@@ -17,6 +19,7 @@ import {
     Forecast,
     ForecastWithTemperature,
     IRLDayDurationInMinutes,
+    TemperatureRange,
     Time,
     TimeSynchro,
     Weather,
@@ -24,9 +27,10 @@ import {
 import { Monitor } from '../monitor/monitor';
 import { Pollution } from '../pollution';
 import { Store } from '../store/store';
-import { Halloween, SpringAutumn, Winter, WMOWeatherMapping } from './forecast';
+import { Halloween, Polluted, Summer, Winter, WMOWeatherMapping } from './forecast';
+import { DaySummerTemperature, ForecastAdderTemperatures, NightSummerTemperature } from './temperature';
 
-const MAX_FORECASTS = 5;
+const MAX_FORECASTS = 6;
 const UPDATE_TIME_INTERVAL = 5;
 
 @Provider()
@@ -46,13 +50,15 @@ export class WeatherProvider {
     private shouldUpdateWeather = true;
     private pollutionManagerReady = false;
 
+    private weatherSyncWithLA = false;
+
     private currentTime: Time = { hour: 2, minute: 0, second: 0 };
     // See forecast.ts for the list of available forecasts
-    private forecast: Forecast = isFeatureEnabled(Feature.Halloween) ? Halloween : SpringAutumn;
+    private forecast: Forecast = isFeatureEnabled(Feature.Halloween) ? Halloween : Summer;
     // See temperature.ts for the list of available temperature ranges,
     // please ensure that the day and night temperature ranges are using the same season
-    //private dayTemperatureRange: TemperatureRange = DaySpringTemperature;
-    //private nightTemperatureRange: TemperatureRange = NightSpringTemperature;
+    private dayTemperatureRange: TemperatureRange = DaySummerTemperature;
+    private nightTemperatureRange: TemperatureRange = NightSummerTemperature;
 
     private defaultWeather: Weather = isFeatureEnabled(Feature.Halloween) ? 'CLOUDS' : 'OVERCAST';
 
@@ -78,6 +84,21 @@ export class WeatherProvider {
         }
 
         this.syncTime();
+
+        if (!this.weatherSyncWithLA) {
+            this.incomingForecasts = [
+                {
+                    weather: this.defaultWeather,
+                    duration: 5000,
+                    temperature: this.getTemperature(this.defaultWeather, this.currentTime),
+                },
+                {
+                    weather: this.defaultWeather,
+                    duration: 5000,
+                    temperature: this.getTemperature(this.defaultWeather, this.currentTime),
+                },
+            ];
+        }
     }
 
     private syncTime() {
@@ -122,37 +143,54 @@ export class WeatherProvider {
             return;
         }
 
-        const localDate = addSeconds(Date.now(), this.timeWeatherDelta);
-        localDate.setHours(this.currentTime.hour);
-        localDate.setMinutes(this.currentTime.minute);
-        localDate.setSeconds(this.currentTime.second);
-        const endDate = addMinutes(localDate, 60 * MAX_FORECASTS);
+        if (this.weatherSyncWithLA) {
+            const localDate = addSeconds(Date.now(), this.timeWeatherDelta);
+            localDate.setHours(this.currentTime.hour);
+            localDate.setMinutes(this.currentTime.minute);
+            localDate.setSeconds(this.currentTime.second);
+            const endDate = addMinutes(localDate, 60 * MAX_FORECASTS);
 
-        const url =
-            `https://api.open-meteo.com/v1/forecast?` +
-            `latitude=34.05&longitude=-118.24&hourly=weather_code,apparent_temperature&timezone=auto&` +
-            `start_hour=${this.formatDate(localDate)}&end_hour=${this.formatDate(endDate)}`;
+            const url =
+                `https://api.open-meteo.com/v1/forecast?` +
+                `latitude=34.05&longitude=-118.24&hourly=weather_code,apparent_temperature&timezone=auto&` +
+                `start_hour=${this.formatDate(localDate)}&end_hour=${this.formatDate(endDate)}`;
 
-        try {
-            const res = await axios.get(url);
+            try {
+                const res = await axios.get(url);
 
-            this.manageForecasts(res.data.hourly);
-            const currentForecast = this.incomingForecasts[0];
+                this.manageForecasts(res.data.hourly);
+                const currentForecast = this.incomingForecasts[0];
 
-            this.store.dispatch.global.update({ weather: currentForecast.weather });
+                this.store.dispatch.global.update({ weather: currentForecast.weather });
+                this.monitor.traceEvent('weather_update', {
+                    weather: currentForecast.weather,
+                    duration: currentForecast.duration,
+                    weather_temperature: currentForecast.temperature,
+                });
+
+                TriggerClientEvent(ClientEvent.PHONE_APP_WEATHER_UPDATE_FORECASTS, -1);
+
+                const duration = currentForecast.duration;
+                await wait(duration);
+            } catch (e) {
+                this.logger.error(url, e);
+                await wait(60_000);
+            }
+        } else {
+            this.incomingForecasts.shift();
+            const weather = this.incomingForecasts[0];
+            this.store.dispatch.global.update({ weather: weather.weather });
             this.monitor.traceEvent('weather_update', {
-                weather: currentForecast.weather,
-                duration: currentForecast.duration,
-                weather_temperature: currentForecast.temperature,
+                weather: weather.weather,
+                duration: weather.duration,
+                weather_temperature: weather.temperature,
             });
+            this.prepareForecasts();
 
             TriggerClientEvent(ClientEvent.PHONE_APP_WEATHER_UPDATE_FORECASTS, -1);
 
-            const duration = currentForecast.duration;
+            const duration = weather.duration;
             await wait(duration);
-        } catch (e) {
-            this.logger.error(url, e);
-            await wait(60_000);
         }
     }
 
@@ -184,6 +222,14 @@ export class WeatherProvider {
     }
 
     public setWeather(weather: Weather): void {
+        this.incomingForecasts = [
+            {
+                weather,
+                temperature: this.getTemperature(weather, this.currentTime),
+                duration: Math.round((Math.random() * 5 + 10) * 60 * 1000),
+            },
+        ];
+        this.prepareForecasts();
         this.store.dispatch.global.update({ weather: weather });
 
         TriggerClientEvent(ClientEvent.PHONE_APP_WEATHER_UPDATE_FORECASTS, -1);
@@ -285,5 +331,78 @@ export class WeatherProvider {
             }
         }
         this.store.dispatch.global.update({ halloween: value });
+    }
+
+    private prepareForecasts() {
+        const initialWeather = this.incomingForecasts[0].weather;
+
+        while (this.incomingForecasts.length < MAX_FORECASTS) {
+            const futureTime = this.incomingForecasts.reduce((acc, forecast) => {
+                const incrementSeconds = forecast.duration / 1000;
+                addSecondstoTime(acc, incrementSeconds);
+                return acc;
+            }, this.currentTime);
+
+            const randomDuration = Math.round((Math.random() * 5 + 10) * 60 * 1000);
+            if (this.shouldUpdateWeather) {
+                const forecast = this.incomingForecasts[this.incomingForecasts.length - 1];
+                const nextWeather = this.getNextWeather(forecast.weather);
+                const futureTime = this.currentTime;
+
+                this.incomingForecasts.push({
+                    weather: nextWeather,
+                    temperature: this.getTemperature(nextWeather, futureTime),
+                    duration: randomDuration,
+                });
+            } else {
+                // As the app will show the next MAX_FORECASTS forecasts,
+                // we need to fill the array with the same forecast
+                this.incomingForecasts.push({
+                    weather: initialWeather,
+                    temperature: this.getTemperature(initialWeather, futureTime),
+                    duration: randomDuration,
+                });
+            }
+        }
+    }
+
+    private getNextWeather(currentWeather: Weather): Weather {
+        let currentForecast = this.forecast;
+        const pollutionLevel: PollutionLevel = this.pollution.getPollutionLevel();
+
+        if (pollutionLevel === PollutionLevel.High) {
+            currentForecast = Polluted;
+        } else if (pollutionLevel === PollutionLevel.Low) {
+            const multipliers: { [key in Weather]?: number } = { EXTRASUNNY: 1.0, SMOG: 0.5, FOGGY: 0.5, CLOUDS: 0.5 };
+            const any = 1;
+
+            for (const weather of Object.keys(currentForecast)) {
+                for (const nextWeather of Object.keys(currentForecast[weather])) {
+                    const multiplier = multipliers[nextWeather] || any;
+
+                    currentForecast[weather][nextWeather] = Math.round(
+                        multiplier * currentForecast[weather][nextWeather]
+                    );
+                }
+            }
+        }
+
+        let transitions = currentForecast[currentWeather];
+
+        if (!transitions) {
+            this.logger.error('no transitions for, bad weather ' + currentWeather);
+
+            transitions = {};
+        }
+        return getRandomKeyWeighted<Weather>(transitions, currentWeather) as Weather;
+    }
+
+    private getTemperature(weather: Weather, time: Time): number {
+        const { hour } = time;
+        const { min: baseMin, max: baseMax } =
+            hour < 6 || hour > 20 ? this.nightTemperatureRange : this.dayTemperatureRange;
+        const { min, max } = ForecastAdderTemperatures[weather];
+
+        return getRandomInt(baseMin + min, baseMax + max);
     }
 }
