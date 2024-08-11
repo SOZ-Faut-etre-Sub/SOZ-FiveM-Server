@@ -391,4 +391,6 @@ export enum ClientEvent {
     WORLD_EVENT_END = 'soz-core:client:world-event:end',
 
     DRONE_USE = 'soz-core:client:drone-use',
+    DRONE_ADD_REMOTE = 'soz-core:client:drone-add-remote',
+    DRONE_REMOVE_REMOTE = 'soz-core:client:drone-remove-remote',
 }

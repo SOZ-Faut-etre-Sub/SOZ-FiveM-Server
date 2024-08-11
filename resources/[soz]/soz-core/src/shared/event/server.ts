@@ -610,4 +610,6 @@ export enum ServerEvent {
     ADMIN_MAPPER_UPDATE_ZONE = 'soz-core:admin:mapper:update-zone',
 
     WORLD_EVENT_STOP = 'soz-core:server:world-event:stop',
+
+    DRONE_NEW = 'soz-core:server:drone-new',
 }

@@ -256,6 +256,8 @@ export enum RpcServerEvent {
 
     WORLD_EVENT_GET_INFO = 'soz-core:server:world-event:get-info',
     WORLD_EVENT_START = 'soz-core:server:world-event:start',
+
+    DRONE_GET = 'soz-core:server:drone-get',
 }
 
 export enum RpcClientEvent {
