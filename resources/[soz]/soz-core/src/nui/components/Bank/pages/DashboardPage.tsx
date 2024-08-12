@@ -4,6 +4,7 @@ import { FunctionComponent } from 'react';
 import { BankAccount, BankContact, BankStatement } from '../../../../shared/bank';
 import { NuiEvent } from '../../../../shared/event/nui';
 import { fetchNui } from '../../../fetch';
+import { Button } from '../component/Button';
 import { Card } from '../component/Card';
 import { Header } from '../component/Header';
 import { HistoryTable } from '../component/HistoryTable';
@@ -84,12 +85,7 @@ export const DashboardPage: FunctionComponent<DashboardProps> = ({
                                 Créez un compte offshore pour sécuriser vos actifs et bénéficier d'une fiscalité
                                 avantageuse.
                             </p>
-                            <button
-                                onClick={createOffshoreAccount}
-                                className="border-2 mt-3 border-green-500/50 w-full p-2 rounded-md"
-                            >
-                                Créer un compte
-                            </button>
+                            <Button onClick={createOffshoreAccount}>Créer un compte</Button>
                         </Card>
                     )}
                 </div>

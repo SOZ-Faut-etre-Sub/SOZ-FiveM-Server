@@ -9,6 +9,7 @@ import { BankAccount, BankContact } from '../../../../shared/bank';
 import { NuiEvent } from '../../../../shared/event/nui';
 import { fetchNui } from '../../../fetch';
 import { inputErrorMessage } from '../utils/format';
+import { Button } from './Button';
 import { Card } from './Card';
 import { Input } from './Input';
 
@@ -165,7 +166,7 @@ export const TransferActionForm: FunctionComponent<TransferActionFormProps> = ({
                     error={errors.reason}
                 />
 
-                <button className="border-2 border-green-500/50 w-full p-2 rounded-md">Transférer</button>
+                <Button>Transférer</Button>
             </form>
         </Card>
     );

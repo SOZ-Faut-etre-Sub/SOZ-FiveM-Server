@@ -36,7 +36,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
                         {
                             'pl-7': props.prefix,
                             'pl-2': !props.prefix,
-                            'pr-2 ring-gray-500/10 focus:ring-green-600/50': !props.error,
+                            'pr-2 ring-gray-500/10 focus:ring-teal-600/50': !props.error,
                             'pr-9 ring-red-500/10 focus:ring-red-600/50': props.error,
                         }
                     )}

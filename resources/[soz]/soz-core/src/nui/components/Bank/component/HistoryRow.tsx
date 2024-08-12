@@ -16,6 +16,7 @@ export const HistoryRow: FunctionComponent<HistoryRowProps> = ({ account, histor
     const Icon = isSource ? MinusIcon : PlusIcon;
     const title = isSource ? 'Paiement à' : 'Virement de';
     const target = isSource ? history.target_label : history.source_label;
+    const targetImage = (isSource ? history.target_accountid : history.source_accountid).replace('offshore_', '');
 
     return (
         <div className="flex items-center gap-4">
@@ -29,8 +30,15 @@ export const HistoryRow: FunctionComponent<HistoryRowProps> = ({ account, histor
                 {history.source_accountid === '' ? (
                     <span>Retrait éffectué depuis un ATM</span>
                 ) : (
-                    <span>
-                        {title} <strong className="font-semibold">{target}</strong>
+                    <span className="flex items-center gap-1.5">
+                        {title}
+                        <img
+                            className="w-5 h-5"
+                            src={`/public/images/society/${targetImage}.webp`}
+                            alt={target}
+                            onError={e => (e.currentTarget.style.display = 'none')}
+                        ></img>
+                        <strong className="font-semibold">{target}</strong>
                     </span>
                 )}
                 <span className="text-sm truncate">{history.reason}</span>

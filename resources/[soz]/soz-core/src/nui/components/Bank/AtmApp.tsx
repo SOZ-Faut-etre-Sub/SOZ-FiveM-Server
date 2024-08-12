@@ -10,6 +10,7 @@ import { fetchNui } from '../../fetch';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 import { AppContent } from './component/AppContent';
 import { ApplicationContainer } from './component/Application';
+import { Button } from './component/Button';
 import { Card } from './component/Card';
 import { Header } from './component/Header';
 import { Input } from './component/Input';
@@ -109,7 +110,7 @@ export const AtmApp: FunctionComponent = () => {
                                     error={errors.withdraw}
                                 />
 
-                                <button className="border-2 border-green-500/50 w-full p-2 rounded-md">Retirer</button>
+                                <Button>Retirer</Button>
                             </Card>
                         </form>
 

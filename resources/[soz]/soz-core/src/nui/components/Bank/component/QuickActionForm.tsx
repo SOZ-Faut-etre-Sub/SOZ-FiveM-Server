@@ -7,6 +7,7 @@ import { BankAccount, BankMoneyType } from '../../../../shared/bank';
 import { NuiEvent } from '../../../../shared/event/nui';
 import { fetchNui } from '../../../fetch';
 import { usePlayer } from '../../../hook/data';
+import { Button } from './Button';
 import { Card } from './Card';
 import { Input } from './Input';
 
@@ -70,9 +71,7 @@ export const QuickActionForm: FunctionComponent<QuickActionFormProps> = ({ accou
                     error={errors.amount}
                 />
 
-                <button className="border-2 mt-3 border-green-500/50 w-full p-2 rounded-md">
-                    {quickAction === 0 ? 'Retirer' : 'Déposer'}
-                </button>
+                <Button>{quickAction === 0 ? 'Retirer' : 'Déposer'}</Button>
             </form>
         </Card>
     );

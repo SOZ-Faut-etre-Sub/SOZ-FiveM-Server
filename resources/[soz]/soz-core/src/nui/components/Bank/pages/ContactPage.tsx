@@ -98,7 +98,7 @@ export const ContactPage: FunctionComponent<HistoryProps> = ({ account, contacts
                                 leaveTo="opacity-0 scale-95"
                             >
                                 <Dialog.Panel
-                                    className="w-full max-w-md transform overflow-hidden rounded-2xl bg-[#1c2128] p-6 text-left align-middle shadow-xl transition-all"
+                                    className="w-full max-w-md transform overflow-hidden rounded-2xl bg-[#0B302E] p-6 text-left align-middle shadow-xl transition-all"
                                     data-ignore-click-outside={true}
                                 >
                                     <Dialog.Title
@@ -175,7 +175,7 @@ export const ContactPage: FunctionComponent<HistoryProps> = ({ account, contacts
                                         </div>
 
                                         <div className="flex justify-end mt-4">
-                                            <button className="inline-flex justify-center rounded-md border border-transparent bg-green-100 px-2 py-1 text-sm font-medium text-green-900 hover:bg-green-200 focus:outline-none">
+                                            <button className="inline-flex justify-center rounded-md text-white px-2 py-1 text-sm font-medium bg-teal-400/10 hover:bg-teal-500/10 ring-1 ring-inset ring-teal-400/10 hover:ring-teal-500/10 focus:outline-none">
                                                 Ajouter
                                             </button>
                                         </div>
@@ -193,7 +193,7 @@ export const ContactPage: FunctionComponent<HistoryProps> = ({ account, contacts
                     <div className="flex justify-end">
                         <button
                             onClick={openModal}
-                            className="flex items-center gap-2 py-1 px-2 cursor-pointer rounded-lg border-2 border-green-500/20 hover:border-green-600/20"
+                            className="flex items-center gap-2 py-1 px-2 cursor-pointer bg-teal-400/10 hover:bg-teal-500/10 ring-1 ring-inset ring-teal-400/10 hover:ring-teal-500/10 rounded-md"
                         >
                             <FaPlus className="h-4 w-4" />
                             Ajouter

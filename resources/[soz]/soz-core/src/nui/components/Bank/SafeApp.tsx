@@ -11,6 +11,7 @@ import { usePlayer } from '../../hook/data';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 import { AppContent } from './component/AppContent';
 import { ApplicationContainer } from './component/Application';
+import { Button } from './component/Button';
 import { Card } from './component/Card';
 import { Input } from './component/Input';
 import { FORMAT_CURRENCY, inputErrorMessage } from './utils/format';
@@ -179,9 +180,7 @@ export const SafeApp: FunctionComponent = () => {
                         </Card>
                     </div>
 
-                    <button className="bg-green-500/40 hover:bg-green-500/35 font-semibold py-3 px-4 rounded-lg">
-                        {action === 0 ? 'Retirer' : 'Déposer'} l'argent
-                    </button>
+                    <Button>{action === 0 ? 'Retirer' : 'Déposer'} l'argent</Button>
                 </form>
             </Transition>
         </ApplicationContainer>

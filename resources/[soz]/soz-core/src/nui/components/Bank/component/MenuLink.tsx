@@ -18,9 +18,10 @@ export const MenuLink: FunctionComponent<MenuProp> = ({ to, onClick, icon, title
         <Link
             to={to}
             onClick={onClick}
-            className={classnames('flex gap-4 items-center py-3 px-4 rounded-lg', className, {
-                'bg-green-500/20 hover:bg-green-600/20': isCurrentPath,
-                'hover:bg-[#444c56]/20': !isCurrentPath,
+            className={classnames('relative flex gap-4 items-center py-3 px-4 rounded-lg', className, {
+                'text-teal-400 bg-white/5 before:absolute before:top-0 before:-left-2.5 before:h-full before:w-1 before:rounded-l-md before:bg-teal-800':
+                    isCurrentPath,
+                'hover:bg-white/10': !isCurrentPath,
             })}
         >
             {icon} {title}
