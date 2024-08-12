@@ -11,6 +11,7 @@ import { RootModel } from '.';
 export const phone = createModel<RootModel>()({
     state: {
         available: true,
+        darkweb: true,
         config: config.defaultSettings as IPhoneSettings,
         callModal: false,
         citizenID: null,
@@ -18,6 +19,9 @@ export const phone = createModel<RootModel>()({
     reducers: {
         SET_AVAILABILITY(state, payload: boolean) {
             return { ...state, available: payload };
+        },
+        SET_DARKWEB(state, payload: boolean) {
+            return { ...state, darkweb: payload };
         },
         SET_CONFIG(state, payload: IPhoneSettings) {
             return { ...state, config: payload };
@@ -32,6 +36,9 @@ export const phone = createModel<RootModel>()({
     effects: dispatch => ({
         async setAvailability(payload: boolean) {
             dispatch.phone.SET_AVAILABILITY(payload);
+        },
+        async setDarkweb(payload: boolean) {
+            dispatch.phone.SET_DARKWEB(payload);
         },
         async setConfig(payload: IPhoneSettings) {
             dispatch.phone.SET_CONFIG(payload);

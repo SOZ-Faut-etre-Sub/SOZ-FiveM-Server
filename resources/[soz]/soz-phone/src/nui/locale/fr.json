@@ -240,7 +240,8 @@
             "LOADING": "Récupération des rooms ...",
             "FEEDBACK": {
                 "CONVERSATION_CREATE_ONE_NUMBER_FAILED": "Impossible de créer la conversation",
-                "EDIT_PARTITIPANT_ROLE": "Impossible de modifier ce participant"
+                "EDIT_PARTITIPANT_ROLE": "Impossible de modifier ce participant",
+                "FETCH_CONVERSATION_FAILED": "Impossible de récupérer les threads"
             }
         },
         "RELATIVE_TIME": {

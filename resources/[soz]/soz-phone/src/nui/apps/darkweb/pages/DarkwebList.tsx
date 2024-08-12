@@ -150,7 +150,7 @@ export const DarkWebList = memo(() => {
                         className="border-[0.2vh] py-2 px-4 text-teal-500 border-teal-500 rounded-lg my-2 hover:bg-teal-900 cursor-pointer"
                         onClick={() => handleOpenCreationModal()}
                     >
-                        NEW THREAD
+                        NOUVEAU THREAD
                     </button>
                 </div>
 

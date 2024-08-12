@@ -185,7 +185,7 @@ export const DarkWebConversationSettingsModal = memo(
                     !isOpenAdminManagementNew && (
                         <div className="flex flex-col h-full w-full">
                             <div className="flex justify-center h-fit flex-wrap rounded-t-3xl w-full pt-2 pb-2 bg-black/40">
-                                <p className="text-2xl font-bold text-teal-500 uppercase">Settings</p>
+                                <p className="text-2xl font-bold text-teal-500 uppercase">Options</p>
                                 <span
                                     className="text-teal-500 absolute right-[1vh] rounded-2xl cursor-pointer hover:bg-teal-900"
                                     onClick={handleClose}
@@ -196,21 +196,21 @@ export const DarkWebConversationSettingsModal = memo(
                             <div className="flex h-full">
                                 <div className="flex flex-row  w-full py-4 px-3 top-0 h-fit justify-around">
                                     <SettingButton
-                                        title={'Edit'}
+                                        title={'Modifier'}
                                         icon={<PencilIcon width={'45px'} height={'45px'} />}
                                         onClick={() => {
                                             setIsEditConversationOpen(true);
                                         }}
                                     />
                                     <SettingButton
-                                        title={'Access'}
+                                        title={'Accès'}
                                         icon={<LockClosedIcon width={'45px'} height={'45px'} />}
                                         onClick={() => {
                                             setIsOpenAdminManagement(true);
                                         }}
                                     />
                                     <SettingButton
-                                        title={'Delete'}
+                                        title={'Supprimer'}
                                         icon={<ExclamationIcon width={'45px'} height={'45px'} />}
                                         type="DELETE"
                                         onClick={() => {
@@ -252,7 +252,7 @@ export const DarkWebConversationSettingsModal = memo(
                                                 onSubjectInputValue(event);
                                             }}
                                             value={subjectInputValue}
-                                            placeholder="SUBJECT"
+                                            placeholder="Titre"
                                         />
                                         <input
                                             className={`${
@@ -267,7 +267,7 @@ export const DarkWebConversationSettingsModal = memo(
                                             onChange={(event: ChangeEvent<HTMLInputElement>) => {
                                                 onPasswordChange(event);
                                             }}
-                                            placeholder="PASSWORD"
+                                            placeholder="Mot de passe"
                                             value={passwordInputValue}
                                         />
                                     </div>
@@ -417,7 +417,7 @@ export const DarkWebConversationSettingsModal = memo(
                             >
                                 <ChevronLeftIcon width={'2vh'} height={'2vh'} />
                             </span>
-                            <p className="text-2xl font-bold text-teal-500 uppercase">Delete</p>
+                            <p className="text-2xl font-bold text-teal-500 uppercase">Supprimer</p>
                             <span
                                 className="text-teal-500 absolute right-[1vh] rounded-2xl cursor-pointer hover:bg-teal-900"
                                 onClick={handleClose}
@@ -431,7 +431,7 @@ export const DarkWebConversationSettingsModal = memo(
                                     className="border-[0.2vh] py-2 px-4 text-red-500 border-red-500 rounded-lg my-2 hover:bg-red-900 cursor-pointer uppercase"
                                     onClick={() => handleDelete()}
                                 >
-                                    DELETE
+                                    SUPPRIMER
                                 </button>
                             </div>
                         </div>

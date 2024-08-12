@@ -6,25 +6,37 @@ import { TextareaField } from '@ui/old_components/Input';
 import React, { FunctionComponent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import useInterval from '../../../hooks/useInterval';
 import { UseDarkwebAPI } from '../hooks/useDarkwebApi';
 
 interface IProps {
     onAddImageClick(): void;
-    blocked: boolean;
+    blockTime: number;
     darkwebConversationId: number | undefined;
-    messageGroupName: string | undefined;
     autoFocus?: boolean;
 }
 
-const DarkWebInput: FunctionComponent<IProps> = ({ darkwebConversationId, onAddImageClick, autoFocus, blocked }) => {
+const DarkWebInput: FunctionComponent<IProps> = ({ darkwebConversationId, onAddImageClick, autoFocus, blockTime }) => {
     const [t] = useTranslation();
     const [message, setMessage] = useState('');
     const [emojiKeyboard, setEmojiKeyboard] = useState(false);
     const { sendMessage } = UseDarkwebAPI();
+    const [blocked, setBlocked] = useState(false);
+    const [localBlockTime, setLocalBlockTime] = useState(0);
+
+    useInterval(
+        () => {
+            setBlocked(Date.now() < blockTime || Date.now() < localBlockTime);
+        },
+        500,
+        [blockTime, localBlockTime]
+    );
 
     const handleSubmit = async () => {
         if (message.trim()) {
             setEmojiKeyboard(false);
+            setLocalBlockTime(Date.now() + 1_000);
+            setBlocked(true);
             await sendMessage({ conversationId: darkwebConversationId, message });
             setMessage('');
         }

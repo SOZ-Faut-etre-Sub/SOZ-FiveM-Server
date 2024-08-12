@@ -22,22 +22,24 @@ export const DarkWebConversationPasswordModal = memo(
 
         const handleConfirm = () => {
             if (!passwordInputValue && password !== '') {
-                setPasswordErrorMessage('Entrez un mdp');
+                setPasswordErrorMessage('Entrez un mot de passe');
             }
             if (password === passwordInputValue) {
                 onConfirm(true);
                 setPasswordInputValue('');
                 onClose();
             } else {
-                setPasswordErrorMessage('ERROR : MATCHING FAILURE');
+                setPasswordErrorMessage('ERREUR : Mot de passe incorrect');
                 setPasswordInputValue('');
             }
         };
 
         useEffect(() => {
-            setTimeout(() => {
-                setPasswordErrorMessage(undefined);
-            }, 4000);
+            if (passwordErrorMessage) {
+                setTimeout(() => {
+                    setPasswordErrorMessage(undefined);
+                }, 4000);
+            }
         }, [passwordErrorMessage]);
 
         useEffect(() => {
@@ -64,7 +66,7 @@ export const DarkWebConversationPasswordModal = memo(
                     } rounded-lg items-center flex flex-col justify-center text-center py-4 w-5/6`}
                 >
                     <div className="m-auto pt-1 pb-3 flex flex-col w-5/6">
-                        <h2 className="text-4xl font-black mb-8 uppercase">password</h2>
+                        <h2 className="text-4xl font-black mb-8 uppercase">Mot de Passe</h2>
 
                         <InputBase
                             className={`${
@@ -82,7 +84,7 @@ export const DarkWebConversationPasswordModal = memo(
                             value={passwordInputValue}
                         />
                     </div>
-                    <h1 className="text-red-500 text-3xl font-bold text-center mt-5 min-h-[3vh]">
+                    <h1 className="text-red-500 text-3xl font-bold text-center mt-5 min-h-[10vh]">
                         {passwordErrorMessage}
                     </h1>
 

@@ -11,11 +11,13 @@ import {
 } from '@typings/app/darkweb';
 import { ServerPromiseResp } from '@typings/common';
 import { fetchNui } from '@utils/fetchNui';
+import { buildRespObj } from '@utils/misc';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { store } from '../../../store';
+import { MockDarkwebConversations, MockDarkwebMessages } from '../utils/constants';
 
 type UseDarkwebAPIProps = {
     sendMessage: ({ conversationId, message }: PreDBDarkwebMessage) => void;
@@ -52,7 +54,11 @@ export const UseDarkwebAPI = (): UseDarkwebAPIProps => {
     );
 
     const getConversations = useCallback(() => {
-        fetchNui<ServerPromiseResp<DarkwebConversation[]>>(DarkwebEvents.FETCH_CONVERSATIONS, {}).then(resp => {
+        fetchNui<ServerPromiseResp<DarkwebConversation[]>>(
+            DarkwebEvents.FETCH_CONVERSATIONS,
+            {},
+            buildRespObj(MockDarkwebConversations, 'ok')
+        ).then(resp => {
             if (resp.status !== 'ok') {
                 return addAlert({
                     message: t('DARKWEB.FEEDBACK.FETCH_CONVERSATION_FAILED'),
@@ -66,9 +72,13 @@ export const UseDarkwebAPI = (): UseDarkwebAPIProps => {
 
     const getMessages = useCallback(
         (conversationId: number) => {
-            fetchNui<ServerPromiseResp<DarkwebMessage[]>>(DarkwebEvents.FETCH_MESSAGES, {
-                conversationId,
-            }).then(resp => {
+            fetchNui<ServerPromiseResp<DarkwebMessage[]>>(
+                DarkwebEvents.FETCH_MESSAGES,
+                {
+                    conversationId,
+                },
+                buildRespObj(MockDarkwebMessages, 'ok')
+            ).then(resp => {
                 if (resp.status !== 'ok') {
                     return addAlert({
                         message: t('DARKWEB.FEEDBACK.FETCH_MESSAGES_FAILED'),
@@ -135,7 +145,7 @@ export const UseDarkwebAPI = (): UseDarkwebAPIProps => {
                 });
             }
             if (resp.data.conversation) {
-                store.dispatch.appDarkweb.updateConversationInfos(resp.data.conversation[0]);
+                store.dispatch.appDarkweb.updateConversationInfos(resp.data.conversation);
             }
 
             navigate(-1);

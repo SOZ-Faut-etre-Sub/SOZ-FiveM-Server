@@ -138,8 +138,8 @@ export class _DarkwebDB {
         return id;
     }
 
-    async getDarkwebConversation(conversationId: number): Promise<any> {
-        return await exports.oxmysql.query_async(
+    async getDarkwebConversation(conversationId: number): Promise<DarkwebConversation> {
+        const conversations = await exports.oxmysql.query_async(
             `SELECT DISTINCT darkweb_conversations.id,
                              darkweb_conversations.user_identifier,
                              darkweb_conversations.label,
@@ -152,9 +152,10 @@ export class _DarkwebDB {
              WHERE darkweb_conversations.id = ?`,
             [conversationId]
         );
+        return conversations[0];
     }
 
-    async getDarkwebConversationParticipants(conversationId: number): Promise<any> {
+    async getDarkwebConversationParticipants(conversationId: number): Promise<DarkwebParticipant[]> {
         return await exports.oxmysql.query_async(
             `SELECT DISTINCT darkweb_participants.conversation_id,
                              darkweb_participants.user_identifier,

@@ -14,7 +14,8 @@ global.isPhoneOpen = false;
 global.isPhoneDrowned = false;
 global.isPhoneDisabled = false;
 global.isPlayerLoaded = false;
-global.isPlayerHasItem = false;
+global.isPlayerHasItem = true;
+global.isPlayerHasDongle = true;
 global.isBlackout = false;
 
 const exps = global.exports;
@@ -112,6 +113,7 @@ export const updateAvailability = async () => {
         (!global.isPhoneDrowned && !global.isPhoneDisabled && global.isPlayerHasItem && !global.isBlackout) ||
         !!state.isDead;
     sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, avail);
+    sendMessage('PHONE', PhoneEvents.SET_DARKWEB, global.isPlayerHasDongle);
 
     if (!avail) {
         if (global.isPhoneOpen) {
@@ -200,9 +202,11 @@ onNet('QBCore:Client:OnPlayerLoaded', async () => {
 onNet('QBCore:Player:SetPlayerData', async (playerData: PlayerData) => {
     if (typeof playerData.items === 'object') playerData.items = Object.values(playerData.items);
     global.isPlayerHasItem = !!playerData.items.find(item => item.name === 'phone');
+    global.isPlayerHasDongle = !!playerData.items.find(item => item.name === 'cyber_darkweb_module');
 
     updateAvailability();
     sendMessage('PHONE', EmergencyEvents.SET_EMERGENCY, playerData.metadata['isdead']);
+    sendMessage('PHONE', PhoneEvents.SET_DARKWEB, global.isPlayerHasDongle);
 });
 
 onNet('ems:client:onDeath', () => {

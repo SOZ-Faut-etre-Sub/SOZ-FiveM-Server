@@ -6,6 +6,7 @@ declare global {
             isPhoneDisabled: boolean;
             isPlayerLoaded: boolean;
             isPlayerHasItem: boolean;
+            isPlayerHasDongle: boolean;
             isBlackout: boolean;
         }
     }

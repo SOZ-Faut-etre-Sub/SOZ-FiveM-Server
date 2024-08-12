@@ -66,3 +66,8 @@ export const useCitizenID = () => {
     const state = useSelector((state: RootState) => state.phone);
     return state.citizenID;
 };
+
+export const useDarkweb = () => {
+    const state = useSelector((state: RootState) => state.phone);
+    return state.darkweb;
+};

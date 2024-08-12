@@ -2,11 +2,11 @@ import { Transition } from '@headlessui/react';
 import { useApps } from '@os/apps/hooks/useApps';
 import { AppContent } from '@ui/components/AppContent';
 import cn from 'classnames';
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import { useConfig } from '../../hooks/usePhone';
+import { useConfig, useDarkweb } from '../../hooks/usePhone';
 import { usePhoneSocietyNumber } from '../../hooks/useSimCard';
 import { useNotifications } from '../../os/notifications/hooks/useNotifications';
 import { Grid } from '../../ui/components/Grid';
@@ -16,14 +16,17 @@ import { AppIcon } from './components/AppIcon';
 export const HomeApp: FunctionComponent = () => {
     const { apps } = useApps();
     const config = useConfig();
+    const darkweb = useDarkweb();
     const [t] = useTranslation();
     const societyNumber = usePhoneSocietyNumber();
     const { countAppNotification } = useNotifications();
 
-    const filteredApps =
-        societyNumber === null
-            ? apps.filter(app => app.home !== true && app.id !== 'society-messages')
-            : apps.filter(app => app.home !== true);
+    const filteredApps = apps.filter(
+        app =>
+            app.home !== true &&
+            (societyNumber !== null || app.id !== 'society-messages') &&
+            (darkweb || app.id !== 'darkweb')
+    );
     const homeApps = apps.filter(app => app.home === true);
 
     return (

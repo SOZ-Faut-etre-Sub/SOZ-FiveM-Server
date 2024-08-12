@@ -1,4 +1,4 @@
-import { DarkwebEvents } from '../../../typings/app/darkweb';
+import { DarkwebConversationResult, DarkwebEvents } from '../../../typings/app/darkweb';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import PlayerService from '../players/player.service';
 import DarkwebDB, { _DarkwebDB } from './darkweb.db';
@@ -57,7 +57,7 @@ class _DarkWebService {
 
     async handleCreateDarkwebConversation(
         reqObj: PromiseRequest<{ label: string; password: string }>,
-        resp: PromiseEventResp<any>
+        resp: PromiseEventResp<DarkwebConversationResult>
     ) {
         try {
             const darkwebConversation = await createDarkwebConversation(
@@ -252,7 +252,6 @@ class _DarkWebService {
                 reqObj.data.phoneNumber,
                 false
             );
-            emitNet(DarkwebEvents.FETCH_CONVERSATIONS, reqObj.source);
         } catch (e) {
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
 

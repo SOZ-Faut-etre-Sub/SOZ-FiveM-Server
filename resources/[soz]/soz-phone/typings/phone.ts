@@ -12,6 +12,7 @@ export enum PhoneEvents {
     UNLOAD_CHARACTER = 'phone:unloadCharacter',
     SET_AVAILABILITY = 'phone:setAvailability',
     SET_VISIBILITY = 'phone:setVisibility',
+    SET_DARKWEB = 'phone:setDarkweb',
     ADD_SNACKBAR_ALERT = 'phone:setSnackarAlert',
     SET_NUMBER = 'phone:setNumber',
     SET_SOCIETY_NUMBER = 'phone:setSocietyNumber',

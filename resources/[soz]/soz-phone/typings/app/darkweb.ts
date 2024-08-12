@@ -17,9 +17,7 @@ export interface DarkwebConversation {
     label: string;
     createdAt: number;
     masked: boolean;
-    display?: string;
     updatedAt: number;
-    unread: number;
     phoneNumber: string;
 }
 

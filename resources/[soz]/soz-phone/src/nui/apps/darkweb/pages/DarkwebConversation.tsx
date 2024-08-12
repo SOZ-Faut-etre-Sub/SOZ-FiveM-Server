@@ -11,7 +11,6 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useDarkweb } from '../../../hooks/app/useDarkweb';
-import useInterval from '../../../hooks/useInterval';
 import { usePhoneNumber } from '../../../hooks/useSimCard';
 import { store } from '../../../store';
 import { DarkWebConversationSettingsModal } from '../components/DarkwebConversationSettingsModal';
@@ -22,7 +21,6 @@ import { DarkwebImageModal } from '../modal/DarkwebImageModal';
 
 export const DarkWebConversation = memo(() => {
     const { getDarkwebConversation, getDarkwebConversationMessages, getDarkwebConversationParticipants } = useDarkweb();
-    const [currentDate, setCurrentDate] = useState<number>(0);
     const { getMessages } = UseDarkwebAPI();
     const phoneNumber = usePhoneNumber();
     const { conversationId } = useParams<{ conversationId: string }>();
@@ -39,23 +37,19 @@ export const DarkWebConversation = memo(() => {
     const query = useQueryParams();
     const referralImage = query?.image || null;
 
-    const inputBlocks =
+    const blockTime =
         messages
             .filter(
                 message => message.phoneNumber === phoneNumber && message.conversation_id === parseInt(conversationId)
             )
             .sort((a, b) => a.createdAt - b.createdAt)
-            .reverse()[0]?.createdAt +
-            60_000 >
-        currentDate;
-
-    useInterval(() => {
-        setCurrentDate(Date.now());
-    }, 500),
-        [messages];
+            .reverse()[0]?.createdAt + 60_000;
 
     useEffect(() => {
         getMessages(conversation.id);
+    }, []);
+
+    useEffect(() => {
         const currentParticipant = participants?.find(participant => participant?.phoneNumber === phoneNumber);
         currentParticipant?.role && setUserRole(currentParticipant?.role);
     }, []);
@@ -116,7 +110,7 @@ export const DarkWebConversation = memo(() => {
                             onClick={() => navigate(-1)}
                             className="flex items-end text-base cursor-pointer text-teal-500"
                         >
-                            <ChevronLeftIcon className="h-5 w-5" /> <p>Back</p>
+                            <ChevronLeftIcon className="h-5 w-5" /> <p>Retour</p>
                         </div>
                     </AppTitle>
                     <AppContent className="pb-0 px-0">
@@ -172,10 +166,9 @@ export const DarkWebConversation = memo(() => {
                             conversationId={conversation.id}
                         />
                         <DarkWebInput
-                            messageGroupName={conversation?.display}
                             darkwebConversationId={conversation.id}
                             onAddImageClick={() => setImageModalOpen(true)}
-                            blocked={inputBlocks}
+                            blockTime={blockTime}
                         />
                     </AppContent>
                     <DarkWebConversationSettingsModal

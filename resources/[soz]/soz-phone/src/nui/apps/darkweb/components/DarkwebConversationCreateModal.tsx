@@ -17,17 +17,17 @@ export const DarkWebConversationCreateModal = memo(({ isOpen, onClose, onConfirm
 
     const handleConfirm = () => {
         if (!subject) {
-            setErrorMessage('ERROR : Missing subject');
+            setErrorMessage('ERREUR : Titre manquant');
             return;
         }
 
         if (!password) {
-            setErrorMessage('ERROR : Missing password');
+            setErrorMessage('ERREUR : Mot de passe manquant');
             return;
         }
 
         if (password && password.length < 4) {
-            setErrorMessage('ERROR : Password too short');
+            setErrorMessage('ERREUR : Mot de passe trop petit');
             return;
         }
 
@@ -36,9 +36,11 @@ export const DarkWebConversationCreateModal = memo(({ isOpen, onClose, onConfirm
     };
 
     useEffect(() => {
-        setTimeout(() => {
-            setErrorMessage(null);
-        }, 4000);
+        if (errorMessage) {
+            setTimeout(() => {
+                setErrorMessage(null);
+            }, 4000);
+        }
     }, [errorMessage]);
 
     useEffect(() => {
@@ -66,14 +68,14 @@ export const DarkWebConversationCreateModal = memo(({ isOpen, onClose, onConfirm
                 } rounded-lg items-center flex flex-col justify-center text-center py-4 w-5/6`}
             >
                 <div className="m-auto pt-1 pb-3 flex flex-col w-5/6">
-                    <h2 className="text-4xl font-black mb-8 uppercase">NEW THREAD</h2>
+                    <h2 className="text-4xl font-black mb-8 uppercase">NOUVEAU THREAD</h2>
                     <InputBase
                         className={`${
                             !errorMessage
                                 ? 'border-teal-500 rounded-lg text-teal-500 focus-within:border-teal-400 placeholder:text-teal-700'
                                 : 'border-red-500 rounded-lg text-red-500 focus-within:border-red-600 placeholder:text-red-700'
                         } mt-2 bg-transparent  text-[2xl] py-2 px-4 mb-2 outline-none border-[0.2vh]`}
-                        placeholder="Subject"
+                        placeholder="Titre"
                         onChange={(event: ChangeEvent<HTMLInputElement>) => {
                             setSubject(event.target.value);
                         }}
@@ -85,7 +87,7 @@ export const DarkWebConversationCreateModal = memo(({ isOpen, onClose, onConfirm
                                 ? 'border-teal-500 rounded-lg text-teal-500 focus-within:border-teal-400 placeholder:text-teal-700'
                                 : 'border-red-500 rounded-lg text-red-500 focus-within:border-red-600 placeholder:text-red-700'
                         } mt-2 bg-transparent  text-[2xl] py-2 px-4  outline-none border-[0.2vh]`}
-                        placeholder="Password"
+                        placeholder="Mot de passe"
                         type="password"
                         onChange={(event: ChangeEvent<HTMLInputElement>) => {
                             setPassword(event.target.value);
@@ -93,7 +95,7 @@ export const DarkWebConversationCreateModal = memo(({ isOpen, onClose, onConfirm
                         value={password}
                     />
                 </div>
-                <h1 className="text-red-500 text-3xl font-bold text-center mt-5 min-h-[3vh]">{errorMessage}</h1>
+                <h1 className="text-red-500 text-3xl font-bold text-center mt-5 min-h-[10vh]">{errorMessage}</h1>
 
                 <div className={'flex justify-between items-center mt-10 w-full px-20 '}>
                     <XCircleIcon

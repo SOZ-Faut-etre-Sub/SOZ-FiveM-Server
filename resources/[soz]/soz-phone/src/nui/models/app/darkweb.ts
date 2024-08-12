@@ -1,5 +1,11 @@
 import { createModel } from '@rematch/core';
-import { DarkwebConversation, DarkwebEvents, DarkwebMessage, DarkwebParticipant, DarkwebState } from '@typings/app/darkweb';
+import {
+    DarkwebConversation,
+    DarkwebEvents,
+    DarkwebMessage,
+    DarkwebParticipant,
+    DarkwebState,
+} from '@typings/app/darkweb';
 
 import { ServerPromiseResp } from '../../../../typings/common';
 import { MockDarkwebParticipants } from '../../apps/darkweb/utils/constants';
@@ -24,9 +30,12 @@ export const appDarkweb = createModel<RootModel>()({
         SET_PARTICIPANTS: (state, payload) => {
             return { ...state, participants: payload.data };
         },
-        ADD_CONVERSATION: (state, payload) => {
-            const conversations = [...payload, ...state.conversations];
-            return { ...state, conversations: conversations };
+        ADD_CONVERSATION: (state, payload: DarkwebConversation) => {
+            if (state.conversations.find(elem => elem.id == payload.id)) {
+                return { ...state };
+            }
+
+            return { ...state, conversations: [...state.conversations, payload] };
         },
         ADD_MESSAGE: (state, payload) => {
             const messages = [...state.messages, ...payload.message];
@@ -35,7 +44,7 @@ export const appDarkweb = createModel<RootModel>()({
         UPDATE_LAST_MESSAGE_SEND: (state, payload) => {
             return { ...state, lastMessageSend: payload };
         },
-        UPDATE_PARITCIPANTS: (state, payload) => {
+        UPDATE_PARTICIPANTS: (state, payload: DarkwebParticipant[]) => {
             return { ...state, participants: [...state.participants, ...payload] };
         },
         UPDATE_PARTICIPANT: (state, payload) => {
@@ -95,8 +104,8 @@ export const appDarkweb = createModel<RootModel>()({
         async loadDarkwebParticipants() {
             fetchNui<ServerPromiseResp<DarkwebParticipant[]>>(
                 DarkwebEvents.FETCH_PARTICIPANTS,
-                undefined,
-                buildRespObj(MockDarkwebParticipants)
+                {},
+                buildRespObj(MockDarkwebParticipants, 'ok')
             )
                 .then(participants => {
                     dispatch.appDarkweb.SET_PARTICIPANTS(participants || []);
@@ -114,7 +123,7 @@ export const appDarkweb = createModel<RootModel>()({
         },
 
         async addConversationParticipants(payload: DarkwebParticipant[]) {
-            dispatch.appDarkweb.UPDATE_PARITCIPANTS(payload);
+            dispatch.appDarkweb.UPDATE_PARTICIPANTS(payload);
         },
 
         async addMessageToConversation(payload: DarkwebMessage) {
@@ -137,14 +146,10 @@ export const appDarkweb = createModel<RootModel>()({
                     phoneNumber: payload.phoneNumber,
                 }
             )
-                .then(resp => {
-                    const payload = {
-                        conversationId: resp.data.conversationId,
-                        phoneNumber: resp.data.phoneNumber,
-                    };
+                .then(() => {
                     dispatch.appDarkweb.SET_CONVERSATION_AS_READ(payload);
                 })
-                .catch(() => console.error('Failed to set conversation as read'));
+                .catch(e => console.error('Failed to set conversation as read', e));
         },
 
         async handleMessageBroadcast(payload) {

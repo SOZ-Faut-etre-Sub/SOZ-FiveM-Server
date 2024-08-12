@@ -41,6 +41,9 @@ exps('setPhoneFocus', (bool: boolean) => {
 exps('setPhoneDisabled', (bool: boolean | number) => {
     verifyExportArgType('setPhoneVisible', bool, ['boolean', 'number']);
     const coercedType = !!bool;
+    if (global.isPhoneDisabled == coercedType) {
+        return;
+    }
     global.isPhoneDisabled = coercedType;
     updateAvailability();
 });

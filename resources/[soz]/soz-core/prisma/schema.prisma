@@ -973,14 +973,15 @@ model darkweb_conversations {
 }
 
 model darkweb_participants {
-    conversation_id        Int      @db.Int()
-    user_identifier        String   @db.VarChar(8)
-    masked                 Boolean  @default(false)
-    unread                 Boolean  @default(true)
-    notification           Boolean  @default(false)
-    joinedAt               DateTime @default(now()) @db.Timestamp(0)
-    role                   String   @db.VarChar(128)
-    @@id([user_identifier, conversation_id])
-    @@index([user_identifier], map: "user_identifier")
-    @@index([conversation_id], map: "conversation_id")
+  conversation_id        Int      @db.Int()
+  user_identifier        String   @db.VarChar(8)
+  masked                 Boolean  @default(false)
+  phoneNumber            String @db.VarChar(128)
+  unread                 Boolean  @default(true)
+  notification           Boolean  @default(false)
+  joinedAt               DateTime @default(now()) @db.Timestamp(0)
+  role                   String   @db.VarChar(128)
+  @@id([user_identifier, conversation_id])
+  @@index([user_identifier], map: "user_identifier")
+  @@index([conversation_id], map: "conversation_id")
 }

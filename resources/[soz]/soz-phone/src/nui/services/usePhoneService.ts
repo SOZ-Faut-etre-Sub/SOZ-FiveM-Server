@@ -41,6 +41,7 @@ export const usePhoneService = () => {
     useNuiEvent('PHONE', PhoneEvents.SET_AVAILABILITY, store.dispatch.phone.setAvailability);
     useNuiEvent('PHONE', PhoneEvents.SET_CONFIG, store.dispatch.phone.setConfig);
     useNuiEvent<string>('PHONE', PhoneEvents.OPEN_APP, handleOpenApp);
+    useNuiEvent('PHONE', PhoneEvents.SET_DARKWEB, store.dispatch.phone.setDarkweb);
 
     useEffect(() => {
         fetchNui(PhoneEvents.PHONE_LOADED, null, 'null');
