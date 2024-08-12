@@ -509,6 +509,7 @@ export enum NuiEvent {
 
     BusinessCyberCryptoDeposit = 'soz-core:client:business:cyber:crypto-deposit',
     BusinessCyberCryptoWithDraw = 'soz-core:client:business:cyber:crypto-withdraw',
+    BusinessCyberCryptoConsultWallet = 'soz-core:client:business:cyber:crypto-consult-wammet',
     BusinessCyberCryptoWash = 'soz-core:client:business:cyber:crypto-wash',
     BusinessCyberDBSearch = 'soz-core:client:business:cyber:db-search',
     BusinessCyberDBSearchDisplay = 'soz-core:client:business:cyber:db-search-display',

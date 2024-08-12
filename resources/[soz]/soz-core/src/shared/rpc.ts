@@ -253,6 +253,13 @@ export enum RpcServerEvent {
     GANG_SMUGGLING_HARVEST_LOCATION = 'soz-core:server:gang:smuggling:harvest:location',
     GANG_SMUGGLING_CONVOY_INIT = 'soz-core:server:gang:smuggling:convoy:init',
     GANG_SMUGGLING_GET_OPENED_RESALERS = 'soz-core:server:gang:smuggling:resalers:opened',
+    GANG_CYBER_CRYPTO_WASH = 'soz-core:server:gang:cyber:crypto-wash',
+    GANG_CYBER_CRYPTO_DEPOSIT = 'soz-core:server:gang:cyber:crypto-deposit',
+    GANG_CYBER_CRYPTO_WITHDRAW = 'soz-core:server:gang:cyber:crypto-withdraw',
+    GANG_CYBER_BLACKOUT = 'soz-core:server:gang:cyber:blackout',
+    GANG_CYBER_DB_SEARCH = 'soz-core:server:gang:cyber:db-search',
+    GANG_CYBER_DB_SEARCH_DELETE = 'soz-core:server:gang:cyber:db-search-delete',
+    GANG_CYBER_DB_ERASE = 'soz-core:server:gang:cyber:db-erase',
 
     WORLD_EVENT_GET_INFO = 'soz-core:server:world-event:get-info',
     WORLD_EVENT_START = 'soz-core:server:world-event:start',
