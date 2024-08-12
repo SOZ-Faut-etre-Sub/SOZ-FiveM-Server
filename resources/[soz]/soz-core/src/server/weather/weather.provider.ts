@@ -62,7 +62,7 @@ export class WeatherProvider {
 
     private defaultWeather: Weather = isFeatureEnabled(Feature.Halloween) ? 'CLOUDS' : 'OVERCAST';
 
-    private incomingForecasts: ForecastWithTemperature[] = [];
+    private incomingForecasts: ForecastWithTemperature[] = null;
 
     private stormDeadline = 0; // timestamp
     private timeWeatherDelta = 0;
@@ -84,21 +84,6 @@ export class WeatherProvider {
         }
 
         this.syncTime();
-
-        if (!this.weatherSyncWithLA) {
-            this.incomingForecasts = [
-                {
-                    weather: this.defaultWeather,
-                    duration: 5000,
-                    temperature: this.getTemperature(this.defaultWeather, this.currentTime),
-                },
-                {
-                    weather: this.defaultWeather,
-                    duration: 5000,
-                    temperature: this.getTemperature(this.defaultWeather, this.currentTime),
-                },
-            ];
-        }
     }
 
     private syncTime() {
@@ -177,6 +162,15 @@ export class WeatherProvider {
                 await wait(60_000);
             }
         } else {
+            if (!this.incomingForecasts) {
+                const weather = {
+                    weather: this.defaultWeather,
+                    duration: 5000,
+                    temperature: this.getTemperature(this.defaultWeather, this.currentTime),
+                };
+                this.incomingForecasts = [weather, weather];
+            }
+
             this.incomingForecasts.shift();
             const weather = this.incomingForecasts[0];
             this.store.dispatch.global.update({ weather: weather.weather });
