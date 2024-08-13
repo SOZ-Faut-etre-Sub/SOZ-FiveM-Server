@@ -24,6 +24,10 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
     public async findApartmentFromCollision(entity: number): Promise<Apartment | null> {
         const targetInterior = GetInteriorFromEntity(entity);
 
+        return await this.findApartmentFromInterior(targetInterior);
+    }
+
+    public async findApartmentFromInterior(targetInterior: number): Promise<Apartment | null> {
         if (!targetInterior) {
             return null;
         }

@@ -1,3 +1,4 @@
+import { HousingRepository } from '@public/client/repository/housing.repository';
 import { On, Once, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Tick } from '@public/core/decorators/tick';
@@ -198,6 +199,9 @@ export class UtilsNPCProvider {
     @Inject(OceanProvider)
     public oceanProvider: OceanProvider;
 
+    @Inject(HousingRepository)
+    private housingRepository: HousingRepository;
+
     @Once()
     public async onStart() {
         const relationshipTypesLike = ['CIVMALE', 'CIVFEMALE', 'COP', 'SECURITY_GUARD', 'PRIVATE_SECURITY'];
@@ -372,6 +376,12 @@ export class UtilsNPCProvider {
                 CancelEvent();
                 return;
             }
+        }
+
+        const apartment = await this.housingRepository.findApartmentFromInterior(GetInteriorFromCollision(x, y, z));
+        if (apartment) {
+            CancelEvent();
+            return;
         }
 
         Wait(500); // Give the entity some time to be created
