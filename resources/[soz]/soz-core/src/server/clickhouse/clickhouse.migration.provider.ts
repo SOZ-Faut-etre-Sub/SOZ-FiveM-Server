@@ -16,6 +16,10 @@ export class ClickhouseMigrationProvider {
 
     @Once(OnceStep.Start)
     async migrateDatabase() {
+        if (GetConvar('disable_clickhouse', 'false') == 'true') {
+            return;
+        }
+
         await this.createMigrationTable();
 
         const sortedMigrations = this.migrations.sort((a, b) => b.priority - a.priority);

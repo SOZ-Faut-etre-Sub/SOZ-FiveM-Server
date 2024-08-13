@@ -52,6 +52,7 @@ export class WeatherProvider {
 
     private weatherSyncWithLA = false;
 
+    private timeReady = false;
     private currentTime: Time = { hour: 2, minute: 0, second: 0 };
     // See forecast.ts for the list of available forecasts
     private forecast: Forecast = isFeatureEnabled(Feature.Halloween) ? Halloween : Summer;
@@ -98,10 +99,15 @@ export class WeatherProvider {
             minute: ig.getMinutes(),
             second: ig.getSeconds(),
         };
+        this.timeReady = true;
     }
 
     @Tick(TickInterval.EVERY_SECOND * UPDATE_TIME_INTERVAL, 'weather:time:advance', true)
     async advanceTime() {
+        if (!this.timeReady) {
+            return;
+        }
+
         addSecondstoTime(this.currentTime, (IRLDayDurationInMinutes / DayDurationInMinutes) * UPDATE_TIME_INTERVAL);
 
         if (isFeatureEnabled(Feature.Halloween)) {
@@ -331,17 +337,19 @@ export class WeatherProvider {
         const initialWeather = this.incomingForecasts[0].weather;
 
         while (this.incomingForecasts.length < MAX_FORECASTS) {
-            const futureTime = this.incomingForecasts.reduce((acc, forecast) => {
-                const incrementSeconds = forecast.duration / 1000;
-                addSecondstoTime(acc, incrementSeconds);
-                return acc;
-            }, this.currentTime);
+            const futureTime = this.incomingForecasts.reduce(
+                (acc, forecast) => {
+                    const incrementSeconds = forecast.duration / 1000;
+                    addSecondstoTime(acc, incrementSeconds);
+                    return acc;
+                },
+                { ...this.currentTime }
+            );
 
             const randomDuration = Math.round((Math.random() * 5 + 10) * 60 * 1000);
             if (this.shouldUpdateWeather) {
                 const forecast = this.incomingForecasts[this.incomingForecasts.length - 1];
                 const nextWeather = this.getNextWeather(forecast.weather);
-                const futureTime = this.currentTime;
 
                 this.incomingForecasts.push({
                     weather: nextWeather,

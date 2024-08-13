@@ -20,6 +20,10 @@ export class Monitor {
     private eventBuffer: MonitorTraceEvent[] = [];
 
     public async flush() {
+        if (GetConvar('disable_clickhouse', 'false') == 'true') {
+            return;
+        }
+
         const events = this.eventBuffer.splice(0, this.eventBuffer.length);
 
         if (events.length > 0) {

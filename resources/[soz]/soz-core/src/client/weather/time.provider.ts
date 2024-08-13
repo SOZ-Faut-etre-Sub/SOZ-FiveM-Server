@@ -1,6 +1,8 @@
+import { Inject } from '@public/core/decorators/injectable';
 import { Tick } from '@public/core/decorators/tick';
+import { Logger } from '@public/core/logger';
 
-import { Once, OnEvent } from '../../core/decorators/event';
+import { OnEvent } from '../../core/decorators/event';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent } from '../../shared/event';
 import {
@@ -17,6 +19,9 @@ const SPEED_ACCELERATION = 20;
 
 @Provider()
 export class TimeProvider {
+    @Inject(Logger)
+    private logger: Logger;
+
     private init = false;
     private baseSpeed = (DayDurationInMinutes * 60_000) / IRLDayDurationInMinutes;
     private coefSpeed = 1;
@@ -28,17 +33,6 @@ export class TimeProvider {
     async onTimeChange(time: Time) {
         this.serverTime = time;
         this.serverSyncTimestamp = Date.now();
-        if (!this.init) {
-            SetClockTime(time.hour, time.minute, time.second);
-            NetworkOverrideClockTime(time.hour, time.minute, time.second);
-            this.init = true;
-            return;
-        }
-    }
-
-    @Once()
-    onStart(): void {
-        SetMillisecondsPerGameMinute(this.baseSpeed);
     }
 
     @Tick(100)
@@ -61,25 +55,59 @@ export class TimeProvider {
             )
         );
 
+        if (!this.init) {
+            NetworkOverrideClockMillisecondsPerGameMinute(this.baseSpeed);
+            NetworkOverrideClockTime(estimatedServerTime.hour, estimatedServerTime.minute, estimatedServerTime.second);
+            this.init = true;
+            return;
+        }
+
         const curCorrected: Time = { ...cur };
         const estimatedCorrectedServerTime = { ...estimatedServerTime };
-        if (cur.hour == 0 && estimatedServerTime.hour == 23) {
-            curCorrected.hour = 24;
-        } else if (cur.hour == 23 && estimatedServerTime.hour == 0) {
-            estimatedCorrectedServerTime.hour = 24;
+        if (estimatedServerTime.hour - cur.hour > 12) {
+            curCorrected.hour = cur.hour + 24;
+        } else if (cur.hour - estimatedServerTime.hour > 12) {
+            estimatedCorrectedServerTime.hour = estimatedServerTime.hour + 24;
         }
 
         let timeDiff = convertTimetoSeconds(estimatedCorrectedServerTime) - convertTimetoSeconds(curCorrected);
 
-        if (-20 < timeDiff && timeDiff < 20) {
+        if (-30 < timeDiff && timeDiff < 30) {
             return;
         }
-        if (-300 < timeDiff && timeDiff < 30) {
-            SetClockTime(estimatedServerTime.hour, estimatedServerTime.minute, estimatedServerTime.second);
-            NetworkOverrideClockTime(estimatedServerTime.hour, estimatedServerTime.minute, estimatedServerTime.second);
+
+        if (-900 < timeDiff && timeDiff < 60) {
             SetMillisecondsPerGameMinute(this.baseSpeed);
+            NetworkOverrideClockTime(estimatedServerTime.hour, estimatedServerTime.minute, estimatedServerTime.second);
             this.coefSpeed = 1;
             return;
+        }
+
+        if (this.coefSpeed == 1) {
+            this.logger.info(
+                'Timediff ' +
+                    timeDiff +
+                    ' Server time ' +
+                    this.serverTime.hour +
+                    ':' +
+                    this.serverTime.minute +
+                    ':' +
+                    this.serverTime.second +
+                    ' delta (ms) ' +
+                    (Date.now() - this.serverSyncTimestamp) +
+                    ' Server estimated time ' +
+                    estimatedServerTime.hour +
+                    ':' +
+                    estimatedServerTime.minute +
+                    ':' +
+                    estimatedServerTime.second +
+                    ' Client time ' +
+                    cur.hour +
+                    ':' +
+                    cur.minute +
+                    ':' +
+                    cur.second
+            );
         }
 
         if (timeDiff < 0) {
@@ -98,8 +126,7 @@ export class TimeProvider {
             this.coefSpeed = Math.min(expected, this.coefSpeed);
         }
 
-        SetMillisecondsPerGameMinute(Math.round(this.baseSpeed / this.coefSpeed));
-        SetClockTime(cur.hour, cur.minute, cur.second);
+        NetworkOverrideClockMillisecondsPerGameMinute(Math.round(this.baseSpeed / this.coefSpeed));
         NetworkOverrideClockTime(cur.hour, cur.minute, cur.second);
     }
 }
