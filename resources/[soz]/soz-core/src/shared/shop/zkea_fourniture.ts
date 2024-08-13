@@ -19633,7 +19633,7 @@ export const ZkeaFourniture: ZkeaFournitureItemList = {
         collision: true,
     },
     v_res_mcupboard: {
-        type: 'Meubles & Rangements',
+        type: 'Meubles & Rangement',
         name: 'Armoire Louis truc',
         model: 'v_res_mcupboard',
         price: 720,

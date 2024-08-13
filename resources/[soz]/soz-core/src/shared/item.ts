@@ -197,8 +197,35 @@ export type MealMetadata = {
     label: string;
 };
 
+type ZkeaFournitureType =
+    | 'Arcade & Jeu'
+    | 'Audiovisuel & Hi-Fi'
+    | 'Chaises & Fauteuils'
+    | 'Cuisine'
+    | 'Décoration Murale'
+    | 'Décoration'
+    | 'Divers'
+    | 'Drapeau & Logo'
+    | 'Éclairages'
+    | 'Figurine & Statue'
+    | 'Informatique & Bureautique'
+    | 'Chambre à coucher'
+    | 'Sensualité'
+    | 'Meubles & Rangement'
+    | 'Nourriture & Boissons'
+    | 'Salle de bains'
+    | 'Fitness & Sport'
+    | 'Tables & Bureaux'
+    | 'Tapis'
+    | 'Nature & Végétal'
+    | 'Sacs & Valises'
+    | 'Vacances à la Plage'
+    | 'Boîtes & Caisses'
+    | 'Construction & Bâtiments'
+    | 'Bijoux & Accessoires';
+
 export type ZkeaFournitureMetadata = {
-    type: string;
+    type: ZkeaFournitureType;
     name: string;
     model: string;
 };
