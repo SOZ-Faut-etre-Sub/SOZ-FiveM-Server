@@ -1,3 +1,5 @@
+import { DroneProvider } from '@private/client/vehicle/drone.provider';
+
 import { Command } from '../../core/decorators/command';
 import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -37,6 +39,9 @@ export class PlayerAnimationProvider {
 
     @Inject(Logger)
     private logger: Logger;
+
+    @Inject(DroneProvider)
+    private droneProvider: DroneProvider;
 
     @Command('animation_stop', {
         description: "Stop l'animation en cours",
@@ -187,6 +192,9 @@ export class PlayerAnimationProvider {
 
     public async doAnimationShortcut(key: string) {
         if (!this.playerService.canDoAction()) {
+            return;
+        }
+        if (this.droneProvider.isUsingDrone()) {
             return;
         }
 
