@@ -19283,10 +19283,10 @@ export const ZkeaFourniture: ZkeaFournitureItemList = {
         price: 320,
         collision: true,
     },
-    v_19_vanillasigneon2: {
+    soz_assets_v_19_vanillasigneon2: {
         type: 'Éclairages',
         name: 'Enseigne lumineuse moderne',
-        model: 'v_19_vanillasigneon2',
+        model: 'soz_assets_v_19_vanillasigneon2',
         price: 310,
         collision: true,
     },
@@ -19486,17 +19486,17 @@ export const ZkeaFourniture: ZkeaFournitureItemList = {
         price: 300,
         collision: false,
     },
-    v_61_lng_poster1: {
+    soz_assets_v_61_lng_poster1: {
         type: 'Sensualité',
         name: 'Poster Érotique',
-        model: 'v_61_lng_poster1',
+        model: 'soz_assets_v_61_lng_poster1',
         price: 300,
         collision: false,
     },
-    v_19_strpfrntpl: {
+    soz_assets_v_19_strpfrntpl: {
         type: 'Sensualité',
         name: 'Barre de Pole Danse',
-        model: 'v_19_strpfrntpl',
+        model: 'soz_assets_v_19_strpfrntpl',
         price: 300,
         collision: false,
     },
@@ -19731,10 +19731,10 @@ export const ZkeaFourniture: ZkeaFournitureItemList = {
         price: 5000,
         collision: true,
     },
-    h4_int_04_fire_tools: {
+    soz_assets_h4_int_04_fire_tools: {
         type: 'Divers',
         name: 'Outils de Cheminée',
-        model: 'h4_int_04_fire_tools',
+        model: 'soz_assets_h4_int_04_fire_tools',
         price: 150,
         collision: true,
     },
@@ -19934,10 +19934,10 @@ export const ZkeaFourniture: ZkeaFournitureItemList = {
         price: 120,
         collision: true,
     },
-    apa_mp_h_05_cowhide: {
+    soz_assets_apa_mp_h_05_cowhide: {
         type: 'Tapis',
         name: 'Peau de vache Étatique',
-        model: 'apa_mp_h_05_cowhide',
+        model: 'soz_assets_apa_mp_h_05_cowhide',
         price: 500,
         collision: false,
     },
@@ -19997,178 +19997,178 @@ export const ZkeaFourniture: ZkeaFournitureItemList = {
         price: 300,
         collision: true,
     },
-    m24_1_prop_m41_radio_01a: {
+    soz_assets_m24_1_prop_m41_radio_01a: {
         type: 'Audiovisuel & Hi-Fi',
         name: 'Enceinte connectée',
-        model: 'm24_1_prop_m41_radio_01a',
+        model: 'soz_assets_m24_1_prop_m41_radio_01a',
         price: 250,
         collision: true,
     },
-    v_61_lng_mesh_fireplace: {
+    soz_assets_v_61_lng_mesh_fireplace: {
         type: 'Construction & Bâtiments',
         name: 'Cheminé en pierre',
-        model: 'v_61_lng_mesh_fireplace',
+        model: 'soz_assets_v_61_lng_mesh_fireplace',
         price: 800,
         collision: false,
     },
-    bkr_bar_bar002: {
+    soz_assets_bkr_bar_bar002: {
         type: 'Cuisine',
         name: 'Bar en angle',
-        model: 'bkr_bar_bar002',
+        model: 'soz_assets_bkr_bar_bar002',
         price: 100,
         collision: true,
     },
-    v_9_kitchen_unit: {
+    soz_assets_v_9_kitchen_unit: {
         type: 'Cuisine',
         name: 'Plan de travail boisé',
-        model: 'v_9_kitchen_unit',
+        model: 'soz_assets_v_9_kitchen_unit',
         price: 100,
         collision: false,
     },
-    v_3_knt_mesh_units: {
+    soz_assets_v_3_knt_mesh_units: {
         type: 'Cuisine',
         name: 'Enorme Cuisine complète',
-        model: 'v_3_knt_mesh_units',
+        model: 'soz_assets_v_3_knt_mesh_units',
         price: 8000,
         collision: false,
     },
-    v_57_lavalamp: {
+    soz_assets_v_57_lavalamp: {
         type: 'Éclairages',
         name: 'Lampe à lave',
-        model: 'v_57_lavalamp',
+        model: 'soz_assets_v_57_lavalamp',
         price: 90,
         collision: false,
     },
-    v_9_glasslamps: {
+    soz_assets_v_9_glasslamps: {
         type: 'Éclairages',
         name: 'Luminaires rétro en verre',
-        model: 'v_9_glasslamps',
+        model: 'soz_assets_v_9_glasslamps',
         price: 500,
         collision: false,
     },
-    apa_mp_h_04_liv_bulblamp1: {
+    soz_assets_apa_mp_h_04_liv_bulblamp1: {
         type: 'Éclairages',
         name: 'Plafonnier long rond',
-        model: 'apa_mp_h_04_liv_bulblamp1',
+        model: 'soz_assets_apa_mp_h_04_liv_bulblamp1',
         price: 100,
         collision: false,
     },
-    vw_vwint02_pent_spa_water_02: {
+    soz_assets_vw_vwint02_pent_spa_water_02: {
         type: 'Décoration Murale',
         name: "Mur d'eau",
-        model: 'vw_vwint02_pent_spa_water_02',
+        model: 'soz_assets_vw_vwint02_pent_spa_water_02',
         price: 100,
         collision: false,
     },
-    m24_1_prop_m41_officedesk_01a: {
+    soz_assets_m24_1_prop_m41_officedesk_01a: {
         type: 'Tables & Bureaux',
         name: 'Bureau de travail avec cable',
-        model: 'm24_1_prop_m41_officedesk_01a',
+        model: 'soz_assets_m24_1_prop_m41_officedesk_01a',
         price: 650,
         collision: true,
     },
-    soz_v_club_bahbarstool: {
+    soz_assets_v_club_bahbarstool: {
         type: 'Chaises & Fauteuils',
         name: 'Chaise de bar bleu',
-        model: 'soz_v_club_bahbarstool',
+        model: 'soz_assets_v_club_bahbarstool',
         price: 150,
         collision: true,
     },
-    v_61_hall_mesh_sideboard: {
+    soz_assets_v_61_hall_mesh_sideboard: {
         type: 'Meubles & Rangement',
         name: "Petit meuble en bois d'entrée",
-        model: 'v_61_hall_mesh_sideboard',
+        model: 'soz_assets_v_61_hall_mesh_sideboard',
         price: 298,
         collision: false,
     },
-    v_16_high_bed_mesh_unit: {
+    soz_assets_v_16_high_bed_mesh_unit: {
         type: 'Meubles & Rangement',
         name: 'Grand meubles avec décoration',
-        model: 'v_16_high_bed_mesh_unit',
+        model: 'soz_assets_v_16_high_bed_mesh_unit',
         price: 3900,
         collision: false,
     },
-    v_16_high_lng_mesh_tvunit: {
+    soz_assets_v_16_high_lng_mesh_tvunit: {
         type: 'Meubles & Rangement',
         name: 'Grand meubles avec décoration 2',
-        model: 'v_16_high_lng_mesh_tvunit',
+        model: 'soz_assets_v_16_high_lng_mesh_tvunit',
         price: 4500,
         collision: false,
     },
-    apa_mp_h_04_dining_shelf: {
+    soz_assets_apa_mp_h_04_dining_shelf: {
         type: 'Meubles & Rangement',
         name: 'Étagère Rangetout noir',
-        model: 'apa_mp_h_04_dining_shelf',
+        model: 'soz_assets_apa_mp_h_04_dining_shelf',
         price: 200,
         collision: false,
     },
-    apa_mp_h_01_dining_shelf: {
+    soz_assets_apa_mp_h_01_dining_shelf: {
         type: 'Meubles & Rangement',
         name: 'Étagère Rangetout bois',
-        model: 'apa_mp_h_01_dining_shelf',
+        model: 'soz_assets_apa_mp_h_01_dining_shelf',
         price: 200,
         collision: false,
     },
-    apa_mp_h_05_dining_shelf: {
+    soz_assets_apa_mp_h_05_dining_shelf: {
         type: 'Meubles & Rangement',
         name: 'Étagère Rangetout gris',
-        model: 'apa_mp_h_05_dining_shelf',
+        model: 'soz_assets_apa_mp_h_05_dining_shelf',
         price: 200,
         collision: false,
     },
-    tr_int1_sideboard_style2_02: {
+    soz_assets_tr_int1_sideboard_style2_02: {
         type: 'Meubles & Rangement',
         name: 'Buffet moderne blanc',
-        model: 'tr_int1_sideboard_style2_02',
+        model: 'soz_assets_tr_int1_sideboard_style2_02',
         price: 400,
         collision: true,
     },
-    tr_int1_sideboard_style2_006: {
+    soz_assets_tr_int1_sideboard_style2_006: {
         type: 'Meubles & Rangement',
         name: 'Buffet moderne noir',
-        model: 'tr_int1_sideboard_style2_006',
+        model: 'soz_assets_tr_int1_sideboard_style2_006',
         price: 400,
         collision: true,
     },
-    tr_int1_sideboard_style2_013: {
+    soz_assets_tr_int1_sideboard_style2_013: {
         type: 'Meubles & Rangement',
         name: 'Buffet moderne en bois',
-        model: 'tr_int1_sideboard_style2_013',
+        model: 'soz_assets_tr_int1_sideboard_style2_013',
         price: 400,
         collision: true,
     },
-    tr_int1_sideboard_style2_01: {
+    soz_assets_tr_int1_sideboard_style2_01: {
         type: 'Meubles & Rangement',
         name: 'Buffet en bois gris',
-        model: 'tr_int1_sideboard_style2_01',
+        model: 'soz_assets_tr_int1_sideboard_style2_01',
         price: 400,
         collision: true,
     },
-    tr_int1_sideboard_style2_004: {
+    soz_assets_tr_int1_sideboard_style2_004: {
         type: 'Meubles & Rangement',
         name: 'Buffet en bois noir',
-        model: 'tr_int1_sideboard_style2_004',
+        model: 'soz_assets_tr_int1_sideboard_style2_004',
         price: 400,
         collision: true,
     },
-    m24_1_prop_m41_sofa_01a: {
+    soz_assets_m24_1_prop_m41_sofa_01a: {
         type: 'Chaises & Fauteuils',
         name: 'Canapé à rayures vieillot',
-        model: 'm24_1_prop_m41_sofa_01a',
+        model: 'soz_assets_m24_1_prop_m41_sofa_01a',
         price: 200,
         collision: true,
     },
-    sf_int1_bar_stool1: {
+    soz_assets_sf_int1_bar_stool1: {
         type: 'Chaises & Fauteuils',
         name: 'Tabouret de bar design',
-        model: 'sf_int1_bar_stool1',
+        model: 'soz_assets_sf_int1_bar_stool1',
         price: 101,
         collision: false,
     },
-    m23_2_int5_m232_bin: {
+    soz_assets_m23_2_int5_m232_bin: {
         type: 'Salle de bains',
         name: 'Poubelle de salle de bains',
-        model: 'm23_2_int5_m232_bin',
+        model: 'soz_assets_m23_2_int5_m232_bin',
         price: 100,
         collision: false,
     },
@@ -20746,4 +20746,37 @@ export const ZkeaFourniture: ZkeaFournitureItemList = {
         price: 200,
         collision: true,
     },
+};
+
+export const ZkeaFournitureModelTranslate: Record<string, string> = {
+    m24_1_prop_m41_radio_01a: 'soz_assets_m24_1_prop_m41_radio_01a',
+    m24_1_prop_m41_officedesk_01a: 'soz_assets_m24_1_prop_m41_officedesk_01a',
+    m24_1_prop_m41_sofa_01a: 'soz_assets_m24_1_prop_m41_sofa_01a',
+    v_16_high_bed_mesh_unit: 'soz_assets_v_16_high_bed_mesh_unit',
+    v_16_high_lng_mesh_tvunit: 'soz_assets_v_16_high_lng_mesh_tvunit',
+    sf_int1_bar_stool1: 'soz_assets_sf_int1_bar_stool1',
+    v_57_lavalamp: 'soz_assets_v_57_lavalamp',
+    soz_v_club_bahbarstool: 'soz_assets_v_club_bahbarstool',
+    apa_mp_h_01_dining_shelf: 'soz_assets_apa_mp_h_01_dining_shelf',
+    apa_mp_h_04_dining_shelf: 'soz_assets_apa_mp_h_04_dining_shelf',
+    apa_mp_h_04_liv_bulblamp1: 'soz_assets_apa_mp_h_04_liv_bulblamp1',
+    apa_mp_h_05_cowhide: 'soz_assets_apa_mp_h_05_cowhide',
+    apa_mp_h_05_dining_shelf: 'soz_assets_apa_mp_h_05_dining_shelf',
+    bkr_bar_bar002: 'soz_assets_bkr_bar_bar002',
+    h4_int_04_fire_tools: 'soz_assets_h4_int_04_fire_tools',
+    m23_2_int5_m232_bin: 'soz_assets_m23_2_int5_m232_bin',
+    tr_int1_sideboard_style2_01: 'soz_assets_tr_int1_sideboard_style2_01',
+    tr_int1_sideboard_style2_02: 'soz_assets_tr_int1_sideboard_style2_02',
+    tr_int1_sideboard_style2_004: 'soz_assets_tr_int1_sideboard_style2_004',
+    tr_int1_sideboard_style2_006: 'soz_assets_tr_int1_sideboard_style2_006',
+    tr_int1_sideboard_style2_013: 'soz_assets_tr_int1_sideboard_style2_013',
+    v_3_knt_mesh_units: 'soz_assets_v_3_knt_mesh_units',
+    v_9_glasslamps: 'soz_assets_v_9_glasslamps',
+    v_9_kitchen_unit: 'soz_assets_v_9_kitchen_unit',
+    v_19_strpfrntpl: 'soz_assets_v_19_strpfrntpl',
+    v_19_vanillasigneon2: 'soz_assets_v_19_vanillasigneon2',
+    v_61_hall_mesh_sideboard: 'soz_assets_v_61_hall_mesh_sideboard',
+    v_61_lng_mesh_fireplace: 'soz_assets_v_61_lng_mesh_fireplace',
+    v_61_lng_poster1: 'soz_assets_v_61_lng_poster1',
+    vw_vwint02_pent_spa_water_02: 'soz_assets_vw_vwint02_pent_spa_water_02',
 };

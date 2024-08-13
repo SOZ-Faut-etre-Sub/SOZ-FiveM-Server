@@ -14,7 +14,7 @@ import { Apartment, getMaxFourntiure } from '@public/shared/housing/housing';
 import { HousingProp } from '@public/shared/nui/prop_placement';
 import { Vector4 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
-import { ZkeaBaseFourntiure, ZkeaFourniture } from '@public/shared/shop/zkea_fourniture';
+import { ZkeaBaseFourntiure, ZkeaFourniture, ZkeaFournitureModelTranslate } from '@public/shared/shop/zkea_fourniture';
 import { isEqual } from 'lodash';
 
 @Provider()
@@ -386,15 +386,20 @@ export class HousingFournitureProvider {
         matrix: string | null;
         storage_type: string | null;
     }): HousingProp {
+        const realModel = this.translateModel(fourniture.model);
         return {
             id: fourniture.id,
-            model: fourniture.model,
-            label: ZkeaFourniture[fourniture.model].name,
+            model: realModel,
+            label: ZkeaFourniture[realModel].name,
             position: fourniture.position ? (JSON.parse(fourniture.position) as Vector4) : null,
             matrix: fourniture.matrix ? (JSON.parse(fourniture.matrix) as number[]) : null,
             storageType: fourniture.storage_type,
             updated: Date.now(),
         };
+    }
+
+    private translateModel(model: string): string {
+        return ZkeaFournitureModelTranslate[model] || model;
     }
 
     private logFourniture(source: number, type: string, apartmentId: number, fournitureId: number, model: string) {
