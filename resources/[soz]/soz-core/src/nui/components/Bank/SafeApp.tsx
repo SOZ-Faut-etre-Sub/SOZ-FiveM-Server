@@ -14,7 +14,7 @@ import { ApplicationContainer } from './component/Application';
 import { Button } from './component/Button';
 import { Card } from './component/Card';
 import { Input } from './component/Input';
-import { FORMAT_CURRENCY, inputErrorMessage } from './utils/format';
+import { FORMAT_CURRENCY } from './utils/format';
 
 type SafeAppInputs = {
     money: number;
@@ -25,6 +25,7 @@ export const SafeApp: FunctionComponent = () => {
     const player = usePlayer();
 
     const [showApp, setShowApp] = useState<boolean>(false);
+    const [keepFocus, setKeepFocus] = useState<boolean>(false);
 
     // 0 => withdraw, 1 => deposit
     const [action, setAction] = useState<number>(0);
@@ -35,22 +36,27 @@ export const SafeApp: FunctionComponent = () => {
         watch,
         handleSubmit,
         reset,
+        setValue,
         formState: { errors },
     } = useForm<SafeAppInputs>({ mode: 'onChange' });
 
-    const resetApp = () => {
+    const resetApp = async () => {
         reset();
         setShowApp(false);
+
+        await fetchNui(NuiEvent.BankAnimation, { type: 'exit' });
+        setKeepFocus(false);
     };
 
     const onKeyUpReceived = (event: KeyboardEvent) => {
         if (event.key === 'Escape') resetApp();
     };
 
-    useNuiFocus(showApp, showApp, false);
+    useNuiFocus(keepFocus, keepFocus, false);
 
     useNuiEvent('bank_safe', 'ShowSafe', (data: boolean) => {
         setShowApp(data);
+        setKeepFocus(data);
     });
 
     useNuiEvent('bank_safe', 'UpdateAccountData', (data: BankAccount) => {
@@ -96,7 +102,7 @@ export const SafeApp: FunctionComponent = () => {
     if (!showApp) return null;
 
     return (
-        <ApplicationContainer size="small" onClickOutside={() => resetApp()}>
+        <ApplicationContainer size="small" onClickOutside={resetApp}>
             <Transition
                 as={AppContent}
                 show={showApp}
@@ -117,7 +123,13 @@ export const SafeApp: FunctionComponent = () => {
                     </div>
 
                     <div className="space-y-6">
-                        <Tab.Group selectedIndex={action} onChange={index => setAction(index)}>
+                        <Tab.Group
+                            selectedIndex={action}
+                            onChange={index => {
+                                setAction(index);
+                                reset();
+                            }}
+                        >
                             <Tab.List className="grid grid-cols-2 gap-3 p-1 bg-white/5 text-gray-200 rounded-md">
                                 <Tab className={tabClass}>Retirer</Tab>
                                 <Tab className={tabClass}>Déposer</Tab>
@@ -136,11 +148,13 @@ export const SafeApp: FunctionComponent = () => {
                                         {account?.money.toLocaleString('en-US', FORMAT_CURRENCY)}
                                     </span>
                                 </div>
+
                                 <Input
                                     type="number"
                                     {...register('money', {
                                         min: 1,
                                         max: action === 0 ? account?.money : player.money.money,
+                                        onChange: e => setValue('money', parseInt(e.target.value)),
                                     })}
                                     placeholder="1000"
                                     disabled={!!watch('markedMoney')}
@@ -163,20 +177,18 @@ export const SafeApp: FunctionComponent = () => {
                                     )}
                                 </span>
                             </div>
+
                             <Input
                                 type="number"
                                 {...register('markedMoney', {
                                     min: 1,
                                     max: action === 0 ? account?.marked_money : player.money.marked_money,
+                                    onChange: e => setValue('markedMoney', parseInt(e.target.value)),
                                 })}
                                 placeholder="1000"
                                 disabled={!!watch('money')}
+                                error={errors.markedMoney}
                             />
-                            {errors.markedMoney && (
-                                <span className="text-red-400 text-sm">
-                                    {inputErrorMessage(errors.markedMoney.type)}
-                                </span>
-                            )}
                         </Card>
                     </div>
 

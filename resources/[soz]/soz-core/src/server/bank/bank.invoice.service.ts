@@ -1,4 +1,5 @@
 import { BankService } from '@public/server/bank/bank.service';
+import { BankStatementsService } from '@public/server/bank/bank.statements.service';
 import { Monitor } from '@public/server/monitor/monitor';
 import { Notifier } from '@public/server/notifier';
 import { ClientEvent } from '@public/shared/event/client';
@@ -25,6 +26,9 @@ export class BankInvoiceService {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(BankStatementsService)
+    private bankStatementsService: BankStatementsService;
 
     @Inject(BankService)
     private bankService: BankService;
@@ -125,6 +129,13 @@ export class BankInvoiceService {
                     this.notifier.error(source, 'Transaction impossible.');
                     return false;
                 }
+
+                await this.bankStatementsService.createStatement(
+                    invoice.targetAccount,
+                    invoice.emitterSafe,
+                    invoice.amount,
+                    `Paiement de facture: ${invoice.label}`
+                );
             }
 
             if (!(await this.bankInvoiceRepository.setPayed(invoiceId))) return false;
@@ -138,7 +149,9 @@ export class BankInvoiceService {
                 invoice.targetAccount,
                 invoice.emitterSafe,
                 'money',
-                invoice.amount
+                invoice.amount,
+                false,
+                `Paiement de facture: ${invoice.label}`
             );
             if (!transaction) {
                 this.notifier.error(source, '~r~Echec~s~ du paiement la facture de la société');

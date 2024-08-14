@@ -22,7 +22,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     });
 
     return (
-        <>
+        <div>
             <div className="relative">
                 {props.prefix && (
                     <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -49,6 +49,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
                     {props.error && inputErrorMessage(props.error.type)}
                 </animated.div>
             )}
-        </>
+        </div>
     );
 });

@@ -22,29 +22,36 @@ type AtmAppInputs = {
 
 export const AtmApp: FunctionComponent = () => {
     const [showApp, setShowApp] = useState<boolean>(false);
+    const [keepFocus, setKeepFocus] = useState<boolean>(false);
+
     const [account, setAccount] = useState<NuiMethodMap['bank_atm']['ShowAtm']>();
 
     const {
         register,
         handleSubmit,
         reset,
+        setValue,
         formState: { errors },
     } = useForm<AtmAppInputs>({ mode: 'onChange' });
 
-    const resetApp = () => {
+    const resetApp = async () => {
         reset();
         setShowApp(false);
+
+        await fetchNui(NuiEvent.BankAnimation, { type: 'exit' });
+        setKeepFocus(false);
     };
 
     const onKeyUpReceived = (event: KeyboardEvent) => {
         if (event.key === 'Escape') resetApp();
     };
 
-    useNuiFocus(showApp, showApp, false);
+    useNuiFocus(keepFocus, keepFocus, false);
 
     useNuiEvent('bank_atm', 'ShowAtm', data => {
         setAccount(data);
         setShowApp(true);
+        setKeepFocus(true);
     });
 
     useNuiEvent('bank', 'CloseInterface', resetApp);
@@ -76,7 +83,7 @@ export const AtmApp: FunctionComponent = () => {
     if (!showApp) return null;
 
     return (
-        <ApplicationContainer size="large" onClickOutside={() => resetApp()}>
+        <ApplicationContainer size="large" onClickOutside={resetApp}>
             <Transition
                 as={AppContent}
                 show={showApp}
@@ -105,6 +112,7 @@ export const AtmApp: FunctionComponent = () => {
                                         min: 1,
                                         max: account?.atm?.config?.maxMoney,
                                         required: true,
+                                        onChange: e => setValue('withdraw', parseInt(e.target.value)),
                                     })}
                                     placeholder="1000"
                                     error={errors.withdraw}

@@ -1,6 +1,6 @@
 import { Tab } from '@headlessui/react';
 import classnames from 'classnames';
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { BankAccount, BankMoneyType } from '../../../../shared/bank';
@@ -18,9 +18,14 @@ type QuickActionInputs = {
 interface QuickActionFormProps {
     account: BankAccount;
     moneyType?: BankMoneyType;
+    bankType: string;
 }
 
-export const QuickActionForm: FunctionComponent<QuickActionFormProps> = ({ account, moneyType = 'money' }) => {
+export const QuickActionForm: FunctionComponent<QuickActionFormProps> = ({
+    account,
+    bankType,
+    moneyType = 'money',
+}) => {
     const player = usePlayer();
 
     // 0 => withdraw, 1 => deposit
@@ -33,6 +38,7 @@ export const QuickActionForm: FunctionComponent<QuickActionFormProps> = ({ accou
         register,
         handleSubmit,
         reset,
+        setValue,
         formState: { errors },
     } = useForm<QuickActionInputs>({ mode: 'onChange' });
 
@@ -41,6 +47,7 @@ export const QuickActionForm: FunctionComponent<QuickActionFormProps> = ({ accou
             type: quickAction === 0 ? 'withdraw' : 'deposit',
             accountId: account.id,
             moneyType,
+            bankType,
             amount: Number(data.amount),
             refreshNui: 'bank',
         });
@@ -48,10 +55,20 @@ export const QuickActionForm: FunctionComponent<QuickActionFormProps> = ({ accou
         reset();
     };
 
+    useEffect(() => {
+        reset();
+    }, [account.id]);
+
     return (
         <Card>
             <h2 className="uppercase text-sm font-light text-gray-300">Actions rapides</h2>
-            <Tab.Group selectedIndex={quickAction} onChange={index => setQuickAction(index)}>
+            <Tab.Group
+                selectedIndex={quickAction}
+                onChange={index => {
+                    setQuickAction(index);
+                    reset();
+                }}
+            >
                 <Tab.List className="grid grid-cols-2 gap-3 p-1 my-3 bg-white/5 text-gray-200 rounded-md">
                     <Tab className={tabClass}>Retirer</Tab>
                     <Tab className={tabClass}>Déposer</Tab>
@@ -66,6 +83,7 @@ export const QuickActionForm: FunctionComponent<QuickActionFormProps> = ({ accou
                         min: 1,
                         max: quickAction === 0 ? account[moneyType] : player.money[moneyType],
                         required: true,
+                        onChange: e => setValue('amount', parseInt(e.target.value)),
                     })}
                     placeholder="1000"
                     error={errors.amount}

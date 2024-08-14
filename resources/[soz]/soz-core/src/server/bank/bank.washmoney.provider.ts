@@ -5,19 +5,23 @@ import { Cron } from '../../core/decorators/cron';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Logger } from '../../core/logger';
-import { PrismaService } from '../database/prisma.service';
+import { Monitor } from '../monitor/monitor';
 import { BankAccountRepository } from '../repository/bank.account.repository';
+import { BankStatementsService } from './bank.statements.service';
 
 @Provider()
 export class BankWashMoneyProvider {
     @Inject(BankAccountRepository)
     private bankAccountRepository: BankAccountRepository;
 
-    @Inject(PrismaService)
-    private prismaService: PrismaService;
+    @Inject(BankStatementsService)
+    private bankStatementsService: BankStatementsService;
 
     @Inject(Logger)
     private logger: Logger;
+
+    @Inject(Monitor)
+    private monitor: Monitor;
 
     @Command('launchWashMoney', { role: 'admin' })
     public async manualWash() {
@@ -53,14 +57,18 @@ export class BankWashMoneyProvider {
                 );
             }
 
-            await this.prismaService.bank_statements.create({
-                data: {
-                    source_accountid: account.id,
-                    target_accountid: targetAccount.id,
-                    amount: toWash,
-                    reason: 'La lessive est faite',
-                },
+            this.monitor.traceEvent('washmoney', {
+                source_account: account.id,
+                target_account: targetAccount.id,
+                amount: toWash,
             });
+
+            await this.bankStatementsService.createStatement(
+                account.id,
+                targetAccount.id,
+                toWash,
+                'La lessive est faite'
+            );
 
             this.logger.info(`[BankWashMoneyProvider] Finished washing money for ${account.id}`);
         }

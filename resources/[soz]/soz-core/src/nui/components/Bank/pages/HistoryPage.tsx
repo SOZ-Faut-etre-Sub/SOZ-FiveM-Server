@@ -1,7 +1,7 @@
 import { animated, useSpring } from '@react-spring/web';
 import { FunctionComponent } from 'react';
 
-import { BankAccount, BankStatement } from '../../../../shared/bank';
+import { BankAccount, BankContact, BankStatement } from '../../../../shared/bank';
 import { Card } from '../component/Card';
 import { Header } from '../component/Header';
 import { HistoryTable } from '../component/HistoryTable';
@@ -10,16 +10,22 @@ import { TextWithCopy } from '../component/TextWithCopy';
 import { moneyFormat } from '../utils/format';
 
 interface HistoryProps {
+    bankType: string;
     account: BankAccount;
     history?: BankStatement[];
+    contacts?: BankContact[];
     showIban?: boolean;
 }
 
-export const HistoryPage: FunctionComponent<HistoryProps> = ({ account, history, showIban }) => {
-    const styles = useSpring({
-        from: { y: 30, opacity: 0 },
-        to: { y: 0, opacity: 1 },
-    });
+export const HistoryPage: FunctionComponent<HistoryProps> = ({ bankType, account, contacts, history, showIban }) => {
+    const [styles] = useSpring(
+        () => ({
+            from: { y: 30, opacity: 0 },
+            to: { y: 0, opacity: 1 },
+            reset: true,
+        }),
+        [account.id]
+    );
 
     return (
         <div className="space-y-10 h-full">
@@ -31,7 +37,7 @@ export const HistoryPage: FunctionComponent<HistoryProps> = ({ account, history,
                     <h2 className="uppercase text-sm font-light text-gray-300">Transactions récentes</h2>
 
                     <div className="h-[90%] overflow-y-auto scrollbar-thin scrollbar-thumb-white/20">
-                        <HistoryTable account={account} history={history} />
+                        <HistoryTable account={account} history={history} contacts={contacts} />
                     </div>
                 </div>
 
@@ -53,7 +59,7 @@ export const HistoryPage: FunctionComponent<HistoryProps> = ({ account, history,
                         </div>
                     </Card>
 
-                    <QuickActionForm account={account} />
+                    <QuickActionForm bankType={bankType} account={account} />
                 </div>
             </animated.div>
         </div>

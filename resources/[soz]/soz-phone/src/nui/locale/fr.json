@@ -131,7 +131,13 @@
         },
         "BANK": {
             "HOME_TITLE": "Compte en banque",
-            "CHECKING": "Total :"
+            "CHECKING": "Total :",
+            "NAVBAR_DASHBOARD": "Accueil",
+            "NAVBAR_HISTORY": "Transactions",
+            "NAVBAR_INVOICES": "Factures"
+        },
+        "HISTORY": {
+            "NO_HISTORY": "Aucun historique de transaction"
         },
         "MARKETPLACE": {
             "FEEDBACK": {

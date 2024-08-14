@@ -347,4 +347,7 @@ export enum ClientEvent {
     BANK_PHONE_INVOICE_PAID = 'banking:client:invoicePaid',
     BANK_PHONE_INVOICE_REJECTED = 'banking:client:invoiceRejected',
     BANK_PHONE_INVOICE_RECEIVED = 'banking:client:invoiceReceived',
+    BANK_PHONE_NEW_STATEMENT = 'phone:app:bank-statements:newStatement',
+    BANK_PHONE_NEW_CONTACT = 'phone:app:bank-contacts:addContact',
+    BANK_PHONE_REMOVE_CONTACT = 'phone:app:bank-contacts:removeContact',
 }

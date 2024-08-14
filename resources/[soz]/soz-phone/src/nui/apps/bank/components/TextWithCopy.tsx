@@ -1,4 +1,4 @@
-import { ClipboardCheckIcon, ClipboardCopyIcon } from '@heroicons/react/outline';
+import { ClipboardCheckIcon, ClipboardCopyIcon } from '@heroicons/react/solid';
 import { FunctionComponent, PropsWithChildren, useEffect, useState } from 'react';
 
 interface TextWithCopyProps {

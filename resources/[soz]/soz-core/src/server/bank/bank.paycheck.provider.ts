@@ -61,13 +61,15 @@ export class BankPaycheckProvider {
                 player.job.id,
                 player.charinfo.account,
                 'money',
-                payment
+                payment,
+                false,
+                'Versement du salaire'
             );
 
             if (result) {
                 this.notifier.advancedNotify(
                     player.source,
-                    'Maze Banque',
+                    'Fleeca Banque',
                     'Mouvement bancaire',
                     `Votre salaire  ~g~${
                         player.job.onduty ? 'en service' : 'hors-service'
@@ -88,12 +90,14 @@ export class BankPaycheckProvider {
                     'gouv',
                     player.charinfo.account,
                     'money',
-                    SENATOR_SALARY
+                    SENATOR_SALARY,
+                    false,
+                    'Indemnité de sénateur'
                 );
                 if (result) {
                     this.notifier.advancedNotify(
                         player.source,
-                        'Maze Banque',
+                        'Fleeca Banque',
                         'Mouvement bancaire',
                         `Votre indemnité de ~g~sénateur~s~ de ~g~${SENATOR_SALARY}$~s~ a été versé sur votre compte bancaire.`,
                         'CHAR_BANK_MAZE'

@@ -5,6 +5,7 @@ import { BankNuiProvider } from './bank.nui.provider';
 import { BankPaycheckProvider } from './bank.paycheck.provider';
 import { BankProvider } from './bank.provider';
 import { BankSafeProvider } from './bank.safe.provider';
+import { BankStatementsService } from './bank.statements.service';
 import { BankTaxProvider } from './bank.tax.provider';
 import { BankWashMoneyProvider } from './bank.washmoney.provider';
 
@@ -18,6 +19,7 @@ import { BankWashMoneyProvider } from './bank.washmoney.provider';
         BankPaycheckProvider,
         BankTaxProvider,
         BankWashMoneyProvider,
+        BankStatementsService,
     ],
 })
 export class BankModule {}

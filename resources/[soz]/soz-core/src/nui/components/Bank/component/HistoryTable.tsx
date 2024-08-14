@@ -2,15 +2,16 @@ import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import React, { FunctionComponent } from 'react';
 
-import { BankAccount, BankStatement } from '../../../../shared/bank';
+import { BankAccount, BankContact, BankStatement } from '../../../../shared/bank';
 import { HistoryRow } from './HistoryRow';
 
 interface HistoryTableProps {
     account: BankAccount;
     history: BankStatement[];
+    contacts?: BankContact[];
 }
 
-export const HistoryTable: FunctionComponent<HistoryTableProps> = ({ account, history = [] }) => {
+export const HistoryTable: FunctionComponent<HistoryTableProps> = ({ account, contacts, history = [] }) => {
     const historyByDays: Record<string, BankStatement[]> = history.reduce((acc, row) => {
         const date = format(row.date, 'eeee dd MMMMMM yyyy', { locale: fr });
         if (!acc[date]) {
@@ -30,7 +31,7 @@ export const HistoryTable: FunctionComponent<HistoryTableProps> = ({ account, hi
                     </div>
 
                     {history.map((row, id) => (
-                        <HistoryRow key={id} account={account} history={row} />
+                        <HistoryRow key={id} account={account} history={row} contacts={contacts} />
                     ))}
                 </div>
             ))}

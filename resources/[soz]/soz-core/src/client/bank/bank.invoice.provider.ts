@@ -12,11 +12,16 @@ export class BankInvoiceProvider {
 
     @OnEvent(ClientEvent.BANK_PHONE_INVOICE_RECEIVED)
     public async onInvoiceReceive(invoiceId: string, label: string, amount: number) {
-        const confirmed = await this.notifier.notifyWithConfirm(
-            `Vous avez reçu une facture de ~r~$${amount}~s~~n~Raison: ${label}.~n~~n~Faites ~g~Y~s~ pour l'accepter`
+        const [confirmed, timeout] = await this.notifier.notifyWithConfirm(
+            `Vous avez reçu une facture de ~r~$${amount}~s~~n~Raison: ${label}.~n~~n~Faites ~g~Y~s~ pour l'accepter ou ~r~N~s~ pour la refuser`
         );
 
+        if (timeout) {
+            return;
+        }
+
         if (!confirmed) {
+            TriggerServerEvent(ServerEvent.BANK_INVOICE_REJECT, invoiceId);
             return;
         }
 

@@ -16,6 +16,8 @@ export const inputErrorMessage = (type: string): string => {
             return 'Le montant doit être supérieur à 0';
         case 'max':
             return "Vous n'avez pas autant d'argent";
+        case 'minLength':
+            return 'Le champ doit contenir plus de caractères';
         case 'maxLength':
             return 'La raison ne doit pas dépasser 90 caractères';
     }

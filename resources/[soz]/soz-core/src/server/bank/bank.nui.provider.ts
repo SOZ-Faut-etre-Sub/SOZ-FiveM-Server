@@ -1,8 +1,10 @@
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
+import { ClientEvent } from '../../shared/event/client';
 import { RpcServerEvent } from '../../shared/rpc';
 import { PrismaService } from '../database/prisma.service';
+import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { BankAccountRepository } from '../repository/bank.account.repository';
 
@@ -14,18 +16,26 @@ export class BankNuiProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
+    @Inject(Notifier)
+    private notifier: Notifier;
+
     @Inject(BankAccountRepository)
     private bankAccountRepository: BankAccountRepository;
 
     @Rpc(RpcServerEvent.BANK_CREATE_OFFSHORE_ACCOUNT)
     public async createOffshoreAccount(source: number): Promise<boolean> {
-        const player = this.playerService.getPlayer(source);
-        if (!player) {
-            return;
-        }
+        this.notifier.notify(source, 'Bien essayé !', 'warning');
 
-        await this.bankAccountRepository.create(`offshore_${player.job.id}`, 'offshore');
+        // Disable this feature for now
         return true;
+
+        // const player = this.playerService.getPlayer(source);
+        // if (!player) {
+        //     return;
+        // }
+        //
+        // await this.bankAccountRepository.create(`offshore_${player.job.id}`, 'offshore');
+        // return true;
     }
 
     @Rpc(RpcServerEvent.BANK_CONTACT_ADD)
@@ -35,13 +45,15 @@ export class BankNuiProvider {
             return;
         }
 
-        await this.prismaService.bank_contacts.create({
+        const contact = await this.prismaService.bank_contacts.create({
             data: {
                 citizenid: player.citizenid,
                 label,
                 accountid: iban,
             },
         });
+        TriggerClientEvent(ClientEvent.BANK_PHONE_NEW_CONTACT, source, contact);
+
         return true;
     }
 
@@ -58,6 +70,8 @@ export class BankNuiProvider {
                 citizenid: player.citizenid,
             },
         });
+        TriggerClientEvent(ClientEvent.BANK_PHONE_REMOVE_CONTACT, source, id);
+
         return true;
     }
 }

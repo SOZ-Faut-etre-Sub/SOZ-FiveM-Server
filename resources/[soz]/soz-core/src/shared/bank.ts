@@ -55,6 +55,7 @@ export type BankUiData = {
         enterprise?: BankStatement[];
         offshore?: BankStatement[];
     };
+    bankType?: string;
 };
 
 export type BankAtm = {

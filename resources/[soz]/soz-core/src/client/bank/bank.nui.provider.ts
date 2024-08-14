@@ -6,11 +6,20 @@ import { BankMoneyType, BankUiData } from '../../shared/bank';
 import { NuiEvent } from '../../shared/event/nui';
 import { RpcServerEvent } from '../../shared/rpc';
 import { NuiDispatch } from '../nui/nui.dispatch';
+import { BankService } from './bank.service';
 
 @Provider()
 export class BankNuiProvider {
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
+
+    @Inject(BankService)
+    private bankService: BankService;
+
+    @OnNuiEvent(NuiEvent.BankAnimation)
+    public async triggerAnimation({ type }: { type: 'enter' | 'exit' }) {
+        return this.bankService.triggerAtmAnimation(type);
+    }
 
     @OnNuiEvent(NuiEvent.BankTransferAction)
     public async onTransferAction({

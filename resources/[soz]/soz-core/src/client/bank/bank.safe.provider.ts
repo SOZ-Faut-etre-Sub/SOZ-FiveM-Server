@@ -3,13 +3,15 @@ import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
-import { BankAccount, BankAccountType, BankActionType, BankMoneyType, BankUiData } from '../../shared/bank';
+import { wait } from '../../core/utils';
+import { AtmType, BankAccount, BankAccountType, BankActionType, BankMoneyType, BankUiData } from '../../shared/bank';
 import { ClientEvent } from '../../shared/event/client';
 import { NuiEvent } from '../../shared/event/nui';
 import { BoxZone } from '../../shared/polyzone/box.zone';
 import { RpcServerEvent } from '../../shared/rpc';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { TargetFactory } from '../target/target.factory';
+import { BankWithdrawManager } from './bank.withdraw.manager';
 
 @Provider()
 export class BankSafeProvider {
@@ -18,6 +20,9 @@ export class BankSafeProvider {
 
     @Inject(TargetFactory)
     private targetFactory: TargetFactory;
+
+    @Inject(BankWithdrawManager)
+    private bankWithdrawManager: BankWithdrawManager;
 
     @Once(OnceStep.PlayerLoaded)
     public async init() {
@@ -29,7 +34,10 @@ export class BankSafeProvider {
                     {
                         label: 'Ouvrir',
                         icon: 'c:bank/compte_safe.png',
-                        action: async () => {
+                        action: async entity => {
+                            TaskTurnPedToFaceEntity(PlayerPedId(), entity, 500);
+                            await wait(500);
+
                             const safe = await emitRpc<BankAccount>(
                                 RpcServerEvent.BANK_GET_ACCOUNT,
                                 `safe_${job}`,
@@ -54,14 +62,26 @@ export class BankSafeProvider {
         accountId,
         moneyType,
         amount = 0,
+        bankType,
         refreshNui,
     }: {
         type: BankActionType;
         accountId: string;
         moneyType: BankMoneyType;
         amount: number;
+        bankType: string;
         refreshNui: 'bank' | BankAccountType;
     }) {
+        if (bankType && type === 'withdraw') {
+            const canConsume = await this.bankWithdrawManager.withdraw(
+                bankType,
+                `bank_${bankType}`,
+                bankType.replace(/[0-9]+/, '') as AtmType,
+                amount
+            );
+            if (!canConsume) return;
+        }
+
         const result = await emitRpc<boolean>(
             RpcServerEvent.BANK_CASH_TRANSFER_ACTION,
             type,
@@ -69,13 +89,19 @@ export class BankSafeProvider {
             moneyType,
             amount
         );
+        if (bankType && type === 'withdraw' && !result) {
+            this.bankWithdrawManager.releaseWithdrawLimit(bankType, amount);
+        }
         if (!result) return;
 
         if (refreshNui === 'bank') {
             const account = await emitRpc<BankUiData>(RpcServerEvent.BANK_GET_ACCOUNT_UI);
             if (!account) return;
 
-            this.nuiDispatch.dispatch('bank', 'UpdateAccountData', account);
+            this.nuiDispatch.dispatch('bank', 'UpdateAccountData', {
+                ...account,
+                bankType: bankType,
+            });
         } else {
             const account = await emitRpc<BankAccount>(RpcServerEvent.BANK_GET_ACCOUNT, accountId, refreshNui);
             if (!account) return;

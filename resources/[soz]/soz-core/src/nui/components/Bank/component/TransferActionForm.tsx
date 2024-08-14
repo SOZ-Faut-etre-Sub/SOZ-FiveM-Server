@@ -1,7 +1,7 @@
 import { Combobox, Transition } from '@headlessui/react';
 import { CheckIcon } from '@heroicons/react/solid';
 import classnames from 'classnames';
-import React, { Fragment, FunctionComponent, useState } from 'react';
+import React, { Fragment, FunctionComponent, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { HiChevronUpDown } from 'react-icons/hi2';
 
@@ -41,6 +41,7 @@ export const TransferActionForm: FunctionComponent<TransferActionFormProps> = ({
         register,
         handleSubmit,
         reset,
+        setValue,
         formState: { errors },
     } = useForm<TransferActionInputs>({ mode: 'onChange' });
 
@@ -60,19 +61,29 @@ export const TransferActionForm: FunctionComponent<TransferActionFormProps> = ({
         reset();
     };
 
+    useEffect(() => {
+        reset();
+    }, [account.id]);
+
     return (
         <Card>
             <form onSubmit={handleSubmit(submitForm)} className="space-y-4">
                 <h2 className="uppercase text-sm font-light text-gray-300">Transfert d'argent</h2>
 
                 <div className="relative rounded-md shadow-sm">
-                    <Combobox value={selected} onChange={setSelected}>
+                    <Combobox
+                        value={selected}
+                        onChange={v => {
+                            setValue('account', v.accountid);
+                            setSelected(v);
+                        }}
+                    >
                         <div className="relative w-full cursor-default overflow-hidden rounded-md ring-1 ring-inset ring-gray-500/10 text-left focus:outline-none">
                             <Combobox.Input
+                                placeholder="Rechercher un bénéficiaire"
                                 className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 bg-white/5 text-gray-100 focus:ring-0"
                                 displayValue={(contact: BankContact) => contact.label}
                                 onChange={event => setQuery(event.target.value)}
-                                placeholder="Rechercher un bénéficiaire"
                             />
                             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
                                 <HiChevronUpDown className="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -83,7 +94,6 @@ export const TransferActionForm: FunctionComponent<TransferActionFormProps> = ({
                             leave="transition ease-in duration-100"
                             leaveFrom="opacity-100"
                             leaveTo="opacity-0"
-                            afterLeave={() => setQuery('')}
                         >
                             <Combobox.Options
                                 {...register('account', {
@@ -142,7 +152,7 @@ export const TransferActionForm: FunctionComponent<TransferActionFormProps> = ({
                         </Transition>
                     </Combobox>
                     {errors.account && (
-                        <span className="text-red-400 text-sm">{inputErrorMessage(errors.account.type)}</span>
+                        <span className="text-red-400 text-sm pt-1 px-2">{inputErrorMessage(errors.account.type)}</span>
                     )}
                 </div>
 
@@ -153,10 +163,12 @@ export const TransferActionForm: FunctionComponent<TransferActionFormProps> = ({
                         min: 1,
                         max: account.money,
                         required: true,
+                        onChange: e => setValue('amount', parseInt(e.target.value)),
                     })}
                     placeholder="1000"
                     error={errors.amount}
                 />
+
                 <Input
                     type="text"
                     {...register('reason', {

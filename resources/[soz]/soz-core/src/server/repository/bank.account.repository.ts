@@ -236,6 +236,9 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
         const apartment = await this.housingRepository.getApartmentByIdentifier(data.accountid);
 
         switch (data.account_type) {
+            case 'player':
+                accountLabel = await this.playerService.getNameFromBankAccount(data.accountid);
+                break;
             case 'business':
                 accountLabel = this.jobService.getJob(data.accountid as JobType)?.label ?? data.accountid;
                 break;

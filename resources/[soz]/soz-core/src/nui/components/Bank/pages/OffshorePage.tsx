@@ -9,18 +9,19 @@ import { QuickActionForm } from '../component/QuickActionForm';
 import { moneyFormat } from '../utils/format';
 
 interface OffshoreProps {
+    bankType: string;
     account: BankAccount;
     history: BankStatement[];
 }
 
-export const OffshorePage: FunctionComponent<OffshoreProps> = ({ account, history }) => {
+export const OffshorePage: FunctionComponent<OffshoreProps> = ({ bankType, account, history }) => {
     const [styles] = useSpring(
         () => ({
             from: { y: 30, opacity: 0 },
             to: { y: 0, opacity: 1 },
             reset: true,
         }),
-        [account]
+        [account.id]
     );
 
     return (
@@ -47,7 +48,7 @@ export const OffshorePage: FunctionComponent<OffshoreProps> = ({ account, histor
                         </div>
                     </Card>
 
-                    <QuickActionForm account={account} moneyType="marked_money" />
+                    <QuickActionForm bankType={bankType} account={account} moneyType="marked_money" />
                 </div>
             </animated.div>
         </div>

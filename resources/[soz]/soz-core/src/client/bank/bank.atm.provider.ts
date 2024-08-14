@@ -4,6 +4,7 @@ import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
+import { wait } from '../../core/utils';
 import { AtmType, AtmUiData, BankAccount, BankActionType } from '../../shared/bank';
 import { ClientEvent } from '../../shared/event/client';
 import { NuiEvent } from '../../shared/event/nui';
@@ -11,13 +12,13 @@ import { ServerEvent } from '../../shared/event/server';
 import { JobType } from '../../shared/job';
 import { toVector2Object, Vector2, Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
-import { AnimationService } from '../animation/animation.service';
 import { BlipFactory } from '../blip';
 import { ItemService } from '../item/item.service';
-import { Notifier } from '../notifier';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { PlayerService } from '../player/player.service';
 import { TargetFactory, TargetOptions } from '../target/target.factory';
+import { BankService } from './bank.service';
+import { BankWithdrawManager } from './bank.withdraw.manager';
 
 @Provider()
 export class BankAtmProvider {
@@ -30,19 +31,17 @@ export class BankAtmProvider {
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
 
-    @Inject(Notifier)
-    private notifier: Notifier;
-
     @Inject(ItemService)
     private itemService: ItemService;
 
     @Inject(PlayerService)
     private playerService: PlayerService;
 
-    @Inject(AnimationService)
-    private animationService: AnimationService;
+    @Inject(BankService)
+    private bankService: BankService;
 
-    private lastUsedAtm: Record<string, { lastUsed: Date; withdrawLimit: number }> = {};
+    @Inject(BankWithdrawManager)
+    private bankWithdrawManager: BankWithdrawManager;
 
     @OnNuiEvent(NuiEvent.BankAtmAction)
     public async depositAtmMoney({
@@ -63,57 +62,8 @@ export class BankAtmProvider {
         const player = this.playerService.getPlayer();
 
         if (type === 'withdraw') {
-            const atmAccount = await emitRpc<BankAccount>(
-                RpcServerEvent.BANK_GET_ACCOUNT,
-                bankAccount,
-                'bank_atm',
-                atmType
-            );
-            if (!atmAccount) return;
-
-            const atmConfig = AtmConfig[atmType];
-
-            if (atmConfig.maxWithdrawal) {
-                if (amount > atmConfig.maxWithdrawal) {
-                    this.notifier.notify(
-                        `Vous ne pouvez pas retirer plus de ~b~$${atmConfig.maxWithdrawal}~s~ depuis ce terminal`,
-                        'error'
-                    );
-                    return;
-                }
-
-                const lastUse = this.lastUsedAtm[atmIdentifier];
-                if (lastUse) {
-                    const amountAvailable = atmConfig.maxWithdrawal - lastUse.withdrawLimit;
-                    const remainingTime = atmConfig.limit + lastUse.lastUsed.getTime() - Date.now();
-
-                    if (remainingTime > 0) {
-                        if (amountAvailable == 0) {
-                            this.notifier.notify(
-                                `Limite de retrait atteinte : max. ~b~$${atmConfig.maxWithdrawal}~s~ par tranche de ${atmConfig.limit / 60000} minutes. Revenez dans ~b~${Math.ceil(remainingTime / 60000)} minutes~s~.`,
-                                'error'
-                            );
-                            return;
-                        } else if (amount > amountAvailable) {
-                            this.notifier.notify(
-                                `Limite de retrait atteinte : max. ~b~$${atmConfig.maxWithdrawal}~s~ par tranche de ${atmConfig.limit / 60000} minutes. ~b~$${amountAvailable}~s~ retirables.`,
-                                'error'
-                            );
-                            return;
-                        }
-                    }
-                }
-            }
-
-            const hasEnoughLiquidity = await emitRpc<boolean>(
-                RpcServerEvent.BANK_ATM_REMOVE_LIQUIDITY,
-                atmIdentifier.startsWith('atm_ent_') ? atmIdentifier : bankAccount,
-                amount
-            );
-            if (!hasEnoughLiquidity) {
-                this.notifier.notify('Liquidité insuffisante à ce terminal', 'error');
-                return;
-            }
+            const canWithdraw = await this.bankWithdrawManager.withdraw(atmIdentifier, bankAccount, atmType, amount);
+            if (!canWithdraw) return;
         }
 
         const response = await emitRpc<boolean>(
@@ -124,16 +74,8 @@ export class BankAtmProvider {
             amount
         );
 
-        if (type === 'withdraw') {
-            if (this.lastUsedAtm[atmIdentifier]) {
-                this.lastUsedAtm[atmIdentifier].lastUsed = new Date();
-                this.lastUsedAtm[atmIdentifier].withdrawLimit += amount;
-            } else {
-                this.lastUsedAtm[atmIdentifier] = {
-                    lastUsed: new Date(),
-                    withdrawLimit: amount,
-                };
-            }
+        if (type === 'withdraw' && !response) {
+            this.bankWithdrawManager.releaseWithdrawLimit(atmIdentifier, amount);
         }
 
         const accountUiData = await emitRpc<AtmUiData>(RpcServerEvent.BANK_ATM_GET_ACCOUNT_UI, atmType, atmCoords);
@@ -161,22 +103,10 @@ export class BankAtmProvider {
                         label: 'Accéder aux comptes',
                         icon: 'c:bank/compte_personal.png',
                         action: async entity => {
-                            await this.animationService.playAnimation({
-                                base: {
-                                    dictionary: 'anim@mp_atm@enter',
-                                    name: 'enter',
-                                    blendInSpeed: 8.0,
-                                    blendOutSpeed: -8.0,
-                                    duration: 3000,
-                                    options: {
-                                        onlyUpperBody: true,
-                                    },
-                                    playbackRate: 0,
-                                    lockX: false,
-                                    lockY: false,
-                                    lockZ: false,
-                                },
-                            });
+                            TaskTurnPedToFaceEntity(PlayerPedId(), entity, 500);
+                            await wait(500);
+
+                            await this.bankService.triggerAtmAnimation('enter');
 
                             const atmCoords = GetEntityCoords(entity) as Vector3;
                             const accountUiData = await emitRpc<AtmUiData>(

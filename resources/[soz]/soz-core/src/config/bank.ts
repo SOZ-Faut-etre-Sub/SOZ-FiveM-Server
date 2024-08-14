@@ -28,9 +28,9 @@ export const HouseSafeStorageTiers = {
 };
 
 export const BankPedLocations: Record<string, Vector4> = {
-    pacific1: [243.63, 226.24, 105.29, 158.33],
-    pacific2: [247.04, 224.99, 105.29, 157.44],
-    pacific3: [252.19, 223.16, 105.29, 160.18],
+    pacific1: [242.79, 226.64, 105.29, 158.36],
+    pacific2: [247.94, 224.69, 105.29, 158.18],
+    pacific3: [253.01, 222.83, 105.29, 163.14],
     fleeca1: [149.42, -1042.15, 28.37, 340.3],
     fleeca2: [313.79, -280.53, 53.16, 341.82],
     fleeca3: [-351.3, -51.3, 48.04, 342.4],
@@ -54,7 +54,7 @@ export const AtmModels: Record<string, AtmType> = {
 };
 
 export const AtmConfig: Record<AtmType, BankAtmConfig> = {
-    [AtmType.PACIFIC]: { maxMoney: 6_000_000 },
+    [AtmType.PACIFIC]: { maxMoney: 6_000_000, maxWithdrawal: 6_000_000, limit: 10 * 60 * 1000 },
     [AtmType.FLEECA]: { maxMoney: 500_000, maxWithdrawal: 100_000, limit: 10 * 60 * 1000 },
     [AtmType.BIG]: { maxMoney: 30_000, maxWithdrawal: 10_000, limit: 10 * 60 * 1000 },
     [AtmType.SMALL]: { maxMoney: 15_000, maxWithdrawal: 5_000, limit: 10 * 60 * 1000 },
@@ -78,6 +78,7 @@ export const FarmAccount: Record<string, { money: number; marked_money?: number 
     farm_ffs: { money: 300_000 },
     farm_fdf: { money: 300_000 },
     farm_dmc: { money: 300_000 },
+    farm_gouv: { money: 300_000 },
 };
 
 export const SocietySafeStorage: Partial<Record<JobType, { label: string; zone: Zone }>> = {

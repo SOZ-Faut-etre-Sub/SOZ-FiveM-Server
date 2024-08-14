@@ -11,8 +11,6 @@ import { DialerApp } from '../../../apps/dialer';
 import DialerIcon from '../../../apps/dialer/icon';
 import GameTetris from '../../../apps/game-tetris';
 import GameTetrisIcon from '../../../apps/game-tetris/icon';
-import { InvoiceApp } from '../../../apps/invoices';
-import InvoiceIcon from '../../../apps/invoices/icon';
 import { MessagesApp } from '../../../apps/messages';
 import MessagesIcon from '../../../apps/messages/icon';
 import { NotesApp } from '../../../apps/notes';
@@ -85,13 +83,6 @@ export const APPS: IAppConfig[] = [
         icon: NotesIcon,
     },
     {
-        id: 'invoices',
-        nameLocale: 'APPS_INVOICES',
-        path: '/invoices',
-        component: <InvoiceApp />,
-        icon: InvoiceIcon,
-    },
-    {
         id: 'society-contacts',
         nameLocale: 'APPS_SOCIETY_CONTACTS',
         path: '/society-contacts',
@@ -126,7 +117,7 @@ export const APPS: IAppConfig[] = [
         component: <TwitchNewsApp />,
         icon: TwitchNewsIcon,
     },
-    /* 
+    /*
     Disabled as sutom web site no longer allow external inclusion
     Need a local instance to fix
     {

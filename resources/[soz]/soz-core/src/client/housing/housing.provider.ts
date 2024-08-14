@@ -52,7 +52,7 @@ export class HousingProvider {
 
     @OnEvent(ClientEvent.HOUSING_REQUEST_ENTER)
     public async requestEnter(propertyId: number, apartmentId: number, target: number) {
-        const confirmed = await this.notifier.notifyWithConfirm(
+        const [confirmed] = await this.notifier.notifyWithConfirm(
             "Une personne souhaite entrer dans votre habitation.~n~Faites ~g~Y~s~ pour l'accepter ou ~r~N~s~ pour la refuser"
         );
 

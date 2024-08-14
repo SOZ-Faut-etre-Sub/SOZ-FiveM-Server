@@ -1,19 +1,25 @@
 import './assets/BankApp.css';
 
 import { Transition } from '@headlessui/react';
+import { CreditCardIcon, DocumentTextIcon, SwitchVerticalIcon } from '@heroicons/react/solid';
+import { AppContent } from '@ui/components/AppContent';
 import { AppTitle } from '@ui/components/AppTitle';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 
 import { AppWrapper } from '../../ui/components/AppWrapper';
+import { NavBarButton, NavBarContainer } from '../../ui/components/NavBar';
 import { useBackground } from '../../ui/hooks/useBackground';
 import { FullPageWithHeader } from '../../ui/layout/FullPageWithHeader';
 import { BankHome } from './pages/BankHome';
+import HistoryList from './pages/HistoryList';
+import InvoiceList from './pages/InvoiceList';
 
 export const BankApp = memo(() => {
     const [t] = useTranslation();
     const backgroundClass = useBackground();
+    const { pathname } = useLocation();
 
     return (
         <FullPageWithHeader className={backgroundClass}>
@@ -28,10 +34,27 @@ export const BankApp = memo(() => {
                 leaveTo="scale-[0.0] opacity-0"
             >
                 <AppWrapper>
-                    <AppTitle title={t('APPS_BANK')} isBigHeader={true} />
-                    <Routes>
-                        <Route index element={<BankHome />} />
-                    </Routes>
+                    {pathname !== '/bank' && <AppTitle title={t('APPS_BANK')} isBigHeader />}
+
+                    <AppContent scrollable={false} className="pb-20">
+                        <Routes>
+                            <Route index element={<BankHome />} />
+                            <Route path="/history" element={<HistoryList />} />
+                            <Route path="/invoices" element={<InvoiceList />} />
+                        </Routes>
+                    </AppContent>
+
+                    <NavBarContainer hasBigHeader={pathname !== '/bank'} hasNoTitle={pathname === '/bank'}>
+                        <NavBarButton active={pathname === '/bank'} path={'/bank'}>
+                            <CreditCardIcon className="w-5 h-5" /> {t('BANK.NAVBAR_DASHBOARD')}
+                        </NavBarButton>
+                        <NavBarButton active={pathname === '/bank/history'} path={'/bank/history'}>
+                            <SwitchVerticalIcon className="w-5 h-5" /> {t('BANK.NAVBAR_HISTORY')}
+                        </NavBarButton>
+                        <NavBarButton active={pathname === '/bank/invoices'} path={'/bank/invoices'}>
+                            <DocumentTextIcon className="w-5 h-5" /> {t('BANK.NAVBAR_INVOICES')}
+                        </NavBarButton>
+                    </NavBarContainer>
                 </AppWrapper>
             </Transition>
         </FullPageWithHeader>

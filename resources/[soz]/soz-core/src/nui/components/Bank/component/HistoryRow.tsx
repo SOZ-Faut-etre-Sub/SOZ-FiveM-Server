@@ -2,21 +2,33 @@ import { MinusIcon, PlusIcon } from '@heroicons/react/solid';
 import classnames from 'classnames';
 import React, { FunctionComponent } from 'react';
 
-import { BankAccount, BankStatement } from '../../../../shared/bank';
+import { BankAccount, BankContact, BankStatement } from '../../../../shared/bank';
 import { moneyFormat } from '../utils/format';
+import { TextWithCopy } from './TextWithCopy';
 
 interface HistoryRowProps {
     account: BankAccount;
     history: BankStatement;
+    contacts?: BankContact[];
 }
 
-export const HistoryRow: FunctionComponent<HistoryRowProps> = ({ account, history }) => {
-    const isSource = history.source_accountid === account.id || history.source_accountid === '';
+export const HistoryRow: FunctionComponent<HistoryRowProps> = ({ account, contacts, history }) => {
+    const isSource = history.source_accountid === account.id;
 
     const Icon = isSource ? MinusIcon : PlusIcon;
     const title = isSource ? 'Paiement à' : 'Virement de';
-    const target = isSource ? history.target_label : history.source_label;
+    const targetAccount = isSource ? history.target_accountid : history.source_accountid;
+    const targetLabel = isSource ? history.target_label : history.source_label;
     const targetImage = (isSource ? history.target_accountid : history.source_accountid).replace('offshore_', '');
+
+    const targetWithLabel = () => {
+        const contact = contacts?.find(c => c.accountid === targetAccount);
+        if (contact) {
+            return `${contact.label} (${contact.accountid})`;
+        }
+
+        return targetLabel;
+    };
 
     return (
         <div className="flex items-center gap-4">
@@ -27,18 +39,20 @@ export const HistoryRow: FunctionComponent<HistoryRowProps> = ({ account, histor
                 })}
             />
             <div className="flex flex-col min-w-0 grow">
-                {history.source_accountid === '' ? (
-                    <span>Retrait éffectué depuis un ATM</span>
+                {history.source_accountid === '' || history.target_accountid === '' ? (
+                    <span>Action effectué sur votre compte</span>
                 ) : (
                     <span className="flex items-center gap-1.5">
                         {title}
                         <img
                             className="w-5 h-5"
                             src={`/public/images/society/${targetImage}.webp`}
-                            alt={target}
+                            alt={targetLabel}
                             onError={e => (e.currentTarget.style.display = 'none')}
                         ></img>
-                        <strong className="font-semibold">{target}</strong>
+                        <TextWithCopy text={targetAccount} className="font-semibold">
+                            {targetWithLabel()}
+                        </TextWithCopy>
                     </span>
                 )}
                 <span className="text-sm truncate">{history.reason}</span>

@@ -14,6 +14,7 @@ import { TransferActionForm } from '../component/TransferActionForm';
 import { moneyFormat } from '../utils/format';
 
 export interface DashboardProps {
+    bankType: string;
     account: BankAccount;
     contacts: BankContact[];
     history: BankStatement[];
@@ -27,6 +28,7 @@ export const DashboardPage: FunctionComponent<DashboardProps> = ({
     history,
     showIban,
     showCreateOffshoreAccount,
+    bankType,
 }) => {
     const [styles] = useSpring(
         () => ({
@@ -34,7 +36,7 @@ export const DashboardPage: FunctionComponent<DashboardProps> = ({
             to: { y: 0, opacity: 1 },
             reset: true,
         }),
-        [account]
+        [account.id]
     );
 
     const createOffshoreAccount = async () => {
@@ -68,14 +70,14 @@ export const DashboardPage: FunctionComponent<DashboardProps> = ({
                         <h2 className="uppercase text-sm font-light text-gray-300">Transactions récentes</h2>
 
                         <div className="h-[65%] overflow-y-auto scrollbar-thin scrollbar-thumb-white/20">
-                            <HistoryTable account={account} history={history.slice(0, 10)} />
+                            <HistoryTable account={account} history={history.slice(0, 10)} contacts={contacts} />
                         </div>
                     </div>
                 </div>
 
                 {/* Right pane */}
                 <div className="w-2/6 space-y-10">
-                    <QuickActionForm account={account} />
+                    <QuickActionForm account={account} bankType={bankType} />
                     <TransferActionForm account={account} contacts={contacts} />
 
                     {showCreateOffshoreAccount && (

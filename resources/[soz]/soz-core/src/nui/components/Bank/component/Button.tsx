@@ -2,6 +2,7 @@ import React, { forwardRef, PropsWithChildren } from 'react';
 
 interface ButtonProps {
     onClick?: () => void;
+    disabled?: boolean;
 }
 
 export const Button = forwardRef<HTMLButtonElement, PropsWithChildren<ButtonProps>>((props, ref) => {

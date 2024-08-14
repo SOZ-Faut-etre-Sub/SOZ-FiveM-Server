@@ -1,10 +1,11 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
 import { Logger } from '@core/logger';
+import { BankStatementsService } from '@public/server/bank/bank.statements.service';
 import { Monitor } from '@public/server/monitor/monitor';
 import { Notifier } from '@public/server/notifier';
 import { BankAccountRepository } from '@public/server/repository/bank.account.repository';
 import { BankFarmRepository } from '@public/server/repository/bank.farm.repository';
-import { BankActionType, BankMoneyType } from '@public/shared/bank';
+import { BankAccount, BankActionType, BankMoneyType } from '@public/shared/bank';
 
 import { PrismaService } from '../database/prisma.service';
 import { QBCore } from '../qbcore';
@@ -32,6 +33,9 @@ export class BankService {
     @Inject(Monitor)
     private monitor: Monitor;
 
+    @Inject(BankStatementsService)
+    private bankStatementsService: BankStatementsService;
+
     public async transferCashMoney(
         source: number,
         accountId: string,
@@ -40,6 +44,11 @@ export class BankService {
         amount: number = 0,
         allowOverflow = false
     ): Promise<boolean> {
+        if (amount <= 0) {
+            this.logger.error(`Invalid amount ${amount}`);
+            return false;
+        }
+
         const player = this.QBCore.getPlayer(source);
         if (!player) {
             this.logger.error(`Player ${source} not found`);
@@ -54,60 +63,26 @@ export class BankService {
 
         const playerMoney = player.Functions.GetMoney(moneyType);
         if (type === 'deposit' && Number(playerMoney) < amount) {
-            this.notifier.advancedNotify(
-                source,
-                'Maze Banque',
-                `Dépot: ~r~$${amount}`,
-                'Fond insuffisant',
-                'CHAR_BANK_MAZE',
-                'error'
-            );
+            this.bankNotify(source, bankAccount, `Dépot: ~r~$${amount}`, 'Fond insuffisant', 'error');
             return false;
         }
 
         if (type === 'deposit') {
             if (!player.Functions.RemoveMoney(moneyType, amount)) {
-                this.notifier.advancedNotify(
-                    source,
-                    'Maze Banque',
-                    `Dépot: ~r~$${amount}`,
-                    'Fond insuffisant',
-                    'CHAR_BANK_MAZE',
-                    'error'
-                );
+                this.bankNotify(source, bankAccount, `Dépot: ~r~$${amount}`, 'Fond insuffisant', 'error');
                 return false;
             }
 
             if (!(await this.bankAccountRepository.addMoney(bankAccount.id, amount, moneyType, allowOverflow))) {
                 player.Functions.AddMoney(moneyType, amount);
-                this.notifier.advancedNotify(
-                    source,
-                    'Maze Banque',
-                    `Dépôt: ~r~$${amount}`,
-                    'Le coffre est plein',
-                    'CHAR_BANK_MAZE',
-                    'error'
-                );
+                this.bankNotify(source, bankAccount, `Dépôt: ~r~$${amount}`, 'Le coffre est plein', 'error');
                 return false;
             }
 
-            this.notifier.advancedNotify(
-                source,
-                'Maze Banque',
-                `Dépot: ~g~$${amount}`,
-                "Vous avez déposé de l'argent",
-                'CHAR_BANK_MAZE'
-            );
+            this.bankNotify(source, bankAccount, `Dépot: ~g~$${amount}`, "Vous avez déposé de l'argent");
         } else {
             if (!(await this.bankAccountRepository.removeMoney(bankAccount.id, amount, moneyType, allowOverflow))) {
-                this.notifier.advancedNotify(
-                    source,
-                    'Maze Banque',
-                    `Retrait: ~r~$${amount}`,
-                    'Fond insuffisant',
-                    'CHAR_BANK_MAZE',
-                    'error'
-                );
+                this.bankNotify(source, bankAccount, `Retrait: ~r~$${amount}`, 'Fond insuffisant', 'error');
                 return false;
             }
 
@@ -115,13 +90,7 @@ export class BankService {
                 return false;
             }
 
-            this.notifier.advancedNotify(
-                source,
-                'Maze Banque',
-                `Retrait: ~r~$${amount}`,
-                "Vous avez retiré de l'argent",
-                'CHAR_BANK_MAZE'
-            );
+            this.bankNotify(source, bankAccount, `Retrait: ~r~$${amount}`, "Vous avez retiré de l'argent");
         }
 
         if (['housestorages', 'safestorages'].includes(bankAccount.type)) {
@@ -134,14 +103,12 @@ export class BankService {
         }
 
         if (!['housestorages'].includes(bankAccount.type)) {
-            await this.prismaService.bank_statements.create({
-                data: {
-                    source_accountid: '',
-                    target_accountid: bankAccount.id,
-                    amount: amount,
-                    reason: "dépôt d'argent",
-                },
-            });
+            await this.bankStatementsService.createStatement(
+                type === 'withdraw' ? bankAccount.id : '',
+                type === 'deposit' ? bankAccount.id : '',
+                amount,
+                type === 'deposit' ? "Dépôt d'argent" : "Retrait d'argent"
+            );
         }
 
         return true;
@@ -155,6 +122,11 @@ export class BankService {
         moneyType: BankMoneyType = 'money',
         isRefund = false
     ): Promise<boolean> {
+        if (amount <= 0) {
+            this.logger.error(`Invalid amount ${amount}`);
+            return false;
+        }
+
         const farmAccount = await this.bankFarmRepository.find(farm);
         if (!farmAccount) {
             this.logger.error(`Farm account ${farm} not found`);
@@ -226,6 +198,11 @@ export class BankService {
         allowOverflow = false,
         reason = ''
     ): Promise<boolean> {
+        if (amount <= 0) {
+            this.logger.error(`Invalid amount ${amount}`);
+            return false;
+        }
+
         const sourceAccount = await this.bankAccountRepository.find(accountSource);
         if (!sourceAccount) {
             this.logger.error(`Account ${accountSource} not found`);
@@ -235,6 +212,11 @@ export class BankService {
         const targetAccount = await this.bankAccountRepository.find(accountTarget);
         if (!targetAccount) {
             this.logger.error(`Account ${accountTarget} not found`);
+            return false;
+        }
+
+        if (sourceAccount.id === targetAccount.id) {
+            this.logger.error(`Source and target accounts are the same`);
             return false;
         }
 
@@ -249,14 +231,7 @@ export class BankService {
             return false;
         }
 
-        await this.prismaService.bank_statements.create({
-            data: {
-                source_accountid: sourceAccount.id,
-                target_accountid: targetAccount.id,
-                amount: amount,
-                reason,
-            },
-        });
+        await this.bankStatementsService.createStatement(sourceAccount.id, targetAccount.id, amount, reason);
 
         this.monitor.traceEvent('transfer_money', {
             player_source: source,
@@ -269,12 +244,12 @@ export class BankService {
     }
 
     public async addAccountMoney(
-        account: any,
+        account: string,
         amount: number,
         type: BankMoneyType = 'money',
         allowOverflow = false
     ): Promise<boolean> {
-        return this.bankAccountRepository.addMoney(account.id, amount, type, allowOverflow);
+        return this.bankAccountRepository.addMoney(account, amount, type, allowOverflow);
     }
 
     public async clearAccount(targetAccount: string) {
@@ -286,5 +261,20 @@ export class BankService {
         if (!account) return;
 
         return account[type];
+    }
+
+    protected bankNotify(
+        source: number,
+        bankAccount: BankAccount,
+        title: string,
+        message: string,
+        type: 'success' | 'error' = 'success'
+    ) {
+        if (['housestorages', 'safestorages'].includes(bankAccount.type)) {
+            this.notifier.notify(source, `${title}~s~~n~${message}`, type);
+            return;
+        }
+
+        this.notifier.advancedNotify(source, 'Fleeca Banque', title, message, 'CHAR_BANK_MAZE', type);
     }
 }

@@ -1,7 +1,7 @@
-import { InvoicesEvents } from '@typings/app/invoices';
-import { ServerPromiseResp } from '@typings/common';
 import { useCallback } from 'react';
 
+import { InvoicesEvents } from '../../../../../typings/app/invoices';
+import { ServerPromiseResp } from '../../../../../typings/common';
 import { fetchNui } from '../../../utils/fetchNui';
 
 interface InvoicesAPIValue {

@@ -3,18 +3,19 @@ import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
+import { wait } from '../../core/utils';
 import { BankUiData } from '../../shared/bank';
 import { ClientEvent } from '../../shared/event/client';
 import { ServerEvent } from '../../shared/event/server';
 import { JobType } from '../../shared/job';
 import { toVector4Object } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
-import { AnimationService } from '../animation/animation.service';
 import { BlipFactory } from '../blip';
 import { ItemService } from '../item/item.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { PlayerService } from '../player/player.service';
 import { TargetFactory, TargetOptions } from '../target/target.factory';
+import { BankService } from './bank.service';
 
 @Provider()
 export class BankProvider {
@@ -30,8 +31,8 @@ export class BankProvider {
     @Inject(ItemService)
     private itemService: ItemService;
 
-    @Inject(AnimationService)
-    private animationService: AnimationService;
+    @Inject(BankService)
+    private bankService: BankService;
 
     @Inject(PlayerService)
     private playerService: PlayerService;
@@ -90,26 +91,17 @@ export class BankProvider {
                         {
                             label: 'Accéder aux comptes',
                             icon: 'c:bank/compte_personal.png',
-                            action: async () => {
-                                await this.animationService.playAnimation({
-                                    base: {
-                                        dictionary: 'anim@mp_atm@enter',
-                                        name: 'enter',
-                                        blendInSpeed: 8.0,
-                                        blendOutSpeed: -8.0,
-                                        duration: 3000,
-                                        options: {
-                                            onlyUpperBody: true,
-                                        },
-                                        playbackRate: 0,
-                                        lockX: false,
-                                        lockY: false,
-                                        lockZ: false,
-                                    },
-                                });
+                            action: async entity => {
+                                TaskTurnPedToFaceEntity(PlayerPedId(), entity, 500);
+                                await wait(500);
+
+                                await this.bankService.triggerAtmAnimation('enter');
 
                                 const accountUiData = await emitRpc<BankUiData>(RpcServerEvent.BANK_GET_ACCOUNT_UI);
-                                this.nuiDispatch.dispatch('bank', 'UpdateAccountData', accountUiData);
+                                this.nuiDispatch.dispatch('bank', 'UpdateAccountData', {
+                                    ...accountUiData,
+                                    bankType: bank,
+                                });
                                 this.nuiDispatch.dispatch('bank', 'ShowAccount', true);
                             },
                             blackoutGlobal: true,

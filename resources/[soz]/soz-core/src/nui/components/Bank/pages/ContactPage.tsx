@@ -17,6 +17,7 @@ import { moneyFormat } from '../utils/format';
 import { DashboardProps } from './DashboardPage';
 
 interface HistoryProps extends DashboardProps {
+    bankType: string;
     account: BankAccount;
     contacts: BankContact[];
 }
@@ -26,7 +27,7 @@ interface AddContactFormInputs {
     accountid: string;
 }
 
-export const ContactPage: FunctionComponent<HistoryProps> = ({ account, contacts }) => {
+export const ContactPage: FunctionComponent<HistoryProps> = ({ bankType, account, contacts }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const styles = useSpring({
@@ -252,7 +253,7 @@ export const ContactPage: FunctionComponent<HistoryProps> = ({ account, contacts
                         </div>
                     </Card>
 
-                    <QuickActionForm account={account} />
+                    <QuickActionForm bankType={bankType} account={account} />
                 </div>
             </animated.div>
         </div>

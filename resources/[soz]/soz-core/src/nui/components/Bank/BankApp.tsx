@@ -6,6 +6,8 @@ import { GiPalmTree } from 'react-icons/gi';
 import { MemoryRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { BankUiData } from '../../../shared/bank';
+import { NuiEvent } from '../../../shared/event/nui';
+import { fetchNui } from '../../fetch';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 import { AppContent } from './component/AppContent';
 import { ApplicationContainer } from './component/Application';
@@ -18,25 +20,33 @@ import { OffshorePage } from './pages/OffshorePage';
 
 export const BankApp: FunctionComponent = () => {
     const [showApp, setShowApp] = useState<boolean>(false);
+    const [keepFocus, setKeepFocus] = useState<boolean>(false);
+
     const [data, setData] = useState<BankUiData>({} as BankUiData);
 
-    const onKeyUpReceived = (event: KeyboardEvent) => {
-        if (event.key === 'Escape') {
-            setShowApp(false);
-        }
+    const resetApp = async () => {
+        setShowApp(false);
+
+        await fetchNui(NuiEvent.BankAnimation, { type: 'exit' });
+        setKeepFocus(false);
     };
 
-    useNuiFocus(showApp, showApp, false);
+    const onKeyUpReceived = (event: KeyboardEvent) => {
+        if (event.key === 'Escape') resetApp();
+    };
+
+    useNuiFocus(keepFocus, keepFocus, false);
 
     useNuiEvent('bank', 'ShowAccount', (data: boolean) => {
         setShowApp(data);
+        setKeepFocus(data);
     });
 
     useNuiEvent('bank', 'UpdateAccountData', (data: BankUiData) => {
         setData(data);
     });
 
-    useNuiEvent('bank', 'CloseInterface', () => setShowApp(false));
+    useNuiEvent('bank', 'CloseInterface', resetApp);
 
     useEffect(() => {
         window.addEventListener('keyup', onKeyUpReceived);
@@ -51,7 +61,7 @@ export const BankApp: FunctionComponent = () => {
     }
 
     return (
-        <ApplicationContainer size="full" onClickOutside={() => setShowApp(false)}>
+        <ApplicationContainer size="full" onClickOutside={resetApp}>
             <Transition
                 as={AppContent}
                 show={showApp}
@@ -118,7 +128,7 @@ export const BankApp: FunctionComponent = () => {
                         </div>
                         <MenuLink
                             title="Se déconnecter"
-                            onClick={() => setShowApp(false)}
+                            onClick={() => resetApp()}
                             icon={<FaArrowRightFromBracket className="h-4 w-4" />}
                             className="hover:bg-red-500/50"
                         />
@@ -130,6 +140,7 @@ export const BankApp: FunctionComponent = () => {
                                 path="/personal"
                                 element={
                                     <DashboardPage
+                                        bankType={data.bankType}
                                         account={data.accounts.personal}
                                         contacts={data.contacts}
                                         history={data.history.personal}
@@ -141,8 +152,10 @@ export const BankApp: FunctionComponent = () => {
                                 path="/personal/history"
                                 element={
                                     <HistoryPage
+                                        bankType={data.bankType}
                                         account={data.accounts.personal}
                                         history={data.history.personal}
+                                        contacts={data.contacts}
                                         showIban
                                     />
                                 }
@@ -153,6 +166,7 @@ export const BankApp: FunctionComponent = () => {
                                 path="/enterprise"
                                 element={
                                     <DashboardPage
+                                        bankType={data.bankType}
                                         account={data.accounts.enterprise}
                                         contacts={data.contacts}
                                         history={data.history.enterprise}
@@ -163,7 +177,12 @@ export const BankApp: FunctionComponent = () => {
                             <Route
                                 path="/enterprise/history"
                                 element={
-                                    <HistoryPage account={data.accounts.enterprise} history={data.history.enterprise} />
+                                    <HistoryPage
+                                        bankType={data.bankType}
+                                        account={data.accounts.enterprise}
+                                        history={data.history.enterprise}
+                                        contacts={data.contacts}
+                                    />
                                 }
                             />
 
@@ -171,7 +190,11 @@ export const BankApp: FunctionComponent = () => {
                             <Route
                                 path="/offshore"
                                 element={
-                                    <OffshorePage account={data.accounts.offshore} history={data.history.offshore} />
+                                    <OffshorePage
+                                        bankType={data.bankType}
+                                        account={data.accounts.offshore}
+                                        history={data.history.offshore}
+                                    />
                                 }
                             />
 
@@ -180,6 +203,7 @@ export const BankApp: FunctionComponent = () => {
                                 path="/settings/contacts"
                                 element={
                                     <ContactPage
+                                        bankType={data.bankType}
                                         account={data.accounts.personal}
                                         contacts={data.contacts}
                                         history={data.history.personal}

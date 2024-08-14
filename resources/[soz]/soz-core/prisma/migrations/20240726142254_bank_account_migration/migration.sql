@@ -18,3 +18,7 @@ update `bank_accounts`
 set accountid=gangid
 where account_type in ('gang')
   and `gangid` is not null;
+
+-- Delete all offshore accounts
+delete from `bank_accounts`
+where account_type = 'offshore';
