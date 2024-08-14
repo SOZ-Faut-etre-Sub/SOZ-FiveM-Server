@@ -10189,6 +10189,18 @@ QBShared.Items = {
         ['description'] = "Cet appat musclé permettra d'aller rapidement au contact des animaux marin, la prise devrait arriver plus rapidement.",
         ['illustrator'] = '.Moustash'
     },
+    ['basic_bait'] = {
+        ['name'] = 'basic_bait',
+        ['label'] = "Appât Classique",
+        ['weight'] = 100,
+        ['useable'] = false,
+        ['type'] = 'fishing_bait',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Un appât tout ce qu'il y'a de plus normal.",
+        ['illustrator'] = '.NariieL'
+    },
     ['bin_bait'] = {
         ['name'] = 'bin_bait',
         ['label'] = "Attrappe-Poubelle",
