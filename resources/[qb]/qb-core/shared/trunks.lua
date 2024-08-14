@@ -156,4 +156,7 @@ QBShared.Trunks = {
     [GetHashKey('benson')] = { slot = 50, weight = 250000 },
     [GetHashKey('tractor2')] = { slot = 50, weight = 20000 },
     [GetHashKey('graintrailer')] = { slot = 50, weight = 100000 },
+
+    -- Other
+    [GetHashKey('vagrant')] = { slot = 10, weight = 10000 },
 }
