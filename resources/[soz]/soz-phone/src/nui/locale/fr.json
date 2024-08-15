@@ -225,7 +225,8 @@
                 "BLIZZARD": "Blizzard",
                 "SNOWLIGHT": "Neige légère",
                 "XMAS": "Neige",
-                "HALLOWEEN": "Apocalyptique"
+                "HALLOWEEN": "Apocalyptique",
+                "SANDSTORM": "Tempête de sable"
             },
             "LOADING": "Récupération de la météo..."
         },

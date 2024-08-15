@@ -14,6 +14,7 @@ import {
     NeutralIcon,
     NeutralNightIcon,
     RainIcon,
+    SandStormIcon,
     SmogDayIcon,
     SmogNightIcon,
     SnowIcon,
@@ -53,13 +54,17 @@ export const WeatherList = memo(() => {
 
     const getIcon = (icon: string, size: string, isDay: boolean, className?: string) => {
         switch (icon) {
+            case 'EXTRASUNNY.DAY':
+                return <SunnyDayIcon className={className || ''} width={size} height={size} />;
+            case 'EXTRASUNNY.NIGHT':
+                return <SunnyNightIcon className={className || ''} width={size} height={size} />;
             case 'EXTRASUNNY':
-            case 'CLEAR': {
+            case 'CLEAR':
                 if (isDay) {
                     return <SunnyDayIcon className={className || ''} width={size} height={size} />;
+                } else {
+                    return <SunnyNightIcon className={className || ''} width={size} height={size} />;
                 }
-                return <SunnyNightIcon className={className || ''} width={size} height={size} />;
-            }
             case 'CLOUDS':
             case 'OVERCAST': {
                 return <CloudsIcon className={className || ''} width={size} height={size} />;
@@ -104,6 +109,9 @@ export const WeatherList = memo(() => {
             case 'HALLOWEEN': {
                 return <HalloweenIcon className={className || ''} width={size} height={size} />;
             }
+            case 'SANDSTORM': {
+                return <SandStormIcon className={className || ''} width={size} height={size} />;
+            }
         }
     };
 
@@ -122,21 +130,31 @@ export const WeatherList = memo(() => {
         );
     }
 
+    function fixWeatherName(weather: string, timeObject: any): string {
+        const day = isDay(timeObject) ? 'DAY' : 'NIGHT';
+        if (weather.toUpperCase() == 'EXTRASUNNY') {
+            weather = 'EXTRASUNNY.' + day;
+        } else if (weather.toUpperCase() == 'BLIZZARD') {
+            //meteor
+            weather = 'SANDSTORM';
+        } else {
+            weather = weather.toUpperCase();
+        }
+        return weather;
+    }
+
     if (forecasts && forecasts.length) {
         const timeObject = extractTime(time);
-        let day = isDay(timeObject) ? 'DAY' : 'NIGHT';
-        const currentWeatherForecastKey =
-            'WEATHER.FORECASTS.' +
-            (forecasts[0].weather.toUpperCase() === 'EXTRASUNNY'
-                ? 'EXTRASUNNY.' + day
-                : forecasts[0].weather.toUpperCase());
+        const day = isDay(timeObject) ? 'DAY' : 'NIGHT';
+        const curWeather = fixWeatherName(forecasts[0].weather, timeObject);
+        const currentWeatherForecastKey = 'WEATHER.FORECASTS.' + curWeather;
         advanceTime(timeObject, forecasts[0].duration);
 
         return (
             <AppContent>
                 <div className="m-auto pt-1 pb-3 flex flex-col w-11/12 h-full justify-between text-white font-thin">
                     <div className="mt-40 m-auto text-center">
-                        {getIcon(forecasts[0].weather, '100px', day === 'DAY', 'm-auto')}
+                        {getIcon(curWeather, '100px', day === 'DAY', 'm-auto')}
                         <h1 className="text-3xl">{t(currentWeatherForecastKey)}</h1>
                         <h1 className="flex-auto text-5xl">{forecasts[0].temperature}°C</h1>
                     </div>
@@ -144,12 +162,8 @@ export const WeatherList = memo(() => {
                         <p className="mb-2">Prévisions</p>
                         <ul className="p-2 bg-opacity-10 bg-black rounded">
                             {forecasts.slice(1).map((forecast, index) => {
-                                day = isDay(timeObject) ? 'DAY' : 'NIGHT';
-                                const weatherForecastKey =
-                                    'WEATHER.FORECASTS.' +
-                                    (forecast.weather.toUpperCase() === 'EXTRASUNNY'
-                                        ? 'EXTRASUNNY.' + day
-                                        : forecast.weather.toUpperCase());
+                                const weather = fixWeatherName(forecast.weather, timeObject);
+                                const weatherForecastKey = 'WEATHER.FORECASTS.' + weather;
                                 advanceTime(timeObject, forecast.duration);
                                 return (
                                     <li
@@ -157,7 +171,7 @@ export const WeatherList = memo(() => {
                                         key={'forecast-' + index}
                                     >
                                         <div className="flex">
-                                            {getIcon(forecast.weather, '2em', day === 'DAY')}
+                                            {getIcon(weather, '2em', day === 'DAY')}
                                             <span className="ml-2 align-middle">{t(weatherForecastKey)}</span>
                                         </div>
                                         <div>

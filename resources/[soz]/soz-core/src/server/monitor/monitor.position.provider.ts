@@ -19,6 +19,10 @@ export class MonitorPositionProvider {
 
     @Tick(5000)
     public async logPlayerPositions() {
+        if (GetConvar('disable_clickhouse', 'false') == 'true') {
+            return;
+        }
+
         const players = this.serverStateService.getPlayers();
         const values = [];
 
