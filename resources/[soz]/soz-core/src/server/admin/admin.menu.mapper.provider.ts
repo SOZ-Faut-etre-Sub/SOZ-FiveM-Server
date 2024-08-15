@@ -1,3 +1,5 @@
+import { TYPE_LABEL } from '@public/shared/housing/upgrades';
+
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
@@ -6,6 +8,8 @@ import { Zone, ZoneTyped } from '../../shared/polyzone/box.zone';
 import { RpcServerEvent } from '../../shared/rpc';
 import { HousingProvider } from '../housing/housing.provider';
 import { InventoryManager } from '../inventory/inventory.manager';
+import { Notifier } from '../notifier';
+import { PlayerAppearanceService } from '../player/player.appearance.service';
 import { PlayerService } from '../player/player.service';
 import { HousingRepository } from '../repository/housing.repository';
 import { SenateRepository } from '../repository/senate.repository';
@@ -30,6 +34,12 @@ export class AdminMenuMapperProvider {
 
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
+
+    @Inject(PlayerAppearanceService)
+    private playerAppearanceService: PlayerAppearanceService;
+
+    @Inject(Notifier)
+    private notifier: Notifier;
 
     @Rpc(RpcServerEvent.ADMIN_MAPPER_SET_APARTMENT_PRICE)
     public async setApartmentPrice(source: number, apartmentId: number, price: number): Promise<Property[]> {
@@ -221,7 +231,23 @@ export class AdminMenuMapperProvider {
         if (apartementTier.tier !== undefined) {
             this.inventoryManager.setHouseStashAndFridgeMaxWeightFromTier(apartment.identifier, apartementTier.tier);
         }
+        if (apartementTier.cloth_tier !== undefined) {
+            if (apartment.owner !== null) {
+                this.playerAppearanceService.trunckateCloakroom(apartment.owner, apartementTier.cloth_tier);
+            }
+            if (apartment.roommate !== null) {
+                this.playerAppearanceService.trunckateCloakroom(apartment.roommate, apartementTier.cloth_tier);
+            }
+        }
+
         await this.housingRepository.setApartmentTier(apartment.id, apartementTier);
+        this.notifier.notify(
+            source,
+            `Vous venez ~g~d'améliorer~s~ l'habitation ~b~${apartment.identifier}~s~:<br>- ${Object.keys(apartementTier)
+                .map(tier => `${TYPE_LABEL[tier]} au palier ~g~${apartementTier[tier] + 1}~s~`)
+                .join('<br>- ')}`,
+            'success'
+        );
 
         return this.housingRepository.get();
     }
