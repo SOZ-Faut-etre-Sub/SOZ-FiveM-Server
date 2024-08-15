@@ -31,7 +31,7 @@ export const AtmApp: FunctionComponent = () => {
         handleSubmit,
         reset,
         setValue,
-        formState: { errors },
+        formState: { errors, isSubmitting },
     } = useForm<AtmAppInputs>({ mode: 'onChange' });
 
     const resetApp = async () => {
@@ -112,13 +112,13 @@ export const AtmApp: FunctionComponent = () => {
                                         min: 1,
                                         max: account?.atm?.config?.maxMoney,
                                         required: true,
-                                        onChange: e => setValue('withdraw', parseInt(e.target.value)),
+                                        onBlur: e => setValue('withdraw', parseInt(e.target.value) || undefined),
                                     })}
                                     placeholder="1000"
                                     error={errors.withdraw}
                                 />
 
-                                <Button>Retirer</Button>
+                                <Button disabled={isSubmitting}>Retirer</Button>
                             </Card>
                         </form>
 

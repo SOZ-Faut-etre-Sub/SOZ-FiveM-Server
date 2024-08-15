@@ -1,8 +1,0 @@
-@font-face {
-    font-family: "Kredit-Black";
-    src: url(../assets/kredit-back.ttf);
-}
-
-.card-text {
-    font-family: "Kredit-Black", serif;
-}

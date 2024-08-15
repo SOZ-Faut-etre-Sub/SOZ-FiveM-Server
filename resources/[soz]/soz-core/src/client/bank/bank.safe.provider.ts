@@ -26,10 +26,10 @@ export class BankSafeProvider {
 
     @Once(OnceStep.PlayerLoaded)
     public async init() {
-        Object.entries(SocietySafeStorage).forEach(([job, safe]) => {
+        Object.entries(SocietySafeStorage).forEach(([job, zone]) => {
             this.targetFactory.createForBoxZone(
                 `bank:safe:${job}`,
-                BoxZone.fromZone(safe.zone),
+                BoxZone.fromZone(zone),
                 [
                     {
                         label: 'Ouvrir',

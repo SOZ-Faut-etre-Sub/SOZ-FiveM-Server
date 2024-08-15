@@ -5,7 +5,7 @@ import { ClientEvent } from '@public/shared/event/client';
 import { PlayerData } from '@public/shared/player';
 import { toVector2Object, Vector3 } from '@public/shared/polyzone/vector';
 
-import { AtmConfig, HouseSafeStorageTiers, SafeStorageMaxCapacity, SocietySafeStorage } from '../../config/bank';
+import { AtmConfig, HouseSafeStorageTiers, SafeStorageMaxCapacity } from '../../config/bank';
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { AtmType, BankAccount, BankAccountType, BankAtmConfig, BankMoneyType } from '../../shared/bank';
 import { JobPermission, JobType } from '../../shared/job';
@@ -189,7 +189,7 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
             case 'business':
                 return 200_000;
             case 'bank_atm':
-                return AtmConfig[atmType].maxMoney;
+                return AtmConfig[atmType]?.maxMoney ?? 0;
             default:
                 return 0;
         }
@@ -232,7 +232,7 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
 
         const coords = JSON.parse(data.coords) as { x: number; y: number };
         const society = this.jobService.getJob(data.accountid?.replace(/[a-z]+_/, '') as JobType);
-        const safeStorage = SocietySafeStorage[data.accountid?.replace(/safe_/, '')];
+        const safeStorageLabel = `Coffre ${this.jobService.getJob(data.accountid?.replace(/safe_/, '') as JobType)?.label}`;
         const apartment = await this.housingRepository.getApartmentByIdentifier(data.accountid);
 
         switch (data.account_type) {
@@ -250,7 +250,7 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
 
                 break;
             case 'safestorages':
-                accountLabel = safeStorage?.label ?? data.accountid;
+                accountLabel = safeStorageLabel;
                 accountMaxCapacity = SafeStorageMaxCapacity;
                 break;
             case 'offshore':
@@ -258,7 +258,7 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
                 break;
             case 'bank_atm':
                 accountType = 'bank_atm';
-                accountLabel = safeStorage?.label ?? data.accountid;
+                accountLabel = safeStorageLabel;
                 break;
         }
 

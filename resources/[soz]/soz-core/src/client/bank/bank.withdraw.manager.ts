@@ -21,6 +21,12 @@ export class BankWithdrawManager {
         const atmAccount = await emitRpc<BankAccount>(RpcServerEvent.BANK_GET_ACCOUNT, bankAccount, 'bank_atm');
         if (!atmAccount) return false;
 
+        if (identifier.startsWith('pacific')) {
+            identifier = 'pacific1';
+            bankAccount = 'bank_pacific1';
+            atmType = AtmType.PACIFIC;
+        }
+
         const atmConfig = AtmConfig[atmType];
 
         if (atmConfig.maxWithdrawal) {

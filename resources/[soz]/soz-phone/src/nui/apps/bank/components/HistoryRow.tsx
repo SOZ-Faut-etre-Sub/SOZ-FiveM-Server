@@ -19,6 +19,8 @@ export const HistoryRow: FunctionComponent<HistoryRowProps> = ({ statement }) =>
 
     const isSource = (statement: BankStatementItem) => statement.source_accountid === personalAccount;
 
+    const title = isSource(statement) ? 'Paiement à' : 'Virement de';
+
     const targetWithLabel = (statement: BankStatementItem) => {
         const accountId = isSource(statement) ? statement.target_accountid : statement.source_accountid;
 
@@ -46,13 +48,15 @@ export const HistoryRow: FunctionComponent<HistoryRowProps> = ({ statement }) =>
             >
                 <div className="grow min-w-0 overflow-hidden">
                     {statement.source_accountid === '' || statement.target_accountid === '' ? (
-                        <span>Action effectué sur votre compte</span>
+                        <span>Action effectuée sur votre compte</span>
                     ) : (
-                        <span>{targetWithLabel(statement)}</span>
+                        <>
+                            {title} <span>{targetWithLabel(statement)}</span>
+                        </>
                     )}
-
                     {statement.reason && <p className="text-gray-400 text-ellipsis">{statement.reason}</p>}
                 </div>
+
                 <div className="shrink text-right">
                     <span
                         className={cn({

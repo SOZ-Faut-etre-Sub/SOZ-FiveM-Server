@@ -1,5 +1,3 @@
-import './assets/BankApp.css';
-
 import { Transition } from '@headlessui/react';
 import { CreditCardIcon, DocumentTextIcon, SwitchVerticalIcon } from '@heroicons/react/solid';
 import { AppContent } from '@ui/components/AppContent';

@@ -81,6 +81,16 @@ export const BrowserHistoryData: BankStatementItem[] = [
         reason: 'Une raison vraiment mais alors vraiment très longue',
         amount: 100000,
     },
+    {
+        id: 5,
+        date: new Date('2023-01-10 13:29:59').getTime(),
+        source_accountid: 'taxi',
+        source_label: 'Carl Jr',
+        target_accountid: '555Z5555T555',
+        target_label: 'John Doe',
+        reason: '😍',
+        amount: 100000,
+    },
 ];
 
 export const BrowserContactsData: BankContactItem[] = [

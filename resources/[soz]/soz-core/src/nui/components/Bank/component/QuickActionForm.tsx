@@ -39,7 +39,7 @@ export const QuickActionForm: FunctionComponent<QuickActionFormProps> = ({
         handleSubmit,
         reset,
         setValue,
-        formState: { errors },
+        formState: { errors, isSubmitting },
     } = useForm<QuickActionInputs>({ mode: 'onChange' });
 
     const submitForm: SubmitHandler<QuickActionInputs> = async data => {
@@ -83,13 +83,13 @@ export const QuickActionForm: FunctionComponent<QuickActionFormProps> = ({
                         min: 1,
                         max: quickAction === 0 ? account[moneyType] : player.money[moneyType],
                         required: true,
-                        onChange: e => setValue('amount', parseInt(e.target.value)),
+                        onBlur: e => setValue('amount', parseInt(e.target.value) || undefined),
                     })}
                     placeholder="1000"
                     error={errors.amount}
                 />
 
-                <Button>{quickAction === 0 ? 'Retirer' : 'Déposer'}</Button>
+                <Button disabled={isSubmitting}>{quickAction === 0 ? 'Retirer' : 'Déposer'}</Button>
             </form>
         </Card>
     );

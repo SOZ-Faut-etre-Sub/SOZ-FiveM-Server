@@ -42,7 +42,7 @@ export const TransferActionForm: FunctionComponent<TransferActionFormProps> = ({
         handleSubmit,
         reset,
         setValue,
-        formState: { errors },
+        formState: { errors, isSubmitting },
     } = useForm<TransferActionInputs>({ mode: 'onChange' });
 
     const submitForm: SubmitHandler<TransferActionInputs> = async data => {
@@ -72,8 +72,7 @@ export const TransferActionForm: FunctionComponent<TransferActionFormProps> = ({
 
                 <div className="relative rounded-md shadow-sm">
                     <Combobox
-                        value={selected}
-                        onChange={v => {
+                        onChange={(v: BankContact) => {
                             setValue('account', v.accountid);
                             setSelected(v);
                         }}
@@ -163,7 +162,7 @@ export const TransferActionForm: FunctionComponent<TransferActionFormProps> = ({
                         min: 1,
                         max: account.money,
                         required: true,
-                        onChange: e => setValue('amount', parseInt(e.target.value)),
+                        onBlur: e => setValue('amount', parseInt(e.target.value) || undefined),
                     })}
                     placeholder="1000"
                     error={errors.amount}
@@ -178,7 +177,7 @@ export const TransferActionForm: FunctionComponent<TransferActionFormProps> = ({
                     error={errors.reason}
                 />
 
-                <Button>Transférer</Button>
+                <Button disabled={isSubmitting}>Transférer</Button>
             </form>
         </Card>
     );

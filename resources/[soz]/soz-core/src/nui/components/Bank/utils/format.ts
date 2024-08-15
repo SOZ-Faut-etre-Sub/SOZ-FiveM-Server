@@ -19,6 +19,6 @@ export const inputErrorMessage = (type: string): string => {
         case 'minLength':
             return 'Le champ doit contenir plus de caractères';
         case 'maxLength':
-            return 'La raison ne doit pas dépasser 90 caractères';
+            return 'Le champ doit contenir moins de caractères';
     }
 };

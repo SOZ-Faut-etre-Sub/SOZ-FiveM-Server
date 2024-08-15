@@ -39,22 +39,25 @@ export const BankHome = memo(() => {
 
     return (
         <>
-            <div
-                className="overflow-hidden absolute h-[50%] top-2 inset-x-0 bg-cover bg-center -z-10"
-                style={{
-                    backgroundImage: `url(media/backgrounds/back3.jpg)`,
-                }}
-            />
-
-            <div className="absolute inset-x-0 bg-gradient-to-b from-black/50 text-white w-full h-[20%] z-10 mt-2 p-3">
-                <TextWithCopy text={credentials.account}>
-                    IBAN: <span className="font-bold">{credentials.account}</span>
-                </TextWithCopy>
+            <div className="absolute h-[59%] -top-12 inset-x-0">
+                <div
+                    className="h-full w-full bg-cover bg-center object-cover"
+                    style={{
+                        backgroundImage: `url(media/bank/cover.webp)`,
+                    }}
+                />
+                <div className="absolute inset-0 bg-gray-500 mix-blend-multiply" aria-hidden="true" />
             </div>
 
+            <div className="absolute -top-12 inset-x-0 bg-gradient-to-b from-black/50 text-white w-full h-[20%] pt-14 z-10 p-3" />
+
             <div className="relative h-[60%]">
-                <div className="absolute flex flex-col items-center justify-center w-full h-full">
-                    <span className="font-light text-white">Compte principal</span>
+                <div className="absolute flex items-end justify-around w-full h-[10%] mt-12">
+                    <img src="media/bank/logo.webp" alt="Logo" className="h-14" />
+                </div>
+
+                <div className="absolute text-white flex flex-col items-center justify-center w-full h-full">
+                    <span className="font-light">Compte principal</span>
                     <h2
                         className={cn('text-6xl', {
                             'text-red-500': credentials.balance <= 0,
@@ -67,12 +70,15 @@ export const BankHome = memo(() => {
                             maximumFractionDigits: 0,
                         })}
                     </h2>
+                    <TextWithCopy text={credentials.account}>
+                        IBAN: <span className="font-bold">{credentials.account}</span>
+                    </TextWithCopy>
                 </div>
 
-                <div className="absolute flex items-end justify-around w-full h-[90%]">
+                <div className="absolute flex items-end justify-around w-full h-[95%]">
                     {fakeIconList.map(({ title, icon: Icon }, index) => (
-                        <div key={index} className="flex flex-col items-center text-white cursor-not-allowed">
-                            <div className="p-3 h-fit w-fit rounded-full text-white bg-ios-600">
+                        <div key={index} className="flex flex-col items-center text-white">
+                            <div className="p-3 h-fit w-fit rounded-full text-white bg-neutral-500">
                                 <Icon className="h-5 w-5" />
                             </div>
                             <span className="text-xs font-light pt-1">{title}</span>
@@ -81,7 +87,7 @@ export const BankHome = memo(() => {
                 </div>
             </div>
 
-            <ul className="relative space-y-2 h-[45%] w-full">
+            <ul className="relative space-y-2 h-[49%] w-full overflow-auto">
                 {limitedStatements.map(statement => (
                     <HistoryRow key={statement.id} statement={statement} />
                 ))}

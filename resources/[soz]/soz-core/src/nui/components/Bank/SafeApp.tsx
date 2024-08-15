@@ -2,7 +2,6 @@ import { Tab, Transition } from '@headlessui/react';
 import classnames from 'classnames';
 import React, { FunctionComponent, KeyboardEvent, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { BsSafe } from 'react-icons/bs';
 
 import { BankAccount } from '../../../shared/bank';
 import { NuiEvent } from '../../../shared/event/nui';
@@ -37,7 +36,7 @@ export const SafeApp: FunctionComponent = () => {
         handleSubmit,
         reset,
         setValue,
-        formState: { errors },
+        formState: { errors, isSubmitting },
     } = useForm<SafeAppInputs>({ mode: 'onChange' });
 
     const resetApp = async () => {
@@ -116,7 +115,12 @@ export const SafeApp: FunctionComponent = () => {
             >
                 <form onSubmit={handleSubmit(submitForm)} className="flex flex-col w-full justify-around">
                     <div className="flex flex-col justify-center items-center gap-4">
-                        <BsSafe className="h-32 w-32 text-white/50" />
+                        <img
+                            className="h-32 w-32"
+                            src={`/public/images/society/${account.id?.replace(/safe_/, '')}.webp`}
+                            alt={account?.label}
+                            onError={e => (e.currentTarget.style.display = 'none')}
+                        ></img>
                         <div className="flex flex-col items-center">
                             <span className="text-white font-semibold text-lg">{account?.label}</span>
                         </div>
@@ -154,7 +158,7 @@ export const SafeApp: FunctionComponent = () => {
                                     {...register('money', {
                                         min: 1,
                                         max: action === 0 ? account?.money : player.money.money,
-                                        onChange: e => setValue('money', parseInt(e.target.value)),
+                                        onBlur: e => setValue('money', parseInt(e.target.value) || undefined),
                                     })}
                                     placeholder="1000"
                                     disabled={!!watch('markedMoney')}
@@ -183,7 +187,7 @@ export const SafeApp: FunctionComponent = () => {
                                 {...register('markedMoney', {
                                     min: 1,
                                     max: action === 0 ? account?.marked_money : player.money.marked_money,
-                                    onChange: e => setValue('markedMoney', parseInt(e.target.value)),
+                                    onBlur: e => setValue('markedMoney', parseInt(e.target.value) || undefined),
                                 })}
                                 placeholder="1000"
                                 disabled={!!watch('money')}
@@ -192,7 +196,7 @@ export const SafeApp: FunctionComponent = () => {
                         </Card>
                     </div>
 
-                    <Button>{action === 0 ? 'Retirer' : 'Déposer'} l'argent</Button>
+                    <Button disabled={isSubmitting}>{action === 0 ? 'Retirer' : 'Déposer'} l'argent</Button>
                 </form>
             </Transition>
         </ApplicationContainer>

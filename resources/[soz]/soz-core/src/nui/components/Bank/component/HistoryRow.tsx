@@ -40,7 +40,7 @@ export const HistoryRow: FunctionComponent<HistoryRowProps> = ({ account, contac
             />
             <div className="flex flex-col min-w-0 grow">
                 {history.source_accountid === '' || history.target_accountid === '' ? (
-                    <span>Action effectué sur votre compte</span>
+                    <span>Action effectuée sur votre compte</span>
                 ) : (
                     <span className="flex items-center gap-1.5">
                         {title}
