@@ -16,7 +16,7 @@ import { Notifier } from '@public/client/notifier';
 import { NuiDispatch } from '@public/client/nui/nui.dispatch';
 import { NuiMenu } from '@public/client/nui/nui.menu';
 import { ObjectService } from '@public/client/object/object.service';
-import { PropHighlightProvider } from '@public/client/object/prop.highlight.provider';
+import { PropHighlightService } from '@public/client/object/prop.highlight.service';
 import { PlayerService } from '@public/client/player/player.service';
 import { HousingRepository } from '@public/client/repository/housing.repository';
 import { ResourceLoader } from '@public/client/repository/resource.loader';
@@ -51,8 +51,8 @@ export class HousingFournitureProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @Inject(PropHighlightProvider)
-    private propHighlightProvider: PropHighlightProvider;
+    @Inject(PropHighlightService)
+    private propHighlightService: PropHighlightService;
 
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
@@ -244,7 +244,7 @@ export class HousingFournitureProvider {
         const entity = await this.objectService.createObject({
             model: GetHashKey(fourniture.model),
             position: fourniture.position,
-            matrix: new Float32Array(fourniture.matrix),
+            matrix: fourniture.matrix,
             id: `housing_placed_${fourniture.id}`,
         });
 
@@ -277,7 +277,7 @@ export class HousingFournitureProvider {
         this.objectService.deleteObject(placementProp.entity, {
             model: GetHashKey(fourniture.model),
             position: fourniture.position,
-            matrix: new Float32Array(fourniture.matrix),
+            matrix: fourniture.matrix,
             id: `housing_placed_${fourniture.id}`,
         });
         placementProp.entity = null;
@@ -600,7 +600,7 @@ export class HousingFournitureProvider {
     public async doCloseEditor() {
         await this.onLeaveEditorMode();
         await this.resetEditortState();
-        this.propHighlightProvider.unhighlightAllEntities();
+        this.propHighlightService.unhighlightAllEntities();
     }
 
     public async refreshPropPlacementMenuData() {
@@ -634,7 +634,7 @@ export class HousingFournitureProvider {
     @OnNuiEvent(NuiEvent.SelectHousingPropToCreate)
     public async onSelectPropToCreate({ selectedProp }: { selectedProp: HousingProp | null }): Promise<void> {
         if (!selectedProp) {
-            this.propHighlightProvider.unhighlightAllEntities();
+            this.propHighlightService.unhighlightAllEntities();
             await this.despawnDebugProp();
             return;
         }
@@ -644,7 +644,7 @@ export class HousingFournitureProvider {
 
     @OnNuiEvent(NuiEvent.SelectHousingPlacedProp)
     public async onSelectPlacedProp({ prop }: { prop: HousingProp }): Promise<void> {
-        this.propHighlightProvider.unhighlightAllEntities();
+        this.propHighlightService.unhighlightAllEntities();
         if (!prop?.position) {
             return;
         }
@@ -655,7 +655,7 @@ export class HousingFournitureProvider {
         }
 
         if (!this.highlightDisabled) {
-            this.propHighlightProvider.highlightEntities([founitureObj.entity]);
+            this.propHighlightService.highlightEntities([founitureObj.entity]);
         }
     }
 
@@ -690,7 +690,7 @@ export class HousingFournitureProvider {
             id: id,
             model: GetHashKey(propToCreate.model),
             position: coords,
-            matrix: propToCreate.matrix ? new Float32Array(propToCreate.matrix) : null,
+            matrix: propToCreate.matrix ? propToCreate.matrix : null,
             noCollision: false,
         });
 
@@ -974,7 +974,7 @@ export class HousingFournitureProvider {
         if (!this.isMenuOpen() || !IsNuiFocused() || this.isEditorModeOn || !this.lastApartment) {
             if (this.taregetedFourniture) {
                 this.taregetedFourniture = null;
-                this.propHighlightProvider.unhighlightAllEntities();
+                this.propHighlightService.unhighlightAllEntities();
             }
             return;
         }
@@ -984,14 +984,14 @@ export class HousingFournitureProvider {
             placementProp => placementProp.entity === hitEntDebug
         )?.fourniture;
 
-        this.propHighlightProvider.unhighlightAllEntities();
+        this.propHighlightService.unhighlightAllEntities();
         if (!fourniture) {
             this.taregetedFourniture = null;
             return;
         }
 
         if (!this.highlightDisabled) {
-            this.propHighlightProvider.highlightEntities([hitEntDebug]);
+            this.propHighlightService.highlightEntities([hitEntDebug]);
         }
         this.taregetedFourniture = fourniture;
     }

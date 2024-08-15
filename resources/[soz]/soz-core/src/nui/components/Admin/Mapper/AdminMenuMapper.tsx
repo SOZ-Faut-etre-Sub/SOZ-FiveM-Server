@@ -1,5 +1,5 @@
-import { TYPE_LABEL } from '@public/shared/housing/upgrades';
 import { useRepository } from '@public/nui/hook/repository';
+import { TYPE_LABEL } from '@public/shared/housing/upgrades';
 import { RepositoryType } from '@public/shared/repository';
 import { Fragment, FunctionComponent, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';

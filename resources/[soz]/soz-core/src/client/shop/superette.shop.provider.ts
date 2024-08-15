@@ -39,7 +39,7 @@ export class SuperetteShopProvider {
     private logger: Logger;
 
     public openShop(brand: ShopBrand, shop: string) {
-        if (brand != ShopBrand.Zkea && brand != ShopBrand.Ammunation) {
+        if (brand != ShopBrand.Ammunation) {
             const superetteContent: ShopItem[] = [];
             for (let i = 0; i < ShopsContent[brand].length; i++) {
                 const sharedItem: ShopItem = {

@@ -11,7 +11,7 @@ import { PropPlacementProvider } from './prop.placement.provider';
         ObjectEditorProvider,
         PropPlacementProvider,
         CircularCameraProvider,
-        GizmoControlProvider
+        GizmoControlProvider,
     ],
 })
 export class ObjectModule {}

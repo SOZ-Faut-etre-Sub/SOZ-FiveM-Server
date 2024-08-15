@@ -109,7 +109,7 @@ export class ObjectService {
                 }
             }
 
-            this.applyEntityMatrix(entity, new Float32Array(object.matrix));
+            this.applyEntityMatrix(entity, object.matrix);
         } else if (object.growth) {
             this.computeGrowth(entity, object);
         }
@@ -184,13 +184,13 @@ export class ObjectService {
         return true;
     }
 
-    public getEntityMatrix(entity: number): Float32Array {
+    public getEntityMatrix(entity: number): number[] {
         const [f, r, u, a] = GetEntityMatrix(entity);
 
-        return new Float32Array([r[0], r[1], r[2], 0, f[0], f[1], f[2], 0, u[0], u[1], u[2], 0, a[0], a[1], a[2], 1]);
+        return [r[0], r[1], r[2], 0, f[0], f[1], f[2], 0, u[0], u[1], u[2], 0, a[0], a[1], a[2], 1];
     }
 
-    public applyEntityMatrix(entity: number, matrix: Float32Array) {
+    public applyEntityMatrix(entity: number, matrix: number[]) {
         SetEntityMatrix(
             entity,
             matrix[4],
@@ -208,7 +208,7 @@ export class ObjectService {
         );
     }
 
-    public applyEntityNormalizedMatrix(entity: number, matrix: Float32Array) {
+    public applyEntityNormalizedMatrix(entity: number, matrix: number[]) {
         const norm_F = Math.sqrt(matrix[0] ** 2 + matrix[1] ** 2);
         SetEntityMatrix(
             entity,

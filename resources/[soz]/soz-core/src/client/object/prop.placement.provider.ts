@@ -34,6 +34,7 @@ import { ProgressService } from '../progress.service';
 import { ResourceLoader } from '../repository/resource.loader';
 import { CircularCameraProvider } from './circular.camera.provider';
 import { ObjectProvider } from './object.provider';
+import { ObjectService } from './object.service';
 import { PropHighlightService } from './prop.highlight.service';
 
 export const PROP_MAX_DISTANCE = 50.0;
@@ -72,6 +73,9 @@ export class PropPlacementProvider {
 
     @Inject(PlayerPositionProvider)
     private playerPositionProvider: PlayerPositionProvider;
+
+    @Inject(ObjectService)
+    private objectService: ObjectService;
 
     private debugProp: DebugProp | null;
     private isEditorModeOn: boolean;
@@ -426,9 +430,9 @@ export class PropPlacementProvider {
 
         if (changed) {
             if (this.debugProp.collision === false) {
-                this.objectProvider.applyEntityMatrix(entity, Array.from(matrixAsFloat));
+                this.objectService.applyEntityMatrix(entity, Array.from(matrixAsFloat));
             } else {
-                this.applyEntityNormalizedMatrix(entity, Array.from(matrixAsFloat));
+                this.objectService.applyEntityNormalizedMatrix(entity, Array.from(matrixAsFloat));
             }
         }
 
@@ -761,25 +765,6 @@ export class PropPlacementProvider {
         return this.isEditorModeOn;
     }
 
-    public applyEntityNormalizedMatrix = (entity: number, matrix: number[]) => {
-        const norm_F = Math.sqrt(matrix[0] ** 2 + matrix[1] ** 2);
-        SetEntityMatrix(
-            entity,
-            -matrix[1] / norm_F,
-            matrix[0] / norm_F,
-            0, // Right
-            matrix[0] / norm_F,
-            matrix[1] / norm_F,
-            0, // Forward
-            0,
-            0,
-            1, // Up
-            matrix[12],
-            matrix[13],
-            matrix[14] // Position
-        );
-    };
-
     public makeEntityMatrix(entity: number): number[] {
         const [f, r, u, a] = GetEntityMatrix(entity);
 
@@ -812,7 +797,7 @@ export class PropPlacementProvider {
         SetEntityHeading(entity, prop.position[3]);
 
         if (prop.matrix) {
-            this.objectProvider.applyEntityMatrix(entity, prop.matrix);
+            this.objectService.applyEntityMatrix(entity, prop.matrix);
         }
 
         SetEntityAlpha(entity, 200, false);
@@ -856,7 +841,7 @@ export class PropPlacementProvider {
         SetEntityHeading(entity, prop.position[3]);
 
         if (prop.matrix) {
-            this.objectProvider.applyEntityMatrix(entity, prop.matrix);
+            this.objectService.applyEntityMatrix(entity, prop.matrix);
         }
 
         SetEntityInvincible(entity, true);

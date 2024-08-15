@@ -371,24 +371,6 @@ export class ObjectProvider {
         this.loadedObjects = {};
     }
 
-    public applyEntityMatrix(entity: number, matrix: number[]) {
-        SetEntityMatrix(
-            entity,
-            matrix[4],
-            matrix[5],
-            matrix[6], // Right
-            matrix[0],
-            matrix[1],
-            matrix[2], // Forward
-            matrix[8],
-            matrix[9],
-            matrix[10], // Up
-            matrix[12],
-            matrix[13],
-            matrix[14] // Position
-        );
-    }
-
     @Tick(TickInterval.EVERY_MINUTE, 'object-scale')
     public async objectScale() {
         for (const obj of Object.values(this.loadedObjects)) {

@@ -20,7 +20,7 @@ export const PROP_MAX_DISTANCE = 50.0;
 
 type CurrentObject = {
     edited: boolean;
-    matrix: Float32Array;
+    matrix: number[];
     position: Vector4;
     entity: number;
     model: number;
@@ -164,17 +164,17 @@ export class ObjectEditorProvider {
 
         DisableAllControlActions(0);
 
-        const matrix = this.objectService.getEntityMatrix(this.currentObject.entity);
+        const matrix = new Float32Array(this.objectService.getEntityMatrix(this.currentObject.entity));
         const changed = DrawGizmo(matrix as any, `Gismo_editor_${this.currentObject.entity}`);
 
         if (!this.currentObject.options.collision) {
-            this.applyEntityMatrix(this.currentObject.entity, matrix);
+            this.objectService.applyEntityMatrix(this.currentObject.entity, Array.from(matrix));
         } else {
-            this.applyEntityNormalizedMatrix(this.currentObject.entity, matrix);
+            this.objectService.applyEntityNormalizedMatrix(this.currentObject.entity, Array.from(matrix));
         }
 
         if (changed) {
-            this.applyEntityMatrix(this.currentObject.entity, matrix);
+            this.objectService.applyEntityMatrix(this.currentObject.entity, Array.from(matrix));
         }
 
         const position = GetEntityCoords(this.currentObject.entity) as Vector3;
@@ -387,42 +387,6 @@ export class ObjectEditorProvider {
 
         this.currentObject.position = [position[0], position[1], position[2], heading];
         this.currentObject.matrix = this.objectService.getEntityMatrix(this.currentObject.entity);
-    }
-
-    private applyEntityMatrix(entity: number, matrix: Float32Array) {
-        SetEntityMatrix(
-            entity,
-            matrix[4],
-            matrix[5],
-            matrix[6], // Right
-            matrix[0],
-            matrix[1],
-            matrix[2], // Forward
-            matrix[8],
-            matrix[9],
-            matrix[10], // Up
-            matrix[12],
-            matrix[13],
-            matrix[14] // Position
-        );
-    }
-
-    private applyEntityNormalizedMatrix(entity: number, matrix: Float32Array) {
-        SetEntityMatrix(
-            entity,
-            matrix[4],
-            1.0,
-            matrix[6], // Right
-            1.0,
-            matrix[1],
-            matrix[2], // Forward
-            matrix[8],
-            matrix[9],
-            1.0, // Up
-            matrix[12],
-            matrix[13],
-            matrix[14] // Position
-        );
     }
 
     @OnEvent(ClientEvent.OBJECT_PLACE_ITEM)

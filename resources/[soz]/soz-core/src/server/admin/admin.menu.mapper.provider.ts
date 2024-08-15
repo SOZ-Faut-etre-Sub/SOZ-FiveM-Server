@@ -1,7 +1,6 @@
-import { TYPE_LABEL } from '@public/shared/housing/upgrades';
-
 import { OnEvent } from '@public/core/decorators/event';
 import { ServerEvent } from '@public/shared/event';
+import { TYPE_LABEL } from '@public/shared/housing/upgrades';
 
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
