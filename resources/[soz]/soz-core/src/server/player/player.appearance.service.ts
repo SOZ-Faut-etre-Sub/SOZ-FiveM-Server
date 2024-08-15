@@ -153,6 +153,10 @@ export class PlayerAppearanceService {
     }
 
     public clearCloakroom(citizenId: string) {
-        exports['soz-character'].TruncatePlayerCloakroomFromTier(citizenId, 0);
+        this.trunckateCloakroom(citizenId, 0);
+    }
+
+    public trunckateCloakroom(citizenId: string, tier: number) {
+        exports['soz-character'].TruncatePlayerCloakroomFromTier(citizenId, tier);
     }
 }

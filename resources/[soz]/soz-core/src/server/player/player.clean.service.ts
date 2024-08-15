@@ -46,6 +46,7 @@ export class PlayerCleanService {
         const housingOwnerIdentifiers = await this.prismaService.housing_apartment.findMany({
             select: {
                 identifier: true,
+                id: true,
             },
             where: {
                 owner: {
@@ -64,7 +65,18 @@ export class PlayerCleanService {
                 owner: null,
                 roommate: null,
                 tier: null,
+                park_tier: null,
+                money_tier: null,
+                cloth_tier: null,
                 has_parking_place: null,
+            },
+        });
+
+        await this.prismaService.apartment_fourniture.deleteMany({
+            where: {
+                apartment_id: {
+                    in: housingOwnerIdentifiers.map(h => h.id),
+                },
             },
         });
 
@@ -112,6 +124,12 @@ export class PlayerCleanService {
                 },
             },
         });
+
+        for (const house of housingOwnerIdentifiers) {
+            this.monitor.traceEvent('house_owner_cleanup', {
+                house_id: house.identifier,
+            });
+        }
 
         return [housingOwnerUpdated.count, housingRoommateUpdated.count];
     }
