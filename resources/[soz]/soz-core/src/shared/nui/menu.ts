@@ -136,6 +136,8 @@ export enum MenuType {
     SmugglingMenu = 'smuggling',
     SmugglingZoneEditMenu = 'smuggling_zone_edit',
     CyberMenu = 'cyber',
+    GangMenu = 'gang',
+    GangVehiculeMenu = 'gang_vehicule_menu',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {

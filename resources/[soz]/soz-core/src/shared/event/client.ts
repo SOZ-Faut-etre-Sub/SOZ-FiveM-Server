@@ -370,6 +370,7 @@ export enum ClientEvent {
     GANG_VEHBIZ_NPC = 'soz-core:client:gang:veh:npc',
     GANG_VEHBIZ_NPC_RELEASE = 'soz-core:client:gang:veh:npc-release',
     GANG_VEHBIZ_NPC_CHASE = 'soz-core:client:gang:veh:npc-chase',
+    GANG_VEHBIZ_BOX_RESELL_ZONE_HIGHLIGHT = 'soz-core:client:gang:veh:resell-hightlight',
 
     GANG_SMUGGLING_CONNECTED_REFRESH = 'soz-core:client:gang:smuggling:connected-refresh',
     GANG_SMUGGLING_EXPORT_POSITION = 'soz-core:client:gang:smuggling:export-position',

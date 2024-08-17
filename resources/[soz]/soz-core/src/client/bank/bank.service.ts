@@ -69,6 +69,7 @@ export class BankService {
                     position: GetEntityCoords(PlayerPedId()) as Vector3,
                     distance: 1.0,
                 },
+                originMenuType: this.nuiMenu.getOpened(),
             }
         );
     }

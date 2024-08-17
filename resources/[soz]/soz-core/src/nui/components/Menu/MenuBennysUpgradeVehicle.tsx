@@ -397,7 +397,12 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
         <Menu type={MenuType.BennysUpgradeVehicle}>
             <MainMenu>
                 <MenuTitle banner={banner}>{crimi ? 'Customisations' : 'Couleur et aspects'}</MenuTitle>
-                <MenuContent>
+                <MenuContent
+                    helpPanel={
+                        data.mode == LSCustomMode.CrimiCusto &&
+                        `${Math.ceil(price / VehicleBusinessCustomPrice)} ${item.label}`
+                    }
+                >
                     <MenuItemSubMenuLink id="colors">Couleur et aspects</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="body">Carrosserie</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="wheel">Roues</MenuItemSubMenuLink>
@@ -411,13 +416,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                     <MenuItemCheckbox onChange={createOnDoorChange(5)} checked={false}>
                         Ouvrir coffre
                     </MenuItemCheckbox>
-                    <MenuItemButton
-                        onConfirm={() => onConfirm()}
-                        description={
-                            data.mode == LSCustomMode.CrimiCusto &&
-                            `${Math.ceil(price / VehicleBusinessCustomPrice)} ${item.label}`
-                        }
-                    >
+                    <MenuItemButton onConfirm={() => onConfirm()}>
                         <div className="flex w-full justify-between items-center">
                             <span>✅ Confirmer les changements</span>
                         </div>

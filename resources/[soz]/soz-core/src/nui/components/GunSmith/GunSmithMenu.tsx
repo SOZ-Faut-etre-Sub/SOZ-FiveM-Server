@@ -164,7 +164,7 @@ const GunSmithWeaponSubMenu: FunctionComponent<{
                     }}
                 >
                     <div className="flex w-full justify-between items-center">
-                        <span>Confirmer les changements</span>
+                        <span>✅ Confirmer les changements</span>
                         <span>${getPrice(price, TaxType.WEAPON).toFixed(0)}</span>
                     </div>
                 </MenuItemButton>

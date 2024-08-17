@@ -604,6 +604,7 @@ export class VehicleGarageProvider {
                     position: garage.zone.center,
                     distance: 5.0,
                 },
+                originMenuType: this.nuiMenu.getOpened(),
             }
         );
     }

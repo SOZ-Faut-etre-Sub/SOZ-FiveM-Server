@@ -87,13 +87,23 @@ export class VehicleCustomProvider {
         }
 
         if (mode == LSCustomMode.CrimiPerfo && crimiPrice) {
+            let message = '';
             for (const itemName of Object.keys(crimiPrice)) {
                 if (!this.inventoryManager.hasEnoughItem(source, itemName, crimiPrice[itemName], true)) {
                     const item = this.itemService.getItem(itemName);
-                    this.notifier.notify(source, `Vous n'avez pas assez de ~r~${item.label}~s~.`, 'error');
-
-                    return originalConfiguration;
+                    message += `~b~${crimiPrice[itemName]}~s~ ~r~${item.label}~s~~n~`;
                 }
+            }
+
+            if (message.length > 0) {
+                this.notifier.notify(
+                    source,
+                    'Vous ne possédez pas les:~n~' +
+                        message +
+                        ' sur vous pour effectuer cette modification de performance.',
+                    'error'
+                );
+                return originalConfiguration;
             }
         }
         if (taxedPrice && mode == LSCustomMode.Normal) {

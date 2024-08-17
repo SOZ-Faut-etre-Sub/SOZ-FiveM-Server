@@ -368,7 +368,7 @@ export class PlayerService {
     public async findCitizenIdFromNames(firstname: string, lastname: string) {
         const playerInfo = await this.prismaService.$queryRaw<
             any[]
-        >`SELECT citizenId FROM player WHERE JSON_EXTRACT(charinfo, "$.firstname") = ${firstname} AND JSON_EXTRACT(charinfo, "$.lastname") = ${lastname}`;
+        >`SELECT citizenId FROM player WHERE JSON_EXTRACT(charinfo, "$.firstname") = ${firstname} AND JSON_EXTRACT(charinfo, "$.lastname") = ${lastname} AND is_default=1`;
 
         if (playerInfo.length == 0) {
             return null;

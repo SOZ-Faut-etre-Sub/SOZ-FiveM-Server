@@ -24,6 +24,7 @@ import {
     MenuItemButton,
     MenuItemSelect,
     MenuItemSelectOptionBox,
+    MenuItemText,
     MenuTitle,
 } from '../Styleguide/Menu';
 
@@ -146,7 +147,13 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
         <Menu type={MenuType.VehicleCustom}>
             <MainMenu>
                 <MenuTitle banner={banner}>{crimi ? 'Performance' : 'LS Customs'}</MenuTitle>
-                <MenuContent>
+                <MenuContent
+                    helpPanel={
+                        data.mode == LSCustomMode.CrimiPerfo &&
+                        crimiPrice().length > 0 &&
+                        crimiPrice().map(elem => <MenuItemText key={'cost_' + elem}>{elem}</MenuItemText>)
+                    }
+                >
                     <MenuItemSelectVehicleCustomLevel
                         value={configuration.modification.engine}
                         option={data.options.modification.engine}
@@ -218,17 +225,9 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
                             <MenuItemSelectOptionBox value={true}>Activé</MenuItemSelectOptionBox>
                         </MenuItemSelect>
                     )}
-                    <MenuItemButton
-                        className="border-t border-white/50"
-                        onConfirm={() => onConfirm()}
-                        description={
-                            data.mode == LSCustomMode.CrimiPerfo &&
-                            crimiPrice().length > 0 &&
-                            crimiPrice().map(elem => <div key={'cost_' + elem}>{elem}</div>)
-                        }
-                    >
+                    <MenuItemButton className="border-t border-white/50" onConfirm={() => onConfirm()}>
                         <div className="flex w-full justify-between items-center">
-                            <span>Confirmer les changements</span>
+                            <span>✅ Confirmer les changements</span>
                             {data.mode == LSCustomMode.Normal && (
                                 <span>
                                     ${' '}

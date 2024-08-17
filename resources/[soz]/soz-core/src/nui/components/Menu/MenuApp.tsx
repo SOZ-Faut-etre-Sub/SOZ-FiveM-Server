@@ -5,6 +5,8 @@ import { ContainerOrderMenu } from '@private/nui/gang/BusinessSmuggling/MenuCont
 import { SmugglingMenu } from '@private/nui/gang/BusinessSmuggling/MenuSmuggling';
 import { MenuSmugglingPrices } from '@private/nui/gang/BusinessSmuggling/MenuSmugglingPrice';
 import { MenuSmugglingEditZone } from '@private/nui/gang/BusinessSmuggling/MenuSmugglingZoneEdit';
+import { MenuGangVehicule } from '@private/nui/gang/BusinessVehicle/MenuGangVehicule';
+import { MenuGang } from '@private/nui/gang/MenuGang';
 import { MenuGangAdmin } from '@private/nui/gang/MenuGangAdmin';
 import { MenuGangMember } from '@private/nui/gang/MenuGangMember';
 import { MenuHubEntryAdmin } from '@private/nui/hub/MenuHubEntryAdmin';
@@ -300,6 +302,8 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.SmugglingMenu}/*`} element={<SmugglingMenu />} />
             <Route path={`/${MenuType.SmugglingZoneEditMenu}/*`} element={<MenuSmugglingEditZone />} />
             <Route path={`/${MenuType.CyberMenu}/*`} element={<MenuCyber />} />
+            <Route path={`/${MenuType.GangMenu}/*`} element={<MenuGang />} />
+            <Route path={`/${MenuType.GangVehiculeMenu}/*`} element={<MenuGangVehicule />} />
         </Routes>
     );
 };
