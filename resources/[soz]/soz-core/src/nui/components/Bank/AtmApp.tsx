@@ -15,6 +15,7 @@ import { Card } from './component/Card';
 import { Header } from './component/Header';
 import { Input } from './component/Input';
 import { MenuLink } from './component/MenuLink';
+import { moneyFormat } from './utils/format';
 
 type AtmAppInputs = {
     withdraw: number;
@@ -110,7 +111,10 @@ export const AtmApp: FunctionComponent = () => {
                                     prefix="$"
                                     {...register('withdraw', {
                                         min: 1,
-                                        max: account?.atm?.config?.maxMoney,
+                                        max: {
+                                            value: account?.atm?.config?.maxMoney,
+                                            message: `La capacité de cet ATM est de ${moneyFormat(account?.atm?.config?.maxMoney)}`,
+                                        },
                                         required: true,
                                         onBlur: e => setValue('withdraw', parseInt(e.target.value) || undefined),
                                     })}

@@ -5,7 +5,7 @@ export const FORMAT_CURRENCY: Intl.NumberFormatOptions = {
 };
 
 export const moneyFormat = (money: number): string => {
-    return money.toLocaleString('en-US', FORMAT_CURRENCY);
+    return money?.toLocaleString('en-US', FORMAT_CURRENCY);
 };
 
 export const inputErrorMessage = (type: string): string => {

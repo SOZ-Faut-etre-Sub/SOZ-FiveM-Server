@@ -46,7 +46,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
             </div>
             {props.error && (
                 <animated.div style={errorStyle} className="text-red-400 text-sm pt-1 px-2">
-                    {props.error && inputErrorMessage(props.error.type)}
+                    {props.error && (props.error.message || inputErrorMessage(props.error.type))}
                 </animated.div>
             )}
         </div>

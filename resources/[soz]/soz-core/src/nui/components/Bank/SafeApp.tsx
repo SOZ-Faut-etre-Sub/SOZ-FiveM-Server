@@ -13,7 +13,7 @@ import { ApplicationContainer } from './component/Application';
 import { Button } from './component/Button';
 import { Card } from './component/Card';
 import { Input } from './component/Input';
-import { FORMAT_CURRENCY } from './utils/format';
+import { moneyFormat } from './utils/format';
 
 type SafeAppInputs = {
     money: number;
@@ -81,7 +81,7 @@ export const SafeApp: FunctionComponent = () => {
             return;
         }
 
-        resetApp();
+        reset();
     };
 
     useEffect(() => {
@@ -148,9 +148,7 @@ export const SafeApp: FunctionComponent = () => {
                             >
                                 <div className="flex justify-between mb-4">
                                     <span className="text-white font-semibold">Argent</span>
-                                    <span className="text-sm text-green-500/70">
-                                        {account?.money.toLocaleString('en-US', FORMAT_CURRENCY)}
-                                    </span>
+                                    <span className="text-sm text-green-500/70">{moneyFormat(account?.money)}</span>
                                 </div>
 
                                 <Input
@@ -175,9 +173,9 @@ export const SafeApp: FunctionComponent = () => {
                             <div className="flex justify-between mb-4">
                                 <span className="text-white font-semibold">Argent marqué</span>
                                 <span className="text-sm text-red-400/70">
-                                    {account?.marked_money.toLocaleString('en-US', FORMAT_CURRENCY)}
+                                    {moneyFormat(account?.marked_money)}
                                     {account?.type === 'housestorages' && (
-                                        <span> / {account?.maxCapacity.toLocaleString('en-US', FORMAT_CURRENCY)}</span>
+                                        <span> / {moneyFormat(account?.maxCapacity)}</span>
                                     )}
                                 </span>
                             </div>

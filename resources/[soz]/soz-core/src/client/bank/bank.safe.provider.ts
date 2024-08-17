@@ -108,6 +108,8 @@ export class BankSafeProvider {
 
             this.nuiDispatch.dispatch('bank_safe', 'UpdateAccountData', account);
         }
+
+        return true;
     }
 
     @OnEvent(ClientEvent.BANK_SAFE_HOUSE_OPEN_UI)

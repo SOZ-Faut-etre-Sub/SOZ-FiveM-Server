@@ -81,14 +81,11 @@ export const ContactPage: FunctionComponent<HistoryProps> = ({ bankType, account
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
                     >
-                        <div className="fixed inset-0 bg-black/25" />
+                        <div className="fixed inset-0 bg-black/25" data-ignore-click-outside={true} />
                     </Transition.Child>
 
-                    <div className="fixed inset-0 overflow-y-auto">
-                        <div
-                            className="flex min-h-full items-center justify-center p-4 text-center"
-                            data-ignore-click-outside={true}
-                        >
+                    <div className="fixed inset-0 overflow-y-auto" data-ignore-click-outside={true}>
+                        <div className="flex min-h-full items-center justify-center p-4 text-center">
                             <Transition.Child
                                 as={Fragment}
                                 enter="ease-out duration-300"
@@ -98,15 +95,8 @@ export const ContactPage: FunctionComponent<HistoryProps> = ({ bankType, account
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                <Dialog.Panel
-                                    className="w-full max-w-md transform overflow-hidden rounded-2xl bg-[#0B302E] p-6 text-left align-middle shadow-xl transition-all"
-                                    data-ignore-click-outside={true}
-                                >
-                                    <Dialog.Title
-                                        as="h3"
-                                        className="text-lg font-medium leading-6 text-gray-100"
-                                        data-ignore-click-outside={true}
-                                    >
+                                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-[#0B302E] p-6 text-left align-middle shadow-xl transition-all">
+                                    <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-100">
                                         Ajouter un bénéficiaire
                                     </Dialog.Title>
 
@@ -216,9 +206,11 @@ export const ContactPage: FunctionComponent<HistoryProps> = ({ bankType, account
                                     }}
                                 />
                                 <div className="flex flex-1 items-center justify-between truncate rounded-r-md border-b border-r border-t border-gray-200/10 bg-white/5">
-                                    <div className="flex-1 truncate px-4 py-2 text-sm">
+                                    <div className="flex-1 truncate pl-4 py-2 text-sm">
                                         <p className="font-medium text-gray-100">{contact.label}</p>
-                                        <p className="text-gray-500">{contact.accountid}</p>
+                                        <TextWithCopy text={contact.accountid} buttonClassName="text-gray-500">
+                                            <p className="text-gray-500">{contact.accountid}</p>
+                                        </TextWithCopy>
                                     </div>
                                     <div className="flex-shrink-0">
                                         <button

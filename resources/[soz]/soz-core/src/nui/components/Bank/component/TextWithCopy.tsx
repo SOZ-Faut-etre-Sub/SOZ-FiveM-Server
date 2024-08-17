@@ -1,14 +1,17 @@
 import { ClipboardCheckIcon, ClipboardCopyIcon } from '@heroicons/react/outline';
+import classnames from 'classnames';
 import { FunctionComponent, PropsWithChildren, useEffect, useState } from 'react';
 
 interface TextWithCopyProps {
     text: string;
     className?: string;
+    buttonClassName?: string;
 }
 
 export const TextWithCopy: FunctionComponent<PropsWithChildren<TextWithCopyProps>> = ({
     text,
     className,
+    buttonClassName,
     children,
 }) => {
     const [isCopied, setIsCopied] = useState(false);
@@ -40,7 +43,10 @@ export const TextWithCopy: FunctionComponent<PropsWithChildren<TextWithCopyProps
             {isCopied ? (
                 <ClipboardCheckIcon className="h-4 w-4 text-green-500" />
             ) : (
-                <ClipboardCopyIcon onClick={copyToClipboard} className="cursor-pointer h-4 w-4" />
+                <ClipboardCopyIcon
+                    onClick={copyToClipboard}
+                    className={classnames('cursor-pointer h-4 w-4', buttonClassName)}
+                />
             )}
         </div>
     );
