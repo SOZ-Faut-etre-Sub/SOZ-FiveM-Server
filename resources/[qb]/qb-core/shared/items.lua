@@ -11173,6 +11173,15 @@ QBShared.Items = {
         ['description'] = "Un dongle USB-C étrange.",
         ['illustrator'] = '',
     },
+    ['cyber_db_search_report'] = {
+        ['name'] = 'cyber_db_search_report',
+        ['label'] = "Résultat de recherche de données personnelles",
+        ['useable'] = true,
+        ['weight'] = 500,
+        ['type'] = 'item',
+        ['description'] = "",
+        ['illustrator'] = '',
+    },
     
     --- Fishing Items
     ['basic_rod'] = {

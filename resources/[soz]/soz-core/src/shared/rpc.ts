@@ -259,6 +259,7 @@ export enum RpcServerEvent {
     GANG_CYBER_BLACKOUT = 'soz-core:server:gang:cyber:blackout',
     GANG_CYBER_DB_SEARCH = 'soz-core:server:gang:cyber:db-search',
     GANG_CYBER_DB_SEARCH_DELETE = 'soz-core:server:gang:cyber:db-search-delete',
+    GANG_CYBER_DB_SEARCH_PRINT = 'soz-core:server:gang:cyber:db-search-print',
     GANG_CYBER_DB_ERASE = 'soz-core:server:gang:cyber:db-erase',
 
     WORLD_EVENT_GET_INFO = 'soz-core:server:world-event:get-info',

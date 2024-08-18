@@ -385,6 +385,7 @@ export enum ClientEvent {
     GANG_CYBER_SCANNER_USE = 'soz-core:server:gang:cyber:use-scanner',
     GANG_CYBER_TRACKER_UPDATE = 'soz-core:server:gang:cyber:tracker-update',
     GANG_CYBER_VISION_USE = 'soz-core:server:gang:cyber:vision-use',
+    GANG_CYBER_REPORT_USE = 'soz-core:server:gang:cyber:report-use',
 
     GANG_CARTEL_CONTAINER_USE = 'soz-core:client:gang:container-use',
 

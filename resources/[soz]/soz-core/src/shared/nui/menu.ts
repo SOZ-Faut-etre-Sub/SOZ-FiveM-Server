@@ -135,7 +135,6 @@ export enum MenuType {
     SmugglingContainerOrderMenu = 'smuggling_container_order',
     SmugglingMenu = 'smuggling',
     SmugglingZoneEditMenu = 'smuggling_zone_edit',
-    CyberMenu = 'cyber',
     GangMenu = 'gang',
     GangVehiculeMenu = 'gang_vehicule_menu',
 }

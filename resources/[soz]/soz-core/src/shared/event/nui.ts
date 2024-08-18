@@ -526,10 +526,11 @@ export enum NuiEvent {
     BusinessCyberCryptoConsultWallet = 'soz-core:client:business:cyber:crypto-consult-wammet',
     BusinessCyberCryptoWash = 'soz-core:client:business:cyber:crypto-wash',
     BusinessCyberDBSearch = 'soz-core:client:business:cyber:db-search',
-    BusinessCyberDBSearchDisplay = 'soz-core:client:business:cyber:db-search-display',
     BusinessCyberDBSearchDelete = 'soz-core:client:business:cyber:db-search-delete',
+    BusinessCyberDBSearchPrint = 'soz-core:client:business:cyber:db-search-print',
     BusinessCyberDBRecordErase = 'soz-core:client:business:cyber:db-record-erase',
     BusinessCyberBlackOut = 'soz-core:client:business:cyber:blackout',
+    BusinessCyberReportExit = 'soz-core:client:business:cyber:report-exit',
 
     AdminDoorSetState = 'soz-core:client:door:set-state',
     AdminDoorAddSub = 'soz-core:client:door:add-subdoor',

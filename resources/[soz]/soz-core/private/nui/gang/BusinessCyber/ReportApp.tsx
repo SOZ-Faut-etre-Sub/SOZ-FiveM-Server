@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
 
-export const MenuCyber: FunctionComponent = () => {
+export const CyberReportApp: FunctionComponent = () => {
     return null;
 };

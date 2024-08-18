@@ -1,3 +1,4 @@
+import { DBSearch } from '@private/shared/business.cyber';
 import { BusinessVehicleMappingUiInput } from '@private/shared/gang';
 
 export interface NuiGangMethodMap {
@@ -8,4 +9,5 @@ export interface NuiGangMethodMap {
     ShowGangBusinessVehicleOrder: never;
     ShowGangBusinessCyberApp: never;
     GangBusinessVehicleMapping: BusinessVehicleMappingUiInput;
+    ShowReport: DBSearch;
 }

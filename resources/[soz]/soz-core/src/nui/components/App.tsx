@@ -6,6 +6,7 @@ import { DrugSkillApp } from '@private/nui/drug/DrugSkillApp';
 import { DrugTransformApp } from '@private/nui/drug/DrugTransformApp';
 import { FishingApp } from '@private/nui/fishing/FishingApp';
 import { BusinessCyberApp } from '@private/nui/gang/BusinessCyber/BusinessCyberApp';
+import { CyberReportApp } from '@private/nui/gang/BusinessCyber/ReportApp';
 import { BusinessVehicleMappingApp } from '@private/nui/gang/BusinessVehicle/BusinessVehicleMapping';
 import { BusinessVehicleOrderApp } from '@private/nui/gang/BusinessVehicle/BusinessVehicleOrderApp';
 import { BusinessManagementApp } from '@private/nui/group/BusinessManagementApp';
@@ -133,6 +134,7 @@ export const App: FunctionComponent = () => {
                 <ArrowsMinigameApp />
                 <GridMinigameApp />
                 <BusinessVehicleMappingApp />
+                <CyberReportApp />
             </div>
             <Meteor />
         </Provider>

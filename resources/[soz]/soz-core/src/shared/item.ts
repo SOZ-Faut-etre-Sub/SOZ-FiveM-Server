@@ -1,3 +1,4 @@
+import { DBSearch } from '@private/shared/business.cyber';
 import { DrugContractInfo } from '@private/shared/drugs';
 import { MissiveType } from '@private/shared/missive';
 
@@ -303,6 +304,7 @@ export type InventoryItemMetadata = {
     printed?: boolean;
     value?: number;
     notSearchable?: boolean;
+    cyberDBSearch?: DBSearch;
 };
 
 export type Inventory = {
