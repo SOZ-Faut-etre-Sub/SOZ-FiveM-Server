@@ -43,6 +43,7 @@ export enum RpcServerEvent {
 
     HOUSING_GET_TEMPORARY_ACCESS = 'soz-core:server:housing:get-temporary-access',
     HOUSING_GET_FOURNITURE = 'soz-core:server:housing:get-fourniture',
+    HOUSING_GET_LIGHTS = 'soz-core:server:housing:get-lights',
     HOUSING_EDIT_FOURNITURE = 'soz-core:server:housing:edit-fourniture',
     HOUSING_SET_SHELL = 'soz-core:server:housing:set-shell',
 

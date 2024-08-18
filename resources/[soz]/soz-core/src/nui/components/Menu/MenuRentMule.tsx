@@ -4,7 +4,7 @@ import { useGetPrice } from '@public/nui/hook/price';
 import { TaxType } from '@public/shared/bank';
 import { NuiEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
-import { MuleRentPrice } from '@public/shared/shop/zkea_fourniture';
+import { MuleRentDeposite, MuleRentPrice } from '@public/shared/shop/zkea_fourniture';
 import { FunctionComponent } from 'react';
 
 export const MenuRentMule: FunctionComponent = () => {
@@ -22,8 +22,8 @@ export const MenuRentMule: FunctionComponent = () => {
                     </MenuItemButton>
                     <MenuItemButton onConfirm={async () => await fetchNui(NuiEvent.MuleRent)}>
                         <div className="flex justify-between items-center">
-                            <span>Louer un camion</span>
-                            <span className="mr-1">${getPrice(MuleRentPrice, TaxType.SERVICE)}</span>
+                            <span>Louer un camion (Caution : ${MuleRentDeposite})</span>
+                            <span className="mr-1">${getPrice(MuleRentPrice + MuleRentDeposite, TaxType.SERVICE)}</span>
                         </div>
                     </MenuItemButton>
                 </MenuContent>

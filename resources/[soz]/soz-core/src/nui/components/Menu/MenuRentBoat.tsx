@@ -42,6 +42,7 @@ export const MenuRentBoat: FunctionComponent = () => {
                         onConfirm={async (index, color) => {
                             await fetchNui(NuiEvent.BoatRent, color);
                         }}
+                        description={`Location : $1450 (Caution : $1000)`}
                     >
                         {Object.entries(Colors).map(([colorName, colorId]) => (
                             <MenuItemSelectOption value={colorId} key={`color_${colorId}`}>

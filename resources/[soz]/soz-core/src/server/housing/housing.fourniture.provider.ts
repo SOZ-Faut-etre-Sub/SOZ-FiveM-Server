@@ -38,6 +38,7 @@ export class HousingFournitureProvider {
     private housingRepository: HousingRepository;
 
     private fournitures: Record<string, Record<number, HousingProp>> = {};
+    private lights: Record<string, Record<number, boolean>> = {};
 
     @Once(OnceStep.DatabaseConnected)
     public async loadFournituresOnStart() {
@@ -133,6 +134,11 @@ export class HousingFournitureProvider {
         return created
             ? { fournitures: [], newDate: newDate }
             : { fournitures: this.getFilteredFourntiure(apartmentId, lastUpdate), newDate: newDate };
+    }
+
+    @Rpc(RpcServerEvent.HOUSING_GET_LIGHTS)
+    public async getLightsData(source: number, apartmentId: number): Promise<{ lights: Record<number, boolean> }> {
+        return { lights: this.lights[apartmentId] || {} };
     }
 
     private getFilteredFourntiure(apartmentId: number, lastUpdate: number | null): HousingProp[] {
@@ -406,5 +412,13 @@ export class HousingFournitureProvider {
             apartment_id: apartmentId,
             apartment_shell: shellEnable,
         });
+    }
+
+    @OnEvent(ServerEvent.HOUSING_TOGGLE_LIGHTS)
+    public async housingToggleLights(source: number, apartmentId: number, room: number) {
+        this.lights[apartmentId] ??= {};
+        this.lights[apartmentId][room] = !this.lights[apartmentId][room];
+
+        TriggerClientEvent(ClientEvent.HOUSING_SYNC_LIGHT, -1, apartmentId, room, this.lights[apartmentId][room]);
     }
 }

@@ -41,6 +41,7 @@ export type HousingPlacementProp = {
     entity: number | null;
     fourniture: HousingProp;
     targetLabel: string[] | null;
+    roomId: number | null;
 };
 
 export type HousingProp = {

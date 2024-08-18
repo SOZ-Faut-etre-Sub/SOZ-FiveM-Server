@@ -1,4 +1,5 @@
 import { ProperTorsos, ShopBrand, UndershirtCategoryNeedingReplacementTorso } from '@public/config/shops';
+import { BankService } from '@public/server/bank/bank.service';
 import { PlayerPositionProvider } from '@public/server/player/player.position.provider';
 import { VehicleSpawner } from '@public/server/vehicle/vehicle.spawner';
 import { VehicleStateService } from '@public/server/vehicle/vehicle.state.service';
@@ -15,6 +16,7 @@ import {
 } from '@public/shared/shop';
 import { CartElement } from '@public/shared/shop/superette';
 import {
+    MuleRentDeposite,
     MuleRentPrice,
     ZkeaFournitureItem,
     ZkeaRentVehicleType,
@@ -79,6 +81,9 @@ export class ShopProvider {
 
     @Inject(PriceService)
     private priceService: PriceService;
+
+    @Inject(BankService)
+    private bankService: BankService;
 
     @Once()
     public onStart() {
@@ -579,7 +584,7 @@ export class ShopProvider {
 
     @OnEvent(ServerEvent.ZKEA_RENT_MULE)
     public async onRentMule(source: number, position: Vector4) {
-        if (!(await this.playerMoneyService.buy(source, MuleRentPrice, TaxType.SERVICE))) {
+        if (!(await this.playerMoneyService.buy(source, MuleRentPrice + MuleRentDeposite, TaxType.SERVICE))) {
             this.notifier.notify(source, `Vous n'avez pas assez d'argent.`, 'error');
             return;
         }
@@ -593,9 +598,13 @@ export class ShopProvider {
 
             TriggerClientEvent(ClientEvent.ANIMATION_GIVE, source);
 
-            const taxedPrice = await this.priceService.getPrice(MuleRentPrice, TaxType.SERVICE);
+            const taxedPrice = await this.priceService.getPrice(MuleRentPrice + MuleRentDeposite, TaxType.SERVICE);
             this.notifier.notify(source, `Vous avez payé ~r~${taxedPrice}$~s~`, 'info');
-            this.notifier.notify(source, `Tiens, v'la les clés, et m'le casse pas !`, 'success');
+            this.notifier.notify(
+                source,
+                `Tiens, v'la les clés, et m'le casse pas ! Si tu veux récupérer ta caution, ramène moi le camion.`,
+                'success'
+            );
         }
     }
 
@@ -613,9 +622,18 @@ export class ShopProvider {
             return;
         }
 
-        if (vehicleState.volatile.rentOwner == player.citizenid) {
+        if (
+            vehicleState.volatile.rentOwner === player.citizenid ||
+            this.vehicleStateService.hasVehicleKey(vehicleState.volatile.plate, player.citizenid)
+        ) {
             if (await this.vehicleSpawner.delete(networkId)) {
-                this.notifier.notify(source, 'Vous avez rendu votre camion de location.', 'success');
+                const rentOwner = this.playerService.getPlayerByCitizenId(vehicleState.volatile.rentOwner);
+                this.bankService.addAccountMoney(rentOwner.charinfo.account, MuleRentDeposite);
+                this.notifier.notify(
+                    source,
+                    'Vous avez rendu votre camion de location, la caution a été rendu au locataire.',
+                    'success'
+                );
             } else {
                 this.notifier.notify(source, 'Impossible de ranger votre camion.', 'error');
             }

@@ -7,6 +7,7 @@ import { RepositoryUpdate } from '@core/decorators/repository';
 import { Tick, TickInterval } from '@core/decorators/tick';
 import { emitRpc } from '@core/rpc';
 import { uuidv4, waitUntil } from '@core/utils';
+import { AnimationService } from '@public/client//animation/animation.service';
 import { BankService } from '@public/client/bank/bank.service';
 import { FlyingCameraProvider } from '@public/client/camera/flying.camera.provider';
 import { HousingApartmentZoneProvider } from '@public/client/housing/housing.apartment.zone.provider';
@@ -21,7 +22,7 @@ import { HousingRepository } from '@public/client/repository/housing.repository'
 import { ResourceLoader } from '@public/client/repository/resource.loader';
 import { TargetFactory } from '@public/client/target/target.factory';
 import { NoClipProvider } from '@public/client/utils/noclip.provider';
-import { ClientEvent } from '@public/shared/event';
+import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { NuiEvent } from '@public/shared/event';
 import {
     canUseHousingInAppartment,
@@ -83,6 +84,9 @@ export class HousingFournitureProvider {
     @Inject(NoClipProvider)
     private noClipProvider: NoClipProvider;
 
+    @Inject(AnimationService)
+    private animationService: AnimationService;
+
     private camera: number;
 
     private debugProp: HousingDebugProp | null;
@@ -92,6 +96,7 @@ export class HousingFournitureProvider {
 
     private lastApartment: Apartment;
     private lastInterior: number;
+    private lights: Record<number, boolean> = {};
     private shellNeedUpdate = true;
     private maxFourntiures = 0;
     private apartmentFourntiures: Record<
@@ -126,6 +131,7 @@ export class HousingFournitureProvider {
 
             this.lastApartment = null;
             this.lastInterior = null;
+            this.lights = {};
             this.shellNeedUpdate = true;
             this.maxFourntiures = 0;
         }
@@ -155,6 +161,16 @@ export class HousingFournitureProvider {
 
         if (this.shellNeedUpdate) {
             await this.setInteriorShell(propertyId, apartment);
+
+            if (!apartment.shell) {
+                const { lights } = await emitRpc<{
+                    lights: Record<number, boolean>;
+                }>(RpcServerEvent.HOUSING_GET_LIGHTS, apartmentId);
+                this.lights = lights;
+            } else {
+                this.lights = {};
+            }
+
             await this.refreshFournitures(apartment);
         }
 
@@ -178,7 +194,7 @@ export class HousingFournitureProvider {
                     if (!this.apartmentFourntiures[apartment.id].placementProps[fourniture.id]?.entity) {
                         await this.spawnNewFourniture(apartment, fourniture);
                     } else {
-                        this.editFourniture(apartment, fourniture);
+                        await this.editFourniture(apartment, fourniture);
                     }
                 } else {
                     if (this.apartmentFourntiures[apartment.id].placementProps[fourniture.id]) {
@@ -191,6 +207,7 @@ export class HousingFournitureProvider {
                             entity: null,
                             fourniture: fourniture,
                             targetLabel: null,
+                            roomId: null,
                         };
                     }
                 }
@@ -234,37 +251,21 @@ export class HousingFournitureProvider {
         SetEntityLodDist(entity, 40);
         const targetLabel = this.addTargetZone(entity, fourniture, apartment);
 
+        const roomHash = GetRoomKeyFromEntity(entity);
+        const roomId = GetInteriorRoomIndexByHash(this.lastInterior, roomHash);
         this.apartmentFourntiures[apartment.id].placementProps[fourniture.id] = {
             entity: entity,
             fourniture: fourniture,
             targetLabel: targetLabel,
+            roomId: roomId,
         };
+
+        this.setLightOnProp(null, this.apartmentFourntiures[apartment.id].placementProps[fourniture.id]);
     }
 
     private async editFourniture(apartment: Apartment, fourniture: HousingProp) {
-        this.objectService.updateObject(this.apartmentFourntiures[apartment.id].placementProps[fourniture.id].entity, {
-            model: GetHashKey(fourniture.model),
-            position: fourniture.position,
-            matrix: new Float32Array(fourniture.matrix),
-            id: `housing_placed_${fourniture.id}`,
-        });
-
-        if (
-            fourniture.storageType !== null ||
-            fourniture.storageType !==
-                this.apartmentFourntiures[apartment.id].placementProps[fourniture.id].fourniture.storageType
-        ) {
-            this.removeTargetZone(this.apartmentFourntiures[apartment.id].placementProps[fourniture.id]);
-
-            const targetLabel = this.addTargetZone(
-                this.apartmentFourntiures[apartment.id].placementProps[fourniture.id].entity,
-                fourniture,
-                apartment
-            );
-
-            this.apartmentFourntiures[apartment.id].placementProps[fourniture.id].targetLabel = targetLabel;
-        }
-        this.apartmentFourntiures[apartment.id].placementProps[fourniture.id].fourniture = fourniture;
+        this.despawnFourntiure(this.apartmentFourntiures[apartment.id].placementProps[fourniture.id], fourniture);
+        await this.spawnNewFourniture(apartment, fourniture);
     }
 
     private despawnFourntiure(placementProp: HousingPlacementProp, fourniture: HousingProp) {
@@ -281,6 +282,7 @@ export class HousingFournitureProvider {
         });
         placementProp.entity = null;
         placementProp.fourniture = fourniture;
+        placementProp.roomId = null;
     }
 
     private addTargetZone(entity: number, fourniture: HousingProp, apartment: Apartment): string[] {
@@ -434,7 +436,7 @@ export class HousingFournitureProvider {
                     if (!placementProp?.entity) {
                         await this.spawnNewFourniture(apartment, placementProp.fourniture);
                     } else {
-                        this.editFourniture(apartment, placementProp.fourniture);
+                        await this.editFourniture(apartment, placementProp.fourniture);
                     }
                 } else {
                     this.despawnFourntiure(placementProp, placementProp.fourniture);
@@ -447,12 +449,7 @@ export class HousingFournitureProvider {
     public async syncFourniture(apartmentId: number) {
         const player = this.playerService.getPlayer();
 
-        if (
-            !player ||
-            !isPlayerInsideApartment(player) ||
-            player.metadata.isdead ||
-            player.metadata.inside.apartment !== apartmentId
-        ) {
+        if (!player || !isPlayerInsideApartment(player) || player.metadata.inside.apartment !== apartmentId) {
             return;
         }
 
@@ -1085,5 +1082,99 @@ export class HousingFournitureProvider {
         }
 
         await this.openHousingPlacementMenu();
+    }
+
+    @Command('housing-lights', {
+        description: 'Housing: Allumer/éteindre les lumières',
+        keys: [{ mapper: 'keyboard', key: 'O' }],
+    })
+    public async toggleLightsCommand() {
+        const player = this.playerService.getPlayer();
+
+        if (!player) {
+            return;
+        }
+
+        if (!this.noClipProvider.IsNoClipMode()) {
+            if (!isPlayerInsideApartment(player) || player.metadata.isdead) {
+                return;
+            }
+
+            const apartement = this.housingRepository.findApartment(
+                player.metadata.inside.property,
+                player.metadata.inside.apartment as number
+            );
+            if (!apartement || this.lastApartment?.id !== apartement.id) {
+                return;
+            }
+
+            if (!canUseHousingInAppartment(player, apartement)) {
+                return;
+            }
+        } else if (!isStaff(player) || !this.lastApartment || !canUseHousingInAppartment(player, this.lastApartment)) {
+            return;
+        }
+
+        if (this.lastInterior !== GetInteriorFromEntity(PlayerPedId()) || this.lastApartment.shell) {
+            return;
+        }
+
+        await this.animationService.playAnimation(
+            {
+                base: {
+                    dictionary: 'anim@mp_player_intmenu@key_fob@',
+                    name: 'fob_click',
+                    blendInSpeed: 3.0,
+                    blendOutSpeed: 3.0,
+                    duration: 750,
+                    options: {
+                        repeat: true,
+                        onlyUpperBody: true,
+                        enablePlayerControl: true,
+                    },
+                },
+            },
+            {
+                resetWeapon: false,
+            }
+        );
+
+        const roomHash = GetRoomKeyFromEntity(PlayerPedId());
+        const roomId = GetInteriorRoomIndexByHash(this.lastInterior, roomHash);
+        TriggerServerEvent(ServerEvent.HOUSING_TOGGLE_LIGHTS, this.lastApartment.id, roomId);
+    }
+
+    @OnEvent(ClientEvent.HOUSING_SYNC_LIGHT)
+    public async onSyncLight(apartmentId: number, room: number, lights: boolean) {
+        const player = this.playerService.getPlayer();
+
+        if (
+            !player ||
+            !isPlayerInsideApartment(player) ||
+            !this.lastApartment ||
+            this.lastApartment.id !== apartmentId ||
+            this.lights[room] === lights
+        ) {
+            return;
+        }
+
+        this.lights[room] = lights;
+        this.syncLights(room);
+    }
+
+    private syncLights(room: number | null) {
+        for (const placementProp of Object.values(this.apartmentFourntiures[this.lastApartment.id].placementProps)) {
+            this.setLightOnProp(room, placementProp);
+        }
+    }
+
+    private setLightOnProp(room: number | null, placementProp: HousingPlacementProp) {
+        if (placementProp.entity) {
+            if (room === null) {
+                SetEntityLights(placementProp.entity, !this.lights[placementProp.roomId]);
+            } else if (room === placementProp.roomId) {
+                SetEntityLights(placementProp.entity, !this.lights[placementProp.roomId]);
+            }
+        }
     }
 }

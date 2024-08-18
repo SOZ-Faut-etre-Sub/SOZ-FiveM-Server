@@ -115,6 +115,7 @@ export enum ServerEvent {
     HOUSING_UPGRADE_APARTMENT_TIER = 'soz-core:server:housing:upgrade-apartment-tier',
     HOUSING_ADD_PARKING_PLACE = 'soz-core:server:housing:add-parking-place',
     HOUSING_STORE_FOURNITURE = 'soz-core:server:housing:store-fourniture',
+    HOUSING_TOGGLE_LIGHTS = 'soz-core:server:housing:toggle-lights',
 
     STONK_RESELL = 'soz-core:server:job:stonk:resell',
     STONK_COLLECT = 'soz-core:server:job:stonk:collect',

@@ -506,9 +506,10 @@ export const MenuPropPlacementHousing: FunctionComponent<MenuPropPlacementProps>
 
 const HousingHelpPanel = (
     <>
-        <MenuTitle>Contrôle du menu</MenuTitle>
+        <MenuTitle>Contrôle général</MenuTitle>
         <MenuItemText> Tab : Basculer le mode caméra ou souris</MenuItemText>
         <MenuItemText> Clic Gauche (en mode souris) : Sélection d'objet</MenuItemText>
+        <MenuItemText> O (hors menu) : Allumer/éteindre les lumières</MenuItemText>
     </>
 );
 

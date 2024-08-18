@@ -27,6 +27,7 @@ export const zkeaGarageSpacePlace: Vector4 = [
 ];
 
 export const MuleRentPrice = 500;
+export const MuleRentDeposite = 1000;
 export const ZkeaRentVehicleType = 'mule3';
 
 export const ZkeaBaseFourntiure = ['v_ret_ml_fridge02', 'p_v_43_safe_s', 'prop_devin_box_closed', 'prop_rub_cabinet01'];

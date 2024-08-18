@@ -540,7 +540,7 @@ export class VehicleLockProvider {
 
     private async hasVehicleKey(player: PlayerData, state: VehicleVolatileState) {
         // Case for temporary care, only owner can unlock / lock vehicle
-        if (state.id === null) {
+        if (state.id === null && state.rentOwner === null) {
             return state.owner === player.citizenid;
         }
 
