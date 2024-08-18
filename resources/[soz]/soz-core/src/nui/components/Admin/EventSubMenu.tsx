@@ -43,12 +43,6 @@ export const EventSubMenu: FunctionComponent<EventSubMenuProps> = ({ banner, eve
                     <MenuItemButton onConfirm={() => fetchNui(NuiEvent.AdminMenuEventCreate)}>
                         📅 Ajouter un nouveau evenement
                     </MenuItemButton>
-                    <MenuTitle>
-                        Evenements, prochain :{' '}
-                        {eventInfo.launchEventTimestamp
-                            ? new Date(eventInfo.launchEventTimestamp).toLocaleString('fr-FR')
-                            : 'aucun'}
-                    </MenuTitle>
                     {currentEvent && currentScene && (
                         <MenuItemButton
                             description={
@@ -66,7 +60,6 @@ export const EventSubMenu: FunctionComponent<EventSubMenuProps> = ({ banner, eve
                                     currentEventId: null,
                                     currentSceneId: null,
                                     endEventTimestamp: null,
-                                    launchEventTimestamp: eventInfo.launchEventTimestamp,
                                 });
                             }}
                         >
