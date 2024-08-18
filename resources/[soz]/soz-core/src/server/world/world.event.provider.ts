@@ -1,9 +1,12 @@
 import PCancelable from 'p-cancelable';
 
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
+import { Get, Post } from '../../core/decorators/http';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
+import { Request } from '../../core/http/request';
+import { Response } from '../../core/http/response';
 import { wait } from '../../core/utils';
 import { getOffsetForTimeZone } from '../../shared/date';
 import { ClientEvent } from '../../shared/event/client';
@@ -49,39 +52,6 @@ export class WorldEventProvider {
 
     private eventLaunchTimestamp: number = null;
 
-    @Once(OnceStep.RepositoriesLoaded)
-    public async onStart() {
-        // 50 % chance to launch an event at the start of the server
-        const shouldLaunchEvent = Math.random() <= 0.5;
-
-        if (!shouldLaunchEvent) {
-            return;
-        }
-
-        const offsetTimezone = getOffsetForTimeZone('Europe/Paris');
-        const hoursOffset = Math.round(offsetTimezone / 3600);
-
-        const minDate = new Date();
-        minDate.setUTCHours(12 - hoursOffset, 0, 0, 0);
-        const minTimestamp = minDate.getTime();
-        // Max date is 12 hours after the min date
-        const maxTimestamp = minTimestamp + 12 * 60 * 60 * 1000;
-
-        const randomTimestamp = getRandomInt(minTimestamp, maxTimestamp);
-        const now = Date.now();
-
-        // can happens if server is launched after
-        if (randomTimestamp < now) {
-            return;
-        }
-
-        this.eventLaunchTimestamp = randomTimestamp;
-
-        setTimeout(async () => {
-            await this.startRandomEvent();
-        });
-    }
-
     @Rpc(RpcServerEvent.WORLD_EVENT_START)
     public async onStartWorldEvent(source: number, eventId: string): Promise<EventInfo> {
         if (this.currentEvent) {
@@ -94,13 +64,12 @@ export class WorldEventProvider {
             return;
         }
 
-        await this.startEvent(event, source);
+        await this.startEvent(event, null, source);
 
         return {
             currentEventId: this.currentEvent.event.id,
             currentSceneId: this.currentEvent.scene.id,
             endEventTimestamp: Date.now() + 3600 * 1000,
-            launchEventTimestamp: this.eventLaunchTimestamp,
         };
     }
 
@@ -120,7 +89,6 @@ export class WorldEventProvider {
                 currentEventId: null,
                 currentSceneId: null,
                 endEventTimestamp: null,
-                launchEventTimestamp: this.eventLaunchTimestamp,
             };
         }
 
@@ -128,8 +96,49 @@ export class WorldEventProvider {
             currentEventId: this.currentEvent.event.id,
             currentSceneId: this.currentEvent.scene.id,
             endEventTimestamp: Date.now() + 3600 * 1000,
-            launchEventTimestamp: this.eventLaunchTimestamp,
         };
+    }
+
+    @Post('/event/start')
+    public async httpStartEvent(request: Request): Promise<Response> {
+        if (this.currentEvent) {
+            return Response.badRequest('Il y a déjà un événement en cours');
+        }
+
+        const data = JSON.parse(await request.body) as {
+            eventId: string;
+            sceneId?: string;
+        };
+
+        const event = await this.worldEventRepository.find(data.eventId);
+
+        if (!event) {
+            return Response.notFound("L'événement n'existe pas");
+        }
+
+        await this.startEvent(event, data.sceneId);
+
+        return Response.json(this.currentEvent);
+    }
+
+    @Post('/event/stop')
+    public async httpStopEvent(): Promise<Response> {
+        if (!this.currentEvent) {
+            return Response.badRequest("Il n'y a pas d'événement en cours");
+        }
+
+        await this.stopCurrentEvent();
+
+        return Response.ok();
+    }
+
+    @Get('/event/current')
+    public async httpCurrentEvent(): Promise<Response> {
+        if (!this.currentEvent) {
+            return Response.notFound("Il n'y a pas d'événement en cours");
+        }
+
+        return Response.json(this.currentEvent);
     }
 
     public async startRandomEvent() {
@@ -148,7 +157,7 @@ export class WorldEventProvider {
         await this.startEvent(event);
     }
 
-    private async startEvent(event: WorldEvent, source?: number) {
+    private async startEvent(event: WorldEvent, sceneId?: string, source?: number) {
         const scenes = await this.sceneRepository.get(scene => {
             return scene.worldEventId === event.id && scene.persistent === true;
         });
@@ -161,7 +170,16 @@ export class WorldEventProvider {
             return;
         }
 
-        const scene = getRandomItem(scenes);
+        let scene: Scene = null;
+
+        if (sceneId) {
+            scene = scenes.find(scene => scene.id === sceneId);
+        }
+
+        if (!scene) {
+            scene = getRandomItem(scenes);
+        }
+
         const inventories = [];
 
         for (const entity of Object.values(scene.entities)) {

@@ -4,7 +4,6 @@ export type EventInfo = {
     currentEventId: string | null;
     currentSceneId: string | null;
     endEventTimestamp: number | null;
-    launchEventTimestamp: number;
 };
 
 export type WorldEvent = {
