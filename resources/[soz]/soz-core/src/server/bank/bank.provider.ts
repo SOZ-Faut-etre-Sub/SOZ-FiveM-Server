@@ -148,7 +148,7 @@ export class BankProvider {
             source,
             'Fleeca Banque',
             `Transfert: ~r~$${amount}`,
-            "Vous avez transféré de l'argent",
+            "Vous avez transféré de l'argent.",
             'CHAR_BANK_MAZE'
         );
 
@@ -158,7 +158,7 @@ export class BankProvider {
                 targetPlayer.source,
                 'Fleeca Banque',
                 `Transfert: ~g~$${amount}`,
-                "Vous avez reçu de l'argent",
+                "Vous avez reçu de l'argent.",
                 'CHAR_BANK_MAZE'
             );
         }

@@ -56,6 +56,17 @@ export const BankHome = memo(() => {
                     <img src="media/bank/logo.webp" alt="Logo" className="h-14" />
                 </div>
 
+                <div className="absolute flex items-end justify-around w-full h-[95%]">
+                    {fakeIconList.map(({ title, icon: Icon }, index) => (
+                        <div key={index} className="flex flex-col items-center text-white">
+                            <div className="p-3 h-fit w-fit rounded-full text-white bg-neutral-500">
+                                <Icon className="h-5 w-5" />
+                            </div>
+                            <span className="text-xs font-light pt-1">{title}</span>
+                        </div>
+                    ))}
+                </div>
+
                 <div className="absolute text-white flex flex-col items-center justify-center w-full h-full">
                     <span className="font-light">Compte principal</span>
                     <h2
@@ -73,17 +84,6 @@ export const BankHome = memo(() => {
                     <TextWithCopy text={credentials.account}>
                         IBAN: <span className="font-bold">{credentials.account}</span>
                     </TextWithCopy>
-                </div>
-
-                <div className="absolute flex items-end justify-around w-full h-[95%]">
-                    {fakeIconList.map(({ title, icon: Icon }, index) => (
-                        <div key={index} className="flex flex-col items-center text-white">
-                            <div className="p-3 h-fit w-fit rounded-full text-white bg-neutral-500">
-                                <Icon className="h-5 w-5" />
-                            </div>
-                            <span className="text-xs font-light pt-1">{title}</span>
-                        </div>
-                    ))}
                 </div>
             </div>
 

@@ -44,7 +44,7 @@ export const SocietyContactsState: Society[] = [
         id: 6,
         display: 'BlueBird',
         number: '555-BLUEBIRD',
-        avatar: 'media/society_icon/bluebird.webp',
+        avatar: 'media/society_icon/garbage.webp',
         type: 'Entreprise Privée',
     },
     {
@@ -80,7 +80,7 @@ export const SocietyContactsState: Society[] = [
         id: 11,
         display: 'New Gahray',
         number: '555-NEWGAHRAY',
-        avatar: 'media/society_icon/newgahray.webp',
+        avatar: 'media/society_icon/bennys.webp',
         type: 'Entreprise Privée',
     },
     {

@@ -73,7 +73,7 @@ export class BankInvoiceService {
                 const markedMoney = player.money.marked_money;
 
                 if (money + markedMoney < invoice.amount) {
-                    this.notifier.error(source, "Vous n'avez pas assez d'argent");
+                    this.notifier.error(source, "Vous n'avez pas assez d'argent.");
                     return false;
                 }
 
@@ -95,7 +95,7 @@ export class BankInvoiceService {
                     moneyTake
                 );
                 if (!moneyTransaction) {
-                    this.notifier.error(source, "Le coffre de destination n'a pas de place pour cette somme");
+                    this.notifier.error(source, "Le coffre de destination n'a pas de place pour cette somme.");
                     return false;
                 }
 
@@ -107,7 +107,7 @@ export class BankInvoiceService {
                     markedMoneyTake
                 );
                 if (!markedMoneyTransaction) {
-                    this.notifier.error(source, "Le coffre de destination n'a pas de place pour cette somme");
+                    this.notifier.error(source, "Le coffre de destination n'a pas de place pour cette somme.");
                     await this.bankService.transferCashMoney(
                         source,
                         invoice.emitterSafe,
@@ -140,9 +140,9 @@ export class BankInvoiceService {
 
             if (!(await this.bankInvoiceRepository.setPayed(invoiceId))) return false;
 
-            this.notifier.notify(source, 'Vous avez ~g~payé~s~ votre facture', 'success');
+            this.notifier.notify(source, 'Vous avez ~g~payé~s~ votre facture.', 'success');
             if (emitter) {
-                this.notifier.notify(emitter.source, `Votre facture ~b~${invoice.label}~s~ a été ~g~payée`, 'success');
+                this.notifier.notify(emitter.source, `Votre facture ~b~${invoice.label}~s~ a été ~g~payée.`, 'success');
             }
         } else {
             const transaction = await this.bankService.transferBankMoney(
@@ -154,15 +154,15 @@ export class BankInvoiceService {
                 `Paiement de facture: ${invoice.label}`
             );
             if (!transaction) {
-                this.notifier.error(source, '~r~Echec~s~ du paiement la facture de la société');
+                this.notifier.error(source, '~r~Echec~s~ du paiement la facture de la société.');
                 return false;
             }
 
             if (!(await this.bankInvoiceRepository.setPayed(invoiceId))) return false;
 
-            this.notifier.notify(source, 'Vous avez ~g~payé~s~ la facture de la société', 'success');
+            this.notifier.notify(source, 'Vous avez ~g~payé~s~ la facture de la société.', 'success');
             if (emitter) {
-                this.notifier.notify(emitter.source, `Votre facture ~b~${invoice.label}~s~ a été ~g~payée`, 'success');
+                this.notifier.notify(emitter.source, `Votre facture ~b~${invoice.label}~s~ a été ~g~payée.`, 'success');
             }
         }
 
@@ -193,14 +193,14 @@ export class BankInvoiceService {
         const emitter = this.playerService.getPlayerByCitizenId(invoice.emitter);
 
         if (player.charinfo.account === invoice.targetAccount) {
-            this.notifier.error(player.source, 'Vous avez ~r~refusé~s~ votre facture');
+            this.notifier.error(player.source, 'Vous avez ~r~refusé~s~ votre facture.');
             if (emitter) {
-                this.notifier.error(emitter.source, `Votre facture ~b~${invoice.label}~s~ a été ~r~refusée`);
+                this.notifier.error(emitter.source, `Votre facture ~b~${invoice.label}~s~ a été ~r~refusée.`);
             }
         } else {
-            this.notifier.error(player.source, 'Vous avez ~r~refusé~s~ la facture de la société');
+            this.notifier.error(player.source, 'Vous avez ~r~refusé~s~ la facture de la société.');
             if (emitter) {
-                this.notifier.error(emitter.source, `Votre facture ~b~${invoice.label}~s~ a été ~r~refusée`);
+                this.notifier.error(emitter.source, `Votre facture ~b~${invoice.label}~s~ a été ~r~refusée.`);
             }
         }
 
