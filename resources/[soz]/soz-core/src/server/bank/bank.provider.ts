@@ -8,6 +8,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { BankContact, BankMoneyType, BankUiData } from '../../shared/bank';
+import { ServerEvent } from '../../shared/event/server';
 import { JobPermission } from '../../shared/job';
 import { PlayerData } from '../../shared/player';
 import { Vector3 } from '../../shared/polyzone/vector';
@@ -66,6 +67,11 @@ export class BankProvider {
             `Money: ${accountMoney?.toLocaleString()}~n~Marked Money: ${accountMarkedMoney?.toLocaleString()}`,
             'CHAR_BANK_MAZE'
         );
+    }
+
+    @On(ServerEvent.BANK_REFRESH_ACCOUNT)
+    public async refreshAccount(source: number, accountId: string) {
+        await this.bankAccountRepository.refreshAccount(accountId);
     }
 
     @On('QBCore:Server:PlayerLoaded', false)
