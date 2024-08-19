@@ -2,6 +2,7 @@ import { animated, useSpring } from '@react-spring/web';
 import classnames from 'classnames';
 import React, { forwardRef, HTMLInputTypeAttribute } from 'react';
 import { FieldError } from 'react-hook-form';
+import { GiPayMoney } from 'react-icons/gi';
 
 import { inputErrorMessage } from '../utils/format';
 import { InputAlertIcon } from './AlertIcon';
@@ -12,6 +13,7 @@ interface InputProps {
     placeholder?: string;
     disabled?: boolean;
     error?: FieldError;
+    autofill?: () => void;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
@@ -36,13 +38,19 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
                         {
                             'pl-7': props.prefix,
                             'pl-2': !props.prefix,
-                            'pr-2 ring-gray-500/10 focus:ring-teal-600/50': !props.error,
-                            'pr-9 ring-red-500/10 focus:ring-red-600/50': props.error,
+                            'ring-gray-500/10 focus:ring-teal-600/50': !props.error,
+                            'ring-red-500/10 focus:ring-red-600/50': props.error,
+                            'pr-2': !props.error && !props.autofill,
+                            'pr-9': props.error && !props.autofill,
+                            'pr-14': props.error && props.autofill,
                         }
                     )}
                     {...props}
                 />
-                {props.error && <InputAlertIcon />}
+                <div className="absolute inset-y-0 right-0 flex items-center pr-2 gap-2">
+                    {props.autofill && <GiPayMoney className="text-teal-500 cursor-pointer" onClick={props.autofill} />}
+                    {props.error && <InputAlertIcon />}
+                </div>
             </div>
             {props.error && (
                 <animated.div style={errorStyle} className="text-red-400 text-sm pt-1 px-2">
