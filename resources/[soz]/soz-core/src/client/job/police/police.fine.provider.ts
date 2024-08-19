@@ -37,7 +37,14 @@ export class PoliceFineProvider {
             return;
         }
 
-        await emitRpc(RpcServerEvent.BANK_CREATE_INVOICE, playerServerId, 'personal', fine.label, amount, 'fine');
+        await emitRpc(
+            RpcServerEvent.BANK_CREATE_INVOICE,
+            playerServerId,
+            'personal',
+            fine.label,
+            Number(amount),
+            'fine'
+        );
     }
 
     @OnNuiEvent(NuiEvent.PolicePreCustomFine)
@@ -72,7 +79,7 @@ export class PoliceFineProvider {
             return;
         }
 
-        await emitRpc(RpcServerEvent.BANK_CREATE_INVOICE, playerServerId, 'personal', title, amount, 'fine');
+        await emitRpc(RpcServerEvent.BANK_CREATE_INVOICE, playerServerId, 'personal', title, Number(amount), 'fine');
     }
 
     private async playLicenceAnimation(textProgressBar: string): Promise<boolean> {
