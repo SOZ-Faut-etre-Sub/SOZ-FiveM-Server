@@ -60,8 +60,6 @@ export enum RpcServerEvent {
     PLAYER_TELEPORT = 'soz-core:player:teleport',
     PLAYER_GET_JOB = 'soz-core:player:get-job',
 
-    BANK_GET_ACCOUNT = 'soz-core:bank:get-account',
-
     CRAFTING_GET_RECIPES = 'soz-core:crafting:get-recipes',
     CRAFTING_DO_CRAFT = 'soz-core:crafting:do-craft',
     CRAFTING_DO_SALVAGE = 'soz-core:crafting:do-salvage',
@@ -210,6 +208,23 @@ export enum RpcServerEvent {
     FOOD_HUNT_INIT = 'soz-core:server:food:hunt-init',
 
     METEOR_OCEAN = 'soz-core:meteor:ocean',
+
+    BANK_GET_ACCOUNT = 'soz-core:server:bank:safe:get-account',
+    BANK_GET_ACCOUNT_MONEY = 'soz-core:server:bank:get-account-money',
+    BANK_GET_ACCOUNT_UI = 'soz-core:server:bank:get-account-ui',
+    BANK_TRANSFER_ACTION = 'soz-core:server:bank:transfer-action',
+    BANK_CASH_TRANSFER_ACTION = 'soz-core:server:bank:safe:transfer-action',
+    BANK_CREATE_OFFSHORE_ACCOUNT = 'soz-core:server:bank:create-offshore-account',
+    BANK_CONTACT_ADD = 'soz-core:server:bank:contact:add',
+    BANK_CONTACT_REMOVE = 'soz-core:server:bank:contact:remove',
+
+    BANK_ATM_REMOVE_LIQUIDITY = 'soz-core:server:bank:atm:remove-liquidity',
+    BANK_ATM_GET_ACCOUNT_UI = 'soz-core:server:bank:atm:get-account-ui',
+    BANK_ATM_GET_ACCOUNT = 'soz-core:server:bank:atm:get-account',
+    BANK_ATM_GET_MONEY = 'soz-core:server:bank:atm:get-money',
+
+    BANK_GET_INVOICES = 'soz-core:server:bank:get-invoices',
+    BANK_CREATE_INVOICE = 'soz-core:server:bank:create-invoice',
 }
 
 export enum RpcClientEvent {

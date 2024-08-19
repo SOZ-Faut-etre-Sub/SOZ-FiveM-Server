@@ -93,7 +93,7 @@ export class JobInvoiceProvider {
         }
 
         const targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-        TriggerServerEvent('banking:server:sendInvoice', targetSource, title, amount);
+        await emitRpc(RpcServerEvent.BANK_CREATE_INVOICE, targetSource, 'personal', title, amount);
     }
 
     public async invoicePlayerSociety(entity: number) {
@@ -104,7 +104,7 @@ export class JobInvoiceProvider {
         }
 
         const targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-        TriggerServerEvent('banking:server:sendSocietyInvoice', targetSource, title, amount);
+        await emitRpc(RpcServerEvent.BANK_CREATE_INVOICE, targetSource, 'society', title, amount);
     }
 
     public async getTitleAndAmount(): Promise<[string, number]> {

@@ -462,7 +462,7 @@ export class HousingProvider {
 
     public async clearApartment(property: Property, apartment: Apartment, notify = true) {
         this.inventoryManager.clearApartment(apartment.identifier);
-        this.bankService.clearAccount(apartment.identifier);
+        await this.bankService.clearAccount(apartment.identifier);
 
         if (apartment.owner !== null) {
             this.playerAppearanceService.clearCloakroom(apartment.owner);

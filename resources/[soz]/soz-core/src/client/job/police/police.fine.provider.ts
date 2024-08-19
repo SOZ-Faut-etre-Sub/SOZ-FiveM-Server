@@ -7,7 +7,9 @@ import { Provider } from '@public/core/decorators/provider';
 import { NuiEvent } from '@public/shared/event';
 import { Fine } from '@public/shared/job/police';
 
+import { emitRpc } from '../../../core/rpc';
 import { NotEmptyStringValidator, PositiveNumberValidator } from '../../../shared/nui/input';
+import { RpcServerEvent } from '../../../shared/rpc';
 
 @Provider()
 export class PoliceFineProvider {
@@ -34,8 +36,8 @@ export class PoliceFineProvider {
         if (!completed) {
             return;
         }
-        //TODO AURELIEN: Change to ServerEvent when server will be refacto
-        TriggerServerEvent('banking:server:sendInvoice', playerServerId, fine.label, amount, 'fine');
+
+        await emitRpc(RpcServerEvent.BANK_CREATE_INVOICE, playerServerId, 'personal', fine.label, amount, 'fine');
     }
 
     @OnNuiEvent(NuiEvent.PolicePreCustomFine)
@@ -69,8 +71,8 @@ export class PoliceFineProvider {
         if (!completed) {
             return;
         }
-        //TODO AURELIEN: Change to ServerEvent when server will be refacto
-        TriggerServerEvent('banking:server:sendInvoice', playerServerId, title, amount, 'fine');
+
+        await emitRpc(RpcServerEvent.BANK_CREATE_INVOICE, playerServerId, 'personal', title, amount, 'fine');
     }
 
     private async playLicenceAnimation(textProgressBar: string): Promise<boolean> {

@@ -1,6 +1,7 @@
 import { SozRole } from '@core/permissions';
 import { DrugSkill } from '@private/shared/drugs';
 import { Talent } from '@private/shared/talent';
+import { BankMoneyType } from '@public/shared/bank';
 import { ApartementTiers } from '@public/shared/housing/housing';
 import { SenatePartyMember } from '@public/shared/senate';
 
@@ -22,10 +23,10 @@ export type QBCorePlayer = {
         SetMetaData: (key: string, val: any) => void;
         SetMetaDatas: (data: Record<string, any>) => void;
         UpdateMaxWeight: () => void;
-        AddMoney: (type: 'money' | 'marked_money', amount: number) => boolean;
-        RemoveMoney: (type: 'money' | 'marked_money', amount: number) => boolean;
+        AddMoney: (type: BankMoneyType, amount: number) => boolean;
+        RemoveMoney: (type: BankMoneyType, amount: number) => boolean;
         SetClothConfig: (config: ClothConfig, skipApply: boolean) => void;
-        GetMoney: (type: 'money' | 'marked_money') => number;
+        GetMoney: (type: BankMoneyType) => number;
         SetJobDuty: (onDuty: boolean) => void;
         SetJob: (job: JobType, grade: number) => void;
         SetSkin: (skin: Skin, skipApply: boolean) => void;

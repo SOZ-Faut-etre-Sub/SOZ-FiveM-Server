@@ -1,6 +1,7 @@
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { BankMoneyType } from '../../shared/bank';
 import { Component, Outfit } from '../../shared/cloth';
 import { DrivingSchoolConfig } from '../../shared/driving-school';
 import { ClientEvent, ServerEvent } from '../../shared/event';
@@ -25,7 +26,7 @@ export class AdminMenuGameProvider {
     private notifier: Notifier;
 
     @OnEvent(ServerEvent.ADMIN_ADD_MONEY)
-    public addMoney(source: number, moneyType: 'money' | 'marked_money', amount: number): void {
+    public addMoney(source: number, moneyType: BankMoneyType, amount: number): void {
         this.playerMoneyService.add(source, amount, moneyType);
     }
 

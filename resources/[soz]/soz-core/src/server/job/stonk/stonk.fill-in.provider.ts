@@ -64,7 +64,7 @@ export class StonkFillInProvider {
             return;
         }
 
-        if (this.numberOfItemsRequired(item, maxBalance, accountName) == 0) {
+        if ((await this.numberOfItemsRequired(item, maxBalance, accountName)) == 0) {
             this.notifier.notify(source, "C'est déjà ~r~rempli~s~");
             return;
         }
@@ -85,7 +85,8 @@ export class StonkFillInProvider {
                     position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
                 });
 
-                const transfer = await this.bankService.transferBankMoney(
+                const transfer = await this.bankService.transferFarmMoney(
+                    source,
                     StonkConfig.bankAccount.bankRefill,
                     accountName,
                     StonkConfig.collection[item].refill_value * fillAmount
@@ -100,7 +101,8 @@ export class StonkFillInProvider {
                     );
                 }
 
-                const transferSociety = await this.bankService.transferBankMoney(
+                const transferSociety = await this.bankService.transferFarmMoney(
+                    source,
                     StonkConfig.bankAccount.farm,
                     StonkConfig.bankAccount.safe,
                     StonkConfig.collection[item].society_gain * fillAmount
@@ -120,18 +122,23 @@ export class StonkFillInProvider {
                 this.notifier.notify(source, 'Vous avez ~r~arrêté~s~ de remplir.');
                 return;
             }
-        } while (this.canFillIn(source, item, maxBalance, accountName));
+        } while (await this.canFillIn(source, item, maxBalance, accountName));
     }
 
-    private numberOfItemsRequired(item: StonkBagType, maxBalance: number, accountName: string): number {
-        const currentBalance = this.bankService.getAccountMoney(accountName);
+    private async numberOfItemsRequired(item: StonkBagType, maxBalance: number, accountName: string): Promise<number> {
+        const currentBalance = await this.bankService.getAccountMoney(accountName);
         return Math.floor((maxBalance - currentBalance) / StonkConfig.collection[item].refill_value);
     }
 
-    private canFillIn(source: number, item: StonkBagType, maxBalance: number, accountName: string): boolean {
+    private async canFillIn(
+        source: number,
+        item: StonkBagType,
+        maxBalance: number,
+        accountName: string
+    ): Promise<boolean> {
         return (
             this.inventoryManager.getFirstItemInventory(source, item) !== null &&
-            this.numberOfItemsRequired(item, maxBalance, accountName) > 0
+            (await this.numberOfItemsRequired(item, maxBalance, accountName)) > 0
         );
     }
 
@@ -163,7 +170,7 @@ export class StonkFillInProvider {
         }
 
         const items = this.inventoryManager.getFirstItemInventory(source, item);
-        let fillInAmount = this.numberOfItemsRequired(item, maxBalance, accountName);
+        let fillInAmount = await this.numberOfItemsRequired(item, maxBalance, accountName);
 
         if (!items || fillInAmount == 0) {
             return [false, 0];

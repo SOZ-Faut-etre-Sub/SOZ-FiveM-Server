@@ -131,7 +131,13 @@
         },
         "BANK": {
             "HOME_TITLE": "Compte en banque",
-            "CHECKING": "Total :"
+            "CHECKING": "Total :",
+            "NAVBAR_DASHBOARD": "Accueil",
+            "NAVBAR_HISTORY": "Transactions",
+            "NAVBAR_INVOICES": "Factures"
+        },
+        "HISTORY": {
+            "NO_HISTORY": "Aucun historique de transaction"
         },
         "MARKETPLACE": {
             "FEEDBACK": {
@@ -281,7 +287,7 @@
         "APPS_TWITCH_NEWS": "San Andreas News",
         "APPS_ZUTOM": "Zutom",
         "APPS_WEATHER": "Météo",
-        "APPS_TETRIS": "Tetris",
+        "APPS_TETRIS": "Zetris",
         "APPS_SNAKE": "Snake",
         "GENERIC_CLICK_TO_REVEAL": "Cliquer pour révéler",
         "GENERIC_LOADING": "Chargement...",

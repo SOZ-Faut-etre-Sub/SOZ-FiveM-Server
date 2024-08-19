@@ -4,6 +4,7 @@ import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
 import { BaunConfig } from '../../../shared/job/baun';
 import { toVector3Object, Vector3 } from '../../../shared/polyzone/vector';
+import { BankService } from '../../bank/bank.service';
 import { InventoryManager } from '../../inventory/inventory.manager';
 import { Monitor } from '../../monitor/monitor';
 import { Notifier } from '../../notifier';
@@ -22,6 +23,9 @@ export class BaunResellProvider {
 
     @Inject(Monitor)
     private monitor: Monitor;
+
+    @Inject(BankService)
+    private bankService: BankService;
 
     @OnEvent(ServerEvent.BAUN_RESELL)
     public async onResell(source: number) {
@@ -51,7 +55,7 @@ export class BaunResellProvider {
         this.inventoryManager.removeItemFromInventory(source, 'cocktail_box', item.amount);
 
         const totalAmount = item.amount * BaunConfig.Resell.reward;
-        TriggerEvent(ServerEvent.BANKING_TRANSFER_MONEY, 'farm_baun', 'safe_baun', totalAmount);
+        await this.bankService.transferFarmMoney(source, 'farm_baun', 'safe_baun', totalAmount);
 
         this.monitor.traceEvent('job_baun_resell', {
             item_id: item.name,

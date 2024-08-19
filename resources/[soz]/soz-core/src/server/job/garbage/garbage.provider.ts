@@ -55,7 +55,7 @@ export class GarbageProvider {
                 const sellPrice = SELL_PRICE[item.item.name] || DEFAULT_SELL_PRICE;
                 const totalMoney = amountToProcess * sellPrice;
 
-                await this.bankService.transferBankMoney('farm_garbage', 'safe_garbage', totalMoney);
+                await this.bankService.transferFarmMoney(0, 'farm_garbage', 'safe_garbage', totalMoney);
 
                 this.monitor.traceEvent('job_bluebird_recycling_garbage_bag', {
                     item_id: item.item.name,

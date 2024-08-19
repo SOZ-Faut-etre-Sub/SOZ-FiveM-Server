@@ -33,8 +33,6 @@ export class PlayerIdentityProvider {
             return;
         }
 
-        const accountId = await this.bankService.getAccountid(player.citizenid);
-
         const cards = [
             {
                 type: 'identity',
@@ -55,7 +53,7 @@ export class PlayerIdentityProvider {
                 type: 'bank',
                 label: 'Carte bancaire',
                 description: 'Votre carte bancaire STONK personnelle.',
-                iban: accountId,
+                iban: player.charinfo.account,
             },
         ];
 

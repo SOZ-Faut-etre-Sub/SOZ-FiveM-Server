@@ -24,6 +24,7 @@ export class PlayerService {
     private prismaService: PrismaService;
 
     private names: Record<string, string> = {};
+    private namesByAccountId: Record<string, string> = {};
 
     public getPlayerByCitizenId(citizenId: string): PlayerData | null {
         const player = this.QBCore.getPlayerByCitizenId(citizenId);
@@ -37,6 +38,16 @@ export class PlayerService {
 
     public getPlayerByPhone(phoneNumber: string): PlayerData | null {
         const player = this.QBCore.getPlayerByPhone(phoneNumber);
+
+        if (player) {
+            return player.PlayerData;
+        }
+
+        return null;
+    }
+
+    public getPlayerByBankAccount(accountId: string): PlayerData | null {
+        const player = this.QBCore.getPlayerByBankAccount(accountId);
 
         if (player) {
             return player.PlayerData;
@@ -319,5 +330,30 @@ export class PlayerService {
         }
 
         return this.names[citizenId];
+    }
+
+    public async getNameFromBankAccount(accountId: string) {
+        if (!this.namesByAccountId[accountId]) {
+            const dbInfo = await this.prismaService.player.findFirst({
+                where: {
+                    charinfo: {
+                        contains: accountId,
+                    },
+                },
+                select: {
+                    charinfo: true,
+                },
+            });
+
+            if (!dbInfo) {
+                return 'Inconnu';
+            }
+
+            const charInfo = JSON.parse(dbInfo.charinfo) as PlayerCharInfo;
+
+            this.namesByAccountId[accountId] = charInfo.firstname + ' ' + charInfo.lastname;
+        }
+
+        return this.namesByAccountId[accountId];
     }
 }

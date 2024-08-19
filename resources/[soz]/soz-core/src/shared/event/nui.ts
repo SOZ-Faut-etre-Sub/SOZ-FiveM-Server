@@ -421,6 +421,14 @@ export enum NuiEvent {
 
     PoliceUploadScientistPhoto = 'soz-core:client:job:police:upload-photo',
 
+    BankAnimation = 'soz-core:nui:bank:animation',
+    BankAtmAction = 'soz-core:nui:bank-atm:action',
+    BankTransferAction = 'soz-core:nui:bank:transfer-action',
+    BankSafeTransferAction = 'soz-core:nui:bank-safe:transfer-action',
+    BankCreateOffshoreAccount = 'soz-core:nui:bank:create-offshore-account',
+    BankContactAdd = 'soz-core:nui:bank-contact:add',
+    BankContactDelete = 'soz-core:client:bank:contact-delete',
+
     ZkeaFournitureShow = 'soz-core:nui:zkea:fourniture:show',
     ZkeaFourniturePurchase = 'soz-core:nui:zkea:fourniture:purchase',
 }

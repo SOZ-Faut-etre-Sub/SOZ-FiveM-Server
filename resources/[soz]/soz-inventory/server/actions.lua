@@ -247,7 +247,7 @@ RegisterServerEvent("inventory:server:ResellItem", function(item, amount, resell
         price = itemSpec.resellPrice[item.metadata.tier] or 1
     end
 
-    TriggerEvent("banking:server:TransferMoney", resellZone.SourceAccount, resellZone.TargetAccount, math.ceil(price) * amount)
+    exports["soz-core"]:TransferFarmMoney(Player.PlayerData.source, resellZone.SourceAccount, resellZone.TargetAccount, math.ceil(price) * amount)
     TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, string.format("Vous avez vendu ~o~%s ~b~%s", amount, itemSpec.label))
 
     exports["soz-core"]:TraceEvent("job_resell", {

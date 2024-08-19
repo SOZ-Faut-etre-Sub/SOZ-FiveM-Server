@@ -43,7 +43,7 @@ export abstract class RepositoryLegacy<T> {
 export abstract class Repository<
     T extends keyof RepositoryConfig,
     K extends keyof RepositoryConfig[T] = keyof RepositoryConfig[T],
-    V extends RepositoryConfig[T][K] = RepositoryConfig[T][K]
+    V extends RepositoryConfig[T][K] = RepositoryConfig[T][K],
 > {
     public abstract type: RepositoryType;
 

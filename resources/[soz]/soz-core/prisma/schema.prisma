@@ -13,33 +13,40 @@ datasource db {
 model bank_accounts {
   id           BigInt                     @id @default(autoincrement())
   accountid    String?                    @unique(map: "accountid") @db.VarChar(50)
-  citizenid    String?                    @unique(map: "citizenid") @db.VarChar(50)
-  businessid   String?                    @db.VarChar(50)
-  houseid      String?                    @db.VarChar(50)
-  gangid       String?                    @db.VarChar(50)
   money        BigInt                     @default(0)
   marked_money BigInt                     @default(0)
   account_type bank_accounts_account_type @default(player)
   coords       String?                    @db.Text
+
+  // deprecated
+  citizenid  String? @unique(map: "citizenid") @db.VarChar(50)
+  businessid String? @db.VarChar(50)
+  houseid    String? @db.VarChar(50)
+  gangid     String? @db.VarChar(50)
 
   @@index([businessid], map: "businessid")
   @@index([gangid], map: "gangid")
 }
 
 model bank_statements {
-  id         BigInt  @id @default(autoincrement())
-  citizenid  String? @db.VarChar(50)
-  account    String? @db.VarChar(50)
-  businessid String? @db.VarChar(50)
-  gangid     String? @db.VarChar(50)
-  deposited  Int?
-  withdraw   Int?
-  balance    Int?
-  date       String? @db.VarChar(50)
-  reason     String? @db.VarChar(255)
+  id               BigInt   @id @default(autoincrement())
+  date             DateTime @default(now()) @db.Timestamp(0)
+  source_accountid String   @db.VarChar(50)
+  target_accountid String   @db.VarChar(50)
+  reason           String?  @db.Text
+  amount           Int
 
-  @@index([businessid], map: "businessid")
-  @@index([gangid], map: "gangid")
+  @@index([source_accountid], map: "source_accountid")
+  @@index([target_accountid], map: "target_accountid")
+}
+
+model bank_contacts {
+  id        Int    @id @default(autoincrement())
+  citizenid String @db.VarChar(50)
+  label     String @db.VarChar(50)
+  accountid String @db.VarChar(50)
+
+  @@index([citizenid], map: "citizenid")
 }
 
 model bans {
@@ -143,7 +150,7 @@ model housing_property {
 }
 
 model apartment_fourniture {
-  id                Int            @id @default(autoincrement())
+  id                Int               @id @default(autoincrement())
   apartment_id      Int
   model             String            @db.VarChar(120)
   position          String?           @db.LongText
@@ -603,10 +610,11 @@ model snake_score {
 
 enum bank_accounts_account_type {
   player
+  housestorages
   business
   safestorages
   offshore
-  bank_atm     @map("bank-atm")
+  bank_atm      @map("bank-atm")
   gang
 }
 

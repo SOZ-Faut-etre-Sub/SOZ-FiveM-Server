@@ -14,8 +14,8 @@ QBCore.Functions.CreateCallback("soz-upw:server:ResaleEnergy", function(source, 
         end
 
         if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, item.name, 1) then
-            TriggerEvent("banking:server:TransferMoney", Config.Upw.Accounts.FarmAccount, Config.Upw.Accounts.SafeAccount,
-                         Config.Upw.Resale.EnergyCellPrice[item.name] or 0)
+            exports["soz-core"]:TransferFarmMoney(Player.PlayerData.source, Config.Upw.Accounts.FarmAccount, Config.Upw.Accounts.SafeAccount,
+                                                  Config.Upw.Resale.EnergyCellPrice[item.name] or 0)
 
             exports["soz-core"]:TraceEvent("job_upw_energy_resale",
                                            {

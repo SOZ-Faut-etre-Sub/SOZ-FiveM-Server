@@ -2,7 +2,13 @@ import React from 'react';
 
 const GameTetrisIcon: React.FC = props => {
     return (
-        <svg {...props} viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+            {...props}
+            viewBox="0 0 500 500"
+            fill="none"
+            style={{ background: '#F2F2F6' }}
+            xmlns="http://www.w3.org/2000/svg"
+        >
             <image
                 y="89"
                 width="500"

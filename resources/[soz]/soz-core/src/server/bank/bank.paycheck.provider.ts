@@ -1,0 +1,114 @@
+import { JobType } from '@public/shared/job';
+
+import { Inject } from '../../core/decorators/injectable';
+import { Provider } from '../../core/decorators/provider';
+import { Tick } from '../../core/decorators/tick';
+import { Monitor } from '../monitor/monitor';
+import { Notifier } from '../notifier';
+import { JobGradeRepository } from '../repository/job.grade.repository';
+import { ServerStateService } from '../server.state.service';
+import { BankService } from './bank.service';
+
+const SENATOR_SALARY = 400;
+
+@Provider()
+export class BankPaycheckProvider {
+    @Inject(ServerStateService)
+    private serverStateService: ServerStateService;
+
+    @Inject(JobGradeRepository)
+    private jobGradeRepository: JobGradeRepository;
+
+    @Inject(BankService)
+    private bankService: BankService;
+
+    @Inject(Monitor)
+    private monitor: Monitor;
+
+    @Inject(Notifier)
+    private notifier: Notifier;
+
+    @Tick(20 * 60 * 1000)
+    public async paycheckLoop() {
+        const players = this.serverStateService.getPlayers();
+
+        for (const player of players) {
+            if (player.metadata.injail) {
+                continue;
+            }
+
+            if (!player.job || player.job.id === JobType.Unemployed) {
+                continue;
+            }
+
+            const grade = await this.jobGradeRepository.find(Number(player.job.grade));
+
+            if (!grade || grade.jobId != player.job.id) {
+                continue;
+            }
+
+            let payment = grade.salary;
+
+            if (payment <= 0) {
+                continue;
+            }
+
+            if (!player.job.onduty) {
+                payment = Math.ceil(payment * 0.3);
+            }
+
+            const result = await this.bankService.transferBankMoney(
+                player.job.id,
+                player.charinfo.account,
+                'money',
+                payment,
+                false,
+                'Versement du salaire'
+            );
+
+            if (result) {
+                this.notifier.advancedNotify(
+                    player.source,
+                    'Fleeca Banque',
+                    'Mouvement bancaire',
+                    `Votre salaire  ~g~${
+                        player.job.onduty ? 'en service' : 'hors-service'
+                    }~s~ de ~g~${payment}$~s~ a été versé sur votre compte bancaire.`,
+                    'CHAR_BANK_MAZE'
+                );
+
+                this.monitor.traceEvent('paycheck', {
+                    player_source: player.source,
+                    amount: payment,
+                });
+            }
+        }
+
+        for (const player of players) {
+            if (player.metadata.is_senator) {
+                const result = await this.bankService.transferBankMoney(
+                    'gouv',
+                    player.charinfo.account,
+                    'money',
+                    SENATOR_SALARY,
+                    false,
+                    'Indemnité de sénateur'
+                );
+                if (result) {
+                    this.notifier.advancedNotify(
+                        player.source,
+                        'Fleeca Banque',
+                        'Mouvement bancaire',
+                        `Votre indemnité de ~g~sénateur~s~ de ~g~${SENATOR_SALARY}$~s~ a été versé sur votre compte bancaire.`,
+                        'CHAR_BANK_MAZE'
+                    );
+
+                    this.monitor.traceEvent('senator_paycheck', {
+                        player_source: player.source,
+                        amount: SENATOR_SALARY,
+                    });
+                }
+            }
+        }
+    }
+}

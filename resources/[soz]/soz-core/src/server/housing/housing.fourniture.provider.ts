@@ -314,7 +314,7 @@ export class HousingFournitureProvider {
                         message = `Attention, tu essaies de ~r~supprimer~s~ un coffre avec des objets à l'intérieur ! Si tu souhaites faire cela, il est nécessaire de vider ton ~p~${ZkeaFourniture[currentFourniture.model].name}~s~.`;
                     }
                 } else if (currentFourniture.storageType === 'cash_stock') {
-                    const money = this.bankService.getSafeMoney(apartement.identifier);
+                    const money = await this.bankService.getAccountMoney(apartement.identifier, 'marked_money');
                     if (money !== 0) {
                         message = `Attention, tu essaies de ~r~supprimer~s~ un coffre avec de l'argent à l'intérieur ! Si tu souhaites faire cela, il est nécessaire de vider ton ~p~${ZkeaFourniture[currentFourniture.model].name}~s~.`;
                     }

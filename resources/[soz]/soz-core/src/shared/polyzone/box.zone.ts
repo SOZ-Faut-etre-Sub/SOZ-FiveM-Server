@@ -85,6 +85,7 @@ export class BoxZone<T = never> extends PolygonZone<T> {
             maxZ: zone.maxZ,
             data: zone.data,
             heading: zone.heading,
+            debugPoly: zone.debugPoly,
         });
     }
 

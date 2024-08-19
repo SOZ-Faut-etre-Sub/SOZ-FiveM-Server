@@ -135,11 +135,11 @@ export class NewsFarmProvider {
         }
 
         if (player.job.id === JobType.News) {
-            await this.bankService.transferBankMoney('farm_news', 'safe_news', amount * 50);
+            await this.bankService.transferFarmMoney(source, 'farm_news', 'safe_news', amount * 50);
         }
 
         if (player.job.id === JobType.YouNews) {
-            await this.bankService.transferBankMoney('farm_you-news', 'safe_you-news', amount * 50);
+            await this.bankService.transferFarmMoney(source, 'farm_you-news', 'safe_you-news', amount * 50);
         }
 
         this.notifier.notify(source, `Vous avez vendu ~g~${amount} journaux.`);

@@ -2,7 +2,7 @@ import { createModel } from '@rematch/core';
 import { InvoiceItem, InvoicesEvents } from '@typings/app/invoices';
 
 import { ServerPromiseResp } from '../../../../typings/common';
-import { BrowserInvoicesData } from '../../apps/invoices/utils/constants';
+import { BrowserInvoicesData } from '../../apps/bank/utils/constants';
 import { fetchNui } from '../../utils/fetchNui';
 import { buildRespObj } from '../../utils/misc';
 import { RootModel } from '..';

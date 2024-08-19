@@ -193,8 +193,11 @@ export class LSMCProvider {
                                       GetEntityBoneIndexByName(entity, seat.doorBone)
                                   ) as Vector3)
                                 : seat && seat.seatBone
-                                ? GetWorldPositionOfEntityBone(entity, GetEntityBoneIndexByName(entity, seat.seatBone))
-                                : GetEntityCoords(ped);
+                                  ? GetWorldPositionOfEntityBone(
+                                        entity,
+                                        GetEntityBoneIndexByName(entity, seat.seatBone)
+                                    )
+                                  : GetEntityCoords(ped);
 
                         await this.animationService.walkToCoordsAvoidObstacles(targetPedCoords as Vector3, 10000);
                         TaskTurnPedToFaceEntity(playerPed, entity, 1000);

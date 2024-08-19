@@ -254,7 +254,6 @@ export enum ServerEvent {
     AFK_KICK = 'soz-core:server:afk:kick',
 
     // not core
-    BANKING_TRANSFER_MONEY = 'banking:server:TransferMoney',
     CHARACTER_SET_JOB_CLOTHES = 'soz-character:server:SetPlayerJobClothes',
     CHARACTER_SET_CLOTHES = 'soz-character:server:SetPlayerClothes',
     QBCORE_CALL_COMMAND = 'QBCore:CallCommand',
@@ -483,4 +482,8 @@ export enum ServerEvent {
 
     LUXURY_DELETE_GUARD = 'soz-core:server:luxury:delete-guard',
     LUXURY_CREATED_GUARD = 'soz-core:server:luxury:created-guard',
+
+    BANK_INVOICE_PAY = 'soz-core:server:bank:invoice-pay',
+    BANK_INVOICE_REJECT = 'soz-core:server:bank:invoice-reject',
+    BANK_REMOVE_ATM_LIQUIDITY_RATIO = 'soz-core:server:bank:remove-atm-liquidity-ratio',
 }

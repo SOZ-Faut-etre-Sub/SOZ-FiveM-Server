@@ -1,3 +1,4 @@
+import { NuiBankAtmMethodMap, NuiBankMethodMap, NuiBankSafeMethodMap } from '@public/shared/nui/bank';
 import { NuiBookMethodMap } from '@public/shared/nui/book';
 import { NuiCardMethodMap } from '@public/shared/nui/card';
 import { NuiCraftingMethodMap } from '@public/shared/nui/crafting';
@@ -82,6 +83,9 @@ export interface NuiMethodMap {
     medicalDiag: NuiMedicalDiagMethodMap;
     repository: NuiRepositoryMethodMap;
     meteor: NuiMeteorMap;
+    bank: NuiBankMethodMap;
+    bank_atm: NuiBankAtmMethodMap;
+    bank_safe: NuiBankSafeMethodMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(

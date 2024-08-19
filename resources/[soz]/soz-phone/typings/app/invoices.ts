@@ -15,5 +15,5 @@ export interface InvoiceItem {
     label: string;
     emitterName: string;
     amount: number;
-    created_at: number;
+    createdAt: number;
 }

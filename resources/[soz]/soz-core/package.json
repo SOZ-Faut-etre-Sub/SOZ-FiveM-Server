@@ -61,6 +61,7 @@
         "@reach/descendants": "^0.18.0",
         "@react-three/drei": "^9.109.2",
         "@react-three/fiber": "^8.16.8",
+        "@react-spring/web": "^9.7.4",
         "@rematch/core": "^2.2.0",
         "axios": "^1.7.2",
         "classnames": "^2.5.1",

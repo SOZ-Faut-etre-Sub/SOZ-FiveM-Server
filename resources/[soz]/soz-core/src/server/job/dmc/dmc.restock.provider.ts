@@ -10,6 +10,8 @@ import { ServerEvent } from '@public/shared/event';
 import { DmcResellconfig } from '@public/shared/job/dmc';
 import { toVector3Object, Vector3 } from '@public/shared/polyzone/vector';
 
+import { BankService } from '../../bank/bank.service';
+
 @Provider()
 export class DmcRestockProvider {
     @Inject(InventoryManager)
@@ -26,6 +28,9 @@ export class DmcRestockProvider {
 
     @Inject(QBCore)
     private qbcore: QBCore;
+
+    @Inject(BankService)
+    private bankService: BankService;
 
     @OnEvent(ServerEvent.DMC_RESTOCK)
     public async onDmcRestock(source: number) {
@@ -44,8 +49,8 @@ export class DmcRestockProvider {
             availableAmount == 0
                 ? 'Aucune pièce ajoutée au stock LS Custom. Le stock est déjà plein.'
                 : maxAmount > availableAmount
-                ? `${toAddAmount} pièce(s) ajoutée(s) au stock LS Custom. Le stock est maintenant plein.`
-                : `${toAddAmount} pièce(s) ajoutée(s) au stock LS Custom.`;
+                  ? `${toAddAmount} pièce(s) ajoutée(s) au stock LS Custom. Le stock est maintenant plein.`
+                  : `${toAddAmount} pièce(s) ajoutée(s) au stock LS Custom.`;
 
         if (toAddAmount == 0) {
             this.notifier.notify(source, msg, 'error');
@@ -71,7 +76,7 @@ export class DmcRestockProvider {
         );
 
         const totalAmount = toAddAmount * DmcResellconfig.resell_price;
-        TriggerEvent(ServerEvent.BANKING_TRANSFER_MONEY, 'farm_dmc', 'safe_dmc', totalAmount);
+        await this.bankService.transferFarmMoney(source, 'farm_dmc', 'safe_dmc', totalAmount);
 
         this.monitor.traceEvent('job_dmc_restock', {
             item_id: item.name,

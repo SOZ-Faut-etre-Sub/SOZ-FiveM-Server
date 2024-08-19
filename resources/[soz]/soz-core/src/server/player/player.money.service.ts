@@ -1,6 +1,6 @@
 import { BankService } from '@public/server/bank/bank.service';
 import { TaxRepository } from '@public/server/repository/tax.repository';
-import { TaxType } from '@public/shared/bank';
+import { BankMoneyType, TaxType } from '@public/shared/bank';
 
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { QBCore } from '../qbcore';
@@ -16,7 +16,7 @@ export class PlayerMoneyService {
     @Inject(BankService)
     private bankService: BankService;
 
-    public add(source: number, money: number, type: 'money' | 'marked_money' = 'money'): boolean {
+    public add(source: number, money: number, type: BankMoneyType = 'money'): boolean {
         if (isNaN(money)) {
             return;
         }
@@ -28,7 +28,7 @@ export class PlayerMoneyService {
      *
      * All prices should be transferred without Tax, the tax will be added automatically and only the display can be changed to display it
      */
-    public async buy(source: number, money: number, tax: TaxType, type: 'money' | 'marked_money' = 'money') {
+    public async buy(source: number, money: number, tax: TaxType, type: BankMoneyType = 'money') {
         if (isNaN(money)) {
             return false;
         }
@@ -44,41 +44,20 @@ export class PlayerMoneyService {
         const moneyRemoved = this.QBCore.getPlayer(source).Functions.RemoveMoney(type, realMoney);
 
         if (taxMoney > 0 && moneyRemoved) {
-            this.bankService.addAccountMoney('safe_gouv', taxMoney, type, true);
+            await this.bankService.addAccountMoney('safe_gouv', taxMoney, type, true);
         }
 
         return moneyRemoved;
     }
 
-    public remove(source: number, money: number, type: 'money' | 'marked_money' = 'money'): boolean {
+    public remove(source: number, money: number, type: BankMoneyType = 'money'): boolean {
         if (isNaN(money)) {
             return;
         }
         return this.QBCore.getPlayer(source).Functions.RemoveMoney(type, money);
     }
 
-    public get(source: number, type: 'money' | 'marked_money' = 'money'): number {
+    public get(source: number, type: BankMoneyType = 'money'): number {
         return this.QBCore.getPlayer(source).Functions.GetMoney(type);
-    }
-
-    public async transfer(
-        sourceAccount: string,
-        targetAccount: string,
-        amount: number,
-        timeout = 10000
-    ): Promise<boolean> {
-        const promise = new Promise<boolean>(resolve => {
-            TriggerEvent('banking:server:TransferMoney', sourceAccount, targetAccount, amount, (success: boolean) => {
-                resolve(success);
-            });
-        });
-
-        const timeoutPromise = new Promise<never>((_, reject) => {
-            setTimeout(() => {
-                reject(new Error('Promise timed out'));
-            }, timeout);
-        });
-
-        return Promise.race([promise, timeoutPromise]);
     }
 }

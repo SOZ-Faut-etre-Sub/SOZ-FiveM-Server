@@ -4,14 +4,26 @@ import { Link } from 'react-router-dom';
 
 import { useConfig } from '../../hooks/usePhone';
 
-export const NavBarContainer: FunctionComponent<PropsWithChildren> = ({ children }) => {
+interface PropsWithBigHeader {
+    hasBigHeader?: boolean;
+    hasNoTitle?: boolean;
+}
+
+export const NavBarContainer: FunctionComponent<PropsWithChildren<PropsWithBigHeader>> = ({
+    children,
+    hasBigHeader,
+    hasNoTitle,
+}) => {
     const config = useConfig();
 
     return (
         <div
-            className={cn('absolute -bottom-3.5 inset-x-0 grid grid-cols-3 content-start h-20', {
+            className={cn('absolute inset-x-0 grid grid-cols-3 content-start h-20', {
                 'bg-ios-700 text-white': config.theme.value === 'dark',
                 'bg-white text-black': config.theme.value === 'light',
+                '-bottom-3.5': !hasBigHeader,
+                'bottom-3': hasBigHeader,
+                '-bottom-16': hasNoTitle,
             })}
         >
             {children}

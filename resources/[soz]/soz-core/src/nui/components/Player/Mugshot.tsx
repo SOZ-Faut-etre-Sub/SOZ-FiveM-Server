@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
@@ -6,9 +7,11 @@ import { fetchNui } from '../../fetch';
 
 export type MugshotProps = {
     player: PlayerData;
+    containerClass?: string;
+    mugshotClass?: string;
 };
 
-export const Mugshot: FunctionComponent<MugshotProps> = ({ player }) => {
+export const Mugshot: FunctionComponent<MugshotProps> = ({ player, containerClass, mugshotClass }) => {
     const [mugshot, setMugshot] = useState<string | null>(null);
 
     useEffect(() => {
@@ -21,9 +24,19 @@ export const Mugshot: FunctionComponent<MugshotProps> = ({ player }) => {
     }, []);
 
     return (
-        <div className="bg-black w-[150px] h-[150px] flex justify-around items-end">
+        <div
+            className={classnames('bg-black flex justify-around items-end', containerClass, {
+                'w-[150px] h-[150px]': !containerClass,
+            })}
+        >
             {mugshot && (
-                <img src={`https://nui-img/${mugshot}/${mugshot}`} alt="Mugshot" className=" w-[130px] h-[130px]" />
+                <img
+                    src={`https://nui-img/${mugshot}/${mugshot}`}
+                    alt="Mugshot"
+                    className={classnames(mugshotClass, {
+                        'w-[130px] h-[130px]': !mugshotClass,
+                    })}
+                />
             )}
         </div>
     );

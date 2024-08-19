@@ -53,7 +53,7 @@ function QBCore.Functions.GetUserAccount(source, useTestMode)
         local resolved = false
 
         if useTestMode then
-            MySQL.single("SELECT a.* FROM soz_api.accounts a LEFT JOIN soz_api.account_identities ai ON a.id = ai.accountId WHERE a.whitelistStatus = 'ACCEPTED' AND ai.identityType = 'STEAM' AND ai.identityId = ? AND (a.vip = 1 OR a.role IN ('ADMIN', 'STAFF', 'GAMEMASTER', 'HELPER')) LIMIT 1", {steam}, function(result)
+            MySQL.single("SELECT a.* FROM soz_api.accounts a LEFT JOIN soz_api.account_identities ai ON a.id = ai.accountId WHERE a.whitelistStatus = 'ACCEPTED' AND ai.identityType = 'STEAM' AND ai.identityId = ? AND (a.vip = 1 OR a.role IN ('ADMIN', 'STAFF', 'GAMEMASTER', 'HELPER')) LIMIT 1", { steam }, function(result)
                 if resolved then
                     return
                 end
@@ -62,7 +62,7 @@ function QBCore.Functions.GetUserAccount(source, useTestMode)
                 resolved = true
             end)
         else
-            MySQL.single("SELECT a.* FROM soz_api.accounts a LEFT JOIN soz_api.account_identities ai ON a.id = ai.accountId WHERE a.whitelistStatus = 'ACCEPTED' AND ai.identityType = 'STEAM' AND ai.identityId = ? LIMIT 1", {steam}, function(result)
+            MySQL.single("SELECT a.* FROM soz_api.accounts a LEFT JOIN soz_api.account_identities ai ON a.id = ai.accountId WHERE a.whitelistStatus = 'ACCEPTED' AND ai.identityType = 'STEAM' AND ai.identityId = ? LIMIT 1", { steam }, function(result)
                 if resolved then
                     return
                 end
@@ -145,7 +145,7 @@ end
 function QBCore.Functions.GetPlayers()
     local sources = {}
     for k, v in pairs(QBCore.Players) do
-        sources[#sources+1] = k
+        sources[#sources + 1] = k
     end
     return sources
 end
@@ -211,13 +211,12 @@ function QBCore.Functions.GetBucketObjects()
     return _G.Player_Buckets, _G.Entity_Buckets
 end
 
-
 --- Will set the provided player id / source into the provided bucket id
-function QBCore.Functions.SetPlayerBucket(player_source --[[int]],bucket --[[int]])
+function QBCore.Functions.SetPlayerBucket(player_source --[[int]], bucket --[[int]])
     if player_source and bucket then
         local plicense = QBCore.Functions.GetSozIdentifier(player_source)
         SetPlayerRoutingBucket(player_source, bucket)
-        _G.Player_Buckets[plicense] = {player_id = player_source, player_bucket = bucket}
+        _G.Player_Buckets[plicense] = { player_id = player_source, player_bucket = bucket }
         return true
     else
         return false
@@ -225,10 +224,10 @@ function QBCore.Functions.SetPlayerBucket(player_source --[[int]],bucket --[[int
 end
 
 --- Will set any entity into the provided bucket, for example peds / vehicles / props / etc...
-function QBCore.Functions.SetEntityBucket(entity --[[int]],bucket --[[int]])
+function QBCore.Functions.SetEntityBucket(entity --[[int]], bucket --[[int]])
     if entity and bucket then
         SetEntityRoutingBucket(entity, bucket)
-        _G.Entity_Buckets[entity] = {entity_id = entity, entity_bucket = bucket}
+        _G.Entity_Buckets[entity] = { entity_id = entity, entity_bucket = bucket }
         return true
     else
         return false
@@ -251,7 +250,6 @@ function QBCore.Functions.GetPlayersInBucket(bucket --[[int]])
     end
 end
 
-
 --- Will return an array of all the entities inside the current bucket (Not player entities , use GetPlayersInBucket for that)
 function QBCore.Functions.GetEntitiesInBucket(bucket --[[int]])
     local curr_bucket_pool = {}
@@ -268,7 +266,7 @@ function QBCore.Functions.GetEntitiesInBucket(bucket --[[int]])
 end
 
 --- Will return true / false wheter the mentioned player id is present in the bucket provided
-function QBCore.Functions.IsPlayerInBucket(player_source --[[int]] ,bucket --[[int]])
+function QBCore.Functions.IsPlayerInBucket(player_source --[[int]], bucket --[[int]])
     local curr_player_bucket = GetPlayerRoutingBucket(player_source)
     return curr_player_bucket == bucket
 end
@@ -379,7 +377,7 @@ function QBCore.Functions.HasPermission(source, _permission)
             if QBCore.Config.Server.PermissionList[license].permission == 'staff' and permission == 'helper' then
                 return true
             end
-            
+
             if QBCore.Config.Server.PermissionList[license].permission == 'gamemaster' and permission == 'helper' then
                 return true
             end

@@ -22,7 +22,8 @@ export class TaxiProvider {
 
     @OnEvent(ServerEvent.TAXI_NPC_PAY)
     public async decrement(source: number, amount: number) {
-        const transfer = await this.bankService.transferBankMoney(
+        const transfer = await this.bankService.transferFarmMoney(
+            source,
             TaxiConfig.bankAccount.farm,
             TaxiConfig.bankAccount.safe,
             amount
@@ -46,7 +47,8 @@ export class TaxiProvider {
 
     @OnEvent(ServerEvent.BUS_NPC_PAY)
     public async busPay(source: number, amount: number) {
-        const transfer = await this.bankService.transferBankMoney(
+        const transfer = await this.bankService.transferFarmMoney(
+            source,
             TaxiConfig.bankAccount.farm,
             TaxiConfig.bankAccount.safe,
             amount
