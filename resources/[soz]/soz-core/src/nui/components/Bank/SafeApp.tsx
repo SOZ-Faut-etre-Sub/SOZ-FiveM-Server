@@ -48,6 +48,8 @@ export const SafeApp: FunctionComponent = () => {
     };
 
     const onKeyUpReceived = (event: KeyboardEvent) => {
+        if (!showApp) return;
+
         if (event.key === 'Escape') resetApp();
     };
 
