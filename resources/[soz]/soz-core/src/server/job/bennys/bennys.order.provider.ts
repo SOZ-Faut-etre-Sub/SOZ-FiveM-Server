@@ -77,10 +77,9 @@ export class BennysOrderProvider {
             return;
         }
         const vehiclePrice = Math.ceil(vehicle.price * 0.01);
-        // todo: safe account check
         const transferred = await this.bankService.transferFarmMoney(source, 'farm_bennys', 'bennys', vehiclePrice);
 
-        if (transferred) {
+        if (!transferred) {
             this.notifier.notify(
                 source,
                 `Il faut ~r~${vehiclePrice.toLocaleString()}$~s~ sur le compte de l'entreprise.`

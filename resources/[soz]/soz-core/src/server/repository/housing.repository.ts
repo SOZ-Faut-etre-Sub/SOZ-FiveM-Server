@@ -1,4 +1,5 @@
 import { housing_apartment, housing_property } from '@prisma/client';
+import { ServerEvent } from '@public/shared/event/server';
 import { ApartementTiers } from '@public/shared/housing/housing';
 
 import { Inject, Injectable } from '../../core/decorators/injectable';
@@ -231,6 +232,8 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
         apartment.money_tier = apartmentDb.money_tier;
         apartment.park_tier = apartmentDb.park_tier;
         apartment.cloth_tier = apartmentDb.cloth_tier;
+
+        TriggerEvent(ServerEvent.BANK_REFRESH_ACCOUNT, apartment.identifier);
     }
 
     public async setApartmentHasParking(apartmentId: number, hasParkingPlace: boolean): Promise<void> {

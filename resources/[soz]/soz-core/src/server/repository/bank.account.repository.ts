@@ -182,6 +182,15 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
         return true;
     }
 
+    public async refreshAccount(accountId: string): Promise<void> {
+        const account = await this.prismaService.bank_accounts.findUnique({
+            where: { accountid: accountId },
+        });
+        if (!account) return;
+
+        this.data[accountId] = await this.serializeFromDatabase(account);
+    }
+
     protected getDefaultMoney(type: BankAccountType, atmType?: AtmType): number {
         switch (type) {
             case 'player':
@@ -245,7 +254,7 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
             case 'housestorages':
                 if (apartment) {
                     accountLabel = apartment.label;
-                    accountMaxCapacity = HouseSafeStorageTiers[apartment.tier ?? 0];
+                    accountMaxCapacity = HouseSafeStorageTiers[apartment.money_tier ?? 0];
                 }
 
                 break;

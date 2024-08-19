@@ -48,6 +48,8 @@ export const SafeApp: FunctionComponent = () => {
     };
 
     const onKeyUpReceived = (event: KeyboardEvent) => {
+        if (!showApp) return;
+
         if (event.key === 'Escape') resetApp();
     };
 
@@ -161,6 +163,11 @@ export const SafeApp: FunctionComponent = () => {
                                     placeholder="1000"
                                     disabled={!!watch('markedMoney')}
                                     error={errors.money}
+                                    autofill={
+                                        action === 1 && player.money.money > 0
+                                            ? () => setValue('money', player.money.money ?? 0)
+                                            : undefined
+                                    }
                                 />
                             </Card>
                         )}
@@ -190,6 +197,11 @@ export const SafeApp: FunctionComponent = () => {
                                 placeholder="1000"
                                 disabled={!!watch('money')}
                                 error={errors.markedMoney}
+                                autofill={
+                                    action === 1 && player.money.marked_money > 0
+                                        ? () => setValue('markedMoney', player.money.marked_money ?? 0)
+                                        : undefined
+                                }
                             />
                         </Card>
                     </div>

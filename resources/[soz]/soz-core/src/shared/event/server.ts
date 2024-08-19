@@ -487,4 +487,5 @@ export enum ServerEvent {
     BANK_INVOICE_PAY = 'soz-core:server:bank:invoice-pay',
     BANK_INVOICE_REJECT = 'soz-core:server:bank:invoice-reject',
     BANK_REMOVE_ATM_LIQUIDITY_RATIO = 'soz-core:server:bank:remove-atm-liquidity-ratio',
+    BANK_REFRESH_ACCOUNT = 'soz-core:server:bank:refresh-account',
 }

@@ -87,6 +87,11 @@ export const QuickActionForm: FunctionComponent<QuickActionFormProps> = ({
                     })}
                     placeholder="1000"
                     error={errors.amount}
+                    autofill={
+                        quickAction === 1 && player.money[moneyType] > 0
+                            ? () => setValue('amount', player.money[moneyType] ?? 0)
+                            : undefined
+                    }
                 />
 
                 <Button disabled={isSubmitting}>{quickAction === 0 ? 'Retirer' : 'Déposer'}</Button>
