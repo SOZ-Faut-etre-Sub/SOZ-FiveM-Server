@@ -85,7 +85,6 @@ export class UpwOrderProvider {
             return;
         }
         const vehiclePrice = Math.ceil(vehicle.price * 0.01);
-        // todo: check safe account
         const transferred = await this.bankService.transferFarmMoney(source, 'farm_upw', 'upw', vehiclePrice);
 
         if (!transferred) {
