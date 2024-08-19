@@ -138,8 +138,8 @@ export class PlayerProneProvider {
         const playerPed = PlayerPedId();
         let forceEnd = false;
 
-        if (!this.canPlayerCrawl(playerPed) || IsEntityInWater(playerPed)) {
-            if (this.isProne) {
+        if (this.isProne) {
+            if (!this.canPlayerCrawl(playerPed) || IsEntityInWater(playerPed)) {
                 ClearPedTasks(playerPed);
                 forceEnd = true;
                 this.isSwitching = true;

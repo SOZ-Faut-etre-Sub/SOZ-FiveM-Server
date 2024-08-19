@@ -91,7 +91,7 @@ export const InputApp: FunctionComponent = () => {
     return (
         <div
             ref={setInputAppRef}
-            className="absolute h-full w-full flex items-center justify-center bg-black bg-opacity-25 z-99"
+            className="absolute h-full w-full flex items-center justify-center bg-black bg-opacity-25 z-50"
         >
             <form onSubmit={handleSubmit} className="w-[100vh] p-2 bg-black bg-opacity-75">
                 <h2 className="text-base text-white drop-shadow-md mb-2">{askInput.title}</h2>

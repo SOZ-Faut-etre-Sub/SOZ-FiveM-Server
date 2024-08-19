@@ -319,12 +319,22 @@ export class UtilsNPCProvider {
 
     @Tick()
     public onDensityTick() {
-        SetParkedVehicleDensityMultiplierThisFrame(this.density['parked']);
-        SetVehicleDensityMultiplierThisFrame(this.density['vehicle']);
-        SetRandomVehicleDensityMultiplierThisFrame(this.density['multiplier']);
-        SetPedDensityMultiplierThisFrame(this.density['peds']);
-        SetAmbientPedRangeMultiplierThisFrame(this.density['peds']);
-        SetScenarioPedDensityMultiplierThisFrame(this.density['scenario'], this.density['scenario']);
+        if (this.density['parked'] != 1) {
+            SetParkedVehicleDensityMultiplierThisFrame(this.density['parked']);
+        }
+        if (this.density['vehicle'] != 1) {
+            SetVehicleDensityMultiplierThisFrame(this.density['vehicle']);
+        }
+        if (this.density['multiplier'] != 1) {
+            SetRandomVehicleDensityMultiplierThisFrame(this.density['multiplier']);
+        }
+        if (this.density['peds'] != 1) {
+            SetPedDensityMultiplierThisFrame(this.density['peds']);
+            SetAmbientPedRangeMultiplierThisFrame(this.density['peds']);
+        }
+        if (this.density['scenario'] != 1) {
+            SetScenarioPedDensityMultiplierThisFrame(this.density['scenario'], this.density['scenario']);
+        }
     }
 
     @Tick()

@@ -99,7 +99,7 @@ export class VehicleDealershipProvider {
     };
 
     @Tick(20)
-    public async onTick() {
+    public async onDisplayVehicleTick() {
         for (const [, vehicle] of Object.entries(this.electricShowVehicles)) {
             if (vehicle.entity === null) {
                 return;

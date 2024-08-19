@@ -189,10 +189,15 @@ export class PoliceSpikeProvider {
     @Tick(TickInterval.EVERY_FRAME)
     public async checkWheels() {
         const ped = PlayerPedId();
-        const coords = GetEntityCoords(ped, true) as Vector3;
         const vehicle = GetVehiclePedIsIn(ped, false);
 
-        if (this.closestSpike && this.spikes[this.closestSpike] && vehicle) {
+        if (!vehicle) {
+            return;
+        }
+
+        const coords = GetEntityCoords(ped) as Vector3;
+
+        if (this.closestSpike && this.spikes[this.closestSpike]) {
             const spikePos = [
                 this.spikes[this.closestSpike][0],
                 this.spikes[this.closestSpike][1],

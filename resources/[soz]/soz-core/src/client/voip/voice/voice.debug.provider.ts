@@ -27,13 +27,14 @@ export class VoiceDebugProvider {
     @OnEvent(ClientEvent.VOIP_DEBUG)
     public setVoipDebug(active: boolean) {
         this.inDebug = active;
+        if (!this.inDebug) {
+            this.nuiDispatch.dispatch('hud', 'VoipDebug', null);
+        }
     }
 
     @Tick(50)
     public debugVoipTick() {
         if (!this.inDebug) {
-            this.nuiDispatch.dispatch('hud', 'VoipDebug', null);
-
             return;
         }
 

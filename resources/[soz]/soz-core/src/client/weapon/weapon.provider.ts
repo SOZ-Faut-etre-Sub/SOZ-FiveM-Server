@@ -207,7 +207,7 @@ export class WeaponProvider {
     }
 
     @Tick(TickInterval.EVERY_FRAME)
-    async onTick() {
+    async onWeaponTick() {
         const player = PlayerPedId();
         const vehicle = GetVehiclePedIsIn(player, false);
 
