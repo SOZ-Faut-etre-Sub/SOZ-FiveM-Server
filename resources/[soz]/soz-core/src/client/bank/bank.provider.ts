@@ -127,11 +127,7 @@ export class BankProvider {
                     RpcServerEvent.BANK_GET_ACCOUNT_MONEY,
                     `bank_${this.currentBank.bank}`
                 );
-                if (currentMoney < AtmConfig[this.currentBank.type].maxMoney) {
-                    return this.playerService.isOnDuty();
-                }
-
-                return false;
+                return currentMoney < AtmConfig[this.currentBank.type].maxMoney;
             },
             action: () => {
                 if (!this.currentBank) return;

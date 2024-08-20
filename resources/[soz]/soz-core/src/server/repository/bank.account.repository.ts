@@ -1,4 +1,5 @@
 import { bank_accounts } from '@prisma/client';
+import { GangRepository } from '@private/server/resources/gang.repository';
 import { PlayerService } from '@public/server/player/player.service';
 import { HousingRepository } from '@public/server/repository/housing.repository';
 import { ClientEvent } from '@public/shared/event/client';
@@ -27,6 +28,9 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
 
     @Inject(HousingRepository)
     private housingRepository: HousingRepository;
+
+    @Inject(GangRepository)
+    private gangRepository: GangRepository;
 
     public type = RepositoryType.BankAccount;
 
@@ -243,6 +247,7 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
         const society = this.jobService.getJob(data.accountid?.replace(/[a-z]+_/, '') as JobType);
         const safeStorageLabel = `Coffre ${this.jobService.getJob(data.accountid?.replace(/safe_/, '') as JobType)?.label}`;
         const apartment = await this.housingRepository.getApartmentByIdentifier(data.accountid);
+        const gang = await this.gangRepository.find(parseInt(data.accountid?.replace('gang_', '')));
 
         switch (data.account_type) {
             case 'player':
@@ -268,6 +273,10 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
             case 'bank_atm':
                 accountType = 'bank_atm';
                 accountLabel = safeStorageLabel;
+                break;
+            case 'gang':
+                accountType = 'gang';
+                accountLabel = gang.name;
                 break;
         }
 

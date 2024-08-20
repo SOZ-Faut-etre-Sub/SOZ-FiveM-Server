@@ -6,7 +6,6 @@ import { PlayerPersonalMenuData } from '@public/shared/nui/player';
 import { EditorMenuData } from '@public/shared/object';
 
 import { AdminMenuStateProps } from '../../nui/components/Admin/AdminMenu';
-import { MenuSafeStorageData } from '../bank';
 import { PlayerCloakroomItem, WardrobeMenuData } from '../cloth';
 import { DrivingSchoolMenuData } from '../driving-school';
 import { FuelType } from '../fuel';
@@ -205,7 +204,6 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.LsmcPlaster]: PlasterMenuData;
     [MenuType.ObjectEditor]: EditorMenuData;
     [MenuType.DoorAdmin]: string;
-    [MenuType.SafeStorage]: MenuSafeStorageData;
     [MenuType.SmugglingBlackMarketPrices]: string[];
 }
 

@@ -1,7 +1,14 @@
 import { Vector2 } from '@public/shared/polyzone/vector';
 
 export type BankMoneyType = 'money' | 'marked_money';
-export type BankAccountType = 'player' | 'housestorages' | 'business' | 'safestorages' | 'offshore' | 'bank_atm';
+export type BankAccountType =
+    | 'player'
+    | 'housestorages'
+    | 'business'
+    | 'safestorages'
+    | 'offshore'
+    | 'bank_atm'
+    | 'gang';
 export type BankActionType = 'deposit' | 'withdraw';
 
 export type BankAtmConfig = { type?: AtmType; maxMoney: number; maxWithdrawal?: number; limit?: number };

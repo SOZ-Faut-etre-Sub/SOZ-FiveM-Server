@@ -76,7 +76,6 @@ import { MenuPropPlacement } from './MenuPropPlacement';
 import { MenuPropPlacementHousing } from './MenuPropPlacementHousing';
 import { MenuRentBoat } from './MenuRentBoat';
 import { MenuRentMule } from './MenuRentMule';
-import { MenuSafeStorage } from './MenuSafeStorage';
 import { MenuSetHealthState } from './MenuSetHealthState';
 import { MenuVehicle } from './MenuVehicle';
 import { MenuVehicleAuction } from './MenuVehicleAuction';
@@ -292,7 +291,6 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.GangAdmin}/*`} element={<MenuGangAdmin />} />
             <Route path={`/${MenuType.DoorAdmin}/*`} element={<DoorAdminMenu data={menuData} />} />
             <Route path={`/${MenuType.GangMember}/*`} element={<MenuGangMember />} />
-            <Route path={`/${MenuType.SafeStorage}/*`} element={<MenuSafeStorage data={menuData} />} />
             <Route
                 path={`/${MenuType.SmugglingBlackMarketPrices}/*`}
                 element={<MenuSmugglingPrices data={menuData} />}

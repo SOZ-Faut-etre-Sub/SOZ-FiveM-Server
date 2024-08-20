@@ -24,7 +24,6 @@ export const SafeApp: FunctionComponent = () => {
     const player = usePlayer();
 
     const [showApp, setShowApp] = useState<boolean>(false);
-    const [keepFocus, setKeepFocus] = useState<boolean>(false);
 
     // 0 => withdraw, 1 => deposit
     const [action, setAction] = useState<number>(0);
@@ -44,7 +43,6 @@ export const SafeApp: FunctionComponent = () => {
         setShowApp(false);
 
         await fetchNui(NuiEvent.BankAnimation, { type: 'exit' });
-        setKeepFocus(false);
     };
 
     const onKeyUpReceived = (event: KeyboardEvent) => {
@@ -53,11 +51,10 @@ export const SafeApp: FunctionComponent = () => {
         if (event.key === 'Escape') resetApp();
     };
 
-    useNuiFocus(keepFocus, keepFocus, false);
+    useNuiFocus(showApp, showApp, false);
 
     useNuiEvent('bank_safe', 'ShowSafe', (data: boolean) => {
         setShowApp(data);
-        setKeepFocus(data);
     });
 
     useNuiEvent('bank_safe', 'UpdateAccountData', (data: BankAccount) => {
@@ -142,7 +139,7 @@ export const SafeApp: FunctionComponent = () => {
                             </Tab.List>
                         </Tab.Group>
 
-                        {account?.type !== 'housestorages' && (
+                        {account?.type !== 'housestorages' && account?.type !== 'gang' && (
                             <Card
                                 className={classnames({
                                     'opacity-50': !!watch('markedMoney'),

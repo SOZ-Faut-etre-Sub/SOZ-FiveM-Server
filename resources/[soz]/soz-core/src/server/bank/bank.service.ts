@@ -106,7 +106,7 @@ export class BankService {
             }
         }
 
-        if (['housestorages', 'safestorages'].includes(bankAccount.type)) {
+        if (['housestorages', 'safestorages', 'gang'].includes(bankAccount.type)) {
             this.monitor.traceEvent(`safe_${type}`, {
                 player_source: source,
                 target_account: bankAccount.id,
@@ -115,7 +115,7 @@ export class BankService {
             });
         }
 
-        if (!['housestorages'].includes(bankAccount.type)) {
+        if (!['housestorages', 'gang'].includes(bankAccount.type)) {
             await this.bankStatementsService.createStatement(
                 type === 'withdraw' ? bankAccount.id : '',
                 type === 'deposit' ? bankAccount.id : '',
@@ -335,6 +335,15 @@ export class BankService {
         return true;
     }
 
+    public async removeAccountMoney(
+        account: string,
+        amount: number,
+        type: BankMoneyType = 'money',
+        allowOverflow = false
+    ): Promise<boolean> {
+        return this.bankAccountRepository.removeMoney(account, amount, type, allowOverflow);
+    }
+
     public async clearAccount(targetAccount: string) {
         return this.bankAccountRepository.clear(targetAccount);
     }
@@ -353,15 +362,11 @@ export class BankService {
         message: string,
         type: 'success' | 'error' = 'success'
     ) {
-        if (['housestorages', 'safestorages'].includes(bankAccount.type)) {
+        if (['housestorages', 'safestorages', 'gang'].includes(bankAccount.type)) {
             this.notifier.notify(source, `${title}~s~~n~${message}`, type);
             return;
         }
 
         this.notifier.advancedNotify(source, 'Fleeca Banque', title, message, 'CHAR_BANK_MAZE', type);
-    }
-
-    public loadGangs(gangs: Record<string, number>) {
-        return exports['soz-bank'].LoadGangs(gangs);
     }
 }

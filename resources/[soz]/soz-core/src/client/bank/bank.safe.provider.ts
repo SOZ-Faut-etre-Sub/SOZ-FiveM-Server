@@ -120,4 +120,13 @@ export class BankSafeProvider {
         this.nuiDispatch.dispatch('bank_safe', 'UpdateAccountData', safe);
         this.nuiDispatch.dispatch('bank_safe', 'ShowSafe', true);
     }
+
+    @OnEvent(ClientEvent.BANK_SAFE_GANG_OPEN_UI)
+    public async onGangOpenUI(identifier: string) {
+        const safe = await emitRpc<BankAccount>(RpcServerEvent.BANK_GET_ACCOUNT, identifier, 'gang');
+        if (!safe) return;
+
+        this.nuiDispatch.dispatch('bank_safe', 'UpdateAccountData', safe);
+        this.nuiDispatch.dispatch('bank_safe', 'ShowSafe', true);
+    }
 }

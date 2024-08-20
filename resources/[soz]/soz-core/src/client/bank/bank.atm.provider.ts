@@ -140,11 +140,7 @@ export class BankAtmProvider {
                     type,
                     GetEntityCoords(entity)
                 );
-                if (account.money < AtmConfig[account.config.type].maxMoney) {
-                    return this.playerService.isOnDuty();
-                }
-
-                return false;
+                return account.money < AtmConfig[account.config.type].maxMoney;
             },
             action: async entity => {
                 const account = await emitRpc<BankAccount>(
