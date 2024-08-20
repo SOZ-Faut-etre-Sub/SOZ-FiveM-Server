@@ -202,7 +202,7 @@ export const createGameView = (canvas: HTMLCanvasElement): GameView => {
                     (blob: Blob) => {
                         resolve(blob);
                     },
-                    'image/jpeg',
+                    'image/webp',
                     0.9
                 );
             });
