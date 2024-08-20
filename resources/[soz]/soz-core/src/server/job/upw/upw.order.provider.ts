@@ -85,7 +85,14 @@ export class UpwOrderProvider {
             return;
         }
         const vehiclePrice = Math.ceil(vehicle.price * 0.01);
-        const transferred = await this.bankService.transferFarmMoney(source, 'farm_upw', 'upw', vehiclePrice);
+        const transferred = await this.bankService.transferFarmMoney(
+            source,
+            'farm_upw',
+            'upw',
+            vehiclePrice,
+            'money',
+            true
+        );
 
         if (!transferred) {
             this.notifier.notify(

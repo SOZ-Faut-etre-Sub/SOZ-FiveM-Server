@@ -165,6 +165,7 @@ export class BankService {
         this.monitor.traceEvent(`farm_${type}_money`, {
             player_source: source,
             target_account: farmAccount.id,
+            account_type: 'farm',
             money_type: moneyType,
             amount: amount,
         });
@@ -217,6 +218,7 @@ export class BankService {
                 player_source: source,
                 source_account: safeAccount.id,
                 target_account: farmAccount.id,
+                account_type: 'farm',
                 money: amount,
             });
 
@@ -242,6 +244,7 @@ export class BankService {
             player_source: source,
             source_account: farmAccount.id,
             target_account: safeAccount.id,
+            account_type: 'farm',
             money: moneyToTransfer,
         });
 
@@ -295,6 +298,7 @@ export class BankService {
             player_source: source,
             source_account: accountSource,
             target_account: accountTarget,
+            account_type: 'farm',
             money: amount,
         });
 

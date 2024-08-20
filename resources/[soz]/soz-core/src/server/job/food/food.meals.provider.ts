@@ -85,7 +85,14 @@ export class FoodMealsProvider {
             return false;
         }
 
-        const transferred = await this.bankService.transferFarmMoney(source, 'farm_food', 'food', this.ORDER_PRICE);
+        const transferred = await this.bankService.transferFarmMoney(
+            source,
+            'farm_food',
+            'food',
+            this.ORDER_PRICE,
+            'money',
+            true
+        );
         if (transferred) {
             const date = new Date();
             date.setTime(date.getTime() + 60 * 60 * 1000); // One hour later...
