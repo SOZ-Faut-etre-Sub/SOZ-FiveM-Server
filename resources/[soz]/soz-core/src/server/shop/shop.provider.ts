@@ -628,7 +628,13 @@ export class ShopProvider {
         ) {
             if (await this.vehicleSpawner.delete(networkId)) {
                 const rentOwner = this.playerService.getPlayerByCitizenId(vehicleState.volatile.rentOwner);
-                this.bankService.addAccountMoney(rentOwner.charinfo.account, MuleRentDeposite);
+                await this.bankService.addAccountMoney(
+                    rentOwner.charinfo.account,
+                    MuleRentDeposite,
+                    'money',
+                    false,
+                    'Restitution de la caution du camion de location ZKEA'
+                );
                 this.notifier.notify(
                     source,
                     'Vous avez rendu votre camion de location, la caution a été rendu au locataire.',
