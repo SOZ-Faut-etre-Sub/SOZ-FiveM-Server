@@ -28,7 +28,7 @@ type FightForStyleStateProps = {
 };
 
 export const StonkJobMenu: FunctionComponent<FightForStyleStateProps> = ({ data }) => {
-    const banner = 'https://nui-img/soz/menu_job_carrier';
+    const banner = 'https://cfx-nui-soz-core/public/images/banner/menu_job_cash-transfer.webp';
     const [blips, setBlips] = useState(null);
 
     const propsList = [{ label: 'Cône de circulation', item: 'cone', props: 'prop_roadcone02a' }];
