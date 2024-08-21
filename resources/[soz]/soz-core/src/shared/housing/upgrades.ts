@@ -17,7 +17,7 @@ export const TYPE_DESCRPTION = {
     all: 'Toutes les améliorations augmente votre stock de meuble.',
 };
 
-export const FOURNITURE_PER_TIER = 10;
+export const FOURNITURE_PER_TIER = 15;
 
 export const HousingTiers = {
     tier: {
