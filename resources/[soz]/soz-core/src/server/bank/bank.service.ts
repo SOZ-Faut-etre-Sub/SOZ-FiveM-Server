@@ -42,7 +42,8 @@ export class BankService {
         type: BankActionType,
         moneyType: BankMoneyType,
         amount: number = 0,
-        allowOverflow = false
+        allowOverflow = false,
+        skipNotify = false
     ): Promise<boolean> {
         if (amount <= 0) {
             this.logger.error(`Invalid amount ${amount}`);
@@ -63,26 +64,36 @@ export class BankService {
 
         const playerMoney = player.Functions.GetMoney(moneyType);
         if (type === 'deposit' && Number(playerMoney) < amount) {
-            this.bankNotify(source, bankAccount, `Dépot: ~r~$${amount}`, 'Fond insuffisant.', 'error');
+            if (!skipNotify) {
+                this.bankNotify(source, bankAccount, `Dépot: ~r~$${amount}`, 'Fond insuffisant.', 'error');
+            }
             return false;
         }
 
         if (type === 'deposit') {
             if (!player.Functions.RemoveMoney(moneyType, amount)) {
-                this.bankNotify(source, bankAccount, `Dépot: ~r~$${amount}`, 'Fond insuffisant.', 'error');
+                if (!skipNotify) {
+                    this.bankNotify(source, bankAccount, `Dépot: ~r~$${amount}`, 'Fond insuffisant.', 'error');
+                }
                 return false;
             }
 
             if (!(await this.bankAccountRepository.addMoney(bankAccount.id, amount, moneyType, allowOverflow))) {
                 player.Functions.AddMoney(moneyType, amount);
-                this.bankNotify(source, bankAccount, `Dépôt: ~r~$${amount}`, 'Le coffre est plein.', 'error');
+                if (!skipNotify) {
+                    this.bankNotify(source, bankAccount, `Dépôt: ~r~$${amount}`, 'Le coffre est plein.', 'error');
+                }
                 return false;
             }
 
-            this.bankNotify(source, bankAccount, `Dépot: ~g~$${amount}`, "Vous avez déposé de l'argent.");
+            if (!skipNotify) {
+                this.bankNotify(source, bankAccount, `Dépot: ~g~$${amount}`, "Vous avez déposé de l'argent.");
+            }
         } else {
             if (!(await this.bankAccountRepository.removeMoney(bankAccount.id, amount, moneyType, allowOverflow))) {
-                this.bankNotify(source, bankAccount, `Retrait: ~r~$${amount}`, 'Fond insuffisant.', 'error');
+                if (!skipNotify) {
+                    this.bankNotify(source, bankAccount, `Retrait: ~r~$${amount}`, 'Fond insuffisant.', 'error');
+                }
                 return false;
             }
 
@@ -90,7 +101,9 @@ export class BankService {
                 return false;
             }
 
-            this.bankNotify(source, bankAccount, `Retrait: ~r~$${amount}`, "Vous avez retiré de l'argent.");
+            if (!skipNotify) {
+                this.bankNotify(source, bankAccount, `Retrait: ~r~$${amount}`, "Vous avez retiré de l'argent.");
+            }
         }
 
         if (['housestorages', 'safestorages'].includes(bankAccount.type)) {

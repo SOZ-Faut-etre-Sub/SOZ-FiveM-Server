@@ -87,35 +87,45 @@ export class BankInvoiceService {
                     moneyTake = invoice.amount - markedMoney;
                 }
 
-                const moneyTransaction = await this.bankService.transferCashMoney(
-                    source,
-                    invoice.emitterSafe,
-                    'deposit',
-                    'money',
-                    moneyTake
-                );
-                if (!moneyTransaction) {
-                    this.notifier.error(source, "Le coffre de destination n'a pas de place pour cette somme.");
-                    return false;
-                }
-
-                const markedMoneyTransaction = await this.bankService.transferCashMoney(
-                    source,
-                    invoice.emitterSafe,
-                    'deposit',
-                    'marked_money',
-                    markedMoneyTake
-                );
-                if (!markedMoneyTransaction) {
-                    this.notifier.error(source, "Le coffre de destination n'a pas de place pour cette somme.");
-                    await this.bankService.transferCashMoney(
+                if (moneyTake > 0) {
+                    const moneyTransaction = await this.bankService.transferCashMoney(
                         source,
                         invoice.emitterSafe,
-                        'withdraw',
+                        'deposit',
                         'money',
-                        moneyTake
+                        moneyTake,
+                        false,
+                        true
                     );
-                    return false;
+                    if (!moneyTransaction) {
+                        this.notifier.error(source, "Le coffre de destination n'a pas de place pour cette somme.");
+                        return false;
+                    }
+                }
+
+                if (markedMoneyTake > 0) {
+                    const markedMoneyTransaction = await this.bankService.transferCashMoney(
+                        source,
+                        invoice.emitterSafe,
+                        'deposit',
+                        'marked_money',
+                        markedMoneyTake,
+                        false,
+                        true
+                    );
+                    if (!markedMoneyTransaction) {
+                        this.notifier.error(source, "Le coffre de destination n'a pas de place pour cette somme.");
+                        await this.bankService.transferCashMoney(
+                            source,
+                            invoice.emitterSafe,
+                            'withdraw',
+                            'money',
+                            moneyTake,
+                            false,
+                            true
+                        );
+                        return false;
+                    }
                 }
             } else {
                 const transaction = await this.bankService.transferCashMoney(
@@ -123,7 +133,9 @@ export class BankInvoiceService {
                     invoice.emitterSafe,
                     'deposit',
                     'money',
-                    invoice.amount
+                    invoice.amount,
+                    false,
+                    true
                 );
                 if (!transaction) {
                     this.notifier.error(source, 'Transaction impossible.');
