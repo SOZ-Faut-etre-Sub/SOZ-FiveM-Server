@@ -57,7 +57,7 @@ const CameraApp: React.FC = () => {
 
         const blob = await gameView.takeScreenshot();
         const formData = new FormData();
-        const file = new File([blob], 'screenshot.jpg', { type: 'image/jpeg' });
+        const file = new File([blob], 'screenshot.webp', { type: 'image/webp' });
 
         const operations = `{"operationName": "createScreenshot", "variables": {"file":null}, "query":"mutation createScreenshot($file: Upload!) { createScreenshot(file: $file) {url} }"}`;
         formData.append('operations', operations);
