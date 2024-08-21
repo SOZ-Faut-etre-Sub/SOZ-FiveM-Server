@@ -276,7 +276,7 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
                 break;
             case 'gang':
                 accountType = 'gang';
-                accountLabel = gang.name;
+                accountLabel = gang?.name ?? data.accountid;
                 break;
         }
 
