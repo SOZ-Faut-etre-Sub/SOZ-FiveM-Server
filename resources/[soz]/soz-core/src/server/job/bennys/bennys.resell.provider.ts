@@ -67,9 +67,9 @@ export class BennysResellProvider {
         }
 
         const sellPrice = result.ok / 2;
-        const gainPrice = result.ok * 0.1;
+        const gainPrice = Math.ceil(result.ok * 0.1);
 
-        const cashTransferResult = await this.bankService.transferCashMoney(
+        const cashTransferResult = await this.bankService.transferFarmCashMoney(
             source,
             'bennys_reseller',
             'withdraw',

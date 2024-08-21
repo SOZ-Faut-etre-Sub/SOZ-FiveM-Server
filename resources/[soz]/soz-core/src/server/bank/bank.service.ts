@@ -114,6 +114,65 @@ export class BankService {
         return true;
     }
 
+    public async transferFarmCashMoney(
+        source: number,
+        farm: string,
+        type: BankActionType,
+        moneyType: BankMoneyType,
+        amount: number = 0
+    ): Promise<boolean> {
+        if (amount <= 0) {
+            this.logger.error(`Invalid amount ${amount}`);
+            return false;
+        }
+
+        const player = this.QBCore.getPlayer(source);
+        if (!player) {
+            this.logger.error(`Player ${source} not found`);
+            return false;
+        }
+
+        const farmAccount = await this.bankFarmRepository.find(farm);
+        if (!farmAccount) {
+            this.logger.error(`Farm account ${farm} not found`);
+            return false;
+        }
+
+        const playerMoney = player.Functions.GetMoney(moneyType);
+        if (type === 'deposit' && Number(playerMoney) < amount) {
+            return false;
+        }
+
+        if (type === 'deposit') {
+            if (!player.Functions.RemoveMoney(moneyType, amount)) {
+                return false;
+            }
+
+            if (!this.bankFarmRepository.addMoney(farmAccount.id, amount, moneyType)) {
+                player.Functions.AddMoney(moneyType, amount);
+                return false;
+            }
+        } else {
+            if (!this.bankFarmRepository.removeMoney(farmAccount.id, amount, moneyType)) {
+                return false;
+            }
+
+            if (!player.Functions.AddMoney(moneyType, amount)) {
+                return false;
+            }
+        }
+
+        this.monitor.traceEvent(`farm_${type}_money`, {
+            player_source: source,
+            target_account: farmAccount.id,
+            account_type: 'farm',
+            money_type: moneyType,
+            amount: amount,
+        });
+
+        return true;
+    }
+
     public async transferFarmMoney(
         source: number,
         farm: string,
@@ -159,6 +218,7 @@ export class BankService {
                 player_source: source,
                 source_account: safeAccount.id,
                 target_account: farmAccount.id,
+                account_type: 'farm',
                 money: amount,
             });
 
@@ -184,6 +244,7 @@ export class BankService {
             player_source: source,
             source_account: farmAccount.id,
             target_account: safeAccount.id,
+            account_type: 'farm',
             money: moneyToTransfer,
         });
 
@@ -237,6 +298,7 @@ export class BankService {
             player_source: source,
             source_account: accountSource,
             target_account: accountTarget,
+            account_type: 'farm',
             money: amount,
         });
 

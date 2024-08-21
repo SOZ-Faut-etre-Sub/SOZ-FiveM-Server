@@ -77,7 +77,14 @@ export class BennysOrderProvider {
             return;
         }
         const vehiclePrice = Math.ceil(vehicle.price * 0.01);
-        const transferred = await this.bankService.transferFarmMoney(source, 'farm_bennys', 'bennys', vehiclePrice);
+        const transferred = await this.bankService.transferFarmMoney(
+            source,
+            'farm_bennys',
+            'bennys',
+            vehiclePrice,
+            'money',
+            true
+        );
 
         if (!transferred) {
             this.notifier.notify(
