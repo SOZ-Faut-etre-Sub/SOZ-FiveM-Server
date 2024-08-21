@@ -52,7 +52,7 @@ Config.Storages["stonk_cloakroom_1"] = {
     minZ = 45.0,
     maxZ = 47.2,
     heading = 295,
-    targetOptions = concatTables(getCloakroomTargetOptions("cash-transfer", "stonk_cloakroom_1"), getPoliceCloakroomTargetOptions("cash-transfer")),
+    targetOptions = getCloakroomTargetOptions("cash-transfer", "stonk_cloakroom_1"),
 }
 
 Config.Storages["stonk_cloakroom_2"] = {
@@ -64,5 +64,5 @@ Config.Storages["stonk_cloakroom_2"] = {
     minZ = 45.0,
     maxZ = 47.2,
     heading = 295,
-    targetOptions = concatTables(getCloakroomTargetOptions("cash-transfer", "stonk_cloakroom_2"), getPoliceCloakroomTargetOptions("cash-transfer")),
+    targetOptions = getCloakroomTargetOptions("cash-transfer", "stonk_cloakroom_2"),
 }

@@ -28,17 +28,15 @@ function getCloakroomTargetOptions(job, storage, event)
                 TriggerEvent("soz-jobs:client:check-cloakroom-storage", storage)
             end,
         },
-    }
-end
-
-function getPoliceCloakroomTargetOptions(job)
-    return {
         {
+            color = job,
             targeticon = "fas fa-box",
             icon = "fas fa-archive",
-            event = "police:cloakroom:openStash",
             label = "Ouvrir mon casier",
             job = job,
+            action = function()
+                TriggerServerEvent("inventory:server:openInventory", "stash", job .. "_" .. PlayerData.citizenid)
+            end,
         },
     }
 end

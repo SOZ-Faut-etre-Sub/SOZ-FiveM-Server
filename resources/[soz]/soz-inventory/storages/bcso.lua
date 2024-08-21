@@ -93,6 +93,5 @@ Config.Storages["bcso_cloakroom"] = {
     minZ = 33.27,
     maxZ = 35.27,
     heading = 300,
-    targetOptions = concatTables(getCloakroomTargetOptions("bcso", "bcso_cloakroom", "soz-core:client:police:OpenCloakroomMenu"),
-                                 getPoliceCloakroomTargetOptions("bcso")),
+    targetOptions = getCloakroomTargetOptions("bcso", "bcso_cloakroom", "soz-core:client:police:OpenCloakroomMenu"),
 }

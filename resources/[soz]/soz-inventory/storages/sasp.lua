@@ -62,6 +62,5 @@ Config.Storages["sasp_cloakroom"] = {
     minZ = 33.68,
     maxZ = 35.68,
     heading = 180,
-    targetOptions = concatTables(getCloakroomTargetOptions("sasp", "sasp_cloakroom", "soz-core:client:police:OpenCloakroomMenu"),
-                                 getPoliceCloakroomTargetOptions("sasp")),
+    targetOptions = getCloakroomTargetOptions("sasp", "sasp_cloakroom", "soz-core:client:police:OpenCloakroomMenu"),
 }

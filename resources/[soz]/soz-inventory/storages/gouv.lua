@@ -40,5 +40,5 @@ Config.Storages["gouv_cloakroom"] = {
     minZ = 33.68,
     maxZ = 35.68,
     heading = 180,
-    targetOptions = concatTables(getCloakroomTargetOptions("gouv", "gouv_cloakroom"), getPoliceCloakroomTargetOptions("gouv")),
+    targetOptions = getCloakroomTargetOptions("gouv", "gouv_cloakroom"),
 }

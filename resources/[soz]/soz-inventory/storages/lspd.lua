@@ -93,8 +93,7 @@ Config.Storages["lspd_male_cloakroom"] = {
     minZ = 75.62,
     maxZ = 78.62,
     heading = 350,
-    targetOptions = concatTables(getCloakroomTargetOptions("lspd", "lspd_male_cloakroom", "soz-core:client:police:OpenCloakroomMenu"),
-                                 getPoliceCloakroomTargetOptions("lspd")),
+    targetOptions = getCloakroomTargetOptions("lspd", "lspd_male_cloakroom", "soz-core:client:police:OpenCloakroomMenu"),
 }
 
 Config.Storages["lspd_female_cloakroom"] = {
@@ -106,6 +105,5 @@ Config.Storages["lspd_female_cloakroom"] = {
     minZ = 75.62,
     maxZ = 78.62,
     heading = 350,
-    targetOptions = concatTables(getCloakroomTargetOptions("lspd", "lspd_female_cloakroom", "soz-core:client:police:OpenCloakroomMenu"),
-                                 getPoliceCloakroomTargetOptions("lspd")),
+    targetOptions = getCloakroomTargetOptions("lspd", "lspd_female_cloakroom", "soz-core:client:police:OpenCloakroomMenu"),
 }
