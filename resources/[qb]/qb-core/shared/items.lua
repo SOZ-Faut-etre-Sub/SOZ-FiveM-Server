@@ -3916,6 +3916,17 @@ QBShared.Items = {
         ['description'] = 'Pour ne jamais perdre le Nord !',
         ['illustrator'] = '.Kutz',
     },
+    ['watch'] = {
+        ['name'] = 'watch',
+        ['label'] = 'Montre connectée',
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Comptez votre nombre de pas, votre rythme cardiaque, et bien plus encore !',
+    },
 
     -- Theft and Jewelry
     ['rolex'] = {

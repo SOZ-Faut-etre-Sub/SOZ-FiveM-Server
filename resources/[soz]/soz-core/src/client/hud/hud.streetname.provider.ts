@@ -1,55 +1,42 @@
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
-import { DrawService } from '../draw.service';
-import { HudCompassProvider } from './hud.compass.provider';
+import { NuiDispatch } from '../nui/nui.dispatch';
 import { HudStateProvider } from './hud.state.provider';
+import { HudWatchProvider } from './hud.watch.provider';
 
 @Provider()
 export class HudStreetNameProvider {
-    @Inject(HudCompassProvider)
-    private readonly hudCompassProvider: HudCompassProvider;
+    @Inject(HudWatchProvider)
+    private readonly hudWatchProvider: HudWatchProvider;
 
     @Inject(HudStateProvider)
     private readonly hudStateProvider: HudStateProvider;
 
-    @Inject(DrawService)
-    private readonly drawService: DrawService;
+    @Inject(NuiDispatch)
+    private readonly nuiDispatch: NuiDispatch;
 
-    private streetName = '';
+    private streetName: string[] = [];
 
     @Tick(TickInterval.EVERY_SECOND)
     public updateStreetNameLoop(): void {
         const position = GetEntityCoords(PlayerPedId(), true);
         const [streetA, streetB] = GetStreetNameAtCoord(position[0], position[1], position[2]);
 
-        this.streetName = `${GetStreetNameFromHashKey(streetA)}`;
+        this.streetName = [`${GetStreetNameFromHashKey(streetA)}`];
 
         if (streetA !== streetB && streetB) {
-            this.streetName += ` & ${GetStreetNameFromHashKey(streetB)}`;
+            this.streetName.push(`${GetStreetNameFromHashKey(streetB)}`);
         }
-    }
 
-    @Tick(TickInterval.EVERY_FRAME)
-    public showStreetNameLoop(): void {
         if (!this.hudStateProvider.isComputedHudVisible) {
             return;
         }
 
-        if (!this.hudCompassProvider.haveCompass) {
+        if (!this.hudWatchProvider.haveWatch) {
             return;
         }
 
-        const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
-
-        if (!vehicle) {
-            return;
-        }
-
-        this.drawService.drawText(this.streetName, [0.5, 0.02], {
-            size: 0.35,
-            outline: true,
-            centered: true,
-        });
+        this.nuiDispatch.dispatch('hud', 'UpdateStreetName', this.streetName);
     }
 }

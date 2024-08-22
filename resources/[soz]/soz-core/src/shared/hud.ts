@@ -32,6 +32,13 @@ export type Minimap = {
     left: number;
     right: number;
     top: number;
+    isHidden: boolean;
+};
+
+export type HudDateTime = {
+    hour: number;
+    minute: number;
+    dayOfWeek: number;
 };
 
 export enum VoiceMode {
@@ -45,7 +52,9 @@ export enum VoiceMode {
 
 export type HudState = {
     minimap: Minimap;
+    dateTime: HudDateTime;
     voiceMode: VoiceMode;
+    streetName: string[];
 };
 
 export enum Font {

@@ -6,6 +6,12 @@ import type { RootModel } from './';
 export const hud = createModel<RootModel>()({
     state: {
         voiceMode: 0,
+        streetName: [],
+        dateTime: {
+            dayOfWeek: 0,
+            hour: 0,
+            minute: 0,
+        },
         minimap: {
             X: 0.08091666683321,
             Y: 0.88549252311906,

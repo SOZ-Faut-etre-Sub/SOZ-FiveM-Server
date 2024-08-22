@@ -6,12 +6,14 @@ import { HudNotificationsProvider } from './hud.notifications.provider';
 import { HudStateProvider } from './hud.state.provider';
 import { HudStreetNameProvider } from './hud.streetname.provider';
 import { HudVehicleProvider } from './hud.vehicle.provider';
+import { HudWatchProvider } from './hud.watch.provider';
 import { HudWeatherIconProvider } from './hud.weathericon.provider';
 
 @Module({
     providers: [
         HudCompassProvider,
         HudMinimapProvider,
+        HudWatchProvider,
         HudNewsProvider,
         HudNotificationsProvider,
         HudStateProvider,

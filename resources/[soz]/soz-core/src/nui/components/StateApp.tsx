@@ -37,6 +37,14 @@ export const StateApp: FunctionComponent = () => {
         dispatch.hud.update({ minimap });
     });
 
+    useNuiEvent('hud', 'UpdateDateTime', dateTime => {
+        dispatch.hud.update({ dateTime });
+    });
+
+    useNuiEvent('hud', 'UpdateStreetName', streetName => {
+        dispatch.hud.update({ streetName });
+    });
+
     useNuiEvent('hud', 'UpdateVehicle', vehicle => {
         dispatch.vehicle.update(vehicle);
     });

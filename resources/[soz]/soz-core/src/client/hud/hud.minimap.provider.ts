@@ -4,7 +4,7 @@ import { PlayerData } from '@public/shared/player';
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { Tick } from '../../core/decorators/tick';
+import { Tick, TickInterval } from '../../core/decorators/tick';
 import { ClientEvent } from '../../shared/event';
 import { Minimap } from '../../shared/hud';
 import { VehicleSeat } from '../../shared/vehicle/vehicle';
@@ -36,6 +36,8 @@ export class HudMinimapProvider {
     private _inVehicle = GetVehiclePedIsIn(PlayerPedId(), false) !== 0;
 
     private _scaledNui = GetResourceKvpInt('soz_scaled_nui') === 1;
+
+    private minimapOffset = -0.075;
 
     public get hasAdminGps(): boolean {
         return this._hasAdminGps;
@@ -110,6 +112,10 @@ export class HudMinimapProvider {
         this.nuiDispatch.dispatch('hud', 'UpdateMinimap', this.getMinimap());
         this.minimapHandle = await this.resourceLoader.loadScaleformMovie('minimap');
 
+        SetMinimapComponentPosition('minimap', 'L', 'B', -0.0045, 0.002 + this.minimapOffset, 0.15, 0.188888);
+        SetMinimapComponentPosition('minimap_mask', 'L', 'B', 0.02, 0.032 + this.minimapOffset, 0.111, 0.159);
+        SetMinimapComponentPosition('minimap_blur', 'L', 'B', -0.03, 0.022 + this.minimapOffset, 0.266, 0.237);
+
         SetRadarBigmapEnabled(false, false);
     }
 
@@ -128,9 +134,14 @@ export class HudMinimapProvider {
         DisplayRadar(showRadar);
     }
 
-    @Tick(1000)
-    public async updateMinimap(): Promise<void> {
+    @Tick(TickInterval.EVERY_SECOND)
+    public async updateHud(): Promise<void> {
         this.nuiDispatch.dispatch('hud', 'UpdateMinimap', this.getMinimap());
+        this.nuiDispatch.dispatch('hud', 'UpdateDateTime', {
+            hour: GetClockHours(),
+            minute: GetClockMinutes(),
+            dayOfWeek: GetClockDayOfWeek(),
+        });
     }
 
     private getMinimap(): Minimap {
@@ -138,6 +149,7 @@ export class HudMinimapProvider {
         const aspectRatio = GetAspectRatio(false);
         const scaleX = 1.0 / x;
         const scaleY = 1.0 / y;
+        const isRadarHidden = IsRadarHidden();
 
         let rawX;
         let rawY;
@@ -150,12 +162,17 @@ export class HudMinimapProvider {
             width = scaleX * (x / (2.52 * aspectRatio));
             height = scaleY * (y / 2.3374);
         } else {
-            [rawX, rawY] = GetScriptGfxPosition(-0.0045, 0.002 + -0.188888);
+            [rawX, rawY] = GetScriptGfxPosition(-0.0045, -0.073 + -0.19);
             width = scaleX * (x / (4 * aspectRatio));
             height = scaleY * (y / 5.674);
         }
 
         ResetScriptGfxAlign();
+
+        if (isRadarHidden) {
+            rawY += height;
+            height = 0;
+        }
 
         if (this.scaledNui) {
             return {
@@ -167,6 +184,7 @@ export class HudMinimapProvider {
                 right: 0.15122916630934,
                 top: 0.79737126827239,
                 width: 0.14062499895226,
+                isHidden: isRadarHidden,
             };
         }
 
@@ -179,6 +197,7 @@ export class HudMinimapProvider {
             bottom: rawY + height,
             X: rawX + width / 2,
             Y: rawY + height / 2,
+            isHidden: isRadarHidden,
         };
     }
 }
