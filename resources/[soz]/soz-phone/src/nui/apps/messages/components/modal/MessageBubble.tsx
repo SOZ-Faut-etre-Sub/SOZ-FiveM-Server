@@ -16,7 +16,7 @@ import Emoji from '../../../../ui/components/Emoji';
 import { Button } from '../../../../ui/old_components/Button';
 
 const isImage = url => {
-    return /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png|jpeg|gif)/g.test(url);
+    return /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png|jpeg|gif|webp)/g.test(url);
 };
 
 const isOldPosition = url => {

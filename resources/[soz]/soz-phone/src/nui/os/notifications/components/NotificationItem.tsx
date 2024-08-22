@@ -15,7 +15,7 @@ export const NotificationItem = ({
     const { title, notificationIcon: NotificationIcon, content, cantClose, onClick } = notification;
 
     const isImage = url => {
-        return /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png|jpeg|gif)/g.test(url);
+        return /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png|jpeg|gif|webp)/g.test(url);
     };
 
     return (
