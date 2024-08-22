@@ -55,6 +55,7 @@ import { RadioApp } from './Radio/RadioApp';
 import { RadioVehicleApp } from './Radio/RadioVehicleApp';
 import { SceneSearchPropApp } from './Scene/SceneSearchPropApp';
 import { StateApp } from './StateApp';
+import { GlassMorphism } from './Styleguide/GlassMorphism';
 import { TaxiHorodateurApp } from './Taxi/TaxiHorodateurApp';
 import { Meteor } from './World/Meteor';
 
@@ -89,6 +90,7 @@ export const App: FunctionComponent = () => {
             <StateApp />
             <StatePrivateApp />
             <AudioApp />
+            <GlassMorphism />
             <div className={classes}>
                 <HudApp />
                 <CardApp />
