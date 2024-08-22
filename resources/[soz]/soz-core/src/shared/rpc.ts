@@ -311,4 +311,6 @@ export enum RpcClientEvent {
     GET_MAX_NB_ARMOR_PLATES = 'soz-core:rpc:client:get-max-armor-plates',
     SET_MAX_NB_ARMOR_PLATES = 'soz-core:rpc:client:set-max-armor-plates',
     GET_CLOTHES = 'soz-core:clothing:get-clothes',
+    CLOTH_FILTER_GEN9 = 'soz-core:clothing:isgen9',
+    CLOTH_TEXTURE_COUNT = 'soz-core:clothing:texture-count',
 }

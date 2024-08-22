@@ -165,14 +165,9 @@ export class ClothingShopRepository extends RepositoryLegacy<ClothingShopReposit
                                     Drawable: ProperTorsos[item.modelHash][item.components[Component.Tops].Drawable],
                                     Texture: 0,
                                 };
-                                if (item.modelHash == PlayerPedHash.Female) {
+                                if (!item.components[Component.Undershirt]) {
                                     item.components[Component.Undershirt] = {
-                                        Drawable: 14, // This is without undershirt (for women)
-                                        Texture: 0,
-                                    };
-                                } else {
-                                    item.components[Component.Undershirt] = {
-                                        Drawable: 15, // This is without undershirt (for men)
+                                        Drawable: item.modelHash == PlayerPedHash.Female ? 14 : 15, // This is without undershirt
                                         Texture: 0,
                                     };
                                 }

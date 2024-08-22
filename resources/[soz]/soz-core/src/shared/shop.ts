@@ -49,7 +49,6 @@ export type ClothingShop = {
     id: number;
     name: string;
     categories?: Record<number, ClothingShopCategory>;
-    stocks?: Record<number, number>;
 };
 
 export type ClothingShopCategory = {
@@ -69,7 +68,7 @@ export type ClothingShopItem = {
     colorLabel?: string;
     price: number;
     modelHash?: number;
-    components?: Record<Component, OutfitItem>;
+    components?: Partial<Record<Component, OutfitItem>>;
     props?: Record<Prop, OutfitItem>;
     stock: number;
     correspondingDrawables?: Record<number, number>; // This is for torso compatibility (for gloves)
@@ -78,15 +77,14 @@ export type ClothingShopItem = {
 };
 
 export type ClothingShopItemData = {
-    components?: Record<Component, OutfitItem>;
+    components?: Partial<Record<Component, OutfitItem>>;
     props?: Record<Prop, OutfitItem>;
-    label?: string;
-    modelHash?: number;
+    modelHash: number;
     correspondingDrawables?: Record<number, number>; // This is for torso compatibility (for gloves)
     undershirtType?: number; // This is for top compatibility (for undershirt)
     underTypes?: number[]; // This is for undershirt compatibility (for tops)
-    modelLabel?: string;
-    colorLabel?: string;
+    modelLabel: string;
+    colorLabel: string;
 };
 
 export const ClothingCategoryID = {

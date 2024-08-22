@@ -101,6 +101,10 @@ export class ClothingShopProvider {
     }
 
     public async setupShop(skipIntro = false) {
+        if (!this.currentShop) {
+            return;
+        }
+
         const ped = PlayerPedId();
         const [x, y, z, w] = ShopsConfig[this.currentShop].positionInShop;
         // binco4 and binco7 and binco2 are bugged on walkToCoordsAvoidObstacles. Use waltkToCoords instead
@@ -131,7 +135,7 @@ export class ClothingShopProvider {
     @OnNuiEvent(NuiEvent.ClothShopToggleCamera)
     public async onToggleCamera(check: boolean) {
         if (check) {
-            await this.cameraService.deleteCamera();
+            this.cameraService.deleteCamera();
         } else {
             await this.setupShop(true);
         }
@@ -143,6 +147,7 @@ export class ClothingShopProvider {
         if (!product) {
             return;
         }
+
         if (product.components && !product.correspondingDrawables) {
             for (const [compId, comp] of Object.entries(product.components)) {
                 let drawable = comp.Drawable;
@@ -190,14 +195,9 @@ export class ClothingShopProvider {
                 player.cloth_config.BaseClothSet.Components[Component.Tops].Texture,
                 0
             );
-            if (UndershirtCategoryNeedingReplacementTorso[playerModel][product.undershirtType] != null) {
-                SetPedComponentVariation(
-                    ped,
-                    Component.Torso,
-                    UndershirtCategoryNeedingReplacementTorso[playerModel][product.undershirtType][baseTorsoDrawable],
-                    0,
-                    0
-                );
+            const replacement = UndershirtCategoryNeedingReplacementTorso[playerModel][product.undershirtType];
+            if (replacement != null && replacement[baseTorsoDrawable] != null) {
+                SetPedComponentVariation(ped, Component.Torso, replacement[baseTorsoDrawable], 0, 0);
             } else {
                 SetPedComponentVariation(ped, Component.Torso, baseTorsoDrawable, 0, 0);
             }
