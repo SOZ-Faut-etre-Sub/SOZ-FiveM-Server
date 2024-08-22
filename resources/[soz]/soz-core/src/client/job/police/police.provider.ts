@@ -111,12 +111,6 @@ export class PoliceProvider {
         });
     }
 
-    @OnEvent(ClientEvent.POLICE_OPEN_STASH_CLOAKROOM, false)
-    public openStashCloakroom() {
-        const player = this.playerService.getPlayer();
-        TriggerServerEvent('inventory:server:openInventory', 'stash', `${player.job.id}_${player.citizenid}`);
-    }
-
     @OnEvent(ClientEvent.TAKE_DOWN)
     public async takeDown() {
         const player = this.playerService.getPlayer();

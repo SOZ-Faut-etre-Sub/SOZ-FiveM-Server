@@ -264,7 +264,6 @@ export enum ClientEvent {
     POLICE_SYNC_SPIKE = 'soz-core:client:police:sync-spikes',
     POLICE_REQUEST_ADD_SPEEDZONE = 'soz-core:client:police:request-add-speedzone',
     POLICE_SYNC_SPEEDZONE = 'soz-core:client:police:sync-speedzone',
-    POLICE_OPEN_STASH_CLOAKROOM = 'police:cloakroom:openStash',
     POLICE_IDENTIFIED_CLUE = 'soz-core:client:police:identified-clue',
     POLICE_ANALYZE_EVIDENCE = 'soz-core:client:police:analyze-evidence',
     POLICE_GATHERED_CLUE = 'soz-core:client:police:cleaned-clue',
