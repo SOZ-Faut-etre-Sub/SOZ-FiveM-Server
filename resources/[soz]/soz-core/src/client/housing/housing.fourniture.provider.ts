@@ -1057,7 +1057,7 @@ export class HousingFournitureProvider {
             return;
         }
 
-        if (!this.noClipProvider.IsNoClipMode()) {
+        if (!isStaff(player)) {
             if (!isPlayerInsideApartment(player) || player.metadata.isdead) {
                 return;
             }
@@ -1069,15 +1069,14 @@ export class HousingFournitureProvider {
             if (!apartement || this.lastApartment?.id !== apartement.id) {
                 return;
             }
-
-            if (!canUseHousingInAppartment(player, apartement)) {
-                return;
-            }
-        } else if (!isStaff(player) || !this.lastApartment || !canUseHousingInAppartment(player, this.lastApartment)) {
+        } else if (!this.lastApartment) {
             return;
         }
 
-        if (this.lastInterior !== GetInteriorFromEntity(PlayerPedId())) {
+        if (
+            !canUseHousingInAppartment(player, this.lastApartment) ||
+            this.lastInterior !== GetInteriorFromEntity(PlayerPedId())
+        ) {
             return;
         }
 
