@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import React, { FunctionComponent } from 'react';
 
 import { BankAccount, BankContact, BankStatement } from '../../../../shared/bank';
-import { moneyFormat } from '../utils/format';
+import { moneyFormat, PlayerAccountRegExp } from '../utils/format';
 import { TextWithCopy } from './TextWithCopy';
 
 interface HistoryRowProps {
@@ -25,6 +25,10 @@ export const HistoryRow: FunctionComponent<HistoryRowProps> = ({ account, contac
         const contact = contacts?.find(c => c.accountid === targetAccount);
         if (contact) {
             return `${contact.label} (${contact.accountid})`;
+        }
+
+        if (account.type === 'player' && targetAccount.match(PlayerAccountRegExp)) {
+            return targetAccount;
         }
 
         return targetLabel;
