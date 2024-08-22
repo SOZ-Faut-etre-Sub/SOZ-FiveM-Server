@@ -145,6 +145,23 @@ export class HousingPropertyZoneProvider {
         }
 
         for (const property of properties) {
+            //meteor
+            if (
+                [
+                    'v_trailer_11',
+                    'v_trailer_12',
+                    'v_trailer_14',
+                    'v_trailer_15',
+                    'v_trailer_16',
+                    'v_trailer_17',
+                    'v_trailer_18',
+                    'v_trailer_24',
+                    'v_trailer_25',
+                ].includes(property.identifier)
+            ) {
+                continue;
+            }
+
             const id = `property_${property.id}`;
             const hasPropertyAccess = hasAccess(property, player, this.temporaryAccess);
             const hasAvailable = hasAvailableApartment(property);
