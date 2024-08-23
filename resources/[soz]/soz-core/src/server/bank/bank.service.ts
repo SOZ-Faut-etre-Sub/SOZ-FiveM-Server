@@ -322,9 +322,17 @@ export class BankService {
         account: string,
         amount: number,
         type: BankMoneyType = 'money',
-        allowOverflow = false
+        allowOverflow = false,
+        reason = ''
     ): Promise<boolean> {
-        return this.bankAccountRepository.addMoney(account, amount, type, allowOverflow);
+        const action = this.bankAccountRepository.addMoney(account, amount, type, allowOverflow);
+        if (!action) return false;
+
+        if (reason !== '') {
+            await this.bankStatementsService.createStatement('', account, amount, reason);
+        }
+
+        return true;
     }
 
     public async clearAccount(targetAccount: string) {

@@ -54,7 +54,7 @@ export class Notifier {
 
         while (!timeout) {
             DisableControlAction(0, Control.MpTextChatTeam, true);
-            DisableControlAction(0, Control.PushToTalk, true);
+            DisableControlAction(0, Control.ReplayEndpoint, true);
 
             if (IsDisabledControlJustPressed(0, Control.MpTextChatTeam)) {
                 this.nuiDispatch.dispatch('hud', 'CancelNotification', id);
@@ -62,7 +62,7 @@ export class Notifier {
                 return [true, false];
             }
 
-            if (IsDisabledControlJustPressed(0, Control.PushToTalk)) {
+            if (IsDisabledControlJustPressed(0, Control.ReplayEndpoint)) {
                 this.nuiDispatch.dispatch('hud', 'CancelNotification', id);
 
                 return [false, false];
