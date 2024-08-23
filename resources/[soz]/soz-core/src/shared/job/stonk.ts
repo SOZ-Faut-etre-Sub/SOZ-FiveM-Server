@@ -116,7 +116,7 @@ const deliveryZones: NamedZone[] = [
 export const StonkConfig = {
     bankAccount: {
         main: 'cash-transfer',
-        safe: 'safe_cash-transfer',
+        safe: 'safe_gouv', //farm from stonks now goes to gouv
         farm: 'farm_stonk',
         bankRefill: 'bank_refill',
     },
