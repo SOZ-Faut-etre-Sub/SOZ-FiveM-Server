@@ -13,6 +13,7 @@ export interface NuiHudMethodMap {
     UpdateVoiceMode: VoiceMode;
     UpdateVoiceActive: boolean;
     SetSyringeDelay: number;
+    SetBattery: number;
     SetTwitchNewsOverlay: JobType | null;
     SetShowHud: boolean;
     DrawNotification: Omit<BasicNotification | AdvancedNotification | TPoliceNotification, 'id'> & { id?: string };

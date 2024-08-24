@@ -3,6 +3,7 @@ import { FunctionComponent, useState } from 'react';
 import { usePlayer } from '../../hook/data';
 import { useNuiEvent } from '../../hook/nui';
 import AlcoholIcon from '../../icons/hud/alcohol.svg';
+import BatteryIcon from '../../icons/hud/battery.svg';
 import DrugIcon from '../../icons/hud/drug.svg';
 import HungerIcon from '../../icons/hud/hunger.svg';
 import SyringeIcon from '../../icons/hud/syringe.svg';
@@ -18,6 +19,7 @@ type SyringeDelay = {
 export const PlayerNeeds: FunctionComponent = () => {
     const player = usePlayer();
     const [syringeDelay, setSyringeDelay] = useState<SyringeDelay>(null);
+    const [battery, setBattery] = useState<number>(100);
 
     useNuiEvent('hud', 'SetSyringeDelay', delay => {
         setSyringeDelay(previousDelay => {
@@ -52,6 +54,8 @@ export const PlayerNeeds: FunctionComponent = () => {
         });
     });
 
+    useNuiEvent('hud', 'SetBattery', value => setBattery(value), [setBattery, battery]);
+
     if (!player) {
         return null;
     }
@@ -67,6 +71,14 @@ export const PlayerNeeds: FunctionComponent = () => {
 
     return (
         <div className={`absolute w-[21vh] bottom-[2.2rem] ${rightOffset()}`}>
+            <StatusBar
+                percent={battery}
+                hideCondition={value => value > 99}
+                backgroundPrimary="rgba(252, 153, 20, 0.4)"
+                backgroundSecondary="linear-gradient(to top, rgba(252, 153, 20, 0.8) 31%, rgba(252, 213, 10, 0.8) 100%)"
+            >
+                <BatteryIcon className="text-white w-3 h-3" />
+            </StatusBar>
             <StatusBar
                 percent={syringeDelay ? (syringeDelay.delay / syringeDelay.initialDelay) * 100 : 0}
                 backgroundPrimary="rgba(150, 8, 183, 0.6)"

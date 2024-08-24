@@ -607,4 +607,5 @@ export enum ServerEvent {
     WORLD_EVENT_STOP = 'soz-core:server:world-event:stop',
 
     DRONE_NEW = 'soz-core:server:drone-new',
+    DRONE_DELETE = 'soz-core:server:drone-delete',
 }
