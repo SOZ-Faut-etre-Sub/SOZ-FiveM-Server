@@ -22,6 +22,21 @@ export class BankFarmRepository extends Repository<RepositoryType.BankFarmAccoun
         return accounts;
     }
 
+    public async findOrCreate(accountId: string): Promise<Partial<BankAccount>> {
+        let account = this.data[accountId];
+        if (!account) {
+            account = {
+                id: accountId,
+                money: 0,
+                marked_money: 0,
+            };
+
+            this.data[accountId] = account;
+        }
+
+        return account;
+    }
+
     public addMoney(accountId: string, money: number, moneyType: BankMoneyType = 'money'): boolean {
         const account = this.data[accountId];
         if (!account) {

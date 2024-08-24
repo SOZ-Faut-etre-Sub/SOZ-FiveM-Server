@@ -145,7 +145,7 @@ export class BankService {
             return false;
         }
 
-        const farmAccount = await this.bankFarmRepository.find(farm);
+        const farmAccount = await this.bankFarmRepository.findOrCreate(farm);
         if (!farmAccount) {
             this.logger.error(`Farm account ${farm} not found`);
             return false;
@@ -199,7 +199,7 @@ export class BankService {
             return false;
         }
 
-        const farmAccount = await this.bankFarmRepository.find(farm);
+        const farmAccount = await this.bankFarmRepository.findOrCreate(farm);
         if (!farmAccount) {
             this.logger.error(`Farm account ${farm} not found`);
             return false;
