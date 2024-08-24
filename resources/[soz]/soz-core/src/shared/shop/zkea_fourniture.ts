@@ -20741,6 +20741,8 @@ export const ZkeaFourniture: ZkeaFournitureItemList = {
     },
 };
 
+// NOTE: Not use as translate model, as none of them are actually used for real
+// But is used to define the wrong model. Both key and value could be deleted from the DB at some point
 export const ZkeaFournitureModelTranslate: Record<string, string> = {
     m24_1_prop_m41_radio_01a: 'soz_assets_m24_1_prop_m41_radio_01a',
     m24_1_prop_m41_officedesk_01a: 'soz_assets_m24_1_prop_m41_officedesk_01a',
@@ -21069,4 +21071,10 @@ export const ZkeaFournitureModelTranslate: Record<string, string> = {
     v_serv_metro_floorbin: 'soz_assets_v_serv_metro_floorbin',
     v_serv_tu_light2_: 'soz_assets_v_serv_tu_light2_',
     v_serv_tu_light3_: 'soz_assets_v_serv_tu_light3_',
+};
+
+const wrongModel = new Set(Object.values(ZkeaFournitureModelTranslate));
+
+export const isHousingPropvalid = (model: string): boolean => {
+    return ZkeaFourniture[model] && !wrongModel.has(model);
 };

@@ -3,7 +3,7 @@ import { useGetPrice } from '@public/nui/hook/price';
 import { TaxType } from '@public/shared/bank';
 import { NuiEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
-import { FormatedFournitureItemList, ZkeaFourniture } from '@public/shared/shop/zkea_fourniture';
+import { FormatedFournitureItemList, isHousingPropvalid, ZkeaFourniture } from '@public/shared/shop/zkea_fourniture';
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import {
@@ -23,8 +23,10 @@ export const ZkeaFournitureMenu: FunctionComponent = () => {
 
     const fournituresByType: FormatedFournitureItemList = {};
     for (const fourniture of Object.values(ZkeaFourniture)) {
-        fournituresByType[fourniture.type] ??= [];
-        fournituresByType[fourniture.type].push(fourniture);
+        if (isHousingPropvalid(fourniture.model)) {
+            fournituresByType[fourniture.type] ??= [];
+            fournituresByType[fourniture.type].push(fourniture);
+        }
     }
 
     const [fournitures, setFrouniture] = useState<FormatedFournitureItemList>(fournituresByType);

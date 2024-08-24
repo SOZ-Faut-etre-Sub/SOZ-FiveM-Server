@@ -14,7 +14,12 @@ import { Apartment, getMaxFourntiure } from '@public/shared/housing/housing';
 import { HousingProp } from '@public/shared/nui/prop_placement';
 import { Vector4 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
-import { ZkeaBaseFourntiure, ZkeaFourniture, ZkeaFournitureModelTranslate } from '@public/shared/shop/zkea_fourniture';
+import {
+    isHousingPropvalid,
+    ZkeaBaseFourntiure,
+    ZkeaFourniture,
+    ZkeaFournitureModelTranslate,
+} from '@public/shared/shop/zkea_fourniture';
 import { isEqual } from 'lodash';
 
 @Provider()
@@ -45,8 +50,9 @@ export class HousingFournitureProvider {
         const fournitures = await this.prismaService.apartment_fourniture.findMany();
 
         for (const fourniture of fournitures) {
-            if (ZkeaFourniture[this.translateModel(fourniture.model)]) {
-                this.fournitures[fourniture.apartment_id] ??= {};
+            this.fournitures[fourniture.apartment_id] ??= {};
+            const modelName = this.translateModel(fourniture.model);
+            if (isHousingPropvalid(modelName)) {
                 this.fournitures[fourniture.apartment_id][fourniture.id] = this.formatFourniture(fourniture);
             }
         }
@@ -119,7 +125,8 @@ export class HousingFournitureProvider {
 
         this.fournitures[apartmentId] ??= {};
         for (const fourniture of fournitures) {
-            if (ZkeaFourniture[this.translateModel(fourniture.model)]) {
+            const modelName = this.translateModel(fourniture.model);
+            if (isHousingPropvalid(modelName)) {
                 this.fournitures[apartmentId][fourniture.id] = this.formatFourniture(fourniture);
             }
         }
