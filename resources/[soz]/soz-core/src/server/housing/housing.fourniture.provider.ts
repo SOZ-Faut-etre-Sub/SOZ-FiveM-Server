@@ -45,8 +45,10 @@ export class HousingFournitureProvider {
         const fournitures = await this.prismaService.apartment_fourniture.findMany();
 
         for (const fourniture of fournitures) {
-            this.fournitures[fourniture.apartment_id] ??= {};
-            this.fournitures[fourniture.apartment_id][fourniture.id] = this.formatFourniture(fourniture);
+            if (ZkeaFourniture[this.translateModel(fourniture.model)]) {
+                this.fournitures[fourniture.apartment_id] ??= {};
+                this.fournitures[fourniture.apartment_id][fourniture.id] = this.formatFourniture(fourniture);
+            }
         }
     }
 
@@ -117,7 +119,9 @@ export class HousingFournitureProvider {
 
         this.fournitures[apartmentId] ??= {};
         for (const fourniture of fournitures) {
-            this.fournitures[apartmentId][fourniture.id] = this.formatFourniture(fourniture);
+            if (ZkeaFourniture[this.translateModel(fourniture.model)]) {
+                this.fournitures[apartmentId][fourniture.id] = this.formatFourniture(fourniture);
+            }
         }
         TriggerClientEvent(ClientEvent.HOUSING_SYNC_FOURNITURE, -1, apartmentId);
     }
