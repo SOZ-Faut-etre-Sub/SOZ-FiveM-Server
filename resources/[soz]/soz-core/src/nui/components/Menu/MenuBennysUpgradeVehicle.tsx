@@ -37,6 +37,7 @@ import {
     MenuItemSelectOption,
     MenuItemSelectOptionColor,
     MenuItemSubMenuLink,
+    MenuItemText,
     MenuTitle,
     SubMenu,
 } from '../Styleguide/Menu';
@@ -399,8 +400,16 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                 <MenuTitle banner={banner}>{crimi ? 'Customisations' : 'Couleur et aspects'}</MenuTitle>
                 <MenuContent
                     helpPanel={
-                        data.mode == LSCustomMode.CrimiCusto &&
-                        `${Math.ceil(price / VehicleBusinessCustomPrice)} ${item.label}`
+                        data.mode == LSCustomMode.CrimiCusto && (
+                            <>
+                                <MenuItemText>
+                                    <span className="underline">Coût totaux : </span>
+                                </MenuItemText>
+                                <MenuItemText>
+                                    • {Math.ceil(price / VehicleBusinessCustomPrice)} {item.label}
+                                </MenuItemText>
+                            </>
+                        )
                     }
                 >
                     <MenuItemSubMenuLink id="colors">Couleur et aspects</MenuItemSubMenuLink>

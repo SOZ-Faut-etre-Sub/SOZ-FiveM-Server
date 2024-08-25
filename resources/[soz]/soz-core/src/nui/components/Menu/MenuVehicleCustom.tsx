@@ -150,8 +150,16 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
                 <MenuContent
                     helpPanel={
                         data.mode == LSCustomMode.CrimiPerfo &&
-                        crimiPrice().length > 0 &&
-                        crimiPrice().map(elem => <MenuItemText key={'cost_' + elem}>{elem}</MenuItemText>)
+                        crimiPrice().length > 0 && (
+                            <>
+                                <MenuItemText>
+                                    <span className="underline">Coût totaux : </span>
+                                </MenuItemText>
+                                {crimiPrice().map(elem => (
+                                    <MenuItemText key={'cost_' + elem}>• {elem}</MenuItemText>
+                                ))}
+                            </>
+                        )
                     }
                 >
                     <MenuItemSelectVehicleCustomLevel

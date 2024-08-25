@@ -304,6 +304,10 @@ export class InventoryManager {
         const items = this.getItems(source);
         let count = 0;
 
+        if (amount == null) {
+            amount = 1;
+        }
+
         if (amount <= 0) {
             return true;
         }
