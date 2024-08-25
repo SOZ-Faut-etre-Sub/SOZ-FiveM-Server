@@ -1,15 +1,13 @@
 import { animated, useSpring } from '@react-spring/web';
 import cn from 'classnames';
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent } from 'react';
 
-import { useHud } from '../../../hook/data';
-import { useNuiEvent } from '../../../hook/nui';
-import PinIcon from '../../../icons/hud/pin.svg';
-import { GlassMorphismContainer } from '../../Styleguide/GlassMorphismContainer';
+import { useHud } from '../../hook/data';
+import PinIcon from '../../icons/hud/pin.svg';
+import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
 
 export const Location: FunctionComponent = () => {
-    const [hasWatch, setHasWatch] = useState(false);
-    const { streetName, minimap } = useHud();
+    const { hasWatch, streetName, minimap } = useHud();
 
     const styles = useSpring({
         from: {
@@ -21,8 +19,6 @@ export const Location: FunctionComponent = () => {
             left: `${(minimap.left + 0.005) * 100}vw`,
         },
     });
-
-    useNuiEvent('hud', 'UpdateHasWatch', setHasWatch);
 
     if (!hasWatch) {
         return null;

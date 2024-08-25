@@ -5,8 +5,15 @@ import type { RootModel } from './';
 
 export const hud = createModel<RootModel>()({
     state: {
+        hasWatch: false,
+        hasCompass: false,
+
         voiceMode: 0,
         streetName: [],
+        compass: {
+            degree: 0,
+            cardinal: 'N',
+        },
         dateTime: {
             dayOfWeek: 0,
             hour: 0,

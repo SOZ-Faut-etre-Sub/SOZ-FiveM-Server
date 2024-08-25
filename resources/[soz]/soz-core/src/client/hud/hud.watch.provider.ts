@@ -1,5 +1,4 @@
 import { PlayerUpdate } from '@public/core/decorators/player';
-import { PlayerData } from '@public/shared/player';
 
 import { Once, OnceStep } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -22,13 +21,13 @@ export class HudWatchProvider {
     }
 
     @PlayerUpdate()
-    async onPlayerUpdate(player: PlayerData): Promise<void> {
+    async onPlayerUpdate(): Promise<void> {
         this._haveWatch = this.inventoryManager.hasEnoughItem('watch', 1, true);
         this.nuiDispatch.dispatch('hud', 'UpdateHasWatch', this._haveWatch);
     }
 
     @Once(OnceStep.PlayerLoaded)
-    public async start(): Promise<void> {
+    public async onPlayerLoaded(): Promise<void> {
         this.nuiDispatch.dispatch('hud', 'UpdateHasWatch', this._haveWatch);
     }
 }

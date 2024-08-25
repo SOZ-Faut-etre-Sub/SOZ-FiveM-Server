@@ -1,0 +1,54 @@
+import { FunctionComponent } from 'react';
+
+import { useHud } from '../../../hook/data';
+import { GlassMorphismContainer } from '../../Styleguide/GlassMorphismContainer';
+
+export const Compass: FunctionComponent = () => {
+    const { hasCompass, compass } = useHud();
+
+    const circumference = 90 * 2 * Math.PI;
+    const offset = circumference - ((-20 * 100) / 100 / 100) * circumference;
+
+    if (!hasCompass) {
+        return null;
+    }
+
+    return (
+        <div className="relative h-11 w-11 rounded-full">
+            <GlassMorphismContainer className="flex justify-center items-center text-white h-11 w-11" disableBorder>
+                <span className="text-sm pt-1">{compass.cardinal}</span>
+                <div className="absolute inset-0 flex justify-center">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-full w-full"
+                        viewBox="0 0 200 200"
+                        style={{ transform: `rotate(${compass.degree + -135}deg)` }}
+                    >
+                        <circle
+                            r="90"
+                            cx="100"
+                            cy="100"
+                            stroke="#fff"
+                            strokeWidth="16px"
+                            strokeLinecap="round"
+                            strokeDasharray={`${circumference} ${circumference}`}
+                            strokeDashoffset={String(-offset)}
+                            fill="transparent"
+                        ></circle>
+                    </svg>
+                </div>
+                <div className="absolute inset-0 p-1.5 flex justify-center">
+                    <svg viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M17 33V31M17 3V1M1 17H3M31 17H33"
+                            stroke="#00000080"
+                            strokeOpacity="0.35"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                        />
+                    </svg>
+                </div>
+            </GlassMorphismContainer>
+        </div>
+    );
+};

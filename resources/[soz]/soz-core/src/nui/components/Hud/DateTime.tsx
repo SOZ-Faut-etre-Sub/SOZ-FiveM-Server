@@ -1,14 +1,12 @@
 import { animated, useSpring } from '@react-spring/web';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale/fr';
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent } from 'react';
 
-import { useHud } from '../../../hook/data';
-import { useNuiEvent } from '../../../hook/nui';
+import { useHud } from '../../hook/data';
 
 export const DateTime: FunctionComponent = () => {
-    const [hasWatch, setHasWatch] = useState(false);
-    const { dateTime, minimap } = useHud();
+    const { hasWatch, dateTime, minimap } = useHud();
 
     const styles = useSpring({
         from: {
@@ -20,8 +18,6 @@ export const DateTime: FunctionComponent = () => {
             left: `${(minimap.left + 0.005) * 100}vw`,
         },
     });
-
-    useNuiEvent('hud', 'UpdateHasWatch', setHasWatch);
 
     if (!hasWatch) {
         return null;

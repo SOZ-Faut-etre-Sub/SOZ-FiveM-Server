@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
 
-import { useHud } from '../../../hook/data';
-import { GlassMorphismBox } from '../../Styleguide/GlassMorphismContainer';
+import { useHud } from '../../hook/data';
+import { GlassMorphismBox } from '../Styleguide/GlassMorphismContainer';
 
 export const Minimap: FunctionComponent = () => {
     const { minimap } = useHud();

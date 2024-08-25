@@ -41,6 +41,11 @@ export type HudDateTime = {
     dayOfWeek: number;
 };
 
+export type HudCompass = {
+    degree: number;
+    cardinal: 'N' | 'NE' | 'E' | 'SE' | 'S' | 'SW' | 'W' | 'NW';
+};
+
 export enum VoiceMode {
     Mute = -1,
     Whisper,
@@ -51,10 +56,14 @@ export enum VoiceMode {
 }
 
 export type HudState = {
-    minimap: Minimap;
-    dateTime: HudDateTime;
+    hasWatch: boolean;
+    hasCompass: boolean;
+
     voiceMode: VoiceMode;
     streetName: string[];
+    compass: HudCompass;
+    dateTime: HudDateTime;
+    minimap: Minimap;
 };
 
 export enum Font {

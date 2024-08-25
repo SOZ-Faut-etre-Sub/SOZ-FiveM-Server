@@ -29,6 +29,14 @@ export const StateApp: FunctionComponent = () => {
         dispatch.taxi.update(status);
     });
 
+    useNuiEvent('hud', 'UpdateHasWatch', hasWatch => {
+        dispatch.hud.update({ hasWatch });
+    });
+
+    useNuiEvent('hud', 'UpdateHasCompass', hasCompass => {
+        dispatch.hud.update({ hasCompass });
+    });
+
     useNuiEvent('hud', 'UpdateVoiceMode', voiceMode => {
         dispatch.hud.update({ voiceMode });
     });
@@ -43,6 +51,10 @@ export const StateApp: FunctionComponent = () => {
 
     useNuiEvent('hud', 'UpdateStreetName', streetName => {
         dispatch.hud.update({ streetName });
+    });
+
+    useNuiEvent('hud', 'UpdateCompass', compass => {
+        dispatch.hud.update({ compass });
     });
 
     useNuiEvent('hud', 'UpdateVehicle', vehicle => {

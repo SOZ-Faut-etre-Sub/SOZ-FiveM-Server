@@ -299,7 +299,7 @@ const PoliceNotification: FunctionComponent<PoliceNotificationProps> = ({ notifi
 };
 
 export const Notifications: FunctionComponent = () => {
-    const { minimap } = useHud();
+    const { hasWatch, minimap } = useHud();
     const [notifications, setNotifications] = useState<
         (BasicNotification | AdvancedNotification | TPoliceNotification)[]
     >([]);
@@ -318,6 +318,8 @@ export const Notifications: FunctionComponent = () => {
         [setNotifications]
     );
 
+    const notificationOffset = hasWatch ? '5rem' : '.5rem';
+
     useNuiEvent(
         'hud',
         'DrawNotification',
@@ -331,11 +333,11 @@ export const Notifications: FunctionComponent = () => {
     );
 
     return (
-        <div>
+        <>
             <div
                 className="absolute flex flex-col-reverse"
                 style={{
-                    top: `calc((100vh * ${minimap.top}) - calc((100vh * ${minimap.height}) * 4) - .5rem )`,
+                    top: `calc((100vh * ${minimap.top}) - calc((100vh * ${minimap.height}) * 4) - ${notificationOffset})`,
                     left: `calc(100vw * ${minimap.left + 0.004})`,
                     height: `calc((100vh * ${minimap.height}) * 4)`,
                     width: `calc(100vw * ${minimap.width})`,
@@ -374,6 +376,6 @@ export const Notifications: FunctionComponent = () => {
                         )
                 )}
             </div>
-        </div>
+        </>
     );
 };

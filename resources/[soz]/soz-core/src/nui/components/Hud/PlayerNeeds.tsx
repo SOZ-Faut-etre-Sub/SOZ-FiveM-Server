@@ -1,9 +1,10 @@
 import { animated, useSpring } from '@react-spring/web';
 import { FunctionComponent, useCallback, useState } from 'react';
 
-import { useHud, usePlayer, usePlayerStats, useVehicle } from '../../../hook/data';
-import { useNuiEvent } from '../../../hook/nui';
-import { StatusGauge } from './StatusGauge';
+import { useHud, usePlayer, usePlayerStats, useVehicle } from '../../hook/data';
+import { useNuiEvent } from '../../hook/nui';
+import { Compass } from './components/Compass';
+import { StatusGauge } from './components/StatusGauge';
 
 type SyringeDelay = {
     delay: number;
@@ -12,10 +13,9 @@ type SyringeDelay = {
 };
 
 export const PlayerNeeds: FunctionComponent = () => {
-    const [hasWatch, setHasWatch] = useState(false);
     const [syringeDelay, setSyringeDelay] = useState<SyringeDelay>(null);
 
-    const { minimap } = useHud();
+    const { hasWatch, minimap } = useHud();
     const player = usePlayer();
     const playerStats = usePlayerStats();
     const vehicle = useVehicle();
@@ -29,8 +29,6 @@ export const PlayerNeeds: FunctionComponent = () => {
             left: `${((hasWatch ? minimap.right : minimap.left) + 0.015) * 100}vw`,
         },
     });
-
-    useNuiEvent('hud', 'UpdateHasWatch', setHasWatch);
 
     useNuiEvent('hud', 'SetSyringeDelay', delay => {
         setSyringeDelay(previousDelay => {
@@ -91,6 +89,8 @@ export const PlayerNeeds: FunctionComponent = () => {
     return (
         <animated.div className="absolute " style={styles}>
             <div className="flex gap-4 relative">
+                <Compass />
+
                 <StatusGauge
                     percent={healthPercent}
                     gaugeColor={healthPercent > 20 ? '#329121' : '#92212B'}

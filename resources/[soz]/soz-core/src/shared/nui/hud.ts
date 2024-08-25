@@ -3,7 +3,7 @@ import { News } from '@public/shared/news';
 import { AdvancedNotification, BasicNotification, TPoliceNotification } from '@public/shared/notification';
 import { VoiceDebugInfo } from '@public/shared/voip';
 
-import { HudDateTime, Minimap, VoiceMode } from '../hud';
+import { HudCompass, HudDateTime, Minimap, VoiceMode } from '../hud';
 import { VehicleHud, VehicleHudSpeed } from '../vehicle/vehicle';
 
 export interface NuiHudMethodMap {
@@ -11,8 +11,10 @@ export interface NuiHudMethodMap {
     UpdateVehicleSpeed: VehicleHudSpeed;
     UpdateMinimap: Minimap;
     UpdateHasWatch: boolean;
+    UpdateHasCompass: boolean;
     UpdateDateTime: HudDateTime;
     UpdateStreetName: string[];
+    UpdateCompass: HudCompass;
     UpdateVoiceMode: VoiceMode;
     UpdateVoiceActive: boolean;
     SetSyringeDelay: number;

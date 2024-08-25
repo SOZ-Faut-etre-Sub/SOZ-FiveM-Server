@@ -1,12 +1,12 @@
 import { FunctionComponent } from 'react';
 
-import { DateTime } from './components/DateTime';
-import { Location } from './components/Location';
-import { Minimap } from './components/Minimap';
-import { PlayerNeeds } from './components/PlayerNeeds';
+import { DateTime } from './DateTime';
 import { DebugVoip } from './DebugVoip';
+import { Location } from './Location';
+import { Minimap } from './Minimap';
 import { NewsBanner } from './NewsBanner';
 import { Notifications } from './Notifications';
+import { PlayerNeeds } from './PlayerNeeds';
 import { SpeedoMeter } from './SpeedoMeter';
 import { TwitchNewsOverlay } from './TwitchNewsOverlay';
 import { VoiceIndicator } from './VoiceIndicator';
@@ -20,7 +20,6 @@ export const HudApp: FunctionComponent = () => {
             <Minimap />
             <Location />
             <PlayerNeeds />
-
             <Notifications />
             <NewsBanner />
             <VoiceIndicator />
