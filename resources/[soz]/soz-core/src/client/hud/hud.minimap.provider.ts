@@ -37,7 +37,7 @@ export class HudMinimapProvider {
 
     private _scaledNui = GetResourceKvpInt('soz_scaled_nui') === 1;
 
-    private minimapOffset = -0.075;
+    private minimapOffset = -0.059;
 
     public get hasAdminGps(): boolean {
         return this._hasAdminGps;
@@ -162,30 +162,23 @@ export class HudMinimapProvider {
             width = scaleX * (x / (2.52 * aspectRatio));
             height = scaleY * (y / 2.3374);
         } else {
-            [rawX, rawY] = GetScriptGfxPosition(-0.0045, -0.073 + -0.19);
+            [rawX, rawY] = GetScriptGfxPosition(-0.0045, 0.002 + this.minimapOffset + -0.19);
             width = scaleX * (x / (4 * aspectRatio));
             height = scaleY * (y / 5.674);
         }
 
         ResetScriptGfxAlign();
 
+        if (this.scaledNui) {
+            width = 0.1406249989522621;
+            height = 0.17624250969333802;
+            rawY = 0.7372593283653259;
+            rawX = 0.0106042670086026;
+        }
+
         if (isRadarHidden) {
             rawY += height;
             height = 0;
-        }
-
-        if (this.scaledNui) {
-            return {
-                X: 0.08091666683321,
-                Y: 0.88549252311906,
-                bottom: 0.97361377796573,
-                height: 0.17624250969333,
-                left: 0.01560416735708,
-                right: 0.15122916630934,
-                top: 0.79737126827239,
-                width: 0.14062499895226,
-                isHidden: isRadarHidden,
-            };
         }
 
         return {
