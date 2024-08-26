@@ -268,6 +268,18 @@ export const PlayerLicenceLabels = {
     [PlayerLicenceType.Rescuer]: 'Secouriste',
 };
 
+export const ShortPlayerLicenceLabels = {
+    [PlayerLicenceType.Car]: 'Voiture',
+    [PlayerLicenceType.Truck]: 'Poids lourd',
+    [PlayerLicenceType.Moto]: 'Moto',
+    [PlayerLicenceType.Boat]: 'Maritime',
+    [PlayerLicenceType.Heli]: 'Aviation',
+    [PlayerLicenceType.Weapon]: "Port d'arme",
+    [PlayerLicenceType.Fishing]: 'Pêche',
+    [PlayerLicenceType.Hunting]: 'Chasse',
+    [PlayerLicenceType.Rescuer]: 'Secouriste',
+};
+
 export type PlayerListStateKey = 'dead' | 'zipped' | 'wearingPatientOutfit' | 'escorted';
 
 export enum PlayerCriminalState {
