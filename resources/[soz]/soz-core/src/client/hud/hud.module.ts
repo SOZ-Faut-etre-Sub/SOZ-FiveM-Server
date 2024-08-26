@@ -1,5 +1,6 @@
 import { Module } from '../../core/decorators/module';
 import { HudCompassProvider } from './hud.compass.provider';
+import { HudInteractionsProvider } from './hud.interactions.provider';
 import { HudMinimapProvider } from './hud.minimap.provider';
 import { HudNewsProvider } from './hud.news.provider';
 import { HudNotificationsProvider } from './hud.notifications.provider';
@@ -20,6 +21,7 @@ import { HudWeatherIconProvider } from './hud.weathericon.provider';
         HudStreetNameProvider,
         HudVehicleProvider,
         HudWeatherIconProvider,
+        HudInteractionsProvider,
     ],
 })
 export class HudModule {}
