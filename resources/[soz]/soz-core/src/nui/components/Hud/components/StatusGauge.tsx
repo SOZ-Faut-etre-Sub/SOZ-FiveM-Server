@@ -29,7 +29,7 @@ export const StatusGauge: FunctionComponent<PropsWithChildren<StatusBarProps>> =
         <div className="relative h-11 w-11 rounded-full">
             <GlassMorphismContainer className="flex justify-center items-center h-11 w-11" disableBorder>
                 {children}
-                <div className="absolute inset-0 flex justify-center">
+                <div className="absolute -inset-[1px] flex justify-center">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-full w-full"
@@ -42,6 +42,7 @@ export const StatusGauge: FunctionComponent<PropsWithChildren<StatusBarProps>> =
                             cy="100"
                             fill="transparent"
                             stroke={gaugeBackgroundColor}
+                            strokeOpacity="0.50"
                             strokeWidth="16px"
                             strokeDasharray={`${circumference} ${circumference}`}
                             strokeDashoffset="0"

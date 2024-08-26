@@ -28,6 +28,17 @@ export const Compass: FunctionComponent = () => {
                             r="90"
                             cx="100"
                             cy="100"
+                            fill="transparent"
+                            stroke="#fff"
+                            strokeOpacity="0.10"
+                            strokeWidth="16px"
+                            strokeDasharray={`${circumference} ${circumference}`}
+                            strokeDashoffset="0"
+                        ></circle>
+                        <circle
+                            r="90"
+                            cx="100"
+                            cy="100"
                             stroke="#fff"
                             strokeWidth="16px"
                             strokeLinecap="round"
@@ -41,8 +52,8 @@ export const Compass: FunctionComponent = () => {
                     <svg viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M17 33V31M17 3V1M1 17H3M31 17H33"
-                            stroke="#00000080"
-                            strokeOpacity="0.35"
+                            stroke="#FFFFFF"
+                            strokeOpacity="0.50"
                             strokeWidth="2"
                             strokeLinecap="round"
                         />

@@ -47,3 +47,11 @@ export const useHud = (): HudState => {
 export const useDrugLocation = (): DrugNuiZone[] => {
     return useSelector((state: RootState) => state.drugLocation);
 };
+
+export const useDateTime = (): { isDay: boolean; isNight: boolean } => {
+    const dateTime = useSelector((state: RootState) => state.hud.dateTime);
+    return {
+        isDay: dateTime.hour > 6 && dateTime.hour < 20,
+        isNight: dateTime.hour < 6 || dateTime.hour > 20,
+    };
+};

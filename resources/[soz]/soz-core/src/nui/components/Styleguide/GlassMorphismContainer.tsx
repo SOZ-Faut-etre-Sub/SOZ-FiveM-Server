@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import { FunctionComponent, HTMLAttributes, PropsWithChildren, useEffect, useRef } from 'react';
 
-import { useHud } from '../../hook/data';
+import { useDateTime } from '../../hook/data';
 
 interface GlassMorphismContainerProps extends HTMLAttributes<any>, PropsWithChildren {
     disableBorder?: boolean;
@@ -12,7 +12,7 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
     disableBorder,
     children,
 }) => {
-    const { dateTime } = useHud();
+    const { isDay, isNight } = useDateTime();
 
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -49,28 +49,31 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
 
     return (
         <div
-            className={cn('relative bg-opacity-10 rounded-full h-full w-full overflow-hidden', {
-                'bg-black': dateTime.hour > 6 && dateTime.hour < 18,
-                'bg-white': dateTime.hour < 6 || dateTime.hour > 18,
-            })}
+            className="relative bg-opacity-10 rounded-full h-full w-full overflow-hidden"
             style={{
                 opacity: 0.99,
             }}
         >
             <div
                 ref={containerRef}
-                className={cn('absolute flex justify-center items-center backdrop-blur-md rounded-full h-full w-full', {
+                className={cn('absolute flex justify-center items-center backdrop-blur-sm rounded-full h-full w-full', {
                     'border-2 border-transparent': !disableBorder,
                 })}
                 style={{
                     height,
-                    // boxShadow: 'inset 0 0 10px rgb(50 50 50 / 0.1)',
                     background:
-                        'linear-gradient(120deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.1) 25%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,1) 100%) border-box',
+                        'linear-gradient(-40deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.1) 25%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,1) 100%) border-box',
                     WebkitMask: 'linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)',
                     WebkitMaskComposite: 'xor',
                     maskComposite: 'exclude',
                 }}
+            />
+
+            <div
+                className={cn('absolute inset-0 transition-colors duration-1000', {
+                    'bg-[#F3FBFA] opacity-20': isDay,
+                    'bg-[#22232A] opacity-45': isNight,
+                })}
             />
 
             <div ref={childrenRef} className={cn('absolute', className)}>

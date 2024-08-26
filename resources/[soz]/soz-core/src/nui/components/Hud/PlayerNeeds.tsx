@@ -97,7 +97,7 @@ export const PlayerNeeds: FunctionComponent = () => {
                     gaugeBackgroundColor={healthPercent > 20 ? '#283525' : '#362628'}
                     hideCondition={hideHealthCondition}
                 >
-                    <img className="w-7 h-7" src="/public/images/hud/health.webp" alt="" />
+                    <img className="size-7" src="/public/images/hud/player/health.webp" alt="" />
                 </StatusGauge>
 
                 <StatusGauge
@@ -106,7 +106,7 @@ export const PlayerNeeds: FunctionComponent = () => {
                     gaugeBackgroundColor="#263136"
                     hideCondition={hideArmorCondition}
                 >
-                    <img className="w-7 h-7" src="/public/images/hud/armor.webp" alt="" />
+                    <img className="size-7" src="/public/images/hud/player/armor.webp" alt="armor" />
                 </StatusGauge>
 
                 {hasWatch && (
@@ -115,19 +115,19 @@ export const PlayerNeeds: FunctionComponent = () => {
                         gaugeColor="#00A5E7"
                         gaugeBackgroundColor="#263136"
                     >
-                        <img className="w-7 h-7" src="/public/images/hud/syringe.webp" alt="" />
+                        <img className="size-7" src="/public/images/hud/player/syringe.webp" alt="syringe" />
                     </StatusGauge>
                 )}
 
                 {hasWatch && (
                     <StatusGauge percent={player.metadata.drug} gaugeColor="#00A5E7" gaugeBackgroundColor="#263136">
-                        <img className="w-7 h-7" src="/public/images/hud/drug.webp" alt="" />
+                        <img className="size-7" src="/public/images/hud/player/drug.webp" alt="drug" />
                     </StatusGauge>
                 )}
 
                 {hasWatch && (
                     <StatusGauge percent={player.metadata.alcohol} gaugeColor="#00A5E7" gaugeBackgroundColor="#263136">
-                        <img className="w-7 h-7" src="/public/images/hud/alcohol.webp" alt="" />
+                        <img className="size-7" src="/public/images/hud/player/alcohol.webp" alt="alcohol" />
                     </StatusGauge>
                 )}
 
@@ -138,7 +138,7 @@ export const PlayerNeeds: FunctionComponent = () => {
                         gaugeBackgroundColor="#362F26"
                         hideCondition={value => value >= 50}
                     >
-                        <img className="w-7 h-7" src="/public/images/hud/stress.webp" alt="hunger" />
+                        <img className="size-7" src="/public/images/hud/player/stress.webp" alt="stress" />
                     </StatusGauge>
                 )}
 
@@ -148,7 +148,7 @@ export const PlayerNeeds: FunctionComponent = () => {
                     gaugeBackgroundColor="#362F26"
                     hideCondition={value => value >= 50}
                 >
-                    <img className="w-7 h-7" src="/public/images/hud/hunger.webp" alt="hunger" />
+                    <img className="size-7" src="/public/images/hud/player/hunger.webp" alt="hunger" />
                 </StatusGauge>
 
                 <StatusGauge
@@ -157,7 +157,7 @@ export const PlayerNeeds: FunctionComponent = () => {
                     gaugeBackgroundColor="#263136"
                     hideCondition={value => value >= 50}
                 >
-                    <img className="w-7 h-7" src="/public/images/hud/thirst.webp" alt="thirst" />
+                    <img className="size-7" src="/public/images/hud/player/thirst.webp" alt="thirst" />
                 </StatusGauge>
             </div>
         </animated.div>

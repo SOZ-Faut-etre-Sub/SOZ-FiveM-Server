@@ -11,14 +11,11 @@ import {
     VehicleMidDamageThreshold,
 } from '../../../shared/vehicle/vehicle';
 import { usePlayer, useVehicle, useVehicleSpeed } from '../../hook/data';
-import BatteryIcon from '../../icons/hud/vehicle/battery.svg';
 import EnergyIcon from '../../icons/hud/vehicle/energy.svg';
 import FuelIcon from '../../icons/hud/vehicle/fuel.svg';
 import HighBeamIcon from '../../icons/hud/vehicle/highBeam.svg';
-import KeyIcon from '../../icons/hud/vehicle/key.svg';
 import LowBeamIcon from '../../icons/hud/vehicle/lowBeam.svg';
 import MotorIcon from '../../icons/hud/vehicle/motor.svg';
-import NosIcon from '../../icons/hud/vehicle/nos.svg';
 import OilIcon from '../../icons/hud/vehicle/oil.svg';
 import SeatbeltIcon from '../../icons/hud/vehicle/seatbelt.svg';
 import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
@@ -34,54 +31,76 @@ const LightIndicator: FunctionComponent<{ state: VehicleLightState }> = ({ state
     );
 };
 
-const MotorIndicator: FunctionComponent<{ motor: number; oil: number; fuelType: string }> = ({
-    motor,
-    oil,
-    fuelType,
-}) => {
-    const motorClasses = classNames('transition-all size-5', {
-        'opacity-5': motor >= VehicleMidDamageThreshold,
-        'opacity-100': motor < VehicleMidDamageThreshold,
-        'text-yellow-300': motor >= VehicleHighDamageThreshold && motor < VehicleMidDamageThreshold,
-        'text-orange-500': motor < VehicleHighDamageThreshold && motor >= VehicleCriticalDamageThreshold,
-        'text-red-500': motor < VehicleCriticalDamageThreshold,
-    });
+const MotorIndicator: FunctionComponent<{ motor: number }> = ({ motor }) => {
+    let motorIcon = 'motor-yellow';
 
-    const oilClasses = classNames('transition-all size-5', {
-        'opacity-5': oil > 10,
-        'opacity-100': oil <= 10,
-        'text-red-500': oil <= 10,
-    });
+    if (motor >= VehicleHighDamageThreshold && motor < VehicleMidDamageThreshold) {
+        motorIcon = 'motor-yellow';
+    } else if (motor < VehicleHighDamageThreshold && motor >= VehicleCriticalDamageThreshold) {
+        motorIcon = 'motor-orange';
+    } else if (motor < VehicleCriticalDamageThreshold) {
+        motorIcon = 'motor-red';
+    }
 
     return (
-        <>
-            <MotorIcon className={motorClasses} />
-            {fuelType === 'electric' && <BatteryIcon className={oilClasses} />}
-            {fuelType === 'essence' && <OilIcon className={oilClasses} />}
-        </>
+        <img
+            className={classNames('size-6 transition-all duration-1000', {
+                'opacity-5': motor >= VehicleMidDamageThreshold,
+                'opacity-100': motor < VehicleMidDamageThreshold,
+            })}
+            src={`/public/images/hud/vehicle/${motorIcon}.webp`}
+            alt="motor"
+        />
+    );
+};
+
+const OilIndicator: FunctionComponent<{ oil: number; fuelType: string }> = ({ oil, fuelType }) => {
+    let oilStatus = 'yellow';
+
+    if (oil <= 10 && oil > 5) {
+        oilStatus = 'yellow';
+    } else if (oil <= 5 && oil > 3) {
+        oilStatus = 'orange';
+    } else if (oil <= 3) {
+        oilStatus = 'red';
+    }
+
+    return (
+        <img
+            className={classNames('size-6 transition-all duration-1000', {
+                'opacity-5': oil > 10,
+                'opacity-100': oil <= 10,
+            })}
+            src={`/public/images/hud/vehicle/${fuelType === 'essence' ? 'oil' : 'oil'}-${oilStatus}.webp`}
+            alt="oil"
+        />
     );
 };
 
 const LockIndicator: FunctionComponent<{ state: VehicleLockStatus }> = ({ state }) => {
-    const classes = classNames('transition-all duration-1000 size-6', {
-        'opacity-0': state === VehicleLockStatus.Locked,
-        'opacity-100': state !== VehicleLockStatus.Locked,
-        'text-green-500': state === VehicleLockStatus.Locked,
-        'text-red-500': state !== VehicleLockStatus.Locked,
-    });
-
-    return <KeyIcon className={classes} />;
+    return (
+        <img
+            className={classNames('size-6 transition-all duration-1000', {
+                'opacity-0': state === VehicleLockStatus.Locked,
+                'opacity-100': state !== VehicleLockStatus.Locked,
+            })}
+            src="/public/images/hud/vehicle/lock.webp"
+            alt="lock"
+        />
+    );
 };
 
 const SeatbeltIndicator: FunctionComponent<{ state: boolean }> = ({ state }) => {
-    const classes = classNames('transition-all duration-1000 size-6', {
-        'opacity-0': state === null || state === true,
-        'opacity-100': state === false,
-        'text-green-500': state === true,
-        'text-red-500': state === false,
-    });
-
-    return <SeatbeltIcon className={classes} />;
+    return (
+        <img
+            className={classNames('size-6 transition-all duration-1000', {
+                'opacity-0': state === null || state === true,
+                'opacity-100': state === false,
+            })}
+            src="/public/images/hud/vehicle/seatbelt.webp"
+            alt="seatbelt"
+        />
+    );
 };
 
 const SpeedGauge: FunctionComponent<{ useRpm: boolean }> = ({ useRpm }) => {
@@ -147,11 +166,8 @@ const SpeedGauge: FunctionComponent<{ useRpm: boolean }> = ({ useRpm }) => {
                         </div>
 
                         <div className="absolute inset-x-0 bottom-2.5 flex justify-center items-center gap-2">
-                            <MotorIndicator
-                                motor={vehicle.engineHealth}
-                                oil={vehicle.oilLevel}
-                                fuelType={vehicle.fuelType}
-                            />
+                            <MotorIndicator motor={vehicle.engineHealth} />
+                            <OilIndicator oil={vehicle.oilLevel} fuelType={vehicle.fuelType} />
                         </div>
                     </div>
                 </div>
