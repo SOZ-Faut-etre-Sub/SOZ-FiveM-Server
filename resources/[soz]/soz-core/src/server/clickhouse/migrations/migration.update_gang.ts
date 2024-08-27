@@ -10,7 +10,7 @@ export class MigrationUpdateGang implements ClickhouseMigration {
     async migrate(): Promise<void> {
         await this.clickhouseService.exec({
             query: `
-                ALTER TABLE soz.trace_events ADD COLUMN gang Nullable(String) ADD COLUMN old_plate Nullable(String);
+                ALTER TABLE soz.trace_events ADD COLUMN gang Nullable(String), ADD COLUMN old_plate Nullable(String);
             `,
         });
     }
