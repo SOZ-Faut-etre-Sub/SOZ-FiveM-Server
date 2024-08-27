@@ -9,6 +9,8 @@ import { Monitor } from '../monitor/monitor';
 import { ConfigurationRepository } from '../repository/configuration.repository';
 import { BankService } from './bank.service';
 
+const NewsTaxPercent = 8;
+
 @Provider()
 export class BankTaxProvider {
     @Inject(JobService)
@@ -66,7 +68,7 @@ export class BankTaxProvider {
             for (const acc of account) {
                 const tax = Math.round((await this.bankService.getAccountMoney(acc)) * percentage);
 
-                const newsIncome = Math.round((6 * tax) / 100);
+                const newsIncome = Math.round((NewsTaxPercent * tax) / 100);
 
                 for (const jobAccount of ['news', 'you-news']) {
                     const result = await this.bankService.transferBankMoney(acc, jobAccount, 'money', newsIncome);
