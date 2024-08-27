@@ -58,7 +58,7 @@ export class BankAtmProvider {
     }
 
     @OnEvent(ServerEvent.BANK_REMOVE_ATM_LIQUIDITY_RATIO)
-    public async removeAtmLiquidityRatio({ coords, type, ratio }: { coords: Vector3; type: AtmType; ratio: number }) {
+    public async removeAtmLiquidityRatio(source: number, coords: Vector3, type: AtmType, ratio: number) {
         const atmIdentifier = await this.atmAccountId(type, coords);
         await this.bankAccountRepository.removeMoneyRatio(atmIdentifier, ratio);
     }

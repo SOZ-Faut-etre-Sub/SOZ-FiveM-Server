@@ -156,7 +156,7 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
         const bank_account = await this.prismaService.bank_accounts.update({
             where: { accountid: accountId },
             data: {
-                [moneyType]: { multiply: ratio },
+                [moneyType]: BigInt(Math.trunc(account[moneyType] * (1 - ratio))),
             },
         });
 
