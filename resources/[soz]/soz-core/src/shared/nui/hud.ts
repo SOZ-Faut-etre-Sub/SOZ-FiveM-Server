@@ -3,7 +3,7 @@ import { News } from '@public/shared/news';
 import { AdvancedNotification, BasicNotification, TPoliceNotification } from '@public/shared/notification';
 import { VoiceDebugInfo } from '@public/shared/voip';
 
-import { HudCompass, HudDateTime, Minimap, VoiceMode } from '../hud';
+import { HudCompass, HudDateTime, HudWeaponAmmo, Minimap, VoiceMode } from '../hud';
 import { VehicleHud, VehicleHudSpeed } from '../vehicle/vehicle';
 
 export interface NuiHudMethodMap {
@@ -17,6 +17,7 @@ export interface NuiHudMethodMap {
     UpdateCompass: HudCompass;
     UpdateVoiceMode: VoiceMode;
     UpdateVoiceActive: boolean;
+    UpdateWeaponAmmo: Partial<HudWeaponAmmo>;
     SetSyringeDelay: number;
     SetBattery: number;
     SetTwitchNewsOverlay: JobType | null;

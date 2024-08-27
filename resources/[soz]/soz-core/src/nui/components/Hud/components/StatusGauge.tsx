@@ -26,8 +26,8 @@ export const StatusGauge: FunctionComponent<PropsWithChildren<StatusBarProps>> =
     const offset = circumference - ((-percent * 100) / 100 / 100) * circumference;
 
     return (
-        <div className="relative h-11 w-11 rounded-full">
-            <GlassMorphismContainer className="flex justify-center items-center h-11 w-11" disableBorder>
+        <div className="relative size-11 rounded-full">
+            <GlassMorphismContainer className="flex justify-center items-center size-11" disableBorder>
                 {children}
                 <div className="absolute -inset-[1px] flex justify-center">
                     <svg

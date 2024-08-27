@@ -8,6 +8,7 @@ import { HudStateProvider } from './hud.state.provider';
 import { HudStreetNameProvider } from './hud.streetname.provider';
 import { HudVehicleProvider } from './hud.vehicle.provider';
 import { HudWatchProvider } from './hud.watch.provider';
+import { HudWeaponProvider } from './hud.weapon.provider';
 import { HudWeatherIconProvider } from './hud.weathericon.provider';
 
 @Module({
@@ -22,6 +23,7 @@ import { HudWeatherIconProvider } from './hud.weathericon.provider';
         HudVehicleProvider,
         HudWeatherIconProvider,
         HudInteractionsProvider,
+        HudWeaponProvider,
     ],
 })
 export class HudModule {}

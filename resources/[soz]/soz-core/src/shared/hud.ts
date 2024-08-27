@@ -81,6 +81,7 @@ export type HudState = {
     voiceMode: VoiceMode;
     streetName: string[];
     compass: HudCompass;
+    ammo: HudWeaponAmmo;
     dateTime: HudDateTime;
     minimap: Minimap;
 };
@@ -92,3 +93,9 @@ export enum Font {
     ChaletComprimeCologne = 4,
     Pricedown = 7,
 }
+
+export type HudWeaponAmmo = {
+    hasWeapon: boolean;
+    ammo: number;
+    maxAmmo: number;
+};

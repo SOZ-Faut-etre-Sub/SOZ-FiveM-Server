@@ -84,6 +84,7 @@ export class HudStateProvider {
     public async disableHudLoop(): Promise<void> {
         // Basic components hide
         HideHudComponentThisFrame(HudComponent.WantedStars);
+        HideHudComponentThisFrame(HudComponent.WeaponIcon);
         HideHudComponentThisFrame(HudComponent.Cash);
         HideHudComponentThisFrame(HudComponent.MpCash);
         HideHudComponentThisFrame(HudComponent.AreaName);

@@ -1,5 +1,6 @@
 import { FunctionComponent } from 'react';
 
+import { Ammo } from './Ammo';
 import { DateTime } from './DateTime';
 import { DebugVoip } from './DebugVoip';
 import { Location } from './Location';
@@ -19,6 +20,7 @@ export const HudApp: FunctionComponent = () => {
             <DateTime />
             <Minimap />
             <Location />
+            <Ammo />
             <PlayerNeeds />
             <Notifications />
             <NewsBanner />

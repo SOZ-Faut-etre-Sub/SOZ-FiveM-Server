@@ -22,24 +22,32 @@ import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
 import { StatusGauge } from './components/StatusGauge';
 
 const LightIndicator: FunctionComponent<{ state: VehicleLightState }> = ({ state }) => {
+    let icon = 'off';
+
+    if (state === VehicleLightState.LowBeam) {
+        icon = 'low';
+    } else if (state === VehicleLightState.HighBeam) {
+        icon = 'high';
+    }
+
     return (
-        <div className="min-w-[18px] text-black-200">
-            {state == VehicleLightState.Off && <LowBeamIcon className="size-6 opacity-0" />}
-            {state == VehicleLightState.LowBeam && <LowBeamIcon className="size-6" style={{ color: '#2ecc71' }} />}
-            {state == VehicleLightState.HighBeam && <HighBeamIcon className="size-6" style={{ color: '#0984e3' }} />}
+        <div className="size-11">
+            <GlassMorphismContainer className="flex justify-center items-center size-11">
+                <img className="size-6" src={`/public/images/hud/vehicle/light-${icon}.webp`} alt="light" />
+            </GlassMorphismContainer>
         </div>
     );
 };
 
-const MotorIndicator: FunctionComponent<{ motor: number }> = ({ motor }) => {
-    let motorIcon = 'motor-yellow';
+const MotorIndicator: FunctionComponent<{ motor: number; fuelType: string }> = ({ motor, fuelType }) => {
+    let motorStatus = 'yellow';
 
     if (motor >= VehicleHighDamageThreshold && motor < VehicleMidDamageThreshold) {
-        motorIcon = 'motor-yellow';
+        motorStatus = 'yellow';
     } else if (motor < VehicleHighDamageThreshold && motor >= VehicleCriticalDamageThreshold) {
-        motorIcon = 'motor-orange';
+        motorStatus = 'orange';
     } else if (motor < VehicleCriticalDamageThreshold) {
-        motorIcon = 'motor-red';
+        motorStatus = 'red';
     }
 
     return (
@@ -48,7 +56,7 @@ const MotorIndicator: FunctionComponent<{ motor: number }> = ({ motor }) => {
                 'opacity-5': motor >= VehicleMidDamageThreshold,
                 'opacity-100': motor < VehicleMidDamageThreshold,
             })}
-            src={`/public/images/hud/vehicle/${motorIcon}.webp`}
+            src={`/public/images/hud/vehicle/${fuelType === 'essence' ? 'motor' : 'battery'}-${motorStatus}.webp`}
             alt="motor"
         />
     );
@@ -71,7 +79,7 @@ const OilIndicator: FunctionComponent<{ oil: number; fuelType: string }> = ({ oi
                 'opacity-5': oil > 10,
                 'opacity-100': oil <= 10,
             })}
-            src={`/public/images/hud/vehicle/${fuelType === 'essence' ? 'oil' : 'oil'}-${oilStatus}.webp`}
+            src={`/public/images/hud/vehicle/oil-${oilStatus}.webp`}
             alt="oil"
         />
     );
@@ -166,7 +174,7 @@ const SpeedGauge: FunctionComponent<{ useRpm: boolean }> = ({ useRpm }) => {
                         </div>
 
                         <div className="absolute inset-x-0 bottom-2.5 flex justify-center items-center gap-2">
-                            <MotorIndicator motor={vehicle.engineHealth} />
+                            <MotorIndicator motor={vehicle.engineHealth} fuelType={vehicle.fuelType} />
                             <OilIndicator oil={vehicle.oilLevel} fuelType={vehicle.fuelType} />
                         </div>
                     </div>
@@ -181,7 +189,6 @@ const FuelGauge: FunctionComponent<{ value: number; fuelType: string; vehCategor
     fuelType,
     vehCategory,
 }) => {
-    const fuelTypeClasses = classNames('w-4 h-4 text-white');
     const maxFuel = getDefaultVehicleCondition().fuelLevel * (VehicleClassFuelStorageMultiplier[vehCategory] || 1.0);
 
     let gaugeColor = '#92212B';
@@ -206,8 +213,11 @@ const FuelGauge: FunctionComponent<{ value: number; fuelType: string; vehCategor
             gaugeColor={gaugeColor}
             gaugeBackgroundColor={gaugeBackgroundColor}
         >
-            {fuelType === 'electric' && <EnergyIcon className={fuelTypeClasses} />}
-            {fuelType === 'essence' && <FuelIcon className={fuelTypeClasses} />}
+            <img
+                className="size-6"
+                src={`/public/images/hud/vehicle/${fuelType === 'electric' ? 'battery' : 'motor'}.webp`}
+                alt="fuel"
+            />
         </StatusGauge>
     );
 };

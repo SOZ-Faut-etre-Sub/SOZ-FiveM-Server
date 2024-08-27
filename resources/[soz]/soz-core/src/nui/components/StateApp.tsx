@@ -49,6 +49,10 @@ export const StateApp: FunctionComponent = () => {
         dispatch.hud.update({ dateTime });
     });
 
+    useNuiEvent('hud', 'UpdateWeaponAmmo', ammo => {
+        dispatch.hud.update({ ammo });
+    });
+
     useNuiEvent('hud', 'UpdateStreetName', streetName => {
         dispatch.hud.update({ streetName });
     });

@@ -36,18 +36,16 @@ export const VoiceIndicator: FunctionComponent = () => {
     }
     const dropShadow = 'drop-shadow-[2px_2px_2px_rgba(0,0,7,0.7)]';
 
+    if (!voiceActive) {
+        return (
+            <animated.div className="absolute h-11 w-11" style={styles}>
+                <VoiceIcon icon="disconnected" disableAutoHide />
+            </animated.div>
+        );
+    }
+
     return (
         <animated.div className="absolute h-11 w-11" style={styles}>
-            {!voiceActive && (
-                <div
-                    className="text-xl text-red-700 font-bold"
-                    style={{
-                        textShadow: '2px 2px 2px rgba(0,0,7,0.7)',
-                    }}
-                >
-                    VOIP déconnecté
-                </div>
-            )}
             {voiceMode === VoiceMode.Mute && <VoiceIcon icon="mute" disableAutoHide />}
             {voiceMode === VoiceMode.Whisper && <VoiceIcon icon="whisper" />}
             {voiceMode === VoiceMode.Normal && <VoiceIcon icon="normal" />}

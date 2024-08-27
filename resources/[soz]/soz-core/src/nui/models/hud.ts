@@ -14,6 +14,11 @@ export const hud = createModel<RootModel>()({
             degree: 0,
             cardinal: 'N',
         },
+        ammo: {
+            hasWeapon: false,
+            ammo: 0,
+            maxAmmo: 0,
+        },
         dateTime: {
             dayOfWeek: 0,
             hour: 0,
