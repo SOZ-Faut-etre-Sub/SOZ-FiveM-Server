@@ -1,69 +1,158 @@
-import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
-import { Inject } from '../../core/decorators/injectable';
-import { Provider } from '../../core/decorators/provider';
-import { AdminPlayer } from '../../shared/admin/admin';
-import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
-import { Vector3 } from '../../shared/polyzone/vector';
-import { Notifier } from '../notifier';
-import { VoipService } from '../voip/voip.service';
+import { Command } from '@core/decorators/command';
+import { OnEvent, OnNuiEvent } from '@core/decorators/event';
+import { Inject } from '@core/decorators/injectable';
+import { Provider } from '@core/decorators/provider';
+import { SozRole } from '@core/permissions';
+import { FlyingCameraProvider } from '@public/client/camera/flying.camera.provider';
+import { OrbitalCameraProvider } from '@public/client/camera/orbital.camera.provider';
+import { Monitor } from '@public/client/monitor/monitor';
+import { Notifier } from '@public/client/notifier';
+import { NuiMenu } from '@public/client/nui/nui.menu';
+import { NoClipProvider } from '@public/client/utils/noclip.provider';
+import { VoipService } from '@public/client/voip/voip.service';
+import { Tick, TickInterval } from '@public/core/decorators/tick';
+import { wait } from '@public/core/utils';
+import { AdminPlayer } from '@public/shared/admin/admin';
+import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
+import { Vector3 } from '@public/shared/polyzone/vector';
 
 @Provider()
 export class AdminSpectateProvider {
+    @Inject(NuiMenu)
+    private nuiMenu: NuiMenu;
+
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(Monitor)
+    private monitor: Monitor;
+
+    @Inject(NoClipProvider)
+    private noClipProvider: NoClipProvider;
 
     @Inject(VoipService)
     private voipService: VoipService;
 
-    private previousPosition: Vector3 = null;
+    @Inject(FlyingCameraProvider)
+    private flyingCameraProvider: FlyingCameraProvider;
 
-    private spectatingPlayer = null;
+    @Inject(OrbitalCameraProvider)
+    private orbitalCameraProvider: OrbitalCameraProvider;
+
+    public ped: number = null;
+    private flyingCamera: number;
+    private orbitalCamera: number;
 
     @OnNuiEvent(NuiEvent.AdminMenuPlayerSpectate)
     public async spectate(player: AdminPlayer): Promise<void> {
         TriggerServerEvent(ServerEvent.ADMIN_SPECTATE_PLAYER, player);
-        this.notifier.notify(`Vous êtes maintenant en mode spectateur sur ~g~${player.name}.`, 'info');
     }
 
     @OnEvent(ClientEvent.ADMIN_SPECTATE_PLAYER)
-    public async spectatePlayer(target: number, position: Vector3): Promise<void> {
-        const ped = PlayerPedId();
-        const targetPlayer = GetPlayerFromServerId(target);
-        const targetPed = GetPlayerPed(targetPlayer);
-
-        if (this.spectatingPlayer === target) {
-            NetworkSetInSpectatorMode(false, targetPed);
-            SetEntityCoords(
-                ped,
-                this.previousPosition[0],
-                this.previousPosition[1],
-                this.previousPosition[2],
-                false,
-                false,
-                false,
-                false
-            );
-            SetEntityVisible(ped, true, false);
-            SetEntityInvincible(ped, false);
-            SetEntityCollision(ped, true, true);
-
-            this.spectatingPlayer = null;
-            this.previousPosition = null;
-            await this.voipService.mutePlayer(false);
-
+    public async spectatePlayer(player: AdminPlayer, position: Vector3): Promise<void> {
+        if (!this.noClipProvider.IsNoClipMode()) {
+            this.notifier.notify(`Le mode NoClip doit être activé pour observer un joueur.`, 'info');
             return;
         }
 
-        if (this.spectatingPlayer === null) {
-            SetEntityVisible(ped, false, false);
-            SetEntityInvincible(ped, true);
-            SetEntityCollision(ped, false, false);
-            this.previousPosition = GetEntityCoords(ped, false) as Vector3;
-            await this.voipService.mutePlayer(true);
+        if (GetPlayerServerId(NetworkGetPlayerIndexFromPed(PlayerPedId())) === player.id) {
+            return;
         }
 
-        SetEntityCoords(ped, position[0], position[1], position[2], false, false, false, false);
-        NetworkSetInSpectatorMode(true, targetPed);
-        this.spectatingPlayer = target;
+        SetEntityCoords(PlayerPedId(), position[0], position[1], position[2] + 30, false, false, false, false);
+        await wait(10);
+
+        const target = GetPlayerPed(GetPlayerFromServerId(player.id));
+        if (!target || target === PlayerPedId()) {
+            return;
+        }
+
+        await this.initSpectate();
+        this.flyingCamera = this.flyingCameraProvider.createCamera(6.25, false);
+        this.orbitalCamera = this.orbitalCameraProvider.createCamera(target);
+        this.ped = target;
+
+        this.nuiMenu.closeMenu();
+        this.notifier.notify(
+            `Vous êtes maintenant en mode spectateur sur ~g~${player.rpFullName} (${player.name}).`,
+            'info'
+        );
+        this.monitor.traceEvent('admin_spectate', {
+            target_source: player.id,
+        });
+    }
+
+    @Tick(TickInterval.EVERY_FRAME)
+    public spectateLoop() {
+        if (!this.flyingCamera || !this.orbitalCamera || !this.ped) {
+            return;
+        }
+
+        const position = GetEntityCoords(this.ped);
+        SetEntityCoords(PlayerPedId(), position[0], position[1], position[2] + 30, false, false, false, false);
+    }
+
+    private async initSpectate() {
+        FreezeEntityPosition(PlayerPedId(), true);
+        await this.voipService.mutePlayer(true);
+    }
+
+    private async terminateSpectate() {
+        FreezeEntityPosition(PlayerPedId(), false);
+        await this.voipService.mutePlayer(false);
+    }
+
+    @Command('admin_swap_spectate_cam', {
+        role: ['admin', 'staff'] as SozRole[],
+        keys: [
+            {
+                mapper: 'keyboard',
+                key: 'Tab',
+            },
+        ],
+    })
+    public swapCamMode() {
+        if (!this.flyingCamera || !this.orbitalCamera) {
+            return;
+        }
+
+        if (!IsCamActive(this.flyingCamera)) {
+            const [x, y, z] = GetCamCoord(this.orbitalCamera);
+            SetCamCoord(this.flyingCamera, x, y, z);
+
+            const [rotX, rotY, rotZ] = GetCamRot(this.orbitalCamera, 0);
+            SetCamRot(this.flyingCamera, rotX, rotY, rotZ, 0);
+
+            SetCamActive(this.orbitalCamera, false);
+            SetCamActive(this.flyingCamera, true);
+        } else if (!IsCamActive(this.orbitalCamera)) {
+            SetCamActive(this.flyingCamera, false);
+            SetCamActive(this.orbitalCamera, true);
+        }
+    }
+
+    @Command('admin_leave_spectate', {
+        role: ['admin', 'staff'] as SozRole[],
+        keys: [
+            {
+                mapper: 'keyboard',
+                key: 'BACK',
+            },
+        ],
+    })
+    public leaveSpactate() {
+        if (!this.ped && !this.flyingCamera && !this.orbitalCamera) {
+            return;
+        }
+
+        this.flyingCameraProvider.deleteCamera();
+        this.orbitalCameraProvider.deleteCamera();
+
+        this.ped = null;
+        this.flyingCamera = null;
+        this.orbitalCamera = null;
+
+        this.terminateSpectate();
+        this.notifier.notify(`Arrêt du mode observateur.`, 'info');
     }
 }

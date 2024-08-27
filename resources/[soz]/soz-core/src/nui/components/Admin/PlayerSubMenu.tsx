@@ -117,6 +117,16 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                             onConfirm={async () => {
                                 await fetchNui(NuiEvent.AdminMenuPlayerSpectate, player);
                             }}
+                            disabled={!isAdminOrStaff}
+                            description={
+                                <ul>
+                                    <MenuTitle>Contrôle du mode observateur</MenuTitle>
+                                    <MenuItemText> Tab : Basculer le mode caméra</MenuItemText>
+                                    <MenuItemText> Retour : Quitter le mode observateur</MenuItemText>
+                                    <MenuItemText> Maj Gauche : Accélérer la caméra libre</MenuItemText>
+                                    <MenuItemText> Controle Gauche : Ralentir la caméra libre</MenuItemText>
+                                </ul>
+                            }
                         >
                             Observer le joueur
                         </MenuItemButton>
