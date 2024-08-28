@@ -23,10 +23,10 @@ export class HudStreetNameProvider {
         const position = GetEntityCoords(PlayerPedId(), true);
         const [streetA, streetB] = GetStreetNameAtCoord(position[0], position[1], position[2]);
 
-        this.streetName = [`${GetStreetNameFromHashKey(streetA)}`];
+        this.streetName = [GetStreetNameFromHashKey(streetA)];
 
         if (streetA !== streetB && streetB) {
-            this.streetName.push(`${GetStreetNameFromHashKey(streetB)}`);
+            this.streetName.push(GetStreetNameFromHashKey(streetB));
         }
 
         if (!this.hudStateProvider.isComputedHudVisible) {

@@ -1,9 +1,9 @@
-import { On, Once, OnceStep, OnEvent } from '../../core/decorators/event';
+import { On, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
 import { ClientEvent } from '../../shared/event';
-import { HudComponent, HudSettings, HudTheme } from '../../shared/hud';
+import { HudComponent } from '../../shared/hud';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { HudMinimapProvider } from './hud.minimap.provider';
 
@@ -38,12 +38,6 @@ export class HudStateProvider {
 
     private _isComputedHudVisible = true;
 
-    private _theme = (GetResourceKvpString('soz_hud_theme') as HudTheme) ?? HudTheme.Auto;
-    private _hideDateTime = GetResourceKvpInt('soz_hud_hide_datetime') === 1;
-    private _hideWeather = GetResourceKvpInt('soz_hud_hide_weather') === 1;
-    private _hideCompass = GetResourceKvpInt('soz_hud_hide_compass') === 1;
-    private _hideStreetName = GetResourceKvpInt('soz_hud_hide_street_name') === 1;
-
     public get isComputedHudVisible(): boolean {
         return this._isComputedHudVisible;
     }
@@ -72,51 +66,6 @@ export class HudStateProvider {
     public setCinematicCameraActive(enabled: boolean): void {
         DisableVehiclePassengerIdleCamera(!enabled);
         this.isCinematicCameraActive = enabled;
-    }
-
-    public getSettings(): HudSettings {
-        return {
-            theme: this._theme,
-            showDateTime: !this._hideDateTime,
-            showWeather: !this._hideWeather,
-            showCompass: !this._hideCompass,
-            showStreetName: !this._hideStreetName,
-        };
-    }
-
-    public set theme(value: HudTheme) {
-        this._theme = value;
-        SetResourceKvp('soz_hud_theme', value);
-        this.nuiDispatch.dispatch('hud', 'SetTheme', this._theme);
-    }
-
-    public set dateTime(value: boolean) {
-        this._hideDateTime = !value;
-        SetResourceKvp('soz_hud_hide_datetime', this._hideDateTime ? '1' : '0');
-        this.nuiDispatch.dispatch('hud', 'SetShowDateTime', value);
-    }
-
-    public set weather(value: boolean) {
-        this._hideWeather = !value;
-        SetResourceKvp('soz_hud_hide_weather', this._hideWeather ? '1' : '0');
-        this.nuiDispatch.dispatch('hud', 'SetShowWeather', value);
-    }
-
-    public set streetName(value: boolean) {
-        this._hideStreetName = !value;
-        SetResourceKvp('soz_hud_hide_street_name', this._hideStreetName ? '1' : '0');
-        this.nuiDispatch.dispatch('hud', 'SetShowStreetName', value);
-    }
-
-    public set compass(value: boolean) {
-        this._hideCompass = !value;
-        SetResourceKvp('soz_hud_hide_compass', this._hideCompass ? '1' : '0');
-        this.nuiDispatch.dispatch('hud', 'SetShowCompass', value);
-    }
-
-    @Once(OnceStep.NuiLoaded)
-    public async onNuiLoaded(): Promise<void> {
-        this.nuiDispatch.dispatch('hud', 'UpdateSettings', this.getSettings());
     }
 
     @OnEvent(ClientEvent.PLAYER_UPDATE_CROSSHAIR)

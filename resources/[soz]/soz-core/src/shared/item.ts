@@ -1,6 +1,7 @@
 import { DBSearch } from '@private/shared/business.cyber';
 import { DrugContractInfo } from '@private/shared/drugs';
 import { MissiveType } from '@private/shared/missive';
+import { HudTheme } from '@public/shared/hud';
 
 import { DamageServerData } from './job/lsmc';
 import { FakeId, PlayerCharInfo, PlayerJob, PlayerMetadata } from './player';
@@ -305,6 +306,12 @@ export type InventoryItemMetadata = {
     value?: number;
     notSearchable?: boolean;
     cyberDBSearch?: DBSearch;
+    // Watch
+    theme?: HudTheme;
+    showDateTime?: boolean;
+    showWeather?: boolean;
+    showCompass?: boolean;
+    showStreetName?: boolean;
 };
 
 export type Inventory = {

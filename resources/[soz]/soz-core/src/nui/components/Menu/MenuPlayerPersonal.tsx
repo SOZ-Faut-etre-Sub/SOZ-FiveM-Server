@@ -59,7 +59,6 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                     )}
 
                     <MenuItemSubMenuLink id="animations">Animations</MenuItemSubMenuLink>
-                    <MenuItemSubMenuLink id="watch">Montre connectée</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="hud">HUD</MenuItemSubMenuLink>
                     {data.job.enabled && <MenuItemSubMenuLink id="job">Gestion de votre métier</MenuItemSubMenuLink>}
                     <MenuItemButton onConfirm={() => fetchNui(NuiEvent.PlayerMenuVoipReset)}>
@@ -107,52 +106,6 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                         onChange={value => fetchNui(NuiEvent.PlayerMenuHudSetScaledNui, { value })}
                     >
                         Scaling NUI
-                    </MenuItemCheckbox>
-                </MenuContent>
-            </SubMenu>
-            <SubMenu id="watch">
-                <MenuTitle banner="https://nui-img/soz/menu_personal">Montre connectée</MenuTitle>
-                <MenuContent>
-                    <MenuItemSelect
-                        title="Thème"
-                        value={data.hud_settings.theme}
-                        description={`Thème de la montre connectée`}
-                        onConfirm={async (_, value) => {
-                            await fetchNui(NuiEvent.PlayerMenuHudSetTheme, value);
-                        }}
-                    >
-                        <MenuItemSelectOption value="dark">Dark Mode</MenuItemSelectOption>
-                        <MenuItemSelectOption value="auto">Auto</MenuItemSelectOption>
-                        <MenuItemSelectOption value="light">Light Mode</MenuItemSelectOption>
-                    </MenuItemSelect>
-
-                    <MenuItemCheckbox
-                        checked={data.hud_settings.showDateTime}
-                        description="Active/Désactive l'affichage de la date et de l'heure"
-                        onChange={value => fetchNui(NuiEvent.PlayerMenuHudSetShowDateTime, value)}
-                    >
-                        Date et heure
-                    </MenuItemCheckbox>
-                    <MenuItemCheckbox
-                        checked={data.hud_settings.showWeather}
-                        description="Active/Désactive l'affichage de la météo"
-                        onChange={value => fetchNui(NuiEvent.PlayerMenuHudSetShowWeather, value)}
-                    >
-                        Météo
-                    </MenuItemCheckbox>
-                    <MenuItemCheckbox
-                        checked={data.hud_settings.showStreetName}
-                        description="Active/Désactive l'affichage des noms de rue"
-                        onChange={value => fetchNui(NuiEvent.PlayerMenuHudSetShowStreetName, value)}
-                    >
-                        Noms de rue
-                    </MenuItemCheckbox>
-                    <MenuItemCheckbox
-                        checked={data.hud_settings.showCompass}
-                        description="Active/Désactive l'affichage de la boussole"
-                        onChange={value => fetchNui(NuiEvent.PlayerMenuHudSetShowCompass, value)}
-                    >
-                        Boussole
                     </MenuItemCheckbox>
                 </MenuContent>
             </SubMenu>

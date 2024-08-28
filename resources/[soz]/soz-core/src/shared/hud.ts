@@ -78,14 +78,16 @@ export enum HudTheme {
     Auto = 'auto',
     Light = 'light',
     Dark = 'dark',
+    Green = 'green',
 }
 
 export type HudSettings = {
     theme: HudTheme;
     showDateTime: boolean;
-    showCompass: boolean;
-    showStreetName: boolean;
     showWeather: boolean;
+    showStreetName: boolean;
+    showCompass: boolean;
+    showStress: boolean;
 };
 
 export type HudState = {

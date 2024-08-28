@@ -14,6 +14,13 @@ export const GlassMorphism: FunctionComponent = () => {
 
     useEffect(() => {
         if (gameView !== null) {
+            const canvas = window.parent.document.body.getElementsByTagName('canvas');
+            if (canvas.length > 1) {
+                canvas[0].remove();
+            }
+        }
+
+        if (gameView !== null) {
             gameView.startRender();
         }
 

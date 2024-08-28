@@ -33,7 +33,7 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
             canvasRef.current.width = container.width;
             canvasRef.current.height = container.height;
             tCtx.fillStyle = '#FFFFFF';
-            tCtx.filter = `blur(10px)`;
+            tCtx.filter = `blur(5px)`;
 
             if (!canvas) return;
 
@@ -72,11 +72,12 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
             />
 
             <div
-                className={cn('absolute inset-0 transition-colors duration-1000', {
+                className={cn('absolute inset-0 transition-all duration-1000', {
                     'bg-[#F3FBFA] opacity-20':
                         settings.theme === HudTheme.Light || (settings.theme === HudTheme.Auto && isDay),
                     'bg-[#22232A] opacity-45':
                         settings.theme === HudTheme.Dark || (settings.theme === HudTheme.Auto && isNight),
+                    'bg-[#33a844] opacity-25': settings.theme === HudTheme.Green,
                 })}
             />
 

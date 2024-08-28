@@ -68,6 +68,14 @@ module.exports = {
             fontSize: {
                 '2xs': '.6rem',
                 xsm: '.8rem',
+                '2.5xl': [
+                    '2.75rem',
+                    {
+                        lineHeight: '2.75rem',
+                        letterSpacing: '-0.01em',
+                        fontWeight: '500',
+                    },
+                ],
             },
         },
     },

@@ -37,7 +37,7 @@ export class HudMinimapProvider {
 
     private _scaledNui = GetResourceKvpInt('soz_scaled_nui') === 1;
 
-    private minimapOffset = -0.059;
+    private minimapOffset = -0.05;
 
     public get hasAdminGps(): boolean {
         return this._hasAdminGps;
@@ -73,12 +73,15 @@ export class HudMinimapProvider {
     public onBaseEnteredVehicle(vehicle: number, seat: VehicleSeat): void {
         this._inVehicle = vehicle && (VehicleSeat.Driver === seat || VehicleSeat.Copilot === seat);
 
+        this.nuiDispatch.dispatch('hud', 'UpdateMinimap', this.getMinimap(true));
         this.updateShowRadar();
     }
 
     @OnEvent(ClientEvent.BASE_LEFT_VEHICLE)
     public onBaseLeftVehicle(): void {
         this._inVehicle = false;
+
+        this.nuiDispatch.dispatch('hud', 'UpdateMinimap', this.getMinimap());
         this.updateShowRadar();
     }
 
@@ -132,11 +135,11 @@ export class HudMinimapProvider {
         const showRadar = this._showHud && ((this._inVehicle && this._haveGps && !this._dead) || this._hasAdminGps);
 
         DisplayRadar(showRadar);
+        this.nuiDispatch.dispatch('hud', 'UpdateMinimap', this.getMinimap());
     }
 
     @Tick(TickInterval.EVERY_SECOND)
     public async updateHud(): Promise<void> {
-        this.nuiDispatch.dispatch('hud', 'UpdateMinimap', this.getMinimap());
         this.nuiDispatch.dispatch('hud', 'UpdateDateTime', {
             hour: GetClockHours(),
             minute: GetClockMinutes(),
@@ -144,7 +147,7 @@ export class HudMinimapProvider {
         });
     }
 
-    private getMinimap(): Minimap {
+    private getMinimap(skipRadarCompute = false): Minimap {
         const [x, y] = GetActiveScreenResolution();
         const aspectRatio = GetAspectRatio(false);
         const scaleX = 1.0 / x;
@@ -172,11 +175,11 @@ export class HudMinimapProvider {
         if (this.scaledNui) {
             width = 0.1406249989522621;
             height = 0.17624250969333802;
-            rawY = 0.7372593283653259;
-            rawX = 0.0106042670086026;
+            rawY = 0.746259331703186;
+            rawX = 0.01060426700860262;
         }
 
-        if (isRadarHidden) {
+        if (!skipRadarCompute && isRadarHidden) {
             rawY += height;
             height = 0;
         }

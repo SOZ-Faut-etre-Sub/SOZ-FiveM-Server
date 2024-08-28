@@ -1,6 +1,6 @@
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { Tick, TickInterval } from '../../core/decorators/tick';
+import { Tick } from '../../core/decorators/tick';
 import { WeaponName } from '../../shared/weapons/weapon';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { NuiDispatch } from '../nui/nui.dispatch';
@@ -17,7 +17,7 @@ export class HudWeaponProvider {
     @Inject(InventoryManager)
     private readonly inventoryManager: InventoryManager;
 
-    @Tick(TickInterval.EVERY_FRAME)
+    @Tick(500)
     async updateWeaponHud() {
         const player = PlayerPedId();
 

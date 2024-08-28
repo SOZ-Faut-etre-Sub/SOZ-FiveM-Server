@@ -41,12 +41,16 @@ export const StateApp: FunctionComponent = () => {
         dispatch.hud.updateSettings({ showWeather });
     });
 
+    useNuiEvent('hud', 'SetShowStreetName', showStreetName => {
+        dispatch.hud.updateSettings({ showStreetName });
+    });
+
     useNuiEvent('hud', 'SetShowCompass', showCompass => {
         dispatch.hud.updateSettings({ showCompass });
     });
 
-    useNuiEvent('hud', 'SetShowStreetName', showStreetName => {
-        dispatch.hud.updateSettings({ showStreetName });
+    useNuiEvent('hud', 'SetShowStress', showStress => {
+        dispatch.hud.updateSettings({ showStress });
     });
 
     useNuiEvent('hud', 'UpdateSettings', settings => {

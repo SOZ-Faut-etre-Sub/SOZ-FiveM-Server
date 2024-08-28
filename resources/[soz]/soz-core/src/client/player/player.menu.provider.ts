@@ -9,7 +9,6 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClothConfig } from '../../shared/cloth';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
-import { HudTheme } from '../../shared/hud';
 import { MenuType } from '../../shared/nui/menu';
 import { AnimationService } from '../animation/animation.service';
 import { HudMinimapProvider } from '../hud/hud.minimap.provider';
@@ -96,7 +95,6 @@ export class PlayerMenuProvider {
             naked: this.playerService.getPlayer().cloth_config.Config.Naked,
             halloween: isFeatureEnabled(Feature.Halloween),
             arachnophobe: this.halloweenSpiderService.isArachnophobeMode(),
-            hud_settings: this.hudStateProvider.getSettings(),
         });
     }
 
@@ -243,30 +241,5 @@ export class PlayerMenuProvider {
         }
 
         TriggerServerEvent('soz-character:server:UpdateClothConfig', 'Naked', false);
-    }
-
-    @OnNuiEvent(NuiEvent.PlayerMenuHudSetTheme)
-    public async setTheme(value: HudTheme) {
-        this.hudStateProvider.theme = value;
-    }
-
-    @OnNuiEvent(NuiEvent.PlayerMenuHudSetShowDateTime)
-    public async setDateTime(value: boolean) {
-        this.hudStateProvider.dateTime = value;
-    }
-
-    @OnNuiEvent(NuiEvent.PlayerMenuHudSetShowWeather)
-    public async setWeather(value: boolean) {
-        this.hudStateProvider.weather = value;
-    }
-
-    @OnNuiEvent(NuiEvent.PlayerMenuHudSetShowStreetName)
-    public async setStreetName(value: boolean) {
-        this.hudStateProvider.streetName = value;
-    }
-
-    @OnNuiEvent(NuiEvent.PlayerMenuHudSetShowCompass)
-    public async setCompass(value: boolean) {
-        this.hudStateProvider.compass = value;
     }
 }

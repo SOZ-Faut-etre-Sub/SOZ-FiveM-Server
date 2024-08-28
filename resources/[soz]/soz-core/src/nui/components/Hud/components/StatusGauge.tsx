@@ -4,20 +4,17 @@ import { GlassMorphismContainer } from '../../Styleguide/GlassMorphismContainer'
 
 export type StatusBarProps = {
     percent: number;
-    gaugeColor: string;
-    gaugeBackgroundColor: string;
+    color: string;
     hideCondition?: (value: number) => boolean;
 };
 
 export const StatusGauge: FunctionComponent<PropsWithChildren<StatusBarProps>> = ({
     percent,
-    gaugeColor,
-    gaugeBackgroundColor,
+    color,
     children,
     hideCondition = value => value < 0.01,
 }) => {
     const hide = hideCondition(percent);
-
     if (hide) {
         return null;
     }
@@ -26,8 +23,8 @@ export const StatusGauge: FunctionComponent<PropsWithChildren<StatusBarProps>> =
     const offset = circumference - ((-percent * 100) / 100 / 100) * circumference;
 
     return (
-        <div className="relative size-11 rounded-full">
-            <GlassMorphismContainer className="flex justify-center items-center size-11" disableBorder>
+        <div className="relative size-12 rounded-full">
+            <GlassMorphismContainer className="flex justify-center items-center size-12" disableBorder>
                 {children}
                 <div className="absolute -inset-[1px] flex justify-center">
                     <svg
@@ -41,9 +38,9 @@ export const StatusGauge: FunctionComponent<PropsWithChildren<StatusBarProps>> =
                             cx="100"
                             cy="100"
                             fill="transparent"
-                            stroke={gaugeBackgroundColor}
-                            strokeOpacity="0.50"
-                            strokeWidth="16px"
+                            stroke={color}
+                            strokeOpacity="0.35"
+                            strokeWidth="1.5rem"
                             strokeDasharray={`${circumference} ${circumference}`}
                             strokeDashoffset="0"
                         ></circle>
@@ -51,8 +48,8 @@ export const StatusGauge: FunctionComponent<PropsWithChildren<StatusBarProps>> =
                             r="90"
                             cx="100"
                             cy="100"
-                            stroke={gaugeColor}
-                            strokeWidth="16px"
+                            stroke={color}
+                            strokeWidth="1.5rem"
                             strokeLinecap="round"
                             strokeDasharray={`${circumference} ${circumference}`}
                             strokeDashoffset={String(-offset)}

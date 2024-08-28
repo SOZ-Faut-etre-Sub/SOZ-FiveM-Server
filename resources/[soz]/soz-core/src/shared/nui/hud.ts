@@ -27,9 +27,11 @@ export interface NuiHudMethodMap {
     CancelNotification: string;
     AddNews: Omit<News, 'id'>;
     VoipDebug: VoiceDebugInfo | null;
+    // Watch Settings
     SetTheme: HudTheme;
     SetShowDateTime: boolean;
     SetShowWeather: boolean;
-    SetShowCompass: boolean;
     SetShowStreetName: boolean;
+    SetShowCompass: boolean;
+    SetShowStress: boolean;
 }

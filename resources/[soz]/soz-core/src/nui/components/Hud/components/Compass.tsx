@@ -1,10 +1,13 @@
 import { FunctionComponent } from 'react';
+import { useSelector } from 'react-redux';
 
-import { useHud } from '../../../hook/data';
+import { RootState } from '../../../store';
 import { GlassMorphismContainer } from '../../Styleguide/GlassMorphismContainer';
 
 export const Compass: FunctionComponent = () => {
-    const { hasWatch, settings, compass } = useHud();
+    const hasWatch = useSelector((state: RootState) => state.hud.hasWatch);
+    const settings = useSelector((state: RootState) => state.hud.settings);
+    const compass = useSelector((state: RootState) => state.hud.compass);
 
     const circumference = 90 * 2 * Math.PI;
     const offset = circumference - ((-20 * 100) / 100 / 100) * circumference;
@@ -14,9 +17,9 @@ export const Compass: FunctionComponent = () => {
     }
 
     return (
-        <div className="relative h-11 w-11 rounded-full">
-            <GlassMorphismContainer className="flex justify-center items-center text-white h-11 w-11" disableBorder>
-                <span className="text-sm pt-1">{compass.cardinal}</span>
+        <div className="relative size-12 rounded-full">
+            <GlassMorphismContainer className="flex justify-center items-center text-white size-12" disableBorder>
+                <span className="text-sm pt-0.5">{compass.cardinal}</span>
                 <div className="absolute inset-0 flex justify-center">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -31,7 +34,7 @@ export const Compass: FunctionComponent = () => {
                             fill="transparent"
                             stroke="#fff"
                             strokeOpacity="0.10"
-                            strokeWidth="16px"
+                            strokeWidth="1.5rem"
                             strokeDasharray={`${circumference} ${circumference}`}
                             strokeDashoffset="0"
                         ></circle>
@@ -40,7 +43,7 @@ export const Compass: FunctionComponent = () => {
                             cx="100"
                             cy="100"
                             stroke="#fff"
-                            strokeWidth="16px"
+                            strokeWidth="1.5rem"
                             strokeLinecap="round"
                             strokeDasharray={`${circumference} ${circumference}`}
                             strokeDashoffset={String(-offset)}
@@ -48,7 +51,7 @@ export const Compass: FunctionComponent = () => {
                         ></circle>
                     </svg>
                 </div>
-                <div className="absolute inset-0 p-1.5 flex justify-center">
+                <div className="absolute inset-0 p-2 flex justify-center">
                     <svg viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M17 33V31M17 3V1M1 17H3M31 17H33"

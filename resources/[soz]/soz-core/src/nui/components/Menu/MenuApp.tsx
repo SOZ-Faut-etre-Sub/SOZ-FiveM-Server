@@ -83,6 +83,7 @@ import { MenuVehicleCustom } from './MenuVehicleCustom';
 import { MenuVehicleDealership } from './MenuVehicleDealership';
 import { VehicleOrderMenu } from './MenuVehicleOrder';
 import { MenuWardrobe } from './MenuWardrobe';
+import { MenuWatch } from './MenuWatch';
 
 export const MenuApp: FunctionComponent = () => {
     return (
@@ -300,6 +301,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.SmugglingZoneEditMenu}/*`} element={<MenuSmugglingEditZone />} />
             <Route path={`/${MenuType.GangMenu}/*`} element={<MenuGang />} />
             <Route path={`/${MenuType.GangVehiculeMenu}/*`} element={<MenuGangVehicule />} />
+            <Route path={`/${MenuType.WatchMenu}/*`} element={<MenuWatch data={menuData} />} />
         </Routes>
     );
 };

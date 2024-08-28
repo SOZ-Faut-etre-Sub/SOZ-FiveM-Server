@@ -1,11 +1,12 @@
 import { Transition } from '@headlessui/react';
 import classNames from 'classnames';
 import { FunctionComponent, useCallback, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { uuidv4 } from '../../../core/utils';
 import { AdvancedNotification, BasicNotification, TPoliceNotification } from '../../../shared/notification';
-import { useHud } from '../../hook/data';
 import { useNuiEvent } from '../../hook/nui';
+import { RootState } from '../../store';
 import { formatText } from '../../utils/gta-format';
 
 type NotificationProps = {
@@ -299,7 +300,9 @@ const PoliceNotification: FunctionComponent<PoliceNotificationProps> = ({ notifi
 };
 
 export const Notifications: FunctionComponent = () => {
-    const { hasWatch, minimap } = useHud();
+    const hasWatch = useSelector((state: RootState) => state.hud.hasWatch);
+    const minimap = useSelector((state: RootState) => state.hud.minimap);
+
     const [notifications, setNotifications] = useState<
         (BasicNotification | AdvancedNotification | TPoliceNotification)[]
     >([]);

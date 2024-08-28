@@ -1,4 +1,5 @@
 import { ApartmentMenuData } from '@public/shared/housing/housing';
+import { HudSettings } from '@public/shared/hud';
 import { JobType } from '@public/shared/job';
 import { MenuOilData } from '@public/shared/job/oil';
 import { NuiJobEmployeeOnDuty, PromoteMenuData } from '@public/shared/nui/job';
@@ -136,6 +137,7 @@ export enum MenuType {
     SmugglingZoneEditMenu = 'smuggling_zone_edit',
     GangMenu = 'gang',
     GangVehiculeMenu = 'gang_vehicule_menu',
+    WatchMenu = 'watch_menu',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {
@@ -205,6 +207,7 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.ObjectEditor]: EditorMenuData;
     [MenuType.DoorAdmin]: string;
     [MenuType.SmugglingBlackMarketPrices]: string[];
+    [MenuType.WatchMenu]: HudSettings;
 }
 
 export const ALLOWED_MENU_NAVIGATE: MenuType[] = [MenuType.AdminMenu, MenuType.PropPlacementMenu];

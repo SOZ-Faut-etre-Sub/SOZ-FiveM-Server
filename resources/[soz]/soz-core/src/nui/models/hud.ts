@@ -10,8 +10,9 @@ export const hud = createModel<RootModel>()({
             theme: 'auto',
             showDateTime: false,
             showWeather: false,
-            showCompass: false,
             showStreetName: false,
+            showCompass: false,
+            showStress: false,
         },
 
         voiceMode: 0,
