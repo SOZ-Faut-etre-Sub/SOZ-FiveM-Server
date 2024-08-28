@@ -39,9 +39,10 @@
 5  anti-emeute LSPD/BCSO
 6  light crimi
 7  medium crimi
-8  bandoulière SASP       / femme armor SASP2 moche
+8  bandoulière SASP       / femme armor SASP moche
 9  armor SASP1            / femme armor SASP1
 10 armor SASP2            / femme bandoulière SASP
+11 N/A                    / femme armor SASP2
 
     Undershirt
 0  stonk holster radio epaule // pas utilisé?
