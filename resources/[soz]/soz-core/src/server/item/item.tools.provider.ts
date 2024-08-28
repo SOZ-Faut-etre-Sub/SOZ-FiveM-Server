@@ -5,6 +5,7 @@ import { Once } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent } from '../../shared/event';
+import { Notifier } from '../notifier';
 import { ObjectProvider } from '../object/object.provider';
 import { PlayerService } from '../player/player.service';
 import { ItemService } from './item.service';
@@ -19,6 +20,9 @@ export class ItemToolsProvider {
 
     @Inject(ObjectProvider)
     private objectProvider: ObjectProvider;
+
+    @Inject(Notifier)
+    private readonly notifier: Notifier;
 
     @Once()
     public onStart() {
@@ -47,6 +51,9 @@ export class ItemToolsProvider {
             await this.objectProvider.onPlaceObject(source, 'cardbord', 'prop_cardbordbox_03a', position);
         });
         this.item.setItemUseCallback('diving_gear', this.useDrivingGear.bind(this));
+        this.item.setItemUseCallback('compass', source => {
+            this.notifier.notify(source, "PTDR, tu crois que t'es Jack Sparrow ou quoi ?", 'info');
+        });
     }
 
     public useDrivingGear(source: number) {

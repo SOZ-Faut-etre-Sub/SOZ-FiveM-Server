@@ -3913,7 +3913,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Pour ne jamais perdre le Nord !',
+        ['description'] = 'Relique d\'un ancien temps, ne sert plus à rien...',
         ['illustrator'] = '.Kutz',
     },
     ['watch'] = {
