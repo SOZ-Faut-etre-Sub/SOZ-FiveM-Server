@@ -4,12 +4,12 @@ import { useHud } from '../../../hook/data';
 import { GlassMorphismContainer } from '../../Styleguide/GlassMorphismContainer';
 
 export const Compass: FunctionComponent = () => {
-    const { hasWatch, compass } = useHud();
+    const { hasWatch, settings, compass } = useHud();
 
     const circumference = 90 * 2 * Math.PI;
     const offset = circumference - ((-20 * 100) / 100 / 100) * circumference;
 
-    if (!hasWatch) {
+    if (!hasWatch || !settings.showCompass) {
         return null;
     }
 

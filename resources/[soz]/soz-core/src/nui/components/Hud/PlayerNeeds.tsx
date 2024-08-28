@@ -15,10 +15,12 @@ type SyringeDelay = {
 export const PlayerNeeds: FunctionComponent = () => {
     const [syringeDelay, setSyringeDelay] = useState<SyringeDelay>(null);
 
-    const { hasWatch, minimap } = useHud();
+    const { hasWatch, settings, minimap } = useHud();
     const player = usePlayer();
     const playerStats = usePlayerStats();
     const vehicle = useVehicle();
+
+    const locationIsShown = hasWatch && settings.showStreetName;
 
     const styles = useSpring({
         from: {
@@ -26,7 +28,7 @@ export const PlayerNeeds: FunctionComponent = () => {
         },
         to: {
             top: `${(minimap.bottom + 0.015) * 100}vh`,
-            left: `${((hasWatch ? minimap.right : minimap.left) + 0.015) * 100}vw`,
+            left: `${((locationIsShown ? minimap.right : minimap.left) + 0.015) * 100}vw`,
         },
     });
 

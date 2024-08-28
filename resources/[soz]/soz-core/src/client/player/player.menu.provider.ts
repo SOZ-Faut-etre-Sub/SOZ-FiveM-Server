@@ -96,7 +96,7 @@ export class PlayerMenuProvider {
             naked: this.playerService.getPlayer().cloth_config.Config.Naked,
             halloween: isFeatureEnabled(Feature.Halloween),
             arachnophobe: this.halloweenSpiderService.isArachnophobeMode(),
-            theme: this.hudStateProvider.theme,
+            hud_settings: this.hudStateProvider.getSettings(),
         });
     }
 
@@ -248,5 +248,25 @@ export class PlayerMenuProvider {
     @OnNuiEvent(NuiEvent.PlayerMenuHudSetTheme)
     public async setTheme(value: HudTheme) {
         this.hudStateProvider.theme = value;
+    }
+
+    @OnNuiEvent(NuiEvent.PlayerMenuHudSetShowDateTime)
+    public async setDateTime(value: boolean) {
+        this.hudStateProvider.dateTime = value;
+    }
+
+    @OnNuiEvent(NuiEvent.PlayerMenuHudSetShowWeather)
+    public async setWeather(value: boolean) {
+        this.hudStateProvider.weather = value;
+    }
+
+    @OnNuiEvent(NuiEvent.PlayerMenuHudSetShowStreetName)
+    public async setStreetName(value: boolean) {
+        this.hudStateProvider.streetName = value;
+    }
+
+    @OnNuiEvent(NuiEvent.PlayerMenuHudSetShowCompass)
+    public async setCompass(value: boolean) {
+        this.hudStateProvider.compass = value;
     }
 }

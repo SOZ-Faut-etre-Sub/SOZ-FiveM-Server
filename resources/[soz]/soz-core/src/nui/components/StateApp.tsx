@@ -30,15 +30,31 @@ export const StateApp: FunctionComponent = () => {
     });
 
     useNuiEvent('hud', 'SetTheme', theme => {
-        dispatch.hud.update({ theme });
+        dispatch.hud.updateSettings({ theme });
+    });
+
+    useNuiEvent('hud', 'SetShowDateTime', showDateTime => {
+        dispatch.hud.updateSettings({ showDateTime });
+    });
+
+    useNuiEvent('hud', 'SetShowWeather', showWeather => {
+        dispatch.hud.updateSettings({ showWeather });
+    });
+
+    useNuiEvent('hud', 'SetShowCompass', showCompass => {
+        dispatch.hud.updateSettings({ showCompass });
+    });
+
+    useNuiEvent('hud', 'SetShowStreetName', showStreetName => {
+        dispatch.hud.updateSettings({ showStreetName });
+    });
+
+    useNuiEvent('hud', 'UpdateSettings', settings => {
+        dispatch.hud.update({ settings });
     });
 
     useNuiEvent('hud', 'UpdateHasWatch', hasWatch => {
         dispatch.hud.update({ hasWatch });
-    });
-
-    useNuiEvent('hud', 'UpdateHasCompass', hasCompass => {
-        dispatch.hud.update({ hasCompass });
     });
 
     useNuiEvent('hud', 'UpdateVoiceMode', voiceMode => {

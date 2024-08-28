@@ -7,7 +7,7 @@ import PinIcon from '../../icons/hud/pin.svg';
 import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
 
 export const Location: FunctionComponent = () => {
-    const { hasWatch, streetName, minimap } = useHud();
+    const { hasWatch, settings, streetName, minimap } = useHud();
 
     const styles = useSpring({
         from: {
@@ -20,7 +20,7 @@ export const Location: FunctionComponent = () => {
         },
     });
 
-    if (!hasWatch) {
+    if (!hasWatch || !settings.showStreetName) {
         return null;
     }
 

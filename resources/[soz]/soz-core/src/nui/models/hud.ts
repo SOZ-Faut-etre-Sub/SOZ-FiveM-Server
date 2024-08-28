@@ -1,13 +1,18 @@
 import { createModel } from '@rematch/core';
 
-import { HudState } from '../../shared/hud';
+import { HudSettings, HudState } from '../../shared/hud';
 import type { RootModel } from './';
 
 export const hud = createModel<RootModel>()({
     state: {
-        theme: 'auto',
         hasWatch: false,
-        hasCompass: false,
+        settings: {
+            theme: 'auto',
+            showDateTime: false,
+            showWeather: false,
+            showCompass: false,
+            showStreetName: false,
+        },
 
         voiceMode: 0,
         streetName: [],
@@ -39,6 +44,9 @@ export const hud = createModel<RootModel>()({
     reducers: {
         update(state, hud: Partial<HudState>) {
             return { ...state, ...hud };
+        },
+        updateSettings(state, hud: Partial<HudSettings>) {
+            return { ...state, settings: { ...state.settings, ...hud } };
         },
     },
     effects: () => ({}),

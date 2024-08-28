@@ -1,5 +1,6 @@
 import { AnimationConfigItem } from '@public/shared/animation';
 import { Invoice } from '@public/shared/bank';
+import { HudSettings } from '@public/shared/hud';
 import { Job } from '@public/shared/job';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
@@ -34,5 +35,5 @@ export type PlayerPersonalMenuData = {
     naked: boolean;
     halloween: boolean;
     arachnophobe: boolean;
-    theme: string;
+    hud_settings: HudSettings;
 };

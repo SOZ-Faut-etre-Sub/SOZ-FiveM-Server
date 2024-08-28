@@ -80,11 +80,17 @@ export enum HudTheme {
     Dark = 'dark',
 }
 
-export type HudState = {
+export type HudSettings = {
     theme: HudTheme;
-    hasWatch: boolean;
-    hasCompass: boolean;
+    showDateTime: boolean;
+    showCompass: boolean;
+    showStreetName: boolean;
+    showWeather: boolean;
+};
 
+export type HudState = {
+    hasWatch: boolean;
+    settings: HudSettings;
     voiceMode: VoiceMode;
     streetName: string[];
     compass: HudCompass;

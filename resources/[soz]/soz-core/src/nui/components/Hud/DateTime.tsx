@@ -6,7 +6,7 @@ import { FunctionComponent } from 'react';
 import { useHud } from '../../hook/data';
 
 export const DateTime: FunctionComponent = () => {
-    const { hasWatch, dateTime, minimap } = useHud();
+    const { hasWatch, settings, dateTime, minimap } = useHud();
 
     const styles = useSpring({
         from: {
@@ -19,7 +19,7 @@ export const DateTime: FunctionComponent = () => {
         },
     });
 
-    if (!hasWatch) {
+    if (!hasWatch || !settings.showDateTime) {
         return null;
     }
 
