@@ -158,7 +158,7 @@ export const VehicleSubMenu: FunctionComponent<VehicleSubMenuProps> = ({ banner,
                             await fetchNui(NuiEvent.AdminMenuVehicleMapping);
                         }}
                     >
-                        🖳 Cartopgraphie
+                        🖳 Cartographie
                     </MenuItemButton>
                     <MenuItemButton
                         disabled={!isStaffOrAdmin}
