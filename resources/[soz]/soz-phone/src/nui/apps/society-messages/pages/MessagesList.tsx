@@ -17,19 +17,31 @@ import { MeasuredCellParent } from 'react-virtualized/dist/es/CellMeasurer';
 
 import { useSociety } from '../../../hooks/app/useSociety';
 import { useConfig } from '../../../hooks/usePhone';
+import { usePhoneSocietyNumber } from '../../../hooks/useSimCard';
 import { DayAgo } from '../../../ui/components/DayAgo';
 import { IPhoneSettings } from '../../settings/hooks/useSettings';
 import { useMessageNotifications } from '../hooks/useMessageNotifications';
+import { borderColor } from '../utils/alertType';
+import { alerts } from '../utils/constants';
 
 const MessagesList = (): any => {
-    const ref = useRef();
+    const [selected, setSelected] = React.useState<number>(1);
+
+    const ref = useRef(null);
     const config = useConfig();
     const { initializeCall } = useCall();
     const navigate = useNavigate();
 
     const { getSocietyMessages } = useSociety();
+    const societyNumber = usePhoneSocietyNumber();
     const societyMessages = getSocietyMessages();
     const { removeNotification } = useMessageNotifications();
+
+    const isFDOPlayer = (): boolean => {
+        return ['555-LSPD', '555-BCSO', '555-SASP', '555-FBI', '555-LSCS'].some(
+            (allowedNumber) => allowedNumber === societyNumber,
+        );
+    };
 
     const startCall = (number: string) => {
         LogDebugEvent({
@@ -44,7 +56,7 @@ const MessagesList = (): any => {
         navigate(`/messages/new/${phoneNumber}`);
     };
 
-    const setWaypoint = pos => {
+    const setWaypoint = (pos) => {
         const position = JSON.parse(pos);
 
         fetchNui<ServerPromiseResp<void>>(MessageEvents.SET_WAYPOINT, {
@@ -65,51 +77,101 @@ const MessagesList = (): any => {
         removeNotification();
     }, []);
 
-    const sortedMessages = Array.from(societyMessages).sort((a, b) => b.createdAt - a.createdAt);
+    useEffect(() => {
+        // scroll to top when changing tab
+        document.getElementById('messages-list').scrollTop = 0;
+    }, [selected]);
+
+    let messagesToRender = societyMessages;
+    if (isFDOPlayer()) {
+        switch (selected) {
+            case 1:
+                messagesToRender = societyMessages.filter((message) => alerts.includes(message.info?.type));
+                break;
+            case 2:
+                messagesToRender = societyMessages.filter((message) => !alerts.includes(message.info?.type));
+                break;
+        }
+    }
+
+    messagesToRender.sort((a, b) => {
+        return b.createdAt - a.createdAt;
+    });
+
     const cache = new CellMeasurerCache({
         defaultHeight: 200,
         fixedWidth: true,
     });
 
     return (
-        <ul className={`mt-5 relative divide-y space-y-1 h-full w-full`}>
-            <AutoSizer>
-                {({ width, height }) => (
-                    <List
-                        rowCount={sortedMessages.length}
-                        rowRenderer={({ index, parent, style }) => {
-                            const message = sortedMessages[index];
-
-                            if (!message) {
-                                return null;
-                            }
-
-                            return (
-                                <MessageItem
-                                    key={message.id}
-                                    message={message}
-                                    config={config}
-                                    startCall={startCall}
-                                    startMessage={startMessage}
-                                    setWaypoint={setWaypoint}
-                                    setMessageState={setMessageState}
-                                    cache={cache}
-                                    parent={parent}
-                                    index={index}
-                                    style={style}
-                                />
-                            );
+        <>
+            {isFDOPlayer() && (
+                <div className="flex justify-around rounded-md mt-2">
+                    <button
+                        className={cn(
+                            { 'border-white': selected === 1, 'border-ios-700': selected != 1 },
+                            'text-white w-1/2 border-b-2 p-2',
+                        )}
+                        onClick={() => {
+                            setSelected(1);
                         }}
-                        ref={ref}
-                        width={width}
-                        height={height}
-                        deferredMeasurementCache={cache}
-                        rowHeight={cache.rowHeight}
-                        containerStyle={{ overflow: 'initial' }}
-                    />
-                )}
-            </AutoSizer>
-        </ul>
+                    >
+                        Alertes
+                    </button>
+                    <button
+                        className={cn(
+                            { 'border-white ': selected === 2, 'border-ios-700': selected != 2 },
+                            'w-1/2 border-b-2 p-2 text-white',
+                        )}
+                        onClick={() => {
+                            setSelected(2);
+                        }}
+                    >
+                        Public
+                    </button>
+                </div>
+            )}
+            <ul className={`mt-5 relative divide-y space-y-1 h-full w-full`}>
+                <AutoSizer>
+                    {({ width, height }) => (
+                        <List
+                            id="messages-list"
+                            rowCount={messagesToRender.length}
+                            rowRenderer={({ index, parent, style }) => {
+                                const message = messagesToRender[index];
+
+                                if (!message) {
+                                    return null;
+                                }
+
+                                return (
+                                    <MessageItem
+                                        key={message.id}
+                                        message={message}
+                                        config={config}
+                                        startCall={startCall}
+                                        startMessage={startMessage}
+                                        setWaypoint={setWaypoint}
+                                        setMessageState={setMessageState}
+                                        cache={cache}
+                                        parent={parent}
+                                        index={index}
+                                        style={style}
+                                        isFDOPlayer={isFDOPlayer()}
+                                    />
+                                );
+                            }}
+                            ref={ref}
+                            width={width}
+                            height={height}
+                            deferredMeasurementCache={cache}
+                            rowHeight={cache.rowHeight}
+                            containerStyle={{ overflow: 'initial' }}
+                        />
+                    )}
+                </AutoSizer>
+            </ul>
+        </>
     );
 };
 
@@ -124,6 +186,7 @@ type MessageItemProps = {
     parent: MeasuredCellParent;
     index: number;
     style: CSSProperties;
+    isFDOPlayer?: boolean;
 };
 
 export const MessageItem: FunctionComponent<MessageItemProps> = ({
@@ -137,77 +200,75 @@ export const MessageItem: FunctionComponent<MessageItemProps> = ({
     parent,
     index,
     style,
+    isFDOPlayer,
 }) => {
+    const alertFDOBorder = `border-l-8 rounded-l-none ${borderColor(message.info?.type)}`;
     return (
         <CellMeasurer key={message.id} cache={cache} parent={parent} columnCount={1} columnIndex={0} rowIndex={index}>
-            <Menu
-                as="li"
-                className={cn('w-full rounded-md shadow border-none', {
-                    'bg-ios-700': config.theme.value === 'dark',
-                    'bg-white': config.theme.value === 'light',
-                })}
-                style={style}
-            >
+            <Menu as="li" style={style}>
                 <Menu.Button className="w-full">
-                    <div
-                        className={cn('relative px-6 py-2 flex items-center space-x-3 rounded-md', {
-                            'hover:bg-ios-600': config.theme.value === 'dark',
-                            'hover:bg-gray-300': config.theme.value === 'light',
-                        })}
-                    >
-                        <div className="flex-1 min-w-0 cursor-pointer">
-                            <span className="absolute inset-0" aria-hidden="true" />
-                            <p
-                                className={cn('text-left text-xs font-bold', {
-                                    'text-white': config.theme.value === 'dark',
-                                    'text-gray-500': config.theme.value === 'light',
-                                })}
-                            >
-                                {!message.source_phone ? (
-                                    <span
-                                        className={cn('rounded-full px-3 py-0', {
-                                            'bg-gray-200': config.theme.value === 'light',
-                                            'bg-gray-600': config.theme.value === 'dark',
-                                        })}
-                                    >
-                                        Anonyme
+                    <div className={cn('w-full p-1')}>
+                        <div
+                            className={cn('relative px-6 py-2 flex items-center space-x-3 rounded-md', {
+                                'hover:bg-ios-600 bg-ios-700': config.theme.value === 'dark',
+                                'hover:bg-gray-300 bg-white': config.theme.value === 'light',
+                                [alertFDOBorder]: isFDOPlayer,
+                            })}
+                        >
+                            <div className="flex-1 min-w-0 cursor-pointer">
+                                <span className="absolute inset-0" aria-hidden="true" />
+                                <p
+                                    className={cn('text-left text-xs font-bold', {
+                                        'text-white': config.theme.value === 'dark',
+                                        'text-gray-500': config.theme.value === 'light',
+                                    })}
+                                >
+                                    {!message.source_phone ? (
+                                        <span
+                                            className={cn('rounded-full px-3 py-0', {
+                                                'bg-gray-200': config.theme.value === 'light',
+                                                'bg-gray-600': config.theme.value === 'dark',
+                                            })}
+                                        >
+                                            Anonyme
+                                        </span>
+                                    ) : (
+                                        <span></span>
+                                    )}
+                                    {message?.info?.notificationId ? (
+                                        <span
+                                            className={cn('rounded-full px-3 py-0', {
+                                                'bg-gray-200': config.theme.value === 'light',
+                                                'bg-gray-600': config.theme.value === 'dark',
+                                            })}
+                                        >
+                                            #{message.info.notificationId}
+                                        </span>
+                                    ) : (
+                                        <span></span>
+                                    )}
+                                </p>
+                                <p
+                                    className={cn('text-left text-sm font-medium break-words whitespace-pre-wrap', {
+                                        'text-gray-100': config.theme.value === 'dark',
+                                        'text-gray-700': config.theme.value === 'light',
+                                    })}
+                                >
+                                    {message.message}
+                                </p>
+                                <p className="flex justify-between text-left text-xs text-gray-400">
+                                    {message.isDone ? (
+                                        <span>L'appel est fini !</span>
+                                    ) : message.isTaken ? (
+                                        <span>L'appel est pris par {message.takenByUsername} !</span>
+                                    ) : (
+                                        <span></span>
+                                    )}
+                                    <span>
+                                        <DayAgo timestamp={message.createdAt} />
                                     </span>
-                                ) : (
-                                    <span></span>
-                                )}
-                                {message?.info?.notificationId ? (
-                                    <span
-                                        className={cn('rounded-full px-3 py-0', {
-                                            'bg-gray-200': config.theme.value === 'light',
-                                            'bg-gray-600': config.theme.value === 'dark',
-                                        })}
-                                    >
-                                        #{message.info.notificationId}
-                                    </span>
-                                ) : (
-                                    <span></span>
-                                )}
-                            </p>
-                            <p
-                                className={cn('text-left text-sm font-medium break-words whitespace-pre-wrap', {
-                                    'text-gray-100': config.theme.value === 'dark',
-                                    'text-gray-700': config.theme.value === 'light',
-                                })}
-                            >
-                                {message.message}
-                            </p>
-                            <p className="flex justify-between text-left text-xs text-gray-400">
-                                {message.isDone ? (
-                                    <span>L'appel est fini !</span>
-                                ) : message.isTaken ? (
-                                    <span>L'appel est pris par {message.takenByUsername} !</span>
-                                ) : (
-                                    <span></span>
-                                )}
-                                <span>
-                                    <DayAgo timestamp={message.createdAt} />
-                                </span>
-                            </p>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </Menu.Button>

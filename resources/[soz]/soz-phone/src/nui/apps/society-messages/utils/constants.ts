@@ -1,5 +1,10 @@
 import { SocietyMessage } from '@typings/society';
 
+const randomType = () => {
+    const types = ['red-alert', 'robbery', 'vandalism', 'racket', 'shooting', 'auto-theft', 'drug', 'explosion'];
+    return types[Math.floor(Math.random() * types.length)];
+};
+
 export const MockSocietyMessages: SocietyMessage[] = [
     {
         id: 1,
@@ -52,10 +57,31 @@ export const MockSocietyMessages: SocietyMessage[] = [
         isDone: true,
         createdAt: 1659788408000,
         updatedAt: 1659788608000,
+        info: {
+            duration: 10000,
+            type: 'shooting',
+        },
     },
 ];
 
-for (let i = 5; i < 20; i++) {
+for (let i = 5; i < 400; i++) {
+    MockSocietyMessages.push({
+        id: i,
+        conversation_id: '555-LSPD',
+        source_phone: '',
+        message: 'Lorem ipsum dolor sit amet, cons ctetur adipi scing elit.',
+        position: '{"x":205.12088012695312,"y":1160.4395751953125,"z":226.99560546875}',
+        isTaken: true,
+        takenBy: 'XXX',
+        takenByUsername: 'John Doe',
+        isDone: true,
+        createdAt: 1659759408000,
+        updatedAt: 1659759608000,
+        info: {
+            duration: 10000,
+            type: randomType(),
+        },
+    });
     MockSocietyMessages.push({
         id: i,
         conversation_id: '555-LSPD',
@@ -70,3 +96,5 @@ for (let i = 5; i < 20; i++) {
         updatedAt: 1659759608000,
     });
 }
+
+export const alerts = ['red-alert', 'robbery', 'vandalism', 'racket', 'shooting', 'auto-theft', 'drug', 'explosion'];
