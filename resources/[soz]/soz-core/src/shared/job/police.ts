@@ -1241,12 +1241,12 @@ export const Armors = {
         ['news']: { Drawable: 31, Texture: 2, Palette: 0 }, // is unmarked, need reskin
         ['you-news']: { Drawable: 31, Texture: 4, Palette: 0 }, // is unmarked, need reskin
         ['sasp1']: {
-            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.BodyArmor] + 9,
+            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.BodyArmor] + 9,
             Texture: 0,
             Palette: 0,
         },
         ['sasp2']: {
-            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.BodyArmor] + 8,
+            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.BodyArmor] + 11,
             Texture: 0,
             Palette: 0,
         },
