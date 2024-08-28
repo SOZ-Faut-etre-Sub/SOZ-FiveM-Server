@@ -11,6 +11,10 @@ local playerHaveJobAndDuty = function(player, owner)
     return player.PlayerData.job.id == owner and player.PlayerData.job.onduty
 end
 
+local playerHaveStorageAccessAndDuty = function(player, owner)
+    return player.PlayerData.job.id == owner and player.PlayerData.job.onduty -- and exports["soz-core"]:HasJobPermission(owner, player.PlayerData.job.id, player.PlayerData.job.grade, "society-general-storage")
+end
+
 --- Setup all containers
 Container["player"] = InventoryContainer:new({
     type = "player",
@@ -29,13 +33,13 @@ Container["player"] = InventoryContainer:new({
 Container["ammo"] = InventoryContainer:new({
     type = "ammo",
     allowedTypes = {"weapon_ammo"},
-    inventoryPermissionCallback = playerHaveJobAndDuty,
+    inventoryPermissionCallback = playerHaveStorageAccessAndDuty,
 })
 
 Container["armory"] = InventoryContainer:new({
     type = "armory",
     allowedTypes = {"weapon", "tool"},
-    inventoryPermissionCallback = playerHaveJobAndDuty,
+    inventoryPermissionCallback = playerHaveStorageAccessAndDuty,
 })
 
 Container["fridge"] = InventoryContainer:new({
@@ -142,14 +146,14 @@ Container["storage"] = InventoryContainer:new({
     type = "storage",
     allowedItems = {"weapon_uvflashlight"},
     allowedTypes = {"item", "oil_and_item", "outfit", "crate", "drug_pot", "evidence"},
-    inventoryPermissionCallback = playerHaveJobAndDuty,
+    inventoryPermissionCallback = playerHaveStorageAccessAndDuty,
 })
 
 Container["evidence_storage"] = InventoryContainer:new({
     type = "evidence_storage",
     allowedTypes = {"evidence"},
     allowedItems = {"detective_board"},
-    inventoryPermissionCallback = playerHaveJobAndDuty,
+    inventoryPermissionCallback = playerHaveStorageAccessAndDuty,
 })
 
 --- Todo: convert to storage type : storage
@@ -172,7 +176,7 @@ Container["seizure"] = InventoryContainer:new({
         "tool",
         "evidence",
     },
-    inventoryPermissionCallback = playerHaveJobAndDuty,
+    inventoryPermissionCallback = playerHaveStorageAccessAndDuty,
 })
 --- Todo: convert to storage type : storage
 Container["boss_storage"] = InventoryContainer:new({
