@@ -520,6 +520,10 @@ export enum NuiEvent {
     BusinessSmugglingConvoyInit = 'soz-core:client:business:smuggling:convoy-init',
     BusinessSmugglingElectronicResalerPosition = 'soz-core:client:business:smuggling-electronic-resaler-position',
     BusinessSmugglingGoldResalerPosition = 'soz-core:client:business:smuggling-mine-resaler-position',
+    BusinessSmugglingPrintStop = 'soz-core:client:business:smuggling-print-stop',
+    BusinessSmugglingPrintCancel = 'soz-core:client:business:smuggling-print-cancel',
+    BusinessSmugglingPrintStart = 'soz-core:client:business:smuggling-print-start',
+    BusinessSmugglingPrintRetrieve = 'soz-core:client:business:smuggling-print-retrieve',
 
     BusinessCyberCryptoDeposit = 'soz-core:client:business:cyber:crypto-deposit',
     BusinessCyberCryptoWithDraw = 'soz-core:client:business:cyber:crypto-withdraw',

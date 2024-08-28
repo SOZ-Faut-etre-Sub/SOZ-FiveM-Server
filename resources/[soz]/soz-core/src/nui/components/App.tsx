@@ -7,6 +7,7 @@ import { DrugTransformApp } from '@private/nui/drug/DrugTransformApp';
 import { FishingApp } from '@private/nui/fishing/FishingApp';
 import { BusinessCyberApp } from '@private/nui/gang/BusinessCyber/BusinessCyberApp';
 import { CyberReportApp } from '@private/nui/gang/BusinessCyber/ReportApp';
+import { BusinessSmugglingPrintApp } from '@private/nui/gang/BusinessSmuggling/BusinessSmugglingPrintApp/BusinessSmugglingPrintApp';
 import { BusinessVehicleMappingApp } from '@private/nui/gang/BusinessVehicle/BusinessVehicleMapping';
 import { BusinessVehicleOrderApp } from '@private/nui/gang/BusinessVehicle/BusinessVehicleOrderApp';
 import { BusinessManagementApp } from '@private/nui/group/BusinessManagementApp';
@@ -130,6 +131,7 @@ export const App: FunctionComponent = () => {
                 <BusinessManagementApp />
                 <BusinessVehicleOrderApp />
                 <BusinessCyberApp />
+                <BusinessSmugglingPrintApp />
                 <HackingDeviceApp />
                 <ArrowsMinigameApp />
                 <GridMinigameApp />
