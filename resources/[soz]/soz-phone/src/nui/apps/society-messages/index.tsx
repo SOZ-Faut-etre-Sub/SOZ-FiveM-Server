@@ -56,17 +56,19 @@ export const SocietyMessagesApp = () => {
                         <button onClick={() => deleteWaypoint()}>
                             <MapIcon
                                 className={cn('h-5 w-5 mx-2', {
-                                    'text-white': config.theme.value === 'dark',
-                                    'text-black': config.theme.value === 'light',
+                                    'text-white hover:text-blue-500': config.theme.value === 'dark',
+                                    'text-black hover:text-blue-500': config.theme.value === 'light',
                                 })}
+                                style={{ transition: 'all 0.15s' }}
                             />
                         </button>
                         <button onClick={() => openContactInfo(societyId)}>
                             <ChatIcon
                                 className={cn('h-5 w-5 mx-2', {
-                                    'text-white': config.theme.value === 'dark',
-                                    'text-black': config.theme.value === 'light',
+                                    'text-white hover:text-blue-500': config.theme.value === 'dark',
+                                    'text-black hover:text-blue-500': config.theme.value === 'light',
                                 })}
+                                style={{ transition: 'all 0.15s' }}
                             />
                         </button>
                     </div>
