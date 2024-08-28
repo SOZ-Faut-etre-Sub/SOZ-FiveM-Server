@@ -13,7 +13,7 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
     disableBorder,
     children,
 }) => {
-    const { theme } = useHud();
+    const { settings } = useHud();
     const { isDay, isNight } = useDateTime();
 
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -73,8 +73,10 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
 
             <div
                 className={cn('absolute inset-0 transition-colors duration-1000', {
-                    'bg-[#F3FBFA] opacity-20': theme === HudTheme.Light || (theme === HudTheme.Auto && isDay),
-                    'bg-[#22232A] opacity-45': theme === HudTheme.Dark || (theme === HudTheme.Auto && isNight),
+                    'bg-[#F3FBFA] opacity-20':
+                        settings.theme === HudTheme.Light || (settings.theme === HudTheme.Auto && isDay),
+                    'bg-[#22232A] opacity-45':
+                        settings.theme === HudTheme.Dark || (settings.theme === HudTheme.Auto && isNight),
                 })}
             />
 

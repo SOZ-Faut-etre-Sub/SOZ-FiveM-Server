@@ -4,8 +4,6 @@ import { FunctionComponent, useEffect, useState } from 'react';
 import { VoiceMode } from '../../../shared/hud';
 import { useHud } from '../../hook/data';
 import { useNuiEvent } from '../../hook/nui';
-import MegaphoneIcon from '../../icons/hud/voice/megaphone.svg';
-import MicrophoneIcon from '../../icons/hud/voice/microphone.svg';
 import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
 
 export const VoiceIndicator: FunctionComponent = () => {
@@ -27,15 +25,6 @@ export const VoiceIndicator: FunctionComponent = () => {
     useNuiEvent('hud', 'UpdateVoiceMode', setVoiceMode);
     useNuiEvent('hud', 'UpdateVoiceActive', setVoiceActive);
 
-    const aspectRatio = window.innerWidth / window.innerHeight;
-    let iconSize = 'w-[4vh] h-[4vh]';
-    if (aspectRatio > 3.5 && window.innerWidth > 5000) {
-        iconSize = 'w-[3vh] h-[3vh]';
-    } else if (aspectRatio < 2 && window.innerHeight > 1080) {
-        iconSize = 'w-[3vh] h-[3vh]';
-    }
-    const dropShadow = 'drop-shadow-[2px_2px_2px_rgba(0,0,7,0.7)]';
-
     if (!voiceActive) {
         return (
             <animated.div className="absolute h-11 w-11" style={styles}>
@@ -50,12 +39,8 @@ export const VoiceIndicator: FunctionComponent = () => {
             {voiceMode === VoiceMode.Whisper && <VoiceIcon icon="whisper" />}
             {voiceMode === VoiceMode.Normal && <VoiceIcon icon="normal" />}
             {voiceMode === VoiceMode.Shouting && <VoiceIcon icon="shouting" />}
-            {voiceMode === VoiceMode.Megaphone && (
-                <MegaphoneIcon className={`${iconSize} animate-display-in opacity-0 ${dropShadow}`} />
-            )}
-            {voiceMode === VoiceMode.Microphone && (
-                <MicrophoneIcon className={`${iconSize} animate-display-in opacity-0 ${dropShadow}`} />
-            )}
+            {voiceMode === VoiceMode.Microphone && <VoiceIcon icon="microphone" />}
+            {voiceMode === VoiceMode.Megaphone && <VoiceIcon icon="megaphone" />}
         </animated.div>
     );
 };

@@ -25,6 +25,8 @@ export class HudWeaponProvider {
         if (!weapon) {
             this.nuiDispatch.dispatch('hud', 'UpdateWeaponAmmo', {
                 hasWeapon: false,
+                ammo: 0,
+                maxAmmo: 0,
             });
             return;
         }
