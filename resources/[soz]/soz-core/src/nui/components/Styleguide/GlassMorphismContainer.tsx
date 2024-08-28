@@ -1,7 +1,8 @@
 import cn from 'classnames';
 import { FunctionComponent, HTMLAttributes, PropsWithChildren, useEffect, useRef } from 'react';
 
-import { useDateTime } from '../../hook/data';
+import { HudTheme } from '../../../shared/hud';
+import { useDateTime, useHud } from '../../hook/data';
 
 interface GlassMorphismContainerProps extends HTMLAttributes<any>, PropsWithChildren {
     disableBorder?: boolean;
@@ -12,6 +13,7 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
     disableBorder,
     children,
 }) => {
+    const { theme } = useHud();
     const { isDay, isNight } = useDateTime();
 
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -71,8 +73,8 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
 
             <div
                 className={cn('absolute inset-0 transition-colors duration-1000', {
-                    'bg-[#F3FBFA] opacity-20': isDay,
-                    'bg-[#22232A] opacity-45': isNight,
+                    'bg-[#F3FBFA] opacity-20': theme === HudTheme.Light || (theme === HudTheme.Auto && isDay),
+                    'bg-[#22232A] opacity-45': theme === HudTheme.Dark || (theme === HudTheme.Auto && isNight),
                 })}
             />
 

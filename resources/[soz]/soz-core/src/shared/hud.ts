@@ -74,7 +74,14 @@ export enum VoiceMode {
     Megaphone,
 }
 
+export enum HudTheme {
+    Auto = 'auto',
+    Light = 'light',
+    Dark = 'dark',
+}
+
 export type HudState = {
+    theme: HudTheme;
     hasWatch: boolean;
     hasCompass: boolean;
 

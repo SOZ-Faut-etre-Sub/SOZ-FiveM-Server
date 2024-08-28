@@ -29,6 +29,10 @@ export const StateApp: FunctionComponent = () => {
         dispatch.taxi.update(status);
     });
 
+    useNuiEvent('hud', 'SetTheme', theme => {
+        dispatch.hud.update({ theme });
+    });
+
     useNuiEvent('hud', 'UpdateHasWatch', hasWatch => {
         dispatch.hud.update({ hasWatch });
     });

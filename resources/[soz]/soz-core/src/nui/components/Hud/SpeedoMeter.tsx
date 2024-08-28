@@ -31,10 +31,8 @@ const LightIndicator: FunctionComponent<{ state: VehicleLightState }> = ({ state
     }
 
     return (
-        <div className="size-11">
-            <GlassMorphismContainer className="flex justify-center items-center size-11">
-                <img className="size-6" src={`/public/images/hud/vehicle/light-${icon}.webp`} alt="light" />
-            </GlassMorphismContainer>
+        <div className="flex justify-center items-center size-8">
+            <img className="size-6" src={`/public/images/hud/vehicle/light-${icon}.webp`} alt="light" />
         </div>
     );
 };

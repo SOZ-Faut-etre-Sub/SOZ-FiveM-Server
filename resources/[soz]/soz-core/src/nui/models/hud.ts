@@ -5,6 +5,7 @@ import type { RootModel } from './';
 
 export const hud = createModel<RootModel>()({
     state: {
+        theme: 'auto',
         hasWatch: false,
         hasCompass: false,
 

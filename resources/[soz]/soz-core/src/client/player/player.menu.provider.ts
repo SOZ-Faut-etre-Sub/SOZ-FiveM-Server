@@ -9,6 +9,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClothConfig } from '../../shared/cloth';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
+import { HudTheme } from '../../shared/hud';
 import { MenuType } from '../../shared/nui/menu';
 import { AnimationService } from '../animation/animation.service';
 import { HudMinimapProvider } from '../hud/hud.minimap.provider';
@@ -95,6 +96,7 @@ export class PlayerMenuProvider {
             naked: this.playerService.getPlayer().cloth_config.Config.Naked,
             halloween: isFeatureEnabled(Feature.Halloween),
             arachnophobe: this.halloweenSpiderService.isArachnophobeMode(),
+            theme: this.hudStateProvider.theme,
         });
     }
 
@@ -241,5 +243,10 @@ export class PlayerMenuProvider {
         }
 
         TriggerServerEvent('soz-character:server:UpdateClothConfig', 'Naked', false);
+    }
+
+    @OnNuiEvent(NuiEvent.PlayerMenuHudSetTheme)
+    public async setTheme(value: HudTheme) {
+        this.hudStateProvider.theme = value;
     }
 }

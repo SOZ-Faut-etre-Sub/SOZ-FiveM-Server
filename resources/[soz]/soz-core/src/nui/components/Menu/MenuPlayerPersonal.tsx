@@ -107,6 +107,18 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                     >
                         Scaling NUI
                     </MenuItemCheckbox>
+                    <MenuTitle>Montre connectée</MenuTitle>
+                    <MenuItemSelect
+                        title="Thème"
+                        value={data.theme}
+                        onConfirm={async (_, value) => {
+                            await fetchNui(NuiEvent.PlayerMenuHudSetTheme, value);
+                        }}
+                    >
+                        <MenuItemSelectOption value="dark">Dark Mode</MenuItemSelectOption>
+                        <MenuItemSelectOption value="auto">Auto</MenuItemSelectOption>
+                        <MenuItemSelectOption value="light">Light Mode</MenuItemSelectOption>
+                    </MenuItemSelect>
                 </MenuContent>
             </SubMenu>
             <MenuJob data={data.job} />

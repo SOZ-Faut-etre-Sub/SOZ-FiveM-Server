@@ -34,4 +34,5 @@ export type PlayerPersonalMenuData = {
     naked: boolean;
     halloween: boolean;
     arachnophobe: boolean;
+    theme: string;
 };

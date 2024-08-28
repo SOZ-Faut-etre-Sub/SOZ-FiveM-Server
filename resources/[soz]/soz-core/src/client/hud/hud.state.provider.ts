@@ -3,7 +3,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
 import { ClientEvent } from '../../shared/event';
-import { HudComponent } from '../../shared/hud';
+import { HudComponent, HudTheme } from '../../shared/hud';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { HudMinimapProvider } from './hud.minimap.provider';
 
@@ -38,6 +38,8 @@ export class HudStateProvider {
 
     private _isComputedHudVisible = true;
 
+    private _theme = (GetResourceKvpString('soz_hud_theme') as HudTheme) ?? HudTheme.Auto;
+
     public get isComputedHudVisible(): boolean {
         return this._isComputedHudVisible;
     }
@@ -66,6 +68,16 @@ export class HudStateProvider {
     public setCinematicCameraActive(enabled: boolean): void {
         DisableVehiclePassengerIdleCamera(!enabled);
         this.isCinematicCameraActive = enabled;
+    }
+
+    public get theme(): HudTheme {
+        return this._theme;
+    }
+
+    public set theme(value: HudTheme) {
+        this._theme = value;
+        SetResourceKvp('soz_hud_theme', value);
+        this.nuiDispatch.dispatch('hud', 'SetTheme', this._theme);
     }
 
     @OnEvent(ClientEvent.PLAYER_UPDATE_CROSSHAIR)
