@@ -79,6 +79,7 @@ Container["trunk"] = InventoryContainer:new({
         "veh_biz_piece",
         "smuggling_export",
         "smuggling_convoy_export",
+        "smuggling_ore",
     },
 })
 
@@ -112,6 +113,7 @@ Container["temporary_trunk"] = InventoryDatastore:new({
         "veh_biz_piece",
         "smuggling_export",
         "smuggling_convoy_export",
+        "smuggling_ore",
     },
 })
 
@@ -149,6 +151,7 @@ Container["trash"] = InventoryContainer:new({
         "veh_biz_piece",
         "smuggling_export",
         "smuggling_convoy_export",
+        "smuggling_ore",
     },
 })
 
@@ -188,6 +191,7 @@ Container["seizure"] = InventoryContainer:new({
         "veh_biz_piece",
         "smuggling_export",
         "smuggling_convoy_export",
+        "smuggling_ore",
     },
     inventoryPermissionCallback = playerHaveStorageAccessAndDuty,
 })
@@ -250,6 +254,7 @@ Container["bin"] = InventoryDatastore:new({
         "veh_biz_piece",
         "smuggling_export",
         "smuggling_convoy_export",
+        "smuggling_ore",
     },
     populateDatastoreCallback = function()
         local inventory = {}
@@ -306,6 +311,7 @@ Container["house_stash"] = InventoryContainer:new({
         "veh_biz_piece",
         "smuggling_export",
         "smuggling_convoy_export",
+        "smuggling_ore",
     },
 })
 Container["house_fridge"] = InventoryContainer:new({
@@ -410,6 +416,7 @@ Container["smuggling_box"] = InventoryDatastore:new({
         "veh_biz_piece",
         "smuggling_export",
         "smuggling_convoy_export",
+        "smuggling_ore",
     },
 })
 
@@ -447,6 +454,7 @@ Container["smuggling_blackmarket"] = InventoryContainer:new({
         "veh_biz_piece",
         "smuggling_export",
         "smuggling_convoy_export",
+        "smuggling_ore",
     },
 })
 
@@ -484,6 +492,7 @@ Container["smuggling_connected"] = InventoryContainer:new({
         "veh_biz_piece",
         "smuggling_export",
         "smuggling_convoy_export",
+        "smuggling_ore",
     },
 })
 
@@ -599,6 +608,7 @@ Container["object_storage"] = InventoryContainer:new({
         "veh_biz_piece",
         "smuggling_export",
         "smuggling_convoy_export",
+        "smuggling_ore",
     },
 })
 
