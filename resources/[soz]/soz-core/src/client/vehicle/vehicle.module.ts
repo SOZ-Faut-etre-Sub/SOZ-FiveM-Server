@@ -15,6 +15,7 @@ import { VehicleOffroadProvider } from './vehicle.offroad.provider';
 import { VehicleOrderProvider } from './vehicle.order.provider';
 import { VehiclePitStopProvider } from './vehicle.pitstop.provider';
 import { VehiclePoliceLocator } from './vehicle.police.locator.provider';
+import { VehiclePushProvider } from './vehicle.push.provider';
 import { VehicleRadarProvider } from './vehicle.radar.provider';
 import { VehicleSeatbeltProvider } from './vehicle.seatbelt.provider';
 import { VehicleSpawnProvider } from './vehicle.spawn.provider';
@@ -46,6 +47,7 @@ import { VehicleTowProvider } from './vehicle.tow.provider';
         VehicleOffroadProvider,
         VehicleTopSpeedProvider,
         VehicleOrderProvider,
+        VehiclePushProvider,
     ],
 })
 export class VehicleModule {}

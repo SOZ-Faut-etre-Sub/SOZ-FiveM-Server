@@ -107,6 +107,9 @@ export enum RpcServerEvent {
     VEHICLE_ORDER_CANCEL = 'soz-core:server:vehicle:cancel-order',
     VEHICLE_ORDER_DO = 'soz-core:server:vehicle:order-do',
 
+    VEHICLE_GRAB_CAR = 'soz-core:server:vehicle:grab-car',
+    VEHICLE_GRAB_STEERING_WHEEL = 'soz-core:server:vehicle:grab-steering-wheel',
+
     VOIP_SET_MUTE = 'soz-core:voip:set-mute',
     VOIP_IS_MUTED = 'soz-core:voip:is-muted',
     VOIP_GET_MEGAPHONE_PLAYERS = 'soz-core:voip:get-megaphone-players',
