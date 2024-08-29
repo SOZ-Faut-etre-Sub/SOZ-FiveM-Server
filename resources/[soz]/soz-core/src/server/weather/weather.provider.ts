@@ -1,6 +1,8 @@
 import { On, Once } from '@public/core/decorators/event';
+import { Rpc } from '@public/core/decorators/rpc';
 import { PollutionLevel } from '@public/shared/pollution';
 import { getRandomInt, getRandomKeyWeighted } from '@public/shared/random';
+import { RpcServerEvent } from '@public/shared/rpc';
 import axios from 'axios';
 import { addMinutes, addSeconds, differenceInSeconds, format } from 'date-fns';
 
@@ -282,6 +284,11 @@ export class WeatherProvider {
 
     @Exportable('getWeatherForecasts')
     getWeatherForecasts(): ForecastWithTemperature[] {
+        return this.incomingForecasts;
+    }
+
+    @Rpc(RpcServerEvent.GET_FORECASTS)
+    public async getForecasts(): Promise<ForecastWithTemperature[]> {
         return this.incomingForecasts;
     }
 
