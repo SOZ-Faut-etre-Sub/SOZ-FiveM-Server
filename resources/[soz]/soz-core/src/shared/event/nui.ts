@@ -537,6 +537,8 @@ export enum NuiEvent {
     BusinessCyberDBRecordErase = 'soz-core:client:business:cyber:db-record-erase',
     BusinessCyberBlackOut = 'soz-core:client:business:cyber:blackout',
     BusinessCyberReportExit = 'soz-core:client:business:cyber:report-exit',
+    BusinessCyberServiceManagement = 'soz-core:client:business:cyber:activate-service',
+    BusinessCyberFarmRetrieve = 'soz-core:client:;business:cyber:retrieve-farm',
 
     AdminDoorSetState = 'soz-core:client:door:set-state',
     AdminDoorAddSub = 'soz-core:client:door:add-subdoor',

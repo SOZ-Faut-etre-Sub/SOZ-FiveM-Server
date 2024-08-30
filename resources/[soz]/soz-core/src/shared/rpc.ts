@@ -265,6 +265,8 @@ export enum RpcServerEvent {
     GANG_CYBER_DB_SEARCH_PRINT = 'soz-core:server:gang:cyber:db-search-print',
     GANG_CYBER_DB_ERASE = 'soz-core:server:gang:cyber:db-erase',
     GANG_CYBER_CRYPTO_MARKET_BUY = 'soz-core:server:gang:cyber:market-buy',
+    GANG_CYBER_CRYPTO_ACTIVATE = 'soz-core:server:gang:cyber:activate',
+    GANG_CYBER_CRYPTO_HARVEST = 'soz-core:server:gang:cyber:harvest',
 
     WORLD_EVENT_GET_INFO = 'soz-core:server:world-event:get-info',
     WORLD_EVENT_START = 'soz-core:server:world-event:start',
