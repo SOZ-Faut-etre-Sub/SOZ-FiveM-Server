@@ -13,6 +13,7 @@ export class UtilsProvider {
         SetFlashLightKeepOnWhileMoving(true);
         StartAudioScene('CHARACTER_CHANGE_IN_SKY_SCENE');
         SetAudioFlag('PoliceScannerDisabled', true);
+        SetAudioFlag('DisableFlightMusic', true);
         SetMaxWantedLevel(0);
     }
 
