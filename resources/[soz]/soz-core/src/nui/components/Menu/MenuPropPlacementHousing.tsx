@@ -252,6 +252,31 @@ export const MenuPropPlacementHousing: FunctionComponent<MenuPropPlacementProps>
                     >
                         <span style={{ color: 'red' }}>Désactiver le highlight (QuantV)</span>
                     </MenuItemCheckbox>
+                    {data.isPlayerStaff && (
+                        <>
+                            <MenuItemButton
+                                onConfirm={() => {
+                                    fetchNui(NuiEvent.AdminOpenHousingStorage, { type: 'storage' });
+                                }}
+                            >
+                                Accès Stockage
+                            </MenuItemButton>
+                            <MenuItemButton
+                                onConfirm={() => {
+                                    fetchNui(NuiEvent.AdminOpenHousingStorage, { type: 'safe' });
+                                }}
+                            >
+                                Accès Coffre fort
+                            </MenuItemButton>
+                            <MenuItemButton
+                                onConfirm={() => {
+                                    fetchNui(NuiEvent.AdminOpenHousingStorage, { type: 'fridge' });
+                                }}
+                            >
+                                Accès Frigo
+                            </MenuItemButton>
+                        </>
+                    )}
                 </MenuContent>
             </MainMenu>
 
