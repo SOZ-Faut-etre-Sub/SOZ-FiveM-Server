@@ -11,6 +11,8 @@ interface HistoryRowProps {
     statement: BankStatementItem;
 }
 
+export const PlayerAccountRegExp = /^[0-9]{3}Z[0-9]{4}T[0-9]{3}$/;
+
 export const HistoryRow: FunctionComponent<HistoryRowProps> = ({ statement }) => {
     const config = useConfig();
 
@@ -27,6 +29,10 @@ export const HistoryRow: FunctionComponent<HistoryRowProps> = ({ statement }) =>
         const contact = contacts?.find(c => c.accountid === accountId);
         if (contact) {
             return `${contact.label} (${contact.accountid})`;
+        }
+
+        if (accountId.match(PlayerAccountRegExp)) {
+            return accountId;
         }
 
         return isSource(statement) ? statement.target_label : statement.source_label;
