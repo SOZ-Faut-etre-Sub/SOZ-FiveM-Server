@@ -12,7 +12,8 @@ local playerHaveJobAndDuty = function(player, owner)
 end
 
 local playerHaveStorageAccessAndDuty = function(player, owner)
-    return player.PlayerData.job.id == owner and player.PlayerData.job.onduty -- and exports["soz-core"]:HasJobPermission(owner, player.PlayerData.job.id, player.PlayerData.job.grade, "society-general-storage")
+    return player.PlayerData.job.id == owner and player.PlayerData.job.onduty and
+               exports["soz-core"]:HasJobPermission(owner, player.PlayerData.job.id, player.PlayerData.job.grade, "society-general-storage")
 end
 
 --- Setup all containers
