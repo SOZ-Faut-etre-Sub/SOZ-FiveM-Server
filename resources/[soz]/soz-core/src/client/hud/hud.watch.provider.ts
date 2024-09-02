@@ -10,6 +10,7 @@ import { NuiEvent } from '../../shared/event/nui';
 import { HudSettings, HudTheme } from '../../shared/hud';
 import { MenuType } from '../../shared/nui/menu';
 import { InventoryManager } from '../inventory/inventory.manager';
+import { AudioService } from '../nui/audio.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { NuiMenu } from '../nui/nui.menu';
 
@@ -21,8 +22,11 @@ export class HudWatchProvider {
     @Inject(InventoryManager)
     private readonly inventoryManager: InventoryManager;
 
+    @Inject(AudioService)
+    private readonly audioService: AudioService;
+
     @Inject(NuiMenu)
-    private menu: NuiMenu;
+    private readonly menu: NuiMenu;
 
     private _haveWatch = false;
 
@@ -82,6 +86,7 @@ export class HudWatchProvider {
             showCompass: true,
             showStress: true,
         });
+        this.audioService.playAudio('audio/uwu.mp3', 0.1);
 
         await wait(5 * 1000);
 
@@ -151,6 +156,10 @@ export class HudWatchProvider {
         this._hideStreetName = !value;
         SetResourceKvpInt('soz_hud_street_name_hide', this._hideStreetName ? 1 : 0);
         this.nuiDispatch.dispatch('hud', 'SetShowStreetName', value);
+    }
+
+    public get showCompass() {
+        return !this._hideCompass;
     }
 
     public set compass(value: boolean) {

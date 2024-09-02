@@ -3,24 +3,28 @@ import { FunctionComponent, PropsWithChildren } from 'react';
 import { GlassMorphismContainer } from '../../Styleguide/GlassMorphismContainer';
 
 export type StatusBarProps = {
-    percent: number;
+    min?: number;
+    max?: number;
+    value: number;
     color: string;
     hideCondition?: (value: number) => boolean;
 };
 
 export const StatusGauge: FunctionComponent<PropsWithChildren<StatusBarProps>> = ({
-    percent,
+    min = 0,
+    max = 100,
+    value,
     color,
     children,
-    hideCondition = value => value < 0.01,
+    hideCondition = value => (value - min) / (max - min) < 1,
 }) => {
-    const hide = hideCondition(percent);
+    const hide = hideCondition(value);
     if (hide) {
         return null;
     }
 
     const circumference = 90 * 2 * Math.PI;
-    const offset = circumference - ((-percent * 100) / 100 / 100) * circumference;
+    const offset = circumference - ((value - min) / (max - min)) * circumference;
 
     return (
         <div className="relative size-12 rounded-full">
@@ -52,7 +56,7 @@ export const StatusGauge: FunctionComponent<PropsWithChildren<StatusBarProps>> =
                             strokeWidth="1.5rem"
                             strokeLinecap="round"
                             strokeDasharray={`${circumference} ${circumference}`}
-                            strokeDashoffset={String(-offset)}
+                            strokeDashoffset={String(offset)}
                             fill="transparent"
                         ></circle>
                     </svg>

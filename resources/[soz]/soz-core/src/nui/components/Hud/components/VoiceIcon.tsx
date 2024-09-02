@@ -1,32 +1,30 @@
 import { animated, useSpring } from '@react-spring/web';
-import { FunctionComponent, useEffect, useRef, useState } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 
 export const VoiceIcon: FunctionComponent<{ icon: string; disableAutoHide?: boolean }> = ({
     icon,
     disableAutoHide,
 }) => {
-    const show = useRef(true);
+    const [show, setShow] = useState(true);
     const [timeout, initTimeout] = useState<NodeJS.Timeout>(null);
 
     useEffect(() => {
         clearTimeout(timeout);
-        show.current = true;
-
-        if (disableAutoHide) return;
+        setShow(true);
 
         initTimeout(
             setTimeout(() => {
-                show.current = false;
+                setShow(disableAutoHide);
             }, 3000)
         );
     }, [icon, disableAutoHide]);
 
     const styles = useSpring({
         from: {
-            opacity: '0',
+            opacity: 0,
         },
         to: {
-            opacity: show.current ? '1' : '0',
+            opacity: show ? 1 : 0,
         },
     });
 

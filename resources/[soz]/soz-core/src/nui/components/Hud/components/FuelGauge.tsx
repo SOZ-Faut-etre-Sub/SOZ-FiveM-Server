@@ -23,7 +23,7 @@ export const FuelGauge: FunctionComponent<{ value: number; fuelType: string; veh
     }
 
     return (
-        <StatusGauge percent={Math.min(value, maxFuel)} color={gaugeColor}>
+        <StatusGauge value={Math.min(value, maxFuel)} color={gaugeColor}>
             <img
                 className="size-8"
                 src={`/public/images/hud/vehicle/${fuelType === 'electric' ? 'battery' : 'motor'}.webp`}

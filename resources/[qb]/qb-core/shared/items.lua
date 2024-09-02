@@ -3918,7 +3918,7 @@ QBShared.Items = {
     },
     ['watch'] = {
         ['name'] = 'watch',
-        ['label'] = 'Montre connectée',
+        ['label'] = 'Smartwatch UwUI',
         ['weight'] = 100,
         ['type'] = 'item',
         ['unique'] = true,

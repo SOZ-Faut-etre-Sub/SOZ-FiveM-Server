@@ -17,17 +17,22 @@ export class HudWeaponProvider {
     @Inject(InventoryManager)
     private readonly inventoryManager: InventoryManager;
 
+    private _haveWeapon = false;
+
     @Tick(500)
     async updateWeaponHud() {
         const player = PlayerPedId();
 
         const weapon = this.weapon.getCurrentWeapon();
         if (!weapon) {
-            this.nuiDispatch.dispatch('hud', 'UpdateWeaponAmmo', {
-                hasWeapon: false,
-                ammo: 0,
-                maxAmmo: 0,
-            });
+            if (this._haveWeapon) {
+                this._haveWeapon = false;
+                this.nuiDispatch.dispatch('hud', 'UpdateWeaponAmmo', {
+                    hasWeapon: false,
+                    ammo: 0,
+                    maxAmmo: 0,
+                });
+            }
             return;
         }
 
@@ -39,6 +44,8 @@ export class HudWeaponProvider {
 
         const ammo = GetAmmoInClip(player, weapon.name)[1] as number;
         const maxAmmo = item.metadata.ammo;
+
+        this._haveWeapon = true;
 
         this.nuiDispatch.dispatch('hud', 'UpdateWeaponAmmo', {
             hasWeapon: maxAmmo !== undefined,

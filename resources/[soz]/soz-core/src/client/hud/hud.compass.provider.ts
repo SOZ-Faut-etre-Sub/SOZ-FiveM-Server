@@ -34,6 +34,10 @@ export class HudCompassProvider {
             return;
         }
 
+        if (!this.hudWatchProvider.showCompass) {
+            return;
+        }
+
         const rotation = GetGameplayCamRot(0) as Vector3;
         const heading = 360 - ((Math.round(rotation[2]) + 360) % 360);
 

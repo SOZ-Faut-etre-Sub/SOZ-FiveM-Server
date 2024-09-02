@@ -66,20 +66,20 @@ export const PlayerStats: FunctionComponent = () => {
     return (
         <>
             <StatusGauge
-                percent={healthPercent}
+                value={healthPercent}
                 color={healthPercent > 20 ? '#329121' : '#92212B'}
                 hideCondition={value => value > 80}
             >
                 <img className="size-9" src="/public/images/hud/player/health.webp" alt="" />
             </StatusGauge>
 
-            <StatusGauge percent={armorPercent} color="#00A5E7" hideCondition={value => value < 1}>
+            <StatusGauge value={armorPercent} color="#00A5E7">
                 <img className="size-9" src="/public/images/hud/player/armor.webp" alt="armor" />
             </StatusGauge>
 
             {hasWatch && (
                 <StatusGauge
-                    percent={syringeDelay ? (syringeDelay.delay / syringeDelay.initialDelay) * 100 : 0}
+                    value={syringeDelay ? (syringeDelay.delay / syringeDelay.initialDelay) * 100 : 0}
                     color="#00A5E7"
                 >
                     <img className="size-9" src="/public/images/hud/player/syringe.webp" alt="syringe" />
@@ -87,28 +87,33 @@ export const PlayerStats: FunctionComponent = () => {
             )}
 
             {hasWatch && (
-                <StatusGauge percent={player.metadata.drug} color="#00A5E7">
+                <StatusGauge value={player.metadata.drug} color="#00A5E7">
                     <img className="size-9" src="/public/images/hud/player/drug.webp" alt="drug" />
                 </StatusGauge>
             )}
 
             {hasWatch && (
-                <StatusGauge percent={player.metadata.alcohol} color="#00A5E7">
+                <StatusGauge value={player.metadata.alcohol} color="#00A5E7">
                     <img className="size-9" src="/public/images/hud/player/alcohol.webp" alt="alcohol" />
                 </StatusGauge>
             )}
 
             {hasWatch && showStress && (
-                <StatusGauge percent={player.metadata.stress_level} color="#FCAF40" hideCondition={value => value < 1}>
+                <StatusGauge value={player.metadata.stress_level} color="#FCAF40">
                     <img className="size-9" src="/public/images/hud/player/stress.webp" alt="stress" />
                 </StatusGauge>
             )}
+            {hasWatch && (
+                <StatusGauge min={60} max={150} value={player.metadata.max_stamina} color="#7748f3">
+                    <img className="size-9" src="/public/images/hud/player/stamina.webp" alt="stamina" />
+                </StatusGauge>
+            )}
 
-            <StatusGauge percent={player.metadata.hunger} color="#FCAF40" hideCondition={value => value >= 50}>
+            <StatusGauge value={player.metadata.hunger} color="#FCAF40" hideCondition={value => value >= 50}>
                 <img className="size-9" src="/public/images/hud/player/hunger.webp" alt="hunger" />
             </StatusGauge>
 
-            <StatusGauge percent={player.metadata.thirst} color="#00A5E7" hideCondition={value => value >= 50}>
+            <StatusGauge value={player.metadata.thirst} color="#00A5E7" hideCondition={value => value >= 50}>
                 <img className="size-9" src="/public/images/hud/player/thirst.webp" alt="thirst" />
             </StatusGauge>
         </>
