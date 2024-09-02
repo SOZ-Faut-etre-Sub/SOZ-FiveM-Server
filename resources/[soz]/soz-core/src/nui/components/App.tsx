@@ -10,6 +10,7 @@ import { CyberReportApp } from '@private/nui/gang/BusinessCyber/ReportApp';
 import { BusinessSmugglingPrintApp } from '@private/nui/gang/BusinessSmuggling/BusinessSmugglingPrintApp/BusinessSmugglingPrintApp';
 import { BusinessVehicleMappingApp } from '@private/nui/gang/BusinessVehicle/BusinessVehicleMapping';
 import { BusinessVehicleOrderApp } from '@private/nui/gang/BusinessVehicle/BusinessVehicleOrderApp';
+import { ArchetypesPresentationsApp } from '@private/nui/group/ArchetypesPresentationsApp';
 import { BusinessManagementApp } from '@private/nui/group/BusinessManagementApp';
 import { HackingDeviceApp } from '@private/nui/hacking/HackingDeviceApp';
 import { HoodApp } from '@private/nui/hood/HoodApp';
@@ -132,6 +133,7 @@ export const App: FunctionComponent = () => {
                 <BusinessVehicleOrderApp />
                 <BusinessCyberApp />
                 <BusinessSmugglingPrintApp />
+                <ArchetypesPresentationsApp />
                 <HackingDeviceApp />
                 <ArrowsMinigameApp />
                 <GridMinigameApp />

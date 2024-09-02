@@ -470,6 +470,7 @@ export enum NuiEvent {
     GangMemberUpdate = 'soz-core:client:gang:member-update',
     GangSafe = 'soz-core:client:gang:safe',
     GangBusiness = 'soz-core:client:gang:business',
+    GangArchetypes = 'soz-core:client:gang:archetypes',
     GangShop = 'soz-core:client:gang:shop',
     GangCraft = 'soz-core:client:gang:craft',
     GangParking = 'soz-core:client:gang:parking',

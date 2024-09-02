@@ -11,6 +11,7 @@ export interface NuiGangMethodMap {
         isboss: boolean;
     };
     ShowGangBusinessVehicleOrder: never;
+    ShowGangBusinessArchetypeApp: never;
     ShowGangBusinessCyberApp: BusinessCyberUiInput;
     ShowGangBusinessSmugglingPrintApp: BusinessSmugglingPrintUiInput;
     GangBusinessVehicleMapping: BusinessVehicleMappingUiInput;
