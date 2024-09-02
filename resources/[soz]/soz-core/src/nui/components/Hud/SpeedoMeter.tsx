@@ -114,6 +114,11 @@ const SpeedGauge: FunctionComponent<{ hasFuel: boolean; useRpm: boolean }> = ({ 
         rpm = 0;
     }
 
+    let gear = vehicleSpeed.gear.toString();
+    if (vehicleSpeed.gear == 0 && vehicleSpeed.speed > 0) {
+        gear = 'R';
+    }
+
     return (
         <>
             <div className="w-[100px] h-[100px] relative">
@@ -140,7 +145,7 @@ const SpeedGauge: FunctionComponent<{ hasFuel: boolean; useRpm: boolean }> = ({ 
                 </svg>
                 <div className={classes}>
                     <span className="text-white border-2 w-6 border-green-300 text-green-300 text-center rounded-md mx-auto">
-                        {vehicleSpeed.gear}
+                        {gear}
                     </span>
                     <span className="text-white text-3xl">{vehicleSpeed.speed.toFixed(0)}</span>
                     <span>km/h</span>

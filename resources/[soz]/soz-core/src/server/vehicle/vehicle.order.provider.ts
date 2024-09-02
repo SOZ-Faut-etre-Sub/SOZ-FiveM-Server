@@ -151,8 +151,8 @@ export class VehicleOrderProvider {
             const config = Configs[player.job.id];
             const transferred = await this.bankService.transferFarmMoney(
                 source,
-                config.account,
                 config.farm,
+                config.account,
                 vehiclePrice,
                 'money',
                 true
@@ -259,8 +259,7 @@ export class VehicleOrderProvider {
         };
 
         const garage = order.job != null ? Configs[order.job].garage : 'garage_gang_' + order.gang;
-        const plate =
-            order.job != null ? 'ESSAI N' + (this.orderedVehicle + 1) : await this.vehicleService.generatePlate();
+        const plate = order.job != null ? 'ESSAI N' + this.orderedVehicle++ : await this.vehicleService.generatePlate();
         const mods: VehicleConfiguration =
             order.job != null ? BennysConfig.UpgradeConfiguration : getDefaultVehicleConfiguration();
         const state = order.job != null ? PlayerVehicleState.InJobGarage : PlayerVehicleState.InGarage;
@@ -290,8 +289,6 @@ export class VehicleOrderProvider {
                 crimiImport: crimiImport,
             },
         });
-
-        this.orderedVehicle++;
 
         this.monitor.traceEvent('vehicle_order_deliver', {
             garage_id: garage,

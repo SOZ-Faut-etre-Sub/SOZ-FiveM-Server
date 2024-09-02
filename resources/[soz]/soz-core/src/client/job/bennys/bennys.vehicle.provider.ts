@@ -212,7 +212,10 @@ export class BennysVehicleProvider {
     public async upgradeVehicle(vehicleEntityId: number, mode: LSCustomMode) {
         const vehicleCondition = await this.vehicleStateService.getVehicleCondition(vehicleEntityId);
 
-        if (mode == LSCustomMode.Normal && this.vehicleService.isInBadCondition(vehicleEntityId, vehicleCondition)) {
+        if (
+            [LSCustomMode.LsCustom, LSCustomMode.NewGahray].includes(mode) &&
+            this.vehicleService.isInBadCondition(vehicleEntityId, vehicleCondition)
+        ) {
             this.notifier.notify(
                 'Ce véhicule est trop endommagé pour être modifié, veuillez le réparer avant de le modifier.',
                 'error'
@@ -221,7 +224,7 @@ export class BennysVehicleProvider {
             return;
         }
 
-        if (mode == LSCustomMode.Normal && vehicleCondition.dirtLevel > 5.0) {
+        if ([LSCustomMode.LsCustom, LSCustomMode.NewGahray].includes(mode) && vehicleCondition.dirtLevel > 5.0) {
             this.notifier.notify(
                 'Ce véhicule est trop sale pour être modifié, veuillez le laver avant de le modifier.',
                 'error'

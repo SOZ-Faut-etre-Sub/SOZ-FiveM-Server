@@ -331,7 +331,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
     const [config, setConfig] = useState<VehicleConfiguration | null>(null);
     const [options, setOptions] = useState<VehicleUpgradeOptions | null>(null);
     const item = useItem('veh_strip_piece_std');
-    const crimi = ![LSCustomMode.Admin, LSCustomMode.Normal].includes(data.mode);
+    const crimi = ![LSCustomMode.Admin, LSCustomMode.LsCustom, LSCustomMode.NewGahray].includes(data.mode);
     const banner = crimi
         ? 'https://cfx-nui-soz-core/public/images/banner/vehbiz_custo.webp'
         : 'https://nui-img/soz/menu_job_bennys';

@@ -119,7 +119,7 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
                             </MenuItemSelect>
                             <MenuItemSubMenuLink id="door">Gestion des portes</MenuItemSubMenuLink>
                             {data.insideLSCustom && (
-                                <MenuItemButton onConfirm={() => onOpenLSCustom(LSCustomMode.Normal)}>
+                                <MenuItemButton onConfirm={() => onOpenLSCustom(LSCustomMode.LsCustom)}>
                                     LS Custom
                                 </MenuItemButton>
                             )}

@@ -48,7 +48,9 @@ export const MenuBennys: FunctionComponent<MenuBennysProps> = ({ data }) => {
                 <MenuTitle banner="https://nui-img/soz/menu_job_bennys">Services Bennys</MenuTitle>
                 <MenuContent>
                     {data.insideUpgradeZone && (
-                        <MenuItemButton onConfirm={() => fetchNui(NuiEvent.BennysUpgradeVehicle, LSCustomMode.Normal)}>
+                        <MenuItemButton
+                            onConfirm={() => fetchNui(NuiEvent.BennysUpgradeVehicle, LSCustomMode.NewGahray)}
+                        >
                             🔧 Améliorer le véhicule
                         </MenuItemButton>
                     )}

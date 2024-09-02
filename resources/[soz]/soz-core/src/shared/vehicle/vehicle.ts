@@ -403,7 +403,8 @@ export enum LSCustomMode {
     Admin = 'admin',
     CrimiPerfo = 'crimi_perfo',
     CrimiCusto = 'crimi_custom',
-    Normal = 'normal',
+    LsCustom = 'ls_custom',
+    NewGahray = 'new_gahray',
 }
 
 export type VehicleAuctionMenuData = {

@@ -56,7 +56,7 @@ export class VehicleCustomProvider {
         originalConfiguration: VehicleConfiguration,
         price: number | null = null,
         notify = true,
-        mode = LSCustomMode.Normal,
+        mode = LSCustomMode.LsCustom,
         crimiPrice: Record<string, number>
     ) {
         // @TODO Price client side
@@ -65,7 +65,7 @@ export class VehicleCustomProvider {
 
         const playerVehicle = state.volatile.isPlayerVehicle;
 
-        if (mode == LSCustomMode.Normal && taxedPrice && this.playerMoneyService.get(source) < taxedPrice) {
+        if (mode == LSCustomMode.LsCustom && taxedPrice && this.playerMoneyService.get(source) < taxedPrice) {
             this.notifier.notify(source, "Vous n'avez pas assez d'argent", 'error');
 
             return originalConfiguration;
@@ -106,9 +106,10 @@ export class VehicleCustomProvider {
                 return originalConfiguration;
             }
         }
-        if (taxedPrice && mode == LSCustomMode.Normal) {
+        if (taxedPrice && mode == LSCustomMode.LsCustom) {
             // LS Custom upgrade parts
             const upgradedParts = this.getLSCustomUpgradedPart(originalConfiguration, mods);
+            console.log('upgradedParts', upgradedParts);
 
             if (
                 upgradedParts > 0 &&
@@ -151,7 +152,7 @@ export class VehicleCustomProvider {
             });
         }
 
-        if (taxedPrice && mode == LSCustomMode.Normal) {
+        if (taxedPrice && mode == LSCustomMode.LsCustom) {
             this.notifier.notify(source, `Vous avez payé $${taxedPrice.toFixed(0)} pour modifier votre véhicule.`);
         } else if (notify) {
             this.notifier.notify(source, 'Le véhicule a été modifié');
@@ -186,6 +187,10 @@ export class VehicleCustomProvider {
                 }
             }
         }
+        if (originalConfig.manualGearbox != newConfig.manualGearbox) {
+            totalParts++;
+        }
+
         return totalParts;
     }
 

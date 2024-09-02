@@ -57,7 +57,7 @@ export const VehicleSubMenu: FunctionComponent<VehicleSubMenuProps> = ({ banner,
         fetchNui(NuiEvent.BennysUpgradeVehicle, LSCustomMode.Admin);
     };
     const onOpenLSCustom = () => {
-        fetchNui(NuiEvent.VehicleOpenLSCustom, true);
+        fetchNui(NuiEvent.VehicleOpenLSCustom, LSCustomMode.Admin);
     };
 
     const isStaffOrAdmin = ['staff', 'admin'].includes(permission);

@@ -76,7 +76,7 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
     const [configuration, setConfiguration] = useState<VehicleConfiguration | null>(null);
     const getPrice = useGetPrice();
     const items = useItems();
-    const crimi = ![LSCustomMode.Admin, LSCustomMode.Normal].includes(data.mode);
+    const crimi = ![LSCustomMode.Admin, LSCustomMode.LsCustom].includes(data.mode);
     const banner = crimi
         ? 'https://cfx-nui-soz-core/public/images/banner/vehbiz_perfo.webp'
         : 'https://nui-img/soz/menu_shop_lscustoms';
@@ -236,7 +236,7 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
                     <MenuItemButton className="border-t border-white/50" onConfirm={() => onConfirm()}>
                         <div className="flex w-full justify-between items-center">
                             <span>✅ Confirmer les changements</span>
-                            {data.mode == LSCustomMode.Normal && (
+                            {data.mode == LSCustomMode.LsCustom && (
                                 <span>
                                     ${' '}
                                     {Intl.NumberFormat('fr-FR').format(
