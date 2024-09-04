@@ -241,22 +241,22 @@ export class ShopProvider {
         // Special for mask shop
         this.targetFactory.createForBoxZone(
             'shops:mask',
+            // { FLOOD
+            //     center: ShopsConfig[ShopBrand.Mask].location as Vector3,
+            //     length: 3.0,
+            //     width: 3.2,
+            //     minZ: 102.11,
+            //     maxZ: 104.11,
+            //     heading: 159.76,
+            // },
             {
                 center: ShopsConfig[ShopBrand.Mask].location as Vector3,
-                length: 3.0,
-                width: 3.2,
-                minZ: 102.11,
-                maxZ: 104.11,
-                heading: 159.76,
+                length: 1.6,
+                width: 0.8,
+                minZ: 3.86,
+                maxZ: 5.26,
+                heading: 20,
             },
-            // { OLD
-            //     center: ShopsConfig[ShopBrand.Mask].location as Vector3,
-            //     length: 1.6,
-            //     width: 0.8,
-            //     minZ: 3.86,
-            //     maxZ: 5.26,
-            //     heading: 20,
-            // },
             [
                 {
                     label: 'Acheter un masque',

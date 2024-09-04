@@ -83,7 +83,7 @@ export const DealershipConfig: Partial<Record<DealershipType, DealershipConfigIt
         garageName: 'bell_farms',
     },
     [DealershipType.Cycle]: {
-        position: [-1377.71, -362.14, 35.63, 170.19], // position: [-1222.26, -1494.83, 3.34, 120.0],
+        position: [-1222.26, -1494.83, 3.34, 120.0],
         blip: {
             name: 'Concessionnaire Vélo',
             sprite: 559,
@@ -91,8 +91,8 @@ export const DealershipConfig: Partial<Record<DealershipType, DealershipConfigIt
         },
         ped: 's_m_m_autoshop_01',
         showroom: {
-            position: [-1375.0, -362.98, 36.67, 57.09], // position: [-1221.96, -1498.45, 4.35, 210.0],
-            camera: [-1376.29, -366.84, 37.45], // camera: [-1222.6, -1501.34, 5.37],
+            position: [-1221.96, -1498.45, 4.35, 210.0],
+            camera: [-1222.6, -1501.34, 5.37],
         },
         garageName: 'bell_farms',
     },
