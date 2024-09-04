@@ -100,6 +100,7 @@ export class FoodHuntProvider {
                 icon: 'c:food/depecer.png',
                 blackoutGlobal: true,
                 blackoutJob: JobType.Food,
+                category: 'citizen',
                 canInteract: entity => {
                     if (IsPedAPlayer(entity)) {
                         return false;

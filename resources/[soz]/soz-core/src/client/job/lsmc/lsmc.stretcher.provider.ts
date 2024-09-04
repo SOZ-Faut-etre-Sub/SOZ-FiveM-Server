@@ -76,6 +76,7 @@ export class LSMCStretcherProvider {
                         this.getPlayerUsingStretcher(entity) == null,
                     label: 'Ramasser',
                     icon: 'c:baun/createCocktailBox.png',
+                    category: 'citizen',
                     action: async entity => {
                         const { completed } = await this.progressService.progress(
                             'stretcher_retrieve',
@@ -109,6 +110,7 @@ export class LSMCStretcherProvider {
             {
                 label: 'Pousser',
                 icon: 'c:ems/push.png',
+                category: 'citizen',
                 canInteract: entity =>
                     this.pushed == 0 &&
                     (!IsEntityAttached(entity) || GetEntityAttachedTo(entity) == 0) &&
@@ -133,6 +135,7 @@ export class LSMCStretcherProvider {
             {
                 label: "S'allonger",
                 icon: 'fas fa-bed',
+                category: 'citizen',
                 canInteract: entity =>
                     this.getPlayerUsingStretcher(entity) == null &&
                     NetworkGetEntityIsNetworked(entity) &&
@@ -146,6 +149,7 @@ export class LSMCStretcherProvider {
             {
                 label: 'Installer sur le brancard',
                 icon: 'c:ems/stretcher.png',
+                category: 'citizen',
                 canInteract: entity => {
                     const state = this.playerService.getState();
                     return (
@@ -163,6 +167,7 @@ export class LSMCStretcherProvider {
             {
                 label: 'Faire descendre',
                 icon: 'c:police/escorter.png',
+                category: 'citizen',
                 canInteract: entity =>
                     this.getPlayerUsingStretcher(entity) != null && NetworkGetEntityIsNetworked(entity),
                 action: async entity => {
@@ -177,6 +182,7 @@ export class LSMCStretcherProvider {
                 {
                     label: 'Installer le brancard',
                     icon: 'c:ems/stretcher.png',
+                    category: 'citizen',
                     canInteract: async entity => {
                         if (!this.pushed) {
                             return false;
@@ -261,6 +267,7 @@ export class LSMCStretcherProvider {
                 {
                     label: 'Récupérer le brancard',
                     icon: 'c:ems/stretcher.png',
+                    category: 'citizen',
                     canInteract: async entity => {
                         if (this.pushed) {
                             return false;

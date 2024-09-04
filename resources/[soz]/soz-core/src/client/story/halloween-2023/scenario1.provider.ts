@@ -84,6 +84,7 @@ export class Halloween2023Scenario1Provider {
                     {
                         label: 'Parler',
                         icon: 'fas fa-comment',
+                        category: 'citizen',
                         canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario1', 0),
                         action: async entity => {
                             TriggerServerEvent(ServerEvent.STORY_HALLOWEEN_2023_SCENARIO_1, 1);
@@ -213,6 +214,7 @@ export class Halloween2023Scenario1Provider {
                     {
                         label: 'Parler',
                         icon: 'fas fa-comment',
+                        category: 'citizen',
                         canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario1', 1),
                         action: async entity => {
                             TriggerServerEvent(ServerEvent.STORY_HALLOWEEN_2023_SCENARIO_1, 2);
@@ -247,6 +249,7 @@ export class Halloween2023Scenario1Provider {
                         label: 'Donner',
                         icon: 'c:pole/livrer.png',
                         item: 'halloween_prehistoric_blood_analysis',
+                        category: 'citizen',
                         canInteract: () => {
                             if (!this.storyService.canInteractForPart('halloween2023', 'scenario1', 3)) {
                                 return false;
@@ -298,6 +301,7 @@ export class Halloween2023Scenario1Provider {
                     {
                         label: 'Parler',
                         icon: 'fas fa-comment',
+                        category: 'citizen',
                         canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario1', 4),
                         action: async entity => {
                             TriggerServerEvent(ServerEvent.STORY_HALLOWEEN_2023_SCENARIO_1, 5);
@@ -323,6 +327,7 @@ export class Halloween2023Scenario1Provider {
                     {
                         label: 'Parler',
                         icon: 'fas fa-comment',
+                        category: 'citizen',
                         canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario1', 7),
                         action: async entity => {
                             TriggerServerEvent(ServerEvent.STORY_HALLOWEEN_2023_SCENARIO_1, 8);
@@ -356,6 +361,7 @@ export class Halloween2023Scenario1Provider {
                     {
                         label: 'Parler',
                         icon: 'fas fa-comment',
+                        category: 'citizen',
                         canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario1', 5),
                         action: async entity => {
                             TriggerServerEvent(ServerEvent.STORY_HALLOWEEN_2023_SCENARIO_1, 6);
@@ -381,6 +387,7 @@ export class Halloween2023Scenario1Provider {
                     {
                         label: 'Donner',
                         icon: 'c:pole/livrer.png',
+                        category: 'citizen',
                         canInteract: () => {
                             if (!this.storyService.canInteractForPart('halloween2023', 'scenario1', 6)) {
                                 return false;
@@ -423,6 +430,7 @@ export class Halloween2023Scenario1Provider {
                 {
                     label: zone.label,
                     icon: zone.icon,
+                    category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario1', zone.part),
                     action: async () => {
                         const { completed } = await this.progressService.progress(

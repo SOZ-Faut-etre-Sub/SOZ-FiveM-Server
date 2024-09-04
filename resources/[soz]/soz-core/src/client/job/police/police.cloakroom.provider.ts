@@ -73,6 +73,7 @@ export class PoliceCloakRoomProvider {
                         label: 'Se changer',
                         color: prisonerCloakroomInfo.job,
                         icon: 'fas fa-tshirt',
+                        category: 'citizen',
                         action: async () => {
                             await this.setPrisonerClothes();
                         },

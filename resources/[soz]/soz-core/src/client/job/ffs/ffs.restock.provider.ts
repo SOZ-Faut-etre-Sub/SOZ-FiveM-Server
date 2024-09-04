@@ -6,10 +6,11 @@ import { Provider } from '../../../core/decorators/provider';
 import { ClientEvent, ServerEvent } from '../../../shared/event';
 import { Garment, LuxuryGarment } from '../../../shared/job/ffs';
 import { ClothingBrand } from '../../../shared/shop';
+import { TargetOption } from '../../../shared/target';
 import { InventoryManager } from '../../inventory/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { PlayerService } from '../../player/player.service';
-import { TargetFactory, TargetOptions } from '../../target/target.factory';
+import { TargetFactory } from '../../target/target.factory';
 
 @Provider()
 export class FightForStyleRestockProvider {
@@ -28,7 +29,7 @@ export class FightForStyleRestockProvider {
     @OnEvent(ClientEvent.FFS_ENTER_CLOTHING_SHOP)
     public onEnterClothingShop(brand: ClothingBrand) {
         const { garments, pedModel } = this.getGarmentsFromBrand(brand);
-        const targets: TargetOptions[] = garments.map(garment => {
+        const targets: TargetOption[] = garments.map(garment => {
             return {
                 label: 'Restock: ' + this.itemService.getItem(garment).label,
                 icon: 'c:/ffs/restock.png',
@@ -36,6 +37,7 @@ export class FightForStyleRestockProvider {
                 job: 'ffs',
                 blackoutGlobal: true,
                 blackoutJob: 'ffs',
+                category: 'society',
                 action: () => {
                     TriggerServerEvent(ServerEvent.FFS_RESTOCK, brand, garment);
                 },

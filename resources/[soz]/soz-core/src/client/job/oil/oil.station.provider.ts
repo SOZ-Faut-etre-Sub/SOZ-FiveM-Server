@@ -62,6 +62,7 @@ export class OilStationProvider {
                     job: JobType.Oil,
                     blackoutGlobal: true,
                     blackoutJob: JobType.Oil,
+                    category: 'society',
                     canInteract: () => this.jobService.hasPermission(JobType.Oil, JobPermission.FuelerChangePrice),
                     action: () => {
                         this.updateStationPrice();

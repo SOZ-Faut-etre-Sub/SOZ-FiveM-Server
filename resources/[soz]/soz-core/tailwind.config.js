@@ -77,6 +77,9 @@ module.exports = {
                     },
                 ],
             },
+            dropShadow: {
+                bg: '2px 2px 2px rgba(0, 0, 7, 0.7)',
+            },
         },
     },
     plugins: [require('tailwind-scrollbar')],

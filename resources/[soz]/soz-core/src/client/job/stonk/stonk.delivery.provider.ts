@@ -5,11 +5,12 @@ import { ClientEvent, ServerEvent } from '../../../shared/event';
 import { JobType } from '../../../shared/job';
 import { StonkConfig } from '../../../shared/job/stonk';
 import { NamedZone } from '../../../shared/polyzone/box.zone';
+import { TargetOption } from '../../../shared/target';
 import { InventoryManager } from '../../inventory/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
-import { TargetFactory, TargetOptions } from '../../target/target.factory';
+import { TargetFactory } from '../../target/target.factory';
 
 @Provider()
 export class StonkDeliveryProvider {
@@ -51,6 +52,7 @@ export class StonkDeliveryProvider {
                         color: JobType.CashTransfer,
                         blackoutGlobal: true,
                         blackoutJob: JobType.CashTransfer,
+                        category: 'society',
                         action: () => {
                             TriggerServerEvent(ServerEvent.STONK_DELIVERY_TAKE);
                         },
@@ -68,7 +70,7 @@ export class StonkDeliveryProvider {
         this.notifier.notify('Les coordonnées de la livraison ont été ajoutées sur votre GPS');
     }
 
-    private deliverAction(): TargetOptions {
+    private deliverAction(): TargetOption {
         const acceptedItem = this.itemService.getItem(StonkConfig.delivery.item);
 
         return {
@@ -79,6 +81,7 @@ export class StonkDeliveryProvider {
             blackoutGlobal: true,
             blackoutJob: JobType.CashTransfer,
             item: StonkConfig.delivery.item,
+            category: 'society',
             action: () => {
                 TriggerServerEvent(ServerEvent.STONK_DELIVERY_END, this.currentDeliverLocation);
                 this.targetFactory.removeBoxZone(this.currentDeliverLocation.name);

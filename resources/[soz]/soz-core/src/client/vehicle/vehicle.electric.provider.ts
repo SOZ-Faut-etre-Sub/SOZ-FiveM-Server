@@ -133,6 +133,7 @@ export class VehicleElectricProvider {
                 blackoutGlobal: true,
                 blackoutJob: JobType.Upw,
                 job: JobType.Upw,
+                category: 'society',
                 action: entity => {
                     const position = GetEntityCoords(entity) as Vector3;
                     const charger = this.upwChargerRepository.getClosestCharger(position);
@@ -152,6 +153,7 @@ export class VehicleElectricProvider {
                 blackoutGlobal: true,
                 blackoutJob: JobType.Upw,
                 job: JobType.Upw,
+                category: 'society',
                 action: entity => {
                     const position = GetEntityCoords(entity) as Vector3;
                     const charger = this.upwChargerRepository.getClosestCharger(position);
@@ -170,6 +172,7 @@ export class VehicleElectricProvider {
                 blackoutGlobal: true,
                 blackoutJob: JobType.Upw,
                 job: JobType.Upw,
+                category: 'society',
                 action: entity => {
                     const position = GetEntityCoords(entity) as Vector3;
                     const charger = this.upwChargerRepository.getClosestCharger(position);
@@ -188,6 +191,7 @@ export class VehicleElectricProvider {
                 blackoutGlobal: true,
                 blackoutJob: JobType.Upw,
                 job: JobType.Upw,
+                category: 'society',
                 action: entity => {
                     const position = GetEntityCoords(entity) as Vector3;
                     const charger = this.upwChargerRepository.getClosestCharger(position);
@@ -206,6 +210,7 @@ export class VehicleElectricProvider {
                 blackoutGlobal: true,
                 blackoutJob: JobType.Upw,
                 job: JobType.Upw,
+                category: 'society',
                 action: (entity: number) => {
                     this.getStationEnergyLevel(entity);
                 },
@@ -213,6 +218,7 @@ export class VehicleElectricProvider {
             {
                 icon: 'c:fuel/plug.png',
                 label: 'Prendre la prise',
+                category: 'society',
                 action: (entity: number) => {
                     this.toggleStationPlug(entity);
                 },
@@ -254,6 +260,7 @@ export class VehicleElectricProvider {
             {
                 icon: 'c:fuel/plug.png',
                 label: 'Reposer la prise',
+                category: 'society',
                 action: (entity: number) => {
                     this.toggleStationPlug(entity);
                 },
@@ -287,6 +294,7 @@ export class VehicleElectricProvider {
             {
                 label: 'Charger le véhicule',
                 icon: 'c:fuel/recharge.png',
+                category: 'society',
                 blackoutGlobal: true,
                 canInteract: (entity: number) => {
                     if (GetEntityHealth(entity) <= 0) {

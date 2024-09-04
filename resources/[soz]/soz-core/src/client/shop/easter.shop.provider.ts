@@ -73,6 +73,7 @@ export class EasterShopProvider {
                         label: 'Accéder à la boutique de Pâques',
                         icon: 'fas fa-store',
                         color: 'food',
+                        category: 'citizen',
                         action: () => {
                             this.onOpenMenu(EasterShopContent);
                         },

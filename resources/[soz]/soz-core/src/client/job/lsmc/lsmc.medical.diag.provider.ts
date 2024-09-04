@@ -55,6 +55,7 @@ export class LSMCMedicalDiagProvider {
                 job: JobType.LSMC,
                 blackoutGlobal: true,
                 icon: 'c:ems/irm.png',
+                category: 'society',
                 canInteract: () => {
                     const playerPed = PlayerPedId();
                     const coord = GetEntityCoords(playerPed) as Vector3;

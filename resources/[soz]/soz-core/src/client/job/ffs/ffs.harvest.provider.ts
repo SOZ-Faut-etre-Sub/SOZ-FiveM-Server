@@ -31,6 +31,7 @@ export class FightForStyleHarvestProvider {
                     icon: 'c:/ffs/harvest.png',
                     color: 'ffs',
                     job: 'ffs',
+                    category: 'society',
                     action: () => {
                         TriggerServerEvent(ServerEvent.FFS_HARVEST);
                     },

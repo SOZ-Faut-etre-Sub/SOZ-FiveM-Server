@@ -36,6 +36,7 @@ export class BunkerProvider {
                 {
                     label: bunker.label,
                     icon: 'c:elevators/descendre.png',
+                    category: 'citizen',
                     action: () => {
                         this.playerPositionProvider.teleportPlayerToPosition(
                             bunker.intermediate ? 'inter:' + bunker.label : bunker.label,
@@ -53,6 +54,7 @@ export class BunkerProvider {
                 {
                     label: 'Sortir',
                     icon: 'c:elevators/monter.png',
+                    category: 'citizen',
                     action: () => {
                         this.playerPositionProvider.teleportPlayerToPosition('exit:' + bunker.label);
                     },

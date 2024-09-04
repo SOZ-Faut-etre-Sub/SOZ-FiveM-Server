@@ -8,12 +8,13 @@ import { Feature, isFeatureEnabled } from '../../../shared/features';
 import { RpcServerEvent } from '../../../shared/rpc';
 import { Halloween2022Scenario1 } from '../../../shared/story/halloween-2022/scenario1';
 import { Dialog } from '../../../shared/story/story';
+import { TargetOption } from '../../../shared/target';
 import { AnimationService } from '../../animation/animation.service';
 import { BlipFactory } from '../../blip';
 import { EntityFactory } from '../../factory/entity.factory';
 import { PedFactory } from '../../factory/ped.factory';
 import { ProgressService } from '../../progress.service';
-import { TargetFactory, TargetOptions } from '../../target/target.factory';
+import { TargetFactory } from '../../target/target.factory';
 import { StoryProvider } from '../story.provider';
 
 @Provider()
@@ -122,6 +123,7 @@ export class Halloween2022Scenario1Provider {
                 {
                     label: 'Parler',
                     icon: 'fas fa-comment',
+                    category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario1', 0),
                     action: async () => {
                         const dialog = await emitRpc<Dialog | null>(RpcServerEvent.STORY_HALLOWEEN_SCENARIO1, 'diag1');
@@ -133,6 +135,7 @@ export class Halloween2022Scenario1Provider {
                 {
                     label: 'Parler',
                     icon: 'fas fa-comment',
+                    category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario1', 2),
                     action: async () => {
                         const dialog = await emitRpc<Dialog | null>(RpcServerEvent.STORY_HALLOWEEN_SCENARIO1, 'part2');
@@ -283,10 +286,11 @@ export class Halloween2022Scenario1Provider {
         );
     }
 
-    private interactionPedGang(part: number): TargetOptions {
+    private interactionPedGang(part: number): TargetOption {
         return {
             label: 'Parler',
             icon: 'fas fa-comment',
+            category: 'citizen',
             canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario1', part),
             action: async () => {
                 const dialog = await emitRpc<Dialog | null>(RpcServerEvent.STORY_HALLOWEEN_SCENARIO1, `part${part}`);
@@ -329,10 +333,11 @@ export class Halloween2022Scenario1Provider {
         );
     }
 
-    private interactionPedPolice(part: number): TargetOptions {
+    private interactionPedPolice(part: number): TargetOption {
         return {
             label: 'Parler',
             icon: 'fas fa-comment',
+            category: 'citizen',
             canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario1', part),
             action: async () => {
                 const dialog = await emitRpc<Dialog | null>(RpcServerEvent.STORY_HALLOWEEN_SCENARIO1, `part${part}`);
@@ -355,6 +360,7 @@ export class Halloween2022Scenario1Provider {
                 {
                     label: zone.label,
                     icon: zone.icon,
+                    category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario1', zone.part),
                     action: async () => {
                         const animationPromise = this.animationService.playAnimation({

@@ -6,11 +6,13 @@ import { useDateTime, useHud } from '../../hook/data';
 
 interface GlassMorphismContainerProps extends HTMLAttributes<any>, PropsWithChildren {
     disableBorder?: boolean;
+    showBorderOnHover?: boolean;
 }
 
 export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerProps> = ({
     className,
     disableBorder,
+    showBorderOnHover,
     children,
 }) => {
     const { settings } = useHud();
@@ -51,16 +53,20 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
 
     return (
         <div
-            className="relative bg-opacity-10 rounded-full h-full w-full overflow-hidden"
+            className="relative bg-opacity-10 rounded-full h-full w-full overflow-hidden group z-10"
             style={{
                 opacity: 0.99,
             }}
         >
             <div
                 ref={containerRef}
-                className={cn('absolute flex justify-center items-center backdrop-blur-sm rounded-full h-full w-full', {
-                    'border-2 border-transparent': !disableBorder,
-                })}
+                className={cn(
+                    'absolute flex justify-center items-center backdrop-blur-sm rounded-full h-full w-full transition-all border-transparent',
+                    {
+                        'border-2': !disableBorder,
+                        'group-hover:border-2': showBorderOnHover,
+                    }
+                )}
                 style={{
                     height,
                     background:

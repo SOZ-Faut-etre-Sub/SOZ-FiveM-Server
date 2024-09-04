@@ -44,6 +44,7 @@ export class FDFTreeProvider {
                     blackoutJob: JobType.FDF,
                     blackoutGlobal: true,
                     job: JobType.FDF,
+                    category: 'society',
                     canInteract: async entity => {
                         const [field, id] = this.getFieldId(entity);
                         if (!field) {
@@ -86,6 +87,7 @@ export class FDFTreeProvider {
                     blackoutJob: JobType.FDF,
                     blackoutGlobal: true,
                     job: JobType.FDF,
+                    category: 'society',
                     canInteract: async entity => {
                         const [field, id] = this.getFieldId(entity);
                         if (!field) {
@@ -145,6 +147,7 @@ export class FDFTreeProvider {
                     blackoutJob: JobType.FDF,
                     blackoutGlobal: true,
                     job: JobType.FDF,
+                    category: 'society',
                     canInteract: async entity => {
                         const [field, id] = this.getFieldId(entity);
                         if (!field) {
@@ -203,6 +206,7 @@ export class FDFTreeProvider {
                     blackoutJob: JobType.FDF,
                     blackoutGlobal: true,
                     job: JobType.FDF,
+                    category: 'society',
                     canInteract: async entity => {
                         const [field, id] = this.getFieldId(entity);
                         if (!field) {

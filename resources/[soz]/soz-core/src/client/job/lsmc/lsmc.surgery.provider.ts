@@ -65,6 +65,7 @@ export class LSMCSurgeryProvider {
                 job: JobType.LSMC,
                 blackoutGlobal: true,
                 blackoutJob: JobType.LSMC,
+                category: 'society',
                 canInteract: async entity => {
                     if (!IsEntityPlayingAnim(entity, 'anim@gangops@morgue@table@', 'body_search', 3)) {
                         return false;
@@ -109,6 +110,7 @@ export class LSMCSurgeryProvider {
                 job: JobType.LSMC,
                 blackoutGlobal: true,
                 blackoutJob: JobType.LSMC,
+                category: 'society',
                 canInteract: async entity => {
                     if (!IsEntityPlayingAnim(entity, 'anim@gangops@morgue@table@', 'body_search', 3)) {
                         return false;
@@ -153,6 +155,7 @@ export class LSMCSurgeryProvider {
                 job: JobType.LSMC,
                 blackoutGlobal: true,
                 blackoutJob: JobType.LSMC,
+                category: 'society',
                 canInteract: async entity => {
                     if (!IsEntityPlayingAnim(entity, 'anim@gangops@morgue@table@', 'body_search', 3)) {
                         return false;
@@ -197,6 +200,7 @@ export class LSMCSurgeryProvider {
                 job: JobType.LSMC,
                 blackoutGlobal: true,
                 blackoutJob: 'lsmc',
+                category: 'society',
                 canInteract: entity => {
                     return (
                         IsEntityPlayingAnim(entity, 'anim@gangops@morgue@table@', 'body_search', 3) &&

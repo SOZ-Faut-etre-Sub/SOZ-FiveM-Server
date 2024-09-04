@@ -104,7 +104,7 @@ export const PlayerStats: FunctionComponent = () => {
                 </StatusGauge>
             )}
             {hasWatch && (
-                <StatusGauge min={60} max={150} value={player.metadata.max_stamina} color="#7748f3">
+                <StatusGauge min={60} max={150} value={player.metadata.max_stamina} color="#3270cd">
                     <img className="size-9" src="/public/images/hud/player/stamina.webp" alt="stamina" />
                 </StatusGauge>
             )}

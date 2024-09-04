@@ -88,6 +88,7 @@ export class OilTankerProvider {
                     job: JobType.Oil,
                     blackoutGlobal: true,
                     blackoutJob: JobType.Oil,
+                    category: 'society',
                     canInteract: () => !this.currentTankerAttached,
                     action: this.connectTanker.bind(this),
                 },
@@ -95,6 +96,7 @@ export class OilTankerProvider {
                     icon: 'c:fuel/pistolet.png',
                     color: 'oil',
                     label: 'Déconnecter le Tanker',
+                    category: 'society',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
 
@@ -134,6 +136,7 @@ export class OilTankerProvider {
                     icon: 'c:fuel/remplir.png',
                     color: 'oil',
                     label: 'Relier le Tanker',
+                    category: 'society',
                     job: JobType.Oil,
                     blackoutGlobal: true,
                     blackoutJob: JobType.Oil,
@@ -149,6 +152,7 @@ export class OilTankerProvider {
                     icon: 'c:fuel/remplir.png',
                     color: 'oil',
                     label: 'Relier le Tanker',
+                    category: 'society',
                     job: JobType.Oil,
                     blackoutGlobal: true,
                     blackoutJob: JobType.Oil,
@@ -165,6 +169,7 @@ export class OilTankerProvider {
                     icon: 'c:fuel/remplir.png',
                     color: 'oil',
                     label: 'Relier le Tanker',
+                    category: 'society',
                     job: JobType.Oil,
                     blackoutGlobal: true,
                     blackoutJob: JobType.Oil,

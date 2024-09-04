@@ -153,6 +153,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'Parler',
                         icon: 'fas fa-comment',
+                        category: 'citizen',
                         canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario4', 0),
                         action: async entity => {
                             TriggerServerEvent(ServerEvent.STORY_HALLOWEEN_2023_SCENARIO_4, 1);
@@ -254,6 +255,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'Inspecter',
                         icon: 'fas fa-search',
+                        category: 'citizen',
                         canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario4', 1),
                         action: () => {
                             TriggerServerEvent(ServerEvent.STORY_HALLOWEEN_2023_SCENARIO_4, 2);
@@ -265,6 +267,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'Re-Inspecter',
                         icon: 'fas fas fa-comment-dots',
+                        category: 'citizen',
                         canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario4', 2),
                         action: () => {
                             this.notifier.notify(
@@ -292,6 +295,7 @@ export class Halloween2023Scenario4Provider {
                 {
                     label: 'Entrer',
                     icon: 'c:housing/enter.png',
+                    category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario4', 1),
                     action: async () => {
                         this.playerPositionProvider.teleportPlayerToPosition(Halloween2023Scenario4EnterMorgue);
@@ -313,6 +317,7 @@ export class Halloween2023Scenario4Provider {
                 {
                     label: 'Sortir',
                     icon: 'c:housing/enter.png',
+                    category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario4', 3),
                     action: async () => {
                         this.playerPositionProvider.teleportPlayerToPosition(Halloween2023Scenario4ExitMorgue);
@@ -334,6 +339,7 @@ export class Halloween2023Scenario4Provider {
                 {
                     label: 'Entrer',
                     icon: 'c:housing/enter.png',
+                    category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario4', 3),
                     action: async () => {
                         this.playerPositionProvider.teleportPlayerToPosition(Halloween2023Scenario4EnterCayo);
@@ -355,6 +361,7 @@ export class Halloween2023Scenario4Provider {
                 {
                     label: 'Sortir',
                     icon: 'c:housing/enter.png',
+                    category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario4', 4),
                     action: async () => {
                         this.playerPositionProvider.teleportPlayerToPosition(Halloween2023Scenario4ExitCayo);
@@ -376,6 +383,7 @@ export class Halloween2023Scenario4Provider {
                 {
                     label: 'Sortir',
                     icon: 'c:housing/enter.png',
+                    category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario4', 6),
                     action: async () => {
                         this.playerPositionProvider.teleportPlayerToPosition(Halloween2023Scenario4ExitFinal);
@@ -420,6 +428,7 @@ export class Halloween2023Scenario4Provider {
                 {
                     label: zone.label,
                     icon: zone.icon,
+                    category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario4', zone.part),
                     action: async () => {
                         const { completed } = await this.progressService.progress(
@@ -460,6 +469,7 @@ export class Halloween2023Scenario4Provider {
                 {
                     label: 'Toucher',
                     icon: 'fas fa-search',
+                    category: 'citizen',
                     canInteract: () =>
                         this.storyService.canInteractForPart('halloween2023', 'scenario4', 3) ||
                         this.storyService.canInteractForPart('halloween2023', 'scenario4', 4),
@@ -577,6 +587,7 @@ export class Halloween2023Scenario4Provider {
                 {
                     label: 'Parler',
                     icon: 'fas fa-comment',
+                    category: 'citizen',
                     canInteract: () => {
                         return this.storyService.canInteractForPart('halloween2023', 'scenario4', 5);
                     },
@@ -684,6 +695,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'Parler',
                         icon: 'fas fa-comment',
+                        category: 'citizen',
                         action: () => {
                             this.notifier.notify('Ooh, notre nouveau chien ! Bonsoir');
                         },
@@ -785,6 +797,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'Parler',
                         icon: 'fas fa-comment',
+                        category: 'citizen',
                         action: () => {
                             this.notifier.notify('Wouah wouaf !!');
                         },
@@ -888,6 +901,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'NariieL',
                         icon: 'fas fa-question',
+                        category: 'citizen',
                         action: async () => {
                             this.notifier.notify('La douceur des enfers te plait?', 'info');
                         },
@@ -1028,6 +1042,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'Kaemy',
                         icon: 'fas fa-question',
+                        category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
                                 "Hmm... Vous avez eu votre ticket d'entrée pour les enfers ? Vous avez bien lu les petites lignes ? Hmm... Votre âme ? J'ai bien peur que ce soit déjà trop tard...",
@@ -1249,6 +1264,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'DaraBesque',
                         icon: 'fas fa-question',
+                        category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
                                 'Par cette incantation je te maudis : tu as désormais des miettes dans ton lit !',
@@ -1369,6 +1385,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'Tluap',
                         icon: 'fas fa-question',
+                        category: 'citizen',
                         action: async () => {
                             this.notifier.notify("Vous cherchez quelqu'un en particulier ? Personne est ici.", 'info');
                         },
@@ -1518,6 +1535,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'Draglock',
                         icon: 'fas fa-question',
+                        category: 'citizen',
                         action: async () => {
                             this.notifier.notify('Huuuuuuum', 'info');
                         },
@@ -1658,6 +1676,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'Poulpito',
                         icon: 'fas fa-question',
+                        category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
                                 "L'enfer des uns est le paradis des autres. Joins-toi à moi dans les limbes pour l'éternité !",
@@ -1777,6 +1796,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'Sniteur ',
                         icon: 'fas fa-question',
+                        category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
                                 'Hmm. Tu es en vie... Bravo. Reste à savoir pendant combien de temps, si tu continues à me faire perdre du temps.',
@@ -1881,6 +1901,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'Brouznouf',
                         icon: 'fas fa-question',
+                        category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
                                 "Il paraît qu'il y a un fantôme qui sort son téléphone au BCSO ?",
@@ -1980,6 +2001,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'Laikker',
                         icon: 'fas fa-question',
+                        category: 'citizen',
                         action: async () => {
                             this.notifier.notify("C'est bon, c'est fini ? je peux aller dormir ?", 'info');
                         },
@@ -2108,6 +2130,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'Moustache',
                         icon: 'fas fa-question',
+                        category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
                                 'Vous avez aussi survécu à ça ? Vous êtes de vrais cafards ma parole.',
@@ -2210,6 +2233,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'Aurukh',
                         icon: 'fas fa-question',
+                        category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
                                 ' Je vois des citrouilles partout ... Je crois même en avoir vu certaines marcher ...',
@@ -2310,6 +2334,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'Rigonkmalk',
                         icon: 'fas fa-question',
+                        category: 'citizen',
                         action: async () => {
                             this.notifier.notify('Des travaux, encore des travaux... Un travail démoniaque...', 'info');
                         },
@@ -2405,6 +2430,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'Oneiluj',
                         icon: 'fas fa-question',
+                        category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
                                 "Il est vrai j'ai beaucoup d'adversaires. Et sur le côté quelques ennemis refoulés.",
@@ -2505,6 +2531,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'Lasbou',
                         icon: 'fas fa-question',
+                        category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
                                 "Rassurez vous tout va bien la situation est sous contrôle ... Oui Commissionner ? c'est classé secret défense ? très bien, Le Commissionner m'informe que c'est classé secret défense.  Sujet suivant s'il vous plait.",
@@ -2602,6 +2629,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'Daelbhas',
                         icon: 'fas fa-question',
+                        category: 'citizen',
                         action: async () => {
                             this.notifier.notify("L'enfer, c'est les Autres.", 'info');
                         },
@@ -2716,6 +2744,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'Ojymas',
                         icon: 'fas fa-question',
+                        category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
                                 "Tu dis avoir vécu l'enfer ces derniers jours ? Arrête tes conneries avant que je ne te foudroie.",
@@ -2814,6 +2843,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'Poulpitor',
                         icon: 'fas fa-question',
+                        category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
                                 'Moi, de mon temps, pour être récompenser, fallait sauter sur des éoliennes... Tout se perd, je vous jure... Les zombies auraient dû gagner, je vous le dis moi...',
@@ -2910,6 +2940,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'DreamXZE',
                         icon: 'fas fa-question',
+                        category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
                                 "Quoi.. Déjà fini? Tu as pourtant l'air effrayé, on aurait peut-être dû vous laisser avec les zombies..",
@@ -3054,6 +3085,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'Balrock',
                         icon: 'fas fa-question',
+                        category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
                                 "Une histoire commence, une autre continue, puis une autre ce fini, tu es le héros de ta propre histoire, attention qu'elle ne se finisse pas rapidement pour toi, bouge de là !",
@@ -3209,6 +3241,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'MarverikG',
                         icon: 'fas fa-question',
+                        category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
                                 'Tu veux vraiment me chercher après avoir vécu tout ça ces derniers jours? T’es fou ou quoi?',
@@ -3311,6 +3344,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'Silverlord',
                         icon: 'fas fa-question',
+                        category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
                                 "J'espère que t'as aimé les petites enquêtes. En espérant que la facture LSMC était pas trop salée !",
@@ -3410,6 +3444,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'Aurelien',
                         icon: 'fas fa-question',
+                        category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
                                 "Que les esprits d'Halloween vous accompagnent tout au long de la nuit. N'oubliez pas de rester prudents et de passer une effrayante et joyeuse soirée d'Halloween !",
@@ -3619,6 +3654,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'Guegette',
                         icon: 'fas fa-question',
+                        category: 'citizen',
                         action: async () => {
                             this.notifier.notify('Lâchez votre arme !... Et heuuu... le cerceuil aussi.', 'info');
                         },
@@ -3733,6 +3769,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'Triplaxion',
                         icon: 'fas fa-question',
+                        category: 'citizen',
                         action: async () => {
                             this.notifier.notify('Ici, la curiosité peut être mortelle. Garde tes distances.', 'info');
                         },
@@ -3837,6 +3874,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'Xerackk',
                         icon: 'fas fa-question',
+                        category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
                                 'Je suis en pleine affaire, ne viens pas me causer des ennuis.',
@@ -3945,6 +3983,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'Berlu',
                         icon: 'fas fa-question',
+                        category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
                                 "Bien joué, t'as trouvé plein de citrouilles, j'espère que tu trouveras les chocolats de Noël dans 2 mois ma gueule .",
@@ -4099,6 +4138,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'Yob',
                         icon: 'fas fa-question',
+                        category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
                                 "Ma patience a des limites. Eloigne toi avant qu'elle ne se brise.",
@@ -4228,6 +4268,7 @@ export class Halloween2023Scenario4Provider {
                     {
                         label: 'Tone',
                         icon: 'fas fa-question',
+                        category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
                                 "Tout le chaos des derniers jours, et c'est maintenant que tu veux me provoquer ? T'es coriace, je l'admets.",

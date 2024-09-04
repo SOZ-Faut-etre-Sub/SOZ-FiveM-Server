@@ -62,6 +62,7 @@ export class VehicleCarWashProvider {
             {
                 icon: 'c:mechanic/Car_wash.png',
                 label: 'Laver sa voiture',
+                category: 'citizen',
                 action: entity => {
                     const networkId = NetworkGetNetworkIdFromEntity(entity);
 

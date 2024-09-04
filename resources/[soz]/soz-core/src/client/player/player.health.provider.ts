@@ -1,4 +1,5 @@
 import { wait } from '@public/core/utils';
+import { TargetOption } from '@public/shared/target';
 
 import { On, Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -641,6 +642,7 @@ export class PlayerHealthProvider {
                 {
                     label: 'Faire des tractions',
                     icon: 'c:/sport/traction.png',
+                    category: 'citizen',
                     canInteract: () => true,
                     action: () => {
                         if (!this.playerService.getState().isInSportClothes) {
@@ -658,6 +660,7 @@ export class PlayerHealthProvider {
                 {
                     label: 'Faire des haltères',
                     icon: 'c:/sport/halteres.png',
+                    category: 'citizen',
                     canInteract: () => true,
                     action: () => {
                         if (!this.playerService.getState().isInSportClothes) {
@@ -701,10 +704,11 @@ export class PlayerHealthProvider {
             color: 47,
         });
 
-        const gym_targets = [
+        const gym_targets: TargetOption[] = [
             {
                 icon: 'c:jobs/habiller.png',
                 label: 'Changer de tenue',
+                category: 'citizen',
                 canInteract: () => {
                     const player = this.playerService.getPlayer();
 
@@ -727,11 +731,11 @@ export class PlayerHealthProvider {
             },
         ];
 
-        const gym_targets_free = [
+        const gym_targets_free: TargetOption[] = [
             {
                 icon: 'c:jobs/habiller.png',
                 label: 'Changer de tenue',
-                canInteract: () => true,
+                category: 'citizen',
                 action: async () => {
                     await puttingSportClothes();
                 },
@@ -895,6 +899,7 @@ export class PlayerHealthProvider {
                     {
                         label: 'Prendre un abonnement.',
                         icon: 'c:/sport/abonnement.png',
+                        category: 'citizen',
                         canInteract: () => {
                             const player = this.playerService.getPlayer();
 
@@ -911,6 +916,7 @@ export class PlayerHealthProvider {
                     {
                         label: 'Renouveler son abonnement.',
                         icon: 'c:/sport/renouvellement.png',
+                        category: 'citizen',
                         canInteract: () => {
                             const player = this.playerService.getPlayer();
 

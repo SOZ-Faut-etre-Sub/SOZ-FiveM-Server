@@ -299,6 +299,7 @@ export class TemporaryProvider {
                         {
                             icon: 'c:pole/start.png',
                             label: job.label,
+                            category: 'society',
                             blackoutGlobal: true,
                             canInteract: () => {
                                 return this.playerService.getPlayer()?.job.id === JobType.Unemployed;
@@ -310,6 +311,7 @@ export class TemporaryProvider {
                         {
                             icon: 'c:pole/restart.png',
                             label: 'Relancer',
+                            category: 'society',
                             blackoutGlobal: true,
                             canInteract: () => {
                                 return this.playerService.getPlayer()?.job.id === jobType;
@@ -321,6 +323,7 @@ export class TemporaryProvider {
                         {
                             icon: 'c:pole/end.png',
                             label: 'Terminer',
+                            category: 'society',
                             canInteract: () => {
                                 return this.playerService.getPlayer()?.job.id === jobType;
                             },
@@ -443,6 +446,7 @@ export class TemporaryProvider {
             {
                 icon: job.targetIcon,
                 label: job.targetLabel,
+                category: 'society',
                 canInteract: entity => {
                     if (job.repeat && this.entityDones.includes(entity)) {
                         return false;

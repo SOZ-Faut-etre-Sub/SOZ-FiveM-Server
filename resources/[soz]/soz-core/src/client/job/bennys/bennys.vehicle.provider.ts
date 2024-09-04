@@ -123,6 +123,7 @@ export class BennysVehicleProvider {
                 blackoutGlobal: true,
                 blackoutJob: JobType.Bennys,
                 job: JobType.Bennys,
+                category: 'society',
                 canInteract: entity => !IsEntityDead(entity) && this.isInsideUpgradeZoneOrNearRepairVehicle(),
             },
             {
@@ -133,6 +134,7 @@ export class BennysVehicleProvider {
                 blackoutGlobal: true,
                 blackoutJob: JobType.Bennys,
                 job: JobType.Bennys,
+                category: 'society',
                 canInteract: entity => !IsEntityDead(entity) && this.isInsideUpgradeZoneOrNearRepairVehicle(),
             },
             {
@@ -143,6 +145,7 @@ export class BennysVehicleProvider {
                 blackoutGlobal: true,
                 blackoutJob: JobType.Bennys,
                 job: JobType.Bennys,
+                category: 'society',
                 canInteract: entity =>
                     !IsEntityDead(entity) &&
                     this.isInsideUpgradeZoneOrNearRepairVehicle() &&
@@ -156,6 +159,7 @@ export class BennysVehicleProvider {
                 blackoutGlobal: true,
                 blackoutJob: JobType.Bennys,
                 job: JobType.Bennys,
+                category: 'society',
                 canInteract: entity => !IsEntityDead(entity) && this.isInsideUpgradeZoneOrNearRepairVehicle(),
             },
             {
@@ -164,6 +168,7 @@ export class BennysVehicleProvider {
                 color: JobType.Bennys,
                 blackoutGlobal: true,
                 blackoutJob: JobType.Bennys,
+                category: 'society',
                 action: this.washVehicle.bind(this),
                 job: JobType.Bennys,
                 canInteract: entity => !IsEntityDead(entity) && this.isInsideUpgradeZoneOrNearRepairVehicle(),
@@ -176,6 +181,7 @@ export class BennysVehicleProvider {
                 blackoutJob: JobType.Bennys,
                 job: JobType.Bennys,
                 item: 'diagnostic_pad',
+                category: 'society',
                 action: this.analyzeVehicle.bind(this),
             },
         ]);
@@ -413,6 +419,7 @@ export class BennysVehicleProvider {
                 job: JobType.Bennys,
                 blackoutJob: JobType.Bennys,
                 blackoutGlobal: true,
+                category: 'society',
                 canInteract: () => {
                     return this.jobService.hasPermission(JobType.Bennys, JobPermission.BennysOrder);
                 },

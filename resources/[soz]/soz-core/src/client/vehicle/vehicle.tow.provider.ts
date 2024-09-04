@@ -36,6 +36,7 @@ export class VehicleTowProvider {
             {
                 label: 'Attacher cable de remorquage',
                 icon: 'c:mechanic/Attacher.png',
+                category: 'citizen',
                 canInteract: entity => entity != this.from,
                 action: async entity => {
                     if (!this.from) {
@@ -82,6 +83,7 @@ export class VehicleTowProvider {
             {
                 label: 'Annuler le Remorquage',
                 icon: 'c:mechanic/Attacher.png',
+                category: 'citizen',
                 canInteract: entity => entity == this.from,
                 action: () => {
                     this.ropeService.deleteRope();
@@ -91,6 +93,7 @@ export class VehicleTowProvider {
             {
                 label: 'Détacher le cable de remorquage',
                 icon: 'c:mechanic/Attacher.png',
+                category: 'citizen',
                 canInteract: entity => {
                     const netId = NetworkGetNetworkIdFromEntity(entity);
                     return this.towRopeRepository.get(rope => rope.netId1 == netId || rope.netId2 == netId).length > 0;

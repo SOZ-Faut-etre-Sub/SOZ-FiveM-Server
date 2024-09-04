@@ -30,6 +30,7 @@ export class InventorySmugglingBoxProvider {
             {
                 label: 'Ouvrir',
                 icon: 'c:inventory/ouvrir_le_stockage.png',
+                category: 'citizen',
                 color: 'crimi',
                 canInteract: entity => {
                     return !!this.objectProvider.getIdFromEntity(entity);

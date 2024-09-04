@@ -65,9 +65,10 @@ export class BennysFlatbedProvider {
                 color: JobType.Bennys,
                 job: JobType.Bennys,
                 label: 'Remorquer',
-                event: 'soz-flatbed:client:calltp',
+                category: 'society',
                 action: (entity: number) => {
                     this.attachVehicle(entity);
+                    TriggerEvent('soz-flatbed:client:calltp');
                 },
                 canInteract: () => this.currentFlatbedAttach !== null,
             },
@@ -76,6 +77,7 @@ export class BennysFlatbedProvider {
                 color: JobType.Bennys,
                 job: JobType.Bennys,
                 label: 'Prendre le crochet',
+                category: 'society',
                 action: (entity: number) => {
                     this.toggleFlatbedAttach(entity);
                 },
@@ -99,6 +101,7 @@ export class BennysFlatbedProvider {
                 color: JobType.Bennys,
                 job: JobType.Bennys,
                 label: 'Déposer le crochet',
+                category: 'society',
                 action: entity => {
                     this.toggleFlatbedAttach(entity);
                 },
@@ -119,6 +122,7 @@ export class BennysFlatbedProvider {
                 color: JobType.Bennys,
                 job: JobType.Bennys,
                 label: 'Démorquer',
+                category: 'society',
                 action: (entity: number) => {
                     TriggerServerEvent(
                         ServerEvent.BENNYS_FLATBED_ASK_DETACH_VEHICLE,

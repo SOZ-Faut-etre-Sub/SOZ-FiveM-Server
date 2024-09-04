@@ -135,6 +135,7 @@ export class LSMCProvider {
                 {
                     icon: 'fas fa-bed',
                     label: "S'allonger sur le lit",
+                    category: 'citizen',
                     action: async entity => {
                         this.onBed(entity);
                     },
@@ -142,6 +143,7 @@ export class LSMCProvider {
                 {
                     icon: 'c:ems/stretcher.png',
                     label: 'Allonger sur le lit',
+                    category: 'citizen',
                     canInteract: () => {
                         const state = this.playerService.getState();
                         return state.isEscorting;
@@ -171,6 +173,7 @@ export class LSMCProvider {
                         [JobType.SASP]: 0,
                         [JobType.FBI]: 0,
                     },
+                    category: 'society',
                     canInteract: entity => {
                         const deadPed = this.getDeadPedInVehicle(entity);
 
@@ -242,6 +245,7 @@ export class LSMCProvider {
                 {
                     label: 'Faire monter',
                     icon: 'c:ems/sortir.png',
+                    category: 'society',
                     canInteract: entity => {
                         if (!this.vehicleLockProvider.isVehOpen(entity)) {
                             return false;

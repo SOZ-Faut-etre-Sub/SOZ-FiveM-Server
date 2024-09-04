@@ -92,6 +92,7 @@ export class HousingApartmentZoneProvider {
                 {
                     label: 'Sortir',
                     icon: 'c:housing/enter.png',
+                    category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
 
@@ -108,6 +109,7 @@ export class HousingApartmentZoneProvider {
                 {
                     label: 'Stocker les meubles',
                     icon: 'fa fa-cart-arrow-down',
+                    category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
 
@@ -144,6 +146,7 @@ export class HousingApartmentZoneProvider {
                 {
                     label: 'Coffre de stockage',
                     icon: 'c:inventory/ouvrir_le_stockage.png',
+                    category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
 
@@ -172,6 +175,7 @@ export class HousingApartmentZoneProvider {
                 {
                     label: 'Frigo',
                     icon: 'fa fa-carrot',
+                    category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
 
@@ -200,6 +204,7 @@ export class HousingApartmentZoneProvider {
                 {
                     label: "Coffre d'argent",
                     icon: 'c:bank/compte_safe.png',
+                    category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
 
@@ -224,6 +229,7 @@ export class HousingApartmentZoneProvider {
                 {
                     label: 'Penderie',
                     icon: 'c:jobs/habiller.png',
+                    category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
 

@@ -33,6 +33,7 @@ export class DmcRestockProvider {
                 job: JobType.DMC,
                 blackoutGlobal: true,
                 blackoutJob: JobType.DMC,
+                category: 'society',
                 action: () => {
                     TriggerServerEvent(ServerEvent.DMC_RESTOCK);
                 },

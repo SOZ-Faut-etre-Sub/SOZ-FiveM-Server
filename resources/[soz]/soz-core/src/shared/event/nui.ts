@@ -571,4 +571,7 @@ export enum NuiEvent {
     SceneTeleport = 'soz-core:nui-client:scene:teleport',
     SceneLoad = 'soz-core:nui-client:scene:load',
     SceneUnload = 'soz-core:nui-client:scene:unload',
+
+    TargetReset = 'soz-core:nui:target:reset',
+    TargetSelect = 'soz-core:nui:target:select',
 }

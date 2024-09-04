@@ -49,6 +49,7 @@ export class UpwVehicleProvider {
                 blackoutGlobal: true,
                 blackoutJob: 'upw',
                 item: 'lithium_battery',
+                category: 'society',
                 canInteract: entity => !IsEntityDead(entity) && isVehicleModelElectric(GetEntityModel(entity)),
             },
         ]);

@@ -72,6 +72,7 @@ export class PoliceMoneyCheckerProvider {
                         job: moneycheckerInfo.job,
                         blackoutGlobal: true,
                         blackoutJob: moneycheckerInfo.job,
+                        category: 'society',
                         canInteract: () => {
                             const [player, distance] = this.playerService.getClosestPlayer();
 

@@ -10,12 +10,13 @@ import { DrivingSchoolConfig, DrivingSchoolLicense, DrivingSchoolLicenseType } f
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { Vector3, Vector4 } from '../../shared/polyzone/vector';
+import { TargetOption } from '../../shared/target';
 import { BlipFactory } from '../blip';
 import { Notifier } from '../notifier';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
 import { TaxRepository } from '../repository/tax.repository';
-import { TargetFactory, TargetOptions } from '../target/target.factory';
+import { TargetFactory } from '../target/target.factory';
 
 @Provider()
 export class DrivingSchoolProvider {
@@ -73,11 +74,12 @@ export class DrivingSchoolProvider {
         this.nuiMenu.closeMenu();
     }
 
-    private getTargetOptions(position: Vector3): TargetOptions[] {
-        const targetOptions: TargetOptions[] = [
+    private getTargetOptions(position: Vector3): TargetOption[] {
+        const targetOptions: TargetOption[] = [
             {
                 label: `Carte grise`,
                 icon: 'c:driving-school/voiture.png',
+                category: 'citizen',
                 blackoutGlobal: true,
                 action: async () => {
                     const remainingSlots = await emitRpc<number>(RpcServerEvent.DRIVING_SCHOOL_CHECK_REMAINING_SLOTS);
@@ -109,8 +111,8 @@ export class DrivingSchoolProvider {
             targetOptions.push({
                 label: `${license.label} ($${price})`,
                 icon: license.icon,
-                event: ClientEvent.DRIVING_SCHOOL_START_EXAM,
                 blackoutGlobal: true,
+                category: 'citizen',
                 action: () => {
                     const lData: DrivingSchoolLicense = DrivingSchoolConfig.licenses[license.licenseType];
 
@@ -130,6 +132,7 @@ export class DrivingSchoolProvider {
                     }
 
                     TriggerServerEvent(ServerEvent.DRIVING_SCHOOL_PLAYER_PAY, lData.licenseType, spawnPoint);
+                    TriggerEvent(ClientEvent.DRIVING_SCHOOL_START_EXAM);
                 },
             });
         });

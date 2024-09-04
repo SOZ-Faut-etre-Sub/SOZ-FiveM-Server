@@ -34,6 +34,7 @@ export class BankSafeProvider {
                     {
                         label: 'Ouvrir',
                         icon: 'c:bank/compte_safe.png',
+                        category: 'citizen',
                         action: async entity => {
                             TaskTurnPedToFaceEntity(PlayerPedId(), entity, 500);
                             await wait(500);

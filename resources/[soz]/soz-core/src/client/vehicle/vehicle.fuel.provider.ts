@@ -142,6 +142,7 @@ export class VehicleFuelProvider {
                 color: JobType.Oil,
                 icon: 'c:fuel/pistolet.png',
                 job: JobType.Oil,
+                category: 'citizen',
                 action: entity => {
                     const station = this.fuelStationRepository.getStationForEntity(entity);
 
@@ -171,6 +172,7 @@ export class VehicleFuelProvider {
                 label: 'Remplir la station de kérosène',
                 color: JobType.Oil,
                 icon: 'c:fuel/pistolet.png',
+                category: 'citizen',
                 action: entity => {
                     const station = this.fuelStationRepository.getStationForEntity(entity);
 
@@ -197,9 +199,10 @@ export class VehicleFuelProvider {
             {
                 label: 'État de la station',
                 icon: 'c:fuel/check.png',
-                event: 'fuel:client:GetFuelLevel',
+                category: 'citizen',
                 action: (entity: number) => {
                     this.getStationFuelLevel(entity);
+                    TriggerEvent('fuel:client:GetFuelLevel');
                 },
                 canInteract: (entity: number) => {
                     const player = this.playerService.getPlayer();
@@ -229,6 +232,7 @@ export class VehicleFuelProvider {
             {
                 icon: 'c:fuel/pistolet.png',
                 label: 'Prendre le pistolet',
+                category: 'citizen',
                 action: (entity: number) => {
                     this.toggleStationPistol(entity);
                 },
@@ -260,6 +264,7 @@ export class VehicleFuelProvider {
             {
                 icon: 'c:fuel/pistolet.png',
                 label: 'Prendre le pistolet ' + '($' + this.publicOilStationPrice.toFixed(2) + '/L)',
+                category: 'citizen',
                 action: (entity: number) => {
                     this.toggleStationPistol(entity);
                 },
@@ -291,6 +296,7 @@ export class VehicleFuelProvider {
             {
                 icon: 'c:fuel/pistolet.png',
                 label: 'Prendre le pistolet ' + '($' + this.publicKeroseneStationPrice.toFixed(2) + '/L)',
+                category: 'citizen',
                 action: (entity: number) => {
                     this.toggleStationPistol(entity);
                 },
@@ -322,6 +328,7 @@ export class VehicleFuelProvider {
             {
                 icon: 'c:fuel/pistolet.png',
                 label: 'Reposer le pistolet',
+                category: 'citizen',
                 action: (entity: number) => {
                     this.toggleStationPistol(entity);
                 },
@@ -360,6 +367,7 @@ export class VehicleFuelProvider {
             {
                 label: 'Remplir le véhicule',
                 icon: 'c:fuel/remplir.png',
+                category: 'citizen',
                 blackoutGlobal: true,
                 canInteract: (entity: number) => {
                     if (GetEntityHealth(entity) <= 0) {

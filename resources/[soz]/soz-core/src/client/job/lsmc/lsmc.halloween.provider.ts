@@ -49,6 +49,7 @@ export class LSMCHalloweenProvider {
                 label: 'Un fil qui dépasse...',
                 color: 'lsmc',
                 job: JobType.LSMC,
+                category: 'society',
                 action: this.doLoot.bind(this),
             },
         ]);

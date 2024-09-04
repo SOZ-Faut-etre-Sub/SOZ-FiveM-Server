@@ -89,8 +89,9 @@ export class SeatAnimationProvider {
             SeatsTargetList,
             [
                 {
-                    label: "S'asseoir",
                     icon: 'fas fa-chair',
+                    label: "S'asseoir",
+                    category: 'citizen',
                     action: async entity =>
                         this.playSitAnimation(entity, 'PROP_HUMAN_SEAT_CHAIR_MP_PLAYER', true, true),
                 },
@@ -101,8 +102,9 @@ export class SeatAnimationProvider {
             SeatsTargetList,
             [
                 {
-                    label: "S'asseoir et Boire",
                     icon: 'fas fa-beer',
+                    label: "S'asseoir et Boire",
+                    category: 'citizen',
                     action: async entity =>
                         this.playSitAnimation(entity, 'PROP_HUMAN_SEAT_CHAIR_DRINK_BEER', false, true),
                 },
@@ -113,8 +115,9 @@ export class SeatAnimationProvider {
             SeatsTargetList,
             [
                 {
-                    label: "S'asseoir et Manger",
                     icon: 'fas fa-hamburger',
+                    label: "S'asseoir et Manger",
+                    category: 'citizen',
                     action: async entity => this.playSitAnimation(entity, 'PROP_HUMAN_SEAT_CHAIR_FOOD', false, true),
                 },
             ],
@@ -124,8 +127,9 @@ export class SeatAnimationProvider {
             LoungerTargetList,
             [
                 {
-                    label: "S'allonger",
                     icon: 'fas fa-umbrella-beach',
+                    label: "S'allonger",
+                    category: 'citizen',
                     action: async entity => this.playSitAnimation(entity, 'PROP_HUMAN_SEAT_SUNLOUNGER', false, false),
                 },
             ],
@@ -135,8 +139,9 @@ export class SeatAnimationProvider {
             BarbecueList,
             [
                 {
-                    label: 'Cuisiner',
                     icon: 'fas fa-stroopwafel',
+                    label: 'Cuisiner',
+                    category: 'citizen',
                     action: async entity => this.playSitAnimation(entity, 'PROP_HUMAN_BBQ', false, false),
                 },
             ],

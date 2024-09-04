@@ -120,6 +120,7 @@ export class PlayerZombieProvider {
                 label: 'Dezombifier',
                 item: 'halloween_zombie_serum',
                 icon: 'c:ems/take_blood.png',
+                category: 'citizen',
                 canInteract: entity => {
                     if (this._isZombie) {
                         return false;

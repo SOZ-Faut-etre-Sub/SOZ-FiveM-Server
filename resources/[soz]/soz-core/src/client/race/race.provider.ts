@@ -114,6 +114,7 @@ export class RaceProvider {
             {
                 label: 'Lancer la course',
                 icon: 'c:race/launch.png',
+                category: 'citizen',
                 canInteract: entity => {
                     return !!Object.values(this.raceRepository.get()).find(race => race.npc == entity);
                 },
@@ -125,6 +126,7 @@ export class RaceProvider {
             {
                 label: 'Classement',
                 icon: 'c:race/score.png',
+                category: 'citizen',
                 canInteract: entity => {
                     return !!Object.values(this.raceRepository.get()).find(race => race.npc == entity);
                 },
@@ -136,6 +138,7 @@ export class RaceProvider {
             {
                 label: 'Accéder au parking temporaire',
                 icon: 'c:garage/ParkingPublic.png',
+                category: 'citizen',
                 canInteract: entity => {
                     const race = Object.values(this.raceRepository.get()).find(race => race.npc == entity);
                     return race && race.garageLocation != null;

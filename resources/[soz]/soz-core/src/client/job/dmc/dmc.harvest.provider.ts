@@ -47,6 +47,7 @@ export class DmcHarvestProvider {
                             icon: 'c:dmc/pickaxe.png',
                             color: 'dmc',
                             job: JobType.DMC,
+                            category: 'society',
                             canInteract: () => {
                                 return (
                                     this.weaponService.getCurrentWeapon() &&

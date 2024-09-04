@@ -79,6 +79,7 @@ export class LSMCInteractionProvider {
                 job: JobType.LSMC,
                 blackoutGlobal: true,
                 blackoutJob: 'lsmc',
+                category: 'society',
                 canInteract: async entity => {
                     if (!hopital.isPointInside(GetEntityCoords(PlayerPedId()) as Vector3)) {
                         return false;
@@ -102,6 +103,7 @@ export class LSMCInteractionProvider {
                 job: JobType.LSMC,
                 blackoutGlobal: true,
                 blackoutJob: 'lsmc',
+                category: 'society',
                 canInteract: async entity => {
                     if (!hopital.isPointInside(GetEntityCoords(PlayerPedId()) as Vector3)) {
                         return false;
@@ -136,6 +138,7 @@ export class LSMCInteractionProvider {
                 color: JobType.LSMC,
                 icon: 'c:ems/desabhiller.png',
                 job: JobType.LSMC,
+                category: 'society',
                 canInteract: entity => {
                     if (!hopital.isPointInside(GetEntityCoords(PlayerPedId()) as Vector3)) {
                         return false;
@@ -158,6 +161,7 @@ export class LSMCInteractionProvider {
                 color: JobType.LSMC,
                 icon: 'c:ems/rhabiller.png',
                 job: JobType.LSMC,
+                category: 'society',
                 canInteract: entity => {
                     if (!hopital.isPointInside(GetEntityCoords(PlayerPedId()) as Vector3)) {
                         return false;
@@ -180,6 +184,7 @@ export class LSMCInteractionProvider {
                 color: JobType.LSMC,
                 icon: 'c:ems/heal.png',
                 job: JobType.LSMC,
+                category: 'society',
                 canInteract: entity => {
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
 
@@ -216,6 +221,7 @@ export class LSMCInteractionProvider {
                 color: JobType.LSMC,
                 icon: 'c:ems/revive.png',
                 job: JobType.LSMC,
+                category: 'society',
                 canInteract: entity => {
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
 
@@ -230,6 +236,7 @@ export class LSMCInteractionProvider {
                 label: 'Utiliser Défibrilateur',
                 color: JobType.LSMC,
                 icon: 'c:ems/revive.png',
+                category: 'society',
                 canInteract: entity => {
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
 
@@ -245,6 +252,7 @@ export class LSMCInteractionProvider {
                 color: JobType.LSMC,
                 icon: 'c:ems/take_blood.png',
                 job: JobType.LSMC,
+                category: 'society',
                 canInteract: entity => {
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                     return !this.playerListStateService.isDead(target);
@@ -285,6 +293,7 @@ export class LSMCInteractionProvider {
                 color: JobType.LSMC,
                 job: JobType.LSMC,
                 icon: 'c:ems/rescuer.png',
+                category: 'society',
                 canInteract: async entity => {
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                     const hasRescuerLicense = await emitRpcCache<number>(
@@ -312,6 +321,7 @@ export class LSMCInteractionProvider {
                 color: JobType.LSMC,
                 job: JobType.LSMC,
                 icon: 'c:ems/notrescuer.png',
+                category: 'society',
                 canInteract: async entity => {
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                     const hasRescuerLicense = await emitRpcCache<number>(
@@ -339,6 +349,7 @@ export class LSMCInteractionProvider {
                 color: JobType.LSMC,
                 job: JobType.LSMC,
                 icon: 'c:ems/platre.png',
+                category: 'society',
                 action: async entity => {
                     const playerServerId = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                     const data = await emitRpc<PlasterLocation[]>(RpcServerEvent.LSMC_PLAYER_PLASTER, playerServerId);
@@ -354,6 +365,7 @@ export class LSMCInteractionProvider {
                 color: JobType.LSMC,
                 job: JobType.LSMC,
                 icon: 'c:ems/naloxone.png',
+                category: 'society',
                 canInteract: entity => {
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
 
@@ -370,6 +382,7 @@ export class LSMCInteractionProvider {
                 color: JobType.LSMC,
                 icon: 'c:ems/morphine.png',
                 job: JobType.LSMC,
+                category: 'society',
                 canInteract: entity => {
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
 
@@ -396,6 +409,7 @@ export class LSMCInteractionProvider {
                     color: JobType.LSMC,
                     icon: 'c:ems/heal.png',
                     job: JobType.LSMC,
+                    category: 'society',
                     action: () => {
                         this.progressService.progress(
                             'heal_training',
@@ -419,6 +433,7 @@ export class LSMCInteractionProvider {
                     color: JobType.LSMC,
                     icon: 'c:ems/morphine.png',
                     job: JobType.LSMC,
+                    category: 'society',
                     action: () => {
                         this.progressService.progress(
                             'shooting_training',
@@ -449,6 +464,7 @@ export class LSMCInteractionProvider {
                     color: JobType.LSMC,
                     icon: 'c:ems/greffer.png',
                     job: JobType.LSMC,
+                    category: 'society',
                     action: () => {
                         this.progressService.progress(
                             'Soigner',

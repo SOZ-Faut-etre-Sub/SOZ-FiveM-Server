@@ -106,6 +106,7 @@ export class LSMCCheckHealthProvider {
                 color: 'lsmc',
                 icon: 'c:ems/take_blood.png',
                 job: 'lsmc',
+                category: 'society',
                 action: this.doBloodCheck.bind(this),
                 item: 'flask_blood_empty',
             },
@@ -114,6 +115,7 @@ export class LSMCCheckHealthProvider {
                 icon: 'c:ems/health_state.png',
                 color: 'lsmc',
                 job: 'lsmc',
+                category: 'society',
                 action: this.doHealthCheck.bind(this),
             },
             {
@@ -121,6 +123,7 @@ export class LSMCCheckHealthProvider {
                 icon: 'c:ems/health_card.png',
                 color: 'lsmc',
                 job: 'lsmc',
+                category: 'society',
                 action: entity => {
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                     this.nuiMenu.openMenu(MenuType.SetHealthState, target, {
@@ -153,7 +156,7 @@ export class LSMCCheckHealthProvider {
                     icon: 'c:ems/urine_test.png',
                     color: 'lsmc',
                     job: 'lsmc',
-                    event: ServerEvent.LSMC_PEE_ANALYZE,
+                    category: 'society',
                     action: () => {
                         TriggerServerEvent(ServerEvent.LSMC_PEE_ANALYZE);
                     },
@@ -164,6 +167,7 @@ export class LSMCCheckHealthProvider {
                     icon: 'c:ems/blood_test.png',
                     color: 'lsmc',
                     job: 'lsmc',
+                    category: 'society',
                     action: () => {
                         TriggerServerEvent(ServerEvent.LSMC_BLOOD_ANALYZE);
                     },

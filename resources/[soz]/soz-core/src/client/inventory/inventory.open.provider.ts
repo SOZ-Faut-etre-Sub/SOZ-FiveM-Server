@@ -39,6 +39,7 @@ export class InventoryOpenProvider {
                 {
                     label: 'Fouiller',
                     icon: 'c:inventory/ouvrir_la_poubelle.png',
+                    category: 'criminal',
                     action: async (entity: number) => {
                         const id = computeBinId(entity);
                         TaskTurnPedToFaceEntity(PlayerPedId(), entity, 800);

@@ -4,6 +4,7 @@ import { Provider } from '@core/decorators/provider';
 import { emitRpc } from '@core/rpc';
 import { wait } from '@core/utils';
 import { Apartment } from '@public/shared/housing/housing';
+import { TargetOption } from '@public/shared/target';
 
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
@@ -123,12 +124,13 @@ export class VehicleGarageProvider {
                 });
             }
 
-            const targets = [];
+            const targets: TargetOption[] = [];
 
             if (garage.type === GarageType.Public) {
                 targets.push({
                     label: 'Accéder au parking public',
                     icon: 'c:garage/ParkingPublic.png',
+                    category: 'citizen',
                     action: () => {
                         this.enterGarage(garageIdentifier, garage);
                     },
@@ -139,6 +141,7 @@ export class VehicleGarageProvider {
                 targets.push({
                     label: 'Accéder au parking privé',
                     icon: 'c:garage/ParkingPrive.png',
+                    category: 'citizen',
                     action: () => {
                         this.enterGarage(garageIdentifier, garage);
                     },
@@ -160,6 +163,7 @@ export class VehicleGarageProvider {
                     targets.push({
                         label: 'Accéder à la fourrière',
                         icon: 'c:garage/Fourriere.png',
+                        category: 'citizen',
                         action: () => {
                             this.enterGarage(garageIdentifier, garage);
                         },
@@ -179,6 +183,7 @@ export class VehicleGarageProvider {
                 targets.push({
                     label: 'Accéder au parking entreprise',
                     icon: 'c:garage/GarageEntreprise.png',
+                    category: 'society',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
                         return player && player.job.id == garage.job;
@@ -199,6 +204,7 @@ export class VehicleGarageProvider {
                 targets.push({
                     label: 'Accéder au parking entreprise luxe',
                     icon: 'c:garage/GarageEntreprise.png',
+                    category: 'society',
                     action: () => {
                         this.enterGarage(garageIdentifier, garage);
                     },
@@ -221,6 +227,7 @@ export class VehicleGarageProvider {
                 {
                     label: 'Fourriérer',
                     icon: 'c:mechanic/CarFourriere.png',
+                    category: 'society',
                     action: async entity => {
                         const closestPound = this.getClosestPound();
 
@@ -238,6 +245,7 @@ export class VehicleGarageProvider {
                 {
                     label: 'Fourrière Fédérale',
                     icon: 'c:mechanic/CarFourriere.png',
+                    category: 'society',
                     action: async entity => {
                         const closestPound = this.getClosestPound();
 

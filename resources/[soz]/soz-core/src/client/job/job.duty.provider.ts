@@ -5,8 +5,9 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { JobPermission, JobType } from '../../shared/job';
 import { Zone } from '../../shared/polyzone/box.zone';
+import { TargetOption } from '../../shared/target';
 import { PlayerService } from '../player/player.service';
-import { TargetFactory, TargetOptions } from '../target/target.factory';
+import { TargetFactory } from '../target/target.factory';
 import { JobService } from './job.service';
 
 const DutyZoneConfig: Zone<JobType>[] = [
@@ -272,47 +273,51 @@ export class JobDutyProvider {
         }
     }
 
-    getDutyZoneTarget(job: JobType): TargetOptions[] {
+    getDutyZoneTarget(job: JobType): TargetOption[] {
         return [
             {
-                type: 'server',
-                event: 'QBCore:ToggleDuty',
                 icon: 'fas fa-sign-in-alt',
                 label: 'Prise de service',
+                category: 'society',
                 canInteract: () => {
                     const player = this.playerService.getPlayer();
                     return player.job.id == job && !player.job.onduty;
                 },
+                action: () => {
+                    TriggerServerEvent('QBCore:ToggleDuty');
+                },
             },
             {
-                type: 'server',
-                event: 'QBCore:ToggleDuty',
                 icon: 'fas fa-sign-in-alt',
                 label: 'Fin de service',
+                category: 'society',
+                action: () => {
+                    TriggerServerEvent('QBCore:ToggleDuty');
+                },
                 job,
             },
             {
                 icon: 'fas fa-users',
                 label: 'Employé(e)s en service',
-                action: () => {
-                    TriggerServerEvent('QBCore:GetEmployOnDuty');
-                },
+                category: 'society',
                 canInteract: () => {
                     const player = this.playerService.getPlayer();
                     return this.jobService.hasPermission(player.job.id, JobPermission.OnDutyView);
+                },
+                action: () => {
+                    TriggerServerEvent('QBCore:GetEmployOnDuty');
                 },
                 job,
             },
         ];
     }
 
-    getBunkerDutyZoneTarget(): TargetOptions[] {
+    getBunkerDutyZoneTarget(): TargetOption[] {
         return [
             {
-                type: 'server',
-                event: 'QBCore:ToggleDuty',
                 icon: 'fas fa-sign-in-alt',
                 label: 'Prise de service',
+                category: 'society',
                 canInteract: () => {
                     const player = this.playerService.getPlayer();
                     if (!player || player.job.id == JobType.Food) {
@@ -325,6 +330,9 @@ export class JobDutyProvider {
                         return false;
                     }
                     return !player.job.onduty;
+                },
+                action: () => {
+                    TriggerServerEvent('QBCore:ToggleDuty');
                 },
             },
         ];

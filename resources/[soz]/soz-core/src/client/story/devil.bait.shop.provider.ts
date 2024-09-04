@@ -1884,6 +1884,7 @@ export class DevilBaitShopProvider {
                     {
                         label: 'Boutique du diable',
                         icon: 'c:/fishing/fishing-rod.png',
+                        category: 'citizen',
                         action: () => {
                             const FishingProducts = [
                                 {
@@ -1900,6 +1901,7 @@ export class DevilBaitShopProvider {
                     {
                         label: 'Vendre son âme',
                         icon: 'c:stonk/vendre.png',
+                        category: 'citizen',
                         canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario4', 4),
                         action: () => {
                             this.halloween2023Scenario4Provider.enterFinal();
@@ -2010,6 +2012,7 @@ export class DevilBaitShopProvider {
                     {
                         label: 'Parler',
                         icon: 'fas fa-comment',
+                        category: 'citizen',
                         action: () => {
                             this.notifier.notify('Wouah wouaf !!');
                         },

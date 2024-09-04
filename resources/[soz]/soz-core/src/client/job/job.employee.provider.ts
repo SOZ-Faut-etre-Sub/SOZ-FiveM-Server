@@ -40,6 +40,7 @@ export class JobEmployeeProvider {
                 label: "Recruter dans l'entreprise",
                 icon: 'c:jobs/enroll.png',
                 blackoutGlobal: true,
+                category: 'society',
                 canInteract: (entity: number) => {
                     return this.canInteract(entity, JobType.Unemployed);
                 },
@@ -52,6 +53,7 @@ export class JobEmployeeProvider {
                 label: "Virer de l'entreprise",
                 icon: 'c:jobs/fire.png',
                 blackoutGlobal: true,
+                category: 'society',
                 canInteract: (entity: number) => {
                     const player = this.playerService.getPlayer();
 
@@ -70,6 +72,7 @@ export class JobEmployeeProvider {
                 label: 'Promouvoir',
                 icon: 'c:jobs/promote.png',
                 blackoutGlobal: true,
+                category: 'society',
                 canInteract: (entity: number) => {
                     const player = this.playerService.getPlayer();
 

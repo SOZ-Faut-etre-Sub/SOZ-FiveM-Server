@@ -280,6 +280,7 @@ export class JobBellProvider {
                     label: 'Biper',
                     icon: 'c:jobs/biper.png',
                     blackoutGlobal: true,
+                    category: 'citizen',
                     canInteract: () => {
                         return GetGameTimer() - this.lastCall > 15000;
                     },

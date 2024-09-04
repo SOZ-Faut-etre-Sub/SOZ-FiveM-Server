@@ -152,6 +152,7 @@ export class VehicleDealershipProvider {
                         {
                             icon: 'c:dealership/list.png',
                             label: 'Accéder au catalogue',
+                            category: 'citizen',
                             blackoutGlobal: true,
                             action: () => {
                                 this.openDealership(dealership as DealershipType, config);
@@ -186,6 +187,7 @@ export class VehicleDealershipProvider {
                     {
                         icon: 'c:dealership/list.png',
                         label: 'Accéder au catalogue',
+                        category: 'citizen',
                         action: () => {
                             this.openJobDealership();
                         },
@@ -245,6 +247,7 @@ export class VehicleDealershipProvider {
                 {
                     icon: 'c:dealership/bid.png',
                     label: 'Voir la vente',
+                    category: 'citizen',
                     canInteract: () => true,
                     action: () => {
                         this.openLuxuryDealership(name);

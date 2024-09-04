@@ -48,6 +48,7 @@ export class GouvRadarProvider {
                 job: JobType.Gouv,
                 blackoutJob: JobType.Gouv,
                 blackoutGlobal: true,
+                category: 'society',
                 canInteract: entity =>
                     this.jobService.hasPermission(JobType.Gouv, JobPermission.GouvManageRadar) &&
                     this.getRadarId(entity) !== null,
@@ -59,6 +60,7 @@ export class GouvRadarProvider {
                 job: JobType.Gouv,
                 blackoutJob: JobType.Gouv,
                 blackoutGlobal: true,
+                category: 'society',
                 canInteract: entity => {
                     if (!this.jobService.hasPermission(JobType.Gouv, JobPermission.GouvManageRadar)) {
                         return false;
@@ -88,6 +90,7 @@ export class GouvRadarProvider {
                 job: JobType.Gouv,
                 blackoutJob: JobType.Gouv,
                 blackoutGlobal: true,
+                category: 'society',
                 canInteract: entity => {
                     if (!this.jobService.hasPermission(JobType.Gouv, JobPermission.GouvManageRadar)) {
                         return false;
@@ -117,6 +120,7 @@ export class GouvRadarProvider {
                 job: JobType.Gouv,
                 blackoutJob: JobType.Gouv,
                 blackoutGlobal: true,
+                category: 'society',
                 canInteract: entity => {
                     if (!this.jobService.hasPermission(JobType.Gouv, JobPermission.GouvManageRadar)) {
                         return false;

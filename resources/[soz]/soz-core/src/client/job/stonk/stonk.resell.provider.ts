@@ -4,10 +4,11 @@ import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
 import { JobType } from '../../../shared/job';
 import { StonkBagType, StonkConfig } from '../../../shared/job/stonk';
+import { TargetOption } from '../../../shared/target';
 import { InventoryManager } from '../../inventory/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { PlayerService } from '../../player/player.service';
-import { TargetFactory, TargetOptions } from '../../target/target.factory';
+import { TargetFactory } from '../../target/target.factory';
 
 @Provider()
 export class StonkResellProvider {
@@ -30,7 +31,7 @@ export class StonkResellProvider {
         });
     }
 
-    private resellZoneToTarget(item: StonkBagType): TargetOptions {
+    private resellZoneToTarget(item: StonkBagType): TargetOption {
         const acceptedItem = this.itemService.getItem(item);
 
         return {
@@ -41,6 +42,7 @@ export class StonkResellProvider {
             blackoutGlobal: true,
             blackoutJob: JobType.CashTransfer,
             item: item,
+            category: 'society',
             action: () => {
                 TriggerServerEvent(ServerEvent.STONK_RESELL, item);
             },

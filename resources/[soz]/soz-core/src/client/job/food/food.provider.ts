@@ -79,6 +79,7 @@ export class FoodProvider {
                         icon: 'c:food/collecter.png',
                         color: JobType.Food,
                         job: JobType.Food,
+                        category: 'society',
                         action: () => {
                             TriggerServerEvent(ServerEvent.FOOD_EASTER_HARVEST);
                         },

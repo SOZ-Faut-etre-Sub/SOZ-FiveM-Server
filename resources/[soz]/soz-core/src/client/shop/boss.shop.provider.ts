@@ -6,10 +6,11 @@ import { Provider } from '../../core/decorators/provider';
 import { JobPermission, JobType } from '../../shared/job';
 import { ShopConfig, ShopProduct } from '../../shared/shop';
 import { BossShop } from '../../shared/shop/boss';
+import { TargetOption } from '../../shared/target';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
 import { JobService } from '../job/job.service';
-import { TargetFactory, TargetOptions } from '../target/target.factory';
+import { TargetFactory } from '../target/target.factory';
 
 @Provider()
 export class BossShopProvider {
@@ -35,8 +36,8 @@ export class BossShopProvider {
         return hydratedProducts;
     }
 
-    private getOrders(shop: ShopConfig & { job: JobType }): TargetOptions[] {
-        const ret: TargetOptions[] = [];
+    private getOrders(shop: ShopConfig & { job: JobType }): TargetOption[] {
+        const ret: TargetOption[] = [];
         if (!shop.orders) {
             return ret;
         }
@@ -48,6 +49,7 @@ export class BossShopProvider {
                 icon: 'c:shop/' + order.id + '.png',
                 job: shop.job,
                 blackoutGlobal: true,
+                category: 'society',
                 canInteract: () => {
                     return this.jobService.hasPermission(shop.job, JobPermission.SocietyShop);
                 },
@@ -71,6 +73,7 @@ export class BossShopProvider {
                         icon: 'fas fa-briefcase',
                         job: shop.job,
                         blackoutGlobal: true,
+                        category: 'society',
                         canInteract: () => {
                             return this.jobService.hasPermission(shop.job, JobPermission.SocietyShop);
                         },

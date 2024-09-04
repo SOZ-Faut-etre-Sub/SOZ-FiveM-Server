@@ -30,6 +30,7 @@ export class BennysEstimateProvider {
                 icon: 'c:/mechanic/estimate.png',
                 job: JobType.Bennys,
                 color: JobType.Bennys,
+                category: 'society',
                 canInteract: () => {
                     return this.jobService.hasPermission(JobType.Bennys, JobPermission.BennysEstimate);
                 },

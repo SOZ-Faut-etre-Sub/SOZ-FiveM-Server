@@ -10,6 +10,7 @@ import { NuiRadioMethodMap, NuiRadioVehicleMethodMap } from '@public/shared/nui/
 import { NuiRepositoryMethodMap } from '@public/shared/nui/repository';
 import { NuiSceneSearchMethodMap } from '@public/shared/nui/scene';
 import { NuiTalentMethodMap } from '@public/shared/nui/talent';
+import { NuiTargetMethodMap } from '@public/shared/nui/target';
 
 import { NuiAdminPlayerSubMenuMethodMap } from '../../nui/components/Admin/PlayerSubMenu';
 import { NuiAdminSkinSubMenuMethodMap } from '../../nui/components/Admin/SkinSubMenu';
@@ -68,6 +69,7 @@ export interface NuiMethodMap {
     taxi: NuiTaxiMethodMap;
     card: NuiCardMethodMap;
     hud: NuiHudMethodMap;
+    target: NuiTargetMethodMap;
     radio: NuiRadioMethodMap;
     radio_vehicle: NuiRadioVehicleMethodMap;
     sozedex: NuiSozedexMethodMap;

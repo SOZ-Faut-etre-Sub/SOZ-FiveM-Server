@@ -99,6 +99,7 @@ export class PolicePlayerProvider {
                     job: job,
                     blackoutJob: job,
                     blackoutGlobal: true,
+                    category: 'society',
                     action: entity => {
                         const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                         this.nuiMenu.openMenu(MenuType.PoliceJobFines, {
@@ -112,6 +113,7 @@ export class PolicePlayerProvider {
                     color: job,
                     icon: 'c:police/permis.png',
                     job: job,
+                    category: 'society',
                     action: async entity => {
                         const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                         const licences = await emitRpc<Partial<Record<PlayerLicenceType, number>>>(
@@ -132,6 +134,7 @@ export class PolicePlayerProvider {
                     icon: 'c:police/menotter.png',
                     item: 'handcuffs',
                     job: job,
+                    category: 'society',
                     canInteract: entity => {
                         return (
                             !IsEntityPlayingAnim(entity, 'mp_arresting', 'idle', 3) &&
@@ -162,6 +165,7 @@ export class PolicePlayerProvider {
                     icon: 'c:police/demenotter.png',
                     item: 'handcuffs_key',
                     job: job,
+                    category: 'society',
                     canInteract: async entity => {
                         if (
                             !IsEntityPlayingAnim(entity, 'mp_arresting', 'idle', 3) ||
@@ -198,6 +202,7 @@ export class PolicePlayerProvider {
                     icon: 'c:police/fouiller.png',
                     job: job,
                     item: 'fingerprint_collector',
+                    category: 'society',
                     action: async entity => {
                         const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                         const { completed } = await this.progressService.progress(
@@ -230,6 +235,7 @@ export class PolicePlayerProvider {
                     color: job,
                     icon: 'c:police/fouiller.png',
                     job: job,
+                    category: 'society',
                     action: async entity => {
                         const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                         const { completed } = await this.progressService.progress(
@@ -267,6 +273,7 @@ export class PolicePlayerProvider {
                         color: job,
                         icon: 'c:police/fouiller.png',
                         job: job,
+                        category: 'society',
                         canInteract: entity => {
                             if (
                                 this.playerService.getPlayer().job.id === JobType.CashTransfer &&
@@ -294,6 +301,7 @@ export class PolicePlayerProvider {
                     color: job,
                     icon: 'c:police/escorter.png',
                     job: job,
+                    category: 'society',
                     canInteract: async entity => {
                         if (
                             this.playerService.getPlayer().job.id === JobType.CashTransfer &&
@@ -323,6 +331,7 @@ export class PolicePlayerProvider {
                         icon: 'c:police/alcootest.png',
                         job: job,
                         item: 'breathanalyzer',
+                        category: 'society',
                         action: async entity => {
                             const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
 
@@ -336,6 +345,7 @@ export class PolicePlayerProvider {
                         icon: 'c:police/screening.png',
                         job: job,
                         item: 'screening_test',
+                        category: 'society',
                         action: async entity => {
                             const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
 

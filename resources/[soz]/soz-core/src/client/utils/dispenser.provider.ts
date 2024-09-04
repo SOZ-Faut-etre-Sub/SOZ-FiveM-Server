@@ -51,6 +51,7 @@ export class DispenserProvider {
                 {
                     label: "Bouteille d'eau ($" + drinkPrice + ')',
                     icon: 'c:food/bouteille.png',
+                    category: 'citizen',
                     action: () => {
                         this.buy('Achète à boire ...', 'water_bottle', dispenser_drink_price);
                     },
@@ -58,6 +59,7 @@ export class DispenserProvider {
                 {
                     label: `Lot de bouteilles</br>($${drinkBatchPrice} unité)`,
                     icon: 'c:food/bouteilles.png',
+                    category: 'citizen',
                     action: async () => {
                         const quantity = await this.inputService.askInput(
                             {
@@ -84,6 +86,7 @@ export class DispenserProvider {
                 {
                     label: 'Sandwich ($' + eatPrice + ')',
                     icon: 'c:food/baguette.png',
+                    category: 'citizen',
                     action: () => {
                         this.buy('Achète à manger...', 'sandwich', dispenser_eat_price);
                     },
@@ -91,6 +94,7 @@ export class DispenserProvider {
                 {
                     label: `Lot de sandwichs</br>($${eatBatchPrice} unité)`,
                     icon: 'c:food/baguettes.png',
+                    category: 'citizen',
                     action: async () => {
                         const quantity = await this.inputService.askInput(
                             {
@@ -111,6 +115,7 @@ export class DispenserProvider {
                 {
                     label: 'Chips barbecue ($' + eatPrice + ')',
                     icon: 'c:food/chips.png',
+                    category: 'citizen',
                     action: () => {
                         this.buy('Achète à manger...', 'bbq_chips', dispenser_eat_price);
                     },
@@ -118,6 +123,7 @@ export class DispenserProvider {
                 {
                     label: 'Chips oignon ($' + eatPrice + ')',
                     icon: 'c:food/chips.png',
+                    category: 'citizen',
                     action: () => {
                         this.buy('Achète à manger...', 'onion_chips', dispenser_eat_price);
                     },
@@ -125,6 +131,7 @@ export class DispenserProvider {
                 {
                     label: 'Chips salé ($' + eatPrice + ')',
                     icon: 'c:food/chips.png',
+                    category: 'citizen',
                     action: () => {
                         this.buy('Achète à manger...', 'water_chips', dispenser_eat_price);
                     },
@@ -132,6 +139,7 @@ export class DispenserProvider {
                 {
                     label: 'Zwix ($' + eatPrice + ')',
                     icon: 'c:food/zwix_candy.png',
+                    category: 'citizen',
                     action: () => {
                         this.buy('Achète à manger...', 'zwix_candy', dispenser_eat_price);
                     },
@@ -146,6 +154,7 @@ export class DispenserProvider {
                 {
                     label: `Café ($${cafePrice})`,
                     icon: 'c:food/cafe.png',
+                    category: 'citizen',
                     action: () => {
                         this.buy('Achète un Café...', 'coffee', dispenser_cafe_price);
                     },
@@ -153,6 +162,7 @@ export class DispenserProvider {
                 {
                     label: `Cafés par lot</br>($${cafeBatchPrice} unité)`,
                     icon: 'c:food/cafes.png',
+                    category: 'citizen',
                     action: async () => {
                         const quantity = await this.inputService.askInput(
                             {
@@ -172,6 +182,7 @@ export class DispenserProvider {
                 {
                     label: 'Chocolat chaud ($' + cafePrice + ')',
                     icon: 'c:food/chocolate.png',
+                    category: 'citizen',
                     action: () => {
                         this.buy('Achète un Chocolat...', 'chocolate', dispenser_cafe_price);
                     },
@@ -179,6 +190,7 @@ export class DispenserProvider {
                 {
                     label: `Chocolats chauds par lot</br>($${cafeBatchPrice} unité)`,
                     icon: 'c:food/chocolates.png',
+                    category: 'citizen',
                     action: async () => {
                         const quantity = await this.inputService.askInput(
                             {
@@ -203,6 +215,7 @@ export class DispenserProvider {
                 {
                     label: 'Thé ($' + cafePrice + ')',
                     icon: 'c:food/tea.png',
+                    category: 'citizen',
                     action: () => {
                         this.buy('Achète un Thé...', 'tea', dispenser_cafe_price);
                     },
@@ -210,6 +223,7 @@ export class DispenserProvider {
                 {
                     label: `Thés par lot</br>($${cafeBatchPrice} unité)`,
                     icon: 'c:food/teas.png',
+                    category: 'citizen',
                     action: async () => {
                         const quantity = await this.inputService.askInput(
                             {

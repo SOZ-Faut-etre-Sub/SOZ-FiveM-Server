@@ -150,6 +150,7 @@ export class DmcProvider {
                 {
                     icon: 'c:/dmc/allumer.png',
                     label: 'Allumer le Convertisseur',
+                    category: 'society',
                     canInteract: async () => {
                         return !(await this.isConverterEnabled());
                     },
@@ -163,6 +164,7 @@ export class DmcProvider {
                 {
                     icon: 'c:/dmc/allumer.png',
                     label: 'Eteindre le Convertisseur',
+                    category: 'society',
                     canInteract: async () => {
                         return await this.isConverterEnabled();
                     },
@@ -174,6 +176,7 @@ export class DmcProvider {
                 {
                     icon: 'c:/dmc/temperature.png',
                     label: 'Consulter la température',
+                    category: 'society',
                     canInteract: async () => {
                         return await this.isConverterEnabled();
                     },
@@ -188,6 +191,7 @@ export class DmcProvider {
                 {
                     icon: 'c:/dmc/temperature-set.png',
                     label: 'Modifier la température',
+                    category: 'society',
                     canInteract: async () => {
                         return await this.isConverterEnabled();
                     },

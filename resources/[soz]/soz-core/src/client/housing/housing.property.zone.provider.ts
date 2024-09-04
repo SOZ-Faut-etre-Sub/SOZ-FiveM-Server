@@ -247,6 +247,7 @@ export class HousingPropertyZoneProvider {
             {
                 label: 'Acheter',
                 icon: 'c:housing/buy.png',
+                category: 'citizen',
                 blackoutGlobal: true,
                 canInteract: () => {
                     const player = this.playerService.getPlayer();
@@ -283,6 +284,7 @@ export class HousingPropertyZoneProvider {
             {
                 label: 'Vendre',
                 icon: 'c:housing/sell.png',
+                category: 'citizen',
                 blackoutGlobal: true,
                 canInteract: () => {
                     const player = this.playerService.getPlayer();
@@ -324,6 +326,7 @@ export class HousingPropertyZoneProvider {
             {
                 label: 'Visiter',
                 icon: 'c:housing/inspect.png',
+                category: 'citizen',
                 canInteract: () => {
                     const player = this.playerService.getPlayer();
 
@@ -342,6 +345,7 @@ export class HousingPropertyZoneProvider {
             {
                 label: 'Sonner',
                 icon: 'c:housing/bell.png',
+                category: 'citizen',
                 canInteract: () => {
                     const player = this.playerService.getPlayer();
 
@@ -358,6 +362,7 @@ export class HousingPropertyZoneProvider {
             {
                 label: 'Entrer',
                 icon: 'c:housing/enter.png',
+                category: 'citizen',
                 canInteract: () => {
                     const player = this.playerService.getPlayer();
 
@@ -374,6 +379,7 @@ export class HousingPropertyZoneProvider {
             {
                 label: 'Garage',
                 icon: 'c:housing/garage.png',
+                category: 'citizen',
                 canInteract: () => {
                     const player = this.playerService.getPlayer();
 
@@ -394,6 +400,7 @@ export class HousingPropertyZoneProvider {
             {
                 label: 'Ajouter colocataire',
                 icon: 'c:jobs/enroll.png',
+                category: 'citizen',
                 blackoutGlobal: true,
                 canInteract: () => {
                     const player = this.playerService.getPlayer();
@@ -415,6 +422,7 @@ export class HousingPropertyZoneProvider {
             {
                 label: 'Retirer colocataire',
                 icon: 'c:jobs/fire.png',
+                category: 'citizen',
                 blackoutGlobal: true,
                 canInteract: () => {
                     const player = this.playerService.getPlayer();
@@ -436,6 +444,7 @@ export class HousingPropertyZoneProvider {
             {
                 label: 'Partir de la colocation',
                 icon: 'c:jobs/fire.png',
+                category: 'citizen',
                 blackoutGlobal: true,
                 canInteract: () => {
                     const player = this.playerService.getPlayer();
@@ -457,6 +466,7 @@ export class HousingPropertyZoneProvider {
             {
                 label: 'Stocker les meubles',
                 icon: 'fa fa-cart-arrow-down',
+                category: 'citizen',
                 canInteract: () => {
                     const player = this.playerService.getPlayer();
 

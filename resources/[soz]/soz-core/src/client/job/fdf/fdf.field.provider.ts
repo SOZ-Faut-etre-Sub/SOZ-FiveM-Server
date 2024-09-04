@@ -29,8 +29,9 @@ import { getRandomItems } from '@public/shared/random';
 import { RpcClientEvent, RpcServerEvent } from '@public/shared/rpc';
 import { VEHICLE_TRUNK_TYPES } from '@public/shared/vehicle/vehicle';
 
+import { TargetOption } from '../../../shared/target';
 import { VehicleClass } from '../../../shared/vehicle/vehicle';
-import { TargetFactory, TargetOptions } from '../../target/target.factory';
+import { TargetFactory } from '../../target/target.factory';
 
 const RAKE_TRAILER = GetHashKey('raketrailer');
 const GRAIN_TRAILER = GetHashKey('graintrailer');
@@ -81,6 +82,7 @@ export class FDFFieldProvider {
                     blackoutJob: JobType.FDF,
                     blackoutGlobal: true,
                     job: JobType.FDF,
+                    category: 'society',
                     canInteract: async entity => {
                         const id = this.objectProvider.getIdFromEntity(entity);
                         if (!id) {
@@ -117,6 +119,7 @@ export class FDFFieldProvider {
                     blackoutJob: JobType.FDF,
                     blackoutGlobal: true,
                     job: JobType.FDF,
+                    category: 'society',
                     canInteract: async entity => {
                         const id = this.objectProvider.getIdFromEntity(entity);
                         if (!id) {
@@ -155,6 +158,7 @@ export class FDFFieldProvider {
                     blackoutJob: JobType.FDF,
                     blackoutGlobal: true,
                     job: JobType.FDF,
+                    category: 'society',
                     canInteract: async entity => {
                         const id = this.objectProvider.getIdFromEntity(entity);
                         if (!id) {
@@ -192,6 +196,7 @@ export class FDFFieldProvider {
                     blackoutJob: JobType.FDF,
                     blackoutGlobal: true,
                     job: JobType.FDF,
+                    category: 'society',
                     canInteract: async entity => {
                         const id = this.objectProvider.getIdFromEntity(entity);
                         if (!id) {
@@ -240,6 +245,7 @@ export class FDFFieldProvider {
                 blackoutJob: JobType.FDF,
                 blackoutGlobal: true,
                 job: JobType.FDF,
+                category: 'society',
                 canInteract: async () => {
                     const coords = GetEntityCoords(PlayerPedId()) as Vector3;
                     const field = Object.keys(FDFFields).find(fieldId => FDFFields[fieldId].isPointInside(coords));
@@ -263,6 +269,7 @@ export class FDFFieldProvider {
                 blackoutJob: JobType.FDF,
                 blackoutGlobal: true,
                 job: JobType.FDF,
+                category: 'society',
                 canInteract: async () => {
                     const coords = GetEntityCoords(PlayerPedId()) as Vector3;
                     const field = Object.keys(FDFFields).find(fieldId => FDFFields[fieldId].isPointInside(coords));
@@ -497,13 +504,14 @@ export class FDFFieldProvider {
                     blackoutGlobal: true,
                     job: JobType.FDF,
                     item: FDFCropConfig[type].seed,
+                    category: 'society',
                     canInteract: async () => {
                         return await this.getFieldPlowStatus(name);
                     },
                     action: async () => {
                         TriggerServerEvent(ServerEvent.FDF_FIELD_PLANT, FDFCropConfig[type].seed);
                     },
-                } as TargetOptions;
+                } as TargetOption;
             });
 
         if (withPlow) {
@@ -513,6 +521,7 @@ export class FDFFieldProvider {
                 blackoutJob: JobType.FDF,
                 blackoutGlobal: true,
                 job: JobType.FDF,
+                category: 'society',
                 canInteract: async () => {
                     return !(await this.getFieldPlowStatus(name));
                 },

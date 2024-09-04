@@ -59,6 +59,7 @@ export class PoliceVehicleProvider {
                     job: job,
                     blackoutJob: job,
                     blackoutGlobal: true,
+                    category: 'society',
                     canInteract: vehicle => {
                         if (VehicleTypeFromClass[GetVehicleClass(vehicle)] == VehicleType.Automobile) {
                             let vehiclePlate = PlateTypeOverride[GetEntityModel(vehicle)];
@@ -135,6 +136,7 @@ export class PoliceVehicleProvider {
                     color: job,
                     icon: 'c:police/fouiller_vehicle.png',
                     job: job,
+                    category: 'society',
                     canInteract: vehicle => {
                         if (VehicleTypeFromClass[GetVehicleClass(vehicle)] == VehicleType.Automobile) {
                             const model = GetEntityModel(vehicle);
@@ -182,6 +184,7 @@ export class PoliceVehicleProvider {
                     color: job,
                     icon: 'c:police/forcer.png',
                     job: job,
+                    category: 'society',
                     action: async entity => {
                         const { completed } = await this.progressService.progress(
                             'police:vehicle:lockpick',
@@ -213,6 +216,7 @@ export class PoliceVehicleProvider {
                     item: 'fingerprint_collector',
                     icon: 'c:police/fouiller.png',
                     color: job,
+                    category: 'society',
                     canInteract: async entity => {
                         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(entity);
                         const vehicleState = await emitRpc<VehicleVolatileState>(
@@ -258,6 +262,7 @@ export class PoliceVehicleProvider {
                     job: job,
                     icon: 'c:police/fouiller.png',
                     color: job,
+                    category: 'society',
                     canInteract: async entity => {
                         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(entity);
                         const vehicleState = await emitRpc<VehicleVolatileState>(

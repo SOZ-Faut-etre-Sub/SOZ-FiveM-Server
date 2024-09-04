@@ -16,6 +16,7 @@ export class VehicleItemProvider {
                 icon: 'c:mechanic/nettoyer.png',
                 label: 'Laver (kit)',
                 item: 'cleaningkit',
+                category: 'society',
                 action: entity => {
                     const networkId = NetworkGetNetworkIdFromEntity(entity);
 
@@ -29,6 +30,7 @@ export class VehicleItemProvider {
                 icon: 'c:mechanic/reparer_mecanique.png',
                 label: 'Réparer mécanique (kit)',
                 item: 'repairkit',
+                category: 'society',
                 action: entity => {
                     const networkId = NetworkGetNetworkIdFromEntity(entity);
 
@@ -42,6 +44,7 @@ export class VehicleItemProvider {
                 icon: 'c:mechanic/reparer_carosserie.png',
                 label: 'Réparer carosserie (kit)',
                 item: 'bodyrepairkit',
+                category: 'society',
                 action: entity => {
                     const networkId = NetworkGetNetworkIdFromEntity(entity);
 
@@ -55,6 +58,7 @@ export class VehicleItemProvider {
                 icon: 'c:mechanic/repair_wheel.png',
                 label: 'Anti crevaison (kit)',
                 item: 'wheel_kit',
+                category: 'society',
                 action: entity => {
                     const networkId = NetworkGetNetworkIdFromEntity(entity);
 

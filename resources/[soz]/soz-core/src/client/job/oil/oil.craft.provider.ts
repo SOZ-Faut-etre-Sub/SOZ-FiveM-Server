@@ -34,6 +34,7 @@ export class OilCraftProvider {
                     job: JobType.Oil,
                     blackoutGlobal: true,
                     blackoutJob: JobType.Oil,
+                    category: 'society',
                     action: this.craftOil.bind(this),
                 },
                 {
@@ -43,6 +44,7 @@ export class OilCraftProvider {
                     job: JobType.Oil,
                     blackoutGlobal: true,
                     blackoutJob: JobType.Oil,
+                    category: 'society',
                     action: this.craftKerosene.bind(this),
                 },
             ]
@@ -66,6 +68,7 @@ export class OilCraftProvider {
                     job: JobType.Oil,
                     blackoutGlobal: true,
                     blackoutJob: JobType.Oil,
+                    category: 'society',
                     action: this.craftOilJerryCan.bind(this),
                 },
                 {
@@ -75,6 +78,7 @@ export class OilCraftProvider {
                     job: JobType.Oil,
                     blackoutGlobal: true,
                     blackoutJob: JobType.Oil,
+                    category: 'society',
                     action: this.craftKeroseneJerryCan.bind(this),
                 },
             ]

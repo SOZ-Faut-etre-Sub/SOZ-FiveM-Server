@@ -27,6 +27,7 @@ export class EasterHuntProvider {
                 {
                     label: 'Fouiller',
                     icon: 'fas fa-search',
+                    category: 'citizen',
                     action: async entity => TriggerServerEvent(ServerEvent.EASTER_HUNT, GetEntityCoords(entity)),
                     canInteract: entity => !this.objectProvider.getIdFromEntity(entity),
                 },

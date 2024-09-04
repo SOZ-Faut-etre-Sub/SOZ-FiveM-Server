@@ -42,6 +42,7 @@ export class PoliceSpeedZoneProvider {
                 label: 'Démonter',
                 icon: 'c:jobs/demonter.png',
                 job: jobsTarget,
+                category: 'society',
                 action: async (entity: number) => {
                     const id = this.objectProvider.getIdFromEntity(entity);
                     const { completed } = await this.progressService.progress(

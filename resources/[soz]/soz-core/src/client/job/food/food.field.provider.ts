@@ -43,6 +43,7 @@ export class FoodFieldProvider {
                         blackoutGlobal: true,
                         blackoutJob: JobType.Food,
                         job: JobType.Food,
+                        category: 'society',
                         canInteract: entity =>
                             !IsEntityAVehicle(entity) &&
                             !IsEntityAPed(entity) &&
@@ -55,6 +56,7 @@ export class FoodFieldProvider {
                         label: 'Récolter de la Zeed',
                         color: 'crimi',
                         icon: 'c:crimi/zeed.png',
+                        category: 'criminal',
                         canInteract: entity =>
                             !IsEntityAVehicle(entity) &&
                             !IsEntityAPed(entity) &&
@@ -83,6 +85,7 @@ export class FoodFieldProvider {
                     blackoutGlobal: true,
                     blackoutJob: JobType.Food,
                     job: JobType.Food,
+                    category: 'society',
                     action: this.harvestMilk.bind(this),
                 },
             ]
