@@ -34,7 +34,7 @@ import { Apartment, Property } from '@public/shared/housing/housing';
 import { MenuType } from '@public/shared/nui/menu';
 import { HousingPlacementProp, HousingProp } from '@public/shared/nui/prop_placement';
 import { HousingDebugProp, WorldObject } from '@public/shared/object';
-import { isStaff } from '@public/shared/player';
+import { isStaff, PlayerData } from '@public/shared/player';
 import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { RepositoryType } from '@public/shared/repository';
 import { Err, Ok } from '@public/shared/result';
@@ -515,7 +515,7 @@ export class HousingFournitureProvider {
         delete this.apartmentFourntiures[apartment.id];
     }
 
-    public async openHousingPlacementMenu() {
+    public async openHousingPlacementMenu(player: PlayerData) {
         if (this.isMenuOpen()) {
             this.menu.closeMenu(false);
             return;
@@ -533,6 +533,7 @@ export class HousingFournitureProvider {
             fournitures: this.getAllFournitures(),
             max: this.maxFourntiures,
             shellEnable: this.lastApartment.shell,
+            isPlayerStaff: isStaff(player),
         });
     }
 
@@ -569,6 +570,31 @@ export class HousingFournitureProvider {
 
         this.flyingCameraProvider.deleteCamera();
         await this.doCloseEditor();
+    }
+
+    @OnNuiEvent<{ type: string }>(NuiEvent.AdminOpenHousingStorage)
+    public async onOpenStorageByType({ type }) {
+        const player = this.playerService.getPlayer();
+        if (!isStaff(player) || !this.lastApartment) {
+            return;
+        }
+
+        this.menu.closeMenu(false);
+        if (type === 'storage') {
+            this.inventoryManager.openInventory('house_stash', this.lastApartment.identifier, {
+                apartmentTier: this.lastApartment.tier,
+                propertyId: this.lastApartment.propertyId,
+                apartmentId: this.lastApartment.id,
+            });
+        } else if (type === 'safe') {
+            this.bankService.openHouseSafe(this.lastApartment);
+        } else if (type === 'fridge') {
+            this.inventoryManager.openInventory('house_fridge', this.lastApartment.identifier, {
+                apartmentTier: this.lastApartment.tier,
+                propertyId: this.lastApartment.propertyId,
+                apartmentId: this.lastApartment.id,
+            });
+        }
     }
 
     public async doCloseEditor() {
@@ -1080,7 +1106,7 @@ export class HousingFournitureProvider {
             return;
         }
 
-        await this.openHousingPlacementMenu();
+        await this.openHousingPlacementMenu(player);
     }
 
     @Command('housing-lights', {

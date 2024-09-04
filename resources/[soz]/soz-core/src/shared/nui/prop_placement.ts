@@ -58,6 +58,7 @@ export type HousingPropPlacementMenuData = {
     fournitures: HousingProp[];
     shellEnable: boolean;
     max: number;
+    isPlayerStaff: boolean;
 };
 
 export type PlacementPropList = Record<string, PlacementProp[]>;
