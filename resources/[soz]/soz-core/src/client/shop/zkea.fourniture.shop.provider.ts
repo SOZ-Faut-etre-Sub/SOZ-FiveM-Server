@@ -4,6 +4,7 @@ import { CircularCameraProvider } from '@public/client/object/circular.camera.pr
 import { ObjectService } from '@public/client/object/object.service';
 import { PlayerPositionProvider } from '@public/client/player/player.position.provider';
 import { ResourceLoader } from '@public/client/repository/resource.loader';
+import { TargetFactory } from '@public/client/target/target.factory';
 import { ShopBrand } from '@public/config/shops';
 import { Once, OnceStep, OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
@@ -50,6 +51,9 @@ export class ZkeaFournitureShopProvider {
     @Inject(ResourceLoader)
     private resourceLoader: ResourceLoader;
 
+    @Inject(TargetFactory)
+    private targetFactory: TargetFactory;
+
     @Inject(AnimationService)
     private animationService: AnimationService;
 
@@ -64,11 +68,31 @@ export class ZkeaFournitureShopProvider {
 
     @Once(OnceStep.PlayerLoaded)
     public async onPlayerLoaded() {
-        const interior = GetInteriorFromEntity(PlayerPedId());
-        const [, interiorHash] = GetInteriorLocationAndNamehash(interior);
-        if (interiorHash === GetHashKey('ex_int_warehouse_l_dlc')) {
-            await this.playerPositionProvider.teleportPlayerToPosition(ZkeaShopZoneExit);
-        }
+        this.targetFactory.createForPed({
+            model: 'cs_brad',
+            //meteor
+            coords: {
+                w: 138.53,
+                x: -63.31,
+                y: 6519.75,
+                z: 19.17,
+            },
+            invincible: true,
+            blockevents: true,
+            freeze: true,
+            target: {
+                distance: 2.5,
+                options: [
+                    {
+                        icon: 'fa fa-sign-out-alt',
+                        label: 'Sortir du Zkea',
+                        action: async () => {
+                            await this.playerPositionProvider.teleportPlayerToPosition(ZkeaShopZoneExit);
+                        },
+                    },
+                ],
+            },
+        });
     }
 
     public async openShop() {
