@@ -291,7 +291,7 @@ export type PlayerMetadata = PlayerHealthBook & {
     disease: Disease | null;
     last_disease_at: number | null;
     // Typing is intentionally in that way so that you could program future items that gives clothes.
-    isWearingItem: 'zevent2022_tshirt' | null;
+    isWearingItem: string | null;
     gym_subscription_expire_at: number | null;
     halloween2022: Halloween2022 | null;
     halloween2023: Halloween2023 | null;

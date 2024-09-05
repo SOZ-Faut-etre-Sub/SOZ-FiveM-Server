@@ -55,7 +55,7 @@ export class ItemNutritionProvider {
         const prop =
             item.prop ||
             (item.type === 'food'
-                ? item.name === 'zevent2022_popcorn'
+                ? ['zevent2022_popcorn', 'zevent2024_popcorn'].includes(item.name)
                     ? {
                           model: 'xs_prop_trinket_cup_01a',
                           bone: 60309,
