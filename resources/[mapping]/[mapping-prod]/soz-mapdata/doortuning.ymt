@@ -1406,5 +1406,11 @@
       <ModelName>soz_prop_gar_door_04</ModelName>
       <TuningName>SupermodGarage</TuningName>
     </Item>
+
+    <!--  Fitness Club -->
+    <Item>
+      <ModelName>breze_swimmingpool_door</ModelName>
+      <TuningName>DefaultStandardLatchShut</TuningName>
+    </Item>
   </ModelToTuneMapping>
 </CDoorTuningFile>
