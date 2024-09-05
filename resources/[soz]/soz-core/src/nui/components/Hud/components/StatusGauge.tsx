@@ -28,7 +28,11 @@ export const StatusGauge: FunctionComponent<PropsWithChildren<StatusBarProps>> =
 
     return (
         <div className="relative size-12 rounded-full">
-            <GlassMorphismContainer className="flex justify-center items-center size-12" disableBorder>
+            <GlassMorphismContainer
+                borderClassName="rounded-full"
+                className="flex justify-center items-center size-12"
+                disableBorder
+            >
                 {children}
                 <div className="absolute -inset-[1px] flex justify-center">
                     <svg

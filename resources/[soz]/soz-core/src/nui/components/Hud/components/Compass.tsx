@@ -18,7 +18,11 @@ export const Compass: FunctionComponent = () => {
 
     return (
         <div className="relative size-12 rounded-full">
-            <GlassMorphismContainer className="flex justify-center items-center text-white size-12" disableBorder>
+            <GlassMorphismContainer
+                borderClassName="rounded-full"
+                className="flex justify-center items-center text-white size-12"
+                disableBorder
+            >
                 <span className="text-sm pt-0.5">{compass.cardinal}</span>
                 <div className="absolute inset-0 flex justify-center">
                     <svg

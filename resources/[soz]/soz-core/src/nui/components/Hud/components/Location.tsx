@@ -28,7 +28,7 @@ export const Location: FunctionComponent = () => {
 
     return (
         <animated.div className="h-12" style={styles}>
-            <GlassMorphismContainer className="flex items-center gap-2 px-5 h-12 w-full">
+            <GlassMorphismContainer borderClassName="rounded-full" className="flex items-center gap-2 px-5 h-12 w-full">
                 <PinIcon className="w-5 h-5" />
 
                 <div className="flex flex-col justify-center -space-y-2.5 h-12">

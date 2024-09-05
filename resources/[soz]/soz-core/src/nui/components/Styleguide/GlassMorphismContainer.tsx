@@ -5,12 +5,16 @@ import { HudTheme } from '../../../shared/hud';
 import { useDateTime, useHud } from '../../hook/data';
 
 interface GlassMorphismContainerProps extends HTMLAttributes<any>, PropsWithChildren {
+    borderColor?: string;
+    borderClassName?: string;
     disableBorder?: boolean;
     showBorderOnHover?: boolean;
 }
 
 export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerProps> = ({
     className,
+    borderColor = '#ffffff',
+    borderClassName,
     disableBorder,
     showBorderOnHover,
     children,
@@ -47,13 +51,13 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
             animation = requestAnimationFrame(renderLoop);
         };
 
-        renderLoop();
+        // renderLoop();
         return () => cancelAnimationFrame(animation);
     }, []);
 
     return (
         <div
-            className="relative bg-opacity-10 rounded-full h-full w-full overflow-hidden group z-10"
+            className={cn('relative bg-opacity-10 h-full w-full overflow-hidden group z-10', borderClassName)}
             style={{
                 opacity: 0.99,
             }}
@@ -61,7 +65,8 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
             <div
                 ref={containerRef}
                 className={cn(
-                    'absolute flex justify-center items-center backdrop-blur-sm rounded-full h-full w-full transition-all border-transparent',
+                    'absolute flex justify-center items-center backdrop-blur-sm h-full w-full transition-all border-transparent',
+                    borderClassName,
                     {
                         'border-2': !disableBorder,
                         'group-hover:border-2': showBorderOnHover,
@@ -69,13 +74,16 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
                 )}
                 style={{
                     height,
-                    background:
-                        'linear-gradient(-40deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.1) 25%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,1) 100%) border-box',
+                    background: `linear-gradient(-40deg, ${borderColor} 0%, ${borderColor}1A 25%, ${borderColor}1A 75%, ${borderColor} 100%) border-box`,
                     WebkitMask: 'linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)',
                     WebkitMaskComposite: 'xor',
                     maskComposite: 'exclude',
                 }}
             />
+
+            <div ref={childrenRef} className={cn('relative z-10', className)}>
+                {children}
+            </div>
 
             <div
                 className={cn('absolute inset-0 transition-all duration-1000', {
@@ -87,11 +95,7 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
                 })}
             />
 
-            <div ref={childrenRef} className={cn('absolute', className)}>
-                {children}
-            </div>
-
-            <canvas ref={canvasRef} />
+            <canvas ref={canvasRef} className="absolute" />
         </div>
     );
 };

@@ -12,7 +12,12 @@ export const TargetItem: FunctionComponent<TargetOption> = ({ id, label }) => {
 
     return (
         <div className="h-12 w-fit cursor-pointer" onClick={handleClick}>
-            <GlassMorphismContainer className="flex items-center gap-2 px-5 h-12 w-fit" disableBorder showBorderOnHover>
+            <GlassMorphismContainer
+                borderClassName="rounded-full"
+                className="flex items-center gap-2 px-5 h-12 w-fit"
+                disableBorder
+                showBorderOnHover
+            >
                 {label}
             </GlassMorphismContainer>
         </div>

@@ -23,7 +23,7 @@ export const SpeedGauge: FunctionComponent<{ useRpm: boolean }> = ({ useRpm }) =
 
     return (
         <div className="relative size-[125px]">
-            <GlassMorphismContainer className="size-[125px]">
+            <GlassMorphismContainer borderClassName="rounded-full" className="size-[125px]">
                 <div className="absolute h-full w-full">
                     <svg className="mt-1.5 mx-1.5" viewBox="0 0 114 109" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path

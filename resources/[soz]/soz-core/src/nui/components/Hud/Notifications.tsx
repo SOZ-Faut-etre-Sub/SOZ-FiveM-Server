@@ -1,6 +1,6 @@
 import { Transition } from '@headlessui/react';
 import classNames from 'classnames';
-import { FunctionComponent, useCallback, useEffect, useState } from 'react';
+import { Fragment, FunctionComponent, useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { uuidv4 } from '../../../core/utils';
@@ -8,6 +8,7 @@ import { AdvancedNotification, BasicNotification, TPoliceNotification } from '..
 import { useNuiEvent } from '../../hook/nui';
 import { RootState } from '../../store';
 import { formatText } from '../../utils/gta-format';
+import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
 
 type NotificationProps = {
     notification: BasicNotification | AdvancedNotification;
@@ -73,16 +74,7 @@ const Notification: FunctionComponent<NotificationProps> = ({ notification, onDe
         [setIsClosing]
     );
 
-    const classes = classNames(
-        'w-full relative px-2 py-3 overflow-hidden mb-2 transition-all rounded text-sm lg:text-lg text-white bg-gradient-to-r from-black/60 to-black/25 border-l-4',
-        {
-            'border-red-500': notification.style === 'error',
-            'border-green-500': notification.style === 'success',
-            'border-blue-500':
-                notification.style !== 'error' && notification.style !== 'success' && notification.style !== 'warning',
-            'border-orange-500': notification.style === 'warning',
-        }
-    );
+    const classes = classNames('w-full overflow-hidden transition-all rounded text-sm lg:text-lg text-white');
 
     return (
         <Transition
@@ -93,26 +85,41 @@ const Notification: FunctionComponent<NotificationProps> = ({ notification, onDe
             leave="transform ease-in duration-300 transition"
             leaveFrom="translate-x-0"
             leaveTo="-translate-x-full"
+            className="relative"
         >
             <div className={classes}>
-                {isAdvancedNotification(notification) && (
-                    <div className="flex items-center mb-2">
-                        <img
-                            className="w-16"
-                            src={
-                                notification.image.startsWith('http')
-                                    ? notification.image
-                                    : `https://nui-img/${notification.image}/${notification.image}`
-                            }
-                            alt={notification.image}
-                        />
-                        <div className="ml-4 flex flex-col overflow-hidden">
-                            <p dangerouslySetInnerHTML={{ __html: formatText(notification.title) }} />
-                            <p dangerouslySetInnerHTML={{ __html: formatText(notification.subtitle) }} />
+                <GlassMorphismContainer
+                    className="p-3"
+                    borderColor={classNames({
+                        '#ef4444': notification.style === 'error',
+                        '#22c55e': notification.style === 'success',
+                        '#f97316': notification.style === 'warning',
+                        '#3b82f6':
+                            notification.style !== 'error' &&
+                            notification.style !== 'success' &&
+                            notification.style !== 'warning',
+                    })}
+                    borderClassName="rounded-xl"
+                >
+                    {isAdvancedNotification(notification) && (
+                        <div className="flex items-center mb-2">
+                            <img
+                                className="w-16"
+                                src={
+                                    notification.image.startsWith('http')
+                                        ? notification.image
+                                        : `https://nui-img/${notification.image}/${notification.image}`
+                                }
+                                alt={notification.image}
+                            />
+                            <div className="ml-4 flex flex-col overflow-hidden">
+                                <p dangerouslySetInnerHTML={{ __html: formatText(notification.title) }} />
+                                <p dangerouslySetInnerHTML={{ __html: formatText(notification.subtitle) }} />
+                            </div>
                         </div>
-                    </div>
-                )}
-                <p dangerouslySetInnerHTML={{ __html: formatText(notification.message) }} />
+                    )}
+                    <p dangerouslySetInnerHTML={{ __html: formatText(notification.message) }} />
+                </GlassMorphismContainer>
             </div>
         </Transition>
     );
@@ -338,7 +345,7 @@ export const Notifications: FunctionComponent = () => {
     return (
         <>
             <div
-                className="absolute flex flex-col-reverse"
+                className="absolute flex flex-col-reverse gap-4"
                 style={{
                     top: `calc((100vh * ${minimap.top}) - calc((100vh * ${minimap.height}) * 4) - ${notificationOffset})`,
                     left: `calc(100vw * ${minimap.left + 0.004})`,
@@ -360,7 +367,7 @@ export const Notifications: FunctionComponent = () => {
                 )}
             </div>
             <div
-                className="absolute flex flex-col-reverse"
+                className="absolute flex flex-col-reverse gap-4"
                 style={{
                     top: `calc(0.5rem)`,
                     right: `0`,
