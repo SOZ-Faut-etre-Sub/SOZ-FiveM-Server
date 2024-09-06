@@ -1,7 +1,9 @@
 import { Transition } from '@headlessui/react';
 import classNames from 'classnames';
-import { Fragment, FunctionComponent, useCallback, useEffect, useState } from 'react';
+import cn from 'classnames';
+import { FunctionComponent, useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
+import colors from 'tailwindcss/colors';
 
 import { uuidv4 } from '../../../core/utils';
 import { AdvancedNotification, BasicNotification, TPoliceNotification } from '../../../shared/notification';
@@ -74,8 +76,6 @@ const Notification: FunctionComponent<NotificationProps> = ({ notification, onDe
         [setIsClosing]
     );
 
-    const classes = classNames('w-full overflow-hidden transition-all rounded text-sm lg:text-lg text-white');
-
     return (
         <Transition
             show={!isClosing && !isOpening}
@@ -87,7 +87,7 @@ const Notification: FunctionComponent<NotificationProps> = ({ notification, onDe
             leaveTo="-translate-x-full"
             className="relative"
         >
-            <div className={classes}>
+            <div className="w-full overflow-hidden transition-all rounded text-sm lg:text-lg text-white">
                 <GlassMorphismContainer
                     className="p-3"
                     borderColor={classNames({
@@ -194,29 +194,29 @@ const PoliceNotification: FunctionComponent<PoliceNotificationProps> = ({ notifi
         return '';
     };
 
-    const borderColor = (): string => {
+    const borderColor = useMemo((): string => {
         switch (notification.policeStyle) {
             case 'red-alert':
-                return 'border-red-500/70';
+                return colors.red['500'];
             case 'robbery':
-                return 'border-lime-500/70';
+                return colors.lime['500'];
             case 'vandalism':
-                return 'border-yellow-400/70';
+                return colors.yellow['400'];
             case 'racket':
-                return 'border-orange-500/70';
+                return colors.orange['500'];
             case 'shooting':
-                return 'border-indigo-500/70';
+                return colors.indigo['500'];
             case 'auto-theft':
-                return 'border-cyan-500/70';
+                return colors.cyan['500'];
             case 'drug':
-                return 'border-teal-300/70';
+                return colors.teal['300'];
             case 'explosion':
-                return 'border-pink-500/70';
+                return colors.pink['500'];
             case 'default':
             default:
-                return 'border-green-500/70';
+                return colors.green['500'];
         }
-    };
+    }, [notification.policeStyle]);
 
     const textColor = (): string => {
         switch (notification.policeStyle) {
@@ -240,10 +240,6 @@ const PoliceNotification: FunctionComponent<PoliceNotificationProps> = ({ notifi
             default:
                 return 'text-green-500';
         }
-    };
-
-    const classes = (): string => {
-        return `w-full relative px-2 py-3 overflow-hidden mb-2 transition-all rounded text-sm lg:text-lg text-white bg-[#131313]/70 border-l-8 ${borderColor()}`;
     };
 
     const hours = (): string => {
@@ -285,22 +281,31 @@ const PoliceNotification: FunctionComponent<PoliceNotificationProps> = ({ notifi
             leaveFrom="-translate-x-0"
             leaveTo="translate-x-full"
         >
-            <div className={classes()}>
-                <div className="flex items-center mb-2 justify-between">
-                    <div className="flex items-center">
-                        <img className="w-6 mr-4" src={image()} alt="Blason des forces de l'ordre" />
+            <div
+                className={cn(
+                    'w-full relative overflow-hidden mb-2 transition-all rounded text-sm lg:text-lg text-white'
+                )}
+            >
+                <GlassMorphismContainer
+                    className="flex flex-col gap-2 py-2 px-4"
+                    borderColor={borderColor}
+                    borderClassName="rounded-xl"
+                >
+                    <div className="flex gap-2">
+                        <img className="w-6" src={image()} alt="Blason des forces de l'ordre" />
                         <p className="flex items-center uppercase text-base lg:text-xl">
                             <span>Alerte :&nbsp;</span>
                             <span className="font-semibold" dangerouslySetInnerHTML={{ __html: formatText(title()) }} />
-                            <span className="ml-4 normal-case text-sm">#{notification.notificationId}</span>
                         </p>
                     </div>
-                    <div className="flex items-center">
-                        <p className="italic" dangerouslySetInnerHTML={{ __html: hours() }} />
-                        <span className="w-10"></span>
+
+                    <p dangerouslySetInnerHTML={{ __html: formatText(message()) }} />
+
+                    <div className="flex justify-between">
+                        <span>{hours()}</span>
+                        <span className="ml-4 normal-case text-sm">#{notification.notificationId}</span>
                     </div>
-                </div>
-                <p dangerouslySetInnerHTML={{ __html: formatText(message()) }} />
+                </GlassMorphismContainer>
             </div>
         </Transition>
     );
@@ -370,7 +375,7 @@ export const Notifications: FunctionComponent = () => {
                 className="absolute flex flex-col-reverse gap-4"
                 style={{
                     top: `calc(0.5rem)`,
-                    right: `0`,
+                    right: `1rem`,
                     height: `50vh`,
                     width: `calc(100vw * ${minimap.width * 1.5})`,
                 }}
