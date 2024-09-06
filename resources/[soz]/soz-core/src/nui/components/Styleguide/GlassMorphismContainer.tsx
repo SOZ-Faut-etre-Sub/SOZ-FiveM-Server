@@ -51,7 +51,7 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
             animation = requestAnimationFrame(renderLoop);
         };
 
-        // renderLoop();
+        renderLoop();
         return () => cancelAnimationFrame(animation);
     }, []);
 
@@ -95,7 +95,7 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
                 })}
             />
 
-            <canvas ref={canvasRef} className="absolute" />
+            <canvas ref={canvasRef} className="absolute inset-0 -z-10" />
         </div>
     );
 };

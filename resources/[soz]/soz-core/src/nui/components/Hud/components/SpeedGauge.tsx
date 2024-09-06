@@ -59,7 +59,7 @@ export const SpeedGauge: FunctionComponent<{ useRpm: boolean }> = ({ useRpm }) =
 
                         <div className="absolute inset-x-0 bottom-3 flex justify-center items-center gap-2">
                             <MotorIndicator motor={vehicle.engineHealth} fuelType={vehicle.fuelType} />
-                            <OilIndicator oil={vehicle.oilLevel} fuelType={vehicle.fuelType} />
+                            <OilIndicator oil={vehicle.oilLevel} />
                         </div>
                     </div>
                 </div>

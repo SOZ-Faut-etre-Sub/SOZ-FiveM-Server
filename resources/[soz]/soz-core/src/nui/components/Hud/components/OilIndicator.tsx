@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import { FunctionComponent } from 'react';
 
-export const OilIndicator: FunctionComponent<{ oil: number; fuelType: string }> = ({ oil, fuelType }) => {
+export const OilIndicator: FunctionComponent<{ oil: number }> = ({ oil }) => {
     let oilStatus = 'yellow';
 
     if (oil <= 10 && oil > 5) {
