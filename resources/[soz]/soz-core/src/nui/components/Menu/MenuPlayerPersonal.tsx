@@ -1,7 +1,8 @@
-import { Fragment, FunctionComponent, ReactElement, useState } from 'react';
+import _ from 'lodash';
+import { Fragment, FunctionComponent, JSXElementConstructor, ReactElement, useEffect, useState } from 'react';
 
 import { Animations, Moods, Walks } from '../../../config/animation';
-import { AnimationConfigItem, WalkConfigItem } from '../../../shared/animation';
+import { AnimationConfigItem, AnimationConfigList, WalkConfigItem } from '../../../shared/animation';
 import { ClothConfig } from '../../../shared/cloth';
 import { NuiEvent } from '../../../shared/event';
 import { JobPermission } from '../../../shared/job';
@@ -19,6 +20,7 @@ import {
     MenuItemCheckbox,
     MenuItemSelect,
     MenuItemSelectOption,
+    MenuItemStringInput,
     MenuItemSubMenuLink,
     MenuTitle,
     SubMenu,
@@ -288,21 +290,77 @@ const MenuAnimation: FunctionComponent<MenuAnimationProps> = ({ shortcuts: intia
 };
 
 const MenuAnimationList: FunctionComponent = () => {
-    const elements = [];
-    const subMenus = [];
+    const [menuConstructor, setMenuConstructor] = useState<{
+        elements: ReactElement<any, string | JSXElementConstructor<any>>[];
+        subMenus: ReactElement<any, string | JSXElementConstructor<any>>[];
+    }>({
+        elements: [],
+        subMenus: [],
+    });
+    const [animations, setAnimations] = useState<AnimationConfigList>([]);
+    const [textFilter, setTextFilter] = useState<string>();
 
-    for (const item of Animations) {
-        const [element, newSubMenus] = createAnimationItemMenu(item, 'animation');
+    const handleFilter = (value: string) => {
+        setTextFilter(value);
+    };
 
-        elements.push(element);
-        subMenus.push(...newSubMenus);
-    }
+    const recursiveFilter = (items: AnimationConfigList): AnimationConfigItem[] => {
+        const newItems = [];
+        for (const item of items) {
+            if (['animation', 'event', 'scenario'].includes(item.type)) {
+                if (
+                    !textFilter ||
+                    item.name
+                        .normalize('NFD')
+                        .replace(/\p{Diacritic}/gu, '')
+                        .includes(textFilter.normalize('NFD').replace(/\p{Diacritic}/gu, ''))
+                ) {
+                    newItems.push(item);
+                }
+            }
+
+            if (item.type === 'category') {
+                item.items = recursiveFilter(item.items);
+
+                if (item.items.length) {
+                    newItems.push(item);
+                }
+            }
+        }
+
+        return newItems;
+    };
+
+    useEffect(() => {
+        const newAnimations = recursiveFilter(_.cloneDeep(Animations));
+
+        setAnimations(newAnimations);
+    }, [textFilter]);
+
+    useEffect(() => {
+        const elementList = [];
+        const subMenuList = [];
+
+        for (const item of animations) {
+            const [element, newSubMenus] = createAnimationItemMenu(item, 'animation');
+
+            elementList.push(element);
+            subMenuList.push(...newSubMenus);
+        }
+        setMenuConstructor({
+            elements: elementList,
+            subMenus: subMenuList,
+        });
+    }, [animations, setAnimations]);
 
     return (
         <>
             <SubMenu id="animation_list">
                 <MenuTitle banner="https://nui-img/soz/menu_personal">Liste des animations</MenuTitle>
                 <MenuContent>
+                    <MenuItemStringInput onChange={handleFilter} value={textFilter}>
+                        Filtre:
+                    </MenuItemStringInput>
                     <MenuItemButton
                         onConfirm={() => {
                             fetchNui(NuiEvent.PlayerMenuAnimationStop);
@@ -310,12 +368,12 @@ const MenuAnimationList: FunctionComponent = () => {
                     >
                         🛑 Stopper l'animation
                     </MenuItemButton>
-                    {elements.map((element, index) => {
+                    {menuConstructor.elements.map((element, index) => {
                         return <Fragment key={index}>{element}</Fragment>;
                     })}
                 </MenuContent>
             </SubMenu>
-            {subMenus.map((element, index) => {
+            {menuConstructor.subMenus.map((element, index) => {
                 return <Fragment key={index}>{element}</Fragment>;
             })}
         </>
@@ -378,7 +436,7 @@ const createRecursiveSubMenu = <T extends ItemCategory<T>>(
 
         subMenus.push(
             <SubMenu id={`${prefix}${item.name}`}>
-                <MenuTitle banner="https://nui-img/soz/menu_personal">Gestion des animations</MenuTitle>
+                <MenuTitle banner="https://nui-img/soz/menu_personal">{item.name}</MenuTitle>
                 <MenuContent>
                     {elements.map((element, index) => {
                         return <Fragment key={index}>{element}</Fragment>;
