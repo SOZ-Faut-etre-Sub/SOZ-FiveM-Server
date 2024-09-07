@@ -144,24 +144,16 @@ export class TargetProvider {
         const targetsFound: TargetOption[] = [];
 
         const entityTargets = await this.checkTargetEntityActions(entity, coords, playerDistance);
-        if (entityTargets.length > 0) {
-            return entityTargets;
-        }
+        targetsFound.push(...entityTargets);
 
         const modelTargets = await this.checkTargetModelActions(entity, coords, playerDistance);
-        if (modelTargets.length > 0) {
-            return modelTargets;
-        }
+        targetsFound.push(...modelTargets);
 
         const pedTargets = await this.checkTargetPedActions(entity, coords, playerDistance);
-        if (pedTargets.length > 0) {
-            return pedTargets;
-        }
+        targetsFound.push(...pedTargets);
 
         const vehicleTargets = await this.checkTargetVehicleActions(entity, coords, playerDistance);
-        if (vehicleTargets.length > 0) {
-            return vehicleTargets;
-        }
+        targetsFound.push(...vehicleTargets);
 
         for (const { zone, targets, distance } of Object.values(this.targetStore.zones.getAll())) {
             if (playerDistance > distance) continue;

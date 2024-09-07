@@ -38,7 +38,6 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
 
             canvasRef.current.width = container.width;
             canvasRef.current.height = container.height;
-            tCtx.fillStyle = '#FFFFFF';
             tCtx.filter = `blur(5px)`;
 
             if (!canvas) return;
@@ -62,11 +61,11 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
                 opacity: 0.99,
             }}
         >
-            <div ref={containerRef} className="absolute backdrop-blur-sm h-full w-full" />
+            <div ref={containerRef} className={cn('absolute h-full w-full overflow-hidden', borderClassName)} />
 
             <div
                 className={cn(
-                    'absolute h-full w-full transition-all duration-300 border-transparent z-10',
+                    'absolute h-full w-full transition-[border] duration-300 border-transparent z-10',
                     borderClassName,
                     {
                         'border-2': !disableBorder,
@@ -75,8 +74,8 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
                 )}
                 style={{
                     height,
-                    background: `linear-gradient(-40deg, ${borderColor} 0%, ${borderColor}1A 25%, ${borderColor}1A 75%, ${borderColor} 100%) border-box`,
-                    WebkitMask: 'linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)',
+                    background: `linear-gradient(-40deg, ${borderColor}FC 0%, ${borderColor}1A 25%, ${borderColor}1A 75%, ${borderColor}FC 100%) border-box`,
+                    WebkitMask: `linear-gradient(${borderColor} 0 0) padding-box, linear-gradient(${borderColor} 0 0) border-box`,
                     WebkitMaskComposite: 'xor',
                     maskComposite: 'exclude',
                 }}

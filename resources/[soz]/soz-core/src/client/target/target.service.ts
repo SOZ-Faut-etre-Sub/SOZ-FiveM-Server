@@ -33,10 +33,14 @@ export class TargetService {
         if (target.canInteract) {
             try {
                 if (target.canInteract instanceof Promise) {
-                    return !(await target.canInteract(entity));
+                    if (!(await target.canInteract(entity))) {
+                        return false;
+                    }
                 }
 
-                return !target.canInteract(entity);
+                if (!target.canInteract(entity)) {
+                    return false;
+                }
             } catch (e) {
                 return false;
             }
