@@ -106,7 +106,7 @@ export class ShopProvider {
             action: () => TriggerEvent('soz-core:client:weapon:open-gunsmith'),
         },
         {
-            icon: 'c:stonk/collecter.png',
+            icon: 'c:stonk/collecter',
             label: 'Collecter',
             job: JobType.CashTransfer,
             category: 'society',
@@ -165,7 +165,7 @@ export class ShopProvider {
             },
         },
         {
-            icon: 'c:mechanic/reparer.png',
+            icon: 'c:mechanic/reparer',
             label: 'Prix Pit Stop',
             category: 'citizen',
             canInteract: () => {
@@ -270,7 +270,7 @@ export class ShopProvider {
             [
                 {
                     label: 'Acheter un masque',
-                    icon: 'c:shop/mask.png',
+                    icon: 'c:shop/mask',
                     category: 'citizen',
                     blackoutGlobal: true,
                     action: () => {
@@ -279,7 +279,7 @@ export class ShopProvider {
                 },
                 {
                     label: 'Restock: Masques',
-                    icon: 'c:/ffs/restock.png',
+                    icon: 'c:/ffs/restock',
                     color: JobType.Ffs,
                     job: JobType.Ffs,
                     blackoutGlobal: true,

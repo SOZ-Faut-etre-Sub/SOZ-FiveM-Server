@@ -247,7 +247,7 @@ export class Halloween2023Scenario1Provider {
                     ),
                     {
                         label: 'Donner',
-                        icon: 'c:pole/livrer.png',
+                        icon: 'c:pole/livrer',
                         item: 'halloween_prehistoric_blood_analysis',
                         category: 'citizen',
                         canInteract: () => {
@@ -386,7 +386,7 @@ export class Halloween2023Scenario1Provider {
                     ),
                     {
                         label: 'Donner',
-                        icon: 'c:pole/livrer.png',
+                        icon: 'c:pole/livrer',
                         category: 'citizen',
                         canInteract: () => {
                             if (!this.storyService.canInteractForPart('halloween2023', 'scenario1', 6)) {

@@ -294,7 +294,7 @@ export class Halloween2023Scenario4Provider {
             [
                 {
                     label: 'Entrer',
-                    icon: 'c:housing/enter.png',
+                    icon: 'c:housing/enter',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario4', 1),
                     action: async () => {
@@ -316,7 +316,7 @@ export class Halloween2023Scenario4Provider {
             [
                 {
                     label: 'Sortir',
-                    icon: 'c:housing/enter.png',
+                    icon: 'c:housing/enter',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario4', 3),
                     action: async () => {
@@ -338,7 +338,7 @@ export class Halloween2023Scenario4Provider {
             [
                 {
                     label: 'Entrer',
-                    icon: 'c:housing/enter.png',
+                    icon: 'c:housing/enter',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario4', 3),
                     action: async () => {
@@ -360,7 +360,7 @@ export class Halloween2023Scenario4Provider {
             [
                 {
                     label: 'Sortir',
-                    icon: 'c:housing/enter.png',
+                    icon: 'c:housing/enter',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario4', 4),
                     action: async () => {
@@ -382,7 +382,7 @@ export class Halloween2023Scenario4Provider {
             [
                 {
                     label: 'Sortir',
-                    icon: 'c:housing/enter.png',
+                    icon: 'c:housing/enter',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario4', 6),
                     action: async () => {

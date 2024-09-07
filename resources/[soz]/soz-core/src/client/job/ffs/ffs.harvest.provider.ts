@@ -28,7 +28,7 @@ export class FightForStyleHarvestProvider {
             [
                 {
                     label: 'Récolter',
-                    icon: 'c:/ffs/harvest.png',
+                    icon: 'c:/ffs/harvest',
                     color: 'ffs',
                     job: 'ffs',
                     category: 'society',

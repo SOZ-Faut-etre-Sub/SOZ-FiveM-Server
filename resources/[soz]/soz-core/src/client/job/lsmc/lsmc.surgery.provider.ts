@@ -61,7 +61,7 @@ export class LSMCSurgeryProvider {
             {
                 label: 'Enlever un Poumon',
                 color: JobType.LSMC,
-                icon: 'c:ems/remove_poumon.png',
+                icon: 'c:ems/remove_poumon',
                 job: JobType.LSMC,
                 blackoutGlobal: true,
                 blackoutJob: JobType.LSMC,
@@ -106,7 +106,7 @@ export class LSMCSurgeryProvider {
             {
                 label: 'Enlever un Rein',
                 color: JobType.LSMC,
-                icon: 'c:ems/remove_rein.png',
+                icon: 'c:ems/remove_rein',
                 job: JobType.LSMC,
                 blackoutGlobal: true,
                 blackoutJob: JobType.LSMC,
@@ -151,7 +151,7 @@ export class LSMCSurgeryProvider {
             {
                 label: 'Enlever le Foie',
                 color: JobType.LSMC,
-                icon: 'c:ems/remove_foie.png',
+                icon: 'c:ems/remove_foie',
                 job: JobType.LSMC,
                 blackoutGlobal: true,
                 blackoutJob: JobType.LSMC,
@@ -196,7 +196,7 @@ export class LSMCSurgeryProvider {
             {
                 label: 'greffer',
                 color: JobType.LSMC,
-                icon: 'c:ems/greffer.png',
+                icon: 'c:ems/greffer',
                 job: JobType.LSMC,
                 blackoutGlobal: true,
                 blackoutJob: 'lsmc',

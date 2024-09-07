@@ -35,7 +35,7 @@ export class BunkerProvider {
             this.targetFactory.createForModel(bunker.model, [
                 {
                     label: bunker.label,
-                    icon: 'c:elevators/descendre.png',
+                    icon: 'c:elevators/descendre',
                     category: 'citizen',
                     action: () => {
                         this.playerPositionProvider.teleportPlayerToPosition(
@@ -53,7 +53,7 @@ export class BunkerProvider {
             this.targetFactory.createForBoxZone('bunker:exit:' + bunker.label, bunker.exitInteractionZone, [
                 {
                     label: 'Sortir',
-                    icon: 'c:elevators/monter.png',
+                    icon: 'c:elevators/monter',
                     category: 'citizen',
                     action: () => {
                         this.playerPositionProvider.teleportPlayerToPosition('exit:' + bunker.label);

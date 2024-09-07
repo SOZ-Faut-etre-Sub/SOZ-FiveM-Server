@@ -1883,7 +1883,7 @@ export class DevilBaitShopProvider {
                 options: [
                     {
                         label: 'Boutique du diable',
-                        icon: 'c:/fishing/fishing-rod.png',
+                        icon: 'c:/fishing/fishing-rod',
                         category: 'citizen',
                         action: () => {
                             const FishingProducts = [
@@ -1900,7 +1900,7 @@ export class DevilBaitShopProvider {
                     },
                     {
                         label: 'Vendre son âme',
-                        icon: 'c:stonk/vendre.png',
+                        icon: 'c:stonk/vendre',
                         category: 'citizen',
                         canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario4', 4),
                         action: () => {

@@ -432,7 +432,7 @@ export class Halloween2022Scenario4Provider {
             [
                 {
                     label: 'Sortir',
-                    icon: 'c:elevators/monter.png',
+                    icon: 'c:elevators/monter',
                     category: 'citizen',
                     action: async () => {
                         const ped = PlayerPedId();

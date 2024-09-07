@@ -306,7 +306,7 @@ export class HousingFournitureProvider {
             this.targetFactory.createForEntity(entity, [
                 {
                     label: 'Coffre de stockage',
-                    icon: 'c:inventory/ouvrir_le_stockage.png',
+                    icon: 'c:inventory/ouvrir_le_stockage',
                     category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
@@ -334,7 +334,7 @@ export class HousingFournitureProvider {
             this.targetFactory.createForEntity(entity, [
                 {
                     label: "Coffre d'argent",
-                    icon: 'c:bank/compte_safe.png',
+                    icon: 'c:bank/compte_safe',
                     category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
@@ -386,7 +386,7 @@ export class HousingFournitureProvider {
             this.targetFactory.createForEntity(entity, [
                 {
                     label: 'Penderie',
-                    icon: 'c:jobs/habiller.png',
+                    icon: 'c:jobs/habiller',
                     category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();

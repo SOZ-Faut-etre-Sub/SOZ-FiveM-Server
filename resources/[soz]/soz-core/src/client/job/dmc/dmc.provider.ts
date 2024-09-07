@@ -148,7 +148,7 @@ export class DmcProvider {
             },
             [
                 {
-                    icon: 'c:/dmc/allumer.png',
+                    icon: 'c:/dmc/allumer',
                     label: 'Allumer le Convertisseur',
                     category: 'society',
                     canInteract: async () => {
@@ -162,7 +162,7 @@ export class DmcProvider {
                     blackoutJob: JobType.DMC,
                 },
                 {
-                    icon: 'c:/dmc/allumer.png',
+                    icon: 'c:/dmc/allumer',
                     label: 'Eteindre le Convertisseur',
                     category: 'society',
                     canInteract: async () => {
@@ -174,7 +174,7 @@ export class DmcProvider {
                     },
                 },
                 {
-                    icon: 'c:/dmc/temperature.png',
+                    icon: 'c:/dmc/temperature',
                     label: 'Consulter la température',
                     category: 'society',
                     canInteract: async () => {
@@ -189,7 +189,7 @@ export class DmcProvider {
                     },
                 },
                 {
-                    icon: 'c:/dmc/temperature-set.png',
+                    icon: 'c:/dmc/temperature-set',
                     label: 'Modifier la température',
                     category: 'society',
                     canInteract: async () => {
@@ -218,7 +218,7 @@ export class DmcProvider {
         );
 
         // Craft zones
-        this.craftService.createBtargetZoneCraft(DMC_CRAFT_ZONES, 'c:/dmc/confection.png', 'Forger', JobType.DMC, {
+        this.craftService.createBtargetZoneCraft(DMC_CRAFT_ZONES, 'c:/dmc/confection', 'Forger', JobType.DMC, {
             weapon: 'weapon_hammer',
         });
 

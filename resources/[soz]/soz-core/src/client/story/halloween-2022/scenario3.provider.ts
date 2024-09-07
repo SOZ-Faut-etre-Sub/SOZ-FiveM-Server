@@ -259,7 +259,7 @@ export class Halloween2022Scenario3Provider {
             [
                 {
                     label: 'Entrer',
-                    icon: 'c:housing/enter.png',
+                    icon: 'c:housing/enter',
                     category: 'citizen',
                     action: async () => {
                         this.playerPositionProvider.teleportPlayerToPosition(Halloween2022Scenario3EnterBunker);
@@ -281,7 +281,7 @@ export class Halloween2022Scenario3Provider {
             [
                 {
                     label: 'Sortir',
-                    icon: 'c:housing/enter.png',
+                    icon: 'c:housing/enter',
                     category: 'citizen',
                     action: async () => {
                         this.playerPositionProvider.teleportPlayerToPosition(Halloween2022Scenario3ExitBunker);

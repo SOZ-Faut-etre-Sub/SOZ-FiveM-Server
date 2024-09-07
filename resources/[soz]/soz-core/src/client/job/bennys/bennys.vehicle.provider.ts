@@ -116,7 +116,7 @@ export class BennysVehicleProvider {
     public setupBennysJob() {
         this.targetFactory.createForAllVehicle([
             {
-                icon: 'c:mechanic/repair_engine.png',
+                icon: 'c:mechanic/repair_engine',
                 label: 'Réparer moteur',
                 color: JobType.Bennys,
                 action: this.repairVehicleEngine.bind(this),
@@ -127,7 +127,7 @@ export class BennysVehicleProvider {
                 canInteract: entity => !IsEntityDead(entity) && this.isInsideUpgradeZoneOrNearRepairVehicle(),
             },
             {
-                icon: 'c:mechanic/reparer.png',
+                icon: 'c:mechanic/reparer',
                 label: 'Réparer carrosserie',
                 color: JobType.Bennys,
                 action: this.repairVehicleBody.bind(this),
@@ -138,7 +138,7 @@ export class BennysVehicleProvider {
                 canInteract: entity => !IsEntityDead(entity) && this.isInsideUpgradeZoneOrNearRepairVehicle(),
             },
             {
-                icon: 'c:mechanic/repair_tank.png',
+                icon: 'c:mechanic/repair_tank',
                 label: 'Réparer réservoir',
                 color: JobType.Bennys,
                 action: this.repairVehicleTank.bind(this),
@@ -152,7 +152,7 @@ export class BennysVehicleProvider {
                     !isVehicleModelElectric(GetEntityModel(entity)),
             },
             {
-                icon: 'c:mechanic/repair_wheel.png',
+                icon: 'c:mechanic/repair_wheel',
                 label: 'Changement des roues',
                 color: JobType.Bennys,
                 action: this.repairVehicleWheel.bind(this),
@@ -163,7 +163,7 @@ export class BennysVehicleProvider {
                 canInteract: entity => !IsEntityDead(entity) && this.isInsideUpgradeZoneOrNearRepairVehicle(),
             },
             {
-                icon: 'c:mechanic/nettoyer.png',
+                icon: 'c:mechanic/nettoyer',
                 label: 'Laver',
                 color: JobType.Bennys,
                 blackoutGlobal: true,
@@ -174,7 +174,7 @@ export class BennysVehicleProvider {
                 canInteract: entity => !IsEntityDead(entity) && this.isInsideUpgradeZoneOrNearRepairVehicle(),
             },
             {
-                icon: 'c:mechanic/repair_diag.png',
+                icon: 'c:mechanic/repair_diag',
                 label: 'Faire un diagnostic',
                 color: JobType.Bennys,
                 blackoutGlobal: true,

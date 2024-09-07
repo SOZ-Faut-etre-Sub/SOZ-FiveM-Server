@@ -13,6 +13,6 @@ export class FightForStyleCraftProvider {
 
     @Once(OnceStep.PlayerLoaded)
     public setupFfsJobCraft() {
-        this.craftService.createBtargetZoneCraft(FFSCraftZones, 'c:/ffs/craft.png', 'Confectionner', JobType.Ffs);
+        this.craftService.createBtargetZoneCraft(FFSCraftZones, 'c:/ffs/craft', 'Confectionner', JobType.Ffs);
     }
 }

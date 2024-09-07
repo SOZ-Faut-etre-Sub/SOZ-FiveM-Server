@@ -209,11 +209,11 @@ CreateThread(function()
         local options = {
             {
                 label = "Ouvrir",
-                icon = "c:inventory/ouvrir_le_stockage.png",
-                event = "inventory:client:qTargetOpenInventory",
-                storageID = id,
-                storage = storage,
+                icon = "c:inventory/ouvrir_le_stockage",
                 job = storage.owner,
+                action = function()
+                    TriggerEvent("inventory:client:qTargetOpenInventory", {storage = storage, storageID = id})
+                end,
             },
         }
         if storage.targetOptions then
@@ -221,13 +221,15 @@ CreateThread(function()
                 table.insert(options, option)
             end
         end
-        exports["qb-target"]:AddBoxZone("storage:" .. id, storage.position, storage.size and storage.size.x or 1.0, storage.size and storage.size.y or 1.0, {
-            name = "storage:" .. id,
+
+        exports["soz-core"]:AddBoxZone("storage:" .. id, {
+            center = {storage.position.x, storage.position.y, storage.position.z},
+            length = storage.size and storage.size.x or 1.0,
+            width = storage.size and storage.size.y or 1.0,
             heading = storage.heading or 0.0,
             minZ = storage.minZ or (storage.position.z - (storage.offsetDownZ or 1.0)),
             maxZ = storage.maxZ or (storage.position.z + (storage.offsetUpZ or 1.0)),
-            debugPoly = storage.debug or false,
-        }, {options = options, distance = 2.5})
+        }, options, 2.5)
     end
 end)
 

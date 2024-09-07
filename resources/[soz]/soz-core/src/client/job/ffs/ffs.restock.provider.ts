@@ -32,7 +32,7 @@ export class FightForStyleRestockProvider {
         const targets: TargetOption[] = garments.map(garment => {
             return {
                 label: 'Restock: ' + this.itemService.getItem(garment).label,
-                icon: 'c:/ffs/restock.png',
+                icon: 'c:/ffs/restock',
                 color: 'ffs',
                 job: 'ffs',
                 blackoutGlobal: true,

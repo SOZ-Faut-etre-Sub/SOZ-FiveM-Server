@@ -78,7 +78,7 @@ export class FDFFieldProvider {
                 {
                     label: elem.fieldConfig.speedLabel,
                     color: JobType.FDF,
-                    icon: 'c:fdf/buttage.png',
+                    icon: 'c:fdf/buttage',
                     blackoutJob: JobType.FDF,
                     blackoutGlobal: true,
                     job: JobType.FDF,
@@ -113,7 +113,7 @@ export class FDFFieldProvider {
                 {
                     label: 'Récolter',
                     color: JobType.FDF,
-                    icon: 'c:fdf/harvest.png',
+                    icon: 'c:fdf/harvest',
                     blackoutJob: JobType.FDF,
                     blackoutGlobal: true,
                     job: JobType.FDF,
@@ -150,7 +150,7 @@ export class FDFFieldProvider {
                 {
                     label: 'Détruire',
                     color: JobType.FDF,
-                    icon: 'c:crimi/destroy.png',
+                    icon: 'c:crimi/destroy',
                     blackoutJob: JobType.FDF,
                     blackoutGlobal: true,
                     job: JobType.FDF,
@@ -188,7 +188,7 @@ export class FDFFieldProvider {
                 {
                     label: 'Vérifier',
                     color: JobType.FDF,
-                    icon: 'c:crimi/time.png',
+                    icon: 'c:crimi/time',
                     blackoutJob: JobType.FDF,
                     blackoutGlobal: true,
                     job: JobType.FDF,
@@ -236,7 +236,7 @@ export class FDFFieldProvider {
 
         this.targetFactory.createForModel(RAKE_TRAILER, [
             {
-                icon: 'c:fdf/plow.png',
+                icon: 'c:fdf/plow',
                 label: 'Labourer',
                 blackoutJob: JobType.FDF,
                 blackoutGlobal: true,
@@ -260,7 +260,7 @@ export class FDFFieldProvider {
 
         this.targetFactory.createForModel(GRAIN_TRAILER, [
             {
-                icon: 'c:fdf/tractor.png',
+                icon: 'c:fdf/tractor',
                 label: 'Récolter',
                 blackoutJob: JobType.FDF,
                 blackoutGlobal: true,
@@ -494,7 +494,7 @@ export class FDFFieldProvider {
             .map(type => {
                 const item = this.itemService.getItem(type);
                 return {
-                    icon: `c:fdf/${type}.png`,
+                    icon: `c:fdf/${type}`,
                     label: 'Planter ' + item.label,
                     blackoutJob: JobType.FDF,
                     blackoutGlobal: true,
@@ -512,7 +512,7 @@ export class FDFFieldProvider {
 
         if (withPlow) {
             targets.push({
-                icon: 'c:fdf/plow.png',
+                icon: 'c:fdf/plow',
                 label: 'Labourer',
                 blackoutJob: JobType.FDF,
                 blackoutGlobal: true,

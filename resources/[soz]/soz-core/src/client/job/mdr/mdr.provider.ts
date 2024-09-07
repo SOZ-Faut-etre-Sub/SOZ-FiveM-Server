@@ -60,7 +60,7 @@ export class MandatoryProvider {
             },
             [
                 {
-                    icon: 'c:stonk/collecter.png',
+                    icon: 'c:stonk/collecter',
                     label: 'Réhabilitation des billets',
                     category: 'society',
                     canInteract: () => {

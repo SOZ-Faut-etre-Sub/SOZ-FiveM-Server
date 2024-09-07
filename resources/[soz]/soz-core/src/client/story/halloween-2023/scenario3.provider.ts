@@ -146,7 +146,7 @@ export class Halloween2023Scenario3Provider {
                     ),
                     {
                         label: 'Donner',
-                        icon: 'c:pole/livrer.png',
+                        icon: 'c:pole/livrer',
                         item: 'halloween_beef_with_bone',
                         category: 'citizen',
                         canInteract: () => {
@@ -175,7 +175,7 @@ export class Halloween2023Scenario3Provider {
                     ),
                     {
                         label: 'Téléportation',
-                        icon: 'c:halloween/teleportation.png',
+                        icon: 'c:halloween/teleportation',
                         category: 'citizen',
                         canInteract: () => {
                             return this.storyService.canInteractForPart('halloween2023', 'scenario3', 2);
@@ -272,7 +272,7 @@ export class Halloween2023Scenario3Provider {
             [
                 {
                     label: 'Sortir',
-                    icon: 'c:housing/enter.png',
+                    icon: 'c:housing/enter',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario3', 2),
                     action: async () => {
@@ -299,7 +299,7 @@ export class Halloween2023Scenario3Provider {
             [
                 {
                     label: 'Alimenter',
-                    icon: 'c:upw/deposer.png',
+                    icon: 'c:upw/deposer',
                     category: 'citizen',
                     canInteract: () =>
                         this.storyService.canInteractForPart('halloween2023', 'scenario3', 2) && !this.electricity,
@@ -493,7 +493,7 @@ export class Halloween2023Scenario3Provider {
             [
                 {
                     label: 'Sortir',
-                    icon: 'c:housing/enter.png',
+                    icon: 'c:housing/enter',
                     category: 'citizen',
                     canInteract: () =>
                         this.storyService.canInteractForPart('halloween2023', 'scenario3', 2) && this.doorUnlock,
@@ -518,7 +518,7 @@ export class Halloween2023Scenario3Provider {
             [
                 {
                     label: 'Ascenseur',
-                    icon: 'c:elevators/descendre.png',
+                    icon: 'c:elevators/descendre',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario3', 3),
                     action: async () => this.exitFBI(),
@@ -538,7 +538,7 @@ export class Halloween2023Scenario3Provider {
             [
                 {
                     label: 'Sortir',
-                    icon: 'c:housing/enter.png',
+                    icon: 'c:housing/enter',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario3', 3),
                     action: async () => this.exitFBI(),
@@ -558,7 +558,7 @@ export class Halloween2023Scenario3Provider {
             [
                 {
                     label: 'Ascenseur',
-                    icon: 'c:elevators/descendre.png',
+                    icon: 'c:elevators/descendre',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario3', 4),
                     action: async () => {
@@ -618,7 +618,7 @@ export class Halloween2023Scenario3Provider {
             [
                 {
                     label: 'Sortir',
-                    icon: 'c:housing/enter.png',
+                    icon: 'c:housing/enter',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario3', 5),
                     action: async () => {

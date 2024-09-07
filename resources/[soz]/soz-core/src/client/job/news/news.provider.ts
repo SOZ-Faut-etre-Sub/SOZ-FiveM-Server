@@ -57,7 +57,7 @@ export class NewsProvider {
             [
                 {
                     label: 'Récupérer',
-                    icon: 'c:jobs/recuperer.png',
+                    icon: 'c:jobs/recuperer',
                     category: 'society',
                     job: { [JobType.News]: 0, [JobType.YouNews]: 0 },
                     action: object => {
@@ -80,7 +80,7 @@ export class NewsProvider {
                 {
                     label: 'Imprimer',
                     color: 'news',
-                    icon: 'c:news/imprimer.png',
+                    icon: 'c:news/imprimer',
                     category: 'society',
                     action: () => {
                         TriggerServerEvent(ServerEvent.NEWS_NEWSPAPER_FARM);
@@ -107,7 +107,7 @@ export class NewsProvider {
                 {
                     label: 'Imprimer',
                     color: 'you-news',
-                    icon: 'c:news/imprimer.png',
+                    icon: 'c:news/imprimer',
                     category: 'society',
                     action: () => {
                         TriggerServerEvent(ServerEvent.NEWS_NEWSPAPER_FARM);
@@ -131,7 +131,7 @@ export class NewsProvider {
                 {
                     label: 'Rentrer dans le studio',
                     item: 'press_card',
-                    icon: 'c:housing/enter.png',
+                    icon: 'c:housing/enter',
                     category: 'society',
                     action: () => {
                         this.playerPositionProvider.teleportPlayerToPosition(StudioEnterZone);
@@ -150,7 +150,7 @@ export class NewsProvider {
             [
                 {
                     label: 'Sortir du studio',
-                    icon: 'c:housing/enter.png',
+                    icon: 'c:housing/enter',
                     category: 'society',
                     action: () => {
                         this.playerPositionProvider.teleportPlayerToPosition(StudioExitZone);
@@ -190,7 +190,7 @@ export class NewsProvider {
                 {
                     label: 'Livrer',
                     color: player.job.id,
-                    icon: 'c:news/livrer.png',
+                    icon: 'c:news/livrer',
                     category: 'society',
                     action: () => {
                         TriggerServerEvent(ServerEvent.NEWS_NEWSPAPER_SOLD);

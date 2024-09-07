@@ -78,7 +78,7 @@ export class DrivingSchoolProvider {
         const targetOptions: TargetOption[] = [
             {
                 label: `Carte grise`,
-                icon: 'c:driving-school/voiture.png',
+                icon: 'c:driving-school/voiture',
                 category: 'citizen',
                 blackoutGlobal: true,
                 action: async () => {

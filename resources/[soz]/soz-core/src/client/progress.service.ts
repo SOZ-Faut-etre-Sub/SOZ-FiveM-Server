@@ -4,7 +4,7 @@ import { AnimationRunner } from '@public/client/animation/animation.factory';
 import { AudioService } from '@public/client/nui/audio.service';
 import { NuiDispatch } from '@public/client/nui/nui.dispatch';
 import { PlayerService } from '@public/client/player/player.service';
-import { AnimationProps, AnimationStopReason } from '@public/shared/animation';
+import { animationFlagsToOptions, AnimationProps, AnimationStopReason } from '@public/shared/animation';
 import { fromVector3Object } from '@public/shared/polyzone/vector';
 import PCancelable from 'p-cancelable';
 
@@ -61,6 +61,8 @@ export class ProgressService {
             return { completed: false, progress: 0 };
         }
 
+        this.currentAction = options;
+
         if (!options.allowExistingAnimation) {
             await this.animationService.stop();
         }
@@ -94,38 +96,6 @@ export class ProgressService {
         }
 
         const start = GetGameTimer();
-
-        const animationCancel = () => {
-            this.animationRunner?.cancel();
-
-            if (audioId) {
-                this.audioService.stopAudio(audioId);
-            }
-
-            this.finish();
-        };
-
-        this.currentAction = options;
-        this.currentPromise = new PCancelable<ProgressResult>(async (resolve, reject, onCancel) => {
-            onCancel(() => {
-                const elapsedBeforeCancel = (GetGameTimer() - start) / duration;
-
-                onCancel.shouldReject = false;
-                resolve({
-                    completed: false,
-                    progress: elapsedBeforeCancel,
-                });
-            });
-
-            await wait(duration);
-
-            animationCancel();
-
-            resolve({
-                completed: true,
-                progress: 1,
-            });
-        });
 
         if (animation) {
             if (animation.task) {
@@ -164,7 +134,7 @@ export class ProgressService {
                             blendInSpeed: animation.blendInSpeed,
                             blendOutSpeed: animation.blendOutSpeed,
                             playbackRate: animation.playbackRate,
-                            options: animation.options,
+                            options: animation.flags ? animationFlagsToOptions(animation.flags) : animation.options,
                             duration: duration,
                         },
                         props: props,
@@ -177,6 +147,7 @@ export class ProgressService {
 
             this.animationRunner.then((stopReason: AnimationStopReason) => {
                 if (stopReason !== AnimationStopReason.Finished) {
+                    console.trace('animation stop reason', stopReason);
                     this.cancel();
                 }
             });
@@ -184,13 +155,46 @@ export class ProgressService {
             animation = null;
         }
 
-        this.nuiDispatch.dispatch('progress', 'Start', {
-            label,
-            duration,
-            units: options.units,
-        });
+        const beforeCallback = () => {
+            options.start?.();
 
-        options.start?.();
+            this.nuiDispatch.dispatch('progress', 'Start', {
+                label,
+                duration,
+                units: options.units,
+            });
+        };
+
+        const afterCallback = () => {
+            this.animationRunner?.cancel(AnimationStopReason.Finished);
+
+            if (audioId) {
+                this.audioService.stopAudio(audioId);
+            }
+
+            this.finish();
+        };
+
+        this.currentPromise = new PCancelable<ProgressResult>(async (resolve, reject, onCancel) => {
+            onCancel(() => {
+                const elapsedBeforeCancel = (GetGameTimer() - start) / duration;
+
+                onCancel.shouldReject = false;
+                resolve({
+                    completed: false,
+                    progress: elapsedBeforeCancel,
+                });
+            });
+
+            beforeCallback();
+            await wait(duration);
+            afterCallback();
+
+            resolve({
+                completed: true,
+                progress: 1,
+            });
+        });
 
         return this.currentPromise;
     }
@@ -200,8 +204,6 @@ export class ProgressService {
     }
 
     public isDoingAction(): boolean {
-        if (this.currentPromise?.isCanceled) return false;
-
         return Boolean(this.currentAction);
     }
 
@@ -223,7 +225,7 @@ export class ProgressService {
             isInventoryBusy: false,
         });
 
-        this.animationRunner?.cancel();
+        this.animationRunner?.cancel(AnimationStopReason.Finished);
         this.currentAction = null;
     }
 }

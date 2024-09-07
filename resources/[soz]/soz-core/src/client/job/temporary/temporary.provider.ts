@@ -141,7 +141,7 @@ const TemporaryJobs: Partial<Record<JobType, TemporaryJob>> = {
             new BoxZone([-822.38, -995.39, 13.07], 1, 1, { heading: 29, maxZ: 14.07, minZ: 12.27 }),
             new BoxZone([-1365.82, -686.5, 25.32], 1, 1, { heading: 37, maxZ: 25.32, minZ: 23.72 }),
         ],
-        targetIcon: 'c:pole/livrer.png',
+        targetIcon: 'c:pole/livrer',
         targetLabel: 'Livrez la fougère',
         missionMoney: 10,
         missionProgressAnimation: {
@@ -207,7 +207,7 @@ const TemporaryJobs: Partial<Record<JobType, TemporaryJob>> = {
             new BoxZone([-566.75, -356.01, 35.06], 1.0, 1.6, { heading: 1, maxZ: 36.06, minZ: 33.86 }),
             new BoxZone([-298.36, -154.46, 41.33], 1.6, 0.6, { heading: 358, maxZ: 41.73, minZ: 19.93 }),
         ],
-        targetIcon: 'c:pole/repair.png',
+        targetIcon: 'c:pole/repair',
         targetLabel: 'Réparer',
         missionMoney: 12,
         missionProgressAnimation: {
@@ -297,7 +297,7 @@ export class TemporaryProvider {
                     distance: 2.5,
                     options: [
                         {
-                            icon: 'c:pole/start.png',
+                            icon: 'c:pole/start',
                             label: job.label,
                             category: 'society',
                             blackoutGlobal: true,
@@ -309,7 +309,7 @@ export class TemporaryProvider {
                             },
                         },
                         {
-                            icon: 'c:pole/restart.png',
+                            icon: 'c:pole/restart',
                             label: 'Relancer',
                             category: 'society',
                             blackoutGlobal: true,
@@ -321,7 +321,7 @@ export class TemporaryProvider {
                             },
                         },
                         {
-                            icon: 'c:pole/end.png',
+                            icon: 'c:pole/end',
                             label: 'Terminer',
                             category: 'society',
                             canInteract: () => {

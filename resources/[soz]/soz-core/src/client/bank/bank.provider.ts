@@ -91,7 +91,7 @@ export class BankProvider {
                     options: [
                         {
                             label: 'Accéder aux comptes',
-                            icon: 'c:bank/compte_personal.png',
+                            icon: 'c:bank/compte_personal',
                             category: 'citizen',
                             action: async entity => {
                                 TaskTurnPedToFaceEntity(PlayerPedId(), entity, 500);
@@ -121,7 +121,7 @@ export class BankProvider {
     protected createBankRefillAction(item: string): TargetOption {
         return {
             label: `Remplir avec ${this.itemService.getItem(item).label}`,
-            icon: 'c:stonk/remplir.png',
+            icon: 'c:stonk/remplir',
             category: 'society',
             canInteract: async () => {
                 if (!this.currentBank) return;

@@ -61,7 +61,7 @@ export class BennysFlatbedProvider {
     public async setupFlatbed() {
         this.targetFactory.createForAllVehicle([
             {
-                icon: 'c:mechanic/Mettre.png',
+                icon: 'c:mechanic/Mettre',
                 color: JobType.Bennys,
                 job: JobType.Bennys,
                 label: 'Remorquer',
@@ -73,7 +73,7 @@ export class BennysFlatbedProvider {
                 canInteract: () => this.currentFlatbedAttach !== null,
             },
             {
-                icon: 'c:mechanic/Attacher.png',
+                icon: 'c:mechanic/Attacher',
                 color: JobType.Bennys,
                 job: JobType.Bennys,
                 label: 'Prendre le crochet',
@@ -97,7 +97,7 @@ export class BennysFlatbedProvider {
                 },
             },
             {
-                icon: 'c:mechanic/Attacher.png',
+                icon: 'c:mechanic/Attacher',
                 color: JobType.Bennys,
                 job: JobType.Bennys,
                 label: 'Déposer le crochet',
@@ -118,7 +118,7 @@ export class BennysFlatbedProvider {
                 },
             },
             {
-                icon: 'c:mechanic/Retirer.png',
+                icon: 'c:mechanic/Retirer',
                 color: JobType.Bennys,
                 job: JobType.Bennys,
                 label: 'Démorquer',

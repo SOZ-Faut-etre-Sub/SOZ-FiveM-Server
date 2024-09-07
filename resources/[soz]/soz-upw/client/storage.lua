@@ -12,7 +12,7 @@ function CreateInverterZone(identifier, data)
     data.options = {
         {
             label = "Accéder à l'onduleur",
-            icon = "c:inventory/ouvrir_le_stockage.png",
+            icon = "c:inventory/ouvrir_le_stockage",
             event = "inventory:client:qTargetOpenInventory",
             storageID = identifier,
             storage = {type = "inverter"},
@@ -94,7 +94,7 @@ function CreateTerminalTargetScope(scope)
     local options = {
         {
             label = "Déposer l'énergie",
-            icon = "c:upw/deposer.png",
+            icon = "c:upw/deposer",
             action = function(entity)
                 local objectId = exports["soz-core"]:GetObjectIdFromEntity(entity)
 
@@ -110,7 +110,7 @@ function CreateTerminalTargetScope(scope)
         },
         {
             label = "État d'énergie",
-            icon = "c:fuel/battery.png",
+            icon = "c:fuel/battery",
             action = function(entity)
                 local objectId = exports["soz-core"]:GetObjectIdFromEntity(entity)
 
@@ -137,5 +137,5 @@ function CreateTerminalTargetScope(scope)
         },
     }
 
-    exports["qb-target"]:AddTargetModel(prop, {options = options, distance = 2})
+    exports["soz-core"]:AddTargetModel(prop, options, 2)
 end

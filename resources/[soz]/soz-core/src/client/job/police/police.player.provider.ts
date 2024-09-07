@@ -95,7 +95,7 @@ export class PolicePlayerProvider {
                 {
                     label: 'Amender',
                     color: job,
-                    icon: 'c:police/amender.png',
+                    icon: 'c:police/amender',
                     job: job,
                     blackoutJob: job,
                     blackoutGlobal: true,
@@ -111,7 +111,7 @@ export class PolicePlayerProvider {
                 {
                     label: 'Permis',
                     color: job,
-                    icon: 'c:police/permis.png',
+                    icon: 'c:police/permis',
                     job: job,
                     category: 'society',
                     action: async entity => {
@@ -131,7 +131,7 @@ export class PolicePlayerProvider {
                 {
                     label: 'Menotter',
                     color: job,
-                    icon: 'c:police/menotter.png',
+                    icon: 'c:police/menotter',
                     item: 'handcuffs',
                     job: job,
                     category: 'society',
@@ -162,7 +162,7 @@ export class PolicePlayerProvider {
                 {
                     label: 'Démenotter',
                     color: job,
-                    icon: 'c:police/demenotter.png',
+                    icon: 'c:police/demenotter',
                     item: 'handcuffs_key',
                     job: job,
                     category: 'society',
@@ -199,7 +199,7 @@ export class PolicePlayerProvider {
                 {
                     label: "Récolte d'empreinte",
                     color: job,
-                    icon: 'c:police/fouiller.png',
+                    icon: 'c:police/fouiller',
                     job: job,
                     item: 'fingerprint_collector',
                     category: 'society',
@@ -233,7 +233,7 @@ export class PolicePlayerProvider {
                 {
                     label: 'Rechercher des traces de poudre',
                     color: job,
-                    icon: 'c:police/fouiller.png',
+                    icon: 'c:police/fouiller',
                     job: job,
                     category: 'society',
                     action: async entity => {
@@ -271,7 +271,7 @@ export class PolicePlayerProvider {
                     {
                         label: 'Fouiller',
                         color: job,
-                        icon: 'c:police/fouiller.png',
+                        icon: 'c:police/fouiller',
                         job: job,
                         category: 'society',
                         canInteract: entity => {
@@ -299,7 +299,7 @@ export class PolicePlayerProvider {
                 {
                     label: 'Escorter',
                     color: job,
-                    icon: 'c:police/escorter.png',
+                    icon: 'c:police/escorter',
                     job: job,
                     category: 'society',
                     canInteract: async entity => {
@@ -328,7 +328,7 @@ export class PolicePlayerProvider {
                     {
                         label: 'Alcootest',
                         color: job,
-                        icon: 'c:police/alcootest.png',
+                        icon: 'c:police/alcootest',
                         job: job,
                         item: 'breathanalyzer',
                         category: 'society',
@@ -342,7 +342,7 @@ export class PolicePlayerProvider {
                     {
                         label: 'Dépistage de drogue',
                         color: job,
-                        icon: 'c:police/screening.png',
+                        icon: 'c:police/screening',
                         job: job,
                         item: 'screening_test',
                         category: 'society',

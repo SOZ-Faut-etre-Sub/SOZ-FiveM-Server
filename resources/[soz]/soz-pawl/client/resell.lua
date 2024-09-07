@@ -3,19 +3,6 @@ Citizen.CreateThread(function()
     local resellOpt = Config.Resell.primary
     local coords = resellOpt.coords
 
-    exports["qb-target"]:SpawnPed({
-        {
-            model = "s_m_y_construct_01",
-            coords = coords,
-            minusOne = true,
-            freeze = true,
-            invincible = true,
-            blockevents = true,
-            scenario = "WORLD_HUMAN_CLIPBOARD",
-            target = {options = {}},
-        },
-    })
-
     local zone = BoxZone:Create(coords, 3.0, 3.0, {
         name = resellOpt.ZoneName,
         heading = coords.w,

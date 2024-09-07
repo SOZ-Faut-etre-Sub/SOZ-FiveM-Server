@@ -13,7 +13,7 @@ export class VehicleItemProvider {
     public async setupVehicleItems() {
         this.targetFactory.createForAllVehicle([
             {
-                icon: 'c:mechanic/nettoyer.png',
+                icon: 'c:mechanic/nettoyer',
                 label: 'Laver (kit)',
                 item: 'cleaningkit',
                 category: 'society',
@@ -27,7 +27,7 @@ export class VehicleItemProvider {
                 },
             },
             {
-                icon: 'c:mechanic/reparer_mecanique.png',
+                icon: 'c:mechanic/reparer_mecanique',
                 label: 'Réparer mécanique (kit)',
                 item: 'repairkit',
                 category: 'society',
@@ -41,7 +41,7 @@ export class VehicleItemProvider {
                 },
             },
             {
-                icon: 'c:mechanic/reparer_carosserie.png',
+                icon: 'c:mechanic/reparer_carosserie',
                 label: 'Réparer carosserie (kit)',
                 item: 'bodyrepairkit',
                 category: 'society',
@@ -55,7 +55,7 @@ export class VehicleItemProvider {
                 },
             },
             {
-                icon: 'c:mechanic/repair_wheel.png',
+                icon: 'c:mechanic/repair_wheel',
                 label: 'Anti crevaison (kit)',
                 item: 'wheel_kit',
                 category: 'society',

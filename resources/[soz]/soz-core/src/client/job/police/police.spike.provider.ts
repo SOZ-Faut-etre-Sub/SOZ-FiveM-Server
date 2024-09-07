@@ -42,7 +42,7 @@ export class PoliceSpikeProvider {
             [
                 {
                     label: 'Démonter',
-                    icon: 'c:jobs/demonter.png',
+                    icon: 'c:jobs/demonter',
                     job: jobsTarget,
                     category: 'citizen',
                     action: async (entity: number) => {
@@ -81,7 +81,7 @@ export class PoliceSpikeProvider {
             [
                 {
                     label: 'Démonter',
-                    icon: 'c:jobs/demonter.png',
+                    icon: 'c:jobs/demonter',
                     job: jobsTarget,
                     category: 'society',
                     canInteract: entity => {

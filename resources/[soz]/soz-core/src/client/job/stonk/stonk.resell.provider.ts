@@ -36,7 +36,7 @@ export class StonkResellProvider {
 
         return {
             label: `Déposer ${acceptedItem.label}`,
-            icon: 'c:stonk/vendre.png',
+            icon: 'c:stonk/vendre',
             color: JobType.CashTransfer,
             job: JobType.CashTransfer,
             blackoutGlobal: true,

@@ -11,47 +11,43 @@ end
 
 local function TreeInteraction(identifier, position)
     local zoneName = ("pawl:%s:%s"):format(identifier, position.x .. position.y)
-    exports["qb-target"]:RemoveZone(zoneName)
-    exports["qb-target"]:AddBoxZone(zoneName, position, 8.0, 8.0,
-                                    {
-        name = zoneName,
+    exports["soz-core"]:RemoveZone(zoneName)
+    exports["soz-core"]:AddBoxZone(zoneName, {
+        center = {position.x, position.y, position.z},
+        length = 8.0,
+        width = 8.0,
         heading = position.w or 0.0,
         minZ = position.z,
         maxZ = position.z + 5.0,
-        debugPoly = false,
     }, {
-        options = {
             {
                 color = "pawl",
                 label = "Récolter",
-                icon = "c:pawl/harvest.png",
-                event = "pawl:client:harvestTree",
+                icon = "c:pawl/harvest",
                 item = Config.Harvest.RequiredWeapon,
                 job = "pawl",
                 blackoutGlobal = true,
                 blackoutJob = "pawl",
-                --- metadata
-                identifier = identifier,
-                position = position,
+                action = function()
+                    TriggerEvent("pawl:client:harvestTree", {identifier, position})
+                end,
             },
             {
                 color = "pawl",
                 label = "Tronçonner",
-                icon = "c:pawl/harvest-chainsaw.png",
-                event = "pawl:client:checkChainsawFuel",
+                icon = "c:pawl/harvest-chainsaw",
                 item = Config.FastHarvest.RequiredWeapon,
                 job = "pawl",
                 blackoutGlobal = true,
                 blackoutJob = "pawl",
-                --- metadata
-                identifier = identifier,
-                position = position,
+                action = function()
+                    TriggerEvent("pawl:client:checkChainsawFuel", {identifier, position})
+                end,
             },
             {
                 color = "pawl",
                 label = "Récolter la sève",
-                icon = "c:pawl/harvest-sap.png",
-                event = "pawl:client:harvestTreeSap",
+                icon = "c:pawl/harvest-sap",
                 item = Config.Harvest.RequiredWeapon,
                 canInteract = function()
                     local treeKey = ConcatPosition(position)
@@ -64,16 +60,14 @@ local function TreeInteraction(identifier, position)
                 job = "pawl",
                 blackoutGlobal = true,
                 blackoutJob = "pawl",
-                --- metadata
-                identifier = identifier,
-                position = position,
+                action = function()
+                    TriggerEvent("pawl:client:harvestTreeSap", {identifier, position})
+                end,
             },
             {
                 color = "crimi",
                 label = "Récolter des champignons",
-                icon = "c:pawl/harvest-mushroom.png",
-                event = "soz-core:client:drugs:harvest-champi",
-                position = position,
+                icon = "c:pawl/harvest-mushroom",
                 canInteract = function()
                     for _, value in ipairs(PlayerData.metadata.drugs_skills) do
                         -- 1 is Botanite
@@ -83,10 +77,11 @@ local function TreeInteraction(identifier, position)
                     end
                     return false
                 end,
+                action = function(entity)
+                    TriggerEvent("soz-core:client:drugs:harvest-champi", {entity, position})
+                end,
             },
-        },
-        distance = 2.5,
-    })
+    }, 2.5)
 end
 
 RegisterNetEvent("pawl:client:harvestTree", function(data)
@@ -230,7 +225,7 @@ RegisterNetEvent("pawl:client:syncField", function(identifier, data)
                 TreeInteraction(identifier, v.position)
             else
                 local zoneName = ("pawl:%s:%s"):format(identifier, v.position.x .. v.position.y)
-                exports["qb-target"]:RemoveZone(zoneName)
+                exports["soz-core"]:RemoveZone(zoneName)
             end
         end
     end

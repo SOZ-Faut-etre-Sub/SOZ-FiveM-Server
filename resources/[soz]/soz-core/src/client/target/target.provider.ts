@@ -11,7 +11,6 @@ import { TargetOption } from '../../shared/target';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { PlayerService } from '../player/player.service';
 import { ScreenService } from '../screen.service';
-import { TargetFactory } from './target.factory';
 import { TargetService } from './target.service';
 import { TargetStore, TargetStoreBase } from './target.store';
 
@@ -19,9 +18,6 @@ const MAX_DISTANCE = 5;
 
 @Provider()
 export class TargetProvider {
-    @Inject(TargetFactory)
-    private readonly targetFactory: TargetFactory;
-
     @Inject(TargetStore)
     private readonly targetStore: TargetStore;
 

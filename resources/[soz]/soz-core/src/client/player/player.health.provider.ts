@@ -641,7 +641,7 @@ export class PlayerHealthProvider {
             this.targetFactory.createForBoxZone(name, zone, [
                 {
                     label: 'Faire des tractions',
-                    icon: 'c:/sport/traction.png',
+                    icon: 'c:/sport/traction',
                     category: 'citizen',
                     canInteract: () => true,
                     action: () => {
@@ -659,7 +659,7 @@ export class PlayerHealthProvider {
             this.targetFactory.createForBoxZone(name, zone, [
                 {
                     label: 'Faire des haltères',
-                    icon: 'c:/sport/halteres.png',
+                    icon: 'c:/sport/halteres',
                     category: 'citizen',
                     canInteract: () => true,
                     action: () => {
@@ -706,7 +706,7 @@ export class PlayerHealthProvider {
 
         const gym_targets: TargetOption[] = [
             {
-                icon: 'c:jobs/habiller.png',
+                icon: 'c:jobs/habiller',
                 label: 'Changer de tenue',
                 category: 'citizen',
                 canInteract: () => {
@@ -733,7 +733,7 @@ export class PlayerHealthProvider {
 
         const gym_targets_free: TargetOption[] = [
             {
-                icon: 'c:jobs/habiller.png',
+                icon: 'c:jobs/habiller',
                 label: 'Changer de tenue',
                 category: 'citizen',
                 action: async () => {
@@ -898,7 +898,7 @@ export class PlayerHealthProvider {
                 options: [
                     {
                         label: 'Prendre un abonnement.',
-                        icon: 'c:/sport/abonnement.png',
+                        icon: 'c:/sport/abonnement',
                         category: 'citizen',
                         canInteract: () => {
                             const player = this.playerService.getPlayer();
@@ -915,7 +915,7 @@ export class PlayerHealthProvider {
                     },
                     {
                         label: 'Renouveler son abonnement.',
-                        icon: 'c:/sport/renouvellement.png',
+                        icon: 'c:/sport/renouvellement',
                         category: 'citizen',
                         canInteract: () => {
                             const player = this.playerService.getPlayer();

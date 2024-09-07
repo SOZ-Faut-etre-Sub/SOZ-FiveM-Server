@@ -113,7 +113,7 @@ export class Halloween2023Scenario2Provider {
                     ),
                     {
                         label: 'Donner',
-                        icon: 'c:pole/livrer.png',
+                        icon: 'c:pole/livrer',
                         item: 'halloween_alien_artifact',
                         category: 'citizen',
                         canInteract: () => {
@@ -226,7 +226,7 @@ export class Halloween2023Scenario2Provider {
                     ),
                     {
                         label: 'Donner',
-                        icon: 'c:pole/livrer.png',
+                        icon: 'c:pole/livrer',
                         category: 'citizen',
                         canInteract: () => {
                             if (!this.storyService.canInteractForPart('halloween2023', 'scenario2', 3)) {

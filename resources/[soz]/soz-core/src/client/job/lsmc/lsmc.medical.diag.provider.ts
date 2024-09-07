@@ -54,7 +54,7 @@ export class LSMCMedicalDiagProvider {
                 color: JobType.LSMC,
                 job: JobType.LSMC,
                 blackoutGlobal: true,
-                icon: 'c:ems/irm.png',
+                icon: 'c:ems/irm',
                 category: 'society',
                 canInteract: () => {
                     const playerPed = PlayerPedId();

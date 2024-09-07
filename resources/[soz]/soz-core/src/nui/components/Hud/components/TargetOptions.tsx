@@ -15,9 +15,11 @@ export const TargetOptions: FunctionComponent<{ targets: TargetOption[]; directi
                 '-right-5': direction === 'right',
             })}
         >
-            {targets.map((target, index) => (
-                <TargetItem key={index} {...target} />
-            ))}
+            {targets
+                .sort((a, b) => a.label.localeCompare(b.label))
+                .map((target, index) => (
+                    <TargetItem key={index} {...target} />
+                ))}
         </div>
     );
 };
