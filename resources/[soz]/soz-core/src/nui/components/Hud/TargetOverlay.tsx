@@ -100,7 +100,7 @@ export const TargetOverlay: FunctionComponent = () => {
                     <h2 className="flex items-center gap-2 text-white uppercase drop-shadow-bg">
                         <div ref={targetCitizen} className="bg-white h-1 w-4 rounded-full" /> Actions
                     </h2>
-                    <TargetOptions targets={citizenActions} direction="left" />
+                    <TargetOptions targets={citizenActions} direction="left" onSelect={() => setTargetFound(false)} />
                 </div>
             )}
 
@@ -118,7 +118,11 @@ export const TargetOverlay: FunctionComponent = () => {
                             <h2 className="relative -right-10 flex items-center justify-end gap-2 text-[#EF4444] uppercase drop-shadow-bg">
                                 Criminelle <div ref={targetCriminal} className="bg-[#EF4444] h-1 w-4 rounded-full" />
                             </h2>
-                            <TargetOptions targets={criminalActions} direction="right" />
+                            <TargetOptions
+                                targets={criminalActions}
+                                direction="right"
+                                onSelect={() => setTargetFound(false)}
+                            />
                         </div>
                     )}
 
@@ -127,7 +131,11 @@ export const TargetOverlay: FunctionComponent = () => {
                             <h2 className="relative -right-10 flex items-center justify-end gap-2 text-blue-600 uppercase drop-shadow-bg">
                                 Entreprise <div ref={targetSociety} className="bg-blue-600 h-1 w-4 rounded-full" />
                             </h2>
-                            <TargetOptions targets={societyActions} direction="right" />
+                            <TargetOptions
+                                targets={societyActions}
+                                direction="right"
+                                onSelect={() => setTargetFound(false)}
+                            />
                         </div>
                     )}
                 </div>

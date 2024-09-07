@@ -62,14 +62,15 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
                 opacity: 0.99,
             }}
         >
+            <div ref={containerRef} className="absolute backdrop-blur-sm h-full w-full" />
+
             <div
-                ref={containerRef}
                 className={cn(
-                    'absolute flex justify-center items-center backdrop-blur-sm h-full w-full transition-all border-transparent',
+                    'absolute h-full w-full transition-all duration-300 border-transparent z-10',
                     borderClassName,
                     {
                         'border-2': !disableBorder,
-                        'group-hover:border-2': showBorderOnHover,
+                        'border-0 group-hover:border-2': showBorderOnHover,
                     }
                 )}
                 style={{

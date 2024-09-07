@@ -5,8 +5,14 @@ import { TargetOption } from '../../../../shared/target';
 import { fetchNui } from '../../../fetch';
 import { GlassMorphismContainer } from '../../Styleguide/GlassMorphismContainer';
 
-export const TargetItem: FunctionComponent<TargetOption> = ({ id, icon, label }) => {
+export const TargetItem: FunctionComponent<TargetOption & { onSelect: () => void }> = ({
+    id,
+    icon,
+    label,
+    onSelect,
+}) => {
     const handleClick = async () => {
+        onSelect();
         await fetchNui(NuiEvent.TargetSelect, id);
     };
 
@@ -21,7 +27,7 @@ export const TargetItem: FunctionComponent<TargetOption> = ({ id, icon, label })
     }, [icon]);
 
     return (
-        <div className="h-12 w-fit cursor-pointer" onClick={handleClick}>
+        <div className="h-12 w-full cursor-pointer" onClick={handleClick}>
             <GlassMorphismContainer
                 borderClassName="rounded-full"
                 className="flex items-center gap-3 px-5 h-12 w-fit"
