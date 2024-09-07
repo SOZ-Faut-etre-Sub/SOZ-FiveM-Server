@@ -104,11 +104,7 @@ export class TargetProvider {
         this._targetOptions = [];
 
         if (playerDistance <= MAX_DISTANCE) {
-            SetEntityDrawOutline(entity, true);
-            setTimeout(() => SetEntityDrawOutline(entity, false), 1000);
-
             const result = await this.checkTargetActions(entity, coords, playerDistance);
-            console.log(result);
 
             this._targetOptions.push(...result);
         }
