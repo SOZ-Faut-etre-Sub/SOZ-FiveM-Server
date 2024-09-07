@@ -11,6 +11,7 @@ end
 
 local function TreeInteraction(identifier, position)
     local zoneName = ("pawl:%s:%s"):format(identifier, position.x .. position.y)
+
     exports["soz-core"]:RemoveZone(zoneName)
     exports["soz-core"]:AddBoxZone(zoneName, {
         center = {position.x, position.y, position.z},

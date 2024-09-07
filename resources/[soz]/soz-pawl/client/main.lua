@@ -83,8 +83,7 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
             blackoutGlobal = true,
             blackoutJob = "pawl",
         },
-        2.5,
-    })
+    }, 2.5)
 end)
 
 --- Degradation

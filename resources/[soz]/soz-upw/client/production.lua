@@ -2,23 +2,23 @@ function CreateEnergyZone(identifier, data)
     data.options = {
         {
             label = "Collecter l'énergie",
-            event = "soz-upw:client:HarvestLoop",
             icon = "c:upw/collecter",
-            identifier = identifier,
-            harvest = "energy",
             canInteract = function()
                 return OnDuty()
+            end,
+            action = function()
+                TriggerEvent("soz-upw:client:HarvestLoop", {identifier = identifier, harvest = "energy"})
             end,
         },
         {
             label = "Taux de pollution",
             icon = "c:upw/pollution",
+            canInteract = function()
+                return OnDuty()
+            end,
             action = function()
                 local pollution = QBCore.Functions.TriggerRpc("soz-upw:server:GetPollutionPercent", true)
                 exports["soz-core"]:DrawNotification("Niveau de pollution : " .. pollution, "info")
-            end,
-            canInteract = function()
-                return OnDuty()
             end,
         },
     }
@@ -30,12 +30,12 @@ function CreateWasteZone(identifier, data)
     data.options = {
         {
             label = "Collecter les déchets",
-            event = "soz-upw:client:HarvestLoop",
             icon = "c:upw/recyclage",
-            identifier = identifier,
-            harvest = "waste",
             canInteract = function()
                 return OnDuty("garbage")
+            end,
+            action = function()
+                TriggerEvent("soz-upw:client:HarvestLoop", {identifier = identifier, harvest = "waste"})
             end,
         },
     }

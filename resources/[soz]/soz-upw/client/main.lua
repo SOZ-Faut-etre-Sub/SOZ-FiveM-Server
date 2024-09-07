@@ -159,7 +159,7 @@ function CreateZone(identifier, zoneType, data)
 
     exports["soz-core"]:RemoveZone(zoneName)
     exports["soz-core"]:AddBoxZone(zoneName, {
-        center = data.coords,
+        center = {data.coords.x, data.coords.y, data.coords.z},
         length = data.sx,
         width = data.sy,
         heading = data.heading,

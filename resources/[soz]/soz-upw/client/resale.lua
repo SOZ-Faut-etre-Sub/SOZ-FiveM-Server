@@ -3,9 +3,11 @@ function CreateResaleZone(data)
         {
             label = "Vendre l'énergie",
             icon = "c:upw/vendre",
-            event = "soz-upw:client:ResaleEnergy",
             canInteract = function()
                 return OnDuty()
+            end,
+            action = function()
+                TriggerEvent("soz-upw:client:ResaleEnergy")
             end,
             blackoutGlobal = true,
         },

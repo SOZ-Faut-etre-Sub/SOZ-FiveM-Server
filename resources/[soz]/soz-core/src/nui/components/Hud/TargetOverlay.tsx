@@ -63,7 +63,7 @@ export const TargetOverlay: FunctionComponent = () => {
     const offset = circumference - ((-30 * 100) / 100 / 100) * circumference;
 
     return (
-        <animated.div ref={container} className="absolute h-full w-full" style={styles}>
+        <animated.div ref={container} className="absolute inset-0" style={styles}>
             <div className="absolute top-[calc(50%-1.25rem)] left-[calc(50%-1.25rem)] size-14">
                 {targetFound ? (
                     <svg

@@ -30,7 +30,17 @@ export class TargetService {
         if (target.item && !this.itemCheck(target.item)) return false;
         if (target.blackoutGlobal && !this.blackoutGlobalCheck()) return false;
         if (target.blackoutJob && !this.blackoutJobCheck()) return false;
-        if (target.canInteract && !(await target.canInteract(entity))) return false;
+        if (target.canInteract) {
+            try {
+                if (target.canInteract instanceof Promise) {
+                    return !(await target.canInteract(entity));
+                }
+
+                return !target.canInteract(entity);
+            } catch (e) {
+                return false;
+            }
+        }
 
         return true;
     }
@@ -62,7 +72,7 @@ export class TargetService {
         const inventoryItem = this.inventoryManager.findItem(i => i.name === item);
         if (!inventoryItem) return false;
 
-        return inventoryItem.amount > 1 && !this.itemService.isExpired(inventoryItem);
+        return inventoryItem.amount >= 1 && !this.itemService.isExpired(inventoryItem);
     }
 
     protected blackoutGlobalCheck(): boolean {
