@@ -37,7 +37,7 @@ export class HudInteractionsProvider {
 
     @Tick()
     public async onTick() {
-        for (const [id, interaction] of Object.entries(this.interactions)) {
+        for (const [, interaction] of Object.entries(this.interactions)) {
             const entity = interaction.entity;
             let coords = interaction.coords;
 
@@ -80,18 +80,6 @@ export class HudInteractionsProvider {
     @Once(OnceStep.Start)
     public async onServerStart() {
         await this.resourceLoader.loadStreamedTextureDict('soz_minimap');
-
-        this.createInteractionForCoords([-549.67, -611.97, 35.0], {
-            label: 'Appeler',
-            action: () => {
-                TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
-                    anonymous: false,
-                    number: '555-GOUV',
-                    message: "Une personne vous demande à l'accueil",
-                    position: true,
-                });
-            },
-        });
     }
 
     @Once(OnceStep.Stop)
