@@ -199,10 +199,14 @@ export class TargetProvider {
         coords: Vector3,
         playerDistance: number
     ): Promise<TargetOption[]> {
-        const model = this.targetStore.getId(GetEntityModel(entity));
-        const modelStore = this.targetStore.models.get(model);
+        try {
+            const model = this.targetStore.getId(GetEntityModel(entity));
+            const modelStore = this.targetStore.models.get(model);
 
-        return this.checkTargetGenericActions(modelStore, playerDistance, entity);
+            return this.checkTargetGenericActions(modelStore, playerDistance, entity);
+        } catch (e) {
+            return [];
+        }
     }
 
     protected async checkTargetPedActions(

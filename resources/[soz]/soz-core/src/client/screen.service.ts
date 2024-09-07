@@ -54,13 +54,14 @@ export class ScreenService {
     public async getEntityOnMousePosition(): Promise<[number, Vector3]> {
         const posX = GetControlNormal(0, Control.CursorX);
         const posY = GetControlNormal(0, Control.CursorY);
+
         const cursor = [posX, posY] as Vector2;
         return this.getEntityOnPosition(cursor);
     }
 
     public async getEntityOnPosition(cursor: Vector2): Promise<[number, Vector3]> {
-        const camRotation = GetGameplayCamRot(0) as Vector3;
-        const camPosition = GetGameplayCamCoord() as Vector3;
+        const camRotation = GetFinalRenderedCamRot(0) as Vector3;
+        const camPosition = GetFinalRenderedCamCoord() as Vector3;
         const [cam3DPos, forwardDir] = this.getScreenToWorldPosition(camPosition, camRotation, cursor);
         const direction = add2Vector3(camPosition, multVector3(forwardDir, 1000.0));
         const rayHandle = StartShapeTestLosProbe(
@@ -70,8 +71,8 @@ export class ScreenService {
             direction[0],
             direction[1],
             direction[2],
-            30,
-            0,
+            511,
+            PlayerPedId(),
             0
         );
 
