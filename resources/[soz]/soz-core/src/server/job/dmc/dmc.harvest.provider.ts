@@ -71,7 +71,6 @@ export class DmcHarvestProvider {
                 },
             },
             {
-                useAnimationService: true,
                 canCancel: true,
             }
         );

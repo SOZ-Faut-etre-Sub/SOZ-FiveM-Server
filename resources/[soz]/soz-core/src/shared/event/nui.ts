@@ -574,4 +574,5 @@ export enum NuiEvent {
 
     TargetReset = 'soz-core:nui:target:reset',
     TargetSelect = 'soz-core:nui:target:select',
+    ProgressFinish = 'soz-core:nui:progress:finish',
 }

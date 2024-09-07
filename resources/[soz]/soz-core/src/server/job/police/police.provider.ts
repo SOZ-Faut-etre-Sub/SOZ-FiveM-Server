@@ -73,7 +73,6 @@ export class PoliceProvider {
                 disableMouse: false,
                 disableCombat: true,
                 canCancel: false,
-                useAnimationService: true,
             }
         );
 

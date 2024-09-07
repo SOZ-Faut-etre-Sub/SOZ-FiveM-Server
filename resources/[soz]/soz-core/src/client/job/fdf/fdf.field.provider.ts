@@ -100,9 +100,7 @@ export class FDFFieldProvider {
                             elem.fieldConfig.progressText,
                             10000,
                             elem.fieldConfig.hillingAnim,
-                            {
-                                useAnimationService: true,
-                            }
+                            {}
                         );
 
                         if (!completed) {
@@ -139,9 +137,7 @@ export class FDFFieldProvider {
                             {
                                 task: 'WORLD_HUMAN_GARDENER_PLANT',
                             },
-                            {
-                                useAnimationService: true,
-                            }
+                            {}
                         );
 
                         if (!completed) {
@@ -545,9 +541,7 @@ export class FDFFieldProvider {
                                 },
                             ],
                         },
-                        {
-                            useAnimationService: true,
-                        }
+                        {}
                     );
 
                     if (!completed) {

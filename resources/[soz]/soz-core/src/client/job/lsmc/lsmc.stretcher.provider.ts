@@ -92,9 +92,7 @@ export class LSMCStretcherProvider {
                                     onlyUpperBody: true,
                                 },
                             },
-                            {
-                                useAnimationService: true,
-                            }
+                            {}
                         );
 
                         if (!completed) {

@@ -172,7 +172,7 @@ export class VehicleLockProvider {
                 dictionary: 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@',
                 name: 'machinic_loop_mechandplayer',
             },
-            { useAnimationService: true }
+            {}
         );
 
         if (!completed) {

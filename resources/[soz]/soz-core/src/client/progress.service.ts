@@ -1,7 +1,10 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
 import { wait } from '@core/utils';
+import { AnimationRunner } from '@public/client/animation/animation.factory';
 import { AudioService } from '@public/client/nui/audio.service';
-import { animationOptionsToFlags, AnimationProps, AnimationStopReason } from '@public/shared/animation';
+import { NuiDispatch } from '@public/client/nui/nui.dispatch';
+import { PlayerService } from '@public/client/player/player.service';
+import { AnimationProps, AnimationStopReason } from '@public/shared/animation';
 import { fromVector3Object } from '@public/shared/polyzone/vector';
 import PCancelable from 'p-cancelable';
 
@@ -12,13 +15,23 @@ import { Notifier } from './notifier';
 @Injectable()
 export class ProgressService {
     @Inject(AnimationService)
-    private animationService: AnimationService;
+    private readonly animationService: AnimationService;
 
     @Inject(AudioService)
-    private audioService: AudioService;
+    private readonly audioService: AudioService;
 
     @Inject(Notifier)
-    private notifier: Notifier;
+    private readonly notifier: Notifier;
+
+    @Inject(NuiDispatch)
+    private readonly nuiDispatch: NuiDispatch;
+
+    @Inject(PlayerService)
+    private readonly playerService: PlayerService;
+
+    private currentAction: Partial<ProgressOptions> | null = null;
+    private currentPromise: PCancelable<ProgressResult> | null = null;
+    private animationRunner: AnimationRunner | null = null;
 
     public async progress(
         name: string,
@@ -36,6 +49,13 @@ export class ProgressService {
             ...options,
         };
 
+        const ped = PlayerPedId();
+
+        if (IsEntityDead(ped) && !options.useWhileDead) {
+            this.notifier.notify('Vous ne pouvez réaliser cette action !', 'error');
+            return { completed: false, progress: 0 };
+        }
+
         if (this.isDoingAction()) {
             this.notifier.notify('Une action est déjà en cours !', 'error');
             return { completed: false, progress: 0 };
@@ -43,6 +63,14 @@ export class ProgressService {
 
         if (!options.allowExistingAnimation) {
             await this.animationService.stop();
+        }
+
+        if (!options.no_inv_busy) {
+            this.playerService.updateState({
+                isInventoryBusy: true,
+            });
+            exports['soz-phone'].setPhoneVisible(false);
+            TriggerEvent('inventory:client:closeInventory');
         }
 
         if (options.headingEntity) {
@@ -66,27 +94,42 @@ export class ProgressService {
         }
 
         const start = GetGameTimer();
-        let promiseResolve;
-        const cancel = () => {
-            this.cancel();
-        };
-        const promise = new PCancelable<ProgressResult>(function (resolve, reject, onCancel) {
-            promiseResolve = resolve;
 
-            onCancel(() => {
-                cancel();
-            });
-        }).finally(() => {
+        const animationCancel = () => {
+            this.animationRunner?.cancel();
+
             if (audioId) {
                 this.audioService.stopAudio(audioId);
             }
+
+            this.finish();
+        };
+
+        this.currentAction = options;
+        this.currentPromise = new PCancelable<ProgressResult>(async (resolve, reject, onCancel) => {
+            onCancel(() => {
+                const elapsedBeforeCancel = (GetGameTimer() - start) / duration;
+
+                onCancel.shouldReject = false;
+                resolve({
+                    completed: false,
+                    progress: elapsedBeforeCancel,
+                });
+            });
+
+            await wait(duration);
+
+            animationCancel();
+
+            resolve({
+                completed: true,
+                progress: 1,
+            });
         });
 
-        let runner = null;
-
-        if (options.useAnimationService && animation) {
+        if (animation) {
             if (animation.task) {
-                runner = this.animationService.playScenario({ name: animation.task, duration: duration });
+                this.animationRunner = this.animationService.playScenario({ name: animation.task, duration: duration });
             } else {
                 const props: AnimationProps[] = animation.props ? [...animation.props] : [];
                 if (options.firstProp) {
@@ -113,7 +156,7 @@ export class ProgressService {
                     options.secondProp = null;
                 }
 
-                runner = this.animationService.playAnimation(
+                this.animationRunner = this.animationService.playAnimation(
                     {
                         base: {
                             dictionary: animation.dictionary,
@@ -132,72 +175,55 @@ export class ProgressService {
                 );
             }
 
-            runner.then((stopReason: AnimationStopReason) => {
+            this.animationRunner.then((stopReason: AnimationStopReason) => {
                 if (stopReason !== AnimationStopReason.Finished) {
-                    cancel();
+                    this.cancel();
                 }
             });
 
             animation = null;
         }
 
-        exports['progressbar'].ProgressWithStartAndTick(
-            {
-                name: name.toLowerCase(),
-                duration,
-                label,
-                disableNui: options.disableNui,
-                useWhileDead: options.useWhileDead,
-                canCancel: options.canCancel,
-                controlDisables: {
-                    disableCombat: options.disableCombat,
-                    disableMovement: options.disableMovement,
-                    disableCarMovement: options.disableCarMovement,
-                    disableMouse: options.disableMouse,
-                },
-                animation: animation
-                    ? {
-                          animDict: animation.dictionary,
-                          anim: animation.name,
-                          flags: animation.options ? animationOptionsToFlags(animation.options) : animation.flags || 0,
-                          task: animation.task,
-                      }
-                    : null,
-                prop: options.firstProp || {},
-                propTwo: options.secondProp || {},
-                no_inv_busy: options.no_inv_busy,
-            },
-            options.start,
-            options.tick,
-            (cancelled: boolean) => {
-                if (runner !== null) {
-                    runner.cancel();
-                }
+        this.nuiDispatch.dispatch('progress', 'Start', {
+            label,
+            duration,
+            units: options.units,
+        });
 
-                if (cancelled) {
-                    const elapsedBeforeCancel = (GetGameTimer() - start) / duration;
+        options.start?.();
 
-                    promiseResolve({
-                        completed: false,
-                        progress: elapsedBeforeCancel,
-                    });
-                } else {
-                    promiseResolve({
-                        completed: true,
-                        progress: 1,
-                    });
-                }
-            }
-        );
+        return this.currentPromise;
+    }
 
-        return promise;
+    public get current(): Partial<ProgressOptions> | null {
+        return this.currentAction;
     }
 
     public isDoingAction(): boolean {
-        return exports['progressbar'].IsDoingAction();
+        if (this.currentPromise?.isCanceled) return false;
+
+        return Boolean(this.currentAction);
     }
 
-    public cancel() {
-        TriggerEvent('progressbar:client:cancel');
+    public finish(): void {
+        this.stop();
+    }
+
+    public cancel(): void {
+        if (this.currentPromise.isCanceled) return;
+
+        this.currentPromise?.cancel();
+        this.stop();
+    }
+
+    public stop(): void {
+        this.nuiDispatch.dispatch('progress', 'Stop');
+
+        this.playerService.updateState({
+            isInventoryBusy: false,
+        });
+
+        this.animationRunner?.cancel();
+        this.currentAction = null;
     }
 }

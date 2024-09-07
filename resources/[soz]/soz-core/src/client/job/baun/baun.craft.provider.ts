@@ -72,9 +72,7 @@ export class BaunCraftProvider {
                     repeat: true,
                 },
             },
-            {
-                useAnimationService: true,
-            }
+            {}
         );
 
         if (!completed) {

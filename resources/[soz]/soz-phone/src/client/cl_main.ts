@@ -275,7 +275,7 @@ setInterval(async () => {
         updateAvailability();
     }
 
-    if (exports['progressbar'].IsDoingAction()) {
+    if (exports['soz-core'].IsDoingAction()) {
         if (global.isPhoneOpen) {
             await hidePhone();
         }

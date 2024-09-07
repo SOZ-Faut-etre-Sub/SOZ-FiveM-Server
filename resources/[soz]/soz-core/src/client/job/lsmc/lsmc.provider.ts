@@ -214,9 +214,7 @@ export class LSMCProvider {
                                 {
                                     task: 'world_human_welding',
                                 },
-                                {
-                                    useAnimationService: true,
-                                }
+                                {}
                             );
 
                             if (!completed) {

@@ -108,9 +108,7 @@ export class GouvRadarProvider {
             {
                 task: 'world_human_const_drill',
             },
-            {
-                useAnimationService: true,
-            }
+            {}
         );
 
         if (!completed) {

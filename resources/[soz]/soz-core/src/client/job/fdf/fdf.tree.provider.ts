@@ -68,9 +68,7 @@ export class FDFTreeProvider {
                                     repeat: true,
                                 },
                             },
-                            {
-                                useAnimationService: true,
-                            }
+                            {}
                         );
 
                         if (!completed) {
@@ -128,9 +126,7 @@ export class FDFTreeProvider {
                                     },
                                 ],
                             },
-                            {
-                                useAnimationService: true,
-                            }
+                            {}
                         );
 
                         if (!completed) {

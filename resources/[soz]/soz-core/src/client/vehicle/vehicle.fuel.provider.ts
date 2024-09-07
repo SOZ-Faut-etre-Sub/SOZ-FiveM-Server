@@ -492,32 +492,8 @@ export class VehicleFuelProvider {
         TriggerServerEvent(ServerEvent.VEHICLE_FUEL_START, vehicleNetworkId, station.id);
     }
 
-    @OnEvent(ClientEvent.VEHICLE_FUEL_START)
-    private async onVehicleFuelStart(duration: number, amount: number, price: number) {
-        const maxPrice = amount * price;
-
-        this.nuiDispatch.dispatch('progress', 'Start', {
-            label: 'Remplissage du véhicule',
-            duration,
-            units: [
-                {
-                    unit: 'L',
-                    start: 0,
-                    end: amount,
-                },
-                {
-                    unit: '$',
-                    start: 0,
-                    end: maxPrice,
-                },
-            ],
-        });
-    }
-
     @OnEvent(ClientEvent.VEHICLE_FUEL_STOP)
     private async onVehicleFuelStop() {
-        this.nuiDispatch.dispatch('progress', 'Stop');
-
         if (this.currentStationPistol) {
             this.currentStationPistol.filling = false;
 

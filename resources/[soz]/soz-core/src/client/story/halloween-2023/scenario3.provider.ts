@@ -249,9 +249,7 @@ export class Halloween2023Scenario3Provider {
                                     repeat: true,
                                 },
                             },
-                            {
-                                useAnimationService: true,
-                            }
+                            {}
                         );
 
                         if (completed) {
@@ -318,9 +316,7 @@ export class Halloween2023Scenario3Provider {
                                     repeat: true,
                                 },
                             },
-                            {
-                                useAnimationService: true,
-                            }
+                            {}
                         );
 
                         if (!completed) {

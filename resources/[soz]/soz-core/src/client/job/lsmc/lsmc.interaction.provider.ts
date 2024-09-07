@@ -419,7 +419,6 @@ export class LSMCInteractionProvider {
                                 task: 'CODE_HUMAN_MEDIC_TEND_TO_DEAD',
                             },
                             {
-                                useAnimationService: true,
                                 disableMovement: true,
                                 disableCarMovement: true,
                                 disableMouse: false,
@@ -448,7 +447,6 @@ export class LSMCInteractionProvider {
                                 playbackRate: 0.4,
                             },
                             {
-                                useAnimationService: true,
                                 firstProp: {
                                     model: 'prop_syringe_01',
                                     bone: 28422,
@@ -475,7 +473,6 @@ export class LSMCInteractionProvider {
                                 name: 'fixing_a_ped',
                             },
                             {
-                                useAnimationService: true,
                                 disableMovement: true,
                                 disableCarMovement: true,
                             }

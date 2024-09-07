@@ -3,7 +3,7 @@ export interface NuiProgressMethodMap {
     Stop: never;
 }
 
-type ProgressUnit = {
+export type ProgressUnit = {
     start: number;
     end: number;
     unit: string;

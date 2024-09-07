@@ -256,7 +256,6 @@ export class DispenserProvider {
                 flags: 16,
             },
             {
-                useAnimationService: true,
                 disableMovement: true,
                 disableCarMovement: false,
                 disableMouse: false,

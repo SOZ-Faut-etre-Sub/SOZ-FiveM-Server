@@ -68,9 +68,7 @@ export class LSMCWheelChairProvider {
                                 onlyUpperBody: true,
                             },
                         },
-                        {
-                            useAnimationService: true,
-                        }
+                        {}
                     );
 
                     if (!completed) {

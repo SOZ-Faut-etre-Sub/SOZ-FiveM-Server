@@ -323,9 +323,7 @@ export class Halloween2023Scenario2Provider {
                                     repeat: true,
                                 },
                             },
-                            {
-                                useAnimationService: true,
-                            }
+                            {}
                         );
 
                         if (completed) {
