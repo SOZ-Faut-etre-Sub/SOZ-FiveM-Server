@@ -46,7 +46,7 @@ export class BankProvider {
 
     @Command('transfermoney', {
         description: 'Transfer money between two accounts',
-        role: 'staff',
+        role: 'admin',
     })
     public async transferMoneyCommand(source: number, accountSource: string, accountTarget: string, amount: number) {
         await this.bankService.transferBankMoney(accountSource, accountTarget, 'money', amount, false);
@@ -54,7 +54,7 @@ export class BankProvider {
 
     @Command('accountinfo', {
         description: 'Get account info',
-        role: 'staff',
+        role: 'admin',
     })
     public async getAccountInfo(source: number, accountId: string) {
         const accountMoney = await this.bankService.getAccountMoney(accountId, 'money');
