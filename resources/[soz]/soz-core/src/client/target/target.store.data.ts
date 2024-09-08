@@ -13,6 +13,10 @@ export class TargetStoreData<E extends TargetStoreBase> {
         return this.data[id];
     }
 
+    public find(predicate: (data: E) => boolean): E[] | undefined {
+        return Object.values(this.data).filter(predicate);
+    }
+
     public add(id: string, data: E): void {
         if (!this.data[id]) {
             this.data[id] = data;

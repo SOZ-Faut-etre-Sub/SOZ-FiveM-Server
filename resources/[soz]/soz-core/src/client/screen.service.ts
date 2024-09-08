@@ -5,6 +5,8 @@ import { add2Vector3, multVector3, sub2Vector3, Vector2, Vector3 } from '../shar
 
 @Injectable()
 export class ScreenService {
+    private intersectEverything = false;
+
     private world3DToScreen2D(world3D: Vector3): Vector2 {
         const screenCorrd = GetScreenCoordFromWorldCoord(world3D[0], world3D[1], world3D[2]);
 
@@ -71,7 +73,7 @@ export class ScreenService {
             direction[0],
             direction[1],
             direction[2],
-            30,
+            this.intersectEverything ? 511 : 30,
             PlayerPedId(),
             0
         );
@@ -87,6 +89,8 @@ export class ScreenService {
             if (result !== 1) {
                 return [null, null];
             }
+
+            this.intersectEverything = !this.intersectEverything;
 
             await wait(0);
         }

@@ -14,7 +14,7 @@ import { ScreenService } from '../screen.service';
 import { TargetService } from './target.service';
 import { TargetStore, TargetStoreBase } from './target.store';
 
-const MAX_DISTANCE = 5;
+const MAX_DISTANCE = 50;
 
 @Provider()
 export class TargetProvider {
@@ -99,11 +99,8 @@ export class TargetProvider {
 
         this._targetOptions = [];
 
-        if (playerDistance <= MAX_DISTANCE) {
-            const result = await this.checkTargetActions(entity, coords, playerDistance);
-
-            this._targetOptions.push(...result);
-        }
+        const result = await this.checkTargetActions(entity, coords, playerDistance);
+        this._targetOptions.push(...result);
 
         this._targetFound = this._targetOptions.length > 0;
         this.nuiDispatch.dispatch('target', 'SetTargetFound', this._targetFound);
@@ -155,7 +152,13 @@ export class TargetProvider {
         const vehicleTargets = await this.checkTargetVehicleActions(entity, coords, playerDistance);
         targetsFound.push(...vehicleTargets);
 
-        for (const { zone, targets, distance } of Object.values(this.targetStore.zones.getAll())) {
+        const playerPosition = GetEntityCoords(PlayerPedId(), true) as Vector3;
+        const nearbyZones = this.targetStore.zones.find(zone =>
+            'center' in zone.zone ? getDistance(zone.zone.center, playerPosition) <= MAX_DISTANCE : true
+        );
+
+        for (const { zone, targets, distance } of nearbyZones) {
+            if (zone.debugPoly) zone.draw([0, 255, 0, 100], 0.5);
             if (playerDistance > distance) continue;
 
             if (zone.isPointInside(coords)) {

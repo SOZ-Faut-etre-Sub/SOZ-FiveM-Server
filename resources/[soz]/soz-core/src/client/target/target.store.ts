@@ -1,7 +1,8 @@
 import { Injectable } from '@core/decorators/injectable';
 import { TargetStoreData } from '@public/client/target/target.store.data';
 import { joaat } from '@public/shared/joaat';
-import { AbstractZone } from '@public/shared/polyzone/abstract.zone';
+import { BoxZone } from '@public/shared/polyzone/box.zone';
+import { PolygonZone } from '@public/shared/polyzone/polygon.zone';
 import { TargetOption } from '@public/shared/target';
 
 const DEFAULT_DISTANCE = 2.5;
@@ -12,7 +13,7 @@ export type TargetStoreBase = {
 };
 
 type TargetStoreZone = TargetStoreBase & {
-    zone: AbstractZone;
+    zone: BoxZone<any> | PolygonZone<any>;
 };
 
 @Injectable()
