@@ -80,7 +80,7 @@ export const DealershipConfig: Partial<Record<DealershipType, DealershipConfigIt
             camera: [-53.69, -1094.83, 27.0],
         },
         //daysBeforeNextPurchase: 7,
-        garageName: 'bell_farms',
+        garageName: 'airport_public',
     },
     [DealershipType.Cycle]: {
         position: [-1222.26, -1494.83, 3.34, 120.0],
@@ -94,7 +94,7 @@ export const DealershipConfig: Partial<Record<DealershipType, DealershipConfigIt
             position: [-1221.96, -1498.45, 4.35, 210.0],
             camera: [-1222.6, -1501.34, 5.37],
         },
-        garageName: 'bell_farms',
+        garageName: 'airport_public',
     },
     [DealershipType.Moto]: {
         position: [1224.79, 2727.25, 37.0, 180.0],
@@ -109,7 +109,7 @@ export const DealershipConfig: Partial<Record<DealershipType, DealershipConfigIt
             camera: [1224.5, 2701.63, 39.0],
         },
         //daysBeforeNextPurchase: 7,
-        garageName: 'bell_farms',
+        garageName: 'airport_public',
     },
     [DealershipType.Air]: {
         position: [1743.13, 3307.23, 40.22, 148.91],
@@ -155,7 +155,7 @@ export const DealershipConfig: Partial<Record<DealershipType, DealershipConfigIt
             camera: [-71.09, 76.8, 72.68],
         },
         //daysBeforeNextPurchase: 7,
-        garageName: 'bell_farms',
+        garageName: 'airport_public',
     },
 };
 
