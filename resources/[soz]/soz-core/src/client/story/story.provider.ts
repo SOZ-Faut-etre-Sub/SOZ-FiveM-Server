@@ -110,7 +110,7 @@ export class StoryProvider {
     public replayTarget(story: Story, scenario: string, part: number): TargetOption {
         return {
             label: 'Ré-écouter',
-            icon: 'fas fa-comment-dots',
+            icon: 'global/comment-dots',
             category: 'citizen',
             canInteract: () => this.canInteractForPart('halloween2022', scenario, part + 1),
             action: async () => {
@@ -129,7 +129,7 @@ export class StoryProvider {
     ): TargetOption {
         return {
             label: 'Ré-écouter',
-            icon: 'fas fa-comment-dots',
+            icon: 'global/comment-dots',
             category: 'citizen',
             canInteract: () => this.canInteractForPart(year, scenario, part + 1),
             action: async entity => {

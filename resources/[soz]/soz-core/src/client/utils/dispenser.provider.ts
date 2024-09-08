@@ -49,16 +49,18 @@ export class DispenserProvider {
             vending_machine_drink,
             [
                 {
-                    label: "Bouteille d'eau ($" + drinkPrice + ')',
-                    icon: 'c:food/bouteille',
+                    label: "Bouteille d'eau",
+                    subLabel: `$${drinkPrice}`,
+                    icon: 'food/bouteille',
                     category: 'citizen',
                     action: () => {
                         this.buy('Achète à boire ...', 'water_bottle', dispenser_drink_price);
                     },
                 },
                 {
-                    label: `Lot de bouteilles</br>($${drinkBatchPrice} unité)`,
-                    icon: 'c:food/bouteilles',
+                    label: `Lot de bouteilles`,
+                    subLabel: `$${drinkBatchPrice} /unité`,
+                    icon: 'food/bouteilles',
                     category: 'citizen',
                     action: async () => {
                         const quantity = await this.inputService.askInput(
@@ -84,16 +86,18 @@ export class DispenserProvider {
             vending_machine_food,
             [
                 {
-                    label: 'Sandwich ($' + eatPrice + ')',
-                    icon: 'c:food/baguette',
+                    label: 'Sandwich',
+                    subLabel: `$${eatPrice}`,
+                    icon: 'food/baguette',
                     category: 'citizen',
                     action: () => {
                         this.buy('Achète à manger...', 'sandwich', dispenser_eat_price);
                     },
                 },
                 {
-                    label: `Lot de sandwichs</br>($${eatBatchPrice} unité)`,
-                    icon: 'c:food/baguettes',
+                    label: `Lot de sandwichs`,
+                    subLabel: `$${eatBatchPrice} /unité`,
+                    icon: 'food/baguettes',
                     category: 'citizen',
                     action: async () => {
                         const quantity = await this.inputService.askInput(
@@ -113,32 +117,36 @@ export class DispenserProvider {
                     },
                 },
                 {
-                    label: 'Chips barbecue ($' + eatPrice + ')',
-                    icon: 'c:food/chips',
+                    label: 'Chips barbecue',
+                    subLabel: `$${eatPrice}`,
+                    icon: 'food/chips',
                     category: 'citizen',
                     action: () => {
                         this.buy('Achète à manger...', 'bbq_chips', dispenser_eat_price);
                     },
                 },
                 {
-                    label: 'Chips oignon ($' + eatPrice + ')',
-                    icon: 'c:food/chips',
+                    label: 'Chips oignon',
+                    subLabel: `$${eatPrice}`,
+                    icon: 'food/chips',
                     category: 'citizen',
                     action: () => {
                         this.buy('Achète à manger...', 'onion_chips', dispenser_eat_price);
                     },
                 },
                 {
-                    label: 'Chips salé ($' + eatPrice + ')',
-                    icon: 'c:food/chips',
+                    label: 'Chips salé',
+                    subLabel: `$${eatPrice}`,
+                    icon: 'food/chips',
                     category: 'citizen',
                     action: () => {
                         this.buy('Achète à manger...', 'water_chips', dispenser_eat_price);
                     },
                 },
                 {
-                    label: 'Zwix ($' + eatPrice + ')',
-                    icon: 'c:food/zwix_candy',
+                    label: 'Zwix',
+                    subLabel: `$${eatPrice}`,
+                    icon: 'food/zwix_candy',
                     category: 'citizen',
                     action: () => {
                         this.buy('Achète à manger...', 'zwix_candy', dispenser_eat_price);
@@ -152,16 +160,18 @@ export class DispenserProvider {
             vending_machine_cafe,
             [
                 {
-                    label: `Café ($${cafePrice})`,
-                    icon: 'c:food/cafe',
+                    label: `Café`,
+                    subLabel: `$${cafePrice}`,
+                    icon: 'food/cafe',
                     category: 'citizen',
                     action: () => {
                         this.buy('Achète un Café...', 'coffee', dispenser_cafe_price);
                     },
                 },
                 {
-                    label: `Cafés par lot</br>($${cafeBatchPrice} unité)`,
-                    icon: 'c:food/cafes',
+                    label: `Cafés par lot`,
+                    subLabel: `$${cafeBatchPrice} /unité`,
+                    icon: 'food/cafes',
                     category: 'citizen',
                     action: async () => {
                         const quantity = await this.inputService.askInput(
@@ -180,16 +190,18 @@ export class DispenserProvider {
                     },
                 },
                 {
-                    label: 'Chocolat chaud ($' + cafePrice + ')',
-                    icon: 'c:food/chocolate',
+                    label: 'Chocolat chaud',
+                    subLabel: `$${cafePrice}`,
+                    icon: 'food/chocolate',
                     category: 'citizen',
                     action: () => {
                         this.buy('Achète un Chocolat...', 'chocolate', dispenser_cafe_price);
                     },
                 },
                 {
-                    label: `Chocolats chauds par lot</br>($${cafeBatchPrice} unité)`,
-                    icon: 'c:food/chocolates',
+                    label: `Chocolats chauds par lot`,
+                    subLabel: `$${cafeBatchPrice} /unité`,
+                    icon: 'food/chocolates',
                     category: 'citizen',
                     action: async () => {
                         const quantity = await this.inputService.askInput(
@@ -213,16 +225,18 @@ export class DispenserProvider {
                     },
                 },
                 {
-                    label: 'Thé ($' + cafePrice + ')',
-                    icon: 'c:food/tea',
+                    label: 'Thé',
+                    subLabel: `$${cafePrice}`,
+                    icon: 'food/tea',
                     category: 'citizen',
                     action: () => {
                         this.buy('Achète un Thé...', 'tea', dispenser_cafe_price);
                     },
                 },
                 {
-                    label: `Thés par lot</br>($${cafeBatchPrice} unité)`,
-                    icon: 'c:food/teas',
+                    label: `Thés par lot`,
+                    subLabel: `$${cafeBatchPrice} /unité`,
+                    icon: 'food/teas',
                     category: 'citizen',
                     action: async () => {
                         const quantity = await this.inputService.askInput(

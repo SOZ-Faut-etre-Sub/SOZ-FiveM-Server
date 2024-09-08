@@ -51,7 +51,7 @@ export class LSMCWheelChairProvider {
                     NetworkGetEntityIsNetworked(entity) &&
                     this.getPlayerUsingWheelChair(entity) == null,
                 label: 'Ramasser',
-                icon: 'c:baun/createCocktailBox',
+                icon: 'baun/createCocktailBox',
                 category: 'citizen',
                 action: async entity => {
                     const { completed } = await this.progressService.progress(
@@ -80,7 +80,7 @@ export class LSMCWheelChairProvider {
             },
             {
                 label: 'Pousser',
-                icon: 'c:ems/push',
+                icon: 'ems/push',
                 category: 'citizen',
                 canInteract: entity =>
                     !this.playerService.isPushing() &&
@@ -90,7 +90,7 @@ export class LSMCWheelChairProvider {
             },
             {
                 label: "S'asseoir",
-                icon: 'c:ems/wheelchair',
+                icon: 'ems/wheelchair',
                 category: 'citizen',
                 canInteract: entity =>
                     this.getPlayerUsingWheelChair(entity) == null &&

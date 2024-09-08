@@ -29,7 +29,7 @@ export class InventorySmugglingBoxProvider {
         this.targetFactory.createForModel(models, [
             {
                 label: 'Ouvrir',
-                icon: 'c:inventory/ouvrir_le_stockage',
+                icon: 'inventory/ouvrir_le_stockage',
                 category: 'citizen',
                 color: 'crimi',
                 canInteract: entity => {

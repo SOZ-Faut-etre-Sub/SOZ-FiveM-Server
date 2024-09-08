@@ -38,7 +38,7 @@ export class InventoryOpenProvider {
             [
                 {
                     label: 'Fouiller',
-                    icon: 'c:inventory/ouvrir_la_poubelle',
+                    icon: 'inventory/ouvrir_la_poubelle',
                     category: 'criminal',
                     action: async (entity: number) => {
                         const id = computeBinId(entity);

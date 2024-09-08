@@ -78,7 +78,7 @@ export class FDFFieldProvider {
                 {
                     label: elem.fieldConfig.speedLabel,
                     color: JobType.FDF,
-                    icon: 'c:fdf/buttage',
+                    icon: 'fdf/buttage',
                     blackoutJob: JobType.FDF,
                     blackoutGlobal: true,
                     job: JobType.FDF,
@@ -113,7 +113,7 @@ export class FDFFieldProvider {
                 {
                     label: 'Récolter',
                     color: JobType.FDF,
-                    icon: 'c:fdf/harvest',
+                    icon: 'fdf/harvest',
                     blackoutJob: JobType.FDF,
                     blackoutGlobal: true,
                     job: JobType.FDF,
@@ -150,7 +150,7 @@ export class FDFFieldProvider {
                 {
                     label: 'Détruire',
                     color: JobType.FDF,
-                    icon: 'c:crimi/destroy',
+                    icon: 'crimi/destroy',
                     blackoutJob: JobType.FDF,
                     blackoutGlobal: true,
                     job: JobType.FDF,
@@ -188,7 +188,7 @@ export class FDFFieldProvider {
                 {
                     label: 'Vérifier',
                     color: JobType.FDF,
-                    icon: 'c:crimi/time',
+                    icon: 'crimi/time',
                     blackoutJob: JobType.FDF,
                     blackoutGlobal: true,
                     job: JobType.FDF,
@@ -236,7 +236,7 @@ export class FDFFieldProvider {
 
         this.targetFactory.createForModel(RAKE_TRAILER, [
             {
-                icon: 'c:fdf/plow',
+                icon: 'fdf/plow',
                 label: 'Labourer',
                 blackoutJob: JobType.FDF,
                 blackoutGlobal: true,
@@ -260,7 +260,7 @@ export class FDFFieldProvider {
 
         this.targetFactory.createForModel(GRAIN_TRAILER, [
             {
-                icon: 'c:fdf/tractor',
+                icon: 'fdf/tractor',
                 label: 'Récolter',
                 blackoutJob: JobType.FDF,
                 blackoutGlobal: true,
@@ -512,7 +512,7 @@ export class FDFFieldProvider {
 
         if (withPlow) {
             targets.push({
-                icon: 'c:fdf/plow',
+                icon: 'fdf/plow',
                 label: 'Labourer',
                 blackoutJob: JobType.FDF,
                 blackoutGlobal: true,

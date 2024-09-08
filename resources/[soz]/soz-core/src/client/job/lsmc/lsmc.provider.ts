@@ -133,7 +133,7 @@ export class LSMCProvider {
             lsmcBeds.map(bed => bed.model),
             [
                 {
-                    icon: 'fas fa-bed',
+                    icon: 'ems/bed',
                     label: "S'allonger sur le lit",
                     category: 'citizen',
                     action: async entity => {
@@ -141,7 +141,7 @@ export class LSMCProvider {
                     },
                 },
                 {
-                    icon: 'c:ems/stretcher',
+                    icon: 'ems/stretcher',
                     label: 'Allonger sur le lit',
                     category: 'citizen',
                     canInteract: () => {
@@ -164,7 +164,7 @@ export class LSMCProvider {
             [
                 {
                     label: 'Extraire le mort',
-                    icon: 'c:ems/sortir',
+                    icon: 'ems/sortir',
                     job: {
                         [JobType.LSMC]: 0,
                         [JobType.LSPD]: 0,
@@ -242,7 +242,7 @@ export class LSMCProvider {
                 },
                 {
                     label: 'Faire monter',
-                    icon: 'c:ems/sortir',
+                    icon: 'ems/sortir',
                     category: 'society',
                     canInteract: entity => {
                         if (!this.vehicleLockProvider.isVehOpen(entity)) {

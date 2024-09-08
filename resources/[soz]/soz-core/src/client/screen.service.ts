@@ -71,7 +71,7 @@ export class ScreenService {
             direction[0],
             direction[1],
             direction[2],
-            511,
+            30,
             PlayerPedId(),
             0
         );

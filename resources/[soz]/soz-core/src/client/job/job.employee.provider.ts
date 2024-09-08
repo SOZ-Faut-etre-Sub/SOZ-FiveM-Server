@@ -38,7 +38,7 @@ export class JobEmployeeProvider {
         this.targetFactory.createForAllPlayer([
             {
                 label: "Recruter dans l'entreprise",
-                icon: 'c:jobs/enroll',
+                icon: 'jobs/enroll',
                 blackoutGlobal: true,
                 category: 'society',
                 canInteract: (entity: number) => {
@@ -51,7 +51,7 @@ export class JobEmployeeProvider {
             },
             {
                 label: "Virer de l'entreprise",
-                icon: 'c:jobs/fire',
+                icon: 'jobs/fire',
                 blackoutGlobal: true,
                 category: 'society',
                 canInteract: (entity: number) => {
@@ -70,7 +70,7 @@ export class JobEmployeeProvider {
             },
             {
                 label: 'Promouvoir',
-                icon: 'c:jobs/promote',
+                icon: 'jobs/promote',
                 blackoutGlobal: true,
                 category: 'society',
                 canInteract: (entity: number) => {

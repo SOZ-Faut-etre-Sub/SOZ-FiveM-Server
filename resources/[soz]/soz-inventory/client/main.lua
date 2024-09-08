@@ -209,7 +209,7 @@ CreateThread(function()
         local options = {
             {
                 label = "Ouvrir",
-                icon = "c:inventory/ouvrir_le_stockage",
+                icon = "inventory/ouvrir_le_stockage",
                 job = storage.owner,
                 action = function()
                     TriggerEvent("inventory:client:qTargetOpenInventory", {storage = storage, storageID = id})

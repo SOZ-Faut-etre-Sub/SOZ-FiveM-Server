@@ -89,7 +89,7 @@ export class SeatAnimationProvider {
             SeatsTargetList,
             [
                 {
-                    icon: 'fas fa-chair',
+                    icon: 'global/chair',
                     label: "S'asseoir",
                     category: 'citizen',
                     action: async entity =>
@@ -102,7 +102,7 @@ export class SeatAnimationProvider {
             SeatsTargetList,
             [
                 {
-                    icon: 'fas fa-beer',
+                    icon: 'global/beer',
                     label: "S'asseoir et Boire",
                     category: 'citizen',
                     action: async entity =>
@@ -115,7 +115,7 @@ export class SeatAnimationProvider {
             SeatsTargetList,
             [
                 {
-                    icon: 'fas fa-hamburger',
+                    icon: 'food/hamburger',
                     label: "S'asseoir et Manger",
                     category: 'citizen',
                     action: async entity => this.playSitAnimation(entity, 'PROP_HUMAN_SEAT_CHAIR_FOOD', false, true),
@@ -127,7 +127,7 @@ export class SeatAnimationProvider {
             LoungerTargetList,
             [
                 {
-                    icon: 'fas fa-umbrella-beach',
+                    icon: 'global/umbrella-beach',
                     label: "S'allonger",
                     category: 'citizen',
                     action: async entity => this.playSitAnimation(entity, 'PROP_HUMAN_SEAT_SUNLOUNGER', false, false),
@@ -139,7 +139,7 @@ export class SeatAnimationProvider {
             BarbecueList,
             [
                 {
-                    icon: 'fas fa-stroopwafel',
+                    icon: 'food/stroopwafel',
                     label: 'Cuisiner',
                     category: 'citizen',
                     action: async entity => this.playSitAnimation(entity, 'PROP_HUMAN_BBQ', false, false),

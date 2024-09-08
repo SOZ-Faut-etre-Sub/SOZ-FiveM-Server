@@ -77,7 +77,7 @@ export class BaunHarvestProvider {
                     {
                         color: JobType.Baun,
                         label: 'Récupérer',
-                        icon: 'c:jobs/recuperer',
+                        icon: 'jobs/recuperer',
                         category: 'society',
                         blackoutJob: JobType.Baun,
                         blackoutGlobal: true,

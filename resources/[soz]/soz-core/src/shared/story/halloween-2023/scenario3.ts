@@ -56,7 +56,7 @@ export const Halloween2023Scenario3: Story = {
             name: 'halloween_2023_scenario3_document',
             part: 4,
             label: 'Ramasser',
-            icon: 'fas fa-search',
+            icon: 'global/search',
             ...new BoxZone([1561.1, 385.16, -50.69], 0.4, 0.6, {
                 heading: 357.32,
                 minZ: -50.09,

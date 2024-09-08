@@ -12,7 +12,7 @@ function CreateInverterZone(identifier, data)
     data.options = {
         {
             label = "Accéder à l'onduleur",
-            icon = "c:inventory/ouvrir_le_stockage",
+            icon = "inventory/ouvrir_le_stockage",
             canInteract = function()
                 return OnDuty()
             end,
@@ -97,7 +97,7 @@ function CreateTerminalTargetScope(scope)
     local options = {
         {
             label = "Déposer l'énergie",
-            icon = "c:upw/deposer",
+            icon = "upw/deposer",
             action = function(entity)
                 local objectId = exports["soz-core"]:GetObjectIdFromEntity(entity)
 
@@ -113,7 +113,7 @@ function CreateTerminalTargetScope(scope)
         },
         {
             label = "État d'énergie",
-            icon = "c:fuel/battery",
+            icon = "fuel/battery",
             action = function(entity)
                 local objectId = exports["soz-core"]:GetObjectIdFromEntity(entity)
 

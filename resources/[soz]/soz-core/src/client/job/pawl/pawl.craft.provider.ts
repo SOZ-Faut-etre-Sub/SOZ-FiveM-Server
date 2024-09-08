@@ -34,7 +34,7 @@ export class PawlCraftProvider {
                     label: 'Fabriquer',
                     blackoutGlobal: true,
                     blackoutJob: JobType.Pawl,
-                    icon: 'c:/pawl/start-prod',
+                    icon: 'pawl/start-prod',
                     color: JobType.Pawl,
                     job: JobType.Pawl,
                     category: 'society',

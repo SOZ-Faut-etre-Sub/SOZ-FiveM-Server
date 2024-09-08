@@ -212,7 +212,7 @@ export class Halloween2022Scenario4Provider {
             [
                 {
                     label: 'Parler',
-                    icon: 'fas fa-comment',
+                    icon: 'global/comment',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario4', 0),
                     action: async () => {
@@ -252,7 +252,7 @@ export class Halloween2022Scenario4Provider {
             [
                 {
                     label: 'Parler',
-                    icon: 'fas fa-comment',
+                    icon: 'global/comment',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario4', 2),
                     action: async () => {
@@ -292,7 +292,7 @@ export class Halloween2022Scenario4Provider {
             [
                 {
                     label: 'Parler',
-                    icon: 'fas fa-comment',
+                    icon: 'global/comment',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario4', 3),
                     action: async () => {
@@ -330,7 +330,7 @@ export class Halloween2022Scenario4Provider {
             [
                 {
                     label: 'Parler',
-                    icon: 'fas fa-comment',
+                    icon: 'global/comment',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario4', 4),
                     action: async () => {
@@ -370,7 +370,7 @@ export class Halloween2022Scenario4Provider {
             [
                 {
                     label: 'Parler',
-                    icon: 'fas fa-comment',
+                    icon: 'global/comment',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario4', 7),
                     action: async () => {
@@ -402,7 +402,7 @@ export class Halloween2022Scenario4Provider {
             [
                 {
                     label: 'Explorer',
-                    icon: 'fas fa-search',
+                    icon: 'global/search',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario4', 7),
                     action: async () => {
@@ -432,7 +432,7 @@ export class Halloween2022Scenario4Provider {
             [
                 {
                     label: 'Sortir',
-                    icon: 'c:elevators/monter',
+                    icon: 'elevators/monter',
                     category: 'citizen',
                     action: async () => {
                         const ped = PlayerPedId();
@@ -601,7 +601,7 @@ export class Halloween2022Scenario4Provider {
             [
                 {
                     label: 'NariieL',
-                    icon: 'fas fa-question',
+                    icon: 'global/question',
                     category: 'citizen',
                     action: async () => {
                         this.notifier.notify('Reste doux.', 'info');
@@ -746,7 +746,7 @@ export class Halloween2022Scenario4Provider {
             [
                 {
                     label: 'Kaemy',
-                    icon: 'fas fa-question',
+                    icon: 'global/question',
                     category: 'citizen',
                     action: async () => {
                         this.notifier.notify(
@@ -979,7 +979,7 @@ export class Halloween2022Scenario4Provider {
             [
                 {
                     label: 'DaraBesque',
-                    icon: 'fas fa-question',
+                    icon: 'global/question',
                     category: 'citizen',
                     action: async () => {
                         this.notifier.notify(
@@ -1113,7 +1113,7 @@ export class Halloween2022Scenario4Provider {
             [
                 {
                     label: 'Tluap',
-                    icon: 'fas fa-question',
+                    icon: 'global/question',
                     category: 'citizen',
                     action: async () => {
                         this.notifier.notify(
@@ -1275,7 +1275,7 @@ export class Halloween2022Scenario4Provider {
             [
                 {
                     label: 'Draglock',
-                    icon: 'fas fa-question',
+                    icon: 'global/question',
                     category: 'citizen',
                     action: async () => {
                         this.notifier.notify('Huuuuuuum', 'info');
@@ -1428,7 +1428,7 @@ export class Halloween2022Scenario4Provider {
             [
                 {
                     label: 'Poulpito',
-                    icon: 'fas fa-question',
+                    icon: 'global/question',
                     category: 'citizen',
                     action: async () => {
                         this.notifier.notify(
@@ -1560,7 +1560,7 @@ export class Halloween2022Scenario4Provider {
             [
                 {
                     label: 'Sniteur ',
-                    icon: 'fas fa-question',
+                    icon: 'global/question',
                     category: 'citizen',
                     action: async () => {
                         this.notifier.notify(
@@ -1675,7 +1675,7 @@ export class Halloween2022Scenario4Provider {
             [
                 {
                     label: 'Brouznouf',
-                    icon: 'fas fa-question',
+                    icon: 'global/question',
                     category: 'citizen',
                     action: async () => {
                         this.notifier.notify("Il paraît qu'il y a un fantôme qui sort son téléphone au BCSO ?", 'info');
@@ -1780,7 +1780,7 @@ export class Halloween2022Scenario4Provider {
             [
                 {
                     label: 'Laikker',
-                    icon: 'fas fa-question',
+                    icon: 'global/question',
                     category: 'citizen',
                     action: async () => {
                         this.notifier.notify("Arreter d'être surpris que ca fonctionne ...", 'info');
@@ -1918,7 +1918,7 @@ export class Halloween2022Scenario4Provider {
             [
                 {
                     label: 'Moustache',
-                    icon: 'fas fa-question',
+                    icon: 'global/question',
                     category: 'citizen',
                     action: async () => {
                         this.notifier.notify(
@@ -2030,7 +2030,7 @@ export class Halloween2022Scenario4Provider {
             [
                 {
                     label: 'Aurukh',
-                    icon: 'fas fa-question',
+                    icon: 'global/question',
                     category: 'citizen',
                     action: async () => {
                         this.notifier.notify(
@@ -2141,7 +2141,7 @@ export class Halloween2022Scenario4Provider {
             [
                 {
                     label: 'Rigonkmalk',
-                    icon: 'fas fa-question',
+                    icon: 'global/question',
                     category: 'citizen',
                     action: async () => {
                         this.notifier.notify(
@@ -2262,7 +2262,7 @@ export class Halloween2022Scenario4Provider {
             [
                 {
                     label: 'Oneiluj',
-                    icon: 'fas fa-question',
+                    icon: 'global/question',
                     category: 'citizen',
                     action: async () => {
                         this.notifier.notify(
@@ -2383,7 +2383,7 @@ export class Halloween2022Scenario4Provider {
             [
                 {
                     label: 'Lasbou',
-                    icon: 'fas fa-question',
+                    icon: 'global/question',
                     category: 'citizen',
                     action: async () => {
                         this.notifier.notify('Minou minou ? GRAOU GRAOU !', 'info');
@@ -2491,7 +2491,7 @@ export class Halloween2022Scenario4Provider {
             [
                 {
                     label: 'Daelbhas',
-                    icon: 'fas fa-question',
+                    icon: 'global/question',
                     category: 'citizen',
                     action: async () => {
                         this.notifier.notify(
@@ -2626,7 +2626,7 @@ export class Halloween2022Scenario4Provider {
             [
                 {
                     label: 'Ojymas',
-                    icon: 'fas fa-question',
+                    icon: 'global/question',
                     category: 'citizen',
                     action: async () => {
                         this.notifier.notify(
@@ -2740,7 +2740,7 @@ export class Halloween2022Scenario4Provider {
             [
                 {
                     label: 'Poulpitor',
-                    icon: 'fas fa-question',
+                    icon: 'global/question',
                     category: 'citizen',
                     action: async () => {
                         this.notifier.notify(
@@ -2847,7 +2847,7 @@ export class Halloween2022Scenario4Provider {
             [
                 {
                     label: 'DreamXZE',
-                    icon: 'fas fa-question',
+                    icon: 'global/question',
                     category: 'citizen',
                     action: async () => {
                         this.notifier.notify(
@@ -3000,7 +3000,7 @@ export class Halloween2022Scenario4Provider {
             [
                 {
                     label: 'Balrock',
-                    icon: 'fas fa-question',
+                    icon: 'global/question',
                     category: 'citizen',
                     action: async () => {
                         this.notifier.notify(
@@ -3163,7 +3163,7 @@ export class Halloween2022Scenario4Provider {
             [
                 {
                     label: 'MarverikG',
-                    icon: 'fas fa-question',
+                    icon: 'global/question',
                     category: 'citizen',
                     action: async () => {
                         this.notifier.notify(
@@ -3273,7 +3273,7 @@ export class Halloween2022Scenario4Provider {
             [
                 {
                     label: 'Silverlord',
-                    icon: 'fas fa-question',
+                    icon: 'global/question',
                     category: 'citizen',
                     action: async () => {
                         this.notifier.notify(
@@ -3379,7 +3379,7 @@ export class Halloween2022Scenario4Provider {
             [
                 {
                     label: 'Aurelien',
-                    icon: 'fas fa-question',
+                    icon: 'global/question',
                     category: 'citizen',
                     action: async () => {
                         this.notifier.notify(
@@ -3596,7 +3596,7 @@ export class Halloween2022Scenario4Provider {
             [
                 {
                     label: 'Guegette',
-                    icon: 'fas fa-question',
+                    icon: 'global/question',
                     category: 'citizen',
                     action: async () => {
                         this.notifier.notify(

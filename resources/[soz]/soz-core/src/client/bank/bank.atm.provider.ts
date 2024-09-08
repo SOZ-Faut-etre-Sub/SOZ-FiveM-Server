@@ -102,7 +102,7 @@ export class BankAtmProvider {
                 [
                     {
                         label: 'Accéder aux comptes',
-                        icon: 'c:bank/compte_personal',
+                        icon: 'bank/compte_personal',
                         category: 'citizen',
                         action: async entity => {
                             TaskTurnPedToFaceEntity(PlayerPedId(), entity, 500);
@@ -133,7 +133,7 @@ export class BankAtmProvider {
     public createAtmRefillAction(type: AtmType, item: string): TargetOption {
         return {
             label: `Remplir avec ${this.itemService.getItem(item).label}`,
-            icon: 'c:stonk/remplir',
+            icon: 'stonk/remplir',
             category: 'society',
             canInteract: async entity => {
                 if (type !== AtmType.ENTERPRISE) return false;

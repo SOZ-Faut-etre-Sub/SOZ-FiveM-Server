@@ -26,7 +26,7 @@ export class HuntProvider {
             [
                 {
                     label: 'Fouiller',
-                    icon: 'fas fa-search',
+                    icon: 'global/search',
                     category: 'citizen',
                     action: async entity => TriggerServerEvent(ServerEvent.HALLOWEEN2022_HUNT, GetEntityCoords(entity)),
                     canInteract: entity => !this.objectProvider.getIdFromEntity(entity),

@@ -35,7 +35,7 @@ export class JobInvoiceProvider {
             this.targetFactory.createForAllPlayer([
                 {
                     label: `Facturer`,
-                    icon: 'c:jobs/facture',
+                    icon: 'jobs/facture',
                     blackoutGlobal: true,
                     blackoutJob: job.id,
                     job: job.id,
@@ -45,7 +45,7 @@ export class JobInvoiceProvider {
                 },
                 {
                     label: 'Facture la société',
-                    icon: 'c:jobs/facture',
+                    icon: 'jobs/facture',
                     blackoutGlobal: true,
                     blackoutJob: job.id,
                     job: job.id,

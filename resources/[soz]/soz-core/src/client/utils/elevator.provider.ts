@@ -16,8 +16,8 @@ enum ElevatorDirection {
 }
 
 const ElevatorDirectionDisplay: Record<ElevatorDirection, { label: string; icon: string }> = {
-    [ElevatorDirection.UP]: { label: 'Monter ', icon: 'c:elevators/monter' },
-    [ElevatorDirection.DOWN]: { label: 'Descendre ', icon: 'c:elevators/descendre' },
+    [ElevatorDirection.UP]: { label: 'Monter ', icon: 'elevators/monter' },
+    [ElevatorDirection.DOWN]: { label: 'Descendre ', icon: 'elevators/descendre' },
 };
 
 type ElevatorFloor = {

@@ -4,7 +4,7 @@ function getCloakroomTargetOptions(job, storage, event)
             color = job,
             type = "client",
             label = "Se changer",
-            icon = "c:jobs/habiller",
+            icon = "jobs/habiller",
             storage = storage,
             canInteract = function()
                 return PlayerData.job.id == job
@@ -17,7 +17,7 @@ function getCloakroomTargetOptions(job, storage, event)
             color = job,
             type = "client",
             label = "Vérifier le stock",
-            icon = "c:jobs/check-stock",
+            icon = "jobs/check-stock",
             storage = storage,
             job = job,
             action = function()
@@ -26,8 +26,7 @@ function getCloakroomTargetOptions(job, storage, event)
         },
         {
             color = job,
-            targeticon = "fas fa-box",
-            icon = "fas fa-archive",
+            icon = "inventory/archive",
             label = "Ouvrir mon casier",
             canInteract = function()
                 return PlayerData.job.id == job

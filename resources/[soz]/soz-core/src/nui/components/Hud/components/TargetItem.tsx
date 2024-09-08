@@ -9,6 +9,7 @@ export const TargetItem: FunctionComponent<TargetOption & { onSelect: () => void
     id,
     icon,
     label,
+    subLabel,
     onSelect,
 }) => {
     const handleClick = async () => {
@@ -19,11 +20,7 @@ export const TargetItem: FunctionComponent<TargetOption & { onSelect: () => void
     const imageUrl = useMemo(() => {
         if (!icon) return null;
 
-        if (icon.startsWith('c:')) {
-            return `/public/images/target/${icon.replace('c:', '')}.webp`;
-        }
-
-        return null;
+        return `/public/images/target/${icon}.webp`;
     }, [icon]);
 
     return (
@@ -36,7 +33,10 @@ export const TargetItem: FunctionComponent<TargetOption & { onSelect: () => void
             >
                 {imageUrl && <img className="size-8" src={imageUrl} alt="" />}
 
-                {label}
+                <div className="flex flex-col">
+                    <span className="truncate">{label}</span>
+                    {subLabel && <span className="text-sm opacity-75">{subLabel}</span>}
+                </div>
             </GlassMorphismContainer>
         </div>
     );

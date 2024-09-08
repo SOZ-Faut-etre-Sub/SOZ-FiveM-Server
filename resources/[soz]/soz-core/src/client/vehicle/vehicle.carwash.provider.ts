@@ -60,7 +60,7 @@ export class VehicleCarWashProvider {
     setupVehicleCarWash(): void {
         this.targetFactory.createForAllVehicle([
             {
-                icon: 'c:mechanic/Car_wash',
+                icon: 'mechanic/Car_wash',
                 label: 'Laver sa voiture',
                 category: 'citizen',
                 action: entity => {

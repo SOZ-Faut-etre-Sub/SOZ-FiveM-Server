@@ -42,7 +42,7 @@ export class UpwVehicleProvider {
     public async setupUpwBattery() {
         this.targetFactory.createForAllVehicle([
             {
-                icon: 'c:mechanic/car_battery',
+                icon: 'mechanic/car_battery',
                 label: 'Changer la batterie',
                 color: 'upw',
                 action: this.changerVehicleBattery.bind(this),

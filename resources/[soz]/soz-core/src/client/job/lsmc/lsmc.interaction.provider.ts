@@ -75,7 +75,7 @@ export class LSMCInteractionProvider {
             {
                 label: 'Rehabiliter',
                 color: JobType.LSMC,
-                icon: 'c:ems/Rehabiliter',
+                icon: 'ems/Rehabiliter',
                 job: JobType.LSMC,
                 blackoutGlobal: true,
                 blackoutJob: 'lsmc',
@@ -99,7 +99,7 @@ export class LSMCInteractionProvider {
             {
                 label: 'Deshabiliter',
                 color: JobType.LSMC,
-                icon: 'c:ems/Deshabiliter',
+                icon: 'ems/Deshabiliter',
                 job: JobType.LSMC,
                 blackoutGlobal: true,
                 blackoutJob: 'lsmc',
@@ -136,7 +136,7 @@ export class LSMCInteractionProvider {
             {
                 label: 'Déshabiller',
                 color: JobType.LSMC,
-                icon: 'c:ems/desabhiller',
+                icon: 'ems/desabhiller',
                 job: JobType.LSMC,
                 category: 'society',
                 canInteract: entity => {
@@ -159,7 +159,7 @@ export class LSMCInteractionProvider {
             {
                 label: 'Rhabiller',
                 color: JobType.LSMC,
-                icon: 'c:ems/rhabiller',
+                icon: 'ems/rhabiller',
                 job: JobType.LSMC,
                 category: 'society',
                 canInteract: entity => {
@@ -182,7 +182,7 @@ export class LSMCInteractionProvider {
             {
                 label: 'Soigner',
                 color: JobType.LSMC,
-                icon: 'c:ems/heal',
+                icon: 'ems/heal',
                 job: JobType.LSMC,
                 category: 'society',
                 canInteract: entity => {
@@ -219,7 +219,7 @@ export class LSMCInteractionProvider {
             {
                 label: 'Réanimer',
                 color: JobType.LSMC,
-                icon: 'c:ems/revive',
+                icon: 'ems/revive',
                 job: JobType.LSMC,
                 category: 'society',
                 canInteract: entity => {
@@ -235,7 +235,7 @@ export class LSMCInteractionProvider {
             {
                 label: 'Utiliser Défibrilateur',
                 color: JobType.LSMC,
-                icon: 'c:ems/revive',
+                icon: 'ems/revive',
                 category: 'society',
                 canInteract: entity => {
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
@@ -250,7 +250,7 @@ export class LSMCInteractionProvider {
             {
                 label: 'Prise de sang',
                 color: JobType.LSMC,
-                icon: 'c:ems/take_blood',
+                icon: 'ems/take_blood',
                 job: JobType.LSMC,
                 category: 'society',
                 canInteract: entity => {
@@ -292,7 +292,7 @@ export class LSMCInteractionProvider {
                 label: 'Donner le diplôme de secourisme',
                 color: JobType.LSMC,
                 job: JobType.LSMC,
-                icon: 'c:ems/rescuer',
+                icon: 'ems/rescuer',
                 category: 'society',
                 canInteract: async entity => {
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
@@ -320,7 +320,7 @@ export class LSMCInteractionProvider {
                 label: 'Retirer le diplôme de secourisme',
                 color: JobType.LSMC,
                 job: JobType.LSMC,
-                icon: 'c:ems/notrescuer',
+                icon: 'ems/notrescuer',
                 category: 'society',
                 canInteract: async entity => {
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
@@ -348,7 +348,7 @@ export class LSMCInteractionProvider {
                 label: 'Plâtre',
                 color: JobType.LSMC,
                 job: JobType.LSMC,
-                icon: 'c:ems/platre',
+                icon: 'ems/platre',
                 category: 'society',
                 action: async entity => {
                     const playerServerId = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
@@ -364,7 +364,7 @@ export class LSMCInteractionProvider {
                 label: 'Naloxone',
                 color: JobType.LSMC,
                 job: JobType.LSMC,
-                icon: 'c:ems/naloxone',
+                icon: 'ems/naloxone',
                 category: 'society',
                 canInteract: entity => {
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
@@ -380,7 +380,7 @@ export class LSMCInteractionProvider {
             {
                 label: 'Morphine',
                 color: JobType.LSMC,
-                icon: 'c:ems/morphine',
+                icon: 'ems/morphine',
                 job: JobType.LSMC,
                 category: 'society',
                 canInteract: entity => {
@@ -407,7 +407,7 @@ export class LSMCInteractionProvider {
                 {
                     label: "S'entrainer aux soins",
                     color: JobType.LSMC,
-                    icon: 'c:ems/heal',
+                    icon: 'ems/heal',
                     job: JobType.LSMC,
                     category: 'society',
                     action: () => {
@@ -430,7 +430,7 @@ export class LSMCInteractionProvider {
                 {
                     label: "S'entrainer aux piqûres",
                     color: JobType.LSMC,
-                    icon: 'c:ems/morphine',
+                    icon: 'ems/morphine',
                     job: JobType.LSMC,
                     category: 'society',
                     action: () => {
@@ -460,7 +460,7 @@ export class LSMCInteractionProvider {
                 {
                     label: "S'entrainer à la chirurgie",
                     color: JobType.LSMC,
-                    icon: 'c:ems/greffer',
+                    icon: 'ems/greffer',
                     job: JobType.LSMC,
                     category: 'society',
                     action: () => {

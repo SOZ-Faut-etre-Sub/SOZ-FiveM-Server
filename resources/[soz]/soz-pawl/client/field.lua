@@ -24,31 +24,31 @@ local function TreeInteraction(identifier, position)
             {
                 color = "pawl",
                 label = "Récolter",
-                icon = "c:pawl/harvest",
+                icon = "pawl/harvest",
                 item = Config.Harvest.RequiredWeapon,
                 job = "pawl",
                 blackoutGlobal = true,
                 blackoutJob = "pawl",
                 action = function()
-                    TriggerEvent("pawl:client:harvestTree", {identifier, position})
+                    TriggerEvent("pawl:client:harvestTree", {identifier = identifier, position = position})
                 end,
             },
             {
                 color = "pawl",
                 label = "Tronçonner",
-                icon = "c:pawl/harvest-chainsaw",
+                icon = "pawl/harvest-chainsaw",
                 item = Config.FastHarvest.RequiredWeapon,
                 job = "pawl",
                 blackoutGlobal = true,
                 blackoutJob = "pawl",
                 action = function()
-                    TriggerEvent("pawl:client:checkChainsawFuel", {identifier, position})
+                    TriggerEvent("pawl:client:checkChainsawFuel", {identifier = identifier, position = position})
                 end,
             },
             {
                 color = "pawl",
                 label = "Récolter la sève",
-                icon = "c:pawl/harvest-sap",
+                icon = "pawl/harvest-sap",
                 item = Config.Harvest.RequiredWeapon,
                 canInteract = function()
                     local treeKey = ConcatPosition(position)
@@ -62,13 +62,13 @@ local function TreeInteraction(identifier, position)
                 blackoutGlobal = true,
                 blackoutJob = "pawl",
                 action = function()
-                    TriggerEvent("pawl:client:harvestTreeSap", {identifier, position})
+                    TriggerEvent("pawl:client:harvestTreeSap", {identifier = identifier, position = position})
                 end,
             },
             {
                 color = "crimi",
                 label = "Récolter des champignons",
-                icon = "c:pawl/harvest-mushroom",
+                icon = "pawl/harvest-mushroom",
                 canInteract = function()
                     for _, value in ipairs(PlayerData.metadata.drugs_skills) do
                         -- 1 is Botanite
@@ -79,7 +79,7 @@ local function TreeInteraction(identifier, position)
                     return false
                 end,
                 action = function(entity)
-                    TriggerEvent("soz-core:client:drugs:harvest-champi", {entity, position})
+                    TriggerEvent("soz-core:client:drugs:harvest-champi", {entity = entity, position = position})
                 end,
             },
     }, 2.5)

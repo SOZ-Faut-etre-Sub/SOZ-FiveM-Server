@@ -35,7 +35,7 @@ export class VehicleTowProvider {
         this.targetFactort.createForAllVehicle([
             {
                 label: 'Attacher cable de remorquage',
-                icon: 'c:mechanic/Attacher',
+                icon: 'mechanic/Attacher',
                 category: 'citizen',
                 canInteract: entity => entity != this.from,
                 action: async entity => {
@@ -82,7 +82,7 @@ export class VehicleTowProvider {
             },
             {
                 label: 'Annuler le Remorquage',
-                icon: 'c:mechanic/Attacher',
+                icon: 'mechanic/Attacher',
                 category: 'citizen',
                 canInteract: entity => entity == this.from,
                 action: () => {
@@ -92,7 +92,7 @@ export class VehicleTowProvider {
             },
             {
                 label: 'Détacher le cable de remorquage',
-                icon: 'c:mechanic/Attacher',
+                icon: 'mechanic/Attacher',
                 category: 'citizen',
                 canInteract: entity => {
                     const netId = NetworkGetNetworkIdFromEntity(entity);

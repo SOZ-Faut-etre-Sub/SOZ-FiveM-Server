@@ -103,7 +103,7 @@ export class Halloween2022Scenario2Provider {
             [
                 {
                     label: 'Parler',
-                    icon: 'fas fa-comment',
+                    icon: 'global/comment',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario2', 0),
                     action: async () => {
@@ -115,7 +115,7 @@ export class Halloween2022Scenario2Provider {
                 },
                 {
                     label: 'Parler',
-                    icon: 'fas fa-comment',
+                    icon: 'global/comment',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario2', 6),
                     action: async () => {
@@ -164,7 +164,7 @@ export class Halloween2022Scenario2Provider {
             [
                 {
                     label: 'Inspecter',
-                    icon: 'fas fa-comment',
+                    icon: 'global/comment',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario2', 4),
                     action: async () => {
@@ -182,7 +182,7 @@ export class Halloween2022Scenario2Provider {
     private interactionFeet(part: number): TargetOption {
         return {
             label: 'Inspecter',
-            icon: 'fas fa-search',
+            icon: 'global/search',
             category: 'citizen',
             canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario2', part),
             action: async () => {

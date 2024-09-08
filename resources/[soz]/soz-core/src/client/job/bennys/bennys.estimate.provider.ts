@@ -27,7 +27,7 @@ export class BennysEstimateProvider {
         this.targetFactory.createForAllVehicle([
             {
                 label: 'Estimer',
-                icon: 'c:/mechanic/estimate',
+                icon: 'mechanic/estimate',
                 job: JobType.Bennys,
                 color: JobType.Bennys,
                 category: 'society',

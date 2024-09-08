@@ -129,7 +129,7 @@ export class VehicleElectricProvider {
             {
                 label: "Recharger à l'énergie fossile",
                 color: JobType.Upw,
-                icon: 'c:fuel/charger',
+                icon: 'fuel/charger',
                 blackoutGlobal: true,
                 blackoutJob: JobType.Upw,
                 job: JobType.Upw,
@@ -149,7 +149,7 @@ export class VehicleElectricProvider {
             {
                 label: "Recharger à l'énergie hydraulique",
                 color: JobType.Upw,
-                icon: 'c:fuel/charger',
+                icon: 'fuel/charger',
                 blackoutGlobal: true,
                 blackoutJob: JobType.Upw,
                 job: JobType.Upw,
@@ -168,7 +168,7 @@ export class VehicleElectricProvider {
             {
                 label: "Recharger à l'énergie éolienne",
                 color: JobType.Upw,
-                icon: 'c:fuel/charger',
+                icon: 'fuel/charger',
                 blackoutGlobal: true,
                 blackoutJob: JobType.Upw,
                 job: JobType.Upw,
@@ -187,7 +187,7 @@ export class VehicleElectricProvider {
             {
                 label: "Recharger à l'énergie solaire",
                 color: JobType.Upw,
-                icon: 'c:fuel/charger',
+                icon: 'fuel/charger',
                 blackoutGlobal: true,
                 blackoutJob: JobType.Upw,
                 job: JobType.Upw,
@@ -206,7 +206,7 @@ export class VehicleElectricProvider {
             {
                 label: 'État de la station',
                 color: JobType.Upw,
-                icon: 'c:fuel/battery',
+                icon: 'fuel/battery',
                 blackoutGlobal: true,
                 blackoutJob: JobType.Upw,
                 job: JobType.Upw,
@@ -216,7 +216,7 @@ export class VehicleElectricProvider {
                 },
             },
             {
-                icon: 'c:fuel/plug',
+                icon: 'fuel/plug',
                 label: 'Prendre la prise',
                 category: 'society',
                 action: (entity: number) => {
@@ -258,7 +258,7 @@ export class VehicleElectricProvider {
                 blackoutGlobal: true,
             },
             {
-                icon: 'c:fuel/plug',
+                icon: 'fuel/plug',
                 label: 'Reposer la prise',
                 category: 'society',
                 action: (entity: number) => {
@@ -293,7 +293,7 @@ export class VehicleElectricProvider {
         this.targetFactory.createForAllVehicle([
             {
                 label: 'Charger le véhicule',
-                icon: 'c:fuel/recharge',
+                icon: 'fuel/recharge',
                 category: 'society',
                 blackoutGlobal: true,
                 canInteract: (entity: number) => {

@@ -36,7 +36,7 @@ export class FoodMealsProvider {
             [
                 {
                     label: 'Commander',
-                    icon: 'c:food/order',
+                    icon: 'food/order',
                     job: 'food',
                     category: 'society',
                     canInteract: () => !this.orderInProgress,
@@ -44,7 +44,7 @@ export class FoodMealsProvider {
                 },
                 {
                     label: 'Récupérer la commande',
-                    icon: 'c:food/retrieve-order',
+                    icon: 'food/retrieve-order',
                     job: 'food',
                     category: 'society',
                     canInteract: () => this.orderInProgress,

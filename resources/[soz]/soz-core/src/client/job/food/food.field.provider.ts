@@ -39,7 +39,7 @@ export class FoodFieldProvider {
                     {
                         label: 'Récolter',
                         color: 'food',
-                        icon: 'c:food/collecter',
+                        icon: 'food/collecter',
                         blackoutGlobal: true,
                         blackoutJob: JobType.Food,
                         job: JobType.Food,
@@ -55,7 +55,7 @@ export class FoodFieldProvider {
                     {
                         label: 'Récolter de la Zeed',
                         color: 'crimi',
-                        icon: 'c:crimi/zeed',
+                        icon: 'crimi/zeed',
                         category: 'criminal',
                         canInteract: entity =>
                             !IsEntityAVehicle(entity) &&
@@ -81,7 +81,7 @@ export class FoodFieldProvider {
                 {
                     label: 'Récupérer',
                     color: 'food',
-                    icon: 'c:food/collecter',
+                    icon: 'food/collecter',
                     blackoutGlobal: true,
                     blackoutJob: JobType.Food,
                     job: JobType.Food,

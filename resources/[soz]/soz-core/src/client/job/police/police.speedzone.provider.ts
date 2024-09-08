@@ -40,7 +40,7 @@ export class PoliceSpeedZoneProvider {
         this.targetFactory.createForModel(roadSignModel, [
             {
                 label: 'Démonter',
-                icon: 'c:jobs/demonter',
+                icon: 'jobs/demonter',
                 job: jobsTarget,
                 category: 'society',
                 action: async (entity: number) => {

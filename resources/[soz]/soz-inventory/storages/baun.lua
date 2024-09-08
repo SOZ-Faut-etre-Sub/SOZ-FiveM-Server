@@ -3,7 +3,7 @@ local function getTargetOption(storage, itemId)
         color = "baun",
         type = "server",
         label = "Restocker",
-        icon = "c:jobs/demonter",
+        icon = "jobs/demonter",
         event = "soz-core:server:job:baun:restock",
         item = itemId,
         storage = storage,
@@ -20,7 +20,7 @@ local function getCocktailTargetOption()
     return {
         color = "baun",
         label = "Créer un assortiment de cocktails",
-        icon = "c:baun/createCocktailBox",
+        icon = "baun/createCocktailBox",
         type = "server",
         event = "soz-core:server:job:baun:create-cocktail-box",
         blackoutGlobal = true,
@@ -42,7 +42,7 @@ local function getIceMachineTargetOption()
     return {
         color = "baun",
         label = "Faire des glaçons",
-        icon = "c:baun/ice",
+        icon = "baun/ice",
         type = "client",
         event = "soz-core:client:baun:create-ice-cubes",
         blackoutGlobal = true,

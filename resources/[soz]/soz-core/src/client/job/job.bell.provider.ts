@@ -278,7 +278,7 @@ export class JobBellProvider {
             this.targetFactory.createForBoxZone(`bell:${zone.data.job}:${index}`, zone, [
                 {
                     label: 'Biper',
-                    icon: 'c:jobs/biper',
+                    icon: 'jobs/biper',
                     blackoutGlobal: true,
                     category: 'citizen',
                     canInteract: () => {

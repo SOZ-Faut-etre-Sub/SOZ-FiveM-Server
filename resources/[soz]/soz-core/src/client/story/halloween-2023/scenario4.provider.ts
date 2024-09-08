@@ -152,7 +152,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'Parler',
-                        icon: 'fas fa-comment',
+                        icon: 'global/comment',
                         category: 'citizen',
                         canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario4', 0),
                         action: async entity => {
@@ -254,7 +254,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'Inspecter',
-                        icon: 'fas fa-search',
+                        icon: 'global/search',
                         category: 'citizen',
                         canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario4', 1),
                         action: () => {
@@ -266,7 +266,7 @@ export class Halloween2023Scenario4Provider {
                     },
                     {
                         label: 'Re-Inspecter',
-                        icon: 'fas fas fa-comment-dots',
+                        icon: 'global/comment-dots',
                         category: 'citizen',
                         canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario4', 2),
                         action: () => {
@@ -294,7 +294,7 @@ export class Halloween2023Scenario4Provider {
             [
                 {
                     label: 'Entrer',
-                    icon: 'c:housing/enter',
+                    icon: 'housing/enter',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario4', 1),
                     action: async () => {
@@ -316,7 +316,7 @@ export class Halloween2023Scenario4Provider {
             [
                 {
                     label: 'Sortir',
-                    icon: 'c:housing/enter',
+                    icon: 'housing/enter',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario4', 3),
                     action: async () => {
@@ -338,7 +338,7 @@ export class Halloween2023Scenario4Provider {
             [
                 {
                     label: 'Entrer',
-                    icon: 'c:housing/enter',
+                    icon: 'housing/enter',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario4', 3),
                     action: async () => {
@@ -360,7 +360,7 @@ export class Halloween2023Scenario4Provider {
             [
                 {
                     label: 'Sortir',
-                    icon: 'c:housing/enter',
+                    icon: 'housing/enter',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario4', 4),
                     action: async () => {
@@ -382,7 +382,7 @@ export class Halloween2023Scenario4Provider {
             [
                 {
                     label: 'Sortir',
-                    icon: 'c:housing/enter',
+                    icon: 'housing/enter',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario4', 6),
                     action: async () => {
@@ -466,7 +466,7 @@ export class Halloween2023Scenario4Provider {
             [
                 {
                     label: 'Toucher',
-                    icon: 'fas fa-search',
+                    icon: 'global/search',
                     category: 'citizen',
                     canInteract: () =>
                         this.storyService.canInteractForPart('halloween2023', 'scenario4', 3) ||
@@ -584,7 +584,7 @@ export class Halloween2023Scenario4Provider {
             [
                 {
                     label: 'Parler',
-                    icon: 'fas fa-comment',
+                    icon: 'global/comment',
                     category: 'citizen',
                     canInteract: () => {
                         return this.storyService.canInteractForPart('halloween2023', 'scenario4', 5);
@@ -692,7 +692,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'Parler',
-                        icon: 'fas fa-comment',
+                        icon: 'global/comment',
                         category: 'citizen',
                         action: () => {
                             this.notifier.notify('Ooh, notre nouveau chien ! Bonsoir');
@@ -794,7 +794,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'Parler',
-                        icon: 'fas fa-comment',
+                        icon: 'global/comment',
                         category: 'citizen',
                         action: () => {
                             this.notifier.notify('Wouah wouaf !!');
@@ -898,7 +898,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'NariieL',
-                        icon: 'fas fa-question',
+                        icon: 'global/question',
                         category: 'citizen',
                         action: async () => {
                             this.notifier.notify('La douceur des enfers te plait?', 'info');
@@ -1039,7 +1039,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'Kaemy',
-                        icon: 'fas fa-question',
+                        icon: 'global/question',
                         category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
@@ -1261,7 +1261,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'DaraBesque',
-                        icon: 'fas fa-question',
+                        icon: 'global/question',
                         category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
@@ -1382,7 +1382,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'Tluap',
-                        icon: 'fas fa-question',
+                        icon: 'global/question',
                         category: 'citizen',
                         action: async () => {
                             this.notifier.notify("Vous cherchez quelqu'un en particulier ? Personne est ici.", 'info');
@@ -1532,7 +1532,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'Draglock',
-                        icon: 'fas fa-question',
+                        icon: 'global/question',
                         category: 'citizen',
                         action: async () => {
                             this.notifier.notify('Huuuuuuum', 'info');
@@ -1673,7 +1673,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'Poulpito',
-                        icon: 'fas fa-question',
+                        icon: 'global/question',
                         category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
@@ -1793,7 +1793,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'Sniteur ',
-                        icon: 'fas fa-question',
+                        icon: 'global/question',
                         category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
@@ -1898,7 +1898,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'Brouznouf',
-                        icon: 'fas fa-question',
+                        icon: 'global/question',
                         category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
@@ -1998,7 +1998,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'Laikker',
-                        icon: 'fas fa-question',
+                        icon: 'global/question',
                         category: 'citizen',
                         action: async () => {
                             this.notifier.notify("C'est bon, c'est fini ? je peux aller dormir ?", 'info');
@@ -2127,7 +2127,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'Moustache',
-                        icon: 'fas fa-question',
+                        icon: 'global/question',
                         category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
@@ -2230,7 +2230,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'Aurukh',
-                        icon: 'fas fa-question',
+                        icon: 'global/question',
                         category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
@@ -2331,7 +2331,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'Rigonkmalk',
-                        icon: 'fas fa-question',
+                        icon: 'global/question',
                         category: 'citizen',
                         action: async () => {
                             this.notifier.notify('Des travaux, encore des travaux... Un travail démoniaque...', 'info');
@@ -2427,7 +2427,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'Oneiluj',
-                        icon: 'fas fa-question',
+                        icon: 'global/question',
                         category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
@@ -2528,7 +2528,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'Lasbou',
-                        icon: 'fas fa-question',
+                        icon: 'global/question',
                         category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
@@ -2626,7 +2626,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'Daelbhas',
-                        icon: 'fas fa-question',
+                        icon: 'global/question',
                         category: 'citizen',
                         action: async () => {
                             this.notifier.notify("L'enfer, c'est les Autres.", 'info');
@@ -2741,7 +2741,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'Ojymas',
-                        icon: 'fas fa-question',
+                        icon: 'global/question',
                         category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
@@ -2840,7 +2840,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'Poulpitor',
-                        icon: 'fas fa-question',
+                        icon: 'global/question',
                         category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
@@ -2937,7 +2937,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'DreamXZE',
-                        icon: 'fas fa-question',
+                        icon: 'global/question',
                         category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
@@ -3082,7 +3082,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'Balrock',
-                        icon: 'fas fa-question',
+                        icon: 'global/question',
                         category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
@@ -3238,7 +3238,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'MarverikG',
-                        icon: 'fas fa-question',
+                        icon: 'global/question',
                         category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
@@ -3341,7 +3341,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'Silverlord',
-                        icon: 'fas fa-question',
+                        icon: 'global/question',
                         category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
@@ -3441,7 +3441,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'Aurelien',
-                        icon: 'fas fa-question',
+                        icon: 'global/question',
                         category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
@@ -3651,7 +3651,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'Guegette',
-                        icon: 'fas fa-question',
+                        icon: 'global/question',
                         category: 'citizen',
                         action: async () => {
                             this.notifier.notify('Lâchez votre arme !... Et heuuu... le cerceuil aussi.', 'info');
@@ -3766,7 +3766,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'Triplaxion',
-                        icon: 'fas fa-question',
+                        icon: 'global/question',
                         category: 'citizen',
                         action: async () => {
                             this.notifier.notify('Ici, la curiosité peut être mortelle. Garde tes distances.', 'info');
@@ -3871,7 +3871,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'Xerackk',
-                        icon: 'fas fa-question',
+                        icon: 'global/question',
                         category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
@@ -3980,7 +3980,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'Berlu',
-                        icon: 'fas fa-question',
+                        icon: 'global/question',
                         category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
@@ -4135,7 +4135,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'Yob',
-                        icon: 'fas fa-question',
+                        icon: 'global/question',
                         category: 'citizen',
                         action: async () => {
                             this.notifier.notify(
@@ -4265,7 +4265,7 @@ export class Halloween2023Scenario4Provider {
                 options: [
                     {
                         label: 'Tone',
-                        icon: 'fas fa-question',
+                        icon: 'global/question',
                         category: 'citizen',
                         action: async () => {
                             this.notifier.notify(

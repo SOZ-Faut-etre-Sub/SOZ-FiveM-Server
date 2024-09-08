@@ -45,7 +45,7 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
         {
             color = "pawl",
             label = "Démarrer production",
-            icon = "c:pawl/start-prod",
+            icon = "pawl/start-prod",
             canInteract = function()
                 local enabled = QBCore.Functions.TriggerRpc("pawl:server:processingTreeIsEnabled")
                 return not enabled
@@ -60,7 +60,7 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
         {
             color = "pawl",
             label = "Arrêter production",
-            icon = "c:pawl/stop-prod",
+            icon = "pawl/stop-prod",
             canInteract = function()
                 local enabled = QBCore.Functions.TriggerRpc("pawl:server:processingTreeIsEnabled")
                 return enabled
@@ -75,7 +75,7 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
         {
             color = "pawl",
             label = "État production",
-            icon = "c:pawl/status-prod",
+            icon = "pawl/status-prod",
             action = function()
                 TriggerServerEvent("pawl:server:statusProcessingTree")
             end,

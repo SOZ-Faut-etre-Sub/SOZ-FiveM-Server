@@ -150,7 +150,7 @@ export class VehicleDealershipProvider {
                 target: {
                     options: [
                         {
-                            icon: 'c:dealership/list',
+                            icon: 'dealership/list',
                             label: 'Accéder au catalogue',
                             category: 'citizen',
                             blackoutGlobal: true,
@@ -185,7 +185,7 @@ export class VehicleDealershipProvider {
             target: {
                 options: [
                     {
-                        icon: 'c:dealership/list',
+                        icon: 'dealership/list',
                         label: 'Accéder au catalogue',
                         category: 'citizen',
                         action: () => {
@@ -245,7 +245,7 @@ export class VehicleDealershipProvider {
 
             this.targetFactory.createForBoxZone(`auction_${name}`, auction.windows, [
                 {
-                    icon: 'c:dealership/bid',
+                    icon: 'dealership/bid',
                     label: 'Voir la vente',
                     category: 'citizen',
                     canInteract: () => true,

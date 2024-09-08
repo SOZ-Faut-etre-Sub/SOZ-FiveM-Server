@@ -31,17 +31,9 @@ export class TargetService {
         if (target.blackoutGlobal && !this.blackoutGlobalCheck()) return false;
         if (target.blackoutJob && !this.blackoutJobCheck()) return false;
         if (target.canInteract) {
-            try {
-                if (target.canInteract instanceof Promise) {
-                    if (!(await target.canInteract(entity))) {
-                        return false;
-                    }
-                }
+            const result = await target.canInteract(entity);
 
-                if (!target.canInteract(entity)) {
-                    return false;
-                }
-            } catch (e) {
+            if (!result) {
                 return false;
             }
         }

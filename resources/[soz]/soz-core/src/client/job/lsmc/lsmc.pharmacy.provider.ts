@@ -66,7 +66,7 @@ export class LSMCPharmacyProvider {
                 options: [
                     {
                         label: 'Liste des médicaments',
-                        icon: 'c:/ems/painkiller',
+                        icon: 'ems/painkiller',
                         category: 'citizen',
                         action: () => {
                             this.inventoryManager.openShopInventory(
@@ -78,7 +78,7 @@ export class LSMCPharmacyProvider {
                     },
                     {
                         label: 'Soins médicaux',
-                        icon: 'c:/ems/heal',
+                        icon: 'ems/heal',
                         category: 'citizen',
                         action: () => {
                             TriggerServerEvent(ServerEvent.LSMC_NPC_HEAL);
@@ -86,7 +86,7 @@ export class LSMCPharmacyProvider {
                     },
                     {
                         label: "Lever de l'ITT",
-                        icon: 'c:ems/Rehabiliter',
+                        icon: 'ems/Rehabiliter',
                         category: 'citizen',
                         canInteract: () => {
                             const player = this.playerService.getPlayer();

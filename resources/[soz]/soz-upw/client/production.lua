@@ -2,7 +2,7 @@ function CreateEnergyZone(identifier, data)
     data.options = {
         {
             label = "Collecter l'énergie",
-            icon = "c:upw/collecter",
+            icon = "upw/collecter",
             canInteract = function()
                 return OnDuty()
             end,
@@ -12,7 +12,7 @@ function CreateEnergyZone(identifier, data)
         },
         {
             label = "Taux de pollution",
-            icon = "c:upw/pollution",
+            icon = "upw/pollution",
             canInteract = function()
                 return OnDuty()
             end,
@@ -30,7 +30,7 @@ function CreateWasteZone(identifier, data)
     data.options = {
         {
             label = "Collecter les déchets",
-            icon = "c:upw/recyclage",
+            icon = "upw/recyclage",
             canInteract = function()
                 return OnDuty("garbage")
             end,

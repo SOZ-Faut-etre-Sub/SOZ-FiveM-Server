@@ -98,7 +98,7 @@ export const Halloween2023Scenario1: Story = {
             name: 'deadwhale',
             part: 2,
             label: 'Récolter',
-            icon: 'fas fa-search',
+            icon: 'global/search',
             ...new BoxZone([4768.34, -4725.53, 1.78], 3.6, 11.8, {
                 heading: 141.49,
                 minZ: 0.78,

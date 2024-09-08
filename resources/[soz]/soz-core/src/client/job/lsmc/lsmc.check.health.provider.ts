@@ -104,7 +104,7 @@ export class LSMCCheckHealthProvider {
             {
                 label: 'Prise de sang pour test',
                 color: 'lsmc',
-                icon: 'c:ems/take_blood',
+                icon: 'ems/take_blood',
                 job: 'lsmc',
                 category: 'society',
                 action: this.doBloodCheck.bind(this),
@@ -112,7 +112,7 @@ export class LSMCCheckHealthProvider {
             },
             {
                 label: 'Etat de santé',
-                icon: 'c:ems/health_state',
+                icon: 'ems/health_state',
                 color: 'lsmc',
                 job: 'lsmc',
                 category: 'society',
@@ -120,7 +120,7 @@ export class LSMCCheckHealthProvider {
             },
             {
                 label: 'Modifier la carte de santé',
-                icon: 'c:ems/health_card',
+                icon: 'ems/health_card',
                 color: 'lsmc',
                 job: 'lsmc',
                 category: 'society',
@@ -153,7 +153,7 @@ export class LSMCCheckHealthProvider {
             this.targetFactory.createForBoxZone('lsmc_analyze_' + index, zone, [
                 {
                     label: 'Analyse urinaire',
-                    icon: 'c:ems/urine_test',
+                    icon: 'ems/urine_test',
                     color: 'lsmc',
                     job: 'lsmc',
                     category: 'society',
@@ -164,7 +164,7 @@ export class LSMCCheckHealthProvider {
                 },
                 {
                     label: 'Analyse de sang',
-                    icon: 'c:ems/blood_test',
+                    icon: 'ems/blood_test',
                     color: 'lsmc',
                     job: 'lsmc',
                     category: 'society',

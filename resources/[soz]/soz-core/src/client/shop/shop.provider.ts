@@ -79,7 +79,7 @@ export class ShopProvider {
 
     public shopActions: TargetOption[] = [
         {
-            icon: 'fas fa-shopping-cart',
+            icon: 'magasin/cart',
             label: 'Accéder au magasin',
             category: 'citizen',
             canInteract: entity => {
@@ -93,7 +93,7 @@ export class ShopProvider {
             action: this.openShop.bind(this),
         },
         {
-            icon: 'fas fa-store',
+            icon: 'shop/store',
             label: 'Accéder au GunSmith',
             category: 'citizen',
             canInteract: entity => {
@@ -106,7 +106,7 @@ export class ShopProvider {
             action: () => TriggerEvent('soz-core:client:weapon:open-gunsmith'),
         },
         {
-            icon: 'c:stonk/collecter',
+            icon: 'stonk/collecter',
             label: 'Collecter',
             job: JobType.CashTransfer,
             category: 'society',
@@ -122,7 +122,7 @@ export class ShopProvider {
             },
         },
         {
-            icon: 'fas fa-store',
+            icon: 'shop/store',
             label: 'Vérifier le stock',
             category: 'citizen',
             canInteract: () => {
@@ -144,7 +144,7 @@ export class ShopProvider {
             },
         },
         {
-            icon: 'fa fa-shopping-basket',
+            icon: 'magasin/cart',
             label: "Accéder à l'entrepôt",
             category: 'citizen',
             canInteract: () => {
@@ -155,7 +155,7 @@ export class ShopProvider {
         },
         {
             label: 'Location de camion de déménagement',
-            icon: 'fas fa-truck',
+            icon: 'mechanic/truck',
             category: 'citizen',
             canInteract: () => {
                 return this.currentShop !== null && this.currentShopBrand === ShopBrand.Zkea;
@@ -165,7 +165,7 @@ export class ShopProvider {
             },
         },
         {
-            icon: 'c:mechanic/reparer',
+            icon: 'mechanic/reparer',
             label: 'Prix Pit Stop',
             category: 'citizen',
             canInteract: () => {
@@ -181,7 +181,7 @@ export class ShopProvider {
             },
         },
         {
-            icon: 'fas fa-store',
+            icon: 'shop/store',
             label: 'Améliorations',
             category: 'citizen',
             blackoutGlobal: true,
@@ -270,7 +270,7 @@ export class ShopProvider {
             [
                 {
                     label: 'Acheter un masque',
-                    icon: 'c:shop/mask',
+                    icon: 'shop/mask',
                     category: 'citizen',
                     blackoutGlobal: true,
                     action: () => {
@@ -279,7 +279,7 @@ export class ShopProvider {
                 },
                 {
                     label: 'Restock: Masques',
-                    icon: 'c:/ffs/restock',
+                    icon: 'ffs/restock',
                     color: JobType.Ffs,
                     job: JobType.Ffs,
                     blackoutGlobal: true,

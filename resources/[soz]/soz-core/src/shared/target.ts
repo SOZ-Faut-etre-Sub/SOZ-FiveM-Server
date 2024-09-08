@@ -7,6 +7,8 @@ export type TargetContext = {
 
 export type TargetOption = TargetContext & {
     label: string;
+    subLabel?: string;
+    icon?: string;
     category: 'citizen' | 'society' | 'criminal';
 
     item?: string;
@@ -18,6 +20,5 @@ export type TargetOption = TargetContext & {
     action?: (entity?: number) => void;
 
     // todo:
-    icon?: string;
     color?: string;
 };

@@ -47,7 +47,7 @@ export class StonkDeliveryProvider {
                 options: [
                     {
                         label: 'Récupérer un conteneur sécurisé',
-                        icon: 'c:/stonk/secure_container',
+                        icon: 'stonk/secure_container',
                         job: JobType.CashTransfer,
                         color: JobType.CashTransfer,
                         blackoutGlobal: true,
@@ -75,7 +75,7 @@ export class StonkDeliveryProvider {
 
         return {
             label: `Déposer ${acceptedItem.label}`,
-            icon: 'c:stonk/vendre',
+            icon: 'stonk/vendre',
             color: JobType.CashTransfer,
             job: JobType.CashTransfer,
             blackoutGlobal: true,

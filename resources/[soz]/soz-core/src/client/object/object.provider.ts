@@ -104,7 +104,7 @@ export class ObjectProvider {
             [
                 {
                     label: 'Démonter',
-                    icon: 'c:jobs/demonter',
+                    icon: 'jobs/demonter',
                     category: 'citizen',
                     canInteract: entity => {
                         const id = this.getIdFromEntity(entity);

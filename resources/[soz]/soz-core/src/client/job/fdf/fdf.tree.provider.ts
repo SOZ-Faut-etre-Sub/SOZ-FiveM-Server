@@ -40,7 +40,7 @@ export class FDFTreeProvider {
                 {
                     label: 'Tailler',
                     color: JobType.FDF,
-                    icon: 'c:fdf/shear',
+                    icon: 'fdf/shear',
                     blackoutJob: JobType.FDF,
                     blackoutGlobal: true,
                     job: JobType.FDF,
@@ -81,7 +81,7 @@ export class FDFTreeProvider {
                 {
                     label: 'Arroser',
                     color: JobType.FDF,
-                    icon: 'c:crimi/water',
+                    icon: 'crimi/water',
                     blackoutJob: JobType.FDF,
                     blackoutGlobal: true,
                     job: JobType.FDF,
@@ -139,7 +139,7 @@ export class FDFTreeProvider {
                 {
                     label: 'Récolter',
                     color: JobType.FDF,
-                    icon: 'c:fdf/harvest',
+                    icon: 'fdf/harvest',
                     blackoutJob: JobType.FDF,
                     blackoutGlobal: true,
                     job: JobType.FDF,
@@ -198,7 +198,7 @@ export class FDFTreeProvider {
                 {
                     label: 'Vérifier',
                     color: JobType.FDF,
-                    icon: 'c:crimi/time',
+                    icon: 'crimi/time',
                     blackoutJob: JobType.FDF,
                     blackoutGlobal: true,
                     job: JobType.FDF,

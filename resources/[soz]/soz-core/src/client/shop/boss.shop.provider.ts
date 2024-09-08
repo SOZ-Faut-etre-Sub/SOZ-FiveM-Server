@@ -46,7 +46,7 @@ export class BossShopProvider {
             const item = this.itemService.getItem(order.id);
             ret.push({
                 label: 'Commander un ' + item.label + ' (' + order.price + '$)',
-                icon: 'c:shop/' + order.id,
+                icon: 'shop/' + order.id,
                 job: shop.job,
                 blackoutGlobal: true,
                 category: 'society',
@@ -70,7 +70,7 @@ export class BossShopProvider {
                 [
                     {
                         label: 'Récupérer du matériel',
-                        icon: 'fas fa-briefcase',
+                        icon: 'shop/briefcase',
                         job: shop.job,
                         blackoutGlobal: true,
                         category: 'society',

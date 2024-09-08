@@ -97,7 +97,7 @@ export class FoodHuntProvider {
         this.targetFactory.createForModel(ANIMAL_ALLOWED_TO_HUNTS, [
             {
                 label: 'Dépecer',
-                icon: 'c:food/depecer',
+                icon: 'food/depecer',
                 blackoutGlobal: true,
                 blackoutJob: JobType.Food,
                 category: 'citizen',

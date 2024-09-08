@@ -55,7 +55,7 @@ export class PoliceVehicleProvider {
                 {
                     label: 'Immatriculation',
                     color: job,
-                    icon: 'c:police/immatriculation',
+                    icon: 'police/immatriculation',
                     job: job,
                     blackoutJob: job,
                     blackoutGlobal: true,
@@ -134,7 +134,7 @@ export class PoliceVehicleProvider {
                 {
                     label: 'Fouiller',
                     color: job,
-                    icon: 'c:police/fouiller_vehicle',
+                    icon: 'police/fouiller_vehicle',
                     job: job,
                     category: 'society',
                     canInteract: vehicle => {
@@ -182,7 +182,7 @@ export class PoliceVehicleProvider {
                 {
                     label: 'Ouvrir',
                     color: job,
-                    icon: 'c:police/forcer',
+                    icon: 'police/forcer',
                     job: job,
                     category: 'society',
                     action: async entity => {
@@ -214,7 +214,7 @@ export class PoliceVehicleProvider {
                     label: 'Rechercher des empreintes',
                     job: job,
                     item: 'fingerprint_collector',
-                    icon: 'c:police/fouiller',
+                    icon: 'police/fouiller',
                     color: job,
                     category: 'society',
                     canInteract: async entity => {
@@ -260,7 +260,7 @@ export class PoliceVehicleProvider {
                 {
                     label: 'Rechercher des traces de drogue',
                     job: job,
-                    icon: 'c:police/fouiller',
+                    icon: 'police/fouiller',
                     color: job,
                     category: 'society',
                     canInteract: async entity => {

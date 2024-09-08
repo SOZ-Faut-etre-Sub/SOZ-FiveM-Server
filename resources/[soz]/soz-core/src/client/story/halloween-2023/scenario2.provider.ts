@@ -87,7 +87,7 @@ export class Halloween2023Scenario2Provider {
                 options: [
                     {
                         label: 'Parler',
-                        icon: 'fas fa-comment',
+                        icon: 'global/comment',
                         category: 'citizen',
                         canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario2', 0),
                         action: async entity => {
@@ -113,7 +113,7 @@ export class Halloween2023Scenario2Provider {
                     ),
                     {
                         label: 'Donner',
-                        icon: 'c:pole/livrer',
+                        icon: 'pole/livrer',
                         item: 'halloween_alien_artifact',
                         category: 'citizen',
                         canInteract: () => {
@@ -160,7 +160,7 @@ export class Halloween2023Scenario2Provider {
                 options: [
                     {
                         label: 'Parler',
-                        icon: 'fas fa-comment',
+                        icon: 'global/comment',
                         category: 'citizen',
                         canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario2', 1),
                         action: async entity => {
@@ -200,7 +200,7 @@ export class Halloween2023Scenario2Provider {
                 options: [
                     {
                         label: 'Parler',
-                        icon: 'fas fa-comment',
+                        icon: 'global/comment',
                         category: 'citizen',
                         canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario2', 2),
                         action: async entity => {
@@ -226,7 +226,7 @@ export class Halloween2023Scenario2Provider {
                     ),
                     {
                         label: 'Donner',
-                        icon: 'c:pole/livrer',
+                        icon: 'pole/livrer',
                         category: 'citizen',
                         canInteract: () => {
                             if (!this.storyService.canInteractForPart('halloween2023', 'scenario2', 3)) {
@@ -272,7 +272,7 @@ export class Halloween2023Scenario2Provider {
                 options: [
                     {
                         label: 'Parler',
-                        icon: 'fas fa-comment',
+                        icon: 'global/comment',
                         category: 'citizen',
                         canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario2', 4),
                         action: async entity => {

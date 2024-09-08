@@ -44,7 +44,7 @@ export class DmcHarvestProvider {
                     [
                         {
                             label: 'Miner',
-                            icon: 'c:dmc/pickaxe',
+                            icon: 'dmc/pickaxe',
                             color: 'dmc',
                             job: JobType.DMC,
                             category: 'society',

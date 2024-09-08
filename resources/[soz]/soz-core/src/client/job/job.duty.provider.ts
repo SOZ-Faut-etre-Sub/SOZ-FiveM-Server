@@ -276,7 +276,7 @@ export class JobDutyProvider {
     getDutyZoneTarget(job: JobType): TargetOption[] {
         return [
             {
-                icon: 'fas fa-sign-in-alt',
+                icon: 'jobs/duty',
                 label: 'Prise de service',
                 category: 'society',
                 canInteract: () => {
@@ -288,7 +288,7 @@ export class JobDutyProvider {
                 },
             },
             {
-                icon: 'fas fa-sign-in-alt',
+                icon: 'jobs/duty',
                 label: 'Fin de service',
                 category: 'society',
                 action: () => {
@@ -297,7 +297,7 @@ export class JobDutyProvider {
                 job,
             },
             {
-                icon: 'fas fa-users',
+                icon: 'global/users',
                 label: 'Employé(e)s en service',
                 category: 'society',
                 canInteract: () => {
@@ -315,7 +315,7 @@ export class JobDutyProvider {
     getBunkerDutyZoneTarget(): TargetOption[] {
         return [
             {
-                icon: 'fas fa-sign-in-alt',
+                icon: 'jobs/duty',
                 label: 'Prise de service',
                 category: 'society',
                 canInteract: () => {

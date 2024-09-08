@@ -103,7 +103,7 @@ export class Halloween2022Scenario3Provider {
             [
                 {
                     label: 'Parler',
-                    icon: 'fas fa-comment',
+                    icon: 'global/comment',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario3', 0),
                     action: async () => {
@@ -115,7 +115,7 @@ export class Halloween2022Scenario3Provider {
                 },
                 {
                     label: 'Parler',
-                    icon: 'fas fa-comment',
+                    icon: 'global/comment',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario3', 5),
                     action: async () => {
@@ -172,7 +172,7 @@ export class Halloween2022Scenario3Provider {
             [
                 {
                     label: 'Parler',
-                    icon: 'fas fa-comment',
+                    icon: 'global/comment',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario3', 2),
                     action: async () => {
@@ -184,7 +184,7 @@ export class Halloween2022Scenario3Provider {
                 },
                 {
                     label: 'Parler',
-                    icon: 'fas fa-comment',
+                    icon: 'global/comment',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario3', 4),
                     action: async () => {
@@ -224,7 +224,7 @@ export class Halloween2022Scenario3Provider {
             [
                 {
                     label: 'Parler',
-                    icon: 'fas fa-comment',
+                    icon: 'global/comment',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario3', 3),
                     action: async () => {
@@ -259,7 +259,7 @@ export class Halloween2022Scenario3Provider {
             [
                 {
                     label: 'Entrer',
-                    icon: 'c:housing/enter',
+                    icon: 'housing/enter',
                     category: 'citizen',
                     action: async () => {
                         this.playerPositionProvider.teleportPlayerToPosition(Halloween2022Scenario3EnterBunker);
@@ -281,7 +281,7 @@ export class Halloween2022Scenario3Provider {
             [
                 {
                     label: 'Sortir',
-                    icon: 'c:housing/enter',
+                    icon: 'housing/enter',
                     category: 'citizen',
                     action: async () => {
                         this.playerPositionProvider.teleportPlayerToPosition(Halloween2022Scenario3ExitBunker);

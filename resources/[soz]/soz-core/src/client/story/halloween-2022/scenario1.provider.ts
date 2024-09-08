@@ -122,7 +122,7 @@ export class Halloween2022Scenario1Provider {
             [
                 {
                     label: 'Parler',
-                    icon: 'fas fa-comment',
+                    icon: 'global/comment',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario1', 0),
                     action: async () => {
@@ -134,7 +134,7 @@ export class Halloween2022Scenario1Provider {
                 },
                 {
                     label: 'Parler',
-                    icon: 'fas fa-comment',
+                    icon: 'global/comment',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario1', 2),
                     action: async () => {
@@ -289,7 +289,7 @@ export class Halloween2022Scenario1Provider {
     private interactionPedGang(part: number): TargetOption {
         return {
             label: 'Parler',
-            icon: 'fas fa-comment',
+            icon: 'global/comment',
             category: 'citizen',
             canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario1', part),
             action: async () => {
@@ -336,7 +336,7 @@ export class Halloween2022Scenario1Provider {
     private interactionPedPolice(part: number): TargetOption {
         return {
             label: 'Parler',
-            icon: 'fas fa-comment',
+            icon: 'global/comment',
             category: 'citizen',
             canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario1', part),
             action: async () => {
