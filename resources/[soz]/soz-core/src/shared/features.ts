@@ -109,9 +109,9 @@ const FeatureConfig: Record<Feature, { [P in Environment]?: boolean }> = {
         test: true,
     },
     [Feature.SummerHeat]: {
-        production: true,
-        development: true,
-        test: true,
+        production: false,
+        development: false,
+        test: false,
     },
     [Feature.Summer]: {
         production: true,

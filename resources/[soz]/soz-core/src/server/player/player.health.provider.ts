@@ -83,7 +83,7 @@ export class PlayerHealthProvider {
         let thirstDiff = THIRST_RATE;
 
         if (isFeatureEnabled(Feature.SummerHeat)) {
-            hungerDiff *= 1.2;
+            thirstDiff *= 1.2;
         }
 
         if (this.pollution.getPollutionLevel() == PollutionLevel.High) {
