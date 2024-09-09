@@ -476,7 +476,7 @@ QBShared.Items = {
     },
     ['weapon_gadgetpistol'] = {
         ['name'] = 'weapon_gadgetpistol',
-        ['label'] = 'Pistolet Perico',
+        ['label'] = 'Pistolet Secret',
         ['weight'] = 1500,
         ['type'] = 'weapon',
         ['ammotype'] = 'AMMO_PISTOL',
@@ -1055,7 +1055,7 @@ QBShared.Items = {
     },
     ['weapon_emplauncher'] = {
         ['name'] = 'weapon_emplauncher',
-        ['label'] = 'Lanceur EMP',
+        ['label'] = 'Lanceur IEM',
         ['weight'] = 6000,
         ['type'] = 'weapon',
         ['ammotype'] = 'AMMO_EMP',
@@ -10145,6 +10145,7 @@ QBShared.Items = {
         ['label'] = "Boite de pièces véhicules",
         ['weight'] = 5000,
         ['useable'] = true,
+        ['usableLabel'] = 'Localiser',
         ['type'] = 'item_illegal',
         ['storageItemType'] = 'veh_biz_piece',
         ['storageItemWeight'] = 20000,
@@ -10408,7 +10409,7 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['carrybox'] = 'prop_drug_package',
         ['description'] = "Ça aurait été très utile pendant la prohibition.",
-        ['illustrator'] = '.Sniteur'
+        ['illustrator'] = '.Ostinato'
     },
     ['smuggling_flower_zoublon'] = {
         ['name'] = 'smuggling_flower_zoublon',
@@ -10468,7 +10469,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['combinable'] = nil,
         ['description'] = "Brassée au coeur des montagnes froides, capable de réchauffer n'importe qui de l'intérieur.",
-        ['illustrator'] = '.Sniteur'
+        ['illustrator'] = '.BaZ'
     },
     ['smuggling_zisama_zoublon'] = {
         ['name'] = 'smuggling_zisama_zoublon',
@@ -10480,7 +10481,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['combinable'] = nil,
         ['description'] = "Brassée sous la fraîcheur des arbres, son goût boisé rafraîchira les bouches les plus épicées.",
-        ['illustrator'] = '.Sniteur'
+        ['illustrator'] = '.BaZ'
     },
     ['smuggling_zibwasser_pack_zoublon'] = {
         ['name'] = 'smuggling_zibwasser_pack_zoublon',
@@ -10492,7 +10493,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['combinable'] = nil,
         ['description'] = " Permet de se désaltérer pour moins cher que de l'eau, mais attention aux effets secondaires.",
-        ['illustrator'] = '.Sniteur'
+        ['illustrator'] = '.Ostinato'
     },
     ['smuggling_zisama_pack_zoublon'] = {
         ['name'] = 'smuggling_zisama_pack_zoublon',
@@ -10504,7 +10505,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['combinable'] = nil,
         ['description'] = "Suffisant pour la consommation journalière d'un citoyen du nord de l'île.",
-        ['illustrator'] = '.Sniteur'
+        ['illustrator'] = '.BaZ'
     },
     ['smuggling_zibwasser_barrel_zoublon'] = {
         ['name'] = 'smuggling_zibwasser_barrel_zoublon',
@@ -10516,7 +10517,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['combinable'] = nil,
         ['description'] = "Il ne vaudrait mieux pas tout boire !",
-        ['illustrator'] = '.Sniteur'
+        ['illustrator'] = '.BaZ'
     },
     ['smuggling_zisama_barrel_zoublon'] = {
         ['name'] = 'smuggling_zisama_barrel_zoublon',
@@ -10528,7 +10529,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['combinable'] = nil,
         ['description'] = "De quoi satisfaire la soif d'un régiment entier.",
-        ['illustrator'] = '.Sniteur'
+        ['illustrator'] = '.BaZ'
     },
     ['smuggling_secret_stash_small'] = {
         ['name'] = 'smuggling_secret_stash_small',
@@ -10611,7 +10612,7 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['unique'] = false,
         ['combinable'] = nil,
-        ['description'] = "",
+        ['description'] = "Ajouter une touche de couleur à votre vie morose.",
         ['illustrator'] = '.Sniteur'
     },
     ['smuggling_rock_piercer'] = {
@@ -10624,7 +10625,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['combinable'] = nil,
         ['description'] = "Pour ceux qui veulent creuser leur propre chemin vers des choses qui brilles.",
-        ['illustrator'] = '.Sniteur'
+        ['illustrator'] = '.BaZ'
     },
     ['smuggling_ore_export'] = {
         ['name'] = 'smuggling_ore_export',
@@ -10652,7 +10653,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['combinable'] = nil,
         ['description'] = "Un dispositif explosif spécialisé conçu pour des explosions contrôlé, enfin normalement...",
-        ['illustrator'] = '.Sniteur'
+        ['illustrator'] = '.BaZ'
     },
     ['smuggling_electronic_export'] = {
         ['name'] = 'smuggling_electronic_export',
@@ -10716,7 +10717,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['combinable'] = nil,
         ['description'] = "Un composant électronique extrêmement rare et précieux, potentiellement unique en son genre !",
-        ['illustrator'] = '.Sniteur'
+        ['illustrator'] = '.BaZ'
     },
     ['smuggling_3d_printer'] = {
         ['name'] = 'smuggling_3d_printer',
@@ -11156,7 +11157,7 @@ QBShared.Items = {
         ['name'] = 'cyber_crypto_wallet',
         ['label'] = "Portefeuille Crypto",
         ['weight'] = 500,
-        ['useable'] = true,
+        ['useable'] = false,
         ['type'] = 'item_illegal',
         ['shouldClose'] = false,
         ['unique'] = false,

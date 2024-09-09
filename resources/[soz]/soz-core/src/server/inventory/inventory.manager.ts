@@ -62,6 +62,18 @@ export class InventoryManager {
         }
     }
 
+    public getStoredItems(metadata: InventoryItemMetadata): InventoryItem[] {
+        if (!metadata?.storageElements) {
+            return null;
+        }
+
+        if (Array.isArray(metadata?.storageElements)) {
+            return metadata?.storageElements;
+        } else {
+            return Object.keys(metadata?.storageElements).map(key => metadata?.storageElements[key]);
+        }
+    }
+
     // deprecated: Use findItem instead
     public getFirstItemInventory(source: number, itemId: string): InventoryItem | null {
         let inventoryItem = null;

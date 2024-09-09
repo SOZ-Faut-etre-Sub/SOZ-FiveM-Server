@@ -25,7 +25,7 @@ export type InventoryItem = {
     weight: number;
     slot: number;
     useable: boolean;
-    usableLabel?: string;  // added by inventory on the fly
+    usableLabel?: string;
     giveLabel?: string; // added by inventory on the fly
     unique: boolean;
     type: ItemType;

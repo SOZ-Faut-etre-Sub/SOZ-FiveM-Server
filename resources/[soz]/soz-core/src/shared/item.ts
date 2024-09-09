@@ -299,7 +299,7 @@ export type InventoryItemMetadata = {
     photosInDetectiveBoard?: string[];
     photoUrl?: string;
     evidenceInfos?: EvidenceMetadata;
-    storageElements?: InventoryItem[];
+    storageElements?: Record<string, InventoryItem> | InventoryItem[];
     keyid?: string;
     printed?: boolean;
     value?: number;

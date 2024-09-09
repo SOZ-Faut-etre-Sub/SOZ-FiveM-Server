@@ -118,6 +118,7 @@ function Inventory.Load(id, invType, owner, slots, maxWeight)
                     combinable = item.combinable,
                     illustrator = item.illustrator,
                     throwable = item.throwable,
+                    usableLabel = item.usableLabel,
                 }
             end
         end

@@ -275,6 +275,7 @@ export class AnimationFactory {
             await wait(prop.fx.delay);
         }
         let index = 0;
+        await this.resourceLoader.loadPtfxAsset(prop.fx.dictionary);
         do {
             UseParticleFxAsset(prop.fx.dictionary);
             StartParticleFxLoopedOnEntity(
@@ -305,6 +306,7 @@ export class AnimationFactory {
                 await wait(prop.fx.duration[index++ % prop.fx.duration.length]);
             }
         } while (prop.fx.manualLoop && DoesEntityExist(entity));
+        this.resourceLoader.unloadPtfxAsset(prop.fx.dictionary);
     }
 
     public createScenario(scenario: Scenario, options: Partial<PlayOptions> = {}): AnimationRunner {

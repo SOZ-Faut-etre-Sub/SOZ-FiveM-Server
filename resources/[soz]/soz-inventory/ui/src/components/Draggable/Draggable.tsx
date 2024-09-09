@@ -225,9 +225,8 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
             secondaryDescription += `</div>`
         }
 
-        if((item?.storageItemType === 'smuggling_ore' || item?.storageItemType === 'smuggling_electronic') && item?.metadata?.storageElements?.length){
-            let totalElementValue = 0
-            item?.metadata?.storageElements.map(element => totalElementValue += element?.metadata?.value ? element?.metadata?.value * element?.amount : 0)
+        if((item?.storageItemType === 'smuggling_ore' || item?.storageItemType === 'smuggling_electronic')){
+            let totalElementValue = item?.metadata?.value ?? 0 * item?.amount
             secondaryDescription += '<div style="display:flex;flex-direction:column;margin-top:0.5rem;align-items:flex-end">'
             secondaryDescription += `<span><b>Valeur estimée :</b> ${totalElementValue} $ </span>`
             secondaryDescription += `</div>`
