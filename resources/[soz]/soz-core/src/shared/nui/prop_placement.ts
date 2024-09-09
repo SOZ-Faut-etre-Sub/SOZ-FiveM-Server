@@ -65,6 +65,12 @@ export type PlacementPropList = Record<string, PlacementProp[]>;
 
 export type PlacementHousingPropList = Record<string, HousingProp[]>;
 
+export const NOT_ALLOWED_PLACEMENT_PROPS: string[] = [
+    'soz_zevent_plaque',
+    'soz_event_plaque_jmadison',
+    'soz_zevent_zplace',
+];
+
 export const PLACEMENT_PROP_LIST: PlacementPropList = {
     ['Distributeur & Arcade']: [
         {

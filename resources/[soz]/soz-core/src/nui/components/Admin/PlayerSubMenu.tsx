@@ -10,6 +10,7 @@ import { useNuiEvent } from '../../hook/nui';
 import {
     MenuContent,
     MenuItemButton,
+    MenuItemCheckbox,
     MenuItemSelect,
     MenuItemSelectOption,
     MenuItemSubMenuLink,
@@ -378,6 +379,30 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                                 </MenuItemSelectOption>
                             ))}
                         </MenuItemSelect>
+                        <MenuItemCheckbox
+                            disabled={!isAdminOrStaff}
+                            checked={player.plate}
+                            onChange={async value => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerSetPlate, { type: 'plate', player, value });
+                                player.plate = value;
+                            }}
+                        >
+                            Plaque ZEVENT 2024
+                        </MenuItemCheckbox>
+                        <MenuItemCheckbox
+                            disabled={!isAdminOrStaff}
+                            checked={player.specialPlate}
+                            onChange={async value => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerSetPlate, {
+                                    type: 'special_plate',
+                                    player,
+                                    value,
+                                });
+                                player.specialPlate = value;
+                            }}
+                        >
+                            Plaque Special ZEVENT 2024 (J.Madison)
+                        </MenuItemCheckbox>
                         <MenuItemButton
                             disabled={!isAdminOrStaff}
                             onConfirm={async () => {

@@ -234,7 +234,8 @@ type ZkeaFournitureType =
     | 'Vacances à la Plage'
     | 'Boîtes & Caisses'
     | 'Construction & Bâtiments'
-    | 'Bijoux & Accessoires';
+    | 'Bijoux & Accessoires'
+    | 'Exclusif';
 
 export type ZkeaFournitureMetadata = {
     type: ZkeaFournitureType;

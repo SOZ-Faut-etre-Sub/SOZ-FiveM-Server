@@ -9,7 +9,7 @@ import { uuidv4, wait } from '@public/core/utils';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import { getChunkId } from '@public/shared/grid';
 import { MenuType } from '@public/shared/nui/menu';
-import { PLACEMENT_PROP_LIST, PlacementProp } from '@public/shared/nui/prop_placement';
+import { NOT_ALLOWED_PLACEMENT_PROPS, PLACEMENT_PROP_LIST, PlacementProp } from '@public/shared/nui/prop_placement';
 import {
     CollectionRadius,
     DebugProp,
@@ -20,6 +20,7 @@ import {
     WorldObject,
     WorldPlacedProp,
 } from '@public/shared/object';
+import { isStaff } from '@public/shared/player';
 import { getDistance, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { Err, Ok } from '@public/shared/result';
 import { RpcServerEvent } from '@public/shared/rpc';
@@ -382,7 +383,13 @@ export class PropPlacementProvider {
             const propModel = await this.inputService.askInput({
                 title: 'Modèle du prop',
             });
-            if (!propModel || !IsModelValid(propModel)) {
+
+            const player = this.playerService.getPlayer();
+            if (
+                !propModel ||
+                !IsModelValid(propModel) ||
+                (!isStaff(player) && NOT_ALLOWED_PLACEMENT_PROPS.includes(propModel))
+            ) {
                 this.notifier.notify('Modèle invalide', 'error');
                 return Err(false);
             }

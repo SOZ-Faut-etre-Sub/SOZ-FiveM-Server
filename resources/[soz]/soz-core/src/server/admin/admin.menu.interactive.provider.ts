@@ -38,6 +38,8 @@ export class AdminMenuInteractiveProvider {
                 rpFullName: `${playerData.charinfo.firstname} ${playerData.charinfo.lastname}`,
                 injuries: playerData.metadata.injuries_count,
                 partyMember: playerData.partyMember,
+                plate: playerData.metadata.plate,
+                specialPlate: playerData.metadata.special_plate,
             });
         }
         return players;
@@ -65,6 +67,8 @@ export class AdminMenuInteractiveProvider {
                 ped: ped,
                 injuries: playerData.metadata.injuries_count,
                 partyMember: playerData.partyMember,
+                plate: playerData.metadata.plate,
+                specialPlate: playerData.metadata.special_plate,
             });
         }
         return players;

@@ -99,6 +99,7 @@ export enum NuiEvent {
     AdminMenuCharacterCreateNew = 'soz-core:client:admin:character:create-new',
     AdminMenuCharacterSwitch = 'soz-core:client:admin:character:switch',
     AdminMenuPlayerSetVoipDebug = 'soz-core:nui:admin:player:set-voip-debug',
+    AdminMenuPlayerSetPlate = 'soz-core:nui:admin:player:set-plate',
     AdminMenuMeteorSiren = 'soz-core:nui:admin:meteor:siren',
     AdminMenuMeteorActivate = 'soz-core:nui:admin:meteor:activate',
     AdminMenuMeteorChronosMusic = 'soz-core:nui:admin:meteor:chonos-music',

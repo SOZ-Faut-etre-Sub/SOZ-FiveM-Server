@@ -4,6 +4,7 @@ import { Vector4 } from '@public/shared/polyzone/vector';
 export type ZkeaFournitureItem = ZkeaFournitureMetadata & {
     price: number;
     collision: boolean;
+    notBuyable?: boolean;
 };
 
 export type ZkeaFournitureItemList = Record<string, ZkeaFournitureItem>;
@@ -31,6 +32,9 @@ export const MuleRentDeposite = 1000;
 export const ZkeaRentVehicleType = 'mule3';
 
 export const ZkeaBaseFourntiure = ['v_ret_ml_fridge02', 'p_v_43_safe_s', 'prop_devin_box_closed', 'prop_rub_cabinet01'];
+
+export const ZkeaPlateModel = 'soz_zevent_plaque';
+export const ZkeaSpecialPlateModel = 'soz_zevent_plaque_jmadison';
 
 export const ZkeaFourniture: ZkeaFournitureItemList = {
     prop_devin_box_closed: {
@@ -20969,6 +20973,22 @@ export const ZkeaFourniture: ZkeaFournitureItemList = {
         model: 'xm_prop_lab_barrier01',
         price: 120,
         collision: true,
+    },
+    [ZkeaPlateModel]: {
+        type: 'Exclusif',
+        name: 'Plaquette ZEVENT 2024',
+        model: ZkeaPlateModel,
+        price: 0,
+        collision: true,
+        notBuyable: true,
+    },
+    [ZkeaSpecialPlateModel]: {
+        type: 'Exclusif',
+        name: 'Plaquette ZEVENT 2024 June Madison',
+        model: ZkeaSpecialPlateModel,
+        price: 0,
+        collision: true,
+        notBuyable: true,
     },
 };
 

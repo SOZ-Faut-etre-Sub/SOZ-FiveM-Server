@@ -350,6 +350,8 @@ export type PlayerMetadata = PlayerHealthBook & {
     scuba: boolean;
     health_book_update_date: number | null;
     plaster: PlasterLocation[];
+    plate?: boolean;
+    special_plate?: boolean;
 };
 
 export const isAdmin = (player: PlayerData) => {
