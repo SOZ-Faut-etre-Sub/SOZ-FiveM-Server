@@ -90,13 +90,13 @@ export const TargetOverlay: FunctionComponent = () => {
                     <img
                         className="absolute inset-0 size-10 opacity-50"
                         src="/public/images/hud/target.webp"
-                        alt="btarget"
+                        alt="target"
                     />
                 )}
             </div>
 
             {targetFound && citizenActions.length > 0 && (
-                <div className="absolute top-[30vh] left-[53vw] w-[15vw] max-h-[65vh] p-5">
+                <div className="absolute top-[30vh] left-[53vw] min-w-[15vw] max-h-[65vh] p-5">
                     <h2 className="flex items-center gap-2 text-white uppercase drop-shadow-bg">
                         <div ref={targetCitizen} className="bg-white h-1 w-4 rounded-full" /> Actions
                     </h2>
@@ -106,7 +106,7 @@ export const TargetOverlay: FunctionComponent = () => {
 
             {targetFound && (criminalActions.length > 0 || societyActions.length > 0) && (
                 <div
-                    className={cn('absolute right-[55vw] w-[15vw] max-h-[65vh] space-y-10 p-5', {
+                    className={cn('absolute right-[55vw] min-w-[15vw] max-h-[65vh] space-y-10 p-5', {
                         'top-[20vh]': criminalActions.length > 0 && societyActions.length > 0,
                         'top-[30vh]':
                             (criminalActions.length > 0 && societyActions.length === 0) ||

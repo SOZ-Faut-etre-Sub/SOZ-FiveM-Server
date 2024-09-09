@@ -242,13 +242,11 @@ export class VehicleFuelProvider {
                     }
 
                     const player = this.playerService.getPlayer();
-
                     if (!player) {
                         return false;
                     }
 
                     const station = this.fuelStationRepository.getStationForEntity(entity);
-
                     if (!station) {
                         return false;
                     }
@@ -263,7 +261,8 @@ export class VehicleFuelProvider {
             },
             {
                 icon: 'fuel/pistolet',
-                label: 'Prendre le pistolet ' + '($' + this.publicOilStationPrice.toFixed(2) + '/L)',
+                label: 'Prendre le pistolet',
+                subLabel: `$${this.publicOilStationPrice.toFixed(2)}/L`,
                 category: 'citizen',
                 action: (entity: number) => {
                     this.toggleStationPistol(entity);
@@ -274,13 +273,11 @@ export class VehicleFuelProvider {
                     }
 
                     const player = this.playerService.getPlayer();
-
                     if (!player) {
                         return false;
                     }
 
                     const station = this.fuelStationRepository.getStationForEntity(entity);
-
                     if (!station) {
                         return false;
                     }
@@ -295,7 +292,8 @@ export class VehicleFuelProvider {
             },
             {
                 icon: 'fuel/pistolet',
-                label: 'Prendre le pistolet ' + '($' + this.publicKeroseneStationPrice.toFixed(2) + '/L)',
+                label: 'Prendre le pistolet',
+                subLabel: `$${this.publicKeroseneStationPrice.toFixed(2)}/L`,
                 category: 'citizen',
                 action: (entity: number) => {
                     this.toggleStationPistol(entity);
@@ -306,13 +304,11 @@ export class VehicleFuelProvider {
                     }
 
                     const player = this.playerService.getPlayer();
-
                     if (!player) {
                         return false;
                     }
 
                     const station = this.fuelStationRepository.getStationForEntity(entity);
-
                     if (!station) {
                         return false;
                     }

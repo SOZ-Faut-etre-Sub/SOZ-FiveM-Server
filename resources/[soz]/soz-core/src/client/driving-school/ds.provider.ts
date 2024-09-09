@@ -109,7 +109,8 @@ export class DrivingSchoolProvider {
             const price = this.taxRepository.getPriceWithTax(license.price, TaxType.VEHICLE);
 
             targetOptions.push({
-                label: `${license.label} ($${price})`,
+                label: `${license.label}`,
+                subLabel: `$${price}`,
                 icon: license.icon,
                 blackoutGlobal: true,
                 category: 'citizen',

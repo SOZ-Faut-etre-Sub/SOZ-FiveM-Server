@@ -65,11 +65,11 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
 
             <div
                 className={cn(
-                    'absolute h-full w-full transition-[border] duration-300 border-transparent z-10',
+                    'absolute h-full w-full transition-opacity duration-300 border-transparent z-10',
                     borderClassName,
                     {
-                        'border-2': !disableBorder,
-                        'border-0 group-hover:border-2': showBorderOnHover,
+                        'border-2': !disableBorder || showBorderOnHover,
+                        'opacity-0 group-hover:opacity-100': showBorderOnHover,
                     }
                 )}
                 style={{
