@@ -46,7 +46,6 @@ export class HudWeaponProvider {
         const maxAmmo = item.metadata.ammo;
 
         this._haveWeapon = true;
-
         this.nuiDispatch.dispatch('hud', 'UpdateWeaponAmmo', {
             hasWeapon: maxAmmo !== undefined,
             ammo,

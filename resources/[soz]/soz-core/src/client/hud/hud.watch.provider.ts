@@ -43,7 +43,7 @@ export class HudWatchProvider {
 
     @PlayerUpdate()
     async onPlayerUpdate(): Promise<void> {
-        this._haveWatch = this.inventoryManager.hasEnoughItem('watch', 1, true);
+        this._haveWatch = this.inventoryManager.hasEnoughItem('smartwatchuiwi', 1, true);
         this.nuiDispatch.dispatch('hud', 'UpdateHasWatch', this._haveWatch);
     }
 

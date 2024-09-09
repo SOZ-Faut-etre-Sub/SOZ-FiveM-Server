@@ -35,7 +35,7 @@ export const WeaponAndVoipInterface: FunctionComponent = () => {
                 top: '150vh',
             },
             to: {
-                top: `${(minimap.bottom - 0.035) * 100}vh`,
+                top: `${(minimap.bottom + (ammo.hasWeapon ? -0.035 : 0.005)) * 100}vh`,
                 right: `${(minimap.left + 0.005) * 100}vw`,
             },
         }),
