@@ -147,7 +147,6 @@ export class ProgressService {
 
             this.animationRunner.then((stopReason: AnimationStopReason) => {
                 if (stopReason !== AnimationStopReason.Finished) {
-                    console.trace('animation stop reason', stopReason);
                     this.cancel();
                 }
             });
