@@ -15,7 +15,7 @@ export class ItemHudProvider {
 
     @Once()
     public onStart() {
-        this.item.setItemUseCallback('watch', (source: number) => {
+        this.item.setItemUseCallback('smartwatchuiwi', (source: number) => {
             TriggerClientEvent(ClientEvent.ITEM_WATCH_USE, source);
         });
 
