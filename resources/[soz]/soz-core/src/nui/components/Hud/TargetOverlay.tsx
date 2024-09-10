@@ -128,8 +128,8 @@ export const TargetOverlay: FunctionComponent = () => {
 
                     {societyActions.length > 0 && (
                         <div>
-                            <h2 className="relative -right-10 flex items-center justify-end gap-2 text-blue-600 uppercase drop-shadow-bg">
-                                Entreprise <div ref={targetSociety} className="bg-blue-600 h-1 w-4 rounded-full" />
+                            <h2 className="relative -right-10 flex items-center justify-end gap-2 text-blue-500 uppercase drop-shadow-bg">
+                                Entreprise <div ref={targetSociety} className="bg-blue-500 h-1 w-4 rounded-full" />
                             </h2>
                             <TargetOptions
                                 targets={societyActions}
@@ -164,7 +164,7 @@ export const TargetOverlay: FunctionComponent = () => {
 
                     {societyActions.length > 0 && (
                         <TargetConnector
-                            className="text-blue-600"
+                            className="text-blue-500"
                             container={container}
                             origin={origin}
                             target={targetSociety}

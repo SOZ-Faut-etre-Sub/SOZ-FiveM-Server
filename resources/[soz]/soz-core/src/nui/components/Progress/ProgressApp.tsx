@@ -86,7 +86,7 @@ export const ProgressApp: FunctionComponent = () => {
 
             <div className="flex items-center mx-auto gap-2">
                 <GlassMorphismContainer
-                    className="flex gap-10 px-5 w-fit"
+                    className="flex gap-10 px-5 py-1 w-fit"
                     borderClassName="rounded-full"
                     borderColor={progress?.color}
                 >
