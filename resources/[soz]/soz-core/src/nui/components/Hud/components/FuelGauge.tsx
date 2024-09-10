@@ -10,7 +10,7 @@ export const FuelGauge: FunctionComponent<{ value: number; fuelType: string; veh
 }) => {
     const maxFuel = getDefaultVehicleCondition().fuelLevel * (VehicleClassFuelStorageMultiplier[vehCategory] || 1.0);
 
-    let gaugeColor = '#92212B';
+    let gaugeColor = '#F39C12';
 
     if (fuelType === 'electric') {
         gaugeColor = '#00E949';
