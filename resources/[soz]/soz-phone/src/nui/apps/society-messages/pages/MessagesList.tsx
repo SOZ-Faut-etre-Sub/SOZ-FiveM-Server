@@ -10,7 +10,7 @@ import { SocietyEvents, SocietyMessage } from '@typings/society';
 import { Button } from '@ui/old_components/Button';
 import { fetchNui } from '@utils/fetchNui';
 import cn from 'classnames';
-import React, { CSSProperties, FunctionComponent, useEffect, useRef } from 'react';
+import React, { CSSProperties, FunctionComponent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AutoSizer, CellMeasurer, CellMeasurerCache, List } from 'react-virtualized';
 import { MeasuredCellParent } from 'react-virtualized/dist/es/CellMeasurer';
@@ -26,8 +26,6 @@ import { alerts } from '../utils/constants';
 
 const MessagesList = (): any => {
     const [selected, setSelected] = React.useState<number>(1);
-
-    const ref = useRef(null);
     const config = useConfig();
     const { initializeCall } = useCall();
     const navigate = useNavigate();
@@ -77,18 +75,15 @@ const MessagesList = (): any => {
         removeNotification();
     }, []);
 
-    useEffect(() => {
-        // scroll to top when changing tab
-        document.getElementById('messages-list').scrollTop = 0;
-    }, [selected]);
-    const messagesToRender = societyMessages.filter(message => {
-        if (!isFDOPlayer) return true;
-        return selected === 1
-            ? alerts.includes(message.info?.type)
-            : selected === 2
-            ? !alerts.includes(message.info?.type)
-            : true;
-    });
+    const messagesToRender = isFDOPlayer()
+        ? societyMessages.filter(message => {
+              return selected === 1
+                  ? alerts.includes(message.info?.type)
+                  : selected === 2
+                  ? !alerts.includes(message.info?.type)
+                  : true;
+          })
+        : societyMessages;
 
     messagesToRender.sort((a, b) => {
         return b.createdAt - a.createdAt;
@@ -100,9 +95,9 @@ const MessagesList = (): any => {
     });
 
     return (
-        <>
+        <div className="h-full pb-[1.5rem]">
             {isFDOPlayer() && (
-                <div className="flex justify-around gap-2 rounded-md mt-2">
+                <div className="flex justify-around gap-2 rounded-md">
                     <button
                         className={cn(
                             {
@@ -146,11 +141,9 @@ const MessagesList = (): any => {
                 <AutoSizer>
                     {({ width, height }) => (
                         <List
-                            id="messages-list"
                             rowCount={messagesToRender.length}
                             rowRenderer={({ index, parent, style }) => {
                                 const message = messagesToRender[index];
-
                                 if (!message) {
                                     return null;
                                 }
@@ -172,7 +165,7 @@ const MessagesList = (): any => {
                                     />
                                 );
                             }}
-                            ref={ref}
+                            scrollToIndex={0}
                             width={width}
                             height={height}
                             deferredMeasurementCache={cache}
@@ -182,7 +175,7 @@ const MessagesList = (): any => {
                     )}
                 </AutoSizer>
             </ul>
-        </>
+        </div>
     );
 };
 

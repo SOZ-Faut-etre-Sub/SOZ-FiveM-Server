@@ -50,6 +50,24 @@ export interface SocietyMessage {
     info?: SocietyMessageInfo;
 }
 
+export interface DBSocietyMessage {
+    id: number;
+    conversation_id: string;
+    source_phone: string;
+    message: string;
+    htmlMessage?: string;
+    position: string;
+    isTaken: boolean;
+    takenBy: string | null;
+    takenByUsername: string | null;
+    isDone: boolean;
+    createdAt: number;
+    updatedAt: number;
+    muted?: boolean;
+    info?: SocietyMessageInfo;
+    type?: string;
+}
+
 export enum SocietiesDatabaseLimits {
     message = 255,
 }
