@@ -19,7 +19,7 @@ export class HudWeaponProvider {
 
     private _haveWeapon = false;
 
-    @Tick(500)
+    @Tick(200)
     async updateWeaponHud() {
         const player = PlayerPedId();
 
@@ -40,16 +40,16 @@ export class HudWeaponProvider {
             return;
         }
 
-        const item = this.inventoryManager.findItem(item => item.type === 'weapon' && item.slot === weapon.slot);
-
         const ammo = GetAmmoInClip(player, weapon.name)[1] as number;
-        const maxAmmo = item.metadata.ammo;
+        const maxAmmo = GetAmmoInPedWeapon(player, weapon.name);
+
+        if (ammo === 0) return;
 
         this._haveWeapon = true;
         this.nuiDispatch.dispatch('hud', 'UpdateWeaponAmmo', {
             hasWeapon: maxAmmo !== undefined,
             ammo,
-            maxAmmo,
+            maxAmmo: Math.max(0, maxAmmo - ammo),
         });
     }
 }
