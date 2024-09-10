@@ -258,9 +258,11 @@ class _SocietyService {
                 societyMessage.source_phone = '';
             }
 
+            societyMessage.info = { type: societyMessage?.type ?? '' };
+
             const players = await PlayerService.getPlayersFromSocietyNumber(identifier);
             players.forEach(player => {
-                emitNet(SocietyEvents.UPDATE_SOCIETY_MESSAGE_SUCCESS, player.source, societyMessage);
+                emitNet(SocietyEvents.UPDATE_SOCIETY_MESSAGE_SUCCESS, player.source, societyMessage as SocietyMessage);
             });
         } catch (e) {
             societiesLogger.error(`Error in updateSocietyMessage, ${e.toString()}`);
@@ -281,6 +283,7 @@ class _SocietyService {
                 status: 'ok',
                 data: messages.map(m => ({
                     ...m,
+                    info: { type: m.type ?? '' },
                     source_phone: m.source_phone.includes('#') ? '' : m.source_phone,
                 })),
             });

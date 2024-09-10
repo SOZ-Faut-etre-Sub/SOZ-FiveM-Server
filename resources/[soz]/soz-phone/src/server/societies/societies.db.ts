@@ -1,10 +1,12 @@
-import { DBSocietyUpdate, PreDBSociety, SocietyMessage } from '../../../typings/society';
+import { DBSocietyMessage, DBSocietyUpdate, PreDBSociety } from '../../../typings/society';
 
 export class _SocietiesDB {
-    async addSociety(identifier: string, { number, message, pedPosition }: PreDBSociety): Promise<number> {
+    async addSociety(identifier: string, { number, message, pedPosition, info }: PreDBSociety): Promise<number> {
+        const type = info?.type ?? null;
+
         return await exports.oxmysql.insert_async(
-            `INSERT INTO phone_society_messages (conversation_id, source_phone, message, position) VALUES (?, ?, ?, ?)`,
-            [number, identifier, message, pedPosition]
+            `INSERT INTO phone_society_messages (conversation_id, source_phone, message, position, type) VALUES (?, ?, ?, ?, ?)`,
+            [number, identifier, message, pedPosition, type]
         );
     }
 
@@ -17,14 +19,14 @@ export class _SocietiesDB {
         );
     }
 
-    async getMessage(id: number): Promise<SocietyMessage> {
+    async getMessage(id: number): Promise<DBSocietyMessage> {
         return await exports.oxmysql.single_async(
             `SELECT *, unix_timestamp(createdAt)*1000 as createdAt, unix_timestamp(updatedAt)*1000 as updatedAt FROM phone_society_messages WHERE id = ?`,
             [id]
         );
     }
 
-    async getMessages(identifier: string): Promise<SocietyMessage[]> {
+    async getMessages(identifier: string): Promise<DBSocietyMessage[]> {
         return await exports.oxmysql.query_async(
             `SELECT *, unix_timestamp(createdAt)*1000 as createdAt, unix_timestamp(updatedAt)*1000 as updatedAt FROM phone_society_messages WHERE conversation_id = ? AND updatedAt > date_sub(now(), interval 2 day)`,
             [identifier]

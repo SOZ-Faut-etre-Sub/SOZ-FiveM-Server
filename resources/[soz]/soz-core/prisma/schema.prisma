@@ -319,6 +319,7 @@ model phone_society_messages {
   isDone          Int      @default(0) @db.TinyInt
   createdAt       DateTime @default(now()) @db.Timestamp(0)
   updatedAt       DateTime @default(now()) @db.Timestamp(0)
+  type            String?  @db.VarChar(50)
 
   @@index([conversation_id], map: "conversation_id")
   @@index([source_phone], map: "source_phone")
