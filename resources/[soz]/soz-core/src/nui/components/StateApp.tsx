@@ -33,6 +33,10 @@ export const StateApp: FunctionComponent = () => {
         dispatch.hud.updateSettings({ theme });
     });
 
+    useNuiEvent('hud', 'SetZoom', zoom => {
+        dispatch.hud.updateSettings({ zoom });
+    });
+
     useNuiEvent('hud', 'SetShowDateTime', showDateTime => {
         dispatch.hud.updateSettings({ showDateTime });
     });

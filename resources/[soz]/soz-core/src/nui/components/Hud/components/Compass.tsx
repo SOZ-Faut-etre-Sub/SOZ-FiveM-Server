@@ -23,7 +23,9 @@ export const Compass: FunctionComponent = () => {
                 className="flex justify-center items-center text-white size-12"
                 disableBorder
             >
-                <span className="text-sm pt-0.5">{compass.cardinal}</span>
+                <span className="text-sm pt-0.5" style={{ zoom: settings.zoom }}>
+                    {compass.cardinal}
+                </span>
                 <div className="absolute inset-0 flex justify-center">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

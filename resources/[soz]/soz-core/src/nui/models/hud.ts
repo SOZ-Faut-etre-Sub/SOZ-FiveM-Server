@@ -8,6 +8,7 @@ export const hud = createModel<RootModel>()({
         hasWatch: false,
         settings: {
             theme: 'auto',
+            zoom: 1,
             showDateTime: false,
             showWeather: false,
             showStreetName: false,

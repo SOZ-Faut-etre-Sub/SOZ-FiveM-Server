@@ -30,6 +30,7 @@ export interface NuiHudMethodMap {
     VoipDebug: VoiceDebugInfo | null;
     // Watch Settings
     SetTheme: HudTheme;
+    SetZoom: number;
     SetShowDateTime: boolean;
     SetShowWeather: boolean;
     SetShowStreetName: boolean;

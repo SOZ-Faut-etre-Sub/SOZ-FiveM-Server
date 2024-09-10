@@ -7,15 +7,15 @@ import { RootState } from '../../../store';
 
 export const DateTime: FunctionComponent = () => {
     const hasWatch = useSelector((state: RootState) => state.hud.hasWatch);
-    const showDateTime = useSelector((state: RootState) => state.hud.settings.showDateTime);
+    const settings = useSelector((state: RootState) => state.hud.settings);
     const { dayOfWeek, hour, minute } = useSelector((state: RootState) => state.hud.dateTime);
 
-    if (!hasWatch || !showDateTime) {
+    if (!hasWatch || !settings.showDateTime) {
         return null;
     }
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col" style={{ zoom: settings.zoom }}>
             <span className="text-2xl leading-4 font-light capitalize">
                 {format(dayOfWeek, 'ccc', { locale: fr }).replace('.', '')}
             </span>

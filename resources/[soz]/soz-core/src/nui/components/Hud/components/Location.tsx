@@ -31,7 +31,7 @@ export const Location: FunctionComponent = () => {
             <GlassMorphismContainer borderClassName="rounded-full" className="flex items-center gap-2 px-5 h-12 w-full">
                 <PinIcon className="w-5 h-5" />
 
-                <div className="flex flex-col justify-center -space-y-2.5 h-12">
+                <div className="flex flex-col justify-center -space-y-2.5 h-12" style={{ zoom: settings.zoom }}>
                     {streetName.map((name, index) => (
                         <span
                             key={index}
