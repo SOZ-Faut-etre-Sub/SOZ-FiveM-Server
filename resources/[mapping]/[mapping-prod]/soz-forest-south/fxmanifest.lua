@@ -1,11 +1,9 @@
--- This mod was made for free by le__AK and Larcius.
--- For more information check out https://www.gta5-mods.com/maps/gta-v-remastered-enhanced
-
-fx_version "cerulean"
-game "gta5"
+fx_version('cerulean')
+game('gta5')
+this_is_a_map('yes')
 
 author 'le__AK and Larcius'
-description 'GTA V Remastered: Enhanced'
-version '4.4'
+description('GTA V Remastered: Enhanced')
+version('5.3')
 
-data_file('DLC_ITYP_REQUEST')('stream/vremastered_slod.ytyp')
+data_file('DLC_ITYP_REQUEST')('stream/vremastered_slod/vremastered_slod.ytyp')
