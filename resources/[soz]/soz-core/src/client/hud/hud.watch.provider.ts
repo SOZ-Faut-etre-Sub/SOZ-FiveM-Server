@@ -36,6 +36,7 @@ export class HudWatchProvider {
     private _hideStreetName = GetResourceKvpInt('soz_hud_street_name_hide') === 1;
     private _hideCompass = GetResourceKvpInt('soz_hud_compass_hide') === 1;
     private _hideStress = GetResourceKvpInt('soz_hud_stress_hide') === 1;
+    private _hideStamina = GetResourceKvpInt('soz_hud_stamina_hide') === 1;
 
     public get haveWatch(): boolean {
         return this._haveWatch;
@@ -85,6 +86,7 @@ export class HudWatchProvider {
             showStreetName: true,
             showCompass: true,
             showStress: true,
+            showStamina: true,
         });
         this.audioService.playAudio('audio/uwu.mp3', 0.1);
 
@@ -123,6 +125,11 @@ export class HudWatchProvider {
         this.stress = value;
     }
 
+    @OnNuiEvent(NuiEvent.WatchMenuSetShowStamina)
+    public async setStamina(value: boolean) {
+        this.stamina = value;
+    }
+
     public getSettings(): HudSettings {
         return {
             theme: this._theme,
@@ -131,6 +138,7 @@ export class HudWatchProvider {
             showStreetName: !this._hideStreetName,
             showCompass: !this._hideCompass,
             showStress: !this._hideStress,
+            showStamina: !this._hideStamina,
         };
     }
 
@@ -172,5 +180,11 @@ export class HudWatchProvider {
         this._hideStress = !value;
         SetResourceKvpInt('soz_hud_stress_hide', this._hideStress ? 1 : 0);
         this.nuiDispatch.dispatch('hud', 'SetShowStress', value);
+    }
+
+    public set stamina(value: boolean) {
+        this._hideStamina = !value;
+        SetResourceKvpInt('soz_hud_stamina_hide', this._hideStamina ? 1 : 0);
+        this.nuiDispatch.dispatch('hud', 'SetShowStamina', value);
     }
 }

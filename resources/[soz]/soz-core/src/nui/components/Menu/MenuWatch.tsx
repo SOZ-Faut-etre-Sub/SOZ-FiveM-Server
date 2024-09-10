@@ -80,6 +80,13 @@ export const MenuWatch: FunctionComponent<MenuWatchProps> = ({ data }) => {
                     >
                         Stress
                     </MenuItemCheckbox>
+                    <MenuItemCheckbox
+                        checked={data.showStamina}
+                        description="Active/Désactive l'affichage de la stamina"
+                        onChange={value => fetchNui(NuiEvent.WatchMenuSetShowStamina, value)}
+                    >
+                        Stamina
+                    </MenuItemCheckbox>
                 </MenuContent>
             </MainMenu>
         </Menu>

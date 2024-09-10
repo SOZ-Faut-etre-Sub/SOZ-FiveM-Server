@@ -199,6 +199,7 @@ export enum NuiEvent {
     WatchMenuSetShowStreetName = 'soz-core:nui:player:menu:hud-set-show-street-name',
     WatchMenuSetShowCompass = 'soz-core:nui:player:menu:hud-set-show-compass',
     WatchMenuSetShowStress = 'soz-core:nui:player:menu:hud-set-show-stress',
+    WatchMenuSetShowStamina = 'soz-core:nui:player:menu:hud-set-show-stamina',
     PlayerMenuJobGradeCreate = 'soz-core:nui:player:menu:job-grade-create',
     PlayerMenuJobGradeDelete = 'soz-core:nui:player:menu:job-grade-delete',
     PlayerMenuJobGradeSetDefault = 'soz-core:nui:player:menu:job-grade-set-default',

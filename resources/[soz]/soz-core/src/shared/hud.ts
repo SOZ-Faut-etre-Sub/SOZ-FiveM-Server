@@ -88,6 +88,7 @@ export type HudSettings = {
     showStreetName: boolean;
     showCompass: boolean;
     showStress: boolean;
+    showStamina: boolean;
 };
 
 export type HudState = {

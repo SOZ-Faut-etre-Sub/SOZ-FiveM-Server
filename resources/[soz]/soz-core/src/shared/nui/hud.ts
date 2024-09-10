@@ -21,6 +21,7 @@ export interface NuiHudMethodMap {
     UpdateWeaponAmmo: HudWeaponAmmo;
     SetSyringeDelay: number;
     SetBattery: number;
+    SetStamina: number;
     SetTwitchNewsOverlay: JobType | null;
     SetShowHud: boolean;
     DrawNotification: Omit<BasicNotification | AdvancedNotification | TPoliceNotification, 'id'> & { id?: string };
@@ -34,4 +35,5 @@ export interface NuiHudMethodMap {
     SetShowStreetName: boolean;
     SetShowCompass: boolean;
     SetShowStress: boolean;
+    SetShowStamina: boolean;
 }

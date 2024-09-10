@@ -13,6 +13,7 @@ export const hud = createModel<RootModel>()({
             showStreetName: false,
             showCompass: false,
             showStress: false,
+            showStamina: false,
         },
 
         voiceMode: 0,

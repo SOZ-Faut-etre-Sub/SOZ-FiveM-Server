@@ -14,13 +14,16 @@ type SyringeDelay = {
 
 export const PlayerStats: FunctionComponent = () => {
     const [syringeDelay, setSyringeDelay] = useState<SyringeDelay>(null);
+    const [stamina, setStamina] = useState<number>(100);
 
     const hasWatch = useSelector((state: RootState) => state.hud.hasWatch);
     const showStress = useSelector((state: RootState) => state.hud.settings.showStress);
+    const showStamina = useSelector((state: RootState) => state.hud.settings.showStamina);
 
     const player = usePlayer();
     const playerStats = usePlayerStats();
 
+    useNuiEvent('hud', 'SetStamina', setStamina);
     useNuiEvent('hud', 'SetSyringeDelay', delay => {
         setSyringeDelay(previousDelay => {
             if (previousDelay) {
@@ -103,8 +106,12 @@ export const PlayerStats: FunctionComponent = () => {
                     <img className="size-9" src="/public/images/hud/player/stress.webp" alt="stress" />
                 </StatusGauge>
             )}
-            {hasWatch && (
-                <StatusGauge min={60} max={150} value={player.metadata.max_stamina} color="#3270cd">
+            {hasWatch && showStamina && (
+                <StatusGauge
+                    value={stamina}
+                    color={stamina <= 25 ? '#FCAF40' : '#3270cd'}
+                    hideCondition={value => value >= 80}
+                >
                     <img className="size-9" src="/public/images/hud/player/stamina.webp" alt="stamina" />
                 </StatusGauge>
             )}

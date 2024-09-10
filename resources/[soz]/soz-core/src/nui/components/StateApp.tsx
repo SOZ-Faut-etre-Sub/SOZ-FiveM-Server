@@ -53,6 +53,10 @@ export const StateApp: FunctionComponent = () => {
         dispatch.hud.updateSettings({ showStress });
     });
 
+    useNuiEvent('hud', 'SetShowStamina', showStamina => {
+        dispatch.hud.updateSettings({ showStamina });
+    });
+
     useNuiEvent('hud', 'UpdateSettings', settings => {
         dispatch.hud.update({ settings });
     });

@@ -4,6 +4,7 @@ import { HudInteractionsProvider } from './hud.interactions.provider';
 import { HudMinimapProvider } from './hud.minimap.provider';
 import { HudNewsProvider } from './hud.news.provider';
 import { HudNotificationsProvider } from './hud.notifications.provider';
+import { HudPlayerProvider } from './hud.player.provider';
 import { HudStateProvider } from './hud.state.provider';
 import { HudStreetNameProvider } from './hud.streetname.provider';
 import { HudVehicleProvider } from './hud.vehicle.provider';
@@ -14,16 +15,17 @@ import { HudWeatherIconProvider } from './hud.weathericon.provider';
 @Module({
     providers: [
         HudCompassProvider,
+        HudInteractionsProvider,
         HudMinimapProvider,
-        HudWatchProvider,
         HudNewsProvider,
         HudNotificationsProvider,
+        HudPlayerProvider,
         HudStateProvider,
         HudStreetNameProvider,
         HudVehicleProvider,
-        HudWeatherIconProvider,
-        HudInteractionsProvider,
+        HudWatchProvider,
         HudWeaponProvider,
+        HudWeatherIconProvider,
     ],
 })
 export class HudModule {}
