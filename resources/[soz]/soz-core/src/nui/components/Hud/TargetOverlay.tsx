@@ -28,12 +28,10 @@ export const TargetOverlay: FunctionComponent = () => {
 
     const onKeyUpReceived = useCallback(
         (event: KeyboardEvent) => {
-            if (event.key === 'Alt') {
-                setIsTargeting(false);
-                setTargetFound(false);
+            setIsTargeting(false);
+            setTargetFound(false);
 
-                fetchNui(NuiEvent.TargetReset);
-            }
+            fetchNui(NuiEvent.TargetReset);
         },
         [setIsTargeting, setTargetFound]
     );
