@@ -13,6 +13,7 @@ import { getRandomInt } from '../../../shared/random';
 import { RpcServerEvent } from '../../../shared/rpc';
 import { BlipFactory } from '../../blip';
 import { Notifier } from '../../notifier';
+import { PlayerService } from '../../player/player.service';
 import { PlayerWardrobe } from '../../player/player.wardrobe';
 import { ProgressService } from '../../progress.service';
 import { TargetFactory } from '../../target/target.factory';
@@ -246,6 +247,9 @@ export class TemporaryProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
+    @Inject(PlayerService)
+    private playerService: PlayerService;
+
     private jobVehicle: number | null = null;
 
     private missionIndex: number | null = null;
@@ -295,8 +299,10 @@ export class TemporaryProvider {
                         {
                             icon: 'c:pole/start.png',
                             label: job.label,
-                            job: JobType.Unemployed,
                             blackoutGlobal: true,
+                            canInteract: () => {
+                                return this.playerService.getPlayer()?.job.id === JobType.Unemployed;
+                            },
                             action: () => {
                                 this.startJob(jobType as JobType);
                             },
@@ -304,8 +310,10 @@ export class TemporaryProvider {
                         {
                             icon: 'c:pole/restart.png',
                             label: 'Relancer',
-                            job: jobType,
                             blackoutGlobal: true,
+                            canInteract: () => {
+                                return this.playerService.getPlayer()?.job.id === jobType;
+                            },
                             action: () => {
                                 this.relaunchJob(jobType as JobType);
                             },
@@ -313,7 +321,9 @@ export class TemporaryProvider {
                         {
                             icon: 'c:pole/end.png',
                             label: 'Terminer',
-                            job: jobType,
+                            canInteract: () => {
+                                return this.playerService.getPlayer()?.job.id === jobType;
+                            },
                             action: () => {
                                 this.stopJob(jobType as JobType);
                             },
