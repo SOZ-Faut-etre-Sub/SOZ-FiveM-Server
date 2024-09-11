@@ -516,6 +516,17 @@ Container["metal_converter"] = InventoryContainer:new({
     type = "metal_converter",
     allowedTypes = {"metal"},
     inventoryPermissionCallback = canAccessConverter,
+    syncCallback = function(id, items)
+        local inv = GetOrCreateInventory("metal_converter", id)
+        if not inv then
+            return false
+        end
+        if table.length(inv.users) > 0 then
+            for player, _ in pairs(inv.users) do
+                TriggerClientEvent("inventory:client:updateTargetStoragesState", player, inv)
+            end
+        end
+    end,
 })
 
 Container["metal_incinerator"] = InventoryContainer:new({

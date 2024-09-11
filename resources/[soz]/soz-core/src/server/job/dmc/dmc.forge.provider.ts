@@ -61,7 +61,7 @@ export class DmcForgeProvider {
         }
     }
 
-    @Tick(TickInterval.EVERY_SECOND)
+    @Tick()
     public handleConverterTemperature() {
         if (!this.converterState.enabled) {
             return;
