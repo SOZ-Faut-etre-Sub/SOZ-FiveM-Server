@@ -187,11 +187,6 @@ RegisterServerEvent("inventory:server:ResellItem", function(item, amount, resell
         return
     end
 
-    if resellZone.ZoneName == "Resell:hub" then
-        TriggerEvent("soz-core:server:hub:shop-resell", source, item, amount, false)
-        return
-    end
-
     if resellZone.ZoneName == "Resell:fish" then
         TriggerEvent("soz-core:server:fishing:resell", source, item, amount)
         return
