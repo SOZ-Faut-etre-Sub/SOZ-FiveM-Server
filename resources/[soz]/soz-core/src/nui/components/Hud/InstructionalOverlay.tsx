@@ -18,14 +18,14 @@ export function InstructionalOverlay() {
         to: {
             opacity: 1,
             top: text.length > 0 ? `${100 - minimap.bottom * 100}vh` : '-50vh',
-            left: `${minimap.left * 100}vw`,
+            right: `${minimap.left * 100}vw`,
         },
     });
 
     useNuiEvent('hud', 'SetInstructional', setText);
 
     return (
-        <animated.div className="absolute -mt-12" style={styles}>
+        <animated.div className="absolute -mt-12 w-fit" style={styles}>
             <GlassMorphismContainer
                 borderClassName="rounded-full"
                 className="flex items-center gap-2 text-white px-5 py-1.5 w-full"

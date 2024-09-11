@@ -1,11 +1,12 @@
+import { InstructionalService } from '@public/client/instructional.service';
 import { ShopBrand, ShopsConfig, ShopTattooConfig } from '@public/config/shops';
 import { ShopTattooProducts } from '@public/config/tattoos';
 import { OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
-import { wait } from '@public/core/utils';
 import { NuiEvent, ServerEvent } from '@public/shared/event';
+import { Control } from '@public/shared/input';
 import { MenuType } from '@public/shared/nui/menu';
 import { PlayerPedHash, Skin } from '@public/shared/player';
 import { Vector3 } from '@public/shared/polyzone/vector';
@@ -23,7 +24,6 @@ type ShopTattooState = {
     camera: number;
     cameraCurrentVariation: number;
     currentSelectedCategory: string;
-    scaleform: number;
 };
 
 @Provider()
@@ -45,6 +45,9 @@ export class TattooShopProvider {
 
     @Inject(AnimationService)
     private animationService: AnimationService;
+
+    @Inject(InstructionalService)
+    private readonly instructionalService: InstructionalService;
 
     private state: ShopTattooState = null;
 
@@ -102,9 +105,9 @@ export class TattooShopProvider {
             ),
             currentSelectedCategory: 'ZONE_HEAD',
             cameraCurrentVariation: 0,
-            scaleform: 0,
         };
-        this.state.scaleform = await this.setupScaleForm('instructional_buttons');
+
+        this.instructionalService.display([Control.Sprint, 'Pour faire pivoter la caméra']);
         await this.updateCamera('ZONE_HEAD', 0);
     }
 
@@ -120,41 +123,6 @@ export class TattooShopProvider {
         PointCamAtCoord(this.state.camera, nctx, ncty, nctz);
     }
 
-    public async setupScaleForm(scaleformType: string) {
-        const scaleform = RequestScaleformMovie(scaleformType);
-        while (!HasScaleformMovieLoaded(scaleform)) {
-            await wait(100);
-        }
-        DrawScaleformMovieFullscreen(scaleform, 255, 255, 255, 0, 0);
-
-        BeginScaleformMovieMethod(scaleform, 'CLEAR_ALL');
-        EndScaleformMovieMethod();
-
-        BeginScaleformMovieMethod(scaleform, 'SET_CLEAR_SPACE');
-        ScaleformMovieMethodAddParamInt(200);
-        EndScaleformMovieMethod();
-
-        BeginScaleformMovieMethod(scaleform, 'SET_DATA_SLOT');
-        ScaleformMovieMethodAddParamInt(0);
-        ScaleformMovieMethodAddParamPlayerNameString(GetControlInstructionalButton(0, 21, true));
-        BeginTextCommandScaleformString('STRING');
-        AddTextComponentSubstringKeyboardDisplay('Faire pivoter la caméra');
-        EndTextCommandScaleformString();
-        EndScaleformMovieMethod();
-
-        BeginScaleformMovieMethod(scaleform, 'DRAW_INSTRUCTIONAL_BUTTONS');
-        EndScaleformMovieMethod();
-
-        BeginScaleformMovieMethod(scaleform, 'SET_BACKGROUND_COLOUR');
-        ScaleformMovieMethodAddParamInt(0);
-        ScaleformMovieMethodAddParamInt(0);
-        ScaleformMovieMethodAddParamInt(0);
-        ScaleformMovieMethodAddParamInt(80);
-        EndScaleformMovieMethod();
-
-        return scaleform;
-    }
-
     @Tick(TickInterval.EVERY_FRAME)
     public async handleCameraControl() {
         if (this.state == null) {
@@ -167,14 +135,12 @@ export class TattooShopProvider {
         DisableControlAction(0, 22, true); // Jump
         DisableControlAction(0, 44, true); // Cover
 
-        if (IsControlJustPressed(0, 21)) {
+        if (IsControlJustPressed(0, Control.Sprint)) {
             this.state.cameraCurrentVariation =
                 (this.state.cameraCurrentVariation + 1) %
                 ShopTattooConfig[this.state.currentSelectedCategory].cam.length;
             this.updateCamera(this.state.currentSelectedCategory, this.state.cameraCurrentVariation);
         }
-
-        DrawScaleformMovieFullscreen(this.state.scaleform, 255, 255, 255, 255, 0);
     }
 
     @OnNuiEvent(NuiEvent.TattooShopResetTattos)
@@ -222,6 +188,7 @@ export class TattooShopProvider {
         TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
         TriggerEvent('soz-character:Client:ApplyCurrentSkin');
         await this.cameraService.deleteCamera();
+        this.instructionalService.clear();
         this.state = null;
     }
 }
