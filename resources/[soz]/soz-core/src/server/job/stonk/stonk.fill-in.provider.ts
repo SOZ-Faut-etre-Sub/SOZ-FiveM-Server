@@ -171,7 +171,7 @@ export class StonkFillInProvider {
 
         const items = this.inventoryManager.findItem(
             source,
-            elem => elem.name == item && this.itemService.isItemExpired(elem)
+            elem => elem.name == item && !this.itemService.isItemExpired(elem)
         );
         let fillInAmount = await this.numberOfItemsRequired(item, maxBalance, accountName);
 
