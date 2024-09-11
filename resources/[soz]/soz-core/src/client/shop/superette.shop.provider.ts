@@ -45,7 +45,7 @@ export class SuperetteShopProvider {
                 const sharedItem: ShopItem = {
                     ...this.itemService.getItem(ShopsContent[brand][i].id),
                     price: ShopsContent[brand][i].price,
-                    amount: 2000,
+                    amount: 0,
                     slot: i + 1,
                 };
                 superetteContent.push(sharedItem);
