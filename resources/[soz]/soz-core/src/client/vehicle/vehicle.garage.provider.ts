@@ -179,10 +179,13 @@ export class VehicleGarageProvider {
                 targets.push({
                     label: 'Accéder au parking entreprise',
                     icon: 'c:garage/GarageEntreprise.png',
+                    canInteract: () => {
+                        const player = this.playerService.getPlayer();
+                        return player && player.job.id == garage.job;
+                    },
                     action: () => {
                         this.enterGarage(garageIdentifier, garage);
                     },
-                    job: garage.job,
                 });
             }
 
