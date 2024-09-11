@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { ChangeEvent, FormEvent, FunctionComponent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import colors from 'tailwindcss/colors';
 
 import { NuiEvent } from '../../../shared/event';
 import { AskInput } from '../../../shared/nui/input';
@@ -8,6 +9,7 @@ import { isErr, Result } from '../../../shared/result';
 import { fetchNui } from '../../fetch';
 import { useInputNuiEvent, useNuiFocus } from '../../hook/nui';
 import { Dispatch } from '../../store';
+import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
 
 export const InputApp: FunctionComponent = () => {
     const [askInput, setAskInput] = useState<AskInput | null>(null);
@@ -81,43 +83,48 @@ export const InputApp: FunctionComponent = () => {
     }
 
     const inputClassnames = classNames(
-        'resize-none box-border w-full text-white bg-black bg-opacity-15 outline-none p-1 border',
+        'resize-none box-border w-full text-white bg-black bg-opacity-15 outline-none py-1 px-2 border rounded-md',
         {
             'border-rose-500': error !== null,
-            'border-lime-700': error === null,
+            'border-gray-700': error === null,
         }
     );
 
     return (
-        <div
-            ref={setInputAppRef}
-            className="absolute h-full w-full flex items-center justify-center bg-black bg-opacity-25 z-50"
-        >
-            <form onSubmit={handleSubmit} className="w-[100vh] p-2 bg-black bg-opacity-75">
-                <h2 className="text-base text-white drop-shadow-md mb-2">{askInput.title}</h2>
+        <div ref={setInputAppRef} className="absolute inset-0 flex items-center justify-center z-50">
+            <div>
+                <GlassMorphismContainer
+                    className="absolute h-full w-[100vh]"
+                    borderColor={colors.gray[700]}
+                    borderClassName="rounded-lg"
+                >
+                    <form onSubmit={handleSubmit} className="w-[100vh] p-2">
+                        <h2 className="text-base text-white drop-shadow-md mb-2">{askInput.title}</h2>
 
-                {askInput.maxCharacters <= 64 ? (
-                    <input
-                        className={inputClassnames}
-                        type="text"
-                        autoFocus={true}
-                        value={value}
-                        onChange={handleChange}
-                        maxLength={askInput.maxCharacters}
-                    />
-                ) : (
-                    <textarea
-                        className={inputClassnames}
-                        autoFocus={true}
-                        value={value}
-                        onChange={handleChange}
-                        onKeyDown={onEnterPress}
-                        maxLength={askInput.maxCharacters}
-                        rows={5}
-                    />
-                )}
-                {error !== null && <p className="text-rose-500 text-sm mt-1 drop-shadow-md">{error}</p>}
-            </form>
+                        {askInput.maxCharacters <= 64 ? (
+                            <input
+                                className={inputClassnames}
+                                type="text"
+                                autoFocus={true}
+                                value={value}
+                                onChange={handleChange}
+                                maxLength={askInput.maxCharacters}
+                            />
+                        ) : (
+                            <textarea
+                                className={inputClassnames}
+                                autoFocus={true}
+                                value={value}
+                                onChange={handleChange}
+                                onKeyDown={onEnterPress}
+                                maxLength={askInput.maxCharacters}
+                                rows={5}
+                            />
+                        )}
+                        {error !== null && <p className="text-rose-500 text-sm mt-1 drop-shadow-md">{error}</p>}
+                    </form>
+                </GlassMorphismContainer>
+            </div>
         </div>
     );
 };
