@@ -330,16 +330,11 @@ local function EnableTarget()
 									DrawOutlineEntity(entity, false)
 								end
 							end
-						else
-							-- Specific Vehicle targets
-							local data = Models[GetEntityModel(entity)]
-							if data ~= nil then
-								CheckEntity(hit, data, entity, distance)
-							end
 						end
+					end
 
-					-- Entity targets
-					elseif entityType > 2 then
+					-- Model targets
+					if not success then
 						local data = Models[GetEntityModel(entity)]
 						if data ~= nil then
 							CheckEntity(hit, data, entity, distance)
