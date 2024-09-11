@@ -11081,6 +11081,18 @@ QBShared.Items = {
         ['description'] = "Trois écrans pour miner, zéro pour travailler. Le rêve de tout G4M3R !",
         ['illustrator'] = '.Sniteur'
     },
+    ['cyber_crypto_farm_0'] = {
+        ['name'] = 'cyber_crypto_farm_0',
+        ['label'] = "Mini Ferme à CryptoMonnaie",
+        ['weight'] = 5000,
+        ['useable'] = true,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Votre premier pas vers une grande récolte, avec cette petite ferme.",
+        ['illustrator'] = '.Sniteur'
+    },
     ['cyber_crypto_farm_1'] = {
         ['name'] = 'cyber_crypto_farm_1',
         ['label'] = "Ferme à crypto Niveau 1",
@@ -11115,6 +11127,18 @@ QBShared.Items = {
         ['unique'] = false,
         ['combinable'] = nil,
         ['description'] = "La Rolls-Royce des fermes virtuelles. Préparez-vous à nager dans les Zcoins !",
+        ['illustrator'] = '.Sniteur'
+    },
+    ['cyber_crypto_mini_battery'] = {
+        ['name'] = 'cyber_crypto_mini_battery',
+        ['label'] = "Générateur Portable ",
+        ['weight'] = 5000,
+        ['useable'] = true,
+        ['type'] = 'item_illegal',
+        ['shouldClose'] = false,
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "L'énergie nécessaire pour concrétiser vos premiers rêves.",
         ['illustrator'] = '.Sniteur'
     },
     ['cyber_crypto_battery'] = {
