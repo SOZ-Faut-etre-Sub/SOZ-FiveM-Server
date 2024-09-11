@@ -157,6 +157,7 @@ RegisterNUICallback("player/giveItemToTarget", function(data, cb)
     if hit == 0 then
         exports["soz-core"]:DrawNotification("Personne n'est à portée de vous", "error")
         cb(true)
+        return
     end
 
     local dist = #(GetEntityCoords(PlayerPedId()) - endCoords)
@@ -164,6 +165,7 @@ RegisterNUICallback("player/giveItemToTarget", function(data, cb)
     if dist > 2 then
         exports["soz-core"]:DrawNotification("Personne n'est à portée de vous", "error")
         cb(true)
+        return
     end
 
     local amount = data.amount
@@ -178,6 +180,7 @@ RegisterNUICallback("player/giveItemToTarget", function(data, cb)
     end
 
     if not amount or tonumber(amount) <= 0 then
+        cb(false)
         return
     end
 
