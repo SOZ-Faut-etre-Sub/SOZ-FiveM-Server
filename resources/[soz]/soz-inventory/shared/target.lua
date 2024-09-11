@@ -6,9 +6,8 @@ function getCloakroomTargetOptions(job, storage, event)
             label = "Se changer",
             icon = "c:jobs/habiller.png",
             storage = storage,
-            job = job,
             canInteract = function()
-                return true
+                return PlayerData.job.id == job
             end,
             action = function()
                 TriggerEvent(event or "soz-core:client:job::OpenCloakroomMenu", storage, job)
@@ -21,9 +20,6 @@ function getCloakroomTargetOptions(job, storage, event)
             icon = "c:jobs/check-stock.png",
             storage = storage,
             job = job,
-            canInteract = function()
-                return PlayerData.job.onduty
-            end,
             action = function()
                 TriggerEvent("soz-jobs:client:check-cloakroom-storage", storage)
             end,
@@ -33,7 +29,9 @@ function getCloakroomTargetOptions(job, storage, event)
             targeticon = "fas fa-box",
             icon = "fas fa-archive",
             label = "Ouvrir mon casier",
-            job = job,
+            canInteract = function()
+                return PlayerData.job.id == job
+            end,
             action = function()
                 TriggerServerEvent("inventory:server:openInventory", "stash", job .. "_" .. PlayerData.citizenid)
             end,
