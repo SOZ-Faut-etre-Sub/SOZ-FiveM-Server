@@ -69,12 +69,6 @@ export class ProgressProvider {
 
         if (!this.progressService.current.canCancel) return;
 
-        BeginTextCommandDisplayHelp('STRING');
-        AddTextComponentSubstringPlayerName(
-            'Appuyez sur ~INPUT_FRONTEND_RRIGHT~ ou ~INPUT_CURSOR_CANCEL~ pour annuler'
-        );
-        EndTextCommandDisplayHelp(0, false, false, -1);
-
         if (IsControlJustPressed(0, Control.FrontendRRight) || IsControlJustPressed(0, Control.CursorCancel)) {
             this.progressService.cancel();
         }

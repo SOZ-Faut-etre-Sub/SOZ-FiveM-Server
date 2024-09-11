@@ -1,10 +1,12 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
 import { wait } from '@core/utils';
 import { AnimationRunner } from '@public/client/animation/animation.factory';
+import { InstructionalService } from '@public/client/instructional.service';
 import { AudioService } from '@public/client/nui/audio.service';
 import { NuiDispatch } from '@public/client/nui/nui.dispatch';
 import { PlayerService } from '@public/client/player/player.service';
 import { animationFlagsToOptions, AnimationProps, AnimationStopReason } from '@public/shared/animation';
+import { Control } from '@public/shared/input';
 import { fromVector3Object } from '@public/shared/polyzone/vector';
 import PCancelable from 'p-cancelable';
 
@@ -28,6 +30,9 @@ export class ProgressService {
 
     @Inject(PlayerService)
     private readonly playerService: PlayerService;
+
+    @Inject(InstructionalService)
+    private readonly instructionalService: InstructionalService;
 
     private currentAction: Partial<ProgressOptions> | null = null;
     private currentPromise: PCancelable<ProgressResult> | null = null;
@@ -157,6 +162,13 @@ export class ProgressService {
         const beforeCallback = () => {
             options.start?.();
 
+            this.instructionalService.display([
+                'Appuyez sur',
+                Control.FrontendRRight,
+                'ou',
+                Control.CursorCancel,
+                'pour annuler',
+            ]);
             this.nuiDispatch.dispatch('progress', 'Start', {
                 label,
                 duration,
@@ -219,6 +231,7 @@ export class ProgressService {
 
     public stop(): void {
         this.nuiDispatch.dispatch('progress', 'Stop');
+        this.instructionalService.clear();
 
         this.playerService.updateState({
             isInventoryBusy: false,

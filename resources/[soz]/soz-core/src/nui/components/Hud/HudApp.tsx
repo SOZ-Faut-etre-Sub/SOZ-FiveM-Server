@@ -1,6 +1,7 @@
 import { FunctionComponent } from 'react';
 
 import { DebugVoip } from './DebugVoip';
+import { InstructionalOverlay } from './InstructionalOverlay';
 import { NewsBanner } from './NewsBanner';
 import { Notifications } from './Notifications';
 import { TargetOverlay } from './TargetOverlay';
@@ -18,6 +19,7 @@ export const HudApp: FunctionComponent = () => {
             <WeaponAndVoipInterface />
 
             <TargetOverlay />
+            <InstructionalOverlay />
 
             <Notifications />
             <NewsBanner />
