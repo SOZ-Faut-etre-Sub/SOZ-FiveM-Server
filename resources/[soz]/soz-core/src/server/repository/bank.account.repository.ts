@@ -208,9 +208,9 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
         }
     }
 
-    protected getAtmConfig(accountId: string): BankAtmConfig {
-        const bankType = accountId.match(/bank_(\D+)/)?.[1] as string;
-        const atmType = accountId.match(/atm_(\w+)_([\w-]+)/)?.[1] as string;
+    protected getAtmConfig(accountId?: string | null): BankAtmConfig | null {
+        const bankType = accountId?.match(/bank_(\D+)/)?.[1];
+        const atmType = accountId?.match(/atm_(\w+)_([\w-]+)/)?.[1];
 
         if (bankType) {
             return { ...AtmConfig[bankType], type: bankType as AtmType };
