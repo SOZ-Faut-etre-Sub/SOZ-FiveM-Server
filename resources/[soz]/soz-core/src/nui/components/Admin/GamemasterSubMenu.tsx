@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
 
 import { SozRole } from '../../../core/permissions';
-import { LICENCES, MONEY_OPTIONS } from '../../../shared/admin/admin';
+import { GameMasterSubMenuState, LICENCES, MONEY_OPTIONS } from '../../../shared/admin/admin';
 import { NuiEvent } from '../../../shared/event';
 import { fetchNui } from '../../fetch';
 import { usePlayer } from '../../hook/data';
@@ -18,12 +18,7 @@ import {
 export type GameMasterSubMenuProps = {
     banner: string;
     permission: SozRole;
-    state: {
-        adminGPS: boolean;
-        moneyCase: boolean;
-        invisible: boolean;
-        adminPoliceLocator: boolean;
-    };
+    state: GameMasterSubMenuState;
 };
 
 export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({ banner, permission, state }) => {
@@ -149,6 +144,16 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({ b
                 >
                     𐂫 Armure
                 </MenuItemButton>
+                <MenuItemCheckbox
+                    checked={state.doors}
+                    disabled={!isAdminOrStaff}
+                    onChange={async value => {
+                        state.doors = value;
+                        await fetchNui(NuiEvent.AdminSetDoorManagement, value);
+                    }}
+                >
+                    🚪Gestions des portes
+                </MenuItemCheckbox>
             </MenuContent>
         </SubMenu>
     );

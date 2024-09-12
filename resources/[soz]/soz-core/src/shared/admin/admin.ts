@@ -42,6 +42,7 @@ export type GameMasterSubMenuState = {
     invisible: boolean;
     adminGPS: boolean;
     adminPoliceLocator: boolean;
+    doors: boolean;
 };
 
 export type InteractiveSubMenuState = {
