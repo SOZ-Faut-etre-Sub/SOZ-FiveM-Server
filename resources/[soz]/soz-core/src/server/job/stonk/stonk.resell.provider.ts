@@ -127,7 +127,7 @@ export class StonkResellProvider {
 
         const items = this.inventoryManager.findItem(
             source,
-            elem => elem.name == item && this.itemService.isItemExpired(elem)
+            elem => elem.name == item && !this.itemService.isItemExpired(elem)
         );
         let resoldAmount = items.amount;
 
