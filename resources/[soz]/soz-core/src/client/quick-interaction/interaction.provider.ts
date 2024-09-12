@@ -15,7 +15,7 @@ const spriteWidth = 0.25 / 16;
 const spriteHeight = 0.25 / 9;
 
 @Provider()
-export class HudInteractionsProvider {
+export class InteractionProvider {
     @Inject(ResourceLoader)
     private readonly resourceLoader: ResourceLoader;
 
