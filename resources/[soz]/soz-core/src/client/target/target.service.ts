@@ -1,4 +1,6 @@
-import { Inject, Injectable } from '../../core/decorators/injectable';
+import { Inject, Injectable } from '@core/decorators/injectable';
+import { InteractionOption } from '@public/shared/interaction';
+
 import { TargetOption } from '../../shared/target';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
@@ -41,6 +43,21 @@ export class TargetService {
         return true;
     }
 
+    public async validateInteraction(interaction: InteractionOption): Promise<boolean> {
+        if (!this.globalCheck()) return false;
+        if (interaction.job && !this.jobCheck(interaction.job)) return false;
+        if (interaction.item && !this.itemCheck(interaction.item)) return false;
+        if (interaction.blackoutGlobal && !this.blackoutGlobalCheck()) return false;
+        if (interaction.blackoutJob && !this.blackoutJobCheck()) return false;
+        if (interaction.canInteract) {
+            const result = await interaction.canInteract();
+            if (!result) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     protected globalCheck(): boolean {
         const player = this.playerService.getPlayer();
 
@@ -56,12 +73,12 @@ export class TargetService {
         const player = this.playerService.getPlayer();
 
         if (typeof job === 'string') {
-            return player.job.id === job;
+            return player.job.id === job && player.job.onduty;
         } else if (typeof job === 'object') {
-            return job[player.job.id] && job[player.job.id] >= Number(player.job.grade);
+            return job[player.job.id] && job[player.job.id] >= Number(player.job.grade) && player.job.onduty;
         }
 
-        return true;
+        return false;
     }
 
     protected itemCheck(item: string): boolean {

@@ -1,22 +1,3 @@
-import { JobType } from '@public/shared/job';
-import { Vector3 } from '@public/shared/polyzone/vector';
-
-export type HubInteraction = {
-    coords?: Vector3;
-    entity?: number;
-    option: HubInteractionOption;
-};
-
-export type HubInteractionOption = {
-    label: string;
-    blackoutGlobal?: boolean;
-    blackoutJob?: string;
-    canInteract?: (entity) => boolean | Promise<boolean>;
-    action?: (entity) => void;
-    job?: string | JobType | Partial<{ [key in JobType]: number }>;
-    item?: string;
-};
-
 export enum HudComponent {
     WantedStars = 1,
     WeaponIcon = 2,
