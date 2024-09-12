@@ -106,10 +106,9 @@ export class VehicleCustomProvider {
                 return originalConfiguration;
             }
         }
-        if (taxedPrice && mode == LSCustomMode.LsCustom) {
+        if (price && mode == LSCustomMode.LsCustom) {
             // LS Custom upgrade parts
             const upgradedParts = this.getLSCustomUpgradedPart(originalConfiguration, mods);
-            console.log('upgradedParts', upgradedParts);
 
             if (
                 upgradedParts > 0 &&
@@ -128,7 +127,10 @@ export class VehicleCustomProvider {
                 return originalConfiguration;
             }
 
-            this.playerMoneyService.remove(source, price);
+            if (!(await this.playerMoneyService.buy(source, price, TaxType.VEHICLE))) {
+                this.notifier.notify(source, "Vous n'avez pas assez d'argent", 'error');
+                return originalConfiguration;
+            }
         } else if (price && mode == LSCustomMode.CrimiCusto) {
             this.inventoryManager.removeNotExpiredItem(
                 source,
