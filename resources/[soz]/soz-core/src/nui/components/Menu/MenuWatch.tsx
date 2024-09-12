@@ -45,20 +45,21 @@ export const MenuWatch: FunctionComponent<MenuWatchProps> = ({ data }) => {
                         <MenuItemSelectOption value="green">Green Mode</MenuItemSelectOption>
                     </MenuItemSelect>
 
-                    <MenuItemSelect
-                        title="Zoom"
-                        value={data.zoom}
-                        description={`Zoom de la montre connectée`}
-                        onConfirm={async (_, value) => {
-                            await fetchNui(NuiEvent.WatchMenuSetZoom, value);
-                        }}
-                    >
-                        <MenuItemSelectOption value={0.5}>50%</MenuItemSelectOption>
-                        <MenuItemSelectOption value={0.75}>75%</MenuItemSelectOption>
-                        <MenuItemSelectOption value={1}>100%</MenuItemSelectOption>
-                        <MenuItemSelectOption value={1.25}>125%</MenuItemSelectOption>
-                        <MenuItemSelectOption value={1.5}>150%</MenuItemSelectOption>
-                    </MenuItemSelect>
+                    {/* Disabled for now */}
+                    {/*<MenuItemSelect*/}
+                    {/*    title="Zoom"*/}
+                    {/*    value={data.zoom}*/}
+                    {/*    description={`Zoom de la montre connectée`}*/}
+                    {/*    onConfirm={async (_, value) => {*/}
+                    {/*        await fetchNui(NuiEvent.WatchMenuSetZoom, value);*/}
+                    {/*    }}*/}
+                    {/*>*/}
+                    {/*    <MenuItemSelectOption value={0.5}>50%</MenuItemSelectOption>*/}
+                    {/*    <MenuItemSelectOption value={0.75}>75%</MenuItemSelectOption>*/}
+                    {/*    <MenuItemSelectOption value={1}>100%</MenuItemSelectOption>*/}
+                    {/*    <MenuItemSelectOption value={1.25}>125%</MenuItemSelectOption>*/}
+                    {/*    <MenuItemSelectOption value={1.5}>150%</MenuItemSelectOption>*/}
+                    {/*</MenuItemSelect>*/}
 
                     <MenuItemCheckbox
                         checked={data.showDateTime}
