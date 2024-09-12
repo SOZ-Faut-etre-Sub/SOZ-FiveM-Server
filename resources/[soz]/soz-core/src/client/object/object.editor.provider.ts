@@ -394,8 +394,39 @@ export class ObjectEditorProvider {
         const object = await this.createOrUpdateObject(GetHashKey(model), {
             snapToGround: true,
             allowScale: false,
+            maxDistance: 8,
         });
         if (!object) {
+            return;
+        }
+
+        const [ret] = GetGroundZFor_3dCoord(object.position[0], object.position[1], object.position[2] + 0.1, false);
+        if (!ret) {
+            this.notifier.error('Position invalide');
+            return;
+        }
+
+        const coords = GetEntityCoords(PlayerPedId());
+        const handle = StartShapeTestLosProbe(
+            coords[0],
+            coords[1],
+            coords[2],
+            object.position[0],
+            object.position[1],
+            object.position[2],
+            49,
+            0,
+            4
+        );
+        let result: [number, any, number[], number[], number];
+
+        do {
+            result = GetShapeTestResult(handle);
+            await wait(0);
+        } while (result[0] == 1);
+
+        if (result[1]) {
+            this.notifier.error('Position incorrecte');
             return;
         }
 

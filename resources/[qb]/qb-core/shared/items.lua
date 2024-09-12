@@ -482,6 +482,7 @@ QBShared.Items = {
         ['ammotype'] = 'AMMO_PISTOL',
         ['unique'] = true,
         ['useable'] = true,
+        ['illustrator'] = ".Laikker",
         ['description'] = 'Arme Pistolet considérée par certains comme étant un gadget'
     },
     ['weapon_stungun_mp'] = {
@@ -1061,7 +1062,8 @@ QBShared.Items = {
         ['ammotype'] = 'AMMO_EMP',
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Un lance-grenades dans un format très compacté.'
+        ['description'] = 'Un pistolet spécialisé dans la désactivation de circuits électriques.',
+        ['illustrator'] = ".Laikker"
     },
     ['weapon_railgunxm3'] = {
         ['name'] = 'weapon_railgunxm3',
@@ -1503,7 +1505,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = ""
+        ['illustrator'] = ".Laikker",
+        ['description'] = "Une balle qui émet une onde de perturbation électromagnétique."
     },
 
     -- Card ITEMS

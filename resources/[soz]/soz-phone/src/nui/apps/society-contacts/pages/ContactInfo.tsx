@@ -7,7 +7,7 @@ import { AppTitle } from '@ui/components/AppTitle';
 import { ActionButton } from '@ui/old_components/ActionButton';
 import { Button } from '@ui/old_components/Button';
 import { TextareaField } from '@ui/old_components/Input';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -30,6 +30,16 @@ const ContactsInfoPage: React.FC = () => {
     const [message, setMessage] = useState('');
     const [anonymous, setAnonymous] = useState(false);
     const [position, setPosition] = useState(true);
+
+    useEffect(() => {
+        if (!contact) {
+            navigate('/society-contacts');
+        }
+    }, []);
+
+    if (!contact) {
+        return null;
+    }
 
     const handleNumberChange: React.ChangeEventHandler<HTMLInputElement> = e => {
         const inputVal = e.currentTarget.value;
