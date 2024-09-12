@@ -1,7 +1,7 @@
 import { animated, useSpring } from '@react-spring/web';
 import { useState } from 'react';
 
-import { BindName } from '../../../shared/utils/bind';
+import { bindKeyToName, BindName } from '../../../shared/utils/bind';
 import { useMinimap } from '../../hook/data';
 import { useNuiEvent } from '../../hook/nui';
 import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
@@ -32,7 +32,11 @@ export function InstructionalOverlay() {
             >
                 {text.map(t => {
                     if (BindName[t]) {
-                        return <span className="bg-white/20 px-2 rounded-md">{BindName[t]}</span>;
+                        return (
+                            <span className="bg-white/10 border border-slate-300/10 px-2 rounded-md">
+                                {bindKeyToName(BindName[t])}
+                            </span>
+                        );
                     }
                     return t;
                 })}

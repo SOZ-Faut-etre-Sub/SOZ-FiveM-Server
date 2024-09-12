@@ -12,7 +12,7 @@ export const NosGauge: FunctionComponent = () => {
     }
 
     return (
-        <StatusGauge value={vehicle.nosLevel} color={colors.blue[500]} hideCondition={() => false}>
+        <StatusGauge value={vehicle.nosLevel * 100} color={colors.blue[500]} hideCondition={() => false}>
             <img className="size-8" src={`/public/images/hud/vehicle/motor.webp`} alt="fuel" />
         </StatusGauge>
     );

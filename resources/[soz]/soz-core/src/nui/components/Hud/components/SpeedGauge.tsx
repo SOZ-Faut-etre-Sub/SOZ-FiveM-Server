@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useMemo } from 'react';
 
 import { useVehicle, useVehicleSpeed } from '../../../hook/data';
 import { GlassMorphismContainer } from '../../Styleguide/GlassMorphismContainer';
@@ -9,17 +9,29 @@ export const SpeedGauge: FunctionComponent<{ useRpm: boolean }> = ({ useRpm }) =
     const vehicle = useVehicle();
     const vehicleSpeed = useVehicleSpeed();
 
-    let rpm;
+    const rpm = useMemo(() => {
+        let rpm: number;
 
-    if (!useRpm) {
-        rpm = vehicleSpeed.speed / 250;
-    } else {
-        rpm = vehicleSpeed.rpm - 0.2;
-    }
+        if (!useRpm) {
+            rpm = vehicleSpeed.speed / 250;
+        } else {
+            rpm = vehicleSpeed.rpm - 0.2;
+        }
 
-    if (rpm < 0) {
-        rpm = 0;
-    }
+        if (rpm < 0) {
+            rpm = 0;
+        }
+
+        return rpm;
+    }, [vehicleSpeed, useRpm]);
+
+    const gear = useMemo(() => {
+        if (vehicleSpeed.gear == 0 && vehicleSpeed.speed > 0) {
+            return 'R';
+        }
+
+        return vehicleSpeed.gear.toString();
+    }, [vehicleSpeed]);
 
     return (
         <div className="relative size-[125px]">
@@ -52,6 +64,7 @@ export const SpeedGauge: FunctionComponent<{ useRpm: boolean }> = ({ useRpm }) =
                     </svg>
 
                     <div className="absolute inset-0 flex flex-col justify-center items-center font-prompt font-semibold text-center text-white/80 uppercase text-sm tabular-nums [text-shadow:_0px_0px_4px_rgb(0_0_0_/_40%)] h-full w-full">
+                        <span className="absolute top-5 font-light">{gear}</span>
                         <div className="absolute inset-0 flex flex-col justify-center">
                             <span className="text-white text-3xl leading-5">{vehicleSpeed.speed.toFixed(0)}</span>
                             <span>km/h</span>
