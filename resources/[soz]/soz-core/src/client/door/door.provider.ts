@@ -40,6 +40,8 @@ export class DoorProvider {
     private initDone = false;
     private idToAdd = null;
 
+    private adminEnabled = false;
+
     @Once(OnceStep.RepositoriesLoaded)
     public async init() {
         const doors = this.doorRepository.get();
@@ -54,6 +56,10 @@ export class DoorProvider {
                     label: 'Admin: Ajouter une porte',
                     icon: 'c:door/door.png',
                     canInteract: entity => {
+                        if (!this.adminEnabled) {
+                            return false;
+                        }
+
                         const doors = this.doorRepository.get();
 
                         const player = this.playerService.getPlayer();
@@ -106,6 +112,10 @@ export class DoorProvider {
                     label: 'Admin: Ajouter un battant',
                     icon: 'c:door/double.png',
                     canInteract: entity => {
+                        if (!this.adminEnabled) {
+                            return false;
+                        }
+
                         if (!this.idToAdd) {
                             return false;
                         }
@@ -164,6 +174,10 @@ export class DoorProvider {
                     label: 'Admin: Configurer la porte',
                     icon: 'c:door/cogwheel.png',
                     canInteract: entity => {
+                        if (!this.adminEnabled) {
+                            return false;
+                        }
+
                         const doors = this.doorRepository.get();
 
                         const player = this.playerService.getPlayer();
@@ -394,5 +408,14 @@ export class DoorProvider {
     public async doorDelete(doorId: string) {
         TriggerServerEvent(ServerEvent.DOOR_DELETE, doorId);
         this.nuiMenu.closeMenu();
+    }
+
+    @OnNuiEvent(NuiEvent.AdminSetDoorManagement)
+    public async door(value: boolean) {
+        this.adminEnabled = value;
+    }
+
+    public isAdminEnabled() {
+        return this.adminEnabled;
     }
 }

@@ -5,6 +5,7 @@ import { Door } from '@public/shared/door';
 import { ServerEvent } from '@public/shared/event';
 
 import { PrismaService } from '../database/prisma.service';
+import { Notifier } from '../notifier';
 import { DoorRepository } from '../repository/door.repository';
 
 @Provider()
@@ -14,6 +15,9 @@ export class DoorProvider {
 
     @Inject(PrismaService)
     public prismaService: PrismaService;
+
+    @Inject(Notifier)
+    public notifier: Notifier;
 
     @OnEvent(ServerEvent.DOOR_ADD_UPDATE)
     public async doorAddUpdate(source: number, door: Door) {
@@ -33,6 +37,7 @@ export class DoorProvider {
         });
 
         await this.doorRepository.set(door.id, door);
+        this.notifier.notify(source, 'Porte créée/modifiée');
     }
 
     @OnEvent(ServerEvent.DOOR_DELETE)
@@ -43,5 +48,6 @@ export class DoorProvider {
                 id: doorId,
             },
         });
+        this.notifier.notify(source, 'Porte supprimée');
     }
 }
