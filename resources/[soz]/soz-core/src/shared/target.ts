@@ -18,7 +18,5 @@ export type TargetOption = TargetContext & {
     canInteract?: (entity?: number) => boolean | Promise<boolean>;
 
     action?: (entity?: number) => void;
-
-    // todo:
-    color?: string;
+    distance?: number;
 };

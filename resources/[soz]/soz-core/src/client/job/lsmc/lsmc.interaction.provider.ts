@@ -74,7 +74,6 @@ export class LSMCInteractionProvider {
         this.targetFactory.createForAllPlayer([
             {
                 label: 'Rehabiliter',
-                color: JobType.LSMC,
                 icon: 'ems/Rehabiliter',
                 job: JobType.LSMC,
                 blackoutGlobal: true,
@@ -98,7 +97,6 @@ export class LSMCInteractionProvider {
             },
             {
                 label: 'Deshabiliter',
-                color: JobType.LSMC,
                 icon: 'ems/Deshabiliter',
                 job: JobType.LSMC,
                 blackoutGlobal: true,
@@ -135,7 +133,6 @@ export class LSMCInteractionProvider {
             },
             {
                 label: 'Déshabiller',
-                color: JobType.LSMC,
                 icon: 'ems/desabhiller',
                 job: JobType.LSMC,
                 category: 'society',
@@ -158,7 +155,6 @@ export class LSMCInteractionProvider {
             },
             {
                 label: 'Rhabiller',
-                color: JobType.LSMC,
                 icon: 'ems/rhabiller',
                 job: JobType.LSMC,
                 category: 'society',
@@ -181,7 +177,6 @@ export class LSMCInteractionProvider {
             },
             {
                 label: 'Soigner',
-                color: JobType.LSMC,
                 icon: 'ems/heal',
                 job: JobType.LSMC,
                 category: 'society',
@@ -218,7 +213,6 @@ export class LSMCInteractionProvider {
             },
             {
                 label: 'Réanimer',
-                color: JobType.LSMC,
                 icon: 'ems/revive',
                 job: JobType.LSMC,
                 category: 'society',
@@ -234,7 +228,6 @@ export class LSMCInteractionProvider {
             },
             {
                 label: 'Utiliser Défibrilateur',
-                color: JobType.LSMC,
                 icon: 'ems/revive',
                 category: 'society',
                 canInteract: entity => {
@@ -249,7 +242,6 @@ export class LSMCInteractionProvider {
             },
             {
                 label: 'Prise de sang',
-                color: JobType.LSMC,
                 icon: 'ems/take_blood',
                 job: JobType.LSMC,
                 category: 'society',
@@ -290,7 +282,6 @@ export class LSMCInteractionProvider {
             },
             {
                 label: 'Donner le diplôme de secourisme',
-                color: JobType.LSMC,
                 job: JobType.LSMC,
                 icon: 'ems/rescuer',
                 category: 'society',
@@ -318,7 +309,6 @@ export class LSMCInteractionProvider {
             },
             {
                 label: 'Retirer le diplôme de secourisme',
-                color: JobType.LSMC,
                 job: JobType.LSMC,
                 icon: 'ems/notrescuer',
                 category: 'society',
@@ -346,7 +336,6 @@ export class LSMCInteractionProvider {
             },
             {
                 label: 'Plâtre',
-                color: JobType.LSMC,
                 job: JobType.LSMC,
                 icon: 'ems/platre',
                 category: 'society',
@@ -362,7 +351,6 @@ export class LSMCInteractionProvider {
             },
             {
                 label: 'Naloxone',
-                color: JobType.LSMC,
                 job: JobType.LSMC,
                 icon: 'ems/naloxone',
                 category: 'society',
@@ -379,7 +367,6 @@ export class LSMCInteractionProvider {
             },
             {
                 label: 'Morphine',
-                color: JobType.LSMC,
                 icon: 'ems/morphine',
                 job: JobType.LSMC,
                 category: 'society',
@@ -406,7 +393,6 @@ export class LSMCInteractionProvider {
             [
                 {
                     label: "S'entrainer aux soins",
-                    color: JobType.LSMC,
                     icon: 'ems/heal',
                     job: JobType.LSMC,
                     category: 'society',
@@ -429,7 +415,6 @@ export class LSMCInteractionProvider {
                 },
                 {
                     label: "S'entrainer aux piqûres",
-                    color: JobType.LSMC,
                     icon: 'ems/morphine',
                     job: JobType.LSMC,
                     category: 'society',
@@ -459,7 +444,6 @@ export class LSMCInteractionProvider {
                 },
                 {
                     label: "S'entrainer à la chirurgie",
-                    color: JobType.LSMC,
                     icon: 'ems/greffer',
                     job: JobType.LSMC,
                     category: 'society',

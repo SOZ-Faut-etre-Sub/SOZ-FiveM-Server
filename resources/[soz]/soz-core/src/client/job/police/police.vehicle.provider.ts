@@ -54,7 +54,6 @@ export class PoliceVehicleProvider {
             [
                 {
                     label: 'Immatriculation',
-                    color: job,
                     icon: 'police/immatriculation',
                     job: job,
                     blackoutJob: job,
@@ -133,7 +132,6 @@ export class PoliceVehicleProvider {
                 },
                 {
                     label: 'Fouiller',
-                    color: job,
                     icon: 'police/fouiller_vehicle',
                     job: job,
                     category: 'society',
@@ -181,7 +179,6 @@ export class PoliceVehicleProvider {
                 },
                 {
                     label: 'Ouvrir',
-                    color: job,
                     icon: 'police/forcer',
                     job: job,
                     category: 'society',
@@ -215,7 +212,6 @@ export class PoliceVehicleProvider {
                     job: job,
                     item: 'fingerprint_collector',
                     icon: 'police/fouiller',
-                    color: job,
                     category: 'society',
                     canInteract: async entity => {
                         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(entity);
@@ -261,7 +257,6 @@ export class PoliceVehicleProvider {
                     label: 'Rechercher des traces de drogue',
                     job: job,
                     icon: 'police/fouiller',
-                    color: job,
                     category: 'society',
                     canInteract: async entity => {
                         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(entity);

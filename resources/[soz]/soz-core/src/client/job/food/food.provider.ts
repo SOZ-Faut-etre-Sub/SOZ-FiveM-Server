@@ -77,7 +77,6 @@ export class FoodProvider {
                     {
                         label: 'Récolter',
                         icon: 'food/collecter',
-                        color: JobType.Food,
                         job: JobType.Food,
                         category: 'society',
                         action: () => {

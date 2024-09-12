@@ -45,7 +45,6 @@ export class CraftService {
                     icon: icon,
                     label: label,
                     job: job,
-                    color: job,
                     blackoutGlobal: true,
                     blackoutJob: job,
                     category: 'citizen', // fixme?

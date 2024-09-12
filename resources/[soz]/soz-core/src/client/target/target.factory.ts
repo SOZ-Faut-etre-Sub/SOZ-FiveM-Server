@@ -1,10 +1,8 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
 import { TargetStore } from '@public/client/target/target.store';
 import { PolygonZone } from '@public/shared/polyzone/polygon.zone';
-import { Vector3 } from '@public/shared/polyzone/vector';
 import { TargetOption } from '@public/shared/target';
 
-import { Inject, Injectable } from '../../core/decorators/injectable';
 import { BoxZone, Zone } from '../../shared/polyzone/box.zone';
 import { Ped, PedFactory } from '../factory/ped.factory';
 import { DnDCallback, InventoryDragAndDropProvider } from '../inventory/inventory.draganddrop.provider';
@@ -28,10 +26,6 @@ const DEFAULT_DISTANCE = 2.5;
 export class TargetFactory {
     @Inject(InventoryDragAndDropProvider)
     private inventoryDragAndDropProvider: InventoryDragAndDropProvider;
-
-    private zones: { [id: string]: any } = {};
-    private players: { [id: string]: any } = {};
-    private vehicles: { [id: string]: any } = {};
 
     @Inject(PedFactory)
     private readonly pedFactory: PedFactory;
@@ -131,29 +125,13 @@ export class TargetFactory {
     }
 
     public removeBoxZone(id: string) {
-        exports['qb-target'].RemoveZone(id);
+        this.targetStore.zones.remove(id);
     }
 
-    public createForBone(bones: string[] | string, targets: TargetOptions[], distance = 1.5) {
+    public createForBone(bones: string[] | string, targets: TargetOption[], distance = 1.5) {
         exports['qb-target'].AddTargetBone(bones, {
             options: targets,
             distance: distance,
         });
-    }
-
-    public isActive() {
-        return exports['qb-target'].IsTargetSuccess();
-    }
-
-    public setPosition(position: Vector3) {
-        if (position) {
-            exports['qb-target'].SetPosition(position[0], position[1], position[2]);
-        } else {
-            exports['qb-target'].SetPosition(null);
-        }
-    }
-
-    public raycastFromMousePosition(flag: number) {
-        return exports['qb-target'].RaycastFromMousePosition(flag);
     }
 }

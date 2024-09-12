@@ -61,11 +61,13 @@ export class ScreenService {
         return this.getEntityOnPosition(cursor);
     }
 
-    public async getEntityOnPosition(cursor: Vector2): Promise<[number, Vector3]> {
+    public async getEntityOnPosition(cursor: Vector2, coords?: Vector3): Promise<[number, Vector3]> {
+        if (!coords) {
+            coords = GetFinalRenderedCamCoord() as Vector3;
+        }
         const camRotation = GetFinalRenderedCamRot(0) as Vector3;
-        const camPosition = GetFinalRenderedCamCoord() as Vector3;
-        const [cam3DPos, forwardDir] = this.getScreenToWorldPosition(camPosition, camRotation, cursor);
-        const direction = add2Vector3(camPosition, multVector3(forwardDir, 1000.0));
+        const [cam3DPos, forwardDir] = this.getScreenToWorldPosition(coords, camRotation, cursor);
+        const direction = add2Vector3(coords, multVector3(forwardDir, 1000.0));
         const rayHandle = StartShapeTestLosProbe(
             cam3DPos[0],
             cam3DPos[1],

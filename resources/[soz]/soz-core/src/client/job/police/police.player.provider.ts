@@ -94,7 +94,6 @@ export class PolicePlayerProvider {
             this.targetFactory.createForAllPlayer([
                 {
                     label: 'Amender',
-                    color: job,
                     icon: 'police/amender',
                     job: job,
                     blackoutJob: job,
@@ -110,7 +109,6 @@ export class PolicePlayerProvider {
                 },
                 {
                     label: 'Permis',
-                    color: job,
                     icon: 'police/permis',
                     job: job,
                     category: 'society',
@@ -130,7 +128,6 @@ export class PolicePlayerProvider {
                 },
                 {
                     label: 'Menotter',
-                    color: job,
                     icon: 'police/menotter',
                     item: 'handcuffs',
                     job: job,
@@ -161,7 +158,6 @@ export class PolicePlayerProvider {
                 },
                 {
                     label: 'Démenotter',
-                    color: job,
                     icon: 'police/demenotter',
                     item: 'handcuffs_key',
                     job: job,
@@ -198,7 +194,6 @@ export class PolicePlayerProvider {
                 },
                 {
                     label: "Récolte d'empreinte",
-                    color: job,
                     icon: 'police/fouiller',
                     job: job,
                     item: 'fingerprint_collector',
@@ -232,7 +227,6 @@ export class PolicePlayerProvider {
                 },
                 {
                     label: 'Rechercher des traces de poudre',
-                    color: job,
                     icon: 'police/fouiller',
                     job: job,
                     category: 'society',
@@ -270,7 +264,6 @@ export class PolicePlayerProvider {
                 [
                     {
                         label: 'Fouiller',
-                        color: job,
                         icon: 'police/fouiller',
                         job: job,
                         category: 'society',
@@ -298,7 +291,6 @@ export class PolicePlayerProvider {
             this.targetFactory.createForAllPlayer([
                 {
                     label: 'Escorter',
-                    color: job,
                     icon: 'police/escorter',
                     job: job,
                     category: 'society',
@@ -327,7 +319,6 @@ export class PolicePlayerProvider {
                 [
                     {
                         label: 'Alcootest',
-                        color: job,
                         icon: 'police/alcootest',
                         job: job,
                         item: 'breathanalyzer',
@@ -341,7 +332,6 @@ export class PolicePlayerProvider {
                     },
                     {
                         label: 'Dépistage de drogue',
-                        color: job,
                         icon: 'police/screening',
                         job: job,
                         item: 'screening_test',

@@ -35,7 +35,6 @@ export class PawlCraftProvider {
                     blackoutGlobal: true,
                     blackoutJob: JobType.Pawl,
                     icon: 'pawl/start-prod',
-                    color: JobType.Pawl,
                     job: JobType.Pawl,
                     category: 'society',
                     action: async () => {

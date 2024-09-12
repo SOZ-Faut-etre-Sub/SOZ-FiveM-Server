@@ -60,7 +60,6 @@ export class LSMCSurgeryProvider {
         this.targetFactory.createForAllPlayer([
             {
                 label: 'Enlever un Poumon',
-                color: JobType.LSMC,
                 icon: 'ems/remove_poumon',
                 job: JobType.LSMC,
                 blackoutGlobal: true,
@@ -105,7 +104,6 @@ export class LSMCSurgeryProvider {
             },
             {
                 label: 'Enlever un Rein',
-                color: JobType.LSMC,
                 icon: 'ems/remove_rein',
                 job: JobType.LSMC,
                 blackoutGlobal: true,
@@ -150,7 +148,6 @@ export class LSMCSurgeryProvider {
             },
             {
                 label: 'Enlever le Foie',
-                color: JobType.LSMC,
                 icon: 'ems/remove_foie',
                 job: JobType.LSMC,
                 blackoutGlobal: true,
@@ -195,7 +192,6 @@ export class LSMCSurgeryProvider {
             },
             {
                 label: 'greffer',
-                color: JobType.LSMC,
                 icon: 'ems/greffer',
                 job: JobType.LSMC,
                 blackoutGlobal: true,

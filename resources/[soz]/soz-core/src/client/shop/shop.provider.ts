@@ -199,7 +199,6 @@ export class ShopProvider {
         },
         {
             label: 'Enlever la tenue temporaire',
-            color: 'crimi',
             category: 'criminal',
             canInteract: () => {
                 const player = this.playerService.getPlayer();
@@ -280,7 +279,6 @@ export class ShopProvider {
                 {
                     label: 'Restock: Masques',
                     icon: 'ffs/restock',
-                    color: JobType.Ffs,
                     job: JobType.Ffs,
                     blackoutGlobal: true,
                     blackoutJob: JobType.Ffs,

@@ -44,7 +44,6 @@ export class UpwVehicleProvider {
             {
                 icon: 'mechanic/car_battery',
                 label: 'Changer la batterie',
-                color: 'upw',
                 action: this.changerVehicleBattery.bind(this),
                 blackoutGlobal: true,
                 blackoutJob: 'upw',
@@ -61,9 +60,9 @@ export class UpwVehicleProvider {
         this.targetFactory.createForBoxZone(orderZone.name, orderZone, [
             {
                 label: 'Commander une voiture éléctrique',
-                icon: 'c:/mechanic/order.png',
-                color: JobType.Upw,
+                icon: 'mechanic/order',
                 job: JobType.Upw,
+                category: 'society',
                 blackoutJob: JobType.Upw,
                 blackoutGlobal: true,
                 canInteract: () => this.jobService.hasPermission(JobType.Upw, JobPermission.UpwOrder),
@@ -82,11 +81,11 @@ export class UpwVehicleProvider {
             },
             {
                 label: 'Prix des chargeurs',
-                icon: 'c:/fuel/plug.png',
-                color: JobType.Upw,
+                icon: 'fuel/plug',
                 job: JobType.Upw,
                 blackoutJob: JobType.Upw,
                 blackoutGlobal: true,
+                category: 'society',
                 canInteract: () => this.jobService.hasPermission(JobType.Upw, JobPermission.UpwChangePrice),
                 action: this.setChargerPrice.bind(this),
             },

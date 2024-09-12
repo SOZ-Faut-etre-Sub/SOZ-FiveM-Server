@@ -83,7 +83,6 @@ export class OilTankerProvider {
             [
                 {
                     icon: 'fuel/pistolet',
-                    color: 'oil',
                     label: 'Connecter le Tanker',
                     job: JobType.Oil,
                     blackoutGlobal: true,
@@ -94,7 +93,6 @@ export class OilTankerProvider {
                 },
                 {
                     icon: 'fuel/pistolet',
-                    color: 'oil',
                     label: 'Déconnecter le Tanker',
                     category: 'society',
                     canInteract: () => {
@@ -134,7 +132,6 @@ export class OilTankerProvider {
             [
                 {
                     icon: 'fuel/remplir',
-                    color: 'oil',
                     label: 'Relier le Tanker',
                     category: 'society',
                     job: JobType.Oil,
@@ -150,7 +147,6 @@ export class OilTankerProvider {
             this.targetFactory.createForBoxZone(`mtp_fuel_refinery_${zone.center[0]}`, zone, [
                 {
                     icon: 'fuel/remplir',
-                    color: 'oil',
                     label: 'Relier le Tanker',
                     category: 'society',
                     job: JobType.Oil,
@@ -167,7 +163,6 @@ export class OilTankerProvider {
             [
                 {
                     icon: 'fuel/remplir',
-                    color: 'oil',
                     label: 'Relier le Tanker',
                     category: 'society',
                     job: JobType.Oil,

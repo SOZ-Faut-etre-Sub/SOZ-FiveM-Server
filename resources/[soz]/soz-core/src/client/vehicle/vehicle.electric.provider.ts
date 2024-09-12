@@ -128,7 +128,6 @@ export class VehicleElectricProvider {
         this.targetFactory.createForModel(this.upwChargerRepository.getModel(), [
             {
                 label: "Recharger à l'énergie fossile",
-                color: JobType.Upw,
                 icon: 'fuel/charger',
                 blackoutGlobal: true,
                 blackoutJob: JobType.Upw,
@@ -148,7 +147,6 @@ export class VehicleElectricProvider {
             },
             {
                 label: "Recharger à l'énergie hydraulique",
-                color: JobType.Upw,
                 icon: 'fuel/charger',
                 blackoutGlobal: true,
                 blackoutJob: JobType.Upw,
@@ -167,7 +165,6 @@ export class VehicleElectricProvider {
             },
             {
                 label: "Recharger à l'énergie éolienne",
-                color: JobType.Upw,
                 icon: 'fuel/charger',
                 blackoutGlobal: true,
                 blackoutJob: JobType.Upw,
@@ -186,7 +183,6 @@ export class VehicleElectricProvider {
             },
             {
                 label: "Recharger à l'énergie solaire",
-                color: JobType.Upw,
                 icon: 'fuel/charger',
                 blackoutGlobal: true,
                 blackoutJob: JobType.Upw,
@@ -205,7 +201,6 @@ export class VehicleElectricProvider {
             },
             {
                 label: 'État de la station',
-                color: JobType.Upw,
                 icon: 'fuel/battery',
                 blackoutGlobal: true,
                 blackoutJob: JobType.Upw,

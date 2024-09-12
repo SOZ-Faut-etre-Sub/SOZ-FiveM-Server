@@ -67,7 +67,6 @@ export class PoliceMoneyCheckerProvider {
                 [
                     {
                         label: 'Analyser',
-                        color: moneycheckerInfo.job,
                         icon: 'police/fouiller',
                         job: moneycheckerInfo.job,
                         blackoutGlobal: true,

@@ -39,7 +39,6 @@ export class JobInvoiceProvider {
                     blackoutGlobal: true,
                     blackoutJob: job.id,
                     job: job.id,
-                    color: job.id,
                     category: 'society',
                     action: this.invoicePlayer.bind(this),
                 },
@@ -49,7 +48,6 @@ export class JobInvoiceProvider {
                     blackoutGlobal: true,
                     blackoutJob: job.id,
                     job: job.id,
-                    color: job.id,
                     category: 'society',
                     canInteract: async entity => {
                         const player = this.playerService.getPlayer();

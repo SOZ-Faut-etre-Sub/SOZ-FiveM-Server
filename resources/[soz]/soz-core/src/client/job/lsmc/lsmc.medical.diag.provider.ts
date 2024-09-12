@@ -51,7 +51,6 @@ export class LSMCMedicalDiagProvider {
             {
                 label: 'Lancer un scan',
                 blackoutJob: JobType.LSMC,
-                color: JobType.LSMC,
                 job: JobType.LSMC,
                 blackoutGlobal: true,
                 icon: 'ems/irm',

@@ -139,7 +139,6 @@ export class VehicleFuelProvider {
         this.targetFactory.createForModel(this.fuelStationRepository.getModels(), [
             {
                 label: "Remplir la station d'essence",
-                color: JobType.Oil,
                 icon: 'fuel/pistolet',
                 job: JobType.Oil,
                 category: 'citizen',
@@ -170,7 +169,6 @@ export class VehicleFuelProvider {
             },
             {
                 label: 'Remplir la station de kérosène',
-                color: JobType.Oil,
                 icon: 'fuel/pistolet',
                 category: 'citizen',
                 action: entity => {

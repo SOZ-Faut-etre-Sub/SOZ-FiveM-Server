@@ -29,7 +29,6 @@ export class OilCraftProvider {
             [
                 {
                     icon: 'fuel/pistolet',
-                    color: 'oil',
                     label: 'Carburant conditionné',
                     job: JobType.Oil,
                     blackoutGlobal: true,
@@ -39,7 +38,6 @@ export class OilCraftProvider {
                 },
                 {
                     icon: 'fuel/pistolet',
-                    color: 'oil',
                     label: 'Kérosène conditionné',
                     job: JobType.Oil,
                     blackoutGlobal: true,
@@ -63,7 +61,6 @@ export class OilCraftProvider {
             [
                 {
                     icon: 'fuel/pistolet',
-                    color: 'oil',
                     label: 'Bidon d’essence',
                     job: JobType.Oil,
                     blackoutGlobal: true,
@@ -73,7 +70,6 @@ export class OilCraftProvider {
                 },
                 {
                     icon: 'fuel/pistolet',
-                    color: 'oil',
                     label: 'Bidon de kérosène',
                     job: JobType.Oil,
                     blackoutGlobal: true,

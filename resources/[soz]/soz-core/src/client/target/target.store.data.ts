@@ -18,6 +18,16 @@ export class TargetStoreData<E extends TargetStoreBase> {
     }
 
     public add(id: string, data: E): void {
+        for (const target of data.targets) {
+            if (!target.action) {
+                throw new Error('Target action is required');
+            }
+
+            if (!target.distance) {
+                target.distance = data.distance;
+            }
+        }
+
         if (!this.data[id]) {
             this.data[id] = data;
             return;

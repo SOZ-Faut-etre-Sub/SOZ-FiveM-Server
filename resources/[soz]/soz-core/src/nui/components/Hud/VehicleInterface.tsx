@@ -5,6 +5,7 @@ import { useMinimap, usePlayer, useVehicle } from '../../hook/data';
 import { FuelGauge } from './components/FuelGauge';
 import { LightIndicator } from './components/LightIndicator';
 import { LockIndicator } from './components/LockIndicator';
+import { NosGauge } from './components/NosGauge';
 import { SeatbeltIndicator } from './components/SeatbeltIndicator';
 import { SpeedGauge } from './components/SpeedGauge';
 
@@ -60,11 +61,14 @@ export const VehicleInterface: FunctionComponent = () => {
                         <div className="flex flex-col justify-end items-center gap-2">
                             <LightIndicator state={vehicle.lightState} />
                             {vehicle.fuelType !== 'none' && (
-                                <FuelGauge
-                                    value={vehicle.fuelLevel}
-                                    fuelType={vehicle.fuelType}
-                                    vehCategory={vehicle.vehCategory}
-                                />
+                                <>
+                                    <FuelGauge
+                                        value={vehicle.fuelLevel}
+                                        fuelType={vehicle.fuelType}
+                                        vehCategory={vehicle.vehCategory}
+                                    />
+                                    <NosGauge />
+                                </>
                             )}
                         </div>
                     </>

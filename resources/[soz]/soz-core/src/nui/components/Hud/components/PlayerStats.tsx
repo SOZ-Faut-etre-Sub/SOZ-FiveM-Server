@@ -15,6 +15,7 @@ type SyringeDelay = {
 export const PlayerStats: FunctionComponent = () => {
     const [syringeDelay, setSyringeDelay] = useState<SyringeDelay>(null);
     const [stamina, setStamina] = useState<number>(100);
+    const [battery, setBattery] = useState<number>(100);
 
     const hasWatch = useSelector((state: RootState) => state.hud.hasWatch);
     const showStress = useSelector((state: RootState) => state.hud.settings.showStress);
@@ -24,6 +25,7 @@ export const PlayerStats: FunctionComponent = () => {
     const playerStats = usePlayerStats();
 
     useNuiEvent('hud', 'SetStamina', setStamina);
+    useNuiEvent('hud', 'SetBattery', setBattery);
     useNuiEvent('hud', 'SetSyringeDelay', delay => {
         setSyringeDelay(previousDelay => {
             if (previousDelay) {
@@ -101,11 +103,20 @@ export const PlayerStats: FunctionComponent = () => {
                 </StatusGauge>
             )}
 
+            <StatusGauge value={player.metadata.hunger} color="#FCAF40" hideCondition={value => value >= 50}>
+                <img className="size-9" src="/public/images/hud/player/hunger.webp" alt="hunger" />
+            </StatusGauge>
+
+            <StatusGauge value={player.metadata.thirst} color="#00A5E7" hideCondition={value => value >= 50}>
+                <img className="size-9" src="/public/images/hud/player/thirst.webp" alt="thirst" />
+            </StatusGauge>
+
             {hasWatch && showStress && (
                 <StatusGauge value={player.metadata.stress_level} color="#FCAF40">
                     <img className="size-9" src="/public/images/hud/player/stress.webp" alt="stress" />
                 </StatusGauge>
             )}
+
             {hasWatch && showStamina && (
                 <StatusGauge
                     value={stamina}
@@ -116,12 +127,8 @@ export const PlayerStats: FunctionComponent = () => {
                 </StatusGauge>
             )}
 
-            <StatusGauge value={player.metadata.hunger} color="#FCAF40" hideCondition={value => value >= 50}>
-                <img className="size-9" src="/public/images/hud/player/hunger.webp" alt="hunger" />
-            </StatusGauge>
-
-            <StatusGauge value={player.metadata.thirst} color="#00A5E7" hideCondition={value => value >= 50}>
-                <img className="size-9" src="/public/images/hud/player/thirst.webp" alt="thirst" />
+            <StatusGauge value={battery} color="#fc9914" hideCondition={value => value > 99}>
+                <img className="size-9" src="/public/images/hud/vehicle/battery.webp" alt="battery" />
             </StatusGauge>
         </>
     );

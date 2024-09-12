@@ -21,67 +21,67 @@ local function TreeInteraction(identifier, position)
         minZ = position.z,
         maxZ = position.z + 5.0,
     }, {
-            {
-                color = "pawl",
-                label = "Récolter",
-                icon = "pawl/harvest",
-                item = Config.Harvest.RequiredWeapon,
-                job = "pawl",
-                blackoutGlobal = true,
-                blackoutJob = "pawl",
-                action = function()
-                    TriggerEvent("pawl:client:harvestTree", {identifier = identifier, position = position})
-                end,
-            },
-            {
-                color = "pawl",
-                label = "Tronçonner",
-                icon = "pawl/harvest-chainsaw",
-                item = Config.FastHarvest.RequiredWeapon,
-                job = "pawl",
-                blackoutGlobal = true,
-                blackoutJob = "pawl",
-                action = function()
-                    TriggerEvent("pawl:client:checkChainsawFuel", {identifier = identifier, position = position})
-                end,
-            },
-            {
-                color = "pawl",
-                label = "Récolter la sève",
-                icon = "pawl/harvest-sap",
-                item = Config.Harvest.RequiredWeapon,
-                canInteract = function()
-                    local treeKey = ConcatPosition(position)
-                    if SapHarvestedTrees[treeKey] ~= nil then
-                        return false
-                    end
-
-                    return not harvesting
-                end,
-                job = "pawl",
-                blackoutGlobal = true,
-                blackoutJob = "pawl",
-                action = function()
-                    TriggerEvent("pawl:client:harvestTreeSap", {identifier = identifier, position = position})
-                end,
-            },
-            {
-                color = "crimi",
-                label = "Récolter des champignons",
-                icon = "pawl/harvest-mushroom",
-                canInteract = function()
-                    for _, value in ipairs(PlayerData.metadata.drugs_skills) do
-                        -- 1 is Botanite
-                        if value == 1 then
-                            return true
-                        end
-                    end
+        {
+            color = "pawl",
+            label = "Récolter",
+            icon = "pawl/harvest",
+            item = Config.Harvest.RequiredWeapon,
+            job = "pawl",
+            blackoutGlobal = true,
+            blackoutJob = "pawl",
+            action = function()
+                TriggerEvent("pawl:client:harvestTree", {identifier = identifier, position = position})
+            end,
+        },
+        {
+            color = "pawl",
+            label = "Tronçonner",
+            icon = "pawl/harvest-chainsaw",
+            item = Config.FastHarvest.RequiredWeapon,
+            job = "pawl",
+            blackoutGlobal = true,
+            blackoutJob = "pawl",
+            action = function()
+                TriggerEvent("pawl:client:checkChainsawFuel", {identifier = identifier, position = position})
+            end,
+        },
+        {
+            color = "pawl",
+            label = "Récolter la sève",
+            icon = "pawl/harvest-sap",
+            item = Config.Harvest.RequiredWeapon,
+            canInteract = function()
+                local treeKey = ConcatPosition(position)
+                if SapHarvestedTrees[treeKey] ~= nil then
                     return false
-                end,
-                action = function(entity)
-                    TriggerEvent("soz-core:client:drugs:harvest-champi", {entity = entity, position = position})
-                end,
-            },
+                end
+
+                return not harvesting
+            end,
+            job = "pawl",
+            blackoutGlobal = true,
+            blackoutJob = "pawl",
+            action = function()
+                TriggerEvent("pawl:client:harvestTreeSap", {identifier = identifier, position = position})
+            end,
+        },
+        {
+            color = "crimi",
+            label = "Récolter des champignons",
+            icon = "pawl/harvest-mushroom",
+            canInteract = function()
+                for _, value in ipairs(PlayerData.metadata.drugs_skills) do
+                    -- 1 is Botanite
+                    if value == 1 then
+                        return true
+                    end
+                end
+                return false
+            end,
+            action = function(entity)
+                TriggerEvent("soz-core:client:drugs:harvest-champi", {entity = entity, position = position})
+            end,
+        },
     }, 2.5)
 end
 

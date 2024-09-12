@@ -7,13 +7,14 @@ import { emitRpc } from '@core/rpc';
 import { InventoryManager } from '@public/client/inventory/inventory.manager';
 import { ObjectService } from '@public/client/object/object.service';
 import { getProperGroundPositionForObject } from '@public/client/object/object.utils';
-import { TargetFactory, TargetOptions } from '@public/client/target/target.factory';
+import { TargetFactory } from '@public/client/target/target.factory';
 import { Command } from '@public/core/decorators/command';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { wait } from '@public/core/utils';
 import { getChunkId, getGridChunks } from '@public/shared/grid';
 import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { RpcClientEvent, RpcServerEvent } from '@public/shared/rpc';
+import { TargetOption } from '@public/shared/target';
 
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { WorldObject } from '../../shared/object';
@@ -22,13 +23,13 @@ import { DnDCallback, InventoryDragAndDropProvider } from '../inventory/inventor
 type SpawnedObject = {
     entity: number;
     object: WorldObject;
-    targets: TargetOptions[];
+    targets: TargetOption[];
     dragAndDropCallbacks: DnDCallback[];
 };
 
 type SpawnableObject = {
     object: WorldObject;
-    targets: TargetOptions[];
+    targets: TargetOption[];
     dragAndDropCallbacks: DnDCallback[];
 };
 
@@ -135,7 +136,7 @@ export class ObjectProvider {
     @OnEvent(ClientEvent.OBJECT_CREATE)
     public async createObjects(
         objects: WorldObject[],
-        targets: TargetOptions[] = [],
+        targets: TargetOption[] = [],
         dragAndDropCallbacks: DnDCallback[] = []
     ) {
         for (const object of objects) {
@@ -146,7 +147,7 @@ export class ObjectProvider {
     @Exportable('CreateObject')
     public async createObject(
         object: WorldObject,
-        targets: TargetOptions[] = [],
+        targets: TargetOption[] = [],
         dragAndDropCallbacks: DnDCallback[] = []
     ): Promise<string> {
         const spawnableObject = {
@@ -280,7 +281,8 @@ export class ObjectProvider {
         if (spawnableObject.object.inventoryId) {
             targets.push({
                 label: 'Ouvrir',
-                icon: 'c:inventory/ouvrir_le_stockage.png',
+                icon: 'inventory/ouvrir_le_stockage',
+                category: 'citizen',
                 canInteract: () => true,
                 action: () => {
                     this.inventoryManager.openInventory('object_storage', spawnableObject.object.inventoryId);

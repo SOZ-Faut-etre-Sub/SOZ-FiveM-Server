@@ -79,7 +79,6 @@ export class NewsProvider {
             [
                 {
                     label: 'Imprimer',
-                    color: 'news',
                     icon: 'news/imprimer',
                     category: 'society',
                     action: () => {
@@ -106,7 +105,6 @@ export class NewsProvider {
             [
                 {
                     label: 'Imprimer',
-                    color: 'you-news',
                     icon: 'news/imprimer',
                     category: 'society',
                     action: () => {
@@ -189,7 +187,6 @@ export class NewsProvider {
             [
                 {
                     label: 'Livrer',
-                    color: player.job.id,
                     icon: 'news/livrer',
                     category: 'society',
                     action: () => {

@@ -72,7 +72,6 @@ export class EasterShopProvider {
                     {
                         label: 'Accéder à la boutique de Pâques',
                         icon: 'shop/store',
-                        color: 'food',
                         category: 'citizen',
                         action: () => {
                             this.onOpenMenu(EasterShopContent);

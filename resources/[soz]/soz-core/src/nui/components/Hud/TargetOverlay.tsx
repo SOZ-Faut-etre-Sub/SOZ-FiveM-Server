@@ -26,15 +26,12 @@ export const TargetOverlay: FunctionComponent = () => {
 
     useNuiFocus(targetFound, targetFound, false);
 
-    const onKeyUpReceived = useCallback(
-        (event: KeyboardEvent) => {
-            setIsTargeting(false);
-            setTargetFound(false);
+    const onKeyUpReceived = useCallback(() => {
+        setIsTargeting(false);
+        setTargetFound(false);
 
-            fetchNui(NuiEvent.TargetReset);
-        },
-        [setIsTargeting, setTargetFound]
-    );
+        fetchNui(NuiEvent.TargetReset);
+    }, [setIsTargeting, setTargetFound]);
 
     useEffect(() => {
         window.addEventListener('keyup', onKeyUpReceived);

@@ -86,6 +86,7 @@ export class ZkeaFournitureShopProvider {
                     {
                         icon: 'fa fa-sign-out-alt',
                         label: 'Sortir du Zkea',
+                        category: 'citizen',
                         action: async () => {
                             await this.playerPositionProvider.teleportPlayerToPosition(ZkeaShopZoneExit);
                         },

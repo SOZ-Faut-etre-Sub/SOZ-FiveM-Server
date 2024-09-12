@@ -118,7 +118,6 @@ export class BennysVehicleProvider {
             {
                 icon: 'mechanic/repair_engine',
                 label: 'Réparer moteur',
-                color: JobType.Bennys,
                 action: this.repairVehicleEngine.bind(this),
                 blackoutGlobal: true,
                 blackoutJob: JobType.Bennys,
@@ -129,7 +128,6 @@ export class BennysVehicleProvider {
             {
                 icon: 'mechanic/reparer',
                 label: 'Réparer carrosserie',
-                color: JobType.Bennys,
                 action: this.repairVehicleBody.bind(this),
                 blackoutGlobal: true,
                 blackoutJob: JobType.Bennys,
@@ -140,7 +138,6 @@ export class BennysVehicleProvider {
             {
                 icon: 'mechanic/repair_tank',
                 label: 'Réparer réservoir',
-                color: JobType.Bennys,
                 action: this.repairVehicleTank.bind(this),
                 blackoutGlobal: true,
                 blackoutJob: JobType.Bennys,
@@ -154,7 +151,6 @@ export class BennysVehicleProvider {
             {
                 icon: 'mechanic/repair_wheel',
                 label: 'Changement des roues',
-                color: JobType.Bennys,
                 action: this.repairVehicleWheel.bind(this),
                 blackoutGlobal: true,
                 blackoutJob: JobType.Bennys,
@@ -165,7 +161,6 @@ export class BennysVehicleProvider {
             {
                 icon: 'mechanic/nettoyer',
                 label: 'Laver',
-                color: JobType.Bennys,
                 blackoutGlobal: true,
                 blackoutJob: JobType.Bennys,
                 category: 'society',
@@ -176,7 +171,6 @@ export class BennysVehicleProvider {
             {
                 icon: 'mechanic/repair_diag',
                 label: 'Faire un diagnostic',
-                color: JobType.Bennys,
                 blackoutGlobal: true,
                 blackoutJob: JobType.Bennys,
                 job: JobType.Bennys,
@@ -414,8 +408,7 @@ export class BennysVehicleProvider {
         this.targetFactory.createForBoxZone(orderZone.name, orderZone, [
             {
                 label: 'Commander une voiture',
-                icon: 'c:/mechanic/order.png',
-                color: JobType.Bennys,
+                icon: 'mechanic/order',
                 job: JobType.Bennys,
                 blackoutJob: JobType.Bennys,
                 blackoutGlobal: true,

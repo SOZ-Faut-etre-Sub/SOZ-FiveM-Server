@@ -57,7 +57,6 @@ export class OilStationProvider {
             [
                 {
                     icon: 'fuel/remplir',
-                    color: 'oil',
                     label: 'Configurateur station',
                     job: JobType.Oil,
                     blackoutGlobal: true,

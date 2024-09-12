@@ -38,7 +38,6 @@ export class FoodFieldProvider {
                 this.targetFactory.createForPolygoneZone(id, polygone, [
                     {
                         label: 'Récolter',
-                        color: 'food',
                         icon: 'food/collecter',
                         blackoutGlobal: true,
                         blackoutJob: JobType.Food,
@@ -54,7 +53,6 @@ export class FoodFieldProvider {
                     },
                     {
                         label: 'Récolter de la Zeed',
-                        color: 'crimi',
                         icon: 'crimi/zeed',
                         category: 'criminal',
                         canInteract: entity =>
@@ -80,7 +78,6 @@ export class FoodFieldProvider {
             [
                 {
                     label: 'Récupérer',
-                    color: 'food',
                     icon: 'food/collecter',
                     blackoutGlobal: true,
                     blackoutJob: JobType.Food,

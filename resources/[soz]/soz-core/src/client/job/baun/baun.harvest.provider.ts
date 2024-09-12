@@ -75,7 +75,6 @@ export class BaunHarvestProvider {
             for (const zone of harvestZone.zones) {
                 const options: TargetOption[] = [
                     {
-                        color: JobType.Baun,
                         label: 'Récupérer',
                         icon: 'jobs/recuperer',
                         category: 'society',

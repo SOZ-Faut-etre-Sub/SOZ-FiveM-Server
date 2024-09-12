@@ -29,7 +29,6 @@ export class DmcRestockProvider {
             {
                 label: 'Restock: Pièces d’Améliorations Certifiées',
                 icon: 'ffs/restock',
-                color: JobType.DMC,
                 job: JobType.DMC,
                 blackoutGlobal: true,
                 blackoutJob: JobType.DMC,

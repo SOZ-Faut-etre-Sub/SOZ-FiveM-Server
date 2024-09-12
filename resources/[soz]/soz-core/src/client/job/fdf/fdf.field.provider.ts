@@ -77,7 +77,6 @@ export class FDFFieldProvider {
             this.targetFactory.createForModel(elem.prop, [
                 {
                     label: elem.fieldConfig.speedLabel,
-                    color: JobType.FDF,
                     icon: 'fdf/buttage',
                     blackoutJob: JobType.FDF,
                     blackoutGlobal: true,
@@ -112,7 +111,6 @@ export class FDFFieldProvider {
                 },
                 {
                     label: 'Récolter',
-                    color: JobType.FDF,
                     icon: 'fdf/harvest',
                     blackoutJob: JobType.FDF,
                     blackoutGlobal: true,
@@ -149,7 +147,6 @@ export class FDFFieldProvider {
                 },
                 {
                     label: 'Détruire',
-                    color: JobType.FDF,
                     icon: 'crimi/destroy',
                     blackoutJob: JobType.FDF,
                     blackoutGlobal: true,
@@ -187,7 +184,6 @@ export class FDFFieldProvider {
                 },
                 {
                     label: 'Vérifier',
-                    color: JobType.FDF,
                     icon: 'crimi/time',
                     blackoutJob: JobType.FDF,
                     blackoutGlobal: true,
@@ -494,7 +490,7 @@ export class FDFFieldProvider {
             .map(type => {
                 const item = this.itemService.getItem(type);
                 return {
-                    icon: `c:fdf/${type}`,
+                    icon: `fdf/${type}`,
                     label: 'Planter ' + item.label,
                     blackoutJob: JobType.FDF,
                     blackoutGlobal: true,

@@ -38,6 +38,8 @@ export class TargetProvider {
     private _targetOptions: TargetOption[] = [];
     private _targetLocked: boolean;
 
+    private _playerCoordsOverride: Vector3 | null;
+
     @Command('+target', {
         description: 'Activer le mode ciblage',
         keys: [{ mapper: 'keyboard', key: 'LMENU' }],
@@ -94,8 +96,10 @@ export class TargetProvider {
         if (!this._targetActive) return;
         if (IsNuiFocused()) return;
 
-        const [entity, coords] = await this.screenService.getEntityOnPosition([0.5, 0.5]);
-        const playerDistance = getDistance(coords, GetEntityCoords(PlayerPedId(), true) as Vector3);
+        const playerCoords = this._playerCoordsOverride ?? (GetEntityCoords(PlayerPedId(), true) as Vector3);
+
+        const [entity, coords] = await this.screenService.getEntityOnPosition([0.5, 0.5], this._playerCoordsOverride);
+        const playerDistance = getDistance(coords, playerCoords);
 
         this._targetOptions = [];
 
@@ -131,6 +135,14 @@ export class TargetProvider {
         option?.action(option?.entity);
 
         return this.disableTargetMode(true);
+    }
+
+    public isActive(): boolean {
+        return this._targetActive;
+    }
+
+    public setPlayerPosition(coords: Vector3 | null): void {
+        this._playerCoordsOverride = coords;
     }
 
     protected async checkTargetActions(
@@ -248,12 +260,10 @@ export class TargetProvider {
         const targetsFound: TargetOption[] = [];
         if (!store) return targetsFound;
 
-        const { targets, distance } = store;
-        if (playerDistance > distance) return targetsFound;
+        for (const target of store.targets) {
+            if (playerDistance > target.distance) continue;
 
-        for (const target of targets) {
             const isValid = await this.targetService.validateTarget(target, entity);
-
             if (isValid) {
                 // enforce citizen category to avoid issues with the migration
                 targetsFound.push({ category: 'citizen', ...target, id: uuidv4(), entity });

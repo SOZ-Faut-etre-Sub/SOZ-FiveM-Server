@@ -33,7 +33,6 @@ export class FightForStyleRestockProvider {
             return {
                 label: 'Restock: ' + this.itemService.getItem(garment).label,
                 icon: 'ffs/restock',
-                color: 'ffs',
                 job: 'ffs',
                 blackoutGlobal: true,
                 blackoutJob: 'ffs',
@@ -42,7 +41,7 @@ export class FightForStyleRestockProvider {
                     TriggerServerEvent(ServerEvent.FFS_RESTOCK, brand, garment);
                 },
                 item: garment,
-            };
+            } as TargetOption;
         });
         this.targetFactory.createForModel([pedModel], targets);
     }

@@ -30,7 +30,6 @@ export class BaunResellProvider {
                 {
                     label: 'Vendre',
                     icon: 'baun/sell',
-                    color: JobType.Baun,
                     job: JobType.Baun,
                     item: 'cocktail_box',
                     category: 'society',

@@ -62,7 +62,6 @@ export class BennysFlatbedProvider {
         this.targetFactory.createForAllVehicle([
             {
                 icon: 'mechanic/Mettre',
-                color: JobType.Bennys,
                 job: JobType.Bennys,
                 label: 'Remorquer',
                 category: 'society',
@@ -74,7 +73,6 @@ export class BennysFlatbedProvider {
             },
             {
                 icon: 'mechanic/Attacher',
-                color: JobType.Bennys,
                 job: JobType.Bennys,
                 label: 'Prendre le crochet',
                 category: 'society',
@@ -98,7 +96,6 @@ export class BennysFlatbedProvider {
             },
             {
                 icon: 'mechanic/Attacher',
-                color: JobType.Bennys,
                 job: JobType.Bennys,
                 label: 'Déposer le crochet',
                 category: 'society',
@@ -119,7 +116,6 @@ export class BennysFlatbedProvider {
             },
             {
                 icon: 'mechanic/Retirer',
-                color: JobType.Bennys,
                 job: JobType.Bennys,
                 label: 'Démorquer',
                 category: 'society',
