@@ -90,7 +90,7 @@ export class FightForStyleRestockProvider {
     public async onRestock(source: number, brand: ClothingBrand, garment: Garment | LuxuryGarment) {
         const item = this.inventoryManager.findItem(
             source,
-            item => item.name == garment && this.itemService.isItemExpired(item)
+            item => item.name == garment && !this.itemService.isItemExpired(item)
         );
 
         if (!item) {
