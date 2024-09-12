@@ -30,6 +30,8 @@ export type NotificationPoliceType =
     | 'shooting'
     | 'explosion'
     | 'auto-theft'
+    | 'jewelry'
+    | 'electronics'
     | 'drug';
 
 export type NotificationPoliceLogoType = 'lspd' | 'bcso' | 'sasp' | 'police';

@@ -13,6 +13,7 @@ import { NuiMenu } from '../../nui/nui.menu';
 import { PlayerService } from '../../player/player.service';
 import { TargetFactory } from '../../target/target.factory';
 import { JobService } from '../job.service';
+import { PoliceAnimationProvider } from '../police/police.animation.provider';
 
 @Provider()
 export class MandatoryProvider {
@@ -39,6 +40,9 @@ export class MandatoryProvider {
 
     @Inject(JobService)
     private jobService: JobService;
+
+    @Inject(PoliceAnimationProvider)
+    private policeAnimationProvider: PoliceAnimationProvider;
 
     @Once(OnceStep.PlayerLoaded)
     public setupMdrJob() {
@@ -100,7 +104,7 @@ export class MandatoryProvider {
     }
 
     @OnNuiEvent(NuiEvent.RedCallMendatory)
-    public redCall(): Promise<void> {
+    public redCall(anonymous: boolean): Promise<void> {
         const ped = PlayerPedId();
         const coords = GetEntityCoords(ped);
         const [street, street2] = GetStreetNameAtCoord(coords[0], coords[1], coords[2]);
@@ -110,11 +114,11 @@ export class MandatoryProvider {
             name += ' et ' + GetStreetNameFromHashKey(street2);
         }
 
-        TriggerEvent(
-            ClientEvent.POLICE_RED_CALL,
+        this.policeAnimationProvider.redCall(
             '555-POLICE',
             `Code Rouge !!! Un membre de Mandatory a besoin d'aide vers ${name}`,
-            `Code Rouge !!! Un membre de Mandatory a besoin d'aide vers <span {class}>${name}</span>`
+            `Code Rouge !!! Un membre de Mandatory a besoin d'aide vers <span {class}>${name}</span>`,
+            anonymous
         );
 
         return;

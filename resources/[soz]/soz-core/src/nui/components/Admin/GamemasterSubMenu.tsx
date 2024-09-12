@@ -144,16 +144,6 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({ b
                 >
                     𐂫 Armure
                 </MenuItemButton>
-                <MenuItemCheckbox
-                    checked={state.doors}
-                    disabled={!isAdminOrStaff}
-                    onChange={async value => {
-                        state.doors = value;
-                        await fetchNui(NuiEvent.AdminSetDoorManagement, value);
-                    }}
-                >
-                    🚪Gestions des portes
-                </MenuItemCheckbox>
             </MenuContent>
         </SubMenu>
     );

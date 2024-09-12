@@ -267,7 +267,6 @@ export enum ClientEvent {
     POLICE_UNCUFF_ANIMATION = 'soz-core:client:police:uncuff-animation',
     POLICE_GET_UNCUFFED = 'soz-core:client:police:get-uncuffed',
     POLICE_GET_CUFFED = 'soz-core:client:police:get-cuffed',
-    POLICE_RED_CALL = 'soz-core:client:police:red-call',
     POLICE_REQUEST_ADD_SPIKE = 'soz-core:client:police:request-add-spike',
     POLICE_SYNC_SPIKE = 'soz-core:client:police:sync-spikes',
     POLICE_REQUEST_ADD_SPEEDZONE = 'soz-core:client:police:request-add-speedzone',

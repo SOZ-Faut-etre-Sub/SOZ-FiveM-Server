@@ -4,12 +4,13 @@ import { OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { emitRpc } from '@public/core/rpc';
-import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
+import { NuiEvent, ServerEvent } from '@public/shared/event';
 import { RpcServerEvent } from '@public/shared/rpc';
 
 import { PositiveNumberValidator } from '../../../shared/nui/input';
 import { Ok } from '../../../shared/result';
 import { InputService } from '../../nui/input.service';
+import { PoliceAnimationProvider } from './police.animation.provider';
 
 @Provider()
 export class PoliceJobMenuProvider {
@@ -21,6 +22,9 @@ export class PoliceJobMenuProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(PoliceAnimationProvider)
+    private policeAnimationProvider: PoliceAnimationProvider;
 
     @OnNuiEvent(NuiEvent.PolicePlaceSpike)
     public async onPlaceSpike() {
@@ -57,7 +61,7 @@ export class PoliceJobMenuProvider {
     }
 
     @OnNuiEvent(NuiEvent.RedCall)
-    public redCall(): Promise<void> {
+    public redCall(anonymous: boolean): Promise<void> {
         const ped = PlayerPedId();
         const coords = GetEntityCoords(ped);
         const [street, street2] = GetStreetNameAtCoord(coords[0], coords[1], coords[2]);
@@ -67,11 +71,11 @@ export class PoliceJobMenuProvider {
             name += ' et ' + GetStreetNameFromHashKey(street2);
         }
 
-        TriggerEvent(
-            ClientEvent.POLICE_RED_CALL,
+        this.policeAnimationProvider.redCall(
             '555-POLICE',
             `Code Rouge !!! Un agent a besoin d'aide vers ${name}`,
-            `Code Rouge !!! Un agent a besoin d'aide vers <span {class}>${name}</span>`
+            `Code Rouge !!! Un agent a besoin d'aide vers <span {class}>${name}</span>`,
+            anonymous
         );
 
         return;

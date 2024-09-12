@@ -114,21 +114,27 @@ export class PoliceAnimationProvider {
         await animation;
     }
 
-    @OnEvent(ClientEvent.POLICE_RED_CALL)
-    public async redCall(societyNumber: string, msg: string, htmlMsg: string) {
-        const { completed } = await this.progressService.progress('police:red-call', 'Code rouge en cours...', 5000, {
-            dictionary: 'oddjobs@assassinate@guard',
-            name: 'unarmed_earpiece_a',
-            options: {
-                onlyUpperBody: true,
-                enablePlayerControl: true,
-            },
-        });
-        if (!completed) {
-            return;
+    public async redCall(societyNumber: string, msg: string, htmlMsg: string, anonymous: boolean = false) {
+        if (!anonymous) {
+            const { completed } = await this.progressService.progress(
+                'police:red-call',
+                'Code rouge en cours...',
+                5000,
+                {
+                    dictionary: 'oddjobs@assassinate@guard',
+                    name: 'unarmed_earpiece_a',
+                    options: {
+                        onlyUpperBody: true,
+                        enablePlayerControl: true,
+                    },
+                }
+            );
+            if (!completed) {
+                return;
+            }
         }
         TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
-            anonymous: false,
+            anonymous: anonymous,
             number: societyNumber,
             message: msg,
             htmlMessage: htmlMsg,

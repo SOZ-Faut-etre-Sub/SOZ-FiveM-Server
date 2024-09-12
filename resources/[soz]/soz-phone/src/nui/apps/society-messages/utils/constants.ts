@@ -97,4 +97,15 @@ for (let i = 5; i < 400; i++) {
     });
 }
 
-export const alerts = ['red-alert', 'robbery', 'vandalism', 'racket', 'shooting', 'auto-theft', 'drug', 'explosion'];
+export const alerts = [
+    'red-alert',
+    'robbery',
+    'vandalism',
+    'racket',
+    'shooting',
+    'auto-theft',
+    'drug',
+    'explosion',
+    'jewelry',
+    'electronics',
+];

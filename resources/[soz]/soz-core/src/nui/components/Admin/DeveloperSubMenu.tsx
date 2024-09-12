@@ -1,3 +1,5 @@
+import { SozRole } from '@public/core/permissions';
+import { DeveloperSubMenuState } from '@public/shared/admin/admin';
 import { FunctionComponent } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
@@ -14,11 +16,8 @@ import {
 
 export type DeveloperSubMenuProps = {
     banner: string;
-    state: {
-        noClip: boolean;
-        displayCoords: boolean;
-        displayMileage: boolean;
-    };
+    permission: SozRole;
+    state: DeveloperSubMenuState;
 };
 
 const coordOptions = [
@@ -32,7 +31,9 @@ const notificationTypeOptions = [
     { label: 'Police', value: 'police' },
 ];
 
-export const DeveloperSubMenu: FunctionComponent<DeveloperSubMenuProps> = ({ banner, state }) => {
+export const DeveloperSubMenu: FunctionComponent<DeveloperSubMenuProps> = ({ banner, permission, state }) => {
+    const isAdmin = permission === 'admin';
+    const isAdminOrStaff = isAdmin || permission === 'staff';
     return (
         <SubMenu id="developer">
             <MenuTitle banner={banner}>Si véloces ces développeurs</MenuTitle>
@@ -104,6 +105,16 @@ export const DeveloperSubMenu: FunctionComponent<DeveloperSubMenuProps> = ({ ban
                 >
                     Créer une zone
                 </MenuItemButton>
+                <MenuItemCheckbox
+                    checked={state.doors}
+                    disabled={!isAdminOrStaff}
+                    onChange={async value => {
+                        state.doors = value;
+                        await fetchNui(NuiEvent.AdminSetDoorManagement, value);
+                    }}
+                >
+                    🚪Gestions des portes
+                </MenuItemCheckbox>
             </MenuContent>
         </SubMenu>
     );

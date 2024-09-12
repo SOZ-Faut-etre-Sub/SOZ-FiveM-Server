@@ -103,7 +103,6 @@ export class AdminMenuProvider {
                         moneyCase: this.playerService.getState().disableMoneyCase,
                         adminGPS: this.hudMinimapProvider.hasAdminGps,
                         adminPoliceLocator: this.vehiclePoliceLocator.getAdminEnabled(),
-                        doors: this.doorProvider.isAdminEnabled(),
                     },
                     interactive: {
                         displayOwners: this.adminMenuInteractiveProvider.intervalHandlers.displayOwners !== null,
@@ -121,6 +120,7 @@ export class AdminMenuProvider {
                         noClip: this.adminMenuDeveloperProvider.isIsNoClipMode(),
                         displayCoords: this.adminMenuDeveloperProvider.showCoordinates !== null,
                         displayMileage: this.adminMenuDeveloperProvider.showMileage !== null,
+                        doors: this.doorProvider.isAdminEnabled(),
                     },
                     vehicule: {
                         noStall: this.vehicleDamageProvider.getAdminNoStall(),
