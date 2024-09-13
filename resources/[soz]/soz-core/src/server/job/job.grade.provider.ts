@@ -126,6 +126,7 @@ export class JobGradeProvider {
             return;
         }
 
+        grade.permissions ??= [];
         const newPermissions = grade.permissions.filter(p => p !== permission);
 
         if (value) {

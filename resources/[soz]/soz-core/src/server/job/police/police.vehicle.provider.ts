@@ -34,7 +34,6 @@ export class PoliceVehicleProvider {
                 job: true,
             },
         });
-        this.notifier.notify(source, "'" + plate + "'");
 
         let msg = `Propriétaire: ~b~inconnu`;
         if (data) {
