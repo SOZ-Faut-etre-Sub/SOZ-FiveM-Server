@@ -12,8 +12,9 @@ import { TargetService } from '../target/target.service';
 const DRAW_DISTANCE = 7;
 const INTERACTION_DISTANCE = 1.5;
 
-const spriteWidth = 0.25 / 16;
-const spriteHeight = 0.25 / 9;
+const INTERACTION_SIZE = 0.25;
+const spriteWidth = INTERACTION_SIZE / 16;
+const spriteHeight = INTERACTION_SIZE / 9;
 
 @Provider()
 export class InteractionProvider {
@@ -70,17 +71,33 @@ export class InteractionProvider {
         SetDrawOrigin(coords[0], coords[1], coords[2], 0);
 
         if (distance > INTERACTION_DISTANCE) {
-            DrawSprite('soz_minimap', 'interaction_pin', 0, 0, spriteWidth, spriteHeight, 0, 255, 255, 255, 255);
+            DrawSprite('soz_minimap', 'interaction_off', 0, 0, spriteWidth, spriteHeight, 0, 255, 255, 255, 255);
             ClearDrawOrigin();
             return;
         }
 
-        DrawSprite('soz_minimap', 'interaction_pin', 0, 0, spriteWidth, spriteHeight, 0, 255, 255, 255, 100);
+        DrawSprite('soz_minimap', 'interaction_on', 0, 0, spriteWidth, spriteHeight, 0, 255, 255, 255, 255);
 
-        SetTextScale(0.0, 0.25);
+        const contentWidth = this.nearbyInteraction.label.length * 0.0075;
+
+        DrawSprite(
+            'soz_minimap',
+            'interaction_content',
+            (spriteWidth + INTERACTION_SIZE / 2) / 16 + contentWidth / 2,
+            0,
+            contentWidth,
+            spriteHeight,
+            0,
+            255,
+            255,
+            255,
+            255
+        );
+
+        SetTextScale(0.0, INTERACTION_SIZE);
         SetTextEntry('STRING');
         AddTextComponentString(this.nearbyInteraction.label);
-        DrawText(0.01, -0.01);
+        DrawText(0.0125, -0.01);
 
         ClearDrawOrigin();
     }
