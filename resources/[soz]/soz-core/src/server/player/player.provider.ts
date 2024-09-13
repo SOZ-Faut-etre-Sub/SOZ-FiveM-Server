@@ -1,3 +1,4 @@
+import { BankMoneyType } from '@public/shared/bank';
 import axios from 'axios';
 
 import { On, Once, OnEvent } from '../../core/decorators/event';
@@ -15,10 +16,10 @@ import {
     PlayerServerState,
 } from '../../shared/player';
 import { RpcServerEvent } from '../../shared/rpc';
-import { PermissionService } from '../permission.service';
 import { QBCore } from '../qbcore';
 import { ServerStateService } from '../server.state.service';
 import { PlayerListStateService } from './player.list.state.service';
+import { PlayerMoneyService } from './player.money.service';
 import { PlayerStateService } from './player.state.service';
 
 @Provider()
@@ -29,9 +30,6 @@ export class PlayerProvider {
     @Inject(Permissions)
     private permissions: Permissions;
 
-    @Inject(PermissionService)
-    private permissionService: PermissionService;
-
     @Inject(PlayerStateService)
     private playerStateService: PlayerStateService;
 
@@ -40,6 +38,9 @@ export class PlayerProvider {
 
     @Inject(PlayerListStateService)
     private playerListStateService: PlayerListStateService;
+
+    @Inject(PlayerMoneyService)
+    private playerMoneyService: PlayerMoneyService;
 
     private jwtTokenCache: Record<string, string> = {};
 
@@ -146,5 +147,11 @@ export class PlayerProvider {
     @Rpc(RpcServerEvent.PLAYER_GET_LICENCES)
     public async getLicences(source: number, target: number): Promise<Partial<Record<PlayerLicenceType, number>>> {
         return this.serverStateService.getPlayer(target).metadata.licences;
+    }
+
+    @Exportable('RemovePlayerMoney')
+    @OnEvent(ServerEvent.PLAYER_UPDATE_STATE)
+    public removePlayerMoney(source: number, money: number, type: BankMoneyType = 'money'): boolean {
+        return this.playerMoneyService.remove(source, money, type);
     }
 }

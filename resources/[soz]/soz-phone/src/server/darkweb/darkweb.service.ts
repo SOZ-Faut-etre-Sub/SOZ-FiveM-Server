@@ -1,4 +1,4 @@
-import { DarkwebConversationResult, DarkwebEvents } from '../../../typings/app/darkweb';
+import { DarkwebConversationResult, DarkwebEvents, ThreadPrice } from '../../../typings/app/darkweb';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import PlayerService from '../players/player.service';
 import DarkwebDB, { _DarkwebDB } from './darkweb.db';
@@ -19,10 +19,12 @@ import {
 
 class _DarkWebService {
     private readonly darkwebConversationDB: _DarkwebDB;
+    private readonly qbCore: any;
 
     constructor() {
         this.darkwebConversationDB = DarkwebDB;
         darkwebLogger.debug('Darkweb service started');
+        this.qbCore = global.exports['qb-core'].GetCoreObject();
     }
 
     async handleFetchConversations(reqObj: PromiseRequest, resp: PromiseEventResp<any>) {
@@ -59,6 +61,19 @@ class _DarkWebService {
         reqObj: PromiseRequest<{ label: string; password: string }>,
         resp: PromiseEventResp<DarkwebConversationResult>
     ) {
+        if (!exports['soz-core'].RemovePlayerMoney(reqObj.source, ThreadPrice, 'marked_money')) {
+            resp({
+                status: 'ok',
+                data: {
+                    error: true,
+                    errorMessage: "Vous n'avez pas assez d'argent",
+                    conversation: null,
+                    conversationParticipants: null,
+                },
+            });
+            return;
+        }
+
         try {
             const darkwebConversation = await createDarkwebConversation(
                 reqObj.data.label,

@@ -106,6 +106,12 @@ export const UseDarkwebAPI = (): UseDarkwebAPIProps => {
                         type: 'error',
                     });
                 }
+                if (resp.data.error) {
+                    return addAlert({
+                        message: resp.data.errorMessage,
+                        type: 'error',
+                    });
+                }
                 if (resp.data.conversation && resp.data.conversationParticipants) {
                     store.dispatch.appDarkweb.addConversationSuccess(resp.data.conversation);
                     store.dispatch.appDarkweb.addConversationParticipants(resp.data.conversationParticipants);

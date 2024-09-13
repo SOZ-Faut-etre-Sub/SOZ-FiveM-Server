@@ -90,3 +90,5 @@ export enum DarkwebEvents {
     UPDATE_BROADCAST_PARTICIPANTS = 'phone:app:darkweb:updateBroadcastParticipants',
     UPDATE_BROADCAST_PARTICIPANTS_SUCCESS = 'phone:app:darkweb:updateBroadcastParticipantsSuccess',
 }
+
+export const ThreadPrice = 150_000;

@@ -1,5 +1,5 @@
 import { Transition } from '@headlessui/react';
-import { DarkwebConversation } from '@typings/app/darkweb';
+import { DarkwebConversation, ThreadPrice } from '@typings/app/darkweb';
 import { AppContent } from '@ui/components/AppContent';
 import { InputBase } from '@ui/old_components/Input';
 import cn from 'classnames';
@@ -115,7 +115,7 @@ export const DarkWebList = memo(() => {
                         className={
                             'border-teal-500/50 rounded-lg text-teal-500 placeholder:text-teal-700 focus-within:border-teal-400 mt-2 bg-transparent  text-[2xl] p-2 px-4 mb-2 outline-none border-[0.2vh] w-full'
                         }
-                        placeholder="Search"
+                        placeholder="Recherche"
                         onChange={(event: ChangeEvent<HTMLInputElement>) => {
                             setSearchValueInput(event.target.value);
                         }}
@@ -150,7 +150,7 @@ export const DarkWebList = memo(() => {
                         className="border-[0.2vh] py-2 px-4 text-teal-500 border-teal-500 rounded-lg my-2 hover:bg-teal-900 cursor-pointer"
                         onClick={() => handleOpenCreationModal()}
                     >
-                        NOUVEAU THREAD
+                        NOUVEAU THREAD ({ThreadPrice.toLocaleString()}$)
                     </button>
                 </div>
 
