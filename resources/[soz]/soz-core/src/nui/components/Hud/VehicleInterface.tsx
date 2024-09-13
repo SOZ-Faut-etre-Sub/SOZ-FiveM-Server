@@ -56,19 +56,17 @@ export const VehicleInterface: FunctionComponent = () => {
                             <LockIndicator state={vehicle.lockStatus} />
                         </div>
                         <div className="flex justify-center">
+                            <NosGauge />
                             <SpeedGauge useRpm={vehicle.useRpm} />
                         </div>
                         <div className="flex flex-col justify-end items-center gap-2">
                             <LightIndicator state={vehicle.lightState} />
                             {vehicle.fuelType !== 'none' && (
-                                <>
-                                    <FuelGauge
-                                        value={vehicle.fuelLevel}
-                                        fuelType={vehicle.fuelType}
-                                        vehCategory={vehicle.vehCategory}
-                                    />
-                                    <NosGauge />
-                                </>
+                                <FuelGauge
+                                    value={vehicle.fuelLevel}
+                                    fuelType={vehicle.fuelType}
+                                    vehCategory={vehicle.vehCategory}
+                                />
                             )}
                         </div>
                     </>

@@ -43,7 +43,7 @@ export const Compass: FunctionComponent = () => {
                             strokeWidth="1.5rem"
                             strokeDasharray={`${circumference} ${circumference}`}
                             strokeDashoffset="0"
-                        ></circle>
+                        />
                         <circle
                             r="90"
                             cx="100"
@@ -54,7 +54,7 @@ export const Compass: FunctionComponent = () => {
                             strokeDasharray={`${circumference} ${circumference}`}
                             strokeDashoffset={String(-offset)}
                             fill="transparent"
-                        ></circle>
+                        />
                     </svg>
                 </div>
                 <div className="absolute inset-0 p-2 flex justify-center">

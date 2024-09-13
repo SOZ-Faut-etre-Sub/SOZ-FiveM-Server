@@ -51,7 +51,7 @@ export const StatusGauge: FunctionComponent<PropsWithChildren<StatusBarProps>> =
                             strokeWidth="1.5rem"
                             strokeDasharray={`${circumference} ${circumference}`}
                             strokeDashoffset="0"
-                        ></circle>
+                        />
                         <circle
                             r="90"
                             cx="100"
@@ -62,7 +62,7 @@ export const StatusGauge: FunctionComponent<PropsWithChildren<StatusBarProps>> =
                             strokeDasharray={`${circumference} ${circumference}`}
                             strokeDashoffset={String(offset)}
                             fill="transparent"
-                        ></circle>
+                        />
                     </svg>
                 </div>
             </GlassMorphismContainer>
