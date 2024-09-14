@@ -113,7 +113,8 @@ export class RaceProvider {
         this.targetFactory.createForModel(npcModel, [
             {
                 label: 'Lancer la course',
-                icon: 'c:race/launch.png',
+                icon: 'race/launch',
+                category: 'citizen',
                 canInteract: entity => {
                     return !!Object.values(this.raceRepository.get()).find(race => race.npc == entity);
                 },
@@ -124,7 +125,8 @@ export class RaceProvider {
             },
             {
                 label: 'Classement',
-                icon: 'c:race/score.png',
+                icon: 'race/score',
+                category: 'citizen',
                 canInteract: entity => {
                     return !!Object.values(this.raceRepository.get()).find(race => race.npc == entity);
                 },
@@ -135,7 +137,8 @@ export class RaceProvider {
             },
             {
                 label: 'Accéder au parking temporaire',
-                icon: 'c:garage/ParkingPublic.png',
+                icon: 'garage/ParkingPublic',
+                category: 'citizen',
                 canInteract: entity => {
                     const race = Object.values(this.raceRepository.get()).find(race => race.npc == entity);
                     return race && race.garageLocation != null;

@@ -38,11 +38,11 @@ export class FoodFieldProvider {
                 this.targetFactory.createForPolygoneZone(id, polygone, [
                     {
                         label: 'Récolter',
-                        color: 'food',
-                        icon: 'c:food/collecter.png',
+                        icon: 'food/collecter',
                         blackoutGlobal: true,
                         blackoutJob: JobType.Food,
                         job: JobType.Food,
+                        category: 'society',
                         canInteract: entity =>
                             !IsEntityAVehicle(entity) &&
                             !IsEntityAPed(entity) &&
@@ -53,8 +53,8 @@ export class FoodFieldProvider {
                     },
                     {
                         label: 'Récolter de la Zeed',
-                        color: 'crimi',
-                        icon: 'c:crimi/zeed.png',
+                        icon: 'crimi/zeed',
+                        category: 'criminal',
                         canInteract: entity =>
                             !IsEntityAVehicle(entity) &&
                             !IsEntityAPed(entity) &&
@@ -78,11 +78,11 @@ export class FoodFieldProvider {
             [
                 {
                     label: 'Récupérer',
-                    color: 'food',
-                    icon: 'c:food/collecter.png',
+                    icon: 'food/collecter',
                     blackoutGlobal: true,
                     blackoutJob: JobType.Food,
                     job: JobType.Food,
+                    category: 'society',
                     action: this.harvestMilk.bind(this),
                 },
             ]

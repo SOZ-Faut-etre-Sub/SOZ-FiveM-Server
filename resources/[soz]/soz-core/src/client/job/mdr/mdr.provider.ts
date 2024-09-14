@@ -60,8 +60,9 @@ export class MandatoryProvider {
             },
             [
                 {
-                    icon: 'c:stonk/collecter.png',
+                    icon: 'stonk/collecter',
                     label: 'Réhabilitation des billets',
+                    category: 'society',
                     canInteract: () => {
                         return this.jobService.hasPermission(JobType.MDR, JobPermission.MdrMarkedMoneyCleaning);
                     },

@@ -84,8 +84,8 @@ export class ZkeaFournitureShopProvider {
                 distance: 2.5,
                 options: [
                     {
-                        icon: 'fa fa-sign-out-alt',
                         label: 'Sortir du Zkea',
+                        category: 'citizen',
                         action: async () => {
                             await this.playerPositionProvider.teleportPlayerToPosition(ZkeaShopZoneExit);
                         },

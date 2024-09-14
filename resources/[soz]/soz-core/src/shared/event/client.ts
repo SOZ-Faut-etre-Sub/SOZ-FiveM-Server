@@ -70,6 +70,7 @@ export enum ClientEvent {
     ITEM_SCUBA_TOOGLE = 'soz-core:client:item:scuba:toggle',
     ITEM_DETECTIVE_BOARD_TOGGLE = 'soz-core:client:item:detective-board:toggle',
     ITEM_RADAR_USE = 'soz-core:client:item:radar:use',
+    ITEM_WATCH_USE = 'soz-core:client:item:watch:use',
 
     HELICO_UPDATE_LIGHT = 'soz-core:client:police:update-light',
 
@@ -396,4 +397,6 @@ export enum ClientEvent {
     DRONE_USE = 'soz-core:client:drone-use',
     DRONE_ADD_REMOTE = 'soz-core:client:drone-add-remote',
     DRONE_REMOVE_REMOTE = 'soz-core:client:drone-remove-remote',
+
+    WEATHER_UPDATE_FORECASTS = 'soz-core:client:weather:update-forecasts',
 }

@@ -47,8 +47,8 @@ export class LSMCHalloweenProvider {
         this.targetFactory.createForAllPlayer([
             {
                 label: 'Un fil qui dépasse...',
-                color: 'lsmc',
                 job: JobType.LSMC,
+                category: 'society',
                 action: this.doLoot.bind(this),
             },
         ]);

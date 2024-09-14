@@ -78,9 +78,7 @@ export class LSMCPlasterProvider {
                     repeat: true,
                 },
             },
-            {
-                useAnimationService: true,
-            }
+            {}
         );
 
         if (!completed) {

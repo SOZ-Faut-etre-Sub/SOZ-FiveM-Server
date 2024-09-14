@@ -29,7 +29,7 @@ export const Halloween2023Scenario4: Story = {
             name: 'Halloween2023-scenario4-files',
             part: 2,
             label: 'Fouiller',
-            icon: 'fas fa-search',
+            icon: 'global/search',
             ...new BoxZone([237.36, -1360.29, 39.53], 1.0, 2.4, {
                 heading: 140.6,
                 minZ: 38.53,

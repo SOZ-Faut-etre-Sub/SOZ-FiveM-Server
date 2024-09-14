@@ -2,6 +2,7 @@ import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
+import { JobType } from '../../../shared/job';
 import { PlayerService } from '../../player/player.service';
 import { TargetFactory } from '../../target/target.factory';
 
@@ -28,12 +29,12 @@ export class BaunResellProvider {
             [
                 {
                     label: 'Vendre',
-                    icon: 'c:/baun/sell.png',
-                    color: 'baun',
-                    job: 'baun',
+                    icon: 'baun/sell',
+                    job: JobType.Baun,
                     item: 'cocktail_box',
+                    category: 'society',
                     blackoutGlobal: true,
-                    blackoutJob: 'baun',
+                    blackoutJob: JobType.Baun,
                     action: () => {
                         TriggerServerEvent(ServerEvent.BAUN_RESELL);
                     },

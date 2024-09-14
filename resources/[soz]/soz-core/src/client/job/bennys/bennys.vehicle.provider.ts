@@ -116,66 +116,66 @@ export class BennysVehicleProvider {
     public setupBennysJob() {
         this.targetFactory.createForAllVehicle([
             {
-                icon: 'c:mechanic/repair_engine.png',
+                icon: 'mechanic/repair_engine',
                 label: 'Réparer moteur',
-                color: JobType.Bennys,
                 action: this.repairVehicleEngine.bind(this),
                 blackoutGlobal: true,
                 blackoutJob: JobType.Bennys,
                 job: JobType.Bennys,
+                category: 'society',
                 canInteract: entity => !IsEntityDead(entity) && this.isInsideUpgradeZoneOrNearRepairVehicle(),
             },
             {
-                icon: 'c:mechanic/reparer.png',
+                icon: 'mechanic/reparer',
                 label: 'Réparer carrosserie',
-                color: JobType.Bennys,
                 action: this.repairVehicleBody.bind(this),
                 blackoutGlobal: true,
                 blackoutJob: JobType.Bennys,
                 job: JobType.Bennys,
+                category: 'society',
                 canInteract: entity => !IsEntityDead(entity) && this.isInsideUpgradeZoneOrNearRepairVehicle(),
             },
             {
-                icon: 'c:mechanic/repair_tank.png',
+                icon: 'mechanic/repair_tank',
                 label: 'Réparer réservoir',
-                color: JobType.Bennys,
                 action: this.repairVehicleTank.bind(this),
                 blackoutGlobal: true,
                 blackoutJob: JobType.Bennys,
                 job: JobType.Bennys,
+                category: 'society',
                 canInteract: entity =>
                     !IsEntityDead(entity) &&
                     this.isInsideUpgradeZoneOrNearRepairVehicle() &&
                     !isVehicleModelElectric(GetEntityModel(entity)),
             },
             {
-                icon: 'c:mechanic/repair_wheel.png',
+                icon: 'mechanic/repair_wheel',
                 label: 'Changement des roues',
-                color: JobType.Bennys,
                 action: this.repairVehicleWheel.bind(this),
                 blackoutGlobal: true,
                 blackoutJob: JobType.Bennys,
                 job: JobType.Bennys,
+                category: 'society',
                 canInteract: entity => !IsEntityDead(entity) && this.isInsideUpgradeZoneOrNearRepairVehicle(),
             },
             {
-                icon: 'c:mechanic/nettoyer.png',
+                icon: 'mechanic/nettoyer',
                 label: 'Laver',
-                color: JobType.Bennys,
                 blackoutGlobal: true,
                 blackoutJob: JobType.Bennys,
+                category: 'society',
                 action: this.washVehicle.bind(this),
                 job: JobType.Bennys,
                 canInteract: entity => !IsEntityDead(entity) && this.isInsideUpgradeZoneOrNearRepairVehicle(),
             },
             {
-                icon: 'c:mechanic/repair_diag.png',
+                icon: 'mechanic/repair_diag',
                 label: 'Faire un diagnostic',
-                color: JobType.Bennys,
                 blackoutGlobal: true,
                 blackoutJob: JobType.Bennys,
                 job: JobType.Bennys,
                 item: 'diagnostic_pad',
+                category: 'society',
                 action: this.analyzeVehicle.bind(this),
             },
         ]);
@@ -408,11 +408,11 @@ export class BennysVehicleProvider {
         this.targetFactory.createForBoxZone(orderZone.name, orderZone, [
             {
                 label: 'Commander une voiture',
-                icon: 'c:/mechanic/order.png',
-                color: JobType.Bennys,
+                icon: 'mechanic/order',
                 job: JobType.Bennys,
                 blackoutJob: JobType.Bennys,
                 blackoutGlobal: true,
+                category: 'society',
                 canInteract: () => {
                     return this.jobService.hasPermission(JobType.Bennys, JobPermission.BennysOrder);
                 },

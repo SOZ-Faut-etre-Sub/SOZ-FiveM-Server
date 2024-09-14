@@ -193,6 +193,14 @@ export enum NuiEvent {
     PlayerMenuHudSetCinematicMode = 'soz-core:nui:player:menu:hud-set-cinematic-mode',
     PlayerMenuHudSetCinematicCameraActive = 'soz-core:nui:player:menu:hud-set-cinematic-camera-active',
     PlayerMenuHudSetScaledNui = 'soz-core:nui:player:menu:hud-set-scaled-nui',
+    WatchMenuSetTheme = 'soz-core:nui:player:menu:hud-set-theme',
+    WatchMenuSetZoom = 'soz-core:nui:player:menu:hud-set-zoom',
+    WatchMenuSetShowDateTime = 'soz-core:nui:player:menu:hud-set-show-date-time',
+    WatchMenuSetShowWeather = 'soz-core:nui:player:menu:hud-set-show-weather',
+    WatchMenuSetShowStreetName = 'soz-core:nui:player:menu:hud-set-show-street-name',
+    WatchMenuSetShowCompass = 'soz-core:nui:player:menu:hud-set-show-compass',
+    WatchMenuSetShowStress = 'soz-core:nui:player:menu:hud-set-show-stress',
+    WatchMenuSetShowStamina = 'soz-core:nui:player:menu:hud-set-show-stamina',
     PlayerMenuJobGradeCreate = 'soz-core:nui:player:menu:job-grade-create',
     PlayerMenuJobGradeDelete = 'soz-core:nui:player:menu:job-grade-delete',
     PlayerMenuJobGradeSetDefault = 'soz-core:nui:player:menu:job-grade-set-default',
@@ -565,4 +573,8 @@ export enum NuiEvent {
     SceneTeleport = 'soz-core:nui-client:scene:teleport',
     SceneLoad = 'soz-core:nui-client:scene:load',
     SceneUnload = 'soz-core:nui-client:scene:unload',
+
+    TargetReset = 'soz-core:nui:target:reset',
+    TargetSelect = 'soz-core:nui:target:select',
+    ProgressFinish = 'soz-core:nui:progress:finish',
 }

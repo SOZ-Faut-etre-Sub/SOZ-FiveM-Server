@@ -27,9 +27,9 @@ export class BennysEstimateProvider {
         this.targetFactory.createForAllVehicle([
             {
                 label: 'Estimer',
-                icon: 'c:/mechanic/estimate.png',
+                icon: 'mechanic/estimate',
                 job: JobType.Bennys,
-                color: JobType.Bennys,
+                category: 'society',
                 canInteract: () => {
                     return this.jobService.hasPermission(JobType.Bennys, JobPermission.BennysEstimate);
                 },

@@ -139,9 +139,9 @@ export class VehicleFuelProvider {
         this.targetFactory.createForModel(this.fuelStationRepository.getModels(), [
             {
                 label: "Remplir la station d'essence",
-                color: JobType.Oil,
-                icon: 'c:fuel/pistolet.png',
+                icon: 'fuel/pistolet',
                 job: JobType.Oil,
+                category: 'citizen',
                 action: entity => {
                     const station = this.fuelStationRepository.getStationForEntity(entity);
 
@@ -169,8 +169,8 @@ export class VehicleFuelProvider {
             },
             {
                 label: 'Remplir la station de kérosène',
-                color: JobType.Oil,
-                icon: 'c:fuel/pistolet.png',
+                icon: 'fuel/pistolet',
+                category: 'citizen',
                 action: entity => {
                     const station = this.fuelStationRepository.getStationForEntity(entity);
 
@@ -196,10 +196,11 @@ export class VehicleFuelProvider {
             },
             {
                 label: 'État de la station',
-                icon: 'c:fuel/check.png',
-                event: 'fuel:client:GetFuelLevel',
+                icon: 'fuel/check',
+                category: 'citizen',
                 action: (entity: number) => {
                     this.getStationFuelLevel(entity);
+                    TriggerEvent('fuel:client:GetFuelLevel');
                 },
                 canInteract: (entity: number) => {
                     const player = this.playerService.getPlayer();
@@ -227,8 +228,9 @@ export class VehicleFuelProvider {
                 blackoutGlobal: true,
             },
             {
-                icon: 'c:fuel/pistolet.png',
+                icon: 'fuel/pistolet',
                 label: 'Prendre le pistolet',
+                category: 'citizen',
                 action: (entity: number) => {
                     this.toggleStationPistol(entity);
                 },
@@ -238,13 +240,11 @@ export class VehicleFuelProvider {
                     }
 
                     const player = this.playerService.getPlayer();
-
                     if (!player) {
                         return false;
                     }
 
                     const station = this.fuelStationRepository.getStationForEntity(entity);
-
                     if (!station) {
                         return false;
                     }
@@ -258,8 +258,10 @@ export class VehicleFuelProvider {
                 blackoutGlobal: true,
             },
             {
-                icon: 'c:fuel/pistolet.png',
-                label: 'Prendre le pistolet ' + '($' + this.publicOilStationPrice.toFixed(2) + '/L)',
+                icon: 'fuel/pistolet',
+                label: 'Prendre le pistolet',
+                subLabel: `$${this.publicOilStationPrice.toFixed(2)}/L`,
+                category: 'citizen',
                 action: (entity: number) => {
                     this.toggleStationPistol(entity);
                 },
@@ -269,13 +271,11 @@ export class VehicleFuelProvider {
                     }
 
                     const player = this.playerService.getPlayer();
-
                     if (!player) {
                         return false;
                     }
 
                     const station = this.fuelStationRepository.getStationForEntity(entity);
-
                     if (!station) {
                         return false;
                     }
@@ -289,8 +289,10 @@ export class VehicleFuelProvider {
                 blackoutGlobal: true,
             },
             {
-                icon: 'c:fuel/pistolet.png',
-                label: 'Prendre le pistolet ' + '($' + this.publicKeroseneStationPrice.toFixed(2) + '/L)',
+                icon: 'fuel/pistolet',
+                label: 'Prendre le pistolet',
+                subLabel: `$${this.publicKeroseneStationPrice.toFixed(2)}/L`,
+                category: 'citizen',
                 action: (entity: number) => {
                     this.toggleStationPistol(entity);
                 },
@@ -300,13 +302,11 @@ export class VehicleFuelProvider {
                     }
 
                     const player = this.playerService.getPlayer();
-
                     if (!player) {
                         return false;
                     }
 
                     const station = this.fuelStationRepository.getStationForEntity(entity);
-
                     if (!station) {
                         return false;
                     }
@@ -320,8 +320,9 @@ export class VehicleFuelProvider {
                 blackoutGlobal: true,
             },
             {
-                icon: 'c:fuel/pistolet.png',
+                icon: 'fuel/pistolet',
                 label: 'Reposer le pistolet',
+                category: 'citizen',
                 action: (entity: number) => {
                     this.toggleStationPistol(entity);
                 },
@@ -359,7 +360,8 @@ export class VehicleFuelProvider {
         this.targetFactory.createForAllVehicle([
             {
                 label: 'Remplir le véhicule',
-                icon: 'c:fuel/remplir.png',
+                icon: 'fuel/remplir',
+                category: 'citizen',
                 blackoutGlobal: true,
                 canInteract: (entity: number) => {
                     if (GetEntityHealth(entity) <= 0) {
@@ -484,32 +486,8 @@ export class VehicleFuelProvider {
         TriggerServerEvent(ServerEvent.VEHICLE_FUEL_START, vehicleNetworkId, station.id);
     }
 
-    @OnEvent(ClientEvent.VEHICLE_FUEL_START)
-    private async onVehicleFuelStart(duration: number, amount: number, price: number) {
-        const maxPrice = amount * price;
-
-        this.nuiDispatch.dispatch('progress', 'Start', {
-            label: 'Remplissage du véhicule',
-            duration,
-            units: [
-                {
-                    unit: 'L',
-                    start: 0,
-                    end: amount,
-                },
-                {
-                    unit: '$',
-                    start: 0,
-                    end: maxPrice,
-                },
-            ],
-        });
-    }
-
     @OnEvent(ClientEvent.VEHICLE_FUEL_STOP)
     private async onVehicleFuelStop() {
-        this.nuiDispatch.dispatch('progress', 'Stop');
-
         if (this.currentStationPistol) {
             this.currentStationPistol.filling = false;
 

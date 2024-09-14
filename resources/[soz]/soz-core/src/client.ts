@@ -42,6 +42,7 @@ import { MonitorModule } from './client/monitor/monitor.module';
 import { NuiModule } from './client/nui/nui.module';
 import { ObjectModule } from './client/object/object.module';
 import { PlayerModule } from './client/player/player.module';
+import { QuickInteractionModule } from './client/quick-interaction/interaction.module';
 import { RaceModule } from './client/race/race.module';
 import { RepositoryModule } from './client/repository/repository.module';
 import { SceneModule } from './client/scene/scene.module';
@@ -131,6 +132,7 @@ async function bootstrap() {
         CameraModule,
         DoorModule,
         SceneModule,
+        QuickInteractionModule,
         ...PrivateModules
     );
 

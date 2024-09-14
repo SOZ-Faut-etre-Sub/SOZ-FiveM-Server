@@ -128,11 +128,11 @@ export class VehicleElectricProvider {
         this.targetFactory.createForModel(this.upwChargerRepository.getModel(), [
             {
                 label: "Recharger à l'énergie fossile",
-                color: JobType.Upw,
-                icon: 'c:fuel/charger.png',
+                icon: 'fuel/charger',
                 blackoutGlobal: true,
                 blackoutJob: JobType.Upw,
                 job: JobType.Upw,
+                category: 'society',
                 action: entity => {
                     const position = GetEntityCoords(entity) as Vector3;
                     const charger = this.upwChargerRepository.getClosestCharger(position);
@@ -147,11 +147,11 @@ export class VehicleElectricProvider {
             },
             {
                 label: "Recharger à l'énergie hydraulique",
-                color: JobType.Upw,
-                icon: 'c:fuel/charger.png',
+                icon: 'fuel/charger',
                 blackoutGlobal: true,
                 blackoutJob: JobType.Upw,
                 job: JobType.Upw,
+                category: 'society',
                 action: entity => {
                     const position = GetEntityCoords(entity) as Vector3;
                     const charger = this.upwChargerRepository.getClosestCharger(position);
@@ -165,11 +165,11 @@ export class VehicleElectricProvider {
             },
             {
                 label: "Recharger à l'énergie éolienne",
-                color: JobType.Upw,
-                icon: 'c:fuel/charger.png',
+                icon: 'fuel/charger',
                 blackoutGlobal: true,
                 blackoutJob: JobType.Upw,
                 job: JobType.Upw,
+                category: 'society',
                 action: entity => {
                     const position = GetEntityCoords(entity) as Vector3;
                     const charger = this.upwChargerRepository.getClosestCharger(position);
@@ -183,11 +183,11 @@ export class VehicleElectricProvider {
             },
             {
                 label: "Recharger à l'énergie solaire",
-                color: JobType.Upw,
-                icon: 'c:fuel/charger.png',
+                icon: 'fuel/charger',
                 blackoutGlobal: true,
                 blackoutJob: JobType.Upw,
                 job: JobType.Upw,
+                category: 'society',
                 action: entity => {
                     const position = GetEntityCoords(entity) as Vector3;
                     const charger = this.upwChargerRepository.getClosestCharger(position);
@@ -201,18 +201,19 @@ export class VehicleElectricProvider {
             },
             {
                 label: 'État de la station',
-                color: JobType.Upw,
-                icon: 'c:fuel/battery.png',
+                icon: 'fuel/battery',
                 blackoutGlobal: true,
                 blackoutJob: JobType.Upw,
                 job: JobType.Upw,
+                category: 'society',
                 action: (entity: number) => {
                     this.getStationEnergyLevel(entity);
                 },
             },
             {
-                icon: 'c:fuel/plug.png',
+                icon: 'fuel/plug',
                 label: 'Prendre la prise',
+                category: 'society',
                 action: (entity: number) => {
                     this.toggleStationPlug(entity);
                 },
@@ -252,8 +253,9 @@ export class VehicleElectricProvider {
                 blackoutGlobal: true,
             },
             {
-                icon: 'c:fuel/plug.png',
+                icon: 'fuel/plug',
                 label: 'Reposer la prise',
+                category: 'society',
                 action: (entity: number) => {
                     this.toggleStationPlug(entity);
                 },
@@ -286,7 +288,8 @@ export class VehicleElectricProvider {
         this.targetFactory.createForAllVehicle([
             {
                 label: 'Charger le véhicule',
-                icon: 'c:fuel/recharge.png',
+                icon: 'fuel/recharge',
+                category: 'society',
                 blackoutGlobal: true,
                 canInteract: (entity: number) => {
                     if (GetEntityHealth(entity) <= 0) {

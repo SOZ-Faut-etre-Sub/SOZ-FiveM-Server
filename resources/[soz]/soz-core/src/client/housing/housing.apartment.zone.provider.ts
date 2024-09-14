@@ -91,7 +91,8 @@ export class HousingApartmentZoneProvider {
             this.targetFactory.createForBoxZone(`housing:apartment:${apartment.id}:exit`, apartment.exitZone, [
                 {
                     label: 'Sortir',
-                    icon: 'c:housing/enter.png',
+                    icon: 'housing/enter',
+                    category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
 
@@ -107,7 +108,8 @@ export class HousingApartmentZoneProvider {
                 },
                 {
                     label: 'Stocker les meubles',
-                    icon: 'fa fa-cart-arrow-down',
+                    icon: 'magasin/acheter',
+                    category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
 
@@ -143,7 +145,8 @@ export class HousingApartmentZoneProvider {
             this.targetFactory.createForBoxZone(`housing:apartment:${apartment.id}:stash`, apartment.stashZone, [
                 {
                     label: 'Coffre de stockage',
-                    icon: 'c:inventory/ouvrir_le_stockage.png',
+                    icon: 'inventory/ouvrir_le_stockage',
+                    category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
 
@@ -171,7 +174,8 @@ export class HousingApartmentZoneProvider {
             this.targetFactory.createForBoxZone(`housing:apartment:${apartment.id}:fridge`, apartment.fridgeZone, [
                 {
                     label: 'Frigo',
-                    icon: 'fa fa-carrot',
+                    icon: 'food/carrot',
+                    category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
 
@@ -199,7 +203,8 @@ export class HousingApartmentZoneProvider {
             this.targetFactory.createForBoxZone(`housing:apartment:${apartment.id}:money`, apartment.moneyZone, [
                 {
                     label: "Coffre d'argent",
-                    icon: 'c:bank/compte_safe.png',
+                    icon: 'bank/compte_safe',
+                    category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
 
@@ -223,7 +228,8 @@ export class HousingApartmentZoneProvider {
             this.targetFactory.createForBoxZone(`housing:apartment:${apartment.id}:closet`, apartment.closetZone, [
                 {
                     label: 'Penderie',
-                    icon: 'c:jobs/habiller.png',
+                    icon: 'jobs/habiller',
+                    category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
 

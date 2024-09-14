@@ -28,11 +28,11 @@ export class DmcRestockProvider {
         this.targetFactory.createForModel(this.shopProvider.getBrandPedModel(BrandsConfig[ShopBrand.LsCustom]), [
             {
                 label: 'Restock: Pièces d’Améliorations Certifiées',
-                icon: 'c:/ffs/restock.png',
-                color: JobType.DMC,
+                icon: 'ffs/restock',
                 job: JobType.DMC,
                 blackoutGlobal: true,
                 blackoutJob: JobType.DMC,
+                category: 'society',
                 action: () => {
                     TriggerServerEvent(ServerEvent.DMC_RESTOCK);
                 },

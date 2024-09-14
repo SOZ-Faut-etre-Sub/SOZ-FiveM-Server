@@ -56,12 +56,12 @@ export class OilStationProvider {
             },
             [
                 {
-                    icon: 'c:fuel/remplir.png',
-                    color: 'oil',
+                    icon: 'fuel/remplir',
                     label: 'Configurateur station',
                     job: JobType.Oil,
                     blackoutGlobal: true,
                     blackoutJob: JobType.Oil,
+                    category: 'society',
                     canInteract: () => this.jobService.hasPermission(JobType.Oil, JobPermission.FuelerChangePrice),
                     action: () => {
                         this.updateStationPrice();

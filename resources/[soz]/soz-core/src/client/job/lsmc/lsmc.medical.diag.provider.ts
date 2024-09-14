@@ -51,10 +51,10 @@ export class LSMCMedicalDiagProvider {
             {
                 label: 'Lancer un scan',
                 blackoutJob: JobType.LSMC,
-                color: JobType.LSMC,
                 job: JobType.LSMC,
                 blackoutGlobal: true,
-                icon: 'c:ems/irm.png',
+                icon: 'ems/irm',
+                category: 'society',
                 canInteract: () => {
                     const playerPed = PlayerPedId();
                     const coord = GetEntityCoords(playerPed) as Vector3;

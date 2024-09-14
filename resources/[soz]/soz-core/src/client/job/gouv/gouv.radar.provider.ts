@@ -44,10 +44,11 @@ export class GouvRadarProvider {
         this.targetFactory.createForModel(RADAR_MODEL, [
             {
                 label: 'Définir la vitesse',
-                icon: 'fas fa-bolt',
+                icon: 'global/bolt',
                 job: JobType.Gouv,
                 blackoutJob: JobType.Gouv,
                 blackoutGlobal: true,
+                category: 'society',
                 canInteract: entity =>
                     this.jobService.hasPermission(JobType.Gouv, JobPermission.GouvManageRadar) &&
                     this.getRadarId(entity) !== null,
@@ -55,10 +56,11 @@ export class GouvRadarProvider {
             },
             {
                 label: 'Désactiver le radar',
-                icon: 'fas fa-toggle-off',
+                icon: 'global/toggle-off',
                 job: JobType.Gouv,
                 blackoutJob: JobType.Gouv,
                 blackoutGlobal: true,
+                category: 'society',
                 canInteract: entity => {
                     if (!this.jobService.hasPermission(JobType.Gouv, JobPermission.GouvManageRadar)) {
                         return false;
@@ -84,10 +86,11 @@ export class GouvRadarProvider {
             },
             {
                 label: 'Activer le radar',
-                icon: 'fas fa-toggle-on',
+                icon: 'global/toggle-on',
                 job: JobType.Gouv,
                 blackoutJob: JobType.Gouv,
                 blackoutGlobal: true,
+                category: 'society',
                 canInteract: entity => {
                     if (!this.jobService.hasPermission(JobType.Gouv, JobPermission.GouvManageRadar)) {
                         return false;
@@ -113,10 +116,11 @@ export class GouvRadarProvider {
             },
             {
                 label: 'Supprimer',
-                icon: 'fas fa-trash',
+                icon: 'global/trash',
                 job: JobType.Gouv,
                 blackoutJob: JobType.Gouv,
                 blackoutGlobal: true,
+                category: 'society',
                 canInteract: entity => {
                     if (!this.jobService.hasPermission(JobType.Gouv, JobPermission.GouvManageRadar)) {
                         return false;

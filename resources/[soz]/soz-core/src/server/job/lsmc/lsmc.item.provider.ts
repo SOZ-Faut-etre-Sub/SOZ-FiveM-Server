@@ -111,9 +111,7 @@ export class LSMCItemProvider {
                     onlyUpperBody: true,
                 },
             },
-            {
-                useAnimationService: true,
-            }
+            {}
         );
 
         if (!completed) {
@@ -229,9 +227,7 @@ export class LSMCItemProvider {
                     onlyUpperBody: true,
                 },
             },
-            {
-                useAnimationService: true,
-            }
+            {}
         );
 
         if (!completed) {
@@ -282,7 +278,6 @@ export class LSMCItemProvider {
                 playbackRate: 0.4,
             },
             {
-                useAnimationService: true,
                 firstProp: {
                     model: 'prop_syringe_01',
                     bone: 28422,
@@ -321,7 +316,6 @@ export class LSMCItemProvider {
                 playbackRate: 0.4,
             },
             {
-                useAnimationService: true,
                 firstProp: {
                     model: 'prop_syringe_01',
                     bone: 28422,
@@ -381,7 +375,6 @@ export class LSMCItemProvider {
                 playbackRate: 0.4,
             },
             {
-                useAnimationService: true,
                 firstProp: {
                     model: 'prop_syringe_01',
                     bone: 28422,

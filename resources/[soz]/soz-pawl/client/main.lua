@@ -32,57 +32,58 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     end
 
     -- Processing
-    exports["qb-target"]:RemoveZone("pawl:processing:tree_trunk")
-    exports["qb-target"]:AddBoxZone("pawl:processing:tree_trunk", vector3(-552.46, 5347.36, 74.74), 0.3, 0.8,
-                                    {
+    exports["soz-core"]:RemoveZone("pawl:processing:tree_trunk")
+    exports["soz-core"]:AddBoxZone("pawl:processing:tree_trunk", {
+        center = {-552.46, 5347.36, 74.74},
+        length = 0.3,
+        width = 0.8,
         name = "pawl:processing:tree_trunk",
         heading = 70,
         minZ = 73.74,
         maxZ = 76.34,
-        debugPoly = false,
     }, {
-        options = {
-            {
-                type = "server",
-                color = "pawl",
-                label = "Démarrer production",
-                icon = "c:pawl/start-prod.png",
-                event = "pawl:server:startProcessingTree",
-                canInteract = function()
-                    local enabled = QBCore.Functions.TriggerRpc("pawl:server:processingTreeIsEnabled")
-                    return not enabled
-                end,
-                job = "pawl",
-                blackoutGlobal = true,
-                blackoutJob = "pawl",
-            },
-            {
-                type = "server",
-                color = "pawl",
-                label = "Arrêter production",
-                icon = "c:pawl/stop-prod.png",
-                event = "pawl:server:stopProcessingTree",
-                canInteract = function()
-                    local enabled = QBCore.Functions.TriggerRpc("pawl:server:processingTreeIsEnabled")
-                    return enabled
-                end,
-                job = "pawl",
-                blackoutGlobal = true,
-                blackoutJob = "pawl",
-            },
-            {
-                type = "server",
-                color = "pawl",
-                label = "État production",
-                icon = "c:pawl/status-prod.png",
-                event = "pawl:server:statusProcessingTree",
-                job = "pawl",
-                blackoutGlobal = true,
-                blackoutJob = "pawl",
-            },
+        {
+            color = "pawl",
+            label = "Démarrer production",
+            icon = "pawl/start-prod",
+            canInteract = function()
+                local enabled = QBCore.Functions.TriggerRpc("pawl:server:processingTreeIsEnabled")
+                return not enabled
+            end,
+            action = function()
+                TriggerServerEvent("pawl:server:startProcessingTree")
+            end,
+            job = "pawl",
+            blackoutGlobal = true,
+            blackoutJob = "pawl",
         },
-        distance = 2.5,
-    })
+        {
+            color = "pawl",
+            label = "Arrêter production",
+            icon = "pawl/stop-prod",
+            canInteract = function()
+                local enabled = QBCore.Functions.TriggerRpc("pawl:server:processingTreeIsEnabled")
+                return enabled
+            end,
+            action = function()
+                TriggerServerEvent("pawl:server:stopProcessingTree")
+            end,
+            job = "pawl",
+            blackoutGlobal = true,
+            blackoutJob = "pawl",
+        },
+        {
+            color = "pawl",
+            label = "État production",
+            icon = "pawl/status-prod",
+            action = function()
+                TriggerServerEvent("pawl:server:statusProcessingTree")
+            end,
+            job = "pawl",
+            blackoutGlobal = true,
+            blackoutJob = "pawl",
+        },
+    }, 2.5)
 end)
 
 --- Degradation

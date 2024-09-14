@@ -43,7 +43,6 @@ export class ItemHalloweenProvider {
                 },
             },
             {
-                useAnimationService: true,
                 disableCombat: true,
                 disableMovement: true,
                 canCancel: false,
@@ -73,7 +72,6 @@ export class ItemHalloweenProvider {
                 },
             },
             {
-                useAnimationService: true,
                 disableCombat: true,
                 disableMovement: true,
                 canCancel: false,

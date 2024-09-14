@@ -32,6 +32,18 @@ export type Minimap = {
     left: number;
     right: number;
     top: number;
+    isHidden: boolean;
+};
+
+export type HudDateTime = {
+    hour: number;
+    minute: number;
+    dayOfWeek: number;
+};
+
+export type HudCompass = {
+    degree: number;
+    cardinal: 'N' | 'NE' | 'E' | 'SE' | 'S' | 'SW' | 'W' | 'NW';
 };
 
 export enum VoiceMode {
@@ -43,9 +55,34 @@ export enum VoiceMode {
     Megaphone,
 }
 
+export enum HudTheme {
+    Auto = 'auto',
+    Light = 'light',
+    Dark = 'dark',
+    Green = 'green',
+    Uwu = 'uwu',
+}
+
+export type HudSettings = {
+    theme: HudTheme;
+    zoom: number;
+    showDateTime: boolean;
+    showWeather: boolean;
+    showStreetName: boolean;
+    showCompass: boolean;
+    showStress: boolean;
+    showStamina: boolean;
+};
+
 export type HudState = {
-    minimap: Minimap;
+    hasWatch: boolean;
+    settings: HudSettings;
     voiceMode: VoiceMode;
+    streetName: string[];
+    compass: HudCompass;
+    ammo: HudWeaponAmmo;
+    dateTime: HudDateTime;
+    minimap: Minimap;
 };
 
 export enum Font {
@@ -55,3 +92,9 @@ export enum Font {
     ChaletComprimeCologne = 4,
     Pricedown = 7,
 }
+
+export type HudWeaponAmmo = {
+    hasWeapon: boolean;
+    ammo: number;
+    maxAmmo: number;
+};

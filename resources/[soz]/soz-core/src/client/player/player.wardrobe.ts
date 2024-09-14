@@ -94,7 +94,6 @@ export class PlayerWardrobe {
                 disableMouse: false,
                 disableCombat: true,
                 canCancel: canCancel,
-                useAnimationService: true,
             }
         );
     }

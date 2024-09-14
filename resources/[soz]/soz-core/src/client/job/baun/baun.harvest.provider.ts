@@ -5,8 +5,9 @@ import { ServerEvent } from '../../../shared/event/server';
 import { JobType } from '../../../shared/job';
 import { Zone } from '../../../shared/polyzone/box.zone';
 import { toVector4Object, Vector4 } from '../../../shared/polyzone/vector';
+import { TargetOption } from '../../../shared/target';
 import { PlayerService } from '../../player/player.service';
-import { TargetFactory, TargetOptions } from '../../target/target.factory';
+import { TargetFactory } from '../../target/target.factory';
 
 type HarvestZone = {
     item: string;
@@ -72,11 +73,11 @@ export class BaunHarvestProvider {
     public async loadHarvestZones() {
         for (const harvestZone of HARVEST_ZONES) {
             for (const zone of harvestZone.zones) {
-                const options: TargetOptions[] = [
+                const options: TargetOption[] = [
                     {
-                        color: JobType.Baun,
                         label: 'Récupérer',
-                        icon: 'c:jobs/recuperer.png',
+                        icon: 'jobs/recuperer',
+                        category: 'society',
                         blackoutJob: JobType.Baun,
                         blackoutGlobal: true,
                         job: JobType.Baun,

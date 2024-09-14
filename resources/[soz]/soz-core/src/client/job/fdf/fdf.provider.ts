@@ -59,7 +59,7 @@ export class FDFProvider {
     public setupFDFJob() {
         Object.values(FDFFieldBlips).forEach(kind => this.areaBlips.set(kind, []));
 
-        this.craftService.createBtargetZoneCraft(FDFCraftZones, 'c:/food/chef.png', 'Préparer', JobType.FDF);
+        this.craftService.createBtargetZoneCraft(FDFCraftZones, 'food/chef', 'Préparer', JobType.FDF);
 
         FDFConfig.resellZones.forEach((zone, index) => {
             this.pedFactory.createPedOnGrid({

@@ -12,12 +12,15 @@ function CreateInverterZone(identifier, data)
     data.options = {
         {
             label = "Accéder à l'onduleur",
-            icon = "c:inventory/ouvrir_le_stockage.png",
-            event = "inventory:client:qTargetOpenInventory",
-            storageID = identifier,
-            storage = {type = "inverter"},
+            icon = "inventory/ouvrir_le_stockage",
             canInteract = function()
                 return OnDuty()
+            end,
+            action = function()
+                TriggerEvent("inventory:client:qTargetOpenInventory", {
+                    storage = {type = "inverter"},
+                    storageID = identifier,
+                })
             end,
         },
     }
@@ -94,7 +97,7 @@ function CreateTerminalTargetScope(scope)
     local options = {
         {
             label = "Déposer l'énergie",
-            icon = "c:upw/deposer.png",
+            icon = "upw/deposer",
             action = function(entity)
                 local objectId = exports["soz-core"]:GetObjectIdFromEntity(entity)
 
@@ -110,7 +113,7 @@ function CreateTerminalTargetScope(scope)
         },
         {
             label = "État d'énergie",
-            icon = "c:fuel/battery.png",
+            icon = "fuel/battery",
             action = function(entity)
                 local objectId = exports["soz-core"]:GetObjectIdFromEntity(entity)
 
@@ -120,15 +123,14 @@ function CreateTerminalTargetScope(scope)
 
                 TriggerServerEvent("soz-upw:server:FacilityCapacity", {identifier = objectId, facility = "terminal"})
             end,
-            scope = scope,
-            canInteract = function(entity, distance, data)
+            canInteract = function(entity)
                 local objectId = exports["soz-core"]:GetObjectIdFromEntity(entity)
 
                 if not objectId then
                     return false
                 end
 
-                if data.scope == "entreprise" then
+                if scope == "entreprise" then
                     return OnDutyUpwOrJob(objectIdJobs[objectId])
                 else
                     return OnDuty()
@@ -137,5 +139,5 @@ function CreateTerminalTargetScope(scope)
         },
     }
 
-    exports["qb-target"]:AddTargetModel(prop, {options = options, distance = 2})
+    exports["soz-core"]:AddTargetModel(prop, options, 2)
 end

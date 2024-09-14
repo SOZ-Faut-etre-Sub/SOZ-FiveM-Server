@@ -23,15 +23,15 @@ import { HousingRepository } from '@public/client/repository/housing.repository'
 import { ResourceLoader } from '@public/client/repository/resource.loader';
 import { TargetFactory } from '@public/client/target/target.factory';
 import { NoClipProvider } from '@public/client/utils/noclip.provider';
-import { ClientEvent, ServerEvent } from '@public/shared/event';
-import { NuiEvent } from '@public/shared/event';
+import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import {
+    Apartment,
     canUseHousingInAppartment,
     getMaxFourntiure,
     isApartmentExcludeFromHousing,
     isPlayerInsideApartment,
+    Property,
 } from '@public/shared/housing/housing';
-import { Apartment, Property } from '@public/shared/housing/housing';
 import { MenuType } from '@public/shared/nui/menu';
 import { HousingPlacementProp, HousingProp } from '@public/shared/nui/prop_placement';
 import { HousingDebugProp, WorldObject } from '@public/shared/object';
@@ -40,6 +40,8 @@ import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { RepositoryType } from '@public/shared/repository';
 import { Err, Ok } from '@public/shared/result';
 import { RpcServerEvent } from '@public/shared/rpc';
+
+import { ScreenService } from '../screen.service';
 
 @Provider()
 export class HousingFournitureProvider {
@@ -69,6 +71,9 @@ export class HousingFournitureProvider {
 
     @Inject(TargetFactory)
     private targetFactory: TargetFactory;
+
+    @Inject(ScreenService)
+    private screenService: ScreenService;
 
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
@@ -301,7 +306,8 @@ export class HousingFournitureProvider {
             this.targetFactory.createForEntity(entity, [
                 {
                     label: 'Coffre de stockage',
-                    icon: 'c:inventory/ouvrir_le_stockage.png',
+                    icon: 'inventory/ouvrir_le_stockage',
+                    category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
 
@@ -328,7 +334,8 @@ export class HousingFournitureProvider {
             this.targetFactory.createForEntity(entity, [
                 {
                     label: "Coffre d'argent",
-                    icon: 'c:bank/compte_safe.png',
+                    icon: 'bank/compte_safe',
+                    category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
 
@@ -351,7 +358,8 @@ export class HousingFournitureProvider {
             this.targetFactory.createForEntity(entity, [
                 {
                     label: 'Frigo',
-                    icon: 'fa fa-carrot',
+                    icon: 'food/carrot',
+                    category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
 
@@ -378,7 +386,8 @@ export class HousingFournitureProvider {
             this.targetFactory.createForEntity(entity, [
                 {
                     label: 'Penderie',
-                    icon: 'c:jobs/habiller.png',
+                    icon: 'jobs/habiller',
+                    category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
 
@@ -1002,7 +1011,7 @@ export class HousingFournitureProvider {
     }
 
     private async getEntityFromMouse() {
-        const [, , , hitEntDebug] = await this.targetFactory.raycastFromMousePosition(-1);
+        const [hitEntDebug] = await this.screenService.getEntityOnMousePosition();
         return hitEntDebug;
     }
 

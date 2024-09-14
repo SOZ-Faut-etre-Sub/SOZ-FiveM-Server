@@ -34,9 +34,9 @@ export class PawlCraftProvider {
                     label: 'Fabriquer',
                     blackoutGlobal: true,
                     blackoutJob: JobType.Pawl,
-                    icon: 'c:/pawl/start-prod.png',
-                    color: JobType.Pawl,
+                    icon: 'pawl/start-prod',
                     job: JobType.Pawl,
+                    category: 'society',
                     action: async () => {
                         const crafting = await emitRpc<CraftsList>(RpcServerEvent.CRAFT_GET_RECIPES, JobType.Pawl);
                         crafting.title = this.jobService.getJob(JobType.Pawl).label;

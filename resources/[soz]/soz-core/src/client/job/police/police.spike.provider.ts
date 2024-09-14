@@ -42,8 +42,9 @@ export class PoliceSpikeProvider {
             [
                 {
                     label: 'Démonter',
-                    icon: 'c:jobs/demonter.png',
+                    icon: 'jobs/demonter',
                     job: jobsTarget,
+                    category: 'citizen',
                     action: async (entity: number) => {
                         const { completed } = await this.progressService.progress(
                             'remove_object',
@@ -80,8 +81,9 @@ export class PoliceSpikeProvider {
             [
                 {
                     label: 'Démonter',
-                    icon: 'c:jobs/demonter.png',
+                    icon: 'jobs/demonter',
                     job: jobsTarget,
+                    category: 'society',
                     canInteract: entity => {
                         const id = this.objectProvider.getIdFromEntity(entity);
                         return !!id;

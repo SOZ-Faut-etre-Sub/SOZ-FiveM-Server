@@ -1883,7 +1883,8 @@ export class DevilBaitShopProvider {
                 options: [
                     {
                         label: 'Boutique du diable',
-                        icon: 'c:/fishing/fishing-rod.png',
+                        icon: 'fishing/fishing-rod',
+                        category: 'citizen',
                         action: () => {
                             const FishingProducts = [
                                 {
@@ -1899,7 +1900,8 @@ export class DevilBaitShopProvider {
                     },
                     {
                         label: 'Vendre son âme',
-                        icon: 'c:stonk/vendre.png',
+                        icon: 'stonk/vendre',
+                        category: 'citizen',
                         canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario4', 4),
                         action: () => {
                             this.halloween2023Scenario4Provider.enterFinal();
@@ -2009,7 +2011,8 @@ export class DevilBaitShopProvider {
                 options: [
                     {
                         label: 'Parler',
-                        icon: 'fas fa-comment',
+                        icon: 'global/comment',
+                        category: 'citizen',
                         action: () => {
                             this.notifier.notify('Wouah wouaf !!');
                         },

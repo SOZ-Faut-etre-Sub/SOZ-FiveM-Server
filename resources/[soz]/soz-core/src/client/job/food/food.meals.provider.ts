@@ -36,15 +36,17 @@ export class FoodMealsProvider {
             [
                 {
                     label: 'Commander',
-                    icon: 'c:food/order.png',
+                    icon: 'food/order',
                     job: 'food',
+                    category: 'society',
                     canInteract: () => !this.orderInProgress,
                     action: this.doOrderMeals.bind(this),
                 },
                 {
                     label: 'Récupérer la commande',
-                    icon: 'c:food/retrieve-order.png',
+                    icon: 'food/retrieve-order',
                     job: 'food',
+                    category: 'society',
                     canInteract: () => this.orderInProgress,
                     action: this.doRetrieveOrder.bind(this),
                 },

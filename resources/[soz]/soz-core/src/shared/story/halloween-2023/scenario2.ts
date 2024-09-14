@@ -75,7 +75,7 @@ export const Halloween2023Scenario2: Story = {
             name: 'halloween_2023_scenario2_artefact',
             part: 5,
             label: 'Ramasser',
-            icon: 'fas fa-search',
+            icon: 'global/search',
             ...new BoxZone([-2077.8, 2614.5, 2.67], 0.4, 0.4, {
                 heading: 198.64,
                 minZ: 1.87,

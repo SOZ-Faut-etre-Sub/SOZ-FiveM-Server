@@ -103,24 +103,24 @@ export class LSMCCheckHealthProvider {
         this.targetFactory.createForAllPlayer([
             {
                 label: 'Prise de sang pour test',
-                color: 'lsmc',
-                icon: 'c:ems/take_blood.png',
+                icon: 'ems/take_blood',
                 job: 'lsmc',
+                category: 'society',
                 action: this.doBloodCheck.bind(this),
                 item: 'flask_blood_empty',
             },
             {
                 label: 'Etat de santé',
-                icon: 'c:ems/health_state.png',
-                color: 'lsmc',
+                icon: 'ems/health_state',
                 job: 'lsmc',
+                category: 'society',
                 action: this.doHealthCheck.bind(this),
             },
             {
                 label: 'Modifier la carte de santé',
-                icon: 'c:ems/health_card.png',
-                color: 'lsmc',
+                icon: 'ems/health_card',
                 job: 'lsmc',
+                category: 'society',
                 action: entity => {
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                     this.nuiMenu.openMenu(MenuType.SetHealthState, target, {
@@ -150,10 +150,9 @@ export class LSMCCheckHealthProvider {
             this.targetFactory.createForBoxZone('lsmc_analyze_' + index, zone, [
                 {
                     label: 'Analyse urinaire',
-                    icon: 'c:ems/urine_test.png',
-                    color: 'lsmc',
+                    icon: 'ems/urine_test',
                     job: 'lsmc',
-                    event: ServerEvent.LSMC_PEE_ANALYZE,
+                    category: 'society',
                     action: () => {
                         TriggerServerEvent(ServerEvent.LSMC_PEE_ANALYZE);
                     },
@@ -161,9 +160,9 @@ export class LSMCCheckHealthProvider {
                 },
                 {
                     label: 'Analyse de sang',
-                    icon: 'c:ems/blood_test.png',
-                    color: 'lsmc',
+                    icon: 'ems/blood_test',
                     job: 'lsmc',
+                    category: 'society',
                     action: () => {
                         TriggerServerEvent(ServerEvent.LSMC_BLOOD_ANALYZE);
                     },

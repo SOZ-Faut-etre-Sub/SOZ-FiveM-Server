@@ -82,19 +82,19 @@ export class OilTankerProvider {
             ['tanker', 'tanker2'],
             [
                 {
-                    icon: 'c:fuel/pistolet.png',
-                    color: 'oil',
+                    icon: 'fuel/pistolet',
                     label: 'Connecter le Tanker',
                     job: JobType.Oil,
                     blackoutGlobal: true,
                     blackoutJob: JobType.Oil,
+                    category: 'society',
                     canInteract: () => !this.currentTankerAttached,
                     action: this.connectTanker.bind(this),
                 },
                 {
-                    icon: 'c:fuel/pistolet.png',
-                    color: 'oil',
+                    icon: 'fuel/pistolet',
                     label: 'Déconnecter le Tanker',
+                    category: 'society',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
 
@@ -131,9 +131,9 @@ export class OilTankerProvider {
             },*/
             [
                 {
-                    icon: 'c:fuel/remplir.png',
-                    color: 'oil',
+                    icon: 'fuel/remplir',
                     label: 'Relier le Tanker',
+                    category: 'society',
                     job: JobType.Oil,
                     blackoutGlobal: true,
                     blackoutJob: JobType.Oil,
@@ -146,9 +146,9 @@ export class OilTankerProvider {
         for (const zone of REFINERY_ZONES) {
             this.targetFactory.createForBoxZone(`mtp_fuel_refinery_${zone.center[0]}`, zone, [
                 {
-                    icon: 'c:fuel/remplir.png',
-                    color: 'oil',
+                    icon: 'fuel/remplir',
                     label: 'Relier le Tanker',
+                    category: 'society',
                     job: JobType.Oil,
                     blackoutGlobal: true,
                     blackoutJob: JobType.Oil,
@@ -162,9 +162,9 @@ export class OilTankerProvider {
             ['p_oil_pjack_01_s', 'p_oil_pjack_02_s', 'p_oil_pjack_03_s'],
             [
                 {
-                    icon: 'c:fuel/remplir.png',
-                    color: 'oil',
+                    icon: 'fuel/remplir',
                     label: 'Relier le Tanker',
+                    category: 'society',
                     job: JobType.Oil,
                     blackoutGlobal: true,
                     blackoutJob: JobType.Oil,

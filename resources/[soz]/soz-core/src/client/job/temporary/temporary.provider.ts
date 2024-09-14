@@ -77,7 +77,7 @@ const TemporaryJobs: Partial<Record<JobType, TemporaryJob>> = {
             new BoxZone([235.83, 235.83, 105.5], 45.8, 54.0, { heading: 340, maxZ: 110.0, minZ: 104.0 }),
             new BoxZone([-1221.01, -1546.34, 18.48], 48.8, 76.6, { heading: 305, maxZ: 7.08, minZ: 3.08 }),
         ],
-        targetIcon: 'fas fa-sign-in-alt',
+        targetIcon: 'jobs/duty',
         targetLabel: 'Donner une info chat',
         targetCanInteract: (entity: number) => {
             return GetEntityType(entity) === 1;
@@ -141,7 +141,7 @@ const TemporaryJobs: Partial<Record<JobType, TemporaryJob>> = {
             new BoxZone([-822.38, -995.39, 13.07], 1, 1, { heading: 29, maxZ: 14.07, minZ: 12.27 }),
             new BoxZone([-1365.82, -686.5, 25.32], 1, 1, { heading: 37, maxZ: 25.32, minZ: 23.72 }),
         ],
-        targetIcon: 'c:pole/livrer.png',
+        targetIcon: 'pole/livrer',
         targetLabel: 'Livrez la fougère',
         missionMoney: 10,
         missionProgressAnimation: {
@@ -207,7 +207,7 @@ const TemporaryJobs: Partial<Record<JobType, TemporaryJob>> = {
             new BoxZone([-566.75, -356.01, 35.06], 1.0, 1.6, { heading: 1, maxZ: 36.06, minZ: 33.86 }),
             new BoxZone([-298.36, -154.46, 41.33], 1.6, 0.6, { heading: 358, maxZ: 41.73, minZ: 19.93 }),
         ],
-        targetIcon: 'c:pole/repair.png',
+        targetIcon: 'pole/repair',
         targetLabel: 'Réparer',
         missionMoney: 12,
         missionProgressAnimation: {
@@ -297,8 +297,9 @@ export class TemporaryProvider {
                     distance: 2.5,
                     options: [
                         {
-                            icon: 'c:pole/start.png',
+                            icon: 'pole/start',
                             label: job.label,
+                            category: 'society',
                             blackoutGlobal: true,
                             canInteract: () => {
                                 return this.playerService.getPlayer()?.job.id === JobType.Unemployed;
@@ -308,8 +309,9 @@ export class TemporaryProvider {
                             },
                         },
                         {
-                            icon: 'c:pole/restart.png',
+                            icon: 'pole/restart',
                             label: 'Relancer',
+                            category: 'society',
                             blackoutGlobal: true,
                             canInteract: () => {
                                 return this.playerService.getPlayer()?.job.id === jobType;
@@ -319,8 +321,9 @@ export class TemporaryProvider {
                             },
                         },
                         {
-                            icon: 'c:pole/end.png',
+                            icon: 'pole/end',
                             label: 'Terminer',
+                            category: 'society',
                             canInteract: () => {
                                 return this.playerService.getPlayer()?.job.id === jobType;
                             },
@@ -443,6 +446,7 @@ export class TemporaryProvider {
             {
                 icon: job.targetIcon,
                 label: job.targetLabel,
+                category: 'society',
                 canInteract: entity => {
                     if (job.repeat && this.entityDones.includes(entity)) {
                         return false;

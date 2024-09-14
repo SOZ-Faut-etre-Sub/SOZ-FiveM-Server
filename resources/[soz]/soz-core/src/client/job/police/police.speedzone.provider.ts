@@ -40,8 +40,9 @@ export class PoliceSpeedZoneProvider {
         this.targetFactory.createForModel(roadSignModel, [
             {
                 label: 'Démonter',
-                icon: 'c:jobs/demonter.png',
+                icon: 'jobs/demonter',
                 job: jobsTarget,
+                category: 'society',
                 action: async (entity: number) => {
                     const id = this.objectProvider.getIdFromEntity(entity);
                     const { completed } = await this.progressService.progress(

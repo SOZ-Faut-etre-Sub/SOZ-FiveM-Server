@@ -54,7 +54,8 @@ export class DoorProvider {
             [
                 {
                     label: 'Admin: Ajouter une porte',
-                    icon: 'c:door/door.png',
+                    icon: 'door/door',
+                    category: 'citizen',
                     canInteract: entity => {
                         if (!this.adminEnabled) {
                             return false;
@@ -110,7 +111,8 @@ export class DoorProvider {
                 },
                 {
                     label: 'Admin: Ajouter un battant',
-                    icon: 'c:door/double.png',
+                    icon: 'door/double',
+                    category: 'citizen',
                     canInteract: entity => {
                         if (!this.adminEnabled) {
                             return false;
@@ -172,7 +174,8 @@ export class DoorProvider {
                 },
                 {
                     label: 'Admin: Configurer la porte',
-                    icon: 'c:door/cogwheel.png',
+                    icon: 'door/cogwheel',
+                    category: 'citizen',
                     canInteract: entity => {
                         if (!this.adminEnabled) {
                             return false;
@@ -200,7 +203,8 @@ export class DoorProvider {
                 },
                 {
                     label: 'Verrouiller',
-                    icon: 'c:door/lock.png',
+                    icon: 'door/lock',
+                    category: 'citizen',
                     canInteract: entity => {
                         const [valid, locked] = this.canInterract(entity);
                         return valid && !locked;
@@ -225,7 +229,8 @@ export class DoorProvider {
                 },
                 {
                     label: 'Déverrouiller',
-                    icon: 'c:door/unlock.png',
+                    icon: 'door/unlock',
+                    category: 'citizen',
                     canInteract: entity => {
                         const [valid, locked] = this.canInterract(entity);
                         return valid && locked;

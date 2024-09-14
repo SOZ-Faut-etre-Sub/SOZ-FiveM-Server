@@ -9,6 +9,7 @@ import { ClientEvent } from '../../shared/event';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { AnimationRunner } from '../animation/animation.factory';
 import { AnimationService } from '../animation/animation.service';
+import { HudWatchProvider } from '../hud/hud.watch.provider';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { PlayerService } from '../player/player.service';
 
@@ -39,6 +40,9 @@ export class ItemCameraProvider {
 
     @Inject(PlayerService)
     private readonly playerService: PlayerService;
+
+    @Inject(HudWatchProvider)
+    private readonly hudWatchProvider: HudWatchProvider;
 
     private currentAnimation: AnimationRunner = null;
 
@@ -200,6 +204,7 @@ export class ItemCameraProvider {
         this.cam = this.createCamera();
 
         this.nuiDispatch.dispatch('hud', 'SetTwitchNewsOverlay', player.job.id);
+        this.hudWatchProvider.disableWatch(true);
 
         await this.currentAnimation;
 
@@ -207,6 +212,7 @@ export class ItemCameraProvider {
 
         this.currentAnimation = null;
         this.nuiDispatch.dispatch('hud', 'SetTwitchNewsOverlay', null);
+        this.hudWatchProvider.disableWatch(false);
     }
 
     private createCamera(): number {

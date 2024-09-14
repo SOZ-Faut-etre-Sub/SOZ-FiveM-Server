@@ -29,12 +29,68 @@ export const StateApp: FunctionComponent = () => {
         dispatch.taxi.update(status);
     });
 
+    useNuiEvent('hud', 'SetTheme', theme => {
+        dispatch.hud.updateSettings({ theme });
+    });
+
+    useNuiEvent('hud', 'SetZoom', zoom => {
+        dispatch.hud.updateSettings({ zoom });
+    });
+
+    useNuiEvent('hud', 'SetShowDateTime', showDateTime => {
+        dispatch.hud.updateSettings({ showDateTime });
+    });
+
+    useNuiEvent('hud', 'SetShowWeather', showWeather => {
+        dispatch.hud.updateSettings({ showWeather });
+    });
+
+    useNuiEvent('hud', 'SetShowStreetName', showStreetName => {
+        dispatch.hud.updateSettings({ showStreetName });
+    });
+
+    useNuiEvent('hud', 'SetShowCompass', showCompass => {
+        dispatch.hud.updateSettings({ showCompass });
+    });
+
+    useNuiEvent('hud', 'SetShowStress', showStress => {
+        dispatch.hud.updateSettings({ showStress });
+    });
+
+    useNuiEvent('hud', 'SetShowStamina', showStamina => {
+        dispatch.hud.updateSettings({ showStamina });
+    });
+
+    useNuiEvent('hud', 'UpdateSettings', settings => {
+        dispatch.hud.update({ settings });
+    });
+
+    useNuiEvent('hud', 'UpdateHasWatch', hasWatch => {
+        dispatch.hud.update({ hasWatch });
+    });
+
     useNuiEvent('hud', 'UpdateVoiceMode', voiceMode => {
         dispatch.hud.update({ voiceMode });
     });
 
     useNuiEvent('hud', 'UpdateMinimap', minimap => {
         dispatch.hud.update({ minimap });
+    });
+
+    useNuiEvent('hud', 'UpdateDateTime', dateTime => {
+        dispatch.hud.update({ dateTime });
+    });
+
+    useNuiEvent('hud', 'UpdateWeaponAmmo', ammo => {
+        dispatch.hud.update({ ammo });
+    });
+
+    useNuiEvent('hud', 'UpdateStreetName', streetName => {
+        dispatch.hud.update({ streetName });
+    });
+
+    useNuiEvent('hud', 'UpdateCompass', compass => {
+        dispatch.hud.update({ compass });
     });
 
     useNuiEvent('hud', 'UpdateVehicle', vehicle => {

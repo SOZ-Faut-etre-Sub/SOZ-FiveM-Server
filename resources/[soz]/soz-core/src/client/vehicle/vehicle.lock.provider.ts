@@ -147,6 +147,8 @@ export class VehicleLockProvider {
             }
         }
 
+        if (GetPedInVehicleSeat(vehicleId, VehicleSeat.Driver) === PlayerPedId()) return;
+
         if (NetworkHasControlOfEntity(vehicleId)) {
             SetVehicleLights(vehicleId, 2);
             await wait(250);

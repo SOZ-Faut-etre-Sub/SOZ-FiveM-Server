@@ -13,6 +13,6 @@ export class FoodCraftProvider {
 
     @Once(OnceStep.PlayerLoaded)
     public setupFoodCraft() {
-        this.craftService.createBtargetZoneCraft(CraftZones, 'c:/food/chef.png', 'Transformer', JobType.Food);
+        this.craftService.createBtargetZoneCraft(CraftZones, 'food/chef', 'Transformer', JobType.Food);
     }
 }

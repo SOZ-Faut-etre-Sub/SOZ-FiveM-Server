@@ -67,11 +67,11 @@ export class PoliceMoneyCheckerProvider {
                 [
                     {
                         label: 'Analyser',
-                        color: moneycheckerInfo.job,
-                        icon: 'c:police/fouiller.png',
+                        icon: 'police/fouiller',
                         job: moneycheckerInfo.job,
                         blackoutGlobal: true,
                         blackoutJob: moneycheckerInfo.job,
+                        category: 'society',
                         canInteract: () => {
                             const [player, distance] = this.playerService.getClosestPlayer();
 

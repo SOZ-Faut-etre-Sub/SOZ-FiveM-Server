@@ -51,7 +51,8 @@ export class LSMCWheelChairProvider {
                     NetworkGetEntityIsNetworked(entity) &&
                     this.getPlayerUsingWheelChair(entity) == null,
                 label: 'Ramasser',
-                icon: 'c:baun/createCocktailBox.png',
+                icon: 'baun/createCocktailBox',
+                category: 'citizen',
                 action: async entity => {
                     const { completed } = await this.progressService.progress(
                         'wheelchair_retrieve',
@@ -67,9 +68,7 @@ export class LSMCWheelChairProvider {
                                 onlyUpperBody: true,
                             },
                         },
-                        {
-                            useAnimationService: true,
-                        }
+                        {}
                     );
 
                     if (!completed) {
@@ -81,7 +80,8 @@ export class LSMCWheelChairProvider {
             },
             {
                 label: 'Pousser',
-                icon: 'c:ems/push.png',
+                icon: 'ems/push',
+                category: 'citizen',
                 canInteract: entity =>
                     !this.playerService.isPushing() &&
                     (!IsEntityAttached(entity) || GetEntityAttachedTo(entity) == 0) &&
@@ -90,7 +90,8 @@ export class LSMCWheelChairProvider {
             },
             {
                 label: "S'asseoir",
-                icon: 'c:ems/wheelchair.png',
+                icon: 'ems/wheelchair',
+                category: 'citizen',
                 canInteract: entity =>
                     this.getPlayerUsingWheelChair(entity) == null &&
                     NetworkGetEntityIsNetworked(entity) &&

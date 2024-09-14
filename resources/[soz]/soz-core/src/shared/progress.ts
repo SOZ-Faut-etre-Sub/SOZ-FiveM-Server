@@ -1,4 +1,5 @@
 import { AnimationOptions, AnimationProps } from '@public/shared/animation';
+import { ProgressUnit } from '@public/shared/nui/progress';
 
 export type ProgressOptions = {
     audio?: {
@@ -21,9 +22,9 @@ export type ProgressOptions = {
     ignorePollution?: boolean;
     start?: () => void;
     tick?: () => void;
-    useAnimationService?: boolean;
     allowExistingAnimation?: boolean;
     no_inv_busy?: boolean;
+    units?: ProgressUnit[];
 };
 
 export type ProgressAnimation = {

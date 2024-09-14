@@ -86,7 +86,8 @@ export class AlbumProvider {
                 options: [
                     {
                         label: 'Liste des Albums',
-                        icon: 'c:/magasin/album.png',
+                        icon: 'magasin/album',
+                        category: 'citizen',
                         action: () => {
                             this.inventoryManager.openShopInventory(shopProducts, 'menu_shop_music', TaxType.SUPPLY);
                         },

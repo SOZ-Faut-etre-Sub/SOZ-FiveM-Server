@@ -11,82 +11,78 @@ end
 
 local function TreeInteraction(identifier, position)
     local zoneName = ("pawl:%s:%s"):format(identifier, position.x .. position.y)
-    exports["qb-target"]:RemoveZone(zoneName)
-    exports["qb-target"]:AddBoxZone(zoneName, position, 8.0, 8.0,
-                                    {
-        name = zoneName,
+
+    exports["soz-core"]:RemoveZone(zoneName)
+    exports["soz-core"]:AddBoxZone(zoneName, {
+        center = {position.x, position.y, position.z},
+        length = 8.0,
+        width = 8.0,
         heading = position.w or 0.0,
         minZ = position.z,
         maxZ = position.z + 5.0,
-        debugPoly = false,
     }, {
-        options = {
-            {
-                color = "pawl",
-                label = "Récolter",
-                icon = "c:pawl/harvest.png",
-                event = "pawl:client:harvestTree",
-                item = Config.Harvest.RequiredWeapon,
-                job = "pawl",
-                blackoutGlobal = true,
-                blackoutJob = "pawl",
-                --- metadata
-                identifier = identifier,
-                position = position,
-            },
-            {
-                color = "pawl",
-                label = "Tronçonner",
-                icon = "c:pawl/harvest-chainsaw.png",
-                event = "pawl:client:checkChainsawFuel",
-                item = Config.FastHarvest.RequiredWeapon,
-                job = "pawl",
-                blackoutGlobal = true,
-                blackoutJob = "pawl",
-                --- metadata
-                identifier = identifier,
-                position = position,
-            },
-            {
-                color = "pawl",
-                label = "Récolter la sève",
-                icon = "c:pawl/harvest-sap.png",
-                event = "pawl:client:harvestTreeSap",
-                item = Config.Harvest.RequiredWeapon,
-                canInteract = function()
-                    local treeKey = ConcatPosition(position)
-                    if SapHarvestedTrees[treeKey] ~= nil then
-                        return false
-                    end
-
-                    return not harvesting
-                end,
-                job = "pawl",
-                blackoutGlobal = true,
-                blackoutJob = "pawl",
-                --- metadata
-                identifier = identifier,
-                position = position,
-            },
-            {
-                color = "crimi",
-                label = "Récolter des champignons",
-                icon = "c:pawl/harvest-mushroom.png",
-                event = "soz-core:client:drugs:harvest-champi",
-                position = position,
-                canInteract = function()
-                    for _, value in ipairs(PlayerData.metadata.drugs_skills) do
-                        -- 1 is Botanite
-                        if value == 1 then
-                            return true
-                        end
-                    end
-                    return false
-                end,
-            },
+        {
+            color = "pawl",
+            label = "Récolter",
+            icon = "pawl/harvest",
+            item = Config.Harvest.RequiredWeapon,
+            job = "pawl",
+            blackoutGlobal = true,
+            blackoutJob = "pawl",
+            action = function()
+                TriggerEvent("pawl:client:harvestTree", {identifier = identifier, position = position})
+            end,
         },
-        distance = 2.5,
-    })
+        {
+            color = "pawl",
+            label = "Tronçonner",
+            icon = "pawl/harvest-chainsaw",
+            item = Config.FastHarvest.RequiredWeapon,
+            job = "pawl",
+            blackoutGlobal = true,
+            blackoutJob = "pawl",
+            action = function()
+                TriggerEvent("pawl:client:checkChainsawFuel", {identifier = identifier, position = position})
+            end,
+        },
+        {
+            color = "pawl",
+            label = "Récolter la sève",
+            icon = "pawl/harvest-sap",
+            item = Config.Harvest.RequiredWeapon,
+            canInteract = function()
+                local treeKey = ConcatPosition(position)
+                if SapHarvestedTrees[treeKey] ~= nil then
+                    return false
+                end
+
+                return not harvesting
+            end,
+            job = "pawl",
+            blackoutGlobal = true,
+            blackoutJob = "pawl",
+            action = function()
+                TriggerEvent("pawl:client:harvestTreeSap", {identifier = identifier, position = position})
+            end,
+        },
+        {
+            color = "crimi",
+            label = "Récolter des champignons",
+            icon = "pawl/harvest-mushroom",
+            canInteract = function()
+                for _, value in ipairs(PlayerData.metadata.drugs_skills) do
+                    -- 1 is Botanite
+                    if value == 1 then
+                        return true
+                    end
+                end
+                return false
+            end,
+            action = function(entity)
+                TriggerEvent("soz-core:client:drugs:harvest-champi", {entity = entity, position = position})
+            end,
+        },
+    }, 2.5)
 end
 
 RegisterNetEvent("pawl:client:harvestTree", function(data)
@@ -230,7 +226,7 @@ RegisterNetEvent("pawl:client:syncField", function(identifier, data)
                 TreeInteraction(identifier, v.position)
             else
                 local zoneName = ("pawl:%s:%s"):format(identifier, v.position.x .. v.position.y)
-                exports["qb-target"]:RemoveZone(zoneName)
+                exports["soz-core"]:RemoveZone(zoneName)
             end
         end
     end

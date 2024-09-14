@@ -35,20 +35,20 @@ export class JobInvoiceProvider {
             this.targetFactory.createForAllPlayer([
                 {
                     label: `Facturer`,
-                    icon: 'c:jobs/facture.png',
+                    icon: 'jobs/facture',
                     blackoutGlobal: true,
                     blackoutJob: job.id,
                     job: job.id,
-                    color: job.id,
+                    category: 'society',
                     action: this.invoicePlayer.bind(this),
                 },
                 {
                     label: 'Facture la société',
-                    icon: 'c:jobs/facture.png',
+                    icon: 'jobs/facture',
                     blackoutGlobal: true,
                     blackoutJob: job.id,
                     job: job.id,
-                    color: job.id,
+                    category: 'society',
                     canInteract: async entity => {
                         const player = this.playerService.getPlayer();
 

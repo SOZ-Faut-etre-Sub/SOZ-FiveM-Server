@@ -150,8 +150,9 @@ export class VehicleDealershipProvider {
                 target: {
                     options: [
                         {
-                            icon: 'c:dealership/list.png',
+                            icon: 'dealership/list',
                             label: 'Accéder au catalogue',
+                            category: 'citizen',
                             blackoutGlobal: true,
                             action: () => {
                                 this.openDealership(dealership as DealershipType, config);
@@ -184,8 +185,9 @@ export class VehicleDealershipProvider {
             target: {
                 options: [
                     {
-                        icon: 'c:dealership/list.png',
+                        icon: 'dealership/list',
                         label: 'Accéder au catalogue',
+                        category: 'citizen',
                         action: () => {
                             this.openJobDealership();
                         },
@@ -243,8 +245,9 @@ export class VehicleDealershipProvider {
 
             this.targetFactory.createForBoxZone(`auction_${name}`, auction.windows, [
                 {
-                    icon: 'c:dealership/bid.png',
+                    icon: 'dealership/bid',
                     label: 'Voir la vente',
+                    category: 'citizen',
                     canInteract: () => true,
                     action: () => {
                         this.openLuxuryDealership(name);

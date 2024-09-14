@@ -45,9 +45,9 @@ export class CraftService {
                     icon: icon,
                     label: label,
                     job: job,
-                    color: job,
                     blackoutGlobal: true,
                     blackoutJob: job,
+                    category: 'citizen', // fixme?
                     canInteract: () => {
                         if (options) {
                             const currentWeapon = this.weaponService.getCurrentWeapon();

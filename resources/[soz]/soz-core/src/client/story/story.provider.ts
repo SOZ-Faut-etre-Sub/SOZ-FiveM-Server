@@ -1,4 +1,5 @@
 import { Vector4 } from '@public/shared/polyzone/vector';
+import { TargetOption } from '@public/shared/target';
 
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -8,7 +9,6 @@ import { Dialog, ScenarioOrder, ScenarioState, Story } from '../../shared/story/
 import { AudioService } from '../nui/audio.service';
 import { PlayerService } from '../player/player.service';
 import { ResourceLoader } from '../repository/resource.loader';
-import { TargetOptions } from '../target/target.factory';
 
 @Provider()
 export class StoryProvider {
@@ -107,10 +107,11 @@ export class StoryProvider {
         return currentScenario?.[`part${part}`] === ScenarioState.Running;
     }
 
-    public replayTarget(story: Story, scenario: string, part: number): TargetOptions {
+    public replayTarget(story: Story, scenario: string, part: number): TargetOption {
         return {
             label: 'Ré-écouter',
-            icon: 'fas fa-comment-dots',
+            icon: 'global/comment-dots',
+            category: 'citizen',
             canInteract: () => this.canInteractForPart('halloween2022', scenario, part + 1),
             action: async () => {
                 await this.launchDialog(story.dialog[`part${part}`]);
@@ -125,10 +126,11 @@ export class StoryProvider {
         part: number,
         dialog: string,
         coords: Vector4
-    ): TargetOptions {
+    ): TargetOption {
         return {
             label: 'Ré-écouter',
-            icon: 'fas fa-comment-dots',
+            icon: 'global/comment-dots',
+            category: 'citizen',
             canInteract: () => this.canInteractForPart(year, scenario, part + 1),
             action: async entity => {
                 await this.launchDialog(story.dialog[dialog], true, coords[0], coords[1], coords[2], coords[3], entity);

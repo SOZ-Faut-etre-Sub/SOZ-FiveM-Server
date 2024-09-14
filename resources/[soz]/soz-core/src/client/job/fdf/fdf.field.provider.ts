@@ -29,8 +29,9 @@ import { getRandomItems } from '@public/shared/random';
 import { RpcClientEvent, RpcServerEvent } from '@public/shared/rpc';
 import { VEHICLE_TRUNK_TYPES } from '@public/shared/vehicle/vehicle';
 
+import { TargetOption } from '../../../shared/target';
 import { VehicleClass } from '../../../shared/vehicle/vehicle';
-import { TargetFactory, TargetOptions } from '../../target/target.factory';
+import { TargetFactory } from '../../target/target.factory';
 
 const RAKE_TRAILER = GetHashKey('raketrailer');
 const GRAIN_TRAILER = GetHashKey('graintrailer');
@@ -76,11 +77,11 @@ export class FDFFieldProvider {
             this.targetFactory.createForModel(elem.prop, [
                 {
                     label: elem.fieldConfig.speedLabel,
-                    color: JobType.FDF,
-                    icon: 'c:fdf/buttage.png',
+                    icon: 'fdf/buttage',
                     blackoutJob: JobType.FDF,
                     blackoutGlobal: true,
                     job: JobType.FDF,
+                    category: 'society',
                     canInteract: async entity => {
                         const id = this.objectProvider.getIdFromEntity(entity);
                         if (!id) {
@@ -98,9 +99,7 @@ export class FDFFieldProvider {
                             elem.fieldConfig.progressText,
                             10000,
                             elem.fieldConfig.hillingAnim,
-                            {
-                                useAnimationService: true,
-                            }
+                            {}
                         );
 
                         if (!completed) {
@@ -112,11 +111,11 @@ export class FDFFieldProvider {
                 },
                 {
                     label: 'Récolter',
-                    color: JobType.FDF,
-                    icon: 'c:fdf/harvest.png',
+                    icon: 'fdf/harvest',
                     blackoutJob: JobType.FDF,
                     blackoutGlobal: true,
                     job: JobType.FDF,
+                    category: 'society',
                     canInteract: async entity => {
                         const id = this.objectProvider.getIdFromEntity(entity);
                         if (!id) {
@@ -136,9 +135,7 @@ export class FDFFieldProvider {
                             {
                                 task: 'WORLD_HUMAN_GARDENER_PLANT',
                             },
-                            {
-                                useAnimationService: true,
-                            }
+                            {}
                         );
 
                         if (!completed) {
@@ -150,11 +147,11 @@ export class FDFFieldProvider {
                 },
                 {
                     label: 'Détruire',
-                    color: JobType.FDF,
-                    icon: 'c:crimi/destroy.png',
+                    icon: 'crimi/destroy',
                     blackoutJob: JobType.FDF,
                     blackoutGlobal: true,
                     job: JobType.FDF,
+                    category: 'society',
                     canInteract: async entity => {
                         const id = this.objectProvider.getIdFromEntity(entity);
                         if (!id) {
@@ -187,11 +184,11 @@ export class FDFFieldProvider {
                 },
                 {
                     label: 'Vérifier',
-                    color: JobType.FDF,
-                    icon: 'c:crimi/time.png',
+                    icon: 'crimi/time',
                     blackoutJob: JobType.FDF,
                     blackoutGlobal: true,
                     job: JobType.FDF,
+                    category: 'society',
                     canInteract: async entity => {
                         const id = this.objectProvider.getIdFromEntity(entity);
                         if (!id) {
@@ -235,11 +232,12 @@ export class FDFFieldProvider {
 
         this.targetFactory.createForModel(RAKE_TRAILER, [
             {
-                icon: 'c:fdf/plow.png',
+                icon: 'fdf/plow',
                 label: 'Labourer',
                 blackoutJob: JobType.FDF,
                 blackoutGlobal: true,
                 job: JobType.FDF,
+                category: 'society',
                 canInteract: async () => {
                     const coords = GetEntityCoords(PlayerPedId()) as Vector3;
                     const field = Object.keys(FDFFields).find(fieldId => FDFFields[fieldId].isPointInside(coords));
@@ -258,11 +256,12 @@ export class FDFFieldProvider {
 
         this.targetFactory.createForModel(GRAIN_TRAILER, [
             {
-                icon: 'c:fdf/tractor.png',
+                icon: 'fdf/tractor',
                 label: 'Récolter',
                 blackoutJob: JobType.FDF,
                 blackoutGlobal: true,
                 job: JobType.FDF,
+                category: 'society',
                 canInteract: async () => {
                     const coords = GetEntityCoords(PlayerPedId()) as Vector3;
                     const field = Object.keys(FDFFields).find(fieldId => FDFFields[fieldId].isPointInside(coords));
@@ -491,28 +490,30 @@ export class FDFFieldProvider {
             .map(type => {
                 const item = this.itemService.getItem(type);
                 return {
-                    icon: `c:fdf/${type}.png`,
+                    icon: `fdf/${type}`,
                     label: 'Planter ' + item.label,
                     blackoutJob: JobType.FDF,
                     blackoutGlobal: true,
                     job: JobType.FDF,
                     item: FDFCropConfig[type].seed,
+                    category: 'society',
                     canInteract: async () => {
                         return await this.getFieldPlowStatus(name);
                     },
                     action: async () => {
                         TriggerServerEvent(ServerEvent.FDF_FIELD_PLANT, FDFCropConfig[type].seed);
                     },
-                } as TargetOptions;
+                } as TargetOption;
             });
 
         if (withPlow) {
             targets.push({
-                icon: 'c:fdf/plow.png',
+                icon: 'fdf/plow',
                 label: 'Labourer',
                 blackoutJob: JobType.FDF,
                 blackoutGlobal: true,
                 job: JobType.FDF,
+                category: 'society',
                 canInteract: async () => {
                     return !(await this.getFieldPlowStatus(name));
                 },
@@ -536,9 +537,7 @@ export class FDFFieldProvider {
                                 },
                             ],
                         },
-                        {
-                            useAnimationService: true,
-                        }
+                        {}
                     );
 
                     if (!completed) {

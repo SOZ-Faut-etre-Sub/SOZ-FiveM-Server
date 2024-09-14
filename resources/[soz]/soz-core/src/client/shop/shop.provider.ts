@@ -10,13 +10,14 @@ import { JobPermission, JobType } from '@public/shared/job';
 import { StonkConfig } from '@public/shared/job/stonk';
 import { MenuType } from '@public/shared/nui/menu';
 import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
+import { TargetOption } from '@public/shared/target';
 
 import { BlipFactory } from '../blip';
 import { PedFactory } from '../factory/ped.factory';
 import { JobService } from '../job/job.service';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
-import { TargetFactory, TargetOptions } from '../target/target.factory';
+import { TargetFactory } from '../target/target.factory';
 import { BarberShopProvider } from './barber.shop.provider';
 import { ClothingShopProvider } from './cloth.shop.provider';
 import { JewelryShopProvider } from './jewelry.shop.provider';
@@ -76,10 +77,11 @@ export class ShopProvider {
 
     private shopsPedEntity: Record<string, shopPedData> = {};
 
-    public shopActions: TargetOptions[] = [
+    public shopActions: TargetOption[] = [
         {
-            icon: 'fas fa-shopping-cart',
+            icon: 'magasin/cart',
             label: 'Accéder au magasin',
+            category: 'citizen',
             canInteract: entity => {
                 return (
                     this.currentShop !== null &&
@@ -91,9 +93,9 @@ export class ShopProvider {
             action: this.openShop.bind(this),
         },
         {
-            icon: 'fas fa-store',
-            event: 'soz-core:client:weapon:open-gunsmith',
+            icon: 'shop/store',
             label: 'Accéder au GunSmith',
+            category: 'citizen',
             canInteract: entity => {
                 return (
                     this.currentShop !== null &&
@@ -101,11 +103,13 @@ export class ShopProvider {
                     !IsEntityPlayingAnim(entity, 'random@robbery', 'robbery_main_female', 3)
                 );
             },
+            action: () => TriggerEvent('soz-core:client:weapon:open-gunsmith'),
         },
         {
-            icon: 'c:stonk/collecter.png',
+            icon: 'stonk/collecter',
             label: 'Collecter',
             job: JobType.CashTransfer,
+            category: 'society',
             canInteract: () => {
                 return Object.values(StonkConfig.collection).some(item =>
                     item.takeInAvailableIn.includes(this.currentShopBrand)
@@ -118,8 +122,9 @@ export class ShopProvider {
             },
         },
         {
-            icon: 'fas fa-store',
+            icon: 'shop/store',
             label: 'Vérifier le stock',
+            category: 'citizen',
             canInteract: () => {
                 return (
                     this.currentShop !== null &&
@@ -139,8 +144,9 @@ export class ShopProvider {
             },
         },
         {
-            icon: 'fa fa-shopping-basket',
+            icon: 'magasin/cart',
             label: "Accéder à l'entrepôt",
+            category: 'citizen',
             canInteract: () => {
                 return this.currentShop !== null && this.currentShopBrand === ShopBrand.Zkea;
             },
@@ -149,7 +155,8 @@ export class ShopProvider {
         },
         {
             label: 'Location de camion de déménagement',
-            icon: 'fas fa-truck',
+            icon: 'vehicle/truck',
+            category: 'citizen',
             canInteract: () => {
                 return this.currentShop !== null && this.currentShopBrand === ShopBrand.Zkea;
             },
@@ -158,8 +165,9 @@ export class ShopProvider {
             },
         },
         {
-            icon: 'c:mechanic/reparer.png',
+            icon: 'mechanic/reparer',
             label: 'Prix Pit Stop',
+            category: 'citizen',
             canInteract: () => {
                 return (
                     this.currentShop !== null &&
@@ -173,9 +181,9 @@ export class ShopProvider {
             },
         },
         {
-            event: ClientEvent.HOUSING_OPEN_UPGRADES_MENU,
-            icon: 'fas fa-store',
+            icon: 'shop/store',
             label: 'Améliorations',
+            category: 'citizen',
             blackoutGlobal: true,
             canInteract: () => {
                 const player = this.playerService.getPlayer();
@@ -187,11 +195,11 @@ export class ShopProvider {
                 }
                 return this.currentShop !== null && this.currentShopBrand === ShopBrand.Zkea;
             },
+            action: () => TriggerEvent(ClientEvent.HOUSING_OPEN_UPGRADES_MENU),
         },
         {
-            event: ClientEvent.CRIMI_REMOVE_CLOTH,
             label: 'Enlever la tenue temporaire',
-            color: 'crimi',
+            category: 'criminal',
             canInteract: () => {
                 const player = this.playerService.getPlayer();
                 if (player.cloth_config.TemporaryClothSet == null) {
@@ -204,6 +212,7 @@ export class ShopProvider {
                         this.currentShopBrand === ShopBrand.Binco)
                 );
             },
+            action: () => TriggerEvent(ClientEvent.CRIMI_REMOVE_CLOTH),
         },
     ];
 
@@ -260,7 +269,8 @@ export class ShopProvider {
             [
                 {
                     label: 'Acheter un masque',
-                    icon: 'c:shop/mask.png',
+                    icon: 'shop/mask',
+                    category: 'citizen',
                     blackoutGlobal: true,
                     action: () => {
                         this.clothingShopProvider.openShop(ShopBrand.Mask, 'mask');
@@ -268,12 +278,12 @@ export class ShopProvider {
                 },
                 {
                     label: 'Restock: Masques',
-                    icon: 'c:/ffs/restock.png',
-                    color: JobType.Ffs,
+                    icon: 'ffs/restock',
                     job: JobType.Ffs,
                     blackoutGlobal: true,
                     blackoutJob: JobType.Ffs,
                     item: 'garment_mask',
+                    category: 'society',
                     action: () => {
                         TriggerServerEvent(ServerEvent.FFS_RESTOCK, ShopBrand.Mask, 'garment_mask');
                     },

@@ -5,9 +5,10 @@ import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { Vector4 } from '@public/shared/polyzone/vector';
 
 import { Provider } from '../../core/decorators/provider';
+import { TargetOption } from '../../shared/target';
 import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
-import { TargetFactory, TargetOptions } from '../target/target.factory';
+import { TargetFactory } from '../target/target.factory';
 
 enum ElevatorDirection {
     UP = 'upTo',
@@ -15,8 +16,8 @@ enum ElevatorDirection {
 }
 
 const ElevatorDirectionDisplay: Record<ElevatorDirection, { label: string; icon: string }> = {
-    [ElevatorDirection.UP]: { label: 'Monter ', icon: 'c:elevators/monter.png' },
-    [ElevatorDirection.DOWN]: { label: 'Descendre ', icon: 'c:elevators/descendre.png' },
+    [ElevatorDirection.UP]: { label: 'Monter ', icon: 'elevators/monter' },
+    [ElevatorDirection.DOWN]: { label: 'Descendre ', icon: 'elevators/descendre' },
 };
 
 type ElevatorFloor = {
@@ -266,7 +267,7 @@ export class ElevatorProvider {
     }
 
     private createTargetOptions(elevator: ElevatorFloor) {
-        const options: TargetOptions[] = [];
+        const options: TargetOption[] = [];
         for (const direction of Object.values(ElevatorDirection)) {
             const destinations = elevator[direction];
 
@@ -277,6 +278,7 @@ export class ElevatorProvider {
                     options.push({
                         icon: display.icon,
                         label: display.label + destinationFloor.label,
+                        category: 'citizen',
                         action: () => {
                             this.playerPositionProvider.teleportAdminToPosition(destinationFloor.spawnPoint);
                         },

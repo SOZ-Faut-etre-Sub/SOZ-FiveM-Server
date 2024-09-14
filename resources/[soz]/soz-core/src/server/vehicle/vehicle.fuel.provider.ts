@@ -117,8 +117,6 @@ export class VehicleFuelProvider {
 
             const duration = Math.max(reservedFuel * 600, 5000);
 
-            TriggerClientEvent(ClientEvent.VEHICLE_FUEL_START, source, duration, reservedFuel, station.price);
-
             const { progress } = await this.progressService.progress(
                 source,
                 'filling_vehicle',
@@ -134,7 +132,18 @@ export class VehicleFuelProvider {
                     },
                 },
                 {
-                    useAnimationService: true,
+                    units: [
+                        {
+                            unit: 'L',
+                            start: 0,
+                            end: reservedFuel,
+                        },
+                        {
+                            unit: '$',
+                            start: 0,
+                            end: reservedFuel * station.price,
+                        },
+                    ],
                 }
             );
 

@@ -60,11 +60,11 @@ export class LSMCSurgeryProvider {
         this.targetFactory.createForAllPlayer([
             {
                 label: 'Enlever un Poumon',
-                color: JobType.LSMC,
-                icon: 'c:ems/remove_poumon.png',
+                icon: 'ems/remove_poumon',
                 job: JobType.LSMC,
                 blackoutGlobal: true,
                 blackoutJob: JobType.LSMC,
+                category: 'society',
                 canInteract: async entity => {
                     if (!IsEntityPlayingAnim(entity, 'anim@gangops@morgue@table@', 'body_search', 3)) {
                         return false;
@@ -104,11 +104,11 @@ export class LSMCSurgeryProvider {
             },
             {
                 label: 'Enlever un Rein',
-                color: JobType.LSMC,
-                icon: 'c:ems/remove_rein.png',
+                icon: 'ems/remove_rein',
                 job: JobType.LSMC,
                 blackoutGlobal: true,
                 blackoutJob: JobType.LSMC,
+                category: 'society',
                 canInteract: async entity => {
                     if (!IsEntityPlayingAnim(entity, 'anim@gangops@morgue@table@', 'body_search', 3)) {
                         return false;
@@ -148,11 +148,11 @@ export class LSMCSurgeryProvider {
             },
             {
                 label: 'Enlever le Foie',
-                color: JobType.LSMC,
-                icon: 'c:ems/remove_foie.png',
+                icon: 'ems/remove_foie',
                 job: JobType.LSMC,
                 blackoutGlobal: true,
                 blackoutJob: JobType.LSMC,
+                category: 'society',
                 canInteract: async entity => {
                     if (!IsEntityPlayingAnim(entity, 'anim@gangops@morgue@table@', 'body_search', 3)) {
                         return false;
@@ -192,11 +192,11 @@ export class LSMCSurgeryProvider {
             },
             {
                 label: 'greffer',
-                color: JobType.LSMC,
-                icon: 'c:ems/greffer.png',
+                icon: 'ems/greffer',
                 job: JobType.LSMC,
                 blackoutGlobal: true,
                 blackoutJob: 'lsmc',
+                category: 'society',
                 canInteract: entity => {
                     return (
                         IsEntityPlayingAnim(entity, 'anim@gangops@morgue@table@', 'body_search', 3) &&

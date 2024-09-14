@@ -13,9 +13,10 @@ export class VehicleItemProvider {
     public async setupVehicleItems() {
         this.targetFactory.createForAllVehicle([
             {
-                icon: 'c:mechanic/nettoyer.png',
+                icon: 'mechanic/nettoyer',
                 label: 'Laver (kit)',
                 item: 'cleaningkit',
+                category: 'society',
                 action: entity => {
                     const networkId = NetworkGetNetworkIdFromEntity(entity);
 
@@ -26,9 +27,10 @@ export class VehicleItemProvider {
                 },
             },
             {
-                icon: 'c:mechanic/reparer_mecanique.png',
+                icon: 'mechanic/reparer_mecanique',
                 label: 'Réparer mécanique (kit)',
                 item: 'repairkit',
+                category: 'society',
                 action: entity => {
                     const networkId = NetworkGetNetworkIdFromEntity(entity);
 
@@ -39,9 +41,10 @@ export class VehicleItemProvider {
                 },
             },
             {
-                icon: 'c:mechanic/reparer_carosserie.png',
+                icon: 'mechanic/reparer_carosserie',
                 label: 'Réparer carosserie (kit)',
                 item: 'bodyrepairkit',
+                category: 'society',
                 action: entity => {
                     const networkId = NetworkGetNetworkIdFromEntity(entity);
 
@@ -52,9 +55,10 @@ export class VehicleItemProvider {
                 },
             },
             {
-                icon: 'c:mechanic/repair_wheel.png',
+                icon: 'mechanic/repair_wheel',
                 label: 'Anti crevaison (kit)',
                 item: 'wheel_kit',
+                category: 'society',
                 action: entity => {
                     const networkId = NetworkGetNetworkIdFromEntity(entity);
 

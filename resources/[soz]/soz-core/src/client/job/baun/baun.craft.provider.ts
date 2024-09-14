@@ -35,7 +35,7 @@ export class BaunCraftProvider {
 
     @Once(OnceStep.PlayerLoaded)
     public setupBaunCraftZone() {
-        this.craftService.createBtargetZoneCraft(baunCraftZones, 'c:/baun/craft.png', 'Confectionner', JobType.Baun);
+        this.craftService.createBtargetZoneCraft(baunCraftZones, 'baun/craft', 'Confectionner', JobType.Baun);
     }
 
     @OnEvent(ClientEvent.BAUN_ICE_CUBE, false)
@@ -72,9 +72,7 @@ export class BaunCraftProvider {
                     repeat: true,
                 },
             },
-            {
-                useAnimationService: true,
-            }
+            {}
         );
 
         if (!completed) {

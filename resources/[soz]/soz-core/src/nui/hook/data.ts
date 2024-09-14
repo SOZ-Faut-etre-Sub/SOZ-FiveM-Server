@@ -44,6 +44,22 @@ export const useHud = (): HudState => {
     return useSelector((state: RootState) => state.hud);
 };
 
+export const useMinimap = (): HudState['minimap'] => {
+    return useSelector((state: RootState) => state.hud.minimap);
+};
+
+export const useAmmo = (): HudState['ammo'] => {
+    return useSelector((state: RootState) => state.hud.ammo);
+};
+
 export const useDrugLocation = (): DrugNuiZone[] => {
     return useSelector((state: RootState) => state.drugLocation);
+};
+
+export const useDateTime = (): { isDay: boolean; isNight: boolean } => {
+    const dateTime = useSelector((state: RootState) => state.hud.dateTime);
+    return {
+        isDay: dateTime.hour > 6 && dateTime.hour < 20,
+        isNight: dateTime.hour < 6 || dateTime.hour > 20,
+    };
 };

@@ -148,8 +148,9 @@ export class DmcProvider {
             },
             [
                 {
-                    icon: 'c:/dmc/allumer.png',
+                    icon: 'dmc/allumer',
                     label: 'Allumer le Convertisseur',
+                    category: 'society',
                     canInteract: async () => {
                         return !(await this.isConverterEnabled());
                     },
@@ -161,8 +162,9 @@ export class DmcProvider {
                     blackoutJob: JobType.DMC,
                 },
                 {
-                    icon: 'c:/dmc/allumer.png',
+                    icon: 'dmc/allumer',
                     label: 'Eteindre le Convertisseur',
+                    category: 'society',
                     canInteract: async () => {
                         return await this.isConverterEnabled();
                     },
@@ -172,8 +174,9 @@ export class DmcProvider {
                     },
                 },
                 {
-                    icon: 'c:/dmc/temperature.png',
+                    icon: 'dmc/temperature',
                     label: 'Consulter la température',
+                    category: 'society',
                     canInteract: async () => {
                         return await this.isConverterEnabled();
                     },
@@ -186,8 +189,9 @@ export class DmcProvider {
                     },
                 },
                 {
-                    icon: 'c:/dmc/temperature-set.png',
+                    icon: 'dmc/temperature-set',
                     label: 'Modifier la température',
+                    category: 'society',
                     canInteract: async () => {
                         return await this.isConverterEnabled();
                     },
@@ -214,7 +218,7 @@ export class DmcProvider {
         );
 
         // Craft zones
-        this.craftService.createBtargetZoneCraft(DMC_CRAFT_ZONES, 'c:/dmc/confection.png', 'Forger', JobType.DMC, {
+        this.craftService.createBtargetZoneCraft(DMC_CRAFT_ZONES, 'dmc/confection', 'Forger', JobType.DMC, {
             weapon: 'weapon_hammer',
         });
 

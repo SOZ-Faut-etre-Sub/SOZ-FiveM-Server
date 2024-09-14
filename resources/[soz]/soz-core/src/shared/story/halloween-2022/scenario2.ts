@@ -63,7 +63,7 @@ export const Halloween2022Scenario2: Story = {
             name: 'relic',
             part: 5,
             label: 'Chercher',
-            icon: 'fas fa-search',
+            icon: 'global/search',
             center: [-2166.59, 5198.18, 16.88],
             length: 0.5,
             width: 0.5,

@@ -1,0 +1,55 @@
+import { Inject } from '../../core/decorators/injectable';
+import { Provider } from '../../core/decorators/provider';
+import { Tick } from '../../core/decorators/tick';
+import { WeaponName } from '../../shared/weapons/weapon';
+import { InventoryManager } from '../inventory/inventory.manager';
+import { NuiDispatch } from '../nui/nui.dispatch';
+import { WeaponService } from '../weapon/weapon.service';
+
+@Provider()
+export class HudWeaponProvider {
+    @Inject(WeaponService)
+    private readonly weapon: WeaponService;
+
+    @Inject(NuiDispatch)
+    private readonly nuiDispatch: NuiDispatch;
+
+    @Inject(InventoryManager)
+    private readonly inventoryManager: InventoryManager;
+
+    private _haveWeapon = false;
+
+    @Tick(200)
+    async updateWeaponHud() {
+        const player = PlayerPedId();
+
+        const weapon = this.weapon.getCurrentWeapon();
+        if (!weapon) {
+            if (this._haveWeapon) {
+                this._haveWeapon = false;
+                this.nuiDispatch.dispatch('hud', 'UpdateWeaponAmmo', {
+                    hasWeapon: false,
+                    ammo: 0,
+                    maxAmmo: 0,
+                });
+            }
+            return;
+        }
+
+        if (weapon.name.toLowerCase() === WeaponName.UNARMED.toLowerCase()) {
+            return;
+        }
+
+        const [hasValue, ammo] = GetAmmoInClip(player, weapon.name);
+        const maxAmmo = GetAmmoInPedWeapon(player, weapon.name);
+
+        if (!hasValue) return;
+
+        this._haveWeapon = true;
+        this.nuiDispatch.dispatch('hud', 'UpdateWeaponAmmo', {
+            hasWeapon: maxAmmo !== undefined,
+            ammo,
+            maxAmmo: Math.max(0, maxAmmo - ammo),
+        });
+    }
+}

@@ -133,15 +133,17 @@ export class LSMCProvider {
             lsmcBeds.map(bed => bed.model),
             [
                 {
-                    icon: 'fas fa-bed',
+                    icon: 'ems/bed',
                     label: "S'allonger sur le lit",
+                    category: 'citizen',
                     action: async entity => {
                         this.onBed(entity);
                     },
                 },
                 {
-                    icon: 'c:ems/stretcher.png',
+                    icon: 'ems/stretcher',
                     label: 'Allonger sur le lit',
+                    category: 'citizen',
                     canInteract: () => {
                         const state = this.playerService.getState();
                         return state.isEscorting;
@@ -162,7 +164,7 @@ export class LSMCProvider {
             [
                 {
                     label: 'Extraire le mort',
-                    icon: 'c:ems/sortir.png',
+                    icon: 'ems/sortir',
                     job: {
                         [JobType.LSMC]: 0,
                         [JobType.LSPD]: 0,
@@ -171,6 +173,7 @@ export class LSMCProvider {
                         [JobType.SASP]: 0,
                         [JobType.FBI]: 0,
                     },
+                    category: 'society',
                     canInteract: entity => {
                         const deadPed = this.getDeadPedInVehicle(entity);
 
@@ -211,9 +214,7 @@ export class LSMCProvider {
                                 {
                                     task: 'world_human_welding',
                                 },
-                                {
-                                    useAnimationService: true,
-                                }
+                                {}
                             );
 
                             if (!completed) {
@@ -241,7 +242,8 @@ export class LSMCProvider {
                 },
                 {
                     label: 'Faire monter',
-                    icon: 'c:ems/sortir.png',
+                    icon: 'ems/sortir',
+                    category: 'society',
                     canInteract: entity => {
                         if (!this.vehicleLockProvider.isVehOpen(entity)) {
                             return false;

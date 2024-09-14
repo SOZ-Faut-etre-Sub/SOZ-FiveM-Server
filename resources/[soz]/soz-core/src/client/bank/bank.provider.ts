@@ -10,11 +10,12 @@ import { ServerEvent } from '../../shared/event/server';
 import { JobType } from '../../shared/job';
 import { toVector4Object } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
+import { TargetOption } from '../../shared/target';
 import { BlipFactory } from '../blip';
 import { ItemService } from '../item/item.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { PlayerService } from '../player/player.service';
-import { TargetFactory, TargetOptions } from '../target/target.factory';
+import { TargetFactory } from '../target/target.factory';
 import { BankService } from './bank.service';
 
 @Provider()
@@ -90,7 +91,8 @@ export class BankProvider {
                     options: [
                         {
                             label: 'Accéder aux comptes',
-                            icon: 'c:bank/compte_personal.png',
+                            icon: 'bank/compte_personal',
+                            category: 'citizen',
                             action: async entity => {
                                 TaskTurnPedToFaceEntity(PlayerPedId(), entity, 500);
                                 await wait(500);
@@ -116,10 +118,11 @@ export class BankProvider {
         }
     }
 
-    protected createBankRefillAction(item: string): TargetOptions {
+    protected createBankRefillAction(item: string): TargetOption {
         return {
             label: `Remplir avec ${this.itemService.getItem(item).label}`,
-            icon: 'c:stonk/remplir.png',
+            icon: 'stonk/remplir',
+            category: 'society',
             canInteract: async () => {
                 if (!this.currentBank) return;
 

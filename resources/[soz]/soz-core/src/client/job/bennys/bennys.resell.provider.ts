@@ -48,10 +48,11 @@ export class BennysResellProvider {
         this.targetFactory.createForAllVehicle([
             {
                 label: label,
-                icon: 'c:/mechanic/resell.png',
-                job: 'bennys',
+                icon: 'mechanic/resell',
+                job: JobType.Bennys,
                 blackoutGlobal: true,
-                blackoutJob: 'bennys',
+                blackoutJob: JobType.Bennys,
+                category: 'society',
                 canInteract: entity => {
                     const coords = GetEntityCoords(entity, false);
                     const point: Vector3 = [coords[0], coords[1], coords[2]];

@@ -1,4 +1,5 @@
-import { TargetOptions } from '../client/target/target.factory';
+import { TargetOption } from '@public/shared/target';
+
 import { Component, GlovesItem, OutfitItem, Prop } from './cloth';
 import { InventoryItemMetadata, Item, ItemType } from './item';
 import { JobType } from './job';
@@ -26,7 +27,7 @@ export type ShopProduct = {
 export type ShopConfig = {
     name: string;
     zone: Zone;
-    targets: TargetOptions[];
+    targets: TargetOption[];
     products: ShopProduct[];
     orders?: {
         targetInv: string;
