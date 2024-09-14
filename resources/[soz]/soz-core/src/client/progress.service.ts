@@ -165,6 +165,8 @@ export class ProgressService {
             }
 
             this.animationRunner.then((stopReason: AnimationStopReason) => {
+                if (options.allowExistingAnimation) return;
+
                 if (stopReason !== AnimationStopReason.Finished) {
                     this.cancel();
                 }
