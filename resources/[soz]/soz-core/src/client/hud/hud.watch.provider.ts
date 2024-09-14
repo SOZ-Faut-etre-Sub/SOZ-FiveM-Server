@@ -28,6 +28,7 @@ export class HudWatchProvider {
     @Inject(NuiMenu)
     private readonly menu: NuiMenu;
 
+    private _watchForceEnabled = false;
     private _watchDisabled = false;
     private _haveWatch = false;
 
@@ -41,6 +42,7 @@ export class HudWatchProvider {
     private _hideStamina = GetResourceKvpInt('soz_hud_stamina_hide') === 1;
 
     public get haveWatch(): boolean {
+        if (this._watchForceEnabled) return true;
         if (this._watchDisabled) return false;
         return this._haveWatch;
     }
@@ -87,6 +89,7 @@ export class HudWatchProvider {
         ],
     })
     public async quickShowWatch() {
+        this._watchForceEnabled = true;
         this.nuiDispatch.dispatch('hud', 'UpdateSettings', {
             theme: this._theme,
             zoom: this._zoom,
@@ -102,6 +105,7 @@ export class HudWatchProvider {
         await wait(5 * 1000);
 
         this.nuiDispatch.dispatch('hud', 'UpdateSettings', this.getSettings());
+        this._watchForceEnabled = false;
     }
 
     @OnNuiEvent(NuiEvent.WatchMenuSetTheme)
@@ -188,6 +192,7 @@ export class HudWatchProvider {
     }
 
     public get showCompass() {
+        if (this._watchForceEnabled) return true;
         return !this._hideCompass;
     }
 
