@@ -15,7 +15,7 @@ export const DateTime: FunctionComponent = () => {
     }
 
     return (
-        <div className="flex flex-col" style={{ zoom: settings.zoom }}>
+        <div className="flex flex-col drop-shadow-bg" style={{ zoom: settings.zoom }}>
             <span className="text-2xl leading-4 font-light capitalize">
                 {format(dayOfWeek, 'ccc', { locale: fr }).replace('.', '')}
             </span>

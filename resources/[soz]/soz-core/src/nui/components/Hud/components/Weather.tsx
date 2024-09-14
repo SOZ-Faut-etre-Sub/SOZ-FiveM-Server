@@ -56,7 +56,7 @@ export const Weather: FunctionComponent = () => {
     }
 
     return (
-        <div className="flex pb-1.5">
+        <div className="flex pb-1.5 drop-shadow-bg">
             <div
                 className={cn('leading-3 mt-1.5', {
                     'relative left-3': weather.endsWith('sun'),
