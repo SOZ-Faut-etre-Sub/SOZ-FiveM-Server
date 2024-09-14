@@ -155,7 +155,7 @@ export class ShopProvider {
         },
         {
             label: 'Location de camion de déménagement',
-            icon: 'mechanic/truck',
+            icon: 'vehicle/truck',
             category: 'citizen',
             canInteract: () => {
                 return this.currentShop !== null && this.currentShopBrand === ShopBrand.Zkea;
