@@ -41,6 +41,7 @@ export const MenuWatch: FunctionComponent<MenuWatchProps> = ({ data }) => {
                             await fetchNui(NuiEvent.WatchMenuSetTheme, value);
                         }}
                     >
+                        <MenuItemSelectOption value="uwu">UwU Mode</MenuItemSelectOption>
                         <MenuItemSelectOption value="dark">Dark Mode</MenuItemSelectOption>
                         <MenuItemSelectOption value="auto">Auto</MenuItemSelectOption>
                         <MenuItemSelectOption value="light">Light Mode</MenuItemSelectOption>

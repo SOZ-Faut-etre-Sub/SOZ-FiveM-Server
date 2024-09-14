@@ -96,6 +96,7 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
                     'bg-[#22232A] opacity-45':
                         settings.theme === HudTheme.Dark || (settings.theme === HudTheme.Auto && isNight),
                     'bg-[#33a844] opacity-25': settings.theme === HudTheme.Green,
+                    'bg-[#f4bad4] opacity-45': settings.theme === HudTheme.Uwu,
                 })}
             />
 

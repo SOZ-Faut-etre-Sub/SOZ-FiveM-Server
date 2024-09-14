@@ -60,6 +60,7 @@ export enum HudTheme {
     Light = 'light',
     Dark = 'dark',
     Green = 'green',
+    Uwu = 'uwu',
 }
 
 export type HudSettings = {
