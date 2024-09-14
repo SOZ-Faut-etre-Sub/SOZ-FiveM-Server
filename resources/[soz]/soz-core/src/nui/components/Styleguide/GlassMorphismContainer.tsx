@@ -31,23 +31,27 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
     useEffect(() => {
         let animation = null;
         const renderLoop = () => {
-            const container = containerRef.current.getBoundingClientRect();
+            try {
+                const container = containerRef.current.getBoundingClientRect();
 
-            const canvas = window.parent.document.body.getElementsByTagName('canvas')[0];
-            const tCtx = canvasRef.current.getContext('2d');
+                const canvas = window.parent.document.body.getElementsByTagName('canvas')[0];
+                const tCtx = canvasRef.current.getContext('2d');
 
-            canvasRef.current.width = container.width;
-            canvasRef.current.height = container.height;
-            tCtx.filter = `blur(5px)`;
+                canvasRef.current.width = container.width;
+                canvasRef.current.height = container.height;
+                tCtx.filter = `blur(5px)`;
 
-            if (!canvas) return;
+                if (!canvas) return;
 
-            const context = canvas.getContext('2d');
-            context?.fillRect(0, 0, canvas.width, canvas.height);
+                const context = canvas.getContext('2d');
+                context?.fillRect(0, 0, canvas.width, canvas.height);
 
-            tCtx.drawImage(canvas, -container.x, -container.y);
+                tCtx.drawImage(canvas, -container.x, -container.y);
 
-            animation = requestAnimationFrame(renderLoop);
+                animation = requestAnimationFrame(renderLoop);
+            } catch (e) {
+                // ignore error
+            }
         };
 
         renderLoop();

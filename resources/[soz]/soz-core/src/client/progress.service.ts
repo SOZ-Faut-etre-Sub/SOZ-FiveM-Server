@@ -197,6 +197,8 @@ export class ProgressService {
         };
 
         this.currentPromise = new PCancelable<ProgressResult>(async (resolve, reject, onCancel) => {
+            let isCanceled = false;
+
             onCancel(() => {
                 const elapsedBeforeCancel = (GetGameTimer() - start) / duration;
 
@@ -205,11 +207,15 @@ export class ProgressService {
                     completed: false,
                     progress: elapsedBeforeCancel,
                 });
+
+                isCanceled = true;
             });
 
             beforeCallback();
             await wait(duration);
             afterCallback();
+
+            if (isCanceled) return;
 
             resolve({
                 completed: true,
