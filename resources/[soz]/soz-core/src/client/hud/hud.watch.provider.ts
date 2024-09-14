@@ -28,10 +28,11 @@ export class HudWatchProvider {
     @Inject(NuiMenu)
     private readonly menu: NuiMenu;
 
+    private _watchDisabled = false;
     private _haveWatch = false;
 
     private _theme = (GetResourceKvpString('soz_hud_theme') as HudTheme) ?? HudTheme.Auto;
-    private _zoom = GetResourceKvpFloat('soz_hud_zoom') ?? 1;
+    private _zoom = 1; //GetResourceKvpFloat('soz_hud_zoom') ?? 1;
     private _hideDateTime = GetResourceKvpInt('soz_hud_datetime_hide') === 1;
     private _hideWeather = GetResourceKvpInt('soz_hud_weather_hide') === 1;
     private _hideStreetName = GetResourceKvpInt('soz_hud_street_name_hide') === 1;
@@ -40,18 +41,24 @@ export class HudWatchProvider {
     private _hideStamina = GetResourceKvpInt('soz_hud_stamina_hide') === 1;
 
     public get haveWatch(): boolean {
+        if (this._watchDisabled) return false;
         return this._haveWatch;
     }
 
     @PlayerUpdate()
     async onPlayerUpdate(): Promise<void> {
         this._haveWatch = this.inventoryManager.hasEnoughItem('smartwatchuiwi', 1, true);
-        this.nuiDispatch.dispatch('hud', 'UpdateHasWatch', this._haveWatch);
+        this.nuiDispatch.dispatch('hud', 'UpdateHasWatch', this.haveWatch);
+    }
+
+    public disableWatch(value: boolean): void {
+        this._watchDisabled = value;
+        this.nuiDispatch.dispatch('hud', 'UpdateHasWatch', this.haveWatch);
     }
 
     @Once(OnceStep.PlayerLoaded)
     public async onPlayerLoaded(): Promise<void> {
-        this.nuiDispatch.dispatch('hud', 'UpdateHasWatch', this._haveWatch);
+        this.nuiDispatch.dispatch('hud', 'UpdateHasWatch', this.haveWatch);
     }
 
     @Once(OnceStep.NuiLoaded)

@@ -207,14 +207,13 @@ export class TargetProvider {
         coords: Vector3,
         playerDistance: number
     ): Promise<TargetOption[]> {
-        try {
-            const model = this.targetStore.getId(GetEntityModel(entity));
-            const modelStore = this.targetStore.models.get(model);
+        const entityType = GetEntityType(entity);
+        if (entityType === 0) return [];
 
-            return this.checkTargetGenericActions(modelStore, playerDistance, entity);
-        } catch (e) {
-            return [];
-        }
+        const model = this.targetStore.getId(GetEntityModel(entity));
+        const modelStore = this.targetStore.models.get(model);
+
+        return this.checkTargetGenericActions(modelStore, playerDistance, entity);
     }
 
     protected async checkTargetPedActions(
