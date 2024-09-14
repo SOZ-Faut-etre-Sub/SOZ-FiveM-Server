@@ -97,7 +97,7 @@ export class InteractionProvider {
         SetTextScale(0.0, INTERACTION_SIZE);
         SetTextEntry('STRING');
         AddTextComponentString(this.nearbyInteraction.label);
-        DrawText(0.0125, -0.01);
+        DrawText(0.0122, -0.011);
 
         ClearDrawOrigin();
     }

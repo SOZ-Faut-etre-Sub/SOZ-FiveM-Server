@@ -34,6 +34,7 @@ export const hud = createModel<RootModel>()({
             minute: 0,
         },
         minimap: {
+            isHidden: true,
             X: 0.08091666683321,
             Y: 0.88549252311906,
             bottom: 0.97361377796573,
