@@ -3824,6 +3824,7 @@ QBShared.Items = {
         ["shouldClose"] = true,
         ["combinable"] = nil,
         ["description"] = "Comptez votre nombre de pas, votre rythme cardiaque, et bien plus encore !",
+        ["illustrator"] = ".Sniteur",
     },
 
     -- Theft and Jewelry

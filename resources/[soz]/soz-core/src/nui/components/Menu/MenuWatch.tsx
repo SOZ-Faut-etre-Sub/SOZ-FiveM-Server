@@ -29,7 +29,9 @@ export const MenuWatch: FunctionComponent<MenuWatchProps> = ({ data }) => {
     return (
         <Menu type={MenuType.WatchMenu}>
             <MainMenu>
-                <MenuTitle banner="https://nui-img/soz/menu_personal">Montre connectée</MenuTitle>
+                <MenuTitle banner="https://cfx-nui-soz-core/public/images/banner/menu_watch.webp">
+                    Montre connectée
+                </MenuTitle>
                 <MenuContent>
                     <MenuItemSelect
                         title="Thème"
