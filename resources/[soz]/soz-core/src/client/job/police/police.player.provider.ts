@@ -30,7 +30,7 @@ import { PoliceAnimationProvider } from './police.animation.provider';
 
 const jobsCanFine = [JobType.LSPD, JobType.BCSO, JobType.SASP, JobType.FBI, JobType.LSCS];
 const jobsCanFouille = [JobType.LSPD, JobType.BCSO, JobType.CashTransfer, JobType.SASP, JobType.LSCS];
-const jobsCanEscort = [
+export const jobsCanEscort = [
     JobType.LSPD,
     JobType.BCSO,
     JobType.CashTransfer,
