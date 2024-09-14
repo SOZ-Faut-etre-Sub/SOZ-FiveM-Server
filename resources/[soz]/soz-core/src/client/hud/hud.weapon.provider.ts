@@ -40,10 +40,10 @@ export class HudWeaponProvider {
             return;
         }
 
-        const ammo = GetAmmoInClip(player, weapon.name)[1] as number;
+        const [hasValue, ammo] = GetAmmoInClip(player, weapon.name);
         const maxAmmo = GetAmmoInPedWeapon(player, weapon.name);
 
-        if (ammo === 0) return;
+        if (!hasValue) return;
 
         this._haveWeapon = true;
         this.nuiDispatch.dispatch('hud', 'UpdateWeaponAmmo', {

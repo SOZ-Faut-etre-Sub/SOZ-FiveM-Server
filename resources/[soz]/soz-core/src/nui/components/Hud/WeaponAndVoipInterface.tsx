@@ -66,17 +66,17 @@ export const WeaponAndVoipInterface: FunctionComponent = () => {
     return (
         <>
             <animated.div
-                className="absolute flex gap-1 items-center justify-center text-white w-fit"
+                className="absolute flex gap-1 items-center justify-center text-white w-fit drop-shadow-bg"
                 style={ammoStyles}
             >
                 <div className="flex flex-col justify-center items-center tabular-nums h-11">
                     <span className="text-3xl leading-7">{ammo?.ammo}</span>
-                    <span className="text-xl leading-5 text-white/50 font-light">{ammo?.maxAmmo}</span>
+                    <span className="text-xl leading-5 text-white/80 font-light">{ammo?.maxAmmo}</span>
                 </div>
                 <img className="size-12 mb-1" src="/public/images/hud/ammo.webp" alt="ammo" />
             </animated.div>
 
-            <animated.div className="absolute size-12" style={voiceStyles}>
+            <animated.div className="absolute size-12 drop-shadow-bg" style={voiceStyles}>
                 <VoiceIcon icon={voiceIcon} disableAutoHide={disableAutoHide} />
             </animated.div>
         </>

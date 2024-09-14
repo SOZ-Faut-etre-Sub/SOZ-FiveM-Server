@@ -33,7 +33,7 @@ export function InstructionalOverlay() {
                 {text.map(t => {
                     if (BindName[t]) {
                         return (
-                            <span className="bg-white/10 border border-slate-300/10 px-2 rounded-md">
+                            <span key={t} className="bg-white/10 border border-slate-300/10 px-2 rounded-md">
                                 {bindKeyToName(BindName[t])}
                             </span>
                         );

@@ -102,7 +102,7 @@ export class ProgressService {
 
         const start = GetGameTimer();
 
-        if (animation) {
+        if (animation && (animation.task || animation.name)) {
             if (animation.task) {
                 this.animationRunner = this.animationService.playScenario({ name: animation.task, duration: duration });
             } else {
@@ -131,6 +131,16 @@ export class ProgressService {
                     options.secondProp = null;
                 }
 
+                if (!animation.options) {
+                    if (animation.flags) {
+                        animation.options = animationFlagsToOptions(animation.flags);
+                    } else {
+                        animation.options = {
+                            repeat: true,
+                        };
+                    }
+                }
+
                 this.animationRunner = this.animationService.playAnimation(
                     {
                         base: {
@@ -139,8 +149,8 @@ export class ProgressService {
                             blendInSpeed: animation.blendInSpeed,
                             blendOutSpeed: animation.blendOutSpeed,
                             playbackRate: animation.playbackRate,
-                            options: animation.flags ? animationFlagsToOptions(animation.flags) : animation.options,
-                            duration: duration,
+                            options: animation.options,
+                            duration: animation.options.repeat ? -1 : duration,
                         },
                         props: props,
                     },
