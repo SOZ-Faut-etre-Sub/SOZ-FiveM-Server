@@ -14,9 +14,10 @@ export const VehicleInterface: FunctionComponent = () => {
 
     const vehicle = useVehicle();
     const player = usePlayer();
-    const inVehicle = vehicle.seat !== null;
     const [isPilot, setIsPilot] = useState(false);
     const [timeout, initTimeout] = useState<NodeJS.Timeout>(null);
+
+    const hudShouldBeDisplayed = player && !player.metadata.isdead && vehicle.seat !== null;
 
     useEffect(() => {
         clearTimeout(timeout);
@@ -38,13 +39,9 @@ export const VehicleInterface: FunctionComponent = () => {
         },
         to: {
             opacity: 1,
-            bottom: inVehicle ? `${100 - minimap.bottom * 100}vh` : '-50vh',
+            bottom: hudShouldBeDisplayed ? `${100 - minimap.bottom * 100}vh` : '-50vh',
         },
     });
-
-    if (player && player.metadata.isdead) {
-        return null;
-    }
 
     return (
         <animated.div className="absolute inset-x-0 w-full" style={styles}>
