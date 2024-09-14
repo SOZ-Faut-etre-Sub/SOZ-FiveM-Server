@@ -29,9 +29,16 @@ export class InteractionProvider {
     private interactions: Record<string, Interaction> = {};
     private nearbyInteraction: Interaction = null;
 
-    public createInteractionForCoords(coords: Vector3 | Vector4, option: InteractionOption) {
+    public createInteractionForCoords(
+        coords: Vector3 | Vector4,
+        option: InteractionOption,
+        interactionDistance = INTERACTION_DISTANCE,
+        drawDistance = DRAW_DISTANCE
+    ) {
         this.interactions[uuidv4()] = {
             coords,
+            drawDistance,
+            interactionDistance,
             ...option,
         };
     }
@@ -47,7 +54,7 @@ export class InteractionProvider {
             const playerPosition = GetEntityCoords(PlayerPedId(), false) as Vector3;
             const distance = getDistance(playerPosition, coords);
 
-            if (distance > DRAW_DISTANCE) continue;
+            if (distance > interaction.drawDistance) continue;
 
             const isValid = await this.targetService.validateInteraction(interaction);
             if (!isValid) continue;
@@ -66,13 +73,14 @@ export class InteractionProvider {
         const playerPosition = GetEntityCoords(PlayerPedId(), false) as Vector3;
         const distance = getDistance(playerPosition, coords);
 
-        if (distance > DRAW_DISTANCE) {
+        if (distance > this.nearbyInteraction.drawDistance) {
             this.resetNearbyInteraction();
+            return;
         }
 
         SetDrawOrigin(coords[0], coords[1], coords[2], 0);
 
-        if (distance > INTERACTION_DISTANCE) {
+        if (distance > this.nearbyInteraction.interactionDistance) {
             DrawSprite('soz_minimap', 'interaction_off', 0, 0, spriteWidth, spriteHeight, 0, 255, 255, 255, 255);
             ClearDrawOrigin();
             return;
@@ -114,7 +122,7 @@ export class InteractionProvider {
         const playerPosition = GetEntityCoords(PlayerPedId(), false) as Vector3;
         const distance = getDistance(playerPosition, this.nearbyInteraction.coords);
 
-        if (distance > INTERACTION_DISTANCE) return;
+        if (distance > this.nearbyInteraction.interactionDistance) return;
 
         this.nearbyInteraction.action();
         this.resetNearbyInteraction();

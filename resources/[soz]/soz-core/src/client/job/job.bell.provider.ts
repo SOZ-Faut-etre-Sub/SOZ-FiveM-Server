@@ -134,16 +134,20 @@ export class JobBellProvider {
     @Once(OnceStep.PlayerLoaded)
     public loadJobBell() {
         for (const bell of BELL_ZONES) {
-            this.interactionProvider.createInteractionForCoords(bell.coords, {
-                label: 'Biper',
-                blackoutGlobal: true,
-                canInteract: () => {
-                    return GetGameTimer() - this.lastCall > 15000;
+            this.interactionProvider.createInteractionForCoords(
+                bell.coords,
+                {
+                    label: 'Biper',
+                    blackoutGlobal: true,
+                    canInteract: () => {
+                        return GetGameTimer() - this.lastCall > 15000;
+                    },
+                    action: () => {
+                        this.callSociety(bell.number, bell?.location);
+                    },
                 },
-                action: () => {
-                    this.callSociety(bell.number, bell?.location);
-                },
-            });
+                0.75
+            );
         }
     }
 
