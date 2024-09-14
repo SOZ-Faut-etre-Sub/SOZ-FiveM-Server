@@ -13,7 +13,7 @@ export type TargetOption = TargetContext & {
 
     item?: string;
     blackoutGlobal?: boolean;
-    blackoutJob?: string;
+    blackoutJob?: string | boolean;
     job?: string | JobType | Partial<{ [key in JobType]: number }>;
     canInteract?: (entity?: number) => boolean | Promise<boolean>;
 

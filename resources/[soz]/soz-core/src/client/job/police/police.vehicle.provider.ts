@@ -1,24 +1,27 @@
-import { Notifier } from '@public/client/notifier';
-import { PlayerService } from '@public/client/player/player.service';
 import { ProgressService } from '@public/client/progress.service';
 import { TargetFactory } from '@public/client/target/target.factory';
 import { VehicleLockProvider } from '@public/client/vehicle/vehicle.lock.provider';
-import { VehicleStateProvider } from '@public/client/vehicle/vehicle.state.provider';
-import { OnEvent } from '@public/core/decorators/event';
+import { Once, OnceStep } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { emitRpc } from '@public/core/rpc';
-import { ClientEvent, ServerEvent } from '@public/shared/event';
+import { ServerEvent } from '@public/shared/event';
 import { JobType } from '@public/shared/job';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
 import { VehicleType, VehicleTypeFromClass, VehicleVolatileState } from '@public/shared/vehicle/vehicle';
 
-const jobsAllowed = [JobType.LSPD, JobType.BCSO, JobType.SASP, JobType.FBI, JobType.LSCS];
-
 const PlateTypeOverride: Record<number, number> = {
     [GetHashKey('rebel')]: 1,
     [GetHashKey('streiter')]: 2,
+};
+
+const jobsAllowed = {
+    [JobType.LSPD]: 0,
+    [JobType.BCSO]: 0,
+    [JobType.SASP]: 0,
+    [JobType.FBI]: 0,
+    [JobType.LSCS]: 0,
 };
 
 @Provider()
@@ -26,37 +29,21 @@ export class PoliceVehicleProvider {
     @Inject(TargetFactory)
     private targetFactory: TargetFactory;
 
-    @Inject(PlayerService)
-    private playerService: PlayerService;
-
     @Inject(ProgressService)
     private progressService: ProgressService;
-
-    @Inject(Notifier)
-    private notifier: Notifier;
 
     @Inject(VehicleLockProvider)
     private vehicleLockProvider: VehicleLockProvider;
 
-    @Inject(VehicleStateProvider)
-    private vehicleStateProvider: VehicleStateProvider;
-
-    @OnEvent(ClientEvent.JOB_DUTY_CHANGE)
-    public onStart(duty: boolean) {
-        const job = this.playerService.getPlayer().job.id;
-        if (!duty) {
-            return;
-        }
-        if (!jobsAllowed.includes(job)) {
-            return;
-        }
+    @Once(OnceStep.PlayerLoaded)
+    public onStart() {
         this.targetFactory.createForAllVehicle(
             [
                 {
                     label: 'Immatriculation',
                     icon: 'police/immatriculation',
-                    job: job,
-                    blackoutJob: job,
+                    job: jobsAllowed,
+                    blackoutJob: true,
                     blackoutGlobal: true,
                     category: 'society',
                     canInteract: vehicle => {
@@ -133,7 +120,7 @@ export class PoliceVehicleProvider {
                 {
                     label: 'Fouiller',
                     icon: 'police/fouiller_vehicle',
-                    job: job,
+                    job: jobsAllowed,
                     category: 'society',
                     canInteract: vehicle => {
                         if (VehicleTypeFromClass[GetVehicleClass(vehicle)] == VehicleType.Automobile) {
@@ -180,7 +167,7 @@ export class PoliceVehicleProvider {
                 {
                     label: 'Ouvrir',
                     icon: 'police/forcer',
-                    job: job,
+                    job: jobsAllowed,
                     category: 'society',
                     action: async entity => {
                         const { completed } = await this.progressService.progress(
@@ -209,7 +196,7 @@ export class PoliceVehicleProvider {
                 },
                 {
                     label: 'Rechercher des empreintes',
-                    job: job,
+                    job: jobsAllowed,
                     item: 'fingerprint_collector',
                     icon: 'police/fouiller',
                     category: 'society',
@@ -255,7 +242,7 @@ export class PoliceVehicleProvider {
                 },
                 {
                     label: 'Rechercher des traces de drogue',
-                    job: job,
+                    job: jobsAllowed,
                     icon: 'police/fouiller',
                     category: 'society',
                     canInteract: async entity => {

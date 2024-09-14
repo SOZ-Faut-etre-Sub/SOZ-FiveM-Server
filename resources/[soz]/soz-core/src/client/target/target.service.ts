@@ -75,7 +75,8 @@ export class TargetService {
         if (typeof job === 'string') {
             return player.job.id === job && player.job.onduty;
         } else if (typeof job === 'object') {
-            return job[player.job.id] && job[player.job.id] >= Number(player.job.grade) && player.job.onduty;
+            if (job[player.job.id] === undefined) return false;
+            return Number(player.job.grade) >= job[player.job.id] && player.job.onduty;
         }
 
         return false;
