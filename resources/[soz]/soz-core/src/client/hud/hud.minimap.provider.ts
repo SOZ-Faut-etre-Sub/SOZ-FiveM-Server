@@ -119,6 +119,9 @@ export class HudMinimapProvider {
         SetMinimapComponentPosition('minimap_mask', 'L', 'B', 0.02, 0.032 + this.minimapOffset, 0.111, 0.159);
         SetMinimapComponentPosition('minimap_blur', 'L', 'B', -0.03, 0.022 + this.minimapOffset, 0.266, 0.237);
 
+        const northBlip = GetNorthRadarBlip();
+        SetBlipAlpha(northBlip, 0);
+
         SetRadarBigmapEnabled(false, false);
     }
 
