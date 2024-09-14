@@ -83,10 +83,10 @@ export const InputApp: FunctionComponent = () => {
     }
 
     const inputClassnames = classNames(
-        'resize-none box-border w-full text-white bg-black bg-opacity-15 outline-none py-1 px-2 border rounded-md',
+        'resize-none box-border w-full text-white bg-white/5 outline-none py-1 px-2 border rounded-md',
         {
             'border-rose-500': error !== null,
-            'border-gray-700': error === null,
+            'border-green-800': error === null,
         }
     );
 
@@ -99,7 +99,7 @@ export const InputApp: FunctionComponent = () => {
                     borderClassName="rounded-lg"
                 >
                     <form onSubmit={handleSubmit} className="w-[100vh] p-2">
-                        <h2 className="text-base text-white drop-shadow-md mb-2">{askInput.title}</h2>
+                        <h2 className="text-base text-white drop-shadow-md mb-2 ml-2">{askInput.title}</h2>
 
                         {askInput.maxCharacters <= 64 ? (
                             <input
