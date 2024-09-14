@@ -40,7 +40,7 @@ export const ApplicationContainer: FunctionComponent<PropsWithChildren<Applicati
 
     return (
         <>
-            <div className="absolute flex justify-center items-center h-full w-full">
+            <div className="absolute flex justify-center items-center h-full w-full z-10">
                 <animated.div
                     ref={refOutside}
                     style={contentStyles}
