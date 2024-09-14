@@ -25,7 +25,7 @@ const SuperetteContent: ShopContent = [
     { id: 'mini_zigmac', type: 'food', price: 9 },
     { id: 'zait_fruite', type: 'drink', price: 9 },
     { id: 'zanta_glace_energetique', type: 'drink', price: 9 },
-    { id: 'smartwatchuiwi', type: 'item', price: 13 },
+    { id: 'smartwatchuiwi', type: 'item', price: 150 },
 ];
 
 const AmmunationContent: ShopContent = [
