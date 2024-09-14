@@ -150,19 +150,19 @@ export class TargetProvider {
     ): Promise<TargetOption[]> {
         const targetsFound: TargetOption[] = [];
 
-        const entityTargets = await this.checkTargetEntityActions(entity, coords, playerDistance);
+        const entityTargets = await this.checkTargetEntityActions(entity, playerDistance);
         targetsFound.push(...entityTargets);
 
-        const modelTargets = await this.checkTargetModelActions(entity, coords, playerDistance);
+        const modelTargets = await this.checkTargetModelActions(entity, playerDistance);
         targetsFound.push(...modelTargets);
 
-        const pedTargets = await this.checkTargetPedActions(entity, coords, playerDistance);
+        const pedTargets = await this.checkTargetPedActions(entity, playerDistance);
         targetsFound.push(...pedTargets);
 
-        const vehicleTargets = await this.checkTargetVehicleActions(entity, coords, playerDistance);
+        const vehicleTargets = await this.checkTargetVehicleActions(entity, playerDistance);
         targetsFound.push(...vehicleTargets);
 
-        const boneTargets = await this.checkTargetBoneActions(entity, coords, playerDistance);
+        const boneTargets = await this.checkTargetBoneActions(entity);
         targetsFound.push(...boneTargets);
 
         const playerPosition = GetEntityCoords(PlayerPedId(), true) as Vector3;
@@ -189,11 +189,7 @@ export class TargetProvider {
         return targetsFound;
     }
 
-    protected async checkTargetEntityActions(
-        entity: number,
-        coords: Vector3,
-        playerDistance: number
-    ): Promise<TargetOption[]> {
+    protected async checkTargetEntityActions(entity: number, playerDistance: number): Promise<TargetOption[]> {
         const entityType = GetEntityType(entity);
         if (entityType < 3) return [];
 
@@ -202,11 +198,7 @@ export class TargetProvider {
         return this.checkTargetGenericActions(modelStore, playerDistance, entity);
     }
 
-    protected async checkTargetModelActions(
-        entity: number,
-        coords: Vector3,
-        playerDistance: number
-    ): Promise<TargetOption[]> {
+    protected async checkTargetModelActions(entity: number, playerDistance: number): Promise<TargetOption[]> {
         const entityType = GetEntityType(entity);
         if (entityType === 0) return [];
 
@@ -216,11 +208,7 @@ export class TargetProvider {
         return this.checkTargetGenericActions(modelStore, playerDistance, entity);
     }
 
-    protected async checkTargetPedActions(
-        entity: number,
-        coords: Vector3,
-        playerDistance: number
-    ): Promise<TargetOption[]> {
+    protected async checkTargetPedActions(entity: number, playerDistance: number): Promise<TargetOption[]> {
         const playerPed = PlayerPedId();
         if (entity === playerPed) return [];
 
@@ -239,11 +227,7 @@ export class TargetProvider {
         return this.checkTargetGenericActions(pedStore, playerDistance, entity);
     }
 
-    protected async checkTargetVehicleActions(
-        entity: number,
-        coords: Vector3,
-        playerDistance: number
-    ): Promise<TargetOption[]> {
+    protected async checkTargetVehicleActions(entity: number, playerDistance: number): Promise<TargetOption[]> {
         const entityType = GetEntityType(entity);
         if (entityType !== 2) return [];
 
@@ -252,11 +236,7 @@ export class TargetProvider {
         return this.checkTargetGenericActions(vehicleStore, playerDistance, entity);
     }
 
-    protected async checkTargetBoneActions(
-        entity: number,
-        coords: Vector3,
-        playerDistance: number
-    ): Promise<TargetOption[]> {
+    protected async checkTargetBoneActions(entity: number): Promise<TargetOption[]> {
         const targetOptions: TargetOption[] = [];
 
         const playerCoords = this.getPlayerCoords();
