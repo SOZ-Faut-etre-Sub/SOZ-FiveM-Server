@@ -141,6 +141,10 @@ export class ProgressService {
                     }
                 }
 
+                if (!animation.options.repeat && !animation.flags) {
+                    animation.options.repeat = true;
+                }
+
                 this.animationRunner = this.animationService.playAnimation(
                     {
                         base: {
