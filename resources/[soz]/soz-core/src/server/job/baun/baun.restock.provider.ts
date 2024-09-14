@@ -52,7 +52,7 @@ export class BaunRestockProvider {
     private itemService: ItemService;
 
     @OnEvent(ServerEvent.BAUN_RESTOCK)
-    public async onRestock(source: number, { storage, item }: { storage: string; item: string }) {
+    public async onRestock(source: number, storage: string, item: string) {
         const config = RESTOCK_CONFIG[item];
 
         if (!config) {

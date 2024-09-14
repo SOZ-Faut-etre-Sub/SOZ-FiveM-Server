@@ -1,11 +1,10 @@
 function getCloakroomTargetOptions(job, storage, event)
     return {
         {
-            color = job,
             type = "client",
             label = "Se changer",
             icon = "jobs/habiller",
-            storage = storage,
+            category = "society",
             canInteract = function()
                 return PlayerData.job.id == job
             end,
@@ -14,20 +13,18 @@ function getCloakroomTargetOptions(job, storage, event)
             end,
         },
         {
-            color = job,
-            type = "client",
             label = "Vérifier le stock",
             icon = "jobs/check-stock",
-            storage = storage,
             job = job,
+            category = "society",
             action = function()
                 TriggerEvent("soz-jobs:client:check-cloakroom-storage", storage)
             end,
         },
         {
-            color = job,
             icon = "inventory/archive",
             label = "Ouvrir mon casier",
+            category = "society",
             canInteract = function()
                 return PlayerData.job.id == job
             end,

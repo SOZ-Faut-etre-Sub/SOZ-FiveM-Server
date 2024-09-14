@@ -1,31 +1,28 @@
 local function getTargetOption(storage, itemId)
     return {
-        color = "baun",
-        type = "server",
         label = "Restocker",
         icon = "jobs/demonter",
-        event = "soz-core:server:job:baun:restock",
-        item = itemId,
-        storage = storage,
         blackoutGlobal = true,
         blackoutJob = "baun",
         job = "baun",
+        category = "society",
         canInteract = function()
             return PlayerData.job.onduty
+        end,
+        action = function()
+            TriggerServerEvent("soz-core:server:job:baun:restock", storage, itemId)
         end,
     }
 end
 
 local function getCocktailTargetOption()
     return {
-        color = "baun",
         label = "Créer un assortiment de cocktails",
         icon = "baun/createCocktailBox",
-        type = "server",
-        event = "soz-core:server:job:baun:create-cocktail-box",
         blackoutGlobal = true,
         blackoutJob = "baun",
         job = "baun",
+        category = "society",
         canInteract = function()
             local numberOfCocktails = 0
             for _, item in pairs(PlayerData.items) do
@@ -35,19 +32,20 @@ local function getCocktailTargetOption()
             end
             return PlayerData.job.onduty and numberOfCocktails >= 10
         end,
+        action = function()
+            TriggerServerEvent("soz-core:server:job:baun:create-cocktail-box")
+        end,
     }
 end
 
 local function getIceMachineTargetOption()
     return {
-        color = "baun",
         label = "Faire des glaçons",
         icon = "baun/ice",
-        type = "client",
-        event = "soz-core:client:baun:create-ice-cubes",
         blackoutGlobal = true,
         blackoutJob = "baun",
         job = "baun",
+        category = "society",
         canInteract = function()
             local numberOfWaterBottle = 0
             for _, item in pairs(PlayerData.items) do
@@ -56,6 +54,9 @@ local function getIceMachineTargetOption()
                 end
             end
             return PlayerData.job.onduty and numberOfWaterBottle >= 1
+        end,
+        action = function()
+            TriggerEvent("soz-core:client:baun:create-ice-cubes")
         end,
     }
 end
