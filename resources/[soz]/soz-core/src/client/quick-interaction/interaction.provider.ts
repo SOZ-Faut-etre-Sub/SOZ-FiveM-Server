@@ -16,6 +16,8 @@ const INTERACTION_SIZE = 0.25;
 const spriteWidth = INTERACTION_SIZE / 16;
 const spriteHeight = INTERACTION_SIZE / 9;
 
+const INTERACTION_SPRITE_CONTENT_WIDTH = 0.0375;
+
 @Provider()
 export class InteractionProvider {
     @Inject(ResourceLoader)
@@ -76,16 +78,16 @@ export class InteractionProvider {
             return;
         }
 
+        const contentX =
+            (INTERACTION_SPRITE_CONTENT_WIDTH + INTERACTION_SIZE / 2) / 16 + INTERACTION_SPRITE_CONTENT_WIDTH / 2;
+
         DrawSprite('soz_minimap', 'interaction_on', 0, 0, spriteWidth, spriteHeight, 0, 255, 255, 255, 255);
-
-        const contentWidth = this.nearbyInteraction.label.length * 0.0075;
-
         DrawSprite(
             'soz_minimap',
             'interaction_content',
-            (spriteWidth + INTERACTION_SIZE / 2) / 16 + contentWidth / 2,
+            contentX,
             0,
-            contentWidth,
+            INTERACTION_SPRITE_CONTENT_WIDTH,
             spriteHeight,
             0,
             255,
@@ -97,7 +99,7 @@ export class InteractionProvider {
         SetTextScale(0.0, INTERACTION_SIZE);
         SetTextEntry('STRING');
         AddTextComponentString(this.nearbyInteraction.label);
-        DrawText(0.0122, -0.011);
+        DrawText(0.0122, -0.0105);
 
         ClearDrawOrigin();
     }
