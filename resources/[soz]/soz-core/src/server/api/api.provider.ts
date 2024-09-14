@@ -7,6 +7,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Request } from '../../core/http/request';
 import { Response } from '../../core/http/response';
+import { BankProvider } from '../bank/bank.provider';
 import { BillboardService } from '../billboard/billboard.service';
 import { ItemService } from '../item/item.service';
 import { FDFFieldProvider } from '../job/fdf/fdf.field.provider';
@@ -40,6 +41,9 @@ export class ApiProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(BankProvider)
+    private bankProvider: BankProvider;
 
     @Get('/active-players')
     public async getActivePlayers(): Promise<Response> {
@@ -222,6 +226,23 @@ export class ApiProvider {
                 data.business2,
                 data.universalBusiness
             );
+
+            return Response.ok(
+                JSON.stringify({
+                    success,
+                    msg,
+                })
+            );
+        } catch (error) {
+            return Response.internalServerError(error);
+        }
+    }
+
+    @Post('/pay-taxe')
+    public async payTaxe(request: Request): Promise<Response> {
+        try {
+            const data = JSON.parse(await request.body);
+            const [success, msg] = await this.bankProvider.payTaxe(data.citizenId, data.money, data.reason);
 
             return Response.ok(
                 JSON.stringify({

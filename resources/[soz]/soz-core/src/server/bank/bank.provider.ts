@@ -219,4 +219,28 @@ export class BankProvider {
                        WHERE c.citizenid = ${citizenId}`
         );
     }
+
+    public async payTaxe(citizenId: string, money: number, reason: string): Promise<[boolean, string]> {
+        const player = this.playerService.getPlayerByCitizenId(citizenId);
+        if (!player) {
+            return [false, 'Joueur inconnu ou pas connecté'];
+        }
+
+        const success = await this.bankService.transferBankMoney(
+            player.charinfo.account,
+            'gouv',
+            'money',
+            money,
+            true,
+            reason
+        );
+
+        if (!success) {
+            return [false, 'Echec du payement'];
+        }
+
+        this.notifier.advancedNotify(player.source, 'Fleeca Banque', `~r~$${money}~s~`, reason, 'CHAR_BANK_MAZE');
+
+        return [true, null];
+    }
 }
