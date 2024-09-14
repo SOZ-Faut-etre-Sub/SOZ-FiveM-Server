@@ -1,3 +1,4 @@
+import { CHANGE_SPEED_KEY, NO_CLIP_FAST_SPEED } from '@public/client/utils/noclip.provider';
 import { Provider } from '@public/core/decorators/provider';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { Control } from '@public/shared/input';
@@ -14,9 +15,11 @@ export class FlyingCameraProvider {
     private vecY: Vector3;
     private vecZ: Vector3;
 
+    private speedMultiplier = 1;
+
     private restrictionLogic: (previousPosition: Vector3, newPosition: Vector3) => Vector3;
 
-    public createCamera(): number {
+    public createCamera(speedMultiplier: number = 1, render: boolean = true): number {
         const pedPos = GetEntityCoords(PlayerPedId());
         const pos = GetGameplayCamCoord();
         const rot = GetGameplayCamRot(0);
@@ -30,15 +33,19 @@ export class FlyingCameraProvider {
             rot[1],
             rot[2],
             80,
-            true,
+            render,
             0
         );
 
-        RenderScriptCams(true, true, 1000, true, true);
+        if (render) {
+            SetCamActive(this.camera, true);
+            RenderScriptCams(true, true, 1000, true, true);
+        }
 
         this.vecX = [1, 0, 0];
         this.vecY = [0, 1, 0];
         this.vecZ = [0, 0, 1];
+        this.speedMultiplier = speedMultiplier;
 
         return this.camera;
     }
@@ -47,8 +54,10 @@ export class FlyingCameraProvider {
         RenderScriptCams(false, true, 1000, true, true);
         DestroyAllCams(true);
         SetFocusEntity(PlayerPedId());
+
         this.restrictionLogic = null;
         this.camera = null;
+        this.speedMultiplier = 1;
     }
 
     @Tick(TickInterval.EVERY_FRAME)
@@ -59,6 +68,10 @@ export class FlyingCameraProvider {
 
         DisableAllControlActions(0);
 
+        if (!IsCamActive(this.camera)) {
+            return;
+        }
+
         const { lookX, lookY, moveX, moveY, moveZ } = this.getInput();
 
         const pos = GetCamCoord(this.camera) as Vector3;
@@ -68,7 +81,14 @@ export class FlyingCameraProvider {
         const rotY = rot[1];
         const rotX = rot[2] + -lookX * this.cameraRotationSpeed;
 
-        const speed = this.cameraMoveSpeed * GetFrameTime() * 60;
+        if (IsDisabledControlJustPressed(1, CHANGE_SPEED_KEY)) {
+            this.speedMultiplier *= NO_CLIP_FAST_SPEED;
+        } else if (IsDisabledControlJustPressed(1, 210)) {
+            this.speedMultiplier /= NO_CLIP_FAST_SPEED;
+            this.speedMultiplier = Math.max(this.speedMultiplier, 1.0);
+        }
+
+        const speed = this.cameraMoveSpeed * this.speedMultiplier * GetFrameTime() * 60;
 
         const newPos = [
             pos[0] + this.vecX[0] * moveX * speed + this.vecY[0] * -moveY * speed + this.vecZ[0] * moveZ * speed,

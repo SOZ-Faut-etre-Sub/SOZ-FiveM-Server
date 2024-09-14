@@ -8,6 +8,7 @@ import { Tick, TickInterval } from '@core/decorators/tick';
 import { emitRpc } from '@core/rpc';
 import { uuidv4, waitUntil } from '@core/utils';
 import { AnimationService } from '@public/client//animation/animation.service';
+import { AdminSpectateProvider } from '@public/client/admin/admin.spectate.provider';
 import { BankService } from '@public/client/bank/bank.service';
 import { FlyingCameraProvider } from '@public/client/camera/flying.camera.provider';
 import { HousingApartmentZoneProvider } from '@public/client/housing/housing.apartment.zone.provider';
@@ -83,6 +84,9 @@ export class HousingFournitureProvider {
 
     @Inject(NoClipProvider)
     private noClipProvider: NoClipProvider;
+
+    @Inject(AdminSpectateProvider)
+    private adminSpectateProvider: AdminSpectateProvider;
 
     @Inject(AnimationService)
     private animationService: AnimationService;
@@ -226,7 +230,8 @@ export class HousingFournitureProvider {
             return;
         }
 
-        const apartment = await this.housingRepository.findApartmentFromCollision(PlayerPedId());
+        const ped = this.adminSpectateProvider.ped || PlayerPedId();
+        const apartment = await this.housingRepository.findApartmentFromCollision(ped);
 
         if (!apartment) {
             if (this.lastApartment) {

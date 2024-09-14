@@ -61,7 +61,7 @@ export class AdminMenuPlayerProvider {
     public spectatePlayer(source: number, player: AdminPlayer) {
         const position = GetEntityCoords(GetPlayerPed(player.id)) as Vector3;
 
-        TriggerClientEvent(ClientEvent.ADMIN_SPECTATE_PLAYER, source, player.id, position);
+        TriggerClientEvent(ClientEvent.ADMIN_SPECTATE_PLAYER, source, player, position);
     }
 
     @OnEvent(ServerEvent.ADMIN_KILL_PLAYER)

@@ -12,9 +12,9 @@ import { WeaponDrawingProvider } from '../weapon/weapon.drawing.provider';
 
 const MOVE_UP_KEY = 20;
 const MOVE_DOWN_KEY = 44;
-const CHANGE_SPEED_KEY = 21;
+export const CHANGE_SPEED_KEY = 21;
 const NO_CLIP_NORMAL_SPEED = 0.5;
-const NO_CLIP_FAST_SPEED = 2.5;
+export const NO_CLIP_FAST_SPEED = 2.5;
 const eps = 0.01;
 const breakSpeed = 10.0;
 
