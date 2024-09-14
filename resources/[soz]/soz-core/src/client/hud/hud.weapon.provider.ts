@@ -25,14 +25,7 @@ export class HudWeaponProvider {
 
         const weapon = this.weapon.getCurrentWeapon();
         if (!weapon) {
-            if (this._haveWeapon) {
-                this._haveWeapon = false;
-                this.nuiDispatch.dispatch('hud', 'UpdateWeaponAmmo', {
-                    hasWeapon: false,
-                    ammo: 0,
-                    maxAmmo: 0,
-                });
-            }
+            this.resetWeaponHud();
             return;
         }
 
@@ -40,16 +33,36 @@ export class HudWeaponProvider {
             return;
         }
 
-        const [hasValue, ammo] = GetAmmoInClip(player, weapon.name);
-        const maxAmmo = GetAmmoInPedWeapon(player, weapon.name);
+        const maxAmmoInClip = GetMaxAmmoInClip(player, weapon.name, true);
+        if (maxAmmoInClip === 0) {
+            this.resetWeaponHud();
+            return;
+        }
 
-        if (!hasValue) return;
+        const [hasValue, ammo] = GetAmmoInClip(player, weapon.name);
+        if (!hasValue) {
+            this.resetWeaponHud();
+            return;
+        }
+
+        const maxAmmo = GetAmmoInPedWeapon(player, weapon.name);
 
         this._haveWeapon = true;
         this.nuiDispatch.dispatch('hud', 'UpdateWeaponAmmo', {
             hasWeapon: maxAmmo !== undefined,
             ammo,
             maxAmmo: Math.max(0, maxAmmo - ammo),
+        });
+    }
+
+    protected resetWeaponHud() {
+        if (!this._haveWeapon) return;
+
+        this._haveWeapon = false;
+        this.nuiDispatch.dispatch('hud', 'UpdateWeaponAmmo', {
+            hasWeapon: false,
+            ammo: 0,
+            maxAmmo: 0,
         });
     }
 }
