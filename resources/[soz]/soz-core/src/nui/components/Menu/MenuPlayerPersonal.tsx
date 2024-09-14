@@ -304,13 +304,14 @@ const MenuAnimationList: FunctionComponent = () => {
         setTextFilter(value);
     };
 
-    const recursiveFilter = (items: AnimationConfigList): AnimationConfigItem[] => {
+    const recursiveFilter = (items: AnimationConfigList, level = 0): AnimationConfigItem[] => {
         const newItems = [];
         for (const item of items) {
             if (['animation', 'event', 'scenario'].includes(item.type)) {
                 if (
                     !textFilter ||
                     item.name
+                        .toLocaleLowerCase()
                         .normalize('NFD')
                         .replace(/\p{Diacritic}/gu, '')
                         .includes(textFilter.normalize('NFD').replace(/\p{Diacritic}/gu, ''))
@@ -320,7 +321,17 @@ const MenuAnimationList: FunctionComponent = () => {
             }
 
             if (item.type === 'category') {
-                item.items = recursiveFilter(item.items);
+                if (
+                    level === 0 ||
+                    !textFilter ||
+                    !item.name
+                        .toLocaleLowerCase()
+                        .normalize('NFD')
+                        .replace(/\p{Diacritic}/gu, '')
+                        .includes(textFilter.normalize('NFD').replace(/\p{Diacritic}/gu, ''))
+                ) {
+                    item.items = recursiveFilter(item.items, level + 1);
+                }
 
                 if (item.items.length) {
                     newItems.push(item);
