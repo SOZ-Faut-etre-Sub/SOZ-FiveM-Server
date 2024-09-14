@@ -9,6 +9,8 @@ import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 import { TargetConnector } from './components/TargetConnector';
 import { TargetOptions } from './components/TargetOptions';
 
+const EXCLUDED_KEYS = ['z', 'q', 's', 'd', 'w', 'a'];
+
 export const TargetOverlay: FunctionComponent = () => {
     const [isTargeting, setIsTargeting] = useState<boolean>(false);
     const [targetFound, setTargetFound] = useState<boolean>(false);
@@ -24,14 +26,19 @@ export const TargetOverlay: FunctionComponent = () => {
     useNuiEvent('target', 'SetTargetFound', setTargetFound);
     useNuiEvent('target', 'SetTargets', setTargets);
 
-    useNuiFocus(targetFound, targetFound, false);
+    useNuiFocus(targetFound, targetFound, targetFound);
 
-    const onKeyUpReceived = useCallback(() => {
-        setIsTargeting(false);
-        setTargetFound(false);
+    const onKeyUpReceived = useCallback(
+        (event: KeyboardEvent) => {
+            if (EXCLUDED_KEYS.includes(event.key.toLowerCase())) return;
 
-        fetchNui(NuiEvent.TargetReset);
-    }, [setIsTargeting, setTargetFound]);
+            setIsTargeting(false);
+            setTargetFound(false);
+
+            fetchNui(NuiEvent.TargetReset);
+        },
+        [setIsTargeting, setTargetFound]
+    );
 
     useEffect(() => {
         window.addEventListener('keyup', onKeyUpReceived);
