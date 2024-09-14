@@ -213,10 +213,10 @@ export class ProgressService {
 
             beforeCallback();
             await wait(duration);
-            afterCallback();
 
             if (isCanceled) return;
 
+            afterCallback();
             resolve({
                 completed: true,
                 progress: 1,
