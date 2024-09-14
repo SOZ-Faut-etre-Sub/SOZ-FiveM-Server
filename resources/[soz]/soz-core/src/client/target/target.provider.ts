@@ -96,10 +96,8 @@ export class TargetProvider {
         if (!this._targetActive) return;
         if (IsNuiFocused()) return;
 
-        const playerCoords = this._playerCoordsOverride ?? (GetEntityCoords(PlayerPedId(), true) as Vector3);
-
         const [entity, coords] = await this.screenService.getEntityOnPosition([0.5, 0.5], this._playerCoordsOverride);
-        const playerDistance = getDistance(coords, playerCoords);
+        const playerDistance = getDistance(coords, this.getPlayerCoords());
 
         this._targetOptions = [];
 
@@ -163,6 +161,9 @@ export class TargetProvider {
 
         const vehicleTargets = await this.checkTargetVehicleActions(entity, coords, playerDistance);
         targetsFound.push(...vehicleTargets);
+
+        const boneTargets = await this.checkTargetBoneActions(entity, coords, playerDistance);
+        targetsFound.push(...boneTargets);
 
         const playerPosition = GetEntityCoords(PlayerPedId(), true) as Vector3;
         const nearbyZones = this.targetStore.zones.find(zone =>
@@ -252,6 +253,27 @@ export class TargetProvider {
         return this.checkTargetGenericActions(vehicleStore, playerDistance, entity);
     }
 
+    protected async checkTargetBoneActions(
+        entity: number,
+        coords: Vector3,
+        playerDistance: number
+    ): Promise<TargetOption[]> {
+        const targetOptions: TargetOption[] = [];
+
+        const playerCoords = this.getPlayerCoords();
+
+        for (const [bone, store] of Object.entries(this.targetStore.bones.getAll())) {
+            const boneId = GetEntityBoneIndexByName(entity, bone);
+            const bonePos = GetWorldPositionOfEntityBone(entity, boneId) as Vector3;
+            const boneDistance = getDistance(playerCoords, bonePos);
+
+            const options = await this.checkTargetGenericActions(store, boneDistance, entity);
+            targetOptions.push(...options);
+        }
+
+        return targetOptions;
+    }
+
     protected async checkTargetGenericActions(
         store: TargetStoreBase,
         playerDistance: number,
@@ -271,6 +293,10 @@ export class TargetProvider {
         }
 
         return targetsFound;
+    }
+
+    protected getPlayerCoords(): Vector3 {
+        return this._playerCoordsOverride ?? (GetEntityCoords(PlayerPedId(), true) as Vector3);
     }
 
     protected async resetTarget(): Promise<void> {

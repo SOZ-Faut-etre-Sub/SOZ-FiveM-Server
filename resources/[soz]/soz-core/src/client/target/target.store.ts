@@ -24,6 +24,7 @@ export class TargetStore {
     public players: TargetStoreData<TargetStoreBase> = new TargetStoreData<TargetStoreBase>();
     public entities: TargetStoreData<TargetStoreBase> = new TargetStoreData<TargetStoreBase>();
     public vehicles: TargetStoreData<TargetStoreBase> = new TargetStoreData<TargetStoreBase>();
+    public bones: TargetStoreData<TargetStoreBase> = new TargetStoreData<TargetStoreBase>();
 
     public addZone(
         id: string,
@@ -62,6 +63,17 @@ export class TargetStore {
         }
 
         this.entities.add(entities.toString(), { targets, distance });
+    }
+
+    public addBones(bones: string[] | string, targets: TargetStoreBase['targets'], distance = DEFAULT_DISTANCE): void {
+        if (bones instanceof Array) {
+            for (const bone of bones) {
+                this.bones.add(bone.toString(), { targets, distance });
+            }
+            return;
+        }
+
+        this.bones.add(bones.toString(), { targets, distance });
     }
 
     public getId(id: string | number): string {

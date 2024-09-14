@@ -129,9 +129,6 @@ export class TargetFactory {
     }
 
     public createForBone(bones: string[] | string, targets: TargetOption[], distance = 1.5) {
-        exports['qb-target'].AddTargetBone(bones, {
-            options: targets,
-            distance: distance,
-        });
+        this.targetStore.addBones(bones, targets, distance);
     }
 }
