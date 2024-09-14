@@ -31,7 +31,7 @@ export const FieldHealthApp: FunctionComponent = () => {
     const Tag = Mapping[icon];
     return (
         <div className="w-full h-full">
-            <div className="absolute flex bottom-10 justify-center items-center w-full">
+            <div className="absolute flex bottom-24 justify-center items-center w-full">
                 {health.split('').map((char, index) => (
                     <Tag key={'FieldHealthApp' + index} className={cn('h-10 w-12', { grayscale: char === '0' })}></Tag>
                 ))}

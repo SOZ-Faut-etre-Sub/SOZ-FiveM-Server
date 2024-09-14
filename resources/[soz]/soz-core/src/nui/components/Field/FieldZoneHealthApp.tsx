@@ -30,7 +30,7 @@ export const FieldZoneHealthApp: FunctionComponent = () => {
 
     return (
         <div className="w-full h-full">
-            <div className="absolute flex bottom-10 justify-center items-center w-full">
+            <div className="absolute flex bottom-24 justify-center items-center w-full">
                 {Object.keys(FoodFields).map((foodFieldType, i) => {
                     const field = FoodFields[foodFieldType as FoodFieldType];
 
