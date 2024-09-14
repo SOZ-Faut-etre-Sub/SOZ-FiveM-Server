@@ -84,26 +84,28 @@ export const ProgressApp: FunctionComponent = () => {
                 ))}
             </div>
 
-            <div className="flex items-center mx-auto gap-2">
-                <GlassMorphismContainer
-                    className="flex gap-10 px-5 py-1 w-fit"
-                    borderClassName="rounded-full"
-                    borderColor={progress?.color}
-                >
-                    <span>{progress?.label}</span>
+            {(progress?.label || progress?.units?.length > 0) && (
+                <div className="flex items-center mx-auto gap-2">
+                    <GlassMorphismContainer
+                        className="flex gap-10 px-5 py-1 w-fit"
+                        borderClassName="rounded-full"
+                        borderColor={progress?.color}
+                    >
+                        <span>{progress?.label}</span>
 
-                    {progress?.units?.length > 0 && (
-                        <div className="flex gap-2">
-                            {progress?.units.map((unit, index) => (
-                                <div key={index} className="font-mono font-sm w-18">
-                                    {((unit.end - unit.start) * currentProgress + unit.start).toFixed(2)}
-                                    {unit.unit}
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </GlassMorphismContainer>
-            </div>
+                        {progress?.units?.length > 0 && (
+                            <div className="flex gap-2">
+                                {progress?.units.map((unit, index) => (
+                                    <div key={index} className="font-mono font-sm w-18">
+                                        {((unit.end - unit.start) * currentProgress + unit.start).toFixed(2)}
+                                        {unit.unit}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </GlassMorphismContainer>
+                </div>
+            )}
         </animated.div>
     );
 };
