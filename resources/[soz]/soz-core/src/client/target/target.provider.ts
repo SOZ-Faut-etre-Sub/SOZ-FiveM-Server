@@ -199,9 +199,9 @@ export class TargetProvider {
         const entityType = GetEntityType(entity);
         if (entityType < 3) return [];
 
-        const modelStore = this.targetStore.entities.get(entity.toString());
+        const entityStore = this.targetStore.entities.get(entity.toString());
 
-        return this.checkTargetGenericActions(modelStore, playerDistance, entity);
+        return this.checkTargetGenericActions(entityStore, playerDistance, entity);
     }
 
     protected async checkTargetModelActions(entity: number, playerDistance: number): Promise<TargetOption[]> {
