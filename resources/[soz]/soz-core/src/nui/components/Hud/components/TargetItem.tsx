@@ -24,7 +24,7 @@ export const TargetItem: FunctionComponent<TargetOption & { onSelect: () => void
     }, [icon]);
 
     return (
-        <div className="h-12 w-full cursor-pointer" onClick={handleClick}>
+        <div className="h-12 w-full cursor-pointer" onClick={handleClick} onAuxClick={handleClick}>
             <GlassMorphismContainer
                 borderClassName="rounded-full"
                 className="flex items-center gap-3 px-5 h-12 w-fit"
