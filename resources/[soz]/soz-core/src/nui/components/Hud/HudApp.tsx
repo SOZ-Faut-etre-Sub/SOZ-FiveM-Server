@@ -13,7 +13,7 @@ import { ZombieOverlay } from './ZombieIcon';
 
 export const HudApp: FunctionComponent = () => {
     return (
-        <main className="absolute h-full w-full overflow-hidden">
+        <main className="fixed inset-0 h-full w-full overflow-hidden">
             <WatchInterface />
             <VehicleInterface />
             <WeaponAndVoipInterface />
