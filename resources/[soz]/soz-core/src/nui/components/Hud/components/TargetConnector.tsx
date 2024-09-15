@@ -35,7 +35,7 @@ export const TargetConnector: FunctionComponent<ConnectorProp> = ({
 
             setTargetRect(targetBounding);
         },
-        50,
+        20,
         [target]
     );
 
