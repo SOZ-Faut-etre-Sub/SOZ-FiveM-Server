@@ -136,6 +136,9 @@ export class TargetProvider {
             exports['soz-phone'].stopPhoneCall();
         }
 
+        const distance = getDistance(GetEntityCoords(option.entity) as Vector3, this.getPlayerCoords());
+        if (distance > option.distance) return;
+
         option?.action(option?.entity);
 
         return this.disableTargetMode(true);
