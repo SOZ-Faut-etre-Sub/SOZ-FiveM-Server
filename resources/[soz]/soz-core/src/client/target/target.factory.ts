@@ -33,7 +33,7 @@ export class TargetFactory {
     @Inject(TargetStore)
     private readonly targetStore: TargetStore;
 
-    public createForBoxZone(id: string, zone: Zone<any>, targets: TargetOption[], distance = DEFAULT_DISTANCE) {
+    public async createForBoxZone(id: string, zone: Zone<any>, targets: TargetOption[], distance = DEFAULT_DISTANCE) {
         zone = {
             length: 1,
             width: 1,
@@ -43,20 +43,20 @@ export class TargetFactory {
             ...zone,
         };
 
-        this.targetStore.addZone(id, BoxZone.fromZone(zone), targets, distance);
+        await this.targetStore.addZone(id, BoxZone.fromZone(zone), targets, distance);
     }
 
-    public createForPolygoneZone(
+    public async createForPolygoneZone(
         id: string,
         zone: PolygonZone<any>,
         targets: TargetOption[],
         distance = DEFAULT_DISTANCE
     ) {
-        this.targetStore.addZone(id, zone, targets, distance);
+        await this.targetStore.addZone(id, zone, targets, distance);
     }
 
-    public createForAllPlayer(targets: TargetOption[], distance = DEFAULT_DISTANCE) {
-        this.targetStore.players.add('global', { targets, distance });
+    public async createForAllPlayer(targets: TargetOption[], distance = DEFAULT_DISTANCE) {
+        await this.targetStore.players.add('global', { targets, distance });
     }
 
     public async createForPed(ped: PedOptions) {
@@ -88,28 +88,28 @@ export class TargetFactory {
         this.removeBoxZone(`entity_${id}`);
     }
 
-    public createForModel(
+    public async createForModel(
         models: string[] | number[] | string | number,
         targets: TargetOption[],
         distance = DEFAULT_DISTANCE
     ) {
-        this.targetStore.addModels(models, targets, distance);
+        await this.targetStore.addModels(models, targets, distance);
     }
 
-    public createForEntity(
+    public async createForEntity(
         entities: string[] | number[] | string | number,
         targets: TargetOption[],
         distance = DEFAULT_DISTANCE
     ) {
-        this.targetStore.addEntities(entities, targets, distance);
+        await this.targetStore.addEntities(entities, targets, distance);
     }
 
-    public createForAllVehicle(targets: TargetOption[], distance = DEFAULT_DISTANCE) {
-        this.targetStore.vehicles.add('global', { targets, distance });
+    public async createForAllVehicle(targets: TargetOption[], distance = DEFAULT_DISTANCE) {
+        await this.targetStore.vehicles.add('global', { targets, distance });
     }
 
-    public createForAllPed(targets: TargetOption[], distance = DEFAULT_DISTANCE) {
-        this.targetStore.peds.add('global', { targets, distance });
+    public async createForAllPed(targets: TargetOption[], distance = DEFAULT_DISTANCE) {
+        await this.targetStore.peds.add('global', { targets, distance });
     }
 
     public removeTargetModel(models: string[], labels: string[]) {
@@ -128,7 +128,7 @@ export class TargetFactory {
         this.targetStore.zones.remove(id);
     }
 
-    public createForBone(bones: string[] | string, targets: TargetOption[], distance = 1.5) {
-        this.targetStore.addBones(bones, targets, distance);
+    public async createForBone(bones: string[] | string, targets: TargetOption[], distance = 1.5) {
+        await this.targetStore.addBones(bones, targets, distance);
     }
 }

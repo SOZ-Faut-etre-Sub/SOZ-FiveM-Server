@@ -26,54 +26,58 @@ export class TargetStore {
     public vehicles: TargetStoreData<TargetStoreBase> = new TargetStoreData<TargetStoreBase>();
     public bones: TargetStoreData<TargetStoreBase> = new TargetStoreData<TargetStoreBase>();
 
-    public addZone(
+    public async addZone(
         id: string,
         zone: TargetStoreZone['zone'],
         targets: TargetStoreZone['targets'],
         distance = DEFAULT_DISTANCE
-    ): void {
-        this.zones.add(id, { zone, targets, distance });
+    ): Promise<void> {
+        await this.zones.add(id, { zone, targets, distance });
     }
 
-    public addModels(
+    public async addModels(
         models: string[] | number[] | string | number,
         targets: TargetStoreBase['targets'],
         distance = DEFAULT_DISTANCE
-    ): void {
+    ): Promise<boolean> {
         if (models instanceof Array) {
             for (const model of models) {
-                this.models.add(this.getId(model), { targets, distance });
+                await this.models.add(this.getId(model), { targets, distance });
             }
-            return;
+            return true;
         }
 
-        this.models.add(this.getId(models), { targets, distance });
+        return this.models.add(this.getId(models), { targets, distance });
     }
 
-    public addEntities(
+    public async addEntities(
         entities: string[] | number[] | string | number,
         targets: TargetStoreBase['targets'],
         distance = DEFAULT_DISTANCE
-    ): void {
+    ): Promise<void> {
         if (entities instanceof Array) {
             for (const entity of entities) {
-                this.entities.add(entity.toString(), { targets, distance });
+                await this.entities.add(entity.toString(), { targets, distance });
             }
             return;
         }
 
-        this.entities.add(entities.toString(), { targets, distance });
+        await this.entities.add(entities.toString(), { targets, distance });
     }
 
-    public addBones(bones: string[] | string, targets: TargetStoreBase['targets'], distance = DEFAULT_DISTANCE): void {
+    public async addBones(
+        bones: string[] | string,
+        targets: TargetStoreBase['targets'],
+        distance = DEFAULT_DISTANCE
+    ): Promise<void> {
         if (bones instanceof Array) {
             for (const bone of bones) {
-                this.bones.add(bone.toString(), { targets, distance });
+                await this.bones.add(bone.toString(), { targets, distance });
             }
             return;
         }
 
-        this.bones.add(bones.toString(), { targets, distance });
+        await this.bones.add(bones.toString(), { targets, distance });
     }
 
     public getId(id: string | number): string {
