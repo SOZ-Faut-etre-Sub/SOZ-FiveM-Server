@@ -92,7 +92,7 @@ export const ProgressApp: FunctionComponent = () => {
                 ))}
             </div>
 
-            {vehicle.seat !== null && (progress?.label || progress?.units?.length > 0) && (
+            {vehicle.seat === null && (progress?.label || progress?.units?.length > 0) && (
                 <div className="flex justify-center items-center gap-2">
                     <GlassMorphismContainer
                         className="flex gap-10 px-5 py-1 w-fit"
