@@ -48,7 +48,7 @@ export const VehicleInterface: FunctionComponent = () => {
             <div className="relative flex justify-center gap-1 top-12">
                 {isPilot ? (
                     <>
-                        <div className="flex justify-end items-end gap-1 pb-2">
+                        <div className="flex justify-end items-end gap-1 pb-2 w-10">
                             {vehicle.seatbelt !== null && <SeatbeltIndicator state={vehicle.seatbelt} />}
                             <LockIndicator state={vehicle.lockStatus} />
                         </div>
@@ -56,7 +56,7 @@ export const VehicleInterface: FunctionComponent = () => {
                             <NosGauge />
                             <SpeedGauge useRpm={vehicle.useRpm} />
                         </div>
-                        <div className="flex flex-col justify-end items-center gap-2">
+                        <div className="flex flex-col justify-end items-center gap-2 w-10">
                             <LightIndicator state={vehicle.lightState} />
                             {vehicle.fuelType !== 'none' && (
                                 <FuelGauge

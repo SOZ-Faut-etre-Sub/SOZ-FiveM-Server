@@ -245,7 +245,7 @@ export class ProgressService {
     }
 
     public cancel(): void {
-        if (this.currentPromise.isCanceled) return;
+        if (this.currentPromise?.isCanceled) return;
 
         this.currentPromise?.cancel();
         this.stop();

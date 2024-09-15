@@ -87,7 +87,7 @@ import { MenuWatch } from './MenuWatch';
 
 export const MenuApp: FunctionComponent = () => {
     return (
-        <div className="absolute w-full h-full overflow-hidden opacity-100">
+        <div className="fixed inset-0 w-full h-full overflow-hidden opacity-100">
             <MemoryRouter>
                 <MenuRouter />
             </MemoryRouter>

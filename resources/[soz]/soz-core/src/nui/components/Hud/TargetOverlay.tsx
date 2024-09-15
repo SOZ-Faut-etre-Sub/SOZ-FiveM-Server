@@ -1,5 +1,4 @@
 import { animated, useSpring } from '@react-spring/web';
-import cn from 'classnames';
 import { FunctionComponent, useCallback, useEffect, useRef, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event/nui';
@@ -65,7 +64,7 @@ export const TargetOverlay: FunctionComponent = () => {
     const offset = circumference - ((-30 * 100) / 100 / 100) * circumference;
 
     return (
-        <animated.div ref={container} className="absolute inset-0" style={styles}>
+        <animated.div ref={container} className="absolute inset-0 z-50" style={styles}>
             <div className="absolute top-[calc(50%-1.25rem)] left-[calc(50%-1.25rem)] size-14">
                 {targetFound ? (
                     <svg
@@ -98,7 +97,7 @@ export const TargetOverlay: FunctionComponent = () => {
             </div>
 
             {targetFound && citizenActions.length > 0 && (
-                <div className="absolute top-[30vh] left-[53vw] min-w-[15vw] max-h-[65vh] p-5">
+                <div className="absolute flex flex-col justify-center inset-y-[5vh] left-[53vw] min-w-[20rem] p-5">
                     <h2 className="flex items-center gap-2 text-white uppercase drop-shadow-bg">
                         <div ref={targetCitizen} className="bg-white h-1 w-4 rounded-full" /> Actions
                     </h2>
@@ -107,14 +106,7 @@ export const TargetOverlay: FunctionComponent = () => {
             )}
 
             {targetFound && (criminalActions.length > 0 || societyActions.length > 0) && (
-                <div
-                    className={cn('absolute right-[55vw] min-w-[15vw] max-h-[65vh] space-y-10 p-5', {
-                        'top-[20vh]': criminalActions.length > 0 && societyActions.length > 0,
-                        'top-[30vh]':
-                            (criminalActions.length > 0 && societyActions.length === 0) ||
-                            (criminalActions.length === 0 && societyActions.length > 0),
-                    })}
-                >
+                <div className="absolute flex flex-col justify-center inset-y-[5vh] right-[55vw] min-w-[20rem] space-y-10 p-5">
                     {criminalActions.length > 0 && (
                         <div>
                             <h2 className="relative -right-10 flex items-center justify-end gap-2 text-[#EF4444] uppercase drop-shadow-bg">
@@ -150,6 +142,7 @@ export const TargetOverlay: FunctionComponent = () => {
                             className="text-white"
                             container={container}
                             origin={origin}
+                            originAnchor="right"
                             target={targetCitizen}
                         />
                     )}
@@ -159,6 +152,7 @@ export const TargetOverlay: FunctionComponent = () => {
                             className="text-[#EF4444]"
                             container={container}
                             origin={origin}
+                            originAnchor="center"
                             target={targetCriminal}
                             targetAnchor="right"
                         />
@@ -169,6 +163,7 @@ export const TargetOverlay: FunctionComponent = () => {
                             className="text-blue-500"
                             container={container}
                             origin={origin}
+                            originAnchor="left"
                             target={targetSociety}
                             targetAnchor="right"
                         />

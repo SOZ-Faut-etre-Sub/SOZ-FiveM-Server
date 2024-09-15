@@ -115,15 +115,35 @@ export class VehicleElectricProvider {
 
         TriggerClientEvent(ClientEvent.VEHICLE_CHARGE_START, source, duration, reservedEnergy, station.price);
 
-        const { progress } = await this.progressService.progress(source, 'charging_vehicle', '', duration, {
-            name: 'gar_ig_5_filling_can',
-            dictionary: 'timetable@gardener@filling_can',
-            options: {
-                enablePlayerControl: false,
-                repeat: true,
-                onlyUpperBody: true,
+        const { progress } = await this.progressService.progress(
+            source,
+            'charging_vehicle',
+            'Remplissage en cours...',
+            duration,
+            {
+                name: 'gar_ig_5_filling_can',
+                dictionary: 'timetable@gardener@filling_can',
+                options: {
+                    enablePlayerControl: false,
+                    repeat: true,
+                    onlyUpperBody: true,
+                },
             },
-        });
+            {
+                units: [
+                    {
+                        unit: 'kWh',
+                        start: 0,
+                        end: reservedEnergy,
+                    },
+                    {
+                        unit: '$',
+                        start: 0,
+                        end: reservedEnergy * station.price,
+                    },
+                ],
+            }
+        );
 
         const totalFilled = Math.min(reservedEnergy, Math.floor(progress * reservedEnergy));
         const cost = Math.floor(totalFilled * station.price);

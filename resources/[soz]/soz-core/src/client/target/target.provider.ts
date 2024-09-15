@@ -1,3 +1,5 @@
+import { ProgressService } from '@public/client/progress.service';
+
 import { Command } from '../../core/decorators/command';
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -33,6 +35,9 @@ export class TargetProvider {
     @Inject(PlayerService)
     private readonly playerService: PlayerService;
 
+    @Inject(ProgressService)
+    private readonly progressService: ProgressService;
+
     private _targetActive = false;
     private _targetFound = false;
     private _targetOptions: TargetOption[] = [];
@@ -46,6 +51,7 @@ export class TargetProvider {
     })
     public async enableTargetMode(): Promise<void> {
         if (this._targetLocked) return;
+        if (this.progressService.isDoingAction()) return;
 
         this._targetActive = true;
         this._targetFound = false;
@@ -130,6 +136,9 @@ export class TargetProvider {
             exports['soz-phone'].stopPhoneCall();
         }
 
+        const distance = getDistance(GetEntityCoords(option.entity) as Vector3, this.getPlayerCoords());
+        if (distance > option.distance) return;
+
         option?.action(option?.entity);
 
         return this.disableTargetMode(true);
@@ -193,9 +202,9 @@ export class TargetProvider {
         const entityType = GetEntityType(entity);
         if (entityType < 3) return [];
 
-        const modelStore = this.targetStore.entities.get(entity.toString());
+        const entityStore = this.targetStore.entities.get(entity.toString());
 
-        return this.checkTargetGenericActions(modelStore, playerDistance, entity);
+        return this.checkTargetGenericActions(entityStore, playerDistance, entity);
     }
 
     protected async checkTargetModelActions(entity: number, playerDistance: number): Promise<TargetOption[]> {

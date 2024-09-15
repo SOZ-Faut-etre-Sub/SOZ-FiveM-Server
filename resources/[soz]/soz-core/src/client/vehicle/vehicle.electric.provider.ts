@@ -213,7 +213,7 @@ export class VehicleElectricProvider {
             {
                 icon: 'fuel/plug',
                 label: 'Prendre la prise',
-                category: 'society',
+                category: 'citizen',
                 action: (entity: number) => {
                     this.toggleStationPlug(entity);
                 },
@@ -255,7 +255,7 @@ export class VehicleElectricProvider {
             {
                 icon: 'fuel/plug',
                 label: 'Reposer la prise',
-                category: 'society',
+                category: 'citizen',
                 action: (entity: number) => {
                     this.toggleStationPlug(entity);
                 },
@@ -285,11 +285,12 @@ export class VehicleElectricProvider {
                 blackoutGlobal: true,
             },
         ]);
-        this.targetFactory.createForAllVehicle([
+
+        await this.targetFactory.createForAllVehicle([
             {
                 label: 'Charger le véhicule',
                 icon: 'fuel/recharge',
-                category: 'society',
+                category: 'citizen',
                 blackoutGlobal: true,
                 canInteract: (entity: number) => {
                     if (GetEntityHealth(entity) <= 0) {

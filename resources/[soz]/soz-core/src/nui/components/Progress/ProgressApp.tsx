@@ -1,10 +1,11 @@
 import { animated, useSpring } from '@react-spring/web';
+import cn from 'classnames';
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event/nui';
 import { Progress } from '../../../shared/nui/progress';
 import { fetchNui } from '../../fetch';
-import { useMinimap } from '../../hook/data';
+import { useMinimap, useVehicle } from '../../hook/data';
 import { useNuiEvent } from '../../hook/nui';
 import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
 
@@ -12,8 +13,9 @@ const PROGRESS_BAR_SEGMENTS = 10;
 
 export const ProgressApp: FunctionComponent = () => {
     const minimap = useMinimap();
+    const vehicle = useVehicle();
 
-    const [progress, setProgress] = useState<Progress | null>(null);
+    const [progress, setProgress] = useState<Progress | null>();
     const [currentProgress, setCurrentProgress] = useState(0);
 
     const styles = useSpring({
@@ -70,9 +72,15 @@ export const ProgressApp: FunctionComponent = () => {
     return (
         <animated.div
             style={styles}
-            className={`fixed flex flex-col gap-3 bottom-10 text-center left-0 right-0 text-white text-xl mx-auto items-center`}
+            className={cn(
+                `absolute w-full inset-x-0 flex flex-col justify-center items-center gap-3 text-white text-xl`,
+                {
+                    'bottom-10': vehicle.seat === null,
+                    '-bottom-10': vehicle.seat !== null,
+                }
+            )}
         >
-            <div className="flex items-center mx-auto gap-2">
+            <div className="flex justify-center items-center gap-2">
                 {Array.from({ length: PROGRESS_BAR_SEGMENTS }, (_, index) => (
                     <ProgressSegment
                         key={index}
@@ -84,8 +92,8 @@ export const ProgressApp: FunctionComponent = () => {
                 ))}
             </div>
 
-            {(progress?.label || progress?.units?.length > 0) && (
-                <div className="flex items-center mx-auto gap-2">
+            {vehicle.seat === null && (progress?.label || progress?.units?.length > 0) && (
+                <div className="flex justify-center items-center gap-2">
                     <GlassMorphismContainer
                         className="flex gap-10 px-5 py-1 w-fit"
                         borderClassName="rounded-full"

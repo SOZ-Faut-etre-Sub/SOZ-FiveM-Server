@@ -25,10 +25,10 @@ export function InstructionalOverlay() {
     useNuiEvent('hud', 'SetInstructional', setText);
 
     return (
-        <animated.div className="absolute -mt-12 w-fit" style={styles}>
+        <animated.div className="absolute -mt-12 w-fit h-10" style={styles}>
             <GlassMorphismContainer
                 borderClassName="rounded-full"
-                className="flex items-center gap-2 text-white px-5 py-1.5 w-full"
+                className="flex items-center gap-2 text-white px-5 py-1.5 w-full h-10"
             >
                 {text.map(t => {
                     if (BindName[t]) {

@@ -94,12 +94,12 @@ export const App: FunctionComponent = () => {
             <div className={classes}>
                 <HudApp />
                 <CardApp />
+                <ProgressApp />
             </div>
             <div className={menuClasses}>
                 <MenuApp />
             </div>
             <div className={classes}>
-                <ProgressApp />
                 <PanelApp />
                 <SceneSearchPropApp />
                 <RepairApp />
