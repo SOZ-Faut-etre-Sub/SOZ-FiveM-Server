@@ -40,6 +40,7 @@ export enum ServerEvent {
     ADMIN_PLAYER_SET_ZOMBIE = 'soz-core:server:admin:player:set-zombie',
     ADMIN_PLAYER_SET_SENATE_PARTY = 'soz-core:server:admin:player:set-senate-party',
     ADMIN_PLAYER_SET_VOIP_DEBUG = 'soz-core:server:admin:player:set-voip-debug',
+    ADMIN_PLAYER_SET_PLATE = 'soz-core:server:admin:player:set-plate',
     ADMIN_METEOR_SIREN = 'soz-core:server:admin:meteor:siren',
     ADMIN_METEOR_ACTIVATE = 'soz-core:server:admin:meteor:activate',
     ADMIN_METEOR_CHONOS_MUSIC = 'soz-core:server:admin:meteor:chonos-music',

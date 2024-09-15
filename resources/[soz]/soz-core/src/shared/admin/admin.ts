@@ -111,6 +111,8 @@ export type AdminPlayer = {
     rpFullName: string;
     injuries: number;
     partyMember: SenatePartyMember | null;
+    plate: boolean | null;
+    specialPlate: boolean | null;
 };
 
 export type FullAdminPlayer = AdminPlayer & {

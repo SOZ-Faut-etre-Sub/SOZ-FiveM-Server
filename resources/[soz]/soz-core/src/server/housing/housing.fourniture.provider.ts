@@ -8,6 +8,7 @@ import { PrismaService } from '@public/server/database/prisma.service';
 import { InventoryManager } from '@public/server/inventory/inventory.manager';
 import { Monitor } from '@public/server/monitor/monitor';
 import { Notifier } from '@public/server/notifier';
+import { PlayerService } from '@public/server/player/player.service';
 import { HousingRepository } from '@public/server/repository/housing.repository';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { Apartment, getMaxFourntiure } from '@public/shared/housing/housing';
@@ -19,6 +20,8 @@ import {
     ZkeaBaseFourntiure,
     ZkeaFourniture,
     ZkeaFournitureModelTranslate,
+    ZkeaPlateModel,
+    ZkeaSpecialPlateModel,
 } from '@public/shared/shop/zkea_fourniture';
 import { isEqual } from 'lodash';
 
@@ -29,6 +32,9 @@ export class HousingFournitureProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(PlayerService)
+    private playerService: PlayerService;
 
     @Inject(BankService)
     private bankService: BankService;
@@ -42,8 +48,9 @@ export class HousingFournitureProvider {
     @Inject(HousingRepository)
     private housingRepository: HousingRepository;
 
-    private fournitures: Record<string, Record<number, HousingProp>> = {};
+    private fournitures: Record<number, Record<number, HousingProp>> = {};
     private lights: Record<string, Record<number, boolean>> = {};
+    private plateChecked: Record<number, boolean> = {};
 
     @Once(OnceStep.DatabaseConnected)
     public async loadFournituresOnStart() {
@@ -141,8 +148,9 @@ export class HousingFournitureProvider {
         lastUpdate: number | null
     ): Promise<{ fournitures: HousingProp[]; newDate: number }> {
         const newDate = Date.now();
-        const created = await this.createBaseFourntiureIfNeeded(source, apartmentId, propertyId);
-        return created
+        const createdBase = await this.createBaseFourntiureIfNeeded(source, apartmentId, propertyId);
+        const modifiedPlate = await this.checkPlateFourntiureIfNeeded(source, apartmentId, propertyId);
+        return createdBase || modifiedPlate
             ? { fournitures: [], newDate: newDate }
             : { fournitures: this.getFilteredFourntiure(apartmentId, lastUpdate), newDate: newDate };
     }
@@ -175,6 +183,98 @@ export class HousingFournitureProvider {
             return true;
         }
         return false;
+    }
+
+    private async checkPlateFourntiureIfNeeded(source: number, apartmentId: number, propertyId: number) {
+        if (this.plateChecked[apartmentId]) {
+            return;
+        }
+
+        const [, apartement] = await this.housingRepository.getApartment(propertyId, apartmentId);
+        if (!apartement) {
+            return;
+        }
+
+        this.plateChecked[apartmentId] = true;
+        const owner = this.playerService.getPlayerByCitizenId(apartement.owner);
+        const roommate = this.playerService.getPlayerByCitizenId(apartement.roommate);
+
+        const plates = Object.values(this.fournitures[apartmentId]).filter(v => v.model === ZkeaPlateModel);
+        const target = (owner?.metadata?.plate ? 1 : 0) + (roommate?.metadata?.plate ? 1 : 0);
+
+        if (plates.length < target) {
+            await this.addFourntiureForApartement(
+                apartmentId,
+                Array(target - plates.length).fill({ apartment_id: apartmentId, model: ZkeaPlateModel })
+            );
+            this.notifier.notify(
+                source,
+                `Des meubles t'ont été offert par le Zkea, n'hésite pas à en acheter plus !<br>- ${Array(
+                    target - plates.length
+                )
+                    .fill(ZkeaFourniture[ZkeaPlateModel].name)
+                    .join('<br>- ')}`
+            );
+        }
+
+        const special_plate = Object.values(this.fournitures[apartmentId]).find(v => v.model === ZkeaSpecialPlateModel);
+        if (!special_plate && (owner?.metadata?.special_plate || roommate?.metadata?.special_plate)) {
+            await this.addFourntiureForApartement(
+                apartmentId,
+                Array(1).fill({ apartment_id: apartmentId, model: ZkeaSpecialPlateModel })
+            );
+            this.notifier.notify(
+                source,
+                `Des meubles t'ont été offert par le Zkea, n'hésite pas à en acheter plus !<br>- ${ZkeaFourniture[ZkeaSpecialPlateModel].name}`
+            );
+        }
+    }
+
+    public async deletePlatesIfNeeded(apartment: Apartment) {
+        await this.deletePlateIfNeeded(apartment);
+        await this.deleteSpecialPlateIfNeeded(apartment);
+    }
+
+    private async deletePlateIfNeeded(apartment: Apartment) {
+        const owner = this.playerService.getPlayerByCitizenId(apartment.owner);
+        const roommate = this.playerService.getPlayerByCitizenId(apartment.roommate);
+
+        const plates = Object.values(this.fournitures[apartment.id]).filter(v => v.model === ZkeaPlateModel);
+        const target = (owner?.metadata?.plate ? 1 : 0) + (roommate?.metadata?.plate ? 1 : 0);
+        if (plates.length <= target) {
+            return;
+        }
+
+        await this.prismaService.apartment_fourniture.delete({
+            where: { id: plates[0].id },
+        });
+
+        delete this.fournitures[apartment.id][plates[0].id];
+        this.clearPlateCheck(apartment.id);
+        TriggerClientEvent(ClientEvent.HOUSING_DELETE_FOURNITURE, -1, apartment.id, plates[0].id);
+    }
+
+    private async deleteSpecialPlateIfNeeded(apartment: Apartment) {
+        const owner = this.playerService.getPlayerByCitizenId(apartment.owner);
+        const roommate = this.playerService.getPlayerByCitizenId(apartment.roommate);
+
+        const plates = Object.values(this.fournitures[apartment.id]).filter(v => v.model === ZkeaSpecialPlateModel);
+        const target = owner?.metadata?.special_plate ? 1 : 0 + (roommate?.metadata?.special_plate ? 1 : 0);
+        if (plates.length <= target) {
+            return;
+        }
+
+        await this.prismaService.apartment_fourniture.delete({
+            where: { id: plates[0].id },
+        });
+
+        delete this.fournitures[apartment.id][plates[0].id];
+        this.clearPlateCheck(apartment.id);
+        TriggerClientEvent(ClientEvent.HOUSING_DELETE_FOURNITURE, -1, apartment.id, plates[0].id);
+    }
+
+    public clearPlateCheck(apartmentId: number) {
+        this.plateChecked[apartmentId] = false;
     }
 
     @Rpc(RpcServerEvent.HOUSING_SET_SHELL)
@@ -387,6 +487,7 @@ export class HousingFournitureProvider {
             where: { apartment_id: apartmentId },
         });
         this.fournitures[apartmentId] = {};
+        this.clearPlateCheck(apartmentId);
     }
 
     private formatFourniture(fourniture: {

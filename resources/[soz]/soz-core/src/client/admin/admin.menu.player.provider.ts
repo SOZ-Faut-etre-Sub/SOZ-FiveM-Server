@@ -289,4 +289,17 @@ export class AdminMenuPlayerProvider {
     public async setPlayerDebug({ player, value }: { player: AdminPlayer; value: boolean }): Promise<void> {
         TriggerServerEvent(ServerEvent.ADMIN_PLAYER_SET_VOIP_DEBUG, player.id, value);
     }
+
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerSetPlate)
+    public async setPlayerPlate({
+        type,
+        player,
+        value,
+    }: {
+        type: 'plate' | 'special_plate';
+        player: AdminPlayer;
+        value: boolean;
+    }): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_PLAYER_SET_PLATE, type, player, value);
+    }
 }

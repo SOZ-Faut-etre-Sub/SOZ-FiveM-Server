@@ -50,6 +50,7 @@ export enum ClientEvent {
     HOUSING_REQUEST_ENTER = 'soz-core:client:housing:request-enter',
     HOUSING_ADD_TEMPORARY_ACCESS = 'soz-core:client:housing:add-temporary-access',
     HOUSING_TELEPORT = 'soz-core:client:housing:teleport',
+    HOUSING_DELETE_FOURNITURE = 'soz-core:client:housing:delete',
     HOUSING_SYNC_FOURNITURE = 'soz-core:client:housing:sync',
     HOUSING_SYNC_LIGHT = 'soz-core:client:housing:sync-light',
 

@@ -1,4 +1,5 @@
 import { Rpc } from '@public/core/decorators/rpc';
+import { HousingFournitureProvider } from '@public/server/housing/housing.fourniture.provider';
 import { RpcServerEvent } from '@public/shared/rpc';
 
 import { OnEvent } from '../../core/decorators/event';
@@ -16,6 +17,7 @@ import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
 import { PlayerStateService } from '../player/player.state.service';
 import { PlayerZombieProvider } from '../player/player.zombie.provider';
+import { HousingRepository } from '../repository/housing.repository';
 
 @Provider()
 export class AdminMenuPlayerProvider {
@@ -39,6 +41,12 @@ export class AdminMenuPlayerProvider {
 
     @Inject(PlayerPositionProvider)
     private playerPositionProvider: PlayerPositionProvider;
+
+    @Inject(HousingFournitureProvider)
+    private housingFournitureProvider: HousingFournitureProvider;
+
+    @Inject(HousingRepository)
+    private housingRepository: HousingRepository;
 
     @OnEvent(ServerEvent.ADMIN_ADD_PERSISTENT_PROP)
     public async addPersistentProp(source: number, model: number, event: string | null, position: Vector4) {
@@ -312,5 +320,34 @@ export class AdminMenuPlayerProvider {
     @OnEvent(ServerEvent.ADMIN_PLAYER_SET_VOIP_DEBUG)
     public async onPlayerSetVoipDebug(_source: number, target: number, value: boolean) {
         TriggerClientEvent(ClientEvent.VOIP_DEBUG, target, value);
+    }
+
+    @OnEvent(ServerEvent.ADMIN_PLAYER_SET_PLATE)
+    public async onAdminSetPlate(source: number, type: 'plate' | 'special_plate', player: AdminPlayer, value: boolean) {
+        const targetPlayer = this.playerService.getPlayer(player.id);
+        if (!targetPlayer) {
+            return;
+        }
+
+        this.playerService.setPlayerMetadata(player.id, type, value);
+        if (targetPlayer.apartment) {
+            const [, apartment] = await this.housingRepository.getApartment(
+                targetPlayer.apartment?.id,
+                targetPlayer.apartment?.property_id
+            );
+            if (apartment) {
+                await this.housingFournitureProvider.deletePlatesIfNeeded(apartment);
+                if (value) {
+                    this.housingFournitureProvider.clearPlateCheck(apartment.id);
+                    TriggerClientEvent(ClientEvent.HOUSING_SYNC_FOURNITURE, -1, apartment.id);
+                }
+            }
+        }
+
+        this.notifier.notify(
+            source,
+            value ? `Plaque attribuée à ${player.rpFullName}` : `Plaque retirée à ${player.rpFullName}`,
+            'info'
+        );
     }
 }

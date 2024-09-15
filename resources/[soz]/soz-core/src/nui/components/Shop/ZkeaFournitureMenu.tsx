@@ -23,7 +23,7 @@ export const ZkeaFournitureMenu: FunctionComponent = () => {
 
     const fournituresByType: FormatedFournitureItemList = {};
     for (const fourniture of Object.values(ZkeaFourniture)) {
-        if (isHousingPropvalid(fourniture.model)) {
+        if (isHousingPropvalid(fourniture.model) && !fourniture.notBuyable) {
             fournituresByType[fourniture.type] ??= [];
             fournituresByType[fourniture.type].push(fourniture);
         }

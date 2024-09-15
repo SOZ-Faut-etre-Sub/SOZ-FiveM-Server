@@ -248,6 +248,7 @@ export class HousingProvider {
         await this.housingRepository.setApartmentRoommate(target.citizenid, apartment.id);
 
         this.playerService.setPlayerApartment(target.source, apartment, property);
+        this.housingFournitureProvider.clearPlateCheck(apartment.id);
 
         this.notifier.notify(target.source, 'Vous avez été ajouté en tant que colocataire.', 'success');
         this.notifier.notify(player.source, 'Vous avez ajouté un colocataire à votre maison.', 'success');
@@ -458,6 +459,7 @@ export class HousingProvider {
         }
 
         await this.housingRepository.setApartmentRoommate(null, apartment.id);
+        this.housingFournitureProvider.deletePlatesIfNeeded(apartment);
     }
 
     public async clearApartment(property: Property, apartment: Apartment, notify = true) {

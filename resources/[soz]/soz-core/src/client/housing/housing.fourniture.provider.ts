@@ -6,7 +6,7 @@ import { Provider } from '@core/decorators/provider';
 import { RepositoryUpdate } from '@core/decorators/repository';
 import { Tick, TickInterval } from '@core/decorators/tick';
 import { emitRpc } from '@core/rpc';
-import { uuidv4, waitUntil } from '@core/utils';
+import { uuidv4, wait, waitUntil } from '@core/utils';
 import { AnimationService } from '@public/client//animation/animation.service';
 import { AdminSpectateProvider } from '@public/client/admin/admin.spectate.provider';
 import { BankService } from '@public/client/bank/bank.service';
@@ -196,28 +196,30 @@ export class HousingFournitureProvider {
                 this.apartmentFourntiures[apartment.id].updated
             );
 
-            this.apartmentFourntiures[apartment.id].updated = newDate;
+            if (fournitures.length) {
+                this.apartmentFourntiures[apartment.id].updated = newDate;
 
-            for (const fourniture of fournitures) {
-                if (fourniture.position) {
-                    if (!this.apartmentFourntiures[apartment.id].placementProps[fourniture.id]?.entity) {
-                        await this.spawnNewFourniture(apartment, fourniture);
+                for (const fourniture of fournitures) {
+                    if (fourniture.position) {
+                        if (!this.apartmentFourntiures[apartment.id].placementProps[fourniture.id]?.entity) {
+                            await this.spawnNewFourniture(apartment, fourniture);
+                        } else {
+                            await this.editFourniture(apartment, fourniture);
+                        }
                     } else {
-                        await this.editFourniture(apartment, fourniture);
-                    }
-                } else {
-                    if (this.apartmentFourntiures[apartment.id].placementProps[fourniture.id]) {
-                        this.despawnFourntiure(
-                            this.apartmentFourntiures[apartment.id].placementProps[fourniture.id],
-                            fourniture
-                        );
-                    } else {
-                        this.apartmentFourntiures[apartment.id].placementProps[fourniture.id] = {
-                            entity: null,
-                            fourniture: fourniture,
-                            targetLabel: null,
-                            roomId: null,
-                        };
+                        if (this.apartmentFourntiures[apartment.id].placementProps[fourniture.id]) {
+                            this.despawnFourntiure(
+                                this.apartmentFourntiures[apartment.id].placementProps[fourniture.id],
+                                fourniture
+                            );
+                        } else {
+                            this.apartmentFourntiures[apartment.id].placementProps[fourniture.id] = {
+                                entity: null,
+                                fourniture: fourniture,
+                                targetLabel: null,
+                                roomId: null,
+                            };
+                        }
                     }
                 }
             }
@@ -469,6 +471,27 @@ export class HousingFournitureProvider {
 
         await this.houseEnter(apartmentId, player.metadata.inside.property);
         await this.refreshPropPlacementMenuData();
+    }
+
+    @OnEvent(ClientEvent.HOUSING_DELETE_FOURNITURE)
+    public async deleteFourniture(apartmentId: number, fournitureId: number) {
+        if (!this.apartmentFourntiures[apartmentId]) {
+            return;
+        }
+
+        if (this.isMenuOpen()) {
+            this.menu.closeMenu(false);
+        }
+
+        const isPlayerInsideTargetedAppartement = this.lastApartment.id === apartmentId;
+        if (isPlayerInsideTargetedAppartement) {
+            const placementProp = this.apartmentFourntiures[apartmentId].placementProps[fournitureId];
+            this.despawnFourntiure(placementProp, placementProp.fourniture);
+            await wait(0);
+        }
+
+        delete this.apartmentFourntiures[apartmentId].placementProps[fournitureId];
+        await this.syncFourniture(apartmentId);
     }
 
     public getAllFournitures(): HousingProp[] {
