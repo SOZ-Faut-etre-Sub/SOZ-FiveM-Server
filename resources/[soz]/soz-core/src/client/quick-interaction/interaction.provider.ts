@@ -1,9 +1,10 @@
-import { Command } from '../../core/decorators/command';
-import { Once, OnceStep } from '../../core/decorators/event';
-import { Inject } from '../../core/decorators/injectable';
-import { Provider } from '../../core/decorators/provider';
-import { Tick, TickInterval } from '../../core/decorators/tick';
-import { uuidv4 } from '../../core/utils';
+import { Command } from '@core/decorators/command';
+import { Once, OnceStep } from '@core/decorators/event';
+import { Inject } from '@core/decorators/injectable';
+import { Provider } from '@core/decorators/provider';
+import { Tick, TickInterval } from '@core/decorators/tick';
+import { uuidv4 } from '@core/utils';
+
 import { Interaction, InteractionOption } from '../../shared/interaction';
 import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { ResourceLoader } from '../repository/resource.loader';

@@ -115,7 +115,7 @@ const BELL_ZONES: BellProps[] = [
         number: '555-FDF',
     },
     {
-        coords: [1078.02, -1980.91, 31.82],
+        coords: [1078.02, -1980.91, 31.52],
         job: JobType.DMC,
         number: '555-DMC',
     },
@@ -146,7 +146,8 @@ export class JobBellProvider {
                         this.callSociety(bell.number, bell?.location);
                     },
                 },
-                0.75
+                0.85,
+                5.0
             );
         }
     }
