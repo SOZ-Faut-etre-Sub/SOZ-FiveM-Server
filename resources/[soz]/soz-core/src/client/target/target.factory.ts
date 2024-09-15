@@ -104,7 +104,7 @@ export class TargetFactory {
         await this.targetStore.addEntities(entities, targets, distance);
     }
 
-    public async createForAllVehicle(targets: TargetOption[], distance = DEFAULT_DISTANCE) {
+    public async createForAllVehicle(targets: TargetOption[], distance = 3.0) {
         await this.targetStore.vehicles.add('global', { targets, distance });
     }
 
