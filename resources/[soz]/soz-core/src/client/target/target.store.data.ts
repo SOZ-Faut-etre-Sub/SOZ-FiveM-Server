@@ -34,9 +34,11 @@ export class TargetStoreData<E extends TargetStoreBase> {
         }
 
         for (const target of data.targets) {
-            if (!this.data[id].targets.find(t => t.action === target.action)) {
-                this.data[id].targets.push(target);
+            if (this.data[id].targets.some(t => JSON.stringify(t) === JSON.stringify(target))) {
+                continue;
             }
+
+            this.data[id].targets.push(target);
         }
     }
 
