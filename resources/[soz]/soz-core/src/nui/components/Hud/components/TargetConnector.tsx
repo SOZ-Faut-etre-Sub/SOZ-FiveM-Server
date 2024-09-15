@@ -1,11 +1,14 @@
 import cn from 'classnames';
 import { FunctionComponent, RefObject, useLayoutEffect, useState } from 'react';
 
+import { useInterval } from '../../../hook/useInterval';
+
 type ConnectorProp = {
     container: RefObject<HTMLDivElement> | null;
     origin: RefObject<SVGSVGElement> | null;
     target: RefObject<HTMLDivElement> | null;
     targetAnchor?: 'left' | 'right';
+    originAnchor?: 'left' | 'center' | 'right';
     className?: string;
 };
 
@@ -14,23 +17,46 @@ export const TargetConnector: FunctionComponent<ConnectorProp> = ({
     origin,
     target,
     targetAnchor = 'left',
+    originAnchor = 'center',
     className,
 }) => {
     const [, setRerender] = useState(0);
+    const [targetRect, setTargetRect] = useState<DOMRect>(target.current?.getBoundingClientRect());
 
-    const [containerRect, originRect, targetRect] = [
+    const [containerRect, originRect] = [
         container.current?.getBoundingClientRect(),
         origin.current?.getBoundingClientRect(),
-        target.current?.getBoundingClientRect(),
     ];
+
+    useInterval(
+        () => {
+            const targetBounding = target.current?.getBoundingClientRect();
+            if (targetRect?.y === targetBounding?.y) return;
+
+            setTargetRect(targetBounding);
+        },
+        50,
+        [target]
+    );
 
     useLayoutEffect(() => {
         setRerender(rerender => rerender + 1);
     }, [container, origin, target]);
 
+    const offset = (): { x: number; y: number } => {
+        switch (originAnchor) {
+            case 'left':
+                return { x: -10, y: -15 };
+            case 'center':
+                return { x: 0, y: -18 };
+            case 'right':
+                return { x: 10, y: -15 };
+        }
+    };
+
     const start = {
-        x: originRect?.x - containerRect?.x + originRect?.width / 2,
-        y: -18 + originRect?.y - containerRect?.y + originRect?.height / 2,
+        x: offset().x + originRect?.x - containerRect?.x + originRect?.width / 2,
+        y: offset().y + originRect?.y - containerRect?.y + originRect?.height / 2,
     };
 
     const end = {

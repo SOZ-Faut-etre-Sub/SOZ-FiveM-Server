@@ -150,6 +150,7 @@ export const TargetOverlay: FunctionComponent = () => {
                             className="text-white"
                             container={container}
                             origin={origin}
+                            originAnchor="right"
                             target={targetCitizen}
                         />
                     )}
@@ -159,6 +160,7 @@ export const TargetOverlay: FunctionComponent = () => {
                             className="text-[#EF4444]"
                             container={container}
                             origin={origin}
+                            originAnchor="center"
                             target={targetCriminal}
                             targetAnchor="right"
                         />
@@ -169,6 +171,7 @@ export const TargetOverlay: FunctionComponent = () => {
                             className="text-blue-500"
                             container={container}
                             origin={origin}
+                            originAnchor="left"
                             target={targetSociety}
                             targetAnchor="right"
                         />
