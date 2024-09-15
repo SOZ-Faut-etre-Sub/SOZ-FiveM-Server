@@ -3,6 +3,7 @@ import { ServerStateService } from '@public/server/server.state.service';
 import { getDistance, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 
 type GlobalSound = {
+    id: string;
     name: string;
     location: Vector3;
     maxDistance: number;
@@ -14,13 +15,14 @@ export class SoundService {
     @Inject(ServerStateService)
     private serverStateService: ServerStateService;
 
-    private globalSound: GlobalSound;
+    private globalSounds: Record<string, GlobalSound> = {};
 
     public playGlobal(sound: GlobalSound) {
-        this.globalSound = sound;
+        this.globalSounds[sound.id] = sound;
         TriggerClientEvent(
             'InteractSound_CL:PlayWithinDistanceRatioLoop',
             -1,
+            sound.id,
             sound.location,
             sound.maxDistance,
             sound.name,
@@ -28,20 +30,21 @@ export class SoundService {
         );
     }
 
-    public stopGlobal() {
-        this.globalSound = null;
-        TriggerClientEvent('InteractSound_CL:Stoploop', -1);
+    public stopGlobal(id: string) {
+        delete this.globalSounds[id];
+        TriggerClientEvent('InteractSound_CL:Stoploop', -1, id);
     }
 
     public playGlobalForPlayer(source: number) {
-        if (this.globalSound) {
+        for (const sound of Object.values(this.globalSounds)) {
             TriggerClientEvent(
                 'InteractSound_CL:PlayWithinDistanceRatioLoop',
                 source,
-                this.globalSound.location,
-                this.globalSound.maxDistance,
-                this.globalSound.name,
-                this.globalSound.volume
+                sound.id,
+                sound.location,
+                sound.maxDistance,
+                sound.name,
+                sound.volume
             );
         }
     }

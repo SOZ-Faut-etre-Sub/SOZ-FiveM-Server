@@ -406,4 +406,7 @@ export enum ClientEvent {
 
     WEATHER_UPDATE_FORECASTS = 'soz-core:client:weather:update-forecasts',
     UPDATE_MINIMAP_POSITION = 'soz-core:client:update-minimap-position',
+
+    OILRIG_HEIST_UPDATE = 'soz-core:server:oilrig-heist:update',
+    OILRIG_HEIST_RESET = 'soz-core:server:oilrig-heist:reset',
 }

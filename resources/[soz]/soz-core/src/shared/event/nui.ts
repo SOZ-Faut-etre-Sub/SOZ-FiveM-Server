@@ -495,8 +495,6 @@ export enum NuiEvent {
     BusinessVehicleOrder = 'soz-core:client:business:vehicle:order',
     BusinessVehicleResetList = 'soz-core:client:business:vehicle:list-reset',
     BusinessVehiclePosition = 'soz-core:client:business:vehicle:position',
-    BusinessVehicleHackSuccess = 'soz-core:client:business:vehicle:hack-success',
-    BusinessVehicleHackError = 'soz-core:client:business:vehicle:hack-error',
     BusinessVehicleHandling = 'soz-core:client:business:vehicle:handling',
     BusinessVehicleUniqueAdd = 'soz-core:client:business:vehicle:unique-add',
     BusinessVehicleUniqueUpdate = 'soz-core:client:business:vehicle:unique-update',
@@ -584,4 +582,6 @@ export enum NuiEvent {
     TargetReset = 'soz-core:nui:target:reset',
     TargetSelect = 'soz-core:nui:target:select',
     ProgressFinish = 'soz-core:nui:progress:finish',
+
+    MinigameEnd = 'soz-core:nui:minigame:end',
 }

@@ -138,6 +138,7 @@ export type MonitorTraceEvent = {
     facility_job?: string;
     gang?: string;
     old_plate?: string;
+    success?: boolean;
 };
 
 export type MonitorEvent = {
@@ -263,4 +264,5 @@ export type MonitorEvent = {
     apartment_shell?: boolean;
     gang?: string;
     old_plate?: string;
+    success?: boolean;
 };

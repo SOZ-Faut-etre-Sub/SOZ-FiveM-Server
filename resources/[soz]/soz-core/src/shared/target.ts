@@ -20,6 +20,6 @@ export type TargetOption = TargetContext & {
     job?: string | JobType | Partial<{ [key in JobType]: number }>;
     canInteract?: (entity?: number) => boolean | Promise<boolean>;
 
-    action?: (entity?: number) => void;
+    action?: (entity?: number, entityCoords?: Vector3) => void;
     distance?: number;
 };

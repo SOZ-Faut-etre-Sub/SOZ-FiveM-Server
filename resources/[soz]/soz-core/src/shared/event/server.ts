@@ -535,7 +535,6 @@ export enum ServerEvent {
     GANG_VEHBIZ_UNLOCK = 'soz-core:server:gang:veh:unlock',
     GANG_VEHBIZ_RESELL = 'soz-core:server:gang:veh:resell',
     GANG_VEHBIZ_HACK = 'soz-core:server:gang:veh:hack',
-    GANG_VEHBIZ_HACK_FAIL = 'soz-core:server:gang:veh:hack-fail',
     GANG_VEHBIZ_STRIP_DOOR = 'soz-core:server:gang:veh:strip-door',
     GANG_VEHBIZ_STRIP_WHEEL = 'soz-core:server:gang:veh:strip-wheel',
     GANG_VEHBIZ_STRIP_ENGINE = 'soz-core:server:gang:veh:strip-engine',
@@ -620,4 +619,19 @@ export enum ServerEvent {
 
     DRONE_NEW = 'soz-core:server:drone-new',
     DRONE_DELETE = 'soz-core:server:drone-delete',
+
+    OILRIG_HEIST_THERMITE = 'soz-core:server:oilrig-heist:thermite',
+    OILRIG_HEIST_PIPELINE_HARVEST = 'soz-core:server:oilrig-heist:pipeline-harvest',
+    OILRIG_HEIST_ELEC = 'soz-core:server:oilrig-heist:elec',
+    OILRIG_HEIST_COMPUTER = 'soz-core:server:oilrig-heist:computer',
+    OILRIG_HEIST_PHONE = 'soz-core:server:oilrig-heist:phone',
+    OILRIG_HEIST_FINALPHONE = 'soz-core:server:oilrig-heist:final-phone',
+    OILRIG_HEIST_BOSS_COMPUTER = 'soz-core:server:oilrig-heist:boss-computer',
+    OILRIG_HEIST_WC = 'soz-core:server:oilrig-heist:wc',
+    OILRIG_HEIST_SHELF = 'soz-core:server:oilrig-heist:shelf',
+    OILRIG_HEIST_BOSS_SAFE = 'soz-core:server:oilrig-heist:boss-safe',
+    OILRIG_HEIST_PRINTER = 'soz-core:server:oilrig-heist:printer',
+    OILRIG_HEIST_TANK = 'soz-core:server:oilrig-heist:tank',
+    OILRIG_HEIST_INIT = 'soz-core:server:oilrig-heist:init',
+    OILRIG_HEIST_CAMERA_SPOTTED = 'soz-core:server:oilrig-heist:camera-spotted',
 }

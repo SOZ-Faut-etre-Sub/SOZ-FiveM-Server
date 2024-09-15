@@ -16,6 +16,7 @@ import { HackingDeviceApp } from '@private/nui/hacking/HackingDeviceApp';
 import { HoodApp } from '@private/nui/hood/HoodApp';
 import { ArrowsMinigameApp } from '@private/nui/minigames/arrows/ArrowsMinigameApp';
 import { GridMinigameApp } from '@private/nui/minigames/grid/GridMinigameApp';
+import { PincrakerMinigameApp } from '@private/nui/minigames/pincraker/PincrakerMinigameApp';
 import { MissiveApp } from '@private/nui/missive/MissiveApp';
 import { DetectiveBoard } from '@private/nui/Police/DetectiveBoard';
 import { ScientistCamera } from '@private/nui/Police/ScientistCamera';
@@ -143,6 +144,7 @@ export const App: FunctionComponent = () => {
                 <GridMinigameApp />
                 <BusinessVehicleMappingApp />
                 <CyberReportApp />
+                <PincrakerMinigameApp />
             </div>
             <Meteor />
         </Provider>
