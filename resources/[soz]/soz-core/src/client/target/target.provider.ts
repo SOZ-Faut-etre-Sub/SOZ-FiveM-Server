@@ -55,7 +55,6 @@ export class TargetProvider {
     })
     public async enableTargetMode(): Promise<void> {
         if (this._targetLocked) return;
-        if (this.progressService.isDoingAction()) return;
 
         this._targetActive = true;
         this._targetFound = false;
