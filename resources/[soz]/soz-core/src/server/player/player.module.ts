@@ -5,6 +5,7 @@ import { PlayerHealthProvider } from './player.health.provider';
 import { PlayerIdentityProvider } from './player.identity.provider';
 import { PlayerPositionProvider } from './player.position.provider';
 import { PlayerProvider } from './player.provider';
+import { PlayerStressProvider } from './player.stress.provider';
 import { PlayerWalkstyleProvider } from './player.walkstyle.provider';
 import { PlayerZombieProvider } from './player.zombie.provider';
 import { ProgressService } from './progress.service';
@@ -19,6 +20,7 @@ import { ProgressService } from './progress.service';
         PlayerWalkstyleProvider,
         PlayerIdentityProvider,
         PlayerZombieProvider,
+        PlayerStressProvider,
         PlayerPositionProvider,
     ],
 })
