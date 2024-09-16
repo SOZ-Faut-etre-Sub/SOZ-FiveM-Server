@@ -1,8 +1,11 @@
+import { Vector3 } from '@public/shared/polyzone/vector';
+
 import { JobType } from './job';
 
 export type TargetContext = {
     id?: string;
     entity?: number;
+    entityCoords?: Vector3;
 };
 
 export type TargetOption = TargetContext & {

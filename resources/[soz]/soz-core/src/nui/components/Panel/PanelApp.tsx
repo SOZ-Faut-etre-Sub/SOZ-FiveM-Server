@@ -55,7 +55,7 @@ export const PanelApp: FunctionComponent = () => {
     };
 
     return (
-        <div className="absolute h-full p-[8rem] z-30" style={{ left: leftOffset(), width: width() }}>
+        <div className="fixed h-full p-[8rem] z-30" style={{ left: leftOffset(), width: width() }}>
             <div ref={refOutside} className="flex flex-col h-full">
                 <div
                     style={{
