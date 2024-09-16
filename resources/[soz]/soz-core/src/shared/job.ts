@@ -74,6 +74,7 @@ export enum JobPermission {
     FuelerChangePrice = 'fueler-change-price',
     CriminalRecord = 'criminal-record',
     VehicleRegistrar = 'vehicle-registrar',
+    VehicleTransfert = 'vehicle-transfert',
     Investigation = 'investigation',
     ManageInvestigation = 'investigation-manage',
     InvestigationLawyer = 'investigation-lawyer',
