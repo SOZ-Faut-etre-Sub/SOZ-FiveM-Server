@@ -42,6 +42,7 @@ import { CraftApp } from './Craft/CraftApp';
 import { FieldHealthApp } from './Field/FieldHealthApp';
 import { FieldZoneHealthApp } from './Field/FieldZoneHealthApp';
 import { HudApp } from './Hud/HudApp';
+import { TargetOverlay } from './Hud/TargetOverlay';
 import { InputApp } from './Input/InputApp';
 import { MedicalApp } from './LSMC/DiagnosticPad/MedicalApp';
 import { MenuApp } from './Menu/MenuApp';
@@ -92,6 +93,7 @@ export const App: FunctionComponent = () => {
             <AudioApp />
             <GlassMorphism />
             <div className={classes}>
+                <TargetOverlay />
                 <HudApp />
                 <CardApp />
                 <ProgressApp />

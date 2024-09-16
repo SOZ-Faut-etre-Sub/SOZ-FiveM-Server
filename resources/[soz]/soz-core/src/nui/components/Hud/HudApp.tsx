@@ -4,7 +4,6 @@ import { DebugVoip } from './DebugVoip';
 import { InstructionalOverlay } from './InstructionalOverlay';
 import { NewsBanner } from './NewsBanner';
 import { Notifications } from './Notifications';
-import { TargetOverlay } from './TargetOverlay';
 import { TwitchNewsOverlay } from './TwitchNewsOverlay';
 import { VehicleInterface } from './VehicleInterface';
 import { WatchInterface } from './WatchInterface';
@@ -13,12 +12,11 @@ import { ZombieOverlay } from './ZombieIcon';
 
 export const HudApp: FunctionComponent = () => {
     return (
-        <main className="absolute inset-0 h-full w-full overflow-hidden z-10">
+        <main className="absolute inset-0 h-full w-full overflow-hidden">
             <WatchInterface />
             <VehicleInterface />
             <WeaponAndVoipInterface />
 
-            <TargetOverlay />
             <InstructionalOverlay />
 
             <Notifications />
