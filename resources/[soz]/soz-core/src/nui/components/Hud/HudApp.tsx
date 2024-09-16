@@ -7,7 +7,7 @@ import { Notifications } from './Notifications';
 import { TwitchNewsOverlay } from './TwitchNewsOverlay';
 import { VehicleInterface } from './VehicleInterface';
 import { WatchInterface } from './WatchInterface';
-import { WeaponAndVoipInterface } from './WeaponAndVoipInterface';
+import { WeaponInterface } from './WeaponInterface';
 import { ZombieOverlay } from './ZombieIcon';
 
 export const HudApp: FunctionComponent = () => {
@@ -15,7 +15,7 @@ export const HudApp: FunctionComponent = () => {
         <main className="absolute inset-0 h-full w-full overflow-hidden">
             <WatchInterface />
             <VehicleInterface />
-            <WeaponAndVoipInterface />
+            <WeaponInterface />
 
             <InstructionalOverlay />
 
