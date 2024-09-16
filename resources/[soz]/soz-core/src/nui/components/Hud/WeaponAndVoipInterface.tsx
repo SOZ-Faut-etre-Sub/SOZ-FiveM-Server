@@ -66,7 +66,7 @@ export const WeaponAndVoipInterface: FunctionComponent = () => {
     return (
         <>
             <animated.div
-                className="absolute flex gap-1 items-center justify-center text-white w-fit drop-shadow-bg"
+                className="absolute flex gap-1 items-center justify-center text-white w-fit drop-shadow-bg -z-10"
                 style={ammoStyles}
             >
                 <div className="flex flex-col justify-center items-center tabular-nums h-11">
