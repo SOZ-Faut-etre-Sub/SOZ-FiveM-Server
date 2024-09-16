@@ -20990,6 +20990,13 @@ export const ZkeaFourniture: ZkeaFournitureItemList = {
         collision: true,
         notBuyable: true,
     },
+    soz_zevent_zplace: {
+        type: 'Exclusif',
+        name: 'Tableau ZPlace 2024',
+        model: 'soz_zevent_zplace',
+        price: 2500,
+        collision: true,
+    },
 };
 
 // NOTE: Not use as translate model, as none of them are actually used for real
