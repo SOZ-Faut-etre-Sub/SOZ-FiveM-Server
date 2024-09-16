@@ -1,11 +1,12 @@
+import { Command } from '@core/decorators/command';
+import { OnNuiEvent } from '@core/decorators/event';
+import { Inject } from '@core/decorators/injectable';
+import { Provider } from '@core/decorators/provider';
+import { Tick } from '@core/decorators/tick';
+import { uuidv4 } from '@core/utils';
+import { Notifier } from '@public/client/notifier';
 import { ProgressService } from '@public/client/progress.service';
 
-import { Command } from '../../core/decorators/command';
-import { OnNuiEvent } from '../../core/decorators/event';
-import { Inject } from '../../core/decorators/injectable';
-import { Provider } from '../../core/decorators/provider';
-import { Tick } from '../../core/decorators/tick';
-import { uuidv4 } from '../../core/utils';
 import { NuiEvent } from '../../shared/event/nui';
 import { Control } from '../../shared/input';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
@@ -37,6 +38,9 @@ export class TargetProvider {
 
     @Inject(ProgressService)
     private readonly progressService: ProgressService;
+
+    @Inject(Notifier)
+    private readonly notifier: Notifier;
 
     private _targetActive = false;
     private _targetFound = false;
@@ -102,12 +106,15 @@ export class TargetProvider {
         if (!this._targetActive) return;
         if (IsNuiFocused()) return;
 
-        const [entity, coords] = await this.screenService.getEntityOnPosition([0.5, 0.5], this._playerCoordsOverride);
-        const playerDistance = getDistance(coords, this.getPlayerCoords());
+        const [entityId, entityCoords] = await this.screenService.getEntityOnPosition(
+            [0.5, 0.5],
+            this._playerCoordsOverride
+        );
+        const playerDistance = getDistance(entityCoords, this.getPlayerCoords());
 
         this._targetOptions = [];
 
-        const result = await this.checkTargetActions(entity, coords, playerDistance);
+        const result = await this.checkTargetActions(entityId, entityCoords, playerDistance);
         this._targetOptions.push(...result);
 
         this._targetFound = this._targetOptions.length > 0;
@@ -136,8 +143,11 @@ export class TargetProvider {
             exports['soz-phone'].stopPhoneCall();
         }
 
-        // const distance = getDistance(GetEntityCoords(option.entity) as Vector3, this.getPlayerCoords());
-        // if (distance > option.distance) return;
+        const distance = getDistance(this.getPlayerCoords(), option.entityCoords);
+        if (distance > option.distance) {
+            this.notifier.error('Vous êtes trop loin pour effectuer cette action');
+            return;
+        }
 
         option?.action(option?.entity);
 
@@ -154,21 +164,21 @@ export class TargetProvider {
 
     protected async checkTargetActions(
         entity: number,
-        coords: Vector3,
+        entityCoords: Vector3,
         playerDistance: number
     ): Promise<TargetOption[]> {
         const targetsFound: TargetOption[] = [];
 
-        const entityTargets = await this.checkTargetEntityActions(entity, playerDistance);
+        const entityTargets = await this.checkTargetEntityActions(entity, entityCoords, playerDistance);
         targetsFound.push(...entityTargets);
 
-        const modelTargets = await this.checkTargetModelActions(entity, playerDistance);
+        const modelTargets = await this.checkTargetModelActions(entity, entityCoords, playerDistance);
         targetsFound.push(...modelTargets);
 
-        const pedTargets = await this.checkTargetPedActions(entity, playerDistance);
+        const pedTargets = await this.checkTargetPedActions(entity, entityCoords, playerDistance);
         targetsFound.push(...pedTargets);
 
-        const vehicleTargets = await this.checkTargetVehicleActions(entity, playerDistance);
+        const vehicleTargets = await this.checkTargetVehicleActions(entity, entityCoords, playerDistance);
         targetsFound.push(...vehicleTargets);
 
         const boneTargets = await this.checkTargetBoneActions(entity);
@@ -183,13 +193,13 @@ export class TargetProvider {
             if (zone.debugPoly) zone.draw([0, 255, 0, 100], 0.5);
             if (playerDistance > distance) continue;
 
-            if (zone.isPointInside(coords)) {
+            if (zone.isPointInside(entityCoords)) {
                 for (const target of targets) {
                     const isValid = await this.targetService.validateTarget(target, entity);
 
                     if (isValid) {
                         // enforce citizen category to avoid issues with the migration
-                        targetsFound.push({ category: 'citizen', ...target, id: uuidv4(), entity });
+                        targetsFound.push({ category: 'citizen', ...target, id: uuidv4(), entity, entityCoords });
                     }
                 }
             }
@@ -198,26 +208,38 @@ export class TargetProvider {
         return targetsFound;
     }
 
-    protected async checkTargetEntityActions(entity: number, playerDistance: number): Promise<TargetOption[]> {
+    protected async checkTargetEntityActions(
+        entity: number,
+        entityCoords: Vector3,
+        playerDistance: number
+    ): Promise<TargetOption[]> {
         const entityType = GetEntityType(entity);
         if (entityType < 3) return [];
 
         const entityStore = this.targetStore.entities.get(entity.toString());
 
-        return this.checkTargetGenericActions(entityStore, playerDistance, entity);
+        return this.checkTargetGenericActions(entityStore, playerDistance, entity, entityCoords);
     }
 
-    protected async checkTargetModelActions(entity: number, playerDistance: number): Promise<TargetOption[]> {
+    protected async checkTargetModelActions(
+        entity: number,
+        entityCoords: Vector3,
+        playerDistance: number
+    ): Promise<TargetOption[]> {
         const entityType = GetEntityType(entity);
         if (entityType === 0) return [];
 
         const model = this.targetStore.getId(GetEntityModel(entity));
         const modelStore = this.targetStore.models.get(model);
 
-        return this.checkTargetGenericActions(modelStore, playerDistance, entity);
+        return this.checkTargetGenericActions(modelStore, playerDistance, entity, entityCoords);
     }
 
-    protected async checkTargetPedActions(entity: number, playerDistance: number): Promise<TargetOption[]> {
+    protected async checkTargetPedActions(
+        entity: number,
+        entityCoords: Vector3,
+        playerDistance: number
+    ): Promise<TargetOption[]> {
         const playerPed = PlayerPedId();
         if (entity === playerPed) return [];
 
@@ -233,16 +255,20 @@ export class TargetProvider {
             pedStore = this.targetStore.players.get('global');
         }
 
-        return this.checkTargetGenericActions(pedStore, playerDistance, entity);
+        return this.checkTargetGenericActions(pedStore, playerDistance, entity, entityCoords);
     }
 
-    protected async checkTargetVehicleActions(entity: number, playerDistance: number): Promise<TargetOption[]> {
+    protected async checkTargetVehicleActions(
+        entity: number,
+        entityCoords: Vector3,
+        playerDistance: number
+    ): Promise<TargetOption[]> {
         const entityType = GetEntityType(entity);
         if (entityType !== 2) return [];
 
         const vehicleStore = this.targetStore.vehicles.get('global');
 
-        return this.checkTargetGenericActions(vehicleStore, playerDistance, entity);
+        return this.checkTargetGenericActions(vehicleStore, playerDistance, entity, entityCoords);
     }
 
     protected async checkTargetBoneActions(entity: number): Promise<TargetOption[]> {
@@ -255,7 +281,7 @@ export class TargetProvider {
             const bonePos = GetWorldPositionOfEntityBone(entity, boneId) as Vector3;
             const boneDistance = getDistance(playerCoords, bonePos);
 
-            const options = await this.checkTargetGenericActions(store, boneDistance, entity);
+            const options = await this.checkTargetGenericActions(store, boneDistance, entity, bonePos);
             targetOptions.push(...options);
         }
 
@@ -265,7 +291,8 @@ export class TargetProvider {
     protected async checkTargetGenericActions(
         store: TargetStoreBase,
         playerDistance: number,
-        entity: number
+        entity: number,
+        entityCoords: Vector3
     ): Promise<TargetOption[]> {
         const targetsFound: TargetOption[] = [];
         if (!store) return targetsFound;
@@ -276,7 +303,7 @@ export class TargetProvider {
             const isValid = await this.targetService.validateTarget(target, entity);
             if (isValid) {
                 // enforce citizen category to avoid issues with the migration
-                targetsFound.push({ category: 'citizen', ...target, id: uuidv4(), entity });
+                targetsFound.push({ category: 'citizen', ...target, id: uuidv4(), entity, entityCoords });
             }
         }
 
