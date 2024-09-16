@@ -332,8 +332,8 @@ export class AdminMenuPlayerProvider {
         this.playerService.setPlayerMetadata(player.id, type, value);
         if (targetPlayer.apartment) {
             const [, apartment] = await this.housingRepository.getApartment(
-                targetPlayer.apartment?.id,
-                targetPlayer.apartment?.property_id
+                targetPlayer.apartment?.property_id,
+                targetPlayer.apartment?.id
             );
             if (apartment) {
                 await this.housingFournitureProvider.deletePlatesIfNeeded(apartment);

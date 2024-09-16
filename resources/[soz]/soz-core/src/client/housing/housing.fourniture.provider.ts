@@ -483,7 +483,7 @@ export class HousingFournitureProvider {
             this.menu.closeMenu(false);
         }
 
-        const isPlayerInsideTargetedAppartement = this.lastApartment.id === apartmentId;
+        const isPlayerInsideTargetedAppartement = this.lastApartment && this.lastApartment.id === apartmentId;
         if (isPlayerInsideTargetedAppartement) {
             const placementProp = this.apartmentFourntiures[apartmentId].placementProps[fournitureId];
             this.despawnFourntiure(placementProp, placementProp.fourniture);
