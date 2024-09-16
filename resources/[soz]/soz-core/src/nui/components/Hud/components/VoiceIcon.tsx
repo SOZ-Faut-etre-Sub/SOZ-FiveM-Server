@@ -29,8 +29,9 @@ export const VoiceIcon: FunctionComponent<{ icon: string; disableAutoHide?: bool
     });
 
     return (
-        <animated.div style={styles}>
-            <img className="size-12" src={`/public/images/hud/voice/${icon}.webp`} alt={icon} />
-        </animated.div>
+        <animated.div
+            className="size-12 bg-cover bg-center"
+            style={{ ...styles, backgroundImage: `url(/public/images/hud/voice/${icon}.webp)` }}
+        />
     );
 };

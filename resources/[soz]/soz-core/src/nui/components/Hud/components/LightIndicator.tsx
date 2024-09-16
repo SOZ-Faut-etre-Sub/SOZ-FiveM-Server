@@ -1,3 +1,4 @@
+import { animated, useSpring } from '@react-spring/web';
 import { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -7,17 +8,24 @@ import { RootState } from '../../../store';
 export const LightIndicator: FunctionComponent = () => {
     const state = useSelector((state: RootState) => state.vehicle.lightState);
 
-    let icon = null;
+    const icon = state === VehicleLightState.LowBeam ? 'low' : 'high';
 
-    if (state === VehicleLightState.LowBeam) {
-        icon = 'low';
-    } else if (state === VehicleLightState.HighBeam) {
-        icon = 'high';
-    }
+    const styles = useSpring({
+        from: {
+            opacity: 0,
+        },
+        to: {
+            opacity: state === VehicleLightState.Off ? 0 : 1,
+        },
+    });
 
-    if (!icon) {
-        return null;
-    }
-
-    return <img className="size-10" src={`/public/images/hud/vehicle/light-${icon}.webp`} alt="light" />;
+    return (
+        <animated.div
+            className="size-12 bg-cover bg-center"
+            style={{
+                ...styles,
+                backgroundImage: `url(/public/images/hud/vehicle/light-${icon}.webp)`,
+            }}
+        />
+    );
 };
