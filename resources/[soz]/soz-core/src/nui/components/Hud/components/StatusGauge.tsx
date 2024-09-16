@@ -16,7 +16,7 @@ export const StatusGauge: FunctionComponent<PropsWithChildren<StatusBarProps>> =
     value,
     color,
     children,
-    hideCondition = value => (value - min) / (max - min) < 1,
+    hideCondition = value => (value - min) / (max - min) === 0,
 }) => {
     const hide = hideCondition(value);
     if (hide) {
