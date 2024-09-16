@@ -148,6 +148,17 @@ export class TargetProvider {
             return;
         }
 
+        if (option.entity) {
+            const entityType = GetEntityType(option.entity);
+            const entityCoords = GetEntityCoords(option.entity) as Vector3;
+            const distance = getDistance(this.getPlayerCoords(), entityCoords);
+
+            if (entityType !== 0 && entityCoords.join('') !== '000' && distance > option.distance) {
+                this.notifier.error('Il semblerait que la cible se soit éloignée');
+                return;
+            }
+        }
+
         option?.action(option?.entity);
 
         return this.disableTargetMode(true);
