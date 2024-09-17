@@ -1034,7 +1034,17 @@ export class HousingFournitureProvider {
     }
 
     private async getEntityFromMouse() {
-        const [hitEntDebug] = await this.screenService.getEntityOnMousePosition();
+        const [screenX, screenY] = GetActiveScreenResolution();
+        const [x, y] = GetNuiCursorPosition();
+
+        const cameraPosition = GetCamCoord(this.camera) as Vector3;
+        const cameraRotation = GetCamRot(this.camera, 0) as Vector3;
+
+        const [hitEntDebug] = await this.screenService.getEntityOnPosition(
+            [x / screenX, y / screenY],
+            cameraPosition,
+            cameraRotation
+        );
         return hitEntDebug;
     }
 

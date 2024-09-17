@@ -61,12 +61,19 @@ export class ScreenService {
         return this.getEntityOnPosition(cursor);
     }
 
-    public async getEntityOnPosition(cursor: Vector2, coords?: Vector3): Promise<[number, Vector3]> {
+    public async getEntityOnPosition(
+        cursor: Vector2,
+        coords?: Vector3,
+        rotations?: Vector3
+    ): Promise<[number, Vector3]> {
         if (!coords) {
             coords = GetFinalRenderedCamCoord() as Vector3;
         }
-        const camRotation = GetFinalRenderedCamRot(0) as Vector3;
-        const [cam3DPos, forwardDir] = this.getScreenToWorldPosition(coords, camRotation, cursor);
+        if (!rotations) {
+            rotations = GetFinalRenderedCamRot(0) as Vector3;
+        }
+
+        const [cam3DPos, forwardDir] = this.getScreenToWorldPosition(coords, rotations, cursor);
         const direction = add2Vector3(coords, multVector3(forwardDir, 1000.0));
         const rayHandle = StartShapeTestLosProbe(
             cam3DPos[0],
@@ -75,7 +82,7 @@ export class ScreenService {
             direction[0],
             direction[1],
             direction[2],
-            this.intersectEverything ? 511 : 30,
+            this.intersectEverything ? -1 : 30,
             PlayerPedId(),
             0
         );
