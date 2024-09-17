@@ -148,7 +148,7 @@ export class TargetProvider {
             return;
         }
 
-        if (option.entity) {
+        /*if (option.entity) {
             const entityType = GetEntityType(option.entity);
             const entityCoords = GetEntityCoords(option.entity) as Vector3;
             const distance = getDistance(this.getPlayerCoords(), entityCoords);
@@ -157,7 +157,7 @@ export class TargetProvider {
                 this.notifier.error('Il semblerait que la cible se soit éloignée');
                 return;
             }
-        }
+        }*/
 
         option?.action(option?.entity);
 
