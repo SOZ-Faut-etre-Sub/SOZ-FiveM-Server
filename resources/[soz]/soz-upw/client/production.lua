@@ -3,6 +3,7 @@ function CreateEnergyZone(identifier, data)
         {
             label = "Collecter l'énergie",
             icon = "upw/collecter",
+            category = "society",
             canInteract = function()
                 return OnDuty()
             end,
@@ -13,6 +14,7 @@ function CreateEnergyZone(identifier, data)
         {
             label = "Taux de pollution",
             icon = "upw/pollution",
+            category = "society",
             canInteract = function()
                 return OnDuty()
             end,
@@ -31,6 +33,7 @@ function CreateWasteZone(identifier, data)
         {
             label = "Collecter les déchets",
             icon = "upw/recyclage",
+            category = "society",
             canInteract = function()
                 return OnDuty("garbage")
             end,
