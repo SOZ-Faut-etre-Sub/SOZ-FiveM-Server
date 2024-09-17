@@ -2,10 +2,9 @@ import { Command } from '@core/decorators/command';
 import { OnNuiEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
-import { Tick } from '@core/decorators/tick';
+import { Tick, TickInterval } from '@core/decorators/tick';
 import { uuidv4 } from '@core/utils';
 import { Notifier } from '@public/client/notifier';
-import { ProgressService } from '@public/client/progress.service';
 
 import { NuiEvent } from '../../shared/event/nui';
 import { Control } from '../../shared/input';
@@ -35,9 +34,6 @@ export class TargetProvider {
 
     @Inject(PlayerService)
     private readonly playerService: PlayerService;
-
-    @Inject(ProgressService)
-    private readonly progressService: ProgressService;
 
     @Inject(Notifier)
     private readonly notifier: Notifier;
@@ -73,6 +69,25 @@ export class TargetProvider {
         }
 
         await this.resetTarget();
+    }
+
+    @Tick(TickInterval.EVERY_SECOND)
+    public async checkTargetMode(): Promise<void> {
+        if (!this._targetFound) return;
+
+        const [entityId, entityCoords] = await this.screenService.getEntityOnPosition(
+            [0.5, 0.5],
+            this._playerCoordsOverride
+        );
+
+        if (entityId === 0) return;
+
+        const playerDistance = getDistance(entityCoords, this.getPlayerCoords());
+        const options = await this.checkTargetActions(entityId, entityCoords, playerDistance);
+
+        if (options.length !== this._targetOptions.length) {
+            this.resetTarget();
+        }
     }
 
     @Tick()
@@ -111,10 +126,7 @@ export class TargetProvider {
         );
         const playerDistance = getDistance(entityCoords, this.getPlayerCoords());
 
-        this._targetOptions = [];
-
-        const result = await this.checkTargetActions(entityId, entityCoords, playerDistance);
-        this._targetOptions.push(...result);
+        this._targetOptions = await this.checkTargetActions(entityId, entityCoords, playerDistance);
 
         this._targetFound = this._targetOptions.length > 0;
         this.nuiDispatch.dispatch('target', 'SetTargetFound', this._targetFound);
@@ -147,17 +159,6 @@ export class TargetProvider {
             this.notifier.error('Vous êtes trop loin pour effectuer cette action');
             return;
         }
-
-        /*if (option.entity) {
-            const entityType = GetEntityType(option.entity);
-            const entityCoords = GetEntityCoords(option.entity) as Vector3;
-            const distance = getDistance(this.getPlayerCoords(), entityCoords);
-
-            if (entityType !== 0 && entityCoords.join('') !== '000' && distance > option.distance) {
-                this.notifier.error('Il semblerait que la cible se soit éloignée');
-                return;
-            }
-        }*/
 
         option?.action(option?.entity);
 
