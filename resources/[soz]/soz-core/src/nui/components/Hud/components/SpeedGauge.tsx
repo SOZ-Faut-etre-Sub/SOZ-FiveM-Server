@@ -1,21 +1,28 @@
 import { FunctionComponent, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 
-import { useVehicle, useVehicleSpeed } from '../../../hook/data';
+import { RootState } from '../../../store';
 import { GlassMorphismContainer } from '../../Styleguide/GlassMorphismContainer';
 import { MotorIndicator } from './MotorIndicator';
 import { OilIndicator } from './OilIndicator';
 
-export const SpeedGauge: FunctionComponent<{ useRpm: boolean }> = ({ useRpm }) => {
-    const vehicle = useVehicle();
-    const vehicleSpeed = useVehicleSpeed();
+export const SpeedGauge: FunctionComponent = () => {
+    const useRpm = useSelector((state: RootState) => state.vehicle.useRpm);
+    const engineHealth = useSelector((state: RootState) => state.vehicle.engineHealth);
+    const oilLevel = useSelector((state: RootState) => state.vehicle.oilLevel);
+    const fuelType = useSelector((state: RootState) => state.vehicle.fuelType);
+
+    const vehicleSpeed = useSelector((state: RootState) => state.vehicleSpeed.speed);
+    const vehicleRpm = useSelector((state: RootState) => state.vehicleSpeed.rpm);
+    const vehicleGear = useSelector((state: RootState) => state.vehicleSpeed.gear);
 
     const rpm = useMemo(() => {
         let rpm: number;
 
         if (!useRpm) {
-            rpm = vehicleSpeed.speed / 250;
+            rpm = vehicleSpeed / 250;
         } else {
-            rpm = vehicleSpeed.rpm - 0.2;
+            rpm = vehicleRpm - 0.2;
         }
 
         if (rpm < 0) {
@@ -23,15 +30,15 @@ export const SpeedGauge: FunctionComponent<{ useRpm: boolean }> = ({ useRpm }) =
         }
 
         return rpm;
-    }, [vehicleSpeed, useRpm]);
+    }, [vehicleSpeed, vehicleRpm, useRpm]);
 
     const gear = useMemo(() => {
-        if (vehicleSpeed.gear == 0 && vehicleSpeed.speed > 0) {
+        if (vehicleGear == 0 && vehicleSpeed > 0) {
             return 'R';
         }
 
-        return vehicleSpeed.gear.toString();
-    }, [vehicleSpeed]);
+        return vehicleGear.toString();
+    }, [vehicleGear, vehicleSpeed]);
 
     return (
         <div className="relative size-[125px]">
@@ -66,13 +73,13 @@ export const SpeedGauge: FunctionComponent<{ useRpm: boolean }> = ({ useRpm }) =
                     <div className="absolute inset-0 flex flex-col justify-center items-center font-prompt font-semibold text-center text-white/80 uppercase text-sm tabular-nums [text-shadow:_0px_0px_4px_rgb(0_0_0_/_40%)] h-full w-full">
                         <span className="absolute top-4 text-base font-light">{gear}</span>
                         <div className="absolute inset-0 flex flex-col justify-center">
-                            <span className="text-white text-3xl leading-5">{vehicleSpeed.speed.toFixed(0)}</span>
+                            <span className="text-white text-3xl leading-5">{vehicleSpeed.toFixed(0)}</span>
                             <span>km/h</span>
                         </div>
 
                         <div className="absolute inset-x-0 bottom-3 flex justify-center items-center gap-2">
-                            <MotorIndicator motor={vehicle.engineHealth} fuelType={vehicle.fuelType} />
-                            <OilIndicator oil={vehicle.oilLevel} />
+                            <MotorIndicator motor={engineHealth} fuelType={fuelType} />
+                            <OilIndicator oil={oilLevel} />
                         </div>
                     </div>
                 </div>

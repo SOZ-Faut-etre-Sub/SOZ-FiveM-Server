@@ -5,10 +5,16 @@ import { Vector3 } from '@public/shared/polyzone/vector';
 
 import { PlayerData } from '../player';
 
+export interface PlayerStats {
+    health: number;
+    armor: number;
+    stamina: number;
+}
+
 export interface NuiPLayerMethodMap {
     Update: PlayerData;
     UpdatePosition: Vector3;
-    UpdatePlayerStats: [number, number];
+    UpdatePlayerStats: PlayerStats;
     UpdateAnimationShortcuts: Record<string, Shortcut>;
     UpdateInvoices: Invoice[];
 }

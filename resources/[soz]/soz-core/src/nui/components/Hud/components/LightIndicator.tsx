@@ -1,8 +1,12 @@
 import { FunctionComponent } from 'react';
+import { useSelector } from 'react-redux';
 
 import { VehicleLightState } from '../../../../shared/vehicle/vehicle';
+import { RootState } from '../../../store';
 
-export const LightIndicator: FunctionComponent<{ state: VehicleLightState }> = ({ state }) => {
+export const LightIndicator: FunctionComponent = () => {
+    const state = useSelector((state: RootState) => state.vehicle.lightState);
+
     let icon = 'off';
 
     if (state === VehicleLightState.LowBeam) {

@@ -1,7 +1,7 @@
 import { FunctionComponent, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { usePlayer, usePlayerStats } from '../../../hook/data';
+import { usePlayer } from '../../../hook/data';
 import { useNuiEvent } from '../../../hook/nui';
 import { RootState } from '../../../store';
 import { StatusGauge } from './StatusGauge';
@@ -14,7 +14,6 @@ type SyringeDelay = {
 
 export const PlayerStats: FunctionComponent = () => {
     const [syringeDelay, setSyringeDelay] = useState<SyringeDelay>(null);
-    const [stamina, setStamina] = useState<number>(100);
     const [battery, setBattery] = useState<number>(100);
 
     const hasWatch = useSelector((state: RootState) => state.hud.hasWatch);
@@ -22,9 +21,11 @@ export const PlayerStats: FunctionComponent = () => {
     const showStamina = useSelector((state: RootState) => state.hud.settings.showStamina);
 
     const player = usePlayer();
-    const playerStats = usePlayerStats();
 
-    useNuiEvent('hud', 'SetStamina', setStamina);
+    const health = useSelector((state: RootState) => state.playerStats.health);
+    const armor = useSelector((state: RootState) => state.playerStats.armor);
+    const stamina = useSelector((state: RootState) => state.playerStats.stamina);
+
     useNuiEvent('hud', 'SetBattery', setBattery);
     useNuiEvent('hud', 'SetSyringeDelay', delay => {
         setSyringeDelay(previousDelay => {
@@ -63,10 +64,7 @@ export const PlayerStats: FunctionComponent = () => {
         return null;
     }
 
-    const armorPercent = playerStats[1];
-    const healthPercent = player.metadata.isdead
-        ? 0
-        : ((playerStats[0] - 100) * 100) / (player.metadata.max_health - 100);
+    const healthPercent = player.metadata.isdead ? 0 : ((health - 100) * 100) / (player.metadata.max_health - 100);
 
     return (
         <>
@@ -78,7 +76,7 @@ export const PlayerStats: FunctionComponent = () => {
                 <img className="size-9" src="/public/images/hud/player/health.webp" alt="" />
             </StatusGauge>
 
-            <StatusGauge value={armorPercent} color="#00A5E7">
+            <StatusGauge value={armor} color="#00A5E7">
                 <img className="size-9" src="/public/images/hud/player/armor.webp" alt="armor" />
             </StatusGauge>
 

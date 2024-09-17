@@ -2,7 +2,7 @@ import { DrugNuiZone } from '@private/shared/drugs';
 import { HudState } from '@public/shared/hud';
 import { Item } from '@public/shared/item';
 import { Vector3 } from '@public/shared/polyzone/vector';
-import { VehicleHud, VehicleHudSpeed } from '@public/shared/vehicle/vehicle';
+import { VehicleHud } from '@public/shared/vehicle/vehicle';
 import { useSelector } from 'react-redux';
 
 import { PlayerData } from '../../shared/player';
@@ -14,10 +14,6 @@ export const usePlayer = (): PlayerData | null => {
 
 export const usePlayerPosition = (): Vector3 => {
     return useSelector((state: RootState) => state.playerPosition);
-};
-
-export const usePlayerStats = (): [number, number] => {
-    return useSelector((state: RootState) => state.playerStats);
 };
 
 export const useItems = (): Item[] => {
@@ -34,10 +30,6 @@ export const useAllowedOutside = (): Record<string, HTMLElement> => {
 
 export const useVehicle = (): VehicleHud => {
     return useSelector((state: RootState) => state.vehicle);
-};
-
-export const useVehicleSpeed = (): VehicleHudSpeed => {
-    return useSelector((state: RootState) => state.vehicleSpeed);
 };
 
 export const useHud = (): HudState => {

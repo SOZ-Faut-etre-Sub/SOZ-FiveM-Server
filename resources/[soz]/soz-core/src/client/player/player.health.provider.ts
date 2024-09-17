@@ -350,10 +350,14 @@ export class PlayerHealthProvider {
 
     @Tick(50)
     private async updateNuiHealth(): Promise<void> {
-        const health = GetEntityHealth(PlayerPedId());
-        const armor = GetPedArmour(PlayerPedId());
+        const playerPed = PlayerPedId();
+        const playerId = PlayerId();
 
-        this.nuiDispatch.dispatch('player', 'UpdatePlayerStats', [health, armor]);
+        const health = GetEntityHealth(playerPed);
+        const armor = GetPedArmour(playerPed);
+        const stamina = 100 - Math.trunc(GetPlayerSprintStaminaRemaining(playerId));
+
+        this.nuiDispatch.dispatch('player', 'UpdatePlayerStats', { health, armor, stamina });
     }
 
     public setNutritionDisabled(value: boolean) {

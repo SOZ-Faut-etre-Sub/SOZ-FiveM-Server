@@ -24,7 +24,7 @@ export class HudCompassProvider {
     @Inject(NuiDispatch)
     private readonly nuiDispatch: NuiDispatch;
 
-    @Tick()
+    @Tick(10)
     public showCompassLoop(): void {
         if (!this.hudStateProvider.isComputedHudVisible) {
             return;
