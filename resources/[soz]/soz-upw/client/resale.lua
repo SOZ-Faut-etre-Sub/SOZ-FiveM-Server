@@ -3,6 +3,7 @@ function CreateResaleZone(data)
         {
             label = "Vendre l'énergie",
             icon = "upw/vendre",
+            category = "society",
             canInteract = function()
                 return OnDuty()
             end,

@@ -141,7 +141,7 @@ export class VehicleFuelProvider {
                 label: "Remplir la station d'essence",
                 icon: 'fuel/pistolet',
                 job: JobType.Oil,
-                category: 'citizen',
+                category: 'society',
                 action: entity => {
                     const station = this.fuelStationRepository.getStationForEntity(entity);
 
@@ -170,7 +170,7 @@ export class VehicleFuelProvider {
             {
                 label: 'Remplir la station de kérosène',
                 icon: 'fuel/pistolet',
-                category: 'citizen',
+                category: 'society',
                 action: entity => {
                     const station = this.fuelStationRepository.getStationForEntity(entity);
 
@@ -197,7 +197,7 @@ export class VehicleFuelProvider {
             {
                 label: 'État de la station',
                 icon: 'fuel/check',
-                category: 'citizen',
+                category: 'society',
                 action: (entity: number) => {
                     this.getStationFuelLevel(entity);
                     TriggerEvent('fuel:client:GetFuelLevel');
