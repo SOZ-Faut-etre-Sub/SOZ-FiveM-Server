@@ -273,7 +273,7 @@ export class DoorProvider {
             return [true, door.lock];
         }
 
-        if (door.jobs && door.jobs.includes(player.job.id) && player.job.onduty) {
+        if (door.jobs && door.jobs.includes(player.job.id)) {
             return [true, door.lock];
         }
 
