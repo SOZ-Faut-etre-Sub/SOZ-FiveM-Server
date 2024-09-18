@@ -209,7 +209,7 @@ export class DoorProvider {
                         const [valid, locked] = this.canInterract(entity);
                         return valid && !locked;
                     },
-                    action: entity => {
+                    action: async entity => {
                         const doors = this.doorRepository.get();
                         const door = doors.find(door => door.subdoors.map(elem => elem.entity).includes(entity));
                         door.lock = true;
@@ -221,10 +221,11 @@ export class DoorProvider {
                                 options: {
                                     onlyUpperBody: true,
                                 },
+                                playbackRate: 0.7,
                             },
                         });
 
-                        TriggerServerEvent(ServerEvent.DOOR_ADD_UPDATE, door);
+                        TriggerServerEvent(ServerEvent.DOOR_ADD_UPDATE, door, true);
                     },
                 },
                 {
@@ -235,7 +236,7 @@ export class DoorProvider {
                         const [valid, locked] = this.canInterract(entity);
                         return valid && locked;
                     },
-                    action: entity => {
+                    action: async entity => {
                         const doors = this.doorRepository.get();
                         const door = doors.find(door => door.subdoors.map(elem => elem.entity).includes(entity));
                         door.lock = false;
@@ -247,10 +248,11 @@ export class DoorProvider {
                                 options: {
                                     onlyUpperBody: true,
                                 },
+                                playbackRate: 0.7,
                             },
                         });
 
-                        TriggerServerEvent(ServerEvent.DOOR_ADD_UPDATE, door);
+                        TriggerServerEvent(ServerEvent.DOOR_ADD_UPDATE, door, false);
                     },
                 },
             ],
