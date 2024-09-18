@@ -20,7 +20,7 @@ export class DoorProvider {
     public notifier: Notifier;
 
     @OnEvent(ServerEvent.DOOR_ADD_UPDATE)
-    public async doorAddUpdate(source: number, door: Door) {
+    public async doorAddUpdate(source: number, door: Door, lock: boolean) {
         door.subdoors.forEach(sub => delete sub['entity']);
 
         await this.prismaService.door.upsert({
@@ -37,7 +37,13 @@ export class DoorProvider {
         });
 
         await this.doorRepository.set(door.id, door);
-        this.notifier.notify(source, 'Porte créée/modifiée');
+        if (lock === true) {
+            this.notifier.notify(source, 'la porte est ~r~verrouillée~s~.');
+        } else if (lock === false) {
+            this.notifier.notify(source, 'la porte est ~g~dévetrouillée~s~.');
+        } else {
+            this.notifier.notify(source, 'Porte créée/modifiée');
+        }
     }
 
     @OnEvent(ServerEvent.DOOR_DELETE)
