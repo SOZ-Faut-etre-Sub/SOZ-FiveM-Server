@@ -12,6 +12,7 @@ import { PlayerStats } from './components/PlayerStats';
 import { Weather } from './components/Weather';
 
 export const WatchInterface: FunctionComponent = () => {
+    const hasWatch = useSelector((state: RootState) => state.hud.hasWatch);
     const minimap = useSelector((state: RootState) => state.hud.minimap);
 
     const headerStyles = useSpring({
@@ -47,7 +48,7 @@ export const WatchInterface: FunctionComponent = () => {
                 <Weather />
             </animated.div>
 
-            {!minimap.isHidden && (
+            {hasWatch && !minimap.isHidden && (
                 <GlassMorphismBox
                     className="rounded-lg"
                     style={{
