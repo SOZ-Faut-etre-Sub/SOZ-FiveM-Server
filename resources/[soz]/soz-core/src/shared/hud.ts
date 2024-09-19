@@ -66,6 +66,7 @@ export enum HudTheme {
 export type HudSettings = {
     theme: HudTheme;
     zoom: number;
+    daltonism: boolean;
     showDateTime: boolean;
     showWeather: boolean;
     showStreetName: boolean;

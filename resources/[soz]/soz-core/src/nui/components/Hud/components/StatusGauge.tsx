@@ -7,6 +7,7 @@ export type StatusBarProps = {
     max?: number;
     value: number;
     color: string;
+    backgroundColor: string;
     hideCondition?: (value: number) => boolean;
 };
 
@@ -15,6 +16,7 @@ export const StatusGauge: FunctionComponent<PropsWithChildren<StatusBarProps>> =
     max = 100,
     value,
     color,
+    backgroundColor,
     children,
     hideCondition = value => (value - min) / (max - min) === 0,
 }) => {
@@ -46,8 +48,7 @@ export const StatusGauge: FunctionComponent<PropsWithChildren<StatusBarProps>> =
                             cx="100"
                             cy="100"
                             fill="transparent"
-                            stroke={color}
-                            strokeOpacity="0.35"
+                            stroke={backgroundColor}
                             strokeWidth="1.5rem"
                             strokeDasharray={`${circumference} ${circumference}`}
                             strokeDashoffset="0"

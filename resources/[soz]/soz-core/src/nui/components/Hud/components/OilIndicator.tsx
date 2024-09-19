@@ -1,7 +1,11 @@
 import cn from 'classnames';
 import { FunctionComponent } from 'react';
 
+import { useDaltonism } from '../hooks/useDaltonism';
+
 export const OilIndicator: FunctionComponent<{ oil: number }> = ({ oil }) => {
+    const { imagePrefix } = useDaltonism();
+
     let oilStatus = 'yellow';
 
     if (oil <= 10 && oil > 5) {
@@ -18,7 +22,7 @@ export const OilIndicator: FunctionComponent<{ oil: number }> = ({ oil }) => {
                 'opacity-5': oil > 10,
                 'opacity-100': oil <= 10,
             })}
-            src={`/public/images/hud/vehicle/oil-${oilStatus}.webp`}
+            src={`/public/images/hud/vehicle/${imagePrefix}oil-${oilStatus}.webp`}
             alt="oil"
         />
     );

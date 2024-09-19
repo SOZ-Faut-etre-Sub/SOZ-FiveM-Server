@@ -3,9 +3,12 @@ import { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux';
 
 import { RootState } from '../../../store';
+import { useDaltonism } from '../hooks/useDaltonism';
 
 export const SeatbeltIndicator: FunctionComponent = () => {
     const state = useSelector((state: RootState) => state.vehicle.seatbelt);
+
+    const { imagePrefix } = useDaltonism();
 
     const styles = useSpring({
         from: {
@@ -16,5 +19,11 @@ export const SeatbeltIndicator: FunctionComponent = () => {
         },
     });
 
-    return <animated.img className="size-12" style={styles} src="/public/images/hud/vehicle/seatbelt.webp" />;
+    return (
+        <animated.img
+            className="size-12"
+            style={styles}
+            src={`/public/images/hud/vehicle/${imagePrefix}seatbelt.webp`}
+        />
+    );
 };

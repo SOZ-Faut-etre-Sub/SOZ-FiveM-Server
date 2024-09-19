@@ -4,9 +4,12 @@ import { useSelector } from 'react-redux';
 
 import { VehicleLockStatus } from '../../../../shared/vehicle/vehicle';
 import { RootState } from '../../../store';
+import { useDaltonism } from '../hooks/useDaltonism';
 
 export const LockIndicator: FunctionComponent = () => {
     const state = useSelector((state: RootState) => state.vehicle.lockStatus);
+
+    const { imagePrefix } = useDaltonism();
 
     const styles = useSpring({
         from: {
@@ -17,5 +20,7 @@ export const LockIndicator: FunctionComponent = () => {
         },
     });
 
-    return <animated.img className="size-12" style={styles} src="/public/images/hud/vehicle/lock.webp" />;
+    return (
+        <animated.img className="size-12" style={styles} src={`/public/images/hud/vehicle/${imagePrefix}lock.webp`} />
+    );
 };

@@ -13,6 +13,7 @@ import { Location } from './components/Location';
 import { PlayerStats } from './components/PlayerStats';
 import { VoiceIcon } from './components/VoiceIcon';
 import { Weather } from './components/Weather';
+import { useDaltonism } from './hooks/useDaltonism';
 
 export const WatchInterface: FunctionComponent = () => {
     const minimap = useSelector((state: RootState) => state.hud.minimap);
@@ -20,12 +21,14 @@ export const WatchInterface: FunctionComponent = () => {
     const [voiceMode, setVoiceMode] = useState(VoiceMode.Normal);
     const [voiceActive, setVoiceActive] = useState(true);
 
+    const { imagePrefix } = useDaltonism();
+
     useNuiEvent('hud', 'UpdateVoiceMode', setVoiceMode);
     useNuiEvent('hud', 'UpdateVoiceActive', setVoiceActive);
 
     const [voiceIcon, disableAutoHide] = useMemo(() => {
         if (!voiceActive) {
-            return ['disconnected', true];
+            return [`${imagePrefix}disconnected`, true];
         }
 
         switch (voiceMode) {
