@@ -59,7 +59,7 @@ export const VehicleInterface: FunctionComponent = () => {
                             <NosGauge />
                             <SpeedGauge />
                         </div>
-                        <div className="flex flex-col justify-end items-center gap-2 w-10">
+                        <div className="flex flex-col justify-end gap-2 w-32">
                             <LightIndicator />
                             <FuelGauge />
                         </div>
