@@ -65,6 +65,14 @@ export const MenuWatch: FunctionComponent<MenuWatchProps> = ({ data }) => {
                     {/*</MenuItemSelect>*/}
 
                     <MenuItemCheckbox
+                        checked={data.daltonism}
+                        description="Active/Désactive le mode daltonien"
+                        onChange={value => fetchNui(NuiEvent.WatchMenuSetDaltonism, value)}
+                    >
+                        Mode daltonien
+                    </MenuItemCheckbox>
+
+                    <MenuItemCheckbox
                         checked={data.showDateTime}
                         description="Active/Désactive l'affichage de la date et de l'heure"
                         onChange={value => fetchNui(NuiEvent.WatchMenuSetShowDateTime, value)}
