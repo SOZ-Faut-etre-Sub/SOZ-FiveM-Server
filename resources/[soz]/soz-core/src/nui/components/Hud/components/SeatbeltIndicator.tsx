@@ -16,13 +16,5 @@ export const SeatbeltIndicator: FunctionComponent = () => {
         },
     });
 
-    return (
-        <animated.div
-            className="size-12 bg-cover bg-center"
-            style={{
-                ...styles,
-                backgroundImage: `url(/public/images/hud/vehicle/seatbelt.webp)`,
-            }}
-        />
-    );
+    return <animated.img className="size-12" style={styles} src="/public/images/hud/vehicle/seatbelt.webp" />;
 };
