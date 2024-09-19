@@ -1,9 +1,8 @@
-import { format } from 'date-fns';
-import { fr } from 'date-fns/locale/fr';
 import { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux';
 
 import { RootState } from '../../../store';
+import { weekToString } from '../hooks/weekToString';
 
 export const DateTime: FunctionComponent = () => {
     const hasWatch = useSelector((state: RootState) => state.hud.hasWatch);
@@ -16,9 +15,7 @@ export const DateTime: FunctionComponent = () => {
 
     return (
         <div className="flex flex-col drop-shadow-bg" style={{ zoom: settings.zoom }}>
-            <span className="text-2xl leading-4 font-light capitalize">
-                {format(dayOfWeek, 'ccc', { locale: fr }).replace('.', '')}
-            </span>
+            <span className="text-2xl leading-4 font-light capitalize">{weekToString(dayOfWeek)}</span>
             <span className="text-2.5xl">
                 {hour <= 9 && '0'}
                 {hour}:{minute <= 9 && '0'}
