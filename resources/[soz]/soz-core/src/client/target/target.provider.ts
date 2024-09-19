@@ -74,7 +74,6 @@ export class TargetProvider {
     @Tick(TickInterval.EVERY_SECOND)
     public async checkTargetMode(): Promise<void> {
         return; // need a better check
-        
         if (!this._targetFound) return;
 
         const [entityId, entityCoords] = await this.screenService.getEntityOnPosition(
