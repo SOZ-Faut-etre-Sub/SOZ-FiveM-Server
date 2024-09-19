@@ -92,9 +92,9 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
             <div
                 className={cn('absolute inset-0 transition-all duration-1000', {
                     'bg-[#F3FBFA] opacity-20':
-                        settings.theme === HudTheme.Light || (settings.theme === HudTheme.Auto && isDay),
+                        settings.theme === HudTheme.Light || (settings.theme === HudTheme.Auto && isNight),
                     'bg-[#22232A] opacity-45':
-                        settings.theme === HudTheme.Dark || (settings.theme === HudTheme.Auto && isNight),
+                        settings.theme === HudTheme.Dark || (settings.theme === HudTheme.Auto && isDay),
                     'bg-[#33a844] opacity-25': settings.theme === HudTheme.Green,
                     'bg-[#f4bad4] opacity-45': settings.theme === HudTheme.Uwu,
                 })}
