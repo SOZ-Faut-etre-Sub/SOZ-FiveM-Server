@@ -38,9 +38,9 @@ export class DoorProvider {
 
         await this.doorRepository.set(door.id, door);
         if (lock === true) {
-            this.notifier.notify(source, 'la porte est ~r~verrouillée~s~.');
+            this.notifier.notify(source, 'La porte est ~r~verrouillée~s~.');
         } else if (lock === false) {
-            this.notifier.notify(source, 'la porte est ~g~dévetrouillée~s~.');
+            this.notifier.notify(source, 'La porte est ~g~déverrouillée~s~.');
         } else {
             this.notifier.notify(source, 'Porte créée/modifiée');
         }
