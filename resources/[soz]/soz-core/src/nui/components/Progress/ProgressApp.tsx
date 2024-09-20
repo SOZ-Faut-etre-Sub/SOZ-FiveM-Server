@@ -5,8 +5,9 @@ import { FunctionComponent, useEffect, useState } from 'react';
 import { NuiEvent } from '../../../shared/event/nui';
 import { Progress } from '../../../shared/nui/progress';
 import { fetchNui } from '../../fetch';
-import { useMinimap, useVehicle } from '../../hook/data';
+import { useHudTheme, useMinimap, useVehicle } from '../../hook/data';
 import { useNuiEvent } from '../../hook/nui';
+import { useDaltonism } from '../Hud/hooks/useDaltonism';
 import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
 
 const PROGRESS_BAR_SEGMENTS = 10;
@@ -131,13 +132,19 @@ export const ProgressSegment: FunctionComponent<ProgressSegmentProps> = ({
     progress,
     currentProgress,
 }) => {
+    const currentTheme = useHudTheme();
+    const { glassmorphism_colors } = useDaltonism();
+
     const sectionMax = progress?.duration / maxSegment;
     const progressForSection = currentProgress * progress?.duration - sectionMax * currentSegment;
     const barPercentage = Math.min(100, (Math.max(0, progressForSection) / sectionMax) * 100);
 
     return (
         <GlassMorphismContainer className="w-10" borderClassName="rounded-md" disableBorder>
-            <div className="bg-white h-2.5 rounded-md" style={{ width: `${barPercentage}%` }}></div>
+            <div
+                className="bg-white h-2.5 rounded-md"
+                style={{ width: `${barPercentage}%`, background: glassmorphism_colors[currentTheme].border }}
+            ></div>
         </GlassMorphismContainer>
     );
 };

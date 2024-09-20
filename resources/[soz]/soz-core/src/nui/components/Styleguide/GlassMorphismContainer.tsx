@@ -1,8 +1,7 @@
 import cn from 'classnames';
 import { FunctionComponent, HTMLAttributes, PropsWithChildren, useEffect, useMemo, useRef } from 'react';
 
-import { HudTheme } from '../../../shared/hud';
-import { useDateTime, useHud } from '../../hook/data';
+import { useHudTheme } from '../../hook/data';
 import { useDaltonism } from '../Hud/hooks/useDaltonism';
 
 interface GlassMorphismContainerProps extends HTMLAttributes<any>, PropsWithChildren {
@@ -20,8 +19,7 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
     showBorderOnHover,
     children,
 }) => {
-    const { settings } = useHud();
-    const { isNight } = useDateTime();
+    const currentTheme = useHudTheme();
     const { glassmorphism_colors } = useDaltonism();
 
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -29,13 +27,6 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
     const childrenRef = useRef<HTMLDivElement>(null);
 
     const { height } = childrenRef.current?.getBoundingClientRect() || { height: undefined };
-
-    const currentTheme = useMemo(() => {
-        if (settings.theme === HudTheme.Auto) {
-            return isNight ? HudTheme.Light : HudTheme.Dark;
-        }
-        return settings.theme;
-    }, [settings.theme]);
 
     const currentBorderColor = useMemo(() => {
         if (borderColor) {
@@ -128,20 +119,12 @@ export const GlassMorphismBox: FunctionComponent<PropsWithChildren<GlassMorphism
     style,
     children,
 }) => {
-    const { settings } = useHud();
-    const { isNight } = useDateTime();
+    const currentTheme = useHudTheme();
     const { glassmorphism_colors } = useDaltonism();
 
     const childrenRef = useRef<HTMLDivElement>(null);
 
     const { height } = childrenRef.current?.getBoundingClientRect() || { height: undefined };
-
-    const currentTheme = useMemo(() => {
-        if (settings.theme === HudTheme.Auto) {
-            return isNight ? HudTheme.Light : HudTheme.Dark;
-        }
-        return settings.theme;
-    }, [settings.theme]);
 
     const currentBorderColor = glassmorphism_colors[currentTheme].border;
 
