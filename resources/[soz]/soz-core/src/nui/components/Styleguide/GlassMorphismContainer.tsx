@@ -1,8 +1,9 @@
 import cn from 'classnames';
-import { FunctionComponent, HTMLAttributes, PropsWithChildren, useEffect, useRef } from 'react';
+import { FunctionComponent, HTMLAttributes, PropsWithChildren, useEffect, useMemo, useRef } from 'react';
 
 import { HudTheme } from '../../../shared/hud';
 import { useDateTime, useHud } from '../../hook/data';
+import { useDaltonism } from '../Hud/hooks/useDaltonism';
 
 interface GlassMorphismContainerProps extends HTMLAttributes<any>, PropsWithChildren {
     borderColor?: string;
@@ -13,20 +14,36 @@ interface GlassMorphismContainerProps extends HTMLAttributes<any>, PropsWithChil
 
 export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerProps> = ({
     className,
-    borderColor = '#ffffff',
+    borderColor,
     borderClassName,
     disableBorder,
     showBorderOnHover,
     children,
 }) => {
     const { settings } = useHud();
-    const { isDay, isNight } = useDateTime();
+    const { isNight } = useDateTime();
+    const { glassmorphism_colors } = useDaltonism();
 
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const childrenRef = useRef<HTMLDivElement>(null);
 
     const { height } = childrenRef.current?.getBoundingClientRect() || { height: undefined };
+
+    const currentTheme = useMemo(() => {
+        if (settings.theme === HudTheme.Auto) {
+            return isNight ? HudTheme.Light : HudTheme.Dark;
+        }
+        return settings.theme;
+    }, [settings.theme]);
+
+    const currentBorderColor = useMemo(() => {
+        if (borderColor) {
+            return borderColor;
+        }
+
+        return glassmorphism_colors[currentTheme].border;
+    }, [glassmorphism_colors, currentTheme, borderColor]);
 
     useEffect(() => {
         let animation = null;
@@ -69,7 +86,7 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
 
             <div
                 className={cn(
-                    'absolute h-full w-full transition-opacity duration-300 border-transparent z-10',
+                    'absolute h-full w-full transition-all duration-1000 border-transparent z-10',
                     borderClassName,
                     {
                         'border-2': !disableBorder || showBorderOnHover,
@@ -78,8 +95,8 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
                 )}
                 style={{
                     height,
-                    background: `linear-gradient(-40deg, ${borderColor}FC 0%, ${borderColor}1A 25%, ${borderColor}1A 75%, ${borderColor}FC 100%) border-box`,
-                    WebkitMask: `linear-gradient(${borderColor} 0 0) padding-box, linear-gradient(${borderColor} 0 0) border-box`,
+                    background: `linear-gradient(-40deg, ${currentBorderColor}FC 0%, ${currentBorderColor}1A 25%, ${currentBorderColor}1A 75%, ${currentBorderColor}FC 100%) border-box`,
+                    WebkitMask: `linear-gradient(${currentBorderColor} 0 0) padding-box, linear-gradient(${currentBorderColor} 0 0) border-box`,
                     WebkitMaskComposite: 'xor',
                     maskComposite: 'exclude',
                 }}
@@ -90,14 +107,10 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
             </div>
 
             <div
-                className={cn('absolute inset-0 transition-all duration-1000', {
-                    'bg-[#F3FBFA] opacity-20':
-                        settings.theme === HudTheme.Light || (settings.theme === HudTheme.Auto && isNight),
-                    'bg-[#22232A] opacity-45':
-                        settings.theme === HudTheme.Dark || (settings.theme === HudTheme.Auto && isDay),
-                    'bg-[#33a844] opacity-25': settings.theme === HudTheme.Green,
-                    'bg-[#f4bad4] opacity-45': settings.theme === HudTheme.Uwu,
-                })}
+                className="absolute inset-0 transition-all duration-1000"
+                style={{
+                    background: glassmorphism_colors[currentTheme].background,
+                }}
             />
 
             <canvas ref={canvasRef} className="absolute inset-0 -z-10" />
@@ -115,9 +128,22 @@ export const GlassMorphismBox: FunctionComponent<PropsWithChildren<GlassMorphism
     style,
     children,
 }) => {
+    const { settings } = useHud();
+    const { isNight } = useDateTime();
+    const { glassmorphism_colors } = useDaltonism();
+
     const childrenRef = useRef<HTMLDivElement>(null);
 
     const { height } = childrenRef.current?.getBoundingClientRect() || { height: undefined };
+
+    const currentTheme = useMemo(() => {
+        if (settings.theme === HudTheme.Auto) {
+            return isNight ? HudTheme.Light : HudTheme.Dark;
+        }
+        return settings.theme;
+    }, [settings.theme]);
+
+    const currentBorderColor = glassmorphism_colors[currentTheme].border;
 
     return (
         <div className="relative w-full h-full">
@@ -125,13 +151,12 @@ export const GlassMorphismBox: FunctionComponent<PropsWithChildren<GlassMorphism
                 {children}
             </div>
             <div
-                className={cn('absolute border-2 border-transparent', className)}
+                className={cn('absolute transition-all duration-1000 border-2 border-transparent', className)}
                 style={{
                     height,
                     ...style,
-                    background:
-                        'linear-gradient(120deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.1) 25%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,1) 100%) border-box',
-                    WebkitMask: 'linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)',
+                    background: `linear-gradient(-40deg, ${currentBorderColor}FC 0%, ${currentBorderColor}1A 25%, ${currentBorderColor}1A 75%, ${currentBorderColor}FC 100%) border-box`,
+                    WebkitMask: `linear-gradient(${currentBorderColor} 0 0) padding-box, linear-gradient(${currentBorderColor} 0 0) border-box`,
                     WebkitMaskComposite: 'xor',
                     maskComposite: 'exclude',
                 }}
