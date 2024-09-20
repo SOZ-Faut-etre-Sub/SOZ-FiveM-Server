@@ -5,7 +5,7 @@ import { FunctionComponent, useEffect, useState } from 'react';
 import { NuiEvent } from '../../../shared/event/nui';
 import { Progress } from '../../../shared/nui/progress';
 import { fetchNui } from '../../fetch';
-import { useHudTheme, useMinimap, useVehicle } from '../../hook/data';
+import { useHudHasStreetNames, useHudTheme, useMinimap, useVehicle } from '../../hook/data';
 import { useNuiEvent } from '../../hook/nui';
 import { useDaltonism } from '../Hud/hooks/useDaltonism';
 import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
@@ -15,6 +15,7 @@ const PROGRESS_BAR_SEGMENTS = 10;
 export const ProgressApp: FunctionComponent = () => {
     const minimap = useMinimap();
     const vehicle = useVehicle();
+    const hasStreetNamesEnabled = useHudHasStreetNames();
 
     const [progress, setProgress] = useState<Progress | null>();
     const [currentProgress, setCurrentProgress] = useState(0);
@@ -37,8 +38,8 @@ export const ProgressApp: FunctionComponent = () => {
     });
 
     useNuiEvent('progress', 'Stop', () => {
-        setProgress(null);
         setCurrentProgress(0);
+        setProgress(null);
     });
 
     useEffect(() => {
@@ -76,8 +77,10 @@ export const ProgressApp: FunctionComponent = () => {
             className={cn(
                 `absolute w-full inset-x-0 flex flex-col justify-center items-center gap-3 text-white text-xl`,
                 {
-                    'bottom-10': vehicle.seat === null,
-                    '-bottom-10': vehicle.seat !== null,
+                    'bottom-10': hasStreetNamesEnabled && vehicle.seat === null,
+                    '-bottom-10': hasStreetNamesEnabled && vehicle.seat !== null,
+                    '-mt-16': !hasStreetNamesEnabled && vehicle.seat === null,
+                    '-mt-0': !hasStreetNamesEnabled && vehicle.seat !== null,
                 }
             )}
         >

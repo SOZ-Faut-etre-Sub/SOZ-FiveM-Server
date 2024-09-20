@@ -15,16 +15,14 @@ export const Location: FunctionComponent = () => {
 
     const styles = useSpring({
         from: {
+            opacity: 0,
             width: '0vw',
         },
         to: {
+            opacity: hasWatch && settings.showStreetName ? 1 : 0,
             width: `${minimap.width * 100}vw`,
         },
     });
-
-    if (!hasWatch || !settings.showStreetName) {
-        return null;
-    }
 
     return (
         <animated.div className="h-12" style={styles}>

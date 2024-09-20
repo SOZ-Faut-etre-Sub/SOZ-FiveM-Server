@@ -32,10 +32,6 @@ export const useVehicle = (): VehicleHud => {
     return useSelector((state: RootState) => state.vehicle);
 };
 
-export const useHud = (): HudState => {
-    return useSelector((state: RootState) => state.hud);
-};
-
 export const useMinimap = (): HudState['minimap'] => {
     return useSelector((state: RootState) => state.hud.minimap);
 };
@@ -64,4 +60,11 @@ export const useHudTheme = (): HudTheme => {
         return isNight ? HudTheme.Light : HudTheme.Dark;
     }
     return theme;
+};
+
+export const useHudHasStreetNames = (): boolean => {
+    const hasWatch = useSelector((state: RootState) => state.hud.hasWatch);
+    const showStreetName = useSelector((state: RootState) => state.hud.settings.showStreetName);
+
+    return hasWatch && showStreetName;
 };

@@ -203,11 +203,7 @@ export class HudWatchProvider {
         this._hideStreetName = !value;
         SetResourceKvpInt('soz_hud_street_name_hide', this._hideStreetName ? 1 : 0);
         this.nuiDispatch.dispatch('hud', 'SetShowStreetName', value);
-    }
-
-    public get showCompass() {
-        if (this._watchForceEnabled) return true;
-        return !this._hideCompass;
+        TriggerEvent(ClientEvent.UPDATE_MINIMAP_POSITION);
     }
 
     public set compass(value: boolean) {
@@ -226,5 +222,15 @@ export class HudWatchProvider {
         this._hideStamina = !value;
         SetResourceKvpInt('soz_hud_stamina_hide', this._hideStamina ? 1 : 0);
         this.nuiDispatch.dispatch('hud', 'SetShowStamina', value);
+    }
+
+    public get showCompass() {
+        if (this._watchForceEnabled) return true;
+        return !this._hideCompass;
+    }
+
+    public get showStreetName() {
+        if (this._watchForceEnabled) return true;
+        return !this._hideStreetName;
     }
 }
