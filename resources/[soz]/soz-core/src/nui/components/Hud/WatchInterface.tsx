@@ -108,7 +108,7 @@ export const WatchInterface: FunctionComponent = () => {
 
             <animated.div
                 className={cn('absolute size-12 drop-shadow-bg ml-3', {
-                    '-mt-14': !hasStreetNamesEnabled,
+                    'mb-14': !hasStreetNamesEnabled,
                 })}
                 style={voiceStyles}
             >

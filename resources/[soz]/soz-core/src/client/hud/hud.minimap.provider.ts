@@ -96,6 +96,7 @@ export class HudMinimapProvider {
     @Once(OnceStep.NuiLoaded)
     public async start(): Promise<void> {
         ForceCloseTextInputBox();
+        SetRadarBigmapEnabled(false, false);
         DisplayRadar(false);
 
         AddTextEntry('PM_PANE_CFX', 'SO~g~Z~w~~italic~ ~s~(FiveM)');
@@ -156,16 +157,24 @@ export class HudMinimapProvider {
     public async updateMinimapPosition(): Promise<void> {
         const offset = this.getMinimapOffset();
 
+        this.minimapHandle = await this.resourceLoader.loadScaleformMovie('minimap');
+
         SetMinimapComponentPosition('minimap', 'L', 'B', -0.0045, 0.002 + offset, 0.15, 0.188888);
         SetMinimapComponentPosition('minimap_mask', 'L', 'B', 0.02, 0.032 + offset, 0.111, 0.159);
         SetMinimapComponentPosition('minimap_blur', 'L', 'B', -0.03, 0.022 + offset, 0.266, 0.237);
 
-        SetRadarBigmapEnabled(true, false);
-        await wait(200);
-        SetRadarBigmapEnabled(false, false);
+        await this.reloadMinimapSize();
 
         this.nuiDispatch.dispatch('hud', 'UpdateMinimap', this.getMinimap());
-        this.minimapHandle = await this.resourceLoader.loadScaleformMovie('minimap');
+    }
+
+    protected async reloadMinimapSize() {
+        SetRadarBigmapEnabled(true, false);
+        while (IsBigmapActive()) {
+            await wait(10);
+            SetRadarBigmapEnabled(false, false);
+        }
+        return true;
     }
 
     private getMinimap(skipRadarCompute = false): Minimap {
