@@ -165,9 +165,19 @@ function CreateZone(identifier, zoneType, data)
         heading = data.heading,
         minZ = data.minZ,
         maxZ = data.maxZ,
-        onPlayerInOut = data.onPlayerInOut,
         debugPoly = false,
     }, data.options)
+
+    if data.onPlayerInOut then
+        BoxZone:Create(data.coords, data.sx, data.sy,
+                       {
+            name = zoneName .. "_inout",
+            heading = data.heading,
+            minZ = data.minZ,
+            maxZ = data.maxZ,
+            debugPoly = false,
+        }):onPlayerInOut(data.onPlayerInOut)
+    end
 end
 
 RegisterNetEvent("soz-upw:client:CreateZone", function(identifier, zoneType, zone, data)
