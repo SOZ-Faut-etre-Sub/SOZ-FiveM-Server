@@ -109,17 +109,11 @@ export class HudMinimapProvider {
 
         DisplayRadar(false);
 
-        const offset = this.getMinimapOffset();
-        SetMinimapComponentPosition('minimap', 'L', 'B', -0.0045, 0.002 + offset, 0.15, 0.188888);
-        SetMinimapComponentPosition('minimap_mask', 'L', 'B', 0.02, 0.032 + offset, 0.111, 0.159);
-        SetMinimapComponentPosition('minimap_blur', 'L', 'B', -0.03, 0.022 + offset, 0.266, 0.237);
+        await this.updateMinimapPosition();
 
         AddReplaceTexture('platform:/textures/graphics', 'radarmasksm', 'soz_minimap', 'radarmasksm');
         AddReplaceTexture('minimap', 'blips_texturesheet_ng', 'soz_minimap', 'blips_texturesheet_ng');
         AddReplaceTexture('minimap', 'blips_texturesheet_ng_2', 'soz_minimap', 'blips_texturesheet_ng_2');
-
-        await this.updateMinimapPosition();
-        this.nuiDispatch.dispatch('hud', 'UpdateMinimap', this.getMinimap());
 
         const northBlip = GetNorthRadarBlip();
         SetBlipAlpha(northBlip, 0);
@@ -140,9 +134,9 @@ export class HudMinimapProvider {
         return this._showHud && ((this._inVehicle && this._haveGps && !this._dead) || this._hasAdminGps);
     }
 
-    private updateShowRadar(): void {
+    private async updateShowRadar(): Promise<void> {
         DisplayRadar(this.shouldDisplayRadar);
-        this.nuiDispatch.dispatch('hud', 'UpdateMinimap', this.getMinimap());
+        await this.updateMinimapPosition();
     }
 
     @Tick(TickInterval.EVERY_SECOND)
@@ -158,20 +152,28 @@ export class HudMinimapProvider {
         const haveWatch = this.hudWatchProvider.haveWatch;
         const showStreetName = this.hudWatchProvider.showStreetName;
 
-        // return haveWatch && showStreetName ? -0.05 : 0.0;
-        return -0.05;
+        return haveWatch && showStreetName ? -0.05 : 0.0;
     }
 
     @OnEvent(ClientEvent.UPDATE_MINIMAP_POSITION)
     public async updateMinimapPosition(): Promise<void> {
+        const offset = this.getMinimapOffset();
+
+        SetMinimapComponentPosition('minimap', 'L', 'B', -0.0045, 0.002 + offset, 0.15, 0.188888);
+        SetMinimapComponentPosition('minimap_mask', 'L', 'B', 0.02, 0.032 + offset, 0.111, 0.159);
+        SetMinimapComponentPosition('minimap_blur', 'L', 'B', -0.03, 0.022 + offset, 0.266, 0.237);
+
+        await this.reloadMinimapSize();
+
         this.nuiDispatch.dispatch('hud', 'UpdateMinimap', this.getMinimap());
     }
 
     protected async reloadMinimapSize() {
         SetRadarBigmapEnabled(true, false);
+        await wait(0);
         while (IsBigmapActive()) {
-            await wait(10);
             SetRadarBigmapEnabled(false, false);
+            await wait(0);
         }
         return true;
     }
