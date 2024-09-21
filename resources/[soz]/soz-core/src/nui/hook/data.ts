@@ -1,5 +1,5 @@
 import { DrugNuiZone } from '@private/shared/drugs';
-import { HudState } from '@public/shared/hud';
+import { HudState, HudTheme } from '@public/shared/hud';
 import { Item } from '@public/shared/item';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { VehicleHud } from '@public/shared/vehicle/vehicle';
@@ -32,10 +32,6 @@ export const useVehicle = (): VehicleHud => {
     return useSelector((state: RootState) => state.vehicle);
 };
 
-export const useHud = (): HudState => {
-    return useSelector((state: RootState) => state.hud);
-};
-
 export const useMinimap = (): HudState['minimap'] => {
     return useSelector((state: RootState) => state.hud.minimap);
 };
@@ -54,4 +50,21 @@ export const useDateTime = (): { isDay: boolean; isNight: boolean } => {
         isDay: dateTime.hour > 6 && dateTime.hour < 20,
         isNight: dateTime.hour < 6 || dateTime.hour > 20,
     };
+};
+
+export const useHudTheme = (): HudTheme => {
+    const theme = useSelector((state: RootState) => state.hud.settings.theme);
+    const { isNight } = useDateTime();
+
+    if (theme === HudTheme.Auto) {
+        return isNight ? HudTheme.Light : HudTheme.Dark;
+    }
+    return theme;
+};
+
+export const useHudHasStreetNames = (): boolean => {
+    const hasWatch = useSelector((state: RootState) => state.hud.hasWatch);
+    const showStreetName = useSelector((state: RootState) => state.hud.settings.showStreetName);
+
+    return hasWatch && showStreetName;
 };

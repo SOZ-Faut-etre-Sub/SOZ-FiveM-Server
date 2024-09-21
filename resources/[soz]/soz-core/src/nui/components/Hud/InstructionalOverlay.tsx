@@ -1,13 +1,16 @@
 import { animated, useSpring } from '@react-spring/web';
+import cn from 'classnames';
 import { useState } from 'react';
 
 import { bindKeyToName, BindName } from '../../../shared/utils/bind';
-import { useMinimap } from '../../hook/data';
+import { useHudHasStreetNames, useMinimap } from '../../hook/data';
 import { useNuiEvent } from '../../hook/nui';
 import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
 
 export function InstructionalOverlay() {
     const minimap = useMinimap();
+    const hasStreetNamesEnabled = useHudHasStreetNames();
+
     const [text, setText] = useState<string[]>([]);
 
     const styles = useSpring({
@@ -23,7 +26,12 @@ export function InstructionalOverlay() {
     useNuiEvent('hud', 'SetInstructional', setText);
 
     return (
-        <animated.div className="absolute inset-x-0 -mt-12 flex justify-center" style={styles}>
+        <animated.div
+            className={cn('absolute inset-x-0 flex justify-center', {
+                '-mt-12': hasStreetNamesEnabled,
+            })}
+            style={styles}
+        >
             <div className="h-10 w-fit">
                 <GlassMorphismContainer
                     borderClassName="rounded-full"

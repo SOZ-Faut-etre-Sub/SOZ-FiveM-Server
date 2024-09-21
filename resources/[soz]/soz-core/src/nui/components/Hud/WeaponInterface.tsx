@@ -1,10 +1,12 @@
 import { animated, useSpring } from '@react-spring/web';
+import cn from 'classnames';
 import { FunctionComponent } from 'react';
 
-import { useAmmo, useMinimap } from '../../hook/data';
+import { useAmmo, useHudHasStreetNames, useMinimap } from '../../hook/data';
 
 export const WeaponInterface: FunctionComponent = () => {
     const minimap = useMinimap();
+    const hasStreetNamesEnabled = useHudHasStreetNames();
     const ammo = useAmmo();
 
     const [ammoStyles] = useSpring(
@@ -22,7 +24,9 @@ export const WeaponInterface: FunctionComponent = () => {
 
     return (
         <animated.div
-            className="absolute flex gap-1 items-center justify-center text-white w-fit drop-shadow-bg -z-10"
+            className={cn('absolute flex gap-1 items-center justify-center text-white w-fit drop-shadow-bg -z-10', {
+                '-mt-14': !hasStreetNamesEnabled,
+            })}
             style={ammoStyles}
         >
             <div className="flex flex-col justify-center items-center tabular-nums h-11">

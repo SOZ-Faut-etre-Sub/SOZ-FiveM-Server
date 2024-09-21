@@ -1,8 +1,9 @@
 import { animated, useSpring } from '@react-spring/web';
+import cn from 'classnames';
 import { FunctionComponent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { useMinimap, usePlayer } from '../../hook/data';
+import { useHudHasStreetNames, useMinimap, usePlayer } from '../../hook/data';
 import { RootState } from '../../store';
 import { FuelGauge } from './components/FuelGauge';
 import { LightIndicator } from './components/LightIndicator';
@@ -13,6 +14,7 @@ import { SpeedGauge } from './components/SpeedGauge';
 
 export const VehicleInterface: FunctionComponent = () => {
     const minimap = useMinimap();
+    const hasStreetNamesEnabled = useHudHasStreetNames();
 
     const seat = useSelector((state: RootState) => state.vehicle.seat);
 
@@ -48,7 +50,11 @@ export const VehicleInterface: FunctionComponent = () => {
 
     return (
         <animated.div className="absolute inset-x-0 w-full -z-10" style={styles}>
-            <div className="relative flex justify-center gap-1 top-12">
+            <div
+                className={cn('relative flex justify-center gap-1', {
+                    'top-12': hasStreetNamesEnabled,
+                })}
+            >
                 {isPilot ? (
                     <>
                         <div className="flex justify-end items-end gap-1 w-32">

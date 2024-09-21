@@ -42,7 +42,6 @@ import { CraftApp } from './Craft/CraftApp';
 import { FieldHealthApp } from './Field/FieldHealthApp';
 import { FieldZoneHealthApp } from './Field/FieldZoneHealthApp';
 import { HudApp } from './Hud/HudApp';
-import { TargetOverlay } from './Hud/TargetOverlay';
 import { InputApp } from './Input/InputApp';
 import { MedicalApp } from './LSMC/DiagnosticPad/MedicalApp';
 import { MenuApp } from './Menu/MenuApp';
@@ -57,6 +56,7 @@ import { RadioVehicleApp } from './Radio/RadioVehicleApp';
 import { SceneSearchPropApp } from './Scene/SceneSearchPropApp';
 import { StateApp } from './StateApp';
 import { GlassMorphism } from './Styleguide/GlassMorphism';
+import { TargetOverlay } from './Target/TargetOverlay';
 import { TaxiHorodateurApp } from './Taxi/TaxiHorodateurApp';
 import { Meteor } from './World/Meteor';
 

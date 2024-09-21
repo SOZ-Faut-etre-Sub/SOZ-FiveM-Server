@@ -5,8 +5,9 @@ import { FunctionComponent, useEffect, useState } from 'react';
 import { NuiEvent } from '../../../shared/event/nui';
 import { Progress } from '../../../shared/nui/progress';
 import { fetchNui } from '../../fetch';
-import { useMinimap, useVehicle } from '../../hook/data';
+import { useHudHasStreetNames, useHudTheme, useMinimap, useVehicle } from '../../hook/data';
 import { useNuiEvent } from '../../hook/nui';
+import { useDaltonism } from '../Hud/hooks/useDaltonism';
 import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
 
 const PROGRESS_BAR_SEGMENTS = 10;
@@ -14,6 +15,7 @@ const PROGRESS_BAR_SEGMENTS = 10;
 export const ProgressApp: FunctionComponent = () => {
     const minimap = useMinimap();
     const vehicle = useVehicle();
+    const hasStreetNamesEnabled = useHudHasStreetNames();
 
     const [progress, setProgress] = useState<Progress | null>();
     const [currentProgress, setCurrentProgress] = useState(0);
@@ -36,8 +38,8 @@ export const ProgressApp: FunctionComponent = () => {
     });
 
     useNuiEvent('progress', 'Stop', () => {
-        setProgress(null);
         setCurrentProgress(0);
+        setProgress(null);
     });
 
     useEffect(() => {
@@ -75,8 +77,10 @@ export const ProgressApp: FunctionComponent = () => {
             className={cn(
                 `absolute w-full inset-x-0 flex flex-col justify-center items-center gap-3 text-white text-xl`,
                 {
-                    'bottom-10': vehicle.seat === null,
-                    '-bottom-10': vehicle.seat !== null,
+                    'bottom-10': hasStreetNamesEnabled && vehicle.seat === null,
+                    '-bottom-10': hasStreetNamesEnabled && vehicle.seat !== null,
+                    '-mt-16': !hasStreetNamesEnabled && vehicle.seat === null,
+                    '-mt-0': !hasStreetNamesEnabled && vehicle.seat !== null,
                 }
             )}
         >
@@ -131,13 +135,19 @@ export const ProgressSegment: FunctionComponent<ProgressSegmentProps> = ({
     progress,
     currentProgress,
 }) => {
+    const currentTheme = useHudTheme();
+    const { glassmorphism_colors } = useDaltonism();
+
     const sectionMax = progress?.duration / maxSegment;
     const progressForSection = currentProgress * progress?.duration - sectionMax * currentSegment;
     const barPercentage = Math.min(100, (Math.max(0, progressForSection) / sectionMax) * 100);
 
     return (
         <GlassMorphismContainer className="w-10" borderClassName="rounded-md" disableBorder>
-            <div className="bg-white h-2.5 rounded-md" style={{ width: `${barPercentage}%` }}></div>
+            <div
+                className="bg-white h-2.5 rounded-md"
+                style={{ width: `${barPercentage}%`, background: glassmorphism_colors[currentTheme].border }}
+            ></div>
         </GlassMorphismContainer>
     );
 };

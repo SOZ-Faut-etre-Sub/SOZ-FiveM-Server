@@ -4,6 +4,7 @@ import { FunctionComponent, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { VoiceMode } from '../../../shared/hud';
+import { useHudHasStreetNames } from '../../hook/data';
 import { useNuiEvent } from '../../hook/nui';
 import { RootState } from '../../store';
 import { GlassMorphismBox } from '../Styleguide/GlassMorphismContainer';
@@ -18,6 +19,8 @@ import { useDaltonism } from './hooks/useDaltonism';
 export const WatchInterface: FunctionComponent = () => {
     const hasWatch = useSelector((state: RootState) => state.hud.hasWatch);
     const minimap = useSelector((state: RootState) => state.hud.minimap);
+
+    const hasStreetNamesEnabled = useHudHasStreetNames();
 
     const [voiceMode, setVoiceMode] = useState(VoiceMode.Normal);
     const [voiceActive, setVoiceActive] = useState(true);
@@ -103,11 +106,21 @@ export const WatchInterface: FunctionComponent = () => {
                 />
             )}
 
-            <animated.div className="absolute size-12 drop-shadow-bg ml-3" style={voiceStyles}>
+            <animated.div
+                className={cn('absolute size-12 drop-shadow-bg ml-3', {
+                    '-mt-14': !hasStreetNamesEnabled,
+                })}
+                style={voiceStyles}
+            >
                 <VoiceIcon icon={voiceIcon} disableAutoHide={disableAutoHide} />
             </animated.div>
 
-            <animated.div className="absolute flex gap-3 text-white h-fit" style={footerStyles}>
+            <animated.div
+                className={cn('absolute flex gap-3 text-white h-fit', {
+                    '-mt-14': !hasStreetNamesEnabled,
+                })}
+                style={footerStyles}
+            >
                 <Location />
                 <Compass />
                 <PlayerStats />

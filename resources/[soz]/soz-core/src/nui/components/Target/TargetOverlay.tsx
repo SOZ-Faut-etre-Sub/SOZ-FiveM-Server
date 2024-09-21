@@ -64,8 +64,8 @@ export const TargetOverlay: FunctionComponent = () => {
     const offset = circumference - ((-30 * 100) / 100 / 100) * circumference;
 
     return (
-        <animated.div ref={container} className="absolute inset-0" style={styles}>
-            <div className="absolute top-[calc(50%-1.25rem)] left-[calc(50%-1.25rem)] size-14">
+        <div ref={container} className="absolute inset-0">
+            <animated.div className="absolute top-[calc(50%-1.25rem)] left-[calc(50%-1.25rem)] size-14" style={styles}>
                 {targetFound ? (
                     <svg
                         ref={origin}
@@ -94,7 +94,7 @@ export const TargetOverlay: FunctionComponent = () => {
                         alt="target"
                     />
                 )}
-            </div>
+            </animated.div>
 
             {targetFound && citizenActions.length > 0 && (
                 <div className="absolute flex flex-col justify-center inset-y-[5vh] left-[53vw] min-w-[20rem] p-5">
@@ -170,6 +170,6 @@ export const TargetOverlay: FunctionComponent = () => {
                     )}
                 </>
             )}
-        </animated.div>
+        </div>
     );
 };

@@ -314,6 +314,8 @@ const PoliceNotification: FunctionComponent<PoliceNotificationProps> = ({ notifi
 export const Notifications: FunctionComponent = () => {
     const hasWatch = useSelector((state: RootState) => state.hud.hasWatch);
     const minimap = useSelector((state: RootState) => state.hud.minimap);
+    const showDateTime = useSelector((state: RootState) => state.hud.settings.showDateTime);
+    const showWeather = useSelector((state: RootState) => state.hud.settings.showWeather);
 
     const [notifications, setNotifications] = useState<
         (BasicNotification | AdvancedNotification | TPoliceNotification)[]
@@ -333,7 +335,7 @@ export const Notifications: FunctionComponent = () => {
         [setNotifications]
     );
 
-    const notificationOffset = hasWatch ? '5rem' : '.5rem';
+    const notificationOffset = hasWatch && (showDateTime || showWeather) ? '5rem' : '.5rem';
 
     useNuiEvent(
         'hud',

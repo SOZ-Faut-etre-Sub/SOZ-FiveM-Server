@@ -400,4 +400,5 @@ export enum ClientEvent {
     DRONE_REMOVE_REMOTE = 'soz-core:client:drone-remove-remote',
 
     WEATHER_UPDATE_FORECASTS = 'soz-core:client:weather:update-forecasts',
+    UPDATE_MINIMAP_POSITION = 'soz-core:client:update-minimap-position',
 }
