@@ -73,7 +73,6 @@ export class HudMinimapProvider {
         this._inVehicle = vehicle && (VehicleSeat.Driver === seat || VehicleSeat.Copilot === seat);
 
         this.nuiDispatch.dispatch('hud', 'UpdateMinimap', this.getMinimap(true));
-        await wait(200);
         this.updateShowRadar();
     }
 
@@ -137,10 +136,12 @@ export class HudMinimapProvider {
         EndScaleformMovieMethod();
     }
 
-    private updateShowRadar(): void {
-        const showRadar = this._showHud && ((this._inVehicle && this._haveGps && !this._dead) || this._hasAdminGps);
+    private get shouldDisplayRadar(): boolean {
+        return this._showHud && ((this._inVehicle && this._haveGps && !this._dead) || this._hasAdminGps);
+    }
 
-        DisplayRadar(showRadar);
+    private updateShowRadar(): void {
+        DisplayRadar(this.shouldDisplayRadar);
         this.nuiDispatch.dispatch('hud', 'UpdateMinimap', this.getMinimap());
     }
 
@@ -180,7 +181,7 @@ export class HudMinimapProvider {
         const aspectRatio = GetAspectRatio(false);
         const scaleX = 1.0 / x;
         const scaleY = 1.0 / y;
-        const isRadarHidden = IsRadarHidden();
+        const isRadarHidden = IsRadarHidden() || !this.shouldDisplayRadar;
 
         let rawX;
         let rawY;
