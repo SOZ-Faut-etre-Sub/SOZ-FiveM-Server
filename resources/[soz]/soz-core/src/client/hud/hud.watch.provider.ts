@@ -34,7 +34,6 @@ export class HudWatchProvider {
 
     private _theme = (GetResourceKvpString('soz_hud_theme') as HudTheme) ?? HudTheme.Auto;
     private _zoom = 1; //GetResourceKvpFloat('soz_hud_zoom') ?? 1;
-    private _daltonism = GetResourceKvpInt('soz_hud_daltonism') === 1;
     private _hideDateTime = GetResourceKvpInt('soz_hud_datetime_hide') === 1;
     private _hideWeather = GetResourceKvpInt('soz_hud_weather_hide') === 1;
     private _hideStreetName = GetResourceKvpInt('soz_hud_street_name_hide') === 1;
@@ -94,7 +93,6 @@ export class HudWatchProvider {
         this.nuiDispatch.dispatch('hud', 'UpdateSettings', {
             theme: this._theme,
             zoom: this._zoom,
-            daltonism: this._daltonism,
             showDateTime: true,
             showWeather: true,
             showStreetName: true,
@@ -118,11 +116,6 @@ export class HudWatchProvider {
     @OnNuiEvent(NuiEvent.WatchMenuSetZoom)
     public async setZoom(value: number) {
         this.zoom = value;
-    }
-
-    @OnNuiEvent(NuiEvent.WatchMenuSetDaltonism)
-    public async setDaltonism(value: boolean) {
-        this.daltonism = value;
     }
 
     @OnNuiEvent(NuiEvent.WatchMenuSetShowDateTime)
@@ -159,7 +152,6 @@ export class HudWatchProvider {
         return {
             theme: this._theme,
             zoom: this._zoom,
-            daltonism: this._daltonism,
             showDateTime: !this._hideDateTime,
             showWeather: !this._hideWeather,
             showStreetName: !this._hideStreetName,
@@ -173,12 +165,6 @@ export class HudWatchProvider {
         this._theme = value;
         SetResourceKvp('soz_hud_theme', value);
         this.nuiDispatch.dispatch('hud', 'SetTheme', this._theme);
-    }
-
-    public set daltonism(value: boolean) {
-        this._daltonism = value;
-        SetResourceKvpInt('soz_hud_daltonism', this._daltonism ? 1 : 0);
-        this.nuiDispatch.dispatch('hud', 'SetDaltonism', this._daltonism);
     }
 
     public set zoom(value: number) {

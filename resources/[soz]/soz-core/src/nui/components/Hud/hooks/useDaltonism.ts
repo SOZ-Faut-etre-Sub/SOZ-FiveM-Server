@@ -1,29 +1,32 @@
-import { useSelector } from 'react-redux';
-
 import { HudTheme } from '../../../../shared/hud';
-import { RootState } from '../../../store';
+import { useHudTheme } from '../../../hook/data';
 
 export const useDaltonism = () => {
-    const daltonism = useSelector((state: RootState) => state.hud.settings.daltonism);
+    const currentTheme = useHudTheme();
+
+    const daltonism = currentTheme === HudTheme.Daltonism;
 
     return {
-        isDaltonism: daltonism,
         glassmorphism_colors: {
             [HudTheme.Light]: {
-                background: daltonism ? '#00000073' : '#F3FBFA4D',
-                border: daltonism ? '#FFFFFF' : '#FFFFFF',
+                background: '#F3FBFA4D',
+                border: '#FFFFFF',
             },
             [HudTheme.Dark]: {
-                background: daltonism ? '#00000073' : '#22232A73',
-                border: daltonism ? '#FFFFFF' : '#FFFFFF',
+                background: '#22232A73',
+                border: '#FFFFFF',
             },
             [HudTheme.Green]: {
-                background: daltonism ? '#00000073' : '#3F7B344D',
-                border: daltonism ? '#FFFFFF' : '#00E949',
+                background: '#3F7B344D',
+                border: '#00E949',
             },
             [HudTheme.Uwu]: {
-                background: daltonism ? '#00000073' : '#E3A7EC4D',
-                border: daltonism ? '#FFFFFF' : '#E3A7EC',
+                background: '#E3A7EC4D',
+                border: '#E3A7EC',
+            },
+            [HudTheme.Daltonism]: {
+                background: '#00000073',
+                border: '#FFFFFF',
             },
         },
         gauge_colors: {

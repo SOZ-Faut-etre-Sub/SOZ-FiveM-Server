@@ -41,10 +41,11 @@ export const MenuWatch: FunctionComponent<MenuWatchProps> = ({ data }) => {
                             await fetchNui(NuiEvent.WatchMenuSetTheme, value);
                         }}
                     >
-                        <MenuItemSelectOption value="uwu">UwU Mode</MenuItemSelectOption>
-                        <MenuItemSelectOption value="dark">Dark Mode</MenuItemSelectOption>
                         <MenuItemSelectOption value="auto">Auto</MenuItemSelectOption>
+                        <MenuItemSelectOption value="daltonism">Daltonien</MenuItemSelectOption>
+                        <MenuItemSelectOption value="dark">Dark Mode</MenuItemSelectOption>
                         <MenuItemSelectOption value="light">Light Mode</MenuItemSelectOption>
+                        <MenuItemSelectOption value="uwu">UwU Mode</MenuItemSelectOption>
                         <MenuItemSelectOption value="green">Green Mode</MenuItemSelectOption>
                     </MenuItemSelect>
 
@@ -63,14 +64,6 @@ export const MenuWatch: FunctionComponent<MenuWatchProps> = ({ data }) => {
                     {/*    <MenuItemSelectOption value={1.25}>125%</MenuItemSelectOption>*/}
                     {/*    <MenuItemSelectOption value={1.5}>150%</MenuItemSelectOption>*/}
                     {/*</MenuItemSelect>*/}
-
-                    <MenuItemCheckbox
-                        checked={data.daltonism}
-                        description="Active/Désactive le mode daltonien"
-                        onChange={value => fetchNui(NuiEvent.WatchMenuSetDaltonism, value)}
-                    >
-                        Mode daltonien
-                    </MenuItemCheckbox>
 
                     <MenuItemCheckbox
                         checked={data.showDateTime}
