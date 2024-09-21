@@ -196,7 +196,6 @@ export enum NuiEvent {
     PlayerMenuHudSetScaledNui = 'soz-core:nui:player:menu:hud-set-scaled-nui',
     WatchMenuSetTheme = 'soz-core:nui:player:menu:hud-set-theme',
     WatchMenuSetZoom = 'soz-core:nui:player:menu:hud-set-zoom',
-    WatchMenuSetDaltonism = 'soz-core:nui:player:menu:hud-set-daltonism',
     WatchMenuSetShowDateTime = 'soz-core:nui:player:menu:hud-set-show-date-time',
     WatchMenuSetShowWeather = 'soz-core:nui:player:menu:hud-set-show-weather',
     WatchMenuSetShowStreetName = 'soz-core:nui:player:menu:hud-set-show-street-name',

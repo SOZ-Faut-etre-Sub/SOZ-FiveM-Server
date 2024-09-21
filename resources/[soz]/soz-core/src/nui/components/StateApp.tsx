@@ -37,10 +37,6 @@ export const StateApp: FunctionComponent = () => {
         dispatch.hud.updateSettings({ zoom });
     });
 
-    useNuiEvent('hud', 'SetDaltonism', daltonism => {
-        dispatch.hud.updateSettings({ daltonism });
-    });
-
     useNuiEvent('hud', 'SetShowDateTime', showDateTime => {
         dispatch.hud.updateSettings({ showDateTime });
     });

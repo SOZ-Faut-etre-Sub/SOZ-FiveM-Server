@@ -31,7 +31,6 @@ export interface NuiHudMethodMap {
     // Watch Settings
     SetTheme: HudTheme;
     SetZoom: number;
-    SetDaltonism: boolean;
     SetShowDateTime: boolean;
     SetShowWeather: boolean;
     SetShowStreetName: boolean;

@@ -57,6 +57,7 @@ export enum VoiceMode {
 
 export enum HudTheme {
     Auto = 'auto',
+    Daltonism = 'daltonism',
     Light = 'light',
     Dark = 'dark',
     Green = 'green',
@@ -66,7 +67,6 @@ export enum HudTheme {
 export type HudSettings = {
     theme: HudTheme;
     zoom: number;
-    daltonism: boolean;
     showDateTime: boolean;
     showWeather: boolean;
     showStreetName: boolean;

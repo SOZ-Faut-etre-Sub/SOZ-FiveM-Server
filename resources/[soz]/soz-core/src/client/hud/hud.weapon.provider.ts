@@ -2,7 +2,6 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
 import { WeaponName } from '../../shared/weapons/weapon';
-import { InventoryManager } from '../inventory/inventory.manager';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { WeaponService } from '../weapon/weapon.service';
 
@@ -14,8 +13,7 @@ export class HudWeaponProvider {
     @Inject(NuiDispatch)
     private readonly nuiDispatch: NuiDispatch;
 
-    @Inject(InventoryManager)
-    private readonly inventoryManager: InventoryManager;
+    private weaponWithoutHud: string[] = [WeaponName.UNARMED.toLowerCase(), WeaponName.STUNGUN.toLowerCase()];
 
     private _haveWeapon = false;
 
@@ -29,7 +27,8 @@ export class HudWeaponProvider {
             return;
         }
 
-        if (weapon.name.toLowerCase() === WeaponName.UNARMED.toLowerCase()) {
+        if (this.weaponWithoutHud.includes(weapon.name.toLowerCase())) {
+            this.resetWeaponHud();
             return;
         }
 
