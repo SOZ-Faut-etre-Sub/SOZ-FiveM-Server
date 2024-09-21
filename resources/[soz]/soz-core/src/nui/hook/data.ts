@@ -66,5 +66,5 @@ export const useHudHasStreetNames = (): boolean => {
     const hasWatch = useSelector((state: RootState) => state.hud.hasWatch);
     const showStreetName = useSelector((state: RootState) => state.hud.settings.showStreetName);
 
-    return hasWatch && showStreetName;
+    return true; //hasWatch && showStreetName;
 };

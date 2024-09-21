@@ -16,11 +16,11 @@ export const Location: FunctionComponent = () => {
     const styles = useSpring({
         from: {
             opacity: 0,
-            width: '0vw',
+            width: `0vw`,
         },
         to: {
             opacity: hasWatch && settings.showStreetName ? 1 : 0,
-            width: `${minimap.width * 100}vw`,
+            width: hasWatch && settings.showStreetName ? `${minimap.width * 100}vw` : `0vw`,
         },
     });
 
