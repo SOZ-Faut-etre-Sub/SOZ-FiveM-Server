@@ -107,6 +107,7 @@ export class HudMinimapProvider {
         AddTextEntry('PM_SCR_SET', 'PARAMÈTRES');
 
         await this.resourceLoader.loadStreamedTextureDict('soz_minimap');
+        this.minimapHandle = await this.resourceLoader.loadScaleformMovie('minimap');
 
         AddReplaceTexture('platform:/textures/graphics', 'radarmasksm', 'soz_minimap', 'radarmasksm');
         AddReplaceTexture('minimap', 'blips_texturesheet_ng', 'soz_minimap', 'blips_texturesheet_ng');
@@ -154,16 +155,17 @@ export class HudMinimapProvider {
     @OnEvent(ClientEvent.UPDATE_MINIMAP_POSITION)
     public async updateMinimapPosition(): Promise<void> {
         const offset = this.getMinimapOffset();
-        this.minimapHandle = await this.resourceLoader.loadScaleformMovie('minimap');
 
         SetMinimapComponentPosition('minimap', 'L', 'B', -0.0045, 0.002 + offset, 0.15, 0.188888);
         SetMinimapComponentPosition('minimap_mask', 'L', 'B', 0.02, 0.032 + offset, 0.111, 0.159);
         SetMinimapComponentPosition('minimap_blur', 'L', 'B', -0.03, 0.022 + offset, 0.266, 0.237);
+
         SetRadarBigmapEnabled(true, false);
-        await wait(50);
+        await wait(200);
         SetRadarBigmapEnabled(false, false);
 
         this.nuiDispatch.dispatch('hud', 'UpdateMinimap', this.getMinimap());
+        this.minimapHandle = await this.resourceLoader.loadScaleformMovie('minimap');
     }
 
     private getMinimap(skipRadarCompute = false): Minimap {
