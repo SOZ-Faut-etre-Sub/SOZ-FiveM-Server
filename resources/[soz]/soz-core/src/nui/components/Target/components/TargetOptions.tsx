@@ -1,15 +1,18 @@
 import { animated, useTransition } from '@react-spring/web';
 import cn from 'classnames';
-import { FunctionComponent } from 'react';
+import { FunctionComponent, RefObject } from 'react';
 
 import { TargetOption } from '../../../../shared/target';
 import { TargetItem } from './TargetItem';
 
 export const TargetOptions: FunctionComponent<{
+    title: string;
+    titleRef: RefObject<HTMLDivElement>;
+    color: string;
     targets: TargetOption[];
     direction: 'left' | 'right';
     onSelect: () => void;
-}> = ({ targets, direction, onSelect }) => {
+}> = ({ title, titleRef, color, targets, direction, onSelect }) => {
     const transitions = useTransition(
         targets.sort((a, b) => a.label.localeCompare(b.label)),
         {
@@ -27,17 +30,36 @@ export const TargetOptions: FunctionComponent<{
     );
 
     return (
-        <div
-            className={cn('relative text-white mt-4 space-y-2', {
-                'left-5': direction === 'left',
-                '-right-5': direction === 'right',
-            })}
-        >
-            {transitions(({ opacity, height }, target) => (
-                <animated.div className="relative" style={{ opacity, height }}>
-                    <TargetItem {...target} onSelect={onSelect} />
-                </animated.div>
-            ))}
+        <div>
+            <h2
+                className={cn('flex items-center gap-2 uppercase drop-shadow-bg', {
+                    'relative -right-10 justify-end': direction === 'right',
+                    'text-white': direction === 'left',
+                })}
+                style={{ color }}
+            >
+                {direction === 'right' && <span>{title}</span>}
+                <div
+                    ref={titleRef}
+                    className="h-1 w-4 rounded-full"
+                    style={{
+                        background: color,
+                    }}
+                />
+                {direction === 'left' && <span>{title}</span>}
+            </h2>
+            <div
+                className={cn('relative text-white mt-4 space-y-2', {
+                    'left-5': direction === 'left',
+                    '-right-5': direction === 'right',
+                })}
+            >
+                {transitions(({ opacity, height }, target) => (
+                    <animated.div className="relative" style={{ opacity, height }}>
+                        <TargetItem {...target} onSelect={onSelect} />
+                    </animated.div>
+                ))}
+            </div>
         </div>
     );
 };

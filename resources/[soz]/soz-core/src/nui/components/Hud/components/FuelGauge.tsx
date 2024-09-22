@@ -11,22 +11,22 @@ export const FuelGauge: FunctionComponent = () => {
     const fuelLevel = useSelector((state: RootState) => state.vehicle.fuelLevel);
     const vehCategory = useSelector((state: RootState) => state.vehicle.vehCategory);
 
-    const { gauge_colors } = useDaltonism();
+    const { gaugeColors } = useDaltonism();
 
     const maxFuel = getDefaultVehicleCondition().fuelLevel * (VehicleClassFuelStorageMultiplier[vehCategory] || 1.0);
 
-    let gaugeColor = [gauge_colors.orange_light, gauge_colors.orange_dark];
+    let gaugeColor = [gaugeColors.orange_light, gaugeColors.orange_dark];
 
     if (fuelType === 'electric') {
-        gaugeColor = [gauge_colors.green_light, gauge_colors.green_dark];
+        gaugeColor = [gaugeColors.green_light, gaugeColors.green_dark];
 
         if (fuelLevel < 60 && fuelLevel >= 30) {
-            gaugeColor = [gauge_colors.orange_light, gauge_colors.orange_dark];
+            gaugeColor = [gaugeColors.orange_light, gaugeColors.orange_dark];
         }
     }
 
     if (fuelLevel < 30) {
-        gaugeColor = [gauge_colors.red_light, gauge_colors.red_dark];
+        gaugeColor = [gaugeColors.red_light, gaugeColors.red_dark];
     }
 
     if (fuelType === 'none') {

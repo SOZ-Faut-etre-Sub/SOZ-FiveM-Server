@@ -61,6 +61,10 @@ export const StateApp: FunctionComponent = () => {
         dispatch.hud.updateSettings({ showStamina });
     });
 
+    useNuiEvent('hud', 'SetShowInstructionalOverlay', showInstructionalOverlay => {
+        dispatch.hud.updateSettings({ showInstructionalOverlay });
+    });
+
     useNuiEvent('hud', 'UpdateSettings', settings => {
         dispatch.hud.update({ settings });
     });

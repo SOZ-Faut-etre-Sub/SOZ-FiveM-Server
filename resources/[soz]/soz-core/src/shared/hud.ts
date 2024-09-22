@@ -73,6 +73,7 @@ export type HudSettings = {
     showCompass: boolean;
     showStress: boolean;
     showStamina: boolean;
+    showInstructionalOverlay: boolean;
 };
 
 export type HudState = {

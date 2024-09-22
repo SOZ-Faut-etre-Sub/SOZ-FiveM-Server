@@ -3,23 +3,29 @@ import cn from 'classnames';
 import { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux';
 
+import { useHudHasStreetNames } from '../../../hook/data';
 import PinIcon from '../../../icons/hud/pin.svg';
 import { RootState } from '../../../store';
 import { GlassMorphismContainer } from '../../Styleguide/GlassMorphismContainer';
 
 export const Location: FunctionComponent = () => {
-    const hasWatch = useSelector((state: RootState) => state.hud.hasWatch);
     const settings = useSelector((state: RootState) => state.hud.settings);
     const streetName = useSelector((state: RootState) => state.hud.streetName);
     const minimap = useSelector((state: RootState) => state.hud.minimap);
 
+    const hasStreetNamesEnabled = useHudHasStreetNames();
+
     const styles = useSpring({
         from: {
             opacity: 0,
+            width: `0vw`,
         },
         to: {
-            opacity: hasWatch && settings.showStreetName ? 1 : 0,
-            width: `${minimap.width * 100}vw`,
+            opacity: hasStreetNamesEnabled ? 1 : 0,
+            width:
+                !hasStreetNamesEnabled && !settings.showWeather && !settings.showDateTime && minimap.isHidden
+                    ? `0vw`
+                    : `${minimap.width * 100}vw`,
         },
     });
 

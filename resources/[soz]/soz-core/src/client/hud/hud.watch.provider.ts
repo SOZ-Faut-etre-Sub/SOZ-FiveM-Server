@@ -40,6 +40,7 @@ export class HudWatchProvider {
     private _hideCompass = GetResourceKvpInt('soz_hud_compass_hide') === 1;
     private _hideStress = GetResourceKvpInt('soz_hud_stress_hide') === 1;
     private _hideStamina = GetResourceKvpInt('soz_hud_stamina_hide') === 1;
+    private _hideInstructionalOverlay = GetResourceKvpInt('soz_hud_instructional_overlay_hide') === 1;
 
     public get haveWatch(): boolean {
         if (this._watchForceEnabled) return true;
@@ -90,6 +91,7 @@ export class HudWatchProvider {
     })
     public async quickShowWatch() {
         this._watchForceEnabled = true;
+        TriggerEvent(ClientEvent.UPDATE_MINIMAP_POSITION);
         this.nuiDispatch.dispatch('hud', 'UpdateSettings', {
             theme: this._theme,
             zoom: this._zoom,
@@ -99,6 +101,7 @@ export class HudWatchProvider {
             showCompass: true,
             showStress: true,
             showStamina: true,
+            showInstructionalOverlay: true,
         });
         this.audioService.playAudio('audio/uwu.mp3', 0.1);
 
@@ -106,6 +109,7 @@ export class HudWatchProvider {
 
         this.nuiDispatch.dispatch('hud', 'UpdateSettings', this.getSettings());
         this._watchForceEnabled = false;
+        TriggerEvent(ClientEvent.UPDATE_MINIMAP_POSITION);
     }
 
     @OnNuiEvent(NuiEvent.WatchMenuSetTheme)
@@ -148,6 +152,11 @@ export class HudWatchProvider {
         this.stamina = value;
     }
 
+    @OnNuiEvent(NuiEvent.WatchMenuSetShowInstructionalOverlay)
+    public async setInstructionalOverlay(value: boolean) {
+        this.instructionalOverlay = value;
+    }
+
     public getSettings(): HudSettings {
         return {
             theme: this._theme,
@@ -158,6 +167,7 @@ export class HudWatchProvider {
             showCompass: !this._hideCompass,
             showStress: !this._hideStress,
             showStamina: !this._hideStamina,
+            showInstructionalOverlay: !this._hideInstructionalOverlay,
         };
     }
 
@@ -208,6 +218,12 @@ export class HudWatchProvider {
         this._hideStamina = !value;
         SetResourceKvpInt('soz_hud_stamina_hide', this._hideStamina ? 1 : 0);
         this.nuiDispatch.dispatch('hud', 'SetShowStamina', value);
+    }
+
+    public set instructionalOverlay(value: boolean) {
+        this._hideInstructionalOverlay = !value;
+        SetResourceKvpInt('soz_hud_instructional_overlay_hide', this._hideInstructionalOverlay ? 1 : 0);
+        this.nuiDispatch.dispatch('hud', 'SetShowInstructionalOverlay', value);
     }
 
     public get showCompass() {

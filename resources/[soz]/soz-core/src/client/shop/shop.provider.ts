@@ -354,7 +354,7 @@ export class ShopProvider {
             BrandsConfig[this.currentShopBrand] &&
             BrandsConfig[this.currentShopBrand].pedModel
         ) {
-            this.targetFactory.removeTargetModel([this.getBrandPedModel(BrandsConfig[this.currentShopBrand])], []);
+            this.targetFactory.removeTargetModel([this.getBrandPedModel(BrandsConfig[this.currentShopBrand])]);
         }
     }
 

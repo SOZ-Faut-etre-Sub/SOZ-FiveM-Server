@@ -1,14 +1,17 @@
 import { animated, useSpring } from '@react-spring/web';
 import cn from 'classnames';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { bindKeyToName, BindName } from '../../../shared/utils/bind';
 import { useHudHasStreetNames, useMinimap } from '../../hook/data';
 import { useNuiEvent } from '../../hook/nui';
+import { RootState } from '../../store';
 import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
 
 export function InstructionalOverlay() {
     const minimap = useMinimap();
+    const showInstructionalOverlay = useSelector((state: RootState) => state.hud.settings.showInstructionalOverlay);
     const hasStreetNamesEnabled = useHudHasStreetNames();
 
     const [text, setText] = useState<string[]>([]);
@@ -24,6 +27,10 @@ export function InstructionalOverlay() {
     });
 
     useNuiEvent('hud', 'SetInstructional', setText);
+
+    if (!showInstructionalOverlay) {
+        return null;
+    }
 
     return (
         <animated.div

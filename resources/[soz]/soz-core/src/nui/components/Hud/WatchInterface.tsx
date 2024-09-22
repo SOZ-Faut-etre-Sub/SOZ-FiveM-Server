@@ -18,6 +18,7 @@ import { useDaltonism } from './hooks/useDaltonism';
 
 export const WatchInterface: FunctionComponent = () => {
     const hasWatch = useSelector((state: RootState) => state.hud.hasWatch);
+    const settings = useSelector((state: RootState) => state.hud.settings);
     const minimap = useSelector((state: RootState) => state.hud.minimap);
 
     const hasStreetNamesEnabled = useHudHasStreetNames();
@@ -78,7 +79,10 @@ export const WatchInterface: FunctionComponent = () => {
         },
         to: {
             bottom: `${100 - minimap.bottom * 100}vh`,
-            left: `${(minimap.right + 0.005) * 100}vw`,
+            left:
+                !hasStreetNamesEnabled && !settings.showWeather && !settings.showDateTime && minimap.isHidden
+                    ? `${(minimap.left + 0.005) * 100}vw`
+                    : `${(minimap.right + 0.005) * 100}vw`,
         },
     });
 

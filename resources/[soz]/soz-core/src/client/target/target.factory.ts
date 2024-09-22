@@ -43,7 +43,7 @@ export class TargetFactory {
             ...zone,
         };
 
-        await this.targetStore.addZone(id, BoxZone.fromZone(zone), targets, distance);
+        await this.targetStore.addZone(BoxZone.fromZone(zone), targets, distance);
     }
 
     public async createForPolygoneZone(
@@ -52,11 +52,11 @@ export class TargetFactory {
         targets: TargetOption[],
         distance = DEFAULT_DISTANCE
     ) {
-        await this.targetStore.addZone(id, zone, targets, distance);
+        await this.targetStore.addZone(zone, targets, distance);
     }
 
-    public async createForAllPlayer(targets: TargetOption[], distance = DEFAULT_DISTANCE) {
-        await this.targetStore.players.add('global', { targets, distance });
+    public createForAllPlayer(targets: TargetOption[], distance = DEFAULT_DISTANCE) {
+        this.targetStore.players.add({ player: -1, targets, distance });
     }
 
     public async createForPed(ped: PedOptions) {
@@ -93,42 +93,42 @@ export class TargetFactory {
         targets: TargetOption[],
         distance = DEFAULT_DISTANCE
     ) {
-        await this.targetStore.addModels(models, targets, distance);
+        return this.targetStore.addModels(models, targets, distance);
     }
 
-    public async createForEntity(
-        entities: string[] | number[] | string | number,
-        targets: TargetOption[],
-        distance = DEFAULT_DISTANCE
-    ) {
-        await this.targetStore.addEntities(entities, targets, distance);
+    public async createForEntity(entities: number[] | number, targets: TargetOption[], distance = DEFAULT_DISTANCE) {
+        return this.targetStore.addEntities(entities, targets, distance);
     }
 
     public async createForAllVehicle(targets: TargetOption[], distance = 3.0) {
-        await this.targetStore.vehicles.add('global', { targets, distance });
+        return this.targetStore.vehicles.add({ vehicle: -1, targets, distance });
     }
 
     public async createForAllPed(targets: TargetOption[], distance = DEFAULT_DISTANCE) {
-        await this.targetStore.peds.add('global', { targets, distance });
+        return this.targetStore.peds.add({ ped: -1, targets, distance });
     }
 
-    public removeTargetModel(models: string[], labels: string[]) {
-        for (const model of models) {
-            this.targetStore.models.remove(this.targetStore.getId(model));
+    public removeTargetModel(models: string[]) {
+        const targetsModel = this.targetStore.models.find(([, value]) =>
+            models.map(m => this.targetStore.getId(m)).includes(value.model)
+        );
+        for (const [key] of targetsModel) {
+            this.targetStore.models.remove(key);
         }
     }
 
     public removeForEntity(entities: number[], labels: string[]) {
-        for (const entity of entities) {
-            this.targetStore.entities.remove(entity.toString());
+        const targetsEntity = this.targetStore.entities.find(([, value]) => entities.includes(value.entity));
+        for (const [key] of targetsEntity) {
+            this.targetStore.entities.remove(key);
         }
     }
 
     public removeBoxZone(id: string) {
-        this.targetStore.zones.remove(id);
+        return this.targetStore.zones.remove(id);
     }
 
     public async createForBone(bones: string[] | string, targets: TargetOption[], distance = 1.5) {
-        await this.targetStore.addBones(bones, targets, distance);
+        return this.targetStore.addBones(bones, targets, distance);
     }
 }

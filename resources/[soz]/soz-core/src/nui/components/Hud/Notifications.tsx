@@ -316,6 +316,7 @@ export const Notifications: FunctionComponent = () => {
     const minimap = useSelector((state: RootState) => state.hud.minimap);
     const showDateTime = useSelector((state: RootState) => state.hud.settings.showDateTime);
     const showWeather = useSelector((state: RootState) => state.hud.settings.showWeather);
+    const showStreetName = useSelector((state: RootState) => state.hud.settings.showStreetName);
 
     const [notifications, setNotifications] = useState<
         (BasicNotification | AdvancedNotification | TPoliceNotification)[]
@@ -335,7 +336,15 @@ export const Notifications: FunctionComponent = () => {
         [setNotifications]
     );
 
-    const notificationOffset = hasWatch && (showDateTime || showWeather) ? '5rem' : '.5rem';
+    const notificationOffset = () => {
+        if (hasWatch && (showDateTime || showWeather)) {
+            return '5rem';
+        }
+        if (hasWatch && !showStreetName && minimap.isHidden) {
+            return '7rem';
+        }
+        return '.5rem';
+    };
 
     useNuiEvent(
         'hud',
@@ -354,7 +363,7 @@ export const Notifications: FunctionComponent = () => {
             <div
                 className="absolute flex flex-col-reverse gap-4"
                 style={{
-                    top: `calc((100vh * ${minimap.top}) - calc((100vh * ${minimap.height}) * 4) - ${notificationOffset})`,
+                    top: `calc((100vh * ${minimap.top}) - calc((100vh * ${minimap.height}) * 4) - ${notificationOffset()})`,
                     left: `calc(100vw * ${minimap.left + 0.004})`,
                     height: `calc((100vh * ${minimap.height}) * 4)`,
                     width: `calc(100vw * ${minimap.width})`,
