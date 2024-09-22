@@ -108,15 +108,19 @@ export class TargetFactory {
         return this.targetStore.peds.add({ ped: -1, targets, distance });
     }
 
-    public removeTargetModel(models: string[], labels: string[]) {
-        for (const model of models) {
-            this.targetStore.models.remove(this.targetStore.getId(model));
+    public removeTargetModel(models: string[]) {
+        const targetsModel = this.targetStore.models.find(([, value]) =>
+            models.map(m => this.targetStore.getId(m)).includes(value.model)
+        );
+        for (const [key] of targetsModel) {
+            this.targetStore.models.remove(key);
         }
     }
 
     public removeForEntity(entities: number[], labels: string[]) {
-        for (const entity of entities) {
-            this.targetStore.entities.remove(entity.toString());
+        const targetsEntity = this.targetStore.entities.find(([, value]) => entities.includes(value.entity));
+        for (const [key] of targetsEntity) {
+            this.targetStore.entities.remove(key);
         }
     }
 

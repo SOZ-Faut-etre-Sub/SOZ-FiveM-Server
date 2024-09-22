@@ -43,9 +43,6 @@ export class DmcRestockProvider {
 
     @OnEvent(ClientEvent.LSC_EXIT_SHOP)
     public onExitLscShop() {
-        this.targetFactory.removeTargetModel(
-            [this.shopProvider.getBrandPedModel(BrandsConfig[ShopBrand.LsCustom])],
-            ['Restock: Pièces d’Améliorations Certifiées']
-        );
+        this.targetFactory.removeTargetModel([this.shopProvider.getBrandPedModel(BrandsConfig[ShopBrand.LsCustom])]);
     }
 }

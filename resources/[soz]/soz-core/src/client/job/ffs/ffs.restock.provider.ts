@@ -48,9 +48,8 @@ export class FightForStyleRestockProvider {
 
     @OnEvent(ClientEvent.FFS_EXIT_CLOTHING_SHOP)
     public onExitClothingShop(brand: ClothingBrand) {
-        const { garments, pedModel } = this.getGarmentsFromBrand(brand);
-        const labels = garments.map(garment => 'Restock: ' + this.itemService.getItem(garment).label);
-        this.targetFactory.removeTargetModel([pedModel], labels);
+        const { pedModel } = this.getGarmentsFromBrand(brand);
+        this.targetFactory.removeTargetModel([pedModel]);
     }
 
     private getGarmentsFromBrand(brand: ClothingBrand): { garments: Garment[] | LuxuryGarment[]; pedModel: string } {
