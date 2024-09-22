@@ -7,7 +7,7 @@ export const useDaltonism = () => {
     const daltonism = currentTheme === HudTheme.Daltonism;
 
     return {
-        glassmorphism_colors: {
+        glassmorphismColors: {
             [HudTheme.Light]: {
                 background: '#F3FBFA4D',
                 border: '#FFFFFF',
@@ -29,7 +29,7 @@ export const useDaltonism = () => {
                 border: '#FFFFFF',
             },
         },
-        gauge_colors: {
+        gaugeColors: {
             green_light: daltonism ? '#FFFFFF' : '#329121',
             green_dark: daltonism ? '#000000' : '#283525',
             blue_light: daltonism ? '#B314E8' : '#00A5E7',
@@ -38,6 +38,11 @@ export const useDaltonism = () => {
             red_dark: daltonism ? '#000000' : '#362628',
             orange_light: daltonism ? '#FFFF00' : '#FCAF40',
             orange_dark: daltonism ? '#000000' : '#362F26',
+        },
+        targetColors: {
+            citizen: daltonism ? '#FFFFFF' : '#FFFFFF',
+            society: daltonism ? '#B314E8' : '#0984E3',
+            criminal: daltonism ? '#FFFF00' : '#EF4444',
         },
         imagePrefix: daltonism ? 'daltonism/' : '',
     };

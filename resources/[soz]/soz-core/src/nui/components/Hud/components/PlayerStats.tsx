@@ -22,7 +22,7 @@ export const PlayerStats: FunctionComponent = () => {
     const showStamina = useSelector((state: RootState) => state.hud.settings.showStamina);
 
     const player = usePlayer();
-    const { gauge_colors } = useDaltonism();
+    const { gaugeColors } = useDaltonism();
 
     const health = useSelector((state: RootState) => state.playerStats.health);
     const armor = useSelector((state: RootState) => state.playerStats.armor);
@@ -72,22 +72,22 @@ export const PlayerStats: FunctionComponent = () => {
         <>
             <StatusGauge
                 value={healthPercent}
-                color={healthPercent > 20 ? gauge_colors.green_light : gauge_colors.red_light}
-                backgroundColor={healthPercent > 20 ? gauge_colors.green_dark : gauge_colors.red_dark}
+                color={healthPercent > 20 ? gaugeColors.green_light : gaugeColors.red_light}
+                backgroundColor={healthPercent > 20 ? gaugeColors.green_dark : gaugeColors.red_dark}
                 hideCondition={value => value > 80}
             >
                 <img className="size-9" src="/public/images/hud/player/health.webp" alt="" />
             </StatusGauge>
 
-            <StatusGauge value={armor} color={gauge_colors.blue_light} backgroundColor={gauge_colors.blue_dark}>
+            <StatusGauge value={armor} color={gaugeColors.blue_light} backgroundColor={gaugeColors.blue_dark}>
                 <img className="size-9" src="/public/images/hud/player/armor.webp" alt="armor" />
             </StatusGauge>
 
             {hasWatch && (
                 <StatusGauge
                     value={syringeDelay ? (syringeDelay.delay / syringeDelay.initialDelay) * 100 : 0}
-                    color={gauge_colors.green_light}
-                    backgroundColor={gauge_colors.green_dark}
+                    color={gaugeColors.green_light}
+                    backgroundColor={gaugeColors.green_dark}
                 >
                     <img className="size-9" src="/public/images/hud/player/syringe.webp" alt="syringe" />
                 </StatusGauge>
@@ -96,8 +96,8 @@ export const PlayerStats: FunctionComponent = () => {
             {hasWatch && (
                 <StatusGauge
                     value={player.metadata.drug}
-                    color={gauge_colors.green_light}
-                    backgroundColor={gauge_colors.green_dark}
+                    color={gaugeColors.green_light}
+                    backgroundColor={gaugeColors.green_dark}
                 >
                     <img className="size-9" src="/public/images/hud/player/drug.webp" alt="drug" />
                 </StatusGauge>
@@ -106,8 +106,8 @@ export const PlayerStats: FunctionComponent = () => {
             {hasWatch && (
                 <StatusGauge
                     value={player.metadata.alcohol}
-                    color={gauge_colors.red_light}
-                    backgroundColor={gauge_colors.red_dark}
+                    color={gaugeColors.red_light}
+                    backgroundColor={gaugeColors.red_dark}
                 >
                     <img className="size-9" src="/public/images/hud/player/alcohol.webp" alt="alcohol" />
                 </StatusGauge>
@@ -115,8 +115,8 @@ export const PlayerStats: FunctionComponent = () => {
 
             <StatusGauge
                 value={player.metadata.hunger}
-                color={gauge_colors.orange_light}
-                backgroundColor={gauge_colors.orange_dark}
+                color={gaugeColors.orange_light}
+                backgroundColor={gaugeColors.orange_dark}
                 hideCondition={value => value >= 50}
             >
                 <img className="size-9" src="/public/images/hud/player/hunger.webp" alt="hunger" />
@@ -124,8 +124,8 @@ export const PlayerStats: FunctionComponent = () => {
 
             <StatusGauge
                 value={player.metadata.thirst}
-                color={gauge_colors.blue_light}
-                backgroundColor={gauge_colors.blue_dark}
+                color={gaugeColors.blue_light}
+                backgroundColor={gaugeColors.blue_dark}
                 hideCondition={value => value >= 50}
             >
                 <img className="size-9" src="/public/images/hud/player/thirst.webp" alt="thirst" />
@@ -134,8 +134,8 @@ export const PlayerStats: FunctionComponent = () => {
             {hasWatch && showStress && (
                 <StatusGauge
                     value={player.metadata.stress_level}
-                    color={gauge_colors.red_light}
-                    backgroundColor={gauge_colors.red_dark}
+                    color={gaugeColors.red_light}
+                    backgroundColor={gaugeColors.red_dark}
                 >
                     <img className="size-9" src="/public/images/hud/player/stress.webp" alt="stress" />
                 </StatusGauge>
@@ -144,8 +144,8 @@ export const PlayerStats: FunctionComponent = () => {
             {hasWatch && showStamina && (
                 <StatusGauge
                     value={stamina}
-                    color={stamina <= 25 ? gauge_colors.orange_light : gauge_colors.blue_light}
-                    backgroundColor={stamina <= 25 ? gauge_colors.orange_dark : gauge_colors.blue_dark}
+                    color={stamina <= 25 ? gaugeColors.orange_light : gaugeColors.blue_light}
+                    backgroundColor={stamina <= 25 ? gaugeColors.orange_dark : gaugeColors.blue_dark}
                     hideCondition={value => value >= 80}
                 >
                     <img className="size-9" src="/public/images/hud/player/stamina.webp" alt="stamina" />
@@ -154,8 +154,8 @@ export const PlayerStats: FunctionComponent = () => {
 
             <StatusGauge
                 value={battery}
-                color={gauge_colors.blue_light}
-                backgroundColor={gauge_colors.blue_dark}
+                color={gaugeColors.blue_light}
+                backgroundColor={gaugeColors.blue_dark}
                 hideCondition={value => value > 99}
             >
                 <img className="size-9" src="/public/images/hud/vehicle/battery.webp" alt="battery" />

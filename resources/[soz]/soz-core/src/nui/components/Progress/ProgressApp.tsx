@@ -136,7 +136,7 @@ export const ProgressSegment: FunctionComponent<ProgressSegmentProps> = ({
     currentProgress,
 }) => {
     const currentTheme = useHudTheme();
-    const { glassmorphism_colors } = useDaltonism();
+    const { glassmorphismColors } = useDaltonism();
 
     const sectionMax = progress?.duration / maxSegment;
     const progressForSection = currentProgress * progress?.duration - sectionMax * currentSegment;
@@ -146,7 +146,7 @@ export const ProgressSegment: FunctionComponent<ProgressSegmentProps> = ({
         <GlassMorphismContainer className="w-10" borderClassName="rounded-md" disableBorder>
             <div
                 className="bg-white h-2.5 rounded-md"
-                style={{ width: `${barPercentage}%`, background: glassmorphism_colors[currentTheme].border }}
+                style={{ width: `${barPercentage}%`, background: glassmorphismColors[currentTheme].border }}
             ></div>
         </GlassMorphismContainer>
     );

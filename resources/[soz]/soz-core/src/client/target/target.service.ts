@@ -34,10 +34,7 @@ export class TargetService {
         if (target.blackoutJob && !this.blackoutJobCheck()) return false;
         if (target.canInteract) {
             const result = await target.canInteract(entity);
-
-            if (!result) {
-                return false;
-            }
+            if (!result) return false;
         }
 
         return true;
@@ -51,9 +48,7 @@ export class TargetService {
         if (interaction.blackoutJob && !this.blackoutJobCheck()) return false;
         if (interaction.canInteract) {
             const result = await interaction.canInteract();
-            if (!result) {
-                return false;
-            }
+            if (!result) return false;
         }
         return true;
     }

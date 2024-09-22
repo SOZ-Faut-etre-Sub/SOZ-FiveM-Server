@@ -5,6 +5,7 @@ import { NuiEvent } from '../../../shared/event/nui';
 import { TargetOption } from '../../../shared/target';
 import { fetchNui } from '../../fetch';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
+import { useDaltonism } from '../Hud/hooks/useDaltonism';
 import { TargetConnector } from './components/TargetConnector';
 import { TargetOptions } from './components/TargetOptions';
 
@@ -14,6 +15,8 @@ export const TargetOverlay: FunctionComponent = () => {
     const [isTargeting, setIsTargeting] = useState<boolean>(false);
     const [targetFound, setTargetFound] = useState<boolean>(false);
     const [targets, setTargets] = useState<TargetOption[]>([]);
+
+    const { targetColors } = useDaltonism();
 
     const container = useRef<HTMLDivElement>(null);
     const origin = useRef<SVGSVGElement>(null);
@@ -96,50 +99,71 @@ export const TargetOverlay: FunctionComponent = () => {
                 )}
             </animated.div>
 
-            {targetFound && citizenActions.length > 0 && (
-                <div className="absolute flex flex-col justify-center inset-y-[5vh] left-[53vw] min-w-[20rem] p-5">
-                    <h2 className="flex items-center gap-2 text-white uppercase drop-shadow-bg">
-                        <div ref={targetCitizen} className="bg-white h-1 w-4 rounded-full" /> Actions
-                    </h2>
-                    <TargetOptions targets={citizenActions} direction="left" onSelect={() => setTargetFound(false)} />
-                </div>
-            )}
-
-            {targetFound && (criminalActions.length > 0 || societyActions.length > 0) && (
-                <div className="absolute flex flex-col justify-center inset-y-[5vh] right-[55vw] min-w-[20rem] space-y-10 p-5">
-                    {criminalActions.length > 0 && (
-                        <div>
-                            <h2 className="relative -right-10 flex items-center justify-end gap-2 text-[#EF4444] uppercase drop-shadow-bg">
-                                Criminelle <div ref={targetCriminal} className="bg-[#EF4444] h-1 w-4 rounded-full" />
-                            </h2>
+            {targetFound && (
+                <>
+                    <div className="absolute flex flex-col justify-center inset-y-[5vh] left-[53vw] min-w-[20rem] p-5">
+                        {citizenActions.length > 0 && (
                             <TargetOptions
+                                title="Actions"
+                                titleRef={targetCitizen}
+                                color={targetColors.citizen}
+                                targets={citizenActions}
+                                direction="left"
+                                onSelect={() => setTargetFound(false)}
+                            />
+                        )}
+
+                        {citizenActions.length === 0 && societyActions.length > 0 && (
+                            <TargetOptions
+                                title="Entreprise"
+                                titleRef={targetSociety}
+                                color={targetColors.society}
+                                targets={societyActions}
+                                direction="left"
+                                onSelect={() => setTargetFound(false)}
+                            />
+                        )}
+
+                        {citizenActions.length === 0 && societyActions.length === 0 && criminalActions.length > 0 && (
+                            <TargetOptions
+                                title="Criminelle"
+                                titleRef={targetCriminal}
+                                color={targetColors.criminal}
+                                targets={criminalActions}
+                                direction="left"
+                                onSelect={() => setTargetFound(false)}
+                            />
+                        )}
+                    </div>
+
+                    <div className="absolute flex flex-col justify-center inset-y-[5vh] right-[55vw] min-w-[20rem] space-y-10 p-5">
+                        {(citizenActions.length > 0 || societyActions.length > 0) && criminalActions.length > 0 && (
+                            <TargetOptions
+                                title="Criminelle"
+                                titleRef={targetCriminal}
+                                color={targetColors.criminal}
                                 targets={criminalActions}
                                 direction="right"
                                 onSelect={() => setTargetFound(false)}
                             />
-                        </div>
-                    )}
+                        )}
 
-                    {societyActions.length > 0 && (
-                        <div>
-                            <h2 className="relative -right-10 flex items-center justify-end gap-2 text-blue-500 uppercase drop-shadow-bg">
-                                Entreprise <div ref={targetSociety} className="bg-blue-500 h-1 w-4 rounded-full" />
-                            </h2>
+                        {citizenActions.length > 0 && societyActions.length > 0 && (
                             <TargetOptions
+                                title="Entreprise"
+                                titleRef={targetSociety}
+                                color={targetColors.society}
                                 targets={societyActions}
                                 direction="right"
                                 onSelect={() => setTargetFound(false)}
                             />
-                        </div>
-                    )}
-                </div>
-            )}
+                        )}
+                    </div>
 
-            {targetFound && (
-                <>
+                    {/*Connector*/}
                     {citizenActions.length > 0 && (
                         <TargetConnector
-                            className="text-white"
+                            color={targetColors.citizen}
                             container={container}
                             origin={origin}
                             originAnchor="right"
@@ -147,9 +171,29 @@ export const TargetOverlay: FunctionComponent = () => {
                         />
                     )}
 
-                    {criminalActions.length > 0 && (
+                    {citizenActions.length === 0 && societyActions.length > 0 && (
                         <TargetConnector
-                            className="text-[#EF4444]"
+                            color={targetColors.society}
+                            container={container}
+                            origin={origin}
+                            originAnchor="right"
+                            target={targetSociety}
+                        />
+                    )}
+
+                    {citizenActions.length === 0 && societyActions.length === 0 && criminalActions.length > 0 && (
+                        <TargetConnector
+                            color={targetColors.criminal}
+                            container={container}
+                            origin={origin}
+                            originAnchor="right"
+                            target={targetCriminal}
+                        />
+                    )}
+
+                    {(citizenActions.length > 0 || societyActions.length > 0) && criminalActions.length > 0 && (
+                        <TargetConnector
+                            color={targetColors.criminal}
                             container={container}
                             origin={origin}
                             originAnchor="center"
@@ -158,9 +202,9 @@ export const TargetOverlay: FunctionComponent = () => {
                         />
                     )}
 
-                    {societyActions.length > 0 && (
+                    {citizenActions.length > 0 && societyActions.length > 0 && (
                         <TargetConnector
-                            className="text-blue-500"
+                            color={targetColors.society}
                             container={container}
                             origin={origin}
                             originAnchor="left"

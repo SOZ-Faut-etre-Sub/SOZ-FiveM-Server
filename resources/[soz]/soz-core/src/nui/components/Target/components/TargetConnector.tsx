@@ -1,4 +1,3 @@
-import cn from 'classnames';
 import { FunctionComponent, RefObject, useLayoutEffect, useState } from 'react';
 
 import { useInterval } from '../../../hook/useInterval';
@@ -9,7 +8,7 @@ type ConnectorProp = {
     target: RefObject<HTMLDivElement> | null;
     targetAnchor?: 'left' | 'right';
     originAnchor?: 'left' | 'center' | 'right';
-    className?: string;
+    color?: string;
 };
 
 export const TargetConnector: FunctionComponent<ConnectorProp> = ({
@@ -18,7 +17,7 @@ export const TargetConnector: FunctionComponent<ConnectorProp> = ({
     target,
     targetAnchor = 'left',
     originAnchor = 'center',
-    className,
+    color,
 }) => {
     const [, setRerender] = useState(0);
     const [targetRect, setTargetRect] = useState<DOMRect>(target.current?.getBoundingClientRect());
@@ -69,8 +68,8 @@ export const TargetConnector: FunctionComponent<ConnectorProp> = ({
     }
 
     return (
-        <svg className={cn('absolute', className)} width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <path d={`M ${start?.x} ${start?.y} L ${end?.x} ${end?.y}`} stroke="currentColor" strokeWidth={3} />
+        <svg className="absolute" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <path d={`M ${start?.x} ${start?.y} L ${end?.x} ${end?.y}`} stroke={color} strokeWidth={4} />
         </svg>
     );
 };
