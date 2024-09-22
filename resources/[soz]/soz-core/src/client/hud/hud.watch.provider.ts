@@ -90,6 +90,7 @@ export class HudWatchProvider {
     })
     public async quickShowWatch() {
         this._watchForceEnabled = true;
+        TriggerEvent(ClientEvent.UPDATE_MINIMAP_POSITION);
         this.nuiDispatch.dispatch('hud', 'UpdateSettings', {
             theme: this._theme,
             zoom: this._zoom,
@@ -106,6 +107,7 @@ export class HudWatchProvider {
 
         this.nuiDispatch.dispatch('hud', 'UpdateSettings', this.getSettings());
         this._watchForceEnabled = false;
+        TriggerEvent(ClientEvent.UPDATE_MINIMAP_POSITION);
     }
 
     @OnNuiEvent(NuiEvent.WatchMenuSetTheme)
