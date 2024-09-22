@@ -633,3 +633,30 @@ Container["distillery"] = InventoryContainer:new({
         return exports["soz-core"]:CanUpdateDistillery(inv.id, inv.owner)
     end,
 })
+
+Container["gang_stash"] = InventoryContainer:new({
+    type = "stash",
+    allowedTypes = {
+        "item",
+        "item_illegal",
+        "weapon",
+        "weapon_ammo",
+        "furniture",
+        "outfit",
+        "log",
+        "oil_and_item",
+        "plank",
+        "sawdust",
+        "fishing_rod",
+        "fishing_garbage",
+        "fishing_bait",
+        "fish",
+        "drug_pot",
+        "tool",
+        "edvidence",
+        "veh_biz_piece",
+        "smuggling_export",
+        "smuggling_convoy_export",
+        "smuggling_ore",
+    },
+})

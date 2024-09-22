@@ -53,7 +53,7 @@
 
 .ShopAmount {
     position: absolute;
-    bottom: 0.25rem;
+    top: 0.25rem;
     left: 0.25rem;
     font-size: 0.75rem;
     color: #ffffff;

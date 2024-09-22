@@ -413,13 +413,13 @@ export class ObjectEditorProvider {
             coords[2],
             object.position[0],
             object.position[1],
-            object.position[2],
+            object.position[2] + 0.2,
             49,
             0,
             4
         );
-        let result: [number, any, number[], number[], number];
 
+        let result: [number, any, number[], number[], number];
         do {
             result = GetShapeTestResult(handle);
             await wait(0);

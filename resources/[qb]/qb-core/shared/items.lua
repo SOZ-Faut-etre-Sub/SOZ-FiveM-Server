@@ -10775,7 +10775,7 @@ QBShared.Items = {
         ["shouldClose"] = false,
         ["unique"] = true,
         ["combinable"] = nil,
-        ["description"] = "Un flacon contenant du plasma sanguin, utilisé pour des traitements.",
+        ["description"] = "Une caisse en bois standard utilisée pour transporter et exporter divers biens et marchandises, discrète et facilement transportable.",
         ["illustrator"] = ".Sniteur",
     },
     ["cyber_jammer"] = {

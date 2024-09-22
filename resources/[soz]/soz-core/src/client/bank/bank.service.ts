@@ -45,9 +45,4 @@ export class BankService {
             },
         });
     }
-
-    public async openGangSafe(gangId: number) {
-        const safeId = 'gang_' + gangId;
-        TriggerEvent(ClientEvent.BANK_SAFE_GANG_OPEN_UI, safeId);
-    }
 }

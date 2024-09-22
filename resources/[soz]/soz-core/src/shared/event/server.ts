@@ -523,6 +523,7 @@ export enum ServerEvent {
     GANG_INFLUENCE_ZONE_UPDATE = 'soz-core:server:gang:influence:update',
     GANG_CARTEL_CONTAINER_TAKE = 'soz-core:server:gang:container-take',
     GANG_CARTEL_CONTAINER_USE = 'soz-core:server:gang:container-use',
+    GANG_UPGRADE = 'soz-core:server:gang:upgrade',
 
     GANG_VEHBIZ_GET_POSITION = 'soz-core:server:gang:veh:position',
     GANG_VEHBIZ_UNLOCK = 'soz-core:server:gang:veh:unlock',

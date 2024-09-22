@@ -487,6 +487,8 @@ export enum NuiEvent {
     GangMember = 'soz-core:client:gang:member',
     GangWash = 'soz-core:client:gang:wash',
     GangPlane = 'soz-core:client:gang:plane',
+    GangStash = 'soz-core:client:gang:stash',
+    GangUpgrade = 'soz-core:client:gang:upgrade',
 
     BusinessVehicleOrder = 'soz-core:client:business:vehicle:order',
     BusinessVehicleResetList = 'soz-core:client:business:vehicle:list-reset',

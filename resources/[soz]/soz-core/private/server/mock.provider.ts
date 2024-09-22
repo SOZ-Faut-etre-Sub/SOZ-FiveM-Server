@@ -7,4 +7,9 @@ export class MockProvider {
     public hasTemporaryCrimiWeight(): boolean {
         return false;
     }
+
+    @Exportable('GetGangStashWeight')
+    public getGangStashWeight(): number {
+        return 0;
+    }
 }

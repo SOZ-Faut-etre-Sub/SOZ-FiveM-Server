@@ -13,6 +13,7 @@ import { PlayerMetadata, PlayerServerStateExercise } from '../../shared/player';
 import { PollutionLevel } from '../../shared/pollution';
 import { Notifier } from '../notifier';
 import { Pollution } from '../pollution';
+import { PlayerHealthService } from './player.health.service';
 import { PlayerMoneyService } from './player.money.service';
 import { PlayerService } from './player.service';
 import { PlayerStateService } from './player.state.service';
@@ -62,6 +63,9 @@ export class PlayerHealthProvider {
 
     @Inject(PriceService)
     private priceService: PriceService;
+
+    @Inject(PlayerHealthService)
+    private playerHealthService: PlayerHealthService;
 
     private yogaAndNaturalMultiplier: (source: number) => number = () => 1;
 
@@ -193,9 +197,7 @@ export class PlayerHealthProvider {
 
     @OnEvent(ServerEvent.PLAYER_INCREASE_STRESS)
     public async increaseStress(source: number, stress: number): Promise<void> {
-        const playerState = this.playerStateService.getServerState(source);
-        playerState.lastStressLevelUpdate = new Date();
-        this.playerService.incrementMetadata(source, 'stress_level', stress, STRESS_MIN, STRESS_MAX);
+        this.playerHealthService.increaseStress(source, stress);
     }
 
     @OnEvent(ServerEvent.PLAYER_INCREASE_RUN_TIME)

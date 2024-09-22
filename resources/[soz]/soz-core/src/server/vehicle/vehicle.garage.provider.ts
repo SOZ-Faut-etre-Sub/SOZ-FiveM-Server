@@ -1,4 +1,5 @@
 import { PlayerVehicle, Prisma } from '@prisma/client';
+import { GangService } from '@private/server/gang/gang.service';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { wait } from '@public/core/utils';
 import { Feature, isFeatureEnabled } from '@public/shared/features';
@@ -115,6 +116,9 @@ export class VehicleGarageProvider {
 
     @Inject(BankService)
     private bankService: BankService;
+
+    @Inject(GangService)
+    private gangService: GangService;
 
     @Once(OnceStep.RepositoriesLoaded)
     public async init(): Promise<void> {
@@ -265,7 +269,7 @@ export class VehicleGarageProvider {
 
     @Rpc(RpcServerEvent.VEHICLE_GARAGE_GET_MAX_PLACES)
     public async getMaxPlaces(source: number, garage: Garage): Promise<number | null> {
-        if (garage.type !== GarageType.Private && garage.type !== GarageType.House) {
+        if (garage.type !== GarageType.Private && garage.type !== GarageType.House && garage.type !== GarageType.Gang) {
             return null;
         }
 
@@ -292,6 +296,10 @@ export class VehicleGarageProvider {
             return HouseGarageLimits[apartment.park_tier ?? 0] ?? 0;
         }
 
+        if (garage.type === GarageType.Gang) {
+            return await this.gangService.getMaxParkingPlace(garage.id);
+        }
+
         return 60;
     }
 
@@ -316,7 +324,10 @@ export class VehicleGarageProvider {
             },
         });
 
-        const max = MaxPlaces[garage.type];
+        let max = MaxPlaces[garage.type];
+        if (garage.type == GarageType.Gang) {
+            max = await this.gangService.getMaxParkingPlace(garage.id);
+        }
         return [Math.max(0, max - count), max];
     }
 

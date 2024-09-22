@@ -210,7 +210,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
         }
 
         if (item?.metadata?.printed) {
-            itemExtraLabel += ` [Replique]`
+            itemExtraLabel += ` [Réplique]`
         }
 
         if (item.illustrator && item.illustrator instanceof Object) {
@@ -355,15 +355,19 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
                 {item && (
                     <>
                         {price ?
-                        <span className={style.Amount}>
-                            {price > 0 && price} $
-                        </span> : <span className={style.Amount}>
-                            {item.amount > 1 && item.amount}
-                        </span>}
+                            <span className={style.Amount}>
+                                {price > 0 && price} $
+                            </span>
+                            : 
+                            <span className={style.Amount}>
+                                {item.amount > 1 && item.amount}
+                            </span>
+                        }
                         { price && item.amount > 0 && (
-                        <span className={style.ShopAmount}>
-                            {item.amount}
-                        </span>)}
+                            <span className={style.ShopAmount}>
+                                {item.amount}
+                            </span>
+                        )}
                         {(item?.shortcut) && (
                             <span className={style.Shortcut}>
                                 {item?.shortcut}
