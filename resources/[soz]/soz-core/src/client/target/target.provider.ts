@@ -197,21 +197,23 @@ export class TargetProvider {
         targetsFound.push(...boneTargets);
 
         const playerPosition = GetEntityCoords(PlayerPedId(), true) as Vector3;
-        const nearbyZones = this.targetStore.zones.find(zone =>
-            'center' in zone.zone ? getDistance(zone.zone.center, playerPosition) <= MAX_DISTANCE : true
+        const nearbyZones = this.targetStore.zones.find(([, { zone }]) =>
+            'center' in zone ? getDistance(zone.center, playerPosition) <= MAX_DISTANCE : true
         );
 
-        for (const { zone, targets, distance } of nearbyZones) {
-            if (zone.debugPoly) zone.draw([0, 255, 0, 100], 0.5);
-            if (playerDistance > distance) continue;
+        if (nearbyZones && nearbyZones.length > 0) {
+            for (const [, { zone, targets, distance }] of nearbyZones) {
+                if (zone.debugPoly) zone.draw([0, 255, 0, 100], 0.5);
+                if (playerDistance > distance) continue;
 
-            if (zone.isPointInside(entityCoords)) {
-                for (const target of targets) {
-                    const isValid = await this.targetService.validateTarget(target, entity);
+                if (zone.isPointInside(entityCoords)) {
+                    for (const target of targets) {
+                        const isValid = await this.targetService.validateTarget(target, entity);
 
-                    if (isValid) {
-                        // enforce citizen category to avoid issues with the migration
-                        targetsFound.push({ category: 'citizen', ...target, id: uuidv4(), entity, entityCoords });
+                        if (isValid) {
+                            // enforce citizen category to avoid issues with the migration
+                            targetsFound.push({ category: 'citizen', ...target, id: uuidv4(), entity, entityCoords });
+                        }
                     }
                 }
             }
@@ -228,7 +230,7 @@ export class TargetProvider {
         const entityType = GetEntityType(entity);
         if (entityType < 3) return [];
 
-        const entityStore = this.targetStore.entities.get(entity.toString());
+        const entityStore = this.targetStore.entities.find(([, target]) => target.entity === entity);
 
         return this.checkTargetGenericActions(entityStore, playerDistance, entity, entityCoords);
     }
@@ -242,7 +244,7 @@ export class TargetProvider {
         if (entityType === 0) return [];
 
         const model = this.targetStore.getId(GetEntityModel(entity));
-        const modelStore = this.targetStore.models.get(model);
+        const modelStore = this.targetStore.models.find(([, target]) => target.model.toString() === model.toString());
 
         return this.checkTargetGenericActions(modelStore, playerDistance, entity, entityCoords);
     }
@@ -260,13 +262,14 @@ export class TargetProvider {
 
         const player = this.playerService.getState();
 
-        let pedStore = this.targetStore.peds.get('global');
         if (IsPedAPlayer(entity)) {
             if (player.isInHub) return [];
 
-            pedStore = this.targetStore.players.get('global');
+            const playerStore = this.targetStore.players.find(([, target]) => target.player === -1);
+            return this.checkTargetGenericActions(playerStore, playerDistance, entity, entityCoords);
         }
 
+        const pedStore = this.targetStore.peds.find(([, target]) => target.ped === -1);
         return this.checkTargetGenericActions(pedStore, playerDistance, entity, entityCoords);
     }
 
@@ -278,7 +281,7 @@ export class TargetProvider {
         const entityType = GetEntityType(entity);
         if (entityType !== 2) return [];
 
-        const vehicleStore = this.targetStore.vehicles.get('global');
+        const vehicleStore = this.targetStore.vehicles.find(([, target]) => target.vehicle === -1);
 
         return this.checkTargetGenericActions(vehicleStore, playerDistance, entity, entityCoords);
     }
@@ -288,12 +291,12 @@ export class TargetProvider {
 
         const playerCoords = this.getPlayerCoords();
 
-        for (const [bone, store] of Object.entries(this.targetStore.bones.getAll())) {
-            const boneId = GetEntityBoneIndexByName(entity, bone);
+        for (const [id, store] of this.targetStore.bones.getAll()) {
+            const boneId = GetEntityBoneIndexByName(entity, store.bone);
             const bonePos = GetWorldPositionOfEntityBone(entity, boneId) as Vector3;
             const boneDistance = getDistance(playerCoords, bonePos);
 
-            const options = await this.checkTargetGenericActions(store, boneDistance, entity, bonePos);
+            const options = await this.checkTargetGenericActions([[id, store]], boneDistance, entity, bonePos);
             targetOptions.push(...options);
         }
 
@@ -301,21 +304,23 @@ export class TargetProvider {
     }
 
     protected async checkTargetGenericActions(
-        store: TargetStoreBase,
+        store: [string, TargetStoreBase][],
         playerDistance: number,
         entity: number,
         entityCoords: Vector3
     ): Promise<TargetOption[]> {
         const targetsFound: TargetOption[] = [];
-        if (!store) return targetsFound;
+        if (!store || store.length === 0) return targetsFound;
 
-        for (const target of store.targets) {
-            if (playerDistance > target.distance) continue;
+        for (const [, targetStore] of store) {
+            for (const target of targetStore.targets) {
+                if (playerDistance > target.distance) continue;
 
-            const isValid = await this.targetService.validateTarget(target, entity);
-            if (isValid) {
-                // enforce citizen category to avoid issues with the migration
-                targetsFound.push({ category: 'citizen', ...target, id: uuidv4(), entity, entityCoords });
+                const isValid = await this.targetService.validateTarget(target, entity);
+                if (isValid) {
+                    // enforce citizen category to avoid issues with the migration
+                    targetsFound.push({ category: 'citizen', ...target, id: uuidv4(), entity, entityCoords });
+                }
             }
         }
 
