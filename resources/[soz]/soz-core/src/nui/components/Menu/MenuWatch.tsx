@@ -107,6 +107,14 @@ export const MenuWatch: FunctionComponent<MenuWatchProps> = ({ data }) => {
                     >
                         Stamina
                     </MenuItemCheckbox>
+                    <MenuTitle>Intéraction</MenuTitle>
+                    <MenuItemCheckbox
+                        checked={data.showInstructionalOverlay}
+                        description="Active/Désactive l'affichage des instructions d'intéraction"
+                        onChange={value => fetchNui(NuiEvent.WatchMenuSetShowInstructionalOverlay, value)}
+                    >
+                        Instructions d'intéraction
+                    </MenuItemCheckbox>
                 </MenuContent>
             </MainMenu>
         </Menu>

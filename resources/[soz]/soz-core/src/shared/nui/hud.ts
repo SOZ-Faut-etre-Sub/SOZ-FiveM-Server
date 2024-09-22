@@ -37,4 +37,5 @@ export interface NuiHudMethodMap {
     SetShowCompass: boolean;
     SetShowStress: boolean;
     SetShowStamina: boolean;
+    SetShowInstructionalOverlay: boolean;
 }
