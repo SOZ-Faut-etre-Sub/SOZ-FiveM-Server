@@ -6,7 +6,7 @@ import { wait } from '../../../core/utils';
 import { ServerEvent } from '../../../shared/event/server';
 import { JobType } from '../../../shared/job';
 import { OIL_FIELDS } from '../../../shared/job/oil';
-import { BoxZone, Zone } from '../../../shared/polyzone/box.zone';
+import { Zone } from '../../../shared/polyzone/box.zone';
 import { MultiZone } from '../../../shared/polyzone/multi.zone';
 import { PolygonZone } from '../../../shared/polyzone/polygon.zone';
 import { Vector3 } from '../../../shared/polyzone/vector';
@@ -113,22 +113,13 @@ export class OilTankerProvider {
         this.targetFactory.createForBoxZone(
             'mtp_fuel_resell',
             {
-                ...new BoxZone([532.82, -632.97, 24.97], 26.8, 5.0, {
-                    heading: 173.14,
-                    minZ: 23.97,
-                    maxZ: 27.17,
-                }),
-            },
-            //meteor
-            /*
-            {
                 center: [263.58, -2972.16, 5.31],
                 width: 10.4,
                 length: 10.4,
                 heading: 45,
                 minZ: 3.31,
                 maxZ: 15.31,
-            },*/
+            },
             [
                 {
                     icon: 'fuel/remplir',
