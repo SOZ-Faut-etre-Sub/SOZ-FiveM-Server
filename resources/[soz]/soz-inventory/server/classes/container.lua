@@ -59,7 +59,7 @@ function InventoryContainer:CompactInventory(inv)
                     type = v.type,
                     slot = k,
                     amount = v.amount,
-                    metadata = next(metadata) and metadata or nil,
+                    metadata = metadata and next(metadata) and metadata or nil,
                 }
             end
         end

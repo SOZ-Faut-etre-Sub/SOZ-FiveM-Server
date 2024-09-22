@@ -41,7 +41,7 @@ export const MenuGarage: FunctionComponent<MenuGarageProps> = ({ data }) => {
         return null;
     }
 
-    const showFreePlaces = data?.garage.type === GarageType.Private;
+    const showFreePlaces = [GarageType.Private, GarageType.Gang].includes(data?.garage.type);
 
     const vehicleShowPlaces = () => {
         fetchNui(NuiEvent.VehicleGarageShowPlaces, { id: data.id, garage: data.garage });

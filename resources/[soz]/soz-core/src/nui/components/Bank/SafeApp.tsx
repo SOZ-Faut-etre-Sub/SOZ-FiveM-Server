@@ -178,7 +178,7 @@ export const SafeApp: FunctionComponent = () => {
                                 <span className="text-white font-semibold">Argent marqué</span>
                                 <span className="text-sm text-red-400/70">
                                     {moneyFormat(account?.marked_money)}
-                                    {account?.type === 'housestorages' && (
+                                    {['housestorages', 'gang'].includes(account?.type) && (
                                         <span> / {moneyFormat(account?.maxCapacity)}</span>
                                     )}
                                 </span>

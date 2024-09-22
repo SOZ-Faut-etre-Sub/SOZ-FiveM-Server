@@ -187,6 +187,11 @@ RegisterServerEvent("inventory:server:ResellItem", function(item, amount, resell
         return
     end
 
+    if item.metadata and item.metadata.printed then
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous ne pouvez pas revendre des produits répliqués", "error")
+        return
+    end
+
     if resellZone.ZoneName == "Resell:fish" then
         TriggerEvent("soz-core:server:fishing:resell", source, item, amount)
         return

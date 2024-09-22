@@ -42,7 +42,7 @@ export const HouseGarageLimits = {
 
 export const MaxPlaces: Record<GarageType, number> = {
     depot: 0,
-    gang: 0,
+    gang: 99,
     house: 99,
     job: 0,
     job_luxury: 0,

@@ -352,7 +352,6 @@ export enum ClientEvent {
     BANK_ATM_CREATED = 'soz-core:client:bank:atm:created',
     BANK_SAFE_OPEN_UI = 'soz-core:client:bank:safe:openui',
     BANK_SAFE_HOUSE_OPEN_UI = 'soz-core:client:bank:safe:house:openui',
-    BANK_SAFE_GANG_OPEN_UI = 'soz-core:client:bank:safe:gang:openui',
     BANK_PHONE_INVOICE_PAID = 'banking:client:invoicePaid',
     BANK_PHONE_INVOICE_REJECTED = 'banking:client:invoiceRejected',
     BANK_PHONE_INVOICE_RECEIVED = 'banking:client:invoiceReceived',

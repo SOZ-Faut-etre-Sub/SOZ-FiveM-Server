@@ -5,16 +5,12 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { CardType } from '../../shared/nui/card';
-import { BankService } from '../bank/bank.service';
 import { PlayerService } from './player.service';
 
 @Provider()
 export class PlayerIdentityProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
-
-    @Inject(BankService)
-    private bankService: BankService;
 
     @OnEvent(ServerEvent.PLAYER_SHOW_IDENTITY)
     public showIdentity(source, type: CardType, targets: number[], player: PlayerData, accountId?: string) {

@@ -1,4 +1,5 @@
 import { bank_accounts } from '@prisma/client';
+import { GangService } from '@private/server/gang/gang.service';
 import { GangRepository } from '@private/server/resources/gang.repository';
 import { PlayerService } from '@public/server/player/player.service';
 import { HousingRepository } from '@public/server/repository/housing.repository';
@@ -31,6 +32,9 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
 
     @Inject(GangRepository)
     private gangRepository: GangRepository;
+
+    @Inject(GangService)
+    private gangService: GangService;
 
     public type = RepositoryType.BankAccount;
 
@@ -277,6 +281,7 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
             case 'gang':
                 accountType = 'gang';
                 accountLabel = gang?.name ?? data.accountid;
+                accountMaxCapacity = await this.gangService.getMaxSafeSize(gang);
                 break;
         }
 
