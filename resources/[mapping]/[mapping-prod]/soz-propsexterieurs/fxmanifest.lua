@@ -3,15 +3,4 @@ game 'gta5'
 this_is_a_map 'yes'
 
 
-data_file 'DLC_ITYP_REQUEST' 'stream/prop_z_park.ytyp'
-data_file 'DLC_ITYP_REQUEST' 'stream/soz_prop_radar.ytyp'
-data_file 'DLC_ITYP_REQUEST' "stream/soz_prop_paystation.ytyp"
-data_file 'DLC_ITYP_REQUEST' "stream/ytyp/barrier.ytyp"
-data_file 'DLC_ITYP_REQUEST' "stream/soz_prop_bb_bin.ytyp"
-data_file 'DLC_ITYP_REQUEST' "stream/soz_prop_elec.ytyp"
-data_file 'DLC_ITYP_REQUEST' "stream/soz_atm_entreprise.ytyp"
-data_file 'DLC_ITYP_REQUEST' 'stream/soz_prop_radar_2.ytyp'
-data_file 'DLC_ITYP_REQUEST' 'stream/soz_prop_atm.ytyp'
-data_file 'DLC_ITYP_REQUEST' 'stream/soz_prop_gas_pump.ytyp'
-data_file 'DLC_ITYP_REQUEST' 'stream/soz_trees_marked_props.ytyp'
-data_file 'DLC_ITYP_REQUEST' 'stream/soz_lantern_custom.ytyp'
+data_file 'DLC_ITYP_REQUEST' 'stream/soz_prop_ext.ytyp'
