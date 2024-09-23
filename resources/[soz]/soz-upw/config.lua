@@ -99,13 +99,5 @@ Config.Upw.Resale = {
         ["energy_cell_wind"] = 36,
         ["energy_cell_solar"] = 36,
     },
-    -- meteor Zone = {coords = vector3(291.97, -2885.82, 6.01), sx = 5.2, sy = 3.8, heading = 0, minZ = 5.01, maxZ = 8.21},
-    Zone = {
-        coords = vector3(712.30, 166.30, 80.751),
-        sx = 4.80,
-        sy = 5.40,
-        heading = 157.86,
-        minZ = 79.75,
-        maxZ = 81.75,
-    },
+    Zone = {coords = vector3(291.97, -2885.82, 6.01), sx = 5.2, sy = 3.8, heading = 0, minZ = 5.01, maxZ = 8.21},
 }

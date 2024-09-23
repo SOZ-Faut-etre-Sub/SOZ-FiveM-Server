@@ -134,9 +134,6 @@ export const WeatherList = memo(() => {
         const day = isDay(timeObject) ? 'DAY' : 'NIGHT';
         if (weather.toUpperCase() == 'EXTRASUNNY') {
             weather = 'EXTRASUNNY.' + day;
-        } else if (weather.toUpperCase() == 'BLIZZARD') {
-            //meteor
-            weather = 'SANDSTORM';
         } else {
             weather = weather.toUpperCase();
         }

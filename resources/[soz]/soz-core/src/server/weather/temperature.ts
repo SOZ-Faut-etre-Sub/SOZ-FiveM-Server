@@ -54,8 +54,7 @@ export const ForecastAdderTemperatures: Record<Weather, TemperatureRange> = {
     RAIN: { min: 3, max: -2 },
     THUNDER: { min: 5, max: -3 },
     SNOW: { min: -5, max: -5 },
-    //meteor BLIZZARD: { min: -30, max: -30 }, // This is a legit value, not a typo
-    BLIZZARD: { min: 5, max: 7 }, // This is a legit value, not a typo
+    BLIZZARD: { min: -30, max: -30 }, // This is a legit value, not a typo
     SNOWLIGHT: { min: -5, max: 0 },
     XMAS: { min: -5, max: -5 },
     HALLOWEEN: { min: 3, max: 2 },

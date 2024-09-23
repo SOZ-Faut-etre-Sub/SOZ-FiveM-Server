@@ -409,8 +409,7 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
         },
         resell: {
             primary: {
-                //meteor coords: [-272.22, -2496.57, 7.3, 186.72],
-                coords: [955.87, -2176.36, 30.15, 90.14],
+                coords: [-272.22, -2496.57, 7.3, 186.72],
                 ZoneName: 'Resell:LSPort:Pawl',
                 SourceAccount: 'farm_pawl',
                 TargetAccount: 'safe_pawl',

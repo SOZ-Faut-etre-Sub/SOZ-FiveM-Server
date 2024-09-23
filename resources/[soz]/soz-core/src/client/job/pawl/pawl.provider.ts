@@ -14,7 +14,7 @@ export class PawlProvider {
     public async onPlayerLoaded() {
         await this.pedFactory.createPedOnGrid({
             model: 's_m_y_construct_01',
-            coords: toVector4Object([955.87, -2176.36, 30.15, 90.14]),
+            coords: toVector4Object([-272.22, -2496.57, 6.3, 186.72]),
             freeze: true,
             invincible: true,
             blockevents: true,
