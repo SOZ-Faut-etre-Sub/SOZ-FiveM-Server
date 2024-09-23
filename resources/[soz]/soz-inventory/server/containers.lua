@@ -635,7 +635,7 @@ Container["distillery"] = InventoryContainer:new({
 })
 
 Container["gang_stash"] = InventoryContainer:new({
-    type = "stash",
+    type = "gang_stash",
     allowedTypes = {
         "item",
         "item_illegal",

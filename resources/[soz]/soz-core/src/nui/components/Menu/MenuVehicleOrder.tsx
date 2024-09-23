@@ -10,6 +10,7 @@ import {
     VehicleOrder,
     VehicleOrderCostMuliplier,
     VehicleOrderMenuData,
+    VehicleOrderMode,
 } from '@public/shared/vehicle/vehicle';
 import { FunctionComponent, useState } from 'react';
 
@@ -31,7 +32,12 @@ export const VehicleOrderMenu: FunctionComponent<VehicleOrderMenuProps> = ({ dat
     const [orders, setOrders] = useState<VehicleOrder[]>([]);
     const vehicles = useRepository(RepositoryType.Vehicle);
     const player = usePlayer();
-    const banner = `https://nui-img/soz/menu_job_${player.job.id}`;
+    let banner = `https://nui-img/soz/menu_job_${player.job.id}`;
+    if (data.mode == VehicleOrderMode.Crimi) {
+        banner = 'https://cfx-nui-soz-core/public/images/banner/menu_vehbiz_import.webp';
+    } else if (data.mode == VehicleOrderMode.Cartel) {
+        banner = 'https://cfx-nui-soz-core/public/images/banner/menu_cartel_plane.webp';
+    }
 
     useState(() => {
         fetchNui<any, VehicleOrder[]>(NuiEvent.VehicleGetOrders, data.mode).then(orders => setOrders(orders));

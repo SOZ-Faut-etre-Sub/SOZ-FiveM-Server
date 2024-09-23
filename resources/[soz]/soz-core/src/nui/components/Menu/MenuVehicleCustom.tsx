@@ -78,7 +78,7 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
     const items = useItems();
     const crimi = ![LSCustomMode.Admin, LSCustomMode.LsCustom].includes(data.mode);
     const banner = crimi
-        ? 'https://cfx-nui-soz-core/public/images/banner/vehbiz_perfo.webp'
+        ? 'https://cfx-nui-soz-core/public/images/banner/menu_vehbiz_perf.webp'
         : 'https://nui-img/soz/menu_shop_lscustoms';
 
     useEffect(() => {

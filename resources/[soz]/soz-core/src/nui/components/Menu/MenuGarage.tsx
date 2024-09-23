@@ -30,7 +30,7 @@ const BannerMap: Record<GarageType, string> = {
     [GarageType.JobLuxury]: 'https://nui-img/soz/menu_garage_entreprise',
     [GarageType.Depot]: 'https://nui-img/soz/menu_garage_pound',
     [GarageType.House]: 'https://nui-img/soz/menu_garage_personal',
-    [GarageType.Gang]: 'https://nui-img/soz/menu_garage_gang',
+    [GarageType.Gang]: 'https://cfx-nui-soz-core/public/images/banner/menu_gang_garage.webp',
 };
 
 export const MenuGarage: FunctionComponent<MenuGarageProps> = ({ data }) => {
