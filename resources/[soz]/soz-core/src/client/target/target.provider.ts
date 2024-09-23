@@ -2,7 +2,7 @@ import { Command } from '@core/decorators/command';
 import { OnNuiEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
-import { Tick, TickInterval } from '@core/decorators/tick';
+import { Tick } from '@core/decorators/tick';
 import { uuidv4 } from '@core/utils';
 import { Notifier } from '@public/client/notifier';
 
@@ -45,6 +45,8 @@ export class TargetProvider {
 
     private _playerCoordsOverride: Vector3 | null;
 
+    private _activeTargetedEntity: Array<number> = [];
+
     @Command('+target', {
         description: 'Activer le mode ciblage',
         keys: [{ mapper: 'keyboard', key: 'LMENU' }],
@@ -71,23 +73,25 @@ export class TargetProvider {
         await this.resetTarget();
     }
 
-    @Tick(TickInterval.EVERY_SECOND)
+    @Tick(50)
     public async checkTargetMode(): Promise<void> {
-        return; // need a better check
         if (!this._targetFound) return;
 
-        const [entityId, entityCoords] = await this.screenService.getEntityOnPosition(
-            [0.5, 0.5],
-            this._playerCoordsOverride
-        );
+        const [entityId] = await this.screenService.getEntityOnPosition([0.5, 0.5], this._playerCoordsOverride);
 
-        if (entityId === 0) return;
+        if (entityId !== 0) {
+            this._activeTargetedEntity.push(entityId);
+        }
 
-        const playerDistance = getDistance(entityCoords, this.getPlayerCoords());
-        const options = await this.checkTargetActions(entityId, entityCoords, playerDistance);
-
-        if (options.length !== this._targetOptions.length) {
+        if (
+            this._activeTargetedEntity.length >= 2 &&
+            !this._targetOptions.some(t => this._activeTargetedEntity.includes(t.entity))
+        ) {
             this.resetTarget();
+        }
+
+        if (this._activeTargetedEntity.length > 2) {
+            this._activeTargetedEntity.shift();
         }
     }
 
@@ -335,6 +339,7 @@ export class TargetProvider {
         this._targetActive = false;
         this._targetFound = false;
         this._targetOptions = [];
+        this._activeTargetedEntity = [];
         this.nuiDispatch.dispatch('target', 'SetTargeting', this._targetActive);
         this.nuiDispatch.dispatch('target', 'SetTargetFound', this._targetFound);
         this.nuiDispatch.dispatch('target', 'SetTargets', this._targetOptions);
