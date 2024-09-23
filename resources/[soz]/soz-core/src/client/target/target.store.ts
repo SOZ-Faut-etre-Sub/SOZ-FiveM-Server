@@ -51,11 +51,12 @@ export class TargetStore {
     public bones: TargetStoreData<TargetStoreBone> = new TargetStoreData<TargetStoreBone>();
 
     public async addZone(
+        id: string,
         zone: TargetStoreZone['zone'],
         targets: TargetStoreZone['targets'],
         distance = DEFAULT_DISTANCE
     ) {
-        this.zones.add({ zone, targets, distance });
+        this.zones.add({ zone, targets, distance }, id);
     }
 
     public addModels(

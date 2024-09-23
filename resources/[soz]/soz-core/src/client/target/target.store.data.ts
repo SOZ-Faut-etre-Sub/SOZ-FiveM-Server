@@ -18,8 +18,10 @@ export class TargetStoreData<E extends TargetStoreBase> {
         return Object.entries(this.data).filter(predicate);
     }
 
-    public add(data: E): string {
-        const id = uuidv4();
+    public add(data: E, id?: string): string {
+        if (!id) {
+            id = uuidv4();
+        }
 
         for (const target of data.targets) {
             if (!target.action) {

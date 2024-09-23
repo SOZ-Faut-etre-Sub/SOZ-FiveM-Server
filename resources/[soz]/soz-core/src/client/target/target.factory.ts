@@ -43,7 +43,7 @@ export class TargetFactory {
             ...zone,
         };
 
-        await this.targetStore.addZone(BoxZone.fromZone(zone), targets, distance);
+        await this.targetStore.addZone(id, BoxZone.fromZone(zone), targets, distance);
     }
 
     public async createForPolygoneZone(
@@ -52,7 +52,7 @@ export class TargetFactory {
         targets: TargetOption[],
         distance = DEFAULT_DISTANCE
     ) {
-        await this.targetStore.addZone(zone, targets, distance);
+        await this.targetStore.addZone(id, zone, targets, distance);
     }
 
     public createForAllPlayer(targets: TargetOption[], distance = DEFAULT_DISTANCE) {
