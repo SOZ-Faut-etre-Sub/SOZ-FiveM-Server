@@ -3799,7 +3799,7 @@ QBShared.Items = {
         ["useable"] = false,
         ["shouldClose"] = true,
         ["combinable"] = nil,
-        ["description"] = "Trouve ton chemin facilement !",
+        ["description"] = "Il existe encore des gens qui utilisent ça ?",
         ["illustrator"] = ".LeakFlood",
     },
     ["compass"] = {
