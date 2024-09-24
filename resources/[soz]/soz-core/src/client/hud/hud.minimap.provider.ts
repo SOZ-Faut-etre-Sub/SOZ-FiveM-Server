@@ -9,7 +9,6 @@ import { wait } from '../../core/utils';
 import { ClientEvent } from '../../shared/event';
 import { Minimap } from '../../shared/hud';
 import { VehicleSeat } from '../../shared/vehicle/vehicle';
-import { InventoryManager } from '../inventory/inventory.manager';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { ResourceLoader } from '../repository/resource.loader';
 import { HudWatchProvider } from './hud.watch.provider';
@@ -22,15 +21,11 @@ export class HudMinimapProvider {
     @Inject(NuiDispatch)
     private readonly nuiDispatch: NuiDispatch;
 
-    @Inject(InventoryManager)
-    private readonly inventoryManager: InventoryManager;
-
     @Inject(HudWatchProvider)
     private readonly hudWatchProvider: HudWatchProvider;
 
     private minimapHandle: number;
 
-    private _haveGps = false;
     private _hasAdminGps = false;
     private _dead = false;
     private _showHud = true;
@@ -86,9 +81,6 @@ export class HudMinimapProvider {
 
     @PlayerUpdate()
     async onPlayerUpdate(player: PlayerData): Promise<void> {
-        this._haveGps =
-            this.inventoryManager.hasEnoughItem('gps', 1, true) ||
-            this.inventoryManager.hasEnoughItem('halloween_atomic_gps', 1, true);
         this._dead = player?.metadata.isdead;
     }
 
@@ -131,7 +123,9 @@ export class HudMinimapProvider {
     }
 
     private get shouldDisplayRadar(): boolean {
-        return this._showHud && ((this._inVehicle && this._haveGps && !this._dead) || this._hasAdminGps);
+        return (
+            this._showHud && ((this._inVehicle && this.hudWatchProvider.haveWatch && !this._dead) || this._hasAdminGps)
+        );
     }
 
     private async updateShowRadar(): Promise<void> {
