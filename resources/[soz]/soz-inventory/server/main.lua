@@ -1217,7 +1217,6 @@ function GetOrCreateInventory(storageType, invID, ctx)
         end
     elseif storageType == "gang_stash" then
         local weight = exports["soz-core"]:GetGangStashWeight(ctx.entity)
-        print("weight", weight)
         if targetInv == nil then
             targetInv = Inventory.Create(invID, invID, storageType, storageConfig.slot, weight, "gang_" .. ctx.entity)
         else

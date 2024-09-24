@@ -14,6 +14,7 @@ const excludeWeapon = [
     0,
     GetHashKey('WEAPON_BRIEFCASE'),
     GetHashKey('WEAPON_UVFLASHLIGHT'),
+    GetHashKey('WEAPON_GADGETPISTOL'),
     966099553 /*WEAPON_OBJECT*/,
 ];
 
