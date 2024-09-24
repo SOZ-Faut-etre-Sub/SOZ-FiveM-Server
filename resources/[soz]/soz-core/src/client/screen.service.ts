@@ -1,5 +1,6 @@
-import { Injectable } from '../core/decorators/injectable';
-import { wait } from '../core/utils';
+import { Injectable } from '@core/decorators/injectable';
+import { wait } from '@core/utils';
+
 import { Control } from '../shared/input';
 import { add2Vector3, multVector3, sub2Vector3, Vector2, Vector3 } from '../shared/polyzone/vector';
 
