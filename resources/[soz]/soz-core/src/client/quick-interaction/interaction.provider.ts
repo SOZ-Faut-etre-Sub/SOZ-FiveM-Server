@@ -13,12 +13,6 @@ import { TargetService } from '../target/target.service';
 const DRAW_DISTANCE = 7;
 const INTERACTION_DISTANCE = 1.5;
 
-const INTERACTION_SIZE = 0.25;
-const spriteWidth = INTERACTION_SIZE / 16;
-const spriteHeight = INTERACTION_SIZE / 9;
-
-const INTERACTION_SPRITE_CONTENT_WIDTH = 0.0375;
-
 @Provider()
 export class InteractionProvider {
     @Inject(ResourceLoader)
@@ -29,6 +23,27 @@ export class InteractionProvider {
 
     private interactions: Record<string, Interaction> = {};
     private nearbyInteraction: Interaction = null;
+
+    private readonly interactionSprite = {
+        onoff: {
+            size: 0.25,
+            width: 0.25 / 16,
+            height: 0.25 / 9,
+        },
+        start: {
+            x: 0.03 / 16,
+            width: 0.03 / 16,
+            height: 0.25 / 9,
+        },
+        content: {
+            height: 0.25 / 9,
+        },
+        end: {
+            x: 0.03,
+            width: 0.03 / 16,
+            height: 0.25 / 9,
+        },
+    };
 
     public createInteractionForCoords(
         coords: Vector3 | Vector4,
@@ -82,22 +97,33 @@ export class InteractionProvider {
         SetDrawOrigin(coords[0], coords[1], coords[2], 0);
 
         if (distance > this.nearbyInteraction.interactionDistance) {
-            DrawSprite('soz_minimap', 'interaction_off', 0, 0, spriteWidth, spriteHeight, 0, 255, 255, 255, 255);
+            DrawSprite(
+                'soz_minimap',
+                'interaction_off',
+                0,
+                0,
+                this.interactionSprite.onoff.width,
+                this.interactionSprite.onoff.height,
+                0,
+                255,
+                255,
+                255,
+                255
+            );
             ClearDrawOrigin();
             return;
         }
 
-        const contentX =
-            (INTERACTION_SPRITE_CONTENT_WIDTH + INTERACTION_SIZE / 2) / 16 + INTERACTION_SPRITE_CONTENT_WIDTH / 2;
+        const labelSize = this.nearbyInteraction.label.length * 0.005;
+        const contentX = (labelSize + this.interactionSprite.onoff.size / 2) / 16 + labelSize / 2;
 
-        DrawSprite('soz_minimap', 'interaction_on', 0, 0, spriteWidth, spriteHeight, 0, 255, 255, 255, 255);
         DrawSprite(
             'soz_minimap',
-            'interaction_content',
-            contentX,
+            'interaction_on',
             0,
-            INTERACTION_SPRITE_CONTENT_WIDTH,
-            spriteHeight,
+            0,
+            this.interactionSprite.onoff.width,
+            this.interactionSprite.onoff.height,
             0,
             255,
             255,
@@ -105,10 +131,50 @@ export class InteractionProvider {
             255
         );
 
-        SetTextScale(0.0, INTERACTION_SIZE);
+        DrawSprite(
+            'soz_minimap',
+            'interaction_start',
+            contentX - labelSize / 2 - this.interactionSprite.start.width / 16,
+            0,
+            this.interactionSprite.start.width,
+            this.interactionSprite.start.height,
+            0,
+            255,
+            255,
+            255,
+            255
+        );
+        DrawSprite(
+            'soz_minimap',
+            'interaction_content',
+            contentX,
+            0,
+            labelSize,
+            this.interactionSprite.content.height,
+            0,
+            255,
+            255,
+            255,
+            255
+        );
+        DrawSprite(
+            'soz_minimap',
+            'interaction_end',
+            contentX + labelSize / 2,
+            0,
+            this.interactionSprite.end.width,
+            this.interactionSprite.end.height,
+            0,
+            255,
+            255,
+            255,
+            255
+        );
+
+        SetTextScale(0.0, this.interactionSprite.onoff.size);
         SetTextEntry('STRING');
         AddTextComponentString(this.nearbyInteraction.label);
-        DrawText(0.0122, -0.0105);
+        DrawText(0.011, -0.0105);
 
         ClearDrawOrigin();
     }
