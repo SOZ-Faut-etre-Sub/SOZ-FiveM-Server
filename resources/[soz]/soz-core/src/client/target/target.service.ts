@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
-import { InteractionOption } from '@public/shared/interaction';
+import { Interaction } from '@public/shared/interaction';
 
 import { TargetOption } from '../../shared/target';
 import { InventoryManager } from '../inventory/inventory.manager';
@@ -40,14 +40,14 @@ export class TargetService {
         return true;
     }
 
-    public async validateInteraction(interaction: InteractionOption): Promise<boolean> {
+    public async validateInteraction(interaction: Interaction, entity?: number): Promise<boolean> {
         if (!this.globalCheck()) return false;
         if (interaction.job && !this.jobCheck(interaction.job)) return false;
         if (interaction.item && !this.itemCheck(interaction.item)) return false;
         if (interaction.blackoutGlobal && !this.blackoutGlobalCheck()) return false;
         if (interaction.blackoutJob && !this.blackoutJobCheck()) return false;
         if (interaction.canInteract) {
-            const result = await interaction.canInteract();
+            const result = await interaction.canInteract(entity);
             if (!result) return false;
         }
         return true;
