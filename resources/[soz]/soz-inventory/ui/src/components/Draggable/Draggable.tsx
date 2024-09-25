@@ -29,6 +29,7 @@ type Props = {
     onItemHover?: (description: string | null) => void;
     price?: number
     undraggable?: boolean;
+    redPrice?: boolean;
 }
 function type_label(type: string | undefined): string {
     if (!type) return 'inconnu';
@@ -50,7 +51,7 @@ function type_label(type: string | undefined): string {
 const FORMAT_LOCALIZED: Intl.DateTimeFormatOptions = {day: "numeric", month: "numeric", year: "numeric", hour: "numeric", minute: "numeric"}
 const FORMAT_CURRENCY: Intl.NumberFormatOptions = {style: "currency", currency: 'USD', maximumFractionDigits: 0}
 
-const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, interactAction, wallet, keychain, onItemHover, price, undraggable }) => {
+const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, interactAction, wallet, keychain, onItemHover, price, undraggable, redPrice }) => {
     const {attributes, listeners, setNodeRef, transform, isDragging} = useDraggable({
         id: `${id}_${item?.slot ?? ''}`,
         data: {
@@ -355,7 +356,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
                 {item && (
                     <>
                         {price ?
-                            <span className={style.Amount}>
+                            <span className={redPrice ? style.AmountRed : style.Amount}>
                                 {price > 0 && price} $
                             </span>
                             : 

@@ -11,9 +11,10 @@ type Props = {
     items: (ShopItem & {id: number})[]
     action?: (action: string, item: ShopItem, shortcut: number) => void;
     taxValue: number;
+    moneyType: string;
 }
 
-export const ShopContainerSlots: FunctionComponent<Props> = ({id, columns = 5, rows, items, action, taxValue}) => {
+export const ShopContainerSlots: FunctionComponent<Props> = ({id, columns = 5, rows, items, action, taxValue, moneyType}) => {
     const [description, setDescription] = useState<string|null>('');
     const [inContextMenu, setInContextMenu] = useState<Record<string, boolean>>({});
 
@@ -57,6 +58,7 @@ export const ShopContainerSlots: FunctionComponent<Props> = ({id, columns = 5, r
                                 interactAction={action}
                                 onItemHover={setDescription}
                                 price={priceTax}
+                                redPrice={moneyType == 'marked_money'}
                             />
                         </Droppable>
                     )

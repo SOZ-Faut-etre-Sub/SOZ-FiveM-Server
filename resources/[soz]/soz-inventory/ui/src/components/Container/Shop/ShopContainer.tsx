@@ -220,6 +220,7 @@ export const ShopContainer = () => {
                                 rows={shopRow}
                                 items={shopContent.map((item, i) => ({ ...item, id: i }))}
                                 taxValue={taxValue}
+                                moneyType={moneyType}
                             />
 
                             <CartContainerSlots
