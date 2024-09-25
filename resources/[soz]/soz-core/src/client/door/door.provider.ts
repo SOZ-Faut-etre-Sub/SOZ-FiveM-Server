@@ -306,7 +306,7 @@ export class DoorProvider {
 
             if (distance < 80) {
                 for (const subdoor of subdoors) {
-                    if (!subdoor.entity && IsModelValid(subdoor.model)) {
+                    if (!subdoor.entity || !DoesEntityExist(subdoor.entity)) {
                         const entity = GetClosestObjectOfType(
                             subdoor.coords[0],
                             subdoor.coords[1],
