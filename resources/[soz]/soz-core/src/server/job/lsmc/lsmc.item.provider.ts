@@ -91,8 +91,16 @@ export class LSMCItemProvider {
         }
     }
 
-    private async useIfaks(source: number) {
-        TriggerClientEvent(ClientEvent.LSMC_HEAL, source, 25);
+    private async useIfaks(source: number, _item: Item, inventoryItem: InventoryItem) {
+        if (!this.inventoryManager.removeInventoryItem(source, inventoryItem)) {
+            return;
+        }
+        this.playerService.setPlayerMetaDatas(source, {
+            hunger: 100,
+            thirst: 100,
+        });
+
+        TriggerClientEvent(ClientEvent.LSMC_HEAL, source, 100);
     }
 
     private async useStretcher(source: number, _item: Item, inventoryItem: InventoryItem) {
