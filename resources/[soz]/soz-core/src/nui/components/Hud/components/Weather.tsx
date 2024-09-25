@@ -6,11 +6,15 @@ import { ForecastWithTemperature } from '../../../../shared/weather';
 import { useDateTime } from '../../../hook/data';
 import { useNuiEvent } from '../../../hook/nui';
 import { RootState } from '../../../store';
+import { useZoom } from '../hooks/useZoom';
 
 export const Weather: FunctionComponent = () => {
     const hasWatch = useSelector((state: RootState) => state.hud.hasWatch);
+    const settings = useSelector((state: RootState) => state.hud.settings);
     const showWeather = useSelector((state: RootState) => state.hud.settings.showWeather);
     const { isDay } = useDateTime();
+
+    const { largeIconSize } = useZoom();
 
     const [forecast, setForecast] = useState<ForecastWithTemperature>();
     useNuiEvent('weather', 'forecast', setForecast);
@@ -61,11 +65,12 @@ export const Weather: FunctionComponent = () => {
                 className={cn('leading-3 mt-1.5', {
                     'relative left-3': weather.endsWith('sun'),
                 })}
+                style={{ zoom: settings.zoom }}
             >
                 <span className="font-semibold">{forecast?.temperature}</span>
                 <span className="font-light">°C</span>
             </div>
-            <img className="h-14" src={`/public/images/hud/weather/${weather}.webp`} />
+            <img style={{ height: largeIconSize }} src={`/public/images/hud/weather/${weather}.webp`} />
         </div>
     );
 };

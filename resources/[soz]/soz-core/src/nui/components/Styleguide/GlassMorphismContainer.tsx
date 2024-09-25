@@ -13,6 +13,7 @@ interface GlassMorphismContainerProps extends HTMLAttributes<any>, PropsWithChil
 
 export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerProps> = ({
     className,
+    style,
     borderColor,
     borderClassName,
     disableBorder,
@@ -93,7 +94,7 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
                 }}
             />
 
-            <div ref={childrenRef} className={cn('relative z-10', className)}>
+            <div ref={childrenRef} className={cn('relative z-10', className)} style={style}>
                 {children}
             </div>
 

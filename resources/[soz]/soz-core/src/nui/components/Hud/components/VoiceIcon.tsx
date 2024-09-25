@@ -1,12 +1,16 @@
 import { animated, useSpring } from '@react-spring/web';
 import { FunctionComponent, useEffect, useState } from 'react';
 
+import { useZoom } from '../hooks/useZoom';
+
 export const VoiceIcon: FunctionComponent<{ icon: string; disableAutoHide?: boolean }> = ({
     icon,
     disableAutoHide,
 }) => {
     const [show, setShow] = useState(true);
     const [timeout, initTimeout] = useState<NodeJS.Timeout>(null);
+
+    const { width, height } = useZoom();
 
     useEffect(() => {
         clearTimeout(timeout);
@@ -30,8 +34,8 @@ export const VoiceIcon: FunctionComponent<{ icon: string; disableAutoHide?: bool
 
     return (
         <animated.div
-            className="size-12 bg-cover bg-center"
-            style={{ ...styles, backgroundImage: `url(/public/images/hud/voice/${icon}.webp)` }}
+            className="bg-cover bg-center"
+            style={{ ...styles, width, height, backgroundImage: `url(/public/images/hud/voice/${icon}.webp)` }}
         />
     );
 };

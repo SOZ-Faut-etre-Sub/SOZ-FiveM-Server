@@ -146,7 +146,7 @@ export class HudMinimapProvider {
         const haveWatch = this.hudWatchProvider.haveWatch;
         const showStreetName = this.hudWatchProvider.showStreetName;
 
-        return haveWatch && showStreetName ? -0.05 : 0.0;
+        return haveWatch && showStreetName ? -0.05 * this.hudWatchProvider.zoom : 0.0;
     }
 
     @OnEvent(ClientEvent.UPDATE_MINIMAP_POSITION)

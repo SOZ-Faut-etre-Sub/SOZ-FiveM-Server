@@ -7,12 +7,14 @@ import { useHudHasStreetNames } from '../../../hook/data';
 import PinIcon from '../../../icons/hud/pin.svg';
 import { RootState } from '../../../store';
 import { GlassMorphismContainer } from '../../Styleguide/GlassMorphismContainer';
+import { useZoom } from '../hooks/useZoom';
 
 export const Location: FunctionComponent = () => {
     const settings = useSelector((state: RootState) => state.hud.settings);
     const streetName = useSelector((state: RootState) => state.hud.streetName);
     const minimap = useSelector((state: RootState) => state.hud.minimap);
 
+    const { height, smallIconSize } = useZoom();
     const hasStreetNamesEnabled = useHudHasStreetNames();
 
     const styles = useSpring({
@@ -30,11 +32,15 @@ export const Location: FunctionComponent = () => {
     });
 
     return (
-        <animated.div className="h-12" style={styles}>
-            <GlassMorphismContainer borderClassName="rounded-full" className="flex items-center gap-2 px-5 h-12 w-full">
-                <PinIcon className="w-5 h-5 shrink" />
+        <animated.div style={{ ...styles, height }}>
+            <GlassMorphismContainer
+                borderClassName="rounded-full"
+                className="flex items-center gap-2 px-5 w-full"
+                style={{ height }}
+            >
+                <PinIcon className="shrink" style={{ width: smallIconSize, height: smallIconSize }} />
 
-                <div className="flex flex-col justify-center -space-y-2.5 h-12" style={{ zoom: settings.zoom }}>
+                <div className="flex flex-col justify-center -space-y-2.5" style={{ height, zoom: settings.zoom }}>
                     {streetName.map((name, index) => (
                         <span
                             key={index}

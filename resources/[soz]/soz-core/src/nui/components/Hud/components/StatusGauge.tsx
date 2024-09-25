@@ -1,6 +1,7 @@
 import { FunctionComponent, PropsWithChildren } from 'react';
 
 import { GlassMorphismContainer } from '../../Styleguide/GlassMorphismContainer';
+import { useZoom } from '../hooks/useZoom';
 
 export type StatusBarProps = {
     min?: number;
@@ -20,6 +21,8 @@ export const StatusGauge: FunctionComponent<PropsWithChildren<StatusBarProps>> =
     children,
     hideCondition = value => (value - min) / (max - min) === 0,
 }) => {
+    const { width, height } = useZoom();
+
     const hide = hideCondition(value);
     if (hide) {
         return null;
@@ -29,10 +32,11 @@ export const StatusGauge: FunctionComponent<PropsWithChildren<StatusBarProps>> =
     const offset = circumference - ((value - min) / (max - min)) * circumference;
 
     return (
-        <div className="relative size-12 rounded-full">
+        <div className="relative rounded-full" style={{ width, height }}>
             <GlassMorphismContainer
                 borderClassName="rounded-full"
-                className="flex justify-center items-center size-12"
+                className="flex justify-center items-center"
+                style={{ width, height }}
                 disableBorder
             >
                 {children}

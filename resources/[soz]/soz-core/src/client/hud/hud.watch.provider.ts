@@ -33,7 +33,7 @@ export class HudWatchProvider {
     private _haveWatch = false;
 
     private _theme = (GetResourceKvpString('soz_hud_theme') as HudTheme) ?? HudTheme.Auto;
-    private _zoom = 1; //GetResourceKvpFloat('soz_hud_zoom') ?? 1;
+    private _zoom = GetResourceKvpFloat('soz_hud_zoom') ?? 1;
     private _hideDateTime = GetResourceKvpInt('soz_hud_datetime_hide') === 1;
     private _hideWeather = GetResourceKvpInt('soz_hud_weather_hide') === 1;
     private _hideStreetName = GetResourceKvpInt('soz_hud_street_name_hide') === 1;
@@ -120,6 +120,7 @@ export class HudWatchProvider {
     @OnNuiEvent(NuiEvent.WatchMenuSetZoom)
     public async setZoom(value: number) {
         this.zoom = value;
+        TriggerEvent(ClientEvent.UPDATE_MINIMAP_POSITION);
     }
 
     @OnNuiEvent(NuiEvent.WatchMenuSetShowDateTime)
@@ -224,6 +225,10 @@ export class HudWatchProvider {
         this._hideInstructionalOverlay = !value;
         SetResourceKvpInt('soz_hud_instructional_overlay_hide', this._hideInstructionalOverlay ? 1 : 0);
         this.nuiDispatch.dispatch('hud', 'SetShowInstructionalOverlay', value);
+    }
+
+    public get zoom(): number {
+        return Number(this._zoom.toPrecision(2));
     }
 
     public get showCompass() {
