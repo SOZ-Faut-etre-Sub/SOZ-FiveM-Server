@@ -74,11 +74,6 @@ export class BankAtmProvider {
             return AtmLocations[atmIdentifier].accountId;
         }
 
-        const atm = await this.bankAccountRepository.find(atmIdentifier);
-        if (atm) {
-            return atm.id;
-        }
-
         if (!coords) {
             return null;
         }
