@@ -87,7 +87,8 @@ export class TargetProvider {
             this._activeTargetedEntity.length >= 2 &&
             !this._targetOptions.some(t => this._activeTargetedEntity.includes(t.entity))
         ) {
-            this.resetTarget();
+            this._targetFound = false;
+            setTimeout(() => this.resetTarget(), 2000);
         }
 
         if (this._activeTargetedEntity.length > 2) {
