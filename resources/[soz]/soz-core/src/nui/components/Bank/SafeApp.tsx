@@ -196,7 +196,13 @@ export const SafeApp: FunctionComponent = () => {
                                 error={errors.markedMoney}
                                 autofill={
                                     action === 1 && player.money.marked_money > 0
-                                        ? () => setValue('markedMoney', player.money.marked_money ?? 0)
+                                        ? () =>
+                                              setValue(
+                                                  'markedMoney',
+                                                  player.money.marked_money > account?.maxCapacity
+                                                      ? account?.maxCapacity
+                                                      : player.money.marked_money ?? 0
+                                              )
                                         : undefined
                                 }
                             />
