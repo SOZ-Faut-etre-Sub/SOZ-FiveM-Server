@@ -52,15 +52,11 @@ export class HudWatchProvider {
     async onPlayerUpdate(): Promise<void> {
         this._haveWatch = this.inventoryManager.hasEnoughItem('smartwatchuiwi', 1, true);
         this.nuiDispatch.dispatch('hud', 'UpdateHasWatch', this.haveWatch);
+        TriggerEvent(ClientEvent.UPDATE_MINIMAP_POSITION);
     }
 
     public disableWatch(value: boolean): void {
         this._watchDisabled = value;
-        this.nuiDispatch.dispatch('hud', 'UpdateHasWatch', this.haveWatch);
-    }
-
-    @Once(OnceStep.PlayerLoaded)
-    public async onPlayerLoaded(): Promise<void> {
         this.nuiDispatch.dispatch('hud', 'UpdateHasWatch', this.haveWatch);
     }
 

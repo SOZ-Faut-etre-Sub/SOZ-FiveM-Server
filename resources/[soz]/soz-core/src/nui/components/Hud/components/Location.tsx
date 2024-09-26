@@ -23,6 +23,7 @@ export const Location: FunctionComponent = () => {
             width: `0vw`,
         },
         to: {
+            height,
             opacity: hasStreetNamesEnabled ? 1 : 0,
             width:
                 !hasStreetNamesEnabled && !settings.showWeather && !settings.showDateTime && minimap.isHidden
@@ -32,7 +33,7 @@ export const Location: FunctionComponent = () => {
     });
 
     return (
-        <animated.div style={{ ...styles, height }}>
+        <animated.div style={styles}>
             <GlassMorphismContainer
                 borderClassName="rounded-full"
                 className="flex items-center gap-2 px-5 w-full"

@@ -78,7 +78,7 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
 
             <div
                 className={cn(
-                    'absolute h-full w-full transition-all duration-1000 border-transparent z-10',
+                    'absolute h-full w-full transition-opacity duration-1000 border-transparent z-10',
                     borderClassName,
                     {
                         'border-2': !disableBorder || showBorderOnHover,
