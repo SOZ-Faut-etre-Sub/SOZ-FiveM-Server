@@ -871,4 +871,12 @@ export const DoorModels = [
     //Glory Villa
     -1687047623,
     103339342,
+
+    //HC Garage
+    1086819216,
+    -1932904945,
 ];
+
+export const DoorRange = {
+    [-1932904945]: 5,
+};
