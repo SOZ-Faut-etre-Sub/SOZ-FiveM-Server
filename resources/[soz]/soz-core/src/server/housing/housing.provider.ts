@@ -770,16 +770,18 @@ export class HousingProvider {
         // wait for fade in, so we don't remove culling too early
         await wait(500);
 
-        this.playerService.setPlayerMetadata(player.source, 'inside', {
-            apartment: apartment.id,
-            property: property.id,
-            exitCoord: {
-                x: position[0],
-                y: position[1],
-                z: position[2],
-                w: heading,
-            },
-        });
+        if (player.metadata.inside.apartment == false) {
+            this.playerService.setPlayerMetadata(player.source, 'inside', {
+                apartment: apartment.id,
+                property: property.id,
+                exitCoord: {
+                    x: position[0],
+                    y: position[1],
+                    z: position[2],
+                    w: heading,
+                },
+            });
+        }
 
         TriggerClientEvent(ClientEvent.HOUSING_TELEPORT, player.source, apartment.id, property.id);
     }
