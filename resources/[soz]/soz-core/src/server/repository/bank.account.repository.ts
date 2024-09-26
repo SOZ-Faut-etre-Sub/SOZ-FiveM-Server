@@ -36,6 +36,8 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
     @Inject(GangService)
     private gangService: GangService;
 
+    private accountTypeWithMaxCapacity = ['housestorages', 'safestorages', 'gang'];
+
     public type = RepositoryType.BankAccount;
 
     protected async load(): Promise<Record<string, BankAccount>> {
@@ -83,7 +85,7 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
 
         if (
             !allowOverflow &&
-            (account.type === 'housestorages' || account.type === 'safestorages') &&
+            this.accountTypeWithMaxCapacity.includes(account.type) &&
             account[moneyType] + money > account.maxCapacity
         ) {
             return false;
