@@ -926,6 +926,31 @@
         <StdDoorRotDir>StdDoorOpenBothDir</StdDoorRotDir>
       </Tuning>
     </Item>
+    <Item>
+      <Name>MichaelGarageCustomBox</Name>
+      <Tuning>
+        <AutoOpenVolumeOffset x="0.000000" y="-2.600000" z="-2.000000" />
+        <Flags />
+        <AutoOpenRadiusModifier value="0.750000" />
+        <AutoOpenRate value="0.500000" />
+        <AutoOpenCosineAngleBetweenThreshold value="-1.000000" />
+        <AutoOpenCloseRateTaper value="true" />
+        <UseAutoOpenTriggerBox value="true" />
+        <CustomTriggerBox value="true" />
+        <TriggerBoxMinMax>
+          <min x="-3.250000" y="-4.175000" z="0.000000" w="0.000000" />
+          <max x="3.000000" y="11.225000" z="3.350000" w="0.000000" />
+        </TriggerBoxMinMax>
+        <BreakableByVehicle value="false" />
+        <BreakingImpulse value="0.000000" />
+        <ShouldLatchShut value="false" />
+        <MassMultiplier value="1.000000" />
+        <WeaponImpulseMultiplier value="1.000000" />
+        <RotationLimitAngle value="0.000000" />
+        <TorqueAngularVelocityLimit value="5.000000" />
+        <StdDoorRotDir>StdDoorOpenBothDir</StdDoorRotDir>
+      </Tuning>
+    </Item>
   </NamedTuningArray>
   <ModelToTuneMapping>
     <Item>
@@ -1416,11 +1441,11 @@
     <!--  HC  -->
     <Item>
       <ModelName>soz_hc_garages_hall01_garagedoor</ModelName>
-      <TuningName>SupermodGarage</TuningName>
+      <TuningName>MichaelGarageCustomBox2</TuningName>
     </Item>
     <Item>
       <ModelName>soz_hc_garages_hall02_garagedoor</ModelName>
-      <TuningName>SupermodGarage</TuningName>
+      <TuningName>MichaelGarageCustomBox2</TuningName>
     </Item>
   </ModelToTuneMapping>
 </CDoorTuningFile>
