@@ -867,4 +867,8 @@ export const DoorModels = [
     //LSMC
     1725561525,
     639705951,
+
+    //Glory Villa
+    -1687047623,
+    103339342,
 ];
