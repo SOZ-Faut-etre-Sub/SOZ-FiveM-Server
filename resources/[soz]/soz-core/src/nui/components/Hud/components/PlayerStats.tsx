@@ -5,6 +5,7 @@ import { usePlayer } from '../../../hook/data';
 import { useNuiEvent } from '../../../hook/nui';
 import { RootState } from '../../../store';
 import { useDaltonism } from '../hooks/useDaltonism';
+import { useZoom } from '../hooks/useZoom';
 import { StatusGauge } from './StatusGauge';
 
 type SyringeDelay = {
@@ -23,6 +24,7 @@ export const PlayerStats: FunctionComponent = () => {
 
     const player = usePlayer();
     const { gaugeColors } = useDaltonism();
+    const { iconSize } = useZoom();
 
     const health = useSelector((state: RootState) => state.playerStats.health);
     const armor = useSelector((state: RootState) => state.playerStats.armor);
@@ -76,11 +78,25 @@ export const PlayerStats: FunctionComponent = () => {
                 backgroundColor={healthPercent > 20 ? gaugeColors.green_dark : gaugeColors.red_dark}
                 hideCondition={value => value > 80}
             >
-                <img className="size-9" src="/public/images/hud/player/health.webp" alt="" />
+                <img
+                    style={{
+                        width: iconSize,
+                        height: iconSize,
+                    }}
+                    src="/public/images/hud/player/health.webp"
+                    alt=""
+                />
             </StatusGauge>
 
             <StatusGauge value={armor} color={gaugeColors.blue_light} backgroundColor={gaugeColors.blue_dark}>
-                <img className="size-9" src="/public/images/hud/player/armor.webp" alt="armor" />
+                <img
+                    style={{
+                        width: iconSize,
+                        height: iconSize,
+                    }}
+                    src="/public/images/hud/player/armor.webp"
+                    alt="armor"
+                />
             </StatusGauge>
 
             {hasWatch && (
@@ -89,7 +105,14 @@ export const PlayerStats: FunctionComponent = () => {
                     color={gaugeColors.green_light}
                     backgroundColor={gaugeColors.green_dark}
                 >
-                    <img className="size-9" src="/public/images/hud/player/syringe.webp" alt="syringe" />
+                    <img
+                        style={{
+                            width: iconSize,
+                            height: iconSize,
+                        }}
+                        src="/public/images/hud/player/syringe.webp"
+                        alt="syringe"
+                    />
                 </StatusGauge>
             )}
 
@@ -99,7 +122,14 @@ export const PlayerStats: FunctionComponent = () => {
                     color={gaugeColors.green_light}
                     backgroundColor={gaugeColors.green_dark}
                 >
-                    <img className="size-9" src="/public/images/hud/player/drug.webp" alt="drug" />
+                    <img
+                        style={{
+                            width: iconSize,
+                            height: iconSize,
+                        }}
+                        src="/public/images/hud/player/drug.webp"
+                        alt="drug"
+                    />
                 </StatusGauge>
             )}
 
@@ -109,7 +139,14 @@ export const PlayerStats: FunctionComponent = () => {
                     color={gaugeColors.red_light}
                     backgroundColor={gaugeColors.red_dark}
                 >
-                    <img className="size-9" src="/public/images/hud/player/alcohol.webp" alt="alcohol" />
+                    <img
+                        style={{
+                            width: iconSize,
+                            height: iconSize,
+                        }}
+                        src="/public/images/hud/player/alcohol.webp"
+                        alt="alcohol"
+                    />
                 </StatusGauge>
             )}
 
@@ -119,7 +156,14 @@ export const PlayerStats: FunctionComponent = () => {
                 backgroundColor={gaugeColors.orange_dark}
                 hideCondition={value => value >= 50}
             >
-                <img className="size-9" src="/public/images/hud/player/hunger.webp" alt="hunger" />
+                <img
+                    style={{
+                        width: iconSize,
+                        height: iconSize,
+                    }}
+                    src="/public/images/hud/player/hunger.webp"
+                    alt="hunger"
+                />
             </StatusGauge>
 
             <StatusGauge
@@ -128,7 +172,14 @@ export const PlayerStats: FunctionComponent = () => {
                 backgroundColor={gaugeColors.blue_dark}
                 hideCondition={value => value >= 50}
             >
-                <img className="size-9" src="/public/images/hud/player/thirst.webp" alt="thirst" />
+                <img
+                    style={{
+                        width: iconSize,
+                        height: iconSize,
+                    }}
+                    src="/public/images/hud/player/thirst.webp"
+                    alt="thirst"
+                />
             </StatusGauge>
 
             {hasWatch && showStress && (
@@ -137,7 +188,14 @@ export const PlayerStats: FunctionComponent = () => {
                     color={gaugeColors.red_light}
                     backgroundColor={gaugeColors.red_dark}
                 >
-                    <img className="size-9" src="/public/images/hud/player/stress.webp" alt="stress" />
+                    <img
+                        style={{
+                            width: iconSize,
+                            height: iconSize,
+                        }}
+                        src="/public/images/hud/player/stress.webp"
+                        alt="stress"
+                    />
                 </StatusGauge>
             )}
 
@@ -148,7 +206,14 @@ export const PlayerStats: FunctionComponent = () => {
                     backgroundColor={stamina <= 25 ? gaugeColors.orange_dark : gaugeColors.blue_dark}
                     hideCondition={value => value >= 80}
                 >
-                    <img className="size-9" src="/public/images/hud/player/stamina.webp" alt="stamina" />
+                    <img
+                        style={{
+                            width: iconSize,
+                            height: iconSize,
+                        }}
+                        src="/public/images/hud/player/stamina.webp"
+                        alt="stamina"
+                    />
                 </StatusGauge>
             )}
 
@@ -158,7 +223,14 @@ export const PlayerStats: FunctionComponent = () => {
                 backgroundColor={gaugeColors.blue_dark}
                 hideCondition={value => value > 99}
             >
-                <img className="size-9" src="/public/images/hud/vehicle/battery.webp" alt="battery" />
+                <img
+                    style={{
+                        width: iconSize,
+                        height: iconSize,
+                    }}
+                    src="/public/images/hud/vehicle/battery.webp"
+                    alt="battery"
+                />
             </StatusGauge>
         </>
     );

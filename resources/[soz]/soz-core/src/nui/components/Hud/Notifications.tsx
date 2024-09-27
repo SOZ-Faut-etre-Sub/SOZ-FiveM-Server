@@ -314,6 +314,7 @@ const PoliceNotification: FunctionComponent<PoliceNotificationProps> = ({ notifi
 export const Notifications: FunctionComponent = () => {
     const hasWatch = useSelector((state: RootState) => state.hud.hasWatch);
     const minimap = useSelector((state: RootState) => state.hud.minimap);
+    const settings = useSelector((state: RootState) => state.hud.settings);
     const showDateTime = useSelector((state: RootState) => state.hud.settings.showDateTime);
     const showWeather = useSelector((state: RootState) => state.hud.settings.showWeather);
     const showStreetName = useSelector((state: RootState) => state.hud.settings.showStreetName);
@@ -338,10 +339,10 @@ export const Notifications: FunctionComponent = () => {
 
     const notificationOffset = () => {
         if (hasWatch && (showDateTime || showWeather)) {
-            return '5rem';
+            return 5 * settings.zoom + 'rem';
         }
         if (hasWatch && !showStreetName && minimap.isHidden) {
-            return '7rem';
+            return 7 * settings.zoom + 'rem';
         }
         return '.5rem';
     };

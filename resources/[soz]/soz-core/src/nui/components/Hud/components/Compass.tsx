@@ -3,11 +3,14 @@ import { useSelector } from 'react-redux';
 
 import { RootState } from '../../../store';
 import { GlassMorphismContainer } from '../../Styleguide/GlassMorphismContainer';
+import { useZoom } from '../hooks/useZoom';
 
 export const Compass: FunctionComponent = () => {
     const hasWatch = useSelector((state: RootState) => state.hud.hasWatch);
     const settings = useSelector((state: RootState) => state.hud.settings);
     const compass = useSelector((state: RootState) => state.hud.compass);
+
+    const { width, height } = useZoom();
 
     const circumference = 90 * 2 * Math.PI;
     const offset = circumference - ((-20 * 100) / 100 / 100) * circumference;
@@ -17,10 +20,11 @@ export const Compass: FunctionComponent = () => {
     }
 
     return (
-        <div className="relative size-12 rounded-full">
+        <div className="relative rounded-full" style={{ width, height }}>
             <GlassMorphismContainer
                 borderClassName="rounded-full"
-                className="flex justify-center items-center text-white size-12"
+                className="flex justify-center items-center text-white"
+                style={{ width, height }}
                 disableBorder
             >
                 <span className="text-sm pt-0.5" style={{ zoom: settings.zoom }}>

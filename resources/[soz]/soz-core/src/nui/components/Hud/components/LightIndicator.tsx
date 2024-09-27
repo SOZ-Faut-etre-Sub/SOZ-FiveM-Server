@@ -4,9 +4,11 @@ import { useSelector } from 'react-redux';
 
 import { VehicleLightState } from '../../../../shared/vehicle/vehicle';
 import { RootState } from '../../../store';
+import { useZoom } from '../hooks/useZoom';
 
 export const LightIndicator: FunctionComponent = () => {
     const state = useSelector((state: RootState) => state.vehicle.lightState);
+    const { width, height } = useZoom();
 
     const icon = state === VehicleLightState.LowBeam ? 'low' : 'high';
 
@@ -19,5 +21,5 @@ export const LightIndicator: FunctionComponent = () => {
         },
     });
 
-    return <animated.img className="size-12" style={styles} src={`/public/images/hud/vehicle/light-${icon}.webp`} />;
+    return <animated.img style={{ ...styles, width, height }} src={`/public/images/hud/vehicle/light-${icon}.webp`} />;
 };

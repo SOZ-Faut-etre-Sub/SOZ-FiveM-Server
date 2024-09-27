@@ -3,10 +3,13 @@ import { useSelector } from 'react-redux';
 
 import { RootState } from '../../../store';
 import { GlassMorphismContainer } from '../../Styleguide/GlassMorphismContainer';
+import { useZoom } from '../hooks/useZoom';
 import { MotorIndicator } from './MotorIndicator';
 import { OilIndicator } from './OilIndicator';
 
 export const SpeedGauge: FunctionComponent = () => {
+    const zoom = useSelector((state: RootState) => state.hud.settings.zoom);
+
     const useRpm = useSelector((state: RootState) => state.vehicle.useRpm);
     const engineHealth = useSelector((state: RootState) => state.vehicle.engineHealth);
     const oilLevel = useSelector((state: RootState) => state.vehicle.oilLevel);
@@ -15,6 +18,8 @@ export const SpeedGauge: FunctionComponent = () => {
     const vehicleSpeed = useSelector((state: RootState) => state.vehicleSpeed.speed);
     const vehicleRpm = useSelector((state: RootState) => state.vehicleSpeed.rpm);
     const vehicleGear = useSelector((state: RootState) => state.vehicleSpeed.gear);
+
+    const { speedometerSize } = useZoom();
 
     const rpm = useMemo(() => {
         let rpm: number;
@@ -41,8 +46,11 @@ export const SpeedGauge: FunctionComponent = () => {
     }, [vehicleGear, vehicleSpeed]);
 
     return (
-        <div className="relative size-[125px]">
-            <GlassMorphismContainer borderClassName="rounded-full" className="size-[125px]">
+        <div className="relative" style={{ width: speedometerSize, height: speedometerSize }}>
+            <GlassMorphismContainer
+                borderClassName="rounded-full"
+                style={{ width: speedometerSize, height: speedometerSize }}
+            >
                 <div className="absolute h-full w-full">
                     <svg className="mt-1.5 mx-1.5" viewBox="0 0 114 109" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -70,7 +78,10 @@ export const SpeedGauge: FunctionComponent = () => {
                         <path d="M106 57H110H114" stroke="white" strokeWidth="2" />
                     </svg>
 
-                    <div className="absolute inset-0 flex flex-col justify-center items-center font-prompt font-semibold text-center text-white/80 uppercase text-sm tabular-nums [text-shadow:_0px_0px_4px_rgb(0_0_0_/_40%)] h-full w-full">
+                    <div
+                        className="absolute inset-0 flex flex-col justify-center items-center font-prompt font-semibold text-center text-white/80 uppercase text-sm tabular-nums [text-shadow:_0px_0px_4px_rgb(0_0_0_/_40%)] h-full w-full"
+                        style={{ zoom }}
+                    >
                         <span className="absolute top-3.5 text-lg font-semibolt">{gear}</span>
                         <div className="absolute inset-0 flex flex-col justify-center">
                             <span className="text-white text-3xl leading-5">{vehicleSpeed.toFixed(0)}</span>
