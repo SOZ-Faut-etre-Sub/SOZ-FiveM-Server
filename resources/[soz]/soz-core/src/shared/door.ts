@@ -19,6 +19,7 @@ export type Door = {
 
 export const DoorOffset: Record<number, Vector3> = {
     [-1603266611]: [1.4, 0, 1.4],
+    [-1932904945]: [0, 0, 1],
 };
 
 export const DoorModels = [
