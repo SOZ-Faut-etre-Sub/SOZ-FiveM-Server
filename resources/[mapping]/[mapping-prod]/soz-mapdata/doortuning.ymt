@@ -1441,7 +1441,7 @@
     <!--  HC  -->
     <Item>
       <ModelName>soz_hc_garages_hall01_garagedoor</ModelName>
-      <TuningName>MichaelGarageCustomBox2</TuningName>
+      <TuningName>SupermodGarage</TuningName>
     </Item>
     <Item>
       <ModelName>soz_hc_garages_hall02_garagedoor</ModelName>
