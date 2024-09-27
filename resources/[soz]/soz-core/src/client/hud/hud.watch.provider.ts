@@ -33,7 +33,7 @@ export class HudWatchProvider {
     private _haveWatch = false;
 
     private _theme = (GetResourceKvpString('soz_hud_theme') as HudTheme) ?? HudTheme.Auto;
-    private _zoom = GetResourceKvpFloat('soz_hud_zoom') ?? 1;
+    private _zoom = this.zoomFromKvp;
     private _hideDateTime = GetResourceKvpInt('soz_hud_datetime_hide') === 1;
     private _hideWeather = GetResourceKvpInt('soz_hud_weather_hide') === 1;
     private _hideStreetName = GetResourceKvpInt('soz_hud_street_name_hide') === 1;
@@ -41,6 +41,13 @@ export class HudWatchProvider {
     private _hideStress = GetResourceKvpInt('soz_hud_stress_hide') === 1;
     private _hideStamina = GetResourceKvpInt('soz_hud_stamina_hide') === 1;
     private _hideInstructionalOverlay = GetResourceKvpInt('soz_hud_instructional_overlay_hide') === 1;
+
+    protected get zoomFromKvp(): number {
+        const kvpValue = Number(GetResourceKvpFloat('soz_hud_zoom').toPrecision(2));
+        if (kvpValue === null) return 1;
+        if (kvpValue < 0.5 || kvpValue > 1.5) return 1;
+        return kvpValue;
+    }
 
     public get haveWatch(): boolean {
         if (this._watchForceEnabled) return true;
