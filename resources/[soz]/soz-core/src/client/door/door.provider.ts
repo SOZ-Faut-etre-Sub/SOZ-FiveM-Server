@@ -4,7 +4,7 @@ import { Inject } from '@public/core/decorators/injectable';
 import { RepositoryDelete, RepositoryInsert, RepositoryUpdate } from '@public/core/decorators/repository';
 import { Tick } from '@public/core/decorators/tick';
 import { uuidv4 } from '@public/core/utils';
-import { Door, DoorModels } from '@public/shared/door';
+import { Door, DoorModels, DoorRange } from '@public/shared/door';
 import { NuiEvent, ServerEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
@@ -49,215 +49,217 @@ export class DoorProvider {
             this.createDoor(door);
         }
 
-        this.targetFactory.createForModel(
-            DoorModels,
-            [
-                {
-                    label: 'Admin: Ajouter une porte',
-                    icon: 'door/door',
-                    category: 'citizen',
-                    canInteract: entity => {
-                        if (!this.adminEnabled) {
-                            return false;
-                        }
+        for (const model of DoorModels) {
+            this.targetFactory.createForModel(
+                model,
+                [
+                    {
+                        label: 'Admin: Ajouter une porte',
+                        icon: 'door/door',
+                        category: 'citizen',
+                        canInteract: entity => {
+                            if (!this.adminEnabled) {
+                                return false;
+                            }
 
-                        const doors = this.doorRepository.get();
+                            const doors = this.doorRepository.get();
 
-                        const player = this.playerService.getPlayer();
-                        if (!['admin', 'staff'].includes(player.role)) {
-                            return false;
-                        }
+                            const player = this.playerService.getPlayer();
+                            if (!['admin', 'staff'].includes(player.role)) {
+                                return false;
+                            }
 
-                        if (doors.find(door => door.subdoors.map(elem => elem.entity).includes(entity))) {
-                            return false;
-                        }
+                            if (doors.find(door => door.subdoors.map(elem => elem.entity).includes(entity))) {
+                                return false;
+                            }
 
-                        return true;
+                            return true;
+                        },
+                        action: entity => {
+                            const id = uuidv4();
+                            const coords = GetEntityCoords(entity);
+                            const temp = uuidv4();
+                            AddDoorToSystem(
+                                temp,
+                                GetEntityModel(entity),
+                                coords[0],
+                                coords[1],
+                                coords[2],
+                                false,
+                                false,
+                                false
+                            );
+                            DoorSystemSetOpenRatio(temp, 0.0, false, false);
+
+                            const door: Door = {
+                                coords: GetEntityCoords(entity) as Vector3,
+                                lock: false,
+                                id,
+                                subdoors: [
+                                    {
+                                        coords: GetEntityCoords(entity) as Vector3,
+                                        hash: GetHashKey(id),
+                                        model: GetEntityModel(entity),
+                                    },
+                                ],
+                                gangs: [],
+                                jobs: [],
+                                keyMetadata: [],
+                            };
+                            RemoveDoorFromSystem(temp);
+                            TriggerServerEvent(ServerEvent.DOOR_ADD_UPDATE, door);
+                        },
                     },
-                    action: entity => {
-                        const id = uuidv4();
-                        const coords = GetEntityCoords(entity);
-                        const temp = uuidv4();
-                        AddDoorToSystem(
-                            temp,
-                            GetEntityModel(entity),
-                            coords[0],
-                            coords[1],
-                            coords[2],
-                            false,
-                            false,
-                            false
-                        );
-                        DoorSystemSetOpenRatio(temp, 0.0, false, false);
+                    {
+                        label: 'Admin: Ajouter un battant',
+                        icon: 'door/double',
+                        category: 'citizen',
+                        canInteract: entity => {
+                            if (!this.adminEnabled) {
+                                return false;
+                            }
 
-                        const door: Door = {
-                            coords: GetEntityCoords(entity) as Vector3,
-                            lock: false,
-                            id,
-                            subdoors: [
-                                {
-                                    coords: GetEntityCoords(entity) as Vector3,
-                                    hash: GetHashKey(id),
-                                    model: GetEntityModel(entity),
+                            if (!this.idToAdd) {
+                                return false;
+                            }
+
+                            const door = this.doorRepository.find(this.idToAdd);
+                            if (!door) {
+                                return false;
+                            }
+
+                            const doors = this.doorRepository.get();
+
+                            const player = this.playerService.getPlayer();
+                            if (!['admin', 'staff'].includes(player.role)) {
+                                return false;
+                            }
+
+                            if (doors.find(door => door.subdoors.map(elem => elem.entity).includes(entity))) {
+                                return false;
+                            }
+
+                            return true;
+                        },
+                        action: entity => {
+                            const door = this.doorRepository.find(this.idToAdd);
+                            if (!door) {
+                                return;
+                            }
+
+                            const id = uuidv4();
+                            const coords = GetEntityCoords(entity);
+                            const temp = uuidv4();
+                            AddDoorToSystem(
+                                temp,
+                                GetEntityModel(entity),
+                                coords[0],
+                                coords[1],
+                                coords[2],
+                                false,
+                                false,
+                                false
+                            );
+                            DoorSystemSetOpenRatio(temp, 0.0, false, false);
+
+                            door.subdoors.push({
+                                coords: GetEntityCoords(entity) as Vector3,
+                                hash: GetHashKey(id),
+                                model: GetEntityModel(entity),
+                            });
+
+                            RemoveDoorFromSystem(temp);
+                            TriggerServerEvent(ServerEvent.DOOR_ADD_UPDATE, door);
+                            this.idToAdd = null;
+                        },
+                    },
+                    {
+                        label: 'Admin: Configurer la porte',
+                        icon: 'door/cogwheel',
+                        category: 'citizen',
+                        canInteract: entity => {
+                            if (!this.adminEnabled) {
+                                return false;
+                            }
+
+                            const doors = this.doorRepository.get();
+
+                            const player = this.playerService.getPlayer();
+                            if (!['admin', 'staff'].includes(player.role)) {
+                                return false;
+                            }
+
+                            if (!doors.find(door => door.subdoors.map(elem => elem.entity).includes(entity))) {
+                                return false;
+                            }
+
+                            return true;
+                        },
+                        action: entity => {
+                            const doors = this.doorRepository.get();
+                            const door = doors.find(door => door.subdoors.map(elem => elem.entity).includes(entity));
+
+                            this.nuiMenu.openMenu(MenuType.DoorAdmin, door.id);
+                        },
+                    },
+                    {
+                        label: 'Verrouiller',
+                        icon: 'door/lock',
+                        category: 'citizen',
+                        canInteract: entity => {
+                            const [valid, locked] = this.canInterract(entity);
+                            return valid && !locked;
+                        },
+                        action: async entity => {
+                            const doors = this.doorRepository.get();
+                            const door = doors.find(door => door.subdoors.map(elem => elem.entity).includes(entity));
+                            door.lock = true;
+
+                            this.animationService.playAnimation({
+                                base: {
+                                    dictionary: 'missheistfbisetup1',
+                                    name: 'unlock_enter_janitor',
+                                    options: {
+                                        onlyUpperBody: true,
+                                    },
+                                    playbackRate: 0.7,
                                 },
-                            ],
-                            gangs: [],
-                            jobs: [],
-                            keyMetadata: [],
-                        };
-                        RemoveDoorFromSystem(temp);
-                        TriggerServerEvent(ServerEvent.DOOR_ADD_UPDATE, door);
+                            });
+
+                            TriggerServerEvent(ServerEvent.DOOR_ADD_UPDATE, door, true);
+                        },
                     },
-                },
-                {
-                    label: 'Admin: Ajouter un battant',
-                    icon: 'door/double',
-                    category: 'citizen',
-                    canInteract: entity => {
-                        if (!this.adminEnabled) {
-                            return false;
-                        }
+                    {
+                        label: 'Déverrouiller',
+                        icon: 'door/unlock',
+                        category: 'citizen',
+                        canInteract: entity => {
+                            const [valid, locked] = this.canInterract(entity);
+                            return valid && locked;
+                        },
+                        action: async entity => {
+                            const doors = this.doorRepository.get();
+                            const door = doors.find(door => door.subdoors.map(elem => elem.entity).includes(entity));
+                            door.lock = false;
 
-                        if (!this.idToAdd) {
-                            return false;
-                        }
-
-                        const door = this.doorRepository.find(this.idToAdd);
-                        if (!door) {
-                            return false;
-                        }
-
-                        const doors = this.doorRepository.get();
-
-                        const player = this.playerService.getPlayer();
-                        if (!['admin', 'staff'].includes(player.role)) {
-                            return false;
-                        }
-
-                        if (doors.find(door => door.subdoors.map(elem => elem.entity).includes(entity))) {
-                            return false;
-                        }
-
-                        return true;
-                    },
-                    action: entity => {
-                        const door = this.doorRepository.find(this.idToAdd);
-                        if (!door) {
-                            return;
-                        }
-
-                        const id = uuidv4();
-                        const coords = GetEntityCoords(entity);
-                        const temp = uuidv4();
-                        AddDoorToSystem(
-                            temp,
-                            GetEntityModel(entity),
-                            coords[0],
-                            coords[1],
-                            coords[2],
-                            false,
-                            false,
-                            false
-                        );
-                        DoorSystemSetOpenRatio(temp, 0.0, false, false);
-
-                        door.subdoors.push({
-                            coords: GetEntityCoords(entity) as Vector3,
-                            hash: GetHashKey(id),
-                            model: GetEntityModel(entity),
-                        });
-
-                        RemoveDoorFromSystem(temp);
-                        TriggerServerEvent(ServerEvent.DOOR_ADD_UPDATE, door);
-                        this.idToAdd = null;
-                    },
-                },
-                {
-                    label: 'Admin: Configurer la porte',
-                    icon: 'door/cogwheel',
-                    category: 'citizen',
-                    canInteract: entity => {
-                        if (!this.adminEnabled) {
-                            return false;
-                        }
-
-                        const doors = this.doorRepository.get();
-
-                        const player = this.playerService.getPlayer();
-                        if (!['admin', 'staff'].includes(player.role)) {
-                            return false;
-                        }
-
-                        if (!doors.find(door => door.subdoors.map(elem => elem.entity).includes(entity))) {
-                            return false;
-                        }
-
-                        return true;
-                    },
-                    action: entity => {
-                        const doors = this.doorRepository.get();
-                        const door = doors.find(door => door.subdoors.map(elem => elem.entity).includes(entity));
-
-                        this.nuiMenu.openMenu(MenuType.DoorAdmin, door.id);
-                    },
-                },
-                {
-                    label: 'Verrouiller',
-                    icon: 'door/lock',
-                    category: 'citizen',
-                    canInteract: entity => {
-                        const [valid, locked] = this.canInterract(entity);
-                        return valid && !locked;
-                    },
-                    action: async entity => {
-                        const doors = this.doorRepository.get();
-                        const door = doors.find(door => door.subdoors.map(elem => elem.entity).includes(entity));
-                        door.lock = true;
-
-                        this.animationService.playAnimation({
-                            base: {
-                                dictionary: 'missheistfbisetup1',
-                                name: 'unlock_enter_janitor',
-                                options: {
-                                    onlyUpperBody: true,
+                            this.animationService.playAnimation({
+                                base: {
+                                    dictionary: 'missheistfbisetup1',
+                                    name: 'unlock_enter_janitor',
+                                    options: {
+                                        onlyUpperBody: true,
+                                    },
+                                    playbackRate: 0.7,
                                 },
-                                playbackRate: 0.7,
-                            },
-                        });
+                            });
 
-                        TriggerServerEvent(ServerEvent.DOOR_ADD_UPDATE, door, true);
+                            TriggerServerEvent(ServerEvent.DOOR_ADD_UPDATE, door, false);
+                        },
                     },
-                },
-                {
-                    label: 'Déverrouiller',
-                    icon: 'door/unlock',
-                    category: 'citizen',
-                    canInteract: entity => {
-                        const [valid, locked] = this.canInterract(entity);
-                        return valid && locked;
-                    },
-                    action: async entity => {
-                        const doors = this.doorRepository.get();
-                        const door = doors.find(door => door.subdoors.map(elem => elem.entity).includes(entity));
-                        door.lock = false;
-
-                        this.animationService.playAnimation({
-                            base: {
-                                dictionary: 'missheistfbisetup1',
-                                name: 'unlock_enter_janitor',
-                                options: {
-                                    onlyUpperBody: true,
-                                },
-                                playbackRate: 0.7,
-                            },
-                        });
-
-                        TriggerServerEvent(ServerEvent.DOOR_ADD_UPDATE, door, false);
-                    },
-                },
-            ],
-            3.5
-        );
+                ],
+                DoorRange[model] ?? 3.5
+            );
+        }
 
         this.initDone = true;
     }
