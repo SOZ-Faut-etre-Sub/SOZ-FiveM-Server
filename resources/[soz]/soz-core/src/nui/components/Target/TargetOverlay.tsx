@@ -5,6 +5,7 @@ import { NuiEvent } from '../../../shared/event/nui';
 import { TargetOption } from '../../../shared/target';
 import { fetchNui } from '../../fetch';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
+import { debounce } from '../../utils/debounce';
 import { useDaltonism } from '../Hud/hooks/useDaltonism';
 import { TargetConnector } from './components/TargetConnector';
 import { TargetOptions } from './components/TargetOptions';
@@ -42,13 +43,24 @@ export const TargetOverlay: FunctionComponent = () => {
         [setIsTargeting, setTargetFound]
     );
 
+    const onMouseMove = debounce(
+        useCallback(() => {
+            if (!targetFound) return;
+
+            fetchNui(NuiEvent.TargetReset);
+        }, [targetFound]),
+        5000
+    );
+
     useEffect(() => {
         window.addEventListener('keyup', onKeyUpReceived);
+        window.addEventListener('mousemove', onMouseMove);
 
         return () => {
             window.removeEventListener('keyup', onKeyUpReceived);
+            window.removeEventListener('mousemove', onMouseMove);
         };
-    }, [onKeyUpReceived]);
+    }, [onMouseMove, onKeyUpReceived]);
 
     const styles = useSpring({
         from: {
