@@ -5,7 +5,6 @@ import { NuiEvent } from '../../../shared/event/nui';
 import { TargetOption } from '../../../shared/target';
 import { fetchNui } from '../../fetch';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
-import { debounce } from '../../utils/debounce';
 import { useDaltonism } from '../Hud/hooks/useDaltonism';
 import { TargetConnector } from './components/TargetConnector';
 import { TargetOptions } from './components/TargetOptions';
@@ -16,6 +15,7 @@ export const TargetOverlay: FunctionComponent = () => {
     const [isTargeting, setIsTargeting] = useState<boolean>(false);
     const [targetFound, setTargetFound] = useState<boolean>(false);
     const [targets, setTargets] = useState<TargetOption[]>([]);
+    const closeTimeout = useRef<NodeJS.Timeout>();
 
     const { targetColors } = useDaltonism();
 
@@ -26,31 +26,37 @@ export const TargetOverlay: FunctionComponent = () => {
     const targetCriminal = useRef<HTMLDivElement>(null);
 
     useNuiEvent('target', 'SetTargeting', setIsTargeting);
-    useNuiEvent('target', 'SetTargetFound', setTargetFound);
+    useNuiEvent('target', 'SetTargetFound', state => {
+        setTargetFound(state);
+        clearTimeout(closeTimeout.current);
+    });
     useNuiEvent('target', 'SetTargets', setTargets);
 
     useNuiFocus(targetFound, targetFound, targetFound);
 
     const onKeyUpReceived = useCallback(
-        (event: KeyboardEvent) => {
+        async (event: KeyboardEvent) => {
             if (EXCLUDED_KEYS.includes(event.key.toLowerCase())) return;
 
             setIsTargeting(false);
             setTargetFound(false);
+            clearTimeout(closeTimeout.current);
 
-            fetchNui(NuiEvent.TargetReset);
+            await fetchNui(NuiEvent.TargetReset);
         },
         [setIsTargeting, setTargetFound]
     );
 
-    const onMouseMove = debounce(
-        useCallback(() => {
-            if (!targetFound) return;
+    const onMouseMove = useCallback(() => {
+        clearTimeout(closeTimeout.current);
+        if (!targetFound) return;
 
-            fetchNui(NuiEvent.TargetReset);
-        }, [targetFound]),
-        5000
-    );
+        closeTimeout.current = setTimeout(async () => {
+            if (!targetFound) return;
+            await fetchNui(NuiEvent.TargetReset);
+            clearTimeout(closeTimeout.current);
+        }, 5000);
+    }, [targetFound]);
 
     useEffect(() => {
         window.addEventListener('keyup', onKeyUpReceived);
