@@ -17,6 +17,10 @@ export type Door = {
     keyMetadata: string[];
 };
 
+export const DoorOffset: Record<number, Vector3> = {
+    [-1603266611]: [1.4, 0, 1.4],
+};
+
 export const DoorModels = [
     GetHashKey('bh1_45_gate2'),
     GetHashKey('prop_police_door_l_dam'),
