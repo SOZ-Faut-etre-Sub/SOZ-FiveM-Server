@@ -89,7 +89,6 @@ function InventoryContainer:SaveInventory(id, owner, inventory)
     inventory = json.encode(self:CompactInventory(inventory))
     local affectedRows = 0
 
-    print("InventoryContainer:SaveInventory", id, owner, inventory, self.type)
     if self.type == "player" then --- Special case for player inventory
         affectedRows = exports.oxmysql:update_async("UPDATE player SET inventory = ? WHERE citizenid = ?", {
             inventory,

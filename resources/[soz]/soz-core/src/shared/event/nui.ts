@@ -553,6 +553,7 @@ export enum NuiEvent {
     BusinessCyberServiceManagement = 'soz-core:client:business:cyber:activate-service',
     BusinessCyberFarmRetrieve = 'soz-core:client:;business:cyber:retrieve-farm',
     BusinessCyberAppExit = 'soz-core:client:;business:cyber:exit-farm',
+    BusinessCyberShowStations = 'soz-core:client:;business:cyber:show-stations',
 
     AdminDoorSetState = 'soz-core:client:door:set-state',
     AdminDoorAddSub = 'soz-core:client:door:add-subdoor',
