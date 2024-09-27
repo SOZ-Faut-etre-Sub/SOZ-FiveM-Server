@@ -79,6 +79,7 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
     }
 
     const isAdminOrStaff = ['admin', 'staff'].includes(permission);
+    const isAdminOrStaffOrGM = ['admin', 'staff', 'gamemaster'].includes(permission);
 
     return (
         <>
@@ -118,7 +119,7 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                             onConfirm={async () => {
                                 await fetchNui(NuiEvent.AdminMenuPlayerSpectate, player);
                             }}
-                            disabled={!isAdminOrStaff}
+                            disabled={!isAdminOrStaffOrGM}
                             description={
                                 <ul>
                                     <MenuTitle>Contrôle du mode observateur</MenuTitle>
