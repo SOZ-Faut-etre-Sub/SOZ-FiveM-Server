@@ -10045,6 +10045,7 @@ QBShared.Items = {
         ["combinable"] = nil,
         ["notSearchable"] = true,
         ["giveable"] = false,
+        ["carrybox"] = "m23_1_prop_m31_crate_04a",
         ["description"] = "Le centre de commandement du cartel, la ou toute la magie commence.",
         ["illustrator"] = ".Sniteur",
     },
