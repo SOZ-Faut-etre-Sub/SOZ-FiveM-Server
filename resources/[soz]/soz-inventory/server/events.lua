@@ -36,9 +36,20 @@ RegisterServerEvent("inventory:server:openItemStorage", function(slot)
 
     local targetInv = Inventory(item.metadata.id)
     if not targetInv then
+        local storageElements = {}
+        for _, storageItem in pairs(item.metadata.storageElements) do
+            local storageItemDef = QBCore.Shared.Items[storageItem.name]
+            storageItem.slot = tonumber(storageItem.slot)
+            storageItem.label = storageItemDef.label
+            storageItem.description = storageItemDef.description
+            storageItem.illustrator = storageItemDef.illustrator
+            storageElements[storageItem.slot] = storageItem
+        end
+
         targetInv = Inventory.Create(item.metadata.id, itemDef.label, itemDef.storageItemType, 1000, itemDef.storageItemWeight or 1000000, source,
-                                     table.deepclone(item.metadata.storageElements))
+                                     storageElements)
     end
+
     targetInv.slot = slot
     targetInv.owner = source
 

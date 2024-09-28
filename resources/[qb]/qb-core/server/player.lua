@@ -438,8 +438,6 @@ function QBCore.Player.CreatePlayer(PlayerData)
     self.Functions.SetInventory = function(items)
         self.PlayerData.items = items
         self.Functions.UpdatePlayerData(true)
-
-        exports['soz-core']:Log('DEBUG', 'Inventory movement - Set ! items set: ' .. json.encode(items))
     end
 
     self.Functions.SetSkin = function(skin, skipApply)
