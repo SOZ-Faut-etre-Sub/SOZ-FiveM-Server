@@ -2,17 +2,28 @@ import { FunctionComponent } from 'react';
 
 import { useVehicle } from '../../../hook/data';
 import NosIcon from '../../../icons/hud/vehicle/nos.svg';
+import { useZoom } from '../hooks/useZoom';
 
 export const NosGauge: FunctionComponent = () => {
-    const vehicle = useVehicle();
     const containerSize = 100;
+
+    const vehicle = useVehicle();
+    const { nosPaddingTopSize, nosPaddingLeftSize, speedometerSize } = useZoom();
 
     if (!vehicle.nosLevel) {
         return null;
     }
 
     return (
-        <div className="absolute -mt-5 -ml-10 size-[125px] z-50">
+        <div
+            className="absolute z-50"
+            style={{
+                marginTop: '-' + nosPaddingTopSize,
+                marginLeft: '-' + nosPaddingLeftSize,
+                width: speedometerSize,
+                height: speedometerSize,
+            }}
+        >
             <svg viewBox="0 0 120 75" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <mask id="barMask">
                     <path

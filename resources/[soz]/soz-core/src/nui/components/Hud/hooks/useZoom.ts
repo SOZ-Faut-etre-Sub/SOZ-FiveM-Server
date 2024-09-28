@@ -9,6 +9,8 @@ interface ZoomHook {
     smallIconSize: string;
     largeIconSize: string;
     speedometerSize: string;
+    nosPaddingTopSize: string;
+    nosPaddingLeftSize: string;
 }
 
 export const useZoom = (): ZoomHook => {
@@ -21,5 +23,7 @@ export const useZoom = (): ZoomHook => {
         smallIconSize: 20 * zoom + 'px',
         largeIconSize: 56 * zoom + 'px',
         speedometerSize: 125 * zoom + 'px',
+        nosPaddingTopSize: 20 * zoom + 'px',
+        nosPaddingLeftSize: 40 * zoom + 'px',
     };
 };
