@@ -291,4 +291,5 @@ export enum RpcClientEvent {
     CHECK_WEARING_GLOVES = 'soz-core:rpc:client:check-wearing-gloves',
     OBJECT_GET_GROUND_POSITION = 'soz-core:rpc:client:object:get-ground-position',
     GANG_SMUGGLING_CHECK_ZONE = 'soz-core:rpc:client:gang:smuggling:check-zone',
+    BATTERY_IS_RELOADING = 'soz-core:rpc:client:battery:i-reloading',
 }
