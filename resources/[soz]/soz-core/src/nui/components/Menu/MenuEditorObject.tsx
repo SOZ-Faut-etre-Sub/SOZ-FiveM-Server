@@ -158,6 +158,7 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
                     {!collision && <MenuItemText> Mode Scale : S</MenuItemText>}
                     <MenuItemText> Coordonnées locales : L</MenuItemText>
                     <MenuItemText> Rotation Camera : Clic Droit</MenuItemText>
+                    <MenuItemText> Zoom Camera : Clic Droit + Molette</MenuItemText>
                 </MenuContent>
             </MainMenu>
         </Menu>

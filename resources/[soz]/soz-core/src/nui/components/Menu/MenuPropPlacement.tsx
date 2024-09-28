@@ -442,6 +442,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                     <MenuItemText> Mode Scale : S</MenuItemText>
                     <MenuItemText> Coordonnées locales : L</MenuItemText>
                     <MenuItemText> Rotation Camera : Clic Droit</MenuItemText>
+                    <MenuItemText> Zoom Camera : Clic Droit + Molette</MenuItemText>
                 </MenuContent>
             </SubMenu>
         </Menu>
