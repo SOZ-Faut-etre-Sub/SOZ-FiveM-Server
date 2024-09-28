@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@core/decorators/injectable';
 
 @Injectable()
@@ -6,7 +7,7 @@ export class PlayerInjuryProvider {
         return 0;
     }
 
-    public handleInjuryRevive(source: number, targetid: number) {
+    public async handleInjuryRevive(source: number, targetid: number) {
         return false;
     }
 }

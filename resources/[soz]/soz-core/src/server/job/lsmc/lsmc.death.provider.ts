@@ -94,7 +94,7 @@ export class LSMCDeathProvider {
             this.notifier.notify(source, 'Cette personne a subit une overdose de drogue.', 'success', 30000);
         }
 
-        const isRPdeath = this.playerInjuryProvider.handleInjuryRevive(source, targetid);
+        const isRPdeath = await this.playerInjuryProvider.handleInjuryRevive(source, targetid);
 
         TriggerClientEvent(ClientEvent.LSMC_REVIVE, player.source, admin, uniteHU, uniteHUBed, isRPdeath);
         if (!admin) {
