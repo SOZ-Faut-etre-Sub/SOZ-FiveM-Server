@@ -2,12 +2,11 @@ import { JobType } from './job';
 import { Vector3, Vector4 } from './polyzone/vector';
 
 export type Interaction = InteractionOption & {
+    id: string;
+
     entity?: number;
     models?: number[];
     coords?: Vector3 | Vector4;
-
-    drawDistance: number;
-    interactionDistance: number;
 };
 
 export type InteractionOption = {

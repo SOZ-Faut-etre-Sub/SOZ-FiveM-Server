@@ -20,6 +20,13 @@ export type Door = {
 export const DoorOffset: Record<number, Vector3> = {
     [-1603266611]: [1.4, 0, 1.4],
     [-1932904945]: [0, 0, 1],
+    [343686854]: [2.4, -0.5, -0.1],
+};
+
+export const DoorRange = {
+    [-1932904945]: 5,
+    [343686854]: 4,
+    [889818406]: 3,
 };
 
 export const DoorModels = [
@@ -881,7 +888,3 @@ export const DoorModels = [
     1086819216,
     -1932904945,
 ];
-
-export const DoorRange = {
-    [-1932904945]: 5,
-};

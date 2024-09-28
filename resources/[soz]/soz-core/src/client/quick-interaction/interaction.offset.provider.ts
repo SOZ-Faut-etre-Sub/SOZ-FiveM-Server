@@ -7,6 +7,7 @@ import { add2Vector3, Vector3 } from '../../shared/polyzone/vector';
 @Provider()
 export class InteractionOffsetProvider {
     private modelOffset = new Map<number, Vector3>();
+
     private readonly defaultOffset = [0, 0, 0] as Vector3;
 
     public getEntityCoordsWithOffset(entity: number): Vector3 {

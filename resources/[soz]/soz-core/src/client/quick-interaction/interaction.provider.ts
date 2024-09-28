@@ -4,15 +4,13 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { Tick, TickInterval } from '@core/decorators/tick';
 import { uuidv4 } from '@core/utils';
+import { InteractionDistanceProvider } from '@public/client/quick-interaction/interaction.distance.provider';
 import { InteractionOffsetProvider } from '@public/client/quick-interaction/interaction.offset.provider';
 
 import { Interaction, InteractionOption } from '../../shared/interaction';
 import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { ResourceLoader } from '../repository/resource.loader';
 import { TargetService } from '../target/target.service';
-
-const DRAW_DISTANCE = 7;
-const INTERACTION_DISTANCE = 1.5;
 
 @Provider()
 export class InteractionProvider {
@@ -21,6 +19,9 @@ export class InteractionProvider {
 
     @Inject(InteractionOffsetProvider)
     private readonly interactionOffsetProvider: InteractionOffsetProvider;
+
+    @Inject(InteractionDistanceProvider)
+    private readonly interactionDistanceProvider: InteractionDistanceProvider;
 
     @Inject(TargetService)
     private readonly targetService: TargetService;
@@ -53,32 +54,51 @@ export class InteractionProvider {
     public createInteractionForCoords(
         coords: Vector3 | Vector4,
         option: InteractionOption,
-        interactionDistance = INTERACTION_DISTANCE,
-        drawDistance = DRAW_DISTANCE
+        interactionDistance?: number,
+        drawDistance?: number
     ): string {
         const id = uuidv4();
         this.interactions[id] = {
+            id,
             coords,
-            drawDistance,
-            interactionDistance,
             ...option,
         };
+        this.interactionDistanceProvider.updateDrawDistance(id, drawDistance);
+        this.interactionDistanceProvider.updateInteractionDistance(id, interactionDistance);
         return id;
     }
 
     public createInteractionForModels(
         models: number[],
         option: InteractionOption,
-        interactionDistance = INTERACTION_DISTANCE,
-        drawDistance = DRAW_DISTANCE
+        interactionDistance?: number,
+        drawDistance?: number
     ): string {
         const id = uuidv4();
         this.interactions[id] = {
+            id,
             models,
-            drawDistance,
-            interactionDistance,
             ...option,
         };
+        this.interactionDistanceProvider.updateDrawDistance(id, drawDistance);
+        this.interactionDistanceProvider.updateInteractionDistance(id, interactionDistance);
+        return id;
+    }
+
+    public createInteractionForEntity(
+        entity: number,
+        option: InteractionOption,
+        interactionDistance?: number,
+        drawDistance?: number
+    ): string {
+        const id = uuidv4();
+        this.interactions[id] = {
+            id,
+            entity,
+            ...option,
+        };
+        this.interactionDistanceProvider.updateDrawDistance(id, drawDistance);
+        this.interactionDistanceProvider.updateInteractionDistance(id, interactionDistance);
         return id;
     }
 
@@ -91,8 +111,7 @@ export class InteractionProvider {
             if (!coords) continue;
 
             const distance = getDistance(this.playerPosition, coords);
-
-            if (distance > interaction.drawDistance) continue;
+            if (distance > this.interactionDistanceProvider.getDrawDistance(id, entity)) continue;
 
             const isValid = await this.targetService.validateInteraction(interaction, entity);
             if (!isValid) continue;
@@ -106,19 +125,18 @@ export class InteractionProvider {
         if (this.nearbyInteractions.size === 0) return;
 
         for (const interaction of this.nearbyInteractions.values()) {
-            const [, coords] = this.getInteractionCoords(interaction);
+            const [entity, coords] = this.getInteractionCoords(interaction);
             if (!coords) return;
 
             const distance = getDistance(this.playerPosition, coords);
-
-            if (distance > interaction.drawDistance) {
+            if (distance > this.interactionDistanceProvider.getDrawDistance(interaction.id, entity)) {
                 this.resetNearbyInteraction();
                 return;
             }
 
             SetDrawOrigin(coords[0], coords[1], coords[2], 0);
 
-            if (distance > interaction.interactionDistance) {
+            if (distance > this.interactionDistanceProvider.getInteractionDistance(interaction.id, entity)) {
                 DrawSprite(
                     'soz_minimap',
                     'interaction_off',
@@ -214,7 +232,8 @@ export class InteractionProvider {
         const [entity, coords] = this.getInteractionCoords(this.nearbyInteraction);
         const distance = getDistance(this.playerPosition, coords);
 
-        if (distance > this.nearbyInteraction.interactionDistance) return;
+        if (distance > this.interactionDistanceProvider.getInteractionDistance(this.nearbyInteraction.id, entity))
+            return;
 
         this.nearbyInteraction.action(entity);
         this.resetNearbyInteraction();
@@ -242,7 +261,11 @@ export class InteractionProvider {
             const objects: number[] = GetGamePool('CObject');
             for (const object of objects) {
                 const objectCoords = GetEntityCoords(object, false) as Vector3;
-                if (getDistance(playerPosition, objectCoords) > interaction.drawDistance) continue;
+                if (
+                    getDistance(playerPosition, objectCoords) >
+                    this.interactionDistanceProvider.getDrawDistance(interaction.id, object)
+                )
+                    continue;
 
                 const model = GetEntityModel(object);
                 if (!interaction.models.includes(model)) continue;
