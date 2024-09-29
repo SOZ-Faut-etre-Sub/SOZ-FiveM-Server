@@ -4,113 +4,222 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { Tick, TickInterval } from '@core/decorators/tick';
 import { uuidv4 } from '@core/utils';
+import { InteractionDistanceProvider } from '@public/client/quick-interaction/interaction.distance.provider';
+import { InteractionOffsetProvider } from '@public/client/quick-interaction/interaction.offset.provider';
 
 import { Interaction, InteractionOption } from '../../shared/interaction';
 import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { ResourceLoader } from '../repository/resource.loader';
 import { TargetService } from '../target/target.service';
 
-const DRAW_DISTANCE = 7;
-const INTERACTION_DISTANCE = 1.5;
-
-const INTERACTION_SIZE = 0.25;
-const spriteWidth = INTERACTION_SIZE / 16;
-const spriteHeight = INTERACTION_SIZE / 9;
-
-const INTERACTION_SPRITE_CONTENT_WIDTH = 0.0375;
-
 @Provider()
 export class InteractionProvider {
     @Inject(ResourceLoader)
     private readonly resourceLoader: ResourceLoader;
 
+    @Inject(InteractionOffsetProvider)
+    private readonly interactionOffsetProvider: InteractionOffsetProvider;
+
+    @Inject(InteractionDistanceProvider)
+    private readonly interactionDistanceProvider: InteractionDistanceProvider;
+
     @Inject(TargetService)
     private readonly targetService: TargetService;
 
     private interactions: Record<string, Interaction> = {};
+    private nearbyInteractions: Map<string, Interaction> = new Map();
     private nearbyInteraction: Interaction = null;
+
+    private readonly interactionSprite = {
+        onoff: {
+            size: 0.25,
+            width: 0.25 / 16,
+            height: 0.25 / 9,
+        },
+        start: {
+            x: 0.015 / 16,
+            width: 0.03 / 16,
+            height: 0.25 / 9,
+        },
+        content: {
+            height: 0.25 / 9,
+        },
+        end: {
+            x: 0.015 / 16,
+            width: 0.035 / 16,
+            height: 0.25 / 9,
+        },
+    };
 
     public createInteractionForCoords(
         coords: Vector3 | Vector4,
         option: InteractionOption,
-        interactionDistance = INTERACTION_DISTANCE,
-        drawDistance = DRAW_DISTANCE
-    ) {
-        this.interactions[uuidv4()] = {
+        interactionDistance?: number,
+        drawDistance?: number
+    ): string {
+        const id = uuidv4();
+        this.interactions[id] = {
+            id,
             coords,
-            drawDistance,
-            interactionDistance,
             ...option,
         };
+        this.interactionDistanceProvider.updateDrawDistance(id, drawDistance);
+        this.interactionDistanceProvider.updateInteractionDistance(id, interactionDistance);
+        return id;
+    }
+
+    public createInteractionForModels(
+        models: number[],
+        option: InteractionOption,
+        interactionDistance?: number,
+        drawDistance?: number
+    ): string {
+        const id = uuidv4();
+        this.interactions[id] = {
+            id,
+            models,
+            ...option,
+        };
+        this.interactionDistanceProvider.updateDrawDistance(id, drawDistance);
+        this.interactionDistanceProvider.updateInteractionDistance(id, interactionDistance);
+        return id;
+    }
+
+    public createInteractionForEntity(
+        entity: number,
+        option: InteractionOption,
+        interactionDistance?: number,
+        drawDistance?: number
+    ): string {
+        const id = uuidv4();
+        this.interactions[id] = {
+            id,
+            entity,
+            ...option,
+        };
+        this.interactionDistanceProvider.updateDrawDistance(id, drawDistance);
+        this.interactionDistanceProvider.updateInteractionDistance(id, interactionDistance);
+        return id;
     }
 
     @Tick(TickInterval.EVERY_SECOND)
     public async listNearbyInteractions() {
         if (this.nearbyInteraction) return;
 
-        for (const interaction of Object.values(this.interactions)) {
-            const coords = interaction.coords;
+        for (const [id, interaction] of Object.entries(this.interactions)) {
+            const [entity, coords] = this.getInteractionCoords(interaction);
             if (!coords) continue;
 
-            const playerPosition = GetEntityCoords(PlayerPedId(), false) as Vector3;
-            const distance = getDistance(playerPosition, coords);
+            const distance = getDistance(this.playerPosition, coords);
+            if (distance > this.interactionDistanceProvider.getDrawDistance(id, entity)) continue;
 
-            if (distance > interaction.drawDistance) continue;
-
-            const isValid = await this.targetService.validateInteraction(interaction);
+            const isValid = await this.targetService.validateInteraction(interaction, entity);
             if (!isValid) continue;
 
-            this.nearbyInteraction = interaction;
-            return;
+            this.nearbyInteractions.set(id, { ...interaction, entity });
         }
     }
 
     @Tick()
     public async onTick() {
-        if (!this.nearbyInteraction) return;
+        if (this.nearbyInteractions.size === 0) return;
 
-        const coords = this.nearbyInteraction.coords;
+        for (const interaction of this.nearbyInteractions.values()) {
+            const [entity, coords] = this.getInteractionCoords(interaction);
+            if (!coords) return;
 
-        const playerPosition = GetEntityCoords(PlayerPedId(), false) as Vector3;
-        const distance = getDistance(playerPosition, coords);
+            const distance = getDistance(this.playerPosition, coords);
+            if (distance > this.interactionDistanceProvider.getDrawDistance(interaction.id, entity)) {
+                this.resetNearbyInteraction();
+                return;
+            }
 
-        if (distance > this.nearbyInteraction.drawDistance) {
-            this.resetNearbyInteraction();
-            return;
-        }
+            SetDrawOrigin(coords[0], coords[1], coords[2], 0);
 
-        SetDrawOrigin(coords[0], coords[1], coords[2], 0);
+            if (distance > this.interactionDistanceProvider.getInteractionDistance(interaction.id, entity)) {
+                DrawSprite(
+                    'soz_minimap',
+                    'interaction_off',
+                    0,
+                    0,
+                    this.interactionSprite.onoff.width,
+                    this.interactionSprite.onoff.height,
+                    0,
+                    255,
+                    255,
+                    255,
+                    255
+                );
+                ClearDrawOrigin();
+                return;
+            }
 
-        if (distance > this.nearbyInteraction.interactionDistance) {
-            DrawSprite('soz_minimap', 'interaction_off', 0, 0, spriteWidth, spriteHeight, 0, 255, 255, 255, 255);
+            const labelSize = interaction.label.length * 0.005;
+            const contentX = (labelSize + this.interactionSprite.onoff.size / 2) / 16 + labelSize / 2;
+
+            DrawSprite(
+                'soz_minimap',
+                'interaction_on',
+                0,
+                0,
+                this.interactionSprite.onoff.width,
+                this.interactionSprite.onoff.height,
+                0,
+                255,
+                255,
+                255,
+                255
+            );
+
+            DrawSprite(
+                'soz_minimap',
+                'interaction_start',
+                contentX - labelSize / 2 - this.interactionSprite.start.x,
+                0,
+                this.interactionSprite.start.width,
+                this.interactionSprite.start.height,
+                0,
+                255,
+                255,
+                255,
+                255
+            );
+            DrawSprite(
+                'soz_minimap',
+                'interaction_content',
+                contentX,
+                0,
+                labelSize,
+                this.interactionSprite.content.height,
+                0,
+                255,
+                255,
+                255,
+                255
+            );
+            DrawSprite(
+                'soz_minimap',
+                'interaction_end',
+                contentX + labelSize / 2 + this.interactionSprite.start.x,
+                0,
+                this.interactionSprite.end.width,
+                this.interactionSprite.end.height,
+                0,
+                255,
+                255,
+                255,
+                255
+            );
+
+            SetTextScale(0.0, this.interactionSprite.onoff.size);
+            SetTextEntry('STRING');
+            AddTextComponentString(interaction.label);
+            DrawText(0.011, -0.0105);
+
             ClearDrawOrigin();
-            return;
+
+            this.nearbyInteraction = interaction;
         }
-
-        const contentX =
-            (INTERACTION_SPRITE_CONTENT_WIDTH + INTERACTION_SIZE / 2) / 16 + INTERACTION_SPRITE_CONTENT_WIDTH / 2;
-
-        DrawSprite('soz_minimap', 'interaction_on', 0, 0, spriteWidth, spriteHeight, 0, 255, 255, 255, 255);
-        DrawSprite(
-            'soz_minimap',
-            'interaction_content',
-            contentX,
-            0,
-            INTERACTION_SPRITE_CONTENT_WIDTH,
-            spriteHeight,
-            0,
-            255,
-            255,
-            255,
-            255
-        );
-
-        SetTextScale(0.0, INTERACTION_SIZE);
-        SetTextEntry('STRING');
-        AddTextComponentString(this.nearbyInteraction.label);
-        DrawText(0.0122, -0.0105);
-
-        ClearDrawOrigin();
     }
 
     @Command('soz-quick-interaction', {
@@ -120,17 +229,74 @@ export class InteractionProvider {
     public async runInteraction(): Promise<void> {
         if (!this.nearbyInteraction) return;
 
-        const playerPosition = GetEntityCoords(PlayerPedId(), false) as Vector3;
-        const distance = getDistance(playerPosition, this.nearbyInteraction.coords);
+        const [entity, coords] = this.getInteractionCoords(this.nearbyInteraction);
+        const distance = getDistance(this.playerPosition, coords);
 
-        if (distance > this.nearbyInteraction.interactionDistance) return;
+        if (distance > this.interactionDistanceProvider.getInteractionDistance(this.nearbyInteraction.id, entity))
+            return;
 
-        this.nearbyInteraction.action();
+        this.nearbyInteraction.action(entity);
         this.resetNearbyInteraction();
     }
 
     protected resetNearbyInteraction() {
+        this.nearbyInteractions = new Map();
         this.nearbyInteraction = null;
+    }
+
+    protected getInteractionCoords(interaction: Interaction): [number, Vector3] {
+        if (interaction.entity) {
+            return [interaction.entity, this.interactionOffsetProvider.getEntityCoordsWithOffset(interaction.entity)];
+        }
+
+        if (interaction.coords) {
+            return [null, interaction.coords as Vector3];
+        }
+
+        if (interaction.models) {
+            const playerPosition = this.playerPosition;
+
+            const entities = [];
+
+            const objects: number[] = GetGamePool('CObject');
+            for (const object of objects) {
+                const objectCoords = GetEntityCoords(object, false) as Vector3;
+                if (
+                    getDistance(playerPosition, objectCoords) >
+                    this.interactionDistanceProvider.getDrawDistance(interaction.id, object)
+                )
+                    continue;
+
+                const model = GetEntityModel(object);
+                if (!interaction.models.includes(model)) continue;
+
+                entities.push(object);
+            }
+
+            if (!entities.length) return [null, null];
+
+            const closedEntities = entities
+                .map(entity => {
+                    const coords = this.interactionOffsetProvider.getEntityCoordsWithOffset(entity);
+
+                    return {
+                        entity,
+                        coords,
+                        distance: getDistance(playerPosition, coords),
+                    };
+                })
+                .sort((a, b) => a.distance - b.distance);
+
+            if (!closedEntities.length) return;
+
+            return [closedEntities[0].entity, closedEntities[0].coords];
+        }
+
+        return [null, null];
+    }
+
+    protected get playerPosition(): Vector3 {
+        return GetEntityCoords(PlayerPedId(), false) as Vector3;
     }
 
     @Once(OnceStep.Start)
@@ -141,5 +307,6 @@ export class InteractionProvider {
     @Once(OnceStep.Stop)
     public async onServerStop() {
         this.interactions = {};
+        this.nearbyInteractions = new Map();
     }
 }
