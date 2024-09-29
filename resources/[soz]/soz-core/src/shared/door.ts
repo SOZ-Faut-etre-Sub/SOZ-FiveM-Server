@@ -27,12 +27,6 @@ export const DoorOffset: Record<number, Vector3> = {
     [343686854]: [2.4, -0.5, -0.1],
 };
 
-export const DoorRange = {
-    [-1932904945]: 5,
-    [343686854]: 4,
-    [889818406]: 3,
-};
-
 export const DoorModels = [
     GetHashKey('bh1_45_gate2'),
     GetHashKey('prop_police_door_l_dam'),

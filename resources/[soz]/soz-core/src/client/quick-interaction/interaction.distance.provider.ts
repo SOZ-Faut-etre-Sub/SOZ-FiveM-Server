@@ -7,34 +7,12 @@ export class InteractionDistanceProvider {
     private interactionDrawDistance = new Map<string, number>();
     private interactionInteractionDistance = new Map<string, number>();
 
-    private modelOverride = new Map<number, { draw?: number; interaction?: number }>();
-
-    public getDrawDistance(key: string, entity?: number) {
-        const distance = this.interactionDrawDistance.get(key) ?? defaultDrawDistance;
-
-        if (entity) {
-            const model = GetEntityModel(entity);
-            const override = this.modelOverride.get(model);
-            if (!override) return distance;
-
-            if (override.draw) return override.draw;
-        }
-
-        return distance;
+    public getDrawDistance(key: string) {
+        return this.interactionDrawDistance.get(key) ?? defaultDrawDistance;
     }
 
-    public getInteractionDistance(key: string, entity?: number) {
-        const distance = this.interactionInteractionDistance.get(key) ?? defaultInteractionDistance;
-
-        if (entity) {
-            const model = GetEntityModel(entity);
-            const override = this.modelOverride.get(model);
-            if (!override) return distance;
-
-            if (override.interaction) return override.interaction;
-        }
-
-        return distance;
+    public getInteractionDistance(key: string) {
+        return this.interactionInteractionDistance.get(key) ?? defaultInteractionDistance;
     }
 
     public updateDrawDistance(key: string, distance?: number) {
@@ -43,10 +21,6 @@ export class InteractionDistanceProvider {
 
     public updateInteractionDistance(key: string, distance?: number) {
         this.interactionInteractionDistance.set(key, distance ?? defaultInteractionDistance);
-    }
-
-    public createModelOverride(model: number, drawDistance: number, interactionDistance: number) {
-        this.modelOverride.set(model, { draw: drawDistance, interaction: interactionDistance });
     }
 
     @Once(OnceStep.Stop)

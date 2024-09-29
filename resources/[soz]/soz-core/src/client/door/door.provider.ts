@@ -4,12 +4,13 @@ import { Inject } from '@public/core/decorators/injectable';
 import { RepositoryDelete, RepositoryInsert, RepositoryUpdate } from '@public/core/decorators/repository';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { uuidv4 } from '@public/core/utils';
-import { Door, DoorModels, DoorRange } from '@public/shared/door';
+import { Door, DoorModels } from '@public/shared/door';
 import { NuiEvent, ServerEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 import { RepositoryType } from '@public/shared/repository';
 
+import { defaultDrawDistance, defaultInteractionDistance } from '../../shared/interaction';
 import { PositiveNumberValidator } from '../../shared/nui/input';
 import { AnimationService } from '../animation/animation.service';
 import { InventoryManager } from '../inventory/inventory.manager';
@@ -60,11 +61,14 @@ export class DoorProvider {
     private adminEnabled = false;
     private adminInteractionPreview: Door;
 
+    private doorInteractionList = new Map<string, string[]>();
+
     @Once(OnceStep.RepositoriesLoaded)
     public async init() {
         const doors = this.doorRepository.get();
         for (const door of doors) {
             this.createDoor(door);
+            this.createInteraction(door);
         }
 
         this.targetFactory.createForModel(
@@ -221,66 +225,80 @@ export class DoorProvider {
                     },
                 },
             ],
-            3.5
+            5
         );
 
-        this.interactionProvider.createInteractionForModels(DoorModels, {
-            label: 'Verrouiller',
-            canInteract: entity => {
-                const [valid, locked] = this.canInterract(entity);
-                return valid && !locked;
-            },
-            action: async entity => {
-                const doors = this.doorRepository.get();
-                const door = doors.find(door => door.subdoors.map(elem => elem.entity).includes(entity));
-                door.lock = true;
-
-                this.animationService.playAnimation({
-                    base: {
-                        dictionary: 'missheistfbisetup1',
-                        name: 'unlock_enter_janitor',
-                        options: {
-                            onlyUpperBody: true,
-                        },
-                        playbackRate: 0.7,
-                    },
-                });
-
-                TriggerServerEvent(ServerEvent.DOOR_ADD_UPDATE, door, true);
-            },
-        });
-
-        this.interactionProvider.createInteractionForModels(DoorModels, {
-            label: 'Déverrouiller',
-            canInteract: entity => {
-                const [valid, locked] = this.canInterract(entity);
-                return valid && locked;
-            },
-            action: async entity => {
-                const doors = this.doorRepository.get();
-                const door = doors.find(door => door.subdoors.map(elem => elem.entity).includes(entity));
-                door.lock = false;
-
-                this.animationService.playAnimation({
-                    base: {
-                        dictionary: 'missheistfbisetup1',
-                        name: 'unlock_enter_janitor',
-                        options: {
-                            onlyUpperBody: true,
-                        },
-                        playbackRate: 0.7,
-                    },
-                });
-
-                TriggerServerEvent(ServerEvent.DOOR_ADD_UPDATE, door, false);
-            },
-        });
-
-        for (const [model, range] of Object.entries(DoorRange)) {
-            this.interactionDistanceProvider.createModelOverride(Number(model), range + 2, range);
-        }
-
         this.initDone = true;
+    }
+
+    private createInteraction(door: Door) {
+        for (const subdoor of door.subdoors) {
+            const lockId = this.interactionProvider.createInteractionForModels(
+                subdoor.model,
+                subdoor.coords,
+                {
+                    label: 'Verrouiller',
+                    canInteract: entity => {
+                        const [valid, locked] = this.canInterract(entity);
+                        return valid && !locked;
+                    },
+                    action: async entity => {
+                        const doors = this.doorRepository.get();
+                        const door = doors.find(door => door.subdoors.map(elem => elem.entity).includes(entity));
+                        door.lock = true;
+
+                        this.animationService.playAnimation({
+                            base: {
+                                dictionary: 'missheistfbisetup1',
+                                name: 'unlock_enter_janitor',
+                                options: {
+                                    onlyUpperBody: true,
+                                },
+                                playbackRate: 0.7,
+                            },
+                        });
+
+                        TriggerServerEvent(ServerEvent.DOOR_ADD_UPDATE, door, true);
+                    },
+                },
+                door.target?.interaction,
+                door.target?.draw
+            );
+
+            const unlockId = this.interactionProvider.createInteractionForModels(
+                subdoor.model,
+                subdoor.coords,
+                {
+                    label: 'Déverrouiller',
+                    canInteract: entity => {
+                        const [valid, locked] = this.canInterract(entity);
+                        return valid && locked;
+                    },
+                    action: async entity => {
+                        const doors = this.doorRepository.get();
+                        const door = doors.find(door => door.subdoors.map(elem => elem.entity).includes(entity));
+                        door.lock = false;
+
+                        this.animationService.playAnimation({
+                            base: {
+                                dictionary: 'missheistfbisetup1',
+                                name: 'unlock_enter_janitor',
+                                options: {
+                                    onlyUpperBody: true,
+                                },
+                                playbackRate: 0.7,
+                            },
+                        });
+
+                        TriggerServerEvent(ServerEvent.DOOR_ADD_UPDATE, door, false);
+                    },
+                },
+                door.target?.interaction,
+                door.target?.draw
+            );
+
+            this.doorInteractionList.set(door.id, [lockId, unlockId]);
+        }
     }
 
     private canInterract(entity: number): [boolean, boolean] {
@@ -357,9 +375,9 @@ export class DoorProvider {
         if (!this.adminEnabled) return;
         if (!this.adminInteractionPreview) return;
 
-        const drawDistance = this.adminInteractionPreview.target.draw;
+        const drawDistance = this.adminInteractionPreview.target?.draw || defaultDrawDistance;
         const drawColor = [255, 255, 255, 20];
-        const interactionDistance = this.adminInteractionPreview.target.interaction;
+        const interactionDistance = this.adminInteractionPreview.target?.interaction || defaultInteractionDistance;
         const interactionColor = [3, 140, 255, 50];
 
         for (const subdoor of this.adminInteractionPreview.subdoors) {
@@ -445,20 +463,13 @@ export class DoorProvider {
             if (door.doorRate || !door.auto) {
                 DoorSystemSetAutomaticRate(subdoor.hash, door.doorRate || 10.0, false, false);
             }*/
-
-            if (door.target) {
-                this.interactionDistanceProvider.createModelOverride(
-                    subdoor.model,
-                    door.target.draw,
-                    door.target.interaction
-                );
-            }
         }
     }
 
     @RepositoryInsert(RepositoryType.Door)
     public async addDoor(door: Door) {
         this.createDoor(door);
+        this.createInteraction(door);
     }
 
     @RepositoryUpdate(RepositoryType.Door)
@@ -489,15 +500,12 @@ export class DoorProvider {
             if (door.holdOpen) {
                 DoorSystemSetHoldOpen(subdoor.hash, !door.lock);
             }
-
-            if (door.target) {
-                this.interactionDistanceProvider.createModelOverride(
-                    subdoor.model,
-                    door.target.draw,
-                    door.target.interaction
-                );
-            }
         }
+
+        this.doorInteractionList.get(door.id).forEach(id => {
+            this.interactionDistanceProvider.updateDrawDistance(id, door.target?.draw);
+            this.interactionDistanceProvider.updateInteractionDistance(id, door.target?.interaction);
+        });
     }
 
     @RepositoryDelete(RepositoryType.Door)
@@ -534,7 +542,6 @@ export class DoorProvider {
 
     @OnNuiEvent(NuiEvent.AdminDoorSetTarget)
     public async updateTargetDistance({ id, type }: { id: string; type: string }) {
-        console.log('updateTargetDistance', id, type);
         const door = this.doorRepository.find(id);
         if (!door) {
             return;
@@ -547,6 +554,10 @@ export class DoorProvider {
             },
             PositiveNumberValidator
         );
+
+        if (!door.target) {
+            door.target = {};
+        }
 
         if (type === 'draw') {
             door.target.draw = value;

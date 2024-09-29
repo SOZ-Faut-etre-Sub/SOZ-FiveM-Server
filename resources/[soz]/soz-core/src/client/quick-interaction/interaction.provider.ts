@@ -26,8 +26,10 @@ export class InteractionProvider {
     @Inject(TargetService)
     private readonly targetService: TargetService;
 
-    private interactions: Record<string, Interaction> = {};
-    private nearbyInteractions: Map<string, Interaction> = new Map();
+    private gamePoolObjects = new Map<number, { model: number; originalCoords: Vector3; coords: Vector3 }>();
+
+    private interactions = new Map<string, Interaction>();
+    private nearbyInteractions = new Map<string, Interaction>();
     private nearbyInteraction: Interaction = null;
 
     private readonly interactionSprite = {
@@ -58,28 +60,21 @@ export class InteractionProvider {
         drawDistance?: number
     ): string {
         const id = uuidv4();
-        this.interactions[id] = {
-            id,
-            coords,
-            ...option,
-        };
+        this.interactions.set(id, { id, coords, ...option });
         this.interactionDistanceProvider.updateDrawDistance(id, drawDistance);
         this.interactionDistanceProvider.updateInteractionDistance(id, interactionDistance);
         return id;
     }
 
     public createInteractionForModels(
-        models: number[],
+        model: number,
+        searchCoords: Vector3,
         option: InteractionOption,
         interactionDistance?: number,
         drawDistance?: number
     ): string {
         const id = uuidv4();
-        this.interactions[id] = {
-            id,
-            models,
-            ...option,
-        };
+        this.interactions.set(id, { id, model, searchCoords, ...option });
         this.interactionDistanceProvider.updateDrawDistance(id, drawDistance);
         this.interactionDistanceProvider.updateInteractionDistance(id, interactionDistance);
         return id;
@@ -92,27 +87,46 @@ export class InteractionProvider {
         drawDistance?: number
     ): string {
         const id = uuidv4();
-        this.interactions[id] = {
-            id,
-            entity,
-            ...option,
-        };
+        this.interactions.set(id, { id, entity, ...option });
         this.interactionDistanceProvider.updateDrawDistance(id, drawDistance);
         this.interactionDistanceProvider.updateInteractionDistance(id, interactionDistance);
         return id;
     }
 
     @Tick(TickInterval.EVERY_SECOND)
+    public async updateGamePoolObjects() {
+        this.gamePoolObjects.clear();
+
+        for (const object of GetGamePool('CObject')) {
+            this.gamePoolObjects.set(object, {
+                model: GetEntityModel(object),
+                originalCoords: GetEntityCoords(object, false) as Vector3,
+                coords: this.interactionOffsetProvider.getEntityCoordsWithOffset(object),
+            });
+        }
+    }
+
+    @Tick(500)
     public async listNearbyInteractions() {
-        for (const [id, interaction] of Object.entries(this.interactions)) {
+        for (const [id, interaction] of this.interactions.entries()) {
             const [entity, coords] = this.getInteractionCoords(interaction);
             if (!coords) continue;
 
             const distance = getDistance(this.playerPosition, coords);
-            if (distance > this.interactionDistanceProvider.getDrawDistance(id, entity)) continue;
+            if (distance > this.interactionDistanceProvider.getDrawDistance(id)) continue;
 
             const isValid = await this.targetService.validateInteraction(interaction, entity);
             if (!isValid) continue;
+
+            let interactionWithEntityAlreadyExists = false;
+
+            for (const nearbyInteraction of this.nearbyInteractions.values()) {
+                if (entity && entity === nearbyInteraction.entity) {
+                    interactionWithEntityAlreadyExists = true;
+                }
+            }
+
+            if (interactionWithEntityAlreadyExists) continue;
 
             this.nearbyInteractions.set(id, { ...interaction, entity });
         }
@@ -123,18 +137,18 @@ export class InteractionProvider {
         if (this.nearbyInteractions.size === 0) return;
 
         for (const [id, interaction] of this.nearbyInteractions.entries()) {
-            const [entity, coords] = this.getInteractionCoords(interaction);
+            const [, coords] = this.getInteractionCoords(interaction);
             if (!coords) continue;
 
             const distance = getDistance(this.playerPosition, coords);
-            if (distance > this.interactionDistanceProvider.getDrawDistance(id, entity)) {
+            if (distance > this.interactionDistanceProvider.getDrawDistance(id)) {
                 this.nearbyInteractions.delete(id);
                 continue;
             }
 
             SetDrawOrigin(coords[0], coords[1], coords[2], 0);
 
-            if (distance > this.interactionDistanceProvider.getInteractionDistance(id, entity)) {
+            if (distance > this.interactionDistanceProvider.getInteractionDistance(id)) {
                 DrawSprite(
                     'soz_minimap',
                     'interaction_off',
@@ -230,8 +244,7 @@ export class InteractionProvider {
         const [entity, coords] = this.getInteractionCoords(this.nearbyInteraction);
         const distance = getDistance(this.playerPosition, coords);
 
-        if (distance > this.interactionDistanceProvider.getInteractionDistance(this.nearbyInteraction.id, entity))
-            return;
+        if (distance > this.interactionDistanceProvider.getInteractionDistance(this.nearbyInteraction.id)) return;
 
         this.nearbyInteraction.action(entity);
         this.nearbyInteractions.delete(this.nearbyInteraction.id);
@@ -247,43 +260,32 @@ export class InteractionProvider {
             return [null, interaction.coords as Vector3];
         }
 
-        if (interaction.models) {
+        if (interaction.model) {
             const playerPosition = this.playerPosition;
+            let closedEntities = [];
 
-            const entities = [];
+            for (const [object, { model, originalCoords, coords }] of this.gamePoolObjects.entries()) {
+                if (model !== interaction.model) continue;
 
-            const objects: number[] = GetGamePool('CObject');
-            for (const object of objects) {
-                const objectCoords = GetEntityCoords(object, false) as Vector3;
                 if (
-                    getDistance(playerPosition, objectCoords) >
-                    this.interactionDistanceProvider.getDrawDistance(interaction.id, object)
-                )
+                    getDistance(originalCoords, interaction.searchCoords) >
+                    this.interactionDistanceProvider.getInteractionDistance(interaction.id)
+                ) {
                     continue;
+                }
 
-                const model = GetEntityModel(object);
-                if (!interaction.models.includes(model)) continue;
-
-                entities.push(object);
+                closedEntities.push({
+                    object,
+                    model,
+                    coords,
+                    distance: getDistance(playerPosition, coords),
+                });
             }
 
-            if (!entities.length) return [null, null];
+            closedEntities = closedEntities.sort((a, b) => a.distance - b.distance);
+            if (closedEntities.length === 0) return [null, null];
 
-            const closedEntities = entities
-                .map(entity => {
-                    const coords = this.interactionOffsetProvider.getEntityCoordsWithOffset(entity);
-
-                    return {
-                        entity,
-                        coords,
-                        distance: getDistance(playerPosition, coords),
-                    };
-                })
-                .sort((a, b) => a.distance - b.distance);
-
-            if (!closedEntities.length) return;
-
-            return [closedEntities[0].entity, closedEntities[0].coords];
+            return [closedEntities[0].object, closedEntities[0].coords];
         }
 
         return [null, null];
@@ -300,7 +302,7 @@ export class InteractionProvider {
 
     @Once(OnceStep.Stop)
     public async onServerStop() {
-        this.interactions = {};
-        this.nearbyInteractions = new Map();
+        this.interactions.clear();
+        this.nearbyInteractions.clear();
     }
 }
