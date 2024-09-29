@@ -269,7 +269,7 @@ export class InteractionProvider {
 
                 if (
                     getDistance(originalCoords, interaction.searchCoords) >
-                    this.interactionDistanceProvider.getInteractionDistance(interaction.id)
+                    this.interactionDistanceProvider.getInteractionDistance(interaction.id) + 0.5
                 ) {
                     continue;
                 }
