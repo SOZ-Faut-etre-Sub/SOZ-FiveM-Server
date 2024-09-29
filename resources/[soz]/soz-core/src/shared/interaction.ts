@@ -1,6 +1,9 @@
 import { JobType } from './job';
 import { Vector3, Vector4 } from './polyzone/vector';
 
+export const defaultDrawDistance = 2.5;
+export const defaultInteractionDistance = 1;
+
 export type Interaction = InteractionOption & {
     id: string;
 

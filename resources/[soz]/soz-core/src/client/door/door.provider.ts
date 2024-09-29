@@ -2,7 +2,7 @@ import { Provider } from '@core/decorators/provider';
 import { Once, OnceStep, OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { RepositoryDelete, RepositoryInsert, RepositoryUpdate } from '@public/core/decorators/repository';
-import { Tick } from '@public/core/decorators/tick';
+import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { uuidv4 } from '@public/core/utils';
 import { Door, DoorModels, DoorRange } from '@public/shared/door';
 import { NuiEvent, ServerEvent } from '@public/shared/event';
@@ -10,11 +10,14 @@ import { MenuType } from '@public/shared/nui/menu';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 import { RepositoryType } from '@public/shared/repository';
 
+import { PositiveNumberValidator } from '../../shared/nui/input';
 import { AnimationService } from '../animation/animation.service';
 import { InventoryManager } from '../inventory/inventory.manager';
+import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
 import { InteractionDistanceProvider } from '../quick-interaction/interaction.distance.provider';
+import { InteractionOffsetProvider } from '../quick-interaction/interaction.offset.provider';
 import { InteractionProvider } from '../quick-interaction/interaction.provider';
 import { DoorRepository } from '../repository/door.repository';
 import { TargetFactory } from '../target/target.factory';
@@ -39,16 +42,23 @@ export class DoorProvider {
     @Inject(NuiMenu)
     public nuiMenu: NuiMenu;
 
+    @Inject(InputService)
+    private inputService: InputService;
+
     @Inject(InteractionProvider)
     private readonly interactionProvider: InteractionProvider;
 
     @Inject(InteractionDistanceProvider)
     private readonly interactionDistanceProvider: InteractionDistanceProvider;
 
+    @Inject(InteractionOffsetProvider)
+    private readonly interactionOffsetProvider: InteractionOffsetProvider;
+
     private initDone = false;
     private idToAdd = null;
 
     private adminEnabled = false;
+    private adminInteractionPreview: Door;
 
     @Once(OnceStep.RepositoriesLoaded)
     public async init() {
@@ -207,6 +217,7 @@ export class DoorProvider {
                         const door = doors.find(door => door.subdoors.map(elem => elem.entity).includes(entity));
 
                         this.nuiMenu.openMenu(MenuType.DoorAdmin, door.id);
+                        this.adminInteractionPreview = door;
                     },
                 },
             ],
@@ -341,6 +352,79 @@ export class DoorProvider {
         }
     }
 
+    @Tick(TickInterval.EVERY_FRAME)
+    public adminDoorLoop() {
+        if (!this.adminEnabled) return;
+        if (!this.adminInteractionPreview) return;
+
+        const drawDistance = this.adminInteractionPreview.target.draw;
+        const drawColor = [255, 255, 255, 20];
+        const interactionDistance = this.adminInteractionPreview.target.interaction;
+        const interactionColor = [3, 140, 255, 50];
+
+        for (const subdoor of this.adminInteractionPreview.subdoors) {
+            if (subdoor.entity) {
+                const coords = this.interactionOffsetProvider.getEntityCoordsWithOffset(subdoor.entity);
+
+                // draw marker
+                DrawMarker(
+                    28,
+                    coords[0],
+                    coords[1],
+                    coords[2],
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    drawDistance,
+                    drawDistance,
+                    drawDistance,
+                    drawColor[0],
+                    drawColor[1],
+                    drawColor[2],
+                    drawColor[3],
+                    false,
+                    false,
+                    2,
+                    false,
+                    null,
+                    null,
+                    false
+                );
+
+                // interaction marker
+                DrawMarker(
+                    28,
+                    coords[0],
+                    coords[1],
+                    coords[2],
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    interactionDistance,
+                    interactionDistance,
+                    interactionDistance,
+                    interactionColor[0],
+                    interactionColor[1],
+                    interactionColor[2],
+                    interactionColor[3],
+                    false,
+                    false,
+                    2,
+                    false,
+                    null,
+                    null,
+                    false
+                );
+            }
+        }
+    }
+
     public createDoor(door: Door) {
         const subdoors = door.subdoors;
 
@@ -361,6 +445,14 @@ export class DoorProvider {
             if (door.doorRate || !door.auto) {
                 DoorSystemSetAutomaticRate(subdoor.hash, door.doorRate || 10.0, false, false);
             }*/
+
+            if (door.target) {
+                this.interactionDistanceProvider.createModelOverride(
+                    subdoor.model,
+                    door.target.draw,
+                    door.target.interaction
+                );
+            }
         }
     }
 
@@ -397,6 +489,14 @@ export class DoorProvider {
             if (door.holdOpen) {
                 DoorSystemSetHoldOpen(subdoor.hash, !door.lock);
             }
+
+            if (door.target) {
+                this.interactionDistanceProvider.createModelOverride(
+                    subdoor.model,
+                    door.target.draw,
+                    door.target.interaction
+                );
+            }
         }
     }
 
@@ -430,6 +530,40 @@ export class DoorProvider {
     @OnNuiEvent(NuiEvent.AdminSetDoorManagement)
     public async door(value: boolean) {
         this.adminEnabled = value;
+    }
+
+    @OnNuiEvent(NuiEvent.AdminDoorSetTarget)
+    public async updateTargetDistance({ id, type }: { id: string; type: string }) {
+        console.log('updateTargetDistance', id, type);
+        const door = this.doorRepository.find(id);
+        if (!door) {
+            return;
+        }
+
+        const value = await this.inputService.askInput(
+            {
+                maxCharacters: 10,
+                title: 'Distance',
+            },
+            PositiveNumberValidator
+        );
+
+        if (type === 'draw') {
+            door.target.draw = value;
+        } else {
+            door.target.interaction = value;
+        }
+
+        TriggerServerEvent(ServerEvent.DOOR_ADD_UPDATE, door);
+    }
+
+    @OnNuiEvent<{ menuType: MenuType }>(NuiEvent.MenuClosed)
+    public async onCloseMenu({ menuType }) {
+        if (menuType !== MenuType.DoorAdmin) {
+            return;
+        }
+
+        this.adminInteractionPreview = null;
     }
 
     public isAdminEnabled() {

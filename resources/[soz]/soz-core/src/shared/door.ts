@@ -15,6 +15,10 @@ export type Door = {
     gangs: number[];
     jobs: JobType[];
     keyMetadata: string[];
+    target?: {
+        draw?: number;
+        interaction?: number;
+    };
 };
 
 export const DoorOffset: Record<number, Vector3> = {

@@ -7,6 +7,7 @@ import { AskInput } from '@public/shared/nui/input';
 import { RepositoryType } from '@public/shared/repository';
 import { FunctionComponent } from 'react';
 
+import { defaultDrawDistance, defaultInteractionDistance } from '../../../shared/interaction';
 import { MenuType } from '../../../shared/nui/menu';
 import {
     MainMenu,
@@ -17,7 +18,6 @@ import {
     MenuItemSelect,
     MenuItemSelectOption,
     MenuItemSubMenuLink,
-    MenuItemText,
     MenuTitle,
     SubMenu,
 } from '../Styleguide/Menu';
@@ -32,7 +32,7 @@ export const DoorGangSubMenu: FunctionComponent<DoorMenuStateProps> = ({ data })
 
     const door = doors[data];
 
-    if (!gangs) {
+    if (!doors || !gangs) {
         return;
     }
 
@@ -78,8 +78,11 @@ export const DoorGangSubMenu: FunctionComponent<DoorMenuStateProps> = ({ data })
 export const DoorJobSubMenu: FunctionComponent<DoorMenuStateProps> = ({ data }) => {
     const jobIds = Object.keys(JobRegistry) as JobType[];
     const doors = useRepository(RepositoryType.Door);
-
     const door = doors[data];
+
+    if (!door) {
+        return null;
+    }
 
     return (
         <SubMenu id="job">
@@ -123,8 +126,11 @@ export const DoorJobSubMenu: FunctionComponent<DoorMenuStateProps> = ({ data }) 
 
 export const DoorKeySubMenu: FunctionComponent<DoorMenuStateProps> = ({ data }) => {
     const doors = useRepository(RepositoryType.Door);
-
     const door = doors[data];
+
+    if (!door) {
+        return null;
+    }
 
     return (
         <SubMenu id="key">
@@ -164,8 +170,11 @@ export const DoorKeySubMenu: FunctionComponent<DoorMenuStateProps> = ({ data }) 
 
 export const DoorAdminMenu: FunctionComponent<DoorMenuStateProps> = ({ data }) => {
     const doors = useRepository(RepositoryType.Door);
-
     const door = doors[data];
+
+    if (!door) {
+        return null;
+    }
 
     return (
         <Menu type={MenuType.DoorAdmin}>
@@ -204,7 +213,30 @@ export const DoorAdminMenu: FunctionComponent<DoorMenuStateProps> = ({ data }) =
                     >
                         Supprimer la porte
                     </MenuItemButton>
-                    <MenuItemText>Permissions</MenuItemText>
+
+                    <MenuTitle>Intéraction</MenuTitle>
+                    <MenuItemButton
+                        onConfirm={async () => {
+                            fetchNui(NuiEvent.AdminDoorSetTarget, { id: door.id, type: 'draw' });
+                        }}
+                    >
+                        <div className="pr-2 flex items-center justify-between">
+                            <span>Modifier la distance d'affichage</span>
+                            <span>{door.target?.draw || defaultDrawDistance}</span>
+                        </div>
+                    </MenuItemButton>
+                    <MenuItemButton
+                        onConfirm={async () => {
+                            fetchNui(NuiEvent.AdminDoorSetTarget, { id: door.id, type: 'interaction' });
+                        }}
+                    >
+                        <div className="pr-2 flex items-center justify-between">
+                            <span>Modifier la distance d'intéraction</span>
+                            <span>{door.target?.interaction || defaultInteractionDistance}</span>
+                        </div>
+                    </MenuItemButton>
+
+                    <MenuTitle>Permissions</MenuTitle>
                     <MenuItemSubMenuLink id="gang">Gang</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="job">Métier</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="key">Clef</MenuItemSubMenuLink>
