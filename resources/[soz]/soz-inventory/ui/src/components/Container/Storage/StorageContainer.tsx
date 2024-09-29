@@ -356,6 +356,7 @@ export const StorageContainer = () => {
                             rows={targetInventoryRow}
                             money={targetMoney}
                             items={targetInventory.items.map((item, i) => ({ ...item, id: i }))}
+                            type={targetInventory.type}
                         />
                     </ContainerWrapper>
                 </div>

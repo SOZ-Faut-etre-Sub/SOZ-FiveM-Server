@@ -39,6 +39,7 @@ export type InventoryItem = {
     openStorageLabel?: string | null;
     canShow?: boolean;
     throwable?: boolean;
+    notSearchable?: boolean;
 };
 
 export type ItemType =

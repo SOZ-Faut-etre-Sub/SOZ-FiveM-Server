@@ -119,6 +119,7 @@ function Inventory.Load(id, invType, owner, slots, maxWeight)
                     illustrator = item.illustrator,
                     throwable = item.throwable,
                     usableLabel = item.usableLabel,
+                    notSearchable = item.notSearchable,
                 }
             end
         end
@@ -370,13 +371,11 @@ function Inventory.FilterItems(inv, target)
         local disabled = not _G.Container[inv.type]:CanGetContentInInventory(inv) or not _G.Container[target.type]:CanPutContentInInventory(target)
         if inv.items ~= nil then
             for _, v in pairs(inv.items) do
-                if target.type ~= "player" or inv.type ~= "player" or not (QBCore.Shared.Items[v.name]["notSearchable"] or v.metadata.notSearchable) then
-                    local insertId = #items + 1
-                    items[insertId] = table.deepclone(v)
+                local insertId = #items + 1
+                items[insertId] = table.deepclone(v)
 
-                    if disabled or not _G.Container[target.type]:ItemIsAllowed(v, target, v.metadata) then
-                        items[insertId].disabled = true
-                    end
+                if disabled or not _G.Container[target.type]:ItemIsAllowed(v, target, v.metadata) then
+                    items[insertId].disabled = true
                 end
             end
         end

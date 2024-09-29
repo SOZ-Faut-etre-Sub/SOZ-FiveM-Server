@@ -11,11 +11,12 @@ type Props = {
     money?: number;
     wallet?:number;
     keychain?:number;
+    type?: string;
     items: (InventoryItem & {id: number})[]
     action?: (action: string, item: InventoryItem, shortcut: number) => void;
 }
 
-export const ContainerSlots: FunctionComponent<Props> = ({id, columns = 5, rows, items, money, wallet, keychain, action}) => {
+export const ContainerSlots: FunctionComponent<Props> = ({id, columns = 5, rows, items, money, wallet, keychain, type, action}) => {
     const [description, setDescription] = useState<string|null>('');
     const [inContextMenu, setInContextMenu] = useState<Record<string, boolean>>({});
 
@@ -83,7 +84,7 @@ export const ContainerSlots: FunctionComponent<Props> = ({id, columns = 5, rows,
                             id={`${id}_drag`}
                             containerName={id}
                             key={i}
-                            item={items.find(it => (it.slot -1) === i)}
+                            item={items.find(it => (it.slot -1) === i && ((type != 'player') || (!it.notSearchable && !it.metadata?.notSearchable)))}
                             setInContext={createInContext(i)}
                             interactAction={action}
                             onItemHover={setDescription}
