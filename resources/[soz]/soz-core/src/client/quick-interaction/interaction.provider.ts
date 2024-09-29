@@ -247,7 +247,7 @@ export class InteractionProvider {
         if (distance > this.interactionDistanceProvider.getInteractionDistance(this.nearbyInteraction.id)) return;
 
         this.nearbyInteraction.action(entity);
-        this.nearbyInteractions.delete(this.nearbyInteraction.id);
+        this.nearbyInteractions.clear();
         this.nearbyInteraction = null;
     }
 
