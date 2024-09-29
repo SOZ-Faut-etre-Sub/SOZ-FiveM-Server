@@ -104,8 +104,6 @@ export class InteractionProvider {
 
     @Tick(TickInterval.EVERY_SECOND)
     public async listNearbyInteractions() {
-        if (this.nearbyInteraction) return;
-
         for (const [id, interaction] of Object.entries(this.interactions)) {
             const [entity, coords] = this.getInteractionCoords(interaction);
             if (!coords) continue;
@@ -124,19 +122,19 @@ export class InteractionProvider {
     public async onTick() {
         if (this.nearbyInteractions.size === 0) return;
 
-        for (const interaction of this.nearbyInteractions.values()) {
+        for (const [id, interaction] of this.nearbyInteractions.entries()) {
             const [entity, coords] = this.getInteractionCoords(interaction);
-            if (!coords) return;
+            if (!coords) continue;
 
             const distance = getDistance(this.playerPosition, coords);
-            if (distance > this.interactionDistanceProvider.getDrawDistance(interaction.id, entity)) {
-                this.resetNearbyInteraction();
-                return;
+            if (distance > this.interactionDistanceProvider.getDrawDistance(id, entity)) {
+                this.nearbyInteractions.delete(id);
+                continue;
             }
 
             SetDrawOrigin(coords[0], coords[1], coords[2], 0);
 
-            if (distance > this.interactionDistanceProvider.getInteractionDistance(interaction.id, entity)) {
+            if (distance > this.interactionDistanceProvider.getInteractionDistance(id, entity)) {
                 DrawSprite(
                     'soz_minimap',
                     'interaction_off',
@@ -151,7 +149,7 @@ export class InteractionProvider {
                     255
                 );
                 ClearDrawOrigin();
-                return;
+                continue;
             }
 
             const labelSize = interaction.label.length * 0.005;
@@ -236,11 +234,7 @@ export class InteractionProvider {
             return;
 
         this.nearbyInteraction.action(entity);
-        this.resetNearbyInteraction();
-    }
-
-    protected resetNearbyInteraction() {
-        this.nearbyInteractions = new Map();
+        this.nearbyInteractions.delete(this.nearbyInteraction.id);
         this.nearbyInteraction = null;
     }
 
