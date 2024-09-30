@@ -558,7 +558,7 @@ export class DoorProvider {
             }
         }
 
-        this.doorInteractionList.get(door.id).forEach(id => {
+        this.doorInteractionList.get(door.id)?.forEach(id => {
             this.interactionDistanceProvider.updateDrawDistance(id, door.target?.draw);
             this.interactionDistanceProvider.updateInteractionDistance(id, door.target?.interaction);
         });
