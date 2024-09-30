@@ -8,8 +8,11 @@ export type Interaction = InteractionOption & {
     id: string;
 
     entity?: number;
-    models?: number[];
+
     coords?: Vector3 | Vector4;
+
+    model?: number;
+    searchCoords?: Vector3;
 };
 
 export type InteractionOption = {
