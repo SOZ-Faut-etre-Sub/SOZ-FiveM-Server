@@ -71,7 +71,7 @@ export const BennysConfig = {
     UpgradeConfiguration: defaultUpgradeConfiguration,
     Order: {
         zone: orderZone,
-        waitingTime: 60, // In minutes
+        waitingTime: 30, // In minutes
         garage: 'bennys_luxury',
         account: 'bennys',
         farm: 'farm_bennys',
