@@ -154,9 +154,14 @@ export class InteractionProvider {
                 continue;
             }
 
+            const nearbyInteractionAlreadyExists = this.nearbyInteraction && this.nearbyInteraction.id !== id;
+
             SetDrawOrigin(coords[0], coords[1], coords[2], 0);
 
-            if (distance > this.interactionDistanceProvider.getInteractionDistance(id)) {
+            if (
+                nearbyInteractionAlreadyExists ||
+                distance > this.interactionDistanceProvider.getInteractionDistance(id)
+            ) {
                 DrawSprite(
                     'soz_minimap',
                     'interaction_off',
@@ -176,7 +181,7 @@ export class InteractionProvider {
                 continue;
             }
 
-            if (this.nearbyInteraction && this.nearbyInteraction.id !== id) {
+            if (nearbyInteractionAlreadyExists) {
                 continue;
             }
 
