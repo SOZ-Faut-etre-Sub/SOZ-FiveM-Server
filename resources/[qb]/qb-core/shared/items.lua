@@ -7950,6 +7950,7 @@ QBShared.Items = {
         ["unique"] = false,
         ["useable"] = true,
         ["shouldClose"] = true,
+        ["durability"] = 14,
         ["combinable"] = nil,
         ["description"] = "Pour ouvrir toutes les portes sans exception.",
         ["illustrator"] = ".Sniteur",

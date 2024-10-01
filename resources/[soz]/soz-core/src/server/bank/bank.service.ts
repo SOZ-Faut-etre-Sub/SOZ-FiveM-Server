@@ -325,7 +325,7 @@ export class BankService {
         allowOverflow = false,
         reason = ''
     ): Promise<boolean> {
-        const action = this.bankAccountRepository.addMoney(account, amount, type, allowOverflow);
+        const action = await this.bankAccountRepository.addMoney(account, amount, type, allowOverflow);
         if (!action) return false;
 
         if (reason !== '') {

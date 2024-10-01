@@ -268,6 +268,7 @@ export enum RpcServerEvent {
     GANG_CYBER_CRYPTO_MARKET_BUY = 'soz-core:server:gang:cyber:market-buy',
     GANG_CYBER_CRYPTO_ACTIVATE = 'soz-core:server:gang:cyber:activate',
     GANG_CYBER_CRYPTO_HARVEST = 'soz-core:server:gang:cyber:harvest',
+    GANG_CYBER_HACK_ENERGY_CHECK = 'soz-core:server:gang:cyber:energy-check',
 
     WORLD_EVENT_GET_INFO = 'soz-core:server:world-event:get-info',
     WORLD_EVENT_START = 'soz-core:server:world-event:start',
