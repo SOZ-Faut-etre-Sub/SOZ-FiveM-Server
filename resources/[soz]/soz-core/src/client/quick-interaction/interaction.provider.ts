@@ -12,6 +12,8 @@ import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { ResourceLoader } from '../repository/resource.loader';
 import { TargetService } from '../target/target.service';
 
+type GamePoolObject = { entity: number; originalCoords: Vector3; coords: Vector3 };
+
 @Provider()
 export class InteractionProvider {
     @Inject(ResourceLoader)
@@ -26,7 +28,7 @@ export class InteractionProvider {
     @Inject(TargetService)
     private readonly targetService: TargetService;
 
-    private gamePoolObjects = new Map<number, { model: number; originalCoords: Vector3; coords: Vector3 }>();
+    private gamePoolObjects: Record<number, GamePoolObject[]> = {};
 
     private interactions = new Map<string, Interaction>();
     private nearbyInteractions = new Map<string, Interaction>();
@@ -93,20 +95,32 @@ export class InteractionProvider {
         return id;
     }
 
-    @Tick(TickInterval.EVERY_SECOND)
+    public deleteInteraction(id: string): void {
+        this.interactions.delete(id);
+        this.nearbyInteractions.delete(id);
+        if (this.nearbyInteraction?.id === id) this.nearbyInteraction = null;
+    }
+
+    @Tick(10 * TickInterval.EVERY_SECOND)
     public async updateGamePoolObjects() {
-        this.gamePoolObjects.clear();
+        this.gamePoolObjects = {};
 
         for (const object of GetGamePool('CObject')) {
-            this.gamePoolObjects.set(object, {
-                model: GetEntityModel(object),
+            const model = GetEntityModel(object);
+
+            if (!this.gamePoolObjects[model]) {
+                this.gamePoolObjects[model] = [];
+            }
+
+            this.gamePoolObjects[model].push({
+                entity: object,
                 originalCoords: GetEntityCoords(object, false) as Vector3,
                 coords: this.interactionOffsetProvider.getEntityCoordsWithOffset(object),
             });
         }
     }
 
-    @Tick(500)
+    @Tick(1000)
     public async listNearbyInteractions() {
         for (const [id, interaction] of this.interactions.entries()) {
             const [entity, coords] = this.getInteractionCoords(interaction);
@@ -146,9 +160,14 @@ export class InteractionProvider {
                 continue;
             }
 
+            const nearbyInteractionAlreadyExists = this.nearbyInteraction && this.nearbyInteraction.id !== id;
+
             SetDrawOrigin(coords[0], coords[1], coords[2], 0);
 
-            if (distance > this.interactionDistanceProvider.getInteractionDistance(id)) {
+            if (
+                nearbyInteractionAlreadyExists ||
+                distance > this.interactionDistanceProvider.getInteractionDistance(id)
+            ) {
                 DrawSprite(
                     'soz_minimap',
                     'interaction_off',
@@ -163,6 +182,12 @@ export class InteractionProvider {
                     255
                 );
                 ClearDrawOrigin();
+
+                if (this.nearbyInteraction?.id === id) this.nearbyInteraction = null;
+                continue;
+            }
+
+            if (nearbyInteractionAlreadyExists) {
                 continue;
             }
 
@@ -262,30 +287,24 @@ export class InteractionProvider {
 
         if (interaction.model) {
             const playerPosition = this.playerPosition;
-            let closedEntities = [];
 
-            for (const [object, { model, originalCoords, coords }] of this.gamePoolObjects.entries()) {
-                if (model !== interaction.model) continue;
-
-                if (
-                    getDistance(originalCoords, interaction.searchCoords) >
-                    this.interactionDistanceProvider.getInteractionDistance(interaction.id) + 0.5
-                ) {
-                    continue;
-                }
-
-                closedEntities.push({
-                    object,
-                    model,
+            const closedEntities = this.gamePoolObjects[interaction.model]
+                ?.filter(
+                    ({ originalCoords }) =>
+                        getDistance(originalCoords, interaction.searchCoords) <=
+                        this.interactionDistanceProvider.getInteractionDistance(interaction.id) + 0.5
+                )
+                ?.map(({ entity, originalCoords, coords }) => ({
+                    entity,
+                    originalCoords,
                     coords,
                     distance: getDistance(playerPosition, coords),
-                });
-            }
+                }))
+                ?.sort((a, b) => a.distance - b.distance);
 
-            closedEntities = closedEntities.sort((a, b) => a.distance - b.distance);
-            if (closedEntities.length === 0) return [null, null];
+            if (!closedEntities || closedEntities.length === 0) return [null, null];
 
-            return [closedEntities[0].object, closedEntities[0].coords];
+            return [closedEntities[0].entity, closedEntities[0].coords];
         }
 
         return [null, null];

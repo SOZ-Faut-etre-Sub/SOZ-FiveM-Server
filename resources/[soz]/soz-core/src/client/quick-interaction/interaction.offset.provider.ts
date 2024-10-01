@@ -7,6 +7,7 @@ import { add2Vector3, Vector3 } from '../../shared/polyzone/vector';
 @Provider()
 export class InteractionOffsetProvider {
     private modelOffset = new Map<number, Vector3>();
+    private modelDimensions = new Map<number, [Vector3, Vector3]>();
 
     private readonly defaultOffset = [0, 0, 0] as Vector3;
 
@@ -20,10 +21,18 @@ export class InteractionOffsetProvider {
         if (GetEntityType(entity) === 0) return this.defaultOffset;
 
         const model = GetEntityModel(entity);
-        const [minimum, maximum] = GetModelDimensions(model) as [Vector3, Vector3];
+        const [minimum, maximum] = this.getModelDimensions(model);
         const offsetMode = add2Vector3(maximum, minimum);
 
         return this.modelOffset.get(model) || offsetMode;
+    }
+
+    private getModelDimensions(model: number): [Vector3, Vector3] {
+        if (!this.modelDimensions.has(model)) {
+            const [minimum, maximum] = GetModelDimensions(model) as [Vector3, Vector3];
+            this.modelDimensions.set(model, [minimum, maximum]);
+        }
+        return this.modelDimensions.get(model);
     }
 
     @Once(OnceStep.Start)

@@ -61,7 +61,7 @@ export class DoorProvider {
     private adminEnabled = false;
     private adminInteractionPreview: Door;
 
-    private doorInteractionList = new Map<string, string[]>();
+    private doorInteractionList: Record<string, string[]> = {};
 
     @Once(OnceStep.RepositoriesLoaded)
     public async init() {
@@ -224,60 +224,6 @@ export class DoorProvider {
                         this.adminInteractionPreview = door;
                     },
                 },
-                {
-                    label: 'Verrouiller',
-                    icon: 'door/lock',
-                    category: 'citizen',
-                    canInteract: entity => {
-                        const [valid, locked] = this.canInterract(entity);
-                        return valid && !locked;
-                    },
-                    action: async entity => {
-                        const doors = this.doorRepository.get();
-                        const door = doors.find(door => door.subdoors.map(elem => elem.entity).includes(entity));
-                        door.lock = true;
-
-                        this.animationService.playAnimation({
-                            base: {
-                                dictionary: 'missheistfbisetup1',
-                                name: 'unlock_enter_janitor',
-                                options: {
-                                    onlyUpperBody: true,
-                                },
-                                playbackRate: 0.7,
-                            },
-                        });
-
-                        TriggerServerEvent(ServerEvent.DOOR_ADD_UPDATE, door, true);
-                    },
-                },
-                {
-                    label: 'Déverrouiller',
-                    icon: 'door/unlock',
-                    category: 'citizen',
-                    canInteract: entity => {
-                        const [valid, locked] = this.canInterract(entity);
-                        return valid && locked;
-                    },
-                    action: async entity => {
-                        const doors = this.doorRepository.get();
-                        const door = doors.find(door => door.subdoors.map(elem => elem.entity).includes(entity));
-                        door.lock = false;
-
-                        this.animationService.playAnimation({
-                            base: {
-                                dictionary: 'missheistfbisetup1',
-                                name: 'unlock_enter_janitor',
-                                options: {
-                                    onlyUpperBody: true,
-                                },
-                                playbackRate: 0.7,
-                            },
-                        });
-
-                        TriggerServerEvent(ServerEvent.DOOR_ADD_UPDATE, door, false);
-                    },
-                },
             ],
             5
         );
@@ -286,7 +232,9 @@ export class DoorProvider {
     }
 
     private createInteraction(door: Door) {
-        return;
+        if (!this.doorInteractionList[door.id]) {
+            this.doorInteractionList[door.id] = [];
+        }
 
         for (const subdoor of door.subdoors) {
             const lockId = this.interactionProvider.createInteractionForModels(
@@ -353,7 +301,7 @@ export class DoorProvider {
                 door.target?.draw
             );
 
-            this.doorInteractionList.set(door.id, [lockId, unlockId]);
+            this.doorInteractionList[door.id].push(lockId, unlockId);
         }
     }
 
@@ -558,7 +506,22 @@ export class DoorProvider {
             }
         }
 
-        this.doorInteractionList.get(door.id)?.forEach(id => {
+        const interactionList = this.doorInteractionList[door.id];
+        if (!interactionList) {
+            this.createInteraction(door);
+            return;
+        }
+
+        if (interactionList.length !== subdoors.length) {
+            interactionList.forEach(id => {
+                this.interactionProvider.deleteInteraction(id);
+            });
+            delete this.doorInteractionList[door.id];
+
+            this.createInteraction(door);
+        }
+
+        interactionList.forEach(id => {
             this.interactionDistanceProvider.updateDrawDistance(id, door.target?.draw);
             this.interactionDistanceProvider.updateInteractionDistance(id, door.target?.interaction);
         });
@@ -572,6 +535,11 @@ export class DoorProvider {
                 RemoveDoorFromSystem(subdoor.hash);
             }
         }
+
+        this.doorInteractionList[door.id]?.forEach(id => {
+            this.interactionProvider.deleteInteraction(id);
+        });
+        delete this.doorInteractionList[door.id];
     }
 
     @OnNuiEvent(NuiEvent.AdminDoorAddSub)
@@ -588,6 +556,7 @@ export class DoorProvider {
     @OnNuiEvent(NuiEvent.AdminDoorDelete)
     public async doorDelete(doorId: string) {
         TriggerServerEvent(ServerEvent.DOOR_DELETE, doorId);
+        this.adminInteractionPreview = null;
         this.nuiMenu.closeMenu();
     }
 
