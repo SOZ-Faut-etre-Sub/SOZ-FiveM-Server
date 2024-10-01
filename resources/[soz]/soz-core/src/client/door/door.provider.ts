@@ -61,7 +61,7 @@ export class DoorProvider {
     private adminEnabled = false;
     private adminInteractionPreview: Door;
 
-    private doorInteractionList = new Map<string, string[]>();
+    private doorInteractionList: Record<string, string[]> = {};
 
     @Once(OnceStep.RepositoriesLoaded)
     public async init() {
@@ -232,6 +232,10 @@ export class DoorProvider {
     }
 
     private createInteraction(door: Door) {
+        if (!this.doorInteractionList[door.id]) {
+            this.doorInteractionList[door.id] = [];
+        }
+
         for (const subdoor of door.subdoors) {
             const lockId = this.interactionProvider.createInteractionForModels(
                 subdoor.model,
@@ -297,7 +301,7 @@ export class DoorProvider {
                 door.target?.draw
             );
 
-            this.doorInteractionList.set(door.id, [lockId, unlockId]);
+            this.doorInteractionList[door.id].push(lockId, unlockId);
         }
     }
 
@@ -502,7 +506,22 @@ export class DoorProvider {
             }
         }
 
-        this.doorInteractionList.get(door.id)?.forEach(id => {
+        const interactionList = this.doorInteractionList[door.id];
+        if (!interactionList) {
+            this.createInteraction(door);
+            return;
+        }
+
+        if (interactionList.length !== subdoors.length) {
+            interactionList.forEach(id => {
+                this.interactionProvider.deleteInteraction(id);
+            });
+            delete this.doorInteractionList[door.id];
+
+            this.createInteraction(door);
+        }
+
+        interactionList.forEach(id => {
             this.interactionDistanceProvider.updateDrawDistance(id, door.target?.draw);
             this.interactionDistanceProvider.updateInteractionDistance(id, door.target?.interaction);
         });
@@ -516,6 +535,11 @@ export class DoorProvider {
                 RemoveDoorFromSystem(subdoor.hash);
             }
         }
+
+        this.doorInteractionList[door.id]?.forEach(id => {
+            this.interactionProvider.deleteInteraction(id);
+        });
+        delete this.doorInteractionList[door.id];
     }
 
     @OnNuiEvent(NuiEvent.AdminDoorAddSub)

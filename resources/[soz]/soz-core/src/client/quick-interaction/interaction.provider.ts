@@ -95,6 +95,12 @@ export class InteractionProvider {
         return id;
     }
 
+    public deleteInteraction(id: string): void {
+        this.interactions.delete(id);
+        this.nearbyInteractions.delete(id);
+        if (this.nearbyInteraction?.id === id) this.nearbyInteraction = null;
+    }
+
     @Tick(10 * TickInterval.EVERY_SECOND)
     public async updateGamePoolObjects() {
         this.gamePoolObjects = {};
