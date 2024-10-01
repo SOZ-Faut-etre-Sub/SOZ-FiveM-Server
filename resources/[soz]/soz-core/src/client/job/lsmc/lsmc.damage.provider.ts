@@ -1,5 +1,6 @@
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
+import { InjuriesPerGroup } from '@private/shared/injuries';
 import { Once, OnceStep, OnGameEvent } from '@public/core/decorators/event';
 import { Tick } from '@public/core/decorators/tick';
 import { GameEvent, ServerEvent } from '@public/shared/event';
@@ -77,6 +78,7 @@ export class LSMCDamageProvider {
         }
 
         damageType = GetWeaponDamageType(this.lastWeaponHash);
+        const group = GetWeapontypeGroup(this.lastWeaponHash);
 
         if (damageType == 1) {
             return;
@@ -138,6 +140,14 @@ export class LSMCDamageProvider {
 
         if (playerData.metadata.drug >= 100) {
             damageType = 903;
+        }
+
+        if (damageType == 3 && InjuriesPerGroup[group] == 2) {
+            damageType = 909;
+        }
+
+        if (damageType == 3 && InjuriesPerGroup[group] == 3) {
+            damageType = 910;
         }
 
         if (bone == 39317) {

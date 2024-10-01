@@ -182,9 +182,9 @@ export const DamagesTypes: Record<number, DamagesType> = {
         icon: 'melee',
     },
     3: {
-        label: 'Balles',
+        label: 'Balles légères',
         description:
-            "Détection d'une blessure par balle. Il s'agit d'un traumatisme physique causé par une balle d'une arme à feu. Les dommages peuvent inclure des saignements, des fractures, des dommages aux organes, une infection de la plaie, ou la perte de la capacité de bouger une partie du corps",
+            "Détection d'une blessure légère par balle. Il s'agit d'un traumatisme physique causé par une balle d'une arme à feu. Les dommages peuvent inclure des saignements, des fractures, des dommages aux organes, une infection de la plaie, ou la perte de la capacité de bouger une partie du corps",
         icon: 'bullet',
     },
     5: {
@@ -258,6 +258,18 @@ export const DamagesTypes: Record<number, DamagesType> = {
         label: 'Poing',
         icon: 'fist',
         description: "Détection d'une blessure causé par des coups de poings ou coups de pieds",
+    },
+    909: {
+        label: 'Balles intermedaires',
+        description:
+            "Détection d'une blessure intermedaires par balle. Il s'agit d'un traumatisme physique causé par une balle d'une arme à feu. Les dommages peuvent inclure des saignements, des fractures, des dommages aux organes, une infection de la plaie, ou la perte de la capacité de bouger une partie du corps",
+        icon: 'bullet2',
+    },
+    910: {
+        label: 'Balles lourdes',
+        description:
+            "Détection d'une blessure lourdes par balle. Il s'agit d'un traumatisme physique causé par une balle d'une arme à feu. Les dommages peuvent inclure des saignements, des fractures, des dommages aux organes, une infection de la plaie, ou la perte de la capacité de bouger une partie du corps",
+        icon: 'bullet3',
     },
 };
 
