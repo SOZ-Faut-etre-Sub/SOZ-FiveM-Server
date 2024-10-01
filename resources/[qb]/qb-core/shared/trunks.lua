@@ -162,6 +162,6 @@ QBShared.Trunks = {
 
     -- Planes
     [GetHashKey('streamer216')] = { slot = 50, weight = 500000 },
-    [GetHashKey('dodo')] = { slot = 50, weight = 250000 },
+    [GetHashKey('dodo')] = { slot = 50, weight = 200000 },
     [GetHashKey('microlight')] = { slot = 50, weight = 50000 },
 }
