@@ -1,3 +1,5 @@
+import { PlayerUpdate } from '@public/core/decorators/player';
+import { Rpc } from '@public/core/decorators/rpc';
 import { wait } from '@public/core/utils';
 import { TargetOption } from '@public/shared/target';
 
@@ -14,7 +16,7 @@ import { Control } from '../../shared/input';
 import { PlayerData, PlayerServerState, PlayerServerStateExercise } from '../../shared/player';
 import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { getRandomInt, getRandomItem } from '../../shared/random';
-import { RpcServerEvent } from '../../shared/rpc';
+import { RpcClientEvent, RpcServerEvent } from '../../shared/rpc';
 import { AnimationService } from '../animation/animation.service';
 import { BlipFactory } from '../blip';
 import { Notifier } from '../notifier';
@@ -355,9 +357,31 @@ export class PlayerHealthProvider {
 
         const health = GetEntityHealth(playerPed);
         const armor = GetPedArmour(playerPed);
+        const armorPlates = this.playerService.getNbArmorPlates();
         const stamina = 100 - Math.trunc(GetPlayerSprintStaminaRemaining(playerId));
 
-        this.nuiDispatch.dispatch('player', 'UpdatePlayerStats', { health, armor, stamina });
+        this.nuiDispatch.dispatch('player', 'UpdatePlayerStats', { health, armor, stamina, armorPlates });
+    }
+
+    @OnEvent(ClientEvent.POLICE_SETUP_ARMOR_PLATE)
+    public setupArmorPlates() {
+        const armorPlates = this.playerService.getNbArmorPlates();
+        this.playerService.setNbArmorPlates(armorPlates + 1);
+        SetPlayerWeaponDefenseModifier(PlayerId(), 0.1);
+        SetPlayerWeaponDefenseModifier_2(PlayerId(), 0.1);
+        console.log(GetPlayerWeaponDamageModifier(PlayerId()));
+    }
+
+    @PlayerUpdate()
+    public onPlayerUpdate(playerData: PlayerData) {
+        if (playerData.cloth_config.Config.HideBulletproof) {
+            this.playerService.setNbArmorPlates(0);
+        }
+    }
+
+    @Rpc(RpcClientEvent.GET_NB_ARMOR_PLATES)
+    public getClientNbArmorPlates() {
+        return this.playerService.getNbArmorPlates();
     }
 
     public setNutritionDisabled(value: boolean) {
@@ -387,6 +411,9 @@ export class PlayerHealthProvider {
         const armor = GetPedArmour(PlayerPedId());
         if (armor != metadataArmor.current) {
             metadataArmor.current = armor;
+            if (!armor) {
+                TriggerServerEvent(ServerEvent.QBCORE_SET_METADATA, 'armor_plates', 0);
+            }
             TriggerServerEvent(ServerEvent.QBCORE_SET_METADATA, 'armor', metadataArmor);
         }
     }

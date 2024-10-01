@@ -2,14 +2,16 @@ import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { Rpc } from '@public/core/decorators/rpc';
+import { emitClientRpc } from '@public/core/rpc';
 import { InventoryManager } from '@public/server/inventory/inventory.manager';
 import { ItemService } from '@public/server/item/item.service';
+import { Notifier } from '@public/server/notifier';
 import { PlayerService } from '@public/server/player/player.service';
 import { ProgressService } from '@public/server/player/progress.service';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { InventoryItem, Item } from '@public/shared/item';
 import { JobLabel } from '@public/shared/job';
-import { RpcServerEvent } from '@public/shared/rpc';
+import { RpcClientEvent, RpcServerEvent } from '@public/shared/rpc';
 
 import { PlayerStateService } from '../../player/player.state.service';
 
@@ -30,9 +32,13 @@ export class PoliceProvider {
     @Inject(ProgressService)
     private progressService: ProgressService;
 
+    @Inject(Notifier)
+    private notifier: Notifier;
+
     @Once(OnceStep.Start)
     public init() {
         this.itemService.setItemUseCallback('armor', this.useArmor.bind(this));
+        this.itemService.setItemUseCallback('armor_plate', this.useArmorPlate.bind(this));
         this.itemService.setItemUseCallback('outfit', this.useOutfit.bind(this));
         this.itemService.setItemUseCallback('light_intervention_outfit', this.useOutfit.bind(this));
         this.itemService.setItemUseCallback('heavy_antiriot_outfit', this.useOutfit.bind(this));
@@ -80,12 +86,65 @@ export class PoliceProvider {
             return;
         }
 
-        if (this.inventoryManager.removeNotExpiredItem(source, item.name, 1, item.metadata)) {
+        if (this.inventoryManager.removeInventoryItem(source, item)) {
             this.playerService.setPlayerMetadata(source, 'armor', { current: 100, hidden: true });
-            TriggerClientEvent(ClientEvent.POLICE_SETUP_ARMOR, source, armorType);
+            TriggerClientEvent(ClientEvent.POLICE_SETUP_ARMOR, source, armorType, item.metadata?.plates);
         }
 
         return;
+    }
+
+    public async useArmorPlate(source: number, unused: Item, item: InventoryItem) {
+        const player = this.playerService.getPlayer(source);
+        const nbArmorPlates = await emitClientRpc<number>(RpcClientEvent.GET_NB_ARMOR_PLATES, source);
+        if (!player) {
+            return;
+        }
+
+        if (player.metadata.armor.hidden) {
+            this.notifier.notify(source, `Vous n'avez pas de gilet sur vous.`, 'error');
+            return;
+        }
+
+        if (nbArmorPlates >= 3) {
+            this.notifier.notify(
+                source,
+                `Vous ne pouvez pas rajouter plus de plaque balistique sur ce gilet.`,
+                'error'
+            );
+            return;
+        }
+
+        const { completed } = await this.progressService.progress(
+            source,
+            'switch_clothes',
+            "Équipement d'une plaque balistique ...",
+            5000,
+            {
+                name: 'male_shower_towel_dry_to_get_dressed',
+                dictionary: 'anim@mp_yacht@shower@male@',
+                options: {
+                    cancellable: false,
+                    enablePlayerControl: true,
+                    onlyUpperBody: true,
+                },
+            },
+            {
+                disableMovement: true,
+                disableCarMovement: true,
+                disableMouse: false,
+                disableCombat: true,
+                canCancel: false,
+            }
+        );
+
+        if (!completed) {
+            return;
+        }
+
+        if (this.inventoryManager.removeItemFromInventory(source, item.name, 1, item.metadata)) {
+            TriggerClientEvent(ClientEvent.POLICE_SETUP_ARMOR_PLATE, source);
+        }
     }
 
     public useOutfit(source: number, it: Item, item: InventoryItem): Promise<void> {

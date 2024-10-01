@@ -14,6 +14,7 @@ export interface NuiHudMethodMap {
     UpdateSettings: HudSettings;
     UpdateHasCompass: boolean;
     UpdateDateTime: HudDateTime;
+    UpdateArmorPlates: number;
     UpdateStreetName: string[];
     UpdateCompass: HudCompass;
     UpdateVoiceMode: VoiceMode;

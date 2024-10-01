@@ -1210,6 +1210,16 @@ export const Armors = {
             Texture: 0,
             Palette: 0,
         },
+        ['bulletproof_vest_medium']: {
+            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.BodyArmor] + 7,
+            Texture: 0,
+            Palette: 0,
+        },
+        ['bulletproof_vest_low']: {
+            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.BodyArmor] + 6,
+            Texture: 0,
+            Palette: 0,
+        },
     },
     [joaat('mp_f_freemode_01')]: {
         ['unmark']: {
@@ -1247,6 +1257,16 @@ export const Armors = {
         },
         ['sasp2']: {
             Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.BodyArmor] + 11,
+            Texture: 0,
+            Palette: 0,
+        },
+        ['bulletproof_vest_medium']: {
+            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.BodyArmor] + 7,
+            Texture: 0,
+            Palette: 0,
+        },
+        ['bulletproof_vest_low']: {
+            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.BodyArmor] + 6,
             Texture: 0,
             Palette: 0,
         },

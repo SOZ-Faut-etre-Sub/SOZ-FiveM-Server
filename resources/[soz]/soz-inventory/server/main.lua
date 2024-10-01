@@ -585,6 +585,7 @@ function Inventory.AddItem(source, inv, item, amount, metadata, slot, cb)
     end
     if slot then
         local slotItem = inv.items[slot]
+        local slotItemDef = slotItem and QBCore.Shared.Items[slotItem.name]
         if not slotItem or not item.unique and slotItem and slotItem.name == item.name and table.matches(slotItem.metadata, metadata) then
             existing = nil
         elseif (table.contains(Config.crateTypeAllowed, item.type)) and slotItem and slotItem.type == "crate" then
@@ -616,6 +617,36 @@ function Inventory.AddItem(source, inv, item, amount, metadata, slot, cb)
                 TriggerClientEvent("soz-core:client:notification:draw", source,
                                    "Impossible d'attacher ~b~" .. item.label .. "~s~ à vôtre ~g~" .. slotItem.label .. "~s~ !", "error")
             end
+        elseif item.name == "armor_plate" and slotItem and slotItemDef.maxplates then
+
+            if slotItem.amount > 1 then
+                reason = "Impossible d'attacher la ~b~" .. item.label .. "~s~ à une pile de ~g~" .. slotItem.label .. "~s~ !"
+                success = false
+                goto endAddItem
+            end
+
+            if not slotItem.metadata.plates or slotItem.metadata.plates < slotItemDef.maxplates then
+                local metadata = slotItem.metadata
+                if not metadata.plates then
+                    metadata.plates = 0
+                end
+
+                metadata.plates = metadata.plates + 1
+
+                Inventory.SetMetadata(inv, slotItem.slot, metadata)
+                amount = amount - 1
+                weight = Inventory.GetItemWeight(item, metadata, amount)
+                TriggerClientEvent("soz-core:client:notification:draw", source,
+                                   "Vous avez attaché une ~b~" .. item.label .. "~s~ à vôtre ~g~" .. slotItem.label .. "~s~ !", "success")
+                if amount == 0 then
+                    success = true
+                    goto endAddItem
+                end
+            else
+                reason = "Impossible d'attacher plus de ~b~" .. item.label .. "~s~ à ce ~g~" .. slotItem.label .. "~s~ !"
+                success = false
+                goto endAddItem
+            end
         elseif item.name == "kerosene_jerrycan" and slotItem and slotItem.name == "chainsaw" then
             local metadata = {fuel = 20}
             if slotItem.metadata.fuel ~= 20 then
@@ -632,7 +663,6 @@ function Inventory.AddItem(source, inv, item, amount, metadata, slot, cb)
                 TriggerClientEvent("soz-core:client:notification:draw", source, "Le réservoir de ~b~" .. slotItem.label .. "~s~ est déjà plein !", "error")
             end
         elseif slotItem and slotItem.type == "drug_pot" then
-            local slotItemDef = QBCore.Shared.Items[slotItem.name]
             if slotItemDef.drug_pot.ingredient == item.name and amount >= slotItemDef.drug_pot.nbIngredient and not exports["soz-core"]:ItemIsExpired(slotItem) and
                 not exports["soz-core"]:ItemIsExpired({metadata = metadata}) then
                 Inventory.RemoveItem(inv, slotItemDef.name, 1, nil, slotItem.slot)

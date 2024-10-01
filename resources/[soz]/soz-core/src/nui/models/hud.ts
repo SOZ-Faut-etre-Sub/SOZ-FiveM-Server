@@ -6,6 +6,7 @@ import type { RootModel } from './';
 export const hud = createModel<RootModel>()({
     state: {
         hasWatch: false,
+        armorPlates: 0,
         settings: {
             theme: 'auto',
             zoom: 1,

@@ -9,6 +9,7 @@ export interface PlayerStats {
     health: number;
     armor: number;
     stamina: number;
+    armorPlates: number;
 }
 
 export interface NuiPLayerMethodMap {

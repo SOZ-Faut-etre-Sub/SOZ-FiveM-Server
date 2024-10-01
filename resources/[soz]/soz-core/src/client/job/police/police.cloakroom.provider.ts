@@ -153,13 +153,20 @@ export class PoliceCloakRoomProvider {
     }
 
     @OnEvent(ClientEvent.POLICE_SETUP_ARMOR)
-    public async setupArmor(armorType: string) {
+    public async setupArmor(armorType: string, plates: number) {
         const playerPed = PlayerPedId();
         const playerPedModel = GetEntityModel(playerPed);
         const armour = Armors[playerPedModel][armorType];
         if (!armour) {
             return;
         }
+        this.playerService.setNbArmorPlates(plates ?? 0);
+
+        if (plates > 0) {
+            SetPlayerWeaponDefenseModifier(PlayerId(), 0.1);
+            SetPlayerWeaponDefenseModifier_2(PlayerId(), 0.1);
+        }
+
         TriggerServerEvent(
             ServerEvent.CHARACTER_SET_JOB_CLOTHES,
             { Components: { [Component.BodyArmor]: armour }, Props: {} },

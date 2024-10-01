@@ -28,6 +28,7 @@ export const PlayerStats: FunctionComponent = () => {
 
     const health = useSelector((state: RootState) => state.playerStats.health);
     const armor = useSelector((state: RootState) => state.playerStats.armor);
+    const plates = useSelector((state: RootState) => state.playerStats.armorPlates);
     const stamina = useSelector((state: RootState) => state.playerStats.stamina);
 
     useNuiEvent('hud', 'SetBattery', setBattery);
@@ -88,7 +89,12 @@ export const PlayerStats: FunctionComponent = () => {
                 />
             </StatusGauge>
 
-            <StatusGauge value={armor} color={gaugeColors.blue_light} backgroundColor={gaugeColors.blue_dark}>
+            <StatusGauge
+                value={armor}
+                color={gaugeColors.blue_light}
+                backgroundColor={gaugeColors.blue_dark}
+                secondaryValue={plates}
+            >
                 <img
                     style={{
                         width: iconSize,

@@ -134,6 +134,7 @@ export type InventoryItemMetadata = {
     value?: number;
     storageElements?: InventoryItem[];
     notSearchable?: boolean;
+    plates?: number;
 };
 
 

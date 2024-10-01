@@ -20,6 +20,7 @@ export const playerStats = createModel<RootModel>()({
         health: 200,
         armor: 100,
         stamina: 100,
+        armorPlates: 0,
     } as PlayerStats,
     reducers: {
         update(state, stats: Partial<PlayerStats>) {

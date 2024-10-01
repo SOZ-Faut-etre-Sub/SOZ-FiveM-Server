@@ -20,6 +20,16 @@ export class PlayerService {
     private fakeId: FakeId = null;
     private deguisement = false;
     private pushing = false;
+    public nbArmorPlates = 0;
+
+    setNbArmorPlates(plates: number) {
+        this.nbArmorPlates = plates;
+        this.nuiDispatch.dispatch('hud', 'UpdateArmorPlates', this.nbArmorPlates);
+    }
+
+    getNbArmorPlates() {
+        return this.nbArmorPlates;
+    }
 
     private state: PlayerClientState = {
         isDead: false,

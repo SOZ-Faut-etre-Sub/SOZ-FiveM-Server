@@ -78,6 +78,7 @@ export type HudSettings = {
 
 export type HudState = {
     hasWatch: boolean;
+    armorPlates: number;
     settings: HudSettings;
     voiceMode: VoiceMode;
     streetName: string[];

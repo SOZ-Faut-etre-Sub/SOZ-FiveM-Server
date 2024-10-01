@@ -430,6 +430,28 @@ export class WeaponProvider {
         }
     }
 
+    @OnGameEvent(GameEvent.CEventNetworkEntityDamage)
+    public onReceived(
+        victim: number,
+        attacker: number,
+        unkInt1: number,
+        unkBool1: number,
+        unkBool2: number,
+        isFatal: boolean,
+        weaponHash: number
+    ) {
+        const armorPlates = this.playerService.getNbArmorPlates();
+        const damageType = GetWeaponDamageType(weaponHash);
+        if (armorPlates > 0 && [3, 5, 6].includes(damageType)) {
+            if (armorPlates === 1) {
+                SetPlayerWeaponDefenseModifier(PlayerId(), 1.0);
+                SetPlayerWeaponDefenseModifier_2(PlayerId(), 1.0);
+            }
+            this.playerService.setNbArmorPlates(armorPlates - 1);
+            return;
+        }
+    }
+
     @Tick(1)
     public async onStunnedTick() {
         const playerPed = PlayerPedId();

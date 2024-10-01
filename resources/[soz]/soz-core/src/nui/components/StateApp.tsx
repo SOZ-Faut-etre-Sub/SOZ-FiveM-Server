@@ -125,5 +125,9 @@ export const StateApp: FunctionComponent = () => {
         dispatch.repository.set(data.type, data.data);
     });
 
+    useNuiEvent('hud', 'UpdateArmorPlates', nbPlates => {
+        dispatch.hud.update({ armorPlates: nbPlates });
+    });
+
     return null;
 };

@@ -313,6 +313,8 @@ export type InventoryItemMetadata = {
     showWeather?: boolean;
     showCompass?: boolean;
     showStreetName?: boolean;
+    // Armor
+    plates?: number;
 };
 
 export type Inventory = {

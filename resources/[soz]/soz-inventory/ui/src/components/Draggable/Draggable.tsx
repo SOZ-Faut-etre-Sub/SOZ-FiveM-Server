@@ -91,6 +91,9 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
             if (WeaponAmmo[item.name]) {
                 contextExtraLabel += ` Munition : ${WeaponAmmo[item.name]}`
             }
+        }
+        else if (item.metadata?.plates && item.metadata?.plates > 0) {
+            contextExtraLabel += ` Plaques : ${item.metadata.plates}`
         } else if(item.type === 'fishing_rod'){
             if (item?.metadata?.bait) {
                 itemExtraLabel += ` [${item.metadata.bait?.label}]`
