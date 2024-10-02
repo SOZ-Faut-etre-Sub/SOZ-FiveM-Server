@@ -8,7 +8,7 @@ import {
 } from '../../../../shared/vehicle/vehicle';
 import { useDaltonism } from '../hooks/useDaltonism';
 
-export const MotorIndicator: FunctionComponent<{ motor: number; fuelType: string }> = ({ motor, fuelType }) => {
+export const MotorIndicator: FunctionComponent<{ motor: number }> = ({ motor }) => {
     const { imagePrefix } = useDaltonism();
 
     let motorStatus = 'yellow';
@@ -27,7 +27,7 @@ export const MotorIndicator: FunctionComponent<{ motor: number; fuelType: string
                 'opacity-5': motor >= VehicleMidDamageThreshold,
                 'opacity-100': motor < VehicleMidDamageThreshold,
             })}
-            src={`/public/images/hud/vehicle/${imagePrefix}${fuelType === 'essence' ? 'motor' : 'battery'}-${motorStatus}.webp`}
+            src={`/public/images/hud/vehicle/${imagePrefix}motor-${motorStatus}.webp`}
             alt="motor"
         />
     );
