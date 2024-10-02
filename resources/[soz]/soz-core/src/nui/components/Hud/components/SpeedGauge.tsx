@@ -89,8 +89,8 @@ export const SpeedGauge: FunctionComponent = () => {
                         </div>
 
                         <div className="absolute inset-x-0 bottom-3 flex justify-center items-center gap-2">
-                            <MotorIndicator motor={engineHealth} fuelType={fuelType} />
-                            <OilIndicator oil={oilLevel} />
+                            <MotorIndicator motor={engineHealth} />
+                            <OilIndicator oil={oilLevel} fuelType={fuelType} />
                         </div>
                     </div>
                 </div>

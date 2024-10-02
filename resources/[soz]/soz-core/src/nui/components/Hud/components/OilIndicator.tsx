@@ -3,7 +3,7 @@ import { FunctionComponent } from 'react';
 
 import { useDaltonism } from '../hooks/useDaltonism';
 
-export const OilIndicator: FunctionComponent<{ oil: number }> = ({ oil }) => {
+export const OilIndicator: FunctionComponent<{ oil: number; fuelType: string }> = ({ oil, fuelType }) => {
     const { imagePrefix } = useDaltonism();
 
     let oilStatus = 'yellow';
@@ -22,7 +22,7 @@ export const OilIndicator: FunctionComponent<{ oil: number }> = ({ oil }) => {
                 'opacity-5': oil > 10,
                 'opacity-100': oil <= 10,
             })}
-            src={`/public/images/hud/vehicle/${imagePrefix}oil-${oilStatus}.webp`}
+            src={`/public/images/hud/vehicle/${imagePrefix}${fuelType === 'essence' ? 'oil' : 'battery'}-${oilStatus}.webp`}
             alt="oil"
         />
     );
