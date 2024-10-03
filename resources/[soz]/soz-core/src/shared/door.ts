@@ -887,4 +887,5 @@ export const DoorModels = [
     //HC Garage
     1086819216,
     -1932904945,
+    GetHashKey('soz_hc_garages_hall03_garagedoor'),
 ];

@@ -1447,5 +1447,9 @@
       <ModelName>soz_hc_garages_hall02_garagedoor</ModelName>
       <TuningName>MichaelGarageCustomBox2</TuningName>
     </Item>
+    <Item>
+      <ModelName>soz_hc_garages_hall03_garagedoor</ModelName>
+      <TuningName>MichaelGarageCustomBox2</TuningName>
+    </Item>
   </ModelToTuneMapping>
 </CDoorTuningFile>
