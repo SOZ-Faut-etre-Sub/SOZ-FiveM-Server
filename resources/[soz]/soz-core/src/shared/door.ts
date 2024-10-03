@@ -884,6 +884,9 @@ export const DoorModels = [
     -1687047623,
     103339342,
 
+    //Obsidian Villa
+    -711771128,
+
     //HC Garage
     1086819216,
     -1932904945,
