@@ -51,8 +51,8 @@
         "webpack-dev-server": "^5.0.4"
     },
     "dependencies": {
-        "@citizenfx/client": "^2.0.7542-1",
-        "@citizenfx/server": "^2.0.7114-1",
+        "@citizenfx/client": "^2.0.10191-1",
+        "@citizenfx/server": "^2.0.10191-1",
         "@clickhouse/client": "^1.2.0",
         "@egoist/router": "^1.2.3",
         "@headlessui/react": "^1.7.19",
