@@ -3,11 +3,10 @@
 
 fx_version "cerulean"
 game "gta5"
-this_is_a_map "yes"
 
-author "Larcius and Rigonkmalk"
-description 'Forests of San Andreas (South): Revised (Special SOZ)'
-version '5.3.1'
+author 'Larcius'
+description 'Forests of San Andreas (South): Revised'
+version '4.3'
 
-data_file('DLC_ITYP_REQUEST')('stream/north/forests_n_slod/forests_n_slod.ytyp')
-data_file('DLC_ITYP_REQUEST')('stream/south/forests_s_slod/forests_s_slod.ytyp')
+data_file('DLC_ITYP_REQUEST')('stream/south/forests_s_slod.ytyp')
+data_file('DLC_ITYP_REQUEST')('stream//north/forests_n_slod.ytyp')
