@@ -6,8 +6,10 @@ import { Rpc } from '@public/core/decorators/rpc';
 import { Vfx } from '@public/shared/animation';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { isPlayerInsideApartment } from '@public/shared/housing/housing';
+import { joaat } from '@public/shared/joaat';
 import {
     DebugProp,
+    ForbiddenPropModels,
     PropCollection,
     PropCollectionData,
     PropServerData,
@@ -255,6 +257,12 @@ export class PropsProvider {
             this.notifier.notify(source, `Impossible de créer le prop car son id ${prop.id} existe déjà`, 'error');
             return Err('id already exist');
         }
+
+        if (ForbiddenPropModels.includes(joaat(prop.model))) {
+            this.notifier.notify(source, `Ce modèle est interdit`, 'error');
+            return Err('Forbidden model');
+        }
+
         await this.prismaService.placed_prop.create({
             data: {
                 unique_id: prop.id,
