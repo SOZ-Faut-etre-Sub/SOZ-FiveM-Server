@@ -45,6 +45,7 @@ import { PlayerService } from '../player/player.service';
 import { GarageRepository } from '../repository/garage.repository';
 import { HousingRepository } from '../repository/housing.repository';
 import { VehicleRepository } from '../repository/vehicle.repository';
+import { VehicleDealershipProvider } from './vehicle.dealership.provider';
 import { VehicleSpawner } from './vehicle.spawner';
 import { VehicleStateService } from './vehicle.state.service';
 
@@ -119,6 +120,9 @@ export class VehicleGarageProvider {
 
     @Inject(GangService)
     private gangService: GangService;
+
+    @Inject(VehicleDealershipProvider)
+    private vehicleDealershipProvider: VehicleDealershipProvider;
 
     @Once(OnceStep.RepositoriesLoaded)
     public async init(): Promise<void> {
@@ -265,6 +269,8 @@ export class VehicleGarageProvider {
                 });
             }
         }
+
+        this.vehicleDealershipProvider.initAuction();
     }
 
     @Rpc(RpcServerEvent.VEHICLE_GARAGE_GET_MAX_PLACES)
