@@ -8,11 +8,13 @@ import { emitRpc } from '@public/core/rpc';
 import { uuidv4, wait } from '@public/core/utils';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import { getChunkId } from '@public/shared/grid';
+import { joaat } from '@public/shared/joaat';
 import { MenuType } from '@public/shared/nui/menu';
 import { NOT_ALLOWED_PLACEMENT_PROPS, PLACEMENT_PROP_LIST, PlacementProp } from '@public/shared/nui/prop_placement';
 import {
     CollectionRadius,
     DebugProp,
+    ForbiddenPropModels,
     PropCollection,
     PropCollectionData,
     PropServerData,
@@ -383,6 +385,11 @@ export class PropPlacementProvider {
             const propModel = await this.inputService.askInput({
                 title: 'Modèle du prop',
             });
+
+            if (ForbiddenPropModels.includes(joaat(propModel))) {
+                this.notifier.notify(`Ce modèle est interdit`, 'error');
+                return;
+            }
 
             const player = this.playerService.getPlayer();
             if (

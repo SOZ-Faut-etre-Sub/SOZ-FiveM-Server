@@ -1,6 +1,7 @@
 import { JobType } from '@public/shared/job';
 
 import { Vfx } from './animation';
+import { joaat } from './joaat';
 import { Vector3, Vector4 } from './polyzone/vector';
 
 export type WorldObjectMetadata = {
@@ -112,3 +113,5 @@ export type ObjectEditorOptions = {
 
 export type EditorMenuData = Omit<ObjectEditorOptions, 'onDrawCallback'>;
 export const CollectionRadius = 400.0;
+
+export const ForbiddenPropModels = [joaat('vw_prop_notebook_01a')];
