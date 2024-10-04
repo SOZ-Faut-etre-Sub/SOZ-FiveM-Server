@@ -1,4 +1,4 @@
-import { On, Once, OnceStep, OnEvent } from '@public/core/decorators/event';
+import { On, OnEvent } from '@public/core/decorators/event';
 import { Logger } from '@public/core/logger';
 import { ServerEvent } from '@public/shared/event';
 import { PlayerData } from '@public/shared/player';
@@ -78,7 +78,6 @@ export class VehicleDealershipProvider {
 
     private activeGuard: Record<number, number> = {};
 
-    @Once(OnceStep.DatabaseConnected)
     public async initAuction() {
         const vehicles = await this.prismaService.vehicle.findMany({
             where: {
