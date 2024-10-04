@@ -105,7 +105,7 @@ export class PlayerZombieProvider {
 
             const pos = GetEntityCoords(ped);
             const heading = GetEntityHeading(ped);
-            NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, 1, false);
+            NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, true, false);
             SetEntityHealth(ped, 200);
             SetPedArmour(ped, 100);
             return;

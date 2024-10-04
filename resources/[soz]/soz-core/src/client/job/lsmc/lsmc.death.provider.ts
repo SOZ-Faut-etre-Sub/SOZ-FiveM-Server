@@ -336,10 +336,10 @@ export class LSMCDeathProvider {
             const veh = GetVehiclePedIsIn(player, false);
             if (veh) {
                 const seat = this.getPedVehicleSeat(player);
-                NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, 1, false);
+                NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, true, false);
                 SetPedIntoVehicle(player, veh, seat);
             } else {
-                NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2] + 0.5, heading, 1, false);
+                NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2] + 0.5, heading, true, false);
             }
 
             this.animationService.stop();
@@ -427,7 +427,7 @@ export class LSMCDeathProvider {
             if (IsEntityDead(player)) {
                 const pos = GetEntityCoords(player);
                 const heading = GetEntityHeading(player);
-                NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, 1, false);
+                NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, true, false);
             }
 
             if (!skipanim) {
