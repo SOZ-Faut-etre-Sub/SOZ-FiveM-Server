@@ -6,6 +6,7 @@ import { emitRpc } from '@core/rpc';
 import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { PlayerUpdate } from '@public/core/decorators/player';
 import { Rpc } from '@public/core/decorators/rpc';
+import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { wait } from '@public/core/utils';
 import { TargetOption } from '@public/shared/target';
 
