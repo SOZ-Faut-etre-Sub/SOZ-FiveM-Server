@@ -2,7 +2,7 @@ import { PoliceClueDBProvider } from '@private/server/police/police.cluedb.provi
 import { PoliceScientistProvider } from '@private/server/police/police.scientist.provider';
 import { uuidv4 } from '@public/core/utils';
 import { joaat } from '@public/shared/joaat';
-import { toVector3Object, Vector3, Vector4 } from '@public/shared/polyzone/vector';
+import { getDistance, toVector3Object, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 
 import { On, Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -47,6 +47,7 @@ export class WeaponProvider {
 
     private lastAlertByZone: Record<string, number> = {};
     private disableExplosionAlert = false;
+    private mutedExplosionLocations: Vector3[] = [];
 
     @OnEvent(ServerEvent.FIVEM_WEAPON_DAMAGE_EVENT)
     public onWeaponDamageEvent(source: number, sender: number, data: any) {
@@ -367,6 +368,14 @@ export class WeaponProvider {
             return;
         }
 
+        const mutedIndex = this.mutedExplosionLocations.findIndex(
+            elem => getDistance(elem, [explosionData.posX, explosionData.posY, explosionData.posZ]) < 0.05
+        );
+        if (mutedIndex >= 0) {
+            this.mutedExplosionLocations.splice(mutedIndex, 1);
+            return;
+        }
+
         if (!explosionData.f208) {
             TriggerClientEvent(
                 ClientEvent.WEAPON_EXPLOSION,
@@ -377,6 +386,10 @@ export class WeaponProvider {
                 explosionData.explosionType
             );
         }
+    }
+
+    public addMutedExplosion(location: Vector3) {
+        this.mutedExplosionLocations.push(location);
     }
 
     public setDisableExplosionAlert(value: boolean) {

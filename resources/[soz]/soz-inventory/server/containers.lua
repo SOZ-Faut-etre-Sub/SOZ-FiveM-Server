@@ -80,6 +80,7 @@ Container["trunk"] = InventoryContainer:new({
         "smuggling_export",
         "smuggling_convoy_export",
         "smuggling_ore",
+        "smuggling_electronic",
     },
 })
 
@@ -114,6 +115,7 @@ Container["temporary_trunk"] = InventoryDatastore:new({
         "smuggling_export",
         "smuggling_convoy_export",
         "smuggling_ore",
+        "smuggling_electronic",
     },
 })
 
@@ -152,6 +154,7 @@ Container["trash"] = InventoryContainer:new({
         "smuggling_export",
         "smuggling_convoy_export",
         "smuggling_ore",
+        "smuggling_electronic",
     },
 })
 
@@ -192,6 +195,7 @@ Container["seizure"] = InventoryContainer:new({
         "smuggling_export",
         "smuggling_convoy_export",
         "smuggling_ore",
+        "smuggling_electronic",
     },
     inventoryPermissionCallback = playerHaveStorageAccessAndDuty,
 })
@@ -255,6 +259,7 @@ Container["bin"] = InventoryDatastore:new({
         "smuggling_export",
         "smuggling_convoy_export",
         "smuggling_ore",
+        "smuggling_electronic",
     },
     populateDatastoreCallback = function()
         local inventory = {}
@@ -312,6 +317,7 @@ Container["house_stash"] = InventoryContainer:new({
         "smuggling_export",
         "smuggling_convoy_export",
         "smuggling_ore",
+        "smuggling_electronic",
     },
 })
 Container["house_fridge"] = InventoryContainer:new({
@@ -417,6 +423,7 @@ Container["smuggling_box"] = InventoryDatastore:new({
         "smuggling_export",
         "smuggling_convoy_export",
         "smuggling_ore",
+        "smuggling_electronic",
     },
 })
 
@@ -455,6 +462,7 @@ Container["smuggling_blackmarket"] = InventoryContainer:new({
         "smuggling_export",
         "smuggling_convoy_export",
         "smuggling_ore",
+        "smuggling_electronic",
     },
 })
 
@@ -493,6 +501,7 @@ Container["smuggling_connected"] = InventoryContainer:new({
         "smuggling_export",
         "smuggling_convoy_export",
         "smuggling_ore",
+        "smuggling_electronic",
     },
 })
 
@@ -578,6 +587,10 @@ Container["recycler_processing"] = InventoryContainer:new({
         "evidence",
         "drug_pot",
         "veh_biz_piece",
+        "smuggling_export",
+        "smuggling_convoy_export",
+        "smuggling_ore",
+        "smuggling_electronic",
     },
     inventoryPermissionCallback = playerHaveJobAndDuty,
     inventoryGetContentCallback = function()
@@ -620,6 +633,7 @@ Container["object_storage"] = InventoryContainer:new({
         "smuggling_export",
         "smuggling_convoy_export",
         "smuggling_ore",
+        "smuggling_electronic",
     },
 })
 
@@ -670,5 +684,6 @@ Container["gang_stash"] = InventoryContainer:new({
         "smuggling_export",
         "smuggling_convoy_export",
         "smuggling_ore",
+        "smuggling_electronic",
     },
 })
