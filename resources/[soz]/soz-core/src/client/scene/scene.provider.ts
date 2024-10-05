@@ -6,6 +6,7 @@ import { emitRpc } from '../../core/rpc';
 import { ClientEvent } from '../../shared/event/client';
 import { NuiEvent } from '../../shared/event/nui';
 import { ServerEvent } from '../../shared/event/server';
+import { FDO, JobType } from '../../shared/job';
 import { NotEmptyStringValidator } from '../../shared/nui/input';
 import { MenuType } from '../../shared/nui/menu';
 import { ObjectEditorContext } from '../../shared/object';
@@ -13,12 +14,15 @@ import { RepositoryType } from '../../shared/repository';
 import { Err, Ok } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
 import { Scene } from '../../shared/scene';
+import { TargetOption } from '../../shared/target';
+import { InventoryManager } from '../inventory/inventory.manager';
 import { InputService } from '../nui/input.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { NuiMenu } from '../nui/nui.menu';
 import { ObjectEditorProvider } from '../object/object.editor.provider';
 import { ObjectProvider } from '../object/object.provider';
 import { PlayerPositionProvider } from '../player/player.position.provider';
+import { PlayerService } from '../player/player.service';
 import { SceneRepository } from '../repository/scene.repository';
 
 type CurrentSceneEdited = {
@@ -48,6 +52,12 @@ export class SceneProvider {
 
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
+
+    @Inject(InventoryManager)
+    private inventoryManager: InventoryManager;
+
+    @Inject(PlayerService)
+    private playerService: PlayerService;
 
     private highlightedObjectId: string = null;
 
@@ -430,19 +440,39 @@ export class SceneProvider {
     }
 
     async doLoadScene(scene: Scene) {
-        const objects = [];
+        const player = this.playerService.getPlayer();
 
         for (const entity of Object.values(scene.entities)) {
-            objects.push({
-                ...entity.object,
-                inventoryId: entity.inventoryId,
-            });
-        }
+            const targets: TargetOption[] = [];
 
-        await this.objectProvider.createObjects(objects);
+            if (entity.inventoryId) {
+                if (player.gang.id) {
+                    targets.push({
+                        label: 'Ouvrir',
+                        icon: 'inventory/ouvrir_le_stockage',
+                        category: 'criminal',
+                        canInteract: () => true,
+                        action: () => {
+                            this.inventoryManager.openInventory('object_storage', entity.inventoryId);
+                        },
+                    });
+                }
 
-        for (const object of objects) {
-            await this.objectProvider.createObject(object);
+                if (FDO.includes(player.job.id)) {
+                    targets.push({
+                        label: "Signaler l'emplacement",
+                        icon: 'inventory/ouvrir_le_stockage',
+                        job: player.job.id,
+                        category: 'society',
+                        canInteract: () => true,
+                        action: () => {
+                            TriggerServerEvent(ServerEvent.WORLD_EVENT_SIGNAL_INVENTORY, entity.inventoryId);
+                        },
+                    });
+                }
+            }
+
+            await this.objectProvider.createObject(entity.object, targets);
         }
     }
 

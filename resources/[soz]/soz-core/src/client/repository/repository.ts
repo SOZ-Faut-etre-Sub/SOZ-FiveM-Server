@@ -62,7 +62,7 @@ export abstract class Repository<
         return this.data;
     }
 
-    public async raw(): Promise<Record<K, V>> {
+    public raw(): Record<K, V> {
         return this.data;
     }
 

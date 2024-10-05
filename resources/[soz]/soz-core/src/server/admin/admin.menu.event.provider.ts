@@ -176,4 +176,30 @@ export class AdminMenuEventProvider {
             `Récompense ${itemId} de l'evenement ${existingEvent.name} a maintenant un maximum de ${max}`
         );
     }
+
+    @OnEvent(ServerEvent.ADMIN_EVENT_SET_START_SOUND)
+    public async setStartSound(source: number, eventId: string, startSound: string | null): Promise<void> {
+        if (!this.permissionService.isHelper(source)) {
+            return;
+        }
+
+        const existingEvent = await this.worldEventRepository.getEvent(eventId);
+
+        if (!existingEvent) {
+            this.notifier.notify(source, `L'evenement ${eventId} n'existe pas`, 'error');
+
+            return;
+        }
+
+        await this.worldEventRepository.setStartSound(eventId, startSound);
+
+        if (startSound) {
+            this.notifier.notify(
+                source,
+                `Evenement ${existingEvent.name} a maintenant un son de départ: ${startSound}`
+            );
+        } else {
+            this.notifier.notify(source, `Evenement ${existingEvent.name} n'a maintenant plus de son de départ`);
+        }
+    }
 }

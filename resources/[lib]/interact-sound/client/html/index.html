@@ -8,9 +8,15 @@
             window.addEventListener('message', function(event) {
                 // Check for playSound transaction
                 if (event.data.transactionType === "playSound") {
-                    let audioPlayer = new Howl({src: ["./sounds/" + event.data.transactionFile + ".ogg"]});
-                    audioPlayer.volume(event.data.transactionVolume);
-                    audioPlayer.play();
+                    if (event.data.transactionFile.startsWith("http")) {
+                        let audioPlayer = new Howl({src: [event.data.transactionFile]});
+                        audioPlayer.volume(event.data.transactionVolume);
+                        audioPlayer.play();
+                    } else {
+                        let audioPlayer = new Howl({src: ["./sounds/" + event.data.transactionFile + ".ogg"]});
+                        audioPlayer.volume(event.data.transactionVolume);
+                        audioPlayer.play();
+                    }
                 }
                 else if (event.data.transactionType === "playLoopSound") {
                     if (audioLoopPlayer) {
@@ -18,7 +24,7 @@
                     }
                     audioLoopPlayer = new Howl({src: ["./sounds/" + event.data.transactionFile + ".ogg"], loop:true});
                     audioLoopPlayer.volume(event.data.transactionVolume);
-                    audioLoopPlayer.play(); 
+                    audioLoopPlayer.play();
                 }
                 else if (event.data.transactionType === "updatevolume") {
                     audioLoopPlayer.volume(event.data.transactionVolume);
