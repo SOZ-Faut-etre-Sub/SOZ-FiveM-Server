@@ -5,11 +5,12 @@ import { Inject } from '@public/core/decorators/injectable';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { emitRpc } from '@public/core/rpc';
 import { Component, Outfit, Prop } from '@public/shared/cloth';
-import { Feature, isFeatureEnabled } from '@public/shared/features';
+import { Feature } from '@public/shared/features';
 import { PlayerPedHash } from '@public/shared/player';
 import { RpcServerEvent } from '@public/shared/rpc';
 
 import { ClothingService } from '../clothing/clothing.service';
+import { FeatureProvider } from '../feature/feature.provider';
 import { HudWeatherIconProvider } from '../hud/hud.weathericon.provider';
 import { Notifier } from '../notifier';
 import { NuiDispatch } from '../nui/nui.dispatch';
@@ -78,6 +79,9 @@ export class PlayerHeatProvider {
     @Inject(BlurService)
     public blurService: BlurService;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     private heatDeath = false;
     private damage = false;
     private heat = false;
@@ -87,7 +91,7 @@ export class PlayerHeatProvider {
 
     @On('soz-character:Client:Cloth:Applied')
     async onClothUpdate(outfit: Outfit): Promise<void> {
-        if (!isFeatureEnabled(Feature.SummerHeat)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.SummerHeat)) {
             return;
         }
 
@@ -164,7 +168,7 @@ export class PlayerHeatProvider {
 
     @Tick(TickInterval.EVERY_SECOND)
     public onCheckHeat() {
-        if (!isFeatureEnabled(Feature.SummerHeat)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.SummerHeat)) {
             return;
         }
         this.damage = false;
@@ -229,7 +233,7 @@ export class PlayerHeatProvider {
 
     @Tick(10_000)
     public onHeatTick() {
-        if (!isFeatureEnabled(Feature.SummerHeat)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.SummerHeat)) {
             return;
         }
 

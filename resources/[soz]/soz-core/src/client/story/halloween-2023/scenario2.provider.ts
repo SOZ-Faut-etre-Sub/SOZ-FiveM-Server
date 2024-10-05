@@ -10,11 +10,12 @@ import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { TaxType } from '@public/shared/bank';
 import { ServerEvent } from '@public/shared/event';
-import { Feature, isFeatureEnabled } from '@public/shared/features';
+import { Feature } from '@public/shared/features';
 import { PlayerData } from '@public/shared/player';
 import { toVector4Object } from '@public/shared/polyzone/vector';
 import { Halloween2023Scenario2, WinePrice } from '@public/shared/story/halloween-2023/scenario2';
 
+import { FeatureProvider } from '../../feature/feature.provider';
 import { StoryProvider } from '../story.provider';
 
 @Provider()
@@ -43,9 +44,12 @@ export class Halloween2023Scenario2Provider {
     @Inject(ItemService)
     private itemService: ItemService;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     @Once(OnceStep.PlayerLoaded)
     public async onPlayerLoaded() {
-        if (!isFeatureEnabled(Feature.Halloween2023Scenario2)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Halloween2023Scenario2)) {
             return;
         }
 
@@ -57,7 +61,7 @@ export class Halloween2023Scenario2Provider {
     }
 
     public createBlip(player: PlayerData) {
-        if (!isFeatureEnabled(Feature.Halloween2023Scenario2)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Halloween2023Scenario2)) {
             return;
         }
 

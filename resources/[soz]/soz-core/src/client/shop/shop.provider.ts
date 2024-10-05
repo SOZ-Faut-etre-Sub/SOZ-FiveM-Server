@@ -1,3 +1,4 @@
+import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { InventoryManager } from '@public/client/inventory/inventory.manager';
 import { BrandConfig, BrandsConfig, ShopBrand, ShopsConfig } from '@public/config/shops';
 import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
@@ -5,7 +6,7 @@ import { Exportable } from '@public/core/decorators/exports';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
-import { Feature, isFeatureEnabled } from '@public/shared/features';
+import { Feature } from '@public/shared/features';
 import { JobPermission, JobType } from '@public/shared/job';
 import { StonkConfig } from '@public/shared/job/stonk';
 import { MenuType } from '@public/shared/nui/menu';
@@ -71,6 +72,9 @@ export class ShopProvider {
 
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     private currentShop: string = null;
     private currentShopBrand: ShopBrand = null;
@@ -396,7 +400,7 @@ export class ShopProvider {
     }
 
     public getBrandPedModel(brandConfig: BrandConfig) {
-        return isFeatureEnabled(Feature.Halloween) ? 'u_m_y_zombie_01' : brandConfig.pedModel;
+        return this.featureProvider.isFeatureEnabled(Feature.Halloween) ? 'u_m_y_zombie_01' : brandConfig.pedModel;
     }
 
     @Exportable('GetCurrentShop')

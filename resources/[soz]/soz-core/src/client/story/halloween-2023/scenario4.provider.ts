@@ -12,7 +12,7 @@ import { Provider } from '@public/core/decorators/provider';
 import { Component, Prop } from '@public/shared/cloth';
 import { VanillaComponentDrawableIndexMaxValue, VanillaPropDrawableIndexMaxValue } from '@public/shared/drawable';
 import { ServerEvent } from '@public/shared/event';
-import { Feature, isFeatureEnabled } from '@public/shared/features';
+import { Feature } from '@public/shared/features';
 import { PlayerData, PlayerPedHash } from '@public/shared/player';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { toVector3Object, toVector4Object, Vector4 } from '@public/shared/polyzone/vector';
@@ -26,6 +26,7 @@ import {
     Halloween2023Scenario4ExitMorgue,
 } from '@public/shared/story/halloween-2023/scenario4';
 
+import { FeatureProvider } from '../../feature/feature.provider';
 import { StoryProvider } from '../story.provider';
 
 @Provider()
@@ -57,11 +58,14 @@ export class Halloween2023Scenario4Provider {
     @Inject(AudioService)
     private audioService: AudioService;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     private audioId: string;
 
     @Once(OnceStep.PlayerLoaded)
     public async onPlayerLoaded() {
-        if (!isFeatureEnabled(Feature.Halloween2023Scenario4)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Halloween2023Scenario4)) {
             return;
         }
 
@@ -115,7 +119,7 @@ export class Halloween2023Scenario4Provider {
     }
 
     public createBlip(player: PlayerData) {
-        if (!isFeatureEnabled(Feature.Halloween2023Scenario4)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Halloween2023Scenario4)) {
             return;
         }
 

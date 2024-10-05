@@ -1,6 +1,7 @@
 import { Once, OnceStep } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
+import { Feature } from '@public/shared/features';
 import { Component, Prop } from '@public/shared/cloth';
 import { VanillaComponentDrawableIndexMaxValue, VanillaPropDrawableIndexMaxValue } from '@public/shared/drawable';
 import { Feature, isFeatureEnabled } from '@public/shared/features';
@@ -9,6 +10,7 @@ import { PlayerPedHash } from '@public/shared/player';
 import { toVector4Object, Vector4 } from '@public/shared/polyzone/vector';
 
 import { PedFactory } from '../factory/ped.factory';
+import { FeatureProvider } from '../feature/feature.provider';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
@@ -1778,9 +1780,12 @@ export class DevilBaitShopProvider {
     @Inject(Halloween2023Scenario4Provider)
     private halloween2023Scenario4Provider: Halloween2023Scenario4Provider;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     @Once(OnceStep.PlayerLoaded)
     public async onPlayerLoaded() {
-        if (!isFeatureEnabled(Feature.Halloween)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Halloween)) {
             return;
         }
 

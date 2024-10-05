@@ -1,12 +1,13 @@
 import { Once, OnceStep } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { wait } from '@public/core/utils';
-import { Feature, isFeatureEnabled } from '@public/shared/features';
+import { Feature } from '@public/shared/features';
 import { toVector3Object, Vector4 } from '@public/shared/polyzone/vector';
 import { Bunkers } from '@public/shared/utils/bunkers';
 
 import { Provider } from '../../core/decorators/provider';
 import { BlipFactory } from '../blip';
+import { FeatureProvider } from '../feature/feature.provider';
 import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
 import { TargetFactory } from '../target/target.factory';
@@ -25,9 +26,12 @@ export class BunkerProvider {
     @Inject(PlayerPositionProvider)
     private playerPositionProvider: PlayerPositionProvider;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     @Once()
     public onStart() {
-        if (!isFeatureEnabled(Feature.Bunkers)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Bunkers)) {
             return;
         }
 
@@ -71,7 +75,7 @@ export class BunkerProvider {
 
     @Once(OnceStep.PlayerLoaded)
     public async onloaded() {
-        if (!isFeatureEnabled(Feature.Bunkers)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Bunkers)) {
             return;
         }
 

@@ -6,7 +6,7 @@ import { Notifier } from '@public/server/notifier';
 import { PlayerPositionProvider } from '@public/server/player/player.position.provider';
 import { PlayerService } from '@public/server/player/player.service';
 import { ServerEvent } from '@public/shared/event';
-import { Feature, isFeatureEnabled } from '@public/shared/features';
+import { Feature } from '@public/shared/features';
 import {
     Halloween2023Scenario3TPAvion,
     Halloween2023Scenario3TPBack,
@@ -19,6 +19,8 @@ import {
     Halloween2023Scenario3TPWhiteBox,
 } from '@public/shared/story/halloween-2023/scenario3';
 import { ScenarioState } from '@public/shared/story/story';
+
+import { FeatureProvider } from '../../feature/feature.provider';
 
 @Provider()
 export class Halloween2023Scenario3Provider {
@@ -33,6 +35,9 @@ export class Halloween2023Scenario3Provider {
 
     @Inject(PlayerPositionProvider)
     private playerPositionProvider: PlayerPositionProvider;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     @Once()
     public onStart() {
@@ -49,7 +54,7 @@ export class Halloween2023Scenario3Provider {
 
     @OnEvent(ServerEvent.STORY_HALLOWEEN_2023_SCENARIO_3)
     public onScenario3(source: number, step?: number) {
-        if (!isFeatureEnabled(Feature.Halloween2023Scenario3)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Halloween2023Scenario3)) {
             return;
         }
 

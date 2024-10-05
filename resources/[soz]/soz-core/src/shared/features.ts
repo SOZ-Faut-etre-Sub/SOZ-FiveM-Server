@@ -20,9 +20,10 @@ export enum Feature {
     Summer = 'Summer',
 }
 
+export type FeaturesConfig = Record<Feature, { [P in Environment]?: boolean }>;
 export type Environment = 'development' | 'production' | 'test';
 
-const FeatureConfig: Record<Feature, { [P in Environment]?: boolean }> = {
+export const DefaultFeatureConfig: FeaturesConfig = {
     [Feature.ChainsOfJustice]: {
         production: true,
         development: true,
@@ -118,10 +119,4 @@ const FeatureConfig: Record<Feature, { [P in Environment]?: boolean }> = {
         development: false,
         test: false,
     },
-};
-
-export const isFeatureEnabled = (feature: Feature): boolean => {
-    const environment = GetConvar('soz_core_environment', 'development') as Environment;
-
-    return !!FeatureConfig[feature][environment];
 };

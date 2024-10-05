@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@public/core/decorators/injectable';
-import { Feature, isFeatureEnabled } from '@public/shared/features';
+import { Feature } from '@public/shared/features';
 
+import { FeatureProvider } from '../feature/feature.provider';
 import { ResourceLoader } from '../repository/resource.loader';
 
 const arachnophobeKvPKey = 'soz/arachnophobe';
@@ -29,10 +30,13 @@ export class HalloweenSpiderService {
     @Inject(ResourceLoader)
     private resourceLoader: ResourceLoader;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     private arachnophobe = !!GetResourceKvpInt(arachnophobeKvPKey);
 
     public async init() {
-        if (this.arachnophobe && isFeatureEnabled(Feature.Halloween)) {
+        if (this.arachnophobe && this.featureProvider.isFeatureEnabled(Feature.Halloween)) {
             for (const spiderLoc of spiderlocations) {
                 CreateModelSwap(spiderLoc[0], spiderLoc[1], spiderLoc[2], 38.2, spider, 0, true);
             }

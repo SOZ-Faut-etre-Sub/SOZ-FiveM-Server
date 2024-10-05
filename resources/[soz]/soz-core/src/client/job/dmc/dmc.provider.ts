@@ -10,7 +10,7 @@ import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { emitRpc } from '@public/core/rpc';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
-import { Feature, isFeatureEnabled } from '@public/shared/features';
+import { Feature } from '@public/shared/features';
 import { JobType } from '@public/shared/job';
 import { DMC_CRAFT_ZONES, DmcConverterState } from '@public/shared/job/dmc';
 import { MenuType } from '@public/shared/nui/menu';
@@ -18,6 +18,7 @@ import { RpcServerEvent } from '@public/shared/rpc';
 
 import { BoxZone } from '../../../shared/polyzone/box.zone';
 import { PedFactory } from '../../factory/ped.factory';
+import { FeatureProvider } from '../../feature/feature.provider';
 import { PlayerInOutService } from '../../player/player.inout.service';
 import { JobService } from '../job.service';
 
@@ -52,6 +53,9 @@ export class DmcProvider {
 
     @Inject(PedFactory)
     private pedFactory: PedFactory;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     private blipState = {
         'job:dmc:iron_mine': false,
@@ -92,7 +96,7 @@ export class DmcProvider {
         this.blipFactory.hide('job:dmc:iron_mine', true);
         this.blipFactory.hide('job:dmc:resell', true);
 
-        if (isFeatureEnabled(Feature.Halloween)) {
+        if (this.featureProvider.isFeatureEnabled(Feature.Halloween)) {
             this.blipFactory.create('job:dmc:uranium_mine', {
                 name: "Mine d'uranium",
                 sprite: 382,

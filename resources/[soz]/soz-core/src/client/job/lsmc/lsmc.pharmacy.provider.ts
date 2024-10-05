@@ -1,7 +1,7 @@
 import { InventoryManager } from '@public/client/inventory/inventory.manager';
 import { ItemService } from '@public/client/item/item.service';
 import { PlayerService } from '@public/client/player/player.service';
-import { Feature, isFeatureEnabled } from '@public/shared/features';
+import { Feature } from '@public/shared/features';
 import { PHARMACY_PRICES } from '@public/shared/job/lsmc';
 import { toVector4Object } from '@public/shared/polyzone/vector';
 
@@ -10,6 +10,7 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { TaxType } from '../../../shared/bank';
 import { ServerEvent } from '../../../shared/event';
+import { FeatureProvider } from '../../feature/feature.provider';
 import { TargetFactory } from '../../target/target.factory';
 
 @Provider()
@@ -26,6 +27,9 @@ export class LSMCPharmacyProvider {
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     @Once(OnceStep.PlayerLoaded)
     public setupPharmacy() {
         const products = [
@@ -36,7 +40,7 @@ export class LSMCPharmacyProvider {
             { name: 'antiacide', price: PHARMACY_PRICES.antiacide },
             { name: 'health_book', price: PHARMACY_PRICES.health_book },
         ];
-        if (isFeatureEnabled(Feature.Halloween)) {
+        if (this.featureProvider.isFeatureEnabled(Feature.Halloween)) {
             products.push({ name: 'horrific_lollipop', price: 15 });
         }
 

@@ -20,7 +20,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
 import { NuiEvent } from '../../shared/event';
-import { Feature, isFeatureEnabled } from '../../shared/features';
+import { Feature } from '../../shared/features';
 import { JobPermission } from '../../shared/job';
 import { MenuType } from '../../shared/nui/menu';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
@@ -31,6 +31,7 @@ import { AuctionVehicle, ShowVehicle } from '../../shared/vehicle/auction';
 import { Vehicle, VehicleDealershipMenuData } from '../../shared/vehicle/vehicle';
 import { BlipFactory } from '../blip';
 import { PedFactory } from '../factory/ped.factory';
+import { FeatureProvider } from '../feature/feature.provider';
 import { JobService } from '../job/job.service';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
@@ -78,6 +79,9 @@ export class VehicleDealershipProvider {
     @Inject(Monitor)
     public monitor: Monitor;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     private lastVehicleShowroom: number | null = null;
 
     private secondPastInZone = -1;
@@ -116,7 +120,7 @@ export class VehicleDealershipProvider {
     @Once(OnceStep.Start)
     public async onStart() {
         for (const [dealership, config] of Object.entries(DealershipConfig)) {
-            if (!isFeatureEnabled(Feature.Boat) && dealership === DealershipType.Boat) {
+            if (!this.featureProvider.isFeatureEnabled(Feature.Boat) && dealership === DealershipType.Boat) {
                 continue;
             }
 

@@ -3,6 +3,7 @@ import { NuiBankAtmMethodMap, NuiBankMethodMap, NuiBankSafeMethodMap } from '@pu
 import { NuiBookMethodMap } from '@public/shared/nui/book';
 import { NuiCardMethodMap } from '@public/shared/nui/card';
 import { NuiCraftingMethodMap } from '@public/shared/nui/crafting';
+import { NuiFeatureMethodMap } from '@public/shared/nui/feature';
 import { NuiZombieMethodMap } from '@public/shared/nui/halloween';
 import { NuiHudMethodMap } from '@public/shared/nui/hud';
 import { NuiItemMethodMap } from '@public/shared/nui/item';
@@ -90,6 +91,7 @@ export interface NuiMethodMap {
     gang: NuiGangMethodMap;
     minigame: MiniGameMethodMap;
     scene: NuiSceneSearchMethodMap;
+    feature: NuiFeatureMethodMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(

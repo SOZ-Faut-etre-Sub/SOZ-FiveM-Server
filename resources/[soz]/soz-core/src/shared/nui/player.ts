@@ -39,6 +39,5 @@ export type PlayerPersonalMenuData = {
     job: JobMenuData;
     deguisement: boolean;
     naked: boolean;
-    halloween: boolean;
     arachnophobe: boolean;
 };

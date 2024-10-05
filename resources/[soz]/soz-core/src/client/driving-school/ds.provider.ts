@@ -1,5 +1,5 @@
 import { emitRpc } from '@public/core/rpc';
-import { Feature, isFeatureEnabled } from '@public/shared/features';
+import { Feature } from '@public/shared/features';
 import { RpcServerEvent } from '@public/shared/rpc';
 
 import { Once, OnceStep, OnNuiEvent } from '../../core/decorators/event';
@@ -12,6 +12,7 @@ import { MenuType } from '../../shared/nui/menu';
 import { Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { TargetOption } from '../../shared/target';
 import { BlipFactory } from '../blip';
+import { FeatureProvider } from '../feature/feature.provider';
 import { Notifier } from '../notifier';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
@@ -37,6 +38,9 @@ export class DrivingSchoolProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     @Once(OnceStep.RepositoriesLoaded)
     public setupDrivingSchool() {
@@ -102,7 +106,10 @@ export class DrivingSchoolProvider {
         const licensesConfig = DrivingSchoolConfig.licenses;
 
         Object.values(licensesConfig).forEach(license => {
-            if (license.licenseType == DrivingSchoolLicenseType.Boat && !isFeatureEnabled(Feature.Boat)) {
+            if (
+                license.licenseType == DrivingSchoolLicenseType.Boat &&
+                !this.featureProvider.isFeatureEnabled(Feature.Boat)
+            ) {
                 return;
             }
 

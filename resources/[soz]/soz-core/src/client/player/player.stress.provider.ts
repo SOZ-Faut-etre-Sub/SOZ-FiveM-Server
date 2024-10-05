@@ -12,7 +12,7 @@ import { ZoneRepository } from '@public/client/repository/zone.repository';
 import { BlurService } from '@public/client/utils/blur.service';
 import { AnimationStopReason } from '@public/shared/animation';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
-import { Feature, isFeatureEnabled } from '@public/shared/features';
+import { Feature } from '@public/shared/features';
 import { IntervalByStressLooseType, StressLooseType } from '@public/shared/health';
 import { Item } from '@public/shared/item';
 import { PlayerData } from '@public/shared/player';
@@ -21,6 +21,7 @@ import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
 import { VehicleMidDamageThreshold } from '@public/shared/vehicle/vehicle';
 
+import { FeatureProvider } from '../feature/feature.provider';
 import { PlayerService } from './player.service';
 import { PlayerWalkstyleProvider } from './player.walkstyle.provider';
 import { PlayerZombieProvider } from './player.zombie.provider';
@@ -50,6 +51,9 @@ export class PlayerStressProvider {
 
     @Inject(BlurService)
     private blurService: BlurService;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     private isStressUpdated = false;
     private wasDead = false;
@@ -102,7 +106,7 @@ export class PlayerStressProvider {
 
     @OnEvent(ClientEvent.ITEM_USE)
     public onItemUse(name: string, item: Item): void {
-        if (!isFeatureEnabled(Feature.MyBodySummer)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.MyBodySummer)) {
             return;
         }
 
@@ -151,7 +155,7 @@ export class PlayerStressProvider {
         trigger_distance: number,
         must_be_player = false
     ): Promise<void> {
-        if (!isFeatureEnabled(Feature.MyBodySummer)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.MyBodySummer)) {
             return;
         }
 
@@ -175,7 +179,7 @@ export class PlayerStressProvider {
 
     @Tick(TickInterval.EVERY_SECOND)
     async checkStressfulEvent(): Promise<void> {
-        if (!isFeatureEnabled(Feature.MyBodySummer)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.MyBodySummer)) {
             return;
         }
 
@@ -303,7 +307,7 @@ export class PlayerStressProvider {
 
     @PlayerUpdate()
     async onPlayerUpdate(player: PlayerData): Promise<void> {
-        if (!isFeatureEnabled(Feature.MyBodySummer)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.MyBodySummer)) {
             return;
         }
 
@@ -315,7 +319,7 @@ export class PlayerStressProvider {
 
     @Tick(TickInterval.EVERY_SECOND)
     async playBlurStressEffect(): Promise<void> {
-        if (!isFeatureEnabled(Feature.MyBodySummer)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.MyBodySummer)) {
             return;
         }
 

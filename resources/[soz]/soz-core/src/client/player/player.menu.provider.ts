@@ -1,5 +1,4 @@
 import { wait } from '@public/core/utils';
-import { Feature, isFeatureEnabled } from '@public/shared/features';
 import { CardType } from '@public/shared/nui/card';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
@@ -93,7 +92,6 @@ export class PlayerMenuProvider {
             job: this.jobMenuProvider.getJobMenuData(),
             deguisement: this.playerService.hasDeguisement(),
             naked: this.playerService.getPlayer().cloth_config.Config.Naked,
-            halloween: isFeatureEnabled(Feature.Halloween),
             arachnophobe: this.halloweenSpiderService.isArachnophobeMode(),
         });
     }

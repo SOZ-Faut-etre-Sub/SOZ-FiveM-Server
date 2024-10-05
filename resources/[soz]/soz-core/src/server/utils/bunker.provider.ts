@@ -1,9 +1,10 @@
 import { Once } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
-import { Feature, isFeatureEnabled } from '@public/shared/features';
+import { Feature } from '@public/shared/features';
 import { Bunkers } from '@public/shared/utils/bunkers';
 
 import { Provider } from '../../core/decorators/provider';
+import { FeatureProvider } from '../feature/feature.provider';
 import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
 
@@ -15,9 +16,12 @@ export class BunkerProvider {
     @Inject(PlayerPositionProvider)
     private playerPositionProvider: PlayerPositionProvider;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     @Once()
     public onStart() {
-        if (!isFeatureEnabled(Feature.Bunkers)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Bunkers)) {
             return;
         }
 

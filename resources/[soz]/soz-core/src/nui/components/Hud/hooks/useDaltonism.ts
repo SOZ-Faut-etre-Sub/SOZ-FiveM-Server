@@ -1,13 +1,41 @@
+import { useSelector } from 'react-redux';
+
 import { HudTheme } from '../../../../shared/hud';
 import { useHudTheme } from '../../../hook/data';
+import { RootState } from '../../../store';
 
 export const useDaltonism = () => {
     const currentTheme = useHudTheme();
-
+    const isHalloween = useSelector((state: RootState) => state.features.Halloween);
     const daltonism = currentTheme === HudTheme.Daltonism;
 
-    return {
-        glassmorphismColors: {
+    const glassmorphismColors = () => {
+        if (isHalloween) {
+            return {
+                [HudTheme.Light]: {
+                    background: '#00000073',
+                    border: '#F0882D',
+                },
+                [HudTheme.Dark]: {
+                    background: '#00000073',
+                    border: '#F0882D',
+                },
+                [HudTheme.Green]: {
+                    background: '#00000073',
+                    border: '#F0882D',
+                },
+                [HudTheme.Uwu]: {
+                    background: '#00000073',
+                    border: '#F0882D',
+                },
+                [HudTheme.Daltonism]: {
+                    background: '#00000073',
+                    border: '#F0882D',
+                },
+            };
+        }
+
+        return {
             [HudTheme.Light]: {
                 background: '#F3FBFA4D',
                 border: '#FFFFFF',
@@ -28,7 +56,11 @@ export const useDaltonism = () => {
                 background: '#00000073',
                 border: '#FFFFFF',
             },
-        },
+        };
+    };
+
+    return {
+        glassmorphismColors: glassmorphismColors(),
         gaugeColors: {
             green_light: daltonism ? '#FFFFFF' : '#329121',
             green_dark: daltonism ? '#000000' : '#283525',

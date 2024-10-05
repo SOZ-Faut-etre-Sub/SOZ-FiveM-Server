@@ -4,12 +4,13 @@ import { Once, OnNuiEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { NuiEvent, ServerEvent } from '../../../shared/event';
-import { Feature, isFeatureEnabled } from '../../../shared/features';
+import { Feature } from '../../../shared/features';
 import { HealthBookLabel, HealthBookMinMax } from '../../../shared/health';
 import { MenuType } from '../../../shared/nui/menu';
 import { PlayerHealthBook } from '../../../shared/player';
 import { Vector3 } from '../../../shared/polyzone/vector';
 import { Err, Ok } from '../../../shared/result';
+import { FeatureProvider } from '../../feature/feature.provider';
 import { InputService } from '../../nui/input.service';
 import { NuiMenu } from '../../nui/nui.menu';
 import { PlayerService } from '../../player/player.service';
@@ -32,6 +33,9 @@ export class LSMCCheckHealthProvider {
 
     @Inject(InputService)
     private inputService: InputService;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     public doBloodCheck(entity: number) {
         const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
@@ -96,7 +100,7 @@ export class LSMCCheckHealthProvider {
 
     @Once()
     public onStart() {
-        if (!isFeatureEnabled(Feature.MyBodySummer)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.MyBodySummer)) {
             return;
         }
 

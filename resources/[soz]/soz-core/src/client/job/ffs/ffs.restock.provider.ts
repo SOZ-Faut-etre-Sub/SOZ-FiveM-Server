@@ -1,4 +1,4 @@
-import { Feature, isFeatureEnabled } from '@public/shared/features';
+import { Feature } from '@public/shared/features';
 
 import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
@@ -7,6 +7,7 @@ import { ClientEvent, ServerEvent } from '../../../shared/event';
 import { Garment, LuxuryGarment } from '../../../shared/job/ffs';
 import { ClothingBrand } from '../../../shared/shop';
 import { TargetOption } from '../../../shared/target';
+import { FeatureProvider } from '../../feature/feature.provider';
 import { InventoryManager } from '../../inventory/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { PlayerService } from '../../player/player.service';
@@ -25,6 +26,9 @@ export class FightForStyleRestockProvider {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     @OnEvent(ClientEvent.FFS_ENTER_CLOTHING_SHOP)
     public onEnterClothingShop(brand: ClothingBrand) {
@@ -57,7 +61,9 @@ export class FightForStyleRestockProvider {
             case ClothingBrand.PONSONBYS:
                 return {
                     garments: Object.values(LuxuryGarment),
-                    pedModel: isFeatureEnabled(Feature.Halloween) ? 'u_m_y_zombie_01' : 's_f_m_shop_high',
+                    pedModel: this.featureProvider.isFeatureEnabled(Feature.Halloween)
+                        ? 'u_m_y_zombie_01'
+                        : 's_f_m_shop_high',
                 };
             case ClothingBrand.SUBURBAN:
                 return {
@@ -70,7 +76,9 @@ export class FightForStyleRestockProvider {
                         Garment.GLOVES,
                         Garment.UNDERWEAR_TOP,
                     ],
-                    pedModel: isFeatureEnabled(Feature.Halloween) ? 'u_m_y_zombie_01' : 's_f_y_shop_mid',
+                    pedModel: this.featureProvider.isFeatureEnabled(Feature.Halloween)
+                        ? 'u_m_y_zombie_01'
+                        : 's_f_y_shop_mid',
                 };
             case ClothingBrand.BINCO:
                 return {
@@ -83,7 +91,9 @@ export class FightForStyleRestockProvider {
                         Garment.GLOVES,
                         Garment.UNDERWEAR_TOP,
                     ],
-                    pedModel: isFeatureEnabled(Feature.Halloween) ? 'u_m_y_zombie_01' : 's_f_y_shop_low',
+                    pedModel: this.featureProvider.isFeatureEnabled(Feature.Halloween)
+                        ? 'u_m_y_zombie_01'
+                        : 's_f_y_shop_low',
                 };
         }
     }

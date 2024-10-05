@@ -8,7 +8,7 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { emitRpc } from '../../../core/rpc';
 import { wait } from '../../../core/utils';
-import { Feature, isFeatureEnabled } from '../../../shared/features';
+import { Feature } from '../../../shared/features';
 import { Vector4 } from '../../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../../shared/rpc';
 import { Halloween2022Scenario4 } from '../../../shared/story/halloween-2022/scenario4';
@@ -16,6 +16,7 @@ import { Dialog } from '../../../shared/story/story';
 import { AnimationService } from '../../animation/animation.service';
 import { BlipFactory } from '../../blip';
 import { PedFactory } from '../../factory/ped.factory';
+import { FeatureProvider } from '../../feature/feature.provider';
 import { Notifier } from '../../notifier';
 import { ProgressService } from '../../progress.service';
 import { TargetFactory } from '../../target/target.factory';
@@ -44,9 +45,12 @@ export class Halloween2022Scenario4Provider {
     @Inject(Notifier)
     private notifier: Notifier;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     @Once(OnceStep.PlayerLoaded)
     public async onPlayerLoaded() {
-        if (!isFeatureEnabled(Feature.HalloweenScenario4)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.HalloweenScenario4)) {
             return;
         }
 
@@ -91,7 +95,7 @@ export class Halloween2022Scenario4Provider {
     }
 
     public createBlip(player: PlayerData) {
-        if (!isFeatureEnabled(Feature.HalloweenScenario4)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.HalloweenScenario4)) {
             return;
         }
 

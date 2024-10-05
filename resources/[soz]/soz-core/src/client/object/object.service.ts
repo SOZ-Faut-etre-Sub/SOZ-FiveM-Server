@@ -1,8 +1,9 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
 import { Logger } from '@core/logger';
 import { wait } from '@core/utils';
+import { FeatureProvider } from '@public/client/feature/feature.provider';
 
-import { Feature, isFeatureEnabled } from '../../shared/features';
+import { Feature } from '../../shared/features';
 import { joaat } from '../../shared/joaat';
 import { WorldObject } from '../../shared/object';
 import { ResourceLoader } from '../repository/resource.loader';
@@ -23,10 +24,13 @@ export class ObjectService {
     @Inject(ResourceLoader)
     private resourceLoader: ResourceLoader;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     public async createObject(object: WorldObject) {
         let model = object.model;
 
-        if (isFeatureEnabled(Feature.Halloween)) {
+        if (this.featureProvider.isFeatureEnabled(Feature.Halloween)) {
             model = HalloweenMapping[model] || model;
         }
 
@@ -169,7 +173,7 @@ export class ObjectService {
 
         let model = object.model;
 
-        if (isFeatureEnabled(Feature.Halloween)) {
+        if (this.featureProvider.isFeatureEnabled(Feature.Halloween)) {
             model = HalloweenMapping[model] || model;
         }
 

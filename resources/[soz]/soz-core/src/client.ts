@@ -15,6 +15,7 @@ import { CraftModule } from './client/craft/craft.module';
 import { DoorModule } from './client/door/door.module';
 import { DrivingSchoolModule } from './client/driving-school/ds.module';
 import { FactoryModule } from './client/factory/factory.module';
+import { FeatureModule } from './client/feature/feature.module';
 import { HousingModule } from './client/housing/housing.module';
 import { HudModule } from './client/hud/hud.module';
 import { InventoryModule } from './client/inventory/inventory.module';
@@ -133,6 +134,7 @@ async function bootstrap() {
         DoorModule,
         SceneModule,
         QuickInteractionModule,
+        FeatureModule,
         ...PrivateModules
     );
 

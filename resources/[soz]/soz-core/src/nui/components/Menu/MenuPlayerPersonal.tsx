@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { Fragment, FunctionComponent, JSXElementConstructor, ReactElement, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { Animations, Moods, Walks } from '../../../config/animation';
 import { AnimationConfigItem, AnimationConfigList, WalkConfigItem } from '../../../shared/animation';
@@ -12,6 +13,7 @@ import { fetchNui } from '../../fetch';
 import { usePlayer } from '../../hook/data';
 import { useJobGrades } from '../../hook/job';
 import { useNuiEvent } from '../../hook/nui';
+import { RootState } from '../../store';
 import {
     MainMenu,
     Menu,
@@ -32,6 +34,7 @@ type MenuPlayerPersonalProps = {
 
 export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({ data }) => {
     const player = usePlayer();
+    const isHalloween = useSelector((state: RootState) => state.features.Halloween);
 
     if (!player) {
         return null;
@@ -64,7 +67,7 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                     <MenuItemButton onConfirm={() => fetchNui(NuiEvent.PlayerMenuVoipReset)}>
                         Redémarrer la voip
                     </MenuItemButton>
-                    {data.halloween && (
+                    {isHalloween && (
                         <MenuItemCheckbox
                             checked={data.arachnophobe}
                             onChange={value => fetchNui(NuiEvent.PlayerMenuHudSetArachnophobe, value)}

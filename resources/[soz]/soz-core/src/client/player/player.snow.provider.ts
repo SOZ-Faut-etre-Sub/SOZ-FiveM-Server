@@ -5,7 +5,7 @@ import { Inject } from '@public/core/decorators/injectable';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { emitRpc } from '@public/core/rpc';
 import { Component, Outfit } from '@public/shared/cloth';
-import { Feature, isFeatureEnabled } from '@public/shared/features';
+import { Feature } from '@public/shared/features';
 import { joaat } from '@public/shared/joaat';
 import { JobType } from '@public/shared/job';
 import { HAZMAT_OUTFIT_NAME, LsmcCloakroom } from '@public/shared/job/lsmc';
@@ -16,6 +16,7 @@ import { RpcServerEvent } from '@public/shared/rpc';
 import { Weather } from '@public/shared/weather';
 
 import { ClothingService } from '../clothing/clothing.service';
+import { FeatureProvider } from '../feature/feature.provider';
 import { HudWeatherIconProvider } from '../hud/hud.weathericon.provider';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { Store } from '../store/store';
@@ -90,6 +91,9 @@ export class PlayerSnowProvider {
     @Inject(HudWeatherIconProvider)
     public hudWeatherIconProvider: HudWeatherIconProvider;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     private lastSlipDate = 0;
     private cold = false;
     private coldProtected = false;
@@ -136,7 +140,7 @@ export class PlayerSnowProvider {
 
     @On('soz-character:Client:Cloth:Applied')
     async onClothUpdate(outfit: Outfit): Promise<void> {
-        if (isFeatureEnabled(Feature.SummerHeat)) {
+        if (this.featureProvider.isFeatureEnabled(Feature.SummerHeat)) {
             return;
         }
 
@@ -240,7 +244,7 @@ export class PlayerSnowProvider {
 
     @Tick(TickInterval.EVERY_SECOND)
     public onColdCheckTick() {
-        if (isFeatureEnabled(Feature.SummerHeat)) {
+        if (this.featureProvider.isFeatureEnabled(Feature.SummerHeat)) {
             return;
         }
 

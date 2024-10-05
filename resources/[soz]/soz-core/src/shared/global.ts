@@ -1,3 +1,5 @@
+import { FeaturesConfig } from '@public/shared/features';
+
 import { JobType } from './job';
 import { Weather } from './weather';
 
@@ -15,6 +17,7 @@ export type GlobalState = {
         bennys: string;
         cinema: string;
     };
+    features: FeaturesConfig;
 };
 
 export const BLACK_SCREEN_URL = 'nui://soz-core/public/dui_twitch_stream.html';
