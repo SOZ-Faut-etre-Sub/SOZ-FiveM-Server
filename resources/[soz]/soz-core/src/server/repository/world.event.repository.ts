@@ -17,6 +17,7 @@ export class WorldEventRepository extends Repository<RepositoryType.WorldEvent> 
                 id: true,
                 name: true,
                 reward: true,
+                start_sound: true,
             },
         });
 
@@ -27,6 +28,7 @@ export class WorldEventRepository extends Repository<RepositoryType.WorldEvent> 
                 id: event.id,
                 name: event.name,
                 reward: event.reward as RewardWorldEvent[],
+                startSound: event.start_sound,
             } as WorldEvent;
         }
 
@@ -48,6 +50,7 @@ export class WorldEventRepository extends Repository<RepositoryType.WorldEvent> 
         this.data[event.id] = {
             id: event.id,
             name: event.name,
+            startSound: null,
             reward: [],
         };
 
@@ -179,6 +182,20 @@ export class WorldEventRepository extends Repository<RepositoryType.WorldEvent> 
             },
             data: {
                 reward: event.reward,
+            },
+        });
+    }
+
+    public async setStartSound(eventId: string, sound: string | null) {
+        const event = this.data[eventId];
+        event.startSound = sound;
+
+        await this.prismaService.event.update({
+            where: {
+                id: eventId,
+            },
+            data: {
+                start_sound: sound,
             },
         });
     }

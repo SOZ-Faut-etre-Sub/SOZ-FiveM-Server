@@ -1,987 +1,991 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["metrics"]
-  binaryTargets   = ["native", "linux-musl", "windows"]
-  engineType      = "binary"
+    provider        = "prisma-client-js"
+    previewFeatures = ["metrics"]
+    binaryTargets   = ["native", "linux-musl", "windows"]
+    engineType      = "binary"
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+    provider = "mysql"
+    url      = env("DATABASE_URL")
 }
 
 model bank_accounts {
-  id           BigInt                     @id @default(autoincrement())
-  accountid    String?                    @unique(map: "accountid") @db.VarChar(50)
-  money        BigInt                     @default(0)
-  marked_money BigInt                     @default(0)
-  account_type bank_accounts_account_type @default(player)
-  coords       String?                    @db.Text
+    id           BigInt                     @id @default(autoincrement())
+    accountid    String?                    @unique(map: "accountid") @db.VarChar(50)
+    money        BigInt                     @default(0)
+    marked_money BigInt                     @default(0)
+    account_type bank_accounts_account_type @default(player)
+    coords       String?                    @db.Text
 
-  // deprecated
-  citizenid  String? @unique(map: "citizenid") @db.VarChar(50)
-  businessid String? @db.VarChar(50)
-  houseid    String? @db.VarChar(50)
-  gangid     String? @db.VarChar(50)
+    // deprecated
+    citizenid  String? @unique(map: "citizenid") @db.VarChar(50)
+    businessid String? @db.VarChar(50)
+    houseid    String? @db.VarChar(50)
+    gangid     String? @db.VarChar(50)
 
-  @@index([businessid], map: "businessid")
-  @@index([gangid], map: "gangid")
+    @@index([businessid], map: "businessid")
+    @@index([gangid], map: "gangid")
 }
 
 model bank_statements {
-  id               BigInt   @id @default(autoincrement())
-  date             DateTime @default(now()) @db.Timestamp(0)
-  source_accountid String   @db.VarChar(50)
-  target_accountid String   @db.VarChar(50)
-  reason           String?  @db.Text
-  amount           Int
+    id               BigInt   @id @default(autoincrement())
+    date             DateTime @default(now()) @db.Timestamp(0)
+    source_accountid String   @db.VarChar(50)
+    target_accountid String   @db.VarChar(50)
+    reason           String?  @db.Text
+    amount           Int
 
-  @@index([source_accountid], map: "source_accountid")
-  @@index([target_accountid], map: "target_accountid")
+    @@index([source_accountid], map: "source_accountid")
+    @@index([target_accountid], map: "target_accountid")
 }
 
 model bank_contacts {
-  id        Int    @id @default(autoincrement())
-  citizenid String @db.VarChar(50)
-  label     String @db.VarChar(50)
-  accountid String @db.VarChar(50)
+    id        Int    @id @default(autoincrement())
+    citizenid String @db.VarChar(50)
+    label     String @db.VarChar(50)
+    accountid String @db.VarChar(50)
 
-  @@index([citizenid], map: "citizenid")
+    @@index([citizenid], map: "citizenid")
 }
 
 model bans {
-  id       Int     @id @default(autoincrement())
-  name     String? @db.VarChar(50)
-  license  String? @db.VarChar(50)
-  discord  String? @db.VarChar(50)
-  ip       String? @db.VarChar(50)
-  reason   String? @db.Text
-  expire   Int?
-  bannedby String  @default("LeBanhammer") @db.VarChar(255)
+    id       Int     @id @default(autoincrement())
+    name     String? @db.VarChar(50)
+    license  String? @db.VarChar(50)
+    discord  String? @db.VarChar(50)
+    ip       String? @db.VarChar(50)
+    reason   String? @db.Text
+    expire   Int?
+    bannedby String  @default("LeBanhammer") @db.VarChar(255)
 
-  @@index([discord], map: "discord")
-  @@index([ip], map: "ip")
-  @@index([license], map: "license")
+    @@index([discord], map: "discord")
+    @@index([ip], map: "ip")
+    @@index([license], map: "license")
 }
 
 model concess_entreprise {
-  id         Int    @id @default(autoincrement())
-  job        String @db.VarChar(15)
-  vehicle    String @db.VarChar(15)
-  price      Int
-  category   String @default("car") @db.VarChar(50)
-  liverytype Int
+    id         Int    @id @default(autoincrement())
+    job        String @db.VarChar(15)
+    vehicle    String @db.VarChar(15)
+    price      Int
+    category   String @default("car") @db.VarChar(50)
+    liverytype Int
 }
 
 model configuration {
-  name  String @id
-  value Json
+    name  String @id
+    value Json
 }
 
 model fuel_storage {
-  id       Int     @id @default(autoincrement())
-  station  String  @db.VarChar(15)
-  fuel     String  @db.VarChar(15)
-  type     String  @default("public") @db.VarChar(20)
-  owner    String? @db.VarChar(32)
-  stock    Int
-  price    Float?  @default(0.00) @db.Float
-  position String  @db.Text
-  model    Int
-  zone     String  @db.Text
+    id       Int     @id @default(autoincrement())
+    station  String  @db.VarChar(15)
+    fuel     String  @db.VarChar(15)
+    type     String  @default("public") @db.VarChar(20)
+    owner    String? @db.VarChar(32)
+    stock    Int
+    price    Float?  @default(0.00) @db.Float
+    position String  @db.Text
+    model    Int
+    zone     String  @db.Text
 }
 
 model upw_stations {
-  id        Int            @id @default(autoincrement())
-  station   String         @unique @db.VarChar(15)
-  stock     Int            @default(0)
-  max_stock Int            @default(600)
-  price     Float?         @default(0.00) @db.Float
-  position  String         @db.Text
-  job       String?        @db.Text
-  chargers  upw_chargers[]
+    id        Int            @id @default(autoincrement())
+    station   String         @unique @db.VarChar(15)
+    stock     Int            @default(0)
+    max_stock Int            @default(600)
+    price     Float?         @default(0.00) @db.Float
+    position  String         @db.Text
+    job       String?        @db.Text
+    chargers  upw_chargers[]
 }
 
 model upw_chargers {
-  id          Int          @id @default(autoincrement())
-  station     String
-  position    String
-  active      Int          @default(0)
-  upw_station upw_stations @relation(fields: [station], references: [station], onDelete: Cascade, onUpdate: Restrict, map: "FK_upw_chargers_soz_test.upw_stations")
+    id          Int          @id @default(autoincrement())
+    station     String
+    position    String
+    active      Int          @default(0)
+    upw_station upw_stations @relation(fields: [station], references: [station], onDelete: Cascade, onUpdate: Restrict, map: "FK_upw_chargers_soz_test.upw_stations")
 
-  @@index([station], map: "FK_upw_chargers_soz_test.upw_stations")
+    @@index([station], map: "FK_upw_chargers_soz_test.upw_stations")
 }
 
 model housing_apartment {
-  id                   Int                    @id @default(autoincrement())
-  property_id          Int
-  senate_party_id      String?
-  identifier           String?                @db.VarChar(50)
-  label                String?                @db.VarChar(50)
-  price                Int?
-  owner                String?                @db.VarChar(50)
-  roommate             String?                @db.VarChar(50)
-  inside_coord         String?                @db.LongText
-  exit_zone            String?                @db.LongText
-  fridge_zone          String?                @db.LongText
-  stash_zone           String?                @db.LongText
-  closet_zone          String?                @db.LongText
-  money_zone           String?                @db.LongText
-  tier                 Int?
-  cloth_tier           Int?                   @default(dbgenerated("(`tier`)"))
-  money_tier           Int?                   @default(dbgenerated("(`tier`)"))
-  park_tier            Int?                   @default(dbgenerated("(`tier`)"))
-  shell                Boolean                @default(true)
-  has_parking_place    Int?
-  housing_property     housing_property       @relation(fields: [property_id], references: [id], onDelete: Cascade, map: "housing_apartment_housing_property_id_fk")
-  senate_party         SenateParty?           @relation(fields: [senate_party_id], references: [id], onDelete: SetNull, map: "housing_apartment_senate_id_fk")
-  apartment_fourniture apartment_fourniture[]
+    id                   Int                    @id @default(autoincrement())
+    property_id          Int
+    senate_party_id      String?
+    identifier           String?                @db.VarChar(50)
+    label                String?                @db.VarChar(50)
+    price                Int?
+    owner                String?                @db.VarChar(50)
+    roommate             String?                @db.VarChar(50)
+    inside_coord         String?                @db.LongText
+    exit_zone            String?                @db.LongText
+    fridge_zone          String?                @db.LongText
+    stash_zone           String?                @db.LongText
+    closet_zone          String?                @db.LongText
+    money_zone           String?                @db.LongText
+    tier                 Int?
+    cloth_tier           Int?                   @default(dbgenerated("(`tier`)"))
+    money_tier           Int?                   @default(dbgenerated("(`tier`)"))
+    park_tier            Int?                   @default(dbgenerated("(`tier`)"))
+    shell                Boolean                @default(true)
+    has_parking_place    Int?
+    housing_property     housing_property       @relation(fields: [property_id], references: [id], onDelete: Cascade, map: "housing_apartment_housing_property_id_fk")
+    senate_party         SenateParty?           @relation(fields: [senate_party_id], references: [id], onDelete: SetNull, map: "housing_apartment_senate_id_fk")
+    apartment_fourniture apartment_fourniture[]
 
-  @@index([property_id], map: "housing_apartment_housing_property_id_fk")
+    @@index([property_id], map: "housing_apartment_housing_property_id_fk")
 }
 
 model housing_property {
-  id                Int                 @id @default(autoincrement())
-  identifier        String              @unique(map: "housing_property_identifier_uindex") @db.VarChar(32)
-  entry_zone        String?             @db.LongText
-  garage_zone       String?             @db.LongText
-  exterior_culling  String              @default("[]") @db.LongText
-  housing_apartment housing_apartment[]
+    id                Int                 @id @default(autoincrement())
+    identifier        String              @unique(map: "housing_property_identifier_uindex") @db.VarChar(32)
+    entry_zone        String?             @db.LongText
+    garage_zone       String?             @db.LongText
+    exterior_culling  String              @default("[]") @db.LongText
+    housing_apartment housing_apartment[]
 }
 
 model apartment_fourniture {
-  id                Int               @id @default(autoincrement())
-  apartment_id      Int
-  model             String            @db.VarChar(120)
-  position          String?           @db.LongText
-  matrix            String?           @db.LongText
-  storage_type      String?           @db.VarChar(120)
-  housing_apartment housing_apartment @relation(fields: [apartment_id], references: [id], onDelete: Cascade, map: "housing_apartment_housing_apartment_id_fk")
+    id                Int               @id @default(autoincrement())
+    apartment_id      Int
+    model             String            @db.VarChar(120)
+    position          String?           @db.LongText
+    matrix            String?           @db.LongText
+    storage_type      String?           @db.VarChar(120)
+    housing_apartment housing_apartment @relation(fields: [apartment_id], references: [id], onDelete: Cascade, map: "housing_apartment_housing_apartment_id_fk")
 
-  @@index([apartment_id], map: "apartment_id")
-  @@index([apartment_id], map: "housing_apartment_housing_apartment_id_fk")
+    @@index([apartment_id], map: "apartment_id")
+    @@index([apartment_id], map: "housing_apartment_housing_apartment_id_fk")
 }
 
 model invoices {
-  id            Int      @id @default(autoincrement())
-  citizenid     String   @db.VarChar(50)
-  emitter       String   @db.VarChar(50)
-  emitterName   String   @db.VarChar(50)
-  emitterSafe   String   @db.VarChar(50)
-  targetAccount String?  @db.VarChar(20)
-  label         String   @db.VarChar(200)
-  amount        Int
-  payed         Boolean  @default(false)
-  kind          String?  @default("invoice") @db.VarChar(50)
-  refused       Boolean  @default(false)
-  created_at    DateTime @default(now()) @db.Timestamp(0)
-  updated_at    DateTime @default(now()) @db.Timestamp(0)
-  deleted       Boolean  @default(false)
+    id            Int      @id @default(autoincrement())
+    citizenid     String   @db.VarChar(50)
+    emitter       String   @db.VarChar(50)
+    emitterName   String   @db.VarChar(50)
+    emitterSafe   String   @db.VarChar(50)
+    targetAccount String?  @db.VarChar(20)
+    label         String   @db.VarChar(200)
+    amount        Int
+    payed         Boolean  @default(false)
+    kind          String?  @default("invoice") @db.VarChar(50)
+    refused       Boolean  @default(false)
+    created_at    DateTime @default(now()) @db.Timestamp(0)
+    updated_at    DateTime @default(now()) @db.Timestamp(0)
+    deleted       Boolean  @default(false)
 
-  @@index([citizenid], map: "citizenid")
-  @@index([emitter], map: "emitter")
-  @@index([payed], map: "payed")
+    @@index([citizenid], map: "citizenid")
+    @@index([emitter], map: "emitter")
+    @@index([payed], map: "payed")
 }
 
 model job_grades {
-  id          Int     @id @default(autoincrement())
-  jobId       String  @db.VarChar(50)
-  name        String  @db.VarChar(50)
-  weight      Int     @default(0)
-  salary      Int?    @default(0)
-  owner       Int?    @default(0)
-  is_default  Int?    @default(0)
-  permissions String? @db.Text
+    id          Int     @id @default(autoincrement())
+    jobId       String  @db.VarChar(50)
+    name        String  @db.VarChar(50)
+    weight      Int     @default(0)
+    salary      Int?    @default(0)
+    owner       Int?    @default(0)
+    is_default  Int?    @default(0)
+    permissions String? @db.Text
 
-  @@index([jobId], map: "jobId")
+    @@index([jobId], map: "jobId")
 }
 
 model migrations {
-  name String @id @db.VarChar(255)
+    name String @id @db.VarChar(255)
 }
 
 model persistent_prop {
-  id       BigInt  @id @default(autoincrement())
-  model    Int
-  event    String? @db.VarChar(20)
-  position String  @db.LongText
+    id       BigInt  @id @default(autoincrement())
+    model    Int
+    event    String? @db.VarChar(20)
+    position String  @db.LongText
 }
 
 model event {
-  id          String          @id @default(uuid())
-  name        String          @db.VarChar(255)
-  reward      Json
-  scenes      scene[]
+    id          String  @id @default(uuid())
+    name        String  @db.VarChar(255)
+    start_sound String? @db.VarChar(255)
+    reward      Json
+    scenes      scene[]
 }
 
 model scene {
-  id          String          @id @default(uuid())
-  name        String          @db.VarChar(255)
-  entities    scene_entity[]
-  persistant  Boolean         @default(false)
-  created_at  DateTime        @default(now()) @db.Timestamp(0)
-  creator_id  String          @db.VarChar(255)
-  creator     player          @relation(fields: [creator_id], references: [citizenid], onDelete: Cascade, map: "FK_collection_creator")
-  event_id    String?
-  event       event?          @relation(fields: [event_id], references: [id], onDelete: Cascade, map: "FK_scene_event")
+    id         String         @id @default(uuid())
+    name       String         @db.VarChar(255)
+    entities   scene_entity[]
+    persistant Boolean        @default(false)
+    created_at DateTime       @default(now()) @db.Timestamp(0)
+    creator_id String         @db.VarChar(255)
+    creator    player         @relation(fields: [creator_id], references: [citizenid], onDelete: Cascade, map: "FK_collection_creator")
+    event_id   String?
+    event      event?         @relation(fields: [event_id], references: [id], onDelete: Cascade, map: "FK_scene_event")
 }
 
 model scene_entity {
-  id           String          @id @default(uuid())
-  model        String
-  object       Json
-  inventory_id String?
-  created_at   DateTime        @default(now()) @db.Timestamp(0)
-  scene_id     String
-  scene        scene           @relation(fields: [scene_id], references: [id], onDelete: Cascade, map: "FK_scene_entity_scene")
+    id           String   @id @default(uuid())
+    model        String
+    object       Json
+    inventory_id String?
+    created_at   DateTime @default(now()) @db.Timestamp(0)
+    scene_id     String
+    scene        scene    @relation(fields: [scene_id], references: [id], onDelete: Cascade, map: "FK_scene_entity_scene")
 }
 
 model collection_prop {
-  id         BigInt        @id @default(autoincrement())
-  name       String        @unique @db.VarChar(50)
-  creator    String        @db.VarChar(50)
-  date       DateTime      @default(now()) @db.Timestamp(0)
-  props      placed_prop[]
-  persistant Boolean       @default(false)
+    id         BigInt        @id @default(autoincrement())
+    name       String        @unique @db.VarChar(50)
+    creator    String        @db.VarChar(50)
+    date       DateTime      @default(now()) @db.Timestamp(0)
+    props      placed_prop[]
+    persistant Boolean       @default(false)
 }
 
 model placed_prop {
-  id              BigInt          @id @default(autoincrement())
-  unique_id       String          @unique @db.VarChar(255)
-  collection      String          @db.VarChar(50)
-  model           String
-  position        String          @db.LongText
-  matrix          String?         @db.LongText
-  collision       Boolean         @default(true)
-  collection_prop collection_prop @relation(fields: [collection], references: [name], onDelete: Cascade, onUpdate: Restrict, map: "FK_placed_prop_soz_collection_prop")
+    id              BigInt          @id @default(autoincrement())
+    unique_id       String          @unique @db.VarChar(255)
+    collection      String          @db.VarChar(50)
+    model           String
+    position        String          @db.LongText
+    matrix          String?         @db.LongText
+    collision       Boolean         @default(true)
+    collection_prop collection_prop @relation(fields: [collection], references: [name], onDelete: Cascade, onUpdate: Restrict, map: "FK_placed_prop_soz_collection_prop")
 
-  @@index([collection], map: "FK_placed_prop_soz_collection_prop")
+    @@index([collection], map: "FK_placed_prop_soz_collection_prop")
 }
 
 model phone_calls {
-  id          Int      @id @default(autoincrement())
-  identifier  String?  @db.VarChar(48)
-  transmitter String   @db.VarChar(8)
-  receiver    String   @db.VarChar(8)
-  is_accepted Int?     @default(0) @db.TinyInt
-  start       DateTime @default(now()) @db.Timestamp(0)
-  end         DateTime @default(now()) @db.Timestamp(0)
+    id          Int      @id @default(autoincrement())
+    identifier  String?  @db.VarChar(48)
+    transmitter String   @db.VarChar(8)
+    receiver    String   @db.VarChar(8)
+    is_accepted Int?     @default(0) @db.TinyInt
+    start       DateTime @default(now()) @db.Timestamp(0)
+    end         DateTime @default(now()) @db.Timestamp(0)
 
-  @@index([identifier], map: "identifier")
-  @@index([transmitter], map: "transmitter")
-  @@index([receiver], map: "receiver")
+    @@index([identifier], map: "identifier")
+    @@index([transmitter], map: "transmitter")
+    @@index([receiver], map: "receiver")
 }
 
 model phone_contacts {
-  id         Int     @id @default(autoincrement())
-  identifier String? @db.VarChar(48)
-  number     String? @db.VarChar(8)
-  display    String  @default("") @db.VarChar(255)
+    id         Int     @id @default(autoincrement())
+    identifier String? @db.VarChar(48)
+    number     String? @db.VarChar(8)
+    display    String  @default("") @db.VarChar(255)
 
-  @@index([identifier], map: "identifier")
-  @@index([number], map: "number")
+    @@index([identifier], map: "identifier")
+    @@index([number], map: "number")
 }
 
 model phone_gallery {
-  id         Int     @id @default(autoincrement())
-  identifier String? @db.VarChar(48)
-  image      String  @db.VarChar(255)
+    id         Int     @id @default(autoincrement())
+    identifier String? @db.VarChar(48)
+    image      String  @db.VarChar(255)
 
-  @@index([identifier], map: "identifier")
+    @@index([identifier], map: "identifier")
 }
 
 model phone_messages {
-  id              Int      @id @default(autoincrement())
-  message         String   @db.VarChar(512)
-  user_identifier String   @db.VarChar(48)
-  conversation_id String   @db.VarChar(128)
-  isRead          Int      @default(0) @db.TinyInt
-  visible         Int      @default(1) @db.TinyInt
-  author          String   @db.VarChar(8)
-  createdAt       DateTime @default(now()) @db.Timestamp(0)
-  updatedAt       DateTime @default(now()) @db.Timestamp(0)
+    id              Int      @id @default(autoincrement())
+    message         String   @db.VarChar(512)
+    user_identifier String   @db.VarChar(48)
+    conversation_id String   @db.VarChar(128)
+    isRead          Int      @default(0) @db.TinyInt
+    visible         Int      @default(1) @db.TinyInt
+    author          String   @db.VarChar(8)
+    createdAt       DateTime @default(now()) @db.Timestamp(0)
+    updatedAt       DateTime @default(now()) @db.Timestamp(0)
 
-  @@index([user_identifier], map: "user_identifier")
-  @@index([conversation_id], map: "conversation_id")
+    @@index([user_identifier], map: "user_identifier")
+    @@index([conversation_id], map: "conversation_id")
 }
 
 model phone_messages_conversations {
-  id                     Int      @id @default(autoincrement())
-  user_identifier        String   @db.VarChar(8)
-  conversation_id        String   @db.VarChar(128)
-  participant_identifier String   @db.VarChar(8)
-  label                  String?  @default("") @db.VarChar(60)
-  unread                 Int      @default(0)
-  masked                 Boolean  @default(false)
-  createdAt              DateTime @default(now()) @db.Timestamp(0)
-  updatedAt              DateTime @default(now()) @db.Timestamp(0)
+    id                     Int      @id @default(autoincrement())
+    user_identifier        String   @db.VarChar(8)
+    conversation_id        String   @db.VarChar(128)
+    participant_identifier String   @db.VarChar(8)
+    label                  String?  @default("") @db.VarChar(60)
+    unread                 Int      @default(0)
+    masked                 Boolean  @default(false)
+    createdAt              DateTime @default(now()) @db.Timestamp(0)
+    updatedAt              DateTime @default(now()) @db.Timestamp(0)
 
-  @@index([user_identifier], map: "user_identifier")
-  @@index([conversation_id], map: "conversation_id")
-  @@index([participant_identifier], map: "participant_identifier")
+    @@index([user_identifier], map: "user_identifier")
+    @@index([conversation_id], map: "conversation_id")
+    @@index([participant_identifier], map: "participant_identifier")
 }
 
 model phone_notes {
-  id         Int    @id @default(autoincrement())
-  identifier String @db.VarChar(48)
-  title      String @db.VarChar(128)
-  content    String @db.VarChar(1024)
+    id         Int    @id @default(autoincrement())
+    identifier String @db.VarChar(48)
+    title      String @db.VarChar(128)
+    content    String @db.VarChar(1024)
 
-  @@index([identifier], map: "identifier")
+    @@index([identifier], map: "identifier")
 }
 
 model phone_profile {
-  number String  @id @db.VarChar(8)
-  avatar String? @db.VarChar(255)
+    number String  @id @db.VarChar(8)
+    avatar String? @db.VarChar(255)
 
-  @@index([number], map: "number")
+    @@index([number], map: "number")
 }
 
 model phone_society_messages {
-  id              Int      @id @default(autoincrement())
-  conversation_id String   @db.VarChar(512)
-  source_phone    String   @db.VarChar(10)
-  message         String   @db.VarChar(512)
-  position        String?  @db.LongText
-  isTaken         Int      @default(0) @db.TinyInt
-  takenBy         String?  @db.VarChar(70)
-  takenByUsername String?  @db.VarChar(70)
-  isDone          Int      @default(0) @db.TinyInt
-  createdAt       DateTime @default(now()) @db.Timestamp(0)
-  updatedAt       DateTime @default(now()) @db.Timestamp(0)
-  type            String?  @db.VarChar(50)
+    id              Int      @id @default(autoincrement())
+    conversation_id String   @db.VarChar(512)
+    source_phone    String   @db.VarChar(10)
+    message         String   @db.VarChar(512)
+    position        String?  @db.LongText
+    isTaken         Int      @default(0) @db.TinyInt
+    takenBy         String?  @db.VarChar(70)
+    takenByUsername String?  @db.VarChar(70)
+    isDone          Int      @default(0) @db.TinyInt
+    createdAt       DateTime @default(now()) @db.Timestamp(0)
+    updatedAt       DateTime @default(now()) @db.Timestamp(0)
+    type            String?  @db.VarChar(50)
 
-  @@index([conversation_id], map: "conversation_id")
-  @@index([source_phone], map: "source_phone")
+    @@index([conversation_id], map: "conversation_id")
+    @@index([source_phone], map: "source_phone")
 }
 
 model phone_twitch_news {
-  id         Int      @id @default(autoincrement())
-  type       String   @db.VarChar(512)
-  reporter   String?  @db.VarChar(150)
-  reporterId String?  @db.VarChar(70)
-  image      String?  @db.VarChar(256)
-  message    String   @db.VarChar(512)
-  job        String   @default("news") @db.VarChar(50)
-  createdAt  DateTime @default(now()) @db.Timestamp(0)
+    id         Int      @id @default(autoincrement())
+    type       String   @db.VarChar(512)
+    reporter   String?  @db.VarChar(150)
+    reporterId String?  @db.VarChar(70)
+    image      String?  @db.VarChar(256)
+    message    String   @db.VarChar(512)
+    job        String   @default("news") @db.VarChar(50)
+    createdAt  DateTime @default(now()) @db.Timestamp(0)
 
-  @@index([type], map: "type")
+    @@index([type], map: "type")
 }
 
 model player {
-  id                      Int                      @default(autoincrement())
-  citizenid               String                   @id @db.VarChar(50)
-  cid                     Int?
-  license                 String                   @db.VarChar(255)
-  name                    String                   @db.VarChar(255)
-  money                   String                   @db.Text
-  charinfo                String?                  @db.Text
-  job                     String                   @db.Text
-  gang                    String?                  @db.Text
-  position                String                   @db.Text
-  metadata                String                   @db.Text
-  inventory               String?                  @db.LongText
-  last_updated            DateTime                 @default(now()) @db.Timestamp(0)
-  created_at              DateTime                 @default(now()) @db.Timestamp(0)
-  is_default              Int                      @default(0)
-  skin                    String?                  @db.Text
-  cloth_config            String?                  @db.Text
-  features                String?                  @default("[]") @db.Text
-  player_cloth_set        player_cloth_set[]
-  player_vehicles         PlayerVehicle[]
-  records_history_player  player_records_history[] @relation("records_history_player")
-  records_history_author  player_records_history[] @relation("records_history_author")
-  records_history_deletor player_records_history[] @relation("records_history_deletor")
-  fishes                  player_fish[]            @relation("fishes")
-  damages                 player_damage[]          @relation("damages")
-  sozedex_rewards         player_sozedex_rewards[] @relation("sozedex_rewards")
-  race_scores             race_score[]             @relation("race_scores")
-  criminal_actions        criminal_action[]        @relation("criminal_actions")
-  radar_speed_records     radar[]                  @relation("radar_speed_record")
-  SenatePartyMember       SenatePartyMember?
-  scenes                  scene[]
+    id                      Int                      @default(autoincrement())
+    citizenid               String                   @id @db.VarChar(50)
+    cid                     Int?
+    license                 String                   @db.VarChar(255)
+    name                    String                   @db.VarChar(255)
+    money                   String                   @db.Text
+    charinfo                String?                  @db.Text
+    job                     String                   @db.Text
+    gang                    String?                  @db.Text
+    position                String                   @db.Text
+    metadata                String                   @db.Text
+    inventory               String?                  @db.LongText
+    last_updated            DateTime                 @default(now()) @db.Timestamp(0)
+    created_at              DateTime                 @default(now()) @db.Timestamp(0)
+    is_default              Int                      @default(0)
+    skin                    String?                  @db.Text
+    cloth_config            String?                  @db.Text
+    features                String?                  @default("[]") @db.Text
+    player_cloth_set        player_cloth_set[]
+    player_vehicles         PlayerVehicle[]
+    records_history_player  player_records_history[] @relation("records_history_player")
+    records_history_author  player_records_history[] @relation("records_history_author")
+    records_history_deletor player_records_history[] @relation("records_history_deletor")
+    fishes                  player_fish[]            @relation("fishes")
+    damages                 player_damage[]          @relation("damages")
+    sozedex_rewards         player_sozedex_rewards[] @relation("sozedex_rewards")
+    race_scores             race_score[]             @relation("race_scores")
+    criminal_actions        criminal_action[]        @relation("criminal_actions")
+    radar_speed_records     radar[]                  @relation("radar_speed_record")
+    SenatePartyMember       SenatePartyMember?
+    scenes                  scene[]
 
-  @@index([id], map: "id")
-  @@index([last_updated], map: "last_updated")
-  @@index([license], map: "license")
-  @@index([created_at], map: "created_at")
+    @@index([id], map: "id")
+    @@index([last_updated], map: "last_updated")
+    @@index([license], map: "license")
+    @@index([created_at], map: "created_at")
 }
 
 model player_cloth_set {
-  id        Int    @id @default(autoincrement())
-  citizenid String @db.VarChar(255)
-  name      String @db.VarChar(255)
-  cloth_set String @db.Text
-  player    player @relation(fields: [citizenid], references: [citizenid], onDelete: Cascade, map: "FK_player_cloth_set_player")
+    id        Int    @id @default(autoincrement())
+    citizenid String @db.VarChar(255)
+    name      String @db.VarChar(255)
+    cloth_set String @db.Text
+    player    player @relation(fields: [citizenid], references: [citizenid], onDelete: Cascade, map: "FK_player_cloth_set_player")
 
-  @@index([citizenid], map: "FK_player_cloth_set_player")
+    @@index([citizenid], map: "FK_player_cloth_set_player")
 }
 
 model player_outfits {
-  id         Int     @id @default(autoincrement())
-  citizenid  String? @db.VarChar(50)
-  outfitname String  @db.VarChar(50)
-  model      String? @db.VarChar(50)
-  skin       String? @db.Text
-  outfitId   String  @db.VarChar(50)
+    id         Int     @id @default(autoincrement())
+    citizenid  String? @db.VarChar(50)
+    outfitname String  @db.VarChar(50)
+    model      String? @db.VarChar(50)
+    skin       String? @db.Text
+    outfitId   String  @db.VarChar(50)
 
-  @@index([citizenid], map: "citizenid")
-  @@index([outfitId], map: "outfitId")
+    @@index([citizenid], map: "citizenid")
+    @@index([outfitId], map: "outfitId")
 }
 
 model PlayerVehicle {
-  id              Int     @id @default(autoincrement())
-  license         String? @db.VarChar(50)
-  citizenid       String? @db.VarChar(50)
-  vehicle         String? @db.VarChar(50)
-  hash            String? @db.VarChar(50)
-  mods            String? @db.LongText
-  condition       String? @db.LongText
-  label           String? @db.VarChar(50)
-  plate           String  @unique(map: "UK_playervehicles_plate") @db.VarChar(15)
-  fakeplate       String? @db.VarChar(50)
-  garage          String? @db.VarChar(50)
-  job             String? @db.VarChar(15)
-  category        String  @default("car") @db.VarChar(50)
-  fuel            Int?    @default(100)
-  engine          Float?  @default(1000) @db.Float
-  body            Float?  @default(1000) @db.Float
-  state           Int?    @default(1)
-  life_counter    Int     @default(3)
-  drivingdistance Int?
-  status          String? @db.Text
-  boughttime      Int     @default(0)
-  parkingtime     Int     @default(0)
-  pound_price     Int?    @default(0)
-  crimiImport     Boolean @default(false)
-  player          player? @relation(fields: [citizenid], references: [citizenid], onDelete: Cascade, map: "FK_playervehicles_players")
+    id              Int     @id @default(autoincrement())
+    license         String? @db.VarChar(50)
+    citizenid       String? @db.VarChar(50)
+    vehicle         String? @db.VarChar(50)
+    hash            String? @db.VarChar(50)
+    mods            String? @db.LongText
+    condition       String? @db.LongText
+    label           String? @db.VarChar(50)
+    plate           String  @unique(map: "UK_playervehicles_plate") @db.VarChar(15)
+    fakeplate       String? @db.VarChar(50)
+    garage          String? @db.VarChar(50)
+    job             String? @db.VarChar(15)
+    category        String  @default("car") @db.VarChar(50)
+    fuel            Int?    @default(100)
+    engine          Float?  @default(1000) @db.Float
+    body            Float?  @default(1000) @db.Float
+    state           Int?    @default(1)
+    life_counter    Int     @default(3)
+    drivingdistance Int?
+    status          String? @db.Text
+    boughttime      Int     @default(0)
+    parkingtime     Int     @default(0)
+    pound_price     Int?    @default(0)
+    crimiImport     Boolean @default(false)
+    player          player? @relation(fields: [citizenid], references: [citizenid], onDelete: Cascade, map: "FK_playervehicles_players")
 
-  @@index([citizenid], map: "citizenid")
-  @@index([license], map: "license")
-  @@index([plate], map: "plate")
-  @@map("player_vehicles")
+    @@index([citizenid], map: "citizenid")
+    @@index([license], map: "license")
+    @@index([plate], map: "plate")
+    @@map("player_vehicles")
 }
 
 model storages {
-  name       String  @id @db.VarChar(50)
-  type       String? @db.VarChar(50)
-  owner      String? @db.VarChar(64)
-  max_slots  Int?    @default(10)
-  max_weight Int?    @default(250000)
-  inventory  String? @db.LongText
+    name       String  @id @db.VarChar(50)
+    type       String? @db.VarChar(50)
+    owner      String? @db.VarChar(64)
+    max_slots  Int?    @default(10)
+    max_weight Int?    @default(250000)
+    inventory  String? @db.LongText
 
-  @@index([owner], map: "owner")
-  @@index([type], map: "type")
-  @@index([name, type, owner], name: "storageTypeOwner")
+    @@index([owner], map: "owner")
+    @@index([type], map: "type")
+    @@index([name, type, owner], name: "storageTypeOwner")
 }
 
 model upw_facility {
-  id         Int     @id @default(autoincrement())
-  type       String  @db.VarChar(50)
-  identifier String  @db.VarChar(50)
-  data       String? @db.LongText
+    id         Int     @id @default(autoincrement())
+    type       String  @db.VarChar(50)
+    identifier String  @db.VarChar(50)
+    data       String? @db.LongText
 
-  @@index([identifier], map: "identifier")
+    @@index([identifier], map: "identifier")
 }
 
 model Vehicle {
-  model           String  @id @db.VarChar(50)
-  hash            Int?
-  name            String  @db.VarChar(255)
-  price           Int
-  category        String? @db.VarChar(50)
-  dealershipId    String? @map("dealership_id") @db.VarChar(10)
-  requiredLicence String? @map("required_licence") @db.VarChar(10)
-  size            Int?    @default(1)
-  jobName         String? @map("job_name") @db.Text
-  stock           Int?    @default(0)
-  radio           Boolean @default(false)
-  maxStock        Int?    @default(2)
-  handling        String? @db.Text
+    model           String  @id @db.VarChar(50)
+    hash            Int?
+    name            String  @db.VarChar(255)
+    price           Int
+    category        String? @db.VarChar(50)
+    dealershipId    String? @map("dealership_id") @db.VarChar(10)
+    requiredLicence String? @map("required_licence") @db.VarChar(10)
+    size            Int?    @default(1)
+    jobName         String? @map("job_name") @db.Text
+    stock           Int?    @default(0)
+    radio           Boolean @default(false)
+    maxStock        Int?    @default(2)
+    handling        String? @db.Text
 
-  @@index([category])
-  @@index([dealershipId], map: "vehicles_dealership_idx")
-  @@map("vehicles")
+    @@index([category])
+    @@index([dealershipId], map: "vehicles_dealership_idx")
+    @@map("vehicles")
 }
 
 model player_purchases {
-  id        Int     @id @default(autoincrement())
-  citizenid String  @db.VarChar(50)
-  shop_type String  @db.VarChar(25)
-  shop_id   String? @db.VarChar(50)
-  item_id   String  @db.VarChar(50)
-  amount    Int
-  date      Int
+    id        Int     @id @default(autoincrement())
+    citizenid String  @db.VarChar(50)
+    shop_type String  @db.VarChar(25)
+    shop_id   String? @db.VarChar(50)
+    item_id   String  @db.VarChar(50)
+    amount    Int
+    date      Int
 
-  @@index([shop_id], map: "shop_id")
+    @@index([shop_id], map: "shop_id")
 }
 
 model category {
-  id              Int               @id @default(autoincrement())
-  name            String            @db.VarChar(255)
-  parent_id       Int?
-  warm_score      Int               @default(0)
-  category        category?         @relation("categoryTocategory_parent_id", fields: [parent_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "category_ibfk_1")
-  other_category  category[]        @relation("categoryTocategory_parent_id")
-  shop_categories shop_categories[]
-  shop_content    shop_content[]
+    id              Int               @id @default(autoincrement())
+    name            String            @db.VarChar(255)
+    parent_id       Int?
+    warm_score      Int               @default(0)
+    category        category?         @relation("categoryTocategory_parent_id", fields: [parent_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "category_ibfk_1")
+    other_category  category[]        @relation("categoryTocategory_parent_id")
+    shop_categories shop_categories[]
+    shop_content    shop_content[]
 
-  @@index([parent_id], map: "parent_id")
+    @@index([parent_id], map: "parent_id")
 }
 
 model field {
-  id         Int     @id @default(autoincrement())
-  identifier String  @unique(map: "identifier") @db.VarChar(64)
-  owner      String? @db.VarChar(32)
-  data       String? @db.LongText
+    id         Int     @id @default(autoincrement())
+    identifier String  @unique(map: "identifier") @db.VarChar(64)
+    owner      String? @db.VarChar(32)
+    data       String? @db.LongText
 
-  @@unique(fields: [identifier, owner], name: "fieldOwner")
+    @@unique(fields: [identifier, owner], name: "fieldOwner")
 }
 
 model investigation {
-  id                     Int                      @id @unique(map: "investigation_id_uindex") @default(autoincrement())
-  citizenid              String                   @db.VarChar(255)
-  service                String                   @db.VarChar(255)
-  title                  String                   @db.VarChar(128)
-  type                   report_type              @default(investigation)
-  isTemplate             Boolean?                 @default(false)
-  closed                 Boolean?                 @default(false)
-  granted                String?                  @db.LongText
-  granted_services       String?                  @db.LongText
-  granted_jobgrade       String?                  @db.LongText
-  granted_certifications String?                  @db.LongText
-  supervisors            String?                  @db.LongText
-  concerned_people       String?                  @db.LongText
-  in_charge              String?                  @db.LongText
-  created_at             DateTime?                @default(now()) @db.Timestamp(0)
-  updated_at             DateTime?                @default(now()) @db.Timestamp(0)
-  investigation_revision investigation_revision[]
+    id                     Int                      @id @unique(map: "investigation_id_uindex") @default(autoincrement())
+    citizenid              String                   @db.VarChar(255)
+    service                String                   @db.VarChar(255)
+    title                  String                   @db.VarChar(128)
+    type                   report_type              @default(investigation)
+    isTemplate             Boolean?                 @default(false)
+    closed                 Boolean?                 @default(false)
+    granted                String?                  @db.LongText
+    granted_services       String?                  @db.LongText
+    granted_jobgrade       String?                  @db.LongText
+    granted_certifications String?                  @db.LongText
+    supervisors            String?                  @db.LongText
+    concerned_people       String?                  @db.LongText
+    in_charge              String?                  @db.LongText
+    created_at             DateTime?                @default(now()) @db.Timestamp(0)
+    updated_at             DateTime?                @default(now()) @db.Timestamp(0)
+    investigation_revision investigation_revision[]
 }
 
 model investigation_revision {
-  id              Int            @id @default(autoincrement())
-  investigationId Int?
-  citizenid       String         @db.VarChar(255)
-  content         String         @db.LongText
-  note            String         @default("") @db.LongText
-  prosecutor_note String         @default("") @db.LongText
-  created_at      DateTime?      @default(now()) @db.Timestamp(0)
-  investigation   investigation? @relation(fields: [investigationId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_investigation")
+    id              Int            @id @default(autoincrement())
+    investigationId Int?
+    citizenid       String         @db.VarChar(255)
+    content         String         @db.LongText
+    note            String         @default("") @db.LongText
+    prosecutor_note String         @default("") @db.LongText
+    created_at      DateTime?      @default(now()) @db.Timestamp(0)
+    investigation   investigation? @relation(fields: [investigationId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_investigation")
 
-  @@index([investigationId], map: "fk_investigation")
+    @@index([investigationId], map: "fk_investigation")
 }
 
 model player_records_history {
-  id               Int       @id @unique(map: "playerrecordshistory_id_uindex") @default(autoincrement())
-  citizenid        String    @db.VarChar(255)
-  author_citizenid String    @db.VarChar(255)
-  delete_citizenid String?   @db.VarChar(255)
-  type             String    @db.VarChar(128)
-  content          String?   @db.LongText
-  isDeleted        Boolean?  @default(false)
-  created_at       DateTime? @default(now()) @db.Timestamp(0)
-  updated_at       DateTime? @default(now()) @db.Timestamp(0)
-  deleted_at       DateTime? @db.Timestamp(0)
-  concerned_player player    @relation(fields: [citizenid], references: [citizenid], onDelete: Cascade, map: "FK_playerrecordshistory_target", name: "records_history_player")
-  author           player    @relation(fields: [author_citizenid], references: [citizenid], onDelete: Cascade, map: "FK_playerrecordshistory_author", name: "records_history_author")
-  deletor          player?   @relation(fields: [delete_citizenid], references: [citizenid], onDelete: Cascade, map: "FK_playerrecordshistory_deletor", name: "records_history_deletor")
+    id               Int       @id @unique(map: "playerrecordshistory_id_uindex") @default(autoincrement())
+    citizenid        String    @db.VarChar(255)
+    author_citizenid String    @db.VarChar(255)
+    delete_citizenid String?   @db.VarChar(255)
+    type             String    @db.VarChar(128)
+    content          String?   @db.LongText
+    isDeleted        Boolean?  @default(false)
+    created_at       DateTime? @default(now()) @db.Timestamp(0)
+    updated_at       DateTime? @default(now()) @db.Timestamp(0)
+    deleted_at       DateTime? @db.Timestamp(0)
+    concerned_player player    @relation(fields: [citizenid], references: [citizenid], onDelete: Cascade, map: "FK_playerrecordshistory_target", name: "records_history_player")
+    author           player    @relation(fields: [author_citizenid], references: [citizenid], onDelete: Cascade, map: "FK_playerrecordshistory_author", name: "records_history_author")
+    deletor          player?   @relation(fields: [delete_citizenid], references: [citizenid], onDelete: Cascade, map: "FK_playerrecordshistory_deletor", name: "records_history_deletor")
 
-  @@index([citizenid], map: "citizenid")
+    @@index([citizenid], map: "citizenid")
 }
 
 model police_fines {
-  id          Int       @id @unique(map: "policefines_id_uindex") @default(autoincrement())
-  label       String    @db.VarChar(255)
-  description String    @db.LongText
-  price_min   Int
-  price_max   Int
-  category    Int
-  created_at  DateTime? @default(now()) @db.Timestamp(0)
-  updated_at  DateTime? @default(now()) @db.Timestamp(0)
+    id          Int       @id @unique(map: "policefines_id_uindex") @default(autoincrement())
+    label       String    @db.VarChar(255)
+    description String    @db.LongText
+    price_min   Int
+    price_max   Int
+    category    Int
+    created_at  DateTime? @default(now()) @db.Timestamp(0)
+    updated_at  DateTime? @default(now()) @db.Timestamp(0)
 
-  @@index([id], map: "id")
+    @@index([id], map: "id")
 }
 
 model shop {
-  id              Int               @id @default(autoincrement())
-  name            String            @db.VarChar(255)
-  label           String            @db.VarChar(255)
-  shop_categories shop_categories[]
-  shop_content    shop_content[]
+    id              Int               @id @default(autoincrement())
+    name            String            @db.VarChar(255)
+    label           String            @db.VarChar(255)
+    shop_categories shop_categories[]
+    shop_content    shop_content[]
 }
 
 model shop_categories {
-  id          Int      @id @default(autoincrement())
-  shop_id     Int
-  category_id Int
-  category    category @relation(fields: [category_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "shop_categories_ibfk_2")
-  shop        shop     @relation(fields: [shop_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "shop_categories_ibfk_1")
+    id          Int      @id @default(autoincrement())
+    shop_id     Int
+    category_id Int
+    category    category @relation(fields: [category_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "shop_categories_ibfk_2")
+    shop        shop     @relation(fields: [shop_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "shop_categories_ibfk_1")
 
-  @@index([category_id], map: "category_id")
-  @@index([shop_id], map: "shop_id")
+    @@index([category_id], map: "category_id")
+    @@index([shop_id], map: "shop_id")
 }
 
 model shop_content {
-  id          Int       @id @default(autoincrement())
-  shop_id     Int?
-  category_id Int?
-  label       String    @db.VarChar(255)
-  price       Int       @default(50)
-  data        String    @db.LongText
-  stock       Int       @default(5)
-  category    category? @relation(fields: [category_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "shop_content_ibfk_2")
-  shop        shop?     @relation(fields: [shop_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "shop_content_ibfk_1")
+    id          Int       @id @default(autoincrement())
+    shop_id     Int?
+    category_id Int?
+    label       String    @db.VarChar(255)
+    price       Int       @default(50)
+    data        String    @db.LongText
+    stock       Int       @default(5)
+    category    category? @relation(fields: [category_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "shop_content_ibfk_2")
+    shop        shop?     @relation(fields: [shop_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "shop_content_ibfk_1")
 
-  @@index([category_id], map: "category_id")
-  @@index([shop_id], map: "shop_id")
+    @@index([category_id], map: "category_id")
+    @@index([shop_id], map: "shop_id")
 }
 
 model snake_score {
-  id         Int    @id @default(autoincrement())
-  identifier String @db.VarChar(50)
-  score      Int
+    id         Int    @id @default(autoincrement())
+    identifier String @db.VarChar(50)
+    score      Int
 }
 
 enum bank_accounts_account_type {
-  player
-  housestorages
-  business
-  safestorages
-  offshore
-  bank_atm      @map("bank-atm")
-  gang
+    player
+    housestorages
+    business
+    safestorages
+    offshore
+    bank_atm      @map("bank-atm")
+    gang
 }
 
 model halloween_pumpkin_hunt {
-  id        Int      @id @default(autoincrement())
-  citizenid String   @db.VarChar(50)
-  coords    String   @db.VarChar(45)
-  hunted_at DateTime @default(now()) @db.Timestamp(0)
+    id        Int      @id @default(autoincrement())
+    citizenid String   @db.VarChar(50)
+    coords    String   @db.VarChar(45)
+    hunted_at DateTime @default(now()) @db.Timestamp(0)
 
-  @@index([citizenid], map: "citizenid")
+    @@index([citizenid], map: "citizenid")
 }
 
 model easter_hunt {
-  id        Int      @id @default(autoincrement())
-  citizenid String   @db.VarChar(50)
-  coords    String   @db.VarChar(45)
-  hunted_at DateTime @default(now()) @db.Timestamp(0)
+    id        Int      @id @default(autoincrement())
+    citizenid String   @db.VarChar(50)
+    coords    String   @db.VarChar(45)
+    hunted_at DateTime @default(now()) @db.Timestamp(0)
 
-  @@index([citizenid], map: "citizenid")
+    @@index([citizenid], map: "citizenid")
 }
 
 enum report_type {
-  investigation
-  report
-  complaint
-  appeal
+    investigation
+    report
+    complaint
+    appeal
 }
 
 model drugs_seedling {
-  id         Int      @id @default(autoincrement())
-  drug       String
-  location   String   @db.Text
-  created_at DateTime @default(now()) @db.Timestamp(0)
-  nb_water   Int
-  garden     String?  @db.VarChar(50)
-  citizenid  String   @db.VarChar(50)
-  skillBoost Boolean
-  property   Int?
-  in_mlo     Boolean  @default(false)
+    id         Int      @id @default(autoincrement())
+    drug       String
+    location   String   @db.Text
+    created_at DateTime @default(now()) @db.Timestamp(0)
+    nb_water   Int
+    garden     String?  @db.VarChar(50)
+    citizenid  String   @db.VarChar(50)
+    skillBoost Boolean
+    property   Int?
+    in_mlo     Boolean  @default(false)
 }
 
 model drugs_sell_location {
-  id   Int    @id @default(autoincrement())
-  name String @db.VarChar(50)
-  type String @db.VarChar(50)
-  zone String @db.Text
+    id   Int    @id @default(autoincrement())
+    name String @db.VarChar(50)
+    type String @db.VarChar(50)
+    zone String @db.Text
 
-  @@unique([name, type])
+    @@unique([name, type])
 }
 
 model drugs_garden_guest {
-  id        Int    @id @default(autoincrement())
-  citizenid String @db.VarChar(50)
-  guest     String @db.VarChar(50)
+    id        Int    @id @default(autoincrement())
+    citizenid String @db.VarChar(50)
+    guest     String @db.VarChar(50)
 
-  @@unique([citizenid, guest])
+    @@unique([citizenid, guest])
 }
 
 model player_fish {
-  player     player   @relation(fields: [citizenId], references: [citizenid], onDelete: Cascade, map: "FK_fish_player", name: "fishes")
-  citizenId  String   @db.VarChar(50)
-  fishId     String   @db.VarChar(100)
-  quantity   Int
-  maxWidth   Int
-  maxWeight  Int
-  maxResell  Int
-  lastFishAt DateTime @default(now()) @db.Timestamp(0)
+    player     player   @relation(fields: [citizenId], references: [citizenid], onDelete: Cascade, map: "FK_fish_player", name: "fishes")
+    citizenId  String   @db.VarChar(50)
+    fishId     String   @db.VarChar(100)
+    quantity   Int
+    maxWidth   Int
+    maxWeight  Int
+    maxResell  Int
+    lastFishAt DateTime @default(now()) @db.Timestamp(0)
 
-  @@id([citizenId, fishId])
+    @@id([citizenId, fishId])
 }
 
 model player_sozedex_rewards {
-  player    player   @relation(fields: [citizenId], references: [citizenid], onDelete: Cascade, map: "FK_player_sozedex_rewards", name: "sozedex_rewards")
-  citizenId String   @db.VarChar(50)
-  itemId    String   @db.VarChar(100)
-  claimedAt DateTime @default(now()) @db.Timestamp(0)
+    player    player   @relation(fields: [citizenId], references: [citizenid], onDelete: Cascade, map: "FK_player_sozedex_rewards", name: "sozedex_rewards")
+    citizenId String   @db.VarChar(50)
+    itemId    String   @db.VarChar(100)
+    claimedAt DateTime @default(now()) @db.Timestamp(0)
 
-  @@id([citizenId, itemId])
+    @@id([citizenId, itemId])
 }
 
 model race {
-  id            Int     @id @default(autoincrement())
-  name          String  @db.VarChar(50)
-  model         String  @db.VarChar(50)
-  npc_position  String  @db.Text
-  start         String  @db.Text
-  checkpoints   String  @db.Text
-  enabled       Boolean
-  fps           Boolean
-  garage        String? @db.Text
-  configuration String? @db.Text
+    id            Int     @id @default(autoincrement())
+    name          String  @db.VarChar(50)
+    model         String  @db.VarChar(50)
+    npc_position  String  @db.Text
+    start         String  @db.Text
+    checkpoints   String  @db.Text
+    enabled       Boolean
+    fps           Boolean
+    garage        String? @db.Text
+    configuration String? @db.Text
 
-  scores race_score[] @relation("race_scores_race")
+    scores race_score[] @relation("race_scores_race")
 
-  @@index([name], map: "name")
+    @@index([name], map: "name")
 }
 
 model race_score {
-  player      player @relation(fields: [citizenid], references: [citizenid], onDelete: Cascade, map: "FK_race_scores_player", name: "race_scores")
-  citizenid   String @db.VarChar(50)
-  race        race   @relation(fields: [race_id], references: [id], onDelete: Cascade, map: "FK_race_id", name: "race_scores_race")
-  race_id     Int
-  best_run    String @db.Text
-  best_splits String @db.Text
+    player      player @relation(fields: [citizenid], references: [citizenid], onDelete: Cascade, map: "FK_race_scores_player", name: "race_scores")
+    citizenid   String @db.VarChar(50)
+    race        race   @relation(fields: [race_id], references: [id], onDelete: Cascade, map: "FK_race_id", name: "race_scores_race")
+    race_id     Int
+    best_run    String @db.Text
+    best_splits String @db.Text
 
-  @@id([citizenid, race_id])
+    @@id([citizenid, race_id])
 }
 
 model radar {
-  id           Int     @id @default(autoincrement())
-  speed        Int
-  position     Json
-  enabled      Boolean
-  destroyed    Boolean
-  speed_record Int
-  player       player? @relation(fields: [citizenid], references: [citizenid], onDelete: SetNull, map: "FK_radar_speed_record_player", name: "radar_speed_record")
-  citizenid    String? @db.VarChar(50)
+    id           Int     @id @default(autoincrement())
+    speed        Int
+    position     Json
+    enabled      Boolean
+    destroyed    Boolean
+    speed_record Int
+    player       player? @relation(fields: [citizenid], references: [citizenid], onDelete: SetNull, map: "FK_radar_speed_record_player", name: "radar_speed_record")
+    citizenid    String? @db.VarChar(50)
 
-  @@map("radar")
+    @@map("radar")
 }
 
 model tetris_score {
-  id         Int    @id @default(autoincrement())
-  identifier String @db.VarChar(50)
-  score      Int
+    id         Int    @id @default(autoincrement())
+    identifier String @db.VarChar(50)
+    score      Int
 }
 
 model billboard {
-  id                Int      @id @default(autoincrement())
-  name              String   @db.VarChar(50)
-  position          String   @db.VarChar(50)
-  originDictName    String   @db.VarChar(50)
-  originTextureName String   @db.VarChar(50)
-  imageUrl          String   @db.VarChar(200)
-  previewImageUrl   String   @db.VarChar(200)
-  templateImageUrl  String   @db.VarChar(200)
-  width             Int      @db.Int
-  height            Int      @db.Int
-  lastEdit          DateTime @default(now()) @db.Timestamp(0)
-  lastEditor        String   @db.VarChar(50)
-  owner             String   @db.VarChar(50)
-  enabled           Boolean
+    id                Int      @id @default(autoincrement())
+    name              String   @db.VarChar(50)
+    position          String   @db.VarChar(50)
+    originDictName    String   @db.VarChar(50)
+    originTextureName String   @db.VarChar(50)
+    imageUrl          String   @db.VarChar(200)
+    previewImageUrl   String   @db.VarChar(200)
+    templateImageUrl  String   @db.VarChar(200)
+    width             Int      @db.Int
+    height            Int      @db.Int
+    lastEdit          DateTime @default(now()) @db.Timestamp(0)
+    lastEditor        String   @db.VarChar(50)
+    owner             String   @db.VarChar(50)
+    enabled           Boolean
 }
 
 model vandalism_props {
-  id          String @db.VarChar(50)
-  kind        String @db.VarChar(50)
-  location    String @db.Text
-  model_group String @db.VarChar(50)
-  value       Int    @db.Int
+    id          String @db.VarChar(50)
+    kind        String @db.VarChar(50)
+    location    String @db.Text
+    model_group String @db.VarChar(50)
+    value       Int    @db.Int
 
-  @@id([id, kind])
+    @@id([id, kind])
 }
 
 model Zone {
-  id   Int      @id @default(autoincrement())
-  type String   @db.VarChar(50)
-  zone String   @db.LongText
-  name String   @db.VarChar(50)
-  extra String? @db.LongText
+    id    Int     @id @default(autoincrement())
+    type  String  @db.VarChar(50)
+    zone  String  @db.LongText
+    name  String  @db.VarChar(50)
+    extra String? @db.LongText
 
-  @@map("zone")
+    @@map("zone")
 }
 
 model player_damage {
-  id         Int       @default(autoincrement())
-  player     player    @relation(fields: [citizenid], references: [citizenid], onDelete: Cascade, map: "FK_damages_player", name: "damages")
-  citizenid  String    @db.VarChar(50)
-  attackerId String    @db.VarChar(50)
-  bone       Int
-  damageType Int
-  weapon     String    @db.VarChar(50)
-  damageQty  Int
-  isFatal    Boolean
-  date       DateTime? @default(now()) @db.Timestamp(0)
+    id         Int       @default(autoincrement())
+    player     player    @relation(fields: [citizenid], references: [citizenid], onDelete: Cascade, map: "FK_damages_player", name: "damages")
+    citizenid  String    @db.VarChar(50)
+    attackerId String    @db.VarChar(50)
+    bone       Int
+    damageType Int
+    weapon     String    @db.VarChar(50)
+    damageQty  Int
+    isFatal    Boolean
+    date       DateTime? @default(now()) @db.Timestamp(0)
 
-  @@id([id, citizenid])
+    @@id([id, citizenid])
 }
 
 model fdf_crops {
-  id        String   @id
-  field     String   @db.VarChar(50)
-  type      String   @db.VarChar(50)
-  coords    String   @db.VarChar(100)
-  hilled    Boolean
-  createdAt DateTime @default(now()) @db.Timestamp(0)
+    id        String   @id
+    field     String   @db.VarChar(50)
+    type      String   @db.VarChar(50)
+    coords    String   @db.VarChar(100)
+    hilled    Boolean
+    createdAt DateTime @default(now()) @db.Timestamp(0)
 }
 
 model pitstop_price {
-  category String @id
-  price    Int    @db.Int
+    category String @id
+    price    Int    @db.Int
 }
 
 model SenateParty {
-  id                String              @id @default(uuid())
-  name              String
-  address           String?
-  imageUrl          String?
-  color             String?
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
-  members           SenatePartyMember[]
-  housing_apartment housing_apartment[]
+    id                String              @id @default(uuid())
+    name              String
+    address           String?
+    imageUrl          String?
+    color             String?
+    createdAt         DateTime            @default(now())
+    updatedAt         DateTime            @updatedAt
+    members           SenatePartyMember[]
+    housing_apartment housing_apartment[]
 
-  @@index([id])
-  @@map("senate_party")
+    @@index([id])
+    @@map("senate_party")
 }
 
 model SenatePartyMember {
-  id               String      @id @default(uuid())
-  partyId          String
-  citizenId        String      @unique
-  firstName        String
-  lastName         String
-  senateSeatNumber Int?
-  createdAt        DateTime    @default(now())
-  updatedAt        DateTime    @updatedAt
-  party            SenateParty @relation(fields: [partyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  player           player      @relation(fields: [citizenId], references: [citizenid], onDelete: Cascade, map: "FK_senate_party_member_player")
+    id               String      @id @default(uuid())
+    partyId          String
+    citizenId        String      @unique
+    firstName        String
+    lastName         String
+    senateSeatNumber Int?
+    createdAt        DateTime    @default(now())
+    updatedAt        DateTime    @updatedAt
+    party            SenateParty @relation(fields: [partyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    player           player      @relation(fields: [citizenId], references: [citizenid], onDelete: Cascade, map: "FK_senate_party_member_player")
 
-  @@unique([senateSeatNumber])
-  @@index([id])
-  @@index([partyId])
-  @@index([citizenId])
-  @@map("senate_party_member")
+    @@unique([senateSeatNumber])
+    @@index([id])
+    @@index([partyId])
+    @@index([citizenId])
+    @@map("senate_party_member")
 }
 
 model criminal_action {
-  id        Int      @id @default(autoincrement())
-  player    player   @relation(fields: [citizenid], references: [citizenid], onDelete: Cascade, map: "FK_criminal_actions_player", name: "criminal_actions")
-  citizenid String   @db.VarChar(50)
-  date      DateTime @default(now()) @db.Timestamp(0)
-  type      String   @db.VarChar(50)
-  data      String   @db.VarChar(100)
+    id        Int      @id @default(autoincrement())
+    player    player   @relation(fields: [citizenid], references: [citizenid], onDelete: Cascade, map: "FK_criminal_actions_player", name: "criminal_actions")
+    citizenid String   @db.VarChar(50)
+    date      DateTime @default(now()) @db.Timestamp(0)
+    type      String   @db.VarChar(50)
+    data      String   @db.VarChar(100)
 }
 
 model hub_entry {
-  id            Int      @id @default(autoincrement())
-  date          DateTime
-  lanternCoords String   @db.VarChar(100)
-  exitCoords    String   @db.VarChar(100)
+    id            Int      @id @default(autoincrement())
+    date          DateTime
+    lanternCoords String   @db.VarChar(100)
+    exitCoords    String   @db.VarChar(100)
 }
 
 model tax {
-  id    String @id
-  value Int    @db.Int
+    id    String @id
+    value Int    @db.Int
 }
 
 model gang {
-  id                 Int        @id @default(autoincrement())
-  name               String     @db.VarChar(100)
-  type               String     @db.VarChar(100)
-  hub                String     @db.Text
-  metadata           String     @db.Text
+    id       Int    @id @default(autoincrement())
+    name     String @db.VarChar(100)
+    type     String @db.VarChar(100)
+    hub      String @db.Text
+    metadata String @db.Text
 }
 
 model door {
-  id             String     @id
-  data           String     @db.Text
+    id   String @id
+    data String @db.Text
 }
 
 model vehicle_business_unique {
-  id             String     @id
-  data           String     @db.Text
+    id   String @id
+    data String @db.Text
 }
 
 model influence_zones {
-  id             Int        @id @default(autoincrement())
-  name           String     @unique @db.VarChar(100)
-  zone           String     @db.Text
-  gang           Int?
+    id   Int    @id @default(autoincrement())
+    name String @unique @db.VarChar(100)
+    zone String @db.Text
+    gang Int?
 }
 
 model vehicle_order {
-  id             String     @id
-  model          String     @db.VarChar(100)
-  deliverDate    DateTime   @default(now())
-  data           String     @db.Text
+    id          String   @id
+    model       String   @db.VarChar(100)
+    deliverDate DateTime @default(now())
+    data        String   @db.Text
 }
 
 model loot_item {
-  id             Int        @id @default(autoincrement())
-  type           String     @db.VarChar(100)
-  item           String     @db.VarChar(100)
-  metadata       String?    @db.Text
-  max            Int
-  chance         Int
+    id       Int     @id @default(autoincrement())
+    type     String  @db.VarChar(100)
+    item     String  @db.VarChar(100)
+    metadata String? @db.Text
+    max      Int
+    chance   Int
 
-  @@index([type])
+    @@index([type])
 }
 
 model smuggling_business_harvest_zone {
-  id             String     @id
-  name           String     @unique @db.VarChar(100)
-  type           String     @db.VarChar(100)
-  data           String     @db.Text
+    id   String @id
+    name String @unique @db.VarChar(100)
+    type String @db.VarChar(100)
+    data String @db.Text
 }
 
 model darkweb_messages {
-  id              Int      @id @default(autoincrement())
-  message         String   @db.VarChar(512)
-  user_identifier String   @db.VarChar(48)
-  conversation_id Int      @db.Int()
-  phoneNumber     String   @db.VarChar(128)
-  isRead          Int      @default(0) @db.TinyInt
-  createdAt       DateTime @default(now()) @db.Timestamp(0)
-  updatedAt       DateTime @default(now()) @db.Timestamp(0)
-  @@index([user_identifier], map: "user_identifier")
-  @@index([conversation_id], map: "conversation_id")
+    id              Int      @id @default(autoincrement())
+    message         String   @db.VarChar(512)
+    user_identifier String   @db.VarChar(48)
+    conversation_id Int      @db.Int()
+    phoneNumber     String   @db.VarChar(128)
+    isRead          Int      @default(0) @db.TinyInt
+    createdAt       DateTime @default(now()) @db.Timestamp(0)
+    updatedAt       DateTime @default(now()) @db.Timestamp(0)
+
+    @@index([user_identifier], map: "user_identifier")
+    @@index([conversation_id], map: "conversation_id")
 }
 
 model darkweb_conversations {
-  id                     Int      @id @default(autoincrement())
-  password               String   @db.VarChar(128)
-  user_identifier        String   @db.VarChar(8)
-  label                  String?  @default("") @db.VarChar(60)
-  unread                 Int      @default(0)
-  masked                 Boolean  @default(false)
-  createdAt              DateTime @default(now()) @db.Timestamp(0)
-  updatedAt              DateTime @default(now()) @db.Timestamp(0)
-  @@index([user_identifier], map: "user_identifier")
+    id              Int      @id @default(autoincrement())
+    password        String   @db.VarChar(128)
+    user_identifier String   @db.VarChar(8)
+    label           String?  @default("") @db.VarChar(60)
+    unread          Int      @default(0)
+    masked          Boolean  @default(false)
+    createdAt       DateTime @default(now()) @db.Timestamp(0)
+    updatedAt       DateTime @default(now()) @db.Timestamp(0)
+
+    @@index([user_identifier], map: "user_identifier")
 }
 
 model darkweb_participants {
-  conversation_id        Int      @db.Int()
-  user_identifier        String   @db.VarChar(8)
-  masked                 Boolean  @default(false)
-  phoneNumber            String @db.VarChar(128)
-  unread                 Boolean  @default(true)
-  notification           Boolean  @default(false)
-  joinedAt               DateTime @default(now()) @db.Timestamp(0)
-  role                   String   @db.VarChar(128)
-  @@id([user_identifier, conversation_id])
-  @@index([user_identifier], map: "user_identifier")
-  @@index([conversation_id], map: "conversation_id")
+    conversation_id Int      @db.Int()
+    user_identifier String   @db.VarChar(8)
+    masked          Boolean  @default(false)
+    phoneNumber     String   @db.VarChar(128)
+    unread          Boolean  @default(true)
+    notification    Boolean  @default(false)
+    joinedAt        DateTime @default(now()) @db.Timestamp(0)
+    role            String   @db.VarChar(128)
+
+    @@id([user_identifier, conversation_id])
+    @@index([user_identifier], map: "user_identifier")
+    @@index([conversation_id], map: "conversation_id")
 }

@@ -25,8 +25,8 @@ export class AdminMenuEventProvider {
     private nuiDispatch: NuiDispatch;
 
     @OnNuiEvent(NuiEvent.AdminMenuEventStart)
-    public async startEvent({ eventId }: { eventId: number }): Promise<EventInfo> {
-        return await emitRpc<EventInfo>(RpcServerEvent.WORLD_EVENT_START, eventId);
+    public async startEvent({ eventId }: { eventId: number }): Promise<EventInfo | null> {
+        return await emitRpc<EventInfo | null>(RpcServerEvent.WORLD_EVENT_START, eventId);
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuEventStop)
@@ -175,5 +175,20 @@ export class AdminMenuEventProvider {
         }
 
         TriggerServerEvent(ServerEvent.ADMIN_EVENT_SET_REWARD_MAX, eventId, itemId, max);
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuEventSetStartSound)
+    public async setStartSound({ eventId, sound }: { eventId: string; sound: string | null }): Promise<void> {
+        const startSound = await this.input.askInput<string>({
+            title: 'Son de début',
+            maxCharacters: 255,
+            defaultValue: sound,
+        });
+
+        if (startSound === null) {
+            return;
+        }
+
+        TriggerServerEvent(ServerEvent.ADMIN_EVENT_SET_START_SOUND, eventId, startSound === '' ? null : startSound);
     }
 }

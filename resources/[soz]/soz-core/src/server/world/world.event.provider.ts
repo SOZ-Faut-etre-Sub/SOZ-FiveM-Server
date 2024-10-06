@@ -1,16 +1,17 @@
 import PCancelable from 'p-cancelable';
 
-import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
+import { OnEvent } from '../../core/decorators/event';
 import { Get, Post } from '../../core/decorators/http';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
+import { Tick, TickInterval } from '../../core/decorators/tick';
 import { Request } from '../../core/http/request';
 import { Response } from '../../core/http/response';
 import { wait } from '../../core/utils';
-import { getOffsetForTimeZone } from '../../shared/date';
 import { ClientEvent } from '../../shared/event/client';
 import { ServerEvent } from '../../shared/event/server';
+import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { getRandomInt, getRandomItem } from '../../shared/random';
 import { RpcServerEvent } from '../../shared/rpc';
 import { EventInfo, Scene, WorldEvent } from '../../shared/scene';
@@ -20,11 +21,12 @@ import { Notifier } from '../notifier';
 import { SceneRepository } from '../repository/scene.repository';
 import { WorldEventRepository } from '../repository/world.event.repository';
 import { SceneProvider } from '../scene/scene.provider';
+import { ServerStateService } from '../server.state.service';
+import { SoundService } from '../sound/sound.service';
 
 type CurrentEvent = {
     event: WorldEvent;
     scene: Scene;
-    endTimestamp: number;
     cancelable?: PCancelable<boolean>;
 };
 
@@ -48,9 +50,13 @@ export class WorldEventProvider {
     @Inject(ItemService)
     private readonly itemService: ItemService;
 
-    private currentEvent: CurrentEvent = null;
+    @Inject(SoundService)
+    private readonly soundService: SoundService;
 
-    private eventLaunchTimestamp: number = null;
+    @Inject(ServerStateService)
+    private serverStateService: ServerStateService;
+
+    private currentEvent: CurrentEvent = null;
 
     @Rpc(RpcServerEvent.WORLD_EVENT_START)
     public async onStartWorldEvent(source: number, eventId: string): Promise<EventInfo> {
@@ -66,10 +72,13 @@ export class WorldEventProvider {
 
         await this.startEvent(event, null, source);
 
+        if (!this.currentEvent) {
+            return null;
+        }
+
         return {
             currentEventId: this.currentEvent.event.id,
             currentSceneId: this.currentEvent.scene.id,
-            endEventTimestamp: Date.now() + 3600 * 1000,
         };
     }
 
@@ -82,20 +91,77 @@ export class WorldEventProvider {
         }
     }
 
+    @OnEvent(ServerEvent.WORLD_EVENT_SIGNAL_INVENTORY)
+    public async onSignalInventory(source: number, inventoryId: string) {
+        if (!this.currentEvent) {
+            return;
+        }
+
+        const objects = Object.values(this.currentEvent.scene.entities);
+
+        for (const object of objects) {
+            if (object.inventoryId === inventoryId) {
+                this.notifier.notify(source, `Le contenu a été signalé`);
+                this.inventoryManager.clearInv(object.inventoryId);
+
+                return;
+            }
+        }
+    }
+
+    @Tick(TickInterval.EVERY_MINUTE)
+    public async checkEventToStop() {
+        if (!this.currentEvent) {
+            return;
+        }
+
+        const eventPosition = Object.values(this.currentEvent.scene.entities)[0]?.object.position;
+
+        if (!eventPosition) {
+            return;
+        }
+
+        const players = this.serverStateService.getPlayers();
+        let hasPlayerNearby = false;
+
+        for (const player of players) {
+            const ped = GetPlayerPed(player.source);
+            const playerPosition = GetEntityCoords(ped) as Vector3;
+
+            if (getDistance(eventPosition, playerPosition) < 500) {
+                hasPlayerNearby = true;
+            }
+        }
+
+        if (hasPlayerNearby) {
+            return;
+        }
+
+        // check inventory are empty
+        const objects = Object.values(this.currentEvent.scene.entities);
+
+        for (const object of objects) {
+            if (object.inventoryId && this.inventoryManager.getAllItems(object.inventoryId).length > 0) {
+                return;
+            }
+        }
+
+        // no player nearby and all inventories are empty
+        await this.stopCurrentEvent();
+    }
+
     @Rpc(RpcServerEvent.WORLD_EVENT_GET_INFO)
     public getEventInfo(): EventInfo {
         if (!this.currentEvent) {
             return {
                 currentEventId: null,
                 currentSceneId: null,
-                endEventTimestamp: null,
             };
         }
 
         return {
             currentEventId: this.currentEvent.event.id,
             currentSceneId: this.currentEvent.scene.id,
-            endEventTimestamp: Date.now() + 3600 * 1000,
         };
     }
 
@@ -141,22 +207,6 @@ export class WorldEventProvider {
         return Response.json(this.currentEvent);
     }
 
-    public async startRandomEvent() {
-        if (this.currentEvent) {
-            return;
-        }
-
-        const events = await this.worldEventRepository.get();
-
-        if (events.length === 0) {
-            return;
-        }
-
-        const event = getRandomItem(events);
-
-        await this.startEvent(event);
-    }
-
     private async startEvent(event: WorldEvent, sceneId?: string, source?: number) {
         const scenes = await this.sceneRepository.get(scene => {
             return scene.worldEventId === event.id && scene.persistent === true;
@@ -190,6 +240,10 @@ export class WorldEventProvider {
 
         for (const reward of event.reward) {
             for (const inventoryId of inventories) {
+                if (this.inventoryManager.getWeight(inventoryId) > 250_000) {
+                    break;
+                }
+
                 const shouldAddItem = Math.random() * 100 <= reward.chance;
 
                 if (!shouldAddItem) {
@@ -216,10 +270,15 @@ export class WorldEventProvider {
         // Event for 1 hour
         const eventDuration = 3600 * 1000;
 
-        this.currentEvent = { event, scene, endTimestamp: Date.now() + eventDuration };
+        this.currentEvent = { event, scene };
+        const firstEntityPosition = Object.values(scene.entities)[0]?.object.position;
 
-        TriggerClientEvent(ClientEvent.WORLD_EVENT_START, -1, event.id, scene.id);
+        TriggerClientEvent(ClientEvent.WORLD_EVENT_START, -1, event.id, scene.id, firstEntityPosition);
         this.sceneProvider.loadScene(scene.id);
+
+        if (firstEntityPosition && event.startSound) {
+            this.soundService.playAtPosition(event.startSound, firstEntityPosition, 1000, 1.0);
+        }
 
         if (source) {
             this.notifier.notify(source, `La scène ${scene.name} pour l'event ${event.name} a été lancée avec succès`);

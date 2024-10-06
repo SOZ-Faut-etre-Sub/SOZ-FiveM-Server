@@ -87,9 +87,25 @@ export const EventSubMenu: FunctionComponent<EventSubMenuProps> = ({ banner, eve
                                 ➕ Ajouter une scène
                             </MenuItemButton>
                             <MenuItemButton
-                                onConfirm={async () =>
-                                    setEventInfo(await fetchNui(NuiEvent.AdminMenuEventStart, { eventId: event.id }))
+                                onConfirm={() =>
+                                    fetchNui(NuiEvent.AdminMenuEventSetStartSound, {
+                                        eventId: event.id,
+                                        sound: event.startSound,
+                                    })
                                 }
+                            >
+                                ➕ Son de début d'évenement
+                            </MenuItemButton>
+                            <MenuItemButton
+                                onConfirm={async () => {
+                                    const eventInfo = await fetchNui(NuiEvent.AdminMenuEventStart, {
+                                        eventId: event.id,
+                                    });
+
+                                    if (eventInfo) {
+                                        setEventInfo(eventInfo as EventInfo);
+                                    }
+                                }}
                             >
                                 🟢 Lancer l'évenement
                             </MenuItemButton>

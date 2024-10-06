@@ -3,12 +3,12 @@ import { WorldObject } from './object';
 export type EventInfo = {
     currentEventId: string | null;
     currentSceneId: string | null;
-    endEventTimestamp: number | null;
 };
 
 export type WorldEvent = {
     id: string;
     name: string;
+    startSound: string | null;
     reward: RewardWorldEvent[];
 };
 

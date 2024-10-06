@@ -124,6 +124,7 @@ export enum NuiEvent {
     AdminMenuEventRemoveReward = 'soz-core:nui:admin:event:remove-reward',
     AdminMenuEventStop = 'soz-core:nui:admin:event:stop',
     AdminMenuEventStart = 'soz-core:nui:admin:event:start',
+    AdminMenuEventSetStartSound = 'soz-core:nui:admin:event:set-start-sound',
 
     GetAPIConfig = 'soz-core:nui:get-api-config',
     GetJWTToken = 'soz-core:nui:get-jwt-token',

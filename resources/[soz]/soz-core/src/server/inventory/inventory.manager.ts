@@ -129,6 +129,10 @@ export class InventoryManager {
         return this.sozInventory.CalculateAvailableWeight(inv);
     }
 
+    public getWeight(inv: string): number {
+        return this.sozInventory.CalculateWeight(this.getAllItems(inv));
+    }
+
     public findItem(source: number, predicate: (item: InventoryItem) => boolean): InventoryItem | null {
         const items = this.playerService.getPlayer(source).items;
 
