@@ -43,6 +43,8 @@ export class VehicleRadarProvider {
     @Inject(VehicleStateService)
     vehicleStateService: VehicleStateService;
 
+    private disabledEndTimes: Record<number, number> = {};
+
     @OnEvent(ClientEvent.VEHICLE_RADAR_TRIGGER)
     public async radarTrigger(
         source: number,
@@ -67,6 +69,10 @@ export class VehicleRadarProvider {
         }
 
         if (radar.destroyed) {
+            return;
+        }
+
+        if (this.disabledEndTimes[radarID] && this.disabledEndTimes[radarID] > Date.now()) {
             return;
         }
 
@@ -207,6 +213,12 @@ export class VehicleRadarProvider {
                     return false;
                 }
             );
+        }
+    }
+
+    public setDisbledTime(radarId: number, time: number) {
+        if (!this.disabledEndTimes[radarId] || this.disabledEndTimes[radarId] < time) {
+            this.disabledEndTimes[radarId] = time;
         }
     }
 }

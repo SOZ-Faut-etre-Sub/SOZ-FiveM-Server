@@ -592,6 +592,7 @@ export enum ServerEvent {
 
     GANG_CYBER_HACK_VEHICLE = 'soz-core:server:gang:cyber:hack-vehicle',
     GANG_CYBER_HACK_PED = 'soz-core:server:gang:cyber:hack-ped',
+    GANG_CYBER_HACK_RADAR = 'soz-core:server:gang:cyber:hack-radar',
     GANG_CYBER_JAMMER_USE = 'soz-core:server:gang:cyber:jammer-use',
     GANG_CYBER_TRACKER_SETUP = 'soz-core:server:gang:cyber:tracker-setup',
     GANG_CYBER_RETRIEVE_DRONE = 'soz-core:server:gang:cyber:drone-retieve',
