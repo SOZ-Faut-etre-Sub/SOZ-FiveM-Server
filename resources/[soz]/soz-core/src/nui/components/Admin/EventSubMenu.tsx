@@ -49,9 +49,6 @@ export const EventSubMenu: FunctionComponent<EventSubMenuProps> = ({ banner, eve
                                 <div>
                                     <div>Evenement: {currentEvent.name}</div>
                                     <div>Scène: {currentScene.name}</div>
-                                    <div>
-                                        Date de fin {new Date(eventInfo.endEventTimestamp).toLocaleString('fr-FR')}
-                                    </div>
                                 </div>
                             }
                             onConfirm={() => {
@@ -59,7 +56,6 @@ export const EventSubMenu: FunctionComponent<EventSubMenuProps> = ({ banner, eve
                                 setEventInfo({
                                     currentEventId: null,
                                     currentSceneId: null,
-                                    endEventTimestamp: null,
                                 });
                             }}
                         >
