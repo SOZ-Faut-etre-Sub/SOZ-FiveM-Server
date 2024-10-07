@@ -283,6 +283,7 @@ export class VehicleStateService {
             position,
         });
 
+        SetEntityOrphanMode(NetworkGetEntityFromNetworkId(netId), 2);
         TriggerClientEvent(ClientEvent.VEHICLE_CONDITION_REGISTER, owner, netId, condition, configuration, false);
     }
 
