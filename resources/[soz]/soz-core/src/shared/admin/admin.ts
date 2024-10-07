@@ -1,4 +1,5 @@
 import { SozRole } from '@core/permissions';
+import { VampireGameCollection, VampireGameRole } from '@public/shared/halloween';
 import { PlayerCharInfo } from '@public/shared/player';
 import { EventInfo } from '@public/shared/scene';
 import { SenateParty, SenatePartyMember } from '@public/shared/senate';
@@ -83,6 +84,12 @@ export type MeteorSubMenuState = {
     sandstormmusic: number;
 };
 
+export type HalloweenSubMenuState = {
+    started: boolean;
+    roleMaxNumber: Record<VampireGameRole, number>;
+    mortalObjective: Record<VampireGameCollection, number>;
+};
+
 export type AdminMenuData = {
     banner: string;
     permission: SozRole;
@@ -96,6 +103,7 @@ export type AdminMenuData = {
         developer: DeveloperSubMenuState;
         vehicule: VehicleSubMenuState;
         meteor: MeteorSubMenuState;
+        halloween: HalloweenSubMenuState;
     };
 };
 

@@ -1,8 +1,11 @@
 import { EventSubMenu } from '@public/nui/components/Admin/EventSubMenu';
+import { HalloweenSubMenu } from '@public/nui/components/Admin/HalloweenSubMenu';
+import { RootState } from '@public/nui/store';
+import { AdminMenuData } from '@public/shared/admin/admin';
+import { MenuType } from '@public/shared/nui/menu';
 import { FunctionComponent } from 'react';
+import { useSelector } from 'react-redux';
 
-import { AdminMenuData } from '../../../shared/admin/admin';
-import { MenuType } from '../../../shared/nui/menu';
 import { MainMenu, Menu, MenuContent, MenuItemSubMenuLink, MenuTitle } from '../Styleguide/Menu';
 import { CharacterSubMenu } from './CharacterSubMenu';
 import { DeveloperSubMenu } from './DeveloperSubMenu';
@@ -19,6 +22,8 @@ export type AdminMenuStateProps = {
 };
 
 export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
+    const isHalloween = useSelector((state: RootState) => state.features.Halloween);
+
     if (!data || !data.state) {
         return null;
     }
@@ -52,6 +57,11 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
                     <MenuItemSubMenuLink disabled={!isStaffOrAdminOrGM} id="event">
                         📅 Gestion des evenements HC
                     </MenuItemSubMenuLink>
+                    {isHalloween && (
+                        <MenuItemSubMenuLink disabled={!isStaffOrAdmin} id="halloween">
+                            🎃 Halloween
+                        </MenuItemSubMenuLink>
+                    )}
                     <MenuItemSubMenuLink id="developer">🛠 Outils pour développeur</MenuItemSubMenuLink>
                 </MenuContent>
             </MainMenu>
@@ -65,6 +75,7 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
             <EventSubMenu banner={data.banner} event={data.event} />
             <CharacterSubMenu banner={data.banner} characters={data.characters} />
             <MeteorSubMenu banner={data.banner} state={data.state.meteor} />
+            {isHalloween && <HalloweenSubMenu banner={data.banner} state={data.state.halloween} />}
         </Menu>
     );
 };

@@ -122,7 +122,7 @@ export class LSMCProvider {
             scale: 1.01,
         });
 
-        this.blipFactory.create('LSMC', {
+        this.blipFactory.create('LSMC2', {
             name: 'Los Santos Medical Center',
             coords: { x: 1828.51, y: 3673.4, z: 34.28 },
             sprite: 61,

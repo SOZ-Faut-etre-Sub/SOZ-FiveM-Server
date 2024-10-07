@@ -3,6 +3,7 @@ import { AdminMenuCharacterProvider } from './admin.menu.character.provider';
 import { AdminMenuDeveloperProvider } from './admin.menu.developer.provider';
 import { AdminMenuEventProvider } from './admin.menu.event.provider';
 import { AdminMenuGameMasterProvider } from './admin.menu.game-master.provider';
+import { AdminMenuHalloweenProvider } from './admin.menu.halloween.provider';
 import { AdminMenuInteractiveProvider } from './admin.menu.interactive.provider';
 import { AdminMenuJobProvider } from './admin.menu.job.provider';
 import { AdminMenuMapperProvider } from './admin.menu.mapper.provider';
@@ -29,6 +30,7 @@ import { AdminZoneProvider } from './admin.zone.provider';
         AdminMenuVehicleProvider,
         AdminSpectateProvider,
         AdminMenuMeteorProvider,
+        AdminMenuHalloweenProvider,
         AdminZoneProvider,
     ],
 })

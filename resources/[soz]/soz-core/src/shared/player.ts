@@ -2,6 +2,7 @@ import { SozRole } from '@core/permissions';
 import { DrugSkill } from '@private/shared/drugs';
 import { Talent } from '@private/shared/talent';
 import { BankMoneyType } from '@public/shared/bank';
+import { VampireGameRole } from '@public/shared/halloween';
 import { ApartementTiers } from '@public/shared/housing/housing';
 import { SenatePartyMember } from '@public/shared/senate';
 
@@ -234,6 +235,7 @@ export type PlayerClientState = {
     isWearingPatientOutfit: boolean;
     isLooted: boolean;
     carryBox: boolean;
+    halloweenRole: VampireGameRole | null;
 };
 
 export enum PlayerLicenceType {

@@ -125,6 +125,15 @@ export class PlayerStateService {
         return this.clientStateByCitizenId[player.citizenid];
     }
 
+    public setAllClientsState(state: Partial<PlayerClientState>) {
+        for (const citizenId in this.clientStateByCitizenId) {
+            this.clientStateByCitizenId[citizenId] = {
+                ...this.clientStateByCitizenId[citizenId],
+                ...state,
+            };
+        }
+    }
+
     private getDefaultPlayerServerState(): PlayerServerState {
         return {
             exercise: { chinUp: false, pushUp: false, sitUp: false, freeWeight: false, completed: 0 },
@@ -157,6 +166,7 @@ export class PlayerStateService {
             isLooted: false,
             isZipped: false,
             carryBox: false,
+            halloweenRole: null,
         };
     }
 

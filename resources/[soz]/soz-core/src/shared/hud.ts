@@ -86,6 +86,9 @@ export type HudState = {
     ammo: HudWeaponAmmo;
     dateTime: HudDateTime;
     minimap: Minimap;
+    halloween: {
+        moon: boolean;
+    };
 };
 
 export enum Font {
