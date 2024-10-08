@@ -6,7 +6,7 @@ import { VehicleStateService } from '@public/client/vehicle/vehicle.state.servic
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
-import { waitUntil } from '@public/core/utils';
+import { wait, waitUntil } from '@public/core/utils';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { Control } from '@public/shared/input';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
@@ -89,21 +89,27 @@ export class VehiclePushProvider {
                         }
 
                         const ped = PlayerPedId();
-                        ClearPedTasksImmediately(ped);
 
                         const [min, max] = GetModelDimensions(GetEntityModel(vehicle)) as [Vector3, Vector3];
                         const position = this.getClosestPedCarPosition(ped, vehicle, min, max);
-                        const attached = await this.attachPedToVehicle(vehicle, position);
-
-                        if (!attached || !position) {
-                            return;
-                        }
 
                         this.isAttaching = true;
                         this.attachedVeh = vehicle;
                         this.attachedPosition = position;
+                        await wait(1);
+
+                        const attached = await this.attachPedToVehicle(vehicle, position);
+                        if (!attached || !position) {
+                            this.isAttaching = false;
+                            this.attachedVeh = null;
+                            this.attachedPosition = null;
+                            return;
+                        }
 
                         const [x, y, z, rotZ] = this.boneToAnimation[position].getPos(min, vehicle);
+
+                        ClearPedTasksImmediately(ped);
+                        await wait(0);
                         AttachEntityToEntity(
                             ped,
                             vehicle,
@@ -134,7 +140,7 @@ export class VehiclePushProvider {
 
     @Tick(TickInterval.EVERY_FRAME)
     public async handleTriggerVehicleActions() {
-        if (!this.attachedVeh && !this.attachedPosition) {
+        if (!this.attachedVeh && !this.attachedPosition && !this.isAttaching) {
             return;
         }
 
@@ -383,6 +389,8 @@ export class VehiclePushProvider {
     }
 
     private async runHoldAnimation(ped: number) {
+        if (!this.attachedPosition) return;
+
         ClearPedTasks(ped);
         await this.resourceLoader.loadAnimationDictionary(this.animDict);
         TaskPlayAnimAdvanced(
@@ -407,6 +415,8 @@ export class VehiclePushProvider {
     }
 
     private async runPushAnimation(ped: number) {
+        if (!this.attachedPosition) return;
+
         ClearPedTasks(ped);
         await this.resourceLoader.loadAnimationDictionary(this.animDict);
         TaskPlayAnim(
@@ -426,6 +436,8 @@ export class VehiclePushProvider {
     }
 
     private isPlayingAnim(ped: number): boolean {
+        if (!this.attachedPosition) return false;
+
         return IsEntityPlayingAnim(ped, this.animDict, this.boneToAnimation[this.attachedPosition].anim, 3);
     }
 
