@@ -446,17 +446,15 @@ export class SceneProvider {
             const targets: TargetOption[] = [];
 
             if (entity.inventoryId) {
-                if (player.gang.id) {
-                    targets.push({
-                        label: 'Ouvrir',
-                        icon: 'inventory/ouvrir_le_stockage',
-                        category: 'criminal',
-                        canInteract: () => true,
-                        action: () => {
-                            this.inventoryManager.openInventory('object_storage', entity.inventoryId);
-                        },
-                    });
-                }
+                targets.push({
+                    label: 'Ouvrir',
+                    icon: 'inventory/ouvrir_le_stockage',
+                    category: 'criminal',
+                    canInteract: () => true,
+                    action: () => {
+                        this.inventoryManager.openInventory('object_storage', entity.inventoryId);
+                    },
+                });
 
                 if (FDO.includes(player.job.id)) {
                     targets.push({
