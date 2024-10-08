@@ -516,7 +516,7 @@ export const VehicleTypeFromClass: Record<VehicleClass, VehicleType> = {
     [VehicleClass.OpenWheel]: VehicleType.OpenWheel,
 };
 
-export const LockPickAlertChance = 0.5;
+export const LockPickAlertChance = 0.1;
 
 export const LockPickAlertMessage = {
     all: [
