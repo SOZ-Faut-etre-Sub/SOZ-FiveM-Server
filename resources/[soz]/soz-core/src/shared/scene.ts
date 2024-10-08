@@ -3,6 +3,7 @@ import { WorldObject } from './object';
 export type EventInfo = {
     currentEventId: string | null;
     currentSceneId: string | null;
+    startTimestamp: number;
 };
 
 export type WorldEvent = {
