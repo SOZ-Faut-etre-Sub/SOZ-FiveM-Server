@@ -3,6 +3,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { RepositoryDelete, RepositoryInsert, RepositoryUpdate } from '../../core/decorators/repository';
 import { emitRpc } from '../../core/rpc';
+import { uuidv4 } from '../../core/utils';
 import { ClientEvent } from '../../shared/event/client';
 import { NuiEvent } from '../../shared/event/nui';
 import { ServerEvent } from '../../shared/event/server';
@@ -382,7 +383,7 @@ export class SceneProvider {
             {
                 title: "ID de l'inventaire",
                 maxCharacters: 50,
-                defaultValue: entity.inventoryId || '',
+                defaultValue: entity.inventoryId || uuidv4(),
             },
             NotEmptyStringValidator
         );
