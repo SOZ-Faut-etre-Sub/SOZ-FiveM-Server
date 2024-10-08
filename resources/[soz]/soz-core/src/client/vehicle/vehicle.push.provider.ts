@@ -152,6 +152,7 @@ export class VehiclePushProvider {
         EnableControlAction(0, Control.LookDownOnly, true);
         EnableControlAction(0, Control.LookLeftOnly, true);
         EnableControlAction(0, Control.LookRightOnly, true);
+        EnableControlAction(0, Control.PushToTalk, true);
 
         if (this.isAttaching) {
             return;
