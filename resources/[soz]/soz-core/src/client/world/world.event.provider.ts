@@ -49,4 +49,9 @@ export class WorldEventProvider {
             });
         }
     }
+
+    @OnEvent(ClientEvent.WORLD_EVENT_END)
+    public async onStopWorldEvent() {
+        this.blipFactory.remove('world_event');
+    }
 }
