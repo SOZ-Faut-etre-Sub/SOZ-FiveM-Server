@@ -89,7 +89,6 @@ export class AdminSpectateProvider {
 
     private async terminateSpectate() {
         FreezeEntityPosition(PlayerPedId(), false);
-        await this.voipService.mutePlayer(false);
     }
 
     @Command('admin_swap_spectate_cam', {

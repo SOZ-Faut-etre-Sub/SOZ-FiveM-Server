@@ -528,18 +528,24 @@ export const PushableVehicleClass: Record<VehicleClass, boolean> = {
     [VehicleClass.Motorcycles]: false,
     [VehicleClass.OffRoad]: true,
     [VehicleClass.Industrial]: false,
-    [VehicleClass.Utility]: true,
+    [VehicleClass.Utility]: false,
     [VehicleClass.Vans]: true,
     [VehicleClass.Cycles]: false,
     [VehicleClass.Boats]: false,
     [VehicleClass.Helicopters]: false,
     [VehicleClass.Planes]: false,
-    [VehicleClass.Service]: true,
+    [VehicleClass.Service]: false,
     [VehicleClass.Emergency]: true,
     [VehicleClass.Military]: false,
     [VehicleClass.Commercial]: false,
     [VehicleClass.Trains]: false,
     [VehicleClass.OpenWheel]: false,
+};
+
+export const NotPushableVehicleModel: Record<string, boolean> = {
+    firetruk: true,
+    brickade: true,
+    brickade1: true,
 };
 
 export const LockPickAlertChance = 0.1;

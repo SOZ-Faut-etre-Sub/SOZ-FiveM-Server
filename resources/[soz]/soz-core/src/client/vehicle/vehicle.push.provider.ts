@@ -2,6 +2,7 @@ import { Once, OnceStep, OnEvent } from '@core/decorators/event';
 import { emitRpc } from '@core/rpc';
 import { ResourceLoader } from '@public/client/repository/resource.loader';
 import { TargetFactory } from '@public/client/target/target.factory';
+import { VehicleFuelProvider } from '@public/client/vehicle/vehicle.fuel.provider';
 import { VehicleStateService } from '@public/client/vehicle/vehicle.state.service';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
@@ -11,7 +12,7 @@ import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { Control } from '@public/shared/input';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
-import { PushableVehicleClass } from '@public/shared/vehicle/vehicle';
+import { NotPushableVehicleModel, PushableVehicleClass } from '@public/shared/vehicle/vehicle';
 
 @Provider()
 export class VehiclePushProvider {
@@ -23,6 +24,9 @@ export class VehiclePushProvider {
 
     @Inject(ResourceLoader)
     private resourceLoader: ResourceLoader;
+
+    @Inject(VehicleFuelProvider)
+    private vehicleFuelProvider: VehicleFuelProvider;
 
     private animDict = 'missfinale_c2ig_11';
     private boneToAnimation = {
@@ -341,13 +345,23 @@ export class VehiclePushProvider {
             return true;
         }
 
-        const model = GetEntityModel(vehicle);
-        if (IsThisModelAQuadbike(model)) {
+        const currentModel = GetEntityModel(vehicle);
+        for (const model of Object.keys(NotPushableVehicleModel)) {
+            if (currentModel == GetHashKey(model)) {
+                return true;
+            }
+        }
+
+        if (IsThisModelAQuadbike(currentModel)) {
             return true;
         }
 
         const vehicleState = await this.vehicleStateService.getServerVehicleState(vehicle);
-        return this.isVehicleCurrentlyNotPushable(vehicle) || !(vehicleState.open || vehicleState.forced);
+        return (
+            this.isVehicleCurrentlyNotPushable(vehicle) ||
+            !(vehicleState.open || vehicleState.forced) ||
+            Boolean(this.vehicleFuelProvider.currentStationPistol?.entity)
+        );
     }
 
     private isVehicleCurrentlyNotPushable(vehicle: number): boolean {
