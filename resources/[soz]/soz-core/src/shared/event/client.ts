@@ -266,6 +266,7 @@ export enum ClientEvent {
     POLICE_SET_PRISONER_CLOTHES = 'soz-core:client:police:SetPrisonerClothes',
     POLICE_SETUP_ARMOR = 'soz-core:client:police:setup-armor',
     POLICE_SETUP_ARMOR_PLATE = 'soz-core:client:police:setup-armor-plate',
+    POLICE_SETUP_MAX_ARMOR_PLATE = 'soz-core:client:police:setup-max-armor-plate',
     POLICE_MOBILE_RADAR = 'soz-core:client:police:mobile-radar',
     POLICE_BREATHANALYZER_TARGET = 'soz-core:client:police:breathanalyzer-target',
     POLICE_HANDCUFF_ANIMATION = 'soz-core:client:police:handcuff-animation',

@@ -300,4 +300,6 @@ export enum RpcClientEvent {
     GANG_SMUGGLING_CHECK_ZONE = 'soz-core:rpc:client:gang:smuggling:check-zone',
     BATTERY_IS_RELOADING = 'soz-core:rpc:client:battery:i-reloading',
     GET_NB_ARMOR_PLATES = 'soz-core:rpc:client:get-armor-plates',
+    GET_MAX_NB_ARMOR_PLATES = 'soz-core:rpc:client:get-max-armor-plates',
+    SET_MAX_NB_ARMOR_PLATES = 'soz-core:rpc:client:set-max-armor-plates',
 }

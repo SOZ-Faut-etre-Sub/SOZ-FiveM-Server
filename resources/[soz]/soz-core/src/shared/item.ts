@@ -51,6 +51,7 @@ type BaseItem = {
     unique: boolean;
     useable: boolean;
     carrybox: string;
+    maxplates?: number;
 };
 
 export type Nutrition = {

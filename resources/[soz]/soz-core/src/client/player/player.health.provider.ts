@@ -364,12 +364,17 @@ export class PlayerHealthProvider {
     }
 
     @OnEvent(ClientEvent.POLICE_SETUP_ARMOR_PLATE)
-    public setupArmorPlates() {
+    public setupArmorPlates(nbPlates?: number) {
         const armorPlates = this.playerService.getNbArmorPlates();
-        this.playerService.setNbArmorPlates(armorPlates + 1);
+        this.playerService.setNbArmorPlates(armorPlates + (nbPlates || 1));
         SetPlayerWeaponDefenseModifier(PlayerId(), 0.1);
         SetPlayerWeaponDefenseModifier_2(PlayerId(), 0.1);
         console.log(GetPlayerWeaponDamageModifier(PlayerId()));
+    }
+
+    @OnEvent(ClientEvent.POLICE_SETUP_MAX_ARMOR_PLATE)
+    public setupMaxArmorPlates(nbPlates?: number) {
+        this.playerService.setMaxNbArmorPlates(nbPlates);
     }
 
     @PlayerUpdate()
@@ -382,6 +387,11 @@ export class PlayerHealthProvider {
     @Rpc(RpcClientEvent.GET_NB_ARMOR_PLATES)
     public getClientNbArmorPlates() {
         return this.playerService.getNbArmorPlates();
+    }
+
+    @Rpc(RpcClientEvent.GET_MAX_NB_ARMOR_PLATES)
+    public getClientMaxNbArmorPlates() {
+        return this.playerService.getMaxNbArmorPlates();
     }
 
     public setNutritionDisabled(value: boolean) {

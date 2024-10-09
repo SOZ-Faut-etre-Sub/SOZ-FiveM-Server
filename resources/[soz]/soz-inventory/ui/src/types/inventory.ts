@@ -40,6 +40,7 @@ export type InventoryItem = {
     canShow?: boolean;
     throwable?: boolean;
     notSearchable?: boolean;
+    maxplates?: number;
 };
 
 export type ItemType =

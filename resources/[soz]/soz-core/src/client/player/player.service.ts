@@ -21,6 +21,7 @@ export class PlayerService {
     private deguisement = false;
     private pushing = false;
     public nbArmorPlates = 0;
+    public maxArmorPlates = 0;
 
     setNbArmorPlates(plates: number) {
         this.nbArmorPlates = plates;
@@ -29,6 +30,14 @@ export class PlayerService {
 
     getNbArmorPlates() {
         return this.nbArmorPlates;
+    }
+
+    setMaxNbArmorPlates(plates: number) {
+        this.maxArmorPlates = plates;
+    }
+
+    getMaxNbArmorPlates() {
+        return this.maxArmorPlates;
     }
 
     private state: PlayerClientState = {

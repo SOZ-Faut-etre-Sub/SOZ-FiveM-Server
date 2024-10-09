@@ -87,7 +87,9 @@ export class PoliceProvider {
         }
 
         if (this.inventoryManager.removeInventoryItem(source, item)) {
+            const itemDef = this.itemService.getItem(item.name);
             this.playerService.setPlayerMetadata(source, 'armor', { current: 100, hidden: true });
+            TriggerClientEvent(ClientEvent.POLICE_SETUP_MAX_ARMOR_PLATE, source, itemDef.maxplates);
             TriggerClientEvent(ClientEvent.POLICE_SETUP_ARMOR, source, armorType, item.metadata?.plates);
         }
 
@@ -97,6 +99,7 @@ export class PoliceProvider {
     public async useArmorPlate(source: number, unused: Item, item: InventoryItem) {
         const player = this.playerService.getPlayer(source);
         const nbArmorPlates = await emitClientRpc<number>(RpcClientEvent.GET_NB_ARMOR_PLATES, source);
+        const maxArmorPlates = await emitClientRpc<number>(RpcClientEvent.GET_MAX_NB_ARMOR_PLATES, source);
         if (!player) {
             return;
         }
@@ -106,7 +109,7 @@ export class PoliceProvider {
             return;
         }
 
-        if (nbArmorPlates >= 3) {
+        if (nbArmorPlates >= maxArmorPlates) {
             this.notifier.notify(
                 source,
                 `Vous ne pouvez pas rajouter plus de plaque balistique sur ce gilet.`,
@@ -119,7 +122,7 @@ export class PoliceProvider {
             source,
             'switch_clothes',
             "Équipement d'une plaque balistique ...",
-            5000,
+            500,
             {
                 name: 'male_shower_towel_dry_to_get_dressed',
                 dictionary: 'anim@mp_yacht@shower@male@',
@@ -159,7 +162,11 @@ export class PoliceProvider {
         }
 
         if (item.name == 'heavy_antiriot_outfit' || item.name == 'light_intervention_outfit') {
+            const itemDef = this.itemService.getItem(item.name);
             this.playerService.setPlayerMetadata(source, 'armor', { current: 100, hidden: true });
+            TriggerClientEvent(ClientEvent.POLICE_SETUP_MAX_ARMOR_PLATE, source, itemDef.maxplates);
+            item?.metadata?.plates &&
+                TriggerClientEvent(ClientEvent.POLICE_SETUP_ARMOR_PLATE, source, item?.metadata?.plates);
         }
 
         if (item.metadata['type'] == 'lspd' || item.metadata['type'] == 'bcso') {
