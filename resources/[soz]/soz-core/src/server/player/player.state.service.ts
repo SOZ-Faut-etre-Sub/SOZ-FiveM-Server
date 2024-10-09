@@ -13,12 +13,22 @@ export class PlayerStateService {
     @Inject(PlayerListStateService)
     private playerListStateService: PlayerListStateService;
 
+    private resetStateHour = new Date().setHours(6, 0, 0, 0);
+
     private serverStateByCitizenId: Record<string, PlayerServerState> = {};
 
     private clientStateByCitizenId: Record<string, PlayerClientState> = {};
 
-    public getServerStateByCitizenId(citizenId: string) {
+    public getServerStateByCitizenId(citizenId: string, playerState?: PlayerServerState) {
         if (!this.serverStateByCitizenId[citizenId]) {
+            this.serverStateByCitizenId[citizenId] = playerState ?? this.getDefaultPlayerServerState();
+        }
+
+        if (
+            this.serverStateByCitizenId[citizenId].lastStrengthUpdate < this.resetStateHour ||
+            this.serverStateByCitizenId[citizenId].lastMaxStaminaUpdate < this.resetStateHour ||
+            this.serverStateByCitizenId[citizenId].lastStressLevelUpdate < this.resetStateHour
+        ) {
             this.serverStateByCitizenId[citizenId] = this.getDefaultPlayerServerState();
         }
 
@@ -66,7 +76,7 @@ export class PlayerStateService {
             return this.getDefaultPlayerServerState();
         }
 
-        return this.getServerStateByCitizenId(player.citizenid);
+        return this.getServerStateByCitizenId(player.citizenid, player.metadata.gym_state);
     }
 
     public getClientState(source: number): PlayerClientState {
@@ -123,9 +133,9 @@ export class PlayerStateService {
             lostStrength: 0,
             runTime: 0,
             yoga: false,
-            lastStrengthUpdate: new Date(),
-            lastMaxStaminaUpdate: new Date(),
-            lastStressLevelUpdate: new Date(),
+            lastStrengthUpdate: new Date().getTime(),
+            lastMaxStaminaUpdate: new Date().getTime(),
+            lastStressLevelUpdate: new Date().getTime(),
         };
     }
 

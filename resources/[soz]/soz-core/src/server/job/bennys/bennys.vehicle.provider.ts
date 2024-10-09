@@ -1,3 +1,4 @@
+import { VehicleBusinessProvider } from '@private/server/gang/business.vehicle.provider';
 import { InventoryManager } from '@public/server/inventory/inventory.manager';
 
 import { OnEvent } from '../../../core/decorators/event';
@@ -35,6 +36,9 @@ export class BennysVehicleProvider {
 
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
+
+    @Inject(VehicleBusinessProvider)
+    private vehicleBusinessProvider: VehicleBusinessProvider;
 
     @OnEvent(ServerEvent.BENNYS_REPAIR_VEHICLE_ENGINE)
     public async onRepairVehicleEngine(source: number, vehicleNetworkId: number) {
@@ -98,6 +102,8 @@ export class BennysVehicleProvider {
             windowStatus: {},
             dirtLevel: 0,
         });
+
+        this.vehicleBusinessProvider.repairVehicule(vehicleNetworkId);
 
         this.monitor.traceEvent('job_bennys_repair_vehicle', {
             player_source: source,

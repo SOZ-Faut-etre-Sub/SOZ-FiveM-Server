@@ -131,3 +131,42 @@ export const HealthBookLabel: Record<keyof PlayerHealthBook, string> = {
     health_book_sugar: 'Glucides',
     health_book_fiber: 'Fibres',
 };
+
+export enum StressLooseType {
+    VehicleAbove160,
+    VehicleAbove180,
+    VehicleYellowEngine,
+    SeenDead,
+    ShootingNearby,
+    HittingNearby,
+    Dead,
+    Handcuffed,
+    DrinkCoffee,
+    DrinkAlcohol,
+}
+
+export const PointsByStressLooseType: Record<StressLooseType, number> = {
+    [StressLooseType.VehicleAbove160]: 1,
+    [StressLooseType.VehicleAbove180]: 2,
+    [StressLooseType.VehicleYellowEngine]: 3,
+    [StressLooseType.ShootingNearby]: 3,
+    [StressLooseType.HittingNearby]: 2,
+    [StressLooseType.SeenDead]: 2,
+    [StressLooseType.Dead]: 10,
+    [StressLooseType.Handcuffed]: 1,
+    [StressLooseType.DrinkCoffee]: -2,
+    [StressLooseType.DrinkAlcohol]: -6,
+};
+
+export const IntervalByStressLooseType: Record<StressLooseType, number> = {
+    [StressLooseType.VehicleAbove160]: 30,
+    [StressLooseType.VehicleAbove180]: 30,
+    [StressLooseType.VehicleYellowEngine]: 30,
+    [StressLooseType.ShootingNearby]: 30,
+    [StressLooseType.HittingNearby]: 30,
+    [StressLooseType.SeenDead]: 30,
+    [StressLooseType.Dead]: 0,
+    [StressLooseType.Handcuffed]: 0,
+    [StressLooseType.DrinkCoffee]: 30,
+    [StressLooseType.DrinkAlcohol]: 30,
+};

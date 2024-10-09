@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Provider } from '@core/decorators/provider';
 
 @Provider()
@@ -10,11 +11,9 @@ export class VehicleBusinessProvider {
         return false;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public testCrimiGarage(entity: number, notif: boolean): boolean {
         return false;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public async mapping(entity: number, admin: boolean) {}
 }

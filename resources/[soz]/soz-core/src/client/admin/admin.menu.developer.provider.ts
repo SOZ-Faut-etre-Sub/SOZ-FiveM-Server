@@ -16,7 +16,7 @@ import { NuiZoneProvider } from '../nui/nui.zone.provider';
 import { ObjectProvider } from '../object/object.provider';
 import { NoClipProvider } from '../utils/noclip.provider';
 import { VehicleConditionProvider } from '../vehicle/vehicle.condition.provider';
-import { VehicleOffroadProvider } from '../vehicle/vehicule.offroad.provider';
+import { VehicleOffroadProvider } from '../vehicle/vehicle.offroad.provider';
 
 @Provider()
 export class AdminMenuDeveloperProvider {

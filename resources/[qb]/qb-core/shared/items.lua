@@ -3439,7 +3439,7 @@ QBShared.Items = {
         ["type"] = "item",
         ["image"] = "Trousse de soin.png",
         ["unique"] = false,
-        ["useable"] = true,
+        ["useable"] = false,
         ["shouldClose"] = true,
         ["combinable"] = nil,
         ["description"] = "Pour remettre les gens sur pied.",
@@ -10113,7 +10113,7 @@ QBShared.Items = {
     },
     ["smuggling_zigarico_cigar"] = {
         ["name"] = "smuggling_zigarico_cigar",
-        ["label"] = "Cigar Zigarico",
+        ["label"] = "Cigare Zigarico",
         ["weight"] = 500,
         ["useable"] = true,
         ["type"] = "item_illegal",
@@ -10137,7 +10137,7 @@ QBShared.Items = {
     },
     ["smuggling_zigarico_cigar_box"] = {
         ["name"] = "smuggling_zigarico_cigar_box",
-        ["label"] = "Boite de cigars Zigarico",
+        ["label"] = "Boite de cigares Zigarico",
         ["weight"] = 1500,
         ["useable"] = false,
         ["type"] = "smuggling_export",

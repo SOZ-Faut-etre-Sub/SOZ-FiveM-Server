@@ -1,3 +1,4 @@
+import { VehicleBusinessProvider } from '@private/server/gang/business.vehicle.provider';
 import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Monitor } from '@public/server/monitor/monitor';
 import { ServerEvent } from '@public/shared/event';
@@ -40,6 +41,9 @@ export class VehiclePitStopProvider {
 
     @Inject(ServerStateService)
     private serverStateService: ServerStateService;
+
+    @Inject(VehicleBusinessProvider)
+    private vehicleBusinessProvider: VehicleBusinessProvider;
 
     @Inject(Monitor)
     private monitor: Monitor;
@@ -132,6 +136,7 @@ export class VehiclePitStopProvider {
             return;
         }
 
+        this.vehicleBusinessProvider.repairVehicule(vehicleNetworkId);
         this.vehicleStateService.updateVehicleCondition(vehicleNetworkId, {
             engineHealth: 1000,
             bodyHealth: 1000,

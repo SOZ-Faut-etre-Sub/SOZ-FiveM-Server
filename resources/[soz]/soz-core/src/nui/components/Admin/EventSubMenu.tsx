@@ -56,6 +56,7 @@ export const EventSubMenu: FunctionComponent<EventSubMenuProps> = ({ banner, eve
                                 setEventInfo({
                                     currentEventId: null,
                                     currentSceneId: null,
+                                    startTimestamp: null,
                                 });
                             }}
                         >

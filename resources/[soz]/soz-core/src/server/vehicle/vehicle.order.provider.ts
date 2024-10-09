@@ -186,8 +186,12 @@ export class VehicleOrderProvider {
 
             waitTime = VehicleBusinessImportConf.VehicleBusinessImportDuration;
         } else if (mode == VehicleOrderMode.Cartel) {
-            if (!this.playerMoneyService.remove(source, vehiclePrice, 'money')) {
-                this.notifier.notify(source, `Vous n'avez pas assez d'argent.`, 'error');
+            if (!this.playerMoneyService.remove(source, vehiclePrice, 'marked_money')) {
+                this.notifier.notify(
+                    source,
+                    `Vous n'avez ~r~pas assez d'argent sale~s~ sur vous pour acheter ce véhicule.`,
+                    'error'
+                );
                 return this.getOrders(source, mode);
             }
             playerDst = this.playerService.getPlayer(source);

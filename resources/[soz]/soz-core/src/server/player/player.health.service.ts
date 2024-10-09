@@ -15,7 +15,7 @@ export class PlayerHealthService {
 
     public async increaseStress(source: number, stress: number): Promise<void> {
         const playerState = this.playerStateService.getServerState(source);
-        playerState.lastStressLevelUpdate = new Date();
+        playerState.lastStressLevelUpdate = new Date().getTime();
         this.playerService.incrementMetadata(source, 'stress_level', stress, STRESS_MIN, STRESS_MAX);
     }
 }

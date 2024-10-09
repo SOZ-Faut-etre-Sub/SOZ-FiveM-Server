@@ -208,7 +208,6 @@ export enum ServerEvent {
     OIL_UNLOCK_TANKER = 'soz-core:server:oil:unlock-tanker',
 
     PLAYER_LOADED = 'soz-core:server:player:loaded',
-    PLAYER_INCREASE_STRESS = 'soz-core:server:player:increase-stress',
     PLAYER_INCREASE_STRENGTH = 'soz-core:server:player:increase-strength',
     PLAYER_SET_CURRENT_DISEASE = 'soz-core:server:server:set-current-disease',
     PLAYER_INCREASE_RUN_TIME = 'soz-core:server:player:health:increase-run-time',
@@ -339,6 +338,11 @@ export enum ServerEvent {
     VEHICLE_NOS_END = 'soz-core:server:vehicle:nos-end',
     VEHICLE_HANDLING_BASE_SAVE = 'soz-core:server:vehicle:handling-base-save',
     VEHICLE_RESET_SURFACE_STATE_TO_OWNER = 'soz-core:server:vehicle:reset-surface-effect-to-owner',
+
+    VEHICLE_UPDATE_PUSHING_OWNER = 'soz-core:server:vehicle:update-pushing-owner',
+    VEHICLE_START_PUSHING = 'soz-core:server:vehicle:start-pushing',
+    VEHICLE_STOP_PUSHING = 'soz-core:server:vehicle:stop-pushing',
+    VEHICLE_CHANGE_DIRECTION = 'soz-core:server:vehicle:change-direction',
 
     VOIP_SET_MEGAPHONE = 'soz-core:server:voip:set-megaphone',
     VOIP_RADIO_VEHICLE_ENABLE = 'soz-core:server:voip:radio-vehicle-enable',
@@ -547,6 +551,8 @@ export enum ServerEvent {
     GANG_VEHBIZ_COMMAND = 'soz-core:server:gang:veh:command',
     GANG_VEHBIZ_MAPPING_APPLY = 'soz-core:server:gang:veh:mapping-apply',
     GANG_VEHBIZ_GARAGE_UPGRADE = 'soz-core:server:gang:veh:garage-upgrade',
+    GANG_VEHBIZ_REPAIR_ENGINE = 'soz-core:server:gang:veh:repair-engine',
+    GANG_VEHBIZ_REPAIR_BODY = 'soz-core:server:gang:veh:repair-body',
 
     GANG_SMUGGLING_BLACK_MARKET_BOX_USE = 'soz-core:server:gang:smuggling:black-market-box-use',
     GANG_SMUGGLING_BLACK_MARKET_PRICE_UPDATE = 'soz-core:server:gang:smuggling:black-market-price',

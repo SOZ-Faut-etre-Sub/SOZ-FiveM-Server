@@ -215,6 +215,8 @@ export enum ClientEvent {
     VEH_FEATURE_SURFACE_RESET = 'reset-feature-surface',
     VEH_HAS_BEEN_TPM = 'soz-core:client:offroad:setTpm',
 
+    VEHICLE_SYNC_PUSHING_STATE = 'soz-core:client:vehicle:sync-pushing-state',
+
     VOIP_DEBUG = 'soz-core:client:voip:debug',
     VOIP_SET_MEGAPHONE = 'soz-core:client:voip:set-megaphone',
     VOIP_ITEM_RADIO_TOGGLE = 'soz-core:client:voip:item-radio:toggle',

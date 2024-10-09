@@ -3,6 +3,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { RepositoryDelete, RepositoryInsert, RepositoryUpdate } from '../../core/decorators/repository';
 import { emitRpc } from '../../core/rpc';
+import { uuidv4 } from '../../core/utils';
 import { ClientEvent } from '../../shared/event/client';
 import { NuiEvent } from '../../shared/event/nui';
 import { ServerEvent } from '../../shared/event/server';
@@ -382,7 +383,7 @@ export class SceneProvider {
             {
                 title: "ID de l'inventaire",
                 maxCharacters: 50,
-                defaultValue: entity.inventoryId || '',
+                defaultValue: entity.inventoryId || uuidv4(),
             },
             NotEmptyStringValidator
         );
@@ -446,17 +447,15 @@ export class SceneProvider {
             const targets: TargetOption[] = [];
 
             if (entity.inventoryId) {
-                if (player.gang.id) {
-                    targets.push({
-                        label: 'Ouvrir',
-                        icon: 'inventory/ouvrir_le_stockage',
-                        category: 'criminal',
-                        canInteract: () => true,
-                        action: () => {
-                            this.inventoryManager.openInventory('object_storage', entity.inventoryId);
-                        },
-                    });
-                }
+                targets.push({
+                    label: 'Ouvrir',
+                    icon: 'inventory/ouvrir_le_stockage',
+                    category: 'criminal',
+                    canInteract: () => true,
+                    action: () => {
+                        this.inventoryManager.openInventory('object_storage', entity.inventoryId);
+                    },
+                });
 
                 if (FDO.includes(player.job.id)) {
                     targets.push({

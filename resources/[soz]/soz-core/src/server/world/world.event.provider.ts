@@ -1,5 +1,3 @@
-import PCancelable from 'p-cancelable';
-
 import { OnEvent } from '../../core/decorators/event';
 import { Get, Post } from '../../core/decorators/http';
 import { Inject } from '../../core/decorators/injectable';
@@ -8,7 +6,6 @@ import { Rpc } from '../../core/decorators/rpc';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { Request } from '../../core/http/request';
 import { Response } from '../../core/http/response';
-import { wait } from '../../core/utils';
 import { ClientEvent } from '../../shared/event/client';
 import { ServerEvent } from '../../shared/event/server';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
@@ -27,7 +24,7 @@ import { SoundService } from '../sound/sound.service';
 type CurrentEvent = {
     event: WorldEvent;
     scene: Scene;
-    cancelable?: PCancelable<boolean>;
+    startTimestamp: number | null;
 };
 
 @Provider()
@@ -79,13 +76,14 @@ export class WorldEventProvider {
         return {
             currentEventId: this.currentEvent.event.id,
             currentSceneId: this.currentEvent.scene.id,
+            startTimestamp: this.currentEvent.startTimestamp,
         };
     }
 
     @OnEvent(ServerEvent.WORLD_EVENT_STOP)
     public async onStopWorldEvent(source: number) {
         if (this.currentEvent) {
-            this.currentEvent.cancelable?.cancel();
+            await this.stopCurrentEvent();
 
             this.notifier.notify(source, "L'événement en cours a été stoppé");
         }
@@ -156,12 +154,14 @@ export class WorldEventProvider {
             return {
                 currentEventId: null,
                 currentSceneId: null,
+                startTimestamp: null,
             };
         }
 
         return {
             currentEventId: this.currentEvent.event.id,
             currentSceneId: this.currentEvent.scene.id,
+            startTimestamp: this.currentEvent.startTimestamp,
         };
     }
 
@@ -267,10 +267,7 @@ export class WorldEventProvider {
             }
         }
 
-        // Event for 1 hour
-        const eventDuration = 3600 * 1000;
-
-        this.currentEvent = { event, scene };
+        this.currentEvent = { event, scene, startTimestamp: Date.now() };
         const firstEntityPosition = Object.values(scene.entities)[0]?.object.position;
 
         TriggerClientEvent(ClientEvent.WORLD_EVENT_START, -1, event.id, scene.id, firstEntityPosition);
@@ -283,11 +280,6 @@ export class WorldEventProvider {
         if (source) {
             this.notifier.notify(source, `La scène ${scene.name} pour l'event ${event.name} a été lancée avec succès`);
         }
-
-        this.currentEvent.cancelable = wait(eventDuration);
-        this.currentEvent.cancelable.then(() => {
-            this.stopCurrentEvent();
-        });
     }
 
     private async stopCurrentEvent() {

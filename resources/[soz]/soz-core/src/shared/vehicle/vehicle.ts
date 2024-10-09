@@ -516,6 +516,32 @@ export const VehicleTypeFromClass: Record<VehicleClass, VehicleType> = {
     [VehicleClass.OpenWheel]: VehicleType.OpenWheel,
 };
 
+export const PushableVehicleClass: Record<VehicleClass, boolean> = {
+    [VehicleClass.Compacts]: true,
+    [VehicleClass.Sedans]: true,
+    [VehicleClass.SUVs]: true,
+    [VehicleClass.Coupes]: true,
+    [VehicleClass.Muscle]: true,
+    [VehicleClass.SportsClassics]: true,
+    [VehicleClass.Sports]: true,
+    [VehicleClass.Super]: true,
+    [VehicleClass.Motorcycles]: false,
+    [VehicleClass.OffRoad]: true,
+    [VehicleClass.Industrial]: false,
+    [VehicleClass.Utility]: true,
+    [VehicleClass.Vans]: true,
+    [VehicleClass.Cycles]: false,
+    [VehicleClass.Boats]: false,
+    [VehicleClass.Helicopters]: false,
+    [VehicleClass.Planes]: false,
+    [VehicleClass.Service]: true,
+    [VehicleClass.Emergency]: true,
+    [VehicleClass.Military]: false,
+    [VehicleClass.Commercial]: false,
+    [VehicleClass.Trains]: false,
+    [VehicleClass.OpenWheel]: false,
+};
+
 export const LockPickAlertChance = 0.1;
 
 export const LockPickAlertMessage = {

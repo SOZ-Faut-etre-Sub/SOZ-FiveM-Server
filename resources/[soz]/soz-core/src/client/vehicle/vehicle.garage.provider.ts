@@ -546,7 +546,7 @@ export class VehicleGarageProvider {
         this.nuiMenu.closeMenu();
     }
 
-    public async enterGarage(id: string, garage: Garage, apartments: Apartment[] = []) {
+    public async enterGarage(id: string, garage: Garage, apartments: Apartment[] = [], range = 5.0) {
         const vehicles = await emitRpc<GarageVehicle[]>(RpcServerEvent.VEHICLE_GARAGE_GET_VEHICLES, id, garage);
         if (vehicles === null) {
             return;
@@ -613,7 +613,7 @@ export class VehicleGarageProvider {
             {
                 position: {
                     position: garage.zone.center,
-                    distance: 5.0,
+                    distance: range,
                 },
                 originMenuType: this.nuiMenu.getOpened(),
             }

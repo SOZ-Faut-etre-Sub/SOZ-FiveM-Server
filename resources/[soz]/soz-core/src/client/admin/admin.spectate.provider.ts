@@ -1,5 +1,5 @@
 import { Command } from '@core/decorators/command';
-import { OnEvent, OnNuiEvent } from '@core/decorators/event';
+import { OnNuiEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { SozRole } from '@core/permissions';
@@ -8,12 +8,11 @@ import { OrbitalCameraProvider } from '@public/client/camera/orbital.camera.prov
 import { Monitor } from '@public/client/monitor/monitor';
 import { Notifier } from '@public/client/notifier';
 import { NuiMenu } from '@public/client/nui/nui.menu';
-import { NoClipProvider } from '@public/client/utils/noclip.provider';
 import { VoipService } from '@public/client/voip/voip.service';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { wait } from '@public/core/utils';
 import { AdminPlayer } from '@public/shared/admin/admin';
-import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
+import { NuiEvent, ServerEvent } from '@public/shared/event';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
 @Provider()
@@ -26,9 +25,6 @@ export class AdminSpectateProvider {
 
     @Inject(Monitor)
     private monitor: Monitor;
-
-    @Inject(NoClipProvider)
-    private noClipProvider: NoClipProvider;
 
     @Inject(VoipService)
     private voipService: VoipService;
@@ -48,18 +44,12 @@ export class AdminSpectateProvider {
         TriggerServerEvent(ServerEvent.ADMIN_SPECTATE_PLAYER, player);
     }
 
-    @OnEvent(ClientEvent.ADMIN_SPECTATE_PLAYER)
     public async spectatePlayer(player: AdminPlayer, position: Vector3): Promise<void> {
-        if (!this.noClipProvider.IsNoClipMode()) {
-            this.notifier.notify(`Le mode NoClip doit être activé pour observer un joueur.`, 'info');
-            return;
-        }
-
         if (GetPlayerServerId(NetworkGetPlayerIndexFromPed(PlayerPedId())) === player.id) {
             return;
         }
 
-        SetEntityCoords(PlayerPedId(), position[0], position[1], position[2] + 30, false, false, false, false);
+        SetEntityCoords(PlayerPedId(), position[0], position[1], position[2] - 5, false, false, false, false);
         await wait(10);
 
         const target = GetPlayerPed(GetPlayerFromServerId(player.id));
@@ -89,7 +79,7 @@ export class AdminSpectateProvider {
         }
 
         const position = GetEntityCoords(this.ped);
-        SetEntityCoords(PlayerPedId(), position[0], position[1], position[2] + 30, false, false, false, false);
+        SetEntityCoords(PlayerPedId(), position[0], position[1], position[2] - 5, false, false, false, false);
     }
 
     private async initSpectate() {
@@ -141,7 +131,7 @@ export class AdminSpectateProvider {
         ],
     })
     public leaveSpactate() {
-        if (!this.ped && !this.flyingCamera && !this.orbitalCamera) {
+        if (this.isNotSpectating()) {
             return;
         }
 
@@ -154,5 +144,9 @@ export class AdminSpectateProvider {
 
         this.terminateSpectate();
         this.notifier.notify(`Arrêt du mode observateur.`, 'info');
+    }
+
+    public isNotSpectating(): boolean {
+        return !this.ped && !this.flyingCamera && !this.orbitalCamera;
     }
 }
