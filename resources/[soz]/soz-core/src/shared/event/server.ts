@@ -551,6 +551,8 @@ export enum ServerEvent {
     GANG_VEHBIZ_COMMAND = 'soz-core:server:gang:veh:command',
     GANG_VEHBIZ_MAPPING_APPLY = 'soz-core:server:gang:veh:mapping-apply',
     GANG_VEHBIZ_GARAGE_UPGRADE = 'soz-core:server:gang:veh:garage-upgrade',
+    GANG_VEHBIZ_REPAIR_ENGINE = 'soz-core:server:gang:veh:repair-engine',
+    GANG_VEHBIZ_REPAIR_BODY = 'soz-core:server:gang:veh:repair-body',
 
     GANG_SMUGGLING_BLACK_MARKET_BOX_USE = 'soz-core:server:gang:smuggling:black-market-box-use',
     GANG_SMUGGLING_BLACK_MARKET_PRICE_UPDATE = 'soz-core:server:gang:smuggling:black-market-price',
