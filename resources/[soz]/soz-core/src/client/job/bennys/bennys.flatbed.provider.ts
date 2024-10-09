@@ -14,9 +14,9 @@ import { PlayerService } from '../../player/player.service';
 import { RopeService } from '../../rope.service';
 import { SoundService } from '../../sound.service';
 import { TargetFactory } from '../../target/target.factory';
+import { VehicleOffroadProvider } from '../../vehicle/vehicle.offroad.provider';
 import { VehicleService } from '../../vehicle/vehicle.service';
 import { VehicleStateService } from '../../vehicle/vehicle.state.service';
-import { VehicleOffroadProvider } from '../../vehicle/vehicule.offroad.provider';
 
 const FLATBED_OFFSET = [0.0, -2.2, 1.1] as Vector3;
 

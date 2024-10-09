@@ -340,6 +340,11 @@ export enum ServerEvent {
     VEHICLE_HANDLING_BASE_SAVE = 'soz-core:server:vehicle:handling-base-save',
     VEHICLE_RESET_SURFACE_STATE_TO_OWNER = 'soz-core:server:vehicle:reset-surface-effect-to-owner',
 
+    VEHICLE_UPDATE_PUSHING_OWNER = 'soz-core:server:vehicle:update-pushing-owner',
+    VEHICLE_START_PUSHING = 'soz-core:server:vehicle:start-pushing',
+    VEHICLE_STOP_PUSHING = 'soz-core:server:vehicle:stop-pushing',
+    VEHICLE_CHANGE_DIRECTION = 'soz-core:server:vehicle:change-direction',
+
     VOIP_SET_MEGAPHONE = 'soz-core:server:voip:set-megaphone',
     VOIP_RADIO_VEHICLE_ENABLE = 'soz-core:server:voip:radio-vehicle-enable',
     VOIP_RADIO_VEHICLE_UPDATE = 'soz-core:server:voip:radio-vehicle-update',
