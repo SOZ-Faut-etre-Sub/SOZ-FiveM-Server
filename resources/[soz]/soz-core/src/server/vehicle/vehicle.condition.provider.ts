@@ -1,3 +1,5 @@
+import { VehicleBusinessProvider } from '@private/server/gang/business.vehicle.provider';
+
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -36,6 +38,9 @@ export class VehicleConditionProvider {
 
     @Inject(Monitor)
     private monitor: Monitor;
+
+    @Inject(VehicleBusinessProvider)
+    private vehicleBusinessProvider: VehicleBusinessProvider;
 
     @OnEvent(ServerEvent.VEHICLE_USE_REPAIR_KIT)
     public async onVehicleUseRepairKit(source: number, vehicleNetworkId: number) {
@@ -80,6 +85,7 @@ export class VehicleConditionProvider {
         }
 
         this.notifier.notify(source, 'La carosserie de votre véhicule a été réparée.');
+        this.vehicleBusinessProvider.repairVehicule(vehicleNetworkId);
 
         this.vehicleStateService.updateVehicleCondition(vehicleNetworkId, {
             bodyHealth: 1000,
