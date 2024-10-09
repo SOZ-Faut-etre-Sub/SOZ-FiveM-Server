@@ -7,7 +7,7 @@ import { uuidv4 } from '../../core/utils';
 import { ClientEvent } from '../../shared/event/client';
 import { NuiEvent } from '../../shared/event/nui';
 import { ServerEvent } from '../../shared/event/server';
-import { FDO, JobType } from '../../shared/job';
+import { FDO } from '../../shared/job';
 import { NotEmptyStringValidator } from '../../shared/nui/input';
 import { MenuType } from '../../shared/nui/menu';
 import { ObjectEditorContext } from '../../shared/object';
