@@ -89,8 +89,13 @@ export class PoliceProvider {
         if (this.inventoryManager.removeInventoryItem(source, item)) {
             const itemDef = this.itemService.getItem(item.name);
             this.playerService.setPlayerMetadata(source, 'armor', { current: 100, hidden: true });
-            TriggerClientEvent(ClientEvent.POLICE_SETUP_MAX_ARMOR_PLATE, source, itemDef.maxplates);
-            TriggerClientEvent(ClientEvent.POLICE_SETUP_ARMOR, source, armorType, item.metadata?.plates);
+            TriggerClientEvent(
+                ClientEvent.POLICE_SETUP_ARMOR,
+                source,
+                armorType,
+                item.metadata?.plates,
+                itemDef.maxplates
+            );
         }
 
         return;
@@ -118,34 +123,8 @@ export class PoliceProvider {
             return;
         }
 
-        const { completed } = await this.progressService.progress(
-            source,
-            'switch_clothes',
-            "Équipement d'une plaque balistique ...",
-            500,
-            {
-                name: 'male_shower_towel_dry_to_get_dressed',
-                dictionary: 'anim@mp_yacht@shower@male@',
-                options: {
-                    cancellable: false,
-                    enablePlayerControl: true,
-                    onlyUpperBody: true,
-                },
-            },
-            {
-                disableMovement: true,
-                disableCarMovement: true,
-                disableMouse: false,
-                disableCombat: true,
-                canCancel: false,
-            }
-        );
-
-        if (!completed) {
-            return;
-        }
-
         if (this.inventoryManager.removeItemFromInventory(source, item.name, 1, item.metadata)) {
+            TriggerClientEvent(ClientEvent.POLICE_ANIMATE_ARMOR_PLATE, source);
             TriggerClientEvent(ClientEvent.POLICE_SETUP_ARMOR_PLATE, source);
         }
     }
@@ -164,9 +143,7 @@ export class PoliceProvider {
         if (item.name == 'heavy_antiriot_outfit' || item.name == 'light_intervention_outfit') {
             const itemDef = this.itemService.getItem(item.name);
             this.playerService.setPlayerMetadata(source, 'armor', { current: 100, hidden: true });
-            TriggerClientEvent(ClientEvent.POLICE_SETUP_MAX_ARMOR_PLATE, source, itemDef.maxplates);
-            item?.metadata?.plates &&
-                TriggerClientEvent(ClientEvent.POLICE_SETUP_ARMOR_PLATE, source, item?.metadata?.plates);
+            TriggerClientEvent(ClientEvent.POLICE_SETUP_ARMOR_PLATE, source, item?.metadata?.plates, itemDef.maxplates);
         }
 
         if (item.metadata['type'] == 'lspd' || item.metadata['type'] == 'bcso') {

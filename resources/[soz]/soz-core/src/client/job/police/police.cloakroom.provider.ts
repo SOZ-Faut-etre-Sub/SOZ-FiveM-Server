@@ -153,7 +153,7 @@ export class PoliceCloakRoomProvider {
     }
 
     @OnEvent(ClientEvent.POLICE_SETUP_ARMOR)
-    public async setupArmor(armorType: string, plates: number) {
+    public async setupArmor(armorType: string, plates: number, maxPlates?: number) {
         const playerPed = PlayerPedId();
         const playerPedModel = GetEntityModel(playerPed);
         const armour = Armors[playerPedModel][armorType];
@@ -161,6 +161,7 @@ export class PoliceCloakRoomProvider {
             return;
         }
         this.playerService.setNbArmorPlates(plates ?? 0);
+        this.playerService.setMaxNbArmorPlates(maxPlates ?? 0);
 
         if (plates > 0) {
             SetPlayerWeaponDefenseModifier(PlayerId(), 0.1);

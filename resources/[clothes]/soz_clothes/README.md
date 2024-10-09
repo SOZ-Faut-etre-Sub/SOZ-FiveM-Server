@@ -42,7 +42,9 @@
 8  bandoulière SASP       / femme armor SASP moche
 9  armor SASP1            / femme armor SASP1
 10 armor SASP2            / femme bandoulière SASP
-11 N/A                    / femme armor SASP2
+11 tactical_armor_medium  / femme armor SASP2
+12 tactical_armor_light   / femme tactical_armor_medium
+13 N/A                    / femme tactical_armor_light
 
     Undershirt
 0  stonk holster radio epaule // pas utilisé?

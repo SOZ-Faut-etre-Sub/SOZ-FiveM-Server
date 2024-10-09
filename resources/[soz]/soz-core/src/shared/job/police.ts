@@ -1220,6 +1220,26 @@ export const Armors = {
             Texture: 0,
             Palette: 0,
         },
+        ['armor_tactical']: {
+            Drawable: 12,
+            Texture: 1,
+            Palette: 0,
+        },
+        ['armor_tactical_light']: {
+            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.BodyArmor] + 11, //drawable 75
+            Texture: 0,
+            Palette: 0,
+        },
+        ['armor_tactical_medium']: {
+            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.BodyArmor] + 12, // drawable 74
+            Texture: 0,
+            Palette: 0,
+        },
+        ['armor_tactical_heavy']: {
+            Drawable: 15,
+            Texture: 2,
+            Palette: 0,
+        },
     },
     [joaat('mp_f_freemode_01')]: {
         ['unmark']: {
@@ -1268,6 +1288,26 @@ export const Armors = {
         ['bulletproof_vest_low']: {
             Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.BodyArmor] + 6,
             Texture: 0,
+            Palette: 0,
+        },
+        ['armor_tactical']: {
+            Drawable: 7,
+            Texture: 1,
+            Palette: 0,
+        },
+        ['armor_tactical_light']: {
+            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.BodyArmor] + 12,
+            Texture: 0,
+            Palette: 0,
+        },
+        ['armor_tactical_medium']: {
+            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.BodyArmor] + 13,
+            Texture: 0,
+            Palette: 0,
+        },
+        ['armor_tactical_heavy']: {
+            Drawable: 17,
+            Texture: 2,
             Palette: 0,
         },
     },

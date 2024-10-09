@@ -369,12 +369,26 @@ export class PlayerHealthProvider {
         this.playerService.setNbArmorPlates(armorPlates + (nbPlates || 1));
         SetPlayerWeaponDefenseModifier(PlayerId(), 0.1);
         SetPlayerWeaponDefenseModifier_2(PlayerId(), 0.1);
-        console.log(GetPlayerWeaponDamageModifier(PlayerId()));
     }
 
-    @OnEvent(ClientEvent.POLICE_SETUP_MAX_ARMOR_PLATE)
-    public setupMaxArmorPlates(nbPlates?: number) {
-        this.playerService.setMaxNbArmorPlates(nbPlates);
+    @OnEvent(ClientEvent.POLICE_ANIMATE_ARMOR_PLATE)
+    public animateArmorPlate() {
+        this.animationService.playAnimation({
+            base: {
+                dictionary: `anim@mp_atm@exit`,
+                name: 'exit',
+                blendInSpeed: 8.0,
+                blendOutSpeed: -8.0,
+                duration: 3000,
+                options: {
+                    onlyUpperBody: true,
+                },
+                playbackRate: 0,
+                lockX: false,
+                lockY: false,
+                lockZ: false,
+            },
+        });
     }
 
     @PlayerUpdate()
