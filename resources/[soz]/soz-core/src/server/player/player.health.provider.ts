@@ -81,7 +81,10 @@ export class PlayerHealthProvider {
             return;
         }
 
-        const playerState = this.playerStateService.getServerStateByCitizenId(player.citizenid);
+        const playerState = this.playerStateService.getServerStateByCitizenId(
+            player.citizenid,
+            player.metadata.gym_state
+        );
 
         let hungerDiff = HUNGER_RATE;
         let thirstDiff = THIRST_RATE;
@@ -112,14 +115,14 @@ export class PlayerHealthProvider {
         if (isFeatureEnabled(Feature.MyBodySummer)) {
             const now = new Date().getTime();
 
-            const strengthTimeDiff = now - playerState.lastStrengthUpdate.getTime();
+            const strengthTimeDiff = now - playerState.lastStrengthUpdate;
 
             if (
                 strengthTimeDiff > 30 * 60 * 1000 &&
                 playerState.lostStrength < 4 &&
                 playerState.exercise.completed < 4
             ) {
-                playerState.lastStrengthUpdate = new Date();
+                playerState.lastStrengthUpdate = new Date().getTime();
 
                 datas.strength = this.playerService.getIncrementedMetadata(
                     player,
@@ -134,10 +137,10 @@ export class PlayerHealthProvider {
                 this.notifier.notify(source, 'Vous vous sentez ~r~moins puissant~s~.', 'error');
             }
 
-            const staminaTimeDiff = now - playerState.lastMaxStaminaUpdate.getTime();
+            const staminaTimeDiff = now - playerState.lastMaxStaminaUpdate;
 
             if (staminaTimeDiff > 60 * 60 * 1000 && playerState.lostStamina < 3 && playerState.runTime < 60 * 8) {
-                playerState.lastMaxStaminaUpdate = new Date();
+                playerState.lastMaxStaminaUpdate = new Date().getTime();
                 datas.max_stamina = this.playerService.getIncrementedMetadata(
                     player,
                     'max_stamina',
@@ -151,10 +154,10 @@ export class PlayerHealthProvider {
                 this.notifier.notify(source, 'Vous vous sentez ~r~moins athlétique~s~.', 'error');
             }
 
-            const stressTimeDiff = now - playerState.lastStressLevelUpdate.getTime();
+            const stressTimeDiff = now - playerState.lastStressLevelUpdate;
 
             if (stressTimeDiff > 30 * 60 * 1000) {
-                playerState.lastStressLevelUpdate = new Date();
+                playerState.lastStressLevelUpdate = new Date().getTime();
                 const ped = GetPlayerPed(source);
                 const coords = GetEntityCoords(ped) as Vector3;
                 const psyCoef = psyZone.isPointInside(coords) ? 2 : 1;
@@ -169,6 +172,8 @@ export class PlayerHealthProvider {
 
                 this.notifier.notify(source, 'Vous vous sentez moins ~g~angoissé~s~.', 'success');
             }
+
+            this.playerService.setPlayerMetadata(source, 'gym_state', playerState);
         }
 
         this.playerService.setPlayerMetaDatas(source, datas);
@@ -182,7 +187,10 @@ export class PlayerHealthProvider {
             return;
         }
 
-        const playerState = this.playerStateService.getServerStateByCitizenId(player.citizenid);
+        const playerState = this.playerStateService.getServerStateByCitizenId(
+            player.citizenid,
+            player.metadata.gym_state
+        );
 
         if (playerState.exercise[exercise]) {
             return;
@@ -193,6 +201,7 @@ export class PlayerHealthProvider {
 
         this.playerService.incrementMetadata(source, 'strength', 2, STRENGTH_MIN, STRENGTH_MAX);
         this.playerService.updatePlayerMaxWeight(source);
+        this.playerService.setPlayerMetadata(source, 'gym_state', playerState);
     }
 
     public async increaseStress(source: number, stress: number): Promise<void> {
@@ -207,7 +216,10 @@ export class PlayerHealthProvider {
             return;
         }
 
-        const playerState = this.playerStateService.getServerStateByCitizenId(player.citizenid);
+        const playerState = this.playerStateService.getServerStateByCitizenId(
+            player.citizenid,
+            player.metadata.gym_state
+        );
 
         playerState.runTime += 1;
 
@@ -220,6 +232,7 @@ export class PlayerHealthProvider {
 
             if (playerState.runTime % 120 == 0) {
                 this.playerService.incrementMetadata(source, 'max_stamina', 1, MAX_STAMINA_MIN, MAX_STAMINA_MAX);
+                this.playerService.setPlayerMetadata(source, 'gym_state', playerState);
             }
 
             if (minutes < 8) {
@@ -248,7 +261,10 @@ export class PlayerHealthProvider {
             return;
         }
 
-        const playerState = this.playerStateService.getServerStateByCitizenId(player.citizenid);
+        const playerState = this.playerStateService.getServerStateByCitizenId(
+            player.citizenid,
+            player.metadata.gym_state
+        );
 
         if (playerState.yoga) {
             return;
@@ -259,6 +275,7 @@ export class PlayerHealthProvider {
         this.notifier.notify(source, 'Vous vous sentez moins ~g~angoissé~s~.', 'success');
 
         await this.increaseStress(source, this.yogaAndNaturalMultiplier(source) * -8);
+        this.playerService.setPlayerMetadata(source, 'gym_state', playerState);
     }
 
     @OnEvent(ServerEvent.PLAYER_HEALTH_GYM_SUBSCRIBE)

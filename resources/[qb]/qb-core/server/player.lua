@@ -21,9 +21,13 @@ function QBCore.Player.Login(source, citizenid, newData)
     if src then
         if citizenid then
             local license = QBCore.Functions.GetSozIdentifier(src)
-            local PlayerData = exports.oxmysql:singleSync('SELECT * FROM player where citizenid = ?', { citizenid })
-            local apartment = exports.oxmysql:singleSync('SELECT id,property_id,label,price,owner,tier,cloth_tier,money_tier,park_tier,shell,has_parking_place FROM housing_apartment where ? IN (owner, roommate)', { citizenid })
-            local partyMember = exports.oxmysql:singleSync('SELECT * FROM senate_party_member WHERE citizenId = ?', { citizenid })
+            local PlayerData = exports.oxmysql:singleSync("SELECT * FROM player where citizenid = ?", {citizenid})
+            local apartment = exports.oxmysql:singleSync(
+                                  "SELECT id,property_id,label,price,owner,tier,cloth_tier,money_tier,park_tier,shell,has_parking_place FROM housing_apartment where ? IN (owner, roommate)",
+                                  {citizenid})
+            local partyMember = exports.oxmysql:singleSync("SELECT * FROM senate_party_member WHERE citizenId = ?", {
+                citizenid,
+            })
             local role = GetConvar("soz_anonymous_default_role", "user")
             local useTestMode = GetConvar("soz_enable_test_auth", "false") == "true"
             local account = QBCore.Functions.GetUserAccount(src, useTestMode)
@@ -33,10 +37,10 @@ function QBCore.Player.Login(source, citizenid, newData)
             end
 
             if useTestMode then
-                role = 'admin'
+                role = "admin"
             end
 
-            if PlayerData and (license == PlayerData.license or role == 'admin') then
+            if PlayerData and (license == PlayerData.license or role == "admin") then
                 PlayerData.money = json.decode(PlayerData.money)
                 PlayerData.job = json.decode(PlayerData.job)
                 PlayerData.position = json.decode(PlayerData.position)
@@ -68,15 +72,16 @@ function QBCore.Player.Login(source, citizenid, newData)
 
                 QBCore.Player.CheckPlayerData(src, PlayerData)
             else
-                DropPlayer(src, 'You Have Been Kicked For Exploitation')
-                TriggerEvent('qb-log:server:CreateLog', 'anticheat', 'Anti-Cheat', 'white', GetPlayerName(src) .. ' Has Been Dropped For Character Joining Exploit', false)
+                DropPlayer(src, "You Have Been Kicked For Exploitation")
+                TriggerEvent("qb-log:server:CreateLog", "anticheat", "Anti-Cheat", "white",
+                             GetPlayerName(src) .. " Has Been Dropped For Character Joining Exploit", false)
             end
         else
             QBCore.Player.CheckPlayerData(src, newData)
         end
         return true
     else
-        QBCore.ShowError(GetCurrentResourceName(), 'ERROR QBCORE.PLAYER.LOGIN - NO SOURCE GIVEN!')
+        QBCore.ShowError(GetCurrentResourceName(), "ERROR QBCORE.PLAYER.LOGIN - NO SOURCE GIVEN!")
         return false
     end
 end
@@ -104,117 +109,117 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.partyMember = PlayerData.partyMember or nil
     -- Charinfo
     PlayerData.charinfo = PlayerData.charinfo or {}
-    PlayerData.charinfo.firstname = PlayerData.charinfo.firstname or 'Firstname'
-    PlayerData.charinfo.lastname = PlayerData.charinfo.lastname or 'Lastname'
-    PlayerData.charinfo.birthdate = PlayerData.charinfo.birthdate or '00-00-0000'
+    PlayerData.charinfo.firstname = PlayerData.charinfo.firstname or "Firstname"
+    PlayerData.charinfo.lastname = PlayerData.charinfo.lastname or "Lastname"
+    PlayerData.charinfo.birthdate = PlayerData.charinfo.birthdate or "00-00-0000"
     PlayerData.charinfo.gender = PlayerData.charinfo.gender or 0
-    PlayerData.charinfo.backstory = PlayerData.charinfo.backstory or 'placeholder backstory'
-    PlayerData.charinfo.nationality = PlayerData.charinfo.nationality or 'USA'
+    PlayerData.charinfo.backstory = PlayerData.charinfo.backstory or "placeholder backstory"
+    PlayerData.charinfo.nationality = PlayerData.charinfo.nationality or "USA"
     PlayerData.charinfo.phone = PlayerData.charinfo.phone or QBCore.Player.CreatePhoneNumber()
-    PlayerData.charinfo.account = PlayerData.charinfo.account ~= nil and PlayerData.charinfo.account or math.random(111, 999) .. 'Z' .. math.random(1111, 9999) .. 'T' .. math.random(111, 999)
+    PlayerData.charinfo.account =
+        PlayerData.charinfo.account ~= nil and PlayerData.charinfo.account or math.random(111, 999) .. "Z" .. math.random(1111, 9999) .. "T" ..
+            math.random(111, 999)
     -- Metadata
     PlayerData.metadata = PlayerData.metadata or {}
     -- Status
-    PlayerData.metadata['walk'] = PlayerData.metadata['walk'] or nil
-    PlayerData.metadata['isdead'] = PlayerData.metadata['isdead'] or false
-    PlayerData.metadata['health'] = PlayerData.metadata['health'] or 200
-    if PlayerData.metadata['isdead'] then
-        PlayerData.metadata['health'] = 0
+    PlayerData.metadata["walk"] = PlayerData.metadata["walk"] or nil
+    PlayerData.metadata["isdead"] = PlayerData.metadata["isdead"] or false
+    PlayerData.metadata["health"] = PlayerData.metadata["health"] or 200
+    if PlayerData.metadata["isdead"] then
+        PlayerData.metadata["health"] = 0
     end
-    PlayerData.metadata['hunger'] = PlayerData.metadata['hunger'] or 100
-    PlayerData.metadata['thirst'] = PlayerData.metadata['thirst'] or 100
-    --NaN check
-    PlayerData.metadata['alcohol'] = PlayerData.metadata['alcohol'] == PlayerData.metadata['alcohol'] and PlayerData.metadata['alcohol'] or 0
-    PlayerData.metadata['fiber'] = PlayerData.metadata['fiber'] or 70
-    PlayerData.metadata['lipid'] = PlayerData.metadata['lipid'] or 70
-    PlayerData.metadata['sugar'] = PlayerData.metadata['sugar'] or 70
-    PlayerData.metadata['protein'] = PlayerData.metadata['protein'] or 70
-    PlayerData.metadata['max_stamina'] = PlayerData.metadata['max_stamina'] or 100
-    PlayerData.metadata['max_health'] = PlayerData.metadata['max_health'] or 200
-    PlayerData.metadata['strength'] = PlayerData.metadata['strength'] or 100
-    PlayerData.metadata['stress_level'] = PlayerData.metadata['stress_level'] or 0
-    PlayerData.metadata['last_max_stamina_update'] = PlayerData.metadata['last_max_stamina_update'] or nil
-    PlayerData.metadata['last_strength_update'] = PlayerData.metadata['last_strength_update'] or nil
-    PlayerData.metadata['last_stress_level_update'] = PlayerData.metadata['last_stress_level_update'] or nil
-    PlayerData.metadata['health_level'] = PlayerData.metadata['health_level'] or 100
-    PlayerData.metadata['health_book_health_level'] = PlayerData.metadata['health_book_health_level'] or nil
-    PlayerData.metadata['health_book_max_stamina'] = PlayerData.metadata['health_book_max_stamina'] or nil
-    PlayerData.metadata['health_book_strength'] = PlayerData.metadata['health_book_strength'] or nil
-    PlayerData.metadata['health_book_stress_level'] = PlayerData.metadata['health_book_stress_level'] or nil
-    PlayerData.metadata['health_book_sugar'] = PlayerData.metadata['health_book_sugar'] or nil
-    PlayerData.metadata['health_book_fiber'] = PlayerData.metadata['health_book_fiber'] or nil
-    PlayerData.metadata['health_book_lipid'] = PlayerData.metadata['health_book_lipid'] or nil
-    PlayerData.metadata['health_book_protein'] = PlayerData.metadata['health_book_protein'] or nil
-    PlayerData.metadata['health_book_update_date'] = PlayerData.metadata['health_book_update_date'] or nil
-    PlayerData.metadata['last_exercise_completed'] = PlayerData.metadata['last_exercise_completed'] or nil
-    PlayerData.metadata['gym_subscription_expire_at'] = PlayerData.metadata['gym_subscription_expire_at'] or nil
-    PlayerData.metadata['drug'] = PlayerData.metadata['drug'] or 0
-    PlayerData.metadata['itt_end'] = PlayerData.metadata['itt_end'] or 0
-    PlayerData.metadata['armor'] = {current = 0, hidden = false}
-    PlayerData.metadata['inlaststand'] = PlayerData.metadata['inlaststand'] or false
-    PlayerData.metadata['ishandcuffed'] = PlayerData.metadata['ishandcuffed'] or false
-    PlayerData.metadata['tracker'] = PlayerData.metadata['tracker'] or false
-    PlayerData.metadata['injail'] = PlayerData.metadata['injail'] or 0
-    PlayerData.metadata['jailitems'] = PlayerData.metadata['jailitems'] or {}
-    PlayerData.metadata['status'] = PlayerData.metadata['status'] or {}
-    PlayerData.metadata['phone'] = PlayerData.metadata['phone'] or {}
-    PlayerData.metadata['fitbit'] = PlayerData.metadata['fitbit'] or {}
-    PlayerData.metadata['shortcuts'] = PlayerData.metadata['shortcuts'] or {}
-    PlayerData.metadata['bloodtype'] = PlayerData.metadata['bloodtype'] or QBCore.Config.Player.Bloodtypes[math.random(1, #QBCore.Config.Player.Bloodtypes)]
-    PlayerData.metadata['dealerrep'] = PlayerData.metadata['dealerrep'] or 0
-    PlayerData.metadata['craftingrep'] = PlayerData.metadata['craftingrep'] or 0
-    PlayerData.metadata['attachmentcraftingrep'] = PlayerData.metadata['attachmentcraftingrep'] or 0
-    PlayerData.metadata['currentapartment'] = PlayerData.metadata['currentapartment'] or nil
-    PlayerData.metadata['jobrep'] = PlayerData.metadata['jobrep'] or {
-        ['tow'] = 0,
-        ['trucker'] = 0,
-        ['taxi'] = 0,
-        ['hotdog'] = 0,
+    PlayerData.metadata["hunger"] = PlayerData.metadata["hunger"] or 100
+    PlayerData.metadata["thirst"] = PlayerData.metadata["thirst"] or 100
+    -- NaN check
+    PlayerData.metadata["alcohol"] = PlayerData.metadata["alcohol"] == PlayerData.metadata["alcohol"] and PlayerData.metadata["alcohol"] or 0
+    PlayerData.metadata["fiber"] = PlayerData.metadata["fiber"] or 70
+    PlayerData.metadata["lipid"] = PlayerData.metadata["lipid"] or 70
+    PlayerData.metadata["sugar"] = PlayerData.metadata["sugar"] or 70
+    PlayerData.metadata["protein"] = PlayerData.metadata["protein"] or 70
+    PlayerData.metadata["max_stamina"] = PlayerData.metadata["max_stamina"] or 100
+    PlayerData.metadata["max_health"] = PlayerData.metadata["max_health"] or 200
+    PlayerData.metadata["strength"] = PlayerData.metadata["strength"] or 100
+    PlayerData.metadata["stress_level"] = PlayerData.metadata["stress_level"] or 0
+    PlayerData.metadata["last_max_stamina_update"] = PlayerData.metadata["last_max_stamina_update"] or nil
+    PlayerData.metadata["last_strength_update"] = PlayerData.metadata["last_strength_update"] or nil
+    PlayerData.metadata["last_stress_level_update"] = PlayerData.metadata["last_stress_level_update"] or nil
+    PlayerData.metadata["health_level"] = PlayerData.metadata["health_level"] or 100
+    PlayerData.metadata["health_book_health_level"] = PlayerData.metadata["health_book_health_level"] or nil
+    PlayerData.metadata["health_book_max_stamina"] = PlayerData.metadata["health_book_max_stamina"] or nil
+    PlayerData.metadata["health_book_strength"] = PlayerData.metadata["health_book_strength"] or nil
+    PlayerData.metadata["health_book_stress_level"] = PlayerData.metadata["health_book_stress_level"] or nil
+    PlayerData.metadata["health_book_sugar"] = PlayerData.metadata["health_book_sugar"] or nil
+    PlayerData.metadata["health_book_fiber"] = PlayerData.metadata["health_book_fiber"] or nil
+    PlayerData.metadata["health_book_lipid"] = PlayerData.metadata["health_book_lipid"] or nil
+    PlayerData.metadata["health_book_protein"] = PlayerData.metadata["health_book_protein"] or nil
+    PlayerData.metadata["health_book_update_date"] = PlayerData.metadata["health_book_update_date"] or nil
+    PlayerData.metadata["last_exercise_completed"] = PlayerData.metadata["last_exercise_completed"] or nil
+    PlayerData.metadata["gym_subscription_expire_at"] = PlayerData.metadata["gym_subscription_expire_at"] or nil
+    PlayerData.metadata["drug"] = PlayerData.metadata["drug"] or 0
+    PlayerData.metadata["itt_end"] = PlayerData.metadata["itt_end"] or 0
+    PlayerData.metadata["armor"] = {current = 0, hidden = false}
+    PlayerData.metadata["inlaststand"] = PlayerData.metadata["inlaststand"] or false
+    PlayerData.metadata["ishandcuffed"] = PlayerData.metadata["ishandcuffed"] or false
+    PlayerData.metadata["tracker"] = PlayerData.metadata["tracker"] or false
+    PlayerData.metadata["injail"] = PlayerData.metadata["injail"] or 0
+    PlayerData.metadata["jailitems"] = PlayerData.metadata["jailitems"] or {}
+    PlayerData.metadata["status"] = PlayerData.metadata["status"] or {}
+    PlayerData.metadata["phone"] = PlayerData.metadata["phone"] or {}
+    PlayerData.metadata["fitbit"] = PlayerData.metadata["fitbit"] or {}
+    PlayerData.metadata["shortcuts"] = PlayerData.metadata["shortcuts"] or {}
+    PlayerData.metadata["bloodtype"] = PlayerData.metadata["bloodtype"] or QBCore.Config.Player.Bloodtypes[math.random(1, #QBCore.Config.Player.Bloodtypes)]
+    PlayerData.metadata["dealerrep"] = PlayerData.metadata["dealerrep"] or 0
+    PlayerData.metadata["craftingrep"] = PlayerData.metadata["craftingrep"] or 0
+    PlayerData.metadata["attachmentcraftingrep"] = PlayerData.metadata["attachmentcraftingrep"] or 0
+    PlayerData.metadata["currentapartment"] = PlayerData.metadata["currentapartment"] or nil
+    PlayerData.metadata["jobrep"] = PlayerData.metadata["jobrep"] or {
+        ["tow"] = 0,
+        ["trucker"] = 0,
+        ["taxi"] = 0,
+        ["hotdog"] = 0,
     }
-    PlayerData.metadata['callsign'] = PlayerData.metadata['callsign'] or 'NO CALLSIGN'
-    PlayerData.metadata['fingerprint'] = PlayerData.metadata['fingerprint'] or QBCore.Player.CreateFingerId()
-    PlayerData.metadata['walletid'] = PlayerData.metadata['walletid'] or QBCore.Player.CreateWalletId()
-    PlayerData.metadata['criminalrecord'] = PlayerData.metadata['criminalrecord'] or {
-        ['hasRecord'] = false,
-        ['date'] = nil
+    PlayerData.metadata["callsign"] = PlayerData.metadata["callsign"] or "NO CALLSIGN"
+    PlayerData.metadata["fingerprint"] = PlayerData.metadata["fingerprint"] or QBCore.Player.CreateFingerId()
+    PlayerData.metadata["walletid"] = PlayerData.metadata["walletid"] or QBCore.Player.CreateWalletId()
+    PlayerData.metadata["criminalrecord"] = PlayerData.metadata["criminalrecord"] or {
+        ["hasRecord"] = false,
+        ["date"] = nil,
     }
-    PlayerData.metadata['licences'] = PlayerData.metadata['licences'] or {
-        ['car'] = 0,
-        ['truck'] = 0,
-        ['motorcycle'] = 0,
-        ['heli'] = 0,
-        ['boat'] = 0,
-        ['weapon'] = false,
-        ['hunting'] = false,
-        ['fishing'] = false,
-        ['rescuer'] = false,
+    PlayerData.metadata["licences"] = PlayerData.metadata["licences"] or {
+        ["car"] = 0,
+        ["truck"] = 0,
+        ["motorcycle"] = 0,
+        ["heli"] = 0,
+        ["boat"] = 0,
+        ["weapon"] = false,
+        ["hunting"] = false,
+        ["fishing"] = false,
+        ["rescuer"] = false,
     }
-    PlayerData.metadata['vehiclelimit'] = PlayerData.metadata['vehiclelimit'] or 1
-    PlayerData.metadata['inside'] = PlayerData.metadata['inside'] or {
-        ['exitCoord'] = false,
-        ['apartment'] = false,
-    }
-    PlayerData.metadata['phonedata'] = PlayerData.metadata['phonedata'] or {
+    PlayerData.metadata["vehiclelimit"] = PlayerData.metadata["vehiclelimit"] or 1
+    PlayerData.metadata["inside"] = PlayerData.metadata["inside"] or {["exitCoord"] = false, ["apartment"] = false}
+    PlayerData.metadata["phonedata"] = PlayerData.metadata["phonedata"] or {
         SerialNumber = QBCore.Player.CreateSerialNumber(),
         InstalledApps = {},
     }
 
-    PlayerData.metadata['missive_count'] = PlayerData.metadata['missive_count'] or 0
-    PlayerData.metadata['criminal_talents'] = PlayerData.metadata['criminal_talents'] or {}
-    PlayerData.metadata['criminal_state'] = PlayerData.metadata['criminal_state'] or 0
-    PlayerData.metadata['criminal_reputation'] = PlayerData.metadata['criminal_reputation'] or 0
-    PlayerData.metadata['criminal_lastaction'] = PlayerData.metadata['criminal_lastaction'] or 0
-    PlayerData.metadata['drugs_skills'] = PlayerData.metadata['drugs_skills'] or {}
-    PlayerData.metadata['drugs_heavy_contract_date'] = PlayerData.metadata['drugs_heavy_contract_date'] or 0
+    PlayerData.metadata["missive_count"] = PlayerData.metadata["missive_count"] or 0
+    PlayerData.metadata["criminal_talents"] = PlayerData.metadata["criminal_talents"] or {}
+    PlayerData.metadata["criminal_state"] = PlayerData.metadata["criminal_state"] or 0
+    PlayerData.metadata["criminal_reputation"] = PlayerData.metadata["criminal_reputation"] or 0
+    PlayerData.metadata["criminal_lastaction"] = PlayerData.metadata["criminal_lastaction"] or 0
+    PlayerData.metadata["drugs_skills"] = PlayerData.metadata["drugs_skills"] or {}
+    PlayerData.metadata["drugs_heavy_contract_date"] = PlayerData.metadata["drugs_heavy_contract_date"] or 0
 
-    PlayerData.metadata['injuries_count'] = PlayerData.metadata['injuries_count'] or 0
-    PlayerData.metadata['injuries_date'] = PlayerData.metadata['injuries_date'] or 0
+    PlayerData.metadata["injuries_count"] = PlayerData.metadata["injuries_count"] or 0
+    PlayerData.metadata["injuries_date"] = PlayerData.metadata["injuries_date"] or 0
 
-    PlayerData.metadata['mort'] = PlayerData.metadata['mort'] or ''
+    PlayerData.metadata["mort"] = PlayerData.metadata["mort"] or ""
 
-    PlayerData.metadata['rp_death'] = PlayerData.metadata['rp_death'] or false
-    PlayerData.metadata['is_senator'] = PlayerData.metadata['is_senator'] or false
-    PlayerData.metadata['plaster'] = PlayerData.metadata['plaster'] or {}
+    PlayerData.metadata["rp_death"] = PlayerData.metadata["rp_death"] or false
+    PlayerData.metadata["is_senator"] = PlayerData.metadata["is_senator"] or false
+    PlayerData.metadata["plaster"] = PlayerData.metadata["plaster"] or {}
+    PlayerData.metadata["gym_state"] = PlayerData.metadata["gym_state"] or nil
 
     if not PlayerData.metadata.lastBidTime then
         PlayerData.metadata.canBid = true
@@ -234,11 +239,11 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     end
 
     -- Job
-    if not PlayerData.job or type(PlayerData.job) ~= 'table' then
+    if not PlayerData.job or type(PlayerData.job) ~= "table" then
         PlayerData.job = {}
     end
 
-    PlayerData.job.id = PlayerData.job.id or 'unemployed'
+    PlayerData.job.id = PlayerData.job.id or "unemployed"
     PlayerData.job.onduty = false
     PlayerData.job.grade = tostring(PlayerData.job.grade) or "1"
     -- Gang
@@ -259,7 +264,7 @@ end
 
 function QBCore.Player.Logout(source)
     local src = source
-    TriggerClientEvent('QBCore:Client:OnPlayerUnload', src)
+    TriggerClientEvent("QBCore:Client:OnPlayerUnload", src)
 
     local Player = QBCore.Players[src]
 
@@ -268,8 +273,8 @@ function QBCore.Player.Logout(source)
     end
 
     Wait(200)
-    TriggerEvent('inventory:DropPlayerInventory', src)
-    TriggerEvent('QBCore:Server:PlayerUnload', src)
+    TriggerEvent("inventory:DropPlayerInventory", src)
+    TriggerEvent("QBCore:Server:PlayerUnload", src)
     QBCore.Players[src] = nil
 end
 
@@ -278,7 +283,7 @@ CreateThread(function()
     while true do
         for player, _ in pairs(playersToSync) do
             if QBCore.Players[player] then
-                TriggerClientEvent('QBCore:Player:SetPlayerData', player, QBCore.Players[player].PlayerData)
+                TriggerClientEvent("QBCore:Player:SetPlayerData", player, QBCore.Players[player].PlayerData)
             end
         end
         playersToSync = {}
@@ -297,12 +302,12 @@ function QBCore.Player.CreatePlayer(PlayerData)
     self.PlayerData = PlayerData
 
     self.Functions.GetName = function()
-        return self.PlayerData.charinfo.firstname .. ' ' .. self.PlayerData.charinfo.lastname
+        return self.PlayerData.charinfo.firstname .. " " .. self.PlayerData.charinfo.lastname
     end
 
     self.Functions.UpdatePlayerData = function(dontUpdateChat)
         playersToSync[self.PlayerData.source] = true
-        TriggerEvent('QBCore:Server:PlayerUpdate', self.PlayerData)
+        TriggerEvent("QBCore:Server:PlayerUpdate", self.PlayerData)
 
         if dontUpdateChat == nil then
             QBCore.Commands.Refresh(self.PlayerData.source)
@@ -315,15 +320,11 @@ function QBCore.Player.CreatePlayer(PlayerData)
     end
 
     self.Functions.SetJob = function(jobId, gradeId)
-        self.PlayerData.job = {
-            id = jobId,
-            grade = tostring(gradeId),
-            onduty = self.PlayerData.job.onduty or false,
-        }
+        self.PlayerData.job = {id = jobId, grade = tostring(gradeId), onduty = self.PlayerData.job.onduty or false}
         self.Functions.UpdatePlayerData(true)
 
-        TriggerClientEvent('QBCore:Client:OnJobUpdate', self.PlayerData.source, self.PlayerData.job)
-        TriggerEvent('QBCore:Server:OnJobUpdate', self.PlayerData.source, self.PlayerData.job)
+        TriggerClientEvent("QBCore:Client:OnJobUpdate", self.PlayerData.source, self.PlayerData.job)
+        TriggerEvent("QBCore:Server:OnJobUpdate", self.PlayerData.source, self.PlayerData.job)
 
         return true
     end
@@ -359,12 +360,12 @@ function QBCore.Player.CreatePlayer(PlayerData)
 
     self.Functions.AddJobReputation = function(amount)
         local amount = tonumber(amount)
-        self.PlayerData.metadata['jobrep'][self.PlayerData.job.id] = self.PlayerData.metadata['jobrep'][self.PlayerData.job.id] + amount
+        self.PlayerData.metadata["jobrep"][self.PlayerData.job.id] = self.PlayerData.metadata["jobrep"][self.PlayerData.job.id] + amount
         self.Functions.UpdatePlayerData(true)
     end
 
     self.Functions.AddMoney = function(moneytype, amount, reason)
-        reason = reason or 'unknown'
+        reason = reason or "unknown"
         local moneytype = moneytype:lower()
         local amount = tonumber(amount)
         if amount < 0 then
@@ -380,7 +381,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
     end
 
     self.Functions.RemoveMoney = function(moneytype, amount, reason)
-        reason = reason or 'unknown'
+        reason = reason or "unknown"
         local moneytype = moneytype:lower()
         local amount = tonumber(amount)
         if amount < 0 then
@@ -396,8 +397,8 @@ function QBCore.Player.CreatePlayer(PlayerData)
             end
             self.PlayerData.money[moneytype] = self.PlayerData.money[moneytype] - amount
             self.Functions.UpdatePlayerData(true)
-            if moneytype == 'bank' then
-                TriggerClientEvent('qb-phone:client:RemoveBankMoney', self.PlayerData.source, amount)
+            if moneytype == "bank" then
+                TriggerClientEvent("qb-phone:client:RemoveBankMoney", self.PlayerData.source, amount)
             end
             return true
         end
@@ -405,7 +406,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
     end
 
     self.Functions.SetMoney = function(moneytype, amount, reason)
-        reason = reason or 'unknown'
+        reason = reason or "unknown"
         local moneytype = moneytype:lower()
         local amount = tonumber(amount)
 
@@ -432,7 +433,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
     end
 
     self.Functions.RemoveItem = function(item, amount, slot)
-        return exports['soz-inventory']:RemoveItem(self.PlayerData.source, item, amount, false, slot)
+        return exports["soz-inventory"]:RemoveItem(self.PlayerData.source, item, amount, false, slot)
     end
 
     self.Functions.SetInventory = function(items)
@@ -448,7 +449,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
             TriggerClientEvent("soz-character:Client:ApplyCurrentSkin", self.PlayerData.source)
         end
 
-        exports['soz-core']:Log('DEBUG', 'Update player skin ' .. json.encode(skin), { player = self.PlayerData })
+        exports["soz-core"]:Log("DEBUG", "Update player skin " .. json.encode(skin), {player = self.PlayerData})
     end
 
     self.Functions.UpdateMaxWeight = function()
@@ -475,7 +476,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
             end
         end
 
-        if exports['soz-core']:HasTemporaryCrimiWeight(self.PlayerData.source) then
+        if exports["soz-core"]:HasTemporaryCrimiWeight(self.PlayerData.source) then
             baseWeight = baseWeight + 40000
         end
 
@@ -521,7 +522,9 @@ function QBCore.Player.CreatePlayer(PlayerData)
             TriggerClientEvent("soz-character:Client:ApplyCurrentClothConfig", self.PlayerData.source)
         end
 
-        exports['soz-core']:Log('DEBUG', 'Update player cloth config ' .. json.encode(config), { player = self.PlayerData })
+        exports["soz-core"]:Log("DEBUG", "Update player cloth config " .. json.encode(config), {
+            player = self.PlayerData,
+        })
     end
 
     self.Functions.GetItemByName = function(item)
@@ -539,7 +542,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
         local slots = QBCore.Player.GetSlotsByItem(self.PlayerData.items, item)
         for _, slot in pairs(slots) do
             if slot then
-                items[#items+1] = self.PlayerData.items[slot]
+                items[#items + 1] = self.PlayerData.items[slot]
             end
         end
         return items
@@ -571,7 +574,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
         return nil
     end
 
-    self.Functions.SetLicence = function (licence, points)
+    self.Functions.SetLicence = function(licence, points)
         local licences = self.PlayerData.metadata.licences
         if licences[licence] ~= nil then
             licences[licence] = tonumber(points)
@@ -579,7 +582,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
         end
     end
 
-    self.Functions.SetVehicleLimit = function (limit)
+    self.Functions.SetVehicleLimit = function(limit)
         self.PlayerData.metadata.vehiclelimit = limit
         self.Functions.UpdatePlayerData(true)
     end
@@ -600,10 +603,18 @@ function QBCore.Player.CreatePlayer(PlayerData)
     end
 
     self.Functions.SetApartmentTier = function(apartmentTier)
-        if apartmentTier.tier then self.PlayerData.apartment.tier = apartmentTier.tier end
-        if apartmentTier.money_tier then self.PlayerData.apartment.money_tier = apartmentTier.money_tier end
-        if apartmentTier.park_tier then self.PlayerData.apartment.park_tier = apartmentTier.park_tier end
-        if apartmentTier.cloth_tier then self.PlayerData.apartment.cloth_tier = apartmentTier.cloth_tier end
+        if apartmentTier.tier then
+            self.PlayerData.apartment.tier = apartmentTier.tier
+        end
+        if apartmentTier.money_tier then
+            self.PlayerData.apartment.money_tier = apartmentTier.money_tier
+        end
+        if apartmentTier.park_tier then
+            self.PlayerData.apartment.park_tier = apartmentTier.park_tier
+        end
+        if apartmentTier.cloth_tier then
+            self.PlayerData.apartment.cloth_tier = apartmentTier.cloth_tier
+        end
         self.Functions.UpdatePlayerData(true)
     end
 
@@ -617,10 +628,10 @@ function QBCore.Player.CreatePlayer(PlayerData)
     end
 
     QBCore.Players[self.PlayerData.source] = self
-    exports['soz-inventory']:CreatePlayerInventory(self.PlayerData)
+    exports["soz-inventory"]:CreatePlayerInventory(self.PlayerData)
 
     -- At this point we are safe to emit new instance to third party resource for load handling
-    TriggerEvent('QBCore:Server:PlayerLoaded', self)
+    TriggerEvent("QBCore:Server:PlayerLoaded", self)
     self.Functions.UpdatePlayerData()
     self.Functions.UpdateMaxWeight()
     self.Functions.UpdateArmour()
@@ -643,57 +654,61 @@ function QBCore.Player.Save(source)
             PlayerData.money[moneytype] = math.floor(PlayerData.money[moneytype])
         end
 
-        exports.oxmysql:insert('INSERT INTO player (citizenid, cid, license, name, money, charinfo, job, gang, position, metadata, skin, cloth_config, is_default, features) VALUES (:citizenid, :cid, :license, :name, :money, :charinfo, :job, :gang, :position, :metadata, :skin, :cloth_config, :is_default, :features) ON DUPLICATE KEY UPDATE cid = :cid, name = :name, money = :money, charinfo = :charinfo, job = :job, gang = :gang, position = :position, metadata = :metadata, skin = :skin, cloth_config = :cloth_config, is_default = :is_default, features = :features', {
-            citizenid = PlayerData.citizenid,
-            cid = tonumber(PlayerData.cid),
-            license = PlayerData.license,
-            name = PlayerData.name,
-            money = json.encode(PlayerData.money),
-            charinfo = json.encode(PlayerData.charinfo),
-            job = json.encode(PlayerData.job),
-            gang = json.encode(PlayerData.gang),
-            position = json.encode(pcoords),
-            metadata = json.encode(PlayerData.metadata),
-            skin = json.encode(PlayerData.skin),
-            cloth_config = json.encode(PlayerData.cloth_config),
-            is_default = PlayerData.is_default,
-            features = json.encode(PlayerData.features),
-        })
+        exports.oxmysql:insert(
+            "INSERT INTO player (citizenid, cid, license, name, money, charinfo, job, gang, position, metadata, skin, cloth_config, is_default, features) VALUES (:citizenid, :cid, :license, :name, :money, :charinfo, :job, :gang, :position, :metadata, :skin, :cloth_config, :is_default, :features) ON DUPLICATE KEY UPDATE cid = :cid, name = :name, money = :money, charinfo = :charinfo, job = :job, gang = :gang, position = :position, metadata = :metadata, skin = :skin, cloth_config = :cloth_config, is_default = :is_default, features = :features",
+            {
+                citizenid = PlayerData.citizenid,
+                cid = tonumber(PlayerData.cid),
+                license = PlayerData.license,
+                name = PlayerData.name,
+                money = json.encode(PlayerData.money),
+                charinfo = json.encode(PlayerData.charinfo),
+                job = json.encode(PlayerData.job),
+                gang = json.encode(PlayerData.gang),
+                position = json.encode(pcoords),
+                metadata = json.encode(PlayerData.metadata),
+                skin = json.encode(PlayerData.skin),
+                cloth_config = json.encode(PlayerData.cloth_config),
+                is_default = PlayerData.is_default,
+                features = json.encode(PlayerData.features),
+            })
     else
-        exports['soz-core']:Log('ERROR', 'Save player error ! PlayerData is empty', { player = PlayerData })
+        exports["soz-core"]:Log("ERROR", "Save player error ! PlayerData is empty", {player = PlayerData})
     end
 end
 
 -- Delete character
 
 local playertables = { -- Add tables as needed
-    { table = 'player' },
-    { table = 'apartments' },
-    { table = 'bank_accounts' },
-    { table = 'crypto_transactions' },
-    { table = 'phone_invoices' },
-    { table = 'phone_messages' },
-    { table = 'player_cloth_set' },
-    { table = 'player_boats' },
-    { table = 'player_contacts' },
-    { table = 'player_houses' },
-    { table = 'player_mails' },
-    { table = 'player_outfits' },
-    { table = 'player_vehicles' }
+    {table = "player"},
+    {table = "apartments"},
+    {table = "bank_accounts"},
+    {table = "crypto_transactions"},
+    {table = "phone_invoices"},
+    {table = "phone_messages"},
+    {table = "player_cloth_set"},
+    {table = "player_boats"},
+    {table = "player_contacts"},
+    {table = "player_houses"},
+    {table = "player_mails"},
+    {table = "player_outfits"},
+    {table = "player_vehicles"},
 }
 
 function QBCore.Player.DeleteCharacter(source, citizenid)
     local src = source
     local license = QBCore.Functions.GetSozIdentifier(src)
-    local result = exports.oxmysql:scalarSync('SELECT license FROM player where citizenid = ?', { citizenid })
+    local result = exports.oxmysql:scalarSync("SELECT license FROM player where citizenid = ?", {citizenid})
     if license == result then
         for k, v in pairs(playertables) do
-            exports.oxmysql:execute('DELETE FROM ' .. v.table .. ' WHERE citizenid = ?', { citizenid })
+            exports.oxmysql:execute("DELETE FROM " .. v.table .. " WHERE citizenid = ?", {citizenid})
         end
-        exports['soz-core']:Log('WARN', 'Character Deleted ! deleted' .. citizenid, { steam = license })
+        exports["soz-core"]:Log("WARN", "Character Deleted ! deleted" .. citizenid, {steam = license})
     else
-        DropPlayer(src, 'You Have Been Kicked For Exploitation')
-        exports['soz-core']:Log('WARN', 'Anti-Cheat ! Player has Been Dropped For Character Deletion Exploit', { steam = license })
+        DropPlayer(src, "You Have Been Kicked For Exploitation")
+        exports["soz-core"]:Log("WARN", "Anti-Cheat ! Player has Been Dropped For Character Deletion Exploit", {
+            steam = license,
+        })
     end
 end
 
@@ -714,7 +729,7 @@ function QBCore.Player.GetSlotsByItem(items, itemName)
     if items then
         for slot, item in pairs(items) do
             if item.name:lower() == itemName:lower() then
-                slotsFound[#slotsFound+1] = slot
+                slotsFound[#slotsFound + 1] = slot
             end
         end
     end
@@ -737,7 +752,9 @@ function QBCore.Player.CreateCitizenId()
     local CitizenId = nil
     while not UniqueFound do
         CitizenId = tostring(QBCore.Shared.RandomStr(3) .. QBCore.Shared.RandomInt(5)):upper()
-        local result = exports.oxmysql:executeSync('SELECT COUNT(*) as count FROM player WHERE citizenid = ?', { CitizenId })
+        local result = exports.oxmysql:executeSync("SELECT COUNT(*) as count FROM player WHERE citizenid = ?", {
+            CitizenId,
+        })
         if result[1].count == 0 then
             UniqueFound = true
         end
@@ -749,9 +766,12 @@ function QBCore.Player.CreateFingerId()
     local UniqueFound = false
     local FingerId = nil
     while not UniqueFound do
-        FingerId = tostring(QBCore.Shared.RandomStr(2) .. QBCore.Shared.RandomInt(3) .. QBCore.Shared.RandomStr(1) .. QBCore.Shared.RandomInt(2) .. QBCore.Shared.RandomStr(3) .. QBCore.Shared.RandomInt(4))
-        local query = '%' .. FingerId .. '%'
-        local result = exports.oxmysql:executeSync('SELECT COUNT(*) as count FROM `player` WHERE `metadata` LIKE ?', { query })
+        FingerId = tostring(QBCore.Shared.RandomStr(2) .. QBCore.Shared.RandomInt(3) .. QBCore.Shared.RandomStr(1) .. QBCore.Shared.RandomInt(2) ..
+                                QBCore.Shared.RandomStr(3) .. QBCore.Shared.RandomInt(4))
+        local query = "%" .. FingerId .. "%"
+        local result = exports.oxmysql:executeSync("SELECT COUNT(*) as count FROM `player` WHERE `metadata` LIKE ?", {
+            query,
+        })
         if result[1].count == 0 then
             UniqueFound = true
         end
@@ -763,9 +783,11 @@ function QBCore.Player.CreatePhoneNumber()
     local UniqueFound = false
     local PhoneNumber = nil
     while not UniqueFound do
-        PhoneNumber = tostring('555-' .. QBCore.Shared.RandomInt(4))
-        local query = '%' .. PhoneNumber .. '%'
-        local result = exports.oxmysql:executeSync('SELECT COUNT(*) as count FROM `player` WHERE `charinfo` LIKE ?', { query })
+        PhoneNumber = tostring("555-" .. QBCore.Shared.RandomInt(4))
+        local query = "%" .. PhoneNumber .. "%"
+        local result = exports.oxmysql:executeSync("SELECT COUNT(*) as count FROM `player` WHERE `charinfo` LIKE ?", {
+            query,
+        })
         if result[1].count == 0 then
             UniqueFound = true
         end
@@ -777,9 +799,9 @@ function QBCore.Player.CreateWalletId()
     local UniqueFound = false
     local WalletId = nil
     while not UniqueFound do
-        WalletId = 'QB-' .. math.random(11111111, 99999999)
-        local query = '%' .. WalletId .. '%'
-        local result = exports.oxmysql:executeSync('SELECT COUNT(*) as count FROM player WHERE metadata LIKE ?', { query })
+        WalletId = "QB-" .. math.random(11111111, 99999999)
+        local query = "%" .. WalletId .. "%"
+        local result = exports.oxmysql:executeSync("SELECT COUNT(*) as count FROM player WHERE metadata LIKE ?", {query})
         if result[1].count == 0 then
             UniqueFound = true
         end
@@ -792,8 +814,8 @@ function QBCore.Player.CreateSerialNumber()
     local SerialNumber = nil
     while not UniqueFound do
         SerialNumber = math.random(11111111, 99999999)
-        local query = '%' .. SerialNumber .. '%'
-        local result = exports.oxmysql:executeSync('SELECT COUNT(*) as count FROM player WHERE metadata LIKE ?', { query })
+        local query = "%" .. SerialNumber .. "%"
+        local result = exports.oxmysql:executeSync("SELECT COUNT(*) as count FROM player WHERE metadata LIKE ?", {query})
         if result[1].count == 0 then
             UniqueFound = true
         end

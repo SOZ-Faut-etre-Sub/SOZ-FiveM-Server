@@ -208,9 +208,9 @@ export type PlayerServerState = {
     exercise: PlayerServerStateExercise & {
         completed: number;
     };
-    lastStrengthUpdate: Date;
-    lastMaxStaminaUpdate: Date;
-    lastStressLevelUpdate: Date;
+    lastStrengthUpdate: number;
+    lastMaxStaminaUpdate: number;
+    lastStressLevelUpdate: number;
 };
 
 export type PlayerClientState = {
@@ -324,6 +324,7 @@ export type PlayerMetadata = PlayerHealthBook & {
     // Typing is intentionally in that way so that you could program future items that gives clothes.
     isWearingItem: string | null;
     gym_subscription_expire_at: number | null;
+    gym_state: PlayerServerState;
     halloween2022: Halloween2022 | null;
     halloween2023: Halloween2023 | null;
     licences: Partial<Record<PlayerLicenceType, number>>;
