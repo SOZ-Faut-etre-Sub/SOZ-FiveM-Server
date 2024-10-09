@@ -195,7 +195,6 @@ export class PlayerHealthProvider {
         this.playerService.updatePlayerMaxWeight(source);
     }
 
-    @OnEvent(ServerEvent.PLAYER_INCREASE_STRESS)
     public async increaseStress(source: number, stress: number): Promise<void> {
         this.playerHealthService.increaseStress(source, stress);
     }

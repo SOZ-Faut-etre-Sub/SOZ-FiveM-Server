@@ -279,6 +279,8 @@ export enum RpcServerEvent {
     DRONE_GET = 'soz-core:server:drone-get',
 
     WEATHER_GET_FORECASTS = 'soz-core:server:weather:get-forecasts',
+
+    STRESS_UPDATE = 'soz-core:server:stress:update',
 }
 
 export enum RpcClientEvent {

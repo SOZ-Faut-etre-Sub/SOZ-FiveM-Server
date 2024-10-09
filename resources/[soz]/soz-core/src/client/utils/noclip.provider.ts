@@ -1,9 +1,12 @@
+import { AdminSpectateProvider } from '@public/client/admin/admin.spectate.provider';
 import { Command } from '@public/core/decorators/command';
-import { Once, OnceStep } from '@public/core/decorators/event';
+import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { Tick } from '@public/core/decorators/tick';
 import { wait } from '@public/core/utils';
+import { AdminPlayer } from '@public/shared/admin/admin';
+import { ClientEvent } from '@public/shared/event';
 import { Control } from '@public/shared/input';
 import { add2Vector3, multVector3, Vector3 } from '@public/shared/polyzone/vector';
 
@@ -33,6 +36,9 @@ export class NoClipProvider {
 
     @Inject(Notifier)
     public notifier: Notifier;
+
+    @Inject(AdminSpectateProvider)
+    public adminSpectateProvider: AdminSpectateProvider;
 
     private input = [0, 0, 0];
     private previousVelocity: Vector3 = [0, 0, 0];
@@ -165,6 +171,10 @@ export class NoClipProvider {
     }
 
     public async ToggleNoClipMode() {
+        if (!this.adminSpectateProvider.isNotSpectating()) {
+            this.notifier.notify('Le mode spectateur doit être stoppé pour désactiver le mode NoClip.', 'warning');
+            return;
+        }
         return await this.SetNoClip(!this.isNoClipping);
     }
 
@@ -182,7 +192,11 @@ export class NoClipProvider {
         FreezeEntityPosition(this.noClippingEntity, true);
         SetEntityCollision(this.noClippingEntity, false, false);
         SetEntityVisible(this.noClippingEntity, false, false);
-        SetLocalPlayerVisibleLocally(true);
+        if (this.adminSpectateProvider.isNotSpectating()) {
+            SetLocalPlayerVisibleLocally(true);
+        } else {
+            SetLocalPlayerInvisibleLocally(true);
+        }
         SetEntityAlpha(this.noClippingEntity, 51, false);
         SetEveryoneIgnorePlayer(playerPed, true);
         SetPoliceIgnorePlayer(playerPed, true);
@@ -274,5 +288,15 @@ export class NoClipProvider {
 
         this.bonusSpeed = Math.max(-1 * NO_CLIP_NORMAL_SPEED, this.bonusSpeed + delta);
         this.notifier.notify('Vitesse ' + (NO_CLIP_NORMAL_SPEED + this.bonusSpeed).toFixed(1));
+    }
+
+    @OnEvent(ClientEvent.ADMIN_SPECTATE_PLAYER)
+    public async onSpectatePlayer(player: AdminPlayer, position: Vector3): Promise<void> {
+        if (!this.IsNoClipMode()) {
+            this.notifier.notify(`Le mode NoClip doit être activé pour observer un joueur.`, 'info');
+            return;
+        }
+
+        await this.adminSpectateProvider.spectatePlayer(player, position);
     }
 }
