@@ -65,6 +65,9 @@ export class WorldEventProvider {
                 await wait(blipSpawnTime - now);
             }
 
+            if (this.blipFactory.exist('world_event')) {
+                this.blipFactory.remove('world_event');
+            }
             this.blipFactory.create('world_event', {
                 position: position,
                 name: event.name,
@@ -101,6 +104,9 @@ export class WorldEventProvider {
                 return;
             }
 
+            if (this.blipFactory.exist('world_event')) {
+                this.blipFactory.remove('world_event');
+            }
             this.blipFactory.create('world_event', {
                 position: position,
                 name: event.name,

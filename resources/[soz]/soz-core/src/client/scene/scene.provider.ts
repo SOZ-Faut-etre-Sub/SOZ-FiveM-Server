@@ -492,6 +492,10 @@ export class SceneProvider {
     }
 
     async doUnloadScene(scene: Scene) {
+        if (!scene) {
+            return;
+        }
+
         const objectIds = [];
 
         for (const entity of Object.values(scene.entities)) {

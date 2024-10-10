@@ -39,6 +39,7 @@ export const StorageContainer = () => {
         if (type === 'storage') type = 'default';
         if (type === 'storage_tank') type = 'default';
         if (type === 'evidence_storage') type = 'evidence_storage';
+        if (type === 'object_storage') type = 'smuggling_box';
 
         return `/html/banner/${type}.jpg`;
     }, [targetInventory?.type]);
