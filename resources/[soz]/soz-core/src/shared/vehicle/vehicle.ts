@@ -542,11 +542,8 @@ export const PushableVehicleClass: Record<VehicleClass, boolean> = {
     [VehicleClass.OpenWheel]: false,
 };
 
-export const NotPushableVehicleModel: Record<string, boolean> = {
-    firetruk: true,
-    brickade: true,
-    brickade1: true,
-};
+export const NotPushableVehicleModel: string[] = ['firetruk', 'brickade', 'brickade1'];
+export const PushableVehicleModel: string[] = ['caddy', 'sadler1', 'utillitruck2', 'utillitruck3', 'utillitruck4'];
 
 export const LockPickAlertChance = 0.1;
 

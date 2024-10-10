@@ -12,7 +12,7 @@ import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { Control } from '@public/shared/input';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
-import { NotPushableVehicleModel, PushableVehicleClass } from '@public/shared/vehicle/vehicle';
+import { NotPushableVehicleModel, PushableVehicleClass, PushableVehicleModel } from '@public/shared/vehicle/vehicle';
 
 @Provider()
 export class VehiclePushProvider {
@@ -57,6 +57,9 @@ export class VehiclePushProvider {
         },
     };
 
+    private notPushableVehicleModelHash: Record<number, boolean> = {};
+    private pushableVehicleModel: Record<number, boolean> = {};
+
     private isWalking: boolean;
     private positionType = ['bonnet', 'door', 'trunk'];
     private attachedVeh: number;
@@ -78,6 +81,14 @@ export class VehiclePushProvider {
 
     @Once(OnceStep.PlayerLoaded)
     public onPlayerLoaded() {
+        for (const model of NotPushableVehicleModel) {
+            this.notPushableVehicleModelHash[GetHashKey(model)] = true;
+        }
+
+        for (const model of PushableVehicleModel) {
+            this.pushableVehicleModel[GetHashKey(model)] = true;
+        }
+
         this.targetFactory.createForAllVehicle(
             [
                 {
@@ -341,18 +352,15 @@ export class VehiclePushProvider {
     }
 
     private async isVehicleNotPushable(vehicle: number): Promise<boolean> {
-        if (!PushableVehicleClass[GetVehicleClass(vehicle)]) {
+        const model = GetEntityModel(vehicle);
+        if (
+            (!PushableVehicleClass[GetVehicleClass(vehicle)] && !this.pushableVehicleModel[model]) ||
+            this.notPushableVehicleModelHash[model]
+        ) {
             return true;
         }
 
-        const currentModel = GetEntityModel(vehicle);
-        for (const model of Object.keys(NotPushableVehicleModel)) {
-            if (currentModel == GetHashKey(model)) {
-                return true;
-            }
-        }
-
-        if (IsThisModelAQuadbike(currentModel)) {
+        if (IsThisModelAQuadbike(model)) {
             return true;
         }
 
@@ -366,7 +374,11 @@ export class VehiclePushProvider {
 
     private isVehicleCurrentlyNotPushable(vehicle: number): boolean {
         return (
-            IsEntityInAir(vehicle) || IsEntityUpsidedown(vehicle) || !this.isVehEmpty(vehicle) || IsEntityDead(vehicle)
+            IsEntityInAir(vehicle) ||
+            IsEntityUpsidedown(vehicle) ||
+            !this.isVehEmpty(vehicle) ||
+            IsEntityDead(vehicle) ||
+            !this.isVehSloping(vehicle)
         );
     }
 
@@ -376,6 +388,17 @@ export class VehiclePushProvider {
             if (!IsVehicleSeatFree(vehicle, i)) {
                 return false;
             }
+        }
+
+        return true;
+    }
+
+    private isVehSloping(vehicle: number) {
+        const vehCoord = GetEntityCoords(vehicle);
+        const [, , normal] = GetGroundZAndNormalFor_3dCoord(vehCoord[0], vehCoord[1], vehCoord[2]);
+
+        if (normal[2] < 0.75 || Math.abs(normal[0]) >= 0.45 || Math.abs(normal[1]) >= 0.45) {
+            return false;
         }
 
         return true;
