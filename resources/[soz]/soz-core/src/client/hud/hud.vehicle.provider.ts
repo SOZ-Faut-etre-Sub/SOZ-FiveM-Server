@@ -37,14 +37,15 @@ export class HudVehicleProvider {
     @Tick(0)
     async updateVehicleHudSpeed() {
         const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
-
         if (!vehicle) {
             return;
         }
 
+        const isHeli = IsThisModelAHeli(GetEntityModel(vehicle));
+
         const speed = GetEntitySpeed(vehicle) * 3.6;
         const rpm = GetVehicleDashboardRpm();
-        const gear = GetVehicleCurrentGear(vehicle);
+        const gear = isHeli ? 1 : GetVehicleCurrentGear(vehicle);
 
         this.nuiDispatch.dispatch('hud', 'UpdateVehicleSpeed', {
             speed,
