@@ -4,6 +4,7 @@ export type EventInfo = {
     currentEventId: string | null;
     currentSceneId: string | null;
     startTimestamp: number;
+    signaled: boolean;
 };
 
 export type WorldEvent = {

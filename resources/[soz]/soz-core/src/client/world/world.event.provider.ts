@@ -65,6 +65,10 @@ export class WorldEventProvider {
                 await wait(blipSpawnTime - now);
             }
 
+            if (this.currentEvent.signaled) {
+                return;
+            }
+
             if (this.blipFactory.exist('world_event')) {
                 this.blipFactory.remove('world_event');
             }
@@ -94,6 +98,7 @@ export class WorldEventProvider {
             currentEventId: eventId,
             currentSceneId: sceneId,
             startTimestamp: Date.now(),
+            signaled: false,
         };
 
         if (position && (player.gang.id || FDO.includes(player.job.id))) {
@@ -119,5 +124,13 @@ export class WorldEventProvider {
     public async onStopWorldEvent() {
         this.blipFactory.remove('world_event');
         this.currentEvent = null;
+    }
+
+    @OnEvent(ClientEvent.WORLD_EVENT_SIGNAL_INVENTORY)
+    public async onSignalInventory() {
+        if (this.currentEvent) {
+            this.blipFactory.remove('world_event');
+            this.currentEvent.signaled = true;
+        }
     }
 }

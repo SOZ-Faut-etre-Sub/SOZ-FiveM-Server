@@ -1,3 +1,5 @@
+import { wait } from '@public/core/utils';
+
 import { OnEvent } from '../../core/decorators/event';
 import { Get, Post } from '../../core/decorators/http';
 import { Inject } from '../../core/decorators/injectable';
@@ -25,6 +27,7 @@ type CurrentEvent = {
     event: WorldEvent;
     scene: Scene;
     startTimestamp: number | null;
+    signaled: boolean;
 };
 
 @Provider()
@@ -77,6 +80,7 @@ export class WorldEventProvider {
             currentEventId: this.currentEvent.event.id,
             currentSceneId: this.currentEvent.scene.id,
             startTimestamp: this.currentEvent.startTimestamp,
+            signaled: this.currentEvent.signaled,
         };
     }
 
@@ -95,7 +99,9 @@ export class WorldEventProvider {
             return;
         }
 
+        this.currentEvent.signaled = true;
         const objects = Object.values(this.currentEvent.scene.entities);
+        TriggerClientEvent(ClientEvent.WORLD_EVENT_SIGNAL_INVENTORY, -1);
 
         for (const object of objects) {
             if (object.inventoryId === inventoryId) {
@@ -155,6 +161,7 @@ export class WorldEventProvider {
                 currentEventId: null,
                 currentSceneId: null,
                 startTimestamp: null,
+                signaled: false,
             };
         }
 
@@ -162,6 +169,7 @@ export class WorldEventProvider {
             currentEventId: this.currentEvent.event.id,
             currentSceneId: this.currentEvent.scene.id,
             startTimestamp: this.currentEvent.startTimestamp,
+            signaled: this.currentEvent.signaled,
         };
     }
 
@@ -235,8 +243,11 @@ export class WorldEventProvider {
         for (const entity of Object.values(scene.entities)) {
             if (entity.inventoryId) {
                 inventories.push(entity.inventoryId);
+                this.inventoryManager.getOrCreateInventory('object_storage', entity.inventoryId, null);
             }
         }
+
+        await wait(1000);
 
         for (const reward of event.reward) {
             for (const inventoryId of inventories) {
@@ -267,7 +278,7 @@ export class WorldEventProvider {
             }
         }
 
-        this.currentEvent = { event, scene, startTimestamp: Date.now() };
+        this.currentEvent = { event, scene, startTimestamp: Date.now(), signaled: false };
         const firstEntityPosition = Object.values(scene.entities)[0]?.object.position;
 
         TriggerClientEvent(ClientEvent.WORLD_EVENT_START, -1, event.id, scene.id, firstEntityPosition);
