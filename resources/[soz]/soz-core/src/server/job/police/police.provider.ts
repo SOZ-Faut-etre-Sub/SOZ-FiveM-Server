@@ -141,13 +141,17 @@ export class PoliceProvider {
         }
 
         if (item.name == 'heavy_antiriot_outfit' || item.name == 'light_intervention_outfit') {
-            const itemDef = this.itemService.getItem(item.name);
             this.playerService.setPlayerMetadata(source, 'armor', { current: 100, hidden: true });
-            TriggerClientEvent(ClientEvent.POLICE_SETUP_ARMOR_PLATE, source, item?.metadata?.plates, itemDef.maxplates);
         }
 
         if (item.metadata['type'] == 'lspd' || item.metadata['type'] == 'bcso') {
-            TriggerClientEvent(ClientEvent.POLICE_APPLY_OUTFIT, source, item.name, item.metadata['type']);
+            TriggerClientEvent(
+                ClientEvent.POLICE_APPLY_OUTFIT,
+                source,
+                item.name,
+                item.metadata['type'],
+                item?.metadata?.plates
+            );
         } else if (item.metadata['type'] == 'lsmc') {
             TriggerClientEvent(ClientEvent.LSMC_APPLY_OUTFIT, source, item.metadata['type']);
         } else if (item.metadata['type'] == 'stonk') {

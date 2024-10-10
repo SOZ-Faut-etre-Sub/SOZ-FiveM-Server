@@ -364,9 +364,12 @@ export class PlayerHealthProvider {
     }
 
     @OnEvent(ClientEvent.POLICE_SETUP_ARMOR_PLATE)
-    public setupArmorPlates(nbPlates?: number) {
+    public setupArmorPlates(nbPlates?: number, maxPlates?: number, removePreviousPlates?: boolean) {
         const armorPlates = this.playerService.getNbArmorPlates();
-        this.playerService.setNbArmorPlates(armorPlates + (nbPlates || 1));
+        if (maxPlates) {
+            this.playerService.setMaxNbArmorPlates(maxPlates);
+        }
+        this.playerService.setNbArmorPlates(removePreviousPlates ? nbPlates : armorPlates + (nbPlates || 1));
         SetPlayerWeaponDefenseModifier(PlayerId(), 0.1);
         SetPlayerWeaponDefenseModifier_2(PlayerId(), 0.1);
     }

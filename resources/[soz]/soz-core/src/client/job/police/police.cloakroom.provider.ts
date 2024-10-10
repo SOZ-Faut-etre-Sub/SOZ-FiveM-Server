@@ -1,3 +1,5 @@
+import { ItemService } from '@public/client/item/item.service';
+import { PlayerHealthProvider } from '@public/client/player/player.health.provider';
 import { PlayerService } from '@public/client/player/player.service';
 import { PlayerWardrobe } from '@public/client/player/player.wardrobe';
 import { TargetFactory } from '@public/client/target/target.factory';
@@ -55,6 +57,12 @@ export class PoliceCloakRoomProvider {
     @Inject(JobCloakroomProvider)
     private jobCloakroomProvider: JobCloakroomProvider;
 
+    @Inject(ItemService)
+    private itemService: ItemService;
+
+    @Inject(PlayerHealthProvider)
+    private playerHealthProvider: PlayerHealthProvider;
+
     @Once(OnceStep.Start)
     public onStart() {
         for (const prisonerCloakroomInfo of prisonerCloakroomInfos) {
@@ -107,7 +115,7 @@ export class PoliceCloakRoomProvider {
     }
 
     @OnEvent(ClientEvent.POLICE_APPLY_OUTFIT)
-    public async applyDutyClothing(itemname: string, job: JobType) {
+    public async applyDutyClothing(itemname: string, job: JobType, plates?: number) {
         const player = this.playerService.getPlayer();
         const model = GetEntityModel(PlayerPedId());
 
@@ -129,6 +137,10 @@ export class PoliceCloakRoomProvider {
 
         const { completed } = await this.playerWardrobe.waitProgress(false);
         if (completed) {
+            if (itemname == 'light_intervention_outfit') {
+                const itemDef = this.itemService.getItem(itemname);
+                this.playerHealthProvider.setupArmorPlates(plates, itemDef?.maxplates, true);
+            }
             TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, outfit);
         }
     }

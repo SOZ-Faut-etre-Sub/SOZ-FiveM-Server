@@ -442,7 +442,9 @@ export class WeaponProvider {
     ) {
         const armorPlates = this.playerService.getNbArmorPlates();
         const damageType = GetWeaponDamageType(weaponHash);
-        if (armorPlates > 0 && [3, 5, 6].includes(damageType)) {
+        const playerPed = PlayerPedId();
+
+        if (armorPlates > 0 && [3, 5, 6].includes(damageType) && victim === playerPed) {
             if (armorPlates === 1) {
                 SetPlayerWeaponDefenseModifier(PlayerId(), 1.0);
                 SetPlayerWeaponDefenseModifier_2(PlayerId(), 1.0);
