@@ -93,7 +93,7 @@ export class VehicleFuelProvider {
     @Inject(VehicleRepository)
     private vehicleRepository: VehicleRepository;
 
-    private currentStationPistol: CurrentStationPistol | null = null;
+    public currentStationPistol: CurrentStationPistol | null = null;
 
     private publicOilStationPrice = 0;
     private publicKeroseneStationPrice = 0;
