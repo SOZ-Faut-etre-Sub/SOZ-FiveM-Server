@@ -903,7 +903,7 @@ model gang {
     name     String @db.VarChar(100)
     type     String @db.VarChar(100)
     hub      String @db.Text
-    metadata String @db.Text
+    metadata String @db.MediumText
 }
 
 model door {
@@ -935,6 +935,7 @@ model loot_item {
     type     String  @db.VarChar(100)
     item     String  @db.VarChar(100)
     metadata String? @db.Text
+    min      Int     @default(1)
     max      Int
     chance   Int
 
