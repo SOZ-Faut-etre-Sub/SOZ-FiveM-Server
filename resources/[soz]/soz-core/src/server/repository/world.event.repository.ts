@@ -76,13 +76,14 @@ export class WorldEventRepository extends Repository<RepositoryType.WorldEvent> 
 
         event.reward.push(reward);
 
-        const rewards = [];
+        const rewards: RewardWorldEvent[] = [];
 
         for (const reward of event.reward) {
             rewards.push({
                 item: reward.item,
                 min: reward.min,
                 max: reward.max,
+                chance: reward.chance,
             });
         }
 
@@ -103,13 +104,14 @@ export class WorldEventRepository extends Repository<RepositoryType.WorldEvent> 
 
         event.reward = event.reward.filter(reward => reward.item !== itemId);
 
-        const rewards = [];
+        const rewards: RewardWorldEvent[] = [];
 
         for (const reward of event.reward) {
             rewards.push({
                 item: reward.item,
                 min: reward.min,
                 max: reward.max,
+                chance: reward.chance,
             });
         }
 
