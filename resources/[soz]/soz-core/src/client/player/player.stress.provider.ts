@@ -69,6 +69,7 @@ export class PlayerStressProvider {
         [StressLooseType.Handcuffed]: null,
         [StressLooseType.DrinkCoffee]: null,
         [StressLooseType.DrinkAlcohol]: null,
+        [StressLooseType.Smoke]: null,
     };
 
     private async updateStress(type: StressLooseType, checkZonePosition: Vector3 = null): Promise<void> {

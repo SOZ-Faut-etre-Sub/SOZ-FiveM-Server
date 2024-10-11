@@ -586,7 +586,8 @@ function Inventory.AddItem(source, inv, item, amount, metadata, slot, cb)
     if slot then
         local slotItem = inv.items[slot]
         local slotItemDef = slotItem and QBCore.Shared.Items[slotItem.name]
-        if not slotItem or not item.unique and slotItem and slotItem.name == item.name and table.matches(slotItem.metadata, metadata) then
+        if not slotItem or not item.unique and slotItem and slotItem.name == item.name and table.matches(slotItem.metadata, metadata) and
+            (not slotItemDef.maxStack or slotItem.amount + amount <= slotItemDef.maxStack) then
             existing = nil
         elseif (table.contains(Config.crateTypeAllowed, item.type)) and slotItem and slotItem.type == "crate" then
             if (Inventory.GetItemWeight(item, metadata, amount) + Inventory.getCrateWeight(slotItem.metadata)) < Config.crateMaxWeight then
@@ -683,7 +684,9 @@ function Inventory.AddItem(source, inv, item, amount, metadata, slot, cb)
         local items, toSlot = inv.items, nil
         for i = 1, inv.slots do
             local slotItem = items[i]
-            if not item.unique and slotItem ~= nil and slotItem.name == item.name and table.matches(slotItem.metadata, metadata) then
+            local slotItemDef = slotItem and QBCore.Shared.Items[slotItem.name]
+            if not item.unique and slotItem ~= nil and slotItem.name == item.name and table.matches(slotItem.metadata, metadata) and
+                (not slotItemDef.maxStack or slotItem.amount + amount <= slotItemDef.maxStack) then
                 toSlot, existing = i, true
                 break
             elseif not toSlot and slotItem == nil then

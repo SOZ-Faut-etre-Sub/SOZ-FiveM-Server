@@ -49,4 +49,23 @@ export class PlayerStressProvider {
         }
         return this.playerLastStressTypeUsedAt[player.citizenid][type];
     }
+
+    public updateStressType(source: number, type: StressLooseType) {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return null;
+        }
+
+        this.playerLastStressTypeUsedAt[player.citizenid] ??= {};
+        const lastUsedAt = this.playerLastStressTypeUsedAt[player.citizenid][type];
+
+        const time = Date.now();
+        if (lastUsedAt !== undefined && time < lastUsedAt + IntervalByStressLooseType[type] * 60 * 1000) {
+            return false;
+        }
+        this.playerLastStressTypeUsedAt[player.citizenid][type] = Date.now();
+
+        return true;
+    }
 }
