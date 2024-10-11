@@ -245,7 +245,7 @@ export class LSMCDeathProvider {
             this.IsDead = true;
 
             this.nuiMenu.closeAll(false);
-            await this.voipService.mutePlayer(true);
+            this.voipService.mutePlayer(true);
 
             // Skip death process if player is zombie
             if (this.playerZombieProvider.isZombie() || this.playerZombieProvider.isTransforming()) {
@@ -440,7 +440,7 @@ export class LSMCDeathProvider {
             this.IsDead = true;
         } else {
             this.notifier.notify('Vous êtes réanimé!');
-            await this.voipService.mutePlayer(false);
+            this.voipService.mutePlayer(false);
         }
 
         FreezeEntityPosition(PlayerPedId(), false);
