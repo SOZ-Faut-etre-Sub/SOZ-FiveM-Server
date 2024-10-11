@@ -133,7 +133,7 @@ export type InventoryItemMetadata = {
     photoUrl?: string;
     printed?: boolean;
     value?: number;
-    storageElements?: InventoryItem[];
+    storageElements?: InventoryItem[] | Record<string, InventoryItem>;
     notSearchable?: boolean;
     plates?: number;
 };
