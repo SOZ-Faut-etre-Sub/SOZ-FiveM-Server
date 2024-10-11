@@ -9,7 +9,7 @@ import { PlayerLicenceLabels, PlayerLicenceType } from '@public/shared/player';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
 
-const jobAllowed = [JobType.FBI, JobType.LSMC, JobType.LSPD, JobType.BCSO, JobType.FBI, JobType.LSCS];
+const jobAllowed = [JobType.FBI, JobType.LSMC, JobType.LSPD, JobType.BCSO, JobType.SASP, JobType.LSCS];
 
 @Provider()
 export class PoliceLicenceProvider {
