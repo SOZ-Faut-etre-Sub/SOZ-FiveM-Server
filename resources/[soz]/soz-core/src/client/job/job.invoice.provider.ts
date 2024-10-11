@@ -3,7 +3,6 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
 import { JobPermission, JobType } from '../../shared/job';
-import { PositiveNumberValidator } from '../../shared/nui/input';
 import { Err, Ok } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
 import { InputService } from '../nui/input.service';
@@ -105,11 +104,7 @@ export class JobInvoiceProvider {
                 maxCharacters: 200,
             },
             input => {
-                if (input === null) {
-                    return Ok(input);
-                }
-
-                if (input.length < 5) {
+                if (input === null || input.length < 5) {
                     return Err('Le titre doit faire au moins 5 caractères');
                 }
 
@@ -117,12 +112,24 @@ export class JobInvoiceProvider {
             }
         );
 
-        const amount = await this.inputService.askInput(
+        const amount = await this.inputService.askInput<number>(
             {
                 title: 'Montant de la facture',
                 maxCharacters: 10,
             },
-            PositiveNumberValidator
+            input => {
+                if (input === null || input.length < 1) {
+                    return Err('Le montant doit être renseigné');
+                }
+
+                const inputNumber = Number(input);
+
+                if (isNaN(inputNumber) || inputNumber < 0) {
+                    return Err('Veuillez entrer un nombre positif');
+                }
+
+                return Ok(inputNumber);
+            }
         );
 
         return [title, amount];
