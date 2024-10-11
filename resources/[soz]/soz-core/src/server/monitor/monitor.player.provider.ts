@@ -1,3 +1,4 @@
+import { GangRepository } from '@private/server/resources/gang.repository';
 import { JobType } from '@public/shared/job';
 import { PlayerCriminalState } from '@public/shared/player';
 import { Gauge } from 'prom-client';
@@ -11,6 +12,9 @@ import { ServerStateService } from '../server.state.service';
 export class MonitorPlayerProvider {
     @Inject(ServerStateService)
     private serverStateService: ServerStateService;
+
+    @Inject(GangRepository)
+    private gangRepository: GangRepository;
 
     private lastPlayers: Record<string, Record<string, any>> = {};
 
@@ -63,14 +67,21 @@ export class MonitorPlayerProvider {
         this.playerCount.set(players.length);
 
         for (const player of players) {
+            let job: string = player.job.id;
+            if (player.gang.id && (await this.gangRepository.find(player.gang.id))) {
+                job = 'HC';
+            } else if (
+                player.job.id == JobType.Unemployed &&
+                player.metadata.criminal_state == PlayerCriminalState.Allowed
+            ) {
+                job = 'MC';
+            }
+
             const labels = {
                 id: player.citizenid,
                 name: player.charinfo.firstname + ' ' + player.charinfo.lastname,
                 license: player.license,
-                job:
-                    player.job.id == JobType.Unemployed && player.metadata.criminal_state == PlayerCriminalState.Allowed
-                        ? 'crimi'
-                        : player.job.id,
+                job,
                 grade: player.job.grade,
             };
             const previousLabels = this.lastPlayers[player.citizenid];
