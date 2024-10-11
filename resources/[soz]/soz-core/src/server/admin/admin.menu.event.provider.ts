@@ -72,16 +72,6 @@ export class AdminMenuEventProvider {
             return;
         }
 
-        if (existingEvent.reward.find(reward => reward.item === itemId)) {
-            this.notifier.notify(
-                source,
-                `L'item ${item.label} est déjà une récompense de l'evenement ${existingEvent.name}`,
-                'error'
-            );
-
-            return;
-        }
-
         const event = await this.worldEventRepository.addReward(eventId, {
             item: item.name,
             chance,
@@ -93,7 +83,7 @@ export class AdminMenuEventProvider {
     }
 
     @OnEvent(ServerEvent.ADMIN_EVENT_REMOVE_REWARD)
-    public async removeReward(source: number, eventId: string, itemId: string): Promise<void> {
+    public async removeReward(source: number, eventId: string, index: number): Promise<void> {
         if (!this.permissionService.isHelper(source)) {
             return;
         }
@@ -106,13 +96,13 @@ export class AdminMenuEventProvider {
             return;
         }
 
-        const event = await this.worldEventRepository.removeReward(eventId, itemId);
+        const itemId = await this.worldEventRepository.removeReward(eventId, index);
 
-        this.notifier.notify(source, `Récompense ${itemId} supprimer de l'evenement ${event.name}`);
+        this.notifier.notify(source, `Récompense ${itemId} supprimée de l'evenement ${existingEvent.name}`);
     }
 
     @OnEvent(ServerEvent.ADMIN_EVENT_SET_REWARD_CHANCE)
-    public async setRewardChance(source: number, eventId: string, itemId: string, chance: number): Promise<void> {
+    public async setRewardChance(source: number, eventId: string, index: number, chance: number): Promise<void> {
         if (!this.permissionService.isHelper(source)) {
             return;
         }
@@ -125,7 +115,7 @@ export class AdminMenuEventProvider {
             return;
         }
 
-        await this.worldEventRepository.setRewardChance(eventId, itemId, chance);
+        const itemId = await this.worldEventRepository.setRewardChance(eventId, index, chance);
 
         this.notifier.notify(
             source,
@@ -134,7 +124,7 @@ export class AdminMenuEventProvider {
     }
 
     @OnEvent(ServerEvent.ADMIN_EVENT_SET_REWARD_MIN)
-    public async setRewardMin(source: number, eventId: string, itemId: string, min: number): Promise<void> {
+    public async setRewardMin(source: number, eventId: string, index: number, min: number): Promise<void> {
         if (!this.permissionService.isHelper(source)) {
             return;
         }
@@ -147,7 +137,7 @@ export class AdminMenuEventProvider {
             return;
         }
 
-        await this.worldEventRepository.setRewardMin(eventId, itemId, min);
+        const itemId = await this.worldEventRepository.setRewardMin(eventId, index, min);
 
         this.notifier.notify(
             source,
@@ -156,7 +146,7 @@ export class AdminMenuEventProvider {
     }
 
     @OnEvent(ServerEvent.ADMIN_EVENT_SET_REWARD_MAX)
-    public async setRewardMax(source: number, eventId: string, itemId: string, max: number): Promise<void> {
+    public async setRewardMax(source: number, eventId: string, index: number, max: number): Promise<void> {
         if (!this.permissionService.isHelper(source)) {
             return;
         }
@@ -169,7 +159,7 @@ export class AdminMenuEventProvider {
             return;
         }
 
-        await this.worldEventRepository.setRewardMax(eventId, itemId, max);
+        const itemId = await this.worldEventRepository.setRewardMax(eventId, index, max);
 
         this.notifier.notify(
             source,

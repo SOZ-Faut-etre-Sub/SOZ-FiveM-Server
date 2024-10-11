@@ -115,52 +115,76 @@ export const EventSubMenu: FunctionComponent<EventSubMenuProps> = ({ banner, eve
                                 ❌ Supprimer
                             </MenuItemButton>
                             <MenuTitle>Récompenses</MenuTitle>
-                            {event.reward.map(reward => (
-                                <MenuItemSelect
-                                    title={items.find(item => item.name === reward.item)?.label || reward.item}
-                                    key={reward.item}
-                                    description={
-                                        <div>
-                                            <div>Chance: {reward.chance}%</div>
-                                            <div>Min: {reward.min}</div>
-                                            <div>Max: {reward.max}</div>
-                                        </div>
-                                    }
-                                    onConfirm={(i, value) => {
-                                        if (value === 'delete') {
-                                            fetchNui(NuiEvent.AdminMenuEventRemoveReward, {
-                                                eventId: event.id,
-                                                itemId: reward.item,
-                                            });
-                                        }
+                            {[
+                                ...new Set(
+                                    event.reward.map(reward => items.find(item => item.name === reward.item).type)
+                                ),
+                            ].map(type => (
+                                <div key={`reward_${type}`}>
+                                    <MenuTitle>
+                                        <span className="font-normal lowercase">{type}</span>
+                                    </MenuTitle>
 
-                                        if (value === 'chance') {
-                                            fetchNui(NuiEvent.AdminMenuEventSetRewardChance, {
-                                                eventId: event.id,
-                                                itemId: reward.item,
-                                            });
-                                        }
+                                    {event.reward
+                                        .map((elem, index) => ({ ...elem, index }))
+                                        .filter(reward => items.find(item => item.name === reward.item).type == type)
+                                        .sort((rewarda, rewardb) =>
+                                            items
+                                                .find(item => item.name === rewarda.item)
+                                                .label.localeCompare(
+                                                    items.find(item => item.name === rewardb.item).label
+                                                )
+                                        )
+                                        .map((reward, index) => (
+                                            <MenuItemSelect
+                                                title={
+                                                    items.find(item => item.name === reward.item)?.label || reward.item
+                                                }
+                                                key={reward.item + index}
+                                                description={
+                                                    <div>
+                                                        <div>Chance: {reward.chance}%</div>
+                                                        <div>Min: {reward.min}</div>
+                                                        <div>Max: {reward.max}</div>
+                                                    </div>
+                                                }
+                                                onConfirm={(i, value) => {
+                                                    if (value === 'delete') {
+                                                        fetchNui(NuiEvent.AdminMenuEventRemoveReward, {
+                                                            eventId: event.id,
+                                                            index: reward.index,
+                                                        });
+                                                    }
 
-                                        if (value === 'min') {
-                                            fetchNui(NuiEvent.AdminMenuEventSetRewardMin, {
-                                                eventId: event.id,
-                                                itemId: reward.item,
-                                            });
-                                        }
+                                                    if (value === 'chance') {
+                                                        fetchNui(NuiEvent.AdminMenuEventSetRewardChance, {
+                                                            eventId: event.id,
+                                                            index: reward.index,
+                                                        });
+                                                    }
 
-                                        if (value === 'max') {
-                                            fetchNui(NuiEvent.AdminMenuEventSetRewardMax, {
-                                                eventId: event.id,
-                                                itemId: reward.item,
-                                            });
-                                        }
-                                    }}
-                                >
-                                    <MenuItemSelectOption value="delete">Supprimer</MenuItemSelectOption>
-                                    <MenuItemSelectOption value="chance">Déf. Chance</MenuItemSelectOption>
-                                    <MenuItemSelectOption value="min">Déf. Min</MenuItemSelectOption>
-                                    <MenuItemSelectOption value="max">Déf. Max</MenuItemSelectOption>
-                                </MenuItemSelect>
+                                                    if (value === 'min') {
+                                                        fetchNui(NuiEvent.AdminMenuEventSetRewardMin, {
+                                                            eventId: event.id,
+                                                            index: reward.index,
+                                                        });
+                                                    }
+
+                                                    if (value === 'max') {
+                                                        fetchNui(NuiEvent.AdminMenuEventSetRewardMax, {
+                                                            eventId: event.id,
+                                                            index: reward.index,
+                                                        });
+                                                    }
+                                                }}
+                                            >
+                                                <MenuItemSelectOption value="delete">Supprimer</MenuItemSelectOption>
+                                                <MenuItemSelectOption value="chance">Déf. Chance</MenuItemSelectOption>
+                                                <MenuItemSelectOption value="min">Déf. Min</MenuItemSelectOption>
+                                                <MenuItemSelectOption value="max">Déf. Max</MenuItemSelectOption>
+                                            </MenuItemSelect>
+                                        ))}
+                                </div>
                             ))}
                             <MenuTitle>Scènes</MenuTitle>
                             {Object.values(scenes)

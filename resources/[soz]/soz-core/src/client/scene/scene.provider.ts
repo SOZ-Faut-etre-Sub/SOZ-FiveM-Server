@@ -24,6 +24,7 @@ import { ObjectEditorProvider } from '../object/object.editor.provider';
 import { ObjectProvider } from '../object/object.provider';
 import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
+import { ProgressService } from '../progress.service';
 import { SceneRepository } from '../repository/scene.repository';
 
 type CurrentSceneEdited = {
@@ -56,6 +57,9 @@ export class SceneProvider {
 
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
+
+    @Inject(ProgressService)
+    private progressService: ProgressService;
 
     @Inject(PlayerService)
     private playerService: PlayerService;
@@ -464,7 +468,22 @@ export class SceneProvider {
                         job: player.job.id,
                         category: 'society',
                         canInteract: () => true,
-                        action: () => {
+                        action: async () => {
+                            const progress = await this.progressService.progress(
+                                'pick_up_ore',
+                                'Signalement en cours...',
+                                180_000,
+                                {
+                                    dictionary: 'Rcm_epsilonism4',
+                                    name: 'eps_4_ig_1_jimmy_lookaround_idle_a_jb',
+                                    options: { repeat: true },
+                                },
+                                {}
+                            );
+                            if (!progress.completed) {
+                                return;
+                            }
+
                             TriggerServerEvent(ServerEvent.WORLD_EVENT_SIGNAL_INVENTORY, entity.inventoryId);
                         },
                     });

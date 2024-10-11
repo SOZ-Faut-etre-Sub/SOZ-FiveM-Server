@@ -122,12 +122,12 @@ export class AdminMenuEventProvider {
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuEventRemoveReward)
-    public async removeEventReward({ itemId, eventId }: { itemId: string; eventId: string }): Promise<void> {
-        TriggerServerEvent(ServerEvent.ADMIN_EVENT_REMOVE_REWARD, eventId, itemId);
+    public async removeEventReward({ index, eventId }: { index: number; eventId: string }): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_EVENT_REMOVE_REWARD, eventId, index);
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuEventSetRewardChance)
-    public async setRewardChance({ itemId, eventId }: { itemId: string; eventId: string }): Promise<void> {
+    public async setRewardChance({ index, eventId }: { index: number; eventId: string }): Promise<void> {
         const chance = await this.input.askInput<number>(
             {
                 title: 'Pourcentage de chance de drop',
@@ -140,11 +140,11 @@ export class AdminMenuEventProvider {
             return;
         }
 
-        TriggerServerEvent(ServerEvent.ADMIN_EVENT_SET_REWARD_CHANCE, eventId, itemId, chance);
+        TriggerServerEvent(ServerEvent.ADMIN_EVENT_SET_REWARD_CHANCE, eventId, index, chance);
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuEventSetRewardMin)
-    public async setRewardMin({ itemId, eventId }: { itemId: string; eventId: string }): Promise<void> {
+    public async setRewardMin({ index, eventId }: { index: number; eventId: string }): Promise<void> {
         const min = await this.input.askInput<number>(
             {
                 title: 'Quantité minimum',
@@ -157,11 +157,11 @@ export class AdminMenuEventProvider {
             return;
         }
 
-        TriggerServerEvent(ServerEvent.ADMIN_EVENT_SET_REWARD_MIN, eventId, itemId, min);
+        TriggerServerEvent(ServerEvent.ADMIN_EVENT_SET_REWARD_MIN, eventId, index, min);
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuEventSetRewardMax)
-    public async setRewardMax({ itemId, eventId }: { itemId: string; eventId: string }): Promise<void> {
+    public async setRewardMax({ index, eventId }: { index: number; eventId: string }): Promise<void> {
         const max = await this.input.askInput<number>(
             {
                 title: 'Quantité maximum',
@@ -174,7 +174,7 @@ export class AdminMenuEventProvider {
             return;
         }
 
-        TriggerServerEvent(ServerEvent.ADMIN_EVENT_SET_REWARD_MAX, eventId, itemId, max);
+        TriggerServerEvent(ServerEvent.ADMIN_EVENT_SET_REWARD_MAX, eventId, index, max);
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuEventSetStartSound)
