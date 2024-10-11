@@ -55,44 +55,51 @@ const CameraApp: React.FC = () => {
             });
         }
 
-        const blob = await gameView.takeScreenshot();
-        const formData = new FormData();
-        const file = new File([blob], 'screenshot.webp', { type: 'image/webp' });
+        try {
+            const blob = await gameView.takeScreenshot();
+            const formData = new FormData();
+            const file = new File([blob], 'screenshot.webp', { type: 'image/webp' });
 
-        const operations = `{"operationName": "createScreenshot", "variables": {"file":null}, "query":"mutation createScreenshot($file: Upload!) { createScreenshot(file: $file) {url} }"}`;
-        formData.append('operations', operations);
+            const operations = `{"operationName": "createScreenshot", "variables": {"file":null}, "query":"mutation createScreenshot($file: Upload!) { createScreenshot(file: $file) {url} }"}`;
+            formData.append('operations', operations);
 
-        const map = `{"0": ["variables.file"]}`;
-        formData.append('map', map);
-        formData.append('0', file);
+            const map = `{"0": ["variables.file"]}`;
+            formData.append('map', map);
+            formData.append('0', file);
 
-        const token = await fetchNui<string>(ApiEvents.FETCH_TOKEN, {});
-        const response = await fetch(apiConfig.apiEndpoint, {
-            method: 'POST',
-            headers: {
-                authorization: `Bearer ${token}`,
-            },
-            body: formData,
-        });
-
-        const responseJson = await response.json();
-        const url = responseJson?.data?.createScreenshot?.url;
-
-        if (url) {
-            const serverResp = await fetchNui<ServerPromiseResp<GalleryPhoto>>(PhotoEvents.TAKE_PHOTO, {
-                url: `${apiConfig.publicEndpoint}${url}`,
+            const token = await fetchNui<string>(ApiEvents.FETCH_TOKEN, {});
+            const response = await fetch(apiConfig.apiEndpoint, {
+                method: 'POST',
+                headers: {
+                    authorization: `Bearer ${token}`,
+                },
+                body: formData,
             });
 
-            if (serverResp.status !== 'ok') {
+            const responseJson = await response.json();
+            const url = responseJson?.data?.createScreenshot?.url;
+
+            if (url) {
+                const serverResp = await fetchNui<ServerPromiseResp<GalleryPhoto>>(PhotoEvents.TAKE_PHOTO, {
+                    url: `${apiConfig.publicEndpoint}${url}`,
+                });
+
+                if (serverResp.status !== 'ok') {
+                    return addAlert({
+                        message: t('CAMERA.FAILED_TO_TAKE_PHOTO'),
+                        type: 'error',
+                    });
+                }
+
                 return addAlert({
-                    message: t('CAMERA.FAILED_TO_TAKE_PHOTO'),
-                    type: 'error',
+                    message: t('CAMERA.TAKE_PHOTO_SUCCESS'),
+                    type: 'success',
                 });
             }
-
+        } catch (e) {
             return addAlert({
-                message: t('CAMERA.TAKE_PHOTO_SUCCESS'),
-                type: 'success',
+                message: t('CAMERA.FAILED_TO_TAKE_PHOTO'),
+                type: 'error',
             });
         }
 
@@ -107,7 +114,10 @@ const CameraApp: React.FC = () => {
     };
 
     useEffect(() => {
-        if (!visibility) navigate('/', { replace: true });
+        if (!visibility) {
+            return navigate('/', { replace: true });
+        }
+
         fetchNui<ServerPromiseResp<void>>(PhotoEvents.ENTER_CAMERA, {});
 
         return () => {
