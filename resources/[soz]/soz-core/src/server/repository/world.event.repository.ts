@@ -99,10 +99,10 @@ export class WorldEventRepository extends Repository<RepositoryType.WorldEvent> 
         return this.data[event.id];
     }
 
-    public async removeReward(eventId: string, itemId: string) {
+    public async removeReward(eventId: string, index: number) {
         const event = this.data[eventId];
 
-        event.reward = event.reward.filter(reward => reward.item !== itemId);
+        const deleted = event.reward.splice(index, 1);
 
         const rewards: RewardWorldEvent[] = [];
 
@@ -124,15 +124,14 @@ export class WorldEventRepository extends Repository<RepositoryType.WorldEvent> 
             },
         });
 
-        return this.data[event.id];
+        return deleted[0].item;
     }
 
-    public async setRewardChance(eventId: string, itemId: string, chance: number) {
+    public async setRewardChance(eventId: string, index: number, chance: number) {
         const event = this.data[eventId];
-        const reward = event.reward.find(reward => reward.item === itemId);
+        const reward = event.reward[index];
 
         if (!reward) {
-            console.log('reward not found for item id', itemId);
             return;
         }
 
@@ -146,11 +145,13 @@ export class WorldEventRepository extends Repository<RepositoryType.WorldEvent> 
                 reward: event.reward,
             },
         });
+
+        return reward.item;
     }
 
-    public async setRewardMin(eventId: string, itemId: string, min: number) {
+    public async setRewardMin(eventId: string, index: number, min: number) {
         const event = this.data[eventId];
-        const reward = event.reward.find(reward => reward.item === itemId);
+        const reward = event.reward[index];
 
         if (!reward) {
             return;
@@ -166,11 +167,13 @@ export class WorldEventRepository extends Repository<RepositoryType.WorldEvent> 
                 reward: event.reward,
             },
         });
+
+        return reward.item;
     }
 
-    public async setRewardMax(eventId: string, itemId: string, max: number) {
+    public async setRewardMax(eventId: string, index: number, max: number) {
         const event = this.data[eventId];
-        const reward = event.reward.find(reward => reward.item === itemId);
+        const reward = event.reward[index];
 
         if (!reward) {
             return;
@@ -186,6 +189,8 @@ export class WorldEventRepository extends Repository<RepositoryType.WorldEvent> 
                 reward: event.reward,
             },
         });
+
+        return reward.item;
     }
 
     public async setStartSound(eventId: string, sound: string | null) {
