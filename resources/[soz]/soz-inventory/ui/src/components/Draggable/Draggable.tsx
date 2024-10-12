@@ -229,8 +229,28 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
             secondaryDescription += `</div>`
         }
 
-        if((item?.storageItemType === 'smuggling_ore' || item?.storageItemType === 'smuggling_electronic')){
-            let totalElementValue = item?.metadata?.value ?? 0 * item?.amount
+        if((item?.storageItemType === 'smuggling_ore' || item?.storageItemType === 'smuggling_electronic') && item?.metadata?.storageElements){
+            let storedItems: InventoryItem[] = [];
+            let totalElementValue = 0;
+    
+            if (Array.isArray(item?.metadata?.storageElements)) {
+                storedItems = item?.metadata?.storageElements;
+            } else {
+                storedItems = Object.values(item?.metadata?.storageElements);
+            }
+            
+            for (const subItem of storedItems) {
+                if (!subItem) {
+                    continue;
+                }
+
+                if (subItem?.metadata?.printed) {
+                    continue;
+                }
+
+                totalElementValue += subItem?.metadata?.value ?? 0 * subItem.amount;
+            }
+
             secondaryDescription += '<div style="display:flex;flex-direction:column;margin-top:0.5rem;align-items:flex-end">'
             secondaryDescription += `<span><b>Valeur estimée :</b> ${totalElementValue} $ </span>`
             secondaryDescription += `</div>`
