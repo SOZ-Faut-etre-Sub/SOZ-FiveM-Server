@@ -97,6 +97,10 @@ export type Skin = {
         ChestHairType?: number;
         ChestHairOpacity?: number;
         ChestHairColor?: number;
+        Scalp?: {
+            Collection: string;
+            Overlay: string;
+        };
     };
     Makeup: {
         BeardType?: number;

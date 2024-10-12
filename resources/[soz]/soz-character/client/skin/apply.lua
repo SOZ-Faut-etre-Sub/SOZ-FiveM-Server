@@ -32,6 +32,9 @@ local function ApplyPedHair(ped, hair)
     SetPedHeadOverlayColor(ped, HeadOverlayType.FacialHair, 1, hair.BeardColor, 0);
     SetPedHeadOverlay(ped, HeadOverlayType.ChestHair, hair.ChestHairType, (hair.ChestHairOpacity or 0) + 0.0 or 1.0);
     SetPedHeadOverlayColor(ped, HeadOverlayType.ChestHair, 1, hair.ChestHairColor, 0);
+    if hair.Scalp then
+        AddPedDecorationFromHashes(ped, hair.Scalp.Collection, hair.Scalp.Overlay)
+    end
 end
 
 local function ApplyPedFaceTrait(ped, faceTrait, model)
