@@ -585,9 +585,10 @@ export class AdminMenuMapperProvider {
 
     @OnNuiEvent(NuiEvent.AdminMenuMapperRenameZone)
     public async renameZone({ id }: { id: number }) {
+        const existing = this.zoneRepository.find(id);
         const name = await this.inputService.askInput({
             title: 'Nom de la zone',
-            defaultValue: '',
+            defaultValue: existing.data.name,
         });
 
         if (!name) {
