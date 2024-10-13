@@ -1,7 +1,7 @@
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { RepositoryDelete, RepositoryInsert, RepositoryUpdate } from '../../core/decorators/repository';
+import { RepositoryDelete, RepositoryUpdate } from '../../core/decorators/repository';
 import { emitRpc } from '../../core/rpc';
 import { uuidv4 } from '../../core/utils';
 import { ClientEvent } from '../../shared/event/client';
@@ -182,6 +182,11 @@ export class SceneProvider {
 
     @OnNuiEvent(NuiEvent.SceneDelete)
     async onNuiDeleteScene({ sceneId }: { sceneId: string }) {
+        const confirm = await this.inputService.askConfirm('Veuillez confimer la suppression de la scène (OUI)');
+        if (!confirm) {
+            return;
+        }
+
         TriggerServerEvent(ServerEvent.SCENE_DELETE, sceneId);
     }
 

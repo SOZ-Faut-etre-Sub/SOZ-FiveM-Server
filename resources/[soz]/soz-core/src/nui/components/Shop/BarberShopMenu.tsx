@@ -290,10 +290,11 @@ const MenuBarberHairComponent: FunctionComponent<{
                     Aucun
                 </MenuItemSelectOption>
                 {ShopScalp[player_data.skin.Model.Hash]
+                    .map((elem, index) => ({ ...elem, index }))
                     .sort((a, b) => a.name.localeCompare(b.name))
-                    .map((entry, index) => (
-                        <MenuItemSelectOption key={'scalp' + index} value={index} helper={entry.name}>
-                            {entry.name}
+                    .map(elem => (
+                        <MenuItemSelectOption key={'scalp' + elem.index} value={elem.index} helper={elem.name}>
+                            {elem.name}
                         </MenuItemSelectOption>
                     ))}
             </MenuItemSelect>

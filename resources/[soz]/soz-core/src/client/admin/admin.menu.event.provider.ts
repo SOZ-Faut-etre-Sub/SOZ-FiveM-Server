@@ -24,6 +24,9 @@ export class AdminMenuEventProvider {
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
 
+    @Inject(InputService)
+    private inputService: InputService;
+
     @OnNuiEvent(NuiEvent.AdminMenuEventStart)
     public async startEvent({ eventId }: { eventId: number }): Promise<EventInfo | null> {
         return await emitRpc<EventInfo | null>(RpcServerEvent.WORLD_EVENT_START, eventId);
@@ -52,6 +55,11 @@ export class AdminMenuEventProvider {
 
     @OnNuiEvent(NuiEvent.AdminMenuEventDelete)
     public async deleteEvent({ eventId }: { eventId: string }): Promise<void> {
+        const confirm = await this.inputService.askConfirm("Veuillez confimer la suppression de l'event (OUI)");
+        if (!confirm) {
+            return;
+        }
+
         TriggerServerEvent(ServerEvent.ADMIN_EVENT_DELETE, eventId);
 
         this.nuiDispatch.dispatch('menu', 'Backspace');
