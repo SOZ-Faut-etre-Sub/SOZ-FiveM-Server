@@ -250,6 +250,7 @@ export enum RpcServerEvent {
     GANG_SMUGGLING_CONTAINER_ORDER_GET = 'soz-core:server:gang:smuggling:container-get',
     GANG_SMUGGLING_CONTAINER_ORDER_CANCEL = 'soz-core:server:gang:smuggling:container-cancel',
     GANG_SMUGGLING_CONTAINER_ORDER_NEW = 'soz-core:server:gang:smuggling:container-new',
+    GANG_SMUGGLING_CONTAINER_CHECK = 'soz-core:server:gang:smuggling:container-check',
     GANG_SMUGGLING_HARVEST_ZONE_GET = 'soz-core:server:gang:smuggling:harvest:get',
     GANG_SMUGGLING_HARVEST_ZONE_CREATE = 'soz-core:server:gang:smuggling:harvest:create',
     GANG_SMUGGLING_HARVEST_ZONE_DELETE = 'soz-core:server:gang:smuggling:harvest:delete',
