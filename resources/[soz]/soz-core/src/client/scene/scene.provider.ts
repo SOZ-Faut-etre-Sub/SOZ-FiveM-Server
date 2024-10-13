@@ -404,7 +404,7 @@ export class SceneProvider {
         const wasLoaded = this.loadedScenes.has(scene.id) || this.currentSceneEdited?.scene.id === scene.id;
         await this.doUnloadScene(previousScene);
 
-        if (!wasLoaded && !scene.persistent) {
+        if (!wasLoaded) {
             return;
         }
 
@@ -418,15 +418,6 @@ export class SceneProvider {
     @RepositoryDelete(RepositoryType.Scene)
     async onSceneDelete(scene: Scene) {
         await this.unloadScene(scene.id);
-    }
-
-    @RepositoryInsert(RepositoryType.Scene)
-    async onSceneCreate(scene: Scene) {
-        if (!scene.persistent) {
-            return;
-        }
-
-        await this.loadScene(scene.id);
     }
 
     @OnEvent(ClientEvent.SCENE_LOAD)
