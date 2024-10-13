@@ -174,6 +174,10 @@ export type BarberConfiguration = {
         BeardColor?: number;
         EyebrowType?: number;
         EyebrowColor?: number;
+        Scalp?: {
+            Collection: string;
+            Overlay: string;
+        };
     };
     Makeup: {
         FullMakeupType?: number;

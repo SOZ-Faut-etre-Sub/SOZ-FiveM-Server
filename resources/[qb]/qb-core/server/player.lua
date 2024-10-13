@@ -446,6 +446,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
         self.Functions.UpdatePlayerData(true)
 
         if not skipApply then
+            Wait(10) -- wait PlayerData synchro
             TriggerClientEvent("soz-character:Client:ApplyCurrentSkin", self.PlayerData.source)
         end
 

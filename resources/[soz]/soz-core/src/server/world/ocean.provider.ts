@@ -16,8 +16,8 @@ export class OceanProvider {
     @Inject(ConfigurationRepository)
     private configurationRepository: ConfigurationRepository;
 
-    private waterCurrentLevel = 10;
-    private waterLevel = 10;
+    private waterCurrentLevel = 0;
+    private waterLevel = 0;
     private highWave = false;
 
     @Once(OnceStep.DatabaseConnected)

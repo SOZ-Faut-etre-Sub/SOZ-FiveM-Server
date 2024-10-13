@@ -89,14 +89,12 @@ export class BarberShopProvider {
     public async openShop() {
         const shop_content = this.barberShopContent;
         const shop_colors = this.barberShopColors;
-        const player_data = this.playerService.getPlayer();
 
         this.setupShop();
 
         this.nuiMenu.openMenu(MenuType.BarberShop, {
             shop_content,
             shop_colors,
-            player_data,
         });
     }
 

@@ -16,7 +16,7 @@ export type Ped = {
     components?: { [key: number]: [number, number, number] };
     props?: { [key: number]: [number, number, number] };
     face?: { [key: string]: number };
-    hair?: { [key: string]: number };
+    hair?: { [key: string]: number | any };
     makeup?: { [key: string]: number };
     modelCustomization?: { [key: string]: number };
     tattoos?: { collection: number; overlay: number }[];
