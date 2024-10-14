@@ -559,4 +559,11 @@ export class PropsProvider {
             TriggerClientEvent(ClientEvent.ANIMATION_FX, player, objectNetId, fx);
         }
     }
+
+    @OnEvent(ServerEvent.ANIMATION_FX)
+    public onAnimationFxPosition(source: number, fx: Vfx, players: number[]) {
+        for (const player of players) {
+            TriggerClientEvent(ClientEvent.ANIMATION_FX_POSITION, player, fx);
+        }
+    }
 }

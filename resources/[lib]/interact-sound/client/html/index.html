@@ -27,7 +27,9 @@
                     audioLoopPlayer[event.data.id].play();
                 }
                 else if (event.data.transactionType === "updatevolume") {
-                    audioLoopPlayer[event.data.id].volume(event.data.transactionVolume);
+                    if (audioLoopPlayer[event.data.id]) {
+                        audioLoopPlayer[event.data.id].volume(event.data.transactionVolume);
+                    }
                 }
                 else if (event.data.transactionType === "stopLoopSound") {
                     if (audioLoopPlayer[event.data.id]) {
