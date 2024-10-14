@@ -195,7 +195,7 @@ export class OilStationProvider {
             {
                 title: 'Nouveau prix :',
                 maxCharacters: 5,
-                defaultValue: price.toFixed(2).toString(),
+                defaultValue: price ? price.toFixed(2).toString() : null,
             },
             PositiveNumberValidator
         );
