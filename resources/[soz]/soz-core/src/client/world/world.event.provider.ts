@@ -29,7 +29,7 @@ export class WorldEventProvider {
 
     private currentEvent: EventInfo | null = null;
 
-    @Once(OnceStep.PlayerLoaded)
+    @Once(OnceStep.RepositoriesLoaded)
     public async onStartEventProvider() {
         const eventInfo = await emitRpc<EventInfo>(RpcServerEvent.WORLD_EVENT_GET_INFO);
 
