@@ -200,6 +200,10 @@ export class OilStationProvider {
             PositiveNumberValidator
         );
 
+        if (newPrice == null) {
+            return;
+        }
+
         TriggerServerEvent(ServerEvent.OIL_SET_STATION_PRICE, newPrice, type);
 
         this.nuiMenu.closeMenu();
