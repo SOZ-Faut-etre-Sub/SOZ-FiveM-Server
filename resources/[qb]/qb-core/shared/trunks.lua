@@ -10,7 +10,7 @@ QBShared.Trunks = {
     [5] = { slot = 10, weight = 20000 }, -- Sports Classics
     [6] = { slot = 10, weight = 20000 }, -- Sports
     [7] = { slot = 10, weight = 20000 }, -- Super
-    [8] = { slot = 10, weight = 10000 }, -- Motorcycles
+    [8] = { slot = 10, weight = 40000 }, -- Motorcycles
     [9] = { slot = 10, weight = 100000 }, -- Off-road
     [10] = { slot = 10, weight = 0 }, -- Industrial
     [11] = { slot = 10, weight = 0 }, -- Utility

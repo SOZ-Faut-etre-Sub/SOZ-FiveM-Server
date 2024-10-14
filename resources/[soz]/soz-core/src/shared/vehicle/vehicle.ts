@@ -584,7 +584,7 @@ export const ALLOWED_AIR_CONTROL: Partial<Record<VehicleClass, true>> = {
 export const DisableNPCBike = false;
 
 export const VehicleClassFuelStorageMultiplier: Record<string, number> = {
-    [PlayerLicenceType.Moto]: 0.5,
+    [PlayerLicenceType.Moto]: 0.75,
 };
 
 export const VEHICLE_TRUNK_TYPES = {
