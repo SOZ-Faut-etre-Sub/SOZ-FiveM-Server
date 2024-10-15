@@ -1,3 +1,6 @@
+import cn from 'classnames';
+
+import { useConfig } from '../../../hooks/usePhone';
 import getImg from '../utils/getImg';
 
 type TaxDescType = {
@@ -10,13 +13,44 @@ type TaxDescType = {
 };
 
 const TaxDesc = ({ tax, taxAmount }: { tax: TaxDescType; taxAmount?: string }) => {
+    const config = useConfig();
+
+    const getText = (text: string) => {
+        return (
+            <div
+                className={cn(
+                    [
+                        {
+                            'text-gray-100': config.theme.value === 'dark',
+                            'text-gray-700': config.theme.value === 'light',
+                        },
+                    ],
+                    'text-sm'
+                )}
+            >
+                {text}
+            </div>
+        );
+    };
     return (
         <>
             <div className="flex justify-center">
                 <img src={getImg(tax.id)} alt="taxes" className="h-16" />
             </div>
             <div className="pt-2 flex justify-center mb-12 py-1">
-                <h1 className="text-white text-xl font-bold">{tax.title}</h1>
+                <h1
+                    className={cn(
+                        [
+                            {
+                                'text-gray-100': config.theme.value === 'dark',
+                                'text-gray-700': config.theme.value === 'light',
+                            },
+                        ],
+                        'text-xl font-bold'
+                    )}
+                >
+                    {tax.title}
+                </h1>
             </div>
             <div className="flex flex-col gap-4 ">
                 <section className="flex flex-col gap-4">
@@ -41,5 +75,3 @@ const TaxDesc = ({ tax, taxAmount }: { tax: TaxDescType; taxAmount?: string }) =
 };
 
 export default TaxDesc;
-
-const getText = (text: string) => <div className="text-white text-sm">{text}</div>;
