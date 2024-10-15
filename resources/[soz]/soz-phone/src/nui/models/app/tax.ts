@@ -23,7 +23,7 @@ export const appTax = createModel<RootModel>()({
                 .then(taxes => {
                     dispatch.appTax.set(taxes.data || null);
                 })
-                .catch(e => console.error('Failed to load taxes'));
+                .catch(() => console.error('Failed to load taxes'));
         },
     }),
 });
