@@ -634,4 +634,5 @@ export enum ServerEvent {
     OILRIG_HEIST_TANK = 'soz-core:server:oilrig-heist:tank',
     OILRIG_HEIST_INIT = 'soz-core:server:oilrig-heist:init',
     OILRIG_HEIST_CAMERA_SPOTTED = 'soz-core:server:oilrig-heist:camera-spotted',
+    OILRIG_HEIST_STOP_ALARM = 'soz-core:server:oilrig-heist:alarm-stop',
 }
