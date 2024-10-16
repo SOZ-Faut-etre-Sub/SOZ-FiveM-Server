@@ -124,6 +124,7 @@ export enum NuiEvent {
     AdminMenuEventRemoveReward = 'soz-core:nui:admin:event:remove-reward',
     AdminMenuEventStop = 'soz-core:nui:admin:event:stop',
     AdminMenuEventStart = 'soz-core:nui:admin:event:start',
+    AdminMenuHalloweenUpdateMoon = 'soz-core:nui:admin:halloween:update-moon',
     AdminMenuHalloweenLaunchGame = 'soz-core:nui:admin:halloween:launch-game',
     AdminMenuHalloweenStopGame = 'soz-core:nui:admin:halloween:stop-game',
     AdminMenuHalloweenUpdateRole = 'soz-core:nui:admin:halloween:update-role',

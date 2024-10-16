@@ -31,6 +31,11 @@ export class AdminMenuHalloweenProvider {
         this.nuiMenu.closeMenu();
     }
 
+    @OnNuiEvent(NuiEvent.AdminMenuHalloweenUpdateMoon)
+    async updateMoon(value: string): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_HALLOWEEN_MOON_UPDATE, value);
+    }
+
     @OnNuiEvent(NuiEvent.AdminMenuHalloweenUpdateRole)
     async updateRole(role: string): Promise<void> {
         const amount = await this.inputService.askInput(

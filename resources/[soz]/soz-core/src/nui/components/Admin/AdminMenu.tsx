@@ -75,7 +75,9 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
             <EventSubMenu banner={data.banner} event={data.event} />
             <CharacterSubMenu banner={data.banner} characters={data.characters} />
             <MeteorSubMenu banner={data.banner} state={data.state.meteor} />
-            {isHalloween && <HalloweenSubMenu banner={data.banner} state={data.state.halloween} />}
+            {isHalloween && (
+                <HalloweenSubMenu banner={data.banner} permission={data.permission} state={data.state.halloween} />
+            )}
         </Menu>
     );
 };

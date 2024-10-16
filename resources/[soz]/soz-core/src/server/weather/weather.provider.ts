@@ -12,7 +12,7 @@ import { Rpc } from '../../core/decorators/rpc';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { Logger } from '../../core/logger';
 import { wait } from '../../core/utils';
-import { ClientEvent } from '../../shared/event';
+import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Feature } from '../../shared/features';
 import { RpcServerEvent } from '../../shared/rpc';
 import {
@@ -336,6 +336,7 @@ export class WeatherProvider {
     }
 
     @Command('halloween', { role: 'admin' })
+    @On(ServerEvent.ADMIN_HALLOWEEN_MOON_UPDATE)
     setTimecycleMod(source: number, value: string): void {
         if (value) {
             if (value == 'full') {

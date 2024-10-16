@@ -60,6 +60,7 @@ export enum ServerEvent {
     ADMIN_EVENT_SET_REWARD_MIN = 'soz-core:server:admin:event:set-reward-min',
     ADMIN_EVENT_SET_REWARD_MAX = 'soz-core:server:admin:event:set-reward-max',
     ADMIN_EVENT_SET_START_SOUND = 'soz-core:server:admin:event:set-start-sound',
+    ADMIN_HALLOWEEN_MOON_UPDATE = 'soz-core:server:admin:halloween:moon-update',
     ADMIN_HALLOWEEN_LAUNCH_GAME = 'soz-core:server:admin:halloween:launch-game',
     ADMIN_HALLOWEEN_STOP_GAME = 'soz-core:server:admin:halloween:stop-game',
     ADMIN_HALLOWEEN_UPDATE_ROLE = 'soz-core:server:admin:halloween:update-role',
