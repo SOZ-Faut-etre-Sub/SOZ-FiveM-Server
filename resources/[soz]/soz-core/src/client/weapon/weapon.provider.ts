@@ -110,7 +110,7 @@ export class WeaponProvider {
         SetWeaponDamageModifier(WeaponName.BZGAS, 0.1);
 
         SetWeaponDamageModifier(WeaponName.MUSKET, 0.5);
-        SetWeaponDamageModifier(WeaponName.REVOLVER_MK2, 0.66); //0.45 for not OS
+        SetWeaponDamageModifier(WeaponName.REVOLVER_MK2, 0.5); //0.45 for not OS
     }
 
     @OnEvent(ClientEvent.PLAYER_ON_DEATH)
