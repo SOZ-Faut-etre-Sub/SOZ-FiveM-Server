@@ -57,6 +57,7 @@ export class WorldEventProvider {
     private serverStateService: ServerStateService;
 
     private currentEvent: CurrentEvent = null;
+    private signaledInvs: string[] = [];
 
     @Rpc(RpcServerEvent.WORLD_EVENT_START)
     public async onStartWorldEvent(source: number, eventId: string): Promise<EventInfo> {
@@ -99,17 +100,22 @@ export class WorldEventProvider {
             return;
         }
 
-        this.currentEvent.signaled = true;
         const objects = Object.values(this.currentEvent.scene.entities);
-        TriggerClientEvent(ClientEvent.WORLD_EVENT_SIGNAL_INVENTORY, -1);
+        let allSignaled = true;
 
         for (const object of objects) {
             if (object.inventoryId === inventoryId) {
                 this.notifier.notify(source, `Le contenu a été signalé`);
                 this.inventoryManager.clearInv(object.inventoryId);
-
-                return;
+                this.signaledInvs.push(object.inventoryId);
+            } else if (!this.signaledInvs.includes(object.inventoryId)) {
+                allSignaled = false;
             }
+        }
+
+        if (allSignaled && !this.currentEvent.signaled) {
+            this.currentEvent.signaled = true;
+            TriggerClientEvent(ClientEvent.WORLD_EVENT_SIGNAL_INVENTORY, -1);
         }
     }
 
@@ -283,6 +289,7 @@ export class WorldEventProvider {
 
         TriggerClientEvent(ClientEvent.WORLD_EVENT_START, -1, event.id, scene.id, firstEntityPosition);
         this.sceneProvider.loadScene(scene.id);
+        this.signaledInvs = [];
 
         if (firstEntityPosition && event.startSound) {
             this.soundService.playAtPosition(event.startSound, firstEntityPosition, 2000, 1.0);
