@@ -166,7 +166,7 @@ export class TargetProvider {
             return;
         }
 
-        option?.action(option?.entity);
+        option?.action(option?.entity, option.entityCoords);
 
         return this.disableTargetMode(true);
     }

@@ -343,6 +343,7 @@ export enum ClientEvent {
     VANDALISM_UPDATE_PROP = 'soz-core:client:vandalism:update-prop',
 
     ANIMATION_FX = 'soz-core:client:animation:fx',
+    ANIMATION_FX_POSITION = 'soz-core:client:animation:fx-position',
 
     METEOR_START = 'soz-core:client:meteor:start',
     METEOR_MUSIC = 'soz-core:client:meteor:music',
@@ -406,4 +407,7 @@ export enum ClientEvent {
 
     WEATHER_UPDATE_FORECASTS = 'soz-core:client:weather:update-forecasts',
     UPDATE_MINIMAP_POSITION = 'soz-core:client:update-minimap-position',
+
+    OILRIG_HEIST_UPDATE = 'soz-core:server:oilrig-heist:update',
+    OILRIG_HEIST_RESET = 'soz-core:server:oilrig-heist:reset',
 }

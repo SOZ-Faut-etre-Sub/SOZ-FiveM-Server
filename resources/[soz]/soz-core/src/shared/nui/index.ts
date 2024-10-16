@@ -1,3 +1,4 @@
+import { MiniGameMethodMap } from '@private/shared/minigame';
 import { NuiBankAtmMethodMap, NuiBankMethodMap, NuiBankSafeMethodMap } from '@public/shared/nui/bank';
 import { NuiBookMethodMap } from '@public/shared/nui/book';
 import { NuiCardMethodMap } from '@public/shared/nui/card';
@@ -22,14 +23,11 @@ import { NuiDrugMethodMap } from './drug';
 import { NuiFieldMethodMap } from './field';
 import { NuiFishingMethodMap } from './fishing';
 import { NuiGangMethodMap } from './gang';
-import { NuiHackingDeviceMethodMap } from './hacking_device';
 import { NuiHoodMethodMap } from './hood';
 import { NuiInputMethodMap } from './input';
 import { NuiMedicalDiagMethodMap } from './medical_diag';
 import { NuiMenuMethodMap } from './menu';
 import { NuiMeteorMap } from './meteor';
-import { NuiArrowMiniGameMethodMap } from './minigame_arrow';
-import { NuiGridMiniGameMethodMap } from './minigame_grid';
 import { NuiPanelMethodMap } from './panel';
 import { NuiPLayerMethodMap } from './player';
 import { NuiPoliceMethodMap } from './police';
@@ -90,9 +88,7 @@ export interface NuiMethodMap {
     bank_atm: NuiBankAtmMethodMap;
     bank_safe: NuiBankSafeMethodMap;
     gang: NuiGangMethodMap;
-    hacking_device: NuiHackingDeviceMethodMap;
-    minigame_arrows: NuiArrowMiniGameMethodMap;
-    minigame_grid: NuiGridMiniGameMethodMap;
+    minigame: MiniGameMethodMap;
     scene: NuiSceneSearchMethodMap;
 }
 

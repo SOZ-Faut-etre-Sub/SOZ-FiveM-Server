@@ -990,3 +990,10 @@ model darkweb_participants {
     @@index([user_identifier], map: "user_identifier")
     @@index([conversation_id], map: "conversation_id")
 }
+
+model heist {
+  id             String      @db.VarChar(128)@id
+  update         DateTime    @default(now()) @db.Timestamp(0)
+  data           String      @db.Text
+}
+

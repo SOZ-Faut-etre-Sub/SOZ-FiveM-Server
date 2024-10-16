@@ -1,3 +1,4 @@
+import { wait } from '@public/core/utils';
 import { Vfx } from '@public/shared/animation';
 import { ClientEvent } from '@public/shared/event/client';
 
@@ -45,6 +46,32 @@ export class AnimationProvider {
             false,
             false
         );
+        this.resourceLoader.unloadPtfxAsset(fx.dictionary);
+    }
+
+    @OnEvent(ClientEvent.ANIMATION_FX_POSITION)
+    public async onAnimationFxPosition(fx: Vfx) {
+        await this.resourceLoader.loadPtfxAsset(fx.dictionary);
+
+        UseParticleFxAsset(fx.dictionary);
+
+        const fxId = StartParticleFxLoopedAtCoord(
+            fx.name,
+            fx.position[0],
+            fx.position[1],
+            fx.position[2],
+            fx.rotation[0],
+            fx.rotation[1],
+            fx.rotation[2],
+            fx.scale,
+            false,
+            false,
+            false,
+            false
+        );
+        await wait(fx.delay);
+        StopParticleFxLooped(fxId, false);
+
         this.resourceLoader.unloadPtfxAsset(fx.dictionary);
     }
 }

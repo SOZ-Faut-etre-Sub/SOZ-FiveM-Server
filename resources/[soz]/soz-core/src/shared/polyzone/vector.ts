@@ -86,6 +86,10 @@ export const rad = (x: number) => {
     return (x * Math.PI) / 180;
 };
 
+export const deg = (x: number) => {
+    return (x * 180) / Math.PI;
+};
+
 export const toVector4Object = (vector: Vector4) => {
     return {
         x: vector[0],
