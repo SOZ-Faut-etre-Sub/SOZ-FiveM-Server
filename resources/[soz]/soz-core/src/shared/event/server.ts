@@ -63,6 +63,7 @@ export enum ServerEvent {
     ADMIN_HALLOWEEN_MOON_UPDATE = 'soz-core:server:admin:halloween:moon-update',
     ADMIN_HALLOWEEN_LAUNCH_GAME = 'soz-core:server:admin:halloween:launch-game',
     ADMIN_HALLOWEEN_STOP_GAME = 'soz-core:server:admin:halloween:stop-game',
+    ADMIN_HALLOWEEN_UPDATE_GAME_DURATION = 'soz-core:server:admin:halloween:update-game-duration',
     ADMIN_HALLOWEEN_UPDATE_ROLE = 'soz-core:server:admin:halloween:update-role',
     ADMIN_HALLOWEEN_UPDATE_MORTAL_COLLECTION = 'soz-core:server:admin:halloween:update-mortal-collection',
 

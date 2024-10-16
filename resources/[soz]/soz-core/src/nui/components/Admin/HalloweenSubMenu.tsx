@@ -77,6 +77,19 @@ export const HalloweenSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner
                         Arrêt du jeu
                     </MenuItemButton>
 
+                    <MenuTitle>Paramètres</MenuTitle>
+                    <MenuItemButton
+                        description="Durée du jeu en minutes"
+                        onConfirm={async () => {
+                            await fetchNui(NuiEvent.AdminMenuHalloweenUpdateGameDuration);
+                        }}
+                    >
+                        <div className="pr-2 flex items-center justify-between">
+                            <span>Durée maximum de la partie</span>
+                            <span>{state.gameDuration} minutes</span>
+                        </div>
+                    </MenuItemButton>
+
                     <MenuTitle>Rôles</MenuTitle>
                     {Object.entries(state.roleMaxNumber).map(([role, amount]) => (
                         <MenuItemButton

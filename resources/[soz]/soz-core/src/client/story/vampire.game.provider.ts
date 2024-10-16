@@ -56,9 +56,12 @@ export class VampireGameProvider {
         this.targetFactory.createForAllPlayer([
             {
                 label: 'Sucer',
+                icon: 'halloween/vampire',
                 category: 'citizen',
                 canInteract: async entity => {
                     if (!this.state.started) return false;
+                    if (this.state.role !== VampireGameRole.Vampire) return false;
+
                     const targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                     const targetState = await emitRpc<PlayerClientState>(
                         RpcServerEvent.PLAYER_GET_CLIENT_STATE,
@@ -69,7 +72,36 @@ export class VampireGameProvider {
                 },
                 action: async entity => {
                     const targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-                    TriggerServerEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_CONVERT_PLAYER, targetSource);
+                    TriggerServerEvent(
+                        ServerEvent.HALLOWEEN_VAMPIRE_GAME_CONVERT_PLAYER,
+                        targetSource,
+                        VampireGameRole.Fanatic
+                    );
+                },
+            },
+            {
+                label: 'Soigner',
+                icon: 'ems/heal',
+                category: 'citizen',
+                canInteract: async entity => {
+                    if (!this.state.started) return false;
+                    if (this.state.role !== VampireGameRole.Alchemist) return false;
+
+                    const targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
+                    const targetState = await emitRpc<PlayerClientState>(
+                        RpcServerEvent.PLAYER_GET_CLIENT_STATE,
+                        targetSource
+                    );
+
+                    return targetState.halloweenRole === VampireGameRole.Fanatic;
+                },
+                action: async entity => {
+                    const targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
+                    TriggerServerEvent(
+                        ServerEvent.HALLOWEEN_VAMPIRE_GAME_CONVERT_PLAYER,
+                        targetSource,
+                        VampireGameRole.Mortal
+                    );
                 },
             },
         ]);

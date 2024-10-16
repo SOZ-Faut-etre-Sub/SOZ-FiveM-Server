@@ -21,6 +21,7 @@ export type VampireGameClientState = {
 
 export type VampireGameServerState = {
     started: boolean;
+    timer: NodeJS.Timeout;
     playerRoles: Map<number, VampireGameRole>;
     objective: Record<VampireGameRole, Map<VampireGameCollection, Vector3[]>>;
     gauges: Record<VampireGameRole, Gauge>;

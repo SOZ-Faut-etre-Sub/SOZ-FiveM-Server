@@ -127,6 +127,7 @@ export enum NuiEvent {
     AdminMenuHalloweenUpdateMoon = 'soz-core:nui:admin:halloween:update-moon',
     AdminMenuHalloweenLaunchGame = 'soz-core:nui:admin:halloween:launch-game',
     AdminMenuHalloweenStopGame = 'soz-core:nui:admin:halloween:stop-game',
+    AdminMenuHalloweenUpdateGameDuration = 'soz-core:nui:admin:halloween:update-game-duration',
     AdminMenuHalloweenUpdateRole = 'soz-core:nui:admin:halloween:update-role',
     AdminMenuHalloweenUpdateMortalCollection = 'soz-core:nui:admin:halloween:update-mortal-collection',
     AdminMenuEventSetStartSound = 'soz-core:nui:admin:event:set-start-sound',

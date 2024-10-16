@@ -31,6 +31,19 @@ export class AdminMenuHalloweenProvider {
         this.nuiMenu.closeMenu();
     }
 
+    @OnNuiEvent(NuiEvent.AdminMenuHalloweenUpdateGameDuration)
+    async updateGameDuration(): Promise<void> {
+        const amount = await this.inputService.askInput(
+            {
+                title: 'Durée maximale du jeu en minutes',
+            },
+            PositiveNumberValidator
+        );
+
+        TriggerServerEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_GAME_DURATION, amount);
+        await this.reloadAdminMenu();
+    }
+
     @OnNuiEvent(NuiEvent.AdminMenuHalloweenUpdateMoon)
     async updateMoon(value: string): Promise<void> {
         TriggerServerEvent(ServerEvent.ADMIN_HALLOWEEN_MOON_UPDATE, value);
@@ -64,6 +77,6 @@ export class AdminMenuHalloweenProvider {
 
     private async reloadAdminMenu() {
         this.nuiMenu.closeMenu();
-        await this.adminMenuProvider.openAdminMenu('halloween');
+        await this.adminMenuProvider.openAdminMenu('halloween-vampire-game');
     }
 }

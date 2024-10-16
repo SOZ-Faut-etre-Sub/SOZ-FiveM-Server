@@ -4,7 +4,6 @@ import { PlayerData } from '@public/shared/player';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { Gauge } from 'prom-client';
 
-import { FeatureProvider } from '../../client/feature/feature.provider';
 import { On, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Rpc } from '../../core/decorators/rpc';
@@ -23,6 +22,7 @@ import {
 } from '../../shared/halloween';
 import { ProgressAnimation } from '../../shared/progress';
 import { RpcServerEvent } from '../../shared/rpc';
+import { FeatureProvider } from '../feature/feature.provider';
 import { Notifier } from '../notifier';
 import { PermissionService } from '../permission.service';
 import { PlayerStateService } from '../player/player.state.service';
@@ -58,6 +58,7 @@ export class VampireGameProvider {
     @Inject(Logger)
     private readonly logger: Logger;
 
+    private gameDuration = 30; // minutes
     private roleMaxNumber: Record<VampireGameRole, number> = {
         [VampireGameRole.Vampire]: 50,
         [VampireGameRole.Fanatic]: 5,
@@ -74,6 +75,7 @@ export class VampireGameProvider {
     };
     private gameState: VampireGameServerState = {
         started: false,
+        timer: null,
         playerRoles: new Map<number, VampireGameRole>(),
 
         objective: {
@@ -139,9 +141,20 @@ export class VampireGameProvider {
     public getState(): HalloweenSubMenuState {
         return {
             started: this.gameState.started,
+            gameDuration: this.gameDuration,
             roleMaxNumber: this.roleMaxNumber,
             mortalObjective: this.mortalObjective,
         };
+    }
+
+    @OnEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_GAME_DURATION)
+    public updateGameDuration(source: number, value: number): void {
+        if (!this.permissionService.isStaff(source)) {
+            return;
+        }
+
+        this.gameDuration = value;
+        this.notifier.notify(source, `La durée du jeu a été mise à jour, durée maximum: ${value} minutes`, 'info');
     }
 
     @OnEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_ROLE)
@@ -205,9 +218,66 @@ export class VampireGameProvider {
 
         await wait(2000);
 
+        this.gameState.timer = setTimeout(
+            () => {
+                this.notifier.notify(
+                    -1,
+                    'Les Vampires ont gagné ce scénario ! Le tournage est terminé, l’ensemble de l’île peut retourner à ses occupations, bravo pour votre prestation.',
+                    'info'
+                );
+                this.stopGame();
+            },
+            this.gameDuration * 60 * 1000
+        );
+
         this.gameState.started = true;
         TriggerLatentClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_STATE, -1, 1024, {
             started: this.gameState.started,
+        });
+
+        this.gameState.playerRoles.forEach((role, player) => {
+            switch (role) {
+                case VampireGameRole.Vampire:
+                    this.notifier.notify(
+                        player,
+                        "Dirige-toi en ville pour empêcher les survivants de rallumer l'électricité, et suce pour gagner des pouvoirs.",
+                        'info'
+                    );
+                    break;
+                case VampireGameRole.Hunter:
+                    this.notifier.notify(
+                        player,
+                        'En tant que Chasseur, tu peux tuer les Vampires à l’aide de ton Mousquet et tes Balles en Argent.',
+                        'info'
+                    );
+                    break;
+                case VampireGameRole.Mortal:
+                    this.notifier.notify(
+                        player,
+                        "Dirige-toi en ville pour réparer l'électricité, et survie aux monstres.",
+                        'info'
+                    );
+                    this.notifier.notify(
+                        player,
+                        'En tant que Mortel, tu n’as aucun pouvoir, donc concentre toi sur les objectifs à accomplir sur la carte.',
+                        'info'
+                    );
+                    break;
+                case VampireGameRole.Squire:
+                    this.notifier.notify(
+                        player,
+                        'En tant qu’Écuyère, tu as le pouvoir de sentir la présence des vampires sur ta carte. Aide les Chasseurs à trouver les vampires et protège les Mortels.',
+                        'info'
+                    );
+                    break;
+                case VampireGameRole.Alchemist:
+                    this.notifier.notify(
+                        player,
+                        'En tant qu’Alchimiste, tu as le pouvoir de réanimer les Goules en Mortel. Soigne-les dès que tu le peux.',
+                        'info'
+                    );
+                    break;
+            }
         });
 
         this.notifier.notify(source, 'Le jeu a été lancé', 'info');
@@ -303,9 +373,23 @@ export class VampireGameProvider {
     }
 
     @OnEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_CONVERT_PLAYER)
-    public async convertPlayer(source: number, target: number) {
+    public async convertPlayer(source: number, target: number, role: VampireGameRole) {
         if (!this.gameState.started) {
             return;
+        }
+
+        const sourceRole = this.gameState.playerRoles.get(source);
+        const targetRole = this.gameState.playerRoles.get(target);
+
+        if (sourceRole !== VampireGameRole.Vampire || targetRole !== VampireGameRole.Alchemist) {
+            this.notifier.error(source, "Vous n'avez pas le droit de faire cette action");
+        }
+
+        switch (role) {
+            case VampireGameRole.Fanatic:
+                break;
+            case VampireGameRole.Alchemist:
+                break;
         }
 
         const roleGauge = await this.gameState.gauges[VampireGameRole.Mortal].get();
