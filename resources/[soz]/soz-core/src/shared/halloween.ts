@@ -27,12 +27,18 @@ export type VampireGameServerState = {
     gauges: Record<VampireGameRole, Gauge>;
 };
 
-export type VampireGameCollection = 'prop_streetlight' | 'prop_fire_hydrant' | 'prop_gas_pump' | 'prop_elecbox';
+export type VampireGameCollection =
+    | 'prop_streetlight'
+    | 'prop_fire_hydrant'
+    | 'prop_gas_pump'
+    | 'prop_elecbox'
+    | 'player';
 export const VampireGameObjectiveCollection: Record<VampireGameCollection, string[]> = {
     prop_streetlight: ['prop_streetlight_01'],
     prop_fire_hydrant: ['prop_fire_hydrant_1'],
     prop_gas_pump: ['prop_gas_pump_1a', 'prop_gas_pump_1b', 'prop_gas_pump_1c'],
     prop_elecbox: ['prop_elecbox_11'],
+    player: [],
 };
 
 export const VampireGameCollectionLabel = (collection: VampireGameCollection) => {
@@ -45,6 +51,8 @@ export const VampireGameCollectionLabel = (collection: VampireGameCollection) =>
             return "Récupérer de l'essence";
         case 'prop_elecbox':
             return "Réparer l'armoire électrique";
+        case 'player':
+            return 'Vampire';
     }
 };
 
@@ -58,6 +66,8 @@ export const VampireGameCollectionSprite = (collection: VampireGameCollection) =
             return 361;
         case 'prop_elecbox':
             return 402;
+        case 'player':
+            return 1;
     }
 };
 

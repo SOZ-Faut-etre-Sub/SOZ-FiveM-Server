@@ -88,7 +88,7 @@ export type HalloweenSubMenuState = {
     started: boolean;
     gameDuration: number;
     roleMaxNumber: Record<VampireGameRole, number>;
-    mortalObjective: Record<VampireGameCollection, number>;
+    mortalObjective: Record<Exclude<VampireGameCollection, 'player'>, number>;
 };
 
 export type AdminMenuData = {

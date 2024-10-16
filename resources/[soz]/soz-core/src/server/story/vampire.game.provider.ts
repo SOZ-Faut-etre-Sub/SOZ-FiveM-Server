@@ -7,6 +7,7 @@ import { Gauge } from 'prom-client';
 import { On, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Rpc } from '../../core/decorators/rpc';
+import { Tick, TickInterval } from '../../core/decorators/tick';
 import { Logger } from '../../core/logger';
 import { HalloweenSubMenuState } from '../../shared/admin/admin';
 import { ClientEvent } from '../../shared/event/client';
@@ -67,7 +68,7 @@ export class VampireGameProvider {
         [VampireGameRole.Squire]: 5,
         [VampireGameRole.Alchemist]: 5,
     };
-    private mortalObjective: Record<VampireGameCollection, number> = {
+    private mortalObjective: Record<Exclude<VampireGameCollection, 'player'>, number> = {
         prop_streetlight: 30,
         prop_fire_hydrant: 30,
         prop_gas_pump: 10,
@@ -401,6 +402,29 @@ export class VampireGameProvider {
             'info'
         );
         this.stopGame();
+    }
+
+    @Tick(TickInterval.EVERY_SECOND)
+    async syncEnemyPosition() {
+        if (!this.gameState.started) return;
+
+        const squirePlayers = [];
+        const enemyPositions: Vector3[] = [];
+
+        this.gameState.playerRoles.forEach((role, player) => {
+            if (role === VampireGameRole.Squire) {
+                squirePlayers.push(player);
+            }
+
+            if (role !== VampireGameRole.Vampire && role !== VampireGameRole.Fanatic) return;
+
+            const [x, y, z] = GetEntityCoords(GetPlayerPed(player));
+            enemyPositions.push([x, y, z]);
+        });
+
+        squirePlayers.forEach(player => {
+            TriggerLatentClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_ENEMY_POSITION, player, 1024, enemyPositions);
+        });
     }
 
     private stopGame() {

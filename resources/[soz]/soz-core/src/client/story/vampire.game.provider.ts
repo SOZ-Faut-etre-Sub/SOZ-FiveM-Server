@@ -42,6 +42,7 @@ export class VampireGameProvider {
 
     private blipDisabled = new Set<string>();
     private objectiveInteractions = new Set<string>();
+    private vampirePositionBlip = new Set<string>();
     private state: VampireGameClientState = {
         inWaitingRoom: false,
         started: false,
@@ -165,6 +166,30 @@ export class VampireGameProvider {
                     true
                 );
             }
+        }
+    }
+
+    @OnEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_ENEMY_POSITION)
+    public syncEnemyPosition(positions: Vector3[]) {
+        this.vampirePositionBlip.forEach(blipName => {
+            this.blipFactory.remove(blipName);
+        });
+        this.vampirePositionBlip.clear();
+
+        for (const [index, position] of positions.entries()) {
+            const blipName = `halloween_vampire_position_${index}`;
+
+            this.blipFactory.create(
+                blipName,
+                {
+                    name: 'Présence de danger',
+                    coords: toVector3Object(position),
+                    sprite: 1,
+                    color: 1,
+                },
+                true
+            );
+            this.vampirePositionBlip.add(blipName);
         }
     }
 
