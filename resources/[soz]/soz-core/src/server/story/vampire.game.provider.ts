@@ -62,7 +62,7 @@ export class VampireGameProvider {
     private gameDuration = 30; // minutes
     private roleMaxNumber: Record<VampireGameRole, number> = {
         [VampireGameRole.Vampire]: 50,
-        [VampireGameRole.Fanatic]: 5,
+        [VampireGameRole.Ghoul]: 5,
         [VampireGameRole.Hunter]: 5,
         [VampireGameRole.Mortal]: 200,
         [VampireGameRole.Squire]: 5,
@@ -81,7 +81,7 @@ export class VampireGameProvider {
 
         objective: {
             [VampireGameRole.Vampire]: new Map<VampireGameCollection, Vector3[]>(),
-            [VampireGameRole.Fanatic]: new Map<VampireGameCollection, Vector3[]>(),
+            [VampireGameRole.Ghoul]: new Map<VampireGameCollection, Vector3[]>(),
             [VampireGameRole.Hunter]: new Map<VampireGameCollection, Vector3[]>(),
             [VampireGameRole.Mortal]: new Map<VampireGameCollection, Vector3[]>(),
             [VampireGameRole.Squire]: new Map<VampireGameCollection, Vector3[]>(),
@@ -93,9 +93,9 @@ export class VampireGameProvider {
                 name: 'soz_halloween_vampire_count',
                 help: 'Number of Vampire in halloween game',
             }),
-            [VampireGameRole.Fanatic]: new Gauge({
-                name: 'soz_halloween_fanatic_count',
-                help: 'Number of Fanatic in halloween game',
+            [VampireGameRole.Ghoul]: new Gauge({
+                name: 'soz_halloween_ghoul_count',
+                help: 'Number of Ghoul in halloween game',
             }),
             [VampireGameRole.Hunter]: new Gauge({
                 name: 'soz_halloween_hunter_count',
@@ -138,57 +138,7 @@ export class VampireGameProvider {
         }
     }
 
-    @Rpc(RpcServerEvent.ADMIN_HALLOWEEN_GAME_STATE)
-    public getState(): HalloweenSubMenuState {
-        return {
-            started: this.gameState.started,
-            gameDuration: this.gameDuration,
-            roleMaxNumber: this.roleMaxNumber,
-            mortalObjective: this.mortalObjective,
-        };
-    }
-
-    @OnEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_GAME_DURATION)
-    public updateGameDuration(source: number, value: number): void {
-        if (!this.permissionService.isStaff(source)) {
-            return;
-        }
-
-        this.gameDuration = value;
-        this.notifier.notify(source, `La durée du jeu a été mise à jour, durée maximum: ${value} minutes`, 'info');
-    }
-
-    @OnEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_ROLE)
-    public toggleRole(source: number, role: VampireGameRole, value: number): void {
-        if (!this.permissionService.isStaff(source)) {
-            return;
-        }
-
-        this.roleMaxNumber[role] = value;
-        if (value <= 0) {
-            this.notifier.notify(source, `Le rôle ${role} a été désactivé`, 'info');
-            return;
-        }
-
-        this.notifier.notify(source, `Le rôle ${role} a été mis à jour, joueurs maximum: ${value}`, 'info');
-    }
-
-    @OnEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_MORTAL_COLLECTION)
-    public toggleCollection(source: number, collection: VampireGameCollection, value: number): void {
-        if (!this.permissionService.isStaff(source)) {
-            return;
-        }
-
-        this.mortalObjective[collection] = value;
-        if (value <= 0) {
-            this.notifier.notify(source, `La collection ${collection} a été désactivée`, 'info');
-            return;
-        }
-
-        this.notifier.notify(source, `La collection ${collection} a été mise à jour, props maximum: ${value}`, 'info');
-    }
-
-    @OnEvent(ServerEvent.ADMIN_HALLOWEEN_LAUNCH_GAME)
+    @OnEvent(ServerEvent.ADMIN_HALLOWEEN_START_GAME)
     public async launchGameEvent(source: number) {
         if (!this.permissionService.isStaff(source)) {
             return;
@@ -204,7 +154,7 @@ export class VampireGameProvider {
         }
 
         for (const player of this.serverStateService.getPlayers()) {
-            this.newPlayer(player);
+            await this.newPlayer(player);
         }
 
         await wait(5000);
@@ -373,6 +323,18 @@ export class VampireGameProvider {
         this.stopGame();
     }
 
+    @OnEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_PLAYER_KNOCKED_OUT)
+    public async playerKnockedOut(source: number) {
+        if (!this.gameState.started) return;
+        if (this.playerStateService.getClientState(source).isKnockedOut) return;
+
+        this.notifier.error(source, "Tu es au sol, prie pour qu'un vampire ne te suce pas !");
+
+        this.playerStateService.setClientState(source, {
+            isKnockedOut: true,
+        });
+    }
+
     @OnEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_CONVERT_PLAYER)
     public async convertPlayer(source: number, target: number, role: VampireGameRole) {
         if (!this.gameState.started) {
@@ -382,16 +344,55 @@ export class VampireGameProvider {
         const sourceRole = this.gameState.playerRoles.get(source);
         const targetRole = this.gameState.playerRoles.get(target);
 
-        if (sourceRole !== VampireGameRole.Vampire || targetRole !== VampireGameRole.Alchemist) {
+        if (![VampireGameRole.Vampire, VampireGameRole.Alchemist].includes(sourceRole)) {
             this.notifier.error(source, "Vous n'avez pas le droit de faire cette action");
         }
 
-        switch (role) {
-            case VampireGameRole.Fanatic:
-                break;
-            case VampireGameRole.Alchemist:
-                break;
+        if (role === VampireGameRole.Ghoul) {
+            if (targetRole !== VampireGameRole.Mortal) {
+                this.notifier.error(source, 'La cible doit être un Mortel');
+                return;
+            }
+
+            const { completed } = await this.progressService.progress(source, 'vampire', 'Ça suce fort', 3000, {
+                name: 'base',
+                dictionary: 'amb@prop_human_bum_bin@base',
+                flags: 1,
+            });
+
+            if (!completed) {
+                return;
+            }
+        } else if (role === VampireGameRole.Alchemist) {
+            if (targetRole !== VampireGameRole.Ghoul) {
+                this.notifier.error(source, 'La cible doit être une Goule');
+                return;
+            }
+
+            const { completed } = await this.progressService.progress(source, 'analyze', 'Injection du sérum', 3000, {
+                name: 'base',
+                dictionary: 'amb@prop_human_bum_bin@base',
+                flags: 1,
+            });
+
+            if (!completed) {
+                return;
+            }
         }
+
+        this.gameState.gauges[targetRole].dec();
+        this.gameState.playerRoles.set(target, role);
+        this.gameState.gauges[role].inc();
+
+        TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_STATE, target, {
+            role,
+        });
+
+        this.playerStateService.setClientState(target, {
+            isKnockedOut: false,
+        });
+
+        TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED, target, role);
 
         const roleGauge = await this.gameState.gauges[VampireGameRole.Mortal].get();
         if (roleGauge.values[0].value > 0) return;
@@ -416,7 +417,7 @@ export class VampireGameProvider {
                 squirePlayers.push(player);
             }
 
-            if (role !== VampireGameRole.Vampire && role !== VampireGameRole.Fanatic) return;
+            if (role !== VampireGameRole.Vampire && role !== VampireGameRole.Ghoul) return;
 
             const [x, y, z] = GetEntityCoords(GetPlayerPed(player));
             enemyPositions.push([x, y, z]);
@@ -427,6 +428,58 @@ export class VampireGameProvider {
         });
     }
 
+    /* Admin events */
+    @Rpc(RpcServerEvent.ADMIN_HALLOWEEN_GAME_STATE)
+    public getState(): HalloweenSubMenuState {
+        return {
+            started: this.gameState.started,
+            gameDuration: this.gameDuration,
+            roleMaxNumber: this.roleMaxNumber,
+            mortalObjective: this.mortalObjective,
+        };
+    }
+
+    @OnEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_GAME_DURATION)
+    public updateGameDuration(source: number, value: number): void {
+        if (!this.permissionService.isStaff(source)) {
+            return;
+        }
+
+        this.gameDuration = value;
+        this.notifier.notify(source, `La durée du jeu a été mise à jour, durée maximum: ${value} minutes`, 'info');
+    }
+
+    @OnEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_ROLE)
+    public toggleRole(source: number, role: VampireGameRole, value: number): void {
+        if (!this.permissionService.isStaff(source)) {
+            return;
+        }
+
+        this.roleMaxNumber[role] = value;
+        if (value <= 0) {
+            this.notifier.notify(source, `Le rôle ${role} a été désactivé`, 'info');
+            return;
+        }
+
+        this.notifier.notify(source, `Le rôle ${role} a été mis à jour, joueurs maximum: ${value}`, 'info');
+    }
+
+    @OnEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_MORTAL_COLLECTION)
+    public toggleCollection(source: number, collection: VampireGameCollection, value: number): void {
+        if (!this.permissionService.isStaff(source)) {
+            return;
+        }
+
+        this.mortalObjective[collection] = value;
+        if (value <= 0) {
+            this.notifier.notify(source, `La collection ${collection} a été désactivée`, 'info');
+            return;
+        }
+
+        this.notifier.notify(source, `La collection ${collection} a été mise à jour, props maximum: ${value}`, 'info');
+    }
+
+    /* Private methods */
     private stopGame() {
         this.gameState.started = false;
         this.gameState.playerRoles.clear();
@@ -454,8 +507,8 @@ export class VampireGameProvider {
         } as VampireGameClientState);
     }
 
-    private newPlayer(player: PlayerData) {
-        const role = this.getRandomRole();
+    private async newPlayer(player: PlayerData) {
+        const role = await this.getRandomRole();
         if (!role) {
             this.logger.error(
                 `${player.charinfo.firstname} ${player.charinfo.lastname} n'a pas pu être assigné à un rôle, aucun rôle de disponible...`
@@ -482,19 +535,21 @@ export class VampireGameProvider {
         );
     }
 
-    private getRandomRole(): VampireGameRole {
-        const availableRoles = Object.entries(this.roleMaxNumber)
-            .filter(([, amount]) => amount > 0)
-            .filter(async ([role, amount]) => {
-                const roleGauge = await this.gameState.gauges[role as VampireGameRole].get();
-                return roleGauge.values[0].value < amount;
-            });
+    private async getRandomRole(): Promise<VampireGameRole> {
+        let availableRoles = Object.keys(this.roleMaxNumber).filter(role => this.roleMaxNumber[role] > 0);
+
+        for (const role of availableRoles) {
+            const roleGauge = await this.gameState.gauges[role as VampireGameRole].get();
+            if (roleGauge.values[0].value >= this.roleMaxNumber[role]) {
+                availableRoles = availableRoles.filter(r => r !== role);
+            }
+        }
 
         if (availableRoles.length === 0) {
             return null;
         }
 
-        return availableRoles[Math.floor(Math.random() * availableRoles.length)][0] as VampireGameRole;
+        return availableRoles[Math.floor(Math.random() * availableRoles.length)] as VampireGameRole;
     }
 
     private createObjective(role: VampireGameRole) {

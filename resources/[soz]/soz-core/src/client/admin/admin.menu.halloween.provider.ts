@@ -21,7 +21,7 @@ export class AdminMenuHalloweenProvider {
 
     @OnNuiEvent(NuiEvent.AdminMenuHalloweenLaunchGame)
     async launchGame(): Promise<void> {
-        TriggerServerEvent(ServerEvent.ADMIN_HALLOWEEN_LAUNCH_GAME);
+        TriggerServerEvent(ServerEvent.ADMIN_HALLOWEEN_START_GAME);
         this.nuiMenu.closeMenu();
     }
 

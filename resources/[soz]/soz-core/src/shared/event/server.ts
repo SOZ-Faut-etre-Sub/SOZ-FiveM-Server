@@ -61,7 +61,7 @@ export enum ServerEvent {
     ADMIN_EVENT_SET_REWARD_MAX = 'soz-core:server:admin:event:set-reward-max',
     ADMIN_EVENT_SET_START_SOUND = 'soz-core:server:admin:event:set-start-sound',
     ADMIN_HALLOWEEN_MOON_UPDATE = 'soz-core:server:admin:halloween:moon-update',
-    ADMIN_HALLOWEEN_LAUNCH_GAME = 'soz-core:server:admin:halloween:launch-game',
+    ADMIN_HALLOWEEN_START_GAME = 'soz-core:server:admin:halloween:launch-game',
     ADMIN_HALLOWEEN_STOP_GAME = 'soz-core:server:admin:halloween:stop-game',
     ADMIN_HALLOWEEN_UPDATE_GAME_DURATION = 'soz-core:server:admin:halloween:update-game-duration',
     ADMIN_HALLOWEEN_UPDATE_ROLE = 'soz-core:server:admin:halloween:update-role',
@@ -636,6 +636,7 @@ export enum ServerEvent {
     WORLD_EVENT_SIGNAL_INVENTORY = 'soz-core:server:world-event:signal-inventory',
     HALLOWEEN_VAMPIRE_GAME_TAKE_OBJECTIVE = 'soz-core:server:halloween:vampire-game-take-objective',
     HALLOWEEN_VAMPIRE_GAME_CONVERT_PLAYER = 'soz-core:server:halloween:vampire-game-convert-player',
+    HALLOWEEN_VAMPIRE_GAME_PLAYER_KNOCKED_OUT = 'soz-core:server:halloween:vampire-game-player-knocked-out',
 
     DRONE_NEW = 'soz-core:server:drone-new',
     DRONE_DELETE = 'soz-core:server:drone-delete',

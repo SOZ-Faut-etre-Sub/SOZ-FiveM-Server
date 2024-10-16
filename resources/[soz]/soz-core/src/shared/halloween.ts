@@ -4,7 +4,7 @@ import { Gauge } from 'prom-client';
 export enum VampireGameRole {
     // Les méchants...
     Vampire = 'Vampire',
-    Fanatic = 'Goule',
+    Ghoul = 'Goule',
     // Les gentils...
     Hunter = 'Chasseur',
     Mortal = 'Mortel',

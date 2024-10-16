@@ -20,8 +20,10 @@ import { RpcServerEvent } from '../../shared/rpc';
 import { BlipFactory } from '../blip';
 import { FeatureProvider } from '../feature/feature.provider';
 import { InstructionalService } from '../instructional.service';
+import { PlayerListStateService } from '../player/player.list.state.service';
 import { InteractionProvider } from '../quick-interaction/interaction.provider';
 import { TargetFactory } from '../target/target.factory';
+import { BlurService } from '../utils/blur.service';
 
 @Provider()
 export class VampireGameProvider {
@@ -40,6 +42,12 @@ export class VampireGameProvider {
     @Inject(BlipFactory)
     private readonly blipFactory: BlipFactory;
 
+    @Inject(PlayerListStateService)
+    private readonly playerListStateService: PlayerListStateService;
+
+    @Inject(BlurService)
+    private readonly blurService: BlurService;
+
     private blipDisabled = new Set<string>();
     private objectiveInteractions = new Set<string>();
     private vampirePositionBlip = new Set<string>();
@@ -49,6 +57,20 @@ export class VampireGameProvider {
         role: null,
         objective: null,
     };
+
+    public isGameRunning() {
+        return this.state.started;
+    }
+
+    public async handleOnDeath() {
+        if (!this.state.started) return;
+        if (this.playerListStateService.isKnockedOut(GetPlayerServerId(PlayerId()))) return;
+
+        this.blurService.add('dead', 5);
+        StartScreenEffect('DeathFailOut', 0, true);
+
+        TriggerServerEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_PLAYER_KNOCKED_OUT);
+    }
 
     @Once(OnceStep.PlayerLoaded)
     async onStart() {
@@ -64,6 +86,9 @@ export class VampireGameProvider {
                     if (this.state.role !== VampireGameRole.Vampire) return false;
 
                     const targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
+
+                    if (!this.playerListStateService.isKnockedOut(targetSource)) return false;
+
                     const targetState = await emitRpc<PlayerClientState>(
                         RpcServerEvent.PLAYER_GET_CLIENT_STATE,
                         targetSource
@@ -76,7 +101,7 @@ export class VampireGameProvider {
                     TriggerServerEvent(
                         ServerEvent.HALLOWEEN_VAMPIRE_GAME_CONVERT_PLAYER,
                         targetSource,
-                        VampireGameRole.Fanatic
+                        VampireGameRole.Ghoul
                     );
                 },
             },
@@ -89,12 +114,15 @@ export class VampireGameProvider {
                     if (this.state.role !== VampireGameRole.Alchemist) return false;
 
                     const targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
+
+                    if (!this.playerListStateService.isKnockedOut(targetSource)) return false;
+
                     const targetState = await emitRpc<PlayerClientState>(
                         RpcServerEvent.PLAYER_GET_CLIENT_STATE,
                         targetSource
                     );
 
-                    return targetState.halloweenRole === VampireGameRole.Fanatic;
+                    return targetState.halloweenRole === VampireGameRole.Ghoul;
                 },
                 action: async entity => {
                     const targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
@@ -121,6 +149,28 @@ export class VampireGameProvider {
         }
 
         this.syncObjective(this.state.objective);
+    }
+
+    @OnEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED)
+    public async onPlayerConverted(role: VampireGameRole) {
+        const ped = PlayerPedId();
+        const pos = GetEntityCoords(ped);
+        const heading = GetEntityHeading(ped);
+
+        StopScreenEffect('DeathFailOut');
+        this.blurService.remove('dead', 1000);
+
+        NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, 1, false);
+        SetEntityHealth(ped, 200);
+
+        if (role === VampireGameRole.Ghoul) {
+            SetPedArmour(ped, 100);
+        }
+
+        this.instructionalService.display(['Tu es désormais', role]);
+
+        await wait(5000);
+        this.instructionalService.clear();
     }
 
     @OnEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_OBJECTIVE)
