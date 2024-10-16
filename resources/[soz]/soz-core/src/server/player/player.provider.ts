@@ -20,6 +20,7 @@ import { QBCore } from '../qbcore';
 import { ServerStateService } from '../server.state.service';
 import { PlayerListStateService } from './player.list.state.service';
 import { PlayerMoneyService } from './player.money.service';
+import { PlayerService } from './player.service';
 import { PlayerStateService } from './player.state.service';
 
 @Provider()
@@ -29,6 +30,9 @@ export class PlayerProvider {
 
     @Inject(Permissions)
     private permissions: Permissions;
+
+    @Inject(PlayerService)
+    private playerService: PlayerService;
 
     @Inject(PlayerStateService)
     private playerStateService: PlayerStateService;
@@ -153,5 +157,14 @@ export class PlayerProvider {
     @OnEvent(ServerEvent.PLAYER_UPDATE_STATE)
     public removePlayerMoney(source: number, money: number, type: BankMoneyType = 'money'): boolean {
         return this.playerMoneyService.remove(source, money, type);
+    }
+
+    @Exportable('IsOnDuty')
+    public isOnDuty(source: number): boolean {
+        const player = this.playerService.getPlayer(source);
+        if (!player) {
+            return false;
+        }
+        return player.job.onduty;
     }
 }
