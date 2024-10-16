@@ -14,6 +14,7 @@ import { useAppDarkWebService } from './services/app/useAppDarkwebService';
 import { useAppNotesService } from './services/app/useAppNotesService';
 import { useAppSnakeLeaderboardService } from './services/app/useAppSnakeLeaderboardService';
 import { useAppSocietyService } from './services/app/useAppSocietyService';
+import { useAppTaxService } from './services/app/useAppTaxService';
 import { useAppTetrisLeaderboardService } from './services/app/useAppTetrisLeaderboardService';
 import { useAppTwitchNewsService } from './services/app/useAppTwitchNewsService';
 import { useAppWeatherService } from './services/app/useAppWeatherService';
@@ -62,6 +63,7 @@ function Phone() {
     useAppTetrisLeaderboardService();
     useAppSnakeLeaderboardService();
     useAppDarkWebService();
+    useAppTaxService();
 
     if (config.wallpaper === undefined) {
         return null;
