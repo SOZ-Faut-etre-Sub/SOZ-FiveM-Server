@@ -118,8 +118,9 @@ class _SocietyService {
             players.forEach(player => {
                 this.createMessageBroadcastEvent(player.source, contact, identifier, reqObj.data);
             });
+            const hasLsmcOnDuty = players.filter(player => exports['soz-core'].IsOnDuty(player.source)).length > 0;
 
-            if (reqObj.data.number === '555-LSMC' && players.length == 0) {
+            if (reqObj.data.number === '555-LSMC' && !hasLsmcOnDuty) {
                 const lspd = await PlayerService.getPlayersFromSocietyNumber('555-LSPD');
                 const bcso = await PlayerService.getPlayersFromSocietyNumber('555-BCSO');
 
