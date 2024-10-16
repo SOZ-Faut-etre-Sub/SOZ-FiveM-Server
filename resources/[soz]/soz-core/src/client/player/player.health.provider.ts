@@ -1,14 +1,14 @@
+import { On, Once, OnceStep, OnEvent } from '@core/decorators/event';
+import { Inject } from '@core/decorators/injectable';
+import { Provider } from '@core/decorators/provider';
+import { Tick, TickInterval } from '@core/decorators/tick';
+import { emitRpc } from '@core/rpc';
+import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { PlayerUpdate } from '@public/core/decorators/player';
 import { Rpc } from '@public/core/decorators/rpc';
-import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { wait } from '@public/core/utils';
 import { TargetOption } from '@public/shared/target';
 
-import { On, Once, OnceStep, OnEvent } from '../../core/decorators/event';
-import { Inject } from '../../core/decorators/injectable';
-import { Provider } from '../../core/decorators/provider';
-import { Tick, TickInterval } from '../../core/decorators/tick';
-import { emitRpc } from '../../core/rpc';
 import { AnimationStopReason } from '../../shared/animation';
 import { Component, WardrobeConfig } from '../../shared/cloth';
 import { ClientEvent, ServerEvent } from '../../shared/event';

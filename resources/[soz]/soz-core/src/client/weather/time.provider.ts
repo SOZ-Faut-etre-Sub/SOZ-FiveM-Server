@@ -1,7 +1,7 @@
 import { Inject } from '@public/core/decorators/injectable';
 import { Tick } from '@public/core/decorators/tick';
 import { Logger } from '@public/core/logger';
-import { Feature, isFeatureEnabled } from '@public/shared/features';
+import { Feature } from '@public/shared/features';
 
 import { OnEvent } from '../../core/decorators/event';
 import { Provider } from '../../core/decorators/provider';
@@ -13,6 +13,7 @@ import {
     IRLDayDurationInMinutes,
     Time,
 } from '../../shared/weather';
+import { FeatureProvider } from '../feature/feature.provider';
 
 const MAX_SPEED = 1000;
 const MAX_DELTA_SPEED = 2 * 3600;
@@ -23,6 +24,9 @@ export class TimeProvider {
     @Inject(Logger)
     private logger: Logger;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     private init = false;
     private baseSpeed = (DayDurationInMinutes * 60_000) / IRLDayDurationInMinutes;
     private coefSpeed = 1;
@@ -32,7 +36,7 @@ export class TimeProvider {
 
     @OnEvent(ClientEvent.STATE_UPDATE_TIME)
     async onTimeChange(time: Time) {
-        if (isFeatureEnabled(Feature.Halloween)) {
+        if (this.featureProvider.isFeatureEnabled(Feature.Halloween)) {
             NetworkOverrideClockTime(time.hour, time.minute, time.second);
             return;
         }
@@ -47,7 +51,7 @@ export class TimeProvider {
             return;
         }
 
-        if (isFeatureEnabled(Feature.Halloween)) {
+        if (this.featureProvider.isFeatureEnabled(Feature.Halloween)) {
             return;
         }
 

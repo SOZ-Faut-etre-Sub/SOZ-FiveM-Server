@@ -32,10 +32,8 @@ export class FeatureProvider {
 
     @Command('feature', { description: 'Enable or disable some features', role: 'admin' })
     setFeature(source: number, action: 'enable' | 'disable', feature: Feature): void {
-        const features = this.store.getState().global.features;
-
-        this.store.dispatch.global.update({
-            features: { ...features, [feature]: { ...features[feature], [this.environment]: action === 'enable' } },
+        this.store.dispatch.global.setFeature({
+            [feature]: { ...this.features[feature], [this.environment]: action === 'enable' },
         });
         this.notifier.notify(
             source,

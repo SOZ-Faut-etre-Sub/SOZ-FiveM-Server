@@ -1,4 +1,4 @@
-import { DefaultFeatureConfig } from '@public/shared/features';
+import { DefaultFeatureConfig, FeaturesConfig } from '@public/shared/features';
 import { BLACK_SCREEN_URL, GlobalState } from '@public/shared/global';
 import { JobType } from '@public/shared/job';
 import { createModel } from '@rematch/core';
@@ -56,6 +56,9 @@ export const global = createModel<RootModel>()({
         },
         setJobEnergies(state, energies: Partial<Record<JobType, number>>) {
             return { ...state, jobEnergy: { ...state.jobEnergy, ...energies } };
+        },
+        setFeature(state, feature: Partial<FeaturesConfig>) {
+            return { ...state, features: { ...state.features, ...feature } };
         },
     },
     effects: () => ({}),

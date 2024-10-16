@@ -1,10 +1,9 @@
 import { Once, OnceStep } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
-import { Feature } from '@public/shared/features';
 import { Component, Prop } from '@public/shared/cloth';
 import { VanillaComponentDrawableIndexMaxValue, VanillaPropDrawableIndexMaxValue } from '@public/shared/drawable';
-import { Feature, isFeatureEnabled } from '@public/shared/features';
+import { Feature } from '@public/shared/features';
 import { WorldObject } from '@public/shared/object';
 import { PlayerPedHash } from '@public/shared/player';
 import { toVector4Object, Vector4 } from '@public/shared/polyzone/vector';
