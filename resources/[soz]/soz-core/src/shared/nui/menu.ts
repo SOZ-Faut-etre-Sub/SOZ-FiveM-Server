@@ -138,6 +138,7 @@ export enum MenuType {
     GangMenu = 'gang',
     GangVehiculeMenu = 'gang_vehicule_menu',
     WatchMenu = 'watch_menu',
+    HalloweenVampire = 'halloween_vampire',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {
@@ -208,6 +209,7 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.DoorAdmin]: string;
     [MenuType.SmugglingBlackMarketPrices]: string[];
     [MenuType.WatchMenu]: HudSettings;
+    [MenuType.HalloweenVampire]: never;
 }
 
 export const ALLOWED_MENU_NAVIGATE: MenuType[] = [MenuType.AdminMenu, MenuType.PropPlacementMenu];

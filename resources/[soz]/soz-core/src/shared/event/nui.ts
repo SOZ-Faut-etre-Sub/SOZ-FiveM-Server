@@ -594,5 +594,7 @@ export enum NuiEvent {
 
     MinigameEnd = 'soz-core:nui:minigame:end',
 
+    HalloweenVampireSwitchModel = 'soz-core:client:halloween:vampire-switch-model',
+
     PickerSelect = 'soz-core:nui:picker:select',
 }

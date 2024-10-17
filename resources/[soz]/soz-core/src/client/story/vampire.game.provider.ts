@@ -1,11 +1,14 @@
-import { Once, OnceStep, OnEvent, OnGameEvent } from '@public/core/decorators/event';
+import { Once, OnceStep, OnEvent, OnGameEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { wait } from '@public/core/utils';
 
+import { Command } from '../../core/decorators/command';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { Tick, TickInterval } from '../../core/decorators/tick';
 import { emitRpc } from '../../core/rpc';
 import { ClientEvent } from '../../shared/event/client';
 import { GameEvent } from '../../shared/event/game';
+import { NuiEvent } from '../../shared/event/nui';
 import { ServerEvent } from '../../shared/event/server';
 import { Feature } from '../../shared/features';
 import {
@@ -17,6 +20,8 @@ import {
     VampireGameRole,
     VampireRespawnPoints,
 } from '../../shared/halloween';
+import { Control } from '../../shared/input';
+import { MenuType } from '../../shared/nui/menu';
 import { PlayerClientState } from '../../shared/player';
 import { toVector3Object, Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
@@ -24,6 +29,7 @@ import { WeaponName } from '../../shared/weapons/weapon';
 import { BlipFactory } from '../blip';
 import { FeatureProvider } from '../feature/feature.provider';
 import { InstructionalService } from '../instructional.service';
+import { NuiMenu } from '../nui/nui.menu';
 import { MapPickerProvider } from '../picker/map.picker.provider';
 import { PlayerListStateService } from '../player/player.list.state.service';
 import { PlayerService } from '../player/player.service';
@@ -67,6 +73,9 @@ export class VampireGameProvider {
 
     @Inject(MapPickerProvider)
     private readonly mapPickerProvider: MapPickerProvider;
+
+    @Inject(NuiMenu)
+    private readonly nuiMenu: NuiMenu;
 
     private blipDisabled = new Set<string>();
     private objectiveInteractions = new Set<string>();
@@ -203,13 +212,13 @@ export class VampireGameProvider {
 
         NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, 1, false);
         SetEntityHealth(ped, 200);
+        await this.syncModel(role);
 
         this.instructionalService.display(['Tu es désormais', role]);
 
         await wait(5000);
         this.instructionalService.clear();
 
-        await this.syncModel(role);
         await this.displayRoleObjective(this.state.role);
     }
 
@@ -309,19 +318,59 @@ export class VampireGameProvider {
         weaponHash: number
     ): Promise<void> {
         if (!this.state.started) return;
-
-        const damageType = GetWeaponDamageType(weaponHash);
+        if (this.state.role !== VampireGameRole.Vampire) return;
 
         const playerPed = PlayerPedId();
         if (playerPed !== victim) return;
 
-        if (this.state.role === VampireGameRole.Vampire && damageType > 1) {
-            if (weaponHash === GetHashKey('weapon_musket')) {
-                SetEntityHealth(playerPed, 0);
-            } else {
-                SetEntityHealth(playerPed, GetPedMaxHealth(playerPed));
-            }
+        if (weaponHash === GetHashKey('weapon_musket')) {
+            SetEntityHealth(playerPed, 0);
+        } else {
+            SetEntityHealth(playerPed, GetPedMaxHealth(playerPed));
         }
+    }
+
+    @Command('soz_halloween_vampire_game_menu')
+    public async openMenu() {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Halloween)) return;
+        if (!this.state.started) return;
+        if (this.state.role !== VampireGameRole.Vampire) return;
+
+        this.nuiMenu.openMenu(MenuType.HalloweenVampire);
+    }
+
+    @OnNuiEvent(NuiEvent.HalloweenVampireSwitchModel)
+    public async switchModel(model: 'vampire' | 'crow' | 'wolf') {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Halloween)) return;
+        if (!this.state.started) return;
+        if (this.state.role !== VampireGameRole.Vampire) return;
+
+        if (model === 'vampire') {
+            await this.skinService.setModel('dracula');
+        } else if (model === 'crow') {
+            await this.skinService.setModel('a_c_crow');
+        } else if (model === 'wolf') {
+            await this.skinService.setModel('a_c_coyote');
+        }
+
+        this.nuiMenu.closeMenu();
+    }
+
+    @Tick(TickInterval.EVERY_FRAME)
+    public async onTick() {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Halloween)) return;
+        if (!this.state.started) return;
+        if (this.state.role !== VampireGameRole.Vampire) return;
+
+        if (!IsControlJustPressed(0, Control.Dive)) return;
+
+        const ped = PlayerPedId();
+        const vel = GetEntityVelocity(ped);
+
+        if (GetEntityHeightAboveGround(ped) >= 0.1) return;
+        if (!IsPedModel(ped, GetHashKey('a_c_crow'))) return;
+
+        SetEntityVelocity(ped, vel[0], vel[1], vel[2] + 10.0);
     }
 
     private async onGameStart() {

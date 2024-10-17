@@ -1,0 +1,48 @@
+import { FunctionComponent } from 'react';
+
+import { NuiEvent } from '../../../shared/event';
+import { MenuType } from '../../../shared/nui/menu';
+import { fetchNui } from '../../fetch';
+import { usePlayer } from '../../hook/data';
+import { MainMenu, Menu, MenuContent, MenuItemButton, MenuTitle } from '../Styleguide/Menu';
+
+export const MenuHalloweenVampire: FunctionComponent = () => {
+    const player = usePlayer();
+
+    if (!player) {
+        return null;
+    }
+
+    return (
+        <Menu type={MenuType.HalloweenVampire}>
+            <MainMenu>
+                <MenuTitle banner="https://nui-img/soz/menu_personal">Dracula</MenuTitle>
+                <MenuContent>
+                    <MenuItemButton
+                        onConfirm={() => {
+                            fetchNui(NuiEvent.HalloweenVampireSwitchModel, 'vampire');
+                        }}
+                    >
+                        Forme de Vampire
+                    </MenuItemButton>
+
+                    <MenuItemButton
+                        onConfirm={() => {
+                            fetchNui(NuiEvent.HalloweenVampireSwitchModel, 'crow');
+                        }}
+                    >
+                        Forme de Chauve Souris
+                    </MenuItemButton>
+
+                    <MenuItemButton
+                        onConfirm={() => {
+                            fetchNui(NuiEvent.HalloweenVampireSwitchModel, 'wolf');
+                        }}
+                    >
+                        Forme de Loup
+                    </MenuItemButton>
+                </MenuContent>
+            </MainMenu>
+        </Menu>
+    );
+};
