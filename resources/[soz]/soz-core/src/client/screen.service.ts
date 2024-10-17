@@ -8,9 +8,8 @@ import { add2Vector3, multVector3, sub2Vector3, Vector2, Vector3 } from '../shar
 export class ScreenService {
     private intersectEverything = false;
 
-    private world3DToScreen2D(world3D: Vector3): Vector2 {
+    public world3DToScreen2D(world3D: Vector3): Vector2 {
         const screenCorrd = GetScreenCoordFromWorldCoord(world3D[0], world3D[1], world3D[2]);
-
         return [screenCorrd[1], screenCorrd[2]];
     }
 

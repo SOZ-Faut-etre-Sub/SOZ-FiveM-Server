@@ -1,3 +1,4 @@
+import { MapPickerLocation } from '@public/shared/picker';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import PCancelable from 'p-cancelable';
 import { Gauge } from 'prom-client';
@@ -74,6 +75,14 @@ export const VampireGameCollectionSprite = (collection: VampireGameCollection) =
             return 1;
     }
 };
+
+export const VampireRespawnPoints: MapPickerLocation[] = [
+    {
+        id: 'Vampire1',
+        coords: [-606.46, -350.25, 34.99] as Vector3,
+        icon: 'coffin',
+    },
+];
 
 export const VampireGameObjectiveProps: Record<string, Vector3[]> = {
     prop_streetlight_01: [

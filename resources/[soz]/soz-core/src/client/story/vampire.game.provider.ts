@@ -15,6 +15,7 @@ import {
     VampireGameCollectionSprite,
     VampireGameEnemyRoles,
     VampireGameRole,
+    VampireRespawnPoints,
 } from '../../shared/halloween';
 import { PlayerClientState } from '../../shared/player';
 import { toVector3Object, Vector3 } from '../../shared/polyzone/vector';
@@ -23,7 +24,7 @@ import { WeaponName } from '../../shared/weapons/weapon';
 import { BlipFactory } from '../blip';
 import { FeatureProvider } from '../feature/feature.provider';
 import { InstructionalService } from '../instructional.service';
-import { Notifier } from '../notifier';
+import { MapPickerProvider } from '../picker/map.picker.provider';
 import { PlayerListStateService } from '../player/player.list.state.service';
 import { PlayerService } from '../player/player.service';
 import { InteractionProvider } from '../quick-interaction/interaction.provider';
@@ -64,8 +65,8 @@ export class VampireGameProvider {
     @Inject(WeaponService)
     private readonly weaponService: WeaponService;
 
-    @Inject(Notifier)
-    private readonly notifier: Notifier;
+    @Inject(MapPickerProvider)
+    private readonly mapPickerProvider: MapPickerProvider;
 
     private blipDisabled = new Set<string>();
     private objectiveInteractions = new Set<string>();
@@ -88,7 +89,12 @@ export class VampireGameProvider {
         this.blurService.add('dead', 5);
         StartScreenEffect('DeathFailOut', 0, true);
 
-        if (VampireGameEnemyRoles.includes(this.state.role)) {
+        if (this.state.role === VampireGameRole.Vampire) {
+            this.instructionalService.display([
+                'Tu as failli à ta tâche...',
+                "Tu as quand même droit à une nouvelle chance d'ici quelques secondes",
+            ]);
+        } else if (this.state.role === VampireGameRole.Ghoul) {
             this.instructionalService.display([
                 'Tu as failli à ta tâche...',
                 "Ton vampire va te réanimer d'ici quelques secondes",
@@ -184,11 +190,16 @@ export class VampireGameProvider {
     @OnEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED)
     public async onPlayerConverted(role: VampireGameRole) {
         const ped = PlayerPedId();
-        const pos = GetEntityCoords(ped);
+        let pos = GetEntityCoords(ped);
         const heading = GetEntityHeading(ped);
 
         StopScreenEffect('DeathFailOut');
         this.blurService.remove('dead', 1000);
+
+        if (role === VampireGameRole.Vampire) {
+            const location = await this.mapPickerProvider.showSouthLocationPicker(VampireRespawnPoints);
+            pos = location.coords;
+        }
 
         NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, 1, false);
         SetEntityHealth(ped, 200);
@@ -273,15 +284,7 @@ export class VampireGameProvider {
     }
 
     @OnGameEvent(GameEvent.CEventNetworkEntityDamage)
-    async onPlayerAttack(
-        victim: number,
-        attacker: number,
-        _unkInt1: number,
-        _unkBool1: number,
-        _unkBool2: number,
-        _isFatal: boolean,
-        weaponHash: number
-    ): Promise<void> {
+    async onPlayerAttack(victim: number, attacker: number): Promise<void> {
         if (!this.state.started) return;
 
         const playerPed = PlayerPedId();

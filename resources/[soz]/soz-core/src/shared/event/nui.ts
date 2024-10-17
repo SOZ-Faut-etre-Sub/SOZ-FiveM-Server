@@ -593,4 +593,6 @@ export enum NuiEvent {
     ProgressFinish = 'soz-core:nui:progress:finish',
 
     MinigameEnd = 'soz-core:nui:minigame:end',
+
+    PickerSelect = 'soz-core:nui:picker:select',
 }

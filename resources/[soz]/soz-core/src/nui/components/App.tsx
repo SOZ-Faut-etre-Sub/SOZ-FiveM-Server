@@ -48,6 +48,7 @@ import { InputApp } from './Input/InputApp';
 import { MedicalApp } from './LSMC/DiagnosticPad/MedicalApp';
 import { MenuApp } from './Menu/MenuApp';
 import { PanelApp } from './Panel/PanelApp';
+import { MapPickerApp } from './Picker/MapPickerApp';
 import { BreathAnalyzerApp } from './Police/BreathAnalyzer';
 import { DrugScreeningApp } from './Police/DrugScreeningApp';
 import { RadarApp } from './Police/RadarApp';
@@ -95,6 +96,7 @@ export const App: FunctionComponent = () => {
             <AudioApp />
             <GlassMorphism />
             <div className={classes}>
+                <MapPickerApp />
                 <TargetOverlay />
                 <HudApp />
                 <CardApp />

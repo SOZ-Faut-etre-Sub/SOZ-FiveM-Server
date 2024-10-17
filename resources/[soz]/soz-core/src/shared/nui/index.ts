@@ -14,6 +14,7 @@ import { NuiRepositoryMethodMap } from '@public/shared/nui/repository';
 import { NuiSceneSearchMethodMap } from '@public/shared/nui/scene';
 import { NuiTalentMethodMap } from '@public/shared/nui/talent';
 import { NuiTargetMethodMap } from '@public/shared/nui/target';
+import { NuiPickerMethodMap } from '@public/shared/picker';
 
 import { NuiAdminPlayerSubMenuMethodMap } from '../../nui/components/Admin/PlayerSubMenu';
 import { NuiAdminSkinSubMenuMethodMap } from '../../nui/components/Admin/SkinSubMenu';
@@ -95,6 +96,7 @@ export interface NuiMethodMap {
     scene: NuiSceneSearchMethodMap;
     feature: NuiFeatureMethodMap;
     blip: NuiBlipMethodMap;
+    picker: NuiPickerMethodMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(

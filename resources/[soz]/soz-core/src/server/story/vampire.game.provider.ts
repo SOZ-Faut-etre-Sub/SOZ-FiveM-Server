@@ -302,9 +302,10 @@ export class VampireGameProvider {
                     onCancel.shouldReject = false;
                     isCanceled = true;
                 });
-                await wait(this.autoRespawnDuration * 1000);
 
+                await wait(this.autoRespawnDuration * 1000);
                 if (isCanceled) return;
+
                 TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED, source, playerRole);
                 resolve();
             });
