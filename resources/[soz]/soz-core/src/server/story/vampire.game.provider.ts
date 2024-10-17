@@ -16,6 +16,7 @@ import { Feature } from '../../shared/features';
 import {
     VampireGameClientState,
     VampireGameCollection,
+    VampireGameEnemyRoles,
     VampireGameObjectiveCollection,
     VampireGameObjectiveProps,
     VampireGameRole,
@@ -61,12 +62,12 @@ export class VampireGameProvider {
 
     private gameDuration = 30; // minutes
     private roleMaxNumber: Record<VampireGameRole, number> = {
-        [VampireGameRole.Vampire]: 50,
-        [VampireGameRole.Ghoul]: 5,
-        [VampireGameRole.Hunter]: 5,
-        [VampireGameRole.Mortal]: 200,
-        [VampireGameRole.Squire]: 5,
-        [VampireGameRole.Alchemist]: 5,
+        [VampireGameRole.Vampire]: 0,
+        [VampireGameRole.Ghoul]: 1,
+        [VampireGameRole.Hunter]: 1,
+        [VampireGameRole.Mortal]: 0,
+        [VampireGameRole.Squire]: 0,
+        [VampireGameRole.Alchemist]: 0,
     };
     private mortalObjective: Record<Exclude<VampireGameCollection, 'player'>, number> = {
         prop_streetlight: 30,
@@ -344,7 +345,7 @@ export class VampireGameProvider {
         const sourceRole = this.gameState.playerRoles.get(source);
         const targetRole = this.gameState.playerRoles.get(target);
 
-        if (![VampireGameRole.Vampire, VampireGameRole.Alchemist].includes(sourceRole)) {
+        if (![...VampireGameEnemyRoles, VampireGameRole.Alchemist].includes(sourceRole)) {
             this.notifier.error(source, "Vous n'avez pas le droit de faire cette action");
         }
 
@@ -405,6 +406,15 @@ export class VampireGameProvider {
         this.stopGame();
     }
 
+    @OnEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_KNOCK_PLAYER)
+    public async knockPlayer(source: number, target: number) {
+        if (!this.gameState.started) return;
+        if (!VampireGameEnemyRoles.includes(this.gameState.playerRoles.get(source))) return;
+        if (this.playerStateService.getClientState(target).isKnockedOut) return;
+
+        TriggerClientEvent(ClientEvent.ADMIN_KILL_PLAYER, target);
+    }
+
     @Tick(TickInterval.EVERY_SECOND)
     async syncEnemyPosition() {
         if (!this.gameState.started) return;
@@ -417,7 +427,7 @@ export class VampireGameProvider {
                 squirePlayers.push(player);
             }
 
-            if (role !== VampireGameRole.Vampire && role !== VampireGameRole.Ghoul) return;
+            if (!VampireGameEnemyRoles.includes(role)) return;
 
             const [x, y, z] = GetEntityCoords(GetPlayerPed(player));
             enemyPositions.push([x, y, z]);

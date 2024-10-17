@@ -1,10 +1,11 @@
-import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
+import { Once, OnceStep, OnEvent, OnGameEvent } from '@public/core/decorators/event';
 import { wait } from '@public/core/utils';
 
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
 import { ClientEvent } from '../../shared/event/client';
+import { GameEvent } from '../../shared/event/game';
 import { ServerEvent } from '../../shared/event/server';
 import { Feature } from '../../shared/features';
 import {
@@ -12,18 +13,23 @@ import {
     VampireGameCollection,
     VampireGameCollectionLabel,
     VampireGameCollectionSprite,
+    VampireGameEnemyRoles,
     VampireGameRole,
 } from '../../shared/halloween';
 import { PlayerClientState } from '../../shared/player';
 import { toVector3Object, Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
+import { WeaponName } from '../../shared/weapons/weapon';
 import { BlipFactory } from '../blip';
 import { FeatureProvider } from '../feature/feature.provider';
 import { InstructionalService } from '../instructional.service';
 import { PlayerListStateService } from '../player/player.list.state.service';
+import { PlayerService } from '../player/player.service';
 import { InteractionProvider } from '../quick-interaction/interaction.provider';
+import { SkinService } from '../skin/skin.service';
 import { TargetFactory } from '../target/target.factory';
 import { BlurService } from '../utils/blur.service';
+import { WeaponService } from '../weapon/weapon.service';
 
 @Provider()
 export class VampireGameProvider {
@@ -47,6 +53,15 @@ export class VampireGameProvider {
 
     @Inject(BlurService)
     private readonly blurService: BlurService;
+
+    @Inject(SkinService)
+    private readonly skinService: SkinService;
+
+    @Inject(PlayerService)
+    private readonly playerService: PlayerService;
+
+    @Inject(WeaponService)
+    private weaponService: WeaponService;
 
     private blipDisabled = new Set<string>();
     private objectiveInteractions = new Set<string>();
@@ -83,7 +98,7 @@ export class VampireGameProvider {
                 category: 'citizen',
                 canInteract: async entity => {
                     if (!this.state.started) return false;
-                    if (this.state.role !== VampireGameRole.Vampire) return false;
+                    if (!VampireGameEnemyRoles.includes(this.state.role)) return false;
 
                     const targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
 
@@ -94,7 +109,7 @@ export class VampireGameProvider {
                         targetSource
                     );
 
-                    return targetState.halloweenRole === VampireGameRole.Mortal;
+                    return !VampireGameEnemyRoles.includes(targetState.halloweenRole);
                 },
                 action: async entity => {
                     const targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
@@ -149,6 +164,7 @@ export class VampireGameProvider {
         }
 
         this.syncObjective(this.state.objective);
+        await this.syncModel(this.state.role);
     }
 
     @OnEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED)
@@ -163,14 +179,12 @@ export class VampireGameProvider {
         NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, 1, false);
         SetEntityHealth(ped, 200);
 
-        if (role === VampireGameRole.Ghoul) {
-            SetPedArmour(ped, 100);
-        }
-
         this.instructionalService.display(['Tu es désormais', role]);
 
         await wait(5000);
         this.instructionalService.clear();
+
+        await this.syncModel(role);
     }
 
     @OnEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_OBJECTIVE)
@@ -243,10 +257,61 @@ export class VampireGameProvider {
         }
     }
 
+    @OnGameEvent(GameEvent.CEventNetworkEntityDamage)
+    async onPlayerAttack(
+        victim: number,
+        attacker: number,
+        _unkInt1: number,
+        _unkBool1: number,
+        _unkBool2: number,
+        _isFatal: boolean,
+        weaponHash: number
+    ): Promise<void> {
+        if (!this.state.started) return;
+
+        const playerPed = PlayerPedId();
+        if (playerPed !== attacker) return;
+
+        if (!IsPedAPlayer(victim)) return;
+
+        if (VampireGameEnemyRoles.includes(this.state.role)) {
+            const victimId = GetPlayerServerId(NetworkGetPlayerIndexFromPed(victim));
+            TriggerServerEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_KNOCK_PLAYER, victimId);
+        }
+    }
+
+    @OnGameEvent(GameEvent.CEventNetworkEntityDamage)
+    async onPlayerVictim(
+        victim: number,
+        attacker: number,
+        _unkInt1: number,
+        _unkBool1: number,
+        _unkBool2: number,
+        _isFatal: boolean,
+        weaponHash: number
+    ): Promise<void> {
+        if (!this.state.started) return;
+
+        const damageType = GetWeaponDamageType(weaponHash);
+
+        const playerPed = PlayerPedId();
+        if (playerPed !== victim) return;
+
+        if (this.state.role === VampireGameRole.Vampire && damageType > 1) {
+            if (weaponHash === GetHashKey('weapon_musket')) {
+                SetEntityHealth(playerPed, 0);
+            } else {
+                SetEntityHealth(playerPed, GetPedMaxHealth(playerPed));
+            }
+        }
+    }
+
     private async onGameStart() {
         const player = PlayerPedId();
         FreezeEntityPosition(player, true);
         SwitchOutPlayer(player, 0, 2);
+
+        this.weaponService.setDisabled('vampire-game', true);
 
         for (const [name] of this.blipFactory.getAll().entries()) {
             if (
@@ -285,6 +350,35 @@ export class VampireGameProvider {
         for (let i = 0; i < 10; i++) {
             ForceLightningFlash();
             await wait(10);
+        }
+
+        this.weaponService.setDisabled('vampire-game', false);
+        await this.syncModel(null);
+    }
+
+    private async syncModel(role: VampireGameRole) {
+        await this.weaponService.clear();
+        this.playerService.setNbArmorPlates(0);
+
+        const player = PlayerPedId();
+        const weapon = GetHashKey(WeaponName.MUSKET);
+        const weaponAmmo = 500;
+
+        if (role === VampireGameRole.Vampire) {
+            await this.skinService.setModel('vampmonster');
+        } else if (role === VampireGameRole.Ghoul) {
+            await this.skinService.setModel('ghoul');
+
+            SetPedArmour(PlayerPedId(), 100);
+            this.playerService.setNbArmorPlates(3);
+        } else if (role === VampireGameRole.Hunter) {
+            GiveWeaponToPed(player, weapon, weaponAmmo, false, true);
+            SetPedAmmo(player, weapon, weaponAmmo);
+            SetCurrentPedWeapon(player, weapon, true);
+        } else {
+            // Reset ped and clothes
+            TriggerEvent('soz-character:Client:ApplyCurrentSkin');
+            TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
         }
     }
 }

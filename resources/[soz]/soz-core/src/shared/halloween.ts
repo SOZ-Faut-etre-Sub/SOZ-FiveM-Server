@@ -12,6 +12,8 @@ export enum VampireGameRole {
     Alchemist = 'Alchemist',
 }
 
+export const VampireGameEnemyRoles = [VampireGameRole.Vampire, VampireGameRole.Ghoul];
+
 export type VampireGameClientState = {
     inWaitingRoom: boolean;
     started: boolean;

@@ -634,6 +634,7 @@ export enum ServerEvent {
 
     WORLD_EVENT_STOP = 'soz-core:server:world-event:stop',
     WORLD_EVENT_SIGNAL_INVENTORY = 'soz-core:server:world-event:signal-inventory',
+    HALLOWEEN_VAMPIRE_GAME_KNOCK_PLAYER = 'soz-core:server:halloween:vampire-game-knock-player',
     HALLOWEEN_VAMPIRE_GAME_TAKE_OBJECTIVE = 'soz-core:server:halloween:vampire-game-take-objective',
     HALLOWEEN_VAMPIRE_GAME_CONVERT_PLAYER = 'soz-core:server:halloween:vampire-game-convert-player',
     HALLOWEEN_VAMPIRE_GAME_PLAYER_KNOCKED_OUT = 'soz-core:server:halloween:vampire-game-player-knocked-out',
