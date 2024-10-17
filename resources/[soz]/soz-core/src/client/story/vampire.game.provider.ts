@@ -384,7 +384,7 @@ export class VampireGameProvider {
         const weaponAmmo = 500;
 
         if (role === VampireGameRole.Vampire) {
-            await this.skinService.setModel('vampmonster');
+            await this.skinService.setModel('dracula');
         } else if (role === VampireGameRole.Ghoul) {
             await this.skinService.setModel('ghoul');
 
