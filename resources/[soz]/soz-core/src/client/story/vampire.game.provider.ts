@@ -23,6 +23,7 @@ import { WeaponName } from '../../shared/weapons/weapon';
 import { BlipFactory } from '../blip';
 import { FeatureProvider } from '../feature/feature.provider';
 import { InstructionalService } from '../instructional.service';
+import { Notifier } from '../notifier';
 import { PlayerListStateService } from '../player/player.list.state.service';
 import { PlayerService } from '../player/player.service';
 import { InteractionProvider } from '../quick-interaction/interaction.provider';
@@ -61,7 +62,10 @@ export class VampireGameProvider {
     private readonly playerService: PlayerService;
 
     @Inject(WeaponService)
-    private weaponService: WeaponService;
+    private readonly weaponService: WeaponService;
+
+    @Inject(Notifier)
+    private readonly notifier: Notifier;
 
     private blipDisabled = new Set<string>();
     private objectiveInteractions = new Set<string>();
@@ -83,6 +87,15 @@ export class VampireGameProvider {
 
         this.blurService.add('dead', 5);
         StartScreenEffect('DeathFailOut', 0, true);
+
+        if (VampireGameEnemyRoles.includes(this.state.role)) {
+            this.instructionalService.display([
+                'Tu as failli à ta tâche...',
+                "Ton vampire va te réanimer d'ici quelques secondes",
+            ]);
+        } else {
+            this.instructionalService.display(["Tu es au sol, prie pour qu'un vampire ne te suce pas !"]);
+        }
 
         TriggerServerEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_PLAYER_KNOCKED_OUT);
     }
@@ -165,6 +178,7 @@ export class VampireGameProvider {
 
         this.syncObjective(this.state.objective);
         await this.syncModel(this.state.role);
+        await this.displayRoleObjective(this.state.role);
     }
 
     @OnEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED)
@@ -185,6 +199,7 @@ export class VampireGameProvider {
         this.instructionalService.clear();
 
         await this.syncModel(role);
+        await this.displayRoleObjective(this.state.role);
     }
 
     @OnEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_OBJECTIVE)
@@ -353,6 +368,7 @@ export class VampireGameProvider {
         }
 
         this.weaponService.setDisabled('vampire-game', false);
+        this.instructionalService.clear();
         await this.syncModel(null);
     }
 
@@ -380,5 +396,38 @@ export class VampireGameProvider {
             TriggerEvent('soz-character:Client:ApplyCurrentSkin');
             TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
         }
+    }
+
+    private async displayRoleObjective(role: VampireGameRole) {
+        switch (role) {
+            case VampireGameRole.Vampire:
+                this.instructionalService.display([
+                    "Dirige-toi en ville pour empêcher les survivants de rallumer l'électricité, et suce pour gagner des pouvoirs.",
+                ]);
+                break;
+            case VampireGameRole.Hunter:
+                this.instructionalService.display([
+                    'En tant que Chasseur, tu peux tuer les Vampires à l’aide de ton Mousquet et tes Balles en Argent.',
+                ]);
+                break;
+            case VampireGameRole.Mortal:
+                this.instructionalService.display([
+                    "Dirige-toi en ville pour réparer l'électricité, et survie aux monstres.",
+                ]);
+                break;
+            case VampireGameRole.Squire:
+                this.instructionalService.display([
+                    'En tant qu’Écuyère, tu as le pouvoir de sentir la présence des vampires sur ta carte. Aide les Chasseurs à trouver les vampires et protège les Mortels.',
+                ]);
+                break;
+            case VampireGameRole.Alchemist:
+                this.instructionalService.display([
+                    'En tant qu’Alchimiste, tu as le pouvoir de réanimer les Goules en Mortel. Soigne-les dès que tu le peux.',
+                ]);
+                break;
+        }
+
+        await wait(5000);
+        this.instructionalService.clear();
     }
 }

@@ -1,4 +1,5 @@
 import { Vector3 } from '@public/shared/polyzone/vector';
+import PCancelable from 'p-cancelable';
 import { Gauge } from 'prom-client';
 
 export enum VampireGameRole {
@@ -26,6 +27,7 @@ export type VampireGameServerState = {
     timer: NodeJS.Timeout;
     playerRoles: Map<number, VampireGameRole>;
     objective: Record<VampireGameRole, Map<VampireGameCollection, Vector3[]>>;
+    autoRespawn: Map<number, PCancelable<void>>;
     gauges: Record<VampireGameRole, Gauge>;
 };
 

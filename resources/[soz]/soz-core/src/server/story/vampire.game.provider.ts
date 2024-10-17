@@ -2,6 +2,7 @@ import { Provider } from '@public/core/decorators/provider';
 import { wait } from '@public/core/utils';
 import { PlayerData } from '@public/shared/player';
 import { Vector3 } from '@public/shared/polyzone/vector';
+import PCancelable from 'p-cancelable';
 import { Gauge } from 'prom-client';
 
 import { On, OnEvent } from '../../core/decorators/event';
@@ -61,13 +62,14 @@ export class VampireGameProvider {
     private readonly logger: Logger;
 
     private gameDuration = 30; // minutes
+    private autoRespawnDuration = 20; // seconds
     private roleMaxNumber: Record<VampireGameRole, number> = {
         [VampireGameRole.Vampire]: 0,
         [VampireGameRole.Ghoul]: 1,
-        [VampireGameRole.Hunter]: 1,
+        [VampireGameRole.Hunter]: 0,
         [VampireGameRole.Mortal]: 0,
         [VampireGameRole.Squire]: 0,
-        [VampireGameRole.Alchemist]: 0,
+        [VampireGameRole.Alchemist]: 1,
     };
     private mortalObjective: Record<Exclude<VampireGameCollection, 'player'>, number> = {
         prop_streetlight: 30,
@@ -88,6 +90,8 @@ export class VampireGameProvider {
             [VampireGameRole.Squire]: new Map<VampireGameCollection, Vector3[]>(),
             [VampireGameRole.Alchemist]: new Map<VampireGameCollection, Vector3[]>(),
         },
+
+        autoRespawn: new Map<number, PCancelable<void>>(),
 
         gauges: {
             [VampireGameRole.Vampire]: new Gauge({
@@ -187,51 +191,6 @@ export class VampireGameProvider {
             started: this.gameState.started,
         });
 
-        this.gameState.playerRoles.forEach((role, player) => {
-            switch (role) {
-                case VampireGameRole.Vampire:
-                    this.notifier.notify(
-                        player,
-                        "Dirige-toi en ville pour empêcher les survivants de rallumer l'électricité, et suce pour gagner des pouvoirs.",
-                        'info'
-                    );
-                    break;
-                case VampireGameRole.Hunter:
-                    this.notifier.notify(
-                        player,
-                        'En tant que Chasseur, tu peux tuer les Vampires à l’aide de ton Mousquet et tes Balles en Argent.',
-                        'info'
-                    );
-                    break;
-                case VampireGameRole.Mortal:
-                    this.notifier.notify(
-                        player,
-                        "Dirige-toi en ville pour réparer l'électricité, et survie aux monstres.",
-                        'info'
-                    );
-                    this.notifier.notify(
-                        player,
-                        'En tant que Mortel, tu n’as aucun pouvoir, donc concentre toi sur les objectifs à accomplir sur la carte.',
-                        'info'
-                    );
-                    break;
-                case VampireGameRole.Squire:
-                    this.notifier.notify(
-                        player,
-                        'En tant qu’Écuyère, tu as le pouvoir de sentir la présence des vampires sur ta carte. Aide les Chasseurs à trouver les vampires et protège les Mortels.',
-                        'info'
-                    );
-                    break;
-                case VampireGameRole.Alchemist:
-                    this.notifier.notify(
-                        player,
-                        'En tant qu’Alchimiste, tu as le pouvoir de réanimer les Goules en Mortel. Soigne-les dès que tu le peux.',
-                        'info'
-                    );
-                    break;
-            }
-        });
-
         this.notifier.notify(source, 'Le jeu a été lancé', 'info');
     }
 
@@ -329,11 +288,29 @@ export class VampireGameProvider {
         if (!this.gameState.started) return;
         if (this.playerStateService.getClientState(source).isKnockedOut) return;
 
-        this.notifier.error(source, "Tu es au sol, prie pour qu'un vampire ne te suce pas !");
-
         this.playerStateService.setClientState(source, {
             isKnockedOut: true,
         });
+
+        const playerRole = this.gameState.playerRoles.get(source);
+
+        if (VampireGameEnemyRoles.includes(playerRole)) {
+            const autoRespawn = new PCancelable<void>(async (resolve, reject, onCancel) => {
+                let isCanceled = false;
+
+                onCancel(() => {
+                    onCancel.shouldReject = false;
+                    isCanceled = true;
+                });
+                await wait(this.autoRespawnDuration * 1000);
+
+                if (isCanceled) return;
+                TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED, source, playerRole);
+                resolve();
+            });
+
+            this.gameState.autoRespawn.set(source, autoRespawn);
+        }
     }
 
     @OnEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_CONVERT_PLAYER)
@@ -350,7 +327,7 @@ export class VampireGameProvider {
         }
 
         if (role === VampireGameRole.Ghoul) {
-            if (targetRole !== VampireGameRole.Mortal) {
+            if (VampireGameEnemyRoles.includes(targetRole)) {
                 this.notifier.error(source, 'La cible doit être un Mortel');
                 return;
             }
@@ -364,7 +341,7 @@ export class VampireGameProvider {
             if (!completed) {
                 return;
             }
-        } else if (role === VampireGameRole.Alchemist) {
+        } else if (role === VampireGameRole.Mortal) {
             if (targetRole !== VampireGameRole.Ghoul) {
                 this.notifier.error(source, 'La cible doit être une Goule');
                 return;
@@ -381,6 +358,8 @@ export class VampireGameProvider {
             }
         }
 
+        this.gameState.autoRespawn.get(target)?.cancel();
+        this.gameState.autoRespawn.delete(target);
         this.gameState.gauges[targetRole].dec();
         this.gameState.playerRoles.set(target, role);
         this.gameState.gauges[role].inc();
