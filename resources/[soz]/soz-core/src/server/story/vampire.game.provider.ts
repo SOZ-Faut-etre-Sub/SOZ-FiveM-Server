@@ -64,12 +64,12 @@ export class VampireGameProvider {
     private gameDuration = 30; // minutes
     private autoRespawnDuration = 20; // seconds
     private roleMaxNumber: Record<VampireGameRole, number> = {
-        [VampireGameRole.Vampire]: 0,
-        [VampireGameRole.Ghoul]: 1,
-        [VampireGameRole.Hunter]: 0,
-        [VampireGameRole.Mortal]: 0,
-        [VampireGameRole.Squire]: 0,
-        [VampireGameRole.Alchemist]: 1,
+        [VampireGameRole.Vampire]: 50,
+        [VampireGameRole.Ghoul]: 0,
+        [VampireGameRole.Hunter]: 20,
+        [VampireGameRole.Mortal]: 300,
+        [VampireGameRole.Squire]: 20,
+        [VampireGameRole.Alchemist]: 20,
     };
     private mortalObjective: Record<Exclude<VampireGameCollection, 'player'>, number> = {
         prop_streetlight: 30,
