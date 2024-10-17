@@ -114,8 +114,8 @@ export class PoliceAnimationProvider {
         await animation;
     }
 
-    public async redCall(societyNumber: string, msg: string, htmlMsg: string, anonymous: boolean = false) {
-        if (!anonymous) {
+    public async redCall(societyNumber: string, msg: string, htmlMsg: string, injector: boolean = false) {
+        if (!injector) {
             const { completed } = await this.progressService.progress(
                 'police:red-call',
                 'Code rouge en cours...',
@@ -134,7 +134,7 @@ export class PoliceAnimationProvider {
             }
         }
         TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
-            anonymous: anonymous,
+            anonymous: true,
             number: societyNumber,
             message: msg,
             htmlMessage: htmlMsg,

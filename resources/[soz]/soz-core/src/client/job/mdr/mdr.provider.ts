@@ -105,7 +105,7 @@ export class MandatoryProvider {
     }
 
     @OnNuiEvent(NuiEvent.RedCallMendatory)
-    public redCall(anonymous: boolean): Promise<void> {
+    public redCall(injector = false): Promise<void> {
         const ped = PlayerPedId();
         const coords = GetEntityCoords(ped);
         const [street, street2] = GetStreetNameAtCoord(coords[0], coords[1], coords[2]);
@@ -119,7 +119,7 @@ export class MandatoryProvider {
             '555-POLICE',
             `Code Rouge !!! Un membre de Mandatory a besoin d'aide vers ${name}`,
             `Code Rouge !!! Un membre de Mandatory a besoin d'aide vers <span {class}>${name}</span>`,
-            anonymous
+            injector
         );
 
         return;
