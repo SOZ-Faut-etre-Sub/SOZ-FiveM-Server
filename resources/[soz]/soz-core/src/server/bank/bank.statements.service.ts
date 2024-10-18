@@ -28,12 +28,13 @@ export class BankStatementsService {
         return this.getStatementsForAccount(player.charinfo.account);
     }
 
-    public async getStatementsForAccount(accountId: string, limit: number = 50) {
+    public async getStatementsForAccount(accountId: string, onlyTransfer: boolean = false, limit: number = 50) {
         const history = [];
 
         const rawHistory = await this.prismaService.bank_statements.findMany({
             where: {
                 OR: [{ source_accountid: accountId }, { target_accountid: accountId }],
+                ...(onlyTransfer ? { is_transfer: true } : {}),
             },
             orderBy: {
                 date: 'desc',
@@ -48,13 +49,14 @@ export class BankStatementsService {
         return history;
     }
 
-    public async createStatement(source: string, target: string, amount: number, reason: string) {
+    public async createStatement(source: string, target: string, amount: number, reason: string, transferFlag = false) {
         const statement = await this.prismaService.bank_statements.create({
             data: {
                 source_accountid: source,
                 target_accountid: target,
                 amount: amount,
                 reason,
+                is_transfer: transferFlag,
             },
         });
 

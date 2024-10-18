@@ -35,6 +35,7 @@ model bank_statements {
     target_accountid String   @db.VarChar(50)
     reason           String?  @db.Text
     amount           Int
+    is_transfer      Boolean  @default(false)
 
     @@index([source_accountid], map: "source_accountid")
     @@index([target_accountid], map: "target_accountid")
@@ -992,8 +993,7 @@ model darkweb_participants {
 }
 
 model heist {
-  id             String      @db.VarChar(128)@id
-  update         DateTime    @default(now()) @db.Timestamp(0)
-  data           String      @db.Text
+    id     String   @db.VarChar(128) @id
+    update DateTime @default(now()) @db.Timestamp(0)
+    data   String   @db.Text
 }
-

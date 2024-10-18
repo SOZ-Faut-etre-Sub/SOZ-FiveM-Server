@@ -107,6 +107,11 @@ export const BankApp: FunctionComponent = () => {
                                         title="Historique"
                                         icon={<FaArrowRightArrowLeft className="h-4 w-4" />}
                                     />
+                                    <MenuLink
+                                        to="/enterprise/history-transfer"
+                                        title="Historique de transfert"
+                                        icon={<FaArrowRightArrowLeft className="h-4 w-4" />}
+                                    />
                                 </MenuGroup>
                             )}
 
@@ -183,6 +188,17 @@ export const BankApp: FunctionComponent = () => {
                                         bankType={data.bankType}
                                         account={data.accounts.enterprise}
                                         history={data.history.enterprise}
+                                        contacts={data.contacts}
+                                    />
+                                }
+                            />
+                            <Route
+                                path="/enterprise/history-transfer"
+                                element={
+                                    <HistoryPage
+                                        bankType={data.bankType}
+                                        account={data.accounts.enterprise}
+                                        history={data.history.enterprise_transfer}
                                         contacts={data.contacts}
                                     />
                                 }

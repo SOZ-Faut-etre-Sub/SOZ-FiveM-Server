@@ -60,6 +60,7 @@ export type BankUiData = {
     history: {
         personal: BankStatement[];
         enterprise?: BankStatement[];
+        enterprise_transfer?: BankStatement[];
         offshore?: BankStatement[];
     };
     bankType?: string;
