@@ -4,6 +4,7 @@ import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { wait } from '@public/core/utils';
 import { ServerEvent } from '@public/shared/event';
 import { PUBLIC_SERVICES } from '@public/shared/job';
+import { PlayerLicenceType } from '@public/shared/player';
 
 import { getRandomInt } from '../../../src/shared/random';
 import {
@@ -371,10 +372,12 @@ export class VehicleDealershipProvider {
     public async buyVehicle({ vehicle, dealershipId }): Promise<void> {
         let parkingPlace = null;
 
-        if (dealershipId === DealershipType.Job) {
+        if (dealershipId === DealershipType.Job && vehicle.requiredLicence != PlayerLicenceType.Boat) {
             const freePlaces = [];
 
-            for (const parkingPlace of DealershipJob.parkingPlaces) {
+            for (const parkingPlace of DealershipJob.parkingPlaces.filter(
+                elem => !vehicle.requiredLicence || elem.data.vehicleTypes[vehicle.requiredLicence]
+            )) {
                 if (
                     !IsPositionOccupied(
                         parkingPlace.center[0],
