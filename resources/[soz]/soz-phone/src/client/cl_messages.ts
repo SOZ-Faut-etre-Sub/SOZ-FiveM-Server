@@ -5,6 +5,7 @@ import {
     PreDBMessage,
 } from '../../typings/messages';
 import { SocietyEvents } from '../../typings/society';
+import { Delay } from '../utils/fivem';
 import { sendMessageEvent } from '../utils/messages';
 import { RegisterNuiCB, RegisterNuiProxy } from './cl_utils';
 
@@ -43,7 +44,20 @@ RegisterNuiCB<void>(SocietyEvents.SEND_CLIENT_POLICE_NOTIFICATION, async (messag
 });
 
 RegisterNuiCB<void>(MessageEvents.GET_STREET_NAME, async (position: any, cb) => {
-    const [streetA, streetB] = GetStreetNameAtCoord(Number(position.x), Number(position.y), Number(position.z));
+    const x = Number(position.x);
+    const y = Number(position.y);
+    const z = Number(position.z);
+
+    const start = Date.now();
+    while (!AreNodesLoadedForArea(x - 100, y - 100, x + 100, y + 100)) {
+        await Delay(0);
+        Citizen.invokeNative('0x2ee5fff3e1e3400d', x - 100, y - 100, x + 100, y + 100); //REQUEST_PATH_NODES_IN_AREA_THIS_FRAME
+        if (Date.now() - start > 5000) {
+            break;
+        }
+    }
+
+    const [streetA, streetB] = GetStreetNameAtCoord(x, y, z);
     let street = `${GetStreetNameFromHashKey(streetA)}`;
 
     if (streetB && streetA !== streetB) {
