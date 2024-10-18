@@ -115,6 +115,10 @@ export class BankProvider {
             accountPayload.accounts.offshore = await this.bankAccountRepository.find(`offshore_${player.job.id}`);
 
             accountPayload.history.enterprise = await this.bankStatementsService.getStatementsForAccount(player.job.id);
+            accountPayload.history.enterprise_transfer = await this.bankStatementsService.getStatementsForAccount(
+                player.job.id,
+                true
+            );
             accountPayload.history.offshore = await this.bankStatementsService.getStatementsForAccount(
                 `offshore_${player.job.id}`
             );
@@ -143,7 +147,8 @@ export class BankProvider {
             moneyType,
             amount,
             false,
-            reason
+            reason,
+            true
         );
         if (!transfer) {
             this.notifier.error(source, "Impossible de transférer de l'argent.");

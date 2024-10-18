@@ -270,7 +270,8 @@ export class BankService {
         moneyType: BankMoneyType,
         amount: number,
         allowOverflow = false,
-        reason = ''
+        reason = '',
+        setTransferFlag = false
     ): Promise<boolean> {
         if (amount <= 0) {
             this.logger.error(`Invalid amount ${amount}`);
@@ -305,7 +306,13 @@ export class BankService {
             return false;
         }
 
-        await this.bankStatementsService.createStatement(sourceAccount.id, targetAccount.id, amount, reason);
+        await this.bankStatementsService.createStatement(
+            sourceAccount.id,
+            targetAccount.id,
+            amount,
+            reason,
+            setTransferFlag
+        );
 
         this.monitor.traceEvent('transfer_money', {
             player_source: source,
