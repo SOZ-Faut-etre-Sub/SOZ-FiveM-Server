@@ -462,7 +462,7 @@ QBShared.Items = {
         ["ammotype"] = "AMMO_PISTOL",
         ["unique"] = true,
         ["useable"] = true,
-        ["description"] = "Un pistolet en céramique, n'active pos les détecteurs de métaux.",
+        ["description"] = "Un pistolet en céramique, n'active pas les détecteurs de métaux.",
     },
     ["weapon_navyrevolver"] = {
         ["name"] = "weapon_navyrevolver",
