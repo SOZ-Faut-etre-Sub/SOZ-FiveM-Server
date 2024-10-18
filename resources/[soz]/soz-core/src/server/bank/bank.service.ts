@@ -294,7 +294,7 @@ export class BankService {
             return false;
         }
 
-        if (!(await this.bankAccountRepository.removeMoney(sourceAccount.id, amount, moneyType))) {
+        if (!(await this.bankAccountRepository.removeMoney(sourceAccount.id, amount, moneyType, allowOverflow))) {
             this.logger.error(`Failed to remove money from account ${sourceAccount.id}`);
             return false;
         }
