@@ -345,15 +345,8 @@ export class VampireGameProvider {
         if (!this.state.started) return;
         if (this.state.role !== VampireGameRole.Vampire) return;
 
-        if (model === 'vampire') {
-            await this.skinService.setModel('dracula');
-        } else if (model === 'crow') {
-            await this.skinService.setModel('a_c_crow');
-        } else if (model === 'wolf') {
-            await this.skinService.setModel('a_c_coyote');
-        }
-
         this.nuiMenu.closeMenu();
+        await this.syncModel(this.state.role, model);
     }
 
     @Tick(TickInterval.EVERY_FRAME)
@@ -424,7 +417,7 @@ export class VampireGameProvider {
         await this.syncModel(null);
     }
 
-    private async syncModel(role: VampireGameRole) {
+    private async syncModel(role: VampireGameRole, model?: string) {
         await this.weaponService.clear();
         this.playerService.setNbArmorPlates(0);
 
@@ -432,8 +425,16 @@ export class VampireGameProvider {
         const weapon = GetHashKey(WeaponName.MUSKET);
         const weaponAmmo = 500;
 
+        await this.switchModelFx();
+
         if (role === VampireGameRole.Vampire) {
-            await this.skinService.setModel('dracula');
+            if (model === 'crow') {
+                await this.skinService.setModel('a_c_crow');
+            } else if (model === 'wolf') {
+                await this.skinService.setModel('a_c_coyote');
+            } else {
+                await this.skinService.setModel('dracula');
+            }
         } else if (role === VampireGameRole.Ghoul) {
             await this.skinService.setModel('ghoul');
 
@@ -481,5 +482,30 @@ export class VampireGameProvider {
 
         await wait(5000);
         this.instructionalService.clear();
+    }
+
+    private async switchModelFx() {
+        UseParticleFxAsset('core');
+        const fx = StartParticleFxLoopedOnEntity(
+            'proj_grenade_smoke',
+            PlayerPedId(),
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            5.0,
+            false,
+            false,
+            false
+        );
+
+        SetParticleFxLoopedColour(fx, 1.0, 1.0, 1.0, false);
+        SetParticleFxLoopedFarClipDist(fx, 0xfff);
+
+        await wait(2000);
+
+        StopParticleFxLooped(fx, false);
     }
 }
