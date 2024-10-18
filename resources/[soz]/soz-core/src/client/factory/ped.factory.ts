@@ -142,12 +142,14 @@ export class PedFactory {
     }
 
     private async spawnPed(ped: GridPed) {
-        const entity = await this.createPed(ped);
+        if (!this.loadedPeds[ped.id]) {
+            const entity = await this.createPed(ped);
 
-        this.loadedPeds[ped.id] = {
-            entity,
-            ped,
-        };
+            this.loadedPeds[ped.id] = {
+                entity,
+                ped,
+            };
+        }
     }
 
     private unspawnPed(id: string): void {
