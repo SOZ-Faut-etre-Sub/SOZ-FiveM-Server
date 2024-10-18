@@ -34,6 +34,18 @@ export class JewelryShopProvider {
 
         await this.setupShop();
 
+        for (const elem of Object.values(shop_content)) {
+            for (const item of Object.values(elem.items)) {
+                for (const subitem of Object.values(item)) {
+                    for (const texture of Object.keys(subitem)) {
+                        if (!subitem[texture].Localized.length && subitem[texture].GXT) {
+                            subitem[texture].Localized = GetLabelText(subitem[texture].GXT);
+                        }
+                    }
+                }
+            }
+        }
+
         this.nuiMenu.openMenu(MenuType.JewelryShop, { shop_content });
     }
 

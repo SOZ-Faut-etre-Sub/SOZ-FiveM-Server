@@ -198,7 +198,7 @@ export class PlayerSnowProvider {
         );
 
         const jewels = player.skin.Model.Hash == PlayerPedHash.Male ? MaleJewelryItems : FemaleJewelryItems;
-        const neckJewels = jewels['Cou'];
+        const neckJewels = jewels['Accessoires'];
         const scarfs = Object.keys(neckJewels.items['Echarpes']).map(item => Number(item));
         const neckProtected = scarfs.includes(outfit.Components[neckJewels.componentId].Drawable);
         if (neckProtected) {
