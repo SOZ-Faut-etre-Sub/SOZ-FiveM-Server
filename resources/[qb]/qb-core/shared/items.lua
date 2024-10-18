@@ -10244,7 +10244,7 @@ QBShared.Items = {
         ["shouldClose"] = false,
         ["unique"] = false,
         ["combinable"] = nil,
-        ["description"] = "Un coffret en cuir noir renforcé avec des coins en métal gravés, contenant quatre cigares roulés à la main de la marque exclusive \"Brothers of Mayhem\". L’intérieur du coffret est orné du logo distinctif du gang de motards de San Andreas, un crâne entouré de flammes et de roues. Chaque cigare est enveloppé d’un anneau métallique noir marqué du même emblème, ajoutant une touche de brutalité et de raffinement.",
+        ["description"] = "Un coffret en cuir noir renforcé avec des coins en métal gravés, contenant trois cigares roulés à la main de la marque exclusive \"Brothers of Mayhem\". L'intérieur du coffret est orné du logo distinctif du club de motards de San Andreas, posé sur une gargoyle, un crâne entouré de fumées ornées de chaque côté d'un couteau, l'un neuf l'autre ensanglanté. Chaque cigare est enveloppé d'un anneau en cuir noir marqué du même emblème, ajoutant une touche de brutalité et de raffinement.",
         ["illustrator"] = ".Mcherrytree",
     },
     ["smuggling_zedwood_export"] = {
