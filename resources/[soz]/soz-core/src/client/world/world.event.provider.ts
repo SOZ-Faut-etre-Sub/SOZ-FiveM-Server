@@ -1,3 +1,5 @@
+import { GangRepository } from '@private/client/repository/gang.repository';
+
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -27,16 +29,30 @@ export class WorldEventProvider {
     @Inject(BlipFactory)
     private blipFactory: BlipFactory;
 
+    @Inject(GangRepository)
+    private gangRepository: GangRepository;
+
     private currentEvent: EventInfo | null = null;
 
     @Once(OnceStep.RepositoriesLoaded)
     public async onStartEventProvider() {
+        const player = this.playerService.getPlayer();
+
+        if (!player) {
+            return;
+        }
+
         const eventInfo = await emitRpc<EventInfo>(RpcServerEvent.WORLD_EVENT_GET_INFO);
 
         if (eventInfo.currentEventId) {
             this.currentEvent = eventInfo;
         } else {
             this.currentEvent = null;
+        }
+
+        const gang = this.gangRepository.find(player.gang.id);
+        if (!gang && !FDO.includes(player.job.id)) {
+            return;
         }
 
         if (this.currentEvent) {
@@ -101,7 +117,8 @@ export class WorldEventProvider {
             signaled: false,
         };
 
-        if (position && (player.gang.id || FDO.includes(player.job.id))) {
+        const gang = this.gangRepository.find(player.gang.id);
+        if (position && (gang || FDO.includes(player.job.id))) {
             // show blip after 2 minutes
             await wait(120 * 1000);
 
