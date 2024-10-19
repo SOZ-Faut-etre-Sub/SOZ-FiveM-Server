@@ -27,14 +27,14 @@ export const BankApp: FunctionComponent = () => {
     const resetApp = async () => {
         setShowApp(false);
 
+        if (!showApp) return;
         await fetchNui(NuiEvent.BankAnimation, { type: 'exit' });
         setKeepFocus(false);
     };
 
     const onKeyUpReceived = (event: KeyboardEvent) => {
-        if (!showApp) return;
-
-        if (event.key === 'Escape') resetApp();
+        if (event.key !== 'Escape') return;
+        resetApp();
     };
 
     useNuiFocus(keepFocus, keepFocus, false);
