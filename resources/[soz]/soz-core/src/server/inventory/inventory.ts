@@ -232,10 +232,16 @@ export class Inventory {
             return Ok(lastSlot);
         }
 
-        const existingItem = slot ? this.doGetItemAtSlot(slot) : this.filterItems(id, true, metadata)[0];
+        const existingItemAtSlot = slot ? this.doGetItemAtSlot(slot) : null;
+
+        if (existingItemAtSlot && !isSameInventoryItem(existingItemAtSlot, { name: id, metadata })) {
+            slot = null;
+        }
+
+        const existingItem = slot ? existingItemAtSlot : this.filterItems(id, true, metadata)[0];
         let leftover = amount;
 
-        if (existingItem) {
+        if (existingItem && isSameInventoryItem(existingItem, { name: id, metadata })) {
             if (!itemObject.maxStack || existingItem.amount + amount <= itemObject.maxStack) {
                 existingItem.amount += amount;
                 this._hasChanges = true;

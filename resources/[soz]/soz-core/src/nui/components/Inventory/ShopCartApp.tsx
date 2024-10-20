@@ -18,20 +18,16 @@ import { NuiEvent } from '../../../shared/event/nui';
 import { isSameInventoryItem } from '../../../shared/inventory';
 import { AskInput } from '../../../shared/nui/input';
 import { RpcServerEvent } from '../../../shared/rpc';
+import { ShopContent } from '../../../shared/shop';
 import { CartElement, ShopItem } from '../../../shared/shop/superette';
 import { fetchNui } from '../../fetch';
 import { useKeyPress } from '../../hook/control';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 import { useGetPrice } from '../../hook/price';
+import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
 import { InventoryDiv } from './Inventory';
 import { ItemDescription } from './ItemDescription';
 import { EmptySlot, getItemIcon, getItemSlotClassnames } from './ItemSlot';
-
-type ShopContent = {
-    items: ShopItem[];
-    tax?: TaxType;
-    banner: string;
-};
 
 type DraggableDateShopItem = {
     type: 'shop_item';
@@ -46,7 +42,7 @@ type DraggableDataCartItem = {
 type DraggableData = DraggableDateShopItem | DraggableDataCartItem;
 
 type ShopData = {
-    moneyType: 'money' | 'marked_money';
+    moneyType: string | BankMoneyType;
     shopId: string;
     rpcServerEvent: RpcServerEvent;
 };
@@ -56,16 +52,10 @@ export const ShopCartApp: FunctionComponent = () => {
     const [cartContent, setCartContent] = useState<CartElement[]>([]);
     const [currentShopItem, setCurrentShopItem] = useState<ShopItem>(null);
     const open = shopContent !== null;
-    const [shopData, setShopData] = useState<ShopData>(null);
 
     useNuiEvent('inventory', 'OpenShop', data => {
         setShopContent(data);
         setCartContent([]);
-        setShopData({
-            moneyType: data.type,
-            shopId: data.shopId,
-            rpcServerEvent: data.serverEvent,
-        });
     });
 
     useNuiEvent('inventory', 'CloseShop', () => {
@@ -193,16 +183,11 @@ export const ShopCartApp: FunctionComponent = () => {
             onDragEnd={handleDragEnd}
             sensors={sensors}
         >
-            <div className="absolute h-full w-full">
+            <div className="absolute h-full w-full font-prompt">
                 <div className="m-8">
                     <div className="flex max-h-[40vh]">
-                        <div
-                            className="max-h-full w-[36vh] xl:ml-[94vh]"
-                            style={{
-                                width: '36vh',
-                            }}
-                        >
-                            <InventoryDiv banner={`https://nui-img/soz/${shopContent.banner}`}>
+                        <div className="max-h-full w-[390px] xl:ml-[94vh]">
+                            <InventoryDiv title={shopContent.title} useGrid>
                                 {[...Array(nbLines)].map((_, i) => {
                                     return (
                                         <Fragment key={i}>
@@ -228,7 +213,8 @@ export const ShopCartApp: FunctionComponent = () => {
                                                         item={item}
                                                         setCurrentShopItem={setCurrentShopItem}
                                                         key={index}
-                                                        moneyType={shopData.moneyType}
+                                                        tax={shopContent.tax}
+                                                        moneyType={shopContent.moneyType}
                                                     />
                                                 );
                                             })}
@@ -245,6 +231,7 @@ export const ShopCartApp: FunctionComponent = () => {
                             }}
                         >
                             <ItemDescription
+                                position="right"
                                 inventoryItem={
                                     currentShopItem
                                         ? {
@@ -263,7 +250,7 @@ export const ShopCartApp: FunctionComponent = () => {
                         removeItem={removeItem}
                         items={cartContent}
                         tax={shopContent.tax}
-                        shopData={shopData}
+                        shopData={shopContent}
                     />
                 </div>
             </div>
@@ -276,8 +263,9 @@ const ShopItem: FunctionComponent<{
     item: ShopItem;
     setCurrentShopItem: (item: ShopItem) => void;
     addItem: (item: ShopItem) => Promise<void>;
-    moneyType: BankMoneyType;
-}> = ({ index, item, setCurrentShopItem, addItem, moneyType }) => {
+    moneyType: string | BankMoneyType;
+    tax?: TaxType;
+}> = ({ index, item, setCurrentShopItem, addItem, moneyType, tax }) => {
     const {
         attributes,
         listeners,
@@ -290,6 +278,7 @@ const ShopItem: FunctionComponent<{
             item,
         },
     });
+    const getPrice = useGetPrice();
 
     const itemForIcon = {
         name: item.name,
@@ -302,6 +291,7 @@ const ShopItem: FunctionComponent<{
     return (
         <>
             <div
+                className="aspect-square w-[70px] h-[70px]"
                 onMouseEnter={() => setCurrentShopItem(item)}
                 onMouseLeave={() => {
                     setCurrentShopItem(null);
@@ -309,38 +299,45 @@ const ShopItem: FunctionComponent<{
                 onDoubleClick={() => {
                     addItem(item);
                 }}
-                className={getItemSlotClassnames(false)}
             >
-                <div ref={setDraggableNodeRef} {...listeners} {...attributes}>
-                    <div className="relative">
-                        <img className="h-full w-full aspect-square" src={getItemIcon(itemForIcon)} alt={item.name} />
-                        <div
-                            className={classNames('absolute text-xs', {
-                                'text-gray-200': moneyType === 'money',
-                                'text-red-500': moneyType === 'marked_money',
-                            })}
-                            style={{
-                                bottom: 0,
-                                right: 0,
-                                margin: '0.1rem 0.2rem',
-                            }}
-                        >
-                            {item.price} $
-                        </div>
-                        {item.amount && item.amount > 1 && (
-                            <div
-                                className="absolute text-gray-200 text-xs"
-                                style={{
-                                    top: 0,
-                                    right: 0,
-                                    margin: '0.1rem 0.2rem',
-                                }}
-                            >
-                                {item.amount}
+                <GlassMorphismContainer borderClassName="rounded-xl aspect-square" showBorderOnHover>
+                    <div className={getItemSlotClassnames(false)}>
+                        <div ref={setDraggableNodeRef} {...listeners} {...attributes}>
+                            <div className="relative">
+                                <img
+                                    className="h-full w-full aspect-square"
+                                    src={getItemIcon(itemForIcon)}
+                                    alt={item.name}
+                                />
+                                <div
+                                    className={classNames('absolute text-xs', {
+                                        'text-gray-200': moneyType !== 'marked_money',
+                                        'text-red-500': moneyType === 'marked_money',
+                                    })}
+                                    style={{
+                                        bottom: 0,
+                                        right: 0,
+                                        margin: '0.1rem 0.2rem',
+                                    }}
+                                >
+                                    {getPrice(item.price, tax)} $
+                                </div>
+                                {item.amount && item.amount > 1 && (
+                                    <div
+                                        className="absolute text-gray-200 text-xs"
+                                        style={{
+                                            top: 0,
+                                            right: 0,
+                                            margin: '0.1rem 0.2rem',
+                                        }}
+                                    >
+                                        {item.amount}
+                                    </div>
+                                )}
                             </div>
-                        )}
+                        </div>
                     </div>
-                </div>
+                </GlassMorphismContainer>
             </div>
             {createPortal(
                 <DragOverlay dropAnimation={null}>
@@ -368,16 +365,8 @@ const CartInventory: FunctionComponent<{
 
     return (
         <div className="flex max-h-[30vh] mt-4">
-            <div
-                ref={setDroppableNodeRef}
-                className={classNames('max-h-full rounded w-[36vh] xl:ml-[94vh]', {
-                    'bg-gray-500/50': isOver,
-                })}
-                style={{
-                    width: '36vh',
-                }}
-            >
-                <InventoryDiv banner="cart">
+            <div ref={setDroppableNodeRef} className={classNames('max-h-full rounded w-[390px] xl:ml-[94vh]')}>
+                <InventoryDiv price={getPrice(amount, tax)} maxHeight="max-h-[20vh]" isCart title="Panier" useGrid>
                     {[...Array(nbLines)].map((_, i) => {
                         return (
                             <Fragment key={i}>
@@ -392,6 +381,7 @@ const CartInventory: FunctionComponent<{
                                                 key={index}
                                                 inventoryId={'shop'}
                                                 slot={index}
+                                                isOver={isOver}
                                             />
                                         );
                                     }
@@ -403,6 +393,7 @@ const CartInventory: FunctionComponent<{
                                             index={index}
                                             setCurrentCartItem={setCurrentCartItem}
                                             key={index}
+                                            isOver={isOver}
                                         />
                                     );
                                 })}
@@ -410,10 +401,8 @@ const CartInventory: FunctionComponent<{
                         );
                     })}
                 </InventoryDiv>
-                <div className="p-2 flex justify-between items-center w-full  bg-black/50 text-white">
-                    <span>
-                        Prix total : {getPrice(amount, tax)}$ ({amount}$ HT)
-                    </span>
+                <div className="p-2 flex justify-between items-center w-full text-white">
+                    <span></span>
                     <button
                         className="bg-spring-green-500/50 hover:bg-spring-green-500 p-2 rounded text-white"
                         onClick={() => {
@@ -437,7 +426,7 @@ const CartInventory: FunctionComponent<{
                     maxWidth: '36vh',
                 }}
             >
-                <ItemDescription inventoryItem={currentCartItem} />
+                <ItemDescription position="right" inventoryItem={currentCartItem} />
             </div>
         </div>
     );
@@ -448,7 +437,8 @@ const CartItem: FunctionComponent<{
     index: number;
     setCurrentCartItem: (item: CartElement) => void;
     removeItem: (index: number) => void;
-}> = ({ cartItem, index, setCurrentCartItem, removeItem }) => {
+    isOver?: boolean;
+}> = ({ cartItem, index, setCurrentCartItem, removeItem, isOver = false }) => {
     const {
         attributes,
         listeners,
@@ -472,23 +462,29 @@ const CartItem: FunctionComponent<{
                 onDoubleClick={() => {
                     removeItem(index);
                 }}
-                className={getItemSlotClassnames(false)}
             >
-                <div ref={setDraggableNodeRef} {...listeners} {...attributes}>
-                    <div className="relative">
-                        <img className="h-full w-full" src={getItemIcon(cartItem)} alt={cartItem.name} />
-                        <div
-                            className="absolute text-gray-200 text-xs"
-                            style={{
-                                bottom: 0,
-                                right: 0,
-                                margin: '0.1rem 0.2rem',
-                            }}
-                        >
-                            {cartItem.amount > 1 && <>{cartItem.amount}</>}
+                <GlassMorphismContainer borderClassName="rounded-xl aspect-square" showBorderOnHover={!isOver}>
+                    <div
+                        ref={setDraggableNodeRef}
+                        {...listeners}
+                        {...attributes}
+                        className={getItemSlotClassnames(isOver)}
+                    >
+                        <div className="relative">
+                            <img className="h-full w-full" src={getItemIcon(cartItem)} alt={cartItem.name} />
+                            <div
+                                className="absolute text-gray-200 text-xs"
+                                style={{
+                                    bottom: 0,
+                                    right: 0,
+                                    margin: '0.1rem 0.2rem',
+                                }}
+                            >
+                                {cartItem.amount > 1 && <>{cartItem.amount}</>}
+                            </div>
                         </div>
                     </div>
-                </div>
+                </GlassMorphismContainer>
             </div>
             {createPortal(
                 <DragOverlay dropAnimation={null}>

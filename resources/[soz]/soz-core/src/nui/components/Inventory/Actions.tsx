@@ -6,17 +6,32 @@ import { InventoryItem } from '../../../shared/inventory';
 import { Item } from '../../../shared/item';
 import { fetchNui } from '../../fetch';
 
-type DraggableData = {
+type DraggableDataInventoryItem = {
     inventoryId: string;
     slot: number;
     inventoryItem: InventoryItem | 'money' | 'wallet' | 'keychain' | null;
     item: Item | null;
+    type: 'inventoryItem';
 };
 
-type DroppableData = {
+type DroppableDataInventoryItem = {
     inventoryId: string;
     slot: number;
+    type: 'inventoryItem';
 };
+
+type DraggableDataShortcut = {
+    type: 'shortcut';
+    shortcut: number;
+};
+
+type DroppableDataShortcut = {
+    type: 'shortcut';
+    shortcut: number;
+};
+
+type DraggableData = DraggableDataInventoryItem | DraggableDataShortcut;
+type DroppableData = DroppableDataInventoryItem | DroppableDataShortcut;
 
 export const createHandleDragAndDrop = (allowOver = true) => {
     return (event: DragEndEvent) => {
@@ -24,68 +39,99 @@ export const createHandleDragAndDrop = (allowOver = true) => {
             return;
         }
 
-        const {
-            inventoryId: sourceInventoryId,
-            slot: sourceSlot,
-            inventoryItem,
-            item,
-        } = event.active.data.current as DraggableData;
+        const draggableData = event.active.data.current as DraggableData;
 
-        if (allowOver && !event.over) {
-            if (inventoryItem instanceof Object) {
-                fetchNui(NuiEvent.InventoryActionItemOnScreen, {
-                    id: event.active.id,
-                    inventoryId: sourceInventoryId,
-                    inventoryItem,
-                    item,
+        if (draggableData.type === 'inventoryItem') {
+            const { inventoryId: sourceInventoryId, slot: sourceSlot, inventoryItem, item } = draggableData;
+
+            if (allowOver && !event.over) {
+                if (inventoryItem instanceof Object) {
+                    fetchNui(NuiEvent.InventoryActionItemOnScreen, {
+                        id: event.active.id,
+                        inventoryId: sourceInventoryId,
+                        inventoryItem,
+                        item,
+                    });
+                }
+
+                if (inventoryItem === 'money') {
+                    fetchNui(NuiEvent.InventoryActionGiveMoney, {
+                        mode: 'screen_fallback_closest',
+                        money: 'money',
+                    });
+                }
+
+                return;
+            } else if (!event.over) {
+                return;
+            }
+
+            if (
+                event.active.id === 'draggable_money' ||
+                event.active.id === 'draggable_wallet' ||
+                event.active.id === 'draggable_money'
+            ) {
+                return;
+            }
+
+            const droppableData = event.over.data.current as DroppableData;
+
+            if (droppableData.type === 'inventoryItem') {
+                const { inventoryId: targetInventoryId, slot: targetSlot } = droppableData;
+
+                if (sourceInventoryId === targetInventoryId && sourceSlot === targetSlot) {
+                    return;
+                }
+
+                const keyEvent = event.activatorEvent as KeyboardEvent;
+
+                fetchNui(NuiEvent.InventoryMoveItem, {
+                    sourceInventoryId,
+                    sourceSlot,
+                    targetInventoryId,
+                    targetSlot,
+                    sourceAmount: inventoryItem instanceof Object ? inventoryItem.amount : null,
+                    modifier:
+                        inventoryItem instanceof Object && !item?.unique
+                            ? keyEvent?.ctrlKey
+                                ? 'ctrl'
+                                : keyEvent?.shiftKey
+                                  ? 'shift'
+                                  : keyEvent?.altKey
+                                    ? 'alt'
+                                    : null
+                            : null,
                 });
             }
 
-            if (inventoryItem === 'money') {
-                fetchNui(NuiEvent.InventoryActionGiveMoney, {
-                    mode: 'screen_fallback_closest',
-                    money: 'money',
+            if (droppableData.type === 'shortcut') {
+                const { shortcut } = droppableData;
+
+                fetchNui(NuiEvent.InventorySetShortcut, {
+                    slot: sourceSlot,
+                    shortcut: shortcut % 10,
                 });
             }
-
-            return;
-        } else if (!event.over) {
-            return;
         }
 
-        if (
-            event.active.id === 'draggable_money' ||
-            event.active.id === 'draggable_wallet' ||
-            event.active.id === 'draggable_money'
-        ) {
-            return;
+        if (draggableData.type === 'shortcut') {
+            const { shortcut } = draggableData;
+
+            if (!event.over || event.over.data.current.type !== 'shortcut') {
+                fetchNui(NuiEvent.InventoryRemoveShortcut, {
+                    shortcut: shortcut % 10,
+                });
+
+                return;
+            }
+
+            const droppableData = event.over.data.current as DroppableDataShortcut;
+
+            fetchNui(NuiEvent.InventoryMoveShortcut, {
+                previousShortcut: shortcut % 10,
+                nextShortcut: droppableData.shortcut % 10,
+            });
         }
-
-        const { inventoryId: targetInventoryId, slot: targetSlot } = event.over.data.current as DroppableData;
-
-        if (sourceInventoryId === targetInventoryId && sourceSlot === targetSlot) {
-            return;
-        }
-
-        const keyEvent = event.activatorEvent as KeyboardEvent;
-
-        fetchNui(NuiEvent.InventoryMoveItem, {
-            sourceInventoryId,
-            sourceSlot,
-            targetInventoryId,
-            targetSlot,
-            sourceAmount: inventoryItem instanceof Object ? inventoryItem.amount : null,
-            modifier:
-                inventoryItem instanceof Object && !item?.unique
-                    ? keyEvent?.ctrlKey
-                        ? 'ctrl'
-                        : keyEvent?.shiftKey
-                          ? 'shift'
-                          : keyEvent?.altKey
-                            ? 'alt'
-                            : null
-                    : null,
-        });
     };
 };
 

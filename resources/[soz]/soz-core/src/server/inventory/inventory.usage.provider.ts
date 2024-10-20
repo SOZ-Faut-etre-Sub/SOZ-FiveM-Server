@@ -5,6 +5,7 @@ import { Rpc } from '../../core/decorators/rpc';
 import { ServerEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/inventory';
 import { RpcServerEvent } from '../../shared/rpc';
+import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
 import { QBCore } from '../qbcore';
 import { InventoryFactory } from './inventory.factory';
@@ -17,11 +18,14 @@ export class InventoryUsageProvider {
     @Inject(InventoryFactory)
     private inventoryFactory: InventoryFactory;
 
+    @Inject(ItemService)
+    private itemService: ItemService;
+
     @Inject(Notifier)
     private notifier: Notifier;
 
     @OnEvent(ServerEvent.INVENTORY_SET_ITEM_SHORTCUT)
-    async setItemUsage(source: number, shortcut: number, slot: number) {
+    async setItemShortcut(source: number, shortcut: number, slot: number) {
         const player = this.QBCore.getPlayer(source);
         if (!player) {
             return;
@@ -29,8 +33,31 @@ export class InventoryUsageProvider {
 
         const inventory = await this.inventoryFactory.getPlayerInventory(source);
         const item = inventory.getItemAtSlot(slot);
+        const itemObject = this.itemService.getItem(item.name);
 
-        if (!item) {
+        if (!item || !itemObject) {
+            return;
+        }
+
+        if (shortcut < 0 || shortcut > 9) {
+            return;
+        }
+
+        if (itemObject.type !== 'weapon' && !itemObject.useable) {
+            this.notifier.error(source, 'Vous ne pouvez pas assigner cet objet à un raccourci.');
+
+            return;
+        }
+
+        if (shortcut !== 0 && shortcut <= 2 && item.type !== 'weapon') {
+            this.notifier.error(source, 'Vous ne pouvez pas assigner cet objet à ce raccourci.');
+
+            return;
+        }
+
+        if ((shortcut === 0 || shortcut > 2) && item.type === 'weapon') {
+            this.notifier.error(source, 'Vous ne pouvez pas assigner cette arme à ce raccourci.');
+
             return;
         }
 
@@ -53,12 +80,72 @@ export class InventoryUsageProvider {
         }
 
         player.Functions.SetMetaData('shortcuts', { ...player.PlayerData.metadata.shortcuts });
+    }
 
-        if (shortcut !== null) {
-            this.notifier.notify(source, `Vous avez changé l'objet lié au raccourci ~b~#${shortcut}`, 'info');
-        } else {
-            this.notifier.notify(source, `Vous avez supprimé l'objet lié au raccourci`, 'info');
+    @OnEvent(ServerEvent.INVENTORY_REMOVE_ITEM_SHORTCUT)
+    async removeItemShortcut(source: number, shortcut: number) {
+        const player = this.QBCore.getPlayer(source);
+        if (!player) {
+            return;
         }
+
+        if (shortcut < 0 || shortcut > 9) {
+            return;
+        }
+
+        player.PlayerData.metadata.shortcuts[shortcut] = null;
+        player.Functions.SetMetaData('shortcuts', { ...player.PlayerData.metadata.shortcuts });
+    }
+
+    @OnEvent(ServerEvent.INVENTORY_MOVE_ITEM_SHORTCUT)
+    async moveItemShortcut(source: number, previousShortcut: number, nextShortcut: number) {
+        const player = this.QBCore.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        if (previousShortcut < 0 || previousShortcut > 9 || nextShortcut < 0 || nextShortcut > 9) {
+            return;
+        }
+
+        const existingNextShortcut = player.PlayerData.metadata.shortcuts[nextShortcut];
+        const existingPreviousShortcut = player.PlayerData.metadata.shortcuts[previousShortcut];
+        const itemNext = existingNextShortcut ? this.itemService.getItem(existingNextShortcut.name) : null;
+        const itemPrevious = this.itemService.getItem(existingPreviousShortcut.name);
+
+        if (!itemPrevious || (existingNextShortcut && !itemNext)) {
+            return;
+        }
+
+        if (existingNextShortcut && itemNext.type === 'weapon' && (previousShortcut === 0 || previousShortcut > 2)) {
+            this.notifier.error(source, 'Vous ne pouvez pas assigner cette arme à ce raccourci.');
+
+            return;
+        }
+
+        if (existingNextShortcut && itemNext.type !== 'weapon' && previousShortcut !== 0 && previousShortcut <= 2) {
+            this.notifier.error(source, 'Vous ne pouvez pas assigner cet objet à ce raccourci.');
+
+            return;
+        }
+
+        if (itemPrevious.type === 'weapon' && (nextShortcut === 0 || nextShortcut > 2)) {
+            this.notifier.error(source, 'Vous ne pouvez pas assigner cette arme à ce raccourci.');
+
+            return;
+        }
+
+        if (itemPrevious.type !== 'weapon' && nextShortcut !== 0 && nextShortcut <= 2) {
+            this.notifier.error(source, 'Vous ne pouvez pas assigner cet objet à ce raccourci.');
+
+            return;
+        }
+
+        player.PlayerData.metadata.shortcuts[previousShortcut] = existingNextShortcut;
+        player.PlayerData.metadata.shortcuts[nextShortcut] = existingPreviousShortcut;
+
+        player.Functions.SetMetaData('shortcuts', { ...player.PlayerData.metadata.shortcuts });
     }
 
     @Rpc(RpcServerEvent.INVENTORY_GET_ITEM_BY_SHORTCUT)

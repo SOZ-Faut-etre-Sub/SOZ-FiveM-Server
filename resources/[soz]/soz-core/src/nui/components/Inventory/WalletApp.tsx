@@ -17,6 +17,7 @@ import { InventoryCard } from '../../../shared/inventory';
 import { fetchNui } from '../../fetch';
 import { useKeyPress } from '../../hook/control';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
+import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
 import { InventoryDiv } from './Inventory';
 import { getItemSlotClassnames } from './ItemSlot';
 
@@ -40,8 +41,10 @@ export const WalletApp: FunctionComponent = () => {
     });
 
     useKeyPress('Backspace', () => {
-        fetchNui(NuiEvent.InventoryGoBackPlayerInventory);
-        setCards(null);
+        if (open) {
+            fetchNui(NuiEvent.InventoryGoBackPlayerInventory);
+            setCards(null);
+        }
     });
 
     const mouseSensor = useSensor(MouseSensor, {
@@ -76,28 +79,39 @@ export const WalletApp: FunctionComponent = () => {
                 });
             }}
         >
-            <div className="absolute h-full w-full">
-                <main className="m-8 h-[45vh] w-[36vh] xl:ml-[94vh]">
-                    <InventoryDiv banner="/public/images/inventory/banner/wallet_banner.webp">
+            <div className="absolute h-full w-full font-prompt">
+                <main className="m-8 h-[45vh] w-[370px] xl:ml-[94vh]">
+                    <InventoryDiv
+                        title="Cartes"
+                        useGrid
+                        description={
+                            currentCard ? (
+                                <div className="mt-2 w-[370px]">
+                                    <GlassMorphismContainer borderClassName="rounded-xl">
+                                        <div className="p-2 rounded text-gray-100">
+                                            <div className="flex justify-between align-items-center w-full">
+                                                <h2 className="font-semibold">{currentCard.label}</h2>
+                                                <div>
+                                                    {currentCard.iban && (
+                                                        <span>
+                                                            [ IBAN : {currentCard.iban.replace(/.{4}/g, '$& ')}]
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </div>
+                                            <div className="mt-2 flex justify-between align-items-center w-full">
+                                                <span>{currentCard.description}</span>
+                                            </div>
+                                        </div>
+                                    </GlassMorphismContainer>
+                                </div>
+                            ) : null
+                        }
+                    >
                         {cards.map((card, index) => (
                             <CardItem key={index} index={index} card={card} setCurrentCard={setCurrentCard} />
                         ))}
                     </InventoryDiv>
-                    {currentCard && (
-                        <div className="p-2 mt-2 rounded text-gray-100 bg-black/60 w-full">
-                            <div className="flex justify-between align-items-center w-full">
-                                <strong>{currentCard.label}</strong>
-                                <div>
-                                    {currentCard.iban && (
-                                        <span>[ IBAN : {currentCard.iban.replace(/.{4}/g, '$& ')}]</span>
-                                    )}
-                                </div>
-                            </div>
-                            <div className="mt-2 flex justify-between align-items-center w-full">
-                                <span>{currentCard.description}</span>
-                            </div>
-                        </div>
-                    )}
                 </main>
             </div>
         </DndContext>
@@ -109,7 +123,7 @@ const CardItem: FunctionComponent<{
     index: number;
     setCurrentCard: (card: InventoryCard) => void;
 }> = ({ card, index, setCurrentCard }) => {
-    const { setNodeRef: setDroppableNodeRef } = useDroppable({
+    const { setNodeRef: setDroppableNodeRef, isOver } = useDroppable({
         id: `droppable_card_${index}`,
         data: card,
     });
@@ -146,6 +160,7 @@ const CardItem: FunctionComponent<{
     return (
         <>
             <div
+                className="aspect-square w-[70px] h-[70px]"
                 onContextMenu={event => {
                     setContextData({
                         visible: true,
@@ -154,20 +169,23 @@ const CardItem: FunctionComponent<{
                     });
                 }}
                 ref={setDroppableNodeRef}
-                className={getItemSlotClassnames(false)}
                 onMouseEnter={() => setCurrentCard(card)}
                 onMouseLeave={() => {
                     setCurrentCard(null);
                     setContextData({ visible: false, posX: 0, posY: 0 });
                 }}
             >
-                <div ref={setDraggableNodeRef} {...listeners} {...attributes}>
-                    <div className="relative">
-                        <img className="h-full w-full" src={imgSrc} alt={card.type} />
+                <GlassMorphismContainer borderClassName="rounded-xl aspect-square" showBorderOnHover={!isOver}>
+                    <div ref={setDroppableNodeRef} className={getItemSlotClassnames(false)}>
+                        <div ref={setDraggableNodeRef} {...listeners} {...attributes}>
+                            <div className="relative">
+                                <img className="h-full w-full" src={imgSrc} alt={card.type} />
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </GlassMorphismContainer>
                 <div
-                    className="fixed rounded p-2 h-auto w-fit flex flex-col justify-center items-center bg-black/80"
+                    className="fixed text-white rounded p-2 h-auto w-fit flex flex-col justify-center items-center bg-black/80"
                     style={{
                         left: contextData.posX,
                         top: contextData.posY,
@@ -197,13 +215,13 @@ const CardItem: FunctionComponent<{
                         Regarder
                     </div>
                 </div>
+                {createPortal(
+                    <DragOverlay dropAnimation={null}>
+                        {isDragging && <img className="absolute z-50" src={imgSrc} alt={card.type} />}
+                    </DragOverlay>,
+                    document.body
+                )}
             </div>
-            {createPortal(
-                <DragOverlay dropAnimation={null}>
-                    {isDragging && <img className="absolute z-50" src={imgSrc} alt={card.type} />}
-                </DragOverlay>,
-                document.body
-            )}
         </>
     );
 };

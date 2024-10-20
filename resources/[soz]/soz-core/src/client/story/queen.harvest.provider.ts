@@ -24,6 +24,7 @@ export class QueenHarvestProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
 

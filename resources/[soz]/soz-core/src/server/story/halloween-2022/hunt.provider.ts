@@ -8,7 +8,6 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
 import { Feature } from '../../../shared/features';
-import { ADD_ERROR_MESSAGE } from '../../../shared/inventory';
 import { doLooting, Loot } from '../../../shared/loot';
 import { Vector3 } from '../../../shared/polyzone/vector';
 import { PrismaService } from '../../database/prisma.service';

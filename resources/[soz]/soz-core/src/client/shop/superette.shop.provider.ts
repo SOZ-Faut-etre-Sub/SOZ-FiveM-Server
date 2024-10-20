@@ -54,7 +54,7 @@ export class SuperetteShopProvider {
             } else if (brand !== ShopBrand.Supermarket247Cayo) {
                 taxes = TaxType.FOOD;
             }
-            this.inventoryManager.openShopInventory(superetteContent, 'menu_shop_supermarket', taxes);
+            this.inventoryManager.openShopInventory(superetteContent, 'Boutique', taxes);
         } else {
             // Ammunation are handled by soz-core here
             const licences = this.playerService.getPlayer().metadata.licences;

@@ -379,6 +379,8 @@ export enum ServerEvent {
 
     INVENTORY_USE_ITEM = 'soz-core:server:inventory:use-item',
     INVENTORY_SET_ITEM_SHORTCUT = 'soz-core:server:inventory:set-item-usage',
+    INVENTORY_REMOVE_ITEM_SHORTCUT = 'soz-core:server:inventory:remove-item-usage',
+    INVENTORY_MOVE_ITEM_SHORTCUT = 'soz-core:server:inventory:move-item-usage',
     INVENTORY_ITEM_SHOW = 'soz-core:server:inventory:item-show',
     INVENTORY_UNSUBSCRIBE = 'soz-core:server:inventory:unsubscribe',
     INVENTORY_OPEN = 'soz-core:server:inventory:open',

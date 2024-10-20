@@ -9,8 +9,9 @@ import { ServerEvent } from '../../shared/event/server';
 import { ScreenSelectMode } from '../../shared/hud';
 import { DEFAULT_MAX_INVENTORY_DISTANCE, InventoryItem, InventorySort } from '../../shared/inventory';
 import { Item } from '../../shared/item';
-import { NumberValidatorFactory, PositiveNumberValidator } from '../../shared/nui/input';
+import { NumberValidatorFactory, PositiveNumberValidator, ValidateInput } from '../../shared/nui/input';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
+import { Err, Ok } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
 import { CartElement } from '../../shared/shop/superette';
 import { PedFactory } from '../factory/ped.factory';
@@ -175,7 +176,7 @@ export class InventoryProvider {
         const [playerId, , distance] = await this.getPlayerFromMode(mode);
         const selfPlayerId = GetPlayerServerId(PlayerId());
 
-        if (playerId !== null && playerId !== selfPlayerId && distance < DEFAULT_MAX_INVENTORY_DISTANCE) {
+        if (playerId && playerId !== selfPlayerId && distance < DEFAULT_MAX_INVENTORY_DISTANCE) {
             await this.giveItemToPlayer(playerId, inventoryId, inventoryItem, item);
 
             return;
@@ -321,15 +322,28 @@ export class InventoryProvider {
         }
 
         const [targetId, , distance] = await this.getPlayerFromMode(mode);
+        const selfPlayerId = GetPlayerServerId(PlayerId());
 
-        if (targetId !== null && distance < DEFAULT_MAX_INVENTORY_DISTANCE) {
-            const amount = await this.inputService.askInput(
+        if (targetId && targetId !== selfPlayerId && distance < DEFAULT_MAX_INVENTORY_DISTANCE) {
+            const amount = await this.inputService.askInput<number>(
                 {
                     title: 'Montant :',
                     defaultValue: '',
                     maxCharacters: 10,
                 },
-                PositiveNumberValidator
+                ((input: string) => {
+                    const inputNumber = Number(input);
+
+                    if (isNaN(inputNumber) || inputNumber <= 0) {
+                        return Err('Veuillez entrer un nombre positif');
+                    }
+
+                    if (Math.round(inputNumber) !== inputNumber) {
+                        return Err('Veuillez entrer un nombre entier');
+                    }
+
+                    return Ok(inputNumber);
+                }) as ValidateInput<number>
             );
 
             if (amount === null) {

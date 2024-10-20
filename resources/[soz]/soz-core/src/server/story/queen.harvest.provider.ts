@@ -2,11 +2,14 @@ import { Once, OnceStep, OnEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { FieldProvider } from '@public/server/farm/field.provider';
-import { InventoryManager } from '@public/server/inventory/inventory.manager';
 import { ItemService } from '@public/server/item/item.service';
 import { Notifier } from '@public/server/notifier';
 import { ProgressService } from '@public/server/player/progress.service';
 import { ServerEvent } from '@public/shared/event';
+
+import { ADD_ERROR_MESSAGE } from '../../shared/inventory';
+import { isOk } from '../../shared/result';
+import { InventoryFactory } from '../inventory/inventory.factory';
 
 const BLOOD_FIELD = 'blood_field';
 const BLOOD_ITEM = 'halloween_pure_blood';
@@ -17,8 +20,8 @@ export class QueenHarvestProvider {
     @Inject(ProgressService)
     private progressService: ProgressService;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(FieldProvider)
     private fieldService: FieldProvider;
@@ -75,22 +78,29 @@ export class QueenHarvestProvider {
             return false;
         }
 
-        if (!this.inventoryManager.canCarryItem(source, BLOOD_ITEM, BLOOD_ITEM_AMOUNT)) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!inventory.canCarryItem(BLOOD_ITEM, BLOOD_ITEM_AMOUNT)) {
             this.notifier.notify(source, `Vous ne possédez pas suffisamment de place dans votre inventaire.`);
             return false;
         }
 
-        const { success, reason } = this.inventoryManager.addItemToInventory(source, BLOOD_ITEM, BLOOD_ITEM_AMOUNT);
-        if (success) {
+        const result = inventory.add(BLOOD_ITEM, BLOOD_ITEM_AMOUNT);
+
+        if (isOk(result)) {
             this.notifier.notify(
                 source,
                 `Vous avez récupéré deux fioles de ~b~${this.itemService.getItem(BLOOD_ITEM).label}.`
             );
-        } else if (reason == 'invalid_weight') {
+        } else if (result.err == 'not_enough_space') {
             this.notifier.notify(source, 'Vos poches sont pleines...', 'error');
             return false;
         } else {
-            this.notifier.notify(source, `Il y a eu une erreur: ${BLOOD_ITEM} ${reason}`, 'error');
+            this.notifier.notify(
+                source,
+                `Il y a eu une erreur: ${BLOOD_ITEM} ${ADD_ERROR_MESSAGE[result.err]}`,
+                'error'
+            );
             return false;
         }
         return true;

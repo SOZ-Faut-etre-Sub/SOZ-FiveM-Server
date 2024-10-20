@@ -166,7 +166,7 @@ export class InventoryOpenProvider {
         this.inventoryPositionChecker.openInventory(inventory.id, inventoryPosition);
 
         if (lockTarget) {
-            TriggerClientEvent(ClientEvent.INVENTORY_LOCK, target, true);
+            TriggerClientEvent(ClientEvent.INVENTORY_LOCK, target, true, 'search');
         }
 
         TriggerClientEvent(
@@ -319,7 +319,7 @@ export class InventoryOpenProvider {
 
             if (player && this.subscriptions.get(storageId).has(player.source)) {
                 // unlock player inventory
-                TriggerClientEvent(ClientEvent.INVENTORY_LOCK, player.source, false);
+                TriggerClientEvent(ClientEvent.INVENTORY_LOCK, player.source, false, 'search');
             }
         }
     }

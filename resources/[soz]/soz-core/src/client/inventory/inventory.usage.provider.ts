@@ -14,8 +14,24 @@ export class InventoryUsageProvider {
     private playerService: PlayerService;
 
     @OnNuiEvent(NuiEvent.InventorySetShortcut)
-    public async onInventoryActionUse({ shortcut, slot }: { shortcut: number; slot: number | null }) {
+    public async onInventoryActionSetShortcut({ shortcut, slot }: { shortcut: number; slot: number | null }) {
         TriggerServerEvent(ServerEvent.INVENTORY_SET_ITEM_SHORTCUT, shortcut, slot);
+    }
+
+    @OnNuiEvent(NuiEvent.InventoryMoveShortcut)
+    public async onInventoryActionMoveShortcut({
+        previousShortcut,
+        nextShortcut,
+    }: {
+        previousShortcut: number;
+        nextShortcut: number;
+    }) {
+        TriggerServerEvent(ServerEvent.INVENTORY_MOVE_ITEM_SHORTCUT, previousShortcut, nextShortcut);
+    }
+
+    @OnNuiEvent(NuiEvent.InventoryRemoveShortcut)
+    public async onInventoryActionRemoveShortcut({ shortcut }: { shortcut: number }) {
+        TriggerServerEvent(ServerEvent.INVENTORY_REMOVE_ITEM_SHORTCUT, shortcut);
     }
 
     private async useItem(shortcut: number) {

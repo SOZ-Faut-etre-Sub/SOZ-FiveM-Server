@@ -2,12 +2,15 @@ import { Once, OnceStep, OnEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { FieldProvider } from '@public/server/farm/field.provider';
-import { InventoryManager } from '@public/server/inventory/inventory.manager';
 import { ItemService } from '@public/server/item/item.service';
 import { Notifier } from '@public/server/notifier';
 import { ProgressService } from '@public/server/player/progress.service';
 import { ServerEvent } from '@public/shared/event';
 import { JobType } from '@public/shared/job';
+
+import { ADD_ERROR_MESSAGE } from '../../../shared/inventory';
+import { isOk } from '../../../shared/result';
+import { InventoryFactory } from '../../inventory/inventory.factory';
 
 const GARLIC_FIELD = 'garlic_field';
 @Provider()
@@ -15,8 +18,8 @@ export class FDFHarvestProvider {
     @Inject(ProgressService)
     private progressService: ProgressService;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(FieldProvider)
     private fieldService: FieldProvider;
@@ -79,7 +82,13 @@ export class FDFHarvestProvider {
             return true;
         }
 
-        if (!this.inventoryManager.canCarryItem(source, item, 1)) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!inventory) {
+            return false;
+        }
+
+        if (!inventory.canCarryItem(item, 1)) {
             this.notifier.notify(
                 source,
                 `Vous ne possédez pas suffisamment de place dans votre inventaire pour récolter.`
@@ -87,14 +96,15 @@ export class FDFHarvestProvider {
             return false;
         }
 
-        const { success, reason } = this.inventoryManager.addItemToInventory(source, item, 1);
-        if (success) {
+        const result = inventory.add(item, 1);
+
+        if (isOk(result)) {
             this.notifier.notify(source, `Vous avez récolté une ~b~${this.itemService.getItem(item).label}.`);
-        } else if (reason == 'invalid_weight') {
+        } else if (result.err == 'not_enough_space') {
             this.notifier.notify(source, 'Vos poches sont pleines...', 'error');
             return false;
         } else {
-            this.notifier.notify(source, `Il y a eu une erreur: ${item} ${reason}`, 'error');
+            this.notifier.notify(source, `Il y a eu une erreur: ${item} ${ADD_ERROR_MESSAGE[result.err]}`, 'error');
             return false;
         }
         return true;

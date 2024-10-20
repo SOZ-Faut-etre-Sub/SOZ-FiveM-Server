@@ -8,7 +8,7 @@ import { PlayerInventoryLoader } from '@core/loader/player.inventory.loader';
 import { emitRpc } from '@core/rpc';
 import { Notifier } from '@public/client/notifier';
 import { NuiDispatch } from '@public/client/nui/nui.dispatch';
-import { TaxType } from '@public/shared/bank';
+import { BankMoneyType, TaxType } from '@public/shared/bank';
 import { ClientEvent } from '@public/shared/event/client';
 import { ServerEvent } from '@public/shared/event/server';
 import {
@@ -250,20 +250,20 @@ export class InventoryManager {
 
     public openShopInventory(
         shopContent: ShopItem[],
-        shopHeaderTexture: string,
+        shopHeaderTitle: string,
         taxType?: TaxType,
-        type: 'money' | 'marked_money' = 'money',
-        serverEvent: RpcServerEvent = RpcServerEvent.INVENTORY_SHOP_VALIDATE_CART,
+        type: BankMoneyType | string = 'money',
+        rpcServerEvent: RpcServerEvent = RpcServerEvent.INVENTORY_SHOP_VALIDATE_CART,
         shopId = null
     ) {
         this.nuiDispatch.closeEverything();
 
         this.nuiDispatch.dispatch('inventory', 'OpenShop', {
             items: shopContent,
-            banner: shopHeaderTexture,
+            title: shopHeaderTitle,
             tax: taxType,
-            type,
-            serverEvent,
+            moneyType: type,
+            rpcServerEvent,
             shopId,
         });
     }

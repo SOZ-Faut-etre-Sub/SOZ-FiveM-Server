@@ -636,7 +636,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             heading: 55,
             data: {
                 storage: 'dmc_storage',
-                type: InventoryType.Stash,
+                type: InventoryType.MetalStorage,
             },
         },
         {
@@ -687,6 +687,18 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
                 type: InventoryType.Cloakroom,
             },
         },
+        {
+            center: [1071.54, -2005.44, 31.53],
+            length: 1.25,
+            width: 1.8,
+            minZ: 30.53,
+            maxZ: 32.53,
+            heading: 145.38,
+            data: {
+                storage: 'dmc_armory',
+                type: InventoryType.Armory,
+            },
+        },
     ],
     [JobType.FBI]: [
         {
@@ -727,18 +739,6 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
         },
     ],
     [JobType.FDF]: [
-        {
-            center: [2437.57, 5013.32, 46.99],
-            length: 0.6,
-            width: 2.2,
-            minZ: 45.99,
-            maxZ: 47.99,
-            heading: 314.41,
-            data: {
-                storage: 'fdf_cloakroom_2',
-                type: InventoryType.Cloakroom,
-            },
-        },
         {
             center: [2439.95, 4974.12, 46.81],
             length: 1.0,
@@ -938,6 +938,30 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
     ],
     [JobType.Garbage]: [
         {
+            center: [-619.88, -1617.2, 33.01],
+            length: 0.6,
+            width: 3.4,
+            minZ: 31.01,
+            maxZ: 35.01,
+            heading: 355,
+            data: {
+                storage: 'garbage_storage',
+                type: InventoryType.Storage,
+            },
+        },
+        {
+            center: [-601.2, -1602.75, 30.4],
+            length: 1.2,
+            width: 0.4,
+            minZ: 29.4,
+            maxZ: 31.0,
+            heading: 355,
+            data: {
+                storage: 'garbage_processing',
+                type: InventoryType.RecyclerProcessing,
+            },
+        },
+        {
             center: [-594.91, -1620.31, 33.01],
             length: 0.8,
             width: 1.6,
@@ -1096,6 +1120,18 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             heading: 320,
             data: {
                 storage: 'lsmc_stash',
+                type: InventoryType.Stash,
+            },
+        },
+        {
+            center: [1825.85, 3674.69, 33.23],
+            length: 1.3,
+            width: 0.6,
+            minZ: 32.23,
+            maxZ: 34.23,
+            heading: 320,
+            data: {
+                storage: 'lsmc_north_stash',
                 type: InventoryType.Stash,
             },
         },

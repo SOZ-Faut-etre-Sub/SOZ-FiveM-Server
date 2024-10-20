@@ -106,8 +106,35 @@ export type Inventory = {
 };
 
 export const DEFAULT_INVENTORY_CONFIGURATION: InventoryConfiguration = {
-    maxWeight: 10000000,
+    maxWeight: 25_000,
     persistent: true,
+};
+
+export const HOUSE_STORAGE_TIER_WEIGHTS = {
+    [-2]: 1000000000,
+    0: 200000,
+    1: 400000,
+    2: 600000,
+    3: 800000,
+    4: 1000000,
+    5: 1400000,
+    6: 1800000,
+    7: 2000000,
+    8: 3000000,
+    9: 4000000,
+};
+export const HOUSE_FRIDGE_TIER_WEIGHTS = {
+    [-2]: 1000000000,
+    0: 200000,
+    1: 400000,
+    2: 600000,
+    3: 800000,
+    4: 1000000,
+    5: 1400000,
+    6: 1800000,
+    7: 2000000,
+    8: 3000000,
+    9: 4000000,
 };
 
 export const INVENTORY_CONFIGURATIONS: Partial<Record<InventoryType, Partial<InventoryConfiguration>>> = {
@@ -115,12 +142,15 @@ export const INVENTORY_CONFIGURATIONS: Partial<Record<InventoryType, Partial<Inv
         maxWeight: 25000,
     },
     [InventoryType.Ammo]: {
+        maxWeight: 10000000,
         allowedItemTypes: ['weapon_ammo'],
     },
     [InventoryType.Armory]: {
+        maxWeight: 10000000,
         allowedItemTypes: ['weapon', 'tool'],
     },
     [InventoryType.Fridge]: {
+        maxWeight: 10000000,
         allowedItemTypes: ['food', 'drink', 'cocktail', 'liquor', 'crate', 'drug'],
     },
     [InventoryType.Trunk]: {
@@ -156,17 +186,21 @@ export const INVENTORY_CONFIGURATIONS: Partial<Record<InventoryType, Partial<Inv
         ],
     },
     [InventoryType.Storage]: {
+        maxWeight: 10000000,
         allowedItems: ['weapon_uvflashlight'],
         allowedItemTypes: ['item', 'oil_and_item', 'outfit', 'crate', 'drug_pot', 'evidence'],
     },
     [InventoryType.EvidenceStorage]: {
+        maxWeight: 10000000,
         allowedItems: ['detective_board'],
         allowedItemTypes: ['evidence'],
     },
     [InventoryType.StorageTank]: {
+        maxWeight: 10000000,
         allowedItemTypes: ['oil', 'oil_and_item'],
     },
     [InventoryType.Seizure]: {
+        maxWeight: 2000000,
         allowedItemTypes: [
             'weapon',
             'weapon_ammo',
@@ -184,6 +218,7 @@ export const INVENTORY_CONFIGURATIONS: Partial<Record<InventoryType, Partial<Inv
         ],
     },
     [InventoryType.ObjectStorage]: {
+        maxWeight: 10000000,
         allowedItemTypes: [
             'item',
             'fishing_rod',
@@ -221,12 +256,15 @@ export const INVENTORY_CONFIGURATIONS: Partial<Record<InventoryType, Partial<Inv
         ],
     },
     [InventoryType.BossStorage]: {
+        maxWeight: 10000000,
         allowedItemTypes: ['weapon', 'weapon_ammo', 'item', 'oil_and_item', 'tool', 'evidence'],
     },
     [InventoryType.Cloakroom]: {
+        maxWeight: 1000000,
         allowedItemTypes: ['outfit'],
     },
     [InventoryType.Organ]: {
+        maxWeight: 10000000,
         allowedItemTypes: ['organ'],
     },
     [InventoryType.Stash]: {
@@ -234,6 +272,7 @@ export const INVENTORY_CONFIGURATIONS: Partial<Record<InventoryType, Partial<Inv
     },
     [InventoryType.Bin]: {
         persistent: false,
+        maxWeight: 25000,
         allowedItemTypes: [
             'item',
             'evidence',
@@ -268,10 +307,11 @@ export const INVENTORY_CONFIGURATIONS: Partial<Record<InventoryType, Partial<Inv
         ],
     },
     [InventoryType.HouseFridge]: {
-        maxWeight: 100000,
+        maxWeight: HOUSE_FRIDGE_TIER_WEIGHTS[0],
         allowedItemTypes: ['food', 'drink', 'cocktail', 'liquor', 'flavor', 'crate', 'drug'],
     },
     [InventoryType.HouseStash]: {
+        maxWeight: HOUSE_STORAGE_TIER_WEIGHTS[0],
         allowedItemTypes: [
             'item',
             'item_illegal',
@@ -385,6 +425,7 @@ export const INVENTORY_CONFIGURATIONS: Partial<Record<InventoryType, Partial<Inv
         allowedItemTypes: ['metal', 'weapon', 'weapon_ammo'],
     },
     [InventoryType.MetalStorage]: {
+        maxWeight: 10000000,
         allowedItemTypes: ['item', 'oil_and_item', 'outfit', 'crate', 'drug_pot', 'metal'],
     },
     [InventoryType.LsCustomStorage]: {
@@ -424,10 +465,12 @@ export const INVENTORY_CONFIGURATIONS: Partial<Record<InventoryType, Partial<Inv
         ],
     },
     [InventoryType.SmugglingExport]: {
+        maxWeight: 5000000,
         persistent: false,
         allowedItemTypes: ['smuggling_export'],
     },
     [InventoryType.Distillery]: {
+        maxWeight: 48000,
         allowedItems: ['smuggling_flower_zoublon'],
     },
     [InventoryType.GangStash]: {
@@ -468,6 +511,7 @@ export const INVENTORY_CONFIGURATIONS: Partial<Record<InventoryType, Partial<Inv
         ],
     },
     [InventoryType.SmugglingConnected]: {
+        maxWeight: 500000,
         allowedItemTypes: [
             'item',
             'fishing_rod',
@@ -800,32 +844,6 @@ export const VEHICLE_CONFIGURATION_BY_VEHICLE_MODEL: Record<number, Partial<Inve
  *         [3] = {slot = 10, weight = 800000},
  *         [4] = {slot = 10, weight = 1000000},
  */
-export const HOUSE_STORAGE_TIER_WEIGHTS = {
-    [-2]: 1000000000,
-    0: 200000,
-    1: 400000,
-    2: 600000,
-    3: 800000,
-    4: 1000000,
-    5: 1400000,
-    6: 1800000,
-    7: 2000000,
-    8: 3000000,
-    9: 4000000,
-};
-export const HOUSE_FRIDGE_TIER_WEIGHTS = {
-    [-2]: 1000000000,
-    0: 200000,
-    1: 400000,
-    2: 600000,
-    3: 800000,
-    4: 1000000,
-    5: 1400000,
-    6: 1800000,
-    7: 2000000,
-    8: 3000000,
-    9: 4000000,
-};
 
 export const isItemAllowed = (type: ItemType, name: string, configuration: InventoryConfiguration): boolean => {
     let isAllowed = true;
@@ -915,7 +933,12 @@ export const INVENTORY_SORT_LABELS: Record<InventorySort, string> = {
     [InventorySort.TypeDesc]: 'Type (Z-A)',
 };
 
-export const isSameInventoryItem = (item1: InventoryItem, item2: InventoryItem): boolean => {
+type InventoryItemCompareItem = {
+    name: string;
+    metadata: InventoryItemMetadata;
+};
+
+export const isSameInventoryItem = (item1: InventoryItemCompareItem, item2: InventoryItemCompareItem): boolean => {
     if (item1.name !== item2.name) {
         return false;
     }

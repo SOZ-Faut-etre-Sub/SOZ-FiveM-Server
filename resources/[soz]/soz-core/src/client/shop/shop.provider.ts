@@ -1,5 +1,4 @@
 import { FeatureProvider } from '@public/client/feature/feature.provider';
-import { InventoryManager } from '@public/client/inventory/inventory.manager';
 import { BrandConfig, BrandsConfig, ShopBrand, ShopsConfig } from '@public/config/shops';
 import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Exportable } from '@public/core/decorators/exports';

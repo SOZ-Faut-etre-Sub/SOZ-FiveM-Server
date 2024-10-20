@@ -1,4 +1,7 @@
+import { BankMoneyType, TaxType } from '@public/shared/bank';
 import { InventoryItemMetadata } from '@public/shared/inventory';
+import { RpcServerEvent } from '@public/shared/rpc';
+import { ShopItem } from '@public/shared/shop/superette';
 import { TargetOption } from '@public/shared/target';
 
 import { Component, GlovesItem, OutfitItem, Prop } from './cloth';
@@ -211,3 +214,12 @@ export type ClothingShopRepositoryData = {
 
 export type GloveShopRepositoryData = Record<number, GlovesItem>; // Map ID of gloves -> Gloves data
 export type UnderTypesShopRepositoryData = Record<number, number[]>; // Map ID -> list of compatible underTypes
+
+export type ShopContent = {
+    items: ShopItem[];
+    tax?: TaxType;
+    title: string;
+    moneyType: string | BankMoneyType;
+    shopId: string;
+    rpcServerEvent: RpcServerEvent;
+};

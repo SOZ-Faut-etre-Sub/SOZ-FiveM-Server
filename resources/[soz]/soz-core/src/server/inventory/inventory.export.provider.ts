@@ -103,6 +103,10 @@ export class InventoryExportProvider {
     public async legacyExportSetPlayerInventoryMaxWeight(source: number, maxWeight: number) {
         const inventory = await this.inventoryFactory.getPlayerInventory(source);
 
+        if (!inventory) {
+            return;
+        }
+
         return inventory.updateConfiguration({
             maxWeight,
         });

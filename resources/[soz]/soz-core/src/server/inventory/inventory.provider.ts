@@ -164,6 +164,9 @@ export class InventoryProvider {
             moneyToGive = amount - markedMoneyToGive;
         }
 
+        this.playerMoneyService.remove(source, moneyToGive, 'money');
+        this.playerMoneyService.remove(source, markedMoneyToGive, 'marked_money');
+
         this.playerMoneyService.add(targetId, moneyToGive, 'money');
         this.playerMoneyService.add(targetId, markedMoneyToGive, 'marked_money');
 
@@ -344,50 +347,52 @@ export class InventoryProvider {
                 return;
             }
 
-            if (
-                !sourceInventory.canSwapItems(
-                    [
-                        {
-                            name: sourceItem.name,
-                            amount,
-                            metadata: sourceItem.metadata,
-                        },
-                    ],
-                    [
-                        {
-                            name: targetItem.name,
-                            amount: targetItem.amount,
-                            metadata: targetItem.metadata,
-                        },
-                    ]
-                )
-            ) {
-                this.notifier.error(source, 'Impossible de porter cet objet');
+            if (targetInventory.id !== sourceInventory.id) {
+                if (
+                    !sourceInventory.canSwapItems(
+                        [
+                            {
+                                name: sourceItem.name,
+                                amount,
+                                metadata: sourceItem.metadata,
+                            },
+                        ],
+                        [
+                            {
+                                name: targetItem.name,
+                                amount: targetItem.amount,
+                                metadata: targetItem.metadata,
+                            },
+                        ]
+                    )
+                ) {
+                    this.notifier.error(source, 'Impossible de porter cet objet');
 
-                return;
-            }
+                    return;
+                }
 
-            if (
-                !targetInventory.canSwapItems(
-                    [
-                        {
-                            name: targetItem.name,
-                            amount: targetItem.amount,
-                            metadata: targetItem.metadata,
-                        },
-                    ],
-                    [
-                        {
-                            name: sourceItem.name,
-                            amount,
-                            metadata: sourceItem.metadata,
-                        },
-                    ]
-                )
-            ) {
-                this.notifier.error(source, 'Pas assez de place pour échanger les objets.');
+                if (
+                    !targetInventory.canSwapItems(
+                        [
+                            {
+                                name: targetItem.name,
+                                amount: targetItem.amount,
+                                metadata: targetItem.metadata,
+                            },
+                        ],
+                        [
+                            {
+                                name: sourceItem.name,
+                                amount,
+                                metadata: sourceItem.metadata,
+                            },
+                        ]
+                    )
+                ) {
+                    this.notifier.error(source, 'Pas assez de place pour échanger les objets.');
 
-                return;
+                    return;
+                }
             }
 
             sourceInventory.removeAtSlot(sourceItem.slot, amount);

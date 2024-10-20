@@ -248,11 +248,7 @@ export class Halloween2023Scenario2Provider {
                             this.inventoryManager.openShopInventory(
                                 [
                                     {
-                                        amount: 0,
-                                        description: item.description,
-                                        label: item.label,
-                                        name: item.name,
-                                        slot: 1,
+                                        ...item,
                                         price: WinePrice,
                                     },
                                 ],

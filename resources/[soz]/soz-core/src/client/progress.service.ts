@@ -77,7 +77,6 @@ export class ProgressService {
                 isInventoryBusy: true,
             });
             exports['soz-phone'].setPhoneVisible(false);
-            this.nuiDispatch.closeEverything();
         }
 
         if (options.headingEntity) {

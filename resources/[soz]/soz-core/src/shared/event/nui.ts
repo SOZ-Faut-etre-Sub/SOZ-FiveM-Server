@@ -613,6 +613,8 @@ export enum NuiEvent {
     InventoryOpenPlayerInventory = 'soz-core:nui:inventory:open-player-inventory',
     InventoryMoveItem = 'soz-core:nui:inventory:move-item',
     InventorySetShortcut = 'soz-core:nui:inventory:set-shortcut',
+    InventoryRemoveShortcut = 'soz-core:nui:inventory:remove-shortcut',
+    InventoryMoveShortcut = 'soz-core:nui:inventory:move-shortcut',
     InventorySort = 'soz-core:nui:inventory:sort',
     InventoryActionUse = 'soz-core:nui:inventory:action-use',
     InventoryActionDrop = 'soz-core:nui:inventory:action-drop',

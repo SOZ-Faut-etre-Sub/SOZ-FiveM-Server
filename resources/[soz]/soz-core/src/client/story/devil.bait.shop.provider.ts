@@ -1902,7 +1902,7 @@ export class DevilBaitShopProvider {
                                 },
                             ];
 
-                            this.inventoryManager.openShopInventory(FishingProducts, 'menu_shop_devil');
+                            this.inventoryManager.openShopInventory(FishingProducts, 'Enfer');
                         },
                     },
                     {

@@ -81,18 +81,18 @@ export const InventoryApp: FunctionComponent = () => {
             onDragEnd={createHandleDragAndDrop(false)}
             sensors={sensors}
         >
-            <main className="absolute h-full w-full">
+            <main className="absolute h-full w-full font-prompt">
                 <div className="flex mt-8 justify-center">
-                    <div className="mr-4 max-h-[50vh] w-[36vh]">
+                    <div className="mr-4 w-[400px]">
                         <Inventory
-                            thin
-                            banner="/public/images/inventory/banner/player.webp"
+                            title="Inventaire"
                             configuration={playerInventoryConfiguration}
                             targetConfiguration={configuration}
                             inventoryItems={playerInventoryItems}
                             inventoryId={`player_${player?.citizenid}`}
                             prefixId="source_"
                             player
+                            itemDescriptionPosition="left"
                             onDoubleClick={inventoryItem => {
                                 if (inventoryItem === null || !(inventoryItem instanceof Object)) {
                                     return;
@@ -109,22 +109,16 @@ export const InventoryApp: FunctionComponent = () => {
                             }}
                         />
                     </div>
-                    <div
-                        className="ml-4"
-                        style={{
-                            maxHeight: '50vh',
-                            width: '36vh',
-                        }}
-                    >
+                    <div className="ml-4 w-[400px]">
                         <Inventory
-                            thin
-                            banner={getInventoryBanner(type)}
+                            title={getInventoryTitle(type)}
                             configuration={configuration}
                             targetConfiguration={playerInventoryConfiguration}
                             inventoryItems={inventoryItems}
                             inventoryId={inventoryId}
                             prefixId="target_"
                             allowForceConsume={type === InventoryType.Player}
+                            itemDescriptionPosition="right"
                             onDoubleClick={inventoryItem => {
                                 if (inventoryItem === null || !(inventoryItem instanceof Object)) {
                                     return;
@@ -148,98 +142,97 @@ export const InventoryApp: FunctionComponent = () => {
     );
 };
 
-const getInventoryBanner = (type: InventoryType): string => {
-    if (type === InventoryType.Armory || type === InventoryType.Ammo) {
-        return '/public/images/inventory/banner/armory.webp';
-    }
+const getInventoryTitle = (type: InventoryType): string => {
+    switch (type) {
+        case InventoryType.Bin:
+            return 'Poubelle';
 
-    if (type === InventoryType.Bin) {
-        return '/public/images/inventory/banner/bin.webp';
-    }
+        case InventoryType.Ammo:
+        case InventoryType.Armory:
+            return 'Armurerie';
 
-    if (type === InventoryType.BossStorage) {
-        return '/public/images/inventory/banner/boss_storage.webp';
-    }
+        case InventoryType.BossStorage:
+            return 'Entreprise';
 
-    if (type === InventoryType.CabinetStorage) {
-        return '/public/images/inventory/banner/default.webp';
-    }
+        case InventoryType.CabinetStorage:
+            return 'Cabinet';
 
-    if (type === InventoryType.Cloakroom) {
-        return '/public/images/inventory/banner/cloakroom.webp';
-    }
+        case InventoryType.Cloakroom:
+            return 'Vestiaire';
 
-    if (type === InventoryType.EvidenceStorage) {
-        return '/public/images/inventory/banner/evidence_storage.webp';
-    }
+        case InventoryType.EvidenceStorage:
+            return 'Preuves';
 
-    if (type === InventoryType.FlavorStorage) {
-        return '/public/images/inventory/banner/flavor_storage.webp';
-    }
+        case InventoryType.FlavorStorage:
+            return 'Saveurs';
 
-    if (type === InventoryType.Fridge || type === InventoryType.IceMachine || type === InventoryType.HouseFridge) {
-        return '/public/images/inventory/banner/fridge.webp';
-    }
+        case InventoryType.Fridge:
+            return 'Frigo';
 
-    if (type === InventoryType.FurnitureStorage) {
-        return '/public/images/inventory/banner/furniture_storage.webp';
-    }
+        case InventoryType.FurnitureStorage:
+            return 'Meubles';
 
-    if (type === InventoryType.Inverter) {
-        return '/public/images/inventory/banner/inverter.webp';
-    }
+        case InventoryType.Inverter:
+            return 'Energie';
 
-    if (type === InventoryType.Stash || type === InventoryType.HouseStash) {
-        return '/public/images/inventory/banner/stash.webp';
-    }
+        case InventoryType.Stash:
+            return 'Stockage';
 
-    if (type === InventoryType.LiquorStorage) {
-        return '/public/images/inventory/banner/liquor_storage.webp';
-    }
+        case InventoryType.LiquorStorage:
+            return 'Alcool';
 
-    if (type === InventoryType.LogStorage) {
-        return '/public/images/inventory/banner/log_storage.webp';
-    }
+        case InventoryType.LogStorage:
+            return 'Bois';
 
-    if (type === InventoryType.LogProcessing || type === InventoryType.MetalConverter) {
-        return '/public/images/inventory/banner/metal_converter.webp';
-    }
+        case InventoryType.LogProcessing:
+            return 'Scierie';
 
-    if (type === InventoryType.MetalIncinerator) {
-        return '/public/images/inventory/banner/metal_incinerator.webp';
-    }
+        case InventoryType.MetalConverter:
+            return 'Fonderie';
 
-    if (type === InventoryType.Organ) {
-        return '/public/images/inventory/banner/organ.webp';
-    }
+        case InventoryType.MetalIncinerator:
+            return 'Incinerateur';
 
-    if (type === InventoryType.PlankStorage) {
-        return '/public/images/inventory/banner/plank_storage.webp';
-    }
+        case InventoryType.Organ:
+            return 'Organes';
 
-    if (type === InventoryType.RecyclerProcessing) {
-        return '/public/images/inventory/banner/recycler_processing.webp';
-    }
+        case InventoryType.PlankStorage:
+            return 'Planches';
 
-    if (type === InventoryType.SawdustStorage) {
-        return '/public/images/inventory/banner/sawdust_storage.webp';
-    }
+        case InventoryType.RecyclerProcessing:
+            return 'Recyclage';
 
-    if (type === InventoryType.Seizure) {
-        return '/public/images/inventory/banner/seizure.webp';
-    }
+        case InventoryType.SawdustStorage:
+            return 'Sciure';
 
-    if (type === InventoryType.SnackStorage) {
-        return '/public/images/inventory/banner/snack_storage.webp';
-    }
+        case InventoryType.Seizure:
+            return 'Saisie';
 
-    if (type === InventoryType.SmugglingBox) {
-        return '/public/images/inventory/banner/smuggling_box.webp';
-    }
+        case InventoryType.SnackStorage:
+            return 'Snacks';
 
-    if (type === InventoryType.Trunk) {
-        return '/public/images/inventory/banner/trunk.webp';
-    }
+        case InventoryType.SmugglingBox:
+            return 'Contrebande';
 
-    return '/public/images/inventory/banner/default.webp';
+        case InventoryType.Trunk:
+            return 'Véhicule';
+
+        case InventoryType.HouseStash:
+            return 'Armoire';
+
+        case InventoryType.HouseFridge:
+            return 'Frigo';
+
+        case InventoryType.IceMachine:
+            return 'Machine à glaçons';
+
+        case InventoryType.Distillery:
+            return 'Distillerie';
+
+        case InventoryType.Player:
+            return 'Fouille';
+
+        default:
+            return 'Stockage';
+    }
 };

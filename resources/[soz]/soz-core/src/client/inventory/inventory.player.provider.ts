@@ -25,7 +25,7 @@ export class InventoryPlayerProvider {
 
     private isOpen = false;
 
-    private isLocked = false;
+    private isLocked: Set<string> = new Set();
 
     @OnNuiEvent(NuiEvent.InventoryOpenPlayerInventory)
     public async onOpenPlayerInventory({ isOpen }: { isOpen: boolean }) {
@@ -38,8 +38,12 @@ export class InventoryPlayerProvider {
     }
 
     @OnEvent(ClientEvent.INVENTORY_LOCK)
-    public async onLockInventory(lock: boolean) {
-        this.isLocked = lock;
+    public async onLockInventory(lock: boolean, reason: string) {
+        if (lock) {
+            this.isLocked.add(reason);
+        } else {
+            this.isLocked.delete(reason);
+        }
 
         if (lock) {
             this.nuiDispatch.closeEverything();
@@ -63,7 +67,12 @@ export class InventoryPlayerProvider {
             return;
         }
 
-        if (player.metadata.isdead || player.metadata.inlaststand || player.metadata.ishandcuffed || this.isLocked) {
+        if (
+            player.metadata.isdead ||
+            player.metadata.inlaststand ||
+            player.metadata.ishandcuffed ||
+            this.isLocked.size > 0
+        ) {
             return;
         }
 

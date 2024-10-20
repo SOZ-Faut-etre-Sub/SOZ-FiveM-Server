@@ -223,7 +223,7 @@ export class Halloween2023Scenario3Provider {
                                 },
                             ];
 
-                            this.inventoryManager.openShopInventory(products, 'menu_shop_supermarket', TaxType.FOOD);
+                            this.inventoryManager.openShopInventory(products, 'Superette', TaxType.FOOD);
                         },
                     },
                 ],

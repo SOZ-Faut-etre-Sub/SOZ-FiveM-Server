@@ -114,6 +114,22 @@ module.exports = {
                 '2xs': '.6rem',
                 xsm: '.8rem',
                 lsm: '0.925rem',
+                xl: [
+                    '1.25rem',
+                    {
+                        lineHeight: '1.65rem',
+                        letterSpacing: '-0.01em',
+                        fontWeight: '300',
+                    },
+                ],
+                '2xl': [
+                    '2rem',
+                    {
+                        lineHeight: '2.2rem',
+                        letterSpacing: '-0.01em',
+                        fontWeight: '400',
+                    },
+                ],
                 '2.5xl': [
                     '2.75rem',
                     {
@@ -222,7 +238,10 @@ module.exports = {
             },
         },
     },
-    plugins: [require('tailwind-scrollbar'), radialGradientPlugin],
+    plugins: [
+        require('tailwind-scrollbar')({ nocompatible: true, preferredStrategy: 'pseudoelements' }),
+        radialGradientPlugin,
+    ],
     variants: {
         scrollbar: ['rounded'],
     },

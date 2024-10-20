@@ -76,10 +76,7 @@ export class BossShopProvider {
                             return this.jobService.hasPermission(shop.job, JobPermission.SocietyShop);
                         },
                         action: () => {
-                            this.inventoryManager.openShopInventory(
-                                this.getHydratedProducts(shop.products),
-                                'menu_shop_society'
-                            );
+                            this.inventoryManager.openShopInventory(this.getHydratedProducts(shop.products), 'Société');
                         },
                     },
                     ...this.getOrders(shop),

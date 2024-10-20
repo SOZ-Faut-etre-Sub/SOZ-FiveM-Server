@@ -390,7 +390,6 @@ export class PedFactory {
             this.pedProps.set(pedId, pedprops);
         }
 
-<<<<<<< HEAD
         if (ped.weapon) {
             GiveWeaponToPed(pedId, ped.weapon, 0, false, true);
             SetCurrentPedWeapon(pedId, ped.weapon, true);
@@ -400,10 +399,7 @@ export class PedFactory {
             SetEntityAlpha(pedId, ped.alpha, false);
         }
 
-        this.peds[pedId] = true;
-=======
         return pedId;
->>>>>>> a8abbb5f7f (feat(inventory): move inventory to core)
     }
 
     @Once(OnceStep.Stop)

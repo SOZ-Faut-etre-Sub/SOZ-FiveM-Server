@@ -1,14 +1,5 @@
 import classNames from 'classnames';
-import {
-    ChangeEvent,
-    FormEvent,
-    FunctionComponent,
-    KeyboardEvent,
-    useCallback,
-    useEffect,
-    useRef,
-    useState,
-} from 'react';
+import { ChangeEvent, FormEvent, FunctionComponent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import colors from 'tailwindcss/colors';
 

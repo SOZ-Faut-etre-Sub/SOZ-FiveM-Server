@@ -4,6 +4,7 @@ import { Provider } from '../../core/decorators/provider';
 import { isErr } from '../../shared/result';
 import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
+import { PlayerService } from '../player/player.service';
 import { InventoryFactory } from './inventory.factory';
 
 /**
@@ -16,6 +17,9 @@ export class InventoryCommandProvider {
 
     @Inject(ItemService)
     private itemService: ItemService;
+
+    @Inject(PlayerService)
+    private playerService: PlayerService;
 
     @Inject(Notifier)
     private notifier: Notifier;
@@ -49,9 +53,10 @@ export class InventoryCommandProvider {
         role: 'admin',
     })
     public async giveItem(source: number, target: number, item: string, amount: number = 1, ...metadatas: string[]) {
+        const player = this.playerService.getPlayer(target);
         const inventory = await this.inventoryFactory.getPlayerInventory(target);
 
-        if (!inventory) {
+        if (!inventory || !player) {
             this.notifier.error(source, 'Joueur introuvable');
 
             return;
@@ -96,7 +101,10 @@ export class InventoryCommandProvider {
             return;
         }
 
-        this.notifier.notify(source, `Objet ${itemObject.label} [${item}] ajouté avec succès`);
+        this.notifier.notify(
+            source,
+            `Vous avez donné ~o~${amount} ~b~${itemObject.label} ~o~"${item}"~s~ à ~b~${player.charinfo.firstname} ${player.charinfo.lastname}`
+        );
 
         await inventory.observe();
     }

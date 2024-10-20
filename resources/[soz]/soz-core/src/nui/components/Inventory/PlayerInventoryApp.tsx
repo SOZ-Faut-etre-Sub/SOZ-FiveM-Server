@@ -1,15 +1,28 @@
-import { DndContext, MouseSensor, rectIntersection, useSensor, useSensors } from '@dnd-kit/core';
+import {
+    DndContext,
+    DragOverlay,
+    MouseSensor,
+    rectIntersection,
+    useDraggable,
+    useDroppable,
+    useSensor,
+    useSensors,
+} from '@dnd-kit/core';
+import classNames from 'classnames';
 import { FunctionComponent, useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 import { NuiEvent } from '../../../shared/event/nui';
 import { InventoryItem } from '../../../shared/inventory';
 import { Item } from '../../../shared/item';
 import { fetchNui } from '../../fetch';
 import { useKeyPress } from '../../hook/control';
-import { usePlayer, usePlayerInventoryConfiguration, usePlayerInventoryItems } from '../../hook/data';
+import { useItemResolver, usePlayer, usePlayerInventoryConfiguration, usePlayerInventoryItems } from '../../hook/data';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
+import { BorderBox, GameCanvasBox } from '../Styleguide/GlassMorphismContainer';
 import { createHandleDragAndDrop } from './Actions';
 import { Inventory } from './Inventory';
+import { getItemIcon, getItemSlotClassnames } from './ItemSlot';
 
 export const PlayerInventoryApp: FunctionComponent = () => {
     const [open, setOpen] = useState(false);
@@ -86,18 +99,132 @@ export const PlayerInventoryApp: FunctionComponent = () => {
             onDragEnd={createHandleDragAndDrop(true)}
             sensors={sensors}
         >
-            <div className="absolute h-full w-full">
-                <main className="m-8 h-[45vh] w-[36vh] xl:ml-[94vh]">
+            <div className="absolute h-full w-full font-prompt">
+                <main className="m-8 w-[400px] wide:ml-[94vh]">
                     <Inventory
-                        banner="/public/images/inventory/banner/inventory_banner.webp"
+                        title="Inventaire"
                         configuration={configuration}
                         inventoryItems={inventoryItems}
                         inventoryId={`player_${player?.citizenid}`}
                         player
                         onDoubleClick={onDoubleClick}
+                        itemDescriptionPosition="right"
                     />
+                    <div className="w-full">
+                        <header className="relative w-full">
+                            <div className="drop-shadow-bg h-[40px] flex w-full justify-between items-center">
+                                <h1 className="font-semibold uppercase text-white text-2xl">Raccourcis</h1>
+                            </div>
+                        </header>
+                        <div className="relative w-full">
+                            <div
+                                className={classNames(
+                                    'overflow-visible w-[400px] scrollbar scrollbar-w-1 scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full'
+                                )}
+                            >
+                                <GameCanvasBox blur={false}>
+                                    <div className="grid grid-cols-5 gap-2">
+                                        {[...Array(10).keys()].map(index => {
+                                            return (
+                                                <ShortcutSlot
+                                                    inventoryItems={inventoryItems}
+                                                    key={index}
+                                                    shortcut={index + 1}
+                                                />
+                                            );
+                                        })}
+                                    </div>
+                                </GameCanvasBox>
+                            </div>
+                        </div>
+                    </div>
                 </main>
             </div>
         </DndContext>
+    );
+};
+
+type ShortcutSlotProps = {
+    inventoryItems: Record<number, InventoryItem>;
+    shortcut: number;
+};
+
+const ShortcutSlot: FunctionComponent<ShortcutSlotProps> = ({ shortcut, inventoryItems }) => {
+    const { isOver, setNodeRef: setDroppableNodeRef } = useDroppable({
+        id: `shortcut_${shortcut}`,
+        data: {
+            type: 'shortcut',
+            shortcut,
+        },
+    });
+    const player = usePlayer();
+    const resolver = useItemResolver();
+
+    const shortcutData = player.metadata.shortcuts[shortcut % 10] || null;
+    const item = shortcutData ? resolver(shortcutData.name) : null;
+    const hasItem = item && Object.values(inventoryItems).some(inventoryItem => inventoryItem.name === item?.name);
+
+    const {
+        attributes,
+        listeners,
+        setNodeRef: setDraggableNodeRef,
+        isDragging,
+    } = useDraggable({
+        id: `shortcut_${shortcut}`,
+        data: {
+            type: 'shortcut',
+            shortcut,
+        },
+    });
+
+    const [imageSrc, setImageSrc] = useState<string | null>(item ? getItemIcon(item) : null);
+
+    useEffect(() => {
+        if (item) {
+            setImageSrc(getItemIcon(item));
+        }
+    }, [item]);
+
+    return (
+        <>
+            <div className="aspect-square w-[70px] h-[70px]">
+                <BorderBox borderClassName="rounded-xl aspect-square" showBorderOnHover={!isOver}>
+                    <div ref={setDroppableNodeRef} className={getItemSlotClassnames(isOver)}>
+                        {item && (
+                            <div ref={setDraggableNodeRef} {...listeners} {...attributes}>
+                                <img
+                                    className={classNames('aspect-square', {
+                                        grayscale: !hasItem,
+                                        'opacity-70': !hasItem,
+                                    })}
+                                    src={imageSrc}
+                                    onError={() => {
+                                        setImageSrc('https://loremflickr.com/70/70');
+                                    }}
+                                    alt="Name"
+                                />
+                            </div>
+                        )}
+                    </div>
+                    <div
+                        className="drop-shadow-bg text-white font-prompt absolute"
+                        style={{
+                            top: 0,
+                            right: 0,
+                            margin: '0.1rem 0.2rem',
+                            padding: '0.1rem 0.3rem',
+                        }}
+                    >
+                        {shortcut === 10 ? '0' : shortcut}
+                    </div>
+                </BorderBox>
+            </div>
+            {createPortal(
+                <DragOverlay dropAnimation={null}>
+                    {isDragging && <img className="absolute z-50" src={imageSrc} alt={item?.label} />}
+                </DragOverlay>,
+                document.body
+            )}
+        </>
     );
 };

@@ -75,7 +75,7 @@ export class LSMCPharmacyProvider {
                         action: () => {
                             this.inventoryManager.openShopInventory(
                                 getLsmcShopProduct(products),
-                                'menu_shop_pharmacy',
+                                'Pharmacie',
                                 TaxType.SERVICE
                             );
                         },

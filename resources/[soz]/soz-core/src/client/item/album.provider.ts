@@ -89,7 +89,7 @@ export class AlbumProvider {
                         icon: 'magasin/album',
                         category: 'citizen',
                         action: () => {
-                            this.inventoryManager.openShopInventory(shopProducts, 'menu_shop_music', TaxType.SUPPLY);
+                            this.inventoryManager.openShopInventory(shopProducts, 'Musique', TaxType.SUPPLY);
                         },
                     },
                 ],

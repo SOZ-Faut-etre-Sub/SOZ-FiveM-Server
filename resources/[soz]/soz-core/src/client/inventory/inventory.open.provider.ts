@@ -127,7 +127,7 @@ export class InventoryOpenProvider {
                 if (inventory.data.type === InventoryType.Cloakroom) {
                     options.push({
                         label: 'Ouvrir mon casier',
-                        icon: 'fas fa-archive',
+                        icon: 'inventory/archive',
                         job: job as JobType,
                         category: 'society',
                         action: async () => {

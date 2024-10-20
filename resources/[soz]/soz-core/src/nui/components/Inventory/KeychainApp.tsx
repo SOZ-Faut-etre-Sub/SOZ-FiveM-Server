@@ -17,6 +17,7 @@ import { InventoryKey } from '../../../shared/inventory';
 import { fetchNui } from '../../fetch';
 import { useKeyPress } from '../../hook/control';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
+import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
 import { InventoryDiv } from './Inventory';
 import { getItemSlotClassnames } from './ItemSlot';
 
@@ -38,8 +39,10 @@ export const KeychainApp: FunctionComponent = () => {
         setKeys(null);
     });
     useKeyPress('Backspace', () => {
-        fetchNui(NuiEvent.InventoryGoBackPlayerInventory);
-        setKeys(null);
+        if (open) {
+            fetchNui(NuiEvent.InventoryGoBackPlayerInventory);
+            setKeys(null);
+        }
     });
 
     const mouseSensor = useSensor(MouseSensor, {
@@ -74,40 +77,47 @@ export const KeychainApp: FunctionComponent = () => {
                 });
             }}
         >
-            <div className="absolute h-full w-full">
-                <main className="m-8 h-[45vh] w-[36vh] xl:ml-[94vh]">
+            <div className="absolute h-full w-full font-prompt">
+                <main className="m-8 h-[45vh] w-[370px] xl:ml-[94vh]">
                     <InventoryDiv
-                        banner="/public/images/inventory/banner/keychain_banner.webp"
+                        title="Porte-clés"
+                        description={
+                            currentKey ? (
+                                <div className="mt-2w-[370px]">
+                                    <GlassMorphismContainer borderClassName="rounded-xl">
+                                        <div className="p-2 rounded text-gray-100 w-full">
+                                            <div className="flex justify-between align-items-center w-full">
+                                                <strong>
+                                                    {currentKey.type === 'vehicle'
+                                                        ? `Véhicule ${currentKey.plate}`
+                                                        : `Appartement ${currentKey.label}`}
+                                                </strong>
+                                            </div>
+                                        </div>
+                                    </GlassMorphismContainer>
+                                </div>
+                            ) : null
+                        }
                         giveKeysCallback={type => {
                             if (type === 'vehicle') {
                                 fetchNui(NuiEvent.InventoryActionGiveKey, {
-                                    keys: [keys.filter(key => key.type === 'vehicle')],
+                                    keys: keys.filter(key => key.type === 'vehicle'),
                                     mode: 'closest',
                                 });
                             }
                             if (type === 'apartment') {
                                 fetchNui(NuiEvent.InventoryActionGiveKey, {
-                                    keys: [keys.filter(key => key.type === 'apartment')],
+                                    keys: keys.filter(key => key.type === 'apartment'),
                                     mode: 'closest',
                                 });
                             }
                         }}
+                        useGrid={true}
                     >
                         {keys.map((key, index) => (
                             <KeychainItem key={index} index={index} inventoryKey={key} setCurrentKey={setCurrentKey} />
                         ))}
                     </InventoryDiv>
-                    {currentKey && (
-                        <div className="p-2 mt-2 rounded text-gray-100 bg-black/60 w-full">
-                            <div className="flex justify-between align-items-center w-full">
-                                <strong>
-                                    {currentKey.type === 'vehicle'
-                                        ? `Véhicule ${currentKey.plate}`
-                                        : `Appartement ${currentKey.label}`}
-                                </strong>
-                            </div>
-                        </div>
-                    )}
                 </main>
             </div>
         </DndContext>
@@ -119,7 +129,7 @@ const KeychainItem: FunctionComponent<{
     index: number;
     setCurrentKey: (key: InventoryKey) => void;
 }> = ({ inventoryKey, index, setCurrentKey }) => {
-    const { setNodeRef: setDroppableNodeRef } = useDroppable({
+    const { setNodeRef: setDroppableNodeRef, isOver } = useDroppable({
         id: `droppable_key_${index}`,
         data: inventoryKey,
     });
@@ -142,46 +152,50 @@ const KeychainItem: FunctionComponent<{
 
     return (
         <>
-            <div
-                onContextMenu={event => {
-                    setContextData({
-                        visible: true,
-                        posX: event.clientX,
-                        posY: event.clientY,
-                    });
-                }}
-                ref={setDroppableNodeRef}
-                onMouseEnter={() => setCurrentKey(inventoryKey)}
-                onMouseLeave={() => {
-                    setCurrentKey(null);
-                    setContextData({ visible: false, posX: 0, posY: 0 });
-                }}
-                className={getItemSlotClassnames(false)}
-            >
-                <div ref={setDraggableNodeRef} {...listeners} {...attributes}>
-                    <div className="relative">
-                        <img className="h-full w-full" src={imgSrc} alt={inventoryKey.type} />
-                    </div>
-                </div>
+            <div>
                 <div
-                    className="fixed rounded p-2 h-auto w-fit flex flex-col justify-center items-center bg-black/80"
-                    style={{
-                        left: contextData.posX,
-                        top: contextData.posY,
-                        zIndex: 1000,
-                        display: contextData.visible ? 'block' : 'none',
+                    onContextMenu={event => {
+                        setContextData({
+                            visible: true,
+                            posX: event.clientX,
+                            posY: event.clientY,
+                        });
                     }}
+                    ref={setDroppableNodeRef}
+                    onMouseEnter={() => setCurrentKey(inventoryKey)}
+                    onMouseLeave={() => {
+                        setCurrentKey(null);
+                        setContextData({ visible: false, posX: 0, posY: 0 });
+                    }}
+                    className={getItemSlotClassnames(false)}
                 >
+                    <GlassMorphismContainer borderClassName="rounded-xl aspect-square" showBorderOnHover={!isOver}>
+                        <div ref={setDraggableNodeRef} {...listeners} {...attributes}>
+                            <div className="relative">
+                                <img className="h-full w-full" src={imgSrc} alt={inventoryKey.type} />
+                            </div>
+                        </div>
+                    </GlassMorphismContainer>
                     <div
-                        onClick={() =>
-                            fetchNui(NuiEvent.InventoryActionGiveKey, {
-                                keys: [inventoryKey],
-                                mode: 'closest',
-                            })
-                        }
-                        className="p-1 rounded hover:bg-white/15"
+                        className="fixed rounded p-2 h-auto w-fit flex flex-col justify-center items-center bg-black/80"
+                        style={{
+                            left: contextData.posX,
+                            top: contextData.posY,
+                            zIndex: 1000,
+                            display: contextData.visible ? 'block' : 'none',
+                        }}
                     >
-                        Donner
+                        <div
+                            onClick={() =>
+                                fetchNui(NuiEvent.InventoryActionGiveKey, {
+                                    keys: [inventoryKey],
+                                    mode: 'closest',
+                                })
+                            }
+                            className="p-1 rounded hover:bg-white/15"
+                        >
+                            Donner
+                        </div>
                     </div>
                 </div>
             </div>

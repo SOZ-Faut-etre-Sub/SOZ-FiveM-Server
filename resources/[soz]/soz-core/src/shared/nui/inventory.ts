@@ -1,4 +1,3 @@
-import { TaxType } from '@public/shared/bank';
 import {
     InventoryCard,
     InventoryConfiguration,
@@ -6,8 +5,7 @@ import {
     InventoryKey,
     InventoryType,
 } from '@public/shared/inventory';
-import { RpcServerEvent } from '@public/shared/rpc';
-import { ShopItem } from '@public/shared/shop/superette';
+import { ShopContent } from '@public/shared/shop';
 
 export interface NuiInventoryMethodMap {
     SetOpen: boolean;
@@ -31,13 +29,6 @@ export interface NuiInventoryMethodMap {
         cards: InventoryCard[];
     };
     CloseWallet: never;
-    OpenShop: {
-        items: ShopItem[];
-        banner: string;
-        tax?: TaxType;
-        type: 'money' | 'marked_money';
-        serverEvent: RpcServerEvent;
-        shopId: string | null;
-    };
+    OpenShop: ShopContent;
     CloseShop: never;
 }

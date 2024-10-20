@@ -1,4 +1,4 @@
-import { PlayerInventoryUpdate, PlayerUpdate } from '@public/core/decorators/player';
+import { PlayerInventoryUpdate } from '@public/core/decorators/player';
 
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Exportable } from '../../core/decorators/exports';

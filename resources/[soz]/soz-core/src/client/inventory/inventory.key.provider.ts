@@ -120,6 +120,12 @@ export class InventoryKeyProvider {
             return;
         }
 
+        if (keys.length === 0) {
+            this.notifier.error('Aucune clef à donner.');
+
+            return;
+        }
+
         for (const key of keys) {
             if (key.type === 'vehicle') {
                 TriggerServerEvent(ServerEvent.VEHICLE_GIVE_KEY, key.plate, player.playerId);

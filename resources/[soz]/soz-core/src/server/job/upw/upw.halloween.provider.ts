@@ -2,7 +2,8 @@ import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event/server';
-import { InventoryManager } from '../../inventory/inventory.manager';
+import { isErr } from '../../../shared/result';
+import { InventoryFactory } from '../../inventory/inventory.factory';
 import { Notifier } from '../../notifier';
 import { ProgressService } from '../../player/progress.service';
 
@@ -11,8 +12,8 @@ export class UpwHalloweenProvider {
     @Inject(ProgressService)
     private progressService: ProgressService;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     @Inject(Notifier)
     private notifier: Notifier;
@@ -35,7 +36,9 @@ export class UpwHalloweenProvider {
             return;
         }
 
-        if (!this.inventoryManager.addItemToInventory(source, 'halloween_blessed_water', 1).success) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (isErr(inventory.add('halloween_blessed_water', 1))) {
             this.notifier.notify(source, 'Vos poches sont pleines...', 'error');
 
             return;

@@ -1,6 +1,7 @@
 import { ShoppingBagIcon } from '@heroicons/react/outline';
 import classNames from 'classnames';
-import { Fragment, FunctionComponent, PropsWithChildren, useState } from 'react';
+import { FunctionComponent, PropsWithChildren, ReactNode, useEffect, useMemo, useState } from 'react';
+import { FixedSizeGrid } from 'react-window';
 
 import { NuiEvent } from '../../../shared/event/nui';
 import {
@@ -13,8 +14,10 @@ import {
 import { Item } from '../../../shared/item';
 import { fetchNui } from '../../fetch';
 import { useItemResolver } from '../../hook/data';
+import WeightIcon from '../../icons/inventory/weight.svg';
+import { GameCanvasBox, GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
 import { ItemDescription } from './ItemDescription';
-import { EmptySlot, ItemSlot } from './ItemSlot';
+import { ItemSlot } from './ItemSlot';
 
 export type InventoryProps = {
     inventoryId: string;
@@ -22,12 +25,12 @@ export type InventoryProps = {
     configuration: InventoryConfiguration;
     targetConfiguration?: InventoryConfiguration;
     inventoryItems: Record<number, InventoryItem>;
-    banner: string;
+    title: string;
     player?: boolean;
     allowForceConsume?: boolean;
-    thin?: boolean;
     allowHiddenItem?: boolean;
     onDoubleClick?: (inventoryItem: InventoryItem | 'money' | 'wallet' | 'keychain' | null, item?: Item | null) => void;
+    itemDescriptionPosition: 'left' | 'right';
 };
 
 export const Inventory: FunctionComponent<InventoryProps> = ({
@@ -36,12 +39,12 @@ export const Inventory: FunctionComponent<InventoryProps> = ({
     configuration,
     targetConfiguration,
     inventoryItems,
-    banner,
+    title,
     player = false,
     allowForceConsume = false,
-    thin = false,
     onDoubleClick,
     allowHiddenItem = false,
+    itemDescriptionPosition = 'right',
 }) => {
     const [currentInventoryItem, setCurrentInventoryItem] = useState<InventoryItem | null>(null);
     const resolver = useItemResolver();
@@ -53,18 +56,31 @@ export const Inventory: FunctionComponent<InventoryProps> = ({
         }, 0) + (player ? 3 : 0);
     const nbLines = Math.max(Math.ceil(maxInventorySlot / 5) + (player ? 0 : 1), 3);
 
-    return (
-        <>
-            <InventoryDiv
-                sortCallback={sort => {
-                    fetchNui(NuiEvent.InventorySort, { id: inventoryId, sort });
-                }}
-                banner={banner}
-                rightText={`${inventoryWeight / 1000}/${configuration.maxWeight / 1000} Kg`}
-                thin={thin}
-            >
-                {player && (
-                    <>
+    useEffect(() => {
+        if (currentInventoryItem) {
+            if (inventoryItems[currentInventoryItem.slot] !== currentInventoryItem) {
+                setCurrentInventoryItem(null);
+            }
+        }
+    }, [inventoryItems, currentInventoryItem]);
+
+    const itemRender = useMemo(() => {
+        return ({ columnIndex, rowIndex, style }) => {
+            const index = rowIndex * 5 + columnIndex - (player ? 3 : 0);
+
+            style = {
+                ...style,
+                left: columnIndex === 0 ? style.left : Number(style.left) + columnIndex * 10,
+                right: style.right
+                    ? columnIndex === 5
+                        ? style.right
+                        : Number(style.right) + columnIndex * 10
+                    : undefined,
+            };
+
+            if (index === -3) {
+                return (
+                    <div style={style}>
                         <ItemSlot
                             prefixId={prefixId}
                             inventoryId={inventoryId}
@@ -77,6 +93,13 @@ export const Inventory: FunctionComponent<InventoryProps> = ({
                             resolver={resolver}
                             onDoubleClick={onDoubleClick}
                         />
+                    </div>
+                );
+            }
+
+            if (index === -2) {
+                return (
+                    <div style={style}>
                         <ItemSlot
                             prefixId={prefixId}
                             inventoryId={inventoryId}
@@ -89,6 +112,13 @@ export const Inventory: FunctionComponent<InventoryProps> = ({
                             resolver={resolver}
                             onDoubleClick={onDoubleClick}
                         />
+                    </div>
+                );
+            }
+
+            if (index === -1) {
+                return (
+                    <div style={style}>
                         <ItemSlot
                             prefixId={prefixId}
                             inventoryId={inventoryId}
@@ -101,132 +131,179 @@ export const Inventory: FunctionComponent<InventoryProps> = ({
                             resolver={resolver}
                             onDoubleClick={onDoubleClick}
                         />
-                    </>
-                )}
-                {[...Array(nbLines)].map((_, i) => {
-                    return (
-                        <Fragment key={i}>
-                            {[...Array(5)].map((_, j) => {
-                                const slot = i * 5 + j + 1;
-                                const inventoryItem = inventoryItems[slot] || null;
-                                const item = inventoryItem ? resolver(inventoryItem?.name) : null;
+                    </div>
+                );
+            }
 
-                                return (
-                                    <ItemSlot
-                                        prefixId={prefixId}
-                                        inventoryId={inventoryId}
-                                        targetConfiguration={targetConfiguration}
-                                        slot={slot}
-                                        key={j}
-                                        inventoryItem={inventoryItem}
-                                        item={item}
-                                        setCurrentInventoryItem={setCurrentInventoryItem}
-                                        resolver={resolver}
-                                        allowActions={player}
-                                        allowShortcuts={player}
-                                        onDoubleClick={onDoubleClick}
-                                        allowForceConsume={allowForceConsume}
-                                        allowHidden={allowHiddenItem}
-                                    />
-                                );
-                            })}
-                        </Fragment>
-                    );
-                })}
-                {player && (
-                    <>
-                        <EmptySlot prefixId={prefixId} inventoryId={inventoryId} slot={nbLines * 5 + 1} droppable />
-                        <EmptySlot prefixId={prefixId} inventoryId={inventoryId} slot={nbLines * 5 + 2} droppable />
-                    </>
-                )}
-            </InventoryDiv>
-            <ItemDescription inventoryItem={currentInventoryItem} />
-        </>
+            const slot = index + 1;
+            const inventoryItem = inventoryItems[slot] || null;
+            const item = inventoryItem ? resolver(inventoryItem?.name) : null;
+
+            return (
+                <div style={style}>
+                    <ItemSlot
+                        prefixId={prefixId}
+                        inventoryId={inventoryId}
+                        targetConfiguration={targetConfiguration}
+                        slot={slot}
+                        inventoryItem={inventoryItem}
+                        item={item}
+                        setCurrentInventoryItem={setCurrentInventoryItem}
+                        resolver={resolver}
+                        allowActions={player}
+                        onDoubleClick={onDoubleClick}
+                        allowForceConsume={allowForceConsume}
+                        allowHidden={allowHiddenItem}
+                    />
+                </div>
+            );
+        };
+    }, [
+        prefixId,
+        inventoryId,
+        targetConfiguration,
+        inventoryItems,
+        resolver,
+        onDoubleClick,
+        player,
+        allowForceConsume,
+        allowHiddenItem,
+        setCurrentInventoryItem,
+    ]);
+
+    const height = Math.min((nbLines + 1) * 80, 560);
+
+    return (
+        <InventoryDiv
+            sortCallback={sort => {
+                fetchNui(NuiEvent.InventorySort, { id: inventoryId, sort });
+            }}
+            title={title}
+            weight={{
+                current: inventoryWeight,
+                max: configuration.maxWeight,
+            }}
+            description={<ItemDescription position={itemDescriptionPosition} inventoryItem={currentInventoryItem} />}
+        >
+            <FixedSizeGrid
+                columnCount={5}
+                columnWidth={70}
+                width={400}
+                rowCount={nbLines + 1}
+                rowHeight={80}
+                height={height}
+                overscanRowCount={7}
+                className="scrollbar scrollbar-w-1 scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full"
+                style={{
+                    overflowY: 'auto',
+                    overflowX: 'hidden',
+                }}
+            >
+                {itemRender}
+            </FixedSizeGrid>
+        </InventoryDiv>
     );
 };
 
 type InventoryDivProps = {
-    banner: string;
+    title: string;
     sortCallback?: (sort: InventorySort) => void;
     giveKeysCallback?: (type: 'vehicle' | 'apartment') => void;
-    rightText?: string;
-    thin?: boolean;
+    description?: ReactNode | undefined;
+    isCart?: boolean;
+    weight?: {
+        current: number;
+        max: number;
+    };
+    price?: number;
+    maxHeight?: string;
+    useGrid?: boolean;
 };
 
 export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps>> = ({
     children,
-    banner,
+    title,
     sortCallback,
     giveKeysCallback,
-    rightText,
-    thin = false,
+    weight = null,
+    description = undefined,
+    isCart = false,
+    maxHeight = 'max-h-[45vh]',
+    price = 0,
+    useGrid = false,
 }) => {
     const [showSort, setShowSort] = useState(false);
 
     return (
-        <div
-            className={classNames('max-h-full flex flex-col w-full bg-black/50', {
-                'text-sm': thin,
-            })}
-        >
-            {banner === 'cart' && (
-                <header className="p-2 relative flex h-10 items-center text-sm uppercase text-white">
-                    <ShoppingBagIcon className="h-8" />
-                    <h2 className="ml-2">Glisse et dépose dans ton panier</h2>
+        <div className="w-full">
+            {isCart && (
+                <header className="relative w-full">
+                    <div className="drop-shadow-bg h-[40px] flex w-full justify-between items-center">
+                        <h1 className="font-semibold uppercase text-white text-2xl">Panier</h1>
+                        <h2 className="flex z-100 text-white bottom-0 right-0 py-1 px-2 items-center">
+                            <span className="flex items-end">
+                                <span className="font-semibold text-xl">{price} $</span>
+                            </span>
+                            <ShoppingBagIcon className="h-8" />
+                        </h2>
+                    </div>
                 </header>
             )}
-            {banner !== 'cart' && (
-                <header className="relative">
-                    <img src={banner} alt="Player Banner" />
+            {!isCart && (
+                <header className="relative w-full">
+                    <div className="drop-shadow-bg h-[40px] flex w-full justify-between items-center">
+                        <h1 className="font-semibold uppercase text-white text-2xl">{title}</h1>
+                        {weight && (
+                            <h2 className="flex z-100 text-white bottom-0 right-0 py-1 px-2 items-center">
+                                <span className="flex items-end">
+                                    <span className="font-semibold text-xl">{(weight.current / 1000).toFixed(2)}</span>
+                                    <span className="text-sm">/{(weight.max / 1000).toFixed(0)} Kg</span>
+                                </span>
+                                <WeightGauge current={weight.current} max={weight.max} />
+                            </h2>
+                        )}
+                    </div>
                     {giveKeysCallback && (
-                        <div
-                            className="absolute flex rounded z-100 ml-3 text-white/80 mb-1"
-                            style={{
-                                bottom: '0',
-                                left: '0',
-                            }}
-                            onClick={() => setShowSort(!showSort)}
-                        >
+                        <div className="cursor-pointer relative inline-block">
                             <div
-                                className="cursor-pointer rounded bg-black/80 hover:bg-white/20 h-6 px-2 flex justify-center relative"
+                                className="cursor-pointer inline-block justify-center relative"
                                 onClick={() => giveKeysCallback('vehicle')}
                             >
-                                <img
-                                    className="h-full"
-                                    src="https://cfx-nui-soz-core/public/images/inventory/icon/car.webp"
-                                    alt="Vehicle keys"
-                                />
+                                <GlassMorphismContainer borderClassName="rounded" showBorderOnHover>
+                                    <img
+                                        className="h-6 px-4"
+                                        src="https://cfx-nui-soz-core/public/images/inventory/icon/car.webp"
+                                        alt="Vehicle keys"
+                                    />
+                                </GlassMorphismContainer>
                             </div>
                             <div
-                                className="ml-1 cursor-pointer rounded bg-black/80 hover:bg-white/20 h-6 px-2 flex justify-center relative"
+                                className="ml-1 cursor-pointer inline-block justify-center relative"
                                 onClick={() => giveKeysCallback('apartment')}
                             >
-                                <img
-                                    className="h-full"
-                                    src="https://cfx-nui-soz-core/public/images/inventory/icon/key.webp"
-                                    alt="Apartment keys"
-                                />
+                                <GlassMorphismContainer borderClassName="rounded" showBorderOnHover>
+                                    <img
+                                        className="h-6 px-4"
+                                        src="https://cfx-nui-soz-core/public/images/inventory/icon/key.webp"
+                                        alt="Apartment keys"
+                                    />
+                                </GlassMorphismContainer>
                             </div>
                         </div>
                     )}
                     {sortCallback && (
-                        <div
-                            className="absolute rounded z-100 ml-2 text-white/80"
-                            style={{
-                                bottom: '0',
-                                left: '0',
-                            }}
-                            onClick={() => setShowSort(!showSort)}
-                        >
-                            <div className="cursor-pointer hover:bg-black/80 relative">
-                                <div className="px-2 py-1">Trier ↑↓</div>
+                        <div className="text-white" onClick={() => setShowSort(!showSort)}>
+                            <div className="cursor-pointer relative inline-block">
+                                <GlassMorphismContainer borderClassName="rounded" showBorderOnHover>
+                                    <div className="text-white px-2 py-1">Trier ↑↓</div>
+                                </GlassMorphismContainer>
                             </div>
                             {showSort && (
-                                <div className="absolute w-40 rounded-b z-50 bg-black/40">
+                                <div className="absolute w-40 rounded z-50 bg-black/75">
                                     {Object.keys(INVENTORY_SORT_LABELS).map(key => {
                                         return (
                                             <div
-                                                className="p-2 w-40 hover:bg-black/80 cursor-pointer rounded"
+                                                className="p-2 w-40 hover:bg-black cursor-pointer rounded"
                                                 key={key}
                                                 onClick={() => {
                                                     sortCallback(key as InventorySort);
@@ -240,14 +317,75 @@ export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps
                             )}
                         </div>
                     )}
-                    {rightText && (
-                        <h2 className="absolute z-100 text-white/80 bottom-0 right-0 py-1 px-2">{rightText}</h2>
-                    )}
                 </header>
             )}
-            <div className="max-h-full min-h-20 overflow-y-scroll rounded-b pt-2 pl-2 pb-2 grid grid-cols-5 gap-2 scrollbar-thin scrollbar-thumb-white/20 scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
-                {children}
+            <div className="relative w-full">
+                <div
+                    className={classNames(
+                        'overflow-visible w-[400px] scrollbar scrollbar-w-1 scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full',
+                        maxHeight
+                    )}
+                >
+                    <GameCanvasBox blur={false}>
+                        <div
+                            className={classNames({
+                                'grid grid-cols-5 gap-2': useGrid,
+                            })}
+                        >
+                            {children}
+                        </div>
+                    </GameCanvasBox>
+                </div>
+                {description}
             </div>
+        </div>
+    );
+};
+
+const WeightGauge: FunctionComponent<{ current: number; max: number }> = ({ current, max }) => {
+    const value = (current * 100) / max;
+    const circumference = 90 * 2 * Math.PI;
+    const offset = circumference - (value / 100) * circumference;
+
+    return (
+        <div className="relative rounded-full ml-2" style={{ width: '36px', height: '36px' }}>
+            <GlassMorphismContainer
+                borderClassName="rounded-full"
+                className="flex justify-center items-center"
+                style={{ width: '36px', height: '36px' }}
+                disableBorder
+            >
+                <WeightIcon className="text-white w-[16x] h-[16px]" />
+                <div className="absolute -inset-[1px] flex justify-center">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-full w-full"
+                        viewBox="0 0 200 200"
+                        style={{ transform: 'rotate(-90deg)' }}
+                    >
+                        <circle
+                            r="90"
+                            cx="100"
+                            cy="100"
+                            fill="transparent"
+                            strokeWidth="1.5rem"
+                            strokeDasharray={`${circumference} ${circumference}`}
+                            strokeDashoffset="0"
+                        />
+                        <circle
+                            r="90"
+                            cx="100"
+                            cy="100"
+                            stroke="white"
+                            strokeWidth="1.5rem"
+                            strokeLinecap="butt"
+                            strokeDasharray={`${circumference} ${circumference}`}
+                            strokeDashoffset={String(offset)}
+                            fill="transparent"
+                        />
+                    </svg>
+                </div>
+            </GlassMorphismContainer>
         </div>
     );
 };

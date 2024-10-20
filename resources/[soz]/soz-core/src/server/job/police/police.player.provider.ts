@@ -37,6 +37,7 @@ export class PolicePlayerProvider {
 
                 TriggerClientEvent(ClientEvent.POLICE_HANDCUFF_ANIMATION, player.source);
                 TriggerClientEvent(ClientEvent.POLICE_GET_CUFFED, target.source, player.source);
+                TriggerClientEvent(ClientEvent.INVENTORY_LOCK, target.source, true, 'cuffed');
                 TriggerClientEvent('soz-talk:client:PowerOffRadio', target.source);
 
                 this.monitor.traceEvent('job_police_cuff_player', {
@@ -64,6 +65,7 @@ export class PolicePlayerProvider {
                 this.playerService.setPlayerMetadata(target.source, 'ishandcuffed', false);
                 this.playerStateService.setClientState(target.source, { isHandcuffed: false });
                 TriggerClientEvent(ClientEvent.POLICE_GET_UNCUFFED, target.source);
+                TriggerClientEvent(ClientEvent.INVENTORY_LOCK, target.source, false, 'cuffed');
                 TriggerClientEvent('soz-talk:client:PowerOnRadio', target.source);
 
                 this.monitor.traceEvent('job_police_uncuff_player', {
