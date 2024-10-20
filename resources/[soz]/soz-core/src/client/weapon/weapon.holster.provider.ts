@@ -4,7 +4,9 @@ import { Provider } from '@core/decorators/provider';
 import { wait } from '@core/utils';
 import { Tick } from '@public/core/decorators/tick';
 import { Component } from '@public/shared/cloth';
+import { VanillaComponentDrawableIndexMaxValue } from '@public/shared/drawable';
 import { JobType } from '@public/shared/job';
+import { PlayerPedHash } from '@public/shared/player';
 
 import { AnimationService } from '../animation/animation.service';
 import { PlayerService } from '../player/player.service';
@@ -20,9 +22,14 @@ const excludeWeapon = [
 
 const AllowedJob = [JobType.FBI, JobType.BCSO, JobType.LSPD, JobType.SASP, JobType.LSCS];
 
-const hosterDrawable = {
-    [GetHashKey('mp_m_freemode_01')]: 130,
-    [GetHashKey('mp_f_freemode_01')]: 160,
+const UndershirtHolster: Record<PlayerPedHash, number> = {
+    [PlayerPedHash.Male]: 130,
+    [PlayerPedHash.Female]: 160,
+};
+
+const AccessoriesHolster: Record<PlayerPedHash, number> = {
+    [PlayerPedHash.Male]: VanillaComponentDrawableIndexMaxValue[PlayerPedHash.Male][Component.Accessories] + 4,
+    [PlayerPedHash.Female]: VanillaComponentDrawableIndexMaxValue[PlayerPedHash.Female][Component.Accessories] + 4,
 };
 
 @Provider()
@@ -68,7 +75,10 @@ export class WeaponHolsterProvider {
                     if (
                         this.isWeaponHolsterable(this.currWeapon) &&
                         ((AllowedJob.includes(player.job.id) && player.cloth_config.JobClothSet) ||
-                            hosterDrawable[GetEntityModel(ped)] == GetPedDrawableVariation(ped, Component.Undershirt))
+                            UndershirtHolster[GetEntityModel(ped)] ==
+                                GetPedDrawableVariation(ped, Component.Undershirt) ||
+                            AccessoriesHolster[GetEntityModel(ped)] ==
+                                GetPedDrawableVariation(ped, Component.Accessories))
                     ) {
                         await this.putWeaponInHolster();
                     } else {
@@ -81,7 +91,10 @@ export class WeaponHolsterProvider {
                     if (
                         this.isWeaponHolsterable(newWeap) &&
                         ((AllowedJob.includes(player.job.id) && player.cloth_config.JobClothSet) ||
-                            hosterDrawable[GetEntityModel(ped)] == GetPedDrawableVariation(ped, Component.Undershirt))
+                            UndershirtHolster[GetEntityModel(ped)] ==
+                                GetPedDrawableVariation(ped, Component.Undershirt) ||
+                            AccessoriesHolster[GetEntityModel(ped)] ==
+                                GetPedDrawableVariation(ped, Component.Accessories))
                     ) {
                         await this.drawWeaponFromHolster(ped, newWeap);
                     } else {
