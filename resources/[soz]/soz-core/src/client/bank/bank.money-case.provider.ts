@@ -32,7 +32,8 @@ export class BankMoneyCaseProvider {
             !this.playerService.getState().disableMoneyCase &&
             !this.weaponHolsterProvider.isInAnimation() &&
             !this.playerService.getState().isInShop &&
-            (this.inventoryManager.hasEnoughItem(StonkConfig.delivery.item, 1) ||
+            (this.inventoryManager.hasEnoughItem(StonkConfig.delivery.item) ||
+                this.inventoryManager.hasEnoughItem('crypto_destroyer') ||
                 Object.values(player.money).reduce((a, b) => a + b) >= MONEY_CASE_TRIGGER);
 
         if (!this.disableAttack) {

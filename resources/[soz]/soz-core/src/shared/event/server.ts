@@ -607,6 +607,7 @@ export enum ServerEvent {
     GANG_CYBER_CRYPTO_DESTROY = 'soz-core:server:gang:cyber:destroy',
     GANG_CYBER_CRYPTO_DESTROY_FDO = 'soz-core:server:gang:cyber:destroy-fdo',
     GANG_CYBER_CRYPTO_STEAL = 'soz-core:server:gang:cyber:steal',
+    GANG_CYBER_CRYPTO_ALERT = 'soz-core:server:gang:cyber:alert',
 
     DOOR_ADD_UPDATE = 'soz-core:server:door:add-update',
     DOOR_DELETE = 'soz-core:server:door:delete',
