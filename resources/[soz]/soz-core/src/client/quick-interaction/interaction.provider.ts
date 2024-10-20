@@ -157,6 +157,7 @@ export class InteractionProvider {
             const distance = getDistance(this.playerPosition, coords);
             if (distance > this.interactionDistanceProvider.getDrawDistance(id)) {
                 this.nearbyInteractions.delete(id);
+                if (this.nearbyInteraction?.id === id) this.nearbyInteraction = null;
                 continue;
             }
 
@@ -191,7 +192,7 @@ export class InteractionProvider {
                 continue;
             }
 
-            const labelSize = interaction.label.length * 0.005;
+            const labelSize = interaction.label.length * 0.004;
             const contentX = (labelSize + this.interactionSprite.onoff.size / 2) / 16 + labelSize / 2;
 
             DrawSprite(
@@ -323,5 +324,6 @@ export class InteractionProvider {
     public async onServerStop() {
         this.interactions.clear();
         this.nearbyInteractions.clear();
+        this.nearbyInteraction = null;
     }
 }
