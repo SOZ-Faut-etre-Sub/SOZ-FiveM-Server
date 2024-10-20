@@ -47,6 +47,7 @@ const messageExclude = [
     GetHashKey('weapon_raypistol'),
     GetHashKey('weapon_pumpshotgun'),
     GetHashKey('weapon_flaregun'),
+    GetHashKey('weapon_emplauncher'),
 ];
 const NonLethalWeapons = {
     [GetHashKey('weapon_pumpshotgun')]: 10,
