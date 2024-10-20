@@ -220,6 +220,7 @@ model scene {
     id         String         @id @default(uuid())
     name       String         @db.VarChar(255)
     entities   scene_entity[]
+    peds       scene_ped[]
     persistant Boolean        @default(false)
     created_at DateTime       @default(now()) @db.Timestamp(0)
     creator_id String         @db.VarChar(255)
@@ -236,6 +237,14 @@ model scene_entity {
     created_at   DateTime @default(now()) @db.Timestamp(0)
     scene_id     String
     scene        scene    @relation(fields: [scene_id], references: [id], onDelete: Cascade, map: "FK_scene_entity_scene")
+}
+
+model scene_ped {
+    id           String   @id @default(uuid())
+    ped          Json
+    created_at   DateTime @default(now()) @db.Timestamp(0)
+    scene_id     String
+    scene        scene    @relation(fields: [scene_id], references: [id], onDelete: Cascade, map: "FK_scene_ped_scene")
 }
 
 model collection_prop {

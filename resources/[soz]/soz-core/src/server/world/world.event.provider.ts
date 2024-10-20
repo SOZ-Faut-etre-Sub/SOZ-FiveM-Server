@@ -57,6 +57,7 @@ export class WorldEventProvider {
     private serverStateService: ServerStateService;
 
     private currentEvent: CurrentEvent = null;
+    private loadedPeds = new Map<string, number>();
 
     @Rpc(RpcServerEvent.WORLD_EVENT_START)
     public async onStartWorldEvent(source: number, eventId: string): Promise<EventInfo> {
@@ -290,6 +291,27 @@ export class WorldEventProvider {
             this.soundService.playAtPosition(event.startSound, firstEntityPosition, 2000, 1.0);
         }
 
+        for (const [pedId, ped] of Object.entries(scene.peds)) {
+            const pedHandle = CreatePed(
+                0,
+                ped.model,
+                ped.position[0],
+                ped.position[1],
+                ped.position[2],
+                ped.position[3],
+                true,
+                true
+            );
+            this.loadedPeds.set(ped.id, pedHandle);
+            TriggerClientEvent(
+                ClientEvent.WORLD_EVENT_INIT_PED,
+                NetworkGetEntityOwner(pedHandle),
+                NetworkGetNetworkIdFromEntity(pedHandle),
+                pedId
+            );
+            SetEntityOrphanMode(pedHandle, 2);
+        }
+
         if (source) {
             this.notifier.notify(source, `La scène ${scene.name} pour l'event ${event.name} a été lancée avec succès`);
         }
@@ -310,6 +332,16 @@ export class WorldEventProvider {
             if (entity.inventoryId) {
                 this.inventoryManager.clearInv(entity.inventoryId);
             }
+        }
+
+        for (const [pedId, pedHandle] of this.loadedPeds.entries()) {
+            if (DoesEntityExist(pedHandle)) {
+                const model = GetEntityModel(pedHandle);
+                if (model == GetHashKey(scene.peds[pedId].model)) {
+                    DeleteEntity(pedHandle);
+                }
+            }
+            delete this.loadedPeds[pedId];
         }
     }
 }

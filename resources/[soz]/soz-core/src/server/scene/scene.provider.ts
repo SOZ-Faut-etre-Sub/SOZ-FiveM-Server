@@ -1,3 +1,5 @@
+import { ScenePedData } from '@public/shared/scene';
+
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -197,6 +199,75 @@ export class SceneProvider {
         await this.sceneRepository.updateEntity(sceneId, entityId, object);
 
         this.notifier.notify(source, `Entité mise à jour dans la scene ${scene.name}`);
+    }
+
+    @OnEvent(ServerEvent.SCENE_ADD_PED)
+    public async addPed(source: number, sceneId: string, ped: ScenePedData): Promise<void> {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        const scene = await this.sceneRepository.find(sceneId);
+
+        if (!scene) {
+            return;
+        }
+
+        if (scene.owner !== player.citizenid && !this.permissionService.isStaff(source)) {
+            return;
+        }
+
+        await this.sceneRepository.addPed(sceneId, ped);
+
+        this.notifier.notify(source, `Ped ${ped.model} ajoutée à la scene ${scene.name}`);
+    }
+
+    @OnEvent(ServerEvent.SCENE_REMOVE_PED)
+    public async removePed(source: number, sceneId: string, pedId: string): Promise<void> {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        const scene = await this.sceneRepository.find(sceneId);
+
+        if (!scene) {
+            return;
+        }
+
+        if (scene.owner !== player.citizenid && !this.permissionService.isStaff(source)) {
+            return;
+        }
+
+        const ped = await this.sceneRepository.removePed(sceneId, pedId);
+
+        this.notifier.notify(source, `Ped ${ped.model} supprimée de la scene ${scene.name}`);
+    }
+
+    @OnEvent(ServerEvent.SCENE_UPDATE_PED)
+    public async updatePed(source: number, sceneId: string, pedId: string, data: Partial<ScenePedData>): Promise<void> {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        const scene = await this.sceneRepository.find(sceneId);
+
+        if (!scene) {
+            return;
+        }
+
+        if (scene.owner !== player.citizenid && !this.permissionService.isStaff(source)) {
+            return;
+        }
+
+        await this.sceneRepository.updatePed(sceneId, pedId, data);
+
+        this.notifier.notify(source, `Ped mis à jour dans la scene ${scene.name}`);
     }
 
     @OnEvent(ServerEvent.SCENE_SET_PERSISTENT)

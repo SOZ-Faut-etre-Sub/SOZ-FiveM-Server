@@ -408,6 +408,7 @@ export enum ClientEvent {
     WORLD_EVENT_START = 'soz-core:client:world-event:start',
     WORLD_EVENT_END = 'soz-core:client:world-event:end',
     WORLD_EVENT_SIGNAL_INVENTORY = 'soz-core:client:world-event:signal-inventory',
+    WORLD_EVENT_INIT_PED = 'soz-core:client:world-event:ped-init',
 
     DRONE_USE = 'soz-core:client:drone-use',
     DRONE_ADD_REMOTE = 'soz-core:client:drone-add-remote',
