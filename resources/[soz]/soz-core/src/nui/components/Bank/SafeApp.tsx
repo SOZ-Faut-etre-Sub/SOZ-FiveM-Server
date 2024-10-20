@@ -42,13 +42,13 @@ export const SafeApp: FunctionComponent = () => {
         reset();
         setShowApp(false);
 
+        if (!showApp) return;
         await fetchNui(NuiEvent.BankAnimation, { type: 'exit' });
     };
 
     const onKeyUpReceived = (event: KeyboardEvent) => {
-        if (!showApp) return;
-
-        if (event.key === 'Escape') resetApp();
+        if (event.key !== 'Escape') return;
+        resetApp();
     };
 
     useNuiFocus(showApp, showApp, false);
