@@ -11264,6 +11264,15 @@ QBShared.Items = {
         ["description"] = "Un dossier secret que même ta mère ne connaît pas... enfin, peut-être.",
         ["illustrator"] = ".Ostinato",
     },
+    ["crypto_destroyer"] = {
+        ["name"] = "crypto_destroyer",
+        ["label"] = "Valkyrie X1",
+        ["useable"] = true,
+        ["weight"] = 20000,
+        ["type"] = "item",
+        ["description"] = "Conçue pour les unités spécialisées dans la lutte contre la cybercriminalité, la Valkyrie X1 peut anéantir des bases de données cryptées et saboter les serveurs clandestins. Elle dispose d’un puissant logiciel de cryptanalyse et de destruction de pare-feu, rendant impossible toute récupération de données.",
+        ["illustrator"] = ".Nariiel",
+    },
     ["heist_precious_material"] = {
         ["name"] = "heist_precious_material",
         ["label"] = "Matériaux précieux",
