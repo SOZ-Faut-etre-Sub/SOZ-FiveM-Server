@@ -119,9 +119,16 @@ export class VehicleOrderProvider {
         const order = this.ordersInProgress.get(uuid);
         if (!order) {
             this.notifier.notify(source, `Cette commande n'existe pas.`);
-            return;
+            return this.getOrders(source, mode);
         }
+
         this.ordersInProgress.delete(uuid);
+        await this.prismaService.vehicle_order.delete({
+            where: {
+                id: uuid,
+            },
+        });
+
         const vehDef = await this.vehicleRepository.findByModel(order.model);
         this.notifier.notify(
             source,

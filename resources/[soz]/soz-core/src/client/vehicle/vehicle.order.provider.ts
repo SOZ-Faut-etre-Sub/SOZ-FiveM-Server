@@ -15,7 +15,9 @@ export class VehicleOrderProvider {
 
     @OnNuiEvent(NuiEvent.VehicleCancelOrder)
     public async onCancelOrder({ uuid, mode }: { uuid: string; mode: VehicleOrderMode }) {
-        const value = await this.inputService.askConfirm('Voulez-vous vraiment annuler cette commande ?');
+        const value = await this.inputService.askConfirm(
+            'Voulez-vous vraiment annuler cette commande ? Pas de remboursement'
+        );
 
         if (value) {
             return emitRpc<string>(RpcServerEvent.VEHICLE_ORDER_CANCEL, uuid, mode);
