@@ -314,18 +314,26 @@ export class VampireGameProvider {
         _unkInt1: number,
         _unkBool1: number,
         _unkBool2: number,
-        _isFatal: boolean,
+        isFatal: boolean,
         weaponHash: number
     ): Promise<void> {
         if (!this.state.started) return;
         if (this.state.role !== VampireGameRole.Vampire) return;
 
         const playerPed = PlayerPedId();
+        const pos = GetEntityCoords(playerPed);
+        const heading = GetEntityHeading(playerPed);
+
         if (playerPed !== victim) return;
 
         if (weaponHash === GetHashKey('weapon_musket')) {
             SetEntityHealth(playerPed, 0);
         } else {
+            SetEntityHealth(playerPed, GetPedMaxHealth(playerPed));
+        }
+
+        if (isFatal) {
+            NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, 1, false);
             SetEntityHealth(playerPed, GetPedMaxHealth(playerPed));
         }
     }
