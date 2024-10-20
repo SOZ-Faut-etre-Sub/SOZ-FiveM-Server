@@ -335,6 +335,7 @@ export class VampireGameProvider {
         if (isFatal) {
             NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, 1, false);
             SetEntityHealth(playerPed, GetPedMaxHealth(playerPed));
+            TriggerServerEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_CANCEL_VAMPIRE_KNOCKOUT);
         }
     }
 

@@ -314,6 +314,19 @@ export class VampireGameProvider {
         }
     }
 
+    @OnEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_CANCEL_VAMPIRE_KNOCKOUT)
+    public async cancelVampireKnockout(source: number) {
+        if (!this.gameState.started) return;
+        if (!this.playerStateService.getClientState(source).isKnockedOut) return;
+
+        this.gameState.autoRespawn.get(source)?.cancel();
+        this.gameState.autoRespawn.delete(source);
+
+        this.playerStateService.setClientState(source, {
+            isKnockedOut: false,
+        });
+    }
+
     @OnEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_CONVERT_PLAYER)
     public async convertPlayer(source: number, target: number, role: VampireGameRole) {
         if (!this.gameState.started) {

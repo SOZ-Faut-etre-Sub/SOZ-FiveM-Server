@@ -638,6 +638,7 @@ export enum ServerEvent {
     HALLOWEEN_VAMPIRE_GAME_TAKE_OBJECTIVE = 'soz-core:server:halloween:vampire-game-take-objective',
     HALLOWEEN_VAMPIRE_GAME_CONVERT_PLAYER = 'soz-core:server:halloween:vampire-game-convert-player',
     HALLOWEEN_VAMPIRE_GAME_PLAYER_KNOCKED_OUT = 'soz-core:server:halloween:vampire-game-player-knocked-out',
+    HALLOWEEN_VAMPIRE_GAME_CANCEL_VAMPIRE_KNOCKOUT = 'soz-core:server:halloween:vampire-game-cancel-vampire-knockout',
 
     DRONE_NEW = 'soz-core:server:drone-new',
     DRONE_DELETE = 'soz-core:server:drone-delete',
