@@ -3,15 +3,15 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { emitRpc } from '@core/rpc';
 import { wait } from '@core/utils';
+import { InteractionProvider } from '@public/client/quick-interaction/interaction.provider';
 import { Apartment } from '@public/shared/housing/housing';
-import { TargetOption } from '@public/shared/target';
 
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { JobPermission, JobType } from '../../shared/job';
 import { MenuType } from '../../shared/nui/menu';
 import { BoxZone } from '../../shared/polyzone/box.zone';
-import { getDistance, toVector3Object, Vector3, Vector4 } from '../../shared/polyzone/vector';
+import { add2Vector3, getDistance, toVector3Object, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { Err, Ok } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
 import { Garage, GarageCategory, GarageType, GarageVehicle, MaxPlaces } from '../../shared/vehicle/garage';
@@ -95,6 +95,9 @@ export class VehicleGarageProvider {
     @Inject(Monitor)
     private monitor: Monitor;
 
+    @Inject(InteractionProvider)
+    private interactionProvider: InteractionProvider;
+
     private pounds: Record<string, Garage> = {};
 
     private isShowingGaragePlaces = false;
@@ -104,6 +107,9 @@ export class VehicleGarageProvider {
         const garageList = this.garageRepository.get();
         const jobGaragePayStation = GetHashKey('soz_prop_paystation');
         this.pounds = {};
+
+        const interactionDistance = 2.0;
+        const drawDistance = 5.0;
 
         for (const garageIdentifier of Object.keys(garageList)) {
             const garage = garageList[garageIdentifier];
@@ -124,28 +130,35 @@ export class VehicleGarageProvider {
                 });
             }
 
-            const targets: TargetOption[] = [];
+            const coords = garage.zone.center as Vector3;
+            const coordsWithOffset = add2Vector3(garage.zone.center as Vector3, [0, 0, 1] as Vector3);
 
             if (garage.type === GarageType.Public) {
-                targets.push({
-                    label: 'Accéder au parking public',
-                    icon: 'garage/ParkingPublic',
-                    category: 'citizen',
-                    action: () => {
-                        this.enterGarage(garageIdentifier, garage);
+                this.interactionProvider.createInteractionForCoords(
+                    garage.category == GarageCategory.Sea ? coordsWithOffset : coords,
+                    {
+                        label: 'Parking public',
+                        action: () => {
+                            this.enterGarage(garageIdentifier, garage);
+                        },
                     },
-                });
+                    interactionDistance,
+                    drawDistance
+                );
             }
 
             if (garage.type === GarageType.Private) {
-                targets.push({
-                    label: 'Accéder au parking privé',
-                    icon: 'garage/ParkingPrive',
-                    category: 'citizen',
-                    action: () => {
-                        this.enterGarage(garageIdentifier, garage);
+                this.interactionProvider.createInteractionForCoords(
+                    coords,
+                    {
+                        label: 'Parking privé',
+                        action: () => {
+                            this.enterGarage(garageIdentifier, garage);
+                        },
                     },
-                });
+                    interactionDistance,
+                    drawDistance
+                );
             }
 
             if (
@@ -160,14 +173,17 @@ export class VehicleGarageProvider {
                 });
 
                 if (garage.type === GarageType.Depot) {
-                    targets.push({
-                        label: 'Accéder à la fourrière',
-                        icon: 'garage/Fourriere',
-                        category: 'citizen',
-                        action: () => {
-                            this.enterGarage(garageIdentifier, garage);
+                    this.interactionProvider.createInteractionForCoords(
+                        coordsWithOffset,
+                        {
+                            label: 'Fourrière',
+                            action: () => {
+                                this.enterGarage(garageIdentifier, garage);
+                            },
                         },
-                    });
+                        interactionDistance,
+                        drawDistance
+                    );
 
                     this.pounds[garageIdentifier] = garage;
                 }
@@ -180,18 +196,18 @@ export class VehicleGarageProvider {
                     id: `garage_${garageIdentifier}`,
                 });
 
-                targets.push({
-                    label: 'Accéder au parking entreprise',
-                    icon: 'garage/GarageEntreprise',
-                    category: 'society',
-                    canInteract: () => {
-                        const player = this.playerService.getPlayer();
-                        return player && player.job.id == garage.job;
+                this.interactionProvider.createInteractionForCoords(
+                    coordsWithOffset,
+                    {
+                        label: 'Parking entreprise',
+                        action: () => {
+                            this.enterGarage(garageIdentifier, garage);
+                        },
+                        job: garage.job,
                     },
-                    action: () => {
-                        this.enterGarage(garageIdentifier, garage);
-                    },
-                });
+                    interactionDistance,
+                    drawDistance
+                );
             }
 
             if (garage.type === GarageType.JobLuxury) {
@@ -201,23 +217,17 @@ export class VehicleGarageProvider {
                     id: `garage_${garageIdentifier}`,
                 });
 
-                targets.push({
-                    label: 'Accéder au parking entreprise luxe',
-                    icon: 'garage/GarageEntreprise',
-                    category: 'society',
-                    action: () => {
-                        this.enterGarage(garageIdentifier, garage);
+                this.interactionProvider.createInteractionForCoords(
+                    coordsWithOffset,
+                    {
+                        label: 'Parking entreprise luxe',
+                        action: () => {
+                            this.enterGarage(garageIdentifier, garage);
+                        },
+                        job: garage.job,
                     },
-                    job: garage.job,
-                });
-            }
-
-            if (targets.length > 0) {
-                this.targetFactory.createForBoxZone(
-                    `garage_enter_${garageIdentifier}`,
-                    { ...garage.zone },
-                    targets,
-                    2.5
+                    interactionDistance,
+                    drawDistance
                 );
             }
         }
