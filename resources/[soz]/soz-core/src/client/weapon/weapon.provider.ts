@@ -263,6 +263,7 @@ export class WeaponProvider {
         if (
             !messageExclude.includes(GetHashKey(weapon.name)) &&
             !messageExcludeGroups.includes(weaponGroup) &&
+            !weapon.metadata?.attachments?.suppressor &&
             Math.random() < 0.6 &&
             Date.now() - this.lastPoliceCall > 60000
         ) {
