@@ -375,6 +375,24 @@ export class VampireGameProvider {
         SetEntityVelocity(ped, vel[0], vel[1], vel[2] + 10.0);
     }
 
+    @OnEvent(ClientEvent.BASE_LEFT_VEHICLE)
+    public async onPlayerLeaveVehicle() {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Halloween)) return;
+        if (!this.state.started) return;
+        if (this.state.role !== VampireGameRole.Hunter) return;
+
+        const player = PlayerPedId();
+        const weapon = GetHashKey(WeaponName.MUSKET);
+        const weaponAmmo = 500;
+
+        const [, hash] = GetCurrentPedWeapon(player, false);
+        if (hash !== GetHashKey(WeaponName.UNARMED)) return;
+
+        GiveWeaponToPed(player, weapon, weaponAmmo, false, true);
+        SetPedAmmo(player, weapon, weaponAmmo);
+        SetCurrentPedWeapon(player, weapon, true);
+    }
+
     private async onGameStart() {
         const player = PlayerPedId();
         FreezeEntityPosition(player, true);
