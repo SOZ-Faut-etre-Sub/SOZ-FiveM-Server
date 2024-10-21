@@ -6,6 +6,7 @@ import { uuidv4, wait } from '@public/core/utils';
 import { ObjectEffects } from '@public/shared/animation';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import { InventoryItem } from '@public/shared/item';
+import { MaterialHash } from '@public/shared/material';
 import { ObjectEditorOptions, WorldObject } from '@public/shared/object';
 import { getDistance, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 
@@ -390,7 +391,12 @@ export class ObjectEditorProvider {
     }
 
     @OnEvent(ClientEvent.OBJECT_PLACE_ITEM)
-    public async placeItem(serverEvent: ServerEvent, model: string, inventoryItem: InventoryItem) {
+    public async placeItem(
+        serverEvent: ServerEvent,
+        model: string,
+        inventoryItem: InventoryItem,
+        invalidSoil: MaterialHash[]
+    ) {
         const object = await this.createOrUpdateObject(GetHashKey(model), {
             snapToGround: true,
             allowScale: false,
@@ -428,6 +434,37 @@ export class ObjectEditorProvider {
         if (result[1]) {
             this.notifier.error('Position incorrecte');
             return;
+        }
+
+        if (invalidSoil && invalidSoil.length > 0) {
+            const rayMaterialHandle = StartShapeTestLosProbe(
+                object.position[0],
+                object.position[1],
+                object.position[2] + 1,
+                object.position[0],
+                object.position[1],
+                object.position[2] - 3,
+                511,
+                0,
+                4
+            );
+
+            let resultMaterial: [number, any, number[], number[], number, number];
+            do {
+                resultMaterial = GetShapeTestResultIncludingMaterial(rayMaterialHandle);
+                await wait(0);
+            } while (resultMaterial[0] == 1);
+
+            if (resultMaterial[0] == 0) {
+                this.notifier.notify('Erreur de detection', 'error');
+                return null;
+            }
+
+            console.log(resultMaterial[4]);
+            if (invalidSoil.includes(resultMaterial[4])) {
+                this.notifier.notify('Impossible de poser cela sur ce sol', 'error');
+                return null;
+            }
         }
 
         TriggerServerEvent(serverEvent, object.position, inventoryItem);
