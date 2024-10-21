@@ -200,10 +200,13 @@ export class VehicleGarageProvider {
                     coordsWithOffset,
                     {
                         label: 'Parking entreprise',
+                        canInteract: () => {
+                            const player = this.playerService.getPlayer();
+                            return player && player.job.id == garage.job;
+                        },
                         action: () => {
                             this.enterGarage(garageIdentifier, garage);
                         },
-                        job: garage.job,
                     },
                     interactionDistance,
                     drawDistance
