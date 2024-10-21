@@ -1,7 +1,5 @@
-import { PlayerService } from '@public/client/player/player.service';
 import { ProgressService } from '@public/client/progress.service';
 import { RaceProvider } from '@public/client/race/race.provider';
-import { TargetFactory } from '@public/client/target/target.factory';
 import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
@@ -11,6 +9,7 @@ import { JobType } from '@public/shared/job';
 import { getDistance, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 
 import { ObjectProvider } from '../../object/object.provider';
+import { InteractionProvider } from '../../quick-interaction/interaction.provider';
 
 const jobsTarget = { [JobType.BCSO]: 0, [JobType.FBI]: 0, [JobType.SASP]: 0, [JobType.LSPD]: 0, [JobType.LSCS]: 0 };
 const spikeModel = GetHashKey('p_ld_stinger_s');
@@ -20,87 +19,82 @@ export class PoliceSpikeProvider {
     @Inject(ProgressService)
     private progressService: ProgressService;
 
-    @Inject(TargetFactory)
-    private targetFactory: TargetFactory;
-
-    @Inject(PlayerService)
-    private playerService: PlayerService;
-
     @Inject(RaceProvider)
     private raceProvider: RaceProvider;
 
     @Inject(ObjectProvider)
     private objectProvider: ObjectProvider;
 
+    @Inject(InteractionProvider)
+    private interactionProvider: InteractionProvider;
+
     private spikes: { [id: string]: Vector4 } = {};
     private closestSpike: string | null = null;
 
     @Once(OnceStep.Start)
     public async onStart() {
-        this.targetFactory.createForModel(
+        this.interactionProvider.createInteractionForModels(
             spikeModel,
-            [
-                {
-                    label: 'Démonter',
-                    icon: 'jobs/demonter',
-                    job: jobsTarget,
-                    category: 'citizen',
-                    action: async (entity: number) => {
-                        const { completed } = await this.progressService.progress(
-                            'remove_object',
-                            'Récupération de la herse en cours',
-                            2500,
-                            {
-                                dictionary: 'weapons@first_person@aim_rng@generic@projectile@thermal_charge@',
-                                name: 'plant_floor',
-                                options: {
-                                    onlyUpperBody: true,
-                                },
+            {
+                label: 'Démonter',
+                action: async (entity: number) => {
+                    const { completed } = await this.progressService.progress(
+                        'remove_object',
+                        'Récupération de la herse en cours',
+                        2500,
+                        {
+                            dictionary: 'weapons@first_person@aim_rng@generic@projectile@thermal_charge@',
+                            name: 'plant_floor',
+                            options: {
+                                onlyUpperBody: true,
                             },
-                            {
-                                useWhileDead: false,
-                                canCancel: true,
-                                disableMovement: true,
-                                disableCarMovement: true,
-                                disableMouse: false,
-                                disableCombat: true,
-                            }
-                        );
-                        if (!completed) {
-                            return;
+                        },
+                        {
+                            useWhileDead: false,
+                            canCancel: true,
+                            disableMovement: true,
+                            disableCarMovement: true,
+                            disableMouse: false,
+                            disableCombat: true,
                         }
+                    );
+                    if (!completed) {
+                        return;
+                    }
 
-                        TriggerServerEvent(ServerEvent.POLICE_REMOVE_SPIKE, ObjToNet(entity));
-                    },
+                    TriggerServerEvent(ServerEvent.POLICE_REMOVE_SPIKE, ObjToNet(entity));
                 },
-            ],
-            2.5
+                job: jobsTarget,
+            },
+            undefined,
+            1.5,
+            6
         );
-        this.targetFactory.createForModel(
-            ['prop_barrier_work05', 'prop_air_conelight'],
-            [
+
+        [GetHashKey('prop_barrier_work05'), GetHashKey('prop_air_conelight')].map(model => {
+            this.interactionProvider.createInteractionForModels(
+                model,
                 {
                     label: 'Démonter',
-                    icon: 'jobs/demonter',
-                    job: jobsTarget,
-                    category: 'society',
                     canInteract: entity => {
                         const id = this.objectProvider.getIdFromEntity(entity);
                         return !!id;
                     },
                     action: async (entity: number) => {
                         const id = this.objectProvider.getIdFromEntity(entity);
-
                         if (!id) {
                             return;
                         }
 
                         TriggerServerEvent(ServerEvent.OBJECT_COLLECT, id);
                     },
+                    job: jobsTarget,
                 },
-            ],
-            2.5
-        );
+                undefined,
+                1.5,
+                6
+            );
+        });
 
         TriggerServerEvent(ServerEvent.POLICE_INIT_SPIKE);
     }

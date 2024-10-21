@@ -11,6 +11,10 @@ export class InteractionOffsetProvider {
 
     private readonly defaultOffset = [0, 0, 0] as Vector3;
 
+    public setModelOffset(entity: number, offset: Vector3) {
+        this.modelOffset.set(entity, offset);
+    }
+
     public getEntityCoordsWithOffset(entity: number): Vector3 {
         const offset = this.getEntityOffset(entity);
         return GetOffsetFromEntityInWorldCoords(entity, offset[0], offset[1], offset[2]) as Vector3;

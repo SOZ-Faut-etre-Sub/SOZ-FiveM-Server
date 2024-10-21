@@ -7,6 +7,7 @@ import { emitRpc } from '@core/rpc';
 import { InventoryManager } from '@public/client/inventory/inventory.manager';
 import { ObjectService } from '@public/client/object/object.service';
 import { getProperGroundPositionForObject } from '@public/client/object/object.utils';
+import { InteractionProvider } from '@public/client/quick-interaction/interaction.provider';
 import { TargetFactory } from '@public/client/target/target.factory';
 import { Command } from '@public/core/decorators/command';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
@@ -19,6 +20,8 @@ import { TargetOption } from '@public/shared/target';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { WorldObject } from '../../shared/object';
 import { DnDCallback, InventoryDragAndDropProvider } from '../inventory/inventory.draganddrop.provider';
+
+const RemovableObject = [GetHashKey('prop_cardbordbox_03a'), GetHashKey('prop_roadcone02a')];
 
 type SpawnedObject = {
     entity: number;
@@ -46,6 +49,9 @@ export class ObjectProvider {
 
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
+
+    @Inject(InteractionProvider)
+    private interactionProvider: InteractionProvider;
 
     private loadedObjects: Record<string, SpawnedObject> = {};
 
@@ -100,21 +106,17 @@ export class ObjectProvider {
             await this.createObject(object);
         }
 
-        this.targetFactory.createForModel(
-            ['prop_cardbordbox_03a', 'prop_roadcone02a'],
-            [
+        RemovableObject.forEach(model => {
+            this.interactionProvider.createInteractionForModels(
+                model,
                 {
                     label: 'Démonter',
-                    icon: 'jobs/demonter',
-                    category: 'citizen',
                     canInteract: entity => {
                         const id = this.getIdFromEntity(entity);
-
                         return id !== null;
                     },
                     action: async (entity: number) => {
                         const id = this.getIdFromEntity(entity);
-
                         if (!id) {
                             return;
                         }
@@ -122,9 +124,11 @@ export class ObjectProvider {
                         TriggerServerEvent(ServerEvent.OBJECT_COLLECT, id);
                     },
                 },
-            ],
-            2.5
-        );
+                undefined,
+                1.5,
+                6
+            );
+        });
 
         this.ready = true;
     }
