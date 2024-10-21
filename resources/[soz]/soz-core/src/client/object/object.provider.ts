@@ -21,7 +21,7 @@ import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { WorldObject } from '../../shared/object';
 import { DnDCallback, InventoryDragAndDropProvider } from '../inventory/inventory.draganddrop.provider';
 
-const RemovableObject = [GetHashKey('prop_cardbordbox_03a'), GetHashKey('prop_roadcone02a')];
+const RemovableObjects = [GetHashKey('prop_cardbordbox_03a'), GetHashKey('prop_roadcone02a')];
 
 type SpawnedObject = {
     entity: number;
@@ -106,7 +106,7 @@ export class ObjectProvider {
             await this.createObject(object);
         }
 
-        RemovableObject.forEach(model => {
+        RemovableObjects.forEach(model => {
             this.interactionProvider.createInteractionForModels(
                 model,
                 {

@@ -42,8 +42,11 @@ export class InteractionOffsetProvider {
     @Once(OnceStep.Start)
     public async onServerStart() {
         for (const [model, offset] of Object.entries(DoorOffset)) {
-            this.modelOffset.set(Number(model), offset);
+            this.setModelOffset(Number(model), offset);
         }
+
+        this.setModelOffset(GetHashKey('prop_ld_greenscreen_01'), [0, 0, -1]);
+        this.setModelOffset(GetHashKey('v_ilev_fos_mic'), [0, 0, 1]);
     }
 
     @Once(OnceStep.Stop)
