@@ -176,8 +176,8 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.Album]: { tracks: Record<string, string>; volume: number };
     [MenuType.DrugShop]: ShopProduct[];
     [MenuType.DrugAdmin]: never;
-    [MenuType.RentBoat]: never;
-    [MenuType.RentMule]: never;
+    [MenuType.RentBoat]: null;
+    [MenuType.RentMule]: null;
     [MenuType.RaceAdmin]: Race[];
     [MenuType.RaceRank]: { id: number; name: string };
     [MenuType.GouvJobMenu]: { displayRadar: boolean };

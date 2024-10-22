@@ -161,7 +161,12 @@ export class ShopProvider {
                 return this.currentShop !== null && this.currentShopBrand === ShopBrand.Zkea;
             },
             action: async () => {
-                this.nuiMenu.openMenu(MenuType.RentMule);
+                this.nuiMenu.openMenu(MenuType.RentMule, null, {
+                    position: {
+                        position: ShopsConfig['zkea'].location as Vector4,
+                        distance: 2.5,
+                    },
+                });
             },
         },
         {
