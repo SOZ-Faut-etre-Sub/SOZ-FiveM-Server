@@ -11,7 +11,7 @@ export enum VampireGameRole {
     Hunter = 'Chasseur',
     Mortal = 'Mortel',
     Squire = 'Écuyère',
-    Alchemist = 'Alchemist',
+    Alchemist = 'Alchimiste',
 }
 
 export const VampireGameEnemyRoles = [VampireGameRole.Vampire, VampireGameRole.Ghoul];
@@ -70,7 +70,7 @@ export const VampireGameCollectionSprite = (collection: VampireGameCollection) =
         case 'prop_gas_pump':
             return 361;
         case 'prop_elecbox':
-            return 402;
+            return 354;
         case 'player':
             return 1;
     }

@@ -127,10 +127,10 @@ export class PlayerStateService {
 
     public setAllClientsState(state: Partial<PlayerClientState>) {
         for (const citizenId in this.clientStateByCitizenId) {
-            this.clientStateByCitizenId[citizenId] = {
-                ...this.clientStateByCitizenId[citizenId],
-                ...state,
-            };
+            const playerSource = this.playerService.getPlayerByCitizenId(citizenId)?.source;
+            if (!playerSource) continue;
+
+            this.setClientState(playerSource, state);
         }
     }
 

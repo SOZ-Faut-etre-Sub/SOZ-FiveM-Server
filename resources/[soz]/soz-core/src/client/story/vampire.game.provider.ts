@@ -328,14 +328,12 @@ export class VampireGameProvider {
 
         if (weaponHash === GetHashKey('weapon_musket')) {
             SetEntityHealth(playerPed, 0);
-        } else {
-            SetEntityHealth(playerPed, GetPedMaxHealth(playerPed));
-        }
-
-        if (isFatal) {
+        } else if (isFatal) {
             NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, 1, false);
             SetEntityHealth(playerPed, GetPedMaxHealth(playerPed));
             TriggerServerEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_CANCEL_VAMPIRE_KNOCKOUT);
+        } else {
+            SetEntityHealth(playerPed, GetPedMaxHealth(playerPed));
         }
     }
 
@@ -442,6 +440,7 @@ export class VampireGameProvider {
         this.weaponService.setDisabled('vampire-game', false);
         this.instructionalService.clear();
         await this.syncModel(null);
+        this.syncEnemyPosition([]);
     }
 
     private async syncModel(role: VampireGameRole, model?: string) {
@@ -507,7 +506,7 @@ export class VampireGameProvider {
                 break;
         }
 
-        await wait(5000);
+        await wait(10000);
         this.instructionalService.clear();
     }
 

@@ -237,7 +237,17 @@ export class VampireGameProvider {
             },
         ];
 
-        if (collection === 'prop_fire_hydrant' || collection === 'prop_gas_pump') {
+        if (collection === 'prop_fire_hydrant') {
+            [name, label, animation] = [
+                'halloween_get',
+                'Récupération en cours ...',
+                {
+                    name: 'base',
+                    dictionary: 'amb@prop_human_bum_bin@base',
+                    flags: 1,
+                },
+            ];
+        } else if (collection === 'prop_gas_pump') {
             [name, label, animation] = [
                 'halloween_get',
                 'Récupération en cours ...',
@@ -484,11 +494,6 @@ export class VampireGameProvider {
 
     /* Private methods */
     private stopGame() {
-        this.gameState.started = false;
-        this.gameState.playerRoles.clear();
-        Object.keys(this.gameState.objective).forEach(role => this.gameState.objective[role].clear());
-        Object.values(this.gameState.gauges).forEach(gauge => gauge.reset());
-
         TriggerClientEvent('InteractSound_CL:PlayOnOne', -1, 'halloween/wolf', 0.8);
 
         this.store.dispatch.global.update({
@@ -498,16 +503,33 @@ export class VampireGameProvider {
             blackoutOverride: false,
         });
 
+        clearTimeout(this.gameState.timer);
+
+        this.gameState.playerRoles.forEach((_, player) => {
+            const playerState = this.playerStateService.getClientState(player);
+            if (!playerState.isKnockedOut) return;
+
+            TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED, player, VampireGameRole.Mortal);
+            this.gameState.autoRespawn.get(player)?.cancel();
+        });
+
         this.playerStateService.setAllClientsState({
             halloweenRole: null,
+            isKnockedOut: false,
         });
 
         TriggerLatentClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_STATE, -1, 1024, {
             inWaitingRoom: false,
-            started: this.gameState.started,
+            started: false,
             role: null,
             objective: null,
         } as VampireGameClientState);
+
+        Object.keys(this.gameState.objective).forEach(role => this.gameState.objective[role].clear());
+        Object.values(this.gameState.gauges).forEach(gauge => gauge.reset());
+        this.gameState.autoRespawn.clear();
+        this.gameState.playerRoles.clear();
+        this.gameState.started = false;
     }
 
     private async newPlayer(player: PlayerData) {
