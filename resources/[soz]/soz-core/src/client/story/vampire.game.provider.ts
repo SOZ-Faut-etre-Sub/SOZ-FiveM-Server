@@ -29,6 +29,7 @@ import { WeaponName } from '../../shared/weapons/weapon';
 import { BlipFactory } from '../blip';
 import { FeatureProvider } from '../feature/feature.provider';
 import { InstructionalService } from '../instructional.service';
+import { Notifier } from '../notifier';
 import { NuiMenu } from '../nui/nui.menu';
 import { MapPickerProvider } from '../picker/map.picker.provider';
 import { PlayerListStateService } from '../player/player.list.state.service';
@@ -76,6 +77,9 @@ export class VampireGameProvider {
 
     @Inject(NuiMenu)
     private readonly nuiMenu: NuiMenu;
+
+    @Inject(Notifier)
+    private readonly notifier: Notifier;
 
     private blipDisabled = new Set<string>();
     private objectiveInteractions = new Set<string>();
@@ -189,11 +193,11 @@ export class VampireGameProvider {
 
         if (this.state.inWaitingRoom && !this.state.started) {
             await this.onGameStart();
+            await this.displayRoleObjective(this.state.role);
         }
 
         this.syncObjective(this.state.objective);
         await this.syncModel(this.state.role);
-        await this.displayRoleObjective(this.state.role);
     }
 
     @OnEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED)
@@ -337,7 +341,10 @@ export class VampireGameProvider {
         }
     }
 
-    @Command('soz_halloween_vampire_game_menu')
+    @Command('soz_halloween_vampire_game_menu', {
+        description: 'Ouvre le menu du jeu Halloween Vampire',
+        keys: [{ mapper: 'keyboard', key: 'H' }],
+    })
     public async openMenu() {
         if (!this.featureProvider.isFeatureEnabled(Feature.Halloween)) return;
         if (!this.state.started) return;
@@ -483,6 +490,10 @@ export class VampireGameProvider {
                 this.instructionalService.display([
                     "Dirige-toi en ville pour empêcher les survivants de rallumer l'électricité, et suce pour gagner des pouvoirs.",
                 ]);
+                this.notifier.notify(
+                    'En tant que Vampire tu peux te transformer. Appuie sur H pour ouvrir le menu.',
+                    'info'
+                );
                 break;
             case VampireGameRole.Hunter:
                 this.instructionalService.display([
