@@ -560,7 +560,7 @@ export class PropsProvider {
         }
     }
 
-    @OnEvent(ServerEvent.ANIMATION_FX)
+    @OnEvent(ServerEvent.ANIMATION_FX_POSITION)
     public onAnimationFxPosition(source: number, fx: Vfx, players: number[]) {
         for (const player of players) {
             TriggerClientEvent(ClientEvent.ANIMATION_FX_POSITION, player, fx);
