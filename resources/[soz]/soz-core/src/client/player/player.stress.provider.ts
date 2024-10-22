@@ -75,7 +75,7 @@ export class PlayerStressProvider {
     private async updateStress(type: StressLooseType, checkZonePosition: Vector3 = null): Promise<void> {
         const lastUsedAt = this.lastStressTypeUsedAt[type];
 
-        const updateTimer = GetGameTimer();
+        const updateTimer = new Date().getTime();
         if (lastUsedAt !== null && updateTimer - lastUsedAt < IntervalByStressLooseType[type] * 60 * 1000) {
             return;
         }
