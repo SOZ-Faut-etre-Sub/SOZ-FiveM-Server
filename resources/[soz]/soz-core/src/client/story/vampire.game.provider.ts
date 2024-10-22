@@ -90,6 +90,7 @@ export class VampireGameProvider {
         role: null,
         objective: null,
     };
+    private respawning = false;
 
     public isGameRunning() {
         return this.state.started;
@@ -97,6 +98,7 @@ export class VampireGameProvider {
 
     public async handleOnDeath() {
         if (!this.state.started) return;
+        if (this.respawning) return;
         if (this.playerListStateService.isKnockedOut(GetPlayerServerId(PlayerId()))) return;
 
         this.blurService.add('dead', 5);
@@ -202,6 +204,8 @@ export class VampireGameProvider {
 
     @OnEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED)
     public async onPlayerConverted(role: VampireGameRole) {
+        this.respawning = true;
+
         const ped = PlayerPedId();
         let pos = GetEntityCoords(ped);
         const heading = GetEntityHeading(ped);
@@ -209,13 +213,17 @@ export class VampireGameProvider {
         StopScreenEffect('DeathFailOut');
         this.blurService.remove('dead', 1000);
 
+        // be sure to remove the knockout effect before resurrecting
+        TriggerServerEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_CANCEL_VAMPIRE_KNOCKOUT);
+
         if (role === VampireGameRole.Vampire) {
             const location = await this.mapPickerProvider.showSouthLocationPicker(VampireRespawnPoints);
             pos = location.coords;
         }
 
         NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, 1, false);
-        SetEntityHealth(ped, 200);
+        SetEntityHealth(ped, GetPedMaxHealth(ped));
+
         await this.syncModel(role);
 
         this.instructionalService.display(['Tu es désormais', role]);
@@ -224,6 +232,7 @@ export class VampireGameProvider {
         this.instructionalService.clear();
 
         await this.displayRoleObjective(this.state.role);
+        this.respawning = false;
     }
 
     @OnEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_OBJECTIVE)
@@ -448,6 +457,7 @@ export class VampireGameProvider {
         this.instructionalService.clear();
         await this.syncModel(null);
         this.syncEnemyPosition([]);
+        this.respawning = false;
     }
 
     private async syncModel(role: VampireGameRole, model?: string) {

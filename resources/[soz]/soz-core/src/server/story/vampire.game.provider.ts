@@ -316,6 +316,7 @@ export class VampireGameProvider {
                 await wait(this.autoRespawnDuration * 1000);
                 if (isCanceled) return;
 
+                this.playerStateService.setClientState(source, { isKnockedOut: false });
                 TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED, source, playerRole);
                 resolve();
             });
