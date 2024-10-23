@@ -469,8 +469,6 @@ export class VampireGameProvider {
         const weapon = GetHashKey(WeaponName.MUSKET);
         const weaponAmmo = 500;
 
-        await this.switchModelFx();
-
         const [found, z] = GetGroundZFor_3dCoord_2(pos[0], pos[1], pos[2], false);
 
         if (found) {
@@ -547,30 +545,5 @@ export class VampireGameProvider {
 
         await wait(10000);
         this.instructionalService.clear();
-    }
-
-    private async switchModelFx() {
-        UseParticleFxAsset('core');
-        const fx = StartParticleFxLoopedOnEntity(
-            'proj_grenade_smoke',
-            PlayerPedId(),
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            5.0,
-            false,
-            false,
-            false
-        );
-
-        SetParticleFxLoopedColour(fx, 1.0, 1.0, 1.0, false);
-        SetParticleFxLoopedFarClipDist(fx, 0xfff);
-
-        await wait(2000);
-
-        StopParticleFxLooped(fx, false);
     }
 }
