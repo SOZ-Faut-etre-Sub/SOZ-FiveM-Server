@@ -22,6 +22,7 @@ import { RpcServerEvent } from '@public/shared/rpc';
 import { VehicleMidDamageThreshold } from '@public/shared/vehicle/vehicle';
 
 import { FeatureProvider } from '../feature/feature.provider';
+import { VampireGameStateProvider } from '../story/vampire.game.state.provider';
 import { PlayerService } from './player.service';
 import { PlayerWalkstyleProvider } from './player.walkstyle.provider';
 import { PlayerZombieProvider } from './player.zombie.provider';
@@ -48,6 +49,9 @@ export class PlayerStressProvider {
 
     @Inject(PlayerZombieProvider)
     private playerZombieProvider: PlayerZombieProvider;
+
+    @Inject(VampireGameStateProvider)
+    private vampireGameStateProvider: VampireGameStateProvider;
 
     @Inject(BlurService)
     private blurService: BlurService;
@@ -156,6 +160,10 @@ export class PlayerStressProvider {
         must_be_player = false
     ): Promise<void> {
         if (!this.featureProvider.isFeatureEnabled(Feature.MyBodySummer)) {
+            return;
+        }
+
+        if (this.vampireGameStateProvider.isGameRunning()) {
             return;
         }
 
@@ -277,6 +285,10 @@ export class PlayerStressProvider {
     @Tick(TickInterval.EVERY_FRAME)
     async onEachFrameStress(): Promise<void> {
         if (this.playerZombieProvider.isZombie()) {
+            return;
+        }
+
+        if (this.vampireGameStateProvider.isGameRunning()) {
             return;
         }
 
