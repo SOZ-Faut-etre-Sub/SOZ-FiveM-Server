@@ -35,6 +35,7 @@ import { NuiMenu } from '../nui/nui.menu';
 import { MapPickerProvider } from '../picker/map.picker.provider';
 import { PlayerListStateService } from '../player/player.list.state.service';
 import { PlayerService } from '../player/player.service';
+import { PlayerStateProvider } from '../player/player.state.provider';
 import { InteractionProvider } from '../quick-interaction/interaction.provider';
 import { SkinService } from '../skin/skin.service';
 import { TargetFactory } from '../target/target.factory';
@@ -72,6 +73,9 @@ export class VampireGameProvider {
 
     @Inject(PlayerService)
     private readonly playerService: PlayerService;
+
+    @Inject(PlayerStateProvider)
+    private readonly playerStateProvider: PlayerStateProvider;
 
     @Inject(WeaponService)
     private readonly weaponService: WeaponService;
@@ -354,6 +358,12 @@ export class VampireGameProvider {
         if (!this.featureProvider.isFeatureEnabled(Feature.Halloween)) return;
         if (!this.gameState.isGameRunning()) return;
         if (!this.gameState.hasRole(VampireGameRole.Vampire)) return;
+        if (this.playerStateProvider.getState().isKnockedOut) return;
+
+        if (this.nuiMenu.getOpened() === MenuType.HalloweenVampire) {
+            this.nuiMenu.closeMenu();
+            return;
+        }
 
         this.nuiMenu.openMenu(MenuType.HalloweenVampire);
     }

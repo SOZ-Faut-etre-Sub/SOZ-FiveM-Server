@@ -39,6 +39,7 @@ import { VehicleSeat } from '@public/shared/vehicle/vehicle';
 import { Animation } from '../../../shared/animation';
 import { PlayerZombieProvider } from '../../player/player.zombie.provider';
 import { VampireGameProvider } from '../../story/vampire.game.provider';
+import { VampireGameStateProvider } from '../../story/vampire.game.state.provider';
 import { VoipService } from '../../voip/voip.service';
 
 const deathVehcleAnim: Animation = {
@@ -205,6 +206,9 @@ export class LSMCDeathProvider {
     @Inject(VampireGameProvider)
     private vampireGameProvider: VampireGameProvider;
 
+    @Inject(VampireGameStateProvider)
+    private vampireGameStateProvider: VampireGameStateProvider;
+
     private IsDead = false;
     private doFeeze = false;
     private hungerThristDeath = false;
@@ -252,7 +256,7 @@ export class LSMCDeathProvider {
             this.voipService.mutePlayer(true);
 
             // Skip death process during vampire game
-            if (this.vampireGameProvider.isGameRunning()) {
+            if (this.vampireGameStateProvider.isGameRunning()) {
                 await this.vampireGameProvider.handleOnDeath();
                 this.IsDead = false;
                 return;
