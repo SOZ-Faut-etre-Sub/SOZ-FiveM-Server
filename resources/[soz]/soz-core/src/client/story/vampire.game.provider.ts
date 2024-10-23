@@ -501,7 +501,18 @@ export class VampireGameProvider {
         }
     }
 
+    @Command('soz_halloween_vampire_game_objective', {
+        description: 'Affiche les objectifs du jeu Halloween Vampire',
+        keys: [{ mapper: 'keyboard', key: 'GRAVE' }],
+    })
     private async displayRoleObjective(role: VampireGameRole) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Halloween)) return;
+        if (!this.gameState.isGameRunning()) return;
+
+        if (!role) {
+            role = this.gameState.getRole();
+        }
+
         switch (role) {
             case VampireGameRole.Vampire:
                 this.instructionalService.display([
