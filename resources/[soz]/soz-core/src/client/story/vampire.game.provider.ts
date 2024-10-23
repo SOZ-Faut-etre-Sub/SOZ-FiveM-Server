@@ -464,6 +464,9 @@ export class VampireGameProvider {
         await this.syncModel(null);
         this.syncEnemyPosition([]);
         this.gameState.setPlayerRespawning(false);
+
+        const playerPed = PlayerPedId();
+        SetEntityHealth(playerPed, GetPedMaxHealth(playerPed));
     }
 
     private async syncModel(role: VampireGameRole, model?: string) {
