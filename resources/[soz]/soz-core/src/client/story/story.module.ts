@@ -15,6 +15,7 @@ import { Halloween2023Scenario4Provider } from './halloween-2023/scenario4.provi
 import { QueenHarvestProvider } from './queen.harvest.provider';
 import { StoryProvider } from './story.provider';
 import { VampireGameProvider } from './vampire.game.provider';
+import { VampireGameStateProvider } from './vampire.game.state.provider';
 import { ZombieProvider } from './zombie.provider';
 
 @Module({
@@ -35,6 +36,7 @@ import { ZombieProvider } from './zombie.provider';
         EasterHuntProvider,
         BloodProvider,
         QueenHarvestProvider,
+        VampireGameStateProvider,
         VampireGameProvider,
     ],
 })

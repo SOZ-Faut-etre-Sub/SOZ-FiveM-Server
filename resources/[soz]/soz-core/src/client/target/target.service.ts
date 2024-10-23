@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
+import { VampireGameStateProvider } from '@public/client/story/vampire.game.state.provider';
 import { Interaction } from '@public/shared/interaction';
 
 import { TargetOption } from '../../shared/target';
@@ -25,8 +26,12 @@ export class TargetService {
     @Inject(StateGlobalProvider)
     private readonly stateGlobalProvider: StateGlobalProvider;
 
+    @Inject(VampireGameStateProvider)
+    private readonly vampireGameStateProvider: VampireGameStateProvider;
+
     public async validateTarget(target: TargetOption, entity: number): Promise<boolean> {
         if (!this.globalCheck()) return false;
+        if (!this.eventCheck(target.event)) return false;
 
         if (target.job && !this.jobCheck(target.job)) return false;
         if (target.item && !this.itemCheck(target.item)) return false;
@@ -42,6 +47,8 @@ export class TargetService {
 
     public async validateInteraction(interaction: Interaction, entity?: number): Promise<boolean> {
         if (!this.globalCheck()) return false;
+        if (!this.eventCheck(interaction.event)) return false;
+
         if (interaction.job && !this.jobCheck(interaction.job)) return false;
         if (interaction.item && !this.itemCheck(interaction.item)) return false;
         if (interaction.blackoutGlobal && !this.blackoutGlobalCheck()) return false;
@@ -50,6 +57,7 @@ export class TargetService {
             const result = await interaction.canInteract(entity);
             if (!result) return false;
         }
+
         return true;
     }
 
@@ -60,6 +68,14 @@ export class TargetService {
         if (this.playerProneProvider.isPlayerProne()) return false;
         if (exports['soz-phone'].isPhoneVisible()) return false;
         if (IsEntityAttached(PlayerPedId())) return false;
+
+        return true;
+    }
+
+    protected eventCheck(event: string): boolean {
+        if (this.vampireGameStateProvider.isGameRunning()) {
+            return event === 'vampire:game';
+        }
 
         return true;
     }

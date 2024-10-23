@@ -19,6 +19,7 @@ export type InteractionOption = {
     label: string;
 
     item?: string;
+    event?: string;
     blackoutGlobal?: boolean;
     blackoutJob?: string;
     job?: string | JobType | Partial<{ [key in JobType]: number }>;
