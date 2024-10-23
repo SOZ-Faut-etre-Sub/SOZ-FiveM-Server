@@ -1,7 +1,6 @@
 import { Command } from '@core/decorators/command';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
-import { Tick, TickInterval } from '@core/decorators/tick';
 import { emitRpc } from '@core/rpc';
 import { VampireGameStateProvider } from '@public/client/story/vampire.game.state.provider';
 import { Once, OnceStep, OnEvent, OnGameEvent, OnNuiEvent } from '@public/core/decorators/event';
@@ -21,7 +20,6 @@ import {
     VampireGameRole,
     VampireRespawnPoints,
 } from '../../shared/halloween';
-import { Control } from '../../shared/input';
 import { MenuType } from '../../shared/nui/menu';
 import { PlayerClientState } from '../../shared/player';
 import { toVector3Object, Vector3 } from '../../shared/polyzone/vector';
@@ -97,6 +95,16 @@ export class VampireGameProvider {
         if (!this.gameState.isGameRunning()) return;
         if (this.gameState.playerRespawning()) return;
         if (this.playerListStateService.isKnockedOut(GetPlayerServerId(PlayerId()))) return;
+
+        if (GetEntityModel(PlayerPedId()) === GetHashKey('a_c_crow')) {
+            const ped = PlayerPedId();
+            const pos = GetEntityCoords(ped);
+            const heading = GetEntityHeading(ped);
+
+            NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, 1, false);
+            SetEntityHealth(ped, GetPedMaxHealth(ped));
+            return;
+        }
 
         this.blurService.add('dead', 5);
         StartScreenEffect('DeathFailOut', 0, true);
@@ -378,23 +386,6 @@ export class VampireGameProvider {
         await this.syncModel(this.gameState.getRole(), model);
     }
 
-    @Tick(TickInterval.EVERY_FRAME)
-    public async onTick() {
-        if (!this.featureProvider.isFeatureEnabled(Feature.Halloween)) return;
-        if (!this.gameState.isGameRunning()) return;
-        if (!this.gameState.hasRole(VampireGameRole.Vampire)) return;
-
-        if (!IsControlJustPressed(0, Control.Dive)) return;
-
-        const ped = PlayerPedId();
-        const vel = GetEntityVelocity(ped);
-
-        if (GetEntityHeightAboveGround(ped) >= 0.1) return;
-        if (!IsPedModel(ped, GetHashKey('a_c_crow'))) return;
-
-        SetEntityVelocity(ped, vel[0], vel[1], vel[2] + 10.0);
-    }
-
     @OnEvent(ClientEvent.BASE_LEFT_VEHICLE)
     public async onPlayerLeaveVehicle() {
         if (!this.featureProvider.isFeatureEnabled(Feature.Halloween)) return;
@@ -474,10 +465,17 @@ export class VampireGameProvider {
         this.playerService.setNbArmorPlates(0);
 
         const player = PlayerPedId();
+        const pos = GetEntityCoords(player);
         const weapon = GetHashKey(WeaponName.MUSKET);
         const weaponAmmo = 500;
 
         await this.switchModelFx();
+
+        const [found, z] = GetGroundZFor_3dCoord_2(pos[0], pos[1], pos[2], false);
+
+        if (found) {
+            SetPedCoordsKeepVehicle(player, pos[0], pos[1], z);
+        }
 
         if (role === VampireGameRole.Vampire) {
             if (model === 'crow') {
