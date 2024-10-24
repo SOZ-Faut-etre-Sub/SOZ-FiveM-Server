@@ -23,6 +23,8 @@ export enum ClientEvent {
 
     CORE_CLOSE_MENU = 'soz-core:client:menu:close',
 
+    GET_CLOTHES = 'soz-core:client:get-clothes',
+
     AUDIO_PLAY = 'soz-core:client:audio:play',
     AUDIO_STOP = 'soz-core:client:audio:stop',
     CRIMI_USE_CLOAKROOM = 'soz-core:client:crimi:use-cloakroom',

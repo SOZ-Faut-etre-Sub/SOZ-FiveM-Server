@@ -1313,6 +1313,11 @@ export const Armors = {
     },
 };
 
+/**
+ * Exception table for armors minor injuries
+ */
+export const InjuriesArmorException = ['bulletproof_vest_medium', 'bulletproof_vest_low'];
+
 export const MaleLSPDGlovesId = 100_000;
 export const FemaleLSPDGlovesId = 100_001;
 
