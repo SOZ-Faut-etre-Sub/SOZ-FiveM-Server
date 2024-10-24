@@ -66,7 +66,7 @@ export class BennysResellProvider {
             return;
         }
 
-        const sellPrice = result.ok / 2;
+        const sellPrice = Math.round(result.ok / 2);
         const gainPrice = Math.ceil(result.ok * 0.1);
 
         const cashTransferResult = await this.bankService.transferFarmCashMoney(
