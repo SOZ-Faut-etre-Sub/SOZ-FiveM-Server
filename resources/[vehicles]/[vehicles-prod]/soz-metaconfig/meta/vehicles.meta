@@ -5054,7 +5054,7 @@
             <ptfxAssetName>null</ptfxAssetName>
             <audioNameHash>CYPHER</audioNameHash>
             <layout>LAYOUT_STANDARD</layout>
-            <coverBoundOffsets>ORACLE_COVER_OFFSET_INFO</coverBoundOffsets>
+            <coverBoundOffsets>ORACLE2_COVER_OFFSET_INFO</coverBoundOffsets>
             <explosionInfo>EXPLOSION_INFO_DEFAULT</explosionInfo>
             <scenarioLayout />
             <cameraName>DEFAULT_FOLLOW_VEHICLE_CAMERA</cameraName>
