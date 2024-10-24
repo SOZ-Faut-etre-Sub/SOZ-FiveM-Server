@@ -166,7 +166,7 @@ export class VehicleCustomProvider {
             player_source: source,
             vehicle_plate: state.volatile.plate,
             type: mode,
-            money: price,
+            money: Math.round(price),
             message: JSON.stringify(mods),
         });
 
