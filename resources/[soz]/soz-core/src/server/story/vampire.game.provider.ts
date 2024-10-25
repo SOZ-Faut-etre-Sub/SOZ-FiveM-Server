@@ -32,6 +32,7 @@ import { PlayerStateService } from '../player/player.state.service';
 import { ProgressService } from '../player/progress.service';
 import { ServerStateService } from '../server.state.service';
 import { Store } from '../store/store';
+import { NpcProvider } from '../utils/npc.provider';
 
 const OBJECTIVE_Y_LIMITATION = [-3600, 1200];
 
@@ -60,6 +61,9 @@ export class VampireGameProvider {
 
     @Inject(Logger)
     private readonly logger: Logger;
+
+    @Inject(NpcProvider)
+    private readonly npcProvider: NpcProvider;
 
     private gameDuration = 30; // minutes
     private autoRespawnDuration = 20; // seconds
@@ -163,6 +167,8 @@ export class VampireGameProvider {
         }
 
         await wait(5000);
+
+        this.npcProvider.disableNPC(true);
 
         this.store.dispatch.global.update({
             halloween: 'full',
@@ -496,6 +502,8 @@ export class VampireGameProvider {
     /* Private methods */
     private stopGame() {
         TriggerClientEvent('InteractSound_CL:PlayOnOne', -1, 'halloween/wolf', 0.8);
+
+        this.npcProvider.disableNPC(false);
 
         this.store.dispatch.global.update({
             halloween: '',

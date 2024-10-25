@@ -6,6 +6,7 @@ import { VampireGameStateProvider } from '@public/client/story/vampire.game.stat
 import { Once, OnceStep, OnEvent, OnGameEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { wait } from '@public/core/utils';
 
+import { Tick, TickInterval } from '../../core/decorators/tick';
 import { ClientEvent } from '../../shared/event/client';
 import { GameEvent } from '../../shared/event/game';
 import { NuiEvent } from '../../shared/event/nui';
@@ -24,6 +25,7 @@ import { MenuType } from '../../shared/nui/menu';
 import { PlayerClientState } from '../../shared/player';
 import { toVector3Object, Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
+import { VehicleSeat } from '../../shared/vehicle/vehicle';
 import { WeaponName } from '../../shared/weapons/weapon';
 import { BlipFactory } from '../blip';
 import { FeatureProvider } from '../feature/feature.provider';
@@ -124,6 +126,24 @@ export class VampireGameProvider {
         }
 
         TriggerServerEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_PLAYER_KNOCKED_OUT);
+    }
+
+    @Tick(TickInterval.EVERY_FRAME)
+    async onTick() {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Halloween)) return;
+        if (!this.gameState.isGameRunning()) return;
+
+        const ped = PlayerPedId();
+
+        const vehicle = GetVehiclePedIsIn(ped, false);
+        if (!vehicle) return;
+
+        const isDriver = GetPedInVehicleSeat(vehicle, VehicleSeat.Driver) === ped;
+        if (!isDriver) return;
+
+        if (!GetIsVehicleEngineRunning(vehicle)) return;
+
+        SetVehicleEngineOn(vehicle, false, true, true);
     }
 
     @Once(OnceStep.PlayerLoaded)

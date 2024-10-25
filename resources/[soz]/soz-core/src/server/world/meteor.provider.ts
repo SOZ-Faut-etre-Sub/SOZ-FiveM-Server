@@ -6,7 +6,6 @@ import { ItemService } from '@public/server/item/item.service';
 import { MeteorSubMenuState } from '@public/shared/admin/admin';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { RpcServerEvent } from '@public/shared/rpc';
-import { DefaultPedDensity, PedDensityType } from '@public/shared/utils/npc';
 
 import { Notifier } from '../notifier';
 import { PermissionService } from '../permission.service';
@@ -14,6 +13,7 @@ import { PlayerAppearanceService } from '../player/player.appearance.service';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../player/progress.service';
 import { RebootProvider } from '../reboot/reboot.provider';
+import { NpcProvider } from '../utils/npc.provider';
 import { EarthquakeProvider } from './earthquake.provider';
 import { OceanProvider } from './ocean.provider';
 
@@ -46,11 +46,13 @@ export class MeteorProvider {
     @Inject(PlayerAppearanceService)
     private playerAppearanceService: PlayerAppearanceService;
 
+    @Inject(NpcProvider)
+    private npcProvider: NpcProvider;
+
     private siren = 0;
     private music = 0;
     private chronos = 0;
     private sandstormmusic = 0;
-    private disabledNpc = false;
 
     @Once()
     public onStart() {
@@ -92,7 +94,7 @@ export class MeteorProvider {
     @Rpc(RpcServerEvent.ADMIN_METEOR_STATE)
     public getMEteorSate(): MeteorSubMenuState {
         return {
-            disableNpc: this.disabledNpc,
+            disableNpc: this.npcProvider.isDisabled(),
             music: this.music,
             siren: this.siren,
             chronos: this.chronos,
@@ -171,28 +173,6 @@ export class MeteorProvider {
             return;
         }
 
-        const newDensity = { ...DefaultPedDensity };
-        if (value) {
-            newDensity[PedDensityType.multiplier] = 0.0;
-            newDensity[PedDensityType.peds] = 0.0;
-            newDensity[PedDensityType.scenario] = 0.0;
-            newDensity[PedDensityType.scenario] = 0.0;
-        }
-        this.disabledNpc = value;
-
-        TriggerLatentClientEvent(ClientEvent.NPC_DENSITY_UPDATE, -1, 1024, newDensity);
-    }
-
-    @Rpc(RpcServerEvent.GET_DISABLE_NPC)
-    public getDisableNPC() {
-        const newDensity = { ...DefaultPedDensity };
-        if (this.disabledNpc) {
-            newDensity[PedDensityType.multiplier] = 0.0;
-            newDensity[PedDensityType.peds] = 0.0;
-            newDensity[PedDensityType.scenario] = 0.0;
-            newDensity[PedDensityType.scenario] = 0.0;
-        }
-
-        return newDensity;
+        this.npcProvider.disableNPC(value);
     }
 }
