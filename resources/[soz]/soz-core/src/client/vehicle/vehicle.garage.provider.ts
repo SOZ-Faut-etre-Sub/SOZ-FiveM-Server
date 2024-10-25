@@ -109,7 +109,7 @@ export class VehicleGarageProvider {
         this.pounds = {};
 
         const interactionDistance = 2.0;
-        const drawDistance = 5.0;
+        const drawDistance = 6.0;
 
         for (const garageIdentifier of Object.keys(garageList)) {
             const garage = garageList[garageIdentifier];

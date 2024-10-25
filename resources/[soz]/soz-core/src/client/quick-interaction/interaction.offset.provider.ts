@@ -11,6 +11,10 @@ export class InteractionOffsetProvider {
 
     private readonly defaultOffset = [0, 0, 0] as Vector3;
 
+    public setModelOffset(entity: number, offset: Vector3) {
+        this.modelOffset.set(entity, offset);
+    }
+
     public getEntityCoordsWithOffset(entity: number): Vector3 {
         const offset = this.getEntityOffset(entity);
         return GetOffsetFromEntityInWorldCoords(entity, offset[0], offset[1], offset[2]) as Vector3;
@@ -38,8 +42,11 @@ export class InteractionOffsetProvider {
     @Once(OnceStep.Start)
     public async onServerStart() {
         for (const [model, offset] of Object.entries(DoorOffset)) {
-            this.modelOffset.set(Number(model), offset);
+            this.setModelOffset(Number(model), offset);
         }
+
+        this.setModelOffset(GetHashKey('prop_ld_greenscreen_01'), [0, 0, -1]);
+        this.setModelOffset(GetHashKey('v_ilev_fos_mic'), [0, 0, 1]);
     }
 
     @Once(OnceStep.Stop)

@@ -146,7 +146,7 @@ export class JobBellProvider {
                         this.callSociety(bell.number, bell?.location);
                     },
                 },
-                0.85,
+                1,
                 5.0
             );
         }

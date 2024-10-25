@@ -2,7 +2,6 @@ import { ObjectProvider } from '@public/client/object/object.provider';
 import { getProperGroundPositionForObject } from '@public/client/object/object.utils';
 import { PlayerService } from '@public/client/player/player.service';
 import { ProgressService } from '@public/client/progress.service';
-import { TargetFactory } from '@public/client/target/target.factory';
 import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
@@ -12,6 +11,8 @@ import { FDO, JobType } from '@public/shared/job';
 import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 
 import { BlipFactory } from '../../blip';
+import { InteractionOffsetProvider } from '../../quick-interaction/interaction.offset.provider';
+import { InteractionProvider } from '../../quick-interaction/interaction.provider';
 
 const jobsTarget = { [JobType.BCSO]: 0, [JobType.FBI]: 0, [JobType.SASP]: 0, [JobType.LSPD]: 0, [JobType.LSCS]: 0 };
 const roadSignModel = GetHashKey('prop_trafficdiv_02');
@@ -20,9 +21,6 @@ const roadSignModel = GetHashKey('prop_trafficdiv_02');
 export class PoliceSpeedZoneProvider {
     @Inject(ProgressService)
     private progressService: ProgressService;
-
-    @Inject(TargetFactory)
-    private targetFactory: TargetFactory;
 
     @Inject(PlayerService)
     private playerService: PlayerService;
@@ -33,46 +31,49 @@ export class PoliceSpeedZoneProvider {
     @Inject(BlipFactory)
     private blipFactory: BlipFactory;
 
+    @Inject(InteractionProvider)
+    private interactionProvider: InteractionProvider;
+
+    @Inject(InteractionOffsetProvider)
+    private interactionOffsetProvider: InteractionOffsetProvider;
+
     private speedZone: { [id: string]: { position: Vector4; radius: number; speed: number; zoneId: number } } = {};
 
     @Once(OnceStep.Start)
     public async onStart() {
-        this.targetFactory.createForModel(roadSignModel, [
-            {
-                label: 'Démonter',
-                icon: 'jobs/demonter',
-                job: jobsTarget,
-                category: 'society',
-                action: async (entity: number) => {
-                    const id = this.objectProvider.getIdFromEntity(entity);
-                    const { completed } = await this.progressService.progress(
-                        'remove_object',
-                        'Démontage du panneau',
-                        2500,
-                        {
-                            dictionary: 'weapons@first_person@aim_rng@generic@projectile@thermal_charge@',
-                            name: 'plant_floor',
-                            options: {
-                                onlyUpperBody: true,
-                            },
+        this.interactionProvider.createInteractionForModels(roadSignModel, {
+            label: 'Démonter',
+            action: async (entity: number) => {
+                const id = this.objectProvider.getIdFromEntity(entity);
+                const { completed } = await this.progressService.progress(
+                    'remove_object',
+                    'Démontage du panneau',
+                    2500,
+                    {
+                        dictionary: 'weapons@first_person@aim_rng@generic@projectile@thermal_charge@',
+                        name: 'plant_floor',
+                        options: {
+                            onlyUpperBody: true,
                         },
-                        {
-                            useWhileDead: false,
-                            canCancel: true,
-                            disableMovement: true,
-                            disableCarMovement: true,
-                            disableMouse: false,
-                            disableCombat: true,
-                        }
-                    );
-                    if (!completed) {
-                        return;
+                    },
+                    {
+                        useWhileDead: false,
+                        canCancel: true,
+                        disableMovement: true,
+                        disableCarMovement: true,
+                        disableMouse: false,
+                        disableCombat: true,
                     }
+                );
+                if (!completed) {
+                    return;
+                }
 
-                    TriggerServerEvent(ServerEvent.POLICE_REMOVE_SPEEDZONE, id);
-                },
+                TriggerServerEvent(ServerEvent.POLICE_REMOVE_SPEEDZONE, id);
             },
-        ]);
+            job: jobsTarget,
+        });
+        this.interactionOffsetProvider.setModelOffset(roadSignModel, [0, 0, 1.0]);
 
         TriggerServerEvent(ServerEvent.POLICE_INIT_SPEEDZONE);
     }

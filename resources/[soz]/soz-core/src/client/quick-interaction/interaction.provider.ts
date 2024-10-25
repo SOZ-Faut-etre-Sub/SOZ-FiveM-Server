@@ -70,8 +70,8 @@ export class InteractionProvider {
 
     public createInteractionForModels(
         model: number,
-        searchCoords: Vector3,
         option: InteractionOption,
+        searchCoords?: Vector3,
         interactionDistance?: number,
         drawDistance?: number
     ): string {
@@ -290,11 +290,14 @@ export class InteractionProvider {
             const playerPosition = this.playerPosition;
 
             const closedEntities = this.gamePoolObjects[interaction.model]
-                ?.filter(
-                    ({ originalCoords }) =>
+                ?.filter(({ originalCoords }) => {
+                    if (!interaction.searchCoords) return true;
+
+                    return (
                         getDistance(originalCoords, interaction.searchCoords) <=
                         this.interactionDistanceProvider.getInteractionDistance(interaction.id) + 0.5
-                )
+                    );
+                })
                 ?.map(({ entity, originalCoords, coords }) => ({
                     entity,
                     originalCoords,

@@ -12,7 +12,15 @@ import { Notifier } from '../../notifier';
 import { ObjectProvider } from '../../object/object.provider';
 import { PlayerPositionProvider } from '../../player/player.position.provider';
 import { PlayerService } from '../../player/player.service';
+import { InteractionProvider } from '../../quick-interaction/interaction.provider';
 import { TargetFactory } from '../../target/target.factory';
+
+const RemovableObjects = [
+    GetHashKey('prop_ld_greenscreen_01'),
+    GetHashKey('prop_tv_cam_02'),
+    GetHashKey('prop_kino_light_01'),
+    GetHashKey('v_ilev_fos_mic'),
+];
 
 @Provider()
 export class NewsProvider {
@@ -34,6 +42,9 @@ export class NewsProvider {
     @Inject(PlayerPositionProvider)
     private playerPositionProvider: PlayerPositionProvider;
 
+    @Inject(InteractionProvider)
+    private interactionProvider: InteractionProvider;
+
     private currentZone: Vector4 = null;
 
     @Once(OnceStep.PlayerLoaded)
@@ -52,20 +63,15 @@ export class NewsProvider {
             scale: 0.9,
         });
 
-        this.targetFactory.createForModel(
-            ['prop_ld_greenscreen_01', 'prop_tv_cam_02', 'prop_kino_light_01', 'v_ilev_fos_mic'],
-            [
-                {
-                    label: 'Récupérer',
-                    icon: 'jobs/recuperer',
-                    category: 'society',
-                    job: { [JobType.News]: 0, [JobType.YouNews]: 0 },
-                    action: object => {
-                        this.objectProvider.collectObject(object);
-                    },
+        RemovableObjects.forEach(model => {
+            this.interactionProvider.createInteractionForModels(model, {
+                label: 'Récupérer',
+                job: { [JobType.News]: 0, [JobType.YouNews]: 0 },
+                action: object => {
+                    this.objectProvider.collectObject(object);
                 },
-            ]
-        );
+            });
+        });
 
         this.targetFactory.createForBoxZone(
             'jobs:news:farm',

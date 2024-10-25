@@ -239,7 +239,6 @@ export class DoorProvider {
         for (const subdoor of door.subdoors) {
             const lockId = this.interactionProvider.createInteractionForModels(
                 subdoor.model,
-                subdoor.coords,
                 {
                     label: 'Verrouiller',
                     canInteract: entity => {
@@ -265,13 +264,13 @@ export class DoorProvider {
                         TriggerServerEvent(ServerEvent.DOOR_ADD_UPDATE, door, true);
                     },
                 },
+                subdoor.coords,
                 door.target?.interaction,
                 door.target?.draw
             );
 
             const unlockId = this.interactionProvider.createInteractionForModels(
                 subdoor.model,
-                subdoor.coords,
                 {
                     label: 'Déverrouiller',
                     canInteract: entity => {
@@ -297,6 +296,7 @@ export class DoorProvider {
                         TriggerServerEvent(ServerEvent.DOOR_ADD_UPDATE, door, false);
                     },
                 },
+                subdoor.coords,
                 door.target?.interaction,
                 door.target?.draw
             );
