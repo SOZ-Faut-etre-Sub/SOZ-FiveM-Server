@@ -136,7 +136,7 @@ export class HousingFournitureProvider {
             for (const placementProp of Object.values(
                 this.apartmentFourntiures[this.lastApartment.id].placementProps
             )) {
-                this.despawnFourntiure(placementProp, placementProp.fourniture);
+                await this.despawnFourntiure(placementProp, placementProp.fourniture);
             }
 
             this.lastApartment = null;
@@ -209,7 +209,7 @@ export class HousingFournitureProvider {
                         }
                     } else {
                         if (this.apartmentFourntiures[apartment.id].placementProps[fourniture.id]) {
-                            this.despawnFourntiure(
+                            await this.despawnFourntiure(
                                 this.apartmentFourntiures[apartment.id].placementProps[fourniture.id],
                                 fourniture
                             );
@@ -226,7 +226,7 @@ export class HousingFournitureProvider {
             }
         } else {
             for (const placementProp of Object.values(this.apartmentFourntiures[apartment.id].placementProps)) {
-                this.despawnFourntiure(placementProp, placementProp.fourniture);
+                await this.despawnFourntiure(placementProp, placementProp.fourniture);
             }
         }
         this.maxFourntiures = getMaxFourntiure(apartment);
@@ -277,22 +277,25 @@ export class HousingFournitureProvider {
     }
 
     private async editFourniture(apartment: Apartment, fourniture: HousingProp) {
-        this.despawnFourntiure(this.apartmentFourntiures[apartment.id].placementProps[fourniture.id], fourniture);
+        await this.despawnFourntiure(this.apartmentFourntiures[apartment.id].placementProps[fourniture.id], fourniture);
         await this.spawnNewFourniture(apartment, fourniture);
     }
 
-    private despawnFourntiure(placementProp: HousingPlacementProp, fourniture: HousingProp) {
-        if (!placementProp?.entity) {
+    private async despawnFourntiure(placementProp: HousingPlacementProp, fourniture: HousingProp) {
+        const entity = placementProp?.entity;
+        if (!entity) {
             return;
         }
 
         this.removeTargetZone(placementProp);
-        this.objectService.deleteObject(placementProp.entity, {
+        this.objectService.deleteObject(entity, {
             model: GetHashKey(fourniture.model),
             position: fourniture.position,
             matrix: fourniture.matrix,
             id: `housing_placed_${fourniture.id}`,
         });
+        await wait(0);
+
         placementProp.entity = null;
         placementProp.fourniture = fourniture;
         placementProp.roomId = null;
@@ -456,7 +459,7 @@ export class HousingFournitureProvider {
                         await this.editFourniture(apartment, placementProp.fourniture);
                     }
                 } else {
-                    this.despawnFourntiure(placementProp, placementProp.fourniture);
+                    await this.despawnFourntiure(placementProp, placementProp.fourniture);
                 }
             }
         }
@@ -487,8 +490,7 @@ export class HousingFournitureProvider {
         const isPlayerInsideTargetedAppartement = this.lastApartment && this.lastApartment.id === apartmentId;
         if (isPlayerInsideTargetedAppartement) {
             const placementProp = this.apartmentFourntiures[apartmentId].placementProps[fournitureId];
-            this.despawnFourntiure(placementProp, placementProp.fourniture);
-            await wait(0);
+            await this.despawnFourntiure(placementProp, placementProp.fourniture);
         }
 
         delete this.apartmentFourntiures[apartmentId].placementProps[fournitureId];
@@ -515,21 +517,21 @@ export class HousingFournitureProvider {
         const player = this.playerService.getPlayer();
 
         if (!isPlayerInsideApartment(player) || property.id !== player.metadata.inside.property) {
-            property.apartments.forEach(apartment => {
+            for (const apartment of property.apartments) {
                 if (!apartment.owner && this.apartmentFourntiures[apartment.id]) {
-                    this.clearApartment(apartment);
+                    await this.clearApartment(apartment);
                 }
-            });
+            }
             return;
         }
 
         const apartment = property.apartments.find(v => v.id === player.metadata.inside.apartment);
         if (!apartment) {
-            property.apartments.forEach(apartment => {
+            for (const apartment of property.apartments) {
                 if (!apartment.owner && this.apartmentFourntiures[apartment.id]) {
-                    this.clearApartment(apartment);
+                    await this.clearApartment(apartment);
                 }
-            });
+            }
             return;
         }
 
@@ -539,15 +541,15 @@ export class HousingFournitureProvider {
                 this.menu.closeMenu(false);
             }
 
-            this.clearApartment(apartment);
+            await this.clearApartment(apartment);
         }
 
         await this.houseEnter(player.metadata.inside.apartment, player.metadata.inside.property);
     }
 
-    private clearApartment(apartment: Apartment) {
+    private async clearApartment(apartment: Apartment) {
         for (const placementProp of Object.values(this.apartmentFourntiures[apartment.id].placementProps)) {
-            this.despawnFourntiure(placementProp, placementProp.fourniture);
+            await this.despawnFourntiure(placementProp, placementProp.fourniture);
         }
 
         delete this.apartmentFourntiures[apartment.id];
