@@ -64,6 +64,7 @@ export class PlayerCleanService {
             },
             data: {
                 owner: null,
+                tenant: null,
                 roommate: null,
                 tier: null,
                 park_tier: null,

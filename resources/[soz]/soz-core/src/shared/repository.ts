@@ -11,7 +11,7 @@ import { Billboard } from './billboard';
 import { GlovesItem } from './cloth';
 import { Door } from './door';
 import { FuelStation, UpwCharger, UpwStation } from './fuel';
-import { Property } from './housing/housing';
+import { Property, RentTaxe } from './housing/housing';
 import { JobGrade } from './job';
 import { WorldObject } from './object';
 import { Race } from './race';
@@ -32,6 +32,7 @@ export enum RepositoryType {
     Fine = 'fine',
     Garage = 'garage',
     Housing = 'housing',
+    ApartmentRentTaxe = 'ApartmentRentTaxe',
     JobGrade = 'jobGrade',
     Object = 'object',
     Race = 'race',
@@ -64,6 +65,7 @@ export type RepositoryMapping = {
     [RepositoryType.Fine]: Fine;
     [RepositoryType.Garage]: Garage;
     [RepositoryType.Housing]: Property;
+    [RepositoryType.ApartmentRentTaxe]: RentTaxe;
     [RepositoryType.JobGrade]: JobGrade;
     [RepositoryType.Object]: WorldObject;
     [RepositoryType.Race]: Race;
@@ -117,4 +119,5 @@ export interface RepositoryConfig extends Record<keyof RepositoryMapping, any> {
     [RepositoryType.StationFuel]: Record<string, FuelStation>;
     [RepositoryType.StationUpw]: Record<number, UpwStation>;
     [RepositoryType.Vehicle]: Record<string, Vehicle>;
+    [RepositoryType.ApartmentRentTaxe]: Record<number, RentTaxe>;
 }

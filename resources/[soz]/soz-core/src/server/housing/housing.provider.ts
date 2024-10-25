@@ -1,16 +1,27 @@
 import { Command } from '@public/core/decorators/command';
+import { OnEvent } from '@public/core/decorators/event';
+import { Exportable } from '@public/core/decorators/exports';
+import { Inject } from '@public/core/decorators/injectable';
+import { Provider } from '@public/core/decorators/provider';
+import { Rpc } from '@public/core/decorators/rpc';
+import { wait } from '@public/core/utils';
+import { BankService } from '@public/server/bank/bank.service';
+import { PriceService } from '@public/server/bank/price.service';
+import { HousingFournitureProvider } from '@public/server/housing/housing.fourniture.provider';
 import { InventoryFactory } from '@public/server/inventory/inventory.factory';
-import { HousingTiers, TYPE_LABEL } from '@public/shared/housing/upgrades';
-
-import { OnEvent } from '../../core/decorators/event';
-import { Exportable } from '../../core/decorators/exports';
-import { Inject } from '../../core/decorators/injectable';
-import { Provider } from '../../core/decorators/provider';
-import { Rpc } from '../../core/decorators/rpc';
-import { wait } from '../../core/utils';
-import { TaxType } from '../../shared/bank';
-import { ClientEvent } from '../../shared/event/client';
-import { ServerEvent } from '../../shared/event/server';
+import { Monitor } from '@public/server/monitor/monitor';
+import { Notifier } from '@public/server/notifier';
+import { PlayerAppearanceService } from '@public/server/player/player.appearance.service';
+import { PlayerCriminalService } from '@public/server/player/player.criminal.service';
+import { PlayerMoneyService } from '@public/server/player/player.money.service';
+import { PlayerPositionProvider } from '@public/server/player/player.position.provider';
+import { PlayerService } from '@public/server/player/player.service';
+import { ProgressService } from '@public/server/player/progress.service';
+import { HousingRepository } from '@public/server/repository/housing.repository';
+import { VehicleService } from '@public/server/vehicle/vehicle.service';
+import { TaxType } from '@public/shared/bank';
+import { ClientEvent } from '@public/shared/event/client';
+import { ServerEvent } from '@public/shared/event/server';
 import {
     ApartementTiers,
     Apartment,
@@ -21,24 +32,15 @@ import {
     isApartmentExcludeFromHousing,
     isTrailer,
     Property,
-} from '../../shared/housing/housing';
-import { HOUSE_FRIDGE_TIER_WEIGHTS, HOUSE_STORAGE_TIER_WEIGHTS } from '../../shared/inventory';
-import { PlayerData } from '../../shared/player';
-import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
-import { RpcServerEvent } from '../../shared/rpc';
-import { BankService } from '../bank/bank.service';
-import { PriceService } from '../bank/price.service';
-import { Monitor } from '../monitor/monitor';
-import { Notifier } from '../notifier';
-import { PlayerAppearanceService } from '../player/player.appearance.service';
-import { PlayerCriminalService } from '../player/player.criminal.service';
-import { PlayerMoneyService } from '../player/player.money.service';
-import { PlayerPositionProvider } from '../player/player.position.provider';
-import { PlayerService } from '../player/player.service';
-import { ProgressService } from '../player/progress.service';
-import { HousingRepository } from '../repository/housing.repository';
-import { VehicleService } from '../vehicle/vehicle.service';
-import { HousingFournitureProvider } from './housing.fourniture.provider';
+} from '@public/shared/housing/housing';
+import { HousingTiers, TYPE_LABEL } from '@public/shared/housing/upgrades';
+import { HOUSE_FRIDGE_TIER_WEIGHTS, HOUSE_STORAGE_TIER_WEIGHTS } from '@public/shared/inventory';
+import { PlayerData } from '@public/shared/player';
+import { getDistance, Vector3, Vector4 } from '@public/shared/polyzone/vector';
+import { RpcServerEvent } from '@public/shared/rpc';
+import { differenceInCalendarDays, differenceInHours } from 'date-fns';
+
+const WEEK_IN_MILLISECONDS = 604_800_000;
 
 @Provider()
 export class HousingProvider {
@@ -116,6 +118,28 @@ export class HousingProvider {
         this.giveKey(source, target, apartment);
     }
 
+    @Command('set-apartment-change', {
+        role: ['admin'],
+        arguments: [
+            { name: 'source', help: 'Target player so change the timer' },
+            { name: 'minutes', help: 'Number of minute to set the time to be able to change main residence in' },
+        ],
+    })
+    public async setApartmentChange(source: number, targetSource: number, minutes: number) {
+        const target = this.playerService.getPlayer(targetSource);
+
+        if (!target) {
+            this.notifier.notify(source, 'Pas de joueur avec cet id');
+            return;
+        }
+
+        this.playerService.setPlayerMetadata(
+            target.source,
+            'main_residence_last_change',
+            Date.now() - WEEK_IN_MILLISECONDS + minutes * 60_000
+        );
+    }
+
     @OnEvent(ServerEvent.HOUSING_ADD_TEMPORARY_ACCESS)
     public async addTemporaryAccess(source: number, propertyId: number, apartmentId: number, targetSource: number) {
         const player = this.playerService.getPlayer(source);
@@ -137,11 +161,11 @@ export class HousingProvider {
         }
 
         if (
-            apartment.owner !== player.citizenid &&
+            apartment.tenant !== player.citizenid &&
             apartment.roommate !== player.citizenid &&
             (apartment.senatePartyId === null || apartment.senatePartyId !== player.partyMember?.partyId)
         ) {
-            this.notifier.error(player.source, 'Vous ne possédez pas cette habitation.');
+            this.notifier.error(player.source, 'Vous ne pouvez pas donner les clés de cette habitation.');
 
             return;
         }
@@ -192,6 +216,146 @@ export class HousingProvider {
             park_tier: apartment.park_tier || 0,
             cloth_tier: apartment.cloth_tier || 0,
         };
+    }
+
+    @OnEvent(ServerEvent.HOUSING_CHANGE_PRINCIPAL_APARTMENT)
+    public async changePrincipalApartement(source: number, propertyId: number, apartmentId: number) {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        const [property, apartment] = await this.housingRepository.getApartment(propertyId, apartmentId);
+
+        if (!property || !apartment) {
+            return;
+        }
+
+        const currentApartment = await this.housingRepository.getPlayerApartment(player.citizenid);
+
+        if (currentApartment) {
+            if (currentApartment.owner === player.citizenid && player.metadata.main_residence_last_change) {
+                const now = Date.now();
+                const canChangeAt = player.metadata.main_residence_last_change + WEEK_IN_MILLISECONDS;
+                if (canChangeAt > now) {
+                    const diffInHours = differenceInHours(canChangeAt, now);
+                    this.notifier.error(
+                        player.source,
+                        `Vous ne pouvez pas changer de résidence principale pour le moment. Attendez encore ${diffInHours < 24 ? `${diffInHours} heure(s).` : `${differenceInCalendarDays(canChangeAt, now)} jour(s).`}`
+                    );
+
+                    return;
+                }
+            }
+
+            if (currentApartment.owner !== player.citizenid) {
+                this.notifier.error(
+                    player.source,
+                    'Vous devez quitter votre habitation actuelle avant de changer de résidence principale.'
+                );
+
+                return;
+            }
+        }
+
+        if (apartment.owner !== player.citizenid) {
+            this.notifier.error(player.source, 'Vous ne possédez pas cette habitation.');
+
+            return;
+        }
+
+        if (apartment.tenant !== null) {
+            this.notifier.error(player.source, 'Cette habitation a un locataire.');
+
+            return;
+        }
+
+        if (apartment.roommate !== null) {
+            this.notifier.error(player.source, 'Cette habitation a un co-locataire.');
+
+            return;
+        }
+
+        if (apartment.senatePartyId !== null) {
+            this.notifier.error(player.source, 'Cette habitation est réservé à un parti politique.');
+
+            return;
+        }
+
+        if (currentApartment) {
+            await this.housingRepository.setApartmentTenant(null, currentApartment.id);
+            currentApartment.tenant = null;
+            this.housingFournitureProvider.deletePlatesIfNeeded(currentApartment);
+        }
+
+        await this.housingRepository.setApartmentTenant(player.citizenid, apartment.id);
+
+        this.playerService.setPlayerApartment(player.source, apartment, property);
+        this.playerService.setPlayerMetadata(player.source, 'main_residence_last_change', Date.now());
+        this.housingFournitureProvider.clearPlateCheck(apartment.id);
+
+        this.notifier.notify(player.source, "Vous avez changé d'habitation principale.", 'success');
+    }
+
+    @OnEvent(ServerEvent.HOUSING_ADD_TENANT)
+    public async addTenant(source: number, propertyId: number, apartmentId: number, targetSource: number) {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        const target = this.playerService.getPlayer(targetSource);
+        if (!target) {
+            return;
+        }
+
+        const [property, apartment] = await this.housingRepository.getApartment(propertyId, apartmentId);
+        if (!property || !apartment) {
+            return;
+        }
+
+        const playerPosition = GetEntityCoords(GetPlayerPed(player.source)) as Vector3;
+        const targetPosition = GetEntityCoords(GetPlayerPed(target.source)) as Vector3;
+
+        if (getDistance(playerPosition, targetPosition) > 2) {
+            this.notifier.error(player.source, "Personne n'est à portée de vous.");
+
+            return;
+        }
+
+        if (await this.housingRepository.hasApartment(target.citizenid)) {
+            this.notifier.error(player.source, 'Cette personne a déjà une maison.');
+
+            return;
+        }
+
+        if (apartment.owner !== player.citizenid) {
+            this.notifier.error(player.source, 'Vous ne possédez pas cette habitation.');
+
+            return;
+        }
+
+        if (apartment.tenant !== null) {
+            this.notifier.error(player.source, 'Cette habitation a déjà un locataire.');
+
+            return;
+        }
+
+        if (apartment.senatePartyId !== null) {
+            this.notifier.error(player.source, 'Cette habitation est réservé à un parti politique.');
+
+            return;
+        }
+
+        await this.housingRepository.setApartmentTenant(target.citizenid, apartment.id);
+
+        this.playerService.setPlayerApartment(target.source, apartment, property);
+        this.housingFournitureProvider.clearPlateCheck(apartment.id);
+
+        this.notifier.notify(target.source, 'Vous avez été ajouté en tant que locataire.', 'success');
+        this.notifier.notify(player.source, 'Vous avez ajouté un locataire à votre maison.', 'success');
     }
 
     @OnEvent(ServerEvent.HOUSING_ADD_ROOMMATE)
@@ -272,10 +436,15 @@ export class HousingProvider {
 
         this.notifier.notify(player.source, `Vous avez sonné à la porte du ${apartment.label}.`, 'info');
 
-        let target = this.playerService.getPlayerByCitizenId(apartment.owner);
+        let target: PlayerData;
+        if (!apartment.tenant && !apartment.roommate) {
+            target = this.playerService.getPlayerByCitizenId(apartment.owner);
+        } else {
+            target = this.playerService.getPlayerByCitizenId(apartment.tenant);
 
-        if (!target && apartment.roommate !== null) {
-            target = this.playerService.getPlayerByCitizenId(apartment.roommate);
+            if (!target && apartment.roommate !== null) {
+                target = this.playerService.getPlayerByCitizenId(apartment.roommate);
+            }
         }
 
         if (!target) {
@@ -288,7 +457,14 @@ export class HousingProvider {
             return;
         }
 
-        TriggerClientEvent(ClientEvent.HOUSING_REQUEST_ENTER, target.source, propertyId, apartmentId, source);
+        TriggerClientEvent(
+            ClientEvent.HOUSING_REQUEST_ENTER,
+            target.source,
+            propertyId,
+            apartmentId,
+            source,
+            apartment.label
+        );
     }
 
     @OnEvent(ServerEvent.HOUSING_BUY_APARTMENT)
@@ -302,12 +478,6 @@ export class HousingProvider {
         const [property, apartment] = await this.housingRepository.getApartment(propertyId, apartmentId);
 
         if (!property || !apartment) {
-            return;
-        }
-
-        if (await this.housingRepository.hasApartment(player.citizenid)) {
-            this.notifier.error(player.source, "Vous ne pouvez acheter plus d'une propriété.");
-
             return;
         }
 
@@ -329,7 +499,13 @@ export class HousingProvider {
             return;
         }
 
-        await this.housingRepository.setApartmentOwner(player.citizenid, apartment.id);
+        const hasPlayerAnotherApartment = await this.housingRepository.hasApartment(player.citizenid);
+        if (hasPlayerAnotherApartment) {
+            await this.housingRepository.setApartmentOwner(player.citizenid, apartment.id);
+        } else {
+            await this.housingRepository.setApartmentOwnerAndTenant(player.citizenid, apartment.id);
+            this.playerService.setPlayerMetadata(player.source, 'main_residence_last_change', Date.now());
+        }
 
         this.monitor.traceEvent('house_buy', {
             player_source: player.source,
@@ -337,7 +513,10 @@ export class HousingProvider {
             amount: apartment.price,
         });
 
-        this.playerService.setPlayerApartment(player.source, apartment, property);
+        if (!hasPlayerAnotherApartment) {
+            this.playerService.setPlayerApartment(player.source, apartment, property);
+        }
+
         const taxedPrice = await this.priceService.getPrice(apartment.price, TaxType.HOUSING);
         this.notifier.notify(
             player.source,
@@ -418,6 +597,61 @@ export class HousingProvider {
         TriggerClientEvent(ClientEvent.HOUSING_TELEPORT, player.source, false, false);
     }
 
+    @OnEvent(ServerEvent.HOUSING_REMOVE_TENANT)
+    public async removeTenant(source: number, propertyId: number, apartmentId: number) {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        const [property, apartment] = await this.housingRepository.getApartment(propertyId, apartmentId);
+
+        if (!property || !apartment) {
+            return;
+        }
+
+        if (apartment.owner !== player.citizenid && apartment.tenant !== player.citizenid) {
+            this.notifier.error(player.source, 'Vous ne possédez pas cette habitation.');
+
+            return;
+        }
+
+        if (apartment.owner === apartment.tenant) {
+            this.notifier.error(player.source, 'Vous habitez cette habitation.');
+
+            return;
+        }
+
+        if (apartment.tenant === null) {
+            this.notifier.error(player.source, "Cette habitation n'a pas de colocataire.");
+
+            return;
+        }
+
+        await this.vehicleService.transferToAirport(getPropertyGarageName(property), apartment.tenant);
+        this.playerAppearanceService.clearCloakroom(apartment.tenant);
+
+        const tenant = this.playerService.getPlayerByCitizenId(apartment.tenant);
+        if (tenant) {
+            this.playerService.setPlayerApartment(tenant.source, null, null);
+
+            if (tenant.citizenid === player.citizenid) {
+                this.notifier.notify(tenant.source, 'Vous avez quitté votre location.', 'error');
+            } else {
+                this.notifier.notify(tenant.source, 'Vous avez été retiré de votre location.', 'error');
+            }
+        }
+
+        if (apartment.owner === player.citizenid) {
+            this.notifier.notify(player.source, 'Vous avez retiré votre locataire de votre maison.', 'success');
+        }
+
+        await this.housingRepository.setApartmentTenant(null, apartment.id);
+        apartment.tenant = null;
+        this.housingFournitureProvider.deletePlatesIfNeeded(apartment);
+    }
+
     @OnEvent(ServerEvent.HOUSING_REMOVE_ROOMMATE)
     public async removeRoommate(source: number, propertyId: number, apartmentId: number) {
         const player = this.playerService.getPlayer(source);
@@ -451,7 +685,11 @@ export class HousingProvider {
 
         if (roommate) {
             this.playerService.setPlayerApartment(roommate.source, null, null);
-            this.notifier.notify(roommate.source, 'Vous avez été retiré de votre colocation.', 'error');
+            if (roommate.citizenid === player.citizenid) {
+                this.notifier.notify(roommate.source, 'Vous avez quitté votre colocation.', 'error');
+            } else {
+                this.notifier.notify(roommate.source, 'Vous avez été retiré de votre colocation.', 'error');
+            }
         }
 
         if (apartment.owner === player.citizenid) {
@@ -459,6 +697,7 @@ export class HousingProvider {
         }
 
         await this.housingRepository.setApartmentRoommate(null, apartment.id);
+        apartment.roommate = null;
         this.housingFournitureProvider.deletePlatesIfNeeded(apartment);
     }
 
@@ -488,6 +727,21 @@ export class HousingProvider {
             }
         }
 
+        if (apartment.tenant !== null) {
+            this.playerAppearanceService.clearCloakroom(apartment.tenant);
+            await this.vehicleService.transferToAirport(getPropertyGarageName(property), apartment.tenant);
+
+            const tenant = this.playerService.getPlayerByCitizenId(apartment.tenant);
+
+            if (tenant) {
+                this.playerService.setPlayerApartment(tenant.source, null, null);
+
+                if (notify && apartment.owner !== apartment.tenant) {
+                    this.notifier.notify(tenant.source, `Votre propriétaire vient de vendre votre habitation.`, 'info');
+                }
+            }
+        }
+
         if (apartment.roommate !== null) {
             this.playerAppearanceService.clearCloakroom(apartment.roommate);
             await this.vehicleService.transferToAirport(getPropertyGarageName(property), apartment.roommate);
@@ -500,7 +754,7 @@ export class HousingProvider {
                 if (notify) {
                     this.notifier.notify(
                         roommate.source,
-                        `Votre colocataire vient de vendre votre habitation.`,
+                        `Votre propriétaire vient de vendre votre habitation.`,
                         'info'
                     );
                 }
@@ -583,25 +837,21 @@ export class HousingProvider {
     }
 
     @OnEvent(ServerEvent.HOUSING_UPGRADE_APARTMENT_TIER)
-    public async upgradeTier(source: number, apartmentTier: Partial<ApartementTiers>) {
+    public async upgradeTier(
+        source: number,
+        apartmentTier: Partial<ApartementTiers>,
+        propertyId: number,
+        apartmentId: number
+    ) {
         const player = this.playerService.getPlayer(source);
 
         if (!player) {
             return;
         }
 
-        if (!player.apartment) {
-            this.notifier.error(player.source, "Vous n'avez pas d'habitation.");
-
-            return;
-        }
-
-        const [property, apartment] = await this.housingRepository.getApartment(
-            player.apartment.property_id,
-            player.apartment.id
-        );
-
+        const [property, apartment] = await this.housingRepository.getApartment(propertyId, apartmentId);
         if (!property || !apartment) {
+            this.notifier.error(player.source, "Vous ne possédez pas cette d'habitation.");
             return;
         }
 
@@ -675,25 +925,16 @@ export class HousingProvider {
     }
 
     @OnEvent(ServerEvent.HOUSING_ADD_PARKING_PLACE)
-    public async addParkingPlace(source: number, hasParking: boolean) {
+    public async addParkingPlace(source: number, hasParking: boolean, propertyId: number, apartmentId: number) {
         const player = this.playerService.getPlayer(source);
 
         if (!player) {
             return;
         }
 
-        if (!player.apartment) {
-            this.notifier.error(player.source, "Vous n'avez pas d'habitation.");
-
-            return;
-        }
-
-        const [property, apartment] = await this.housingRepository.getApartment(
-            player.apartment.property_id,
-            player.apartment.id
-        );
-
+        const [property, apartment] = await this.housingRepository.getApartment(propertyId, apartmentId);
         if (!property || !apartment) {
+            this.notifier.error(player.source, "Vous ne possédez pas cette d'habitation.");
             return;
         }
 
@@ -728,7 +969,11 @@ export class HousingProvider {
             return false;
         }
 
-        if (apartment.owner === player.citizenid) {
+        if (apartment.owner === player.citizenid && apartment.tenant === null && apartment.roommate === null) {
+            return true;
+        }
+
+        if (apartment.tenant === player.citizenid) {
             return true;
         }
 
@@ -746,6 +991,32 @@ export class HousingProvider {
 
         if (hasSearchWarrantAccessInApartment(apartment, player)) {
             return true;
+        }
+
+        return false;
+    }
+
+    public async hasAccessToApartmentGarageStore(player: PlayerData, apartmentIdentifier: string) {
+        const apartment = await this.housingRepository.getApartmentByIdentifier(apartmentIdentifier);
+
+        if (!apartment) {
+            return false;
+        }
+
+        if (apartment.tenant === player.citizenid) {
+            return true;
+        }
+
+        if (apartment.roommate === player.citizenid) {
+            return true;
+        }
+
+        if (apartment.senatePartyId !== null && apartment.senatePartyId === player.partyMember?.partyId) {
+            return true;
+        }
+
+        if (this.playerTemporaryAccess.has(player.citizenid)) {
+            return this.playerTemporaryAccess.get(player.citizenid).has(apartment.id);
         }
 
         return false;

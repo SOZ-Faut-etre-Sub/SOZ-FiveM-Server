@@ -555,6 +555,12 @@ export class VehicleGarageProvider {
     }
 
     public async enterGarage(id: string, garage: Garage, apartments: Apartment[] = [], range = 5.0) {
+        const player = this.playerService.getPlayer();
+
+        if (!player) {
+            return;
+        }
+
         const vehicles = await emitRpc<GarageVehicle[]>(RpcServerEvent.VEHICLE_GARAGE_GET_VEHICLES, id, garage);
         if (vehicles === null) {
             return;
@@ -599,6 +605,7 @@ export class VehicleGarageProvider {
                 garage,
                 free_places,
                 max_places,
+                citizenId: player.citizenid,
                 has_fake_ticket: this.inventoryManager.hasEnoughItem('parking_ticket_fake', 1, true),
                 transferGarageList:
                     garage.transferList

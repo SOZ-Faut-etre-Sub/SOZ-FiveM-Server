@@ -198,6 +198,7 @@ export type MonitorEvent = {
     percentage?: number;
     zone_id?: string | number;
     end_date?: number;
+    citizen_id?: string;
     citizen_ids?: string[];
     prop_model?: string;
     prop_id?: string;

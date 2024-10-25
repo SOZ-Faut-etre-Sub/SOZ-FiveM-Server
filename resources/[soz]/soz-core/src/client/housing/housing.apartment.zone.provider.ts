@@ -13,6 +13,7 @@ import { PlayerCloakroomItem } from '@public/shared/cloth';
 import { ServerEvent } from '@public/shared/event/server';
 import {
     Apartment,
+    canAccessTargetInApartment,
     canUseHousingInAppartment,
     isApartmentExcludeFromHousing,
     isPlayerInsideApartment,
@@ -137,7 +138,7 @@ export class HousingApartmentZoneProvider {
                     action: async () => {
                         await this.housingMenuProvider.storeFournitureInApartment({
                             apartmentId: apartment.id,
-                            propretyId: apartment.propertyId,
+                            propertyId: apartment.propertyId,
                         });
                     },
                 },
@@ -160,15 +161,7 @@ export class HousingApartmentZoneProvider {
                     category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
-
-                        if (!player) {
-                            return false;
-                        }
-
-                        return (
-                            (apartment.senatePartyId !== null || apartment.owner !== null) &&
-                            isPlayerInsideApartment(player)
-                        );
+                        return canAccessTargetInApartment(player, apartment);
                     },
                     action: () => {
                         this.inventoryManager.openInventory(
@@ -189,15 +182,7 @@ export class HousingApartmentZoneProvider {
                     category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
-
-                        if (!player) {
-                            return false;
-                        }
-
-                        return (
-                            (apartment.senatePartyId !== null || apartment.owner !== null) &&
-                            isPlayerInsideApartment(player)
-                        );
+                        return canAccessTargetInApartment(player, apartment);
                     },
                     action: () => {
                         this.inventoryManager.openInventory(
@@ -218,15 +203,7 @@ export class HousingApartmentZoneProvider {
                     category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
-
-                        if (!player) {
-                            return false;
-                        }
-
-                        return (
-                            (apartment.senatePartyId !== null || apartment.owner !== null) &&
-                            isPlayerInsideApartment(player)
-                        );
+                        return canAccessTargetInApartment(player, apartment);
                     },
                     action: () => {
                         this.bankService.openHouseSafe(apartment);
@@ -243,15 +220,7 @@ export class HousingApartmentZoneProvider {
                     category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
-
-                        if (!player) {
-                            return false;
-                        }
-
-                        return (
-                            (apartment.senatePartyId !== null || apartment.owner !== null) &&
-                            isPlayerInsideApartment(player)
-                        );
+                        return canAccessTargetInApartment(player, apartment);
                     },
                     action: () => {
                         this.openApartmentCloakroom();

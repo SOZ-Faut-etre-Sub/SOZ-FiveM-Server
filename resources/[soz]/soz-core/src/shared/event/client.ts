@@ -46,6 +46,7 @@ export enum ClientEvent {
     FOOD_HUNT_SYNC = 'soz-core:client:food:hunt-sync',
 
     HOUSING_OPEN_UPGRADES_MENU = 'soz-core:client:housing:open-upgrades-menu',
+    HOUSING_SELECT_UPGRADES_MENU = 'soz-core:client:housing:select-upgrades-menu',
     HOUSING_REQUEST_ENTER = 'soz-core:client:housing:request-enter',
     HOUSING_ADD_TEMPORARY_ACCESS = 'soz-core:client:housing:add-temporary-access',
     HOUSING_TELEPORT = 'soz-core:client:housing:teleport',

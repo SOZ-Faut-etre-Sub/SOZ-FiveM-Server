@@ -51,9 +51,9 @@ export class HousingProvider {
     }
 
     @OnEvent(ClientEvent.HOUSING_REQUEST_ENTER)
-    public async requestEnter(propertyId: number, apartmentId: number, target: number) {
+    public async requestEnter(propertyId: number, apartmentId: number, target: number, label: string) {
         const [confirmed] = await this.notifier.notifyWithConfirm(
-            "Une personne souhaite entrer dans votre habitation.~n~Faites ~g~Y~s~ pour l'accepter ou ~r~N~s~ pour la refuser"
+            `Une personne souhaite entrer dans votre habitation (${label}).~n~Faites ~g~Y~s~ pour l'accepter ou ~r~N~s~ pour la refuser`
         );
 
         if (confirmed) {
@@ -62,6 +62,8 @@ export class HousingProvider {
     }
 
     @OnNuiEvent<{
+        apartmentId: number;
+        propertyId: number;
         apartmentTier: ApartementTiers;
         price: number;
         zkeaPrice: number;
@@ -69,15 +71,23 @@ export class HousingProvider {
         hasParking: number;
         parkingPrice: number;
     }>(NuiEvent.HousingUpgradeApartment)
-    public async upgradeApartment({ apartmentTier, price, isApartmentTrailer, hasParking, parkingPrice }) {
-        const player = this.playerService.getPlayer();
-        if (!player.apartment) {
-            this.notifier.notify("Vous n'avez pas d'habitation !", 'error');
+    public async upgradeApartment({
+        apartmentId,
+        propertyId,
+        apartmentTier,
+        price,
+        isApartmentTrailer,
+        hasParking,
+        parkingPrice,
+    }) {
+        const apartment = this.housingRepository.findApartment(propertyId, apartmentId);
+        if (!apartment) {
+            this.notifier.notify("Vous ne possédez pas cette d'habitation !", 'error');
             return;
         }
 
+        const player = this.playerService.getPlayer();
         const {
-            apartment,
             money: { money },
         } = player;
 
@@ -99,34 +109,27 @@ export class HousingProvider {
         }
 
         if (Object.keys(editedTier).length > 0) {
-            TriggerServerEvent(ServerEvent.HOUSING_UPGRADE_APARTMENT_TIER, editedTier);
+            TriggerServerEvent(ServerEvent.HOUSING_UPGRADE_APARTMENT_TIER, editedTier, propertyId, apartmentId);
         }
 
         if (isApartmentTrailer && hasParking && parkingPrice > 0) {
-            TriggerServerEvent(ServerEvent.HOUSING_ADD_PARKING_PLACE, hasParking);
+            TriggerServerEvent(ServerEvent.HOUSING_ADD_PARKING_PLACE, hasParking, propertyId, apartmentId);
         }
 
         this.nuiMenu.closeMenu();
     }
 
+    @OnNuiEvent<{ apartmentId: number; propertyId: number }>(NuiEvent.HousingOpenUpgradeMenu)
     @OnEvent(ClientEvent.HOUSING_OPEN_UPGRADES_MENU)
-    public async openUpgradesMenu() {
+    public async openUpgradesMenu({ apartmentId, propertyId }) {
         const player = this.playerService.getPlayer();
 
-        if (!player.apartment) {
-            this.notifier.notify("Vous n'avez pas d'habitation !", 'error');
+        const apartment = this.housingRepository.findApartment(propertyId, apartmentId);
+        if (!apartment || apartment.owner !== player.citizenid) {
+            this.notifier.notify("Vous ne possédez pas cette d'habitation !", 'error');
             return;
         }
-
-        const { id, tier, cloth_tier, money_tier, park_tier, price, property_id } = player.apartment;
-
-        const property = this.housingRepository.findProperty(property_id);
-
-        if (!property) {
-            this.notifier.notify("Cet habitation n'appartient à aucune propriété !", 'error');
-            return;
-        }
-
+        const property = this.housingRepository.findProperty(propertyId);
         const isApartmentTrailer = isTrailer(property);
 
         let hasParking = true;
@@ -139,9 +142,12 @@ export class HousingProvider {
 
         const position = GetEntityCoords(PlayerPedId()) as Vector3;
 
+        const { id, tier, cloth_tier, money_tier, park_tier, price } = apartment;
         this.nuiMenu.openMenu(
             MenuType.HousingUpgrades,
             {
+                apartmentId,
+                propertyId,
                 apartmentPrice: price,
                 currentTier: {
                     tier,

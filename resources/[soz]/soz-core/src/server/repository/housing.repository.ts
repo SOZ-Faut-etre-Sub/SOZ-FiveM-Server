@@ -25,7 +25,7 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
             where: {
                 OR: [
                     {
-                        owner: citizenId,
+                        tenant: citizenId,
                     },
                     {
                         roommate: citizenId,
@@ -37,6 +37,48 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
         return apartment > 0;
     }
 
+    public async getPlayerApartment(citizenId: string): Promise<Apartment | null> {
+        const apartment = await this.prismaService.housing_apartment.findFirst({
+            where: {
+                OR: [
+                    {
+                        tenant: citizenId,
+                    },
+                    {
+                        roommate: citizenId,
+                    },
+                ],
+            },
+        });
+
+        return apartment ? this.serializeApartment(apartment) : null;
+    }
+
+    public async getAllOwnedPlayerApartment(): Promise<Apartment[]> {
+        const apartments = await this.prismaService.housing_apartment.findMany({
+            where: {
+                owner: { not: null },
+            },
+        });
+
+        return this.serializeApartments(apartments);
+    }
+
+    public async getAllApartmentForCitizenId(citizenId: string): Promise<Apartment[]> {
+        const dbApartments = await this.prismaService.housing_apartment.findMany({
+            where: {
+                owner: citizenId,
+            },
+        });
+
+        const apartments: Apartment[] = [];
+        for (const apartement of dbApartments) {
+            apartments.push(this.serializeApartment(apartement));
+        }
+
+        return apartments;
+    }
+
     public async clearApartment(apartmentId: number): Promise<void> {
         const apartment = await this.prismaService.housing_apartment.update({
             where: {
@@ -44,6 +86,7 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
             },
             data: {
                 owner: null,
+                tenant: null,
                 roommate: null,
                 tier: 0,
                 money_tier: 0,
@@ -60,6 +103,7 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
 
         if (existingApartment) {
             existingApartment.owner = null;
+            existingApartment.tenant = null;
             existingApartment.roommate = null;
             existingApartment.tier = 0;
             existingApartment.money_tier = 0;
@@ -82,6 +126,37 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
 
         this.data[apartment.property_id].apartments.find(apartment => apartment.id === apartmentId).owner =
             apartment.owner;
+    }
+
+    public async setApartmentOwnerAndTenant(citizenId: string, apartmentId: number): Promise<void> {
+        const apartment = await this.prismaService.housing_apartment.update({
+            where: {
+                id: apartmentId,
+            },
+            data: {
+                owner: citizenId,
+                tenant: citizenId,
+            },
+        });
+
+        this.data[apartment.property_id].apartments.find(apartment => apartment.id === apartmentId).owner =
+            apartment.owner;
+        this.data[apartment.property_id].apartments.find(apartment => apartment.id === apartmentId).tenant =
+            apartment.tenant;
+    }
+
+    public async setApartmentTenant(citizenId: string | null, apartmentId: number): Promise<void> {
+        const apartment = await this.prismaService.housing_apartment.update({
+            where: {
+                id: apartmentId,
+            },
+            data: {
+                tenant: citizenId,
+            },
+        });
+
+        this.data[apartment.property_id].apartments.find(apartment => apartment.id === apartmentId).tenant =
+            apartment.tenant;
     }
 
     public async setApartmentRoommate(citizenId: string | null, apartmentId: number): Promise<void> {
@@ -133,6 +208,10 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
         }
 
         return null;
+    }
+
+    public async getPropertyById(propertyId: number): Promise<Property | null> {
+        return await this.find(propertyId);
     }
 
     public async getApartment(propertyId: number, apartmentId: number): Promise<[Property | null, Apartment | null]> {
@@ -425,6 +504,16 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
         };
     }
 
+    private serializeApartments(apartments: housing_apartment[]): Apartment[] {
+        const serializedApartments = [];
+
+        for (const apartment of apartments) {
+            serializedApartments.push(this.serializeApartment(apartment));
+        }
+
+        return serializedApartments;
+    }
+
     private serializeApartment(apartment: housing_apartment): Apartment {
         const insideCord = JSON.parse(apartment.inside_coord);
 
@@ -435,6 +524,7 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
             label: apartment.label,
             price: apartment.price,
             owner: apartment.owner,
+            tenant: apartment.tenant,
             roommate: apartment.roommate,
             position: insideCord ? [insideCord.x, insideCord.y, insideCord.z, insideCord.w] : null,
             exitZone: createZoneFromLegacyData(JSON.parse(apartment.exit_zone)),
