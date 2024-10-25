@@ -78,8 +78,58 @@ export const VampireGameCollectionSprite = (collection: VampireGameCollection) =
 
 export const VampireRespawnPoints: MapPickerLocation[] = [
     {
+        id: 'Vampire0',
+        coords: [-412.96, 1169.34, 325.85] as Vector3,
+        icon: 'coffin',
+    },
+    {
         id: 'Vampire1',
         coords: [-606.46, -350.25, 34.99] as Vector3,
+        icon: 'coffin',
+    },
+    {
+        id: 'Vampire2',
+        coords: [-1692.94, 194.73, 63.85] as Vector3,
+        icon: 'coffin',
+    },
+    {
+        id: 'Vampire3',
+        coords: [-1850.06, -1232.13, 13.02] as Vector3,
+        icon: 'coffin',
+    },
+    {
+        id: 'Vampire4',
+        coords: [-475.62, -1708.46, 18.69] as Vector3,
+        icon: 'coffin',
+    },
+    {
+        id: 'Vampire5',
+        coords: [923.1, 47.53, 81.11] as Vector3,
+        icon: 'coffin',
+    },
+    {
+        id: 'Vampire6',
+        coords: [1013.23, -2000.74, 31.31] as Vector3,
+        icon: 'coffin',
+    },
+    {
+        id: 'Vampire7',
+        coords: [197.35, -936.41, 30.69] as Vector3,
+        icon: 'coffin',
+    },
+    {
+        id: 'Vampire8',
+        coords: [143.13, 188.72, 106.34] as Vector3,
+        icon: 'coffin',
+    },
+    {
+        id: 'Vampire9',
+        coords: [-847.1, -1050.18, 10.93] as Vector3,
+        icon: 'coffin',
+    },
+    {
+        id: 'Vampire10',
+        coords: [-2073.14, -307.24, 13.14] as Vector3,
         icon: 'coffin',
     },
 ];
