@@ -222,11 +222,11 @@ export class VampireGameProvider {
 
         if (this.gameState.isGameStarting() && !this.gameState.isGameRunning()) {
             await this.onGameStart();
+            await this.syncModel(this.gameState.getRole());
             await this.displayRoleObjective(this.gameState.getRole());
         }
 
         this.syncObjective(this.gameState.getObjective());
-        await this.syncModel(this.gameState.getRole());
     }
 
     @OnEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED)
@@ -284,7 +284,6 @@ export class VampireGameProvider {
 
                             TriggerServerEvent(
                                 ServerEvent.HALLOWEEN_VAMPIRE_GAME_TAKE_OBJECTIVE,
-                                this.gameState.getRole(),
                                 collection,
                                 objective
                             );
