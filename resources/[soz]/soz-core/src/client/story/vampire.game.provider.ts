@@ -133,17 +133,21 @@ export class VampireGameProvider {
         if (!this.featureProvider.isFeatureEnabled(Feature.Halloween)) return;
         if (!this.gameState.isGameRunning()) return;
 
-        const ped = PlayerPedId();
+        if (this.gameState.hasEnemyRole()) {
+            RestorePlayerStamina(PlayerId(), 1.0);
+        } else {
+            const ped = PlayerPedId();
 
-        const vehicle = GetVehiclePedIsIn(ped, false);
-        if (!vehicle) return;
+            const vehicle = GetVehiclePedIsIn(ped, false);
+            if (!vehicle) return;
 
-        const isDriver = GetPedInVehicleSeat(vehicle, VehicleSeat.Driver) === ped;
-        if (!isDriver) return;
+            const isDriver = GetPedInVehicleSeat(vehicle, VehicleSeat.Driver) === ped;
+            if (!isDriver) return;
 
-        if (!GetIsVehicleEngineRunning(vehicle)) return;
+            if (!GetIsVehicleEngineRunning(vehicle)) return;
 
-        SetVehicleEngineOn(vehicle, false, true, true);
+            SetVehicleEngineOn(vehicle, false, true, true);
+        }
     }
 
     @Once(OnceStep.PlayerLoaded)
