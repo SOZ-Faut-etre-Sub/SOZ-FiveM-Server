@@ -214,6 +214,15 @@ export class VampireGameProvider {
                 },
             },
         ]);
+
+        // Trigger game start if a game is already running
+        setTimeout(async () => {
+            if (!this.gameState.isGameRunning()) return;
+
+            await this.onGameStart();
+            await this.syncModel(this.gameState.getRole());
+            await this.displayRoleObjective(this.gameState.getRole());
+        }, 10_000);
     }
 
     @OnEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_STATE)

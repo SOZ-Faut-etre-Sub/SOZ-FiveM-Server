@@ -120,13 +120,13 @@ export class VampireGameProvider {
     };
 
     @On('QBCore:Server:PlayerLoaded', false)
-    onPlayerLoaded(data: any) {
-        const player = data.PlayerData as PlayerData;
-
+    async onPlayerLoaded(data: any) {
         if (!this.featureProvider.isFeatureEnabled(Feature.Halloween)) return;
         if (!this.gameState.started) return;
 
-        this.newPlayer(player);
+        const player = data.PlayerData as PlayerData;
+
+        await this.newPlayer(player);
     }
 
     @On('QBCore:Server:PlayerUnload', false)
@@ -135,10 +135,10 @@ export class VampireGameProvider {
         if (!this.gameState.started) return;
 
         const role = this.gameState.playerRoles.get(source);
-        if (role) {
-            this.gameState.gauges[role].dec();
-            this.gameState.playerRoles.delete(source);
-        }
+        if (!role) return;
+
+        this.gameState.gauges[role].dec();
+        this.gameState.playerRoles.delete(source);
     }
 
     @OnEvent(ServerEvent.ADMIN_HALLOWEEN_START_GAME)
@@ -400,6 +400,8 @@ export class VampireGameProvider {
         if (VampireGameEnemyRoles.includes(role)) {
             TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_OBJECTIVE, target, {});
         }
+
+        await wait(1000);
 
         const roleGauge = await this.gameState.gauges[VampireGameRole.Mortal].get();
         if (roleGauge.values[0].value > 0) return;
