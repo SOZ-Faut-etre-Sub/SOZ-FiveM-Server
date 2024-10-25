@@ -1254,7 +1254,7 @@ export const Armors = {
         },
         ['bcso']: {
             Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.BodyArmor] + 2,
-            Texture: 3,
+            Texture: 4,
             Palette: 0,
         },
         ['lsmc']: { Drawable: 31, Texture: 8, Palette: 0 }, // is unmarked, need reskin
