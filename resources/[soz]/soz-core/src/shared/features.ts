@@ -18,6 +18,7 @@ export enum Feature {
     Bunkers = 'Bunkers',
     SummerHeat = 'SummerHeat',
     Summer = 'Summer',
+    Vampire = 'Vampire',
 }
 
 export type FeaturesConfig = Record<Feature, { [P in Environment]?: boolean }>;
@@ -117,6 +118,11 @@ export const DefaultFeatureConfig: FeaturesConfig = {
     [Feature.Summer]: {
         production: false,
         development: false,
+        test: false,
+    },
+    [Feature.Vampire]: {
+        production: false,
+        development: true,
         test: false,
     },
 };

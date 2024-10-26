@@ -11860,6 +11860,18 @@ QBShared.Items = {
         ["description"] = "Un ver des sables d'une fraicheur très apétissante pour les créatures rocheuses et mystérieuses..",
         ["illustrator"] = ".Sniteur",
     },
+    ["vampire_blood_bait"] = {
+        ["name"] = "vampire_blood_bait",
+        ["label"] = "Appât de Sang",
+        ["weight"] = 250,
+        ["useable"] = false,
+        ["type"] = "fishing_bait",
+        ["shouldClose"] = false,
+        ["unique"] = false,
+        ["combinable"] = nil,
+        ["description"] = "Une sangsue fraîche et gorgée de sang qui attirera les carnivores les plus assoiffés..",
+        ["illustrator"] = ".Sniteur",
+    },
     ["sozedex"] = {
         ["name"] = "sozedex",
         ["label"] = "Sozedex",
