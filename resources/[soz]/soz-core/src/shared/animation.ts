@@ -99,6 +99,7 @@ export type Vfx = {
     delay?: number;
     net?: boolean;
     rgb?: Vector3;
+    id?: number;
 };
 
 export type AnimationProps = {

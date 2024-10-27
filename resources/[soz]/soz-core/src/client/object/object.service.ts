@@ -137,7 +137,7 @@ export class ObjectService {
         if (object.vfx) {
             await this.resourceLoader.loadPtfxAsset(object.vfx.dictionary);
             UseParticleFxAsset(object.vfx.dictionary);
-            const fx = StartParticleFxLoopedOnEntity(
+            object.vfx.id = StartParticleFxLoopedOnEntity(
                 object.vfx.name,
                 entity,
                 object.vfx.position[0],
@@ -152,7 +152,7 @@ export class ObjectService {
                 false
             );
             if (object.vfx.rgb) {
-                SetParticleFxLoopedColour(fx, object.vfx.rgb[0], object.vfx.rgb[1], object.vfx.rgb[2], true);
+                SetParticleFxLoopedColour(object.vfx.id, object.vfx.rgb[0], object.vfx.rgb[1], object.vfx.rgb[2], true);
             }
             this.resourceLoader.unloadPtfxAsset(object.vfx.dictionary);
         }

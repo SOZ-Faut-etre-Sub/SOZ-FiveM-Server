@@ -76,6 +76,18 @@ export class ObjectProvider {
         return null;
     }
 
+    public findObject(id: string): WorldObject | null {
+        for (const chunk of this.objectsByChunk.values()) {
+            for (const object of chunk) {
+                if (object.object.id == id) {
+                    return object.object;
+                }
+            }
+        }
+
+        return null;
+    }
+
     public getObjects(filter?: (object: WorldObject) => boolean): WorldObject[] {
         const objects: WorldObject[] = [];
 
