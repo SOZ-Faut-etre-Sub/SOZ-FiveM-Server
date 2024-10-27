@@ -2,16 +2,18 @@ import { BlipFactory } from '@public/client/blip';
 import { EntityFactory } from '@public/client/factory/entity.factory';
 import { PedFactory } from '@public/client/factory/ped.factory';
 import { InventoryManager } from '@public/client/inventory/inventory.manager';
+import { ItemService } from '@public/client/item/item.service';
 import { ProgressService } from '@public/client/progress.service';
 import { TargetFactory } from '@public/client/target/target.factory';
 import { Once, OnceStep } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
+import { TaxType } from '@public/shared/bank';
 import { ServerEvent } from '@public/shared/event';
 import { Feature, isFeatureEnabled } from '@public/shared/features';
 import { PlayerData } from '@public/shared/player';
 import { toVector4Object } from '@public/shared/polyzone/vector';
-import { Halloween2023Scenario2 } from '@public/shared/story/halloween-2023/scenario2';
+import { Halloween2023Scenario2, WinePrice } from '@public/shared/story/halloween-2023/scenario2';
 
 import { StoryProvider } from '../story.provider';
 
@@ -37,6 +39,9 @@ export class Halloween2023Scenario2Provider {
 
     @Inject(EntityFactory)
     private entityFactory: EntityFactory;
+
+    @Inject(ItemService)
+    private itemService: ItemService;
 
     @Once(OnceStep.PlayerLoaded)
     public async onPlayerLoaded() {
@@ -143,6 +148,118 @@ export class Halloween2023Scenario2Provider {
             freeze: true,
             blockevents: true,
             scenario: 'WORLD_HUMAN_STAND_IMPATIENT',
+        });
+
+        const item = this.itemService.getItem('halloween_damned_wine');
+        this.targetFactory.createForPed({
+            model: 'mp_m_freemode_01',
+            face: {
+                NosePeakHeight: -0.4,
+                NoseBoneTwist: 0,
+                AddBodyBlemish: -1,
+                NeckThickness: 0,
+                NosePeakLength: 0.3,
+                CheeksBoneWidth: 0,
+                EyesOpening: -0.4,
+                JawBoneBackLength: 0,
+                LipsThickness: 0,
+                Complexion: -1,
+                NoseBoneHigh: 0,
+                ChimpBoneLower: 0,
+                NoseWidth: 0.5,
+                CheeksWidth: 0,
+                JawBoneWidth: 0.6,
+                CheeksBoneHigh: 0,
+                EyebrowHigh: 0,
+                ChimpBoneLength: 0,
+                ChimpBoneWidth: 0,
+                NosePeakLower: 0,
+                Ageing: -1,
+                EyeColor: 26,
+                ChimpHole: 0,
+                Moles: -1,
+                Blemish: 1,
+                BodyBlemish: 0,
+                EyebrowForward: 0.2,
+            },
+            tattoos: [
+                { collection: 1926256505, overlay: 1745422723 },
+                { collection: 1926256505, overlay: -1531355431 },
+                { collection: -1398869298, overlay: -890282963 },
+                { collection: -1368357453, overlay: -1621104712 },
+                { collection: 598190139, overlay: 1369179057 },
+            ],
+            modelCustomization: { SkinMix: 0.5, ShapeMix: 0.2, Hash: 1885233650, Mother: 26, Father: 4 },
+            makeup: {
+                LipstickColor: 0,
+                BlushType: -1,
+                BlushColor: 0,
+                LipstickOpacity: 1,
+                LipstickType: -1,
+                FullMakeupOpacity: 0.95,
+                FullMakeupSecondaryColor: 17,
+                FullMakeupDefaultColor: 1,
+                BlushOpacity: 1,
+                FullMakeupPrimaryColor: 9,
+                FullMakeupType: 32,
+            },
+            hair: {
+                ChestHairColor: 0,
+                Scalp: { Collection: 'mphipster_overlays', Overlay: 'FM_Hip_M_Hair_001_e' },
+                BeardType: 10,
+                EyebrowOpacity: 1,
+                ChestHairOpacity: 0.7,
+                BeardOpacity: 1,
+                BeardColor: 61,
+                HairSecondaryColor: 29,
+                HairType: 11,
+                ChestHairType: 14,
+                EyebrowColor: 61,
+                HairColor: 28,
+                EyebrowType: 12,
+            },
+            components: {
+                3: [33, 0, 0],
+                4: [24, 4, 0],
+                6: [10, 0, 0],
+                7: [31, 2, 0],
+                8: [148, 10, 0],
+                11: [31, 4, 0],
+            },
+            props: {
+                0: [7, 2, 0],
+            },
+            coords: toVector4Object([-1928.6, 2059.94, 139.84, 347.97]),
+            invincible: true,
+            freeze: true,
+            blockevents: true,
+            scenario: 'WORLD_HUMAN_STAND_IMPATIENT',
+            target: {
+                options: [
+                    {
+                        category: 'citizen',
+                        label: 'Boutique',
+                        icon: 'magasin/cart',
+                        action: () => {
+                            this.inventoryManager.openShopInventory(
+                                [
+                                    {
+                                        amount: 0,
+                                        description: item.description,
+                                        label: item.label,
+                                        name: item.name,
+                                        slot: 1,
+                                        price: WinePrice,
+                                    },
+                                ],
+                                'menu_job_food',
+                                TaxType.FOOD
+                            );
+                        },
+                    },
+                ],
+                distance: 2.0,
+            },
         });
     }
 

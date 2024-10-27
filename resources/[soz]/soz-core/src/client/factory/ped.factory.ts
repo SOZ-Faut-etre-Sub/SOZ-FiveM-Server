@@ -291,6 +291,10 @@ export class PedFactory {
             SetPedHeadOverlayColor(pedId, 1, 1, ped.hair.BeardColor, 0);
             SetPedHeadOverlay(pedId, 10, ped.hair.ChestHairType, ped.hair.ChestHairOpacity || 1.0);
             SetPedHeadOverlayColor(pedId, 10, 1, ped.hair.ChestHairColor, 0);
+
+            if (ped.hair.Scalp) {
+                AddPedDecorationFromHashes(pedId, ped.hair.Scalp.Collection, ped.hair.Scalp.Overlay);
+            }
         }
 
         if (ped.makeup) {

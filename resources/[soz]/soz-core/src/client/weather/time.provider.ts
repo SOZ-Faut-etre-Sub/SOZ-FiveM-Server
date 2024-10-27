@@ -1,6 +1,7 @@
 import { Inject } from '@public/core/decorators/injectable';
 import { Tick } from '@public/core/decorators/tick';
 import { Logger } from '@public/core/logger';
+import { Feature, isFeatureEnabled } from '@public/shared/features';
 
 import { OnEvent } from '../../core/decorators/event';
 import { Provider } from '../../core/decorators/provider';
@@ -31,6 +32,11 @@ export class TimeProvider {
 
     @OnEvent(ClientEvent.STATE_UPDATE_TIME)
     async onTimeChange(time: Time) {
+        if (isFeatureEnabled(Feature.Halloween)) {
+            NetworkOverrideClockTime(time.hour, time.minute, time.second);
+            return;
+        }
+
         this.serverTime = time;
         this.serverSyncTimestamp = Date.now();
     }
@@ -38,6 +44,10 @@ export class TimeProvider {
     @Tick(100)
     public manageClockSpeed() {
         if (!this.serverTime) {
+            return;
+        }
+
+        if (isFeatureEnabled(Feature.Halloween)) {
             return;
         }
 

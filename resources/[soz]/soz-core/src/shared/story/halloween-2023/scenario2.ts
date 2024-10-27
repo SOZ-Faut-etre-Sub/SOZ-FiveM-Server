@@ -84,3 +84,5 @@ export const Halloween2023Scenario2: Story = {
         },
     ],
 };
+
+export const WinePrice = 500;
