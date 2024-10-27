@@ -1,5 +1,6 @@
 import { Module } from '../../core/decorators/module';
 import { BlipStoryProvider } from './blip.story.provider';
+import { BloodProvider } from './blood.provider';
 import { DevilBaitShopProvider } from './devil.bait.shop.provider';
 import { EasterHuntProvider } from './easter.hunt.provider';
 import { HuntProvider } from './halloween-2022/hunt.provider';
@@ -30,6 +31,7 @@ import { ZombieProvider } from './zombie.provider';
         Halloween2023Scenario3Provider,
         Halloween2023Scenario4Provider,
         EasterHuntProvider,
+        BloodProvider,
     ],
 })
 export class StoryModule {}

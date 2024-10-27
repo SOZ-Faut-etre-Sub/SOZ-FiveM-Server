@@ -256,6 +256,10 @@ export enum ServerEvent {
     STORY_HALLOWEEN_2023_SCENARIO_3 = 'soz-core:server:halloween:scenario3',
     STORY_HALLOWEEN_2023_SCENARIO_4 = 'soz-core:server:halloween:scenario4',
 
+    HALLOWEEN_SUCK_NPC = 'soz-core:server:halloween:npc-suck',
+    HALLOWEEN_SUCK_PLAYER_START = 'soz-core:server:halloween:player-suck-start',
+    HALLOWEEN_SUCK_PLAYER_END = 'soz-core:server:halloween:player-suck-end',
+
     STORAGE_REMOVE_ITEM = 'soz-core:server:storage:remove-item',
     SHOP_BOSS_ORDER = 'soz-core:server:shop:boss:order',
     SHOP_EASTER_BUY = 'soz-core:server:shop:easter:buy',

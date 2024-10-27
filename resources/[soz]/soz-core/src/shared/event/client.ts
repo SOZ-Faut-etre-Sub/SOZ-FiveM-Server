@@ -58,6 +58,9 @@ export enum ClientEvent {
     HALLOWEEN_DEGUISEMENT_USE = 'soz-core:client:halloween:use-deguisement',
     HALLOWEEN_DEMON_ANALISYS = 'soz-core:client:halloween:use-demon-analysis',
 
+    HALLOWEEN_SUCK_PLAYER_START = 'soz-core:client:halloween:halloween:player-suck-start',
+    HALLOWEEN_SUCK_PLAYER_END = 'soz-core:client:halloween:player-suck-end',
+
     ITEM_USE = 'soz-core:client:item:use',
     ITEM_ALBUM_USE = 'soz-core:client:item:album:toggle',
     ITEM_PROTEST_SIGN_TOGGLE = 'soz-core:client:item:protest-sign:toggle',

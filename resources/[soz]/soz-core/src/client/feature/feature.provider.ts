@@ -16,6 +16,9 @@ export class FeatureProvider {
 
     @StateSelector(state => state.global.features)
     async onFeaturesChange(features: FeaturesConfig) {
+        if (!features) {
+            return;
+        }
         this.features = features;
         this.updateNuiFeatures();
     }
