@@ -560,7 +560,7 @@ export class VampireGameProvider {
                 break;
             case VampireGameRole.Mortal:
                 this.instructionalService.display([
-                    "Dirige-toi en ville pour réparer l'électricité, et survie aux monstres.",
+                    "Dirige-toi en ville pour réparer l'électricité en accomplissant divers objectifs, et survie aux monstres.",
                 ]);
                 break;
             case VampireGameRole.Squire:

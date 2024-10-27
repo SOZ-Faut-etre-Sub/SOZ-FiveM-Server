@@ -5,7 +5,6 @@ import { emitRpc } from '@core/rpc';
 import { wait } from '@core/utils';
 import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { InteractionProvider } from '@public/client/quick-interaction/interaction.provider';
-import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { Apartment } from '@public/shared/housing/housing';
 
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
