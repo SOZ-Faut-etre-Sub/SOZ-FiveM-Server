@@ -37,7 +37,7 @@ export const sozedexStatsZones = {
         titre: {
             classic: 'Complétion du Sozédex',
             halloween: 'Découvertes Macabres',
-            vampire: 'Découvertes Macabres',
+            vampire: 'Secrets Sanguinaires',
             summer: 'Voyage tropical',
         },
         description: {
@@ -46,13 +46,13 @@ export const sozedexStatsZones = {
             halloween:
                 'Il est désormais temps de découvrir ces pages remplies de créatures monstrueuses et démoniaques que seul un appât du diable est en mesure de débusquer.',
             vampire:
-                'Il est désormais temps de découvrir ces pages remplies de créatures monstrueuses et démoniaques que seul un appât du diable est en mesure de débusquer.',
+                'Explorez ces pages sombres où se cachent des créatures mystérieuses, insaisissables, drapées de ténèbres et assoiffées de sang.',
             summer: 'Découvrez les pages de ce périple rempli de créatures plus surprenantes les unes que les autres dans cet environnement hors du commun.',
         },
         rewardTitle: {
             classic: 'Vous avez réussi !',
             halloween: 'Vous avez réussi !',
-            vampire: 'Vous avez réussi !',
+            vampire: 'Vous êtes victorieux !',
             summer: 'Vous avez réussi !',
         },
         rewardDescription: {
@@ -61,7 +61,7 @@ export const sozedexStatsZones = {
             halloween:
                 "Vous avez réussi à découvrir la totalité des monstruosités présentes sur l'île.. Voici votre récompense.",
             vampire:
-                "Vous avez réussi à découvrir la totalité des monstruosités présentes sur l'île.. Voici votre récompense.",
+                "Vous avez bravé l'ombre et découvert tous les secrets cachés de San Andreas, triomphant des créatures les plus ténébreuses. Voici votre récompense.",
             summer: 'Vous avez réussi à découvrir les totalité des espèces méconnues de cet environnement. Voici votre récompense.',
         },
     },
@@ -71,7 +71,7 @@ export const sozedexStatsZones = {
             label: {
                 classic: Localisation.littoral,
                 halloween: 'Côte des Ombres',
-                vampire: 'Côte des Ombres',
+                vampire: 'Côte des Mânes',
                 summer: 'Côtes submergées',
             },
             name: 'littoral',
@@ -81,7 +81,7 @@ export const sozedexStatsZones = {
                 halloween:
                     'Entre terre et mer, le littoral de San Andreas révèle des profondeurs cauchemardesques où des coraux déformés et des créatures marines mutées errent, affamées de chair humaine.',
                 vampire:
-                    'Entre terre et mer, le littoral de San Andreas révèle des profondeurs cauchemardesques où des coraux déformés et des créatures marines mutées errent, affamées de chair humaine.',
+                    'Les côtes de San Andreas, plongées dans la pénombre, sont peuplées de créatures nocturnes, attirées par le parfum du sang et l’aura mystérieuse de la nuit.',
                 summer: 'Autrefois entre terre et mer, le littoral de San Andreas regorgeais de coraux et de créatures colorées. Et maintenant..?',
             },
         },
@@ -90,7 +90,7 @@ export const sozedexStatsZones = {
             label: {
                 classic: Localisation.river,
                 halloween: 'Fleuves Ténébreux',
-                vampire: 'Fleuves Ténébreux',
+                vampire: 'Fleuves Pourpres',
                 summer: 'Fleuves Oubliés',
             },
             name: 'river',
@@ -100,7 +100,7 @@ export const sozedexStatsZones = {
                 halloween:
                     'Les rivières sinueuses de San Andreas cachent des secrets terrifiants, abritant des créatures insaisissables qui surgissent des eaux sombres pour se repaître des âmes perdues.',
                 vampire:
-                    'Les rivières sinueuses de San Andreas cachent des secrets terrifiants, abritant des créatures insaisissables qui surgissent des eaux sombres pour se repaître des âmes perdues.',
+                    'Les rivières pourpres de San Andreas cachent des secrets interdits, où des êtres éternels se désaltèrent dans le calme nocturne, surveillant leurs territoires anciens.',
                 summer: "Après une telle catastrophe, qu'est-il advenu des créatures fluviales ?",
             },
         },
@@ -109,16 +109,16 @@ export const sozedexStatsZones = {
             label: {
                 classic: Localisation.south_sea,
                 halloween: 'Mer de la Nuit',
-                vampire: 'Mer de la Nuit',
+                vampire: 'Mer des Lamentations',
                 summer: "Crique d'Émeraude",
             },
             name: 'south_sea',
             descriptions: {
-                classic: "La Mer du Sud qui borde l'île de Cayo Perico est chaude et peuplée de race exotiques. ",
+                classic: "La Mer du Sud qui borde l'île de Cayo Perico est chaude et peuplée de race exotiques.",
                 halloween:
                     "La Mer du Sud qui ceinture l'île de Cayo Perico est un véritable enfer aquatique, où des êtres exotiques et maléfiques prospèrent dans les abysses, attendant patiemment que les voyageurs s'aventurent dans leurs profondeurs mortelles",
                 vampire:
-                    "La Mer du Sud qui ceinture l'île de Cayo Perico est un véritable enfer aquatique, où des êtres exotiques et maléfiques prospèrent dans les abysses, attendant patiemment que les voyageurs s'aventurent dans leurs profondeurs mortelles",
+                    'La Mer des Lamentations accueille des créatures en quête de sang, se mouvant silencieusement dans ses eaux sombres, attirant les âmes perdues vers leur fin.',
                 summer: 'La Mer du Sud autrefois calme et paradisiaque est désormais remplie de dangers et de phénomènes de grande ampleur.',
             },
         },
@@ -127,7 +127,7 @@ export const sozedexStatsZones = {
             label: {
                 classic: Localisation.north_sea,
                 halloween: 'Abysses du Nord',
-                vampire: 'Abysses du Nord',
+                vampire: 'Abysses Obscurs',
                 summer: 'Baie des Brumes',
             },
             name: 'north_sea',
@@ -137,7 +137,7 @@ export const sozedexStatsZones = {
                 halloween:
                     "La Mer du Nord, qui borde Paleto Bay, cache des îles maudites, des repaires de créatures marines difformes, où l'obscurité règne en maître et où les marins téméraires deviennent des proies pour les monstres qui rôdent.",
                 vampire:
-                    "La Mer du Nord, qui borde Paleto Bay, cache des îles maudites, des repaires de créatures marines difformes, où l'obscurité règne en maître et où les marins téméraires deviennent des proies pour les monstres qui rôdent.",
+                    'Les Abysses Obscurs sont le royaume des créatures maudites, qui veillent dans les ombres et nourrissent une soif insatiable pour quiconque oserait troubler leur sommeil.',
                 summer: 'La Mer du Nord qui bordait paleto est désormais sombre et mystérieuse, ne vous faites pas emporter ...',
             },
         },
@@ -146,7 +146,7 @@ export const sozedexStatsZones = {
             label: {
                 classic: Localisation.big_lake,
                 halloween: "Lac de l'Effroi",
-                vampire: "Lac de l'Effroi",
+                vampire: 'Lac Sombre',
                 summer: "Désert d'Alamo",
             },
             name: 'big_lake',
@@ -156,7 +156,7 @@ export const sozedexStatsZones = {
                 halloween:
                     "Le grand lac de San Andreas, l'Alamo Sea, n'est pas seulement gelé en hiver, il est également le lieu de repos de forces démoniaques qui attendent sous la glace, prêtes à surgir pour punir les intrus audacieux.",
                 vampire:
-                    "Le grand lac de San Andreas, l'Alamo Sea, n'est pas seulement gelé en hiver, il est également le lieu de repos de forces démoniaques qui attendent sous la glace, prêtes à surgir pour punir les intrus audacieux.",
+                    "Le Lac Sombre, teinté de rouge par les légendes de San Andreas, attire les créatures vampiriques, où nul ne s'aventure sans craindre pour son sang.",
                 summer: "Du sable, des rochers, c'est tout ce qu'il reste de la mer d'Alamo..",
             },
         },
@@ -165,7 +165,7 @@ export const sozedexStatsZones = {
             label: {
                 classic: Localisation.little_lake,
                 halloween: 'Étangs Sombres',
-                vampire: 'Étangs Sombres',
+                vampire: 'Étangs Morts',
                 summer: 'Étendues de Sables',
             },
             name: 'little_lake',
@@ -175,7 +175,7 @@ export const sozedexStatsZones = {
                 halloween:
                     "Les petits lacs tranquilles qui parsèment les plaines et les vallées de l'île de San Andreas cachent des secrets maléfiques, et ceux qui osent les explorer risquent de libérer des horreurs indicibles.",
                 vampire:
-                    "Les petits lacs tranquilles qui parsèment les plaines et les vallées de l'île de San Andreas cachent des secrets maléfiques, et ceux qui osent les explorer risquent de libérer des horreurs indicibles.",
+                    'Les Étangs Morts dissimulent des présences éternelles, invisibles au regard humain, mais bien réelles pour ceux dotés de pouvoirs vampiriques.',
                 summer: "Il y'avait autrefois des petits lacs qui parsemaient les plaines et les vallées de San Andreas.. Il ne reste plus que du sable et des cailloux..",
             },
         },
@@ -184,7 +184,7 @@ export const sozedexStatsZones = {
             label: {
                 classic: Localisation.canals,
                 halloween: 'Canaux du Cauchemar',
-                vampire: 'Canaux du Cauchemar',
+                vampire: 'Canaux de la Nuit',
                 summer: 'Quartiers Engloutis',
             },
             name: 'canals',
@@ -194,7 +194,7 @@ export const sozedexStatsZones = {
                 halloween:
                     "Les canaux d'irrigation et de plaisance serpentant à travers les villes de San Andreas sont hantés par des présences sinistres, des ombres inquiétantes qui se meuvent dans l'eau noire, attendant de piéger quiconque ose s'aventurer trop loin dans leurs sombres passages.",
                 vampire:
-                    "Les canaux d'irrigation et de plaisance serpentant à travers les villes de San Andreas sont hantés par des présences sinistres, des ombres inquiétantes qui se meuvent dans l'eau noire, attendant de piéger quiconque ose s'aventurer trop loin dans leurs sombres passages.",
+                    'Les Canaux de la Nuit sont des passages secrets utilisés par des créatures assoiffées de sang, invisibles aux yeux humains mais prêtes à se manifester au moindre murmure.',
                 summer: "La météorite a englouti les canaux et les quartiers irrigés, de nouvelles créatures s'y sont cachées..",
             },
         },
