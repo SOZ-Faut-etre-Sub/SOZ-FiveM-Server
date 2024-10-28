@@ -4457,7 +4457,7 @@ QBShared.Items = {
     },
     ["essence"] = {
         ["name"] = "essence",
-        ["label"] = "Carburant conditionné",
+        ["label"] = 'Jus de cadavre', --"Carburant conditionné",
         ["weight"] = 1000,
         ["type"] = "oil",
         ["unique"] = false,
