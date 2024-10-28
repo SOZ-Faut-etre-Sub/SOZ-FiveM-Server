@@ -235,7 +235,7 @@ QBShared.Items = {
     },
     ["weapon_garbagebag"] = {
         ["name"] = "weapon_garbagebag",
-        ["label"] = "Sac poubelle", -- Sac poubelle
+        ["label"] = "Sac poubelle de l\'Apocalypse", -- Sac poubelle
         ["weight"] = 2000,
         ["type"] = "weapon",
         ["ammotype"] = nil,
@@ -1195,7 +1195,7 @@ QBShared.Items = {
         ["label"] = "Journal",
         ["weight"] = 800,
         ["type"] = "weapon",
-        ["ammotype"] = nil,
+        ["ammotype"] = nil, 
         ["unique"] = true,
         ["useable"] = false,
         ["description"] = "Chute de News",
@@ -1203,13 +1203,13 @@ QBShared.Items = {
     -- Miscellaneous
     ["weapon_petrolcan"] = {
         ["name"] = "weapon_petrolcan",
-        ["label"] = "Bidon d'essence", -- 'Bidon d\'essence'
+        ['label'] =  'Jus de cadavre', -- 'Bidon d\'essence',
         ["weight"] = 1000,
         ["type"] = "weapon",
         ["ammotype"] = "AMMO_PETROLCAN",
         ["unique"] = true,
         ["useable"] = false,
-        ["description"] = "De quoi faire le plein de ta caisse !", -- 'De quoi faire le plein de ta caisse !'
+        ['description'] = '10 ans d\'âge..', -- 'De quoi faire le plein de ta caisse !',
         ["illustrator"] = ".LeakFlood",
     },
     ["weapon_fireextinguisher"] = {
@@ -3688,7 +3688,7 @@ QBShared.Items = {
 
     ["garbagebag"] = {
         ["name"] = "garbagebag",
-        ["label"] = "Sac poubelle", -- Sac poubelle
+        ["label"] = 'Sac poubelle de l\'Apocalypse', -- Sac poubelle
         ["weight"] = 2000,
         ["type"] = "item",
         ["unique"] = false,
