@@ -9,11 +9,11 @@ import { TargetFactory } from '@public/client/target/target.factory';
 import { Once, OnceStep } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
-import { Component } from '@public/shared/cloth';
-import { VanillaComponentDrawableIndexMaxValue } from '@public/shared/drawable';
+import { Component, Prop } from '@public/shared/cloth';
+import { VanillaComponentDrawableIndexMaxValue, VanillaPropDrawableIndexMaxValue } from '@public/shared/drawable';
 import { ServerEvent } from '@public/shared/event';
-import { Feature, isFeatureEnabled } from '@public/shared/features';
-import { PlayerData } from '@public/shared/player';
+import { Feature } from '@public/shared/features';
+import { PlayerData, PlayerPedHash } from '@public/shared/player';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { toVector3Object, toVector4Object, Vector4 } from '@public/shared/polyzone/vector';
 import {
@@ -26,6 +26,7 @@ import {
     Halloween2023Scenario4ExitMorgue,
 } from '@public/shared/story/halloween-2023/scenario4';
 
+import { FeatureProvider } from '../../feature/feature.provider';
 import { StoryProvider } from '../story.provider';
 
 @Provider()
@@ -57,11 +58,14 @@ export class Halloween2023Scenario4Provider {
     @Inject(AudioService)
     private audioService: AudioService;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     private audioId: string;
 
     @Once(OnceStep.PlayerLoaded)
     public async onPlayerLoaded() {
-        if (!isFeatureEnabled(Feature.Halloween2023Scenario4)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Halloween2023Scenario4)) {
             return;
         }
 
@@ -115,7 +119,7 @@ export class Halloween2023Scenario4Provider {
     }
 
     public createBlip(player: PlayerData) {
-        if (!isFeatureEnabled(Feature.Halloween2023Scenario4)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Halloween2023Scenario4)) {
             return;
         }
 
@@ -242,7 +246,7 @@ export class Halloween2023Scenario4Provider {
                 11: [15, 0, 0],
             },
             props: {
-                0: [204, 0, 0],
+                0: [VanillaPropDrawableIndexMaxValue[PlayerPedHash.Male][Prop.Hat] + 9, 0, 0],
             },
             invincible: true,
             freeze: true,
@@ -497,14 +501,14 @@ export class Halloween2023Scenario4Provider {
                 2: [4, 0, 0],
                 3: [0, 0, 0],
                 4: [10, 0, 0],
-                5: [114, 0, 0],
+                5: [VanillaComponentDrawableIndexMaxValue[PlayerPedHash.Male][Component.Bag] + 3, 0, 0],
                 6: [32, 0, 0],
                 8: [15, 0, 0],
-                10: [178, 0, 0],
+                10: [VanillaComponentDrawableIndexMaxValue[PlayerPedHash.Male][Component.Decals] + 14, 0, 0],
                 11: [44, 1, 0],
             },
             props: {
-                0: [204, 0, 0],
+                0: [VanillaPropDrawableIndexMaxValue[PlayerPedHash.Male][Prop.Hat] + 9, 0, 0],
                 1: [23, 0, 0],
             },
             face: {
@@ -612,7 +616,6 @@ export class Halloween2023Scenario4Provider {
                 Father: 6,
             },
             components: {
-                2: [97, 0, 0],
                 3: [16, 1, 0],
                 4: [63, 2, 0],
                 5: [0, 0, 0],
@@ -623,7 +626,7 @@ export class Halloween2023Scenario4Provider {
                 11: [415, 8, 0],
             },
             props: {
-                0: [203, 0, 0],
+                0: [VanillaPropDrawableIndexMaxValue[PlayerPedHash.Female][Prop.Hat] + 9, 0, 0],
                 2: [7, 0, 0],
                 6: [1, 0, 0],
             },
@@ -665,7 +668,7 @@ export class Halloween2023Scenario4Provider {
                 EyebrowColor: 8,
                 HairColor: 61,
                 ChestHairColor: 0,
-                HairType: 106,
+                HairType: VanillaComponentDrawableIndexMaxValue[PlayerPedHash.Female][Component.Hair] + 20,
                 EyebrowType: 1,
                 ChestHairOpacity: 1,
                 HairSecondaryColor: 54,
@@ -725,7 +728,7 @@ export class Halloween2023Scenario4Provider {
                 11: [29, 0, 0],
             },
             props: {
-                0: [204, 0, 0],
+                0: [VanillaPropDrawableIndexMaxValue[PlayerPedHash.Male][Prop.Hat] + 9, 0, 0],
             },
             face: {
                 NosePeakLength: 0.0,
@@ -818,7 +821,6 @@ export class Halloween2023Scenario4Provider {
                 Hash: -1667301416,
             },
             components: {
-                2: [97, 0, 0],
                 3: [16, 1, 0],
                 4: [63, 2, 0],
                 6: [41, 2, 0],
@@ -827,7 +829,7 @@ export class Halloween2023Scenario4Provider {
                 11: [415, 8, 0],
             },
             props: {
-                0: [203, 0, 0],
+                0: [VanillaPropDrawableIndexMaxValue[PlayerPedHash.Female][Prop.Hat] + 9, 0, 0],
                 2: [7, 0, 0],
             },
             face: {
@@ -860,18 +862,18 @@ export class Halloween2023Scenario4Provider {
                 ChimpBoneLength: 0,
             },
             hair: {
-                ChestHairColor: 0,
-                EyebrowColor: 8,
-                HairSecondaryColor: 15,
-                BeardType: -1,
-                EyebrowOpacity: 1,
-                HairType: 97,
-                EyebrowType: 1,
                 BeardOpacity: 1,
-                HairColor: 16,
-                BeardColor: 0,
-                ChestHairOpacity: 1,
+                EyebrowOpacity: 1,
+                BeardType: -1,
                 ChestHairType: -1,
+                BeardColor: 0,
+                EyebrowColor: 8,
+                HairColor: 61,
+                ChestHairColor: 0,
+                HairType: 105,
+                EyebrowType: 1,
+                ChestHairOpacity: 1,
+                HairSecondaryColor: 54,
             },
             makeup: {
                 FullMakeupOpacity: 1,
@@ -931,7 +933,7 @@ export class Halloween2023Scenario4Provider {
                 11: [415, 0, 0],
             },
             props: {
-                0: [203, 0, 0],
+                0: [VanillaPropDrawableIndexMaxValue[PlayerPedHash.Female][Prop.Hat] + 9, 0, 0],
                 1: [11, 1, 0],
             },
             face: {
@@ -1075,7 +1077,7 @@ export class Halloween2023Scenario4Provider {
                 11: [427, 4, 0],
             },
             props: {
-                0: [203, 0, 0],
+                0: [VanillaPropDrawableIndexMaxValue[PlayerPedHash.Female][Prop.Hat] + 9, 0, 0],
                 2: [15, 0, 0],
                 6: [19, 2, 0],
                 7: [2, 0, 0],
@@ -1291,11 +1293,11 @@ export class Halloween2023Scenario4Provider {
                 4: [73, 0, 0],
                 6: [24, 0, 0],
                 7: [112, 2, 0],
-                8: [2, 2, 0],
+                8: [1, 12, 0],
                 11: [151, 3, 0],
             },
             props: {
-                0: [204, 0, 0],
+                0: [VanillaPropDrawableIndexMaxValue[PlayerPedHash.Male][Prop.Hat] + 9, 0, 0],
             },
             face: {
                 NosePeakLength: 0.0,
@@ -1417,7 +1419,7 @@ export class Halloween2023Scenario4Provider {
                 11: [31, 0, 0],
             },
             props: {
-                0: [204, 0, 0],
+                0: [VanillaPropDrawableIndexMaxValue[PlayerPedHash.Male][Prop.Hat] + 9, 0, 0],
                 1: [5, 5, 0],
                 2: [25, 3, 0],
                 6: [37, 1, 0],
@@ -1560,11 +1562,11 @@ export class Halloween2023Scenario4Provider {
                 5: [114, 0, 0],
                 6: [10, 0, 0],
                 8: [15, 0, 0],
-                10: [178, 0, 0],
+                10: [VanillaComponentDrawableIndexMaxValue[PlayerPedHash.Male][Component.Decals] + 14, 0, 0],
                 11: [349, 3, 0],
             },
             props: {
-                0: [204, 0, 0],
+                0: [VanillaPropDrawableIndexMaxValue[PlayerPedHash.Male][Prop.Hat] + 9, 0, 0],
                 1: [8, 3, 0],
                 6: [2, 0, 0],
             },
@@ -1708,7 +1710,7 @@ export class Halloween2023Scenario4Provider {
                 11: [294, 4, 0],
             },
             props: {
-                0: [204, 0, 0],
+                0: [VanillaPropDrawableIndexMaxValue[PlayerPedHash.Male][Prop.Hat] + 9, 0, 0],
                 1: [5, 5, 0],
                 2: [31, 1, 0],
                 6: [36, 0, 0],
@@ -1829,7 +1831,7 @@ export class Halloween2023Scenario4Provider {
                 11: [384, 0, 0],
             },
             props: {
-                0: [204, 0, 0],
+                0: [VanillaPropDrawableIndexMaxValue[PlayerPedHash.Male][Prop.Hat] + 9, 0, 0],
                 1: [10, 10, 0],
             },
             face: {
@@ -1929,7 +1931,7 @@ export class Halloween2023Scenario4Provider {
                 9: [0, 0, 0],
             },
             props: {
-                0: [204, 0, 0],
+                0: [VanillaPropDrawableIndexMaxValue[PlayerPedHash.Male][Prop.Hat] + 9, 0, 0],
             },
             face: {
                 ChimpBoneLower: 0.0,
@@ -2026,7 +2028,7 @@ export class Halloween2023Scenario4Provider {
                 11: [6, 6, 0],
             },
             props: {
-                0: [204, 0, 0],
+                0: [VanillaPropDrawableIndexMaxValue[PlayerPedHash.Male][Prop.Hat] + 9, 0, 0],
                 1: [7, 0, 0],
                 7: [5, 0, 0],
             },
@@ -2126,7 +2128,7 @@ export class Halloween2023Scenario4Provider {
                 distance: 1.5,
                 options: [
                     {
-                        label: 'Moustache',
+                        label: 'Moustash',
                         icon: 'global/question',
                         category: 'citizen',
                         action: async () => {
@@ -2253,14 +2255,14 @@ export class Halloween2023Scenario4Provider {
                 2: [10, 0, 0],
                 3: [4, 0, 0],
                 4: [141, 3, 0],
-                5: [114, 3, 0],
+                5: [114, 0, 0],
                 6: [15, 4, 0],
                 8: [15, 0, 0],
-                10: [178, 0, 0],
+                10: [VanillaComponentDrawableIndexMaxValue[PlayerPedHash.Male][Component.Decals] + 14, 0, 0],
                 11: [349, 3, 0],
             },
             props: {
-                0: [204, 0, 0],
+                0: [VanillaPropDrawableIndexMaxValue[PlayerPedHash.Male][Prop.Hat] + 9, 0, 0],
                 1: [5, 9, 0],
                 2: [32, 1, 0],
                 6: [18, 0, 0],
@@ -2349,16 +2351,16 @@ export class Halloween2023Scenario4Provider {
             modelCustomization: { Father: 43, ShapeMix: 0.5, SkinMix: 0.6, Mother: 30 },
             components: {
                 3: [22, 0, 0],
-                4: [185, 0, 0],
-                5: [113, 1, 0],
+                4: [VanillaComponentDrawableIndexMaxValue[PlayerPedHash.Male][Component.Legs] + 1, 2, 0],
+                5: [VanillaComponentDrawableIndexMaxValue[PlayerPedHash.Male][Component.Bag] + 2, 1, 0],
                 6: [51, 0, 0],
-                7: [179, 0, 0],
-                8: [203, 0, 0],
-                9: [67, 0, 0],
-                11: [497, 3, 0],
+                7: [VanillaComponentDrawableIndexMaxValue[PlayerPedHash.Male][Component.Accessories] + 4, 0, 0],
+                8: [VanillaComponentDrawableIndexMaxValue[PlayerPedHash.Male][Component.Undershirt] + 4, 0, 0],
+                9: [VanillaComponentDrawableIndexMaxValue[PlayerPedHash.Male][Component.BodyArmor] + 8, 0, 0],
+                11: [VanillaComponentDrawableIndexMaxValue[PlayerPedHash.Male][Component.Tops] + 2, 2, 0],
             },
             props: {
-                0: [201, 0, 0],
+                0: [VanillaPropDrawableIndexMaxValue[PlayerPedHash.Male][Prop.Hat] + 6, 0, 0],
             },
             face: {
                 CheeksBoneHigh: 0.0,
@@ -2447,18 +2449,17 @@ export class Halloween2023Scenario4Provider {
             coords: toVector4Object([-1597.46, -3012.67, -80.01, 86.66]),
             modelCustomization: { SkinMix: 0.5, ShapeMix: 0.5, Mother: 26, Father: 43 },
             components: {
-                2: [18, 0, 0],
                 3: [22, 0, 0],
-                4: [178, 2, 0],
-                5: [113, 1, 0],
+                4: [VanillaComponentDrawableIndexMaxValue[PlayerPedHash.Male][Component.Legs] + 8, 0, 0],
+                5: [VanillaComponentDrawableIndexMaxValue[PlayerPedHash.Male][Component.Bag] + 2, 1, 0],
                 6: [51, 0, 0],
-                7: [179, 0, 0],
-                8: [203, 0, 0],
-                9: [68, 0, 0],
-                11: [497, 2, 0],
+                7: [VanillaComponentDrawableIndexMaxValue[PlayerPedHash.Male][Component.Accessories] + 4, 0, 0],
+                8: [VanillaComponentDrawableIndexMaxValue[PlayerPedHash.Male][Component.Undershirt] + 4, 0, 0],
+                9: [VanillaComponentDrawableIndexMaxValue[PlayerPedHash.Male][Component.BodyArmor] + 8, 0, 0],
+                11: [VanillaComponentDrawableIndexMaxValue[PlayerPedHash.Male][Component.Tops] + 2, 3, 0],
             },
             props: {
-                0: [201, 0, 0],
+                0: [VanillaPropDrawableIndexMaxValue[PlayerPedHash.Male][Prop.Hat] + 7, 0, 0],
                 1: [3, 0, 0],
             },
             face: {
@@ -2548,16 +2549,15 @@ export class Halloween2023Scenario4Provider {
             coords: toVector4Object([-1599.01, -3010.93, -80.01, 114.82]),
             modelCustomization: { Mother: 45, ShapeMix: 0.25, Father: 42, SkinMix: 0.5 },
             components: {
-                2: [79, 0, 0],
-                3: [20, 0, 0],
-                4: [178, 1, 0],
-                5: [112, 0, 0],
+                3: [11, 0, 0],
+                4: [VanillaComponentDrawableIndexMaxValue[PlayerPedHash.Male][Component.Legs] + 1, 1, 0],
+                5: [VanillaComponentDrawableIndexMaxValue[PlayerPedHash.Male][Component.Bag] + 1, 0, 0],
                 6: [51, 0, 0],
-                8: [202, 0, 0],
-                11: [497, 1, 0],
+                8: [VanillaComponentDrawableIndexMaxValue[PlayerPedHash.Male][Component.Undershirt] + 3, 0, 0],
+                11: [VanillaComponentDrawableIndexMaxValue[PlayerPedHash.Male][Component.Tops] + 4, 1, 0],
             },
             props: {
-                0: [204, 0, 0],
+                0: [VanillaPropDrawableIndexMaxValue[PlayerPedHash.Male][Prop.Hat] + 9, 0, 0],
             },
             face: {
                 ChimpBoneWidth: 0.0,
@@ -2650,7 +2650,7 @@ export class Halloween2023Scenario4Provider {
                 11: [327, 0, 0],
             },
             props: {
-                0: [204, 0, 0],
+                0: [VanillaPropDrawableIndexMaxValue[PlayerPedHash.Male][Prop.Hat] + 9, 0, 0],
             },
             face: {
                 CheeksBoneHigh: 0.1,
@@ -2768,7 +2768,7 @@ export class Halloween2023Scenario4Provider {
                 11: [31, 5, 0],
             },
             props: {
-                0: [204, 0, 0],
+                0: [VanillaPropDrawableIndexMaxValue[PlayerPedHash.Male][Prop.Hat] + 9, 0, 0],
                 1: [8, 1, 0],
                 6: [16, 1, 0],
             },
@@ -2868,7 +2868,7 @@ export class Halloween2023Scenario4Provider {
                 11: [88, 11, 0],
             },
             props: {
-                0: [204, 0, 0],
+                0: [VanillaPropDrawableIndexMaxValue[PlayerPedHash.Male][Prop.Hat] + 9, 0, 0],
             },
             face: {
                 CheeksBoneHigh: 0.0,
@@ -2968,7 +2968,7 @@ export class Halloween2023Scenario4Provider {
                 10: [0, 0, 0],
             },
             props: {
-                0: [204, 0, 0],
+                0: [VanillaPropDrawableIndexMaxValue[PlayerPedHash.Male][Prop.Hat] + 9, 0, 0],
                 1: [23, 9, 0],
                 2: [32, 1, 0],
                 6: [4, 1, 0],
@@ -3371,7 +3371,7 @@ export class Halloween2023Scenario4Provider {
                 9: [0, 0, 0],
             },
             props: {
-                0: [204, 0, 0],
+                0: [VanillaPropDrawableIndexMaxValue[PlayerPedHash.Male][Prop.Hat] + 9, 0, 0],
             },
             face: {
                 CheeksBoneHigh: 0.0,
@@ -3482,7 +3482,7 @@ export class Halloween2023Scenario4Provider {
                 10: [VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Decals] + 2, 4, 0],
             },
             props: {
-                0: [203, 0, 0],
+                0: [VanillaPropDrawableIndexMaxValue[PlayerPedHash.Female][Prop.Hat] + 9, 0, 0],
                 2: [7, 0, 0],
                 6: [7, 1, 0],
             },
@@ -3683,7 +3683,7 @@ export class Halloween2023Scenario4Provider {
                 11: [348, 3, 0],
             },
             props: {
-                0: [204, 0, 0],
+                0: [VanillaPropDrawableIndexMaxValue[PlayerPedHash.Male][Prop.Hat] + 9, 0, 0],
                 1: [33, 2, 0],
             },
             face: {

@@ -3,11 +3,12 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { emitRpc } from '@core/rpc';
 import { wait } from '@core/utils';
+import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { InteractionProvider } from '@public/client/quick-interaction/interaction.provider';
 import { Apartment } from '@public/shared/housing/housing';
 
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
-import { Feature, isFeatureEnabled } from '../../shared/features';
+import { Feature } from '../../shared/features';
 import { JobPermission, JobType } from '../../shared/job';
 import { MenuType } from '../../shared/nui/menu';
 import { BoxZone } from '../../shared/polyzone/box.zone';
@@ -95,6 +96,9 @@ export class VehicleGarageProvider {
     @Inject(Monitor)
     private monitor: Monitor;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     @Inject(InteractionProvider)
     private interactionProvider: InteractionProvider;
 
@@ -114,7 +118,7 @@ export class VehicleGarageProvider {
         for (const garageIdentifier of Object.keys(garageList)) {
             const garage = garageList[garageIdentifier];
 
-            if (!isFeatureEnabled(Feature.Boat) && garage.category === GarageCategory.Sea) {
+            if (!this.featureProvider.isFeatureEnabled(Feature.Boat) && garage.category === GarageCategory.Sea) {
                 continue;
             }
 

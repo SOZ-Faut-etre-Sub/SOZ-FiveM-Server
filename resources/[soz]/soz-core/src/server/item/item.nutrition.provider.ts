@@ -3,9 +3,10 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { ClientEvent } from '@public/shared/event';
 
-import { Feature, isFeatureEnabled } from '../../shared/features';
+import { Feature } from '../../shared/features';
 import { CocktailItem, DrinkItem, FoodItem, InventoryItem, Item, LiquorItem } from '../../shared/item';
 import { PlayerMetadata } from '../../shared/player';
+import { FeatureProvider } from '../feature/feature.provider';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
@@ -31,6 +32,9 @@ export class ItemNutritionProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     private lastItemEatByPlayer: Record<string, string> = {};
 
@@ -95,7 +99,7 @@ export class ItemNutritionProvider {
 
         let dyspepsiaLuck = 0.5;
 
-        if (isFeatureEnabled(Feature.MyBodySummer)) {
+        if (this.featureProvider.isFeatureEnabled(Feature.MyBodySummer)) {
             if (this.lastItemEatByPlayer[player.citizenid] === item.name && item.type === 'food') {
                 dyspepsiaLuck = 25.0;
             }
@@ -131,7 +135,7 @@ export class ItemNutritionProvider {
             datas.drug = this.playerService.getIncrementedMetadata(player, 'drug', item.nutrition.drug, 0, 110);
         }
 
-        if (isFeatureEnabled(Feature.MyBodySummer)) {
+        if (this.featureProvider.isFeatureEnabled(Feature.MyBodySummer)) {
             const fiber = dyspepsia || intoxicated ? DYSPEPSIA_NUTRITION_MALUS : item.nutrition.fiber * progress;
             const sugar = dyspepsia || intoxicated ? DYSPEPSIA_NUTRITION_MALUS : item.nutrition.sugar * progress;
             const protein = dyspepsia || intoxicated ? DYSPEPSIA_NUTRITION_MALUS : item.nutrition.protein * progress;

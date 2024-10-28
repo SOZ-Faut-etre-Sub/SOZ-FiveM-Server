@@ -1,10 +1,11 @@
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { Rpc } from '../../../core/decorators/rpc';
-import { Feature, isFeatureEnabled } from '../../../shared/features';
+import { Feature } from '../../../shared/features';
 import { RpcServerEvent } from '../../../shared/rpc';
 import { Halloween2022Scenario2 } from '../../../shared/story/halloween-2022/scenario2';
 import { Dialog, ScenarioState } from '../../../shared/story/story';
+import { FeatureProvider } from '../../feature/feature.provider';
 import { InventoryManager } from '../../inventory/inventory.manager';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
@@ -22,9 +23,12 @@ export class Halloween2022Scenario2Provider {
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     @Rpc(RpcServerEvent.STORY_HALLOWEEN_SCENARIO2)
     public onScenario2(source: number): Dialog | null {
-        if (!isFeatureEnabled(Feature.HalloweenScenario2)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.HalloweenScenario2)) {
             return;
         }
 

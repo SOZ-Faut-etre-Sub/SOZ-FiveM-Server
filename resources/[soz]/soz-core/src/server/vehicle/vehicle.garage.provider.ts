@@ -2,7 +2,7 @@ import { PlayerVehicle, Prisma } from '@prisma/client';
 import { GangService } from '@private/server/gang/gang.service';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { wait } from '@public/core/utils';
-import { Feature, isFeatureEnabled } from '@public/shared/features';
+import { Feature } from '@public/shared/features';
 
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -33,6 +33,7 @@ import { getDefaultVehicleCondition, VehicleCategory } from '../../shared/vehicl
 import { BankService } from '../bank/bank.service';
 import { PriceService } from '../bank/price.service';
 import { PrismaService } from '../database/prisma.service';
+import { FeatureProvider } from '../feature/feature.provider';
 import { HousingProvider } from '../housing/housing.provider';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { JobService } from '../job.service';
@@ -124,6 +125,9 @@ export class VehicleGarageProvider {
     @Inject(VehicleDealershipProvider)
     private vehicleDealershipProvider: VehicleDealershipProvider;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     @Once(OnceStep.RepositoriesLoaded)
     public async init(): Promise<void> {
         const queries = `
@@ -160,7 +164,7 @@ export class VehicleGarageProvider {
             },
         });
 
-        if (!isFeatureEnabled(Feature.SummerHeat)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.SummerHeat)) {
             const garages = await this.garageRepository.get();
             const toPound: number[] = [];
             const toVoid: number[] = [];

@@ -2,11 +2,12 @@ import { OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { ServerEvent } from '@public/shared/event/server';
-import { Feature, isFeatureEnabled } from '@public/shared/features';
+import { Feature } from '@public/shared/features';
 import { doLooting, Loot } from '@public/shared/loot';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
 import { PrismaService } from '../database/prisma.service';
+import { FeatureProvider } from '../feature/feature.provider';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { Notifier } from '../notifier';
 import { PlayerMoneyService } from '../player/player.money.service';
@@ -33,6 +34,9 @@ export class EasterHuntProvider {
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     private loots: Loot[] = [
         { type: 'money', value: 150, chance: 20 },
         { type: 'item', value: 'easter_basket', chance: 10 },
@@ -47,7 +51,7 @@ export class EasterHuntProvider {
 
     @OnEvent(ServerEvent.EASTER_HUNT)
     public async onHunt(source: number, position: Vector3) {
-        if (!isFeatureEnabled(Feature.Easter)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Easter)) {
             return;
         }
 

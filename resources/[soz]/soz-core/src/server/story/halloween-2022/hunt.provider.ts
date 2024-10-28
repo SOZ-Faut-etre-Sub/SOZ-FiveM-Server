@@ -4,10 +4,11 @@ import { On } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
-import { Feature, isFeatureEnabled } from '../../../shared/features';
+import { Feature } from '../../../shared/features';
 import { doLooting, Loot } from '../../../shared/loot';
 import { Vector3 } from '../../../shared/polyzone/vector';
 import { PrismaService } from '../../database/prisma.service';
+import { FeatureProvider } from '../../feature/feature.provider';
 import { InventoryManager } from '../../inventory/inventory.manager';
 import { Notifier } from '../../notifier';
 import { PlayerMoneyService } from '../../player/player.money.service';
@@ -34,6 +35,9 @@ export class HuntProvider {
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     private loots: Loot[] = [
         { type: 'item', value: 'batrachian_eye', chance: 10 },
         { type: 'item', value: 'zombie_hand', chance: 10 },
@@ -49,7 +53,7 @@ export class HuntProvider {
 
     @On(ServerEvent.HALLOWEEN2022_HUNT)
     public async onScenario1(source: number, position: Vector3) {
-        if (!isFeatureEnabled(Feature.Halloween)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Halloween)) {
             return;
         }
 
@@ -121,6 +125,6 @@ export class HuntProvider {
 
     @Exportable('isHalloween')
     public isHalloween(): boolean {
-        return isFeatureEnabled(Feature.Halloween);
+        return this.featureProvider.isFeatureEnabled(Feature.Halloween);
     }
 }

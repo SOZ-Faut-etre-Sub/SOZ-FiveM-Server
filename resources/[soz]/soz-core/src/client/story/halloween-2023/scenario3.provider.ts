@@ -14,7 +14,7 @@ import { Provider } from '@public/core/decorators/provider';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { wait } from '@public/core/utils';
 import { ServerEvent } from '@public/shared/event';
-import { Feature, isFeatureEnabled } from '@public/shared/features';
+import { Feature } from '@public/shared/features';
 import { PlayerData } from '@public/shared/player';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { toVector4Object } from '@public/shared/polyzone/vector';
@@ -32,6 +32,7 @@ import {
 } from '@public/shared/story/halloween-2023/scenario3';
 
 import { TaxType } from '../../../shared/bank';
+import { FeatureProvider } from '../../feature/feature.provider';
 import { StoryProvider } from '../story.provider';
 
 @Provider()
@@ -69,12 +70,15 @@ export class Halloween2023Scenario3Provider {
     @Inject(Notifier)
     private notifier: Notifier;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     private electricity = false;
     private doorUnlock = false;
 
     @Once(OnceStep.PlayerLoaded)
     public async onPlayerLoaded() {
-        if (!isFeatureEnabled(Feature.Halloween2023Scenario3)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Halloween2023Scenario3)) {
             return;
         }
 
@@ -85,7 +89,7 @@ export class Halloween2023Scenario3Provider {
     }
 
     public createBlip(player: PlayerData) {
-        if (!isFeatureEnabled(Feature.Halloween2023Scenario3)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Halloween2023Scenario3)) {
             return;
         }
 

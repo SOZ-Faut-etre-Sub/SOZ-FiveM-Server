@@ -1,17 +1,18 @@
+import { On, Once, OnceStep, OnEvent } from '@core/decorators/event';
+import { Inject } from '@core/decorators/injectable';
+import { Provider } from '@core/decorators/provider';
+import { Tick, TickInterval } from '@core/decorators/tick';
+import { emitRpc } from '@core/rpc';
+import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { PlayerUpdate } from '@public/core/decorators/player';
 import { Rpc } from '@public/core/decorators/rpc';
 import { wait } from '@public/core/utils';
 import { TargetOption } from '@public/shared/target';
 
-import { On, Once, OnceStep, OnEvent } from '../../core/decorators/event';
-import { Inject } from '../../core/decorators/injectable';
-import { Provider } from '../../core/decorators/provider';
-import { Tick, TickInterval } from '../../core/decorators/tick';
-import { emitRpc } from '../../core/rpc';
 import { AnimationStopReason } from '../../shared/animation';
 import { Component, WardrobeConfig } from '../../shared/cloth';
 import { ClientEvent, ServerEvent } from '../../shared/event';
-import { Feature, isFeatureEnabled } from '../../shared/features';
+import { Feature } from '../../shared/features';
 import { Control } from '../../shared/input';
 import { PlayerData, PlayerServerState, PlayerServerStateExercise } from '../../shared/player';
 import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
@@ -342,6 +343,9 @@ export class PlayerHealthProvider {
     @Inject(PlayerWardrobe)
     private playerWardrobe: PlayerWardrobe;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     private lastRunPosition = null;
 
     private unlimitedSprint = false;
@@ -624,7 +628,7 @@ export class PlayerHealthProvider {
 
     @Tick(TickInterval.EVERY_SECOND)
     async checkRunning(): Promise<void> {
-        if (!isFeatureEnabled(Feature.MyBodySummer)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.MyBodySummer)) {
             return;
         }
 
@@ -691,7 +695,7 @@ export class PlayerHealthProvider {
 
     @Once()
     async onStart(): Promise<void> {
-        if (!isFeatureEnabled(Feature.MyBodySummer)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.MyBodySummer)) {
             return;
         }
 
@@ -734,7 +738,7 @@ export class PlayerHealthProvider {
 
     @Once(OnceStep.PlayerLoaded)
     async setupPlayerBodySummer(): Promise<void> {
-        if (!isFeatureEnabled(Feature.MyBodySummer)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.MyBodySummer)) {
             return;
         }
 

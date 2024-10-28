@@ -20,9 +20,10 @@ export enum Feature {
     Summer = 'Summer',
 }
 
+export type FeaturesConfig = Record<Feature, { [P in Environment]?: boolean }>;
 export type Environment = 'development' | 'production' | 'test';
 
-const FeatureConfig: Record<Feature, { [P in Environment]?: boolean }> = {
+export const DefaultFeatureConfig: FeaturesConfig = {
     [Feature.ChainsOfJustice]: {
         production: true,
         development: true,
@@ -34,9 +35,9 @@ const FeatureConfig: Record<Feature, { [P in Environment]?: boolean }> = {
         test: true,
     },
     [Feature.Halloween]: {
-        production: false,
-        development: false,
-        test: false,
+        production: true,
+        development: true,
+        test: true,
     },
     [Feature.HalloweenReboot]: {
         production: true,
@@ -44,44 +45,44 @@ const FeatureConfig: Record<Feature, { [P in Environment]?: boolean }> = {
         test: true,
     },
     [Feature.HalloweenScenario1]: {
-        production: false,
-        development: false,
-        test: false,
+        production: true,
+        development: true,
+        test: true,
     },
     [Feature.HalloweenScenario2]: {
-        production: false,
-        development: false,
-        test: false,
+        production: true,
+        development: true,
+        test: true,
     },
     [Feature.HalloweenScenario3]: {
-        production: false,
-        development: false,
-        test: false,
+        production: true,
+        development: true,
+        test: true,
     },
     [Feature.HalloweenScenario4]: {
-        production: false,
-        development: false,
-        test: false,
+        production: true,
+        development: true,
+        test: true,
     },
     [Feature.Halloween2023Scenario1]: {
-        production: false,
-        development: false,
-        test: false,
+        production: true,
+        development: true,
+        test: true,
     },
     [Feature.Halloween2023Scenario2]: {
-        production: false,
-        development: false,
-        test: false,
+        production: true,
+        development: true,
+        test: true,
     },
     [Feature.Halloween2023Scenario3]: {
-        production: false,
-        development: false,
-        test: false,
+        production: true,
+        development: true,
+        test: true,
     },
     [Feature.Halloween2023Scenario4]: {
-        production: false,
-        development: false,
-        test: false,
+        production: true,
+        development: true,
+        test: true,
     },
     [Feature.Boat]: {
         production: true,
@@ -118,10 +119,4 @@ const FeatureConfig: Record<Feature, { [P in Environment]?: boolean }> = {
         development: false,
         test: false,
     },
-};
-
-export const isFeatureEnabled = (feature: Feature): boolean => {
-    const environment = GetConvar('soz_core_environment', 'development') as Environment;
-
-    return !!FeatureConfig[feature][environment];
 };

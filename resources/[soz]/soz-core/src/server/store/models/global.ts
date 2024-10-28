@@ -1,7 +1,8 @@
+import { DefaultFeatureConfig, FeaturesConfig } from '@public/shared/features';
+import { BLACK_SCREEN_URL, GlobalState } from '@public/shared/global';
+import { JobType } from '@public/shared/job';
 import { createModel } from '@rematch/core';
 
-import { BLACK_SCREEN_URL, GlobalState } from '../../../shared/global';
-import { JobType } from '../../../shared/job';
 import type { RootModel } from './';
 
 export const global = createModel<RootModel>()({
@@ -44,6 +45,7 @@ export const global = createModel<RootModel>()({
             bennys: BLACK_SCREEN_URL,
             cinema: BLACK_SCREEN_URL,
         },
+        features: DefaultFeatureConfig,
     } as GlobalState,
     reducers: {
         update(state, hud: Partial<GlobalState>) {
@@ -54,6 +56,9 @@ export const global = createModel<RootModel>()({
         },
         setJobEnergies(state, energies: Partial<Record<JobType, number>>) {
             return { ...state, jobEnergy: { ...state.jobEnergy, ...energies } };
+        },
+        setFeature(state, feature: Partial<FeaturesConfig>) {
+            return { ...state, features: { ...state.features, ...feature } };
         },
     },
     effects: () => ({}),

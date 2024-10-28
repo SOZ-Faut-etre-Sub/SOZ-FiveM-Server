@@ -3,12 +3,12 @@ import { GangProvider } from '@private/server/gang/gang.provider';
 import { Inject } from '@public/core/decorators/injectable';
 import { Rpc } from '@public/core/decorators/rpc';
 import { CraftCategory, Crafts, CraftsList } from '@public/shared/craft/craft';
-import { isFeatureEnabled } from '@public/shared/features';
 import { InventoryItemMetadata } from '@public/shared/item';
 import { toVector3Object, Vector3 } from '@public/shared/polyzone/vector';
 import { getRandomKeyWeighted } from '@public/shared/random';
 import { RpcServerEvent } from '@public/shared/rpc';
 
+import { FeatureProvider } from '../feature/feature.provider';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
 import { Monitor } from '../monitor/monitor';
@@ -39,6 +39,9 @@ export class CraftProvider {
     @Inject(GangProvider)
     private gangProvider: GangProvider;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     private async getCrafts(source: number, type: string): Promise<Record<string, CraftCategory>> {
         if (type == 'gang') {
             return await this.gangProvider.getGangRecipes(source);
@@ -53,7 +56,7 @@ export class CraftProvider {
         for (const category of Object.keys(crafts)) {
             const categoryList = crafts[category];
 
-            if (categoryList.feature && !isFeatureEnabled(categoryList.feature)) {
+            if (categoryList.feature && !this.featureProvider.isFeatureEnabled(categoryList.feature)) {
                 delete crafts[category];
                 continue;
             }

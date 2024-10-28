@@ -3,8 +3,9 @@ import { ServerEvent } from '@public/shared/event';
 
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
-import { Feature, isFeatureEnabled } from '../../../shared/features';
+import { Feature } from '../../../shared/features';
 import { ScenarioState } from '../../../shared/story/story';
+import { FeatureProvider } from '../../feature/feature.provider';
 import { InventoryManager } from '../../inventory/inventory.manager';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
@@ -20,9 +21,12 @@ export class Halloween2023Scenario2Provider {
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     @OnEvent(ServerEvent.STORY_HALLOWEEN_2023_SCENARIO_2)
     public onScenario2(source: number, step?: number) {
-        if (!isFeatureEnabled(Feature.Halloween2023Scenario2)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Halloween2023Scenario2)) {
             return;
         }
 

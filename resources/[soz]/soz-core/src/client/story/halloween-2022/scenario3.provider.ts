@@ -6,7 +6,7 @@ import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { emitRpc } from '../../../core/rpc';
-import { Feature, isFeatureEnabled } from '../../../shared/features';
+import { Feature } from '../../../shared/features';
 import { RpcServerEvent } from '../../../shared/rpc';
 import {
     Halloween2022Scenario3,
@@ -16,6 +16,7 @@ import {
 import { Dialog } from '../../../shared/story/story';
 import { BlipFactory } from '../../blip';
 import { PedFactory } from '../../factory/ped.factory';
+import { FeatureProvider } from '../../feature/feature.provider';
 import { TargetFactory } from '../../target/target.factory';
 import { StoryProvider } from '../story.provider';
 
@@ -39,9 +40,12 @@ export class Halloween2022Scenario3Provider {
     @Inject(EntityFactory)
     private entityFactory: EntityFactory;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     @Once(OnceStep.PlayerLoaded)
     public async onPlayerLoaded() {
-        if (!isFeatureEnabled(Feature.HalloweenScenario3)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.HalloweenScenario3)) {
             return;
         }
 
@@ -55,7 +59,7 @@ export class Halloween2022Scenario3Provider {
     }
 
     public createBlip(player: PlayerData) {
-        if (!isFeatureEnabled(Feature.HalloweenScenario3)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.HalloweenScenario3)) {
             return;
         }
 

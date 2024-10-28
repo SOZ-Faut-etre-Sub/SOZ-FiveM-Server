@@ -1,11 +1,15 @@
 import { Once, OnceStep } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
-import { Feature, isFeatureEnabled } from '@public/shared/features';
+import { Component, Prop } from '@public/shared/cloth';
+import { VanillaComponentDrawableIndexMaxValue, VanillaPropDrawableIndexMaxValue } from '@public/shared/drawable';
+import { Feature } from '@public/shared/features';
 import { WorldObject } from '@public/shared/object';
+import { PlayerPedHash } from '@public/shared/player';
 import { toVector4Object, Vector4 } from '@public/shared/polyzone/vector';
 
 import { PedFactory } from '../factory/ped.factory';
+import { FeatureProvider } from '../feature/feature.provider';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
@@ -1775,9 +1779,12 @@ export class DevilBaitShopProvider {
     @Inject(Halloween2023Scenario4Provider)
     private halloween2023Scenario4Provider: Halloween2023Scenario4Provider;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     @Once(OnceStep.PlayerLoaded)
     public async onPlayerLoaded() {
-        if (!isFeatureEnabled(Feature.Halloween)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Halloween)) {
             return;
         }
 
@@ -1801,7 +1808,6 @@ export class DevilBaitShopProvider {
                 Father: 6,
             },
             components: {
-                2: [97, 0, 0],
                 3: [16, 1, 0],
                 4: [63, 2, 0],
                 5: [114, 0, 0],
@@ -1812,7 +1818,7 @@ export class DevilBaitShopProvider {
                 11: [415, 8, 0],
             },
             props: {
-                0: [203, 0, 0],
+                0: [VanillaPropDrawableIndexMaxValue[PlayerPedHash.Female][Prop.Hat] + 9, 0, 0],
                 2: [7, 0, 0],
                 6: [1, 0, 0],
             },
@@ -1854,7 +1860,7 @@ export class DevilBaitShopProvider {
                 EyebrowColor: 8,
                 HairColor: 61,
                 ChestHairColor: 0,
-                HairType: 106,
+                HairType: VanillaComponentDrawableIndexMaxValue[PlayerPedHash.Female][Component.Hair] + 20,
                 EyebrowType: 1,
                 ChestHairOpacity: 1,
                 HairSecondaryColor: 54,
@@ -1942,7 +1948,7 @@ export class DevilBaitShopProvider {
                 11: [29, 0, 0],
             },
             props: {
-                0: [204, 0, 0],
+                0: [VanillaPropDrawableIndexMaxValue[PlayerPedHash.Male][Prop.Hat] + 9, 0, 0],
             },
             face: {
                 NosePeakLength: 0.0,

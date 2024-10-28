@@ -1,6 +1,6 @@
 import { Prop, Wardrobe } from '@public/shared/cloth';
 import { VanillaPropDrawableIndexMaxValue } from '@public/shared/drawable';
-import { Feature, isFeatureEnabled } from '@public/shared/features';
+import { Feature } from '@public/shared/features';
 import { toVector4Object, Vector4 } from '@public/shared/polyzone/vector';
 import { getRandomInt } from '@public/shared/random';
 import { EasterShopContent } from '@public/shared/shop/easter';
@@ -11,6 +11,7 @@ import { Provider } from '../../core/decorators/provider';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { ShopProduct } from '../../shared/shop';
+import { FeatureProvider } from '../feature/feature.provider';
 import { ItemService } from '../item/item.service';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
@@ -32,6 +33,9 @@ export class EasterShopProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     private isWearingEar = false;
 
     public async onOpenMenu(products: ShopProduct[]) {
@@ -52,7 +56,7 @@ export class EasterShopProvider {
 
     @Once(OnceStep.Start)
     setupEaster() {
-        if (!isFeatureEnabled(Feature.Easter)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Easter)) {
             return;
         }
 

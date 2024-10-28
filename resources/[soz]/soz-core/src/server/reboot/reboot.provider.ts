@@ -7,9 +7,10 @@ import { Provider } from '../../core/decorators/provider';
 import { Logger } from '../../core/logger';
 import { wait } from '../../core/utils';
 import { ServerEvent } from '../../shared/event';
-import { Feature, isFeatureEnabled } from '../../shared/features';
+import { Feature } from '../../shared/features';
 import { ApiClient } from '../api/api.client';
 import { PrismaService } from '../database/prisma.service';
+import { FeatureProvider } from '../feature/feature.provider';
 import { PlayerCleanService } from '../player/player.clean.service';
 import { QBCore } from '../qbcore';
 import { Store } from '../store/store';
@@ -43,6 +44,9 @@ export class RebootProvider {
 
     @Inject('Store')
     private store: Store;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     @OnEvent(ServerEvent.FIVEM_PLAYER_CONNECTING)
     public onPlayerConnecting(source, name, setKickReason, deferrals) {
@@ -160,7 +164,7 @@ export class RebootProvider {
 
         this.store.dispatch.global.update({ blackout: true });
 
-        if (isFeatureEnabled(Feature.HalloweenReboot)) {
+        if (this.featureProvider.isFeatureEnabled(Feature.HalloweenReboot)) {
             this.weatherProvider.setWeather('HALLOWEEN');
             await wait(60 * 1000);
 

@@ -13,7 +13,7 @@ import { Tick, TickInterval } from '../../core/decorators/tick';
 import { Logger } from '../../core/logger';
 import { wait } from '../../core/utils';
 import { ClientEvent } from '../../shared/event';
-import { Feature, isFeatureEnabled } from '../../shared/features';
+import { Feature } from '../../shared/features';
 import { RpcServerEvent } from '../../shared/rpc';
 import {
     addSecondstoTime,
@@ -26,6 +26,7 @@ import {
     TimeSynchro,
     Weather,
 } from '../../shared/weather';
+import { FeatureProvider } from '../feature/feature.provider';
 import { Monitor } from '../monitor/monitor';
 import { Pollution } from '../pollution';
 import { Store } from '../store/store';
@@ -49,6 +50,9 @@ export class WeatherProvider {
     @Inject(Monitor)
     private monitor: Monitor;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     private shouldUpdateWeather = true;
     private pollutionManagerReady = false;
 
@@ -57,13 +61,13 @@ export class WeatherProvider {
     private timeReady = false;
     private currentTime: Time = { hour: 2, minute: 0, second: 0 };
     // See forecast.ts for the list of available forecasts
-    private forecast: Forecast = isFeatureEnabled(Feature.Halloween) ? Halloween : Summer;
+    private forecast: Forecast = Summer;
     // See temperature.ts for the list of available temperature ranges,
     // please ensure that the day and night temperature ranges are using the same season
     private dayTemperatureRange: TemperatureRange = DaySummerTemperature;
     private nightTemperatureRange: TemperatureRange = NightSummerTemperature;
 
-    private defaultWeather: Weather = isFeatureEnabled(Feature.Halloween) ? 'CLOUDS' : 'OVERCAST';
+    private defaultWeather: Weather = 'OVERCAST';
 
     private incomingForecasts: ForecastWithTemperature[] = null;
 
@@ -72,6 +76,11 @@ export class WeatherProvider {
 
     @Once()
     public async init() {
+        if (this.featureProvider.isFeatureEnabled(Feature.Halloween)) {
+            this.forecast = Halloween;
+            this.defaultWeather = 'CLOUDS';
+        }
+
         if (this.forecast == Winter) {
             this.store.dispatch.global.update({ snow: true });
         }
@@ -112,7 +121,7 @@ export class WeatherProvider {
 
         addSecondstoTime(this.currentTime, (IRLDayDurationInMinutes / DayDurationInMinutes) * UPDATE_TIME_INTERVAL);
 
-        if (isFeatureEnabled(Feature.Halloween)) {
+        if (this.featureProvider.isFeatureEnabled(Feature.Halloween)) {
             if (this.currentTime.hour >= 2 || this.currentTime.hour < 1) {
                 this.currentTime.hour = 1;
                 this.currentTime.minute = 0;

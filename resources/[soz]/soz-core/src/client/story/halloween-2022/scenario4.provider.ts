@@ -8,7 +8,7 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { emitRpc } from '../../../core/rpc';
 import { wait } from '../../../core/utils';
-import { Feature, isFeatureEnabled } from '../../../shared/features';
+import { Feature } from '../../../shared/features';
 import { Vector4 } from '../../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../../shared/rpc';
 import { Halloween2022Scenario4 } from '../../../shared/story/halloween-2022/scenario4';
@@ -16,6 +16,7 @@ import { Dialog } from '../../../shared/story/story';
 import { AnimationService } from '../../animation/animation.service';
 import { BlipFactory } from '../../blip';
 import { PedFactory } from '../../factory/ped.factory';
+import { FeatureProvider } from '../../feature/feature.provider';
 import { Notifier } from '../../notifier';
 import { ProgressService } from '../../progress.service';
 import { TargetFactory } from '../../target/target.factory';
@@ -44,9 +45,12 @@ export class Halloween2022Scenario4Provider {
     @Inject(Notifier)
     private notifier: Notifier;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     @Once(OnceStep.PlayerLoaded)
     public async onPlayerLoaded() {
-        if (!isFeatureEnabled(Feature.HalloweenScenario4)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.HalloweenScenario4)) {
             return;
         }
 
@@ -91,7 +95,7 @@ export class Halloween2022Scenario4Provider {
     }
 
     public createBlip(player: PlayerData) {
-        if (!isFeatureEnabled(Feature.HalloweenScenario4)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.HalloweenScenario4)) {
             return;
         }
 
@@ -508,14 +512,11 @@ export class Halloween2022Scenario4Provider {
                 Hash: -1667301416,
             },
             components: {
-                2: [97, 0, 0],
-                3: [34, 0, 0],
-                4: [201, 22, 0],
-                6: [8, 0, 0],
-                7: [148, 0, 0],
+                3: [38, 0, 0],
+                4: [229, 22, 0],
+                6: [161, 4, 0],
                 8: [160, 0, 0],
-                9: [54, 0, 0],
-                10: [192, 0, 0],
+                9: [71, 1, 0],
                 11: [366, 3, 0],
             },
             props: {
@@ -558,7 +559,7 @@ export class Halloween2022Scenario4Provider {
                 HairSecondaryColor: 15,
                 BeardType: -1,
                 EyebrowOpacity: 1,
-                HairType: 97,
+                HairType: 123,
                 EyebrowType: 1,
                 BeardOpacity: 1,
                 HairColor: 16,
@@ -1009,7 +1010,7 @@ export class Halloween2022Scenario4Provider {
                 4: [73, 0, 0],
                 6: [24, 0, 0],
                 7: [112, 2, 0],
-                8: [2, 2, 0],
+                8: [1, 12, 0],
                 9: [0, 0, 0],
                 10: [0, 0, 0],
                 11: [151, 3, 0],
@@ -2520,8 +2521,8 @@ export class Halloween2022Scenario4Provider {
                 ],
                 1: [0, 0, 0],
                 2: [19, 0, 0],
-                3: [VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Legs] + 1, 0, 0],
-                4: [25, 0, 0],
+                3: [11, 0, 0],
+                4: [VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Legs] + 1, 0, 0],
                 10: [VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Decals] + 2, 2, 0],
                 5: [VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Bag], 0, 0],
             },

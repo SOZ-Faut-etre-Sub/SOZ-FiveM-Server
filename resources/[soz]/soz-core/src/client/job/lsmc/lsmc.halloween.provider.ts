@@ -4,7 +4,8 @@ import { Once } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
-import { Feature, isFeatureEnabled } from '../../../shared/features';
+import { Feature } from '../../../shared/features';
+import { FeatureProvider } from '../../feature/feature.provider';
 import { InputService } from '../../nui/input.service';
 import { NuiDispatch } from '../../nui/nui.dispatch';
 import { NuiMenu } from '../../nui/nui.menu';
@@ -32,6 +33,9 @@ export class LSMCHalloweenProvider {
     @Inject(InputService)
     private inputService: InputService;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     public doLoot(entity: number) {
         const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
 
@@ -40,7 +44,7 @@ export class LSMCHalloweenProvider {
 
     @Once()
     public onStart() {
-        if (!isFeatureEnabled(Feature.Halloween)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Halloween)) {
             return;
         }
 

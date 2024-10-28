@@ -4,7 +4,8 @@ import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
-import { Feature, isFeatureEnabled } from '../../../shared/features';
+import { Feature } from '../../../shared/features';
+import { FeatureProvider } from '../../feature/feature.provider';
 import { TargetFactory } from '../../target/target.factory';
 
 @Provider()
@@ -15,9 +16,12 @@ export class HuntProvider {
     @Inject(ObjectProvider)
     private objectProvider: ObjectProvider;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     @Once(OnceStep.PlayerLoaded)
     public async onPlayerLoaded() {
-        if (!isFeatureEnabled(Feature.Halloween)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Halloween)) {
             return;
         }
 

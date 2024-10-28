@@ -5,12 +5,13 @@ import { TargetFactory } from '@public/client/target/target.factory';
 import { emitRpc } from '@public/core/rpc';
 import { CraftsList } from '@public/shared/craft/craft';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
-import { Feature, isFeatureEnabled } from '@public/shared/features';
+import { Feature } from '@public/shared/features';
 import { JobType } from '@public/shared/job';
 import { MenuType } from '@public/shared/nui/menu';
 import { RpcServerEvent } from '@public/shared/rpc';
 
 import { BlipFactory } from '../../blip';
+import { FeatureProvider } from '../../feature/feature.provider';
 import { NuiMenu } from '../../nui/nui.menu';
 import { PlayerService } from '../../player/player.service';
 
@@ -27,6 +28,9 @@ export class FoodProvider {
 
     @Inject(TargetFactory)
     private targetFactory: TargetFactory;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     private state = {
         displayMilkBlip: false,
@@ -51,7 +55,7 @@ export class FoodProvider {
 
         this.blipFactory.hide('displayMilkBlip', true);
 
-        if (isFeatureEnabled(Feature.EasterFood)) {
+        if (this.featureProvider.isFeatureEnabled(Feature.EasterFood)) {
             this.state.easterEnabled = true;
 
             this.blipFactory.create('displayEasterEggBlip', {

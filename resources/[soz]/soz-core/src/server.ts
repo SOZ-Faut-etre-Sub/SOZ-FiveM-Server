@@ -17,6 +17,7 @@ import { DatabaseModule } from './server/database/database.module';
 import { DoorModule } from './server/door/door.module';
 import { DrivingSchoolModule } from './server/driving-school/ds.module';
 import { FieldModule } from './server/farm/field.module';
+import { FeatureModule } from './server/feature/feature.module';
 import { HousingModule } from './server/housing/housing.module';
 import { InventoryModule } from './server/inventory/inventory.module';
 import { ItemModule } from './server/item/item.module';
@@ -124,6 +125,7 @@ async function bootstrap() {
         DoorModule,
         SceneModule,
         WorldModule,
+        FeatureModule,
         ...PrivateModules
     );
 

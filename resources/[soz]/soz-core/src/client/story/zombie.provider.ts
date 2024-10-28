@@ -2,7 +2,9 @@ import { On } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { ResourceLoader } from '@public/client/repository/resource.loader';
-import { Feature, isFeatureEnabled } from '@public/shared/features';
+import { Feature } from '@public/shared/features';
+
+import { FeatureProvider } from '../feature/feature.provider';
 
 // For some reason populationPedCreating does not use int32 for model hash
 // so cannot use GetHashKey
@@ -57,9 +59,12 @@ export class ZombieProvider {
     @Inject(ResourceLoader)
     private resourceLoader: ResourceLoader;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     @On('populationPedCreating')
     public async onStart(x: number, y: number, z: number, model: number, setters) {
-        if (!isFeatureEnabled(Feature.Halloween)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Halloween)) {
             return;
         }
 

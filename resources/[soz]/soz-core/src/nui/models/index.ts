@@ -1,4 +1,5 @@
 import { drugLocation } from '@private/nui/drug/DrugLocation';
+import { features } from '@public/nui/models/features';
 import { repository } from '@public/nui/models/repository';
 import { Models } from '@rematch/core';
 
@@ -23,6 +24,7 @@ export interface RootModel extends Models<RootModel> {
     drugLocation: typeof drugLocation;
     api: typeof api;
     repository: typeof repository;
+    features: typeof features;
 }
 
 export const models: RootModel = {
@@ -38,4 +40,5 @@ export const models: RootModel = {
     drugLocation,
     api,
     repository,
+    features,
 };

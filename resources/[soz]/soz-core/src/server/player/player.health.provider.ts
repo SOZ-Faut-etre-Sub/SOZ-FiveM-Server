@@ -1,4 +1,5 @@
 import { PriceService } from '@public/server/bank/price.service';
+import { FeatureProvider } from '@public/server/feature/feature.provider';
 import { PlayerZombieProvider } from '@public/server/player/player.zombie.provider';
 import { TaxType } from '@public/shared/bank';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
@@ -8,7 +9,7 @@ import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ServerEvent } from '../../shared/event';
-import { Feature, isFeatureEnabled } from '../../shared/features';
+import { Feature } from '../../shared/features';
 import { PlayerMetadata, PlayerServerStateExercise } from '../../shared/player';
 import { PollutionLevel } from '../../shared/pollution';
 import { Notifier } from '../notifier';
@@ -67,6 +68,9 @@ export class PlayerHealthProvider {
     @Inject(PlayerHealthService)
     private playerHealthService: PlayerHealthService;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     private yogaAndNaturalMultiplier: (source: number) => number = () => 1;
 
     @OnEvent(ServerEvent.PLAYER_NUTRITION_LOOP)
@@ -89,7 +93,7 @@ export class PlayerHealthProvider {
         let hungerDiff = HUNGER_RATE;
         let thirstDiff = THIRST_RATE;
 
-        if (isFeatureEnabled(Feature.SummerHeat)) {
+        if (this.featureProvider.isFeatureEnabled(Feature.SummerHeat)) {
             thirstDiff *= 1.2;
         }
 
@@ -112,7 +116,7 @@ export class PlayerHealthProvider {
         datas.alcohol = this.playerService.getIncrementedMetadata(player, 'alcohol', ALCOHOL_RATE, 0, 200);
         datas.drug = this.playerService.getIncrementedMetadata(player, 'drug', DRUG_RATE, 0, 110);
 
-        if (isFeatureEnabled(Feature.MyBodySummer)) {
+        if (this.featureProvider.isFeatureEnabled(Feature.MyBodySummer)) {
             const now = new Date().getTime();
 
             const strengthTimeDiff = now - playerState.lastStrengthUpdate;
