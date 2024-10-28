@@ -38,7 +38,7 @@ export class HalloweenSpiderService {
     public async init() {
         if (this.arachnophobe && this.featureProvider.isFeatureEnabled(Feature.Halloween)) {
             for (const spiderLoc of spiderlocations) {
-                CreateModelSwap(spiderLoc[0], spiderLoc[1], spiderLoc[2], 38.2, spider, 0, true);
+                CreateModelHide(spiderLoc[0], spiderLoc[1], spiderLoc[2], 38.2, spider, true);
             }
         }
     }
@@ -53,9 +53,9 @@ export class HalloweenSpiderService {
 
         for (const spiderLoc of spiderlocations) {
             if (this.arachnophobe) {
-                CreateModelSwap(spiderLoc[0], spiderLoc[1], spiderLoc[2], 38.2, spider, 0, true);
+                CreateModelHide(spiderLoc[0], spiderLoc[1], spiderLoc[2], 38.2, spider, true);
             } else {
-                RemoveModelSwap(spiderLoc[0], spiderLoc[1], spiderLoc[2], 38.2, spider, 0, false);
+                RemoveModelHide(spiderLoc[0], spiderLoc[1], spiderLoc[2], 38.2, spider, false);
             }
         }
     }
