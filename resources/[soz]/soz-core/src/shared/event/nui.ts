@@ -126,6 +126,8 @@ export enum NuiEvent {
     AdminMenuEventStart = 'soz-core:nui:admin:event:start',
     AdminMenuEventSetStartSound = 'soz-core:nui:admin:event:set-start-sound',
 
+    BlipAction = 'soz-core:client:blip:action',
+
     GetAPIConfig = 'soz-core:nui:get-api-config',
     GetJWTToken = 'soz-core:nui:get-jwt-token',
 

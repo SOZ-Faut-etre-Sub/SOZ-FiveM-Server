@@ -18,6 +18,10 @@ export class PlayerPositionProvider {
         this.registerZone(this.AIRPORT, [-1037.47, -2737.59, 20.17, 330.0]);
     }
 
+    public getPlayerPosition(source: number): Vector3 | null {
+        return this.players[source] || null;
+    }
+
     public updatePosition(source: number, coord: Vector3) {
         const prevCoord = this.players[source];
         this.players[source] = coord;

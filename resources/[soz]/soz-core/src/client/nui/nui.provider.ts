@@ -29,6 +29,8 @@ export class NuiProvider {
 
     private disabledAllControls = false;
 
+    private showCursor = true;
+
     @Inject(OnceLoader)
     private onceLoader: OnceLoader;
 
@@ -83,6 +85,7 @@ export class NuiProvider {
         this.keepInput = false;
         this.disabledControls = {};
         this.disabledAllControls = false;
+        this.showCursor = true;
 
         for (const focus of Object.values(this.state)) {
             this.keyboard = this.keyboard || focus.keyboard;
@@ -94,9 +97,11 @@ export class NuiProvider {
             }
 
             this.disabledAllControls = this.disabledAllControls || focus.disableAllControls;
+            this.showCursor = this.showCursor && focus.showCursor;
         }
 
         SetNuiFocus(this.keyboard, this.cursor);
         SetNuiFocusKeepInput(this.keepInput);
+        SetMouseCursorVisibleInMenus(this.showCursor);
     }
 }

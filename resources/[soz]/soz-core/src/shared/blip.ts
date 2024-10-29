@@ -36,6 +36,7 @@ export type QbBlip = {
     category?: number;
     radius?: number;
     type?: BlipType;
+    group?: string;
 };
 
 export type Blip = RequireAtLeastOne<QbBlip, 'coords' | 'position'>;

@@ -3,6 +3,9 @@ import { OnEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { Rpc } from '@core/decorators/rpc';
+import { Tick } from '@core/decorators/tick';
+import { ObjectProvider } from '@public/server/object/object.provider';
+import { PlayerPositionProvider } from '@public/server/player/player.position.provider';
 import { Gauge } from 'prom-client';
 
 import { ClientEvent } from '../../shared/event/client';
@@ -27,7 +30,15 @@ export class PlayerZombieProvider {
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
 
+    @Inject(PlayerPositionProvider)
+    private playerPositionProvider: PlayerPositionProvider;
+
+    @Inject(ObjectProvider)
+    private objectProvider: ObjectProvider;
+
     private zombiePlayerList = new Set<string>();
+
+    private zombieTpList = new Map<string, number>();
 
     private zombieCount: Gauge<string> = new Gauge({
         name: 'soz_player_zombie_count',
@@ -136,6 +147,60 @@ export class PlayerZombieProvider {
         this.zombieCount.set(this.zombiePlayerList.size);
 
         TriggerClientEvent(ClientEvent.PLAYER_ZOMBIE_REMOVE, source);
+    }
+
+    @OnEvent(ServerEvent.PLAYER_ZOMBIE_TP)
+    public async tpZombie(source: number, propId: string) {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        const lastTp = this.zombieTpList.get(player.citizenid) || 0;
+        const now = Date.now();
+
+        if (now - lastTp < 3 * 60 * 1000) {
+            this.notifier.notify(source, 'Tu dois ~r~attendre~s~ avant de pouvoir te téléporter !');
+
+            return;
+        }
+
+        const object = this.objectProvider.getObjects().find(object => object.id === propId);
+
+        if (!object) {
+            return;
+        }
+
+        this.playerPositionProvider.teleportToCoords(source, object.position);
+        this.zombieTpList.set(player.citizenid, now);
+    }
+
+    @Tick(5000)
+    public sendZombiePosition() {
+        const positions = {};
+        const players = [];
+
+        for (const playerId of this.zombiePlayerList) {
+            const player = this.playerService.getPlayerByCitizenId(playerId);
+
+            if (!player) {
+                continue;
+            }
+
+            const position = this.playerPositionProvider.getPlayerPosition(player.source);
+
+            if (!position) {
+                continue;
+            }
+
+            players.push(player.source);
+            positions[player.source] = position;
+        }
+
+        for (const source of players) {
+            TriggerLatentClientEvent(ClientEvent.PLAYER_ZOMBIE_SET_POSITIONS, source, 16 * 1024, positions);
+        }
     }
 
     @Command('clear-zombie', { role: 'admin' })

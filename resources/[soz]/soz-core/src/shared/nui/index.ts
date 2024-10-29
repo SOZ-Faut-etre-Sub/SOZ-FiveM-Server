@@ -1,5 +1,6 @@
 import { MiniGameMethodMap } from '@private/shared/minigame';
 import { NuiBankAtmMethodMap, NuiBankMethodMap, NuiBankSafeMethodMap } from '@public/shared/nui/bank';
+import { NuiBlipMethodMap } from '@public/shared/nui/blip';
 import { NuiBookMethodMap } from '@public/shared/nui/book';
 import { NuiCardMethodMap } from '@public/shared/nui/card';
 import { NuiCraftingMethodMap } from '@public/shared/nui/crafting';
@@ -92,6 +93,7 @@ export interface NuiMethodMap {
     minigame: MiniGameMethodMap;
     scene: NuiSceneSearchMethodMap;
     feature: NuiFeatureMethodMap;
+    blip: NuiBlipMethodMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(

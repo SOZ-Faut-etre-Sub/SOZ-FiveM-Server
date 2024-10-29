@@ -231,6 +231,7 @@ export enum ServerEvent {
 
     PLAYER_ZOMBIE_CONVERT = 'soz-core:server:player:zombie:convert',
     PLAYER_ZOMBIE_REMOVE = 'soz-core:server:player:zombie:remove',
+    PLAYER_ZOMBIE_TP = 'soz-core:server:player:zombie:tp',
 
     PLAYER_OPEN_WALLET = 'soz-core:server:player:open-wallet',
 

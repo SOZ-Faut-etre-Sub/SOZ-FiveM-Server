@@ -1,6 +1,10 @@
+import { joaat } from '@public/shared/joaat';
+
 import { WardrobeConfig } from '../cloth';
 import { getLocationHash } from '../locationhash';
 import { Vector3 } from '../polyzone/vector';
+
+export const BIN_MODELS = [joaat('soz_prop_bb_bin'), joaat('soz_prop_bb_bin_hs2'), joaat('soz_prop_bb_bin_hs3')];
 
 export const GarbageCloakroom: WardrobeConfig = {
     [GetHashKey('mp_m_freemode_01')]: {

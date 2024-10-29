@@ -1,5 +1,10 @@
+import { BlipFactory } from '@public/client/blip';
+import { ObjectProvider } from '@public/client/object/object.provider';
 import { PhoneService } from '@public/client/phone/phone.service';
+import { Blip } from '@public/shared/blip';
 import { Control } from '@public/shared/input';
+import { BIN_MODELS } from '@public/shared/job/garbage';
+import { Vector3 } from '@public/shared/polyzone/vector';
 import { WeaponName } from '@public/shared/weapons/weapon';
 import PCancelable from 'p-cancelable';
 
@@ -44,9 +49,17 @@ export class PlayerZombieProvider {
     @Inject(PhoneService)
     private readonly phoneService: PhoneService;
 
+    @Inject(ObjectProvider)
+    private readonly objectProvider: ObjectProvider;
+
+    @Inject(BlipFactory)
+    private readonly blipFactory: BlipFactory;
+
     private _isZombie = false;
 
     private transform: PCancelable<void> | null = null;
+
+    private zombiePositions: Record<number, Vector3> = null;
 
     public isZombie(): boolean {
         return this._isZombie;
@@ -92,6 +105,11 @@ export class PlayerZombieProvider {
             await wait(5_000);
             this.transform.cancel();
 
+            const ped = PlayerPedId();
+            const pos = GetEntityCoords(ped);
+            const heading = GetEntityHeading(ped);
+            NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, 1, false);
+
             await wait(2_000);
             await this.zombieTransform();
 
@@ -112,7 +130,7 @@ export class PlayerZombieProvider {
         }
     }
 
-    @Once(OnceStep.PlayerLoaded)
+    @Once(OnceStep.RepositoriesLoaded)
     async onPlayerZombieStart(): Promise<void> {
         // add btarget
         this.targetFactory.createForAllPlayer([
@@ -231,6 +249,86 @@ export class PlayerZombieProvider {
         // Reset ped and clothes
         TriggerEvent('soz-character:Client:ApplyCurrentSkin');
         TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
+
+        // Remove zombie blips
+        const bins = this.objectProvider.getObjects(object => BIN_MODELS.includes(object.model));
+
+        for (const bin of bins) {
+            this.blipFactory.remove(`zombie_tp_${bin.id}`);
+        }
+    }
+
+    @OnEvent(ClientEvent.PLAYER_ZOMBIE_SET_POSITIONS)
+    async onZombieSetPositions(positions: Record<number, Vector3>): Promise<void> {
+        if (this._isZombie) {
+            this.zombiePositions = positions;
+        } else {
+            this.zombiePositions = null;
+        }
+    }
+
+    @Tick(1000)
+    public async checkZombieBlips(): Promise<void> {
+        const currentBlips = this.blipFactory.getBlipsByGroup('zombie');
+
+        if (!this._isZombie) {
+            if (currentBlips.length > 0) {
+                for (const blip of currentBlips) {
+                    this.blipFactory.remove(blip.id);
+                }
+            }
+
+            this.zombiePositions = null;
+
+            return;
+        }
+
+        if (!this.zombiePositions) {
+            return;
+        }
+
+        const blips = {};
+        const toAdd = [];
+        const toDelete = [];
+        const toUpdate = [];
+
+        for (const [id, position] of Object.entries(this.zombiePositions)) {
+            if (!currentBlips.find(blip => blip.id === `zombie_position_${id}`)) {
+                toAdd.push({ id, position });
+            } else {
+                blips[`zombie_position_${id}`] = position;
+            }
+        }
+
+        for (const blip of currentBlips) {
+            if (blips[blip.id]) {
+                toUpdate.push({ id: blip.id, position: blips[blip.id] });
+            }
+
+            if (!blips[blip.id]) {
+                toDelete.push(blip.id);
+            }
+        }
+
+        for (const blip of toAdd) {
+            this.blipFactory.create(`zombie_position_${blip.id}`, {
+                name: 'Zombie',
+                coords: blip.position,
+                sprite: 1,
+                group: 'zombie',
+                color: 47,
+            });
+        }
+
+        for (const blip of toUpdate) {
+            this.blipFactory.update(blip.id, {
+                position: blip.position,
+            });
+        }
+
+        for (const blip of toDelete) {
+            this.blipFactory.remove(blip);
+        }
     }
 
     private async zombieTransform() {
@@ -249,6 +347,34 @@ export class PlayerZombieProvider {
         SetWeaponDamageModifier(WeaponName.UNARMED, 1.0);
         SetPedArmour(PlayerPedId(), 100);
         AnimpostfxPlay(ZOMBIE_SCREEN_EFFECT, 0, true);
+
+        const bins = this.objectProvider.getObjects(object => BIN_MODELS.includes(object.model));
+
+        for (const bin of bins) {
+            this.blipFactory.create(
+                `zombie_tp_${bin.id}`,
+                {
+                    name: 'Cercueil de zombie',
+                    coords: {
+                        x: bin.position[0],
+                        y: bin.position[1],
+                        z: bin.position[2],
+                    },
+                    sprite: 885,
+                },
+                true,
+                [
+                    {
+                        label: 'Téléporter',
+                        action: async (blip: Blip, data: string) => {
+                            SetFrontendActive(false);
+                            TriggerServerEvent(ServerEvent.PLAYER_ZOMBIE_TP, data);
+                        },
+                        data: bin.id,
+                    },
+                ]
+            );
+        }
     }
 
     @OnGameEvent(GameEvent.CEventNetworkEntityDamage)

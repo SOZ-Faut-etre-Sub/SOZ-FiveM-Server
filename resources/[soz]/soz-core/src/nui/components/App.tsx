@@ -37,6 +37,7 @@ import { AtmApp } from './Bank/AtmApp';
 import { BankApp } from './Bank/BankApp';
 import { SafeApp } from './Bank/SafeApp';
 import { RepairApp } from './Bennys/RepairApp';
+import { BlipApp } from './Blip/BlipApp';
 import { BookApp } from './Book/BookApp';
 import { CardApp } from './Card/CardApp';
 import { CraftApp } from './Craft/CraftApp';
@@ -147,6 +148,7 @@ export const App: FunctionComponent = () => {
                 <PincrakerMinigameApp />
             </div>
             <Meteor />
+            <BlipApp />
         </Provider>
     );
 };
