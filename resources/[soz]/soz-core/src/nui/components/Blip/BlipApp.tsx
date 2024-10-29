@@ -21,7 +21,7 @@ export const BlipApp: FunctionComponent = () => {
         setIsPauseMenuActive(active);
     });
 
-    useNuiFocus(actions.length > 0, actions.length > 0 && isOver, actions.length === 0 || !isOver, [], false);
+    useNuiFocus(actions.length > 0, actions.length > 0 && isOver, false);
 
     useEffect(() => {
         if (actions.length > 0) {
