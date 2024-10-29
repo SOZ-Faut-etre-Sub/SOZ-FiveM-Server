@@ -680,6 +680,7 @@ enum report_type {
     report
     complaint
     appeal
+    document
 }
 
 model drugs_seedling {
