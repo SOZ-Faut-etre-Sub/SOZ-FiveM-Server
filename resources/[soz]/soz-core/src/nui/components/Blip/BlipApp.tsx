@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from 'react';
+import {FunctionComponent, useEffect, useState} from 'react';
 
 import { NuiEvent } from '../../../shared/event/nui';
 import { BlipAction } from '../../../shared/nui/blip';
@@ -24,8 +24,15 @@ export const BlipApp: FunctionComponent = () => {
         actions.length === 0 || !isOver,
         [],
         false,
-        actions.length === 0 || !isOver
     );
+
+    useEffect(() => {
+        if (actions.length > 0) {
+            fetchNui(NuiEvent.SetShowCursor, { showCursor: !isOver });
+        } else {
+            fetchNui(NuiEvent.SetShowCursor, { showCursor: false });
+        }
+    }, [actions, isOver]);
 
     const refOutside = useOutside({
         click: () => setActions([]),

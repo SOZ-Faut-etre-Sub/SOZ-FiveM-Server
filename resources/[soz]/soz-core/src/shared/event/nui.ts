@@ -218,6 +218,7 @@ export enum NuiEvent {
     PlayerMenuVoipReset = 'soz-core:nui:player:menu:voip-reset',
     PlayerMenuHudSetArachnophobe = 'soz-core:nui:player:menu:arachnophobe',
     SetFocusInput = 'soz-core:nui:set-focus-input',
+    SetShowCursor = 'soz-core:nui:set-show-cursor',
     SetWardrobeOutfit = 'soz-core:nui:set-wardrobe-outfit',
 
     PlaySound = 'soz-core:nui:play-sound',

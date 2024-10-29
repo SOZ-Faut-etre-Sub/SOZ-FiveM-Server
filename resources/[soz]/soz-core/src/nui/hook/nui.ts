@@ -136,7 +136,6 @@ export const useNuiFocus = (
     keepInput: boolean,
     disableKeepInputControls: Control[] = [],
     disableAllControls = false,
-    showCursor = true
 ) => {
     useEffect(() => {
         const id = uuidv4();
@@ -149,7 +148,6 @@ export const useNuiFocus = (
                 keepInput,
                 disableKeepInputControls,
                 disableAllControls,
-                showCursor,
             },
         });
 
