@@ -1,4 +1,4 @@
-import {FunctionComponent, useEffect, useState} from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event/nui';
 import { BlipAction } from '../../../shared/nui/blip';
@@ -9,6 +9,7 @@ import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
 
 export const BlipApp: FunctionComponent = () => {
     const [actions, setActions] = useState<BlipAction[]>([]);
+    const [isPauseMenuActive, setIsPauseMenuActive] = useState(false);
     const [isOver, setIsOver] = useState(false);
 
     useNuiEvent('blip', 'SetActions', setActions);
@@ -16,23 +17,19 @@ export const BlipApp: FunctionComponent = () => {
         if (!active) {
             setActions([]);
         }
+
+        setIsPauseMenuActive(active);
     });
 
-    useNuiFocus(
-        actions.length > 0,
-        actions.length > 0 && isOver,
-        actions.length === 0 || !isOver,
-        [],
-        false,
-    );
+    useNuiFocus(actions.length > 0, actions.length > 0 && isOver, actions.length === 0 || !isOver, [], false);
 
     useEffect(() => {
         if (actions.length > 0) {
-            fetchNui(NuiEvent.SetShowCursor, { showCursor: !isOver });
+            fetchNui(NuiEvent.SetShowCursor, { showCursor: isPauseMenuActive && !isOver });
         } else {
-            fetchNui(NuiEvent.SetShowCursor, { showCursor: false });
+            fetchNui(NuiEvent.SetShowCursor, { showCursor: isPauseMenuActive });
         }
-    }, [actions, isOver]);
+    }, [actions, isOver, isPauseMenuActive]);
 
     const refOutside = useOutside({
         click: () => setActions([]),
