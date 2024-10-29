@@ -1,10 +1,12 @@
 import { BlipFactory } from '@public/client/blip';
 import { ObjectProvider } from '@public/client/object/object.provider';
 import { PhoneService } from '@public/client/phone/phone.service';
+import { WeaponService } from '@public/client/weapon/weapon.service';
 import { Blip } from '@public/shared/blip';
 import { Control } from '@public/shared/input';
 import { BIN_MODELS } from '@public/shared/job/garbage';
 import { Vector3 } from '@public/shared/polyzone/vector';
+import { getRandomItem } from '@public/shared/random';
 import { WeaponName } from '@public/shared/weapons/weapon';
 import PCancelable from 'p-cancelable';
 
@@ -25,6 +27,7 @@ import { PlayerWalkstyleProvider } from './player.walkstyle.provider';
 
 const ZOMBIE_SCREEN_EFFECT = 'SwitchOpenTrevorIn';
 const ZOMBIE_TRANSFORM_EFFECT = 'MinigameEndTrevor';
+const ZOMBIE_MODELS = ['U_M_Y_Zombie_01', 'G_M_M_Zombie_01', 'G_M_M_Zombie_02'];
 
 @Provider()
 export class PlayerZombieProvider {
@@ -54,6 +57,9 @@ export class PlayerZombieProvider {
 
     @Inject(BlipFactory)
     private readonly blipFactory: BlipFactory;
+
+    @Inject(WeaponService)
+    private weaponService: WeaponService;
 
     private _isZombie = false;
 
@@ -241,6 +247,7 @@ export class PlayerZombieProvider {
         }
 
         this.phoneService.setPhoneDisabled('zombie', false);
+        this.weaponService.setDisabled('zombie', false);
         SetWeaponDamageModifier(WeaponName.UNARMED, 0.5);
 
         await this.playerWalkstyleProvider.updateWalkStyle('drugAlcool', null);
@@ -334,10 +341,13 @@ export class PlayerZombieProvider {
     private async zombieTransform() {
         this._isZombie = true;
         this.nuiDispatch.dispatch('zombie', 'zombie', true);
-        await this.skinService.setModel('u_m_y_zombie_01');
+
+        const model = getRandomItem(ZOMBIE_MODELS);
+        await this.skinService.setModel(model, true);
 
         TriggerServerEvent(ServerEvent.TALENT_TREE_DISABLE_CRIMI);
         this.phoneService.setPhoneDisabled('zombie', true);
+        this.weaponService.setDisabled('zombie', true);
 
         this.notifier.notify(
             'Tu es désormais un ~r~zombie~s~ ! Ton seul et unique bût est de contaminer la terre entière. Agis et comporte toi comme tel !',

@@ -6,7 +6,7 @@ export class SkinService {
     @Inject(ResourceLoader)
     private resourceLoader: ResourceLoader;
 
-    public async setModel(model: string) {
+    public async setModel(model: string, randomize: boolean = false): Promise<void> {
         if (!IsModelInCdimage(model) || !IsModelValid(model)) {
             return;
         }
@@ -14,7 +14,12 @@ export class SkinService {
 
         if (await this.resourceLoader.loadModel(model)) {
             SetPlayerModel(PlayerId(), model);
-            SetPedDefaultComponentVariation(PlayerPedId());
+
+            if (randomize) {
+                SetPedRandomComponentVariation(PlayerPedId(), 0);
+            } else {
+                SetPedDefaultComponentVariation(PlayerPedId());
+            }
         }
 
         this.resourceLoader.unloadModel(model);
