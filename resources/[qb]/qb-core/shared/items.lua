@@ -6359,6 +6359,28 @@ QBShared.Items = {
         ["description"] = "--",
         ["illustrator"] = ".Crash",
     },
+    ["halloween_vampire_queen_plush"] = {
+        ["name"] = "halloween_vampire_queen_plush",
+        ["label"] = "Peluche Reine Vampire",
+        ["weight"] = 200,
+        ["type"] = "item",
+        ["unique"] = true,
+        ["useable"] = false,
+        ["shouldClose"] = true,
+        ["description"] = "Une douce peluche très rare permettant de toujours se souvenir de cet événement.",
+        ["illustrator"] = ".--",
+    },
+    ["halloween_vampire_prince_plush"] = {
+        ["name"] = "halloween_vampire_prince_plush",
+        ["label"] = "Peluche Prince Vampire",
+        ["weight"] = 200,
+        ["type"] = "item",
+        ["unique"] = true,
+        ["useable"] = false,
+        ["shouldClose"] = true,
+        ["description"] = "Une douce peluche très rare permettant de toujours se souvenir de cet événement.",
+        ["illustrator"] = ".--",
+    },
 
     --- DMC
     ["halloween_uranium_raw"] = {
