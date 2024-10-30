@@ -31,6 +31,7 @@ import { Provider } from 'react-redux';
 import { NuiEvent } from '../../shared/event';
 import { fetchNui } from '../fetch';
 import { useNuiEvent } from '../hook/nui';
+import { GlassMorphismProvider } from '../providers/GlassMorphismProvider';
 import { store } from '../store';
 import { AudioApp } from './Audio/AudioApp';
 import { AtmApp } from './Bank/AtmApp';
@@ -95,72 +96,73 @@ export const App: FunctionComponent = () => {
     }, []);
 
     return (
-        <Provider store={store}>
-            <StateApp />
-            <StatePrivateApp />
-            <AudioApp />
-            <GlassMorphism />
-            <div className={classes}>
-                <MapPickerApp />
-                <TargetOverlay />
-                <HudApp />
-                <CardApp />
-                <ProgressApp />
-            </div>
-            <div className={menuClasses}>
-                <MenuApp />
-                <PlayerInventoryApp />
-                <InventoryApp />
-                <KeychainApp />
-                <WalletApp />
-                <ShopCartApp />
-            </div>
-            <div className={classes}>
-                <PanelApp />
-                <SceneSearchPropApp />
-                <RepairApp />
-                <MissiveApp />
-                <DrugContractApp />
-                <RadarApp />
-                <RadioApp />
-                <RadioVehicleApp />
-                <BreathAnalyzerApp />
-                <DrugScreeningApp />
-                <DetectiveBoard />
-                <ScientistCamera />
-                <ScientistPhoto />
-                <HoodApp />
-                <TaxiHorodateurApp />
-                <TalentApp />
-                <CraftingApp />
-                <FishingApp />
-                <SozedexApp />
-                <DrugSkillApp />
-                <DrugTransformApp />
-                <RaceApp />
-                <BookApp />
-                <FieldHealthApp />
-                <FieldZoneHealthApp />
-                <CraftApp />
-                <MedicalApp />
-                <BankApp />
-                <AtmApp />
-                <SafeApp />
-                <BusinessManagementApp />
-                <BusinessVehicleOrderApp />
-                <BusinessCyberApp />
-                <BusinessSmugglingPrintApp />
-                <ArchetypesPresentationsApp />
-                <HackingDeviceApp />
-                <ArrowsMinigameApp />
-                <GridMinigameApp />
-                <BusinessVehicleMappingApp />
-                <CyberReportApp />
-                <PincrakerMinigameApp />
-                <InputApp />
-            </div>
-            <Meteor />
-            <BlipApp />
-        </Provider>
+        <GlassMorphismProvider>
+            <Provider store={store}>
+                <StateApp />
+                <StatePrivateApp />
+                <AudioApp />
+                <div className={classes}>
+                    <MapPickerApp />
+                    <TargetOverlay />
+                    <HudApp />
+                    <CardApp />
+                    <ProgressApp />
+                </div>
+                <div className={menuClasses}>
+                    <MenuApp />
+                    <PlayerInventoryApp />
+                    <InventoryApp />
+                    <KeychainApp />
+                    <WalletApp />
+                    <ShopCartApp />
+                </div>
+                <div className={classes}>
+                    <PanelApp />
+                    <SceneSearchPropApp />
+                    <RepairApp />
+                    <MissiveApp />
+                    <DrugContractApp />
+                    <RadarApp />
+                    <RadioApp />
+                    <RadioVehicleApp />
+                    <BreathAnalyzerApp />
+                    <DrugScreeningApp />
+                    <DetectiveBoard />
+                    <ScientistCamera />
+                    <ScientistPhoto />
+                    <HoodApp />
+                    <TaxiHorodateurApp />
+                    <TalentApp />
+                    <CraftingApp />
+                    <FishingApp />
+                    <SozedexApp />
+                    <DrugSkillApp />
+                    <DrugTransformApp />
+                    <RaceApp />
+                    <BookApp />
+                    <FieldHealthApp />
+                    <FieldZoneHealthApp />
+                    <CraftApp />
+                    <MedicalApp />
+                    <BankApp />
+                    <AtmApp />
+                    <SafeApp />
+                    <BusinessManagementApp />
+                    <BusinessVehicleOrderApp />
+                    <BusinessCyberApp />
+                    <BusinessSmugglingPrintApp />
+                    <ArchetypesPresentationsApp />
+                    <HackingDeviceApp />
+                    <ArrowsMinigameApp />
+                    <GridMinigameApp />
+                    <BusinessVehicleMappingApp />
+                    <CyberReportApp />
+                    <PincrakerMinigameApp />
+                    <InputApp />
+                </div>
+                <Meteor />
+                <BlipApp />
+            </Provider>
+        </GlassMorphismProvider>
     );
 };
