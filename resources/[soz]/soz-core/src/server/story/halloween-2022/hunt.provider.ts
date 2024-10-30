@@ -74,7 +74,7 @@ export class HuntProvider {
         });
 
         if (pumpkin.length > 0) {
-            this.notifier.notify(source, 'Vous avez déjà fouillé cette citrouille', 'info');
+            this.notifier.notify(source, 'Vous avez déjà trouvé cette coupe', 'info');
             return;
         }
 
@@ -84,8 +84,8 @@ export class HuntProvider {
             'Vous fouillez...',
             2000,
             {
-                dictionary: 'anim@mp_radio@garage@low',
-                name: 'action_a',
+                dictionary: 'Rcm_epsilonism4',
+                name: 'eps_4_ig_1_jimmy_lookaround_idle_a_jb',
                 flags: 1,
             },
             {
@@ -99,6 +99,27 @@ export class HuntProvider {
             return;
         }
 
+        const loot = doLooting(this.loots);
+
+        const itemsToAdd = [
+            {
+                name: 'halloween_blood_cup',
+                amount: 1,
+            },
+        ];
+
+        if (loot.type === 'item') {
+            itemsToAdd.push({
+                name: loot.value.toString(),
+                amount: 1,
+            });
+        }
+
+        if (!this.inventoryManager.canCarryItems(source, itemsToAdd)) {
+            this.notifier.notify(source, "Vous n'avez pas assez de place dans votre inventaire", 'error');
+            return;
+        }
+
         await this.prismaService.halloween_pumpkin_hunt.create({
             data: {
                 citizenid: player.citizenid,
@@ -107,20 +128,16 @@ export class HuntProvider {
             },
         });
 
-        this.notifier.notify(source, `Vous avez fouillé ~b~${pumpkinFound + 1}~s~ citrouille(s)`, 'success');
-        const loot = doLooting(this.loots);
+        this.inventoryManager.addItemToInventory(source, 'halloween_blood_cup', 1);
 
         if (loot.type === 'item') {
-            if (this.inventoryManager.canCarryItem(source, loot.value.toString(), 1)) {
-                this.inventoryManager.addItemToInventory(source, loot.value as string, 1);
-                return this.notifier.notify(source, 'Vous avez trouvé un objet', 'success');
-            } else {
-                return this.notifier.notify(source, "Vous n'avez pas assez de place dans votre inventaire", 'error');
-            }
+            this.inventoryManager.addItemToInventory(source, loot.value as string, 1);
+            this.notifier.notify(source, 'Vous avez trouvé une coupe avec un objet', 'success');
         } else if (loot.type === 'money') {
             this.playerMoneyService.add(source, loot.value as number);
-            return this.notifier.notify(source, "Vous avez trouvé de l'argent", 'success');
+            this.notifier.notify(source, "Vous avez trouvé une coupe avec de l'argent", 'success');
         }
+        this.notifier.notify(source, `Vous avez trouvé ~b~${pumpkinFound + 1}~s~ coupe(s)`, 'success');
     }
 
     @Exportable('isHalloween')

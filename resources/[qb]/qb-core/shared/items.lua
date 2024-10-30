@@ -7249,6 +7249,28 @@ QBShared.Items = {
         ["description"] = "Une boisson contenant une dose contrôlée de Virus-Z. En la consommant, votre personnage peut obtenir un boost d'endurance et de résistance, mais doit gérer les risques liés à l'exposition au virus.",
         ["illustrator"] = ".Pastouke",
     },
+    ["halloween_blood_cup"] = {
+        ["name"] = "halloween_blood_cup",
+        ["label"] = "Coupe de Sang",
+        ["weight"] = 300,
+        ["type"] = "drink",
+        ["unique"] = false,
+        ["nutrition"] = {
+            ["hunger"] = 10,
+            ["thirst"] = 10,
+            ["stamina"] = 0,
+            ["fiber"] = 2,
+            ["lipid"] = 2,
+            ["sugar"] = 2,
+            ["protein"] = 2,
+            ["alcohol"] = 0,
+        },
+        ["useable"] = true,
+        ["shouldClose"] = true,
+        ["combinable"] = nil,
+        ["description"] = "Cette coupe ornée, souvent fabriquée en argent ou en or, est finement gravée de motifs occultes et de symboles ésotériques. Remplie de sang rouge vif ou d’un liquide semblable, elle est utilisée lors de rituels sacrés et de festins nocturnes par les vampires.",
+        ["illustrator"] = ".Nariiel",
+    },
 
     ["new_year_bottle_2023"] = {
         ["name"] = "new_year_bottle_2023",
