@@ -5,7 +5,7 @@ import { Vector3 } from '@public/shared/polyzone/vector';
 import PCancelable from 'p-cancelable';
 import { Gauge } from 'prom-client';
 
-import { On, OnEvent } from '../../core/decorators/event';
+import { On, Once, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Rpc } from '../../core/decorators/rpc';
 import { Tick, TickInterval } from '../../core/decorators/tick';
@@ -22,12 +22,14 @@ import {
     VampireGameObjectiveProps,
     VampireGameRole,
     VampireGameServerState,
+    VampireRespawnPoints,
 } from '../../shared/halloween';
 import { ProgressAnimation } from '../../shared/progress';
 import { RpcServerEvent } from '../../shared/rpc';
 import { FeatureProvider } from '../feature/feature.provider';
 import { Notifier } from '../notifier';
 import { PermissionService } from '../permission.service';
+import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerStateService } from '../player/player.state.service';
 import { ProgressService } from '../player/progress.service';
 import { ServerStateService } from '../server.state.service';
@@ -64,6 +66,9 @@ export class VampireGameProvider {
 
     @Inject(NpcProvider)
     private readonly npcProvider: NpcProvider;
+
+    @Inject(PlayerPositionProvider)
+    private playerPositionProvider: PlayerPositionProvider;
 
     private gameDuration = 30; // minutes
     private autoRespawnDuration = 20; // seconds
@@ -118,6 +123,16 @@ export class VampireGameProvider {
             }),
         },
     };
+
+    @Once()
+    onStart() {
+        VampireRespawnPoints.forEach(location => {
+            this.playerPositionProvider.registerZone(`halloween_vampire_respawn_${location.id}`, [
+                ...location.coords,
+                0,
+            ]);
+        });
+    }
 
     @On('QBCore:Server:PlayerLoaded', false)
     async onPlayerLoaded(data: any) {

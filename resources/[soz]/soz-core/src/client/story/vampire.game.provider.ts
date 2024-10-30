@@ -34,6 +34,7 @@ import { Notifier } from '../notifier';
 import { NuiMenu } from '../nui/nui.menu';
 import { MapPickerProvider } from '../picker/map.picker.provider';
 import { PlayerListStateService } from '../player/player.list.state.service';
+import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
 import { PlayerStateProvider } from '../player/player.state.provider';
 import { InteractionProvider } from '../quick-interaction/interaction.provider';
@@ -88,6 +89,9 @@ export class VampireGameProvider {
 
     @Inject(Notifier)
     private readonly notifier: Notifier;
+
+    @Inject(PlayerPositionProvider)
+    private playerPositionProvider: PlayerPositionProvider;
 
     private blipDisabled = new Set<string>();
     private objectiveInteractions = new Set<string>();
@@ -247,7 +251,7 @@ export class VampireGameProvider {
         this.gameState.setPlayerRespawning(true);
 
         const ped = PlayerPedId();
-        let pos = GetEntityCoords(ped);
+        const pos = GetEntityCoords(ped);
         const heading = GetEntityHeading(ped);
 
         StopScreenEffect('DeathFailOut');
@@ -258,11 +262,12 @@ export class VampireGameProvider {
 
         if (role === VampireGameRole.Vampire) {
             const location = await this.mapPickerProvider.showSouthLocationPicker(VampireRespawnPoints);
-            pos = location.coords;
-        }
 
-        NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, 1, false);
-        SetEntityHealth(ped, GetPedMaxHealth(ped));
+            await this.playerPositionProvider.teleportPlayerToPosition(`halloween_vampire_respawn_${location.id}`);
+        } else {
+            NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, 1, false);
+            SetEntityHealth(ped, GetPedMaxHealth(ped));
+        }
 
         await this.syncModel(role);
 
