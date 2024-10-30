@@ -1,5 +1,8 @@
 import { Story } from '../story';
 
+export const Halloween2022Scenario4EnterFinal = 'Halloween2022Scenario4EnterFinal';
+export const Halloween2022Scenario4ExitFinal = 'Halloween2022Scenario4ExitFinal';
+
 export const Halloween2022Scenario4: Story = {
     name: 'Halloween 2022 Scenario 4',
     dialog: {

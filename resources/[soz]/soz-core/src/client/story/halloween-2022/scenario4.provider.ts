@@ -1,3 +1,4 @@
+import { PlayerPositionProvider } from '@public/client/player/player.position.provider';
 import { Component, Prop } from '@public/shared/cloth';
 import { VanillaComponentDrawableIndexMaxValue, VanillaPropDrawableIndexMaxValue } from '@public/shared/drawable';
 import { PlayerData } from '@public/shared/player';
@@ -7,11 +8,13 @@ import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { emitRpc } from '../../../core/rpc';
-import { wait } from '../../../core/utils';
 import { Feature } from '../../../shared/features';
 import { Vector4 } from '../../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../../shared/rpc';
-import { Halloween2022Scenario4 } from '../../../shared/story/halloween-2022/scenario4';
+import {
+    Halloween2022Scenario4,
+    Halloween2022Scenario4EnterFinal,
+} from '../../../shared/story/halloween-2022/scenario4';
 import { Dialog } from '../../../shared/story/story';
 import { AnimationService } from '../../animation/animation.service';
 import { BlipFactory } from '../../blip';
@@ -47,6 +50,9 @@ export class Halloween2022Scenario4Provider {
 
     @Inject(FeatureProvider)
     private featureProvider: FeatureProvider;
+
+    @Inject(PlayerPositionProvider)
+    private playerPositionProvider: PlayerPositionProvider;
 
     @Once(OnceStep.PlayerLoaded)
     public async onPlayerLoaded() {
@@ -409,15 +415,8 @@ export class Halloween2022Scenario4Provider {
                     icon: 'global/search',
                     category: 'citizen',
                     canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario4', 7),
-                    action: async () => {
-                        const ped = PlayerPedId();
-                        DoScreenFadeOut(500);
-                        await wait(500);
-
-                        SetEntityCoords(ped, 2154.75, 2921.0, -61.9, false, false, false, false);
-                        SetEntityRotation(ped, 0.0, 0.0, 88.25, 0, false);
-
-                        DoScreenFadeIn(500);
+                    action: () => {
+                        this.playerPositionProvider.teleportPlayerToPosition(Halloween2022Scenario4EnterFinal);
                     },
                 },
             ]
@@ -439,14 +438,7 @@ export class Halloween2022Scenario4Provider {
                     icon: 'elevators/monter',
                     category: 'citizen',
                     action: async () => {
-                        const ped = PlayerPedId();
-                        DoScreenFadeOut(500);
-                        await wait(500);
-
-                        SetEntityCoords(ped, -262.88, 4729.65, 138.33, false, false, false, false);
-                        SetEntityRotation(ped, 0.0, 0.0, 321.49, 0, false);
-
-                        DoScreenFadeIn(500);
+                        this.playerPositionProvider.teleportPlayerToPosition(Halloween2022Scenario4EnterFinal);
                     },
                 },
             ]
