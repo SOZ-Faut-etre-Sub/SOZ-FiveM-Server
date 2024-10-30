@@ -514,7 +514,6 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
             { id: 'corn_seed', type: 'item', price: 2 },
             { id: 'cabage_seed', type: 'item', price: 2 },
             { id: 'pumpkin_seed', type: 'item', price: 2 },
-            { id: 'garlic_seed', type: 'item', price: 2 },
         ],
     },
     {
