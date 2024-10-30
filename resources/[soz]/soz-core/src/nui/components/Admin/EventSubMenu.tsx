@@ -57,7 +57,7 @@ export const EventSubMenu: FunctionComponent<EventSubMenuProps> = ({ banner, eve
                                     currentEventId: null,
                                     currentSceneId: null,
                                     startTimestamp: null,
-                                    signaled: false,
+                                    signaledInvs: [],
                                 });
                             }}
                         >

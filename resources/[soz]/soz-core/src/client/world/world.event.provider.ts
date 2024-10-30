@@ -9,8 +9,9 @@ import { ClientEvent } from '../../shared/event/client';
 import { FDO } from '../../shared/job';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
-import { EventInfo } from '../../shared/scene';
+import { EventInfo, Scene } from '../../shared/scene';
 import { BlipFactory } from '../blip';
+import { ObjectProvider } from '../object/object.provider';
 import { PlayerService } from '../player/player.service';
 import { SceneRepository } from '../repository/scene.repository';
 import { WorldEventRepository } from '../repository/world.event.repository';
@@ -31,6 +32,9 @@ export class WorldEventProvider {
 
     @Inject(GangRepository)
     private gangRepository: GangRepository;
+
+    @Inject(ObjectProvider)
+    private objectProvider: ObjectProvider;
 
     private currentEvent: EventInfo | null = null;
 
@@ -81,7 +85,7 @@ export class WorldEventProvider {
                 await wait(blipSpawnTime - now);
             }
 
-            if (this.currentEvent.signaled) {
+            if (this.areAllInvSignaled(scene, eventInfo.signaledInvs)) {
                 return;
             }
 
@@ -94,6 +98,17 @@ export class WorldEventProvider {
                 sprite: 303,
             });
         }
+    }
+
+    private areAllInvSignaled(scene: Scene, signaled: string[]) {
+        const objects = Object.values(scene.entities);
+        for (const object of objects) {
+            if (object.inventoryId && !signaled.includes(object.inventoryId)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @OnEvent(ClientEvent.WORLD_EVENT_START)
@@ -114,7 +129,7 @@ export class WorldEventProvider {
             currentEventId: eventId,
             currentSceneId: sceneId,
             startTimestamp: Date.now(),
-            signaled: false,
+            signaledInvs: [],
         };
 
         const gang = this.gangRepository.find(player.gang.id);
@@ -129,6 +144,17 @@ export class WorldEventProvider {
             if (this.blipFactory.exist('world_event')) {
                 this.blipFactory.remove('world_event');
             }
+
+            const scene = this.sceneRepository.find(this.currentEvent.currentSceneId);
+
+            if (!scene) {
+                return;
+            }
+
+            if (this.areAllInvSignaled(scene, this.currentEvent.signaledInvs)) {
+                return;
+            }
+
             this.blipFactory.create('world_event', {
                 position: position,
                 name: event.name,
@@ -144,10 +170,45 @@ export class WorldEventProvider {
     }
 
     @OnEvent(ClientEvent.WORLD_EVENT_SIGNAL_INVENTORY)
-    public async onSignalInventory() {
-        if (this.currentEvent) {
-            this.blipFactory.remove('world_event');
-            this.currentEvent.signaled = true;
+    public async onSignalInventory(signaledInvs: string[]) {
+        if (!this.currentEvent) {
+            return;
         }
+        this.currentEvent.signaledInvs = signaledInvs;
+
+        const scene = this.sceneRepository.find(this.currentEvent.currentSceneId);
+
+        if (!scene) {
+            return;
+        }
+
+        const objects = Object.values(scene.entities);
+        for (const object of objects) {
+            if (!signaledInvs.includes(object.inventoryId)) {
+                continue;
+            }
+
+            if (!object.object.vfx) {
+                continue;
+            }
+
+            const obj = this.objectProvider.findObject(object.object.id);
+            if (!obj) {
+                continue;
+            }
+
+            if (obj.vfx?.id) {
+                StopParticleFxLooped(obj.vfx?.id, false);
+            }
+            obj.vfx = null;
+        }
+
+        if (this.areAllInvSignaled(scene, signaledInvs)) {
+            this.blipFactory.remove('world_event');
+        }
+    }
+
+    public isSignaled(inventoryId: string) {
+        return this.currentEvent && this.currentEvent.signaledInvs.includes(inventoryId);
     }
 }

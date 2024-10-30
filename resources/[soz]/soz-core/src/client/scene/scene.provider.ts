@@ -7,7 +7,7 @@ import { uuidv4 } from '../../core/utils';
 import { ClientEvent } from '../../shared/event/client';
 import { NuiEvent } from '../../shared/event/nui';
 import { ServerEvent } from '../../shared/event/server';
-import { FDO } from '../../shared/job';
+import { FDO, JobType } from '../../shared/job';
 import { NotEmptyStringValidator } from '../../shared/nui/input';
 import { MenuType } from '../../shared/nui/menu';
 import { ObjectEditorContext } from '../../shared/object';
@@ -23,9 +23,9 @@ import { NuiMenu } from '../nui/nui.menu';
 import { ObjectEditorProvider } from '../object/object.editor.provider';
 import { ObjectProvider } from '../object/object.provider';
 import { PlayerPositionProvider } from '../player/player.position.provider';
-import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../progress.service';
 import { SceneRepository } from '../repository/scene.repository';
+import { WorldEventProvider } from '../world/world.event.provider';
 
 type CurrentSceneEdited = {
     scene: Scene;
@@ -49,6 +49,9 @@ export class SceneProvider {
     @Inject(PlayerPositionProvider)
     private playerPositionProvider: PlayerPositionProvider;
 
+    @Inject(WorldEventProvider)
+    private worldEventProvider: WorldEventProvider;
+
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
 
@@ -60,9 +63,6 @@ export class SceneProvider {
 
     @Inject(ProgressService)
     private progressService: ProgressService;
-
-    @Inject(PlayerService)
-    private playerService: PlayerService;
 
     private highlightedObjectId: string = null;
 
@@ -441,8 +441,6 @@ export class SceneProvider {
     }
 
     async doLoadScene(scene: Scene) {
-        const player = this.playerService.getPlayer();
-
         for (const entity of Object.values(scene.entities)) {
             const targets: TargetOption[] = [];
 
@@ -457,36 +455,40 @@ export class SceneProvider {
                     },
                 });
 
-                if (FDO.includes(player.job.id)) {
-                    targets.push({
-                        label: "Signaler l'emplacement",
-                        icon: 'inventory/ouvrir_le_stockage',
-                        job: player.job.id,
-                        category: 'society',
-                        canInteract: () => true,
-                        action: async () => {
-                            const progress = await this.progressService.progress(
-                                'pick_up_ore',
-                                'Signalement en cours...',
-                                180_000,
-                                {
-                                    dictionary: 'Rcm_epsilonism4',
-                                    name: 'eps_4_ig_1_jimmy_lookaround_idle_a_jb',
-                                    options: { repeat: true },
-                                },
-                                {}
-                            );
-                            if (!progress.completed) {
-                                return;
-                            }
+                targets.push({
+                    label: "Signaler l'emplacement",
+                    icon: 'inventory/ouvrir_le_stockage',
+                    job: FDO.reduce((prev, cur) => ({ ...prev, [cur]: 0 }), {} as Record<JobType, number>),
+                    category: 'society',
+                    canInteract: () => !this.worldEventProvider.isSignaled(entity.inventoryId),
+                    action: async () => {
+                        const progress = await this.progressService.progress(
+                            'pick_up_ore',
+                            'Signalement en cours...',
+                            10_000,
+                            {
+                                dictionary: 'Rcm_epsilonism4',
+                                name: 'eps_4_ig_1_jimmy_lookaround_idle_a_jb',
+                                options: { repeat: true },
+                            },
+                            {}
+                        );
+                        if (!progress.completed) {
+                            return;
+                        }
 
-                            TriggerServerEvent(ServerEvent.WORLD_EVENT_SIGNAL_INVENTORY, entity.inventoryId);
-                        },
-                    });
-                }
+                        TriggerServerEvent(ServerEvent.WORLD_EVENT_SIGNAL_INVENTORY, entity.inventoryId);
+                    },
+                });
             }
 
-            await this.objectProvider.createObject(entity.object, targets);
+            await this.objectProvider.createObject(
+                {
+                    ...entity.object,
+                    vfx: this.worldEventProvider.isSignaled(entity.inventoryId) ? null : entity.object.vfx,
+                },
+                targets
+            );
         }
     }
 
