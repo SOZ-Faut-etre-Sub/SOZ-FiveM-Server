@@ -40,6 +40,8 @@ export class PlayerZombieProvider {
 
     private zombieTpList = new Map<string, number>();
 
+    private blipEnabled = true;
+
     private zombieCount: Gauge<string> = new Gauge({
         name: 'soz_player_zombie_count',
         help: 'Number of zombie players',
@@ -178,6 +180,10 @@ export class PlayerZombieProvider {
 
     @Tick(5000)
     public sendZombiePosition() {
+        if (!this.blipEnabled) {
+            return;
+        }
+
         const positions = {};
         const players = [];
 
@@ -201,6 +207,12 @@ export class PlayerZombieProvider {
         for (const source of players) {
             TriggerLatentClientEvent(ClientEvent.PLAYER_ZOMBIE_SET_POSITIONS, source, 16 * 1024, positions);
         }
+    }
+
+    @Command('blip-zombie', { role: 'admin' })
+    public setZombieBlip(source: number, enabled: string) {
+        const ENABLE_VALUES = ['true', 'on', '1'];
+        this.blipEnabled = ENABLE_VALUES.includes(enabled.toLowerCase());
     }
 
     @Command('clear-zombie', { role: 'admin' })
