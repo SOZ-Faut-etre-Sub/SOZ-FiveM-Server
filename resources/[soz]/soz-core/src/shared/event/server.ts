@@ -260,6 +260,8 @@ export enum ServerEvent {
     HALLOWEEN_SUCK_PLAYER_START = 'soz-core:server:halloween:player-suck-start',
     HALLOWEEN_SUCK_PLAYER_END = 'soz-core:server:halloween:player-suck-end',
 
+    HALLOWEEN_BLOOD_HARVEST = 'soz-core:server:halloween:blood-harvest',
+
     STORAGE_REMOVE_ITEM = 'soz-core:server:storage:remove-item',
     SHOP_BOSS_ORDER = 'soz-core:server:shop:boss:order',
     SHOP_EASTER_BUY = 'soz-core:server:shop:easter:buy',

@@ -10,6 +10,7 @@ import { Halloween2023Scenario1Provider } from './halloween-2023/scenario1.provi
 import { Halloween2023Scenario2Provider } from './halloween-2023/scenario2.provider';
 import { Halloween2023Scenario3Provider } from './halloween-2023/scenario3.provider';
 import { Halloween2023Scenario4Provider } from './halloween-2023/scenario4.provider';
+import { QueenHarvestProvider } from './queen.harvest.provider';
 
 @Module({
     providers: [
@@ -24,6 +25,7 @@ import { Halloween2023Scenario4Provider } from './halloween-2023/scenario4.provi
         Halloween2023Scenario4Provider,
         EasterHuntProvider,
         BloodProvider,
+        QueenHarvestProvider,
     ],
 })
 export class StoryModule {}
