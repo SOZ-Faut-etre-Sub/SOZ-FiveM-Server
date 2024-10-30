@@ -3,10 +3,13 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { CraftService } from '@public/client/craft/craft.service';
 import { PedFactory } from '@public/client/factory/ped.factory';
+import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { PlayerInOutService } from '@public/client/player/player.inout.service';
+import { TargetFactory } from '@public/client/target/target.factory';
 import { emitRpc } from '@public/core/rpc';
 import { CraftsList } from '@public/shared/craft/craft';
-import { ClientEvent, NuiEvent } from '@public/shared/event';
+import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
+import { Feature } from '@public/shared/features';
 import { JobType } from '@public/shared/job';
 import {
     FDFConfig,
@@ -36,11 +39,17 @@ export class FDFProvider {
     @Inject(BlipFactory)
     private blipFactory: BlipFactory;
 
+    @Inject(TargetFactory)
+    private targetFactory: TargetFactory;
+
     @Inject(PlayerInOutService)
     private playerInOutService: PlayerInOutService;
 
     @Inject(PedFactory)
     private pedFactory: PedFactory;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     @Inject(CraftService)
     private craftService: CraftService;
@@ -52,6 +61,8 @@ export class FDFProvider {
         [FDFFieldBlips.orange]: false,
         [FDFFieldBlips.resell]: false,
         [FDFFieldBlips.lemon]: false,
+        displayGarlicBlip: false,
+        garlicEnabled: false,
     };
     private areaBlips = new Map<FDFFieldBlips, number[]>();
 
@@ -99,6 +110,42 @@ export class FDFProvider {
             sprite: 381,
             scale: 1.2,
         });
+
+        if (this.featureProvider.isFeatureEnabled(Feature.Halloween)) {
+            this.state.garlicEnabled = true;
+
+            this.blipFactory.create('displayGarlicBlip', {
+                name: "Champ de gousses d'ail",
+                coords: { x: 2253.42, y: 4835.86, z: 40.66 },
+                sprite: 819,
+                scale: 0.9,
+            });
+
+            this.blipFactory.hide('displayGarlicBlip', true);
+
+            this.targetFactory.createForBoxZone(
+                'fdf:garlic_harvest',
+                {
+                    center: [2253.42, 4835.86, 40.66],
+                    length: 33.2,
+                    width: 8.4,
+                    minZ: 38.66,
+                    maxZ: 40.66,
+                    heading: 45,
+                },
+                [
+                    {
+                        label: 'Récolter',
+                        icon: 'food/collecter',
+                        job: JobType.FDF,
+                        category: 'society',
+                        action: () => {
+                            TriggerServerEvent(ServerEvent.FDF_GARLIC_HARVEST);
+                        },
+                    },
+                ]
+            );
+        }
     }
 
     @OnEvent(ClientEvent.JOBS_FDF_OPEN_SOCIETY_MENU)
@@ -128,13 +175,18 @@ export class FDFProvider {
     }
 
     @OnNuiEvent(NuiEvent.FdfDisplayBlip)
-    public async onDisplayBlip({ type, value }: { type: FDFFieldBlips; value: boolean }) {
+    public async onDisplayBlip({ type, value }: { type: FDFFieldBlips | 'displayGarlicBlip'; value: boolean }) {
         this.state[type] = value;
 
         if (type == FDFFieldBlips.resell) {
             for (let i = 0; i < FDFConfig.resellZones.length; i++) {
                 this.blipFactory.hide('fdfResellBlip' + i, !value);
             }
+            return;
+        }
+
+        if (type === 'displayGarlicBlip') {
+            this.blipFactory.hide('displayGarlicBlip', !value);
             return;
         }
 

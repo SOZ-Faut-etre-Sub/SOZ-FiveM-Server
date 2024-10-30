@@ -500,6 +500,7 @@ export enum ServerEvent {
     FDF_FIELD_PLANT = 'soz-core:server:fdf:field-plant',
     FDF_FIELD_CHECK = 'soz-core:server:fdf:field-check',
     FDF_TRACTOR_HARVEST = 'soz-core:server:fdf:field-tractor-harvest',
+    FDF_GARLIC_HARVEST = 'soz-core:server:fdf:garlic-harvest',
 
     ANIMATION_FX = 'soz-core:server:animation:fx',
     ANIMATION_FX_POSITION = 'soz-core:server:animation:fx-position',
