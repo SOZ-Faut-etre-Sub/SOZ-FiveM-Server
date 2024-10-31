@@ -7,6 +7,7 @@ import { ServerEvent } from '../../shared/event/server';
 import { Feature } from '../../shared/features';
 import { toVector4Object, Vector4 } from '../../shared/polyzone/vector';
 import { FeatureProvider } from '../feature/feature.provider';
+import { Notifier } from '../notifier';
 import { TargetFactory } from '../target/target.factory';
 
 @Provider()
@@ -16,6 +17,9 @@ export class QueenHarvestProvider {
 
     @Inject(FeatureProvider)
     private featureProvider: FeatureProvider;
+
+    @Inject(Notifier)
+    private notifier: Notifier;
 
     private queenPosition: Vector4 = [667.8741, 1282.325, 360.85, 259.64];
 
@@ -130,6 +134,18 @@ export class QueenHarvestProvider {
                             await wait(500);
 
                             TriggerServerEvent(ServerEvent.HALLOWEEN_BLOOD_HARVEST);
+                        },
+                    },
+                    {
+                        label: 'Quête',
+                        category: 'citizen',
+                        icon: 'global/search',
+                        action: () => {
+                            this.notifier.notify(
+                                "Écoute attentivement, mortel… ~r~Soixante-six Coupes de Sang ont été éparpillées aux confins de cette île~s~, chacune placée avec soin pour ceux capables d'en saisir la puissance. Chaque entreprise détient sa propre coupe, tandis que les autres demeurent cachées dans les ténèbres, en attente de leur maître. ~r~Peut-être que la récompense te sera accordée, si tu as le courage de toutes les retrouver~s~.",
+                                'success',
+                                21_000
+                            );
                         },
                     },
                 ],
