@@ -10,16 +10,18 @@ export class InstructionalService {
     @Inject(NuiDispatch)
     private readonly nuiDispatch: NuiDispatch;
 
-    public display(textParts: InstructionalText): void {
+    public display(textParts: InstructionalText, forced = false): void {
         const instructional = textParts.map(part =>
             typeof part === 'string' ? part : this.getControlInstructional(part)
         );
 
         this.nuiDispatch.dispatch('hud', 'SetInstructional', instructional);
+        this.nuiDispatch.dispatch('hud', 'ForceDisplayInstructional', forced);
     }
 
     public clear(): void {
         this.nuiDispatch.dispatch('hud', 'SetInstructional', []);
+        this.nuiDispatch.dispatch('hud', 'ForceDisplayInstructional', false);
     }
 
     protected getControlInstructional(control: Control): string {

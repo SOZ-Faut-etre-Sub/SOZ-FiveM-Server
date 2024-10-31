@@ -15,6 +15,7 @@ export function InstructionalOverlay() {
     const hasStreetNamesEnabled = useHudHasStreetNames();
 
     const [text, setText] = useState<string[]>([]);
+    const [forceDisplay, setForceDisplay] = useState(false);
 
     const styles = useSpring({
         from: {
@@ -27,8 +28,9 @@ export function InstructionalOverlay() {
     });
 
     useNuiEvent('hud', 'SetInstructional', setText);
+    useNuiEvent('hud', 'ForceDisplayInstructional', setForceDisplay);
 
-    if (!showInstructionalOverlay) {
+    if (!forceDisplay && !showInstructionalOverlay) {
         return null;
     }
 
