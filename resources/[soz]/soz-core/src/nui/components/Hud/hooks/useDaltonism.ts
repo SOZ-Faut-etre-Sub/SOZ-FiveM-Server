@@ -16,7 +16,7 @@ export const useDaltonism = () => {
     const glassmorphismColors = useMemo(() => {
         if (isHalloween) {
             const background = '#00000073';
-            const border = halloweenMoon ? '#F02B2B' : '#F0882D';
+            const border = '#F02B2B'; // : '#F0882D';
 
             return {
                 [HudTheme.Light]: { background, border },
