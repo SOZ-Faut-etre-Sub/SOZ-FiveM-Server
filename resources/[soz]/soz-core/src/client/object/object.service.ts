@@ -162,6 +162,10 @@ export class ObjectService {
         } else {
             SetEntityLodDist(entity, 0x200);
         }
+
+        if (object.alpha) {
+            SetEntityAlpha(entity, object.alpha, false);
+        }
     }
 
     public deleteObject(entity: number, object: WorldObject) {

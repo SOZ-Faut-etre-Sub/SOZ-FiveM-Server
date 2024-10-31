@@ -1,4 +1,5 @@
 import { WorldObject } from './object';
+import { Vector4 } from './polyzone/vector';
 
 export type EventInfo = {
     currentEventId: string | null;
@@ -28,6 +29,7 @@ export type Scene = {
     worldEventId?: string;
     owner?: string;
     entities: Record<string, SceneEntity>;
+    peds: Record<string, ScenePed>;
 };
 
 export type SceneEntity = {
@@ -35,4 +37,25 @@ export type SceneEntity = {
     model: string;
     inventoryId?: string;
     object: WorldObject;
+};
+
+export enum ScenePedBehavior {
+    passive = 'passive',
+    agressive = 'agressive',
+}
+
+export type ScenePedData = {
+    position: Vector4;
+    weapon: string;
+    behavior: ScenePedBehavior;
+    model: string;
+};
+
+export type ScenePed = ScenePedData & {
+    id: string;
+};
+
+export const ScenePedBehaviorRelationship: Record<ScenePedBehavior, number> = {
+    [ScenePedBehavior.passive]: 4,
+    [ScenePedBehavior.agressive]: 5,
 };

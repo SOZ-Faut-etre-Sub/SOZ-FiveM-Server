@@ -71,6 +71,16 @@ export const SubMenuScene: FunctionComponent<SubMenuSceneProps> = ({ scene, cont
                     >
                         ➕ Ajouter une entité
                     </MenuItemButton>
+                    <MenuItemButton
+                        onConfirm={async () => {
+                            await fetchNui(NuiEvent.SceneAddPed, {
+                                sceneId: scene.id,
+                            });
+                        }}
+                        onSelected={() => fetchNui(NuiEvent.SceneSetEntityHighlighted, { objectId: null })}
+                    >
+                        ➕ Ajouter un ped
+                    </MenuItemButton>
                     {allowLoad && (
                         <>
                             <MenuItemButton
@@ -190,6 +200,60 @@ export const SubMenuScene: FunctionComponent<SubMenuSceneProps> = ({ scene, cont
                             <MenuItemSelectOption value="delete">Supprimer</MenuItemSelectOption>
                             <MenuItemSelectOption value="inventory">Définir l'inventaire</MenuItemSelectOption>
                             <MenuItemSelectOption value="inventory_delete">Supprimer l'inventaire</MenuItemSelectOption>
+                        </MenuItemSelect>
+                    ))}
+                    <MenuTitle>PNJs</MenuTitle>
+                    {Object.values(scene.peds).map(ped => (
+                        <MenuItemSelect
+                            title={ped.model}
+                            key={ped.id}
+                            onSelected={() => fetchNui(NuiEvent.SceneSetEntityHighlighted, { objectId: ped.id })}
+                            description={
+                                <>
+                                    <div>Arme: {ped.weapon}</div>
+                                    <div>Comportement: {ped.behavior}</div>
+                                </>
+                            }
+                            onConfirm={(i, value) => {
+                                switch (value) {
+                                    case 'edit':
+                                        fetchNui(NuiEvent.SceneUpdatePosition, {
+                                            sceneId: scene.id,
+                                            pedId: ped.id,
+                                        });
+                                        break;
+                                    case 'duplicate':
+                                        fetchNui(NuiEvent.SceneDuplicatePed, {
+                                            sceneId: scene.id,
+                                            pedId: ped.id,
+                                        });
+                                        break;
+                                    case 'delete':
+                                        fetchNui(NuiEvent.SceneRemovePed, {
+                                            sceneId: scene.id,
+                                            pedId: ped.id,
+                                        });
+                                        break;
+                                    case 'weapon':
+                                        fetchNui(NuiEvent.SceneSetPedWeapon, {
+                                            sceneId: scene.id,
+                                            pedId: ped.id,
+                                        });
+                                        break;
+                                    case 'behavior':
+                                        fetchNui(NuiEvent.SceneSetPedBehavior, {
+                                            sceneId: scene.id,
+                                            pedId: ped.id,
+                                        });
+                                        break;
+                                }
+                            }}
+                        >
+                            <MenuItemSelectOption value="edit">Position</MenuItemSelectOption>
+                            <MenuItemSelectOption value="duplicate">Dupliquer</MenuItemSelectOption>
+                            <MenuItemSelectOption value="delete">Supprimer</MenuItemSelectOption>
+                            <MenuItemSelectOption value="weapon">Arme</MenuItemSelectOption>
+                            <MenuItemSelectOption value="behavior">Comportement</MenuItemSelectOption>
                         </MenuItemSelect>
                     ))}
                 </MenuContent>

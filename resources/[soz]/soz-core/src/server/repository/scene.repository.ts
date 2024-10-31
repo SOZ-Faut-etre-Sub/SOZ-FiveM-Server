@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { WorldObject } from '../../shared/object';
 import { RepositoryType } from '../../shared/repository';
-import { Scene, SceneEntity } from '../../shared/scene';
+import { Scene, SceneEntity, ScenePed, ScenePedData } from '../../shared/scene';
 import { PrismaService } from '../database/prisma.service';
 import { Repository } from './repository';
 
@@ -16,13 +16,15 @@ export class SceneRepository extends Repository<RepositoryType.Scene> {
         const scenes = await this.prismaService.scene.findMany({
             include: {
                 entities: true,
+                peds: true,
             },
         });
 
-        const list = {};
+        const list: Record<string, Scene> = {};
 
         for (const scene of scenes) {
-            const entities = {};
+            const entities: Record<string, SceneEntity> = {};
+            const peds: Record<string, ScenePed> = {};
 
             for (const entity of scene.entities) {
                 entities[entity.id] = {
@@ -30,7 +32,13 @@ export class SceneRepository extends Repository<RepositoryType.Scene> {
                     model: entity.model,
                     object: entity.object as WorldObject,
                     inventoryId: entity.inventory_id,
-                } as SceneEntity;
+                };
+            }
+            for (const ped of scene.peds) {
+                peds[ped.id] = {
+                    id: ped.id,
+                    ...(ped.ped as ScenePedData),
+                };
             }
 
             list[scene.id] = {
@@ -38,9 +46,10 @@ export class SceneRepository extends Repository<RepositoryType.Scene> {
                 name: scene.name,
                 persistent: scene.persistant,
                 entities: entities,
+                peds: peds,
                 owner: scene.creator_id,
                 worldEventId: scene.event_id,
-            } as Scene;
+            };
         }
 
         return list;
@@ -60,6 +69,7 @@ export class SceneRepository extends Repository<RepositoryType.Scene> {
             name: scene.name,
             persistent: false,
             entities: {},
+            peds: {},
             worldEventId: scene.event_id,
         };
 
@@ -175,5 +185,53 @@ export class SceneRepository extends Repository<RepositoryType.Scene> {
         });
 
         return entity;
+    }
+
+    public async addPed(sceneId: string, data: ScenePedData) {
+        const scene = this.data[sceneId];
+
+        const ped = await this.prismaService.scene_ped.create({
+            data: {
+                scene_id: sceneId,
+                ped: data,
+            },
+        });
+
+        scene.peds[ped.id] = {
+            id: ped.id,
+            ...data,
+        };
+    }
+
+    public async removePed(sceneId: string, pedId: string) {
+        const entity = this.data[sceneId].peds[pedId];
+        delete this.data[sceneId].peds[pedId];
+
+        await this.prismaService.scene_ped.delete({
+            where: {
+                id: pedId,
+            },
+        });
+
+        return entity;
+    }
+
+    public async updatePed(sceneId: string, pedId: string, data: Partial<ScenePedData>) {
+        const ped = this.data[sceneId].peds[pedId];
+        this.data[sceneId].peds[pedId] = {
+            ...ped,
+            ...data,
+        };
+
+        await this.prismaService.scene_ped.update({
+            where: {
+                id: pedId,
+            },
+            data: {
+                ped: this.data[sceneId].peds[pedId],
+            },
+        });
+
+        return ped;
     }
 }

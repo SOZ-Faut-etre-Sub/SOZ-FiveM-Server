@@ -587,6 +587,12 @@ export enum NuiEvent {
     SceneTeleport = 'soz-core:nui-client:scene:teleport',
     SceneLoad = 'soz-core:nui-client:scene:load',
     SceneUnload = 'soz-core:nui-client:scene:unload',
+    SceneAddPed = 'soz-core:nui-client:scene:add-ped',
+    SceneUpdatePosition = 'soz-core:nui-client:scene:set-ped-position',
+    SceneDuplicatePed = 'soz-core:nui-client:scene:set-ped-duplicate',
+    SceneRemovePed = 'soz-core:nui-client:scene:set-ped-remove',
+    SceneSetPedWeapon = 'soz-core:nui-client:scene:set-ped-weapon',
+    SceneSetPedBehavior = 'soz-core:nui-client:scene:set-ped-behavior',
 
     TargetReset = 'soz-core:nui:target:reset',
     TargetSelect = 'soz-core:nui:target:select',

@@ -9,7 +9,7 @@ import { ClientEvent } from '../../shared/event/client';
 import { FDO } from '../../shared/job';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
-import { EventInfo, Scene } from '../../shared/scene';
+import { EventInfo, Scene, ScenePedBehavior, ScenePedBehaviorRelationship } from '../../shared/scene';
 import { BlipFactory } from '../blip';
 import { ObjectProvider } from '../object/object.provider';
 import { PlayerService } from '../player/player.service';
@@ -37,6 +37,23 @@ export class WorldEventProvider {
     private objectProvider: ObjectProvider;
 
     private currentEvent: EventInfo | null = null;
+
+    @Once()
+    public init() {
+        for (const behavior of Object.values(ScenePedBehavior)) {
+            AddRelationshipGroup('RelationGroup' + behavior);
+            SetRelationshipBetweenGroups(
+                ScenePedBehaviorRelationship[behavior],
+                GetHashKey('RelationGroup' + behavior),
+                GetHashKey('PLAYER')
+            );
+            SetRelationshipBetweenGroups(
+                0,
+                GetHashKey('RelationGroup' + behavior),
+                GetHashKey('RelationGroup' + behavior)
+            );
+        }
+    }
 
     @Once(OnceStep.RepositoriesLoaded)
     public async onStartEventProvider() {
@@ -210,5 +227,37 @@ export class WorldEventProvider {
 
     public isSignaled(inventoryId: string) {
         return this.currentEvent && this.currentEvent.signaledInvs.includes(inventoryId);
+    }
+
+    @OnEvent(ClientEvent.WORLD_EVENT_INIT_PED)
+    public async oninitPed(pedNet: number, pedId: string) {
+        const scene = this.sceneRepository.find(this.currentEvent.currentSceneId);
+
+        if (!scene) {
+            return;
+        }
+
+        const ped = scene.peds[pedId];
+        if (!ped) {
+            return;
+        }
+
+        while (!NetworkDoesEntityExistWithNetworkId(pedNet)) {
+            await wait(0);
+        }
+        const pedHandle = NetToPed(pedNet);
+        GiveWeaponToPed(pedHandle, ped.weapon, 1000, false, true);
+        SetCurrentPedWeapon(pedHandle, ped.weapon, true);
+        SetPedDropsWeaponsWhenDead(pedHandle, false);
+        SetPedCombatAttributes(pedHandle, 0, false);
+        SetPedCombatAttributes(pedHandle, 46, true);
+        SetPedCombatAttributes(pedHandle, 5, true);
+        SetPedCombatAttributes(pedHandle, 50, true);
+        SetPedCombatAttributes(pedHandle, 13, true);
+        SetPedShootRate(pedHandle, 1000);
+        SetPedInfiniteAmmoClip(pedHandle, true);
+        SetPedCombatMovement(pedHandle, 2);
+        SetPedRelationshipGroupHash(pedHandle, GetHashKey('RelationGroup' + ped.behavior));
+        TaskWanderInArea(pedHandle, ped.position[0], ped.position[1], ped.position[2], 20, 3, 2000);
     }
 }

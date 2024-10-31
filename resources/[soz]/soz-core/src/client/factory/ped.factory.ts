@@ -31,6 +31,8 @@ export type Ped = {
     isScriptHostPed?: boolean;
     isRandomClothes?: boolean;
     animprops?: AnimationProps[];
+    weapon?: string;
+    alpha?: number;
 };
 
 export type GridPed = Ped & {
@@ -125,6 +127,10 @@ export class PedFactory {
         }
 
         this.unspawnPed(id);
+    }
+
+    public findLoadedPed(id: string) {
+        return this.loadedPeds[id];
     }
 
     public isPedLoaded(id: string) {
@@ -369,6 +375,15 @@ export class PedFactory {
                 pedprops.push(propId);
             }
             this.pedprops.set(pedId, pedprops);
+        }
+
+        if (ped.weapon) {
+            GiveWeaponToPed(pedId, ped.weapon, 0, false, true);
+            SetCurrentPedWeapon(pedId, ped.weapon, true);
+        }
+
+        if (ped.alpha) {
+            SetEntityAlpha(pedId, ped.alpha, false);
         }
 
         this.peds[pedId] = true;

@@ -254,6 +254,9 @@ export enum ServerEvent {
     SCENE_REMOVE_ENTITY = 'soz-core:server:scene:remove-entity',
     SCENE_UPDATE_ENTITY = 'soz-core:server:scene:update-entity',
     SCENE_SET_ENTITY_INVENTORY = 'soz-core:server:scene:set-entity-inventory',
+    SCENE_ADD_PED = 'soz-core:server:scene:add-ped',
+    SCENE_REMOVE_PED = 'soz-core:server:scene:remove-ped',
+    SCENE_UPDATE_PED = 'soz-core:server:scene:update-ped',
     SCENE_SET_PERSISTENT = 'soz-core:server:scene:set-persistent',
     SCENE_SET_NAME = 'soz-core:server:scene:set-name',
 

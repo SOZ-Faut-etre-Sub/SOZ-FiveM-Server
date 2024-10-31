@@ -97,6 +97,7 @@ export class NoClipProvider {
             return;
         }
         const playerPed = PlayerPedId();
+        const playerId = PlayerId();
         this.noClippingEntity = playerPed;
         if (IsPedInAnyVehicle(playerPed, false)) {
             const veh = GetVehiclePedIsIn(playerPed, false);
@@ -117,7 +118,7 @@ export class NoClipProvider {
             SetEntityCollision(this.noClippingEntity, true, true);
             SetEntityVisible(this.noClippingEntity, true, false);
             SetLocalPlayerVisibleLocally(true);
-            SetEveryoneIgnorePlayer(playerPed, false);
+            SetEveryoneIgnorePlayer(playerId, false);
             SetPoliceIgnorePlayer(playerPed, false);
             this.voipService.mutePlayer(false);
             await wait(5000);
@@ -188,7 +189,7 @@ export class NoClipProvider {
             return;
         }
 
-        const playerPed = PlayerPedId();
+        const playerId = PlayerId();
         FreezeEntityPosition(this.noClippingEntity, true);
         SetEntityCollision(this.noClippingEntity, false, false);
         SetEntityVisible(this.noClippingEntity, false, false);
@@ -198,8 +199,8 @@ export class NoClipProvider {
             SetLocalPlayerInvisibleLocally(true);
         }
         SetEntityAlpha(this.noClippingEntity, 51, false);
-        SetEveryoneIgnorePlayer(playerPed, true);
-        SetPoliceIgnorePlayer(playerPed, true);
+        SetEveryoneIgnorePlayer(playerId, true);
+        SetPoliceIgnorePlayer(playerId, true);
         this.input = [
             GetControlNormal(0, Control.MoveLeftRight),
             GetControlNormal(0, Control.MoveUpDown),
@@ -219,13 +220,13 @@ export class NoClipProvider {
     @Once(OnceStep.Stop)
     private onStop() {
         this.SetNoClip(false);
-        const playerPed = PlayerPedId();
+        const playerId = PlayerId();
         FreezeEntityPosition(this.noClippingEntity, false);
         SetEntityCollision(this.noClippingEntity, true, true);
         SetEntityVisible(this.noClippingEntity, true, false);
         SetLocalPlayerVisibleLocally(true);
         ResetEntityAlpha(this.noClippingEntity);
-        SetEveryoneIgnorePlayer(playerPed, false);
+        SetEveryoneIgnorePlayer(playerId, false);
         SetPoliceIgnorePlayer(this.noClippingEntity, false);
         ResetEntityAlpha(this.noClippingEntity);
         this.SetInvincible(false, this.noClippingEntity);

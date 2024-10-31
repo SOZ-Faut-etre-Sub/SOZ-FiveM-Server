@@ -35,6 +35,7 @@ export type WorldObject = {
     highlight?: boolean;
     inventoryId?: string;
     permanent?: boolean;
+    alpha?: number;
 };
 
 export type WorldPlacedProp = {
