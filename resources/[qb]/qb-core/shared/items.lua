@@ -6368,7 +6368,7 @@ QBShared.Items = {
         ["useable"] = false,
         ["shouldClose"] = true,
         ["description"] = "Une douce peluche très rare permettant de toujours se souvenir de cet événement.",
-        ["illustrator"] = ".--",
+        ["illustrator"] = ".Sniteur",
     },
     ["halloween_vampire_prince_plush"] = {
         ["name"] = "halloween_vampire_prince_plush",
@@ -6379,7 +6379,7 @@ QBShared.Items = {
         ["useable"] = false,
         ["shouldClose"] = true,
         ["description"] = "Une douce peluche très rare permettant de toujours se souvenir de cet événement.",
-        ["illustrator"] = ".--",
+        ["illustrator"] = ".Sniteur",
     },
 
     --- DMC
@@ -6459,7 +6459,7 @@ QBShared.Items = {
         ["combinable"] = nil,
         ["shouldClose"] = true,
         ["description"] = " Minimaliste mais captivante, la Veine Nocturne est dotée d’un écran OLED où s'affichent des motifs de veines qui réagissent à chaque mouvement du porteur. Outre les fonctions classiques de smartwatch, elle propose une analyse du rythme circadien et des rappels nocturnes optimisés, parfaite pour les créatures de la nuit. Son design épuré avec un boîtier en acier noir ou gris argenté inclut des alertes discrètes en rouge profond, émettant une lueur discrète qui rappelle l’éclat d’une goutte de sang.",
-        ["illustrator"] = ".--",
+        ["illustrator"] = ".BaZ",
     },
 
     --- LSMC
@@ -6841,7 +6841,7 @@ QBShared.Items = {
             ["alcohol"] = 8,
         },
         prop = {model = "prop_shots_glass_cs", bone = 28422, coords = {x = 0.01, y = -0.01, z = -0.01}},
-        illustrator = ".Crash",
+        illustrator = ".Kaemy",
     },
     ["halloween_mortal_kiss"] = {
         name = "halloween_mortal_kiss",
@@ -6865,7 +6865,7 @@ QBShared.Items = {
             ["alcohol"] = 8,
         },
         prop = {model = "prop_shots_glass_cs", bone = 28422, coords = {x = 0.01, y = -0.01, z = -0.01}},
-        illustrator = ".Crash",
+        illustrator = ".Kaemy",
     },
     ["halloween_scarlet_nectar"] = {
         name = "halloween_scarlet_nectar",
@@ -6889,7 +6889,7 @@ QBShared.Items = {
             ["alcohol"] = 8,
         },
         prop = {model = "prop_shots_glass_cs", bone = 28422, coords = {x = 0.01, y = -0.01, z = -0.01}},
-        illustrator = ".Crash",
+        illustrator = ".Druideca",
     },
     ["halloween_twilight_chalice"] = {
         name = "halloween_twilight_chalice",
@@ -6913,7 +6913,7 @@ QBShared.Items = {
             ["alcohol"] = 8,
         },
         prop = {model = "prop_shots_glass_cs", bone = 28422, coords = {x = 0.01, y = -0.01, z = -0.01}},
-        illustrator = ".Crash",
+        illustrator = ".BaZ",
     },
     ---
     ["bag_kibble"] = {
@@ -7504,7 +7504,7 @@ QBShared.Items = {
         },
         prop = {model = "prop_cs_beer_bot_03", bone = 28422, coords = {x = 0.0, y = 0.0, z = 0.02}},
         ["description"] = "Une bière ambrée sombre teintée de rouge, aux notes intenses de cerise noire et de caramel brûlé. Sa saveur douce-amère rappelle la terre humide et les profondeurs d’une tombe oubliée, tandis que son parfum de fruits mûrs laisse un arrière-goût envoûtant et un peu sauvage. Tombe Sanglante est à la fois riche et envoûtante, parfaite pour les amateurs de saveurs profondes et mystérieuses.",
-        ["illustrator"] = ".Nariiel",
+        ["illustrator"] = ".Ostinato",
     },
     ["halloween_after_life_dark"] = {
         ["name"] = "halloween_after_life_dark",
@@ -7527,7 +7527,7 @@ QBShared.Items = {
         },
         prop = {model = "prop_cs_beer_bot_03", bone = 28422, coords = {x = 0.0, y = 0.0, z = 0.02}},
         ["description"] = "Une stout épaisse et opaque, cette bière aux notes de réglisse, de tabac et de cacao est aussi sombre que l’âme d’un vampire. Chaque gorgée laisse une amertume subtile, teintée de vanille et de bois vieilli, évoquant le repos éternel. Idéale pour ceux qui recherchent une saveur robuste et envoûtante.",
-        ["illustrator"] = ".Nariiel",
+        ["illustrator"] = ".Druideca",
     },
 
     ["new_year_bottle_2023"] = {
