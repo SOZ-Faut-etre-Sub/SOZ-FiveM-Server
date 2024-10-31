@@ -121,8 +121,8 @@ export const DefaultFeatureConfig: FeaturesConfig = {
         test: false,
     },
     [Feature.Vampire]: {
-        production: false,
+        production: true,
         development: true,
-        test: false,
+        test: true,
     },
 };
