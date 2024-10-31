@@ -7472,7 +7472,7 @@ QBShared.Items = {
     },
     ["halloween_smoked_blood"] = {
         ["name"] = "halloween_smoked_blood",
-        ["label"] = "Sceptre des Ténèbres",
+        ["label"] = "Sang Fumé",
         ["weight"] = 500,
         ["type"] = "item_illegal",
         ["unique"] = false,
@@ -11870,7 +11870,7 @@ QBShared.Items = {
         ["unique"] = false,
         ["combinable"] = nil,
         ["description"] = "Une sangsue fraîche et gorgée de sang qui attirera les carnivores les plus assoiffés..",
-        ["illustrator"] = ".Sniteur",
+        ["illustrator"] = ".Kaemy",
     },
     ["sozedex"] = {
         ["name"] = "sozedex",
