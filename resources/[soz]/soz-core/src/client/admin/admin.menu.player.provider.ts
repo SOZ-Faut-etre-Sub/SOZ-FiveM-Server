@@ -80,6 +80,7 @@ export class AdminMenuPlayerProvider {
         if (action === 'kill') {
             TriggerServerEvent(ServerEvent.ADMIN_KILL_PLAYER, player);
         } else {
+            TriggerServerEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_CANCEL_VAMPIRE_KNOCKOUT, player.id, true);
             TriggerServerEvent(ServerEvent.LSMC_REVIVE, player.id, true, false, false);
         }
 

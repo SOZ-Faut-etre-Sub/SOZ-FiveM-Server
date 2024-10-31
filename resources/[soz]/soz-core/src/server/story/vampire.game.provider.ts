@@ -27,6 +27,7 @@ import {
 import { ProgressAnimation } from '../../shared/progress';
 import { RpcServerEvent } from '../../shared/rpc';
 import { FeatureProvider } from '../feature/feature.provider';
+import { LSMCDeathProvider } from '../job/lsmc/lsmc.death.provider';
 import { Notifier } from '../notifier';
 import { PermissionService } from '../permission.service';
 import { PlayerPositionProvider } from '../player/player.position.provider';
@@ -73,6 +74,9 @@ export class VampireGameProvider {
 
     @Inject(PlayerPositionProvider)
     private playerPositionProvider: PlayerPositionProvider;
+
+    @Inject(LSMCDeathProvider)
+    private lsmcDeathProvider: LSMCDeathProvider;
 
     private gameDuration = 30; // minutes
     private autoRespawnDuration = 20; // seconds
@@ -362,11 +366,16 @@ export class VampireGameProvider {
     }
 
     @OnEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_CANCEL_VAMPIRE_KNOCKOUT)
-    public async cancelVampireKnockout(source: number) {
+    public async cancelVampireKnockout(source: number, target?: number, admin?: boolean) {
         if (!this.gameState.started) return;
-        if (!this.playerStateService.getClientState(source).isKnockedOut) return;
 
-        const player = this.playerService.getPlayer(source);
+        if (!target) {
+            target = source;
+        }
+
+        if (!this.playerStateService.getClientState(target).isKnockedOut) return;
+
+        const player = this.playerService.getPlayer(target);
         if (!player) {
             return;
         }
@@ -374,9 +383,17 @@ export class VampireGameProvider {
         this.gameState.autoRespawn.get(player.citizenid)?.cancel();
         this.gameState.autoRespawn.delete(player.citizenid);
 
-        this.playerStateService.setClientState(source, {
+        this.playerStateService.setClientState(target, {
             isKnockedOut: false,
         });
+
+        if (admin) {
+            TriggerClientEvent(
+                ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED,
+                target,
+                this.gameState.playerRoles.get(player.citizenid)
+            );
+        }
     }
 
     @OnEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_CONVERT_PLAYER)
@@ -618,7 +635,12 @@ export class VampireGameProvider {
             role,
             objective: Object.fromEntries(this.gameState.mortalObjectivePart1.entries()),
         });
-        -this.logger.debug(
+
+        if (player.metadata.isdead) {
+            await this.lsmcDeathProvider.revive(player.source, player.source, true, false, false);
+        }
+
+        this.logger.debug(
             `Player ${player.charinfo.firstname} ${player.charinfo.lastname} has been assigned to role ${role}`
         );
     }
