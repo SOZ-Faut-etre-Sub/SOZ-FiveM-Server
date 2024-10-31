@@ -150,7 +150,7 @@ export class QueenHarvestProvider {
                         action: () => {
                             this.notifier.notify(
                                 "Écoute attentivement, mortel… ~r~Soixante-six Coupes de Sang ont été éparpillées aux confins de cette île~s~, chacune placée avec soin pour ceux capables d'en saisir la puissance. Chaque entreprise détient sa propre coupe, tandis que les autres demeurent cachées dans les ténèbres, en attente de leur maître. ~r~Peut-être que la récompense te sera accordée, si tu as le courage de toutes les retrouver~s~.",
-                                'success',
+                                'error',
                                 21_000
                             );
                         },
