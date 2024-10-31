@@ -12,6 +12,7 @@ import { AnimationService } from '../animation/animation.service';
 import { FeatureProvider } from '../feature/feature.provider';
 import { PlayerService } from '../player/player.service';
 import { TargetFactory } from '../target/target.factory';
+import { BlurService } from '../utils/blur.service';
 
 @Provider()
 export class BloodProvider {
@@ -26,6 +27,9 @@ export class BloodProvider {
 
     @Inject(FeatureProvider)
     public featureProvider: FeatureProvider;
+
+    @Inject(BlurService)
+    public blurService: BlurService;
 
     private sucked = false;
 
@@ -130,6 +134,10 @@ export class BloodProvider {
         setTimeout(() => {
             if (this.sucked) {
                 this.bloodEffect(PlayerPedId());
+                this.blurService.add('sucking', 200);
+                setTimeout(() => {
+                    this.blurService.remove('sucking', 200);
+                }, 5000);
             }
         }, 2000);
 

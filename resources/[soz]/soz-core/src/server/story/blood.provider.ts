@@ -16,8 +16,8 @@ export class BloodProvider {
 
     @OnEvent(ServerEvent.HALLOWEEN_SUCK_NPC)
     public onNpcSuck(source: number) {
-        this.playerService.incrementMetadata(source, 'hunger', 25, 0, 100);
-        this.playerService.incrementMetadata(source, 'thirst', 25, 0, 100);
+        this.playerService.incrementMetadata(source, 'hunger', 10, 0, 100);
+        this.playerService.incrementMetadata(source, 'thirst', 10, 0, 100);
         this.monitor.traceEvent('halloween_suck_player', {
             player_source: source,
         });
@@ -37,10 +37,10 @@ export class BloodProvider {
         TriggerClientEvent(ClientEvent.HALLOWEEN_SUCK_PLAYER_END, target);
 
         if (!abort) {
-            this.playerService.incrementMetadata(source, 'hunger', 25, 0, 100);
-            this.playerService.incrementMetadata(source, 'thirst', 25, 0, 100);
-            this.playerService.incrementMetadata(target, 'hunger', -25, 0, 100);
-            this.playerService.incrementMetadata(target, 'thirst', -25, 0, 100);
+            this.playerService.incrementMetadata(source, 'hunger', 10, 0, 100);
+            this.playerService.incrementMetadata(source, 'thirst', 10, 0, 100);
+            this.playerService.incrementMetadata(target, 'hunger', -10, 0, 100);
+            this.playerService.incrementMetadata(target, 'thirst', -10, 0, 100);
         }
     }
 }
