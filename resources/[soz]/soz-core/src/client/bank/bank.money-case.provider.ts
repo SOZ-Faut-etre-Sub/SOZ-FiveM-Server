@@ -6,6 +6,7 @@ import { Tick, TickInterval } from '../../core/decorators/tick';
 import { StonkConfig } from '../../shared/job/stonk';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { PlayerService } from '../player/player.service';
+import { VampireGameStateProvider } from '../story/vampire.game.state.provider';
 import { WeaponHolsterProvider } from '../weapon/weapon.holster.provider';
 
 const MONEY_CASE_TRIGGER = 5000;
@@ -22,10 +23,18 @@ export class BankMoneyCaseProvider {
     @Inject(WeaponHolsterProvider)
     private weaponHolsterProvider: WeaponHolsterProvider;
 
+    @Inject(VampireGameStateProvider)
+    private readonly vampireGameStateProvider: VampireGameStateProvider;
+
     private disableAttack = false;
 
     private shouldDisplayMoneyCase(): boolean {
         const player = this.playerService.getPlayer();
+
+        if (this.vampireGameStateProvider.isGameRunning()) {
+            this.disableAttack = false;
+            return false;
+        }
 
         this.disableAttack =
             player !== null &&
