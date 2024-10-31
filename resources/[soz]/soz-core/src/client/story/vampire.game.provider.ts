@@ -4,7 +4,7 @@ import { Provider } from '@core/decorators/provider';
 import { emitRpc } from '@core/rpc';
 import { VampireGameStateProvider } from '@public/client/story/vampire.game.state.provider';
 import { Once, OnceStep, OnEvent, OnGameEvent, OnNuiEvent } from '@public/core/decorators/event';
-import { wait } from '@public/core/utils';
+import { uuidv4, wait } from '@public/core/utils';
 
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { ClientEvent } from '../../shared/event/client';
@@ -15,14 +15,17 @@ import { Feature } from '../../shared/features';
 import {
     VampireGameClientState,
     VampireGameCollection,
-    VampireGameCollectionLabel,
-    VampireGameCollectionSprite,
     VampireGameEnemyRoles,
+    VampireGameLabel,
+    VampireGameObjectivePart2,
+    VampireGameObjectiveTypePart2,
     VampireGameRole,
+    VampireGameSprite,
     VampireRespawnPoints,
 } from '../../shared/halloween';
 import { MenuType } from '../../shared/nui/menu';
 import { PlayerClientState } from '../../shared/player';
+import { BoxZone } from '../../shared/polyzone/box.zone';
 import { toVector3Object, Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import { VehicleSeat } from '../../shared/vehicle/vehicle';
@@ -33,6 +36,7 @@ import { InstructionalService } from '../instructional.service';
 import { Notifier } from '../notifier';
 import { NuiMenu } from '../nui/nui.menu';
 import { MapPickerProvider } from '../picker/map.picker.provider';
+import { PlayerInOutService } from '../player/player.inout.service';
 import { PlayerListStateService } from '../player/player.list.state.service';
 import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
@@ -84,6 +88,9 @@ export class VampireGameProvider {
     @Inject(MapPickerProvider)
     private readonly mapPickerProvider: MapPickerProvider;
 
+    @Inject(PlayerInOutService)
+    private readonly playerInOutService: PlayerInOutService;
+
     @Inject(NuiMenu)
     private readonly nuiMenu: NuiMenu;
 
@@ -95,6 +102,7 @@ export class VampireGameProvider {
 
     private blipDisabled = new Set<string>();
     private objectiveInteractions = new Set<string>();
+    private collectiveObjectives = new Set<string>();
     private vampirePositionBlip = new Set<string>();
 
     public async handleOnDeath() {
@@ -219,6 +227,48 @@ export class VampireGameProvider {
             },
         ]);
 
+        for (const [type, zone] of Object.entries(VampireGameObjectivePart2)) {
+            this.targetFactory.createForBoxZone(`halloween_vampire_objective_part2_${type}`, zone, [
+                {
+                    label: VampireGameLabel(type as VampireGameObjectiveTypePart2),
+                    category: 'citizen',
+                    event: 'vampire:game',
+                    canInteract: async () => {
+                        if (!this.gameState.isGameRunning()) return false;
+                        if (!this.gameState.getObjectivePart2()) return false;
+                        if (this.gameState.hasEnemyRole()) return false;
+
+                        return !this.gameState.isObjectivePart2Finished(type as VampireGameObjectiveTypePart2);
+                    },
+                    action: async () => {
+                        TriggerServerEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_TAKE_OBJECTIVE_PART2, type);
+                    },
+                },
+            ]);
+
+            this.playerInOutService.add(
+                `io_halloween_vampire_objective_part2_${type}`,
+                new BoxZone(zone.center, zone.length + 30, zone.width + 30, {
+                    minZ: zone.minZ,
+                    maxZ: zone.maxZ,
+                }),
+                isInside => {
+                    if (!this.gameState.isGameRunning()) return;
+                    if (!this.gameState.getObjectivePart2()) return;
+                    if (this.gameState.hasEnemyRole()) return;
+
+                    if (isInside) {
+                        this.instructionalService.display(
+                            this.gameState.getObjectivePart2Instructions(type as VampireGameObjectiveTypePart2),
+                            true
+                        );
+                    } else {
+                        this.instructionalService.clear();
+                    }
+                }
+            );
+        }
+
         // Trigger game start if a game is already running
         setTimeout(async () => {
             if (!this.gameState.isGameRunning()) return;
@@ -231,7 +281,7 @@ export class VampireGameProvider {
 
     @OnEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_STATE)
     public async onGameStateUpdate(state: Partial<VampireGameClientState>) {
-        if (this.gameState.isGameRunning() && !state.started) {
+        if (this.gameState.isGameRunning() && !this.gameState.getCompleteState(state).started) {
             await this.onGameEnd();
         }
 
@@ -243,7 +293,8 @@ export class VampireGameProvider {
             await this.displayRoleObjective(this.gameState.getRole());
         }
 
-        this.syncObjective(this.gameState.getObjective());
+        this.syncObjectivePart1(this.gameState.getObjectivePart1());
+        this.syncObjectivePart2(this.gameState.getObjectivePart2());
     }
 
     @OnEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED)
@@ -277,9 +328,9 @@ export class VampireGameProvider {
         this.gameState.setPlayerRespawning(false);
     }
 
-    @OnEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_OBJECTIVE)
-    public syncObjective(objective: Record<VampireGameCollection, Vector3[]>) {
-        this.gameState.setState({ objective });
+    @OnEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_OBJECTIVE_PART1)
+    public syncObjectivePart1(objective: Record<VampireGameCollection, Vector3[]>) {
+        this.gameState.setState({ objectivePart1: objective });
 
         this.objectiveInteractions.forEach(interaction => {
             this.interactionProvider.deleteInteraction(interaction);
@@ -287,18 +338,19 @@ export class VampireGameProvider {
         });
         this.objectiveInteractions.clear();
 
-        for (const [collection, objectives] of Object.entries(this.gameState.getObjective() ?? {})) {
+        for (const [collection, objectives] of Object.entries(this.gameState.getObjectivePart1() ?? {})) {
             for (const objective of objectives) {
                 const interactionId = this.interactionProvider.createInteractionForCoords(
                     [objective[0], objective[1], objective[2] + 0.7],
                     {
-                        label: VampireGameCollectionLabel(collection as VampireGameCollection),
+                        label: VampireGameLabel(collection as VampireGameCollection),
                         event: 'vampire:game',
-                        action: entity => {
-                            TaskTurnPedToFaceEntity(PlayerPedId(), entity, 500);
+                        action: async () => {
+                            TaskTurnPedToFaceCoord(PlayerPedId(), objective[0], objective[1], objective[2], 500);
+                            await wait(500);
 
                             TriggerServerEvent(
-                                ServerEvent.HALLOWEEN_VAMPIRE_GAME_TAKE_OBJECTIVE,
+                                ServerEvent.HALLOWEEN_VAMPIRE_GAME_TAKE_OBJECTIVE_PART1,
                                 collection,
                                 objective
                             );
@@ -312,14 +364,42 @@ export class VampireGameProvider {
                 this.blipFactory.create(
                     `halloween_vampire_objective_${interactionId}`,
                     {
-                        name: VampireGameCollectionLabel(collection as VampireGameCollection),
+                        name: VampireGameLabel(collection as VampireGameCollection),
                         coords: toVector3Object(objective),
-                        sprite: VampireGameCollectionSprite(collection as VampireGameCollection),
+                        sprite: VampireGameSprite(collection as VampireGameCollection),
                         color: 1,
                     },
                     true
                 );
             }
+        }
+    }
+
+    @OnEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_OBJECTIVE_PART2)
+    public syncObjectivePart2(
+        objective: Record<VampireGameObjectiveTypePart2, { playerRequired: number; finished: boolean }>
+    ) {
+        this.gameState.setState({ objectivePart2: objective });
+
+        this.collectiveObjectives.forEach(id => {
+            this.blipFactory.remove(`halloween_vampire_objective_${id}`);
+        });
+        this.collectiveObjectives.clear();
+
+        for (const [objective, { finished }] of Object.entries(this.gameState.getObjectivePart2() ?? {})) {
+            const id = uuidv4();
+            this.blipFactory.create(
+                `halloween_vampire_objective_${id}`,
+                {
+                    name: VampireGameLabel(objective as VampireGameObjectiveTypePart2),
+                    coords: toVector3Object(VampireGameObjectivePart2[objective].center),
+                    sprite: VampireGameSprite(objective as VampireGameObjectiveTypePart2),
+                    color: finished ? 2 : 1,
+                },
+                true
+            );
+
+            this.collectiveObjectives.add(id);
         }
     }
 

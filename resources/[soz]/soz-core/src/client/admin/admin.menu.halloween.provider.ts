@@ -71,7 +71,33 @@ export class AdminMenuHalloweenProvider {
             PositiveNumberValidator
         );
 
-        TriggerServerEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_MORTAL_COLLECTION, collection, amount);
+        TriggerServerEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_MORTAL_OBJECTIVE_PART1, collection, amount);
+        await this.reloadAdminMenu();
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuHalloweenUpdateObjectivePart2)
+    async updateObjectivePart2(objective: string): Promise<void> {
+        const amount = await this.inputService.askInput(
+            {
+                title: 'Nombre de joueurs requis',
+            },
+            PositiveNumberValidator
+        );
+
+        TriggerServerEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_MORTAL_OBJECTIVE_PART2, objective, amount);
+        await this.reloadAdminMenu();
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuHalloweenUpdateObjectivePart3)
+    async updateObjectivePart3(): Promise<void> {
+        const amount = await this.inputService.askInput(
+            {
+                title: 'Durée maximale de la partie 3 en minutes',
+            },
+            PositiveNumberValidator
+        );
+
+        TriggerServerEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_MORTAL_OBJECTIVE_PART3, amount);
         await this.reloadAdminMenu();
     }
 

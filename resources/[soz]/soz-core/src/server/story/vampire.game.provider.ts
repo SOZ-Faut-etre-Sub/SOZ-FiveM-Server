@@ -18,8 +18,11 @@ import {
     VampireGameClientState,
     VampireGameCollection,
     VampireGameEnemyRoles,
-    VampireGameObjectiveCollection,
+    VampireGameLabel,
+    VampireGameObjectiveCollectionPart1,
+    VampireGameObjectivePart2,
     VampireGameObjectiveProps,
+    VampireGameObjectiveTypePart2,
     VampireGameRole,
     VampireGameServerState,
     VampireRespawnPoints,
@@ -78,8 +81,9 @@ export class VampireGameProvider {
     @Inject(LSMCDeathProvider)
     private lsmcDeathProvider: LSMCDeathProvider;
 
-    private gameDuration = 30; // minutes
+    private gameDuration = 90; // minutes
     private autoRespawnDuration = 20; // seconds
+
     private roleMaxNumber: Record<VampireGameRole, number> = {
         [VampireGameRole.Vampire]: 50,
         [VampireGameRole.Ghoul]: 0,
@@ -88,12 +92,19 @@ export class VampireGameProvider {
         [VampireGameRole.Squire]: 20,
         [VampireGameRole.Alchemist]: 20,
     };
-    private mortalObjective: Record<Exclude<VampireGameCollection, 'player'>, number> = {
+    private mortalObjectivePart1: Record<Exclude<VampireGameCollection, 'player'>, number> = {
         prop_streetlight: 30,
         prop_fire_hydrant: 30,
         prop_gas_pump: 10,
         prop_elecbox: 30,
     };
+    private mortalObjectivePart2: Record<VampireGameObjectiveTypePart2, number> = {
+        battery: 15,
+        dam: 15,
+        vampire: 20,
+        weapon: 15,
+    };
+    private mortalObjectivePart3Duration = 10; // minutes
 
     private gameState: VampireGameServerState = {
         started: false,
@@ -102,6 +113,13 @@ export class VampireGameProvider {
         playerRoles: new Map<string, VampireGameRole>(),
 
         mortalObjectivePart1: new Map<VampireGameCollection, Vector3[]>(),
+        mortalObjectivePart2: {
+            battery: { finished: false, players: new Set<string>() },
+            dam: { finished: false, players: new Set<string>() },
+            vampire: { finished: false, players: new Set<string>() },
+            weapon: { finished: false, players: new Set<string>() },
+        },
+        mortalObjectivePart3: null,
 
         autoRespawn: new Map<string, PCancelable<void>>(),
 
@@ -181,7 +199,7 @@ export class VampireGameProvider {
             return;
         }
 
-        this.createObjective();
+        this.createObjectivePart1();
 
         for (const player of this.serverStateService.getPlayers()) {
             await this.newPlayer(player);
@@ -241,8 +259,8 @@ export class VampireGameProvider {
         this.notifier.notify(source, 'Le jeu a été arrêté', 'info');
     }
 
-    @OnEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_TAKE_OBJECTIVE)
-    public async takeObjective(source: number, collection: VampireGameCollection, objective: Vector3) {
+    @OnEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_TAKE_OBJECTIVE_PART1)
+    public async takeObjectivePart1(source: number, collection: VampireGameCollection, objective: Vector3) {
         if (!this.gameState.started) return;
 
         const player = this.playerService.getPlayer(source);
@@ -305,12 +323,17 @@ export class VampireGameProvider {
         );
         this.notifier.notify(source, 'Objectif validé', 'success');
 
-        for (const [player, playerRole] of this.gameState.playerRoles.entries()) {
+        for (const [citizenId, playerRole] of this.gameState.playerRoles.entries()) {
             if (VampireGameEnemyRoles.includes(playerRole)) continue;
 
+            const player = this.playerService.getPlayerByCitizenId(citizenId);
+            if (!player) {
+                return;
+            }
+
             TriggerLatentClientEvent(
-                ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_OBJECTIVE,
-                player,
+                ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_OBJECTIVE_PART1,
+                player.source,
                 1024,
                 Object.fromEntries(this.gameState.mortalObjectivePart1.entries())
             );
@@ -320,12 +343,79 @@ export class VampireGameProvider {
             if (positions.length > 0) return;
         }
 
-        this.notifier.notify(
-            -1,
-            'Les Mortels ont gagné ce scénario ! Le tournage est terminé, l’ensemble de l’île peut retourner à ses occupations, bravo pour votre prestation.',
-            'info'
+        this.callFunctionOnNonEnemyPlayers(player => {
+            this.notifier.notify(
+                player.source,
+                'Les Mortels ont ~g~réussi~s~ la première phase ! Leur périple continue avec de ~y~nouveaux objectifs à accomplir~s~.',
+                'info'
+            );
+        });
+
+        this.sendObjectivePart2();
+    }
+
+    @OnEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_TAKE_OBJECTIVE_PART2)
+    public async takeObjectivePart2(source: number, objective: VampireGameObjectiveTypePart2) {
+        if (!this.gameState.started) return;
+
+        const player = this.playerService.getPlayer(source);
+        if (!player) {
+            return;
+        }
+
+        if (VampireGameEnemyRoles.includes(this.gameState.playerRoles.get(player.citizenid))) {
+            this.notifier.error(source, "Vous n'avez pas le droit de faire cette action");
+            return;
+        }
+
+        this.gameState.mortalObjectivePart2[objective].players.add(player.citizenid);
+
+        const { completed } = await this.progressService.progress(
+            source,
+            'halloween_part2',
+            'Action en cours ...',
+            10_000,
+            {
+                dictionary: 'anim@heists@ornate_bank@thermal_charge',
+                name: 'thermal_charge',
+            },
+            {}
         );
-        this.stopGame();
+        if (!completed) {
+            this.notifier.error(source, 'Objectif abandonné');
+            this.gameState.mortalObjectivePart2[objective].players.delete(player.citizenid);
+            return;
+        }
+
+        if (this.gameState.mortalObjectivePart2[objective].players.size >= this.mortalObjectivePart2[objective]) {
+            this.gameState.mortalObjectivePart2[objective].finished = true;
+
+            this.callFunctionOnNonEnemyPlayers(player => {
+                this.notifier.notify(
+                    player.source,
+                    `L'objectif ~b~${VampireGameLabel(objective)}~s~ est validé.`,
+                    'success'
+                );
+            });
+        }
+
+        this.gameState.mortalObjectivePart2[objective].players.delete(player.citizenid);
+
+        this.sendObjectivePart2();
+
+        for (const { finished } of Object.values(this.gameState.mortalObjectivePart2)) {
+            if (!finished) return;
+        }
+
+        this.triggerMortalObjectivePart3();
+
+        this.callFunctionOnNonEnemyPlayers(player => {
+            this.notifier.notify(
+                player.source,
+                'Tous les mortels ont reçu de quoi se défendre, les balles d’argent peuvent tuer les vampires ! La chasse se retourne contre eux, survivez 10 minutes pour sortir victorieux de cette bataille.',
+                'info'
+            );
+        });
     }
 
     @OnEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_PLAYER_KNOCKED_OUT)
@@ -466,7 +556,7 @@ export class VampireGameProvider {
         TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED, target, role);
 
         if (VampireGameEnemyRoles.includes(role)) {
-            TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_OBJECTIVE, target, {});
+            TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_OBJECTIVE_PART1, target, {});
         }
 
         await wait(1000);
@@ -558,7 +648,9 @@ export class VampireGameProvider {
             started: this.gameState.started,
             gameDuration: this.gameDuration,
             roleMaxNumber: this.roleMaxNumber,
-            mortalObjective: this.mortalObjective,
+            mortalObjectivePart1: this.mortalObjectivePart1,
+            mortalObjectivePart2: this.mortalObjectivePart2,
+            mortalObjectivePart3: this.mortalObjectivePart3Duration,
         };
     }
 
@@ -587,19 +679,44 @@ export class VampireGameProvider {
         this.notifier.notify(source, `Le rôle ${role} a été mis à jour, joueurs maximum: ${value}`, 'info');
     }
 
-    @OnEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_MORTAL_COLLECTION)
+    @OnEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_MORTAL_OBJECTIVE_PART1)
     public toggleCollection(source: number, collection: VampireGameCollection, value: number): void {
         if (!this.permissionService.isStaff(source)) {
             return;
         }
 
-        this.mortalObjective[collection] = value;
+        this.mortalObjectivePart1[collection] = value;
         if (value <= 0) {
             this.notifier.notify(source, `La collection ${collection} a été désactivée`, 'info');
             return;
         }
 
         this.notifier.notify(source, `La collection ${collection} a été mise à jour, props maximum: ${value}`, 'info');
+    }
+
+    @OnEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_MORTAL_OBJECTIVE_PART2)
+    public updateObjectivePart2Player(source: number, objective: VampireGameCollection, value: number): void {
+        if (!this.permissionService.isStaff(source)) {
+            return;
+        }
+
+        this.mortalObjectivePart2[objective] = value;
+        if (value <= 0) {
+            this.notifier.notify(source, `L'objectif ${objective} a été désactivée`, 'info');
+            return;
+        }
+
+        this.notifier.notify(source, `L'objectif ${objective} a été mise à jour, joueur requis: ${value}`, 'info');
+    }
+
+    @OnEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_MORTAL_OBJECTIVE_PART3)
+    public updateObjectivePart3(source: number, value: number): void {
+        if (!this.permissionService.isStaff(source)) {
+            return;
+        }
+
+        this.mortalObjectivePart3Duration = value;
+        this.notifier.notify(source, `La durée de l'objectif 3 a été mise à jour, durée: ${value} minutes`, 'info');
     }
 
     /* Private methods */
@@ -616,13 +733,19 @@ export class VampireGameProvider {
         });
 
         clearTimeout(this.gameState.timer);
+        clearTimeout(this.gameState.mortalObjectivePart3);
 
-        this.gameState.playerRoles.forEach((_, player) => {
-            const playerState = this.playerStateService.getClientStateByCitizenId(player);
+        this.gameState.playerRoles.forEach((_, citizenId) => {
+            const player = this.playerService.getPlayerByCitizenId(citizenId);
+            if (!player) {
+                return;
+            }
+
+            const playerState = this.playerStateService.getClientStateByCitizenId(citizenId);
             if (!playerState.isKnockedOut) return;
 
-            TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED, player, VampireGameRole.Mortal);
-            this.gameState.autoRespawn.get(player)?.cancel();
+            TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED, player.source, VampireGameRole.Mortal);
+            this.gameState.autoRespawn.get(citizenId)?.cancel();
         });
 
         this.playerStateService.setAllClientsState({
@@ -634,11 +757,17 @@ export class VampireGameProvider {
             inWaitingRoom: false,
             started: false,
             role: null,
-            objective: null,
+            objectivePart1: null,
+            objectivePart2: null,
         } as VampireGameClientState);
 
         Object.values(this.gameState.gauges).forEach(gauge => gauge.reset());
         this.gameState.mortalObjectivePart1.clear();
+        Object.keys(this.gameState.mortalObjectivePart2).forEach(key => {
+            this.gameState.mortalObjectivePart2[key].validated = false;
+            this.gameState.mortalObjectivePart2[key].players.clear();
+        });
+        this.gameState.mortalObjectivePart3 = null;
         this.gameState.autoRespawn.clear();
         this.gameState.playerRoles.clear();
         this.gameState.started = false;
@@ -664,7 +793,10 @@ export class VampireGameProvider {
             inWaitingRoom: true,
             started: this.gameState.started,
             role,
-            objective: Object.fromEntries(this.gameState.mortalObjectivePart1.entries()),
+            objectivePart1: !VampireGameEnemyRoles.includes(role)
+                ? Object.fromEntries(this.gameState.mortalObjectivePart1.entries())
+                : null,
+            objectivePart2: null,
         });
 
         if (player.metadata.isdead) {
@@ -693,17 +825,17 @@ export class VampireGameProvider {
         return availableRoles[Math.floor(Math.random() * availableRoles.length)] as VampireGameRole;
     }
 
-    private createObjective() {
-        for (const collection of Object.keys(VampireGameObjectiveCollection) as VampireGameCollection[]) {
+    private createObjectivePart1() {
+        for (const collection of Object.keys(VampireGameObjectiveCollectionPart1) as VampireGameCollection[]) {
             this.gameState.mortalObjectivePart1.set(
                 collection,
-                this.getCollectionContent(collection, this.mortalObjective[collection])
+                this.getCollectionContent(collection, this.mortalObjectivePart1[collection])
             );
         }
     }
 
     private getCollectionContent(collection: VampireGameCollection, amount: number): Vector3[] {
-        const collectionPropsList = VampireGameObjectiveCollection[collection];
+        const collectionPropsList = VampireGameObjectiveCollectionPart1[collection];
         if (!collectionPropsList) {
             return [];
         }
@@ -716,5 +848,100 @@ export class VampireGameProvider {
             .filter(coords => coords[1] >= OBJECTIVE_Y_LIMITATION[0] && coords[1] <= OBJECTIVE_Y_LIMITATION[1])
             .sort(() => Math.random() - 0.5)
             .slice(0, amount);
+    }
+
+    private sendObjectivePart2() {
+        if (!this.gameState.started) return;
+
+        for (const [, positions] of this.gameState.mortalObjectivePart1) {
+            if (positions.length > 0) return;
+        }
+
+        let objectivePart2 = Object.fromEntries(
+            Object.entries(VampireGameObjectivePart2).map(([key]) => [
+                key,
+                {
+                    playerRequired: this.mortalObjectivePart2[key],
+                    finished: this.gameState.mortalObjectivePart2[key].finished,
+                },
+            ])
+        );
+
+        if (Object.values(this.gameState.mortalObjectivePart2).every(o => o.finished)) {
+            objectivePart2 = {};
+        }
+
+        this.callFunctionOnNonEnemyPlayers(player => {
+            TriggerLatentClientEvent(
+                ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_OBJECTIVE_PART2,
+                player.source,
+                1024,
+                objectivePart2
+            );
+        });
+    }
+
+    private callFunctionOnNonEnemyPlayers(callback: (player: PlayerData) => void) {
+        this.gameState.playerRoles.forEach((role, citizenId) => {
+            if (VampireGameEnemyRoles.includes(role)) return;
+
+            const player = this.playerService.getPlayerByCitizenId(citizenId);
+            if (!player) {
+                return;
+            }
+
+            callback(player);
+        });
+    }
+
+    private callFunctionOnEnemyPlayers(callback: (player: PlayerData) => void) {
+        this.gameState.playerRoles.forEach((role, citizenId) => {
+            if (!VampireGameEnemyRoles.includes(role)) return;
+
+            const player = this.playerService.getPlayerByCitizenId(citizenId);
+            if (!player) {
+                return;
+            }
+
+            callback(player);
+        });
+    }
+
+    private triggerMortalObjectivePart3() {
+        this.gameState.playerRoles.forEach((role, citizenId) => {
+            if (VampireGameEnemyRoles.includes(role)) return;
+            if (role === VampireGameRole.Hunter) return;
+
+            const player = this.playerService.getPlayerByCitizenId(citizenId);
+            if (!player) {
+                return;
+            }
+
+            this.gameState.gauges[role].dec();
+            this.gameState.playerRoles.set(citizenId, VampireGameRole.Hunter);
+            this.gameState.gauges[VampireGameRole.Hunter].inc();
+
+            TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_STATE, player.source, {
+                role: VampireGameRole.Hunter,
+            });
+
+            this.playerStateService.setClientState(player.source, {
+                isKnockedOut: false,
+            });
+
+            TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED, player.source, role);
+        });
+
+        this.gameState.mortalObjectivePart3 = setTimeout(
+            () => {
+                this.notifier.notify(
+                    -1,
+                    'Les Mortels ont gagné ce scénario ! Le tournage est terminé, l’ensemble de l’île peut retourner à ses occupations, bravo pour votre prestation.',
+                    'info'
+                );
+                this.stopGame();
+            },
+            this.mortalObjectivePart3Duration * 60 * 1000
+        );
     }
 }
