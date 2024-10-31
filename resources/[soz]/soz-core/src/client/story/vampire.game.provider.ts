@@ -420,7 +420,7 @@ export class VampireGameProvider {
         await this.syncModel(this.gameState.getRole(), model);
     }
 
-    @OnEvent(ClientEvent.BASE_LEFT_VEHICLE)
+    @Tick(10 * TickInterval.EVERY_SECOND)
     public async onPlayerLeaveVehicle() {
         if (!this.featureProvider.isFeatureEnabled(Feature.Halloween)) return;
         if (!this.gameState.isGameRunning()) return;
