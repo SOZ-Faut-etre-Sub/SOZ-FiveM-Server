@@ -1891,6 +1891,7 @@ export class DevilBaitShopProvider {
                         label: 'Boutique du diable',
                         icon: 'fishing/fishing-rod',
                         category: 'citizen',
+                        canInteract: () => !this.featureProvider.isFeatureEnabled(Feature.Vampire),
                         action: () => {
                             const FishingProducts = [
                                 {

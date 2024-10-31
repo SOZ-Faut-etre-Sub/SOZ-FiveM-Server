@@ -1,4 +1,5 @@
 import { Provider } from '@core/decorators/provider';
+import { FISHING_PRICES } from '@private/config/fishing';
 
 import { Once, OnceStep } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -7,6 +8,8 @@ import { ServerEvent } from '../../shared/event/server';
 import { Feature } from '../../shared/features';
 import { toVector4Object, Vector4 } from '../../shared/polyzone/vector';
 import { FeatureProvider } from '../feature/feature.provider';
+import { InventoryManager } from '../inventory/inventory.manager';
+import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
 import { TargetFactory } from '../target/target.factory';
 
@@ -20,6 +23,11 @@ export class QueenHarvestProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
+    @Inject(InventoryManager)
+    private inventoryManager: InventoryManager;
+
+    @Inject(ItemService)
+    private itemService: ItemService;
 
     private queenPosition: Vector4 = [667.8741, 1282.325, 360.85, 259.64];
 
@@ -146,6 +154,24 @@ export class QueenHarvestProvider {
                                 'success',
                                 21_000
                             );
+                        },
+                    },
+                    {
+                        label: 'Boutique de Sang',
+                        icon: 'fishing/fishing-rod',
+                        category: 'citizen',
+                        canInteract: () => this.featureProvider.isFeatureEnabled(Feature.Vampire),
+                        action: () => {
+                            const FishingProducts = [
+                                {
+                                    ...this.itemService.getItem('vampire_blood_bait'),
+                                    price: FISHING_PRICES.vampire_blood_bait,
+                                    amount: 0,
+                                    slot: 1,
+                                },
+                            ];
+
+                            this.inventoryManager.openShopInventory(FishingProducts, 'menu_shop_queen');
                         },
                     },
                 ],
