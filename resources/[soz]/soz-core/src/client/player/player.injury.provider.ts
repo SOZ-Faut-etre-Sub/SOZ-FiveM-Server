@@ -4,6 +4,7 @@ import { Tick, TickInterval } from '@core/decorators/tick';
 import { wait } from '@public/core/utils';
 
 import { Notifier } from '../notifier';
+import { VampireGameStateProvider } from '../story/vampire.game.state.provider';
 import { PlayerService } from './player.service';
 import { PlayerWalkstyleProvider } from './player.walkstyle.provider';
 import { PlayerZombieProvider } from './player.zombie.provider';
@@ -35,6 +36,9 @@ export class PlayerInjuryProvider {
     @Inject(PlayerZombieProvider)
     private playerZombieProvider: PlayerZombieProvider;
 
+    @Inject(VampireGameStateProvider)
+    private vampireGameStateProvider: VampireGameStateProvider;
+
     @Inject(PlayerWalkstyleProvider)
     private playerWalkstyleProvider: PlayerWalkstyleProvider;
 
@@ -50,6 +54,10 @@ export class PlayerInjuryProvider {
         }
 
         if (this.playerZombieProvider.isZombie()) {
+            return;
+        }
+
+        if (this.vampireGameStateProvider.isGameRunning()) {
             return;
         }
 
