@@ -20330,8 +20330,8 @@ QBShared.Items = {
         ['sozedex_id'] = 50,
         ['price'] = 74
      },
-    ['vampire_bullanis_drăculea'] = {
-        ['name'] = "vampire_bullanis_drăculea",
+    ['vampire_bullanis_draculea'] = {
+        ['name'] = "vampire_bullanis_draculea",
         ['label'] = "Bullanis Drăculea",
         ['useable'] = false,
         ['weight'] = 200,
