@@ -1145,6 +1145,7 @@ export enum ExplosionType {
     SMOKEGRENADELAUNCHER = 19,
     SMOKEGRENADE = 20,
     FLARE = 22,
+    FIREWORK = 38,
     EXP_TAG_SNOWBALL = 39,
     EXP_TAG_RAYGUN = 70,
     EMPLAUNCHER_EMP = 83,
@@ -1158,4 +1159,5 @@ export const excludeExplosionAlert = [
     ExplosionType.FLARE,
     ExplosionType.EXP_TAG_SNOWBALL,
     ExplosionType.EMPLAUNCHER_EMP,
+    ExplosionType.FIREWORK,
 ];
