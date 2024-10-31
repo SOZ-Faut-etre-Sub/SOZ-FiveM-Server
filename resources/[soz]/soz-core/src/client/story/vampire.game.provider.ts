@@ -323,8 +323,8 @@ export class VampireGameProvider {
         }
     }
 
-    @OnEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_ENEMY_POSITION)
-    public syncEnemyPosition(positions: Vector3[]) {
+    @OnEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_POSITION)
+    public syncEnemyPosition(positions: Vector3[], isEnemy: boolean) {
         this.vampirePositionBlip.forEach(blipName => {
             this.blipFactory.remove(blipName);
         });
@@ -336,10 +336,10 @@ export class VampireGameProvider {
             this.blipFactory.create(
                 blipName,
                 {
-                    name: 'Présence de danger',
+                    name: isEnemy ? 'Danger' : 'Viande fraîche',
                     coords: toVector3Object(position),
                     sprite: 1,
-                    color: 1,
+                    color: isEnemy ? 1 : 0,
                 },
                 true
             );
@@ -487,7 +487,7 @@ export class VampireGameProvider {
         this.weaponService.setDisabled('vampire-game', false);
         this.instructionalService.clear();
         await this.syncModel(null);
-        this.syncEnemyPosition([]);
+        this.syncEnemyPosition([], false);
         this.gameState.setPlayerRespawning(false);
 
         const playerPed = PlayerPedId();

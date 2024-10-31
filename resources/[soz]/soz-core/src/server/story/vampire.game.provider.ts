@@ -502,21 +502,52 @@ export class VampireGameProvider {
         if (!this.gameState.started) return;
 
         const squirePlayers = [];
+        const enemyPlayers = [];
+
+        const victimPositions: Vector3[] = [];
         const enemyPositions: Vector3[] = [];
 
-        this.gameState.playerRoles.forEach((role, player) => {
-            if (role === VampireGameRole.Squire) {
-                squirePlayers.push(player);
+        this.gameState.playerRoles.forEach((role, citizenId) => {
+            if (VampireGameEnemyRoles.includes(role)) {
+                enemyPlayers.push(citizenId);
+            } else if (role === VampireGameRole.Squire) {
+                squirePlayers.push(citizenId);
             }
 
-            if (!VampireGameEnemyRoles.includes(role)) return;
+            const player = this.playerService.getPlayerByCitizenId(citizenId);
+            const [x, y, z] = GetEntityCoords(GetPlayerPed(player.source));
 
-            const [x, y, z] = GetEntityCoords(GetPlayerPed(player));
-            enemyPositions.push([x, y, z]);
+            if (VampireGameEnemyRoles.includes(role)) {
+                enemyPositions.push([x, y, z]);
+            } else {
+                victimPositions.push([x, y, z]);
+            }
         });
 
-        squirePlayers.forEach(player => {
-            TriggerLatentClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_ENEMY_POSITION, player, 1024, enemyPositions);
+        squirePlayers.forEach(citizenId => {
+            const player = this.playerService.getPlayerByCitizenId(citizenId);
+            if (!player) return;
+
+            TriggerLatentClientEvent(
+                ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_POSITION,
+                player.source,
+                1024,
+                enemyPositions,
+                true
+            );
+        });
+
+        enemyPlayers.forEach(citizenId => {
+            const player = this.playerService.getPlayerByCitizenId(citizenId);
+            if (!player) return;
+
+            TriggerLatentClientEvent(
+                ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_POSITION,
+                player.source,
+                1024,
+                victimPositions,
+                false
+            );
         });
     }
 
