@@ -1,5 +1,4 @@
 import { Provider } from '@core/decorators/provider';
-import { FISHING_PRICES } from '@private/config/fishing';
 
 import { Once, OnceStep } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -165,7 +164,7 @@ export class QueenHarvestProvider {
                             const FishingProducts = [
                                 {
                                     ...this.itemService.getItem('vampire_blood_bait'),
-                                    price: FISHING_PRICES.vampire_blood_bait,
+                                    price: 5,
                                     amount: 0,
                                     slot: 1,
                                 },
