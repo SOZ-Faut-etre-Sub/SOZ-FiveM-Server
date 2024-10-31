@@ -116,17 +116,17 @@ export class VampireGameProvider {
         StartScreenEffect('DeathFailOut', 0, true);
 
         if (this.gameState.hasRole(VampireGameRole.Vampire)) {
-            this.instructionalService.display([
-                'Tu as failli à ta tâche...',
-                "Tu as quand même droit à une nouvelle chance d'ici quelques secondes",
-            ]);
+            this.instructionalService.display(
+                ['Tu as failli à ta tâche...', "Tu as quand même droit à une nouvelle chance d'ici quelques secondes"],
+                true
+            );
         } else if (this.gameState.hasRole(VampireGameRole.Ghoul)) {
-            this.instructionalService.display([
-                'Tu as failli à ta tâche...',
-                "Ton vampire va te réanimer d'ici quelques secondes",
-            ]);
+            this.instructionalService.display(
+                ['Tu as failli à ta tâche...', "Ton vampire va te réanimer d'ici quelques secondes"],
+                true
+            );
         } else {
-            this.instructionalService.display(["Tu es au sol, prie pour qu'un vampire ne te suce pas !"]);
+            this.instructionalService.display(["Tu es au sol, prie pour qu'un vampire ne te suce pas !"], true);
         }
 
         TriggerServerEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_PLAYER_KNOCKED_OUT);
@@ -271,10 +271,7 @@ export class VampireGameProvider {
 
         await this.syncModel(role);
 
-        this.instructionalService.display(['Tu es désormais', role]);
-
-        await wait(5000);
-        this.instructionalService.clear();
+        await this.displayRole();
 
         await this.displayRoleObjective(this.gameState.getRole());
         this.gameState.setPlayerRespawning(false);
@@ -463,7 +460,7 @@ export class VampireGameProvider {
         this.blipFactory.qbHide('job_pawl', true);
         this.blipFactory.qbHide('job_upw', true);
 
-        this.instructionalService.display(['Tu es désormais', this.gameState.getRole()]);
+        this.instructionalService.display(['Tu es désormais', this.gameState.getRole()], true);
 
         do {
             await wait(0);
@@ -509,7 +506,7 @@ export class VampireGameProvider {
         const [found, z] = GetGroundZFor_3dCoord_2(pos[0], pos[1], pos[2], false);
 
         if (found) {
-            SetPedCoordsKeepVehicle(player, pos[0], pos[1], z);
+            SetPedCoordsKeepVehicle(player, pos[0], pos[1], z + 1.0);
         }
 
         if (role === VampireGameRole.Vampire) {
@@ -536,6 +533,12 @@ export class VampireGameProvider {
         }
     }
 
+    private async displayRole() {
+        this.instructionalService.display(['Tu es désormais', this.gameState.getRole()], true);
+        await wait(5000);
+        this.instructionalService.clear();
+    }
+
     @Command('soz_halloween_vampire_game_objective', {
         description: 'Affiche les objectifs du jeu Halloween Vampire',
         keys: [{ mapper: 'keyboard', key: 'GRAVE' }],
@@ -548,35 +551,52 @@ export class VampireGameProvider {
             role = this.gameState.getRole();
         }
 
+        await this.displayRole();
+
         switch (role) {
             case VampireGameRole.Vampire:
-                this.instructionalService.display([
-                    "Dirige-toi en ville pour empêcher les survivants de rallumer l'électricité, et suce pour gagner des pouvoirs.",
-                ]);
+                this.instructionalService.display(
+                    [
+                        "Dirige-toi en ville pour empêcher les survivants de rallumer l'électricité, et suce pour gagner des pouvoirs.",
+                    ],
+                    true
+                );
                 this.notifier.notify(
                     'En tant que Vampire tu peux te transformer. Appuie sur H pour ouvrir le menu.',
                     'info'
                 );
                 break;
             case VampireGameRole.Hunter:
-                this.instructionalService.display([
-                    'En tant que Chasseur, tu peux tuer les Vampires à l’aide de ton Mousquet et tes Balles en Argent.',
-                ]);
+                this.instructionalService.display(
+                    [
+                        'En tant que Chasseur, tu peux tuer les Vampires à l’aide de ton Mousquet et tes Balles en Argent.',
+                    ],
+                    true
+                );
                 break;
             case VampireGameRole.Mortal:
-                this.instructionalService.display([
-                    "Dirige-toi en ville pour réparer l'électricité en accomplissant divers objectifs, et survie aux monstres.",
-                ]);
+                this.instructionalService.display(
+                    [
+                        "Dirige-toi en ville pour réparer l'électricité en accomplissant divers objectifs, et survie aux monstres.",
+                    ],
+                    true
+                );
                 break;
             case VampireGameRole.Squire:
-                this.instructionalService.display([
-                    'En tant qu’Écuyère, tu as le pouvoir de sentir la présence des vampires sur ta carte. Aide les Chasseurs à trouver les vampires et protège les Mortels.',
-                ]);
+                this.instructionalService.display(
+                    [
+                        'En tant qu’Écuyère, tu as le pouvoir de sentir la présence des vampires sur ta carte. Aide les Chasseurs à trouver les vampires et protège les Mortels.',
+                    ],
+                    true
+                );
                 break;
             case VampireGameRole.Alchemist:
-                this.instructionalService.display([
-                    'En tant qu’Alchimiste, tu as le pouvoir de réanimer les Goules en Mortel. Soigne-les dès que tu le peux.',
-                ]);
+                this.instructionalService.display(
+                    [
+                        'En tant qu’Alchimiste, tu as le pouvoir de réanimer les Goules en Mortel. Soigne-les dès que tu le peux.',
+                    ],
+                    true
+                );
                 break;
         }
 
