@@ -28,6 +28,8 @@ type FDFStateProps = {
             [FDFFieldKind.greenhouse]: boolean;
             [FDFFieldKind.apple]: boolean;
             [FDFFieldKind.orange]: boolean;
+            displayGarlicBlip: boolean;
+            garlicEnabled: boolean;
         };
     };
 };
@@ -77,6 +79,14 @@ export const FdfJobMenu: FunctionComponent<FDFStateProps> = ({ data }) => {
                             {FDFFieldMenu[kind]}
                         </MenuItemCheckbox>
                     ))}
+                    {data.state.garlicEnabled && (
+                        <MenuItemCheckbox
+                            checked={data.state.displayGarlicBlip}
+                            onChange={value => displayBlip('displayGarlicBlip', value)}
+                        >
+                            Afficher le champ d'Ail
+                        </MenuItemCheckbox>
+                    )}
                     {Object.keys(data.recipes).map(category => (
                         <MenuItemSubMenuLink
                             id={`recipe_${category}`}

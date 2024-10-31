@@ -22,7 +22,7 @@ export class AnimationProvider {
     }
 
     @OnEvent(ClientEvent.ANIMATION_FX)
-    public async onAnimationFx(objectNetId: number, fx: Vfx) {
+    public async onAnimationFx(objectNetId: number, fx: Vfx, bone: number) {
         if (!NetworkDoesNetworkIdExist(objectNetId)) {
             return;
         }
@@ -32,20 +32,43 @@ export class AnimationProvider {
 
         UseParticleFxAsset(fx.dictionary);
 
-        StartParticleFxLoopedOnEntity(
-            fx.name,
-            entity,
-            fx.position[0],
-            fx.position[1],
-            fx.position[2],
-            fx.rotation[0],
-            fx.rotation[1],
-            fx.rotation[2],
-            fx.scale,
-            false,
-            false,
-            false
-        );
+        let fxId = 0;
+        if (bone) {
+            fxId = StartParticleFxLoopedOnEntityBone(
+                fx.name,
+                entity,
+                fx.position[0],
+                fx.position[1],
+                fx.position[2],
+                fx.rotation[0],
+                fx.rotation[1],
+                fx.rotation[2],
+                bone,
+                fx.scale,
+                false,
+                false,
+                false
+            );
+        } else {
+            fxId = StartParticleFxLoopedOnEntity(
+                fx.name,
+                entity,
+                fx.position[0],
+                fx.position[1],
+                fx.position[2],
+                fx.rotation[0],
+                fx.rotation[1],
+                fx.rotation[2],
+                fx.scale,
+                false,
+                false,
+                false
+            );
+        }
+
+        await wait(fx.delay);
+        StopParticleFxLooped(fxId, false);
+
         this.resourceLoader.unloadPtfxAsset(fx.dictionary);
     }
 

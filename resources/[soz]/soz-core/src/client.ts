@@ -42,6 +42,7 @@ import { UpwModule } from './client/job/upw/upw.module';
 import { MonitorModule } from './client/monitor/monitor.module';
 import { NuiModule } from './client/nui/nui.module';
 import { ObjectModule } from './client/object/object.module';
+import { PickerModule } from './client/picker/picker.module';
 import { PlayerModule } from './client/player/player.module';
 import { QuickInteractionModule } from './client/quick-interaction/interaction.module';
 import { RaceModule } from './client/race/race.module';
@@ -135,6 +136,7 @@ async function bootstrap() {
         SceneModule,
         QuickInteractionModule,
         FeatureModule,
+        PickerModule,
         ...PrivateModules
     );
 

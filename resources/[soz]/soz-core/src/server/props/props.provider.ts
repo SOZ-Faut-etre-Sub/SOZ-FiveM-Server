@@ -554,9 +554,9 @@ export class PropsProvider {
     }
 
     @OnEvent(ServerEvent.ANIMATION_FX)
-    public onAnimationFx(source: number, objectNetId: number, fx: Vfx, players: number[]) {
+    public onAnimationFx(source: number, objectNetId: number, fx: Vfx, players: number[], bone: number) {
         for (const player of players) {
-            TriggerClientEvent(ClientEvent.ANIMATION_FX, player, objectNetId, fx);
+            TriggerClientEvent(ClientEvent.ANIMATION_FX, player, objectNetId, fx, bone);
         }
     }
 

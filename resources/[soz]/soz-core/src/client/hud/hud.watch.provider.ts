@@ -57,7 +57,9 @@ export class HudWatchProvider {
 
     @PlayerUpdate()
     async onPlayerUpdate(): Promise<void> {
-        const haveWatch = this.inventoryManager.hasEnoughItem('smartwatchuiwi', 1, true);
+        const haveWatch =
+            this.inventoryManager.hasEnoughItem('smartwatchuiwi', 1, true) ||
+            this.inventoryManager.hasEnoughItem('halloween_smartwatch_nocturnal_vein', 1, true);
         if (this._haveWatch === haveWatch) return;
 
         this._haveWatch = haveWatch;

@@ -13,7 +13,7 @@ export class HudWeaponProvider {
     @Inject(NuiDispatch)
     private readonly nuiDispatch: NuiDispatch;
 
-    private weaponWithoutHud: string[] = [WeaponName.UNARMED.toLowerCase(), WeaponName.STUNGUN.toLowerCase()];
+    private weaponWithoutHud: number[] = [GetHashKey(WeaponName.UNARMED), GetHashKey(WeaponName.STUNGUN)];
 
     private _haveWeapon = false;
 
@@ -21,30 +21,30 @@ export class HudWeaponProvider {
     async updateWeaponHud() {
         const player = PlayerPedId();
 
-        const weapon = this.weapon.getCurrentWeapon();
-        if (!weapon) {
+        const weaponHash = GetSelectedPedWeapon(player);
+        if (!weaponHash || weaponHash === 0) {
             this.resetWeaponHud();
             return;
         }
 
-        if (this.weaponWithoutHud.includes(weapon.name.toLowerCase())) {
+        if (this.weaponWithoutHud.includes(weaponHash)) {
             this.resetWeaponHud();
             return;
         }
 
-        const maxAmmoInClip = GetMaxAmmoInClip(player, weapon.name, true);
+        const maxAmmoInClip = GetMaxAmmoInClip(player, weaponHash, true);
         if (maxAmmoInClip === 0) {
             this.resetWeaponHud();
             return;
         }
 
-        const [hasValue, ammo] = GetAmmoInClip(player, weapon.name);
+        const [hasValue, ammo] = GetAmmoInClip(player, weaponHash);
         if (!hasValue) {
             this.resetWeaponHud();
             return;
         }
 
-        const maxAmmo = GetAmmoInPedWeapon(player, weapon.name);
+        const maxAmmo = GetAmmoInPedWeapon(player, weaponHash);
 
         this._haveWeapon = true;
         this.nuiDispatch.dispatch('hud', 'UpdateWeaponAmmo', {

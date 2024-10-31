@@ -57,6 +57,13 @@ export enum ClientEvent {
     HALLOWEEN_HAT_TOOGLE = 'soz-core:client:halloween:hat-toggle',
     HALLOWEEN_DEGUISEMENT_USE = 'soz-core:client:halloween:use-deguisement',
     HALLOWEEN_DEMON_ANALISYS = 'soz-core:client:halloween:use-demon-analysis',
+    HALLOWEEN_VAMPIRE_UPDATE_STATE = 'soz-core:client:halloween:vampire-update-state',
+    HALLOWEEN_VAMPIRE_UPDATE_OBJECTIVE = 'soz-core:client:halloween:vampire-update-objective',
+    HALLOWEEN_VAMPIRE_UPDATE_ENEMY_POSITION = 'soz-core:client:halloween:vampire-update-vampire-position',
+    HALLOWEEN_VAMPIRE_PLAYER_CONVERTED = 'soz-core:client:halloween:vampire-player-converted',
+
+    HALLOWEEN_SUCK_PLAYER_START = 'soz-core:client:halloween:halloween:player-suck-start',
+    HALLOWEEN_SUCK_PLAYER_END = 'soz-core:client:halloween:player-suck-end',
 
     ITEM_USE = 'soz-core:client:item:use',
     ITEM_ALBUM_USE = 'soz-core:client:item:album:toggle',

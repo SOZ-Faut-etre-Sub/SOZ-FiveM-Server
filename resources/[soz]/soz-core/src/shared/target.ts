@@ -15,6 +15,7 @@ export type TargetOption = TargetContext & {
     category: 'citizen' | 'society' | 'criminal';
 
     item?: string;
+    event?: string;
     blackoutGlobal?: boolean;
     blackoutJob?: string | boolean;
     job?: string | JobType | Partial<{ [key in JobType]: number }>;

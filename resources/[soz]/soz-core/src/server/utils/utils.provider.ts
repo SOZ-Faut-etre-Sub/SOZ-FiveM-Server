@@ -17,15 +17,6 @@ import { PlayerMoneyService } from '../player/player.money.service';
 import { PlayerService } from '../player/player.service';
 import { ServerStateService } from '../server.state.service';
 
-const BlacklistedPeds = [
-    GetHashKey('s_m_y_ranger_01'),
-    GetHashKey('s_m_y_sheriff_01'),
-    GetHashKey('s_m_y_cop_01'),
-    GetHashKey('s_f_y_sheriff_01'),
-    GetHashKey('s_f_y_cop_01'),
-    GetHashKey('s_m_y_hwaycop_01'),
-];
-
 @Provider()
 export class UtilsProvider {
     @Inject(PlayerMoneyService)
@@ -48,15 +39,6 @@ export class UtilsProvider {
 
     @Inject(Monitor)
     private monitor: Monitor;
-
-    @On('entityCreating', false)
-    public onEntityCreating(handle: number) {
-        const entityModel = GetEntityModel(handle);
-
-        if (GetEntityType(handle) == 1 && BlacklistedPeds.includes(entityModel)) {
-            CancelEvent();
-        }
-    }
 
     @OnEvent(ServerEvent.DISPENSER_BUY)
     public async onDispenserBuy(source: number, price: number, item: string, quantity: number) {

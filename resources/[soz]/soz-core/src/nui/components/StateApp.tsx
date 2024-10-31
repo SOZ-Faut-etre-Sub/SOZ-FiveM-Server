@@ -133,5 +133,9 @@ export const StateApp: FunctionComponent = () => {
         dispatch.features.set(data);
     });
 
+    useNuiEvent('halloween', 'moon', moon => {
+        dispatch.hud.update({ halloween: { moon } });
+    });
+
     return null;
 };

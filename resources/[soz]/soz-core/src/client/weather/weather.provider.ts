@@ -2,6 +2,7 @@ import { Once } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Weather } from '../../shared/weather';
+import { NuiDispatch } from '../nui/nui.dispatch';
 import { ResourceLoader } from '../repository/resource.loader';
 import { StateSelector } from '../store/store';
 
@@ -9,6 +10,9 @@ import { StateSelector } from '../store/store';
 export class WeatherProvider {
     @Inject(ResourceLoader)
     private resourceLoader: ResourceLoader;
+
+    @Inject(NuiDispatch)
+    private readonly nuiDispatch: NuiDispatch;
 
     @StateSelector(state => state.global.weather)
     async onWeatherChange(weather: Weather) {
@@ -25,6 +29,7 @@ export class WeatherProvider {
             SetTransitionTimecycleModifier('default', 30.05);
             RemoveReplaceTexture('platform:/textures/skydome', 'moon-new');
         }
+        this.nuiDispatch.dispatch('halloween', 'moon', Boolean(halloween));
     }
 
     @StateSelector(state => state.global.rain)

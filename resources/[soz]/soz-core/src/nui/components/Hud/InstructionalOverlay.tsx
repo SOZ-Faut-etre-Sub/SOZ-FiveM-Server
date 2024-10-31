@@ -44,16 +44,14 @@ export function InstructionalOverlay() {
                     borderClassName="rounded-full"
                     className="flex items-center gap-2 text-white px-5 py-1.5 w-full h-10"
                 >
-                    {text.map(t => {
-                        if (BindName[t]) {
-                            return (
-                                <span key={t} className="bg-white/10 border border-slate-300/10 px-2 rounded-md">
-                                    {bindKeyToName(BindName[t])}
-                                </span>
-                            );
-                        }
-                        return t;
-                    })}
+                    {text.map(t => (
+                        <span
+                            key={t}
+                            className={cn({ 'bg-white/10 border border-slate-300/10 px-2 rounded-md': BindName[t] })}
+                        >
+                            {BindName[t] ? bindKeyToName(BindName[t]) : t}
+                        </span>
+                    ))}
                 </GlassMorphismContainer>
             </div>
         </animated.div>

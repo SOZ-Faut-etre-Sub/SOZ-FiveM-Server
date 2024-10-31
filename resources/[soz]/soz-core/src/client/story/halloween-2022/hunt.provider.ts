@@ -26,7 +26,7 @@ export class HuntProvider {
         }
 
         this.targetFactory.createForModel(
-            ['pumpkin'],
+            ['soz_hw24_cup'],
             [
                 {
                     label: 'Fouiller',

@@ -1,4 +1,4 @@
-import { MeteorSubMenuState } from '@public/shared/admin/admin';
+import { HalloweenSubMenuState, MeteorSubMenuState } from '@public/shared/admin/admin';
 
 import { Command } from '../../core/decorators/command';
 import { OnEvent } from '../../core/decorators/event';
@@ -87,6 +87,7 @@ export class AdminMenuProvider {
         const ped = PlayerPedId();
         const characters = await emitRpc<Record<string, PlayerCharInfo>>(RpcServerEvent.ADMIN_GET_CHARACTERS);
         const meteorState = await emitRpc<MeteorSubMenuState>(RpcServerEvent.ADMIN_METEOR_STATE);
+        const halloweenState = await emitRpc<HalloweenSubMenuState>(RpcServerEvent.ADMIN_HALLOWEEN_GAME_STATE);
         const eventInfo = await emitRpc<EventInfo>(RpcServerEvent.WORLD_EVENT_GET_INFO);
 
         this.nuiMenu.openMenu<MenuType.AdminMenu>(
@@ -128,6 +129,7 @@ export class AdminMenuProvider {
                         noSurfaceCalc: this.vehicleOffroadProvider.getNoSurfaceCalc(),
                     },
                     meteor: meteorState,
+                    halloween: halloweenState,
                 },
             },
             { subMenuId }

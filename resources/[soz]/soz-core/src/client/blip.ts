@@ -34,6 +34,10 @@ export class BlipFactory {
 
     private blips = new Map<string, GameBlip>();
 
+    public getAll(): Map<string, GameBlip> {
+        return this.blips;
+    }
+
     @Tick()
     public checkBlipSelected(): void {
         const blipId = GetNewSelectedMissionCreatorBlip();
@@ -153,6 +157,16 @@ export class BlipFactory {
             SetBlipAlpha(gameBlip.gameId, 255);
             SetBlipHiddenOnLegend(gameBlip.gameId, false);
         }
+    }
+
+    public isHidden(id: string) {
+        const gameBlip = this.blips.get(id);
+
+        if (!gameBlip) {
+            return;
+        }
+
+        return GetBlipAlpha(gameBlip.gameId) === 0;
     }
 
     public qbHide(id: string, value: boolean): void {

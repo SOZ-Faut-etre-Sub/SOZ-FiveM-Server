@@ -125,6 +125,15 @@ export class PlayerStateService {
         return this.clientStateByCitizenId[player.citizenid];
     }
 
+    public setAllClientsState(state: Partial<PlayerClientState>) {
+        for (const citizenId in this.clientStateByCitizenId) {
+            const playerSource = this.playerService.getPlayerByCitizenId(citizenId)?.source;
+            if (!playerSource) continue;
+
+            this.setClientState(playerSource, state);
+        }
+    }
+
     private getDefaultPlayerServerState(): PlayerServerState {
         return {
             exercise: { chinUp: false, pushUp: false, sitUp: false, freeWeight: false, completed: 0 },
@@ -146,6 +155,7 @@ export class PlayerStateService {
             isEscorted: false,
             isEscorting: false,
             isHandcuffed: false,
+            isKnockedOut: false,
             isInventoryBusy: false,
             isInShop: false,
             isInHub: false,
@@ -157,6 +167,7 @@ export class PlayerStateService {
             isLooted: false,
             isZipped: false,
             carryBox: false,
+            halloweenRole: null,
         };
     }
 

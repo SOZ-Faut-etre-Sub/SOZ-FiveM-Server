@@ -60,6 +60,12 @@ export enum ServerEvent {
     ADMIN_EVENT_SET_REWARD_MIN = 'soz-core:server:admin:event:set-reward-min',
     ADMIN_EVENT_SET_REWARD_MAX = 'soz-core:server:admin:event:set-reward-max',
     ADMIN_EVENT_SET_START_SOUND = 'soz-core:server:admin:event:set-start-sound',
+    ADMIN_HALLOWEEN_MOON_UPDATE = 'soz-core:server:admin:halloween:moon-update',
+    ADMIN_HALLOWEEN_START_GAME = 'soz-core:server:admin:halloween:launch-game',
+    ADMIN_HALLOWEEN_STOP_GAME = 'soz-core:server:admin:halloween:stop-game',
+    ADMIN_HALLOWEEN_UPDATE_GAME_DURATION = 'soz-core:server:admin:halloween:update-game-duration',
+    ADMIN_HALLOWEEN_UPDATE_ROLE = 'soz-core:server:admin:halloween:update-role',
+    ADMIN_HALLOWEEN_UPDATE_MORTAL_COLLECTION = 'soz-core:server:admin:halloween:update-mortal-collection',
 
     BASE_ENTERED_VEHICLE = 'baseevents:enteredVehicle',
     BASE_LEFT_VEHICLE = 'baseevents:leftVehicle',
@@ -255,6 +261,12 @@ export enum ServerEvent {
     STORY_HALLOWEEN_2023_SCENARIO_2 = 'soz-core:server:halloween:scenario2',
     STORY_HALLOWEEN_2023_SCENARIO_3 = 'soz-core:server:halloween:scenario3',
     STORY_HALLOWEEN_2023_SCENARIO_4 = 'soz-core:server:halloween:scenario4',
+
+    HALLOWEEN_SUCK_NPC = 'soz-core:server:halloween:npc-suck',
+    HALLOWEEN_SUCK_PLAYER_START = 'soz-core:server:halloween:player-suck-start',
+    HALLOWEEN_SUCK_PLAYER_END = 'soz-core:server:halloween:player-suck-end',
+
+    HALLOWEEN_BLOOD_HARVEST = 'soz-core:server:halloween:blood-harvest',
 
     STORAGE_REMOVE_ITEM = 'soz-core:server:storage:remove-item',
     SHOP_BOSS_ORDER = 'soz-core:server:shop:boss:order',
@@ -494,6 +506,7 @@ export enum ServerEvent {
     FDF_FIELD_PLANT = 'soz-core:server:fdf:field-plant',
     FDF_FIELD_CHECK = 'soz-core:server:fdf:field-check',
     FDF_TRACTOR_HARVEST = 'soz-core:server:fdf:field-tractor-harvest',
+    FDF_GARLIC_HARVEST = 'soz-core:server:fdf:garlic-harvest',
 
     ANIMATION_FX = 'soz-core:server:animation:fx',
     ANIMATION_FX_POSITION = 'soz-core:server:animation:fx-position',
@@ -621,6 +634,11 @@ export enum ServerEvent {
 
     WORLD_EVENT_STOP = 'soz-core:server:world-event:stop',
     WORLD_EVENT_SIGNAL_INVENTORY = 'soz-core:server:world-event:signal-inventory',
+    HALLOWEEN_VAMPIRE_GAME_KNOCK_PLAYER = 'soz-core:server:halloween:vampire-game-knock-player',
+    HALLOWEEN_VAMPIRE_GAME_TAKE_OBJECTIVE = 'soz-core:server:halloween:vampire-game-take-objective',
+    HALLOWEEN_VAMPIRE_GAME_CONVERT_PLAYER = 'soz-core:server:halloween:vampire-game-convert-player',
+    HALLOWEEN_VAMPIRE_GAME_PLAYER_KNOCKED_OUT = 'soz-core:server:halloween:vampire-game-player-knocked-out',
+    HALLOWEEN_VAMPIRE_GAME_CANCEL_VAMPIRE_KNOCKOUT = 'soz-core:server:halloween:vampire-game-cancel-vampire-knockout',
 
     DRONE_NEW = 'soz-core:server:drone-new',
     DRONE_DELETE = 'soz-core:server:drone-delete',

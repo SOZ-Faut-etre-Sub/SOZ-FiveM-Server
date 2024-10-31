@@ -224,6 +224,13 @@ export const PawlCraftsLists: Record<string, CraftCategory> = {
                 },
                 amount: 1,
             },
+            halloween_wooden_stake: {
+                inputs: {
+                    wood_plank: { count: 1 },
+                    halloween_pure_blood: { count: 1 },
+                },
+                amount: 1,
+            },
         },
     },
 };

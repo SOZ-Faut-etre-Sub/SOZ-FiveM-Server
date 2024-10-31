@@ -5,7 +5,7 @@ import { NuiBookMethodMap } from '@public/shared/nui/book';
 import { NuiCardMethodMap } from '@public/shared/nui/card';
 import { NuiCraftingMethodMap } from '@public/shared/nui/crafting';
 import { NuiFeatureMethodMap } from '@public/shared/nui/feature';
-import { NuiZombieMethodMap } from '@public/shared/nui/halloween';
+import { NuiHalloweenMethodMap, NuiZombieMethodMap } from '@public/shared/nui/halloween';
 import { NuiHudMethodMap } from '@public/shared/nui/hud';
 import { NuiItemMethodMap } from '@public/shared/nui/item';
 import { NuiMissiveMethodMap } from '@public/shared/nui/missive';
@@ -14,6 +14,7 @@ import { NuiRepositoryMethodMap } from '@public/shared/nui/repository';
 import { NuiSceneSearchMethodMap } from '@public/shared/nui/scene';
 import { NuiTalentMethodMap } from '@public/shared/nui/talent';
 import { NuiTargetMethodMap } from '@public/shared/nui/target';
+import { NuiPickerMethodMap } from '@public/shared/picker';
 
 import { NuiAdminPlayerSubMenuMethodMap } from '../../nui/components/Admin/PlayerSubMenu';
 import { NuiAdminSkinSubMenuMethodMap } from '../../nui/components/Admin/SkinSubMenu';
@@ -82,6 +83,7 @@ export interface NuiMethodMap {
     gizmo: NuiGizmoMethodMap;
     craft: NuiCraftMethodMap;
     zombie: NuiZombieMethodMap;
+    halloween: NuiHalloweenMethodMap;
     weather: NuiWeatherMethodMap;
     medicalDiag: NuiMedicalDiagMethodMap;
     repository: NuiRepositoryMethodMap;
@@ -94,6 +96,7 @@ export interface NuiMethodMap {
     scene: NuiSceneSearchMethodMap;
     feature: NuiFeatureMethodMap;
     blip: NuiBlipMethodMap;
+    picker: NuiPickerMethodMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(

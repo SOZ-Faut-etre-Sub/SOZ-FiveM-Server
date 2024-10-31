@@ -282,6 +282,8 @@ export enum RpcServerEvent {
 
     WEATHER_GET_FORECASTS = 'soz-core:server:weather:get-forecasts',
 
+    ADMIN_HALLOWEEN_GAME_STATE = 'soz-core:server:admin:halloween:vampire-game-state',
+
     STRESS_UPDATE = 'soz-core:server:stress:update',
 }
 

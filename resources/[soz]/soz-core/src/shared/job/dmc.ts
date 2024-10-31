@@ -575,6 +575,23 @@ export const DmcCraftsLists: Record<string, CraftCategory> = {
                 },
                 amount: 1,
             },
+            halloween_crucifix: {
+                inputs: {
+                    halloween_uranium_ingot: { count: 1 },
+                    iron_ingot: { count: 1 },
+                    steel_ingot: { count: 1 },
+                    aluminium_ingot: { count: 1 },
+                    halloween_pure_blood: { count: 1 },
+                },
+                amount: 1,
+            },
+            halloween_smartwatch_nocturnal_vein: {
+                inputs: {
+                    halloween_uranium_ingot: { count: 10 },
+                    halloween_pure_blood: { count: 1 },
+                },
+                amount: 1,
+            },
         },
     },
 };
