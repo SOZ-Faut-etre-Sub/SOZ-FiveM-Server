@@ -824,6 +824,29 @@ export class VampireGameProvider {
             return;
         }
 
+        if (this.gameState.playerRoles.has(player.citizenid)) {
+            const role = this.gameState.playerRoles.get(player.citizenid);
+
+            this.logger.error(
+                `${player.charinfo.firstname} ${player.charinfo.lastname} has already been assigned to a role: ${role}`
+            );
+
+            this.playerStateService.setClientState(player.source, {
+                halloweenRole: role,
+            });
+
+            TriggerLatentClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_STATE, player.source, 1024, {
+                inWaitingRoom: true,
+                started: this.gameState.started,
+                role,
+            });
+
+            this.sendObjectivePart1();
+            this.sendObjectivePart2();
+
+            return;
+        }
+
         const role = await this.getRandomRole();
         if (!role) {
             this.logger.error(
