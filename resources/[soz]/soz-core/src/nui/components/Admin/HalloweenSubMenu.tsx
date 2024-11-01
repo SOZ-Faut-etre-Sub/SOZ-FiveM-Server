@@ -119,14 +119,14 @@ export const HalloweenSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner
                     {Object.entries(state.roleMaxNumber).map(([role, amount]) => (
                         <MenuItemButton
                             key={role}
-                            description={`Nombre maximum de ${role}`}
+                            description={`Chance de drop en ${role}`}
                             onConfirm={async () => {
                                 await fetchNui(NuiEvent.AdminMenuHalloweenUpdateRole, role);
                             }}
                         >
                             <div className="pr-2 flex items-center justify-between">
                                 <span>{role}</span>
-                                <span>{amount}</span>
+                                <span>{amount}%</span>
                             </div>
                         </MenuItemButton>
                     ))}

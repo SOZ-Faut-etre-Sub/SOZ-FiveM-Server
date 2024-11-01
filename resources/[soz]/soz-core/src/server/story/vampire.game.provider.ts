@@ -92,12 +92,12 @@ export class VampireGameProvider {
     };
 
     private roleMaxNumber: Record<VampireGameRole, number> = {
-        [VampireGameRole.Vampire]: 50,
+        [VampireGameRole.Vampire]: 20,
         [VampireGameRole.Ghoul]: 0,
-        [VampireGameRole.Hunter]: 20,
-        [VampireGameRole.Mortal]: 300,
-        [VampireGameRole.Squire]: 20,
-        [VampireGameRole.Alchemist]: 20,
+        [VampireGameRole.Hunter]: 10,
+        [VampireGameRole.Mortal]: 60,
+        [VampireGameRole.Squire]: 5,
+        [VampireGameRole.Alchemist]: 5,
     };
     private mortalObjectivePart1: Record<Exclude<VampireGameCollection, 'player'>, number> = {
         prop_streetlight: 30,
@@ -696,7 +696,7 @@ export class VampireGameProvider {
             return;
         }
 
-        this.notifier.notify(source, `Le rôle ${role} a été mis à jour, joueurs maximum: ${value}`, 'info');
+        this.notifier.notify(source, `Le rôle ${role} a été mis à jour, chance de drop: ${value}%`, 'info');
     }
 
     @OnEvent(ServerEvent.ADMIN_HALLOWEEN_FOCE_TRANSFORM_PLAYER)
@@ -866,20 +866,18 @@ export class VampireGameProvider {
     }
 
     private async getRandomRole(): Promise<VampireGameRole> {
-        let availableRoles = Object.keys(this.roleMaxNumber).filter(role => this.roleMaxNumber[role] > 0);
+        const roles = Object.keys(this.roleMaxNumber)
+            .map(role => {
+                const roleValue = this.roleMaxNumber[role as VampireGameRole];
+                return Array.from({ length: roleValue }, () => role as VampireGameRole);
+            })
+            .flat();
 
-        for (const role of availableRoles) {
-            const roleGauge = await this.gameState.gauges[role as VampireGameRole].get();
-            if (roleGauge.values[0].value >= this.roleMaxNumber[role]) {
-                availableRoles = availableRoles.filter(r => r !== role);
-            }
-        }
-
-        if (availableRoles.length === 0) {
+        if (roles.length === 0) {
             return null;
         }
 
-        return availableRoles[Math.floor(Math.random() * availableRoles.length)] as VampireGameRole;
+        return roles[Math.floor(Math.random() * roles.length)];
     }
 
     private createObjectivePart1() {
