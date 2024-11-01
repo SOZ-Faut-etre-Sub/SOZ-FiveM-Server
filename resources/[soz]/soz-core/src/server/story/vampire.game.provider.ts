@@ -10,7 +10,6 @@ import { Inject } from '../../core/decorators/injectable';
 import { Rpc } from '../../core/decorators/rpc';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { Logger } from '../../core/logger';
-import { player } from '../../nui/models/player';
 import { HalloweenSubMenuState } from '../../shared/admin/admin';
 import { ClientEvent } from '../../shared/event/client';
 import { ServerEvent } from '../../shared/event/server';
