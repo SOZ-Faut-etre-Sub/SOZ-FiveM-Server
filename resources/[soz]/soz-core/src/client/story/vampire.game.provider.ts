@@ -7,6 +7,7 @@ import { Once, OnceStep, OnEvent, OnGameEvent, OnNuiEvent } from '@public/core/d
 import { uuidv4, wait } from '@public/core/utils';
 
 import { Tick, TickInterval } from '../../core/decorators/tick';
+import { Blip } from '../../shared/blip';
 import { ClientEvent } from '../../shared/event/client';
 import { GameEvent } from '../../shared/event/game';
 import { NuiEvent } from '../../shared/event/nui';
@@ -25,6 +26,7 @@ import {
     VampireOutfit,
     VampireRespawnPoints,
 } from '../../shared/halloween';
+import { BIN_MODELS } from '../../shared/job/garbage';
 import { MenuType } from '../../shared/nui/menu';
 import { PlayerClientState } from '../../shared/player';
 import { BoxZone } from '../../shared/polyzone/box.zone';
@@ -37,6 +39,7 @@ import { FeatureProvider } from '../feature/feature.provider';
 import { InstructionalService } from '../instructional.service';
 import { Notifier } from '../notifier';
 import { NuiMenu } from '../nui/nui.menu';
+import { ObjectProvider } from '../object/object.provider';
 import { MapPickerProvider } from '../picker/map.picker.provider';
 import { PlayerInOutService } from '../player/player.inout.service';
 import { PlayerListStateService } from '../player/player.list.state.service';
@@ -99,8 +102,11 @@ export class VampireGameProvider {
     @Inject(Notifier)
     private readonly notifier: Notifier;
 
+    @Inject(ObjectProvider)
+    private readonly objectProvider: ObjectProvider;
+
     @Inject(PlayerPositionProvider)
-    private playerPositionProvider: PlayerPositionProvider;
+    private readonly playerPositionProvider: PlayerPositionProvider;
 
     private blipDisabled = new Set<string>();
     private objectiveInteractions = new Set<string>();
@@ -297,6 +303,7 @@ export class VampireGameProvider {
 
         this.syncObjectivePart1(this.gameState.getObjectivePart1());
         this.syncObjectivePart2(this.gameState.getObjectivePart2());
+        this.createEnemyTeleports();
     }
 
     @OnEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED)
@@ -689,5 +696,43 @@ export class VampireGameProvider {
 
         await wait(10000);
         this.instructionalService.clear();
+    }
+
+    private createEnemyTeleports() {
+        const bins = this.objectProvider.getObjects(object => BIN_MODELS.includes(object.model));
+
+        for (const bin of bins) {
+            if (this.gameState.isGameRunning() && this.gameState.hasEnemyRole()) {
+                if (this.blipFactory.exist(`vampire_tp_${bin.id}`)) {
+                    continue;
+                }
+
+                this.blipFactory.create(
+                    `vampire_tp_${bin.id}`,
+                    {
+                        name: 'Cercueil de vampire',
+                        coords: {
+                            x: bin.position[0],
+                            y: bin.position[1],
+                            z: bin.position[2],
+                        },
+                        sprite: 885,
+                    },
+                    true,
+                    [
+                        {
+                            label: 'Téléporter',
+                            action: async (blip: Blip, data: string) => {
+                                SetFrontendActive(false);
+                                TriggerServerEvent(ServerEvent.PLAYER_ZOMBIE_TP, data);
+                            },
+                            data: bin.id,
+                        },
+                    ]
+                );
+            } else {
+                this.blipFactory.remove(`vampire_tp_${bin.id}`);
+            }
+        }
     }
 }
