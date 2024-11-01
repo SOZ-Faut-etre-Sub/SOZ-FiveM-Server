@@ -1011,6 +1011,7 @@ export class VampireGameProvider {
 
             this.playerStateService.setClientState(player.source, {
                 isKnockedOut: false,
+                halloweenRole: VampireGameRole.Hunter,
             });
 
             TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED, player.source, role);
