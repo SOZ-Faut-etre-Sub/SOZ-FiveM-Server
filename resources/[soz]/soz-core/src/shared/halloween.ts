@@ -42,7 +42,7 @@ export const VampireOutfit = {
         Components: {
             '1': { Drawable: 0, Texture: 0, Palette: 0 },
             '3': { Drawable: 270, Texture: 0, Palette: 0 },
-            '4': { Drawable: 63, Texture: 2, Palette: 0 },
+            '4': { Drawable: 46, Texture: 0, Palette: 0 },
             '5': { Drawable: 0, Texture: 0, Palette: 0 },
             '6': { Drawable: 160, Texture: 0, Palette: 0 },
             '7': { Drawable: 154, Texture: 0, Palette: 0 },

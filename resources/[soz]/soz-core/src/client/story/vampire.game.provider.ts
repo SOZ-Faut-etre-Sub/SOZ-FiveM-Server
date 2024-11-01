@@ -350,6 +350,10 @@ export class VampireGameProvider {
         });
         this.objectiveInteractions.clear();
 
+        if (this.gameState.hasEnemyRole()) {
+            return;
+        }
+
         for (const [collection, objectives] of Object.entries(this.gameState.getObjectivePart1() ?? {})) {
             for (const objective of objectives) {
                 const interactionId = this.interactionProvider.createInteractionForCoords(
@@ -397,6 +401,10 @@ export class VampireGameProvider {
             this.blipFactory.remove(`halloween_vampire_objective_${id}`);
         });
         this.collectiveObjectives.clear();
+
+        if (this.gameState.hasEnemyRole()) {
+            return;
+        }
 
         for (const [objective, { finished }] of Object.entries(this.gameState.getObjectivePart2() ?? {})) {
             const id = uuidv4();
@@ -652,6 +660,7 @@ export class VampireGameProvider {
 
         switch (role) {
             case VampireGameRole.Vampire:
+            case VampireGameRole.Ghoul:
                 this.instructionalService.display(
                     [
                         "Dirige-toi en ville pour empêcher les survivants de rallumer l'électricité, et suce pour gagner des pouvoirs.",

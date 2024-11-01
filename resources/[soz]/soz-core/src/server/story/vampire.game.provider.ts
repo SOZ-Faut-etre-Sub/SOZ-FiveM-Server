@@ -10,6 +10,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Rpc } from '../../core/decorators/rpc';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { Logger } from '../../core/logger';
+import { player } from '../../nui/models/player';
 import { HalloweenSubMenuState } from '../../shared/admin/admin';
 import { ClientEvent } from '../../shared/event/client';
 import { ServerEvent } from '../../shared/event/server';
@@ -460,8 +461,24 @@ export class VampireGameProvider {
                 await wait(this.autoRespawnDuration * 1000);
                 if (isCanceled) return;
 
-                this.playerStateService.setClientState(source, { isKnockedOut: false });
-                TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED, source, playerRole);
+                this.switchPlayerRole(source, playerRole);
+                resolve();
+            });
+
+            this.gameState.autoRespawn.set(player.citizenid, autoRespawn);
+        } else {
+            const autoRespawn = new PCancelable<void>(async (resolve, reject, onCancel) => {
+                let isCanceled = false;
+
+                onCancel(() => {
+                    onCancel.shouldReject = false;
+                    isCanceled = true;
+                });
+
+                await wait(this.autoRespawnDuration * 1000);
+                if (isCanceled) return;
+
+                this.switchPlayerRole(source, VampireGameRole.Ghoul);
                 resolve();
             });
 
@@ -559,16 +576,7 @@ export class VampireGameProvider {
         this.gameState.playerRoles.set(playerTarget.citizenid, role);
         this.gameState.gauges[role].inc();
 
-        TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_STATE, target, {
-            role,
-        });
-
-        this.playerStateService.setClientState(target, {
-            isKnockedOut: false,
-            halloweenRole: role,
-        });
-
-        TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED, target, role);
+        this.switchPlayerRole(target, VampireGameRole.Hunter);
 
         if (VampireGameEnemyRoles.includes(role)) {
             TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_OBJECTIVE_PART1, target, {});
@@ -737,12 +745,7 @@ export class VampireGameProvider {
         this.sendObjectivePart1();
         this.sendObjectivePart2();
 
-        this.playerStateService.setClientState(target, {
-            isKnockedOut: false,
-            halloweenRole: role,
-        });
-
-        TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED, target, role);
+        this.switchPlayerRole(target, role);
     }
 
     @OnEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_MORTAL_OBJECTIVE_PART1)
@@ -1020,16 +1023,7 @@ export class VampireGameProvider {
             this.gameState.playerRoles.set(citizenId, VampireGameRole.Hunter);
             this.gameState.gauges[VampireGameRole.Hunter].inc();
 
-            TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_STATE, player.source, {
-                role: VampireGameRole.Hunter,
-            });
-
-            this.playerStateService.setClientState(player.source, {
-                isKnockedOut: false,
-                halloweenRole: VampireGameRole.Hunter,
-            });
-
-            TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED, player.source, role);
+            this.switchPlayerRole(player.source, VampireGameRole.Hunter);
         });
 
         clearInterval(this.gameState.mortalObjectivePart3);
@@ -1044,5 +1038,17 @@ export class VampireGameProvider {
             },
             this.mortalObjectivePart3Duration * 60 * 1000
         );
+    }
+
+    private switchPlayerRole(source: number, role: VampireGameRole) {
+        this.playerStateService.setClientState(source, {
+            isKnockedOut: false,
+            halloweenRole: role,
+        });
+
+        TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_STATE, source, { role });
+        TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED, source, role);
+
+        TriggerLatentClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_POSITION, source, 1024, [], false);
     }
 }
