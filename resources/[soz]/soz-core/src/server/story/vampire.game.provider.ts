@@ -366,7 +366,7 @@ export class VampireGameProvider {
         const { completed } = await this.progressService.progress(
             source,
             'halloween_part2',
-            'Action en cours ...',
+            '',
             10_000,
             {
                 dictionary: 'anim@heists@ornate_bank@thermal_charge',
