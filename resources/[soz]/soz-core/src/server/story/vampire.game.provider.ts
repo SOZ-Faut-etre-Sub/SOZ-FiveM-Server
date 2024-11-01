@@ -558,6 +558,7 @@ export class VampireGameProvider {
 
         this.playerStateService.setClientState(target, {
             isKnockedOut: false,
+            halloweenRole: role,
         });
 
         TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED, target, role);
@@ -721,11 +722,16 @@ export class VampireGameProvider {
         this.gameState.gauges[role].inc();
 
         TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_STATE, source, {
+            inWaitingRoom: true,
+            started: this.gameState.started,
             role,
         });
 
+        this.sendObjectivePart2();
+
         this.playerStateService.setClientState(source, {
             isKnockedOut: false,
+            halloweenRole: role,
         });
 
         TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED, source, role);

@@ -304,7 +304,7 @@ export class VampireGameProvider {
         this.gameState.setPlayerRespawning(true);
 
         const ped = PlayerPedId();
-        const pos = GetEntityCoords(ped);
+        let pos = GetEntityCoords(ped);
         const heading = GetEntityHeading(ped);
 
         StopScreenEffect('DeathFailOut');
@@ -316,6 +316,7 @@ export class VampireGameProvider {
         if (role === VampireGameRole.Vampire) {
             const location = await this.mapPickerProvider.showSouthLocationPicker(VampireRespawnPoints);
             await this.playerPositionProvider.teleportPlayerToPosition(`halloween_vampire_respawn_${location.id}`);
+            pos = location.coords;
         }
 
         NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, 1, false);
