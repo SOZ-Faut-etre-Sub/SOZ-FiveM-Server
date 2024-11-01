@@ -591,7 +591,7 @@ export class VampireGameProvider {
         this.gameState.playerRoles.set(playerTarget.citizenid, role);
         this.gameState.gauges[role].inc();
 
-        this.switchPlayerRole(target, VampireGameRole.Hunter);
+        this.switchPlayerRole(target, role);
 
         if (VampireGameEnemyRoles.includes(role)) {
             TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_OBJECTIVE_PART1, target, {});

@@ -660,7 +660,6 @@ export class VampireGameProvider {
 
         switch (role) {
             case VampireGameRole.Vampire:
-            case VampireGameRole.Ghoul:
                 this.instructionalService.display(
                     [
                         "Dirige-toi en ville pour empêcher les survivants de rallumer l'électricité, et suce pour gagner des pouvoirs.",
@@ -670,6 +669,14 @@ export class VampireGameProvider {
                 this.notifier.notify(
                     'En tant que Vampire tu peux te transformer. Appuie sur H pour ouvrir le menu.',
                     'info'
+                );
+                break;
+            case VampireGameRole.Ghoul:
+                this.instructionalService.display(
+                    [
+                        "Dirige-toi en ville pour empêcher les survivants de rallumer l'électricité, et suce pour gagner des pouvoirs.",
+                    ],
+                    true
                 );
                 break;
             case VampireGameRole.Hunter:
