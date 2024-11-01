@@ -29,6 +29,7 @@ import {
     VampireRespawnPoints,
 } from '../../shared/halloween';
 import { ProgressAnimation } from '../../shared/progress';
+import { getRandomKeyWeighted } from '../../shared/random';
 import { RpcServerEvent } from '../../shared/rpc';
 import { FeatureProvider } from '../feature/feature.provider';
 import { LSMCDeathProvider } from '../job/lsmc/lsmc.death.provider';
@@ -906,18 +907,20 @@ export class VampireGameProvider {
     }
 
     private async getRandomRole(): Promise<VampireGameRole> {
-        const roles = Object.keys(this.roleMaxNumber)
-            .map(role => {
-                const roleValue = this.roleMaxNumber[role as VampireGameRole];
-                return Array.from({ length: roleValue }, () => role as VampireGameRole);
-            })
-            .flat();
+        for (const role of Object.keys(this.roleMaxNumber) as VampireGameRole[]) {
+            if (this.roleMaxNumber[role] <= 0) {
+                continue;
+            }
 
-        if (roles.length === 0) {
-            return null;
+            const roleGauge = await this.gameState.gauges[role].get();
+            if (roleGauge.values[0].value >= 1) {
+                continue;
+            }
+
+            return role;
         }
 
-        return roles[Math.floor(Math.random() * roles.length)];
+        return getRandomKeyWeighted<VampireGameRole>(this.roleMaxNumber, VampireGameRole.Vampire) as VampireGameRole;
     }
 
     private createObjectivePart1() {
