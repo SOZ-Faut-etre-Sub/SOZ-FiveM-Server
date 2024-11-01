@@ -545,11 +545,18 @@ export class VampireGameProvider {
                 return;
             }
 
-            const { completed } = await this.progressService.progress(source, 'vampire', 'Ça suce fort', 3000, {
-                name: 'base',
-                dictionary: 'amb@prop_human_bum_bin@base',
-                flags: 1,
-            });
+            const { completed } = await this.progressService.progress(
+                source,
+                'vampire',
+                'Ça suce fort',
+                3000,
+                {
+                    name: 'base',
+                    dictionary: 'amb@prop_human_bum_bin@base',
+                    flags: 1,
+                },
+                { canCancel: false }
+            );
 
             if (!completed) {
                 return;
@@ -560,11 +567,18 @@ export class VampireGameProvider {
                 return;
             }
 
-            const { completed } = await this.progressService.progress(source, 'analyze', 'Injection du sérum', 3000, {
-                name: 'base',
-                dictionary: 'amb@prop_human_bum_bin@base',
-                flags: 1,
-            });
+            const { completed } = await this.progressService.progress(
+                source,
+                'analyze',
+                'Injection du sérum',
+                3000,
+                {
+                    name: 'base',
+                    dictionary: 'amb@prop_human_bum_bin@base',
+                    flags: 1,
+                },
+                { canCancel: false }
+            );
 
             if (!completed) {
                 return;
