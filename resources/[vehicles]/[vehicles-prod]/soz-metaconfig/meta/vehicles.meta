@@ -5284,18 +5284,18 @@
             </firstPersonDrivebyData>
         </Item>
         <Item>
-              <modelName>peptos_h2</modelName>
-              <txdName>peptos_h2</txdName>
-              <handlingId>peptos_h2</handlingId>
-              <gameName>peptos_h2</gameName>
-              <vehicleMakeName>KAWA</vehicleMakeName>
+              <modelName>holloween2024bike</modelName>
+              <txdName>holloween2024bike</txdName>
+              <handlingId>holloween2024bike</handlingId>
+              <gameName>holloween2024bike</gameName>
+              <vehicleMakeName>NAGASAKI</vehicleMakeName>
               <expressionDictName>null</expressionDictName>
               <expressionName>null</expressionName>
               <animConvRoofDictName>null</animConvRoofDictName>
               <animConvRoofName>null</animConvRoofName>
               <animConvRoofWindowsAffected />
               <ptfxAssetName>null</ptfxAssetName>
-              <audioNameHash>kc144kawazx10rsc</audioNameHash>
+              <audioNameHash>holloween2024bike</audioNameHash>
               <layout>LAYOUT_BIKE_SPORT</layout>
               <coverBoundOffsets>BIKE_COVER_OFFSET_INFO</coverBoundOffsets>
         	  <POVTuningInfo>PCJ_POV_TUNING</POVTuningInfo>
@@ -5583,7 +5583,7 @@
         </Item>
         <Item>
             <parent>vehicles_sportbk_interior</parent>
-            <child>peptos_h2</child>
+            <child>holloween2024bike</child>
         </Item>
     </txdRelationships>
 </CVehicleModelInfo__InitDataList>
