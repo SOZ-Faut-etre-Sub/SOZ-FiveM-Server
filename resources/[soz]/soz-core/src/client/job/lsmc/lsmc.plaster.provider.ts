@@ -6,6 +6,7 @@ import { AttachedObjectService } from '@public/client/object/attached.object.ser
 import { PlayerService } from '@public/client/player/player.service';
 import { ProgressService } from '@public/client/progress.service';
 import { ResourceLoader } from '@public/client/repository/resource.loader';
+import { VampireGameStateProvider } from '@public/client/story/vampire.game.state.provider';
 import { Command } from '@public/core/decorators/command';
 import { PlayerUpdate } from '@public/core/decorators/player';
 import { Tick } from '@public/core/decorators/tick';
@@ -32,6 +33,9 @@ export class LSMCPlasterProvider {
 
     @Inject(AttachedObjectService)
     private attachedObjectService: AttachedObjectService;
+
+    @Inject(VampireGameStateProvider)
+    private vampireGameStateProvider: VampireGameStateProvider;
 
     private plasters: Map<PlasterLocation, number> = null;
 
@@ -148,6 +152,10 @@ export class LSMCPlasterProvider {
 
     @Tick()
     public async onPlasterBlockActionTick() {
+        if (this.vampireGameStateProvider.isGameRunning()) {
+            return;
+        }
+
         const player = this.playerService.getPlayer();
         if (!player || !player.metadata) {
             return;

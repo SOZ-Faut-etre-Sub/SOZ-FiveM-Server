@@ -6,11 +6,15 @@ import { Control } from '@public/shared/input';
 import { Provider } from '../../core/decorators/provider';
 import { Notifier } from '../notifier';
 import { PlayerWalkstyleProvider } from '../player/player.walkstyle.provider';
+import { VampireGameStateProvider } from '../story/vampire.game.state.provider';
 
 @Provider()
 export class InventoryOverloadProvider {
     @Inject(PlayerWalkstyleProvider)
     private playerWalkstyleProvider: PlayerWalkstyleProvider;
+
+    @Inject(VampireGameStateProvider)
+    private vampireGameStateProvider: VampireGameStateProvider;
 
     @Inject(Notifier)
     private notifier: Notifier;
@@ -21,6 +25,10 @@ export class InventoryOverloadProvider {
     @On('inventory:client:overloaded')
     public onOverload(overloaded: boolean) {
         this.overloaded = overloaded;
+        if (this.vampireGameStateProvider.isGameRunning()) {
+            return;
+        }
+
         this.playerWalkstyleProvider.updateWalkStyle('overloaded', overloaded ? 'move_heist_lester' : null);
         clearInterval(this.interval);
         if (this.overloaded) {
@@ -37,6 +45,10 @@ export class InventoryOverloadProvider {
 
     @Tick()
     public onOverloadedTick() {
+        if (this.vampireGameStateProvider.isGameRunning()) {
+            return;
+        }
+
         if (this.overloaded) {
             DisableControlAction(0, Control.Jump, true);
             DisableControlAction(0, Control.Sprint, true);

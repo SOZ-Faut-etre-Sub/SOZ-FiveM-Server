@@ -46,6 +46,7 @@ import { PlayerListStateService } from '../player/player.list.state.service';
 import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
 import { PlayerStateProvider } from '../player/player.state.provider';
+import { PlayerWalkstyleProvider } from '../player/player.walkstyle.provider';
 import { InteractionProvider } from '../quick-interaction/interaction.provider';
 import { SkinService } from '../skin/skin.service';
 import { TargetFactory } from '../target/target.factory';
@@ -107,6 +108,9 @@ export class VampireGameProvider {
 
     @Inject(PlayerPositionProvider)
     private readonly playerPositionProvider: PlayerPositionProvider;
+
+    @Inject(PlayerWalkstyleProvider)
+    private readonly playerWalkstyleProvider: PlayerWalkstyleProvider;
 
     private blipDisabled = new Set<string>();
     private objectiveInteractions = new Set<string>();
@@ -531,6 +535,7 @@ export class VampireGameProvider {
         FreezeEntityPosition(player, true);
         SwitchOutPlayer(player, 0, 2);
 
+        this.playerWalkstyleProvider.updateWalkStyle('overloaded', null);
         this.weaponService.setDisabled('vampire-game', true);
 
         for (const [name] of this.blipFactory.getAll().entries()) {
