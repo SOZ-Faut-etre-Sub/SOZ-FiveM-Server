@@ -599,16 +599,16 @@ export class VampireGameProvider {
             SetPedCoordsKeepVehicle(ped, pos[0], pos[1], z + 1.0);
         }
 
+        // Reset ped and clothes
+        TriggerEvent('soz-character:Client:ApplyCurrentSkin');
+        TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
+
         if (role === VampireGameRole.Vampire) {
             if (model === 'crow') {
                 await this.skinService.setModel('a_c_crow');
             } else if (model === 'wolf') {
                 await this.skinService.setModel('a_c_coyote');
             } else {
-                // Reset ped and clothes
-                TriggerEvent('soz-character:Client:ApplyCurrentSkin');
-                TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
-
                 this.playerService.setTempClothes(VampireOutfit[player.skin.Model.Hash]);
             }
         } else if (role === VampireGameRole.Ghoul) {
@@ -620,10 +620,6 @@ export class VampireGameProvider {
             GiveWeaponToPed(ped, weapon, weaponAmmo, false, true);
             SetPedAmmo(ped, weapon, weaponAmmo);
             SetCurrentPedWeapon(ped, weapon, true);
-        } else {
-            // Reset ped and clothes
-            TriggerEvent('soz-character:Client:ApplyCurrentSkin');
-            TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
         }
     }
 
