@@ -750,7 +750,7 @@ export class SceneProvider {
                         ...entity.object,
                         vfx: this.worldEventProvider.isSignaled(entity.inventoryId) ? null : entity.object.vfx,
                     },
-                    alpha: editing ? 200 : 256,
+                    alpha: editing ? 200 : null,
                 },
                 targets
             );

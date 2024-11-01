@@ -257,7 +257,15 @@ export class WorldEventProvider {
         SetPedShootRate(pedHandle, 1000);
         SetPedInfiniteAmmoClip(pedHandle, true);
         SetPedCombatMovement(pedHandle, 2);
+        SetPedFleeAttributes(pedHandle, 0, false);
+        SetPedCombatRange(pedHandle, 2);
+        SetPedCombatAbility(pedHandle, 2);
+        SetPedSeeingRange(pedHandle, 100);
+        SetPedHearingRange(pedHandle, 100);
+
         SetPedRelationshipGroupHash(pedHandle, GetHashKey('RelationGroup' + ped.behavior));
-        TaskWanderInArea(pedHandle, ped.position[0], ped.position[1], ped.position[2], 20, 3, 2000);
+        await wait(1000);
+        TaskWanderInArea(pedHandle, ped.position[0], ped.position[1], ped.position[2] + 0.2, 10, 8, 10);
+        SetPedKeepTask(pedHandle, true);
     }
 }

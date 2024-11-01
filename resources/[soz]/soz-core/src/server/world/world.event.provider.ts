@@ -297,7 +297,7 @@ export class WorldEventProvider {
                 ped.model,
                 ped.position[0],
                 ped.position[1],
-                ped.position[2],
+                ped.position[2] + 0.2,
                 ped.position[3],
                 true,
                 true
