@@ -2,14 +2,14 @@ import { Injectable } from '@public/core/decorators/injectable';
 
 @Injectable()
 export class BlurService {
-    private blurRaisons: string[] = [];
+    private blurReasons: string[] = [];
     private isBlur = false;
 
     private update(delay: number) {
-        if (this.blurRaisons.length > 0 && !this.isBlur) {
+        if (this.blurReasons.length > 0 && !this.isBlur) {
             this.isBlur = true;
             TriggerScreenblurFadeIn(delay);
-        } else if (this.blurRaisons.length == 0 && this.isBlur) {
+        } else if (this.blurReasons.length == 0 && this.isBlur) {
             if (IsScreenblurFadeRunning()) {
                 DisableScreenblurFade();
             } else {
@@ -19,20 +19,20 @@ export class BlurService {
         }
     }
 
-    public add(icon: string, delay: number): void {
-        if (this.blurRaisons.indexOf(icon) == -1) {
-            this.blurRaisons.push(icon);
+    public add(reason: string, delay: number): void {
+        if (this.blurReasons.indexOf(reason) == -1) {
+            this.blurReasons.push(reason);
         }
         this.update(delay);
     }
 
-    public remove(icon: string, delay: number): void {
-        if (icon == null) {
-            this.blurRaisons = [];
+    public remove(reason: string, delay: number): void {
+        if (reason == null) {
+            this.blurReasons = [];
         } else {
-            const index = this.blurRaisons.indexOf(icon);
+            const index = this.blurReasons.indexOf(reason);
             if (index > -1) {
-                this.blurRaisons.splice(index, 1);
+                this.blurReasons.splice(index, 1);
             }
         }
         this.update(delay);
