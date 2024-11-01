@@ -4,7 +4,6 @@ import { PlayerData } from '@public/shared/player';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import PCancelable from 'p-cancelable';
 import { Gauge } from 'prom-client';
-import { info } from 'sass';
 
 import { On, Once, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';

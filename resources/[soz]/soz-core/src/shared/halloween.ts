@@ -41,7 +41,7 @@ export const VampireOutfit = {
     [PlayerPedHash.Female]: {
         Components: {
             '1': { Drawable: 0, Texture: 0, Palette: 0 },
-            '3': { Drawable: 251, Texture: 0, Palette: 0 },
+            '3': { Drawable: 270, Texture: 0, Palette: 0 },
             '4': { Drawable: 63, Texture: 2, Palette: 0 },
             '5': { Drawable: 0, Texture: 0, Palette: 0 },
             '6': { Drawable: 160, Texture: 0, Palette: 0 },
@@ -49,7 +49,7 @@ export const VampireOutfit = {
             '8': { Drawable: 14, Texture: 0, Palette: 0 },
             '9': { Drawable: 54, Texture: 1, Palette: 0 },
             '10': { Drawable: 0, Texture: 0, Palette: 0 },
-            '11': { Drawable: 618, Texture: 3, Palette: 0 },
+            '11': { Drawable: 617, Texture: 1, Palette: 0 },
         },
         Props: {
             '0': { Drawable: -1, Texture: -1 },
@@ -66,7 +66,7 @@ export const GhoulOutfit = {
         Components: {
             '1': { Drawable: 0, Texture: 0, Palette: 0 },
             '3': { Drawable: 4, Texture: 0, Palette: 0 },
-            '4': { Drawable: 63, Texture: 2, Palette: 0 },
+            '4': { Drawable: 71, Texture: 0, Palette: 0 },
             '5': { Drawable: 0, Texture: 0, Palette: 0 },
             '6': { Drawable: 111, Texture: 0, Palette: 0 },
             '7': { Drawable: 0, Texture: 0, Palette: 0 },
@@ -86,7 +86,7 @@ export const GhoulOutfit = {
     [PlayerPedHash.Female]: {
         Components: {
             '1': { Drawable: 0, Texture: 0, Palette: 0 },
-            '3': { Drawable: 270, Texture: 0, Palette: 0 },
+            '3': { Drawable: 251, Texture: 0, Palette: 0 },
             '4': { Drawable: 63, Texture: 2, Palette: 0 },
             '5': { Drawable: 0, Texture: 0, Palette: 0 },
             '6': { Drawable: 160, Texture: 0, Palette: 0 },
@@ -94,7 +94,7 @@ export const GhoulOutfit = {
             '8': { Drawable: 14, Texture: 0, Palette: 0 },
             '9': { Drawable: 54, Texture: 1, Palette: 0 },
             '10': { Drawable: 0, Texture: 0, Palette: 0 },
-            '11': { Drawable: 617, Texture: 1, Palette: 0 },
+            '11': { Drawable: 618, Texture: 3, Palette: 0 },
         },
         Props: {
             '0': { Drawable: -1, Texture: -1 },
