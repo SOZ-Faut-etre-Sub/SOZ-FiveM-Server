@@ -584,11 +584,13 @@ export class VampireGameProvider {
 
     private async syncModel(role: VampireGameRole, model?: string) {
         const player = this.playerService.getPlayer();
+        const ped = PlayerPedId();
 
         await this.weaponService.clear();
+
+        SetPedArmour(ped, 0);
         this.playerService.setNbArmorPlates(0);
 
-        const ped = PlayerPedId();
         const pos = GetEntityCoords(ped);
         const weapon = GetHashKey(WeaponName.MUSKET);
         const weaponAmmo = 500;

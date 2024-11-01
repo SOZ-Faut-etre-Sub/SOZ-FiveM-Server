@@ -392,6 +392,17 @@ export class VampireGameProvider {
             });
         }
 
+        if (!this.gameState.mortalObjectivePart2[objective].finished) {
+            const currentPlayers = this.gameState.mortalObjectivePart2[objective].players.size;
+            const requiredPlayers = this.mortalObjectivePart2[objective];
+
+            this.notifier.notify(
+                player.source,
+                `L'objectif ~b~${VampireGameLabel(objective)}~s~ ne peut pas être validé ! ~o~${currentPlayers}~s~/~b~${requiredPlayers} joueurs~s~ réfléchissent.`,
+                'error'
+            );
+        }
+
         this.gameState.mortalObjectivePart2[objective].players.delete(player.citizenid);
 
         this.sendObjectivePart2();
@@ -406,7 +417,8 @@ export class VampireGameProvider {
             this.notifier.notify(
                 player.source,
                 `Tous les mortels ont reçu de quoi se défendre, les balles d’argent peuvent tuer les vampires ! La chasse se retourne contre eux, survivez ${this.mortalObjectivePart3Duration} minutes pour sortir victorieux de cette bataille.`,
-                'info'
+                'info',
+                30_000
             );
         });
 
@@ -414,7 +426,8 @@ export class VampireGameProvider {
             this.notifier.notify(
                 player.source,
                 `Les mortels ont reçu de quoi se défendre, les balles d’argent peuvent te tuer ! Ne deviens pas la proie de ces chasseurs ! Il ne te reste que ${this.mortalObjectivePart3Duration} minutes pour les traquer et leur faire regretter leur audace.`,
-                'info'
+                'info',
+                30_000
             );
         });
     }
@@ -817,7 +830,7 @@ export class VampireGameProvider {
         Object.values(this.gameState.gauges).forEach(gauge => gauge.reset());
         this.gameState.mortalObjectivePart1.clear();
         Object.keys(this.gameState.mortalObjectivePart2).forEach(key => {
-            this.gameState.mortalObjectivePart2[key].validated = false;
+            this.gameState.mortalObjectivePart2[key].finished = false;
             this.gameState.mortalObjectivePart2[key].players.clear();
         });
         this.gameState.mortalObjectivePart3 = null;
@@ -949,26 +962,20 @@ export class VampireGameProvider {
             if (positions.length > 0) return;
         }
 
-        let objectivePart2 = Object.fromEntries(
-            Object.entries(VampireGameObjectivePart2).map(([key]) => [
-                key,
-                {
-                    playerRequired: this.mortalObjectivePart2[key],
-                    finished: this.gameState.mortalObjectivePart2[key].finished,
-                },
-            ])
-        );
-
-        if (Object.values(this.gameState.mortalObjectivePart2).every(o => o.finished)) {
-            objectivePart2 = {};
-        }
-
         this.callFunctionOnNonEnemyPlayers(player => {
             TriggerLatentClientEvent(
                 ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_OBJECTIVE_PART2,
                 player.source,
                 1024,
-                objectivePart2
+                Object.fromEntries(
+                    Object.entries(VampireGameObjectivePart2).map(([key]) => [
+                        key,
+                        {
+                            playerRequired: this.mortalObjectivePart2[key],
+                            finished: this.gameState.mortalObjectivePart2[key].finished,
+                        },
+                    ])
+                )
             );
         });
     }
@@ -1025,6 +1032,7 @@ export class VampireGameProvider {
             TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED, player.source, role);
         });
 
+        clearInterval(this.gameState.mortalObjectivePart3);
         this.gameState.mortalObjectivePart3 = setTimeout(
             () => {
                 this.notifier.notify(

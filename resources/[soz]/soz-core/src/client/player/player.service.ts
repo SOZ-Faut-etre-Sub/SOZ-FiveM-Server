@@ -146,7 +146,13 @@ export class PlayerService {
     }
 
     public canDoAction(): boolean {
-        return !this.state.isDead && !this.state.isHandcuffed && !this.state.isZipped && !this.state.isEscorting;
+        return (
+            !this.state.isDead &&
+            !this.state.isHandcuffed &&
+            !this.state.isZipped &&
+            !this.state.isEscorting &&
+            !this.state.isKnockedOut
+        );
     }
 
     public getPlayersAround(

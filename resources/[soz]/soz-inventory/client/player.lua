@@ -11,6 +11,10 @@ RegisterCommand("inventory", function()
         if inventory ~= nil then
             local playerState = exports["soz-core"]:GetPlayerState()
 
+            if playerState.isKnockedOut then
+                return
+            end
+
             if playerState.isInventoryBusy then
                 exports["soz-core"]:DrawNotification("Inventaire en cours d'utilisation", "warning")
                 return

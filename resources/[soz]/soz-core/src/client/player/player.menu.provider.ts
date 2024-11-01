@@ -18,6 +18,7 @@ import { NuiDispatch } from '../nui/nui.dispatch';
 import { NuiMenu } from '../nui/nui.menu';
 import { HalloweenSpiderService } from '../object/halloween.spider.service';
 import { ProgressService } from '../progress.service';
+import { VampireGameStateProvider } from '../story/vampire.game.state.provider';
 import { VoiceProvider } from '../voip/voice/voice.provider';
 import { PlayerAnimationProvider } from './player.animation.provider';
 import { PlayerService } from './player.service';
@@ -64,6 +65,9 @@ export class PlayerMenuProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
+    @Inject(VampireGameStateProvider)
+    private vampireGameStateProvider: VampireGameStateProvider;
+
     @Once()
     public async init() {
         await this.halloweenSpiderService.init();
@@ -82,6 +86,10 @@ export class PlayerMenuProvider {
     public async togglePersonalMenu() {
         if (this.menu.getOpened() === MenuType.PlayerPersonal) {
             this.menu.closeMenu();
+            return;
+        }
+
+        if (this.vampireGameStateProvider.isGameRunning()) {
             return;
         }
 

@@ -27,11 +27,12 @@ export const MenuHalloweenVampire: FunctionComponent = () => {
                     </MenuItemButton>
 
                     <MenuItemButton
+                        description={`Appuyez sur "Shift gauche" pour décoller`}
                         onConfirm={() => {
                             fetchNui(NuiEvent.HalloweenVampireSwitchModel, 'crow');
                         }}
                     >
-                        Forme de Chauve Souris
+                        Forme de Corbeau
                     </MenuItemButton>
 
                     <MenuItemButton
