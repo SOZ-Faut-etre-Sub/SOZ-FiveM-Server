@@ -1,4 +1,5 @@
 import { MapPickerLocation } from '@public/shared/picker';
+import { PlayerPedHash } from '@public/shared/player';
 import { Zone } from '@public/shared/polyzone/box.zone';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import PCancelable from 'p-cancelable';
@@ -14,6 +15,96 @@ export enum VampireGameRole {
     Squire = 'Écuyère',
     Alchemist = 'Alchimiste',
 }
+
+export const VampireOutfit = {
+    [PlayerPedHash.Male]: {
+        Components: {
+            '1': { Drawable: 0, Texture: 0, Palette: 0 },
+            '3': { Drawable: 4, Texture: 0, Palette: 0 },
+            '4': { Drawable: 45, Texture: 0, Palette: 0 },
+            '5': { Drawable: 0, Texture: 0, Palette: 0 },
+            '6': { Drawable: 111, Texture: 0, Palette: 0 },
+            '7': { Drawable: 0, Texture: 0, Palette: 0 },
+            '8': { Drawable: 11, Texture: 0, Palette: 0 },
+            '9': { Drawable: 54, Texture: 1, Palette: 0 },
+            '10': { Drawable: 0, Texture: 0, Palette: 0 },
+            '11': { Drawable: 560, Texture: 1, Palette: 0 },
+        },
+        Props: {
+            '0': { Drawable: -1, Texture: -1 },
+            '1': { Drawable: -1, Texture: -1 },
+            '2': { Drawable: 7, Texture: 0 },
+            '6': { Drawable: 14, Texture: 0 },
+            '7': { Drawable: 10, Texture: 0 },
+        },
+    },
+    [PlayerPedHash.Female]: {
+        Components: {
+            '1': { Drawable: 0, Texture: 0, Palette: 0 },
+            '3': { Drawable: 251, Texture: 0, Palette: 0 },
+            '4': { Drawable: 63, Texture: 2, Palette: 0 },
+            '5': { Drawable: 0, Texture: 0, Palette: 0 },
+            '6': { Drawable: 160, Texture: 0, Palette: 0 },
+            '7': { Drawable: 154, Texture: 0, Palette: 0 },
+            '8': { Drawable: 14, Texture: 0, Palette: 0 },
+            '9': { Drawable: 54, Texture: 1, Palette: 0 },
+            '10': { Drawable: 0, Texture: 0, Palette: 0 },
+            '11': { Drawable: 618, Texture: 3, Palette: 0 },
+        },
+        Props: {
+            '0': { Drawable: -1, Texture: -1 },
+            '1': { Drawable: -1, Texture: -1 },
+            '2': { Drawable: 7, Texture: 0 },
+            '6': { Drawable: 14, Texture: 0 },
+            '7': { Drawable: 10, Texture: 0 },
+        },
+    },
+};
+
+export const GhoulOutfit = {
+    [PlayerPedHash.Male]: {
+        Components: {
+            '1': { Drawable: 0, Texture: 0, Palette: 0 },
+            '3': { Drawable: 4, Texture: 0, Palette: 0 },
+            '4': { Drawable: 63, Texture: 2, Palette: 0 },
+            '5': { Drawable: 0, Texture: 0, Palette: 0 },
+            '6': { Drawable: 111, Texture: 0, Palette: 0 },
+            '7': { Drawable: 0, Texture: 0, Palette: 0 },
+            '8': { Drawable: 11, Texture: 0, Palette: 0 },
+            '9': { Drawable: 54, Texture: 1, Palette: 0 },
+            '10': { Drawable: 0, Texture: 0, Palette: 0 },
+            '11': { Drawable: 559, Texture: 0, Palette: 0 },
+        },
+        Props: {
+            '0': { Drawable: -1, Texture: -1 },
+            '1': { Drawable: -1, Texture: -1 },
+            '2': { Drawable: 7, Texture: 0 },
+            '6': { Drawable: 14, Texture: 0 },
+            '7': { Drawable: 10, Texture: 0 },
+        },
+    },
+    [PlayerPedHash.Female]: {
+        Components: {
+            '1': { Drawable: 0, Texture: 0, Palette: 0 },
+            '3': { Drawable: 270, Texture: 0, Palette: 0 },
+            '4': { Drawable: 63, Texture: 2, Palette: 0 },
+            '5': { Drawable: 0, Texture: 0, Palette: 0 },
+            '6': { Drawable: 160, Texture: 0, Palette: 0 },
+            '7': { Drawable: 154, Texture: 0, Palette: 0 },
+            '8': { Drawable: 14, Texture: 0, Palette: 0 },
+            '9': { Drawable: 54, Texture: 1, Palette: 0 },
+            '10': { Drawable: 0, Texture: 0, Palette: 0 },
+            '11': { Drawable: 617, Texture: 1, Palette: 0 },
+        },
+        Props: {
+            '0': { Drawable: -1, Texture: -1 },
+            '1': { Drawable: -1, Texture: -1 },
+            '2': { Drawable: 7, Texture: 0 },
+            '6': { Drawable: 14, Texture: 0 },
+            '7': { Drawable: 10, Texture: 0 },
+        },
+    },
+};
 
 export const VampireGameEnemyRoles = [VampireGameRole.Vampire, VampireGameRole.Ghoul];
 

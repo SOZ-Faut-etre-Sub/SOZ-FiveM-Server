@@ -13,6 +13,7 @@ import { NuiEvent } from '../../shared/event/nui';
 import { ServerEvent } from '../../shared/event/server';
 import { Feature } from '../../shared/features';
 import {
+    GhoulOutfit,
     VampireGameClientState,
     VampireGameCollection,
     VampireGameEnemyRoles,
@@ -21,6 +22,7 @@ import {
     VampireGameObjectiveTypePart2,
     VampireGameRole,
     VampireGameSprite,
+    VampireOutfit,
     VampireRespawnPoints,
 } from '../../shared/halloween';
 import { MenuType } from '../../shared/nui/menu';
@@ -573,18 +575,20 @@ export class VampireGameProvider {
     }
 
     private async syncModel(role: VampireGameRole, model?: string) {
+        const player = this.playerService.getPlayer();
+
         await this.weaponService.clear();
         this.playerService.setNbArmorPlates(0);
 
-        const player = PlayerPedId();
-        const pos = GetEntityCoords(player);
+        const ped = PlayerPedId();
+        const pos = GetEntityCoords(ped);
         const weapon = GetHashKey(WeaponName.MUSKET);
         const weaponAmmo = 500;
 
         const [found, z] = GetGroundZFor_3dCoord_2(pos[0], pos[1], pos[2], false);
 
         if (found) {
-            SetPedCoordsKeepVehicle(player, pos[0], pos[1], z + 1.0);
+            SetPedCoordsKeepVehicle(ped, pos[0], pos[1], z + 1.0);
         }
 
         if (role === VampireGameRole.Vampire) {
@@ -593,17 +597,21 @@ export class VampireGameProvider {
             } else if (model === 'wolf') {
                 await this.skinService.setModel('a_c_coyote');
             } else {
-                await this.skinService.setModel('dracula');
+                // Reset ped and clothes
+                TriggerEvent('soz-character:Client:ApplyCurrentSkin');
+                TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
+
+                this.playerService.setTempClothes(VampireOutfit[player.skin.Model.Hash]);
             }
         } else if (role === VampireGameRole.Ghoul) {
-            await this.skinService.setModel('ghoul');
+            this.playerService.setTempClothes(GhoulOutfit[player.skin.Model.Hash]);
 
             SetPedArmour(PlayerPedId(), 100);
             this.playerService.setNbArmorPlates(3);
         } else if (role === VampireGameRole.Hunter) {
-            GiveWeaponToPed(player, weapon, weaponAmmo, false, true);
-            SetPedAmmo(player, weapon, weaponAmmo);
-            SetCurrentPedWeapon(player, weapon, true);
+            GiveWeaponToPed(ped, weapon, weaponAmmo, false, true);
+            SetPedAmmo(ped, weapon, weaponAmmo);
+            SetCurrentPedWeapon(ped, weapon, true);
         } else {
             // Reset ped and clothes
             TriggerEvent('soz-character:Client:ApplyCurrentSkin');
