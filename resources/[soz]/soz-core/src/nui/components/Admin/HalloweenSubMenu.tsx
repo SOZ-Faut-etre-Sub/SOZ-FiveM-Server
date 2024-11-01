@@ -8,6 +8,7 @@ import { FunctionComponent } from 'react';
 import {
     MenuContent,
     MenuItemButton,
+    MenuItemCheckbox,
     MenuItemSelect,
     MenuItemSelectOption,
     MenuItemSubMenuLink,
@@ -89,6 +90,16 @@ export const HalloweenSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner
                             <span>{state.gameDuration} minutes</span>
                         </div>
                     </MenuItemButton>
+                    {['admin', 'staff', 'gamemaster', 'helper'].map(role => (
+                        <MenuItemCheckbox
+                            checked={state.staffEnabled[role]}
+                            onChange={enabled =>
+                                fetchNui(NuiEvent.AdminMenuHalloweenUpdateGameStaffEnabled, { role, enabled })
+                            }
+                        >
+                            {role}
+                        </MenuItemCheckbox>
+                    ))}
 
                     <MenuTitle>Rôles</MenuTitle>
                     {Object.entries(state.roleMaxNumber).map(([role, amount]) => (

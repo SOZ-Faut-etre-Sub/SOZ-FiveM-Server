@@ -313,15 +313,13 @@ export class VampireGameProvider {
 
         if (role === VampireGameRole.Vampire) {
             const location = await this.mapPickerProvider.showSouthLocationPicker(VampireRespawnPoints);
-
             await this.playerPositionProvider.teleportPlayerToPosition(`halloween_vampire_respawn_${location.id}`);
-        } else {
-            NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, 1, false);
-            SetEntityHealth(ped, GetPedMaxHealth(ped));
         }
 
-        await this.syncModel(role);
+        NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, 1, false);
+        SetEntityHealth(ped, GetPedMaxHealth(ped));
 
+        await this.syncModel(role);
         await this.displayRole();
 
         await this.displayRoleObjective(this.gameState.getRole());

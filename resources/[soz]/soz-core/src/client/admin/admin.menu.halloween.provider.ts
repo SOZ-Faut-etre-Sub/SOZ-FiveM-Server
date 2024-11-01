@@ -44,6 +44,12 @@ export class AdminMenuHalloweenProvider {
         await this.reloadAdminMenu();
     }
 
+    @OnNuiEvent(NuiEvent.AdminMenuHalloweenUpdateGameStaffEnabled)
+    async updateGameStaffEnabled({ role, enabled }: { role: string; enabled: boolean }): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_GAME_STAFF_ENABLED, role, enabled);
+        await this.reloadAdminMenu();
+    }
+
     @OnNuiEvent(NuiEvent.AdminMenuHalloweenUpdateMoon)
     async updateMoon(value: string): Promise<void> {
         TriggerServerEvent(ServerEvent.ADMIN_HALLOWEEN_MOON_UPDATE, value);

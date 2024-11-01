@@ -86,6 +86,7 @@ export type MeteorSubMenuState = {
 
 export type HalloweenSubMenuState = {
     started: boolean;
+    staffEnabled: Record<string, boolean>;
     gameDuration: number;
     roleMaxNumber: Record<VampireGameRole, number>;
     mortalObjectivePart1: Record<Exclude<VampireGameCollection, 'player'>, number>;

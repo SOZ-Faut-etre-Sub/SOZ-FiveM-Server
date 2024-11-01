@@ -84,6 +84,13 @@ export class VampireGameProvider {
     private gameDuration = 90; // minutes
     private autoRespawnDuration = 20; // seconds
 
+    private staffEnabled = {
+        admin: true,
+        staff: true,
+        gamemaster: true,
+        helper: true,
+    };
+
     private roleMaxNumber: Record<VampireGameRole, number> = {
         [VampireGameRole.Vampire]: 50,
         [VampireGameRole.Ghoul]: 0,
@@ -646,12 +653,23 @@ export class VampireGameProvider {
     public getState(): HalloweenSubMenuState {
         return {
             started: this.gameState.started,
+            staffEnabled: this.staffEnabled,
             gameDuration: this.gameDuration,
             roleMaxNumber: this.roleMaxNumber,
             mortalObjectivePart1: this.mortalObjectivePart1,
             mortalObjectivePart2: this.mortalObjectivePart2,
             mortalObjectivePart3: this.mortalObjectivePart3Duration,
         };
+    }
+
+    @OnEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_GAME_STAFF_ENABLED)
+    public updateStaffEnabled(source: number, role: string, value: boolean): void {
+        if (!this.permissionService.isStaff(source)) {
+            return;
+        }
+
+        this.staffEnabled[role] = value;
+        this.notifier.notify(source, `Le rôle ${role} a été mis à jour: ${value ? 'activé' : 'désactivé'}`, 'info');
     }
 
     @OnEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_GAME_DURATION)
@@ -774,6 +792,11 @@ export class VampireGameProvider {
     }
 
     private async newPlayer(player: PlayerData) {
+        const playerRole = this.permissionService.getPermission(player.source);
+        if (playerRole !== 'user' && !this.staffEnabled[playerRole]) {
+            return;
+        }
+
         const role = await this.getRandomRole();
         if (!role) {
             this.logger.error(
