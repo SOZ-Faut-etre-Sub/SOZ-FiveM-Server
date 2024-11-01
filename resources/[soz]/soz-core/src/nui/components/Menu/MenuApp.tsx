@@ -255,7 +255,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.Album}/*`} element={<MenuAlbum data={menuData} />} />
             <Route path={`/${MenuType.RentBoat}/*`} element={<MenuRentBoat />} />
             <Route path={`/${MenuType.RentMule}/*`} element={<MenuRentMule />} />
-            <Route path={`/${MenuType.RaceAdmin}/*`} element={<MenuRaceAdmin data={menuData} />} />
+            <Route path={`/${MenuType.RaceAdmin}/*`} element={<MenuRaceAdmin />} />
             <Route path={`/${MenuType.RaceRank}/*`} element={<MenuRaceRank data={menuData} />} />
             <Route path={`/${MenuType.GouvJobMenu}/*`} element={<GouvJobMenu data={menuData} />} />
             <Route path={`/${MenuType.PropPlacementMenu}/*`} element={<MenuPropPlacement data={menuData} />} />

@@ -1,13 +1,16 @@
 import { rad, Vector4 } from '@public/shared/polyzone/vector';
 import { getRacePNJPosID, getRacePosID, Race } from '@public/shared/race';
+import { RepositoryType } from '@public/shared/repository';
 
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { PrismaService } from '../database/prisma.service';
 import { PlayerPositionProvider } from '../player/player.position.provider';
-import { RepositoryLegacy } from './repository';
+import { Repository } from './repository';
 
-@Injectable()
-export class RaceRepository extends RepositoryLegacy<Record<number, Race>> {
+@Injectable(RaceRepository, Repository)
+export class RaceRepository extends Repository<RepositoryType.Race> {
+    public type = RepositoryType.Race;
+
     @Inject(PrismaService)
     private prismaService: PrismaService;
 

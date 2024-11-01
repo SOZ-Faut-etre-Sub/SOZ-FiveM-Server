@@ -3,7 +3,7 @@ import { Exportable } from '@core/decorators/exports';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { Rpc } from '@core/decorators/rpc';
-import { emitRpc } from '@core/rpc';
+import { emitRpc, emitRpcTimeout } from '@core/rpc';
 import { InventoryManager } from '@public/client/inventory/inventory.manager';
 import { ObjectService } from '@public/client/object/object.service';
 import { getProperGroundPositionForObject } from '@public/client/object/object.utils';
@@ -112,7 +112,7 @@ export class ObjectProvider {
 
     @Once(OnceStep.PlayerLoaded)
     private async setupObjects(): Promise<void> {
-        const objects = await emitRpc<WorldObject[]>(RpcServerEvent.OBJECT_GET_LIST);
+        const objects = await emitRpcTimeout<WorldObject[]>(RpcServerEvent.OBJECT_GET_LIST, 10_000);
 
         for (const object of objects) {
             await this.createObject(object);
