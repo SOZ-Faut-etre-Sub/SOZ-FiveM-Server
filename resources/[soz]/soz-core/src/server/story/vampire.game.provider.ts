@@ -970,9 +970,13 @@ export class VampireGameProvider {
                 ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_OBJECTIVE_PART1,
                 player.source,
                 1024,
-                Object.fromEntries(this.gameState.mortalObjectivePart1.entries())
+                this.getObjectivePart1Progress()
             );
         });
+    }
+
+    private getObjectivePart1Progress() {
+        return Object.fromEntries(this.gameState.mortalObjectivePart1.entries());
     }
 
     private sendObjectivePart2() {
@@ -987,17 +991,25 @@ export class VampireGameProvider {
                 ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_OBJECTIVE_PART2,
                 player.source,
                 1024,
-                Object.fromEntries(
-                    Object.entries(VampireGameObjectivePart2).map(([key]) => [
-                        key,
-                        {
-                            playerRequired: this.mortalObjectivePart2[key],
-                            finished: this.gameState.mortalObjectivePart2[key].finished,
-                        },
-                    ])
-                )
+                this.getObjectivePart2Progress()
             );
         });
+    }
+
+    private getObjectivePart2Progress() {
+        for (const [, positions] of this.gameState.mortalObjectivePart1) {
+            if (positions.length > 0) return null;
+        }
+
+        return Object.fromEntries(
+            Object.entries(VampireGameObjectivePart2).map(([key]) => [
+                key,
+                {
+                    playerRequired: this.mortalObjectivePart2[key],
+                    finished: this.gameState.mortalObjectivePart2[key].finished,
+                },
+            ])
+        );
     }
 
     private callFunctionOnNonEnemyPlayers(callback: (player: PlayerData) => void) {
@@ -1063,7 +1075,11 @@ export class VampireGameProvider {
             halloweenRole: role,
         });
 
-        TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_STATE, source, { role });
+        TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_STATE, source, {
+            role,
+            objectivePart1: this.getObjectivePart1Progress(),
+            objectivePart2: this.getObjectivePart2Progress(),
+        });
         TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED, source, role);
 
         TriggerLatentClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_POSITION, source, 1024, [], false);
