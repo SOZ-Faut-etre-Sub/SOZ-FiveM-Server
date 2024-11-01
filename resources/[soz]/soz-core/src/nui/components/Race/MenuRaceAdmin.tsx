@@ -11,6 +11,7 @@ import {
     SubMenu,
 } from '@public/nui/components/Styleguide/Menu';
 import { fetchNui } from '@public/nui/fetch';
+import { useRepository } from '@public/nui/hook/repository';
 import { NuiEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
 import {
@@ -20,18 +21,12 @@ import {
     RaceUpdateMenuOptions,
     RaceVehConfigurationOptions,
 } from '@public/shared/race';
+import { RepositoryType } from '@public/shared/repository';
 import { FunctionComponent } from 'react';
-import { useLocation } from 'react-router-dom';
 
-type MenuRaceProps = {
-    data: Race[];
-};
-
-export const MenuRaceAdmin: FunctionComponent<MenuRaceProps> = ({ data }) => {
+export const MenuRaceAdmin: FunctionComponent = () => {
     const banner = 'https://nui-img/soz/menu_mapper';
-    const location = useLocation();
-
-    fetchNui(NuiEvent.RaceCurrrent, location.pathname.replace('/' + MenuType.RaceAdmin, '').replace('/', ''));
+    const races = Object.values(useRepository(RepositoryType.Race));
 
     return (
         <Menu type={MenuType.RaceAdmin}>
@@ -39,7 +34,7 @@ export const MenuRaceAdmin: FunctionComponent<MenuRaceProps> = ({ data }) => {
                 <MenuTitle banner={banner}>Courses</MenuTitle>
                 <MenuContent>
                     <MenuItemButton onConfirm={() => fetchNui(NuiEvent.RaceAdd)}>➕ Ajouter une course</MenuItemButton>
-                    {data
+                    {races
                         .sort((itemA, itemB) => itemA.name.localeCompare(itemB.name))
                         .map(race => {
                             return (
@@ -50,7 +45,7 @@ export const MenuRaceAdmin: FunctionComponent<MenuRaceProps> = ({ data }) => {
                         })}
                 </MenuContent>
             </MainMenu>
-            {data.map(race => {
+            {races.map(race => {
                 return <RaceSubMenu key={race.name} data={race} />;
             })}
         </Menu>

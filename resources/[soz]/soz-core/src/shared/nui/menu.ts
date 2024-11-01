@@ -20,7 +20,6 @@ import {
     PoliceJobMoneycheckerMenuData,
 } from '../job/police';
 import { MenuUpwData } from '../job/upw';
-import { Race } from '../race';
 import { BossShopMenu, ShopProduct } from '../shop';
 import { GarageMenuData } from '../vehicle/garage';
 import { VehicleCustomMenuData } from '../vehicle/modification';
@@ -179,7 +178,7 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.DrugAdmin]: never;
     [MenuType.RentBoat]: null;
     [MenuType.RentMule]: null;
-    [MenuType.RaceAdmin]: Race[];
+    [MenuType.RaceAdmin]: null;
     [MenuType.RaceRank]: { id: number; name: string };
     [MenuType.GouvJobMenu]: { displayRadar: boolean };
     [MenuType.PropPlacementMenu]: PropPlacementMenuData;

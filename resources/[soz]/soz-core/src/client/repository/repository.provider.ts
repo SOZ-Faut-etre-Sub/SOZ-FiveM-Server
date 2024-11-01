@@ -66,7 +66,6 @@ export class RepositoryProvider {
         await this.underTypesShopRepository.load();
         await this.drugSeedlingRepository.load();
         await this.drugSellLocationRepository.load();
-        await this.raceRepository.load();
         await this.billboardRepository.load();
 
         for (const repository of this.repositories) {

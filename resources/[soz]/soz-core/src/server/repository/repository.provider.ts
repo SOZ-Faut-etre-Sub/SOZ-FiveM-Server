@@ -100,7 +100,6 @@ export class RepositoryProvider {
         this.legacyRepositories['underTypesShop'] = this.underTypesShopRepository;
         this.legacyRepositories['drugSeedling'] = this.drugSeedlingRepository;
         this.legacyRepositories['drugSellLocation'] = this.drugSellLocationRepository;
-        this.legacyRepositories['race'] = this.raceRepository;
         this.legacyRepositories['billboard'] = this.billboardRepository;
     }
 

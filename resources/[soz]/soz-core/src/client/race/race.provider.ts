@@ -1,4 +1,4 @@
-import { Exportable } from '@public/core/decorators/exports';
+import { RepositoryDelete, RepositoryInsert, RepositoryUpdate } from '@public/core/decorators/repository';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { emitRpc } from '@public/core/rpc';
 import { wait } from '@public/core/utils';
@@ -19,16 +19,17 @@ import {
     SplitInfo,
 } from '@public/shared/race';
 import { getRandomInt } from '@public/shared/random';
+import { RepositoryType } from '@public/shared/repository';
 import { Err, Ok } from '@public/shared/result';
 import { RpcServerEvent } from '@public/shared/rpc';
 import { GarageCategory, GarageType, PlaceCapacity } from '@public/shared/vehicle/garage';
-import { VehicleColor, VehicleModType } from '@public/shared/vehicle/modification';
+import { VehicleColor, VehicleConfiguration, VehicleModType } from '@public/shared/vehicle/modification';
 import { getDefaultVehicleVolatileState } from '@public/shared/vehicle/vehicle';
 
-import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event';
+import { Once, OnceStep, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
+import { NuiEvent, ServerEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { toVector4Object, Vector2, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { BlipFactory } from '../blip';
@@ -106,7 +107,6 @@ export class RaceProvider {
 
     private inRace = false;
     private preRace = false;
-    private currentAdminMenuRace: string = null;
 
     @Once(OnceStep.Start)
     public onStart() {
@@ -184,6 +184,9 @@ export class RaceProvider {
     @Tick(TickInterval.EVERY_FRAME, 'race-display')
     public raceDisplayLoop() {
         const races = this.raceRepository.get();
+        if (!races) {
+            return;
+        }
         for (const race of Object.values(races)) {
             if (!race.display) {
                 continue;
@@ -219,7 +222,7 @@ export class RaceProvider {
 
     @OnNuiEvent(NuiEvent.RaceAdminMenuOpen)
     public async onRaceAdminMenuOpen() {
-        this.nuiMenu.openMenu(MenuType.RaceAdmin, Object.values(this.raceRepository.get()));
+        this.nuiMenu.openMenu(MenuType.RaceAdmin);
     }
 
     @OnNuiEvent(NuiEvent.RaceAdd)
@@ -253,11 +256,12 @@ export class RaceProvider {
         TriggerServerEvent(ServerEvent.RACE_ADD, race);
     }
 
-    private async askName() {
+    private async askName(defaultValue: string = null) {
         return this.inputService.askInput(
             {
                 title: 'Nom de la course',
                 maxCharacters: 50,
+                defaultValue,
             },
             value => {
                 const locations = this.raceRepository.get();
@@ -275,11 +279,12 @@ export class RaceProvider {
         );
     }
 
-    private async askModel() {
+    private async askModel(defaultValue: string = null) {
         return this.inputService.askInput<string>(
             {
                 title: 'Modèle de voiture',
                 maxCharacters: 50,
+                defaultValue,
             },
             value => {
                 if (!value) {
@@ -303,12 +308,12 @@ export class RaceProvider {
         );
     }
 
-    private async askRadius() {
+    private async askRadius(defaultValue: string = null) {
         return await this.inputService.askInput(
             {
                 title: 'Rayon',
                 maxCharacters: 3,
-                defaultValue: '5',
+                defaultValue: defaultValue ?? '5',
             },
             PositiveNumberValidator
         );
@@ -316,77 +321,76 @@ export class RaceProvider {
 
     @OnNuiEvent(NuiEvent.RaceEnable)
     public async onRaceEnable({ raceId, enabled }: { raceId: number; enabled: boolean }) {
-        const race = this.raceRepository.find(raceId);
-        race.enabled = enabled;
-        TriggerServerEvent(ServerEvent.RACE_UPDATE, race);
+        TriggerServerEvent(ServerEvent.RACE_UPDATE, raceId, {
+            enabled: !!enabled,
+        });
     }
 
     @OnNuiEvent(NuiEvent.RaceFps)
-    public async onRaceFps({ raceId, enabled }: { raceId: number; enabled: boolean }) {
-        const race = this.raceRepository.find(raceId);
-        race.fps = enabled;
-        TriggerServerEvent(ServerEvent.RACE_UPDATE, race);
+    public async onRaceFps({ raceId, fps }: { raceId: number; fps: boolean }) {
+        TriggerServerEvent(ServerEvent.RACE_UPDATE, raceId, {
+            fps: !!fps,
+        });
     }
 
     @OnNuiEvent(NuiEvent.RaceRename)
     public async onRaceRename(raceId: number) {
-        const name = await this.askName();
+        const race = this.raceRepository.find(raceId);
+        const name = await this.askName(race.name);
 
         if (!name) {
             return;
         }
 
-        const race = this.raceRepository.find(raceId);
-        race.name = name;
-
-        TriggerServerEvent(ServerEvent.RACE_UPDATE, race);
+        TriggerServerEvent(ServerEvent.RACE_UPDATE, raceId, {
+            name,
+        });
     }
 
     @OnNuiEvent(NuiEvent.RaceUpdateLocation)
     public async onRaceUpdateLocation({ raceId, option }: { option: RaceUpdateMenuOptions; raceId: number }) {
-        const race = this.raceRepository.find(raceId);
-
         const playerPed = PlayerPedId();
         const coords = GetEntityCoords(playerPed);
         const heading = GetEntityHeading(playerPed);
 
         const loc = [coords[0], coords[1], coords[2] - 1, heading] as Vector4;
 
+        const update: Partial<Race> = {};
         switch (option) {
             case RaceUpdateMenuOptions.npc:
-                race.npcPosition = loc;
+                update.npcPosition = loc;
                 break;
             case RaceUpdateMenuOptions.garage:
-                race.garageLocation = loc;
+                update.garageLocation = loc;
                 break;
             case RaceUpdateMenuOptions.start:
-                race.start = loc;
+                update.start = loc;
                 break;
         }
 
-        TriggerServerEvent(ServerEvent.RACE_UPDATE, race);
+        TriggerServerEvent(ServerEvent.RACE_UPDATE, raceId, update);
     }
 
     @OnNuiEvent(NuiEvent.RaceUpdateCarModel)
     public async onRaceUpdateCarModel(raceId: number) {
-        const model = await this.askModel();
+        const race = this.raceRepository.find(raceId);
+        const model = await this.askModel(race.carModel);
         if (!model) {
             return;
         }
 
-        const race = this.raceRepository.find(raceId);
-        race.carModel = model;
-
-        TriggerServerEvent(ServerEvent.RACE_UPDATE, race);
+        TriggerServerEvent(ServerEvent.RACE_UPDATE, raceId, {
+            carModel: model,
+        });
     }
 
     @OnNuiEvent(NuiEvent.RaceVehConfiguration)
     public async onRaceVehVonfiguration({ raceId, option }: { option: RaceVehConfigurationOptions; raceId: number }) {
         const race = this.raceRepository.find(raceId);
 
+        let vehicleConfiguration: VehicleConfiguration = null;
         switch (option) {
             case RaceVehConfigurationOptions.default:
-                race.vehicleConfiguration = null;
                 break;
             case RaceVehConfigurationOptions.current:
                 {
@@ -402,13 +406,14 @@ export class RaceProvider {
                         return;
                     }
 
-                    const configuration = this.vehicleModificationService.getVehicleConfiguration(vehicle);
-                    race.vehicleConfiguration = configuration;
+                    vehicleConfiguration = this.vehicleModificationService.getVehicleConfiguration(vehicle);
                 }
                 break;
         }
 
-        TriggerServerEvent(ServerEvent.RACE_UPDATE, race);
+        TriggerServerEvent(ServerEvent.RACE_UPDATE, raceId, {
+            vehicleConfiguration,
+        });
     }
 
     @OnNuiEvent(NuiEvent.RaceDelete)
@@ -433,9 +438,12 @@ export class RaceProvider {
         const coords = GetEntityCoords(playerPed);
 
         const race = this.raceRepository.find(raceId);
-        race.checkpoints.splice(index, 0, [...coords, radius] as Vector4);
+        const checkpoints = [...race.checkpoints];
+        checkpoints.splice(index, 0, [...coords, radius] as Vector4);
 
-        TriggerServerEvent(ServerEvent.RACE_UPDATE, race);
+        TriggerServerEvent(ServerEvent.RACE_UPDATE, raceId, {
+            checkpoints,
+        });
     }
 
     @OnNuiEvent(NuiEvent.RaceUpdateCheckPoint)
@@ -452,11 +460,17 @@ export class RaceProvider {
 
         switch (option) {
             case RaceCheckpointMenuOptions.delete:
-                race.checkpoints.splice(index, 1);
+                {
+                    const checkpoints = [...race.checkpoints];
+                    checkpoints.splice(index, 1);
+                    TriggerServerEvent(ServerEvent.RACE_UPDATE, raceId, {
+                        checkpoints,
+                    });
+                }
                 break;
             case RaceCheckpointMenuOptions.edit:
                 {
-                    const radius = await this.askRadius();
+                    const radius = await this.askRadius(race.checkpoints[index][3].toString());
 
                     if (!radius) {
                         return;
@@ -465,8 +479,11 @@ export class RaceProvider {
                     const playerPed = PlayerPedId();
                     const coords = GetEntityCoords(playerPed);
 
-                    const race = this.raceRepository.find(raceId);
-                    race.checkpoints[index] = [...coords, radius] as Vector4;
+                    const checkpoints = [...race.checkpoints];
+                    checkpoints[index] = [...coords, radius] as Vector4;
+                    TriggerServerEvent(ServerEvent.RACE_UPDATE, raceId, {
+                        checkpoints,
+                    });
                 }
                 break;
             case RaceCheckpointMenuOptions.goto:
@@ -476,8 +493,6 @@ export class RaceProvider {
                 }
                 return;
         }
-
-        TriggerServerEvent(ServerEvent.RACE_UPDATE, race);
     }
 
     @OnNuiEvent(NuiEvent.RaceDisplay)
@@ -490,11 +505,6 @@ export class RaceProvider {
     public async onRaceTPStart(raceId: number) {
         const race = this.raceRepository.find(raceId);
         this.playerPositionProvider.teleportAdminToPosition(race.start);
-    }
-
-    @OnNuiEvent(NuiEvent.RaceCurrrent)
-    public async onRaceCurrrent(raceId: string) {
-        this.currentAdminMenuRace = raceId;
     }
 
     @OnNuiEvent(NuiEvent.RaceClearRanking)
@@ -879,40 +889,25 @@ export class RaceProvider {
         return result;
     }
 
-    @OnEvent(ClientEvent.RACE_DELETE)
-    public async onRaceServerDelete(raceId: number) {
-        const race = this.raceRepository.find(raceId);
-        if (race.npc) {
-            await this.removeNpc(race);
-        }
+    @RepositoryDelete(RepositoryType.Race)
+    public async onRaceServerDelete(race: Race) {
+        await this.removeNpc(race);
 
-        this.raceRepository.deleteRace(raceId);
         if (this.nuiMenu.getOpened() == MenuType.RaceAdmin) {
             this.nuiMenu.closeAll();
-            this.nuiMenu.openMenu(MenuType.RaceAdmin, Object.values(this.raceRepository.get()));
+            this.nuiMenu.openMenu(MenuType.RaceAdmin);
         }
     }
 
-    @OnEvent(ClientEvent.RACE_ADD_UPDATE)
+    @RepositoryInsert(RepositoryType.Race)
+    @RepositoryUpdate(RepositoryType.Race)
     public async onRaceServerUpdate(race: Race) {
-        race = this.raceRepository.updateRace(race);
-
         if (race) {
             if (race.enabled) {
                 await this.addNpc(race);
             } else {
                 await this.removeNpc(race);
             }
-        }
-
-        if (
-            this.nuiMenu.getOpened() == MenuType.RaceAdmin &&
-            (this.currentAdminMenuRace == null || this.currentAdminMenuRace == race.id.toString())
-        ) {
-            this.nuiMenu.closeAll();
-            this.nuiMenu.openMenu(MenuType.RaceAdmin, Object.values(this.raceRepository.get()), {
-                subMenuId: this.currentAdminMenuRace,
-            });
         }
     }
 
@@ -966,7 +961,6 @@ export class RaceProvider {
         }
     }
 
-    @Exportable('IsInRace')
     public isInRace() {
         return this.inRace;
     }

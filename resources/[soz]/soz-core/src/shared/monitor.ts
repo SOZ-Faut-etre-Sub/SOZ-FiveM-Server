@@ -94,7 +94,7 @@ export type MonitorTraceEvent = {
     weather_temperature?: number;
     report_citizen_id?: string;
     report_type?: string;
-    report_position?: Vector3;
+    report_position?: [number, number];
     reputation?: number;
     missive_type?: number;
     missive_choice1?: number;
@@ -217,7 +217,7 @@ export type MonitorEvent = {
     weather_temperature?: number;
     report_citizen_id?: string;
     report_type?: string;
-    report_position?: Vector3;
+    report_position?: [number, number];
     reputation?: number;
     missive_type?: number;
     missive_choice1?: number;

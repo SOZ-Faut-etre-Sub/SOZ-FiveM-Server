@@ -340,9 +340,6 @@ export enum ClientEvent {
     DRUGS_ZONE_ADD_UPDATE = 'soz-core:client:drugs:zone-add',
     DRUGS_ZONE_DELETE = 'soz-core:client:drugs:zone-delete',
 
-    RACE_ADD_UPDATE = 'soz-core:client:race:add-update',
-    RACE_DELETE = 'soz-core:client:race:delete',
-
     BILLBOARD_UPDATE = 'soz-core:client:billboard:update',
     BILLBOARD_DELETE = 'soz-core:client:billboard:delete',
 

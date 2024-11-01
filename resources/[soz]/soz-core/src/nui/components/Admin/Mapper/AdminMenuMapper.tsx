@@ -455,6 +455,7 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                                 {Object.entries(TYPE_LABEL).map(([type, label]) => {
                                     return (
                                         <MenuItemSelect
+                                            key={type}
                                             value={apartment[type]}
                                             title={label}
                                             onConfirm={(_, value) => {

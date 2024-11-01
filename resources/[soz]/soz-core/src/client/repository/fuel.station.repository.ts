@@ -3,7 +3,7 @@ import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
 import { Inject, Injectable } from '../../core/decorators/injectable';
-import { emitRpc } from '../../core/rpc';
+import { emitRpcTimeout } from '../../core/rpc';
 import { FuelStation, FuelStationType, FuelType } from '../../shared/fuel';
 import { RpcServerEvent } from '../../shared/rpc';
 
@@ -35,7 +35,7 @@ export class FuelStationRepository {
     private models: number[];
 
     public async load() {
-        this.fuelStations = await emitRpc(RpcServerEvent.REPOSITORY_GET_DATA, 'fuelStation');
+        this.fuelStations = await emitRpcTimeout(RpcServerEvent.REPOSITORY_GET_DATA, 10_000, 'fuelStation');
         this.models = [];
         this.updateModels();
     }

@@ -383,7 +383,6 @@ export enum NuiEvent {
     RaceUpdateCheckPoint = 'soz-core:client:race:update-checkpoint',
     RaceDisplay = 'soz-core:client:race:display',
     RaceTPStart = 'soz-core:client:race:tp',
-    RaceCurrrent = 'soz-core:client:race:current',
     RaceClearRanking = 'soz-core:client:race:clear-ranking',
     RaceGetRanking = 'soz-core:client:race:get-ranking',
     RaceFps = 'soz-core:client:race:fps',

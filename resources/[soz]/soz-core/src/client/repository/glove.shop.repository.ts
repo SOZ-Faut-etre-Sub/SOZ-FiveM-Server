@@ -1,5 +1,5 @@
 import { Injectable } from '@core/decorators/injectable';
-import { emitRpc } from '@core/rpc';
+import { emitRpcTimeout } from '@core/rpc';
 import { GlovesItem } from '@public/shared/cloth';
 
 import { RpcServerEvent } from '../../shared/rpc';
@@ -14,7 +14,11 @@ export class GloveShopRepository {
             return;
         }
 
-        this.repoData = await emitRpc<GloveShopRepositoryData>(RpcServerEvent.REPOSITORY_GET_DATA, 'gloveShop');
+        this.repoData = await emitRpcTimeout<GloveShopRepositoryData>(
+            RpcServerEvent.REPOSITORY_GET_DATA,
+            10_000,
+            'gloveShop'
+        );
     }
 
     public update(data: GloveShopRepositoryData) {

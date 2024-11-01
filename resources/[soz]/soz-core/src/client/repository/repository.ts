@@ -1,6 +1,6 @@
 import { Inject } from '@core/decorators/injectable';
 import { RepositoryLoader } from '@core/loader/repository.loader';
-import { emitRpc } from '@core/rpc';
+import { emitRpcTimeout } from '@core/rpc';
 import { deepCopy } from '@public/shared/utils/array';
 import { applyPatch, Operation } from 'fast-json-patch';
 
@@ -22,7 +22,7 @@ export abstract class Repository<
     public isInitialized = false;
 
     async init(): Promise<Record<K, V>> {
-        this.data = (await emitRpc(RpcServerEvent.REPOSITORY_GET_DATA_2, this.type)) as Record<K, V>;
+        this.data = (await emitRpcTimeout(RpcServerEvent.REPOSITORY_GET_DATA_2, 10_000, this.type)) as Record<K, V>;
         this.isInitialized = true;
 
         return this.data;
