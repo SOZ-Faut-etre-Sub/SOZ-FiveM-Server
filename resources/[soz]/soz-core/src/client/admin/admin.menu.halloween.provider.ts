@@ -47,7 +47,7 @@ export class AdminMenuHalloweenProvider {
 
     @OnNuiEvent(NuiEvent.AdminMenuHalloweenForceTransformPlayer)
     async updateStaff(role: VampireGameRole): Promise<void> {
-        TriggerServerEvent(ServerEvent.ADMIN_HALLOWEEN_FOCE_TRANSFORM_PLAYER, role);
+        TriggerServerEvent(ServerEvent.ADMIN_HALLOWEEN_FOCE_TRANSFORM_PLAYER, GetPlayerServerId(PlayerId()), role);
         this.nuiMenu.closeMenu();
     }
 

@@ -4,6 +4,7 @@ import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
 import { AdminPlayer, HEALTH_OPTIONS, MOVEMENT_OPTIONS, VOCAL_OPTIONS } from '../../shared/admin/admin';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
+import { VampireGameRole } from '../../shared/halloween';
 import { PositiveNumberValidator } from '../../shared/nui/input';
 import { Err, Ok } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
@@ -284,6 +285,17 @@ export class AdminMenuPlayerProvider {
     @OnNuiEvent(NuiEvent.AdminMenuPlayerSetZombie)
     public async handlePlayerSetZombie({ player, value }: { player: AdminPlayer; value: boolean }): Promise<void> {
         TriggerServerEvent(ServerEvent.ADMIN_PLAYER_SET_ZOMBIE, player.id, value);
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerSetHalloweenRole)
+    public async handlePlayerSetHalloweenRole({
+        player,
+        value,
+    }: {
+        player: AdminPlayer;
+        value: VampireGameRole;
+    }): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_HALLOWEEN_FOCE_TRANSFORM_PLAYER, player.id, value);
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuPlayerSetVoipDebug)

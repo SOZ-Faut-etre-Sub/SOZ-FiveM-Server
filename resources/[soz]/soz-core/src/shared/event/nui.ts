@@ -55,6 +55,7 @@ export enum NuiEvent {
     AdminMenuPlayerHandleResetClientState = 'soz-core:client:admin:reset-client-state',
     AdminMenuPlayerSearch = 'soz-core:client:admin:search',
     AdminMenuPlayerSetZombie = 'soz-core:client:admin:set-zombie',
+    AdminMenuPlayerSetHalloweenRole = 'soz-core:client:admin:set-halloween-role',
     AdminMenuPlayerSetSenateParty = 'soz-core:client:admin:set-senate-party',
     AdminResetHealthData = 'soz-core:client:admin:reset-health-data',
     AdminSetGodMode = 'soz-core:client:admin:set-god-mode',

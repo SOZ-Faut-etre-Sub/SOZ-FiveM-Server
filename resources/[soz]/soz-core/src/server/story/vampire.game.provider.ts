@@ -330,21 +330,7 @@ export class VampireGameProvider {
         );
         this.notifier.notify(source, 'Objectif validé', 'success');
 
-        for (const [citizenId, playerRole] of this.gameState.playerRoles.entries()) {
-            if (VampireGameEnemyRoles.includes(playerRole)) continue;
-
-            const player = this.playerService.getPlayerByCitizenId(citizenId);
-            if (!player) {
-                return;
-            }
-
-            TriggerLatentClientEvent(
-                ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_OBJECTIVE_PART1,
-                player.source,
-                1024,
-                Object.fromEntries(this.gameState.mortalObjectivePart1.entries())
-            );
-        }
+        this.sendObjectivePart1();
 
         for (const [, positions] of this.gameState.mortalObjectivePart1) {
             if (positions.length > 0) return;
@@ -701,12 +687,12 @@ export class VampireGameProvider {
     }
 
     @OnEvent(ServerEvent.ADMIN_HALLOWEEN_FOCE_TRANSFORM_PLAYER)
-    public forceTransformStaffPlayer(source: number, role: VampireGameRole): void {
+    public forceTransformStaffPlayer(source: number, target: number, role: VampireGameRole): void {
         if (!this.permissionService.isStaff(source)) {
             return;
         }
 
-        const player = this.playerService.getPlayer(source);
+        const player = this.playerService.getPlayer(target);
         if (!player) {
             return;
         }
@@ -721,20 +707,21 @@ export class VampireGameProvider {
         this.gameState.playerRoles.set(player.citizenid, role);
         this.gameState.gauges[role].inc();
 
-        TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_STATE, source, {
+        TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_STATE, target, {
             inWaitingRoom: true,
             started: this.gameState.started,
             role,
         });
 
+        this.sendObjectivePart1();
         this.sendObjectivePart2();
 
-        this.playerStateService.setClientState(source, {
+        this.playerStateService.setClientState(target, {
             isKnockedOut: false,
             halloweenRole: role,
         });
 
-        TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED, source, role);
+        TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED, target, role);
     }
 
     @OnEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_MORTAL_OBJECTIVE_PART1)
@@ -909,6 +896,19 @@ export class VampireGameProvider {
             .filter(coords => coords[1] >= OBJECTIVE_Y_LIMITATION[0] && coords[1] <= OBJECTIVE_Y_LIMITATION[1])
             .sort(() => Math.random() - 0.5)
             .slice(0, amount);
+    }
+
+    private sendObjectivePart1() {
+        if (!this.gameState.started) return;
+
+        this.callFunctionOnNonEnemyPlayers(player => {
+            TriggerLatentClientEvent(
+                ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_OBJECTIVE_PART1,
+                player.source,
+                1024,
+                Object.fromEntries(this.gameState.mortalObjectivePart1.entries())
+            );
+        });
     }
 
     private sendObjectivePart2() {

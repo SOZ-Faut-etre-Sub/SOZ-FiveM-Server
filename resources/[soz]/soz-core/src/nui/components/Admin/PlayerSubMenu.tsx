@@ -1,3 +1,4 @@
+import { VampireGameRole } from '@public/shared/halloween';
 import { SenateParty } from '@public/shared/senate';
 import { FunctionComponent, useEffect, useState } from 'react';
 
@@ -455,6 +456,21 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                         >
                             <MenuItemSelectOption value={true}>Activer</MenuItemSelectOption>
                             <MenuItemSelectOption value={false}>Désactiver</MenuItemSelectOption>
+                        </MenuItemSelect>
+                        <MenuItemSelect
+                            title={'Vampire Game Role'}
+                            onConfirm={async (_, value) => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerSetHalloweenRole, {
+                                    player,
+                                    value,
+                                });
+                            }}
+                        >
+                            {Object.values(VampireGameRole).map(role => (
+                                <MenuItemSelectOption key={role} value={role}>
+                                    {role}
+                                </MenuItemSelectOption>
+                            ))}
                         </MenuItemSelect>
                     </MenuContent>
                 </SubMenu>
