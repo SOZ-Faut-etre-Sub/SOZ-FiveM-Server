@@ -78,6 +78,20 @@ export const HalloweenSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner
                         Arrêt du jeu
                     </MenuItemButton>
 
+                    <MenuItemSelect
+                        title="Forcer son rôle"
+                        description={`Remplace le rôle de l'utilisateur par le rôle sélectionné`}
+                        onConfirm={async (_, value) => {
+                            await fetchNui(NuiEvent.AdminMenuHalloweenForceTransformPlayer, value);
+                        }}
+                    >
+                        {Object.keys(state.roleMaxNumber).map(role => (
+                            <MenuItemSelectOption key={role} value={role}>
+                                {role}
+                            </MenuItemSelectOption>
+                        ))}
+                    </MenuItemSelect>
+
                     <MenuTitle>Paramètres</MenuTitle>
                     <MenuItemButton
                         description="Durée du jeu en minutes"

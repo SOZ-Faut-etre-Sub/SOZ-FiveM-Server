@@ -3,6 +3,7 @@ import { Inject } from '@public/core/decorators/injectable';
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Provider } from '../../core/decorators/provider';
 import { NuiEvent, ServerEvent } from '../../shared/event';
+import { VampireGameRole } from '../../shared/halloween';
 import { PositiveNumberValidator } from '../../shared/nui/input';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
@@ -42,6 +43,12 @@ export class AdminMenuHalloweenProvider {
 
         TriggerServerEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_GAME_DURATION, amount);
         await this.reloadAdminMenu();
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuHalloweenForceTransformPlayer)
+    async updateStaff(role: VampireGameRole): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_HALLOWEEN_FOCE_TRANSFORM_PLAYER, role);
+        this.nuiMenu.closeMenu();
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuHalloweenUpdateGameStaffEnabled)

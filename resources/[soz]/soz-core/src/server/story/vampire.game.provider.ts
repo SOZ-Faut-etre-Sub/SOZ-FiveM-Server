@@ -612,6 +612,8 @@ export class VampireGameProvider {
             }
 
             const player = this.playerService.getPlayerByCitizenId(citizenId);
+            if (!player) return;
+
             const [x, y, z] = GetEntityCoords(GetPlayerPed(player.source));
 
             if (VampireGameEnemyRoles.includes(role)) {
@@ -695,6 +697,38 @@ export class VampireGameProvider {
         }
 
         this.notifier.notify(source, `Le rôle ${role} a été mis à jour, joueurs maximum: ${value}`, 'info');
+    }
+
+    @OnEvent(ServerEvent.ADMIN_HALLOWEEN_FOCE_TRANSFORM_PLAYER)
+    public forceTransformStaffPlayer(source: number, role: VampireGameRole): void {
+        if (!this.permissionService.isStaff(source)) {
+            return;
+        }
+
+        const player = this.playerService.getPlayer(source);
+        if (!player) {
+            return;
+        }
+
+        this.gameState.autoRespawn.get(player.citizenid)?.cancel();
+        this.gameState.autoRespawn.delete(player.citizenid);
+
+        const oldRole = this.gameState.playerRoles.get(player.citizenid);
+        if (oldRole) {
+            this.gameState.gauges[oldRole].dec();
+        }
+        this.gameState.playerRoles.set(player.citizenid, role);
+        this.gameState.gauges[role].inc();
+
+        TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_STATE, source, {
+            role,
+        });
+
+        this.playerStateService.setClientState(source, {
+            isKnockedOut: false,
+        });
+
+        TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED, source, role);
     }
 
     @OnEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_MORTAL_OBJECTIVE_PART1)

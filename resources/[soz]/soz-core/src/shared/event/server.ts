@@ -65,6 +65,7 @@ export enum ServerEvent {
     ADMIN_HALLOWEEN_STOP_GAME = 'soz-core:server:admin:halloween:stop-game',
     ADMIN_HALLOWEEN_UPDATE_GAME_DURATION = 'soz-core:server:admin:halloween:update-game-duration',
     ADMIN_HALLOWEEN_UPDATE_GAME_STAFF_ENABLED = 'soz-core:server:admin:halloween:update-game-staff-enabled',
+    ADMIN_HALLOWEEN_FOCE_TRANSFORM_PLAYER = 'soz-core:server:admin:halloween:force-transform-player',
     ADMIN_HALLOWEEN_UPDATE_ROLE = 'soz-core:server:admin:halloween:update-role',
     ADMIN_HALLOWEEN_UPDATE_MORTAL_OBJECTIVE_PART1 = 'soz-core:server:admin:halloween:update-mortal-objective-part1',
     ADMIN_HALLOWEEN_UPDATE_MORTAL_OBJECTIVE_PART2 = 'soz-core:server:admin:halloween:update-mortal-objective-part2',
