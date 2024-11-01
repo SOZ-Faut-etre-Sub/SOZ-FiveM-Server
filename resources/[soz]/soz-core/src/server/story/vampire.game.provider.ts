@@ -4,6 +4,7 @@ import { PlayerData } from '@public/shared/player';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import PCancelable from 'p-cancelable';
 import { Gauge } from 'prom-client';
+import { info } from 'sass';
 
 import { On, Once, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -405,7 +406,15 @@ export class VampireGameProvider {
         this.callFunctionOnNonEnemyPlayers(player => {
             this.notifier.notify(
                 player.source,
-                'Tous les mortels ont reçu de quoi se défendre, les balles d’argent peuvent tuer les vampires ! La chasse se retourne contre eux, survivez 10 minutes pour sortir victorieux de cette bataille.',
+                `Tous les mortels ont reçu de quoi se défendre, les balles d’argent peuvent tuer les vampires ! La chasse se retourne contre eux, survivez ${this.mortalObjectivePart3Duration} minutes pour sortir victorieux de cette bataille.`,
+                'info'
+            );
+        });
+
+        this.callFunctionOnEnemyPlayers(player => {
+            this.notifier.notify(
+                player.source,
+                `Les mortels ont reçu de quoi se défendre, les balles d’argent peuvent te tuer ! Ne deviens pas la proie de ces chasseurs ! Il ne te reste que ${this.mortalObjectivePart3Duration} minutes pour les traquer et leur faire regretter leur audace.`,
                 'info'
             );
         });
