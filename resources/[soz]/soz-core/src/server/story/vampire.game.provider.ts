@@ -373,8 +373,16 @@ export class VampireGameProvider {
             {
                 dictionary: 'anim@heists@ornate_bank@thermal_charge',
                 name: 'thermal_charge',
+                options: {
+                    repeat: true,
+                },
             },
-            {}
+            {
+                disableMovement: true,
+                disableCarMovement: true,
+                disableMouse: false,
+                disableCombat: true,
+            }
         );
         if (!completed) {
             this.notifier.error(source, 'Objectif abandonné');
@@ -553,9 +561,16 @@ export class VampireGameProvider {
                 {
                     name: 'base',
                     dictionary: 'amb@prop_human_bum_bin@base',
-                    flags: 1,
+                    options: {
+                        repeat: true,
+                    },
                 },
-                { canCancel: false }
+                {
+                    disableMovement: true,
+                    disableCarMovement: true,
+                    disableMouse: false,
+                    disableCombat: true,
+                }
             );
 
             if (!completed) {
@@ -575,9 +590,16 @@ export class VampireGameProvider {
                 {
                     name: 'base',
                     dictionary: 'amb@prop_human_bum_bin@base',
-                    flags: 1,
+                    options: {
+                        repeat: true,
+                    },
                 },
-                { canCancel: false }
+                {
+                    disableMovement: true,
+                    disableCarMovement: true,
+                    disableMouse: false,
+                    disableCombat: true,
+                }
             );
 
             if (!completed) {
