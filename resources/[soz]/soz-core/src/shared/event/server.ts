@@ -284,6 +284,7 @@ export enum ServerEvent {
     UPW_REFILL_STATION = 'soz-core:server:job:upw:refill-station',
     UPW_CHANGE_BATTERY = 'soz-core:server:job:upw:change-battery',
     UPW_SET_CHARGER_PRICE = 'soz-core:server:job:upw:set-charger-price',
+    UPW_GET_BLESSED_WATER = 'soz-core:server:job:upw:get-blessed-water',
 
     PAWL_DECREASE_CHAINSAW_FUEL = 'soz-core:server:job:pawl:decrease-chainsaw-fuel',
 
