@@ -1,5 +1,5 @@
 import { SozRole } from '@core/permissions';
-import { VampireGameCollection, VampireGameRole } from '@public/shared/halloween';
+import { VampireGameCollection, VampireGameObjectiveTypePart2, VampireGameRole } from '@public/shared/halloween';
 import { PlayerCharInfo } from '@public/shared/player';
 import { EventInfo } from '@public/shared/scene';
 import { SenateParty, SenatePartyMember } from '@public/shared/senate';
@@ -86,9 +86,12 @@ export type MeteorSubMenuState = {
 
 export type HalloweenSubMenuState = {
     started: boolean;
+    staffEnabled: Record<string, boolean>;
     gameDuration: number;
     roleMaxNumber: Record<VampireGameRole, number>;
-    mortalObjective: Record<Exclude<VampireGameCollection, 'player'>, number>;
+    mortalObjectivePart1: Record<Exclude<VampireGameCollection, 'player'>, number>;
+    mortalObjectivePart2: Record<VampireGameObjectiveTypePart2, number>;
+    mortalObjectivePart3: number;
 };
 
 export type AdminMenuData = {

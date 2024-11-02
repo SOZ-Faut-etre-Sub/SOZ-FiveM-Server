@@ -1,4 +1,6 @@
 import { MapPickerLocation } from '@public/shared/picker';
+import { PlayerPedHash } from '@public/shared/player';
+import { Zone } from '@public/shared/polyzone/box.zone';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import PCancelable from 'p-cancelable';
 import { Gauge } from 'prom-client';
@@ -14,40 +16,178 @@ export enum VampireGameRole {
     Alchemist = 'Alchimiste',
 }
 
+export const VampireOutfit = {
+    [PlayerPedHash.Male]: {
+        Components: {
+            '1': { Drawable: 0, Texture: 0, Palette: 0 },
+            '3': { Drawable: 4, Texture: 0, Palette: 0 },
+            '4': { Drawable: 45, Texture: 0, Palette: 0 },
+            '5': { Drawable: 0, Texture: 0, Palette: 0 },
+            '6': { Drawable: 111, Texture: 0, Palette: 0 },
+            '7': { Drawable: 0, Texture: 0, Palette: 0 },
+            '8': { Drawable: 11, Texture: 0, Palette: 0 },
+            '9': { Drawable: 54, Texture: 1, Palette: 0 },
+            '10': { Drawable: 0, Texture: 0, Palette: 0 },
+            '11': { Drawable: 560, Texture: 1, Palette: 0 },
+        },
+        Props: {
+            '0': { Drawable: -1, Texture: -1 },
+            '1': { Drawable: -1, Texture: -1 },
+            '2': { Drawable: 7, Texture: 0 },
+            '6': { Drawable: 14, Texture: 0 },
+            '7': { Drawable: 10, Texture: 0 },
+        },
+    },
+    [PlayerPedHash.Female]: {
+        Components: {
+            '1': { Drawable: 0, Texture: 0, Palette: 0 },
+            '3': { Drawable: 270, Texture: 0, Palette: 0 },
+            '4': { Drawable: 46, Texture: 0, Palette: 0 },
+            '5': { Drawable: 0, Texture: 0, Palette: 0 },
+            '6': { Drawable: 160, Texture: 0, Palette: 0 },
+            '7': { Drawable: 154, Texture: 0, Palette: 0 },
+            '8': { Drawable: 14, Texture: 0, Palette: 0 },
+            '9': { Drawable: 54, Texture: 1, Palette: 0 },
+            '10': { Drawable: 0, Texture: 0, Palette: 0 },
+            '11': { Drawable: 617, Texture: 1, Palette: 0 },
+        },
+        Props: {
+            '0': { Drawable: -1, Texture: -1 },
+            '1': { Drawable: -1, Texture: -1 },
+            '2': { Drawable: 7, Texture: 0 },
+            '6': { Drawable: 14, Texture: 0 },
+            '7': { Drawable: 10, Texture: 0 },
+        },
+    },
+};
+
+export const GhoulOutfit = {
+    [PlayerPedHash.Male]: {
+        Components: {
+            '1': { Drawable: 0, Texture: 0, Palette: 0 },
+            '3': { Drawable: 4, Texture: 0, Palette: 0 },
+            '4': { Drawable: 71, Texture: 0, Palette: 0 },
+            '5': { Drawable: 0, Texture: 0, Palette: 0 },
+            '6': { Drawable: 111, Texture: 0, Palette: 0 },
+            '7': { Drawable: 0, Texture: 0, Palette: 0 },
+            '8': { Drawable: 11, Texture: 0, Palette: 0 },
+            '9': { Drawable: 54, Texture: 1, Palette: 0 },
+            '10': { Drawable: 0, Texture: 0, Palette: 0 },
+            '11': { Drawable: 559, Texture: 0, Palette: 0 },
+        },
+        Props: {
+            '0': { Drawable: -1, Texture: -1 },
+            '1': { Drawable: -1, Texture: -1 },
+            '2': { Drawable: 7, Texture: 0 },
+            '6': { Drawable: 14, Texture: 0 },
+            '7': { Drawable: 10, Texture: 0 },
+        },
+    },
+    [PlayerPedHash.Female]: {
+        Components: {
+            '1': { Drawable: 0, Texture: 0, Palette: 0 },
+            '3': { Drawable: 251, Texture: 0, Palette: 0 },
+            '4': { Drawable: 63, Texture: 2, Palette: 0 },
+            '5': { Drawable: 0, Texture: 0, Palette: 0 },
+            '6': { Drawable: 160, Texture: 0, Palette: 0 },
+            '7': { Drawable: 154, Texture: 0, Palette: 0 },
+            '8': { Drawable: 14, Texture: 0, Palette: 0 },
+            '9': { Drawable: 54, Texture: 1, Palette: 0 },
+            '10': { Drawable: 0, Texture: 0, Palette: 0 },
+            '11': { Drawable: 618, Texture: 3, Palette: 0 },
+        },
+        Props: {
+            '0': { Drawable: -1, Texture: -1 },
+            '1': { Drawable: -1, Texture: -1 },
+            '2': { Drawable: 7, Texture: 0 },
+            '6': { Drawable: 14, Texture: 0 },
+            '7': { Drawable: 10, Texture: 0 },
+        },
+    },
+};
+
 export const VampireGameEnemyRoles = [VampireGameRole.Vampire, VampireGameRole.Ghoul];
 
 export type VampireGameClientState = {
     inWaitingRoom: boolean;
     started: boolean;
     role: VampireGameRole;
-    objective: Record<VampireGameCollection, Vector3[]>;
+    objectivePart1: Record<VampireGameCollection, Vector3[]>;
+    objectivePart2: Record<
+        VampireGameObjectiveTypePart2,
+        {
+            playerRequired: number;
+            finished: boolean;
+        }
+    >;
 };
 
 export type VampireGameServerState = {
     started: boolean;
     timer: NodeJS.Timeout;
-    playerRoles: Map<number, VampireGameRole>;
-    mortalObjective: Map<VampireGameCollection, Vector3[]>;
-    autoRespawn: Map<number, PCancelable<void>>;
+    playerRoles: Map<string, VampireGameRole>;
+
+    mortalObjectivePart1: Map<VampireGameCollection, Vector3[]>;
+    mortalObjectivePart2: Record<
+        VampireGameObjectiveTypePart2,
+        {
+            finished: boolean;
+            players: Set<string>;
+        }
+    >;
+    mortalObjectivePart3: NodeJS.Timeout;
+
+    autoRespawn: Map<string, PCancelable<void>>;
     gauges: Record<VampireGameRole, Gauge>;
 };
 
-export type VampireGameCollection =
-    | 'prop_streetlight'
-    | 'prop_fire_hydrant'
-    | 'prop_gas_pump'
-    | 'prop_elecbox'
-    | 'player';
-export const VampireGameObjectiveCollection: Record<VampireGameCollection, string[]> = {
+export type VampireGameCollection = 'prop_streetlight' | 'prop_fire_hydrant' | 'prop_gas_pump' | 'prop_elecbox';
+export const VampireGameObjectiveCollectionPart1: Record<VampireGameCollection, string[]> = {
     prop_streetlight: ['prop_streetlight_01'],
     prop_fire_hydrant: ['prop_fire_hydrant_1'],
     prop_gas_pump: ['prop_gas_pump_1a', 'prop_gas_pump_1b', 'prop_gas_pump_1c'],
     prop_elecbox: ['prop_elecbox_11'],
-    player: [],
 };
 
-export const VampireGameCollectionLabel = (collection: VampireGameCollection) => {
-    switch (collection) {
+export type VampireGameObjectiveTypePart2 = 'battery' | 'dam' | 'vampire' | 'weapon';
+
+export const VampireGameObjectivePart2: Record<VampireGameObjectiveTypePart2, Zone> = {
+    battery: {
+        center: [716.97, 154.02, 81.75],
+        length: 0.4,
+        width: 9.8,
+        heading: 150.1,
+        minZ: 79.75,
+        maxZ: 82.75,
+    },
+    dam: {
+        center: [1231.94, -1082.78, 38.73],
+        length: 15.6,
+        width: 0.4,
+        heading: 34.29,
+        minZ: 37.73,
+        maxZ: 40.33,
+    },
+    vampire: {
+        center: [-2219.26, 261.0, 174.61],
+        length: 0.4,
+        width: 11.4,
+        heading: 114.29,
+        minZ: 173.61,
+        maxZ: 177.61,
+    },
+    weapon: {
+        center: [1116.99, -2013.14, 35.44],
+        length: 5.8,
+        width: 6.2,
+        heading: 144.68,
+        minZ: 34.44,
+        maxZ: 38.24,
+    },
+};
+
+export const VampireGameLabel = (str: VampireGameCollection | VampireGameObjectiveTypePart2) => {
+    switch (str) {
         case 'prop_streetlight':
             return 'Réparer le lampadaire';
         case 'prop_fire_hydrant':
@@ -56,13 +196,19 @@ export const VampireGameCollectionLabel = (collection: VampireGameCollection) =>
             return "Récupérer de l'essence";
         case 'prop_elecbox':
             return "Réparer l'armoire électrique";
-        case 'player':
-            return 'Vampire';
+        case 'battery':
+            return 'Relancer les batteries';
+        case 'dam':
+            return 'Relancer le barrage';
+        case 'vampire':
+            return 'S’informer sur les vampires';
+        case 'weapon':
+            return 'Fondre les armes';
     }
 };
 
-export const VampireGameCollectionSprite = (collection: VampireGameCollection) => {
-    switch (collection) {
+export const VampireGameSprite = (str: VampireGameCollection | VampireGameObjectiveTypePart2) => {
+    switch (str) {
         case 'prop_streetlight':
             return 402;
         case 'prop_fire_hydrant':
@@ -71,8 +217,14 @@ export const VampireGameCollectionSprite = (collection: VampireGameCollection) =
             return 361;
         case 'prop_elecbox':
             return 354;
-        case 'player':
-            return 1;
+        case 'battery':
+            return 867;
+        case 'dam':
+            return 779;
+        case 'vampire':
+            return 764;
+        case 'weapon':
+            return 556;
     }
 };
 

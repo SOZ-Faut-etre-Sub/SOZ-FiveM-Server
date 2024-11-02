@@ -15,6 +15,7 @@ export function InstructionalOverlay() {
     const hasStreetNamesEnabled = useHudHasStreetNames();
 
     const [text, setText] = useState<string[]>([]);
+    const [forceDisplay, setForceDisplay] = useState(false);
 
     const styles = useSpring({
         from: {
@@ -27,8 +28,12 @@ export function InstructionalOverlay() {
     });
 
     useNuiEvent('hud', 'SetInstructional', setText);
+    useNuiEvent('hud', 'ForceDisplayInstructional', setForceDisplay);
 
-    if (!showInstructionalOverlay) {
+    const cleanText = string => string.replace(/^~/, '').replace(/~$/, '');
+    const shouldBeDisplayAsKey = string => BindName[string] || (string.startsWith('~') && string.endsWith('~'));
+
+    if (!forceDisplay && !showInstructionalOverlay) {
         return null;
     }
 
@@ -47,9 +52,11 @@ export function InstructionalOverlay() {
                     {text.map(t => (
                         <span
                             key={t}
-                            className={cn({ 'bg-white/10 border border-slate-300/10 px-2 rounded-md': BindName[t] })}
+                            className={cn({
+                                'bg-white/10 border border-slate-300/10 px-2 rounded-md': shouldBeDisplayAsKey(t),
+                            })}
                         >
-                            {BindName[t] ? bindKeyToName(BindName[t]) : t}
+                            {BindName[t] ? bindKeyToName(BindName[t]) : cleanText(t)}
                         </span>
                     ))}
                 </GlassMorphismContainer>

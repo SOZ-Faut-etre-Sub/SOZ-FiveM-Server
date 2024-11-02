@@ -335,6 +335,10 @@ export class PlayerStressProvider {
             return;
         }
 
+        if (this.vampireGameStateProvider.isGameRunning()) {
+            return;
+        }
+
         const player = this.playerService.getPlayer();
 
         if (player === null || player.metadata.isdead || player.metadata.godmode) {

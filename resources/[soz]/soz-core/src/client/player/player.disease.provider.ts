@@ -10,6 +10,7 @@ import { PollutionLevel } from '../../shared/pollution';
 import { AnimationService } from '../animation/animation.service';
 import { Notifier } from '../notifier';
 import { Pollution } from '../pollution';
+import { VampireGameStateProvider } from '../story/vampire.game.state.provider';
 import { BlurService } from '../utils/blur.service';
 import { PlayerService } from './player.service';
 
@@ -36,12 +37,19 @@ export class PlayerDiseaseProvider {
     @Inject(BlurService)
     private blurService: BlurService;
 
+    @Inject(VampireGameStateProvider)
+    private vampireGameStateProvider: VampireGameStateProvider;
+
     private currentDisease: Disease = false;
 
     private currentDiseaseLoop: Promise<void> | null = null;
 
     private async fluLoop(): Promise<void> {
         while (this.currentDisease === 'grippe') {
+            if (this.vampireGameStateProvider.isGameRunning()) {
+                return;
+            }
+
             const [playerPed, distance] = this.playerService.getClosestPlayer();
             const playerServerId = GetPlayerServerId(playerPed);
             const propagation = Math.round(Math.random() * 4);
@@ -56,6 +64,10 @@ export class PlayerDiseaseProvider {
 
     private async commonColdLoop(): Promise<void> {
         while (this.currentDisease === 'rhume') {
+            if (this.vampireGameStateProvider.isGameRunning()) {
+                return;
+            }
+
             this.blurService.add('rhume', 100);
 
             await this.animationService.playAnimation(
@@ -83,6 +95,10 @@ export class PlayerDiseaseProvider {
 
     private async backPainLoop(): Promise<void> {
         while (this.currentDisease === 'backpain') {
+            if (this.vampireGameStateProvider.isGameRunning()) {
+                return;
+            }
+
             DisableControlAction(0, 21, true);
             DisableControlAction(0, 22, true);
 
@@ -92,6 +108,10 @@ export class PlayerDiseaseProvider {
 
     private async intoxicationLoop(): Promise<void> {
         while (this.currentDisease === 'intoxication') {
+            if (this.vampireGameStateProvider.isGameRunning()) {
+                return;
+            }
+
             await this.animationService.playAnimation(
                 {
                     base: {
@@ -114,6 +134,10 @@ export class PlayerDiseaseProvider {
 
     private async dyspepsiaLoop(): Promise<void> {
         while (this.currentDisease === 'dyspepsie') {
+            if (this.vampireGameStateProvider.isGameRunning()) {
+                return;
+            }
+
             await this.animationService.playAnimation(
                 {
                     base: {
@@ -186,6 +210,10 @@ export class PlayerDiseaseProvider {
     @Tick(TickInterval.EVERY_15_MINUTE)
     public async diseaseLoop(): Promise<void> {
         const player = this.playerService.getPlayer();
+
+        if (this.vampireGameStateProvider.isGameRunning()) {
+            return;
+        }
 
         if (player === null || player.metadata.godmode || player.metadata.isdead) {
             return;

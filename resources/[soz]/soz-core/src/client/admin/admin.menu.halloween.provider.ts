@@ -3,6 +3,7 @@ import { Inject } from '@public/core/decorators/injectable';
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Provider } from '../../core/decorators/provider';
 import { NuiEvent, ServerEvent } from '../../shared/event';
+import { VampireGameRole } from '../../shared/halloween';
 import { PositiveNumberValidator } from '../../shared/nui/input';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
@@ -44,6 +45,18 @@ export class AdminMenuHalloweenProvider {
         await this.reloadAdminMenu();
     }
 
+    @OnNuiEvent(NuiEvent.AdminMenuHalloweenForceTransformPlayer)
+    async updateStaff(role: VampireGameRole): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_HALLOWEEN_FOCE_TRANSFORM_PLAYER, GetPlayerServerId(PlayerId()), role);
+        this.nuiMenu.closeMenu();
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuHalloweenUpdateGameStaffEnabled)
+    async updateGameStaffEnabled({ role, enabled }: { role: string; enabled: boolean }): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_GAME_STAFF_ENABLED, role, enabled);
+        await this.reloadAdminMenu();
+    }
+
     @OnNuiEvent(NuiEvent.AdminMenuHalloweenUpdateMoon)
     async updateMoon(value: string): Promise<void> {
         TriggerServerEvent(ServerEvent.ADMIN_HALLOWEEN_MOON_UPDATE, value);
@@ -71,7 +84,33 @@ export class AdminMenuHalloweenProvider {
             PositiveNumberValidator
         );
 
-        TriggerServerEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_MORTAL_COLLECTION, collection, amount);
+        TriggerServerEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_MORTAL_OBJECTIVE_PART1, collection, amount);
+        await this.reloadAdminMenu();
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuHalloweenUpdateObjectivePart2)
+    async updateObjectivePart2(objective: string): Promise<void> {
+        const amount = await this.inputService.askInput(
+            {
+                title: 'Nombre de joueurs requis',
+            },
+            PositiveNumberValidator
+        );
+
+        TriggerServerEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_MORTAL_OBJECTIVE_PART2, objective, amount);
+        await this.reloadAdminMenu();
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuHalloweenUpdateObjectivePart3)
+    async updateObjectivePart3(): Promise<void> {
+        const amount = await this.inputService.askInput(
+            {
+                title: 'Durée maximale de la partie 3 en minutes',
+            },
+            PositiveNumberValidator
+        );
+
+        TriggerServerEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_MORTAL_OBJECTIVE_PART3, amount);
         await this.reloadAdminMenu();
     }
 

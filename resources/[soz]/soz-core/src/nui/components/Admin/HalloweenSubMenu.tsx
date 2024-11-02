@@ -2,12 +2,13 @@ import { SozRole } from '@core/permissions';
 import { fetchNui } from '@public/nui/fetch';
 import { HalloweenSubMenuState } from '@public/shared/admin/admin';
 import { NuiEvent } from '@public/shared/event/nui';
-import { VampireGameCollection, VampireGameCollectionLabel } from '@public/shared/halloween';
+import { VampireGameCollection, VampireGameLabel, VampireGameObjectiveTypePart2 } from '@public/shared/halloween';
 import { FunctionComponent } from 'react';
 
 import {
     MenuContent,
     MenuItemButton,
+    MenuItemCheckbox,
     MenuItemSelect,
     MenuItemSelectOption,
     MenuItemSubMenuLink,
@@ -77,6 +78,20 @@ export const HalloweenSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner
                         Arrêt du jeu
                     </MenuItemButton>
 
+                    <MenuItemSelect
+                        title="Forcer son rôle"
+                        description={`Remplace le rôle de l'utilisateur par le rôle sélectionné`}
+                        onConfirm={async (_, value) => {
+                            await fetchNui(NuiEvent.AdminMenuHalloweenForceTransformPlayer, value);
+                        }}
+                    >
+                        {Object.keys(state.roleMaxNumber).map(role => (
+                            <MenuItemSelectOption key={role} value={role}>
+                                {role}
+                            </MenuItemSelectOption>
+                        ))}
+                    </MenuItemSelect>
+
                     <MenuTitle>Paramètres</MenuTitle>
                     <MenuItemButton
                         description="Durée du jeu en minutes"
@@ -89,28 +104,38 @@ export const HalloweenSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner
                             <span>{state.gameDuration} minutes</span>
                         </div>
                     </MenuItemButton>
+                    {['admin', 'staff', 'gamemaster', 'helper'].map(role => (
+                        <MenuItemCheckbox
+                            checked={state.staffEnabled[role]}
+                            onChange={enabled =>
+                                fetchNui(NuiEvent.AdminMenuHalloweenUpdateGameStaffEnabled, { role, enabled })
+                            }
+                        >
+                            {role}
+                        </MenuItemCheckbox>
+                    ))}
 
                     <MenuTitle>Rôles</MenuTitle>
                     {Object.entries(state.roleMaxNumber).map(([role, amount]) => (
                         <MenuItemButton
                             key={role}
-                            description={`Nombre maximum de ${role}`}
+                            description={`Chance de drop en ${role}`}
                             onConfirm={async () => {
                                 await fetchNui(NuiEvent.AdminMenuHalloweenUpdateRole, role);
                             }}
                         >
                             <div className="pr-2 flex items-center justify-between">
                                 <span>{role}</span>
-                                <span>{amount}</span>
+                                <span>{amount}%</span>
                             </div>
                         </MenuItemButton>
                     ))}
 
-                    <MenuTitle>Objectif des mortels</MenuTitle>
-                    {Object.entries(state.mortalObjective).map(([collection, amount]) => (
+                    <MenuTitle>Objectif des mortels - Part I</MenuTitle>
+                    {Object.entries(state.mortalObjectivePart1).map(([collection, amount]) => (
                         <MenuItemButton
                             key={collection}
-                            description={`Props pour l'action: ${VampireGameCollectionLabel(collection as VampireGameCollection)}`}
+                            description={`Props pour l'action: ${VampireGameLabel(collection as VampireGameCollection)}`}
                             onConfirm={async () => {
                                 await fetchNui(NuiEvent.AdminMenuHalloweenUpdateMortalCollection, collection);
                             }}
@@ -121,6 +146,35 @@ export const HalloweenSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner
                             </div>
                         </MenuItemButton>
                     ))}
+
+                    <MenuTitle>Objectif des mortels - Part II</MenuTitle>
+                    {Object.entries(state.mortalObjectivePart2).map(([objective, amount]) => (
+                        <MenuItemButton
+                            key={objective}
+                            description={`Nombre de joueurs pour l'action: ${VampireGameLabel(objective as VampireGameObjectiveTypePart2)}`}
+                            onConfirm={async () => {
+                                await fetchNui(NuiEvent.AdminMenuHalloweenUpdateObjectivePart2, objective);
+                            }}
+                        >
+                            <div className="pr-2 flex items-center justify-between">
+                                <span>{VampireGameLabel(objective as VampireGameObjectiveTypePart2)}</span>
+                                <span>{amount}</span>
+                            </div>
+                        </MenuItemButton>
+                    ))}
+
+                    <MenuTitle>Objectif des mortels - Part III</MenuTitle>
+                    <MenuItemButton
+                        description="Durée de la phase en minutes"
+                        onConfirm={async () => {
+                            await fetchNui(NuiEvent.AdminMenuHalloweenUpdateObjectivePart3);
+                        }}
+                    >
+                        <div className="pr-2 flex items-center justify-between">
+                            <span>Durée maximum de la phase</span>
+                            <span>{state.mortalObjectivePart3} minutes</span>
+                        </div>
+                    </MenuItemButton>
                 </MenuContent>
             </SubMenu>
         </>
