@@ -1,11 +1,13 @@
+import { On, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
+import { Tick, TickInterval } from '../../core/decorators/tick';
 import { AdminPlayer, FullAdminPlayer } from '../../shared/admin/admin';
+import { ClientEvent } from '../../shared/event/client';
+import { ServerEvent } from '../../shared/event/server';
 import { RpcServerEvent } from '../../shared/rpc';
 import { PermissionService } from '../permission.service';
-import { PlayerService } from '../player/player.service';
-import { QBCore } from '../qbcore';
 import { ServerStateService } from '../server.state.service';
 
 @Provider()
@@ -13,14 +15,10 @@ export class AdminMenuInteractiveProvider {
     @Inject(PermissionService)
     private permissionService: PermissionService;
 
-    @Inject(PlayerService)
-    private playerService: PlayerService;
-
     @Inject(ServerStateService)
     private serverStateService: ServerStateService;
 
-    @Inject(QBCore)
-    private QBCore: QBCore;
+    private interactivePlayerSubscriptions: Set<number> = new Set();
 
     @Rpc(RpcServerEvent.ADMIN_GET_PLAYERS)
     public getPlayers(source: number): AdminPlayer[] {
@@ -45,10 +43,29 @@ export class AdminMenuInteractiveProvider {
         return players;
     }
 
-    @Rpc(RpcServerEvent.ADMIN_GET_FULL_PLAYERS)
-    public getFullPlayers(source: number): FullAdminPlayer[] {
+    @OnEvent(ServerEvent.ADMIN_TOGGLE_PLAYER_POSITION)
+    public togglePlayerPosition(source: number, enabled: boolean): void {
         if (!this.permissionService.isHelper(source)) {
-            return [];
+            return;
+        }
+
+        if (enabled) {
+            this.interactivePlayerSubscriptions.add(source);
+        } else {
+            this.interactivePlayerSubscriptions.delete(source);
+            TriggerLatentClientEvent(ClientEvent.ADMIN_PLAYER_POSITION, source, 1024, []);
+        }
+    }
+
+    @On('QBCore:Server:PlayerUnload', false)
+    onPlayerUnload(source: number) {
+        this.interactivePlayerSubscriptions.delete(source);
+    }
+
+    @Tick(TickInterval.EVERY_SECOND)
+    public broadcastPlayerPosition() {
+        if (this.interactivePlayerSubscriptions.size === 0) {
+            return;
         }
 
         const players: FullAdminPlayer[] = [];
@@ -71,6 +88,9 @@ export class AdminMenuInteractiveProvider {
                 specialPlate: playerData.metadata.special_plate,
             });
         }
-        return players;
+
+        this.interactivePlayerSubscriptions.forEach(source => {
+            TriggerLatentClientEvent(ClientEvent.ADMIN_PLAYER_POSITION, source, 1024, players);
+        });
     }
 }
