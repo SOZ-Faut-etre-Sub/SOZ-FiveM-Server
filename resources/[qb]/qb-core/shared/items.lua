@@ -7457,6 +7457,18 @@ QBShared.Items = {
         ["description"] = "Cette coupe ornée, souvent fabriquée en argent ou en or, est finement gravée de motifs occultes et de symboles ésotériques. Remplie de sang rouge vif ou d’un liquide semblable, elle est utilisée lors de rituels sacrés et de festins nocturnes par les vampires.",
         ["illustrator"] = ".Nariiel",
     },
+    ["halloween_blood_cup_66"] = {
+        ["name"] = "halloween_blood_cup_66",
+        ["label"] = "66ème Coupe de sang",
+        ["weight"] = 2000,
+        ["type"] = "item",
+        ["unique"] = false,
+        ["useable"] = true,
+        ["shouldClose"] = true,
+        ["combinable"] = nil,
+        ["description"] = "Une coupe au premier regard identique aux autres, mais dont la teinte rouge semble légèrement altérée, comme si elle manquait de la pureté des véritables Coupes de Sang. Conçue pour tromper les imprudents, cette fausse coupe n'offre aucun pouvoir, seulement une impression de malaise pour ceux qui la découvrent.",
+        ["illustrator"] = ".Nariiel",
+    },
     ["halloween_darkness_scepter"] = {
         ["name"] = "halloween_darkness_scepter",
         ["label"] = "Sceptre des Ténèbres",
