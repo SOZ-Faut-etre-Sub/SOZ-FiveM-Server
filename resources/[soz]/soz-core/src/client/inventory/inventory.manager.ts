@@ -87,7 +87,7 @@ export class InventoryManager {
         shopContent: ShopItem[],
         shopHeaderTexture: string,
         taxType?: TaxType,
-        type: 'money' | 'marked_money' = 'money',
+        type: string = 'money',
         serverEvent: ServerEvent = null,
         shopId = null
     ) {

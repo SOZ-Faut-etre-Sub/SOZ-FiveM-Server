@@ -231,6 +231,7 @@ export const ShopContainer = () => {
                                 items={cartContent.map((item, i) => ({ ...item, id: i }))}
                                 validateAction={validateCart}
                                 taxValue={taxValue}
+                                moneyType={moneyType}
                             />
                         </ContainerWrapper>
                     </div>

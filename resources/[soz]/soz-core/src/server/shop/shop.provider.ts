@@ -1,3 +1,4 @@
+import { ItemService } from '@public/client/item/item.service';
 import { ProperTorsos, ShopBrand, UndershirtCategoryNeedingReplacementTorso } from '@public/config/shops';
 import { BankService } from '@public/server/bank/bank.service';
 import { PlayerPositionProvider } from '@public/server/player/player.position.provider';
@@ -31,7 +32,7 @@ import { Once, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Logger } from '../../core/logger';
-import { TaxType } from '../../shared/bank';
+import { BankMoneyType, TaxType } from '../../shared/bank';
 import { CAYO } from '../../shared/cayo';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Vector3, Vector4 } from '../../shared/polyzone/vector';
@@ -85,6 +86,9 @@ export class ShopProvider {
     @Inject(BankService)
     private bankService: BankService;
 
+    @Inject(ItemService)
+    private itemService: ItemService;
+
     @Once()
     public onStart() {
         this.playerPositionProvider.registerZone(ZkeaShopZoneEnter, ZkeaShopZoneEnterPosition);
@@ -92,12 +96,7 @@ export class ShopProvider {
     }
 
     @OnEvent(ServerEvent.SHOP_VALIDATE_CART)
-    public async onShopMaskBuy(
-        source: number,
-        cartContent: CartElement[],
-        moneytype: 'money' | 'marked_money',
-        taxType?: TaxType
-    ) {
+    public async onShopMaskBuy(source: number, cartContent: CartElement[], moneytype: string, taxType?: TaxType) {
         const player = this.playerService.getPlayer(source);
         if (!player) {
             return;
@@ -119,14 +118,26 @@ export class ShopProvider {
             return;
         }
 
-        const hasRemovedMoney = taxType
-            ? await this.playerMoneyService.buy(source, cartAmount, taxType)
-            : this.playerMoneyService.remove(source, cartAmount, moneytype);
+        if (['money', 'marked_money'].includes(moneytype)) {
+            const hasRemovedMoney = taxType
+                ? await this.playerMoneyService.buy(source, cartAmount, taxType)
+                : this.playerMoneyService.remove(source, cartAmount, moneytype as BankMoneyType);
 
-        if (!hasRemovedMoney) {
-            this.notifier.notify(source, "Vous n'avez pas assez d'argent", 'error');
+            if (!hasRemovedMoney) {
+                this.notifier.notify(source, "Vous n'avez pas assez d'argent", 'error');
 
-            return;
+                return;
+            }
+        } else {
+            if (!this.inventoryManager.removeNotExpiredItem(source, moneytype, cartAmount)) {
+                const itemDef = this.itemService.getItem(moneytype);
+                if (!itemDef) {
+                    return;
+                }
+
+                this.notifier.notify(source, `Vous n'avez pas assez de ${itemDef.label}`, 'error');
+                return;
+            }
         }
 
         cartContent.map(item => {
@@ -139,19 +150,32 @@ export class ShopProvider {
             }
         });
 
-        this.notifier.notify(
-            source,
-            `Votre achat a bien été validé ! Merci. Prix : ~g~$${await this.priceService.getPrice(
-                cartAmount,
-                taxType
-            )}`,
-            'success'
-        );
+        if (['money', 'marked_money'].includes(moneytype)) {
+            this.notifier.notify(
+                source,
+                `Votre achat a bien été validé ! Merci. Prix : ~g~$${await this.priceService.getPrice(
+                    cartAmount,
+                    taxType
+                )}`,
+                'success'
+            );
+        } else {
+            const itemDef = this.itemService.getItem(moneytype);
+            if (!itemDef) {
+                return;
+            }
+            this.notifier.notify(
+                source,
+                `Votre achat a bien été validé ! Merci. Prix : ~g~${cartAmount}~s~ ~b~${itemDef.label}~s~`,
+                'success'
+            );
+        }
 
         this.monitor.traceEvent('shop_buy', {
             player_source: source,
             money: cartAmount,
             tax_type: taxType,
+            money_type: moneytype,
             cart_items: cartContent.map(item => {
                 return {
                     item_id: item.name,

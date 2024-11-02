@@ -105,3 +105,11 @@
     font-weight: lighter;
     font-size: 0.7rem;
 }
+
+.Price {
+    height: 25px;
+    opacity: 0.8;
+    object-fit: contain;
+    display:inline-block;
+    vertical-align:middle;
+}

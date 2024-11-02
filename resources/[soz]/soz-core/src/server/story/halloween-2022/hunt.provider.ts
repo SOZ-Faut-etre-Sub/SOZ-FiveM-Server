@@ -1,4 +1,6 @@
 import { Exportable } from '@public/core/decorators/exports';
+import { Rpc } from '@public/core/decorators/rpc';
+import { RpcServerEvent } from '@public/shared/rpc';
 
 import { On } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
@@ -14,6 +16,8 @@ import { Notifier } from '../../notifier';
 import { PlayerMoneyService } from '../../player/player.money.service';
 import { PlayerService } from '../../player/player.service';
 import { ProgressService } from '../../player/progress.service';
+
+const MAX_HUNT = 66;
 
 @Provider()
 export class HuntProvider {
@@ -143,5 +147,21 @@ export class HuntProvider {
     @Exportable('isHalloween')
     public isHalloween(): boolean {
         return this.featureProvider.isFeatureEnabled(Feature.Halloween);
+    }
+
+    @Rpc(RpcServerEvent.HALLOWEEN_HUNTCHECK)
+    public async huntCheck(source: number) {
+        const player = this.playerService.getPlayer(source);
+        if (!player) {
+            return false;
+        }
+
+        const found = await this.prismaService.halloween_pumpkin_hunt.count({
+            where: {
+                citizenid: player.citizenid,
+            },
+        });
+
+        return found >= MAX_HUNT;
     }
 }

@@ -14,9 +14,10 @@ type Props = {
     cartAmount: number;
     cartContent: ShopItem[]
     taxValue: number;
+    moneyType: string;
 }
 
-export const CartContainerSlots: FunctionComponent<Props> = ({id, columns = 5, rows, items, validateAction, cartAmount, cartContent, taxValue}) => {
+export const CartContainerSlots: FunctionComponent<Props> = ({id, columns = 5, rows, items, validateAction, cartAmount, cartContent, taxValue, moneyType}) => {
     const [description, setDescription] = useState<string|null>('');
     const [inContextMenu, setInContextMenu] = useState<Record<string, boolean>>({});
 
@@ -63,7 +64,14 @@ export const CartContainerSlots: FunctionComponent<Props> = ({id, columns = 5, r
                 ))}
             </div>
             <div className={style.CartFooter}>
-                    <p>PRIX : {cartAmountTtc.toLocaleString('fr-fr') ?? cartAmountTtc} $</p>
+                    <p>PRIX : {cartAmountTtc.toLocaleString('fr-fr') ?? cartAmountTtc} {['marked_money', 'money'].includes(moneyType ?? '') ? '$' : (                    
+                            <img
+                            alt=""
+                            className={style.Price}
+                            src={`https://cfx-nui-soz-core/public/images/items/${moneyType}.webp`}
+                            onError={(e) => e.currentTarget.src = 'https://cfx-nui-soz-core/public/images/default/cat.webp'}
+                        />)}
+                    </p>
                     <button
                         disabled={cartAmount == 0}
                         className={style.CartButton}
