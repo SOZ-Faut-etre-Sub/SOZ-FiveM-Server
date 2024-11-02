@@ -18,7 +18,11 @@ export class UpwHalloweenProvider {
 
     @Once()
     public onStart() {
-        this.targetFactory.createForModel(GetHashKey('prop_storagetank_06'), [
+        if (!this.featureProvider.isFeatureEnabled(Feature.Halloween)) {
+            return;
+        }
+
+        this.targetFactory.createForModel('prop_storagetank_06', [
             {
                 label: "Un filet d'eau lumineux s'échappe de la cuve...",
                 job: JobType.Upw,
