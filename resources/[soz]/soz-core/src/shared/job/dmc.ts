@@ -592,6 +592,13 @@ export const DmcCraftsLists: Record<string, CraftCategory> = {
                 },
                 amount: 1,
             },
+            halloween_blood_cup_66: {
+                inputs: {
+                    halloween_uranium_ingot: { count: 10 },
+                    halloween_pure_blood: { count: 100 },
+                },
+                amount: 1,
+            },
         },
     },
 };
