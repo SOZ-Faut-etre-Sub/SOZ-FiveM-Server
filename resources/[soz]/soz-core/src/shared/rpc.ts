@@ -72,6 +72,8 @@ export enum RpcServerEvent {
     STORY_HALLOWEEN_SCENARIO3 = 'soz-story:server:halloween3',
     STORY_HALLOWEEN_SCENARIO4 = 'soz-story:server:halloween4',
 
+    HALLOWEEN_HUNTCHECK = 'soz-story:server:halloween-check',
+
     REPOSITORY_GET_DATA = 'soz-core:repository:get-data',
     REPOSITORY_GET_DATA_2 = 'soz-core:repository:get-data-2',
 

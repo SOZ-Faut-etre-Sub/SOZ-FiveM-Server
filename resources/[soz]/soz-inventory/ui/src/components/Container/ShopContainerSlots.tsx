@@ -58,7 +58,7 @@ export const ShopContainerSlots: FunctionComponent<Props> = ({id, columns = 5, r
                                 interactAction={action}
                                 onItemHover={setDescription}
                                 price={priceTax}
-                                redPrice={moneyType == 'marked_money'}
+                                moneyType={moneyType}
                             />
                         </Droppable>
                     )

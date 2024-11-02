@@ -1,4 +1,6 @@
 import { Provider } from '@core/decorators/provider';
+import { emitRpc } from '@public/core/rpc';
+import { RpcServerEvent } from '@public/shared/rpc';
 
 import { Once, OnceStep } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -171,6 +173,92 @@ export class QueenHarvestProvider {
                             ];
 
                             this.inventoryManager.openShopInventory(FishingProducts, 'menu_shop_queen');
+                        },
+                    },
+                    {
+                        label: 'Boutique souvenirs de la Reine Vampire',
+                        icon: 'shop/store',
+                        category: 'citizen',
+                        action: async () => {
+                            const valid = await emitRpc<boolean>(RpcServerEvent.HALLOWEEN_HUNTCHECK);
+                            if (!valid) {
+                                this.notifier.notify(
+                                    'Seul ceux qui ont su se montrer à la hauteur de la ~r~quète~s~ qui leur a été confié peuvent prétendre à mes services.',
+                                    'error'
+                                );
+                                return;
+                            }
+
+                            let slot = 1;
+                            const products = [
+                                {
+                                    ...this.itemService.getItem('halloween_silver_mirror'),
+                                    price: 20,
+                                    amount: 0,
+                                    slot: slot++,
+                                },
+                                {
+                                    ...this.itemService.getItem('halloween_eternal_night_trinket'),
+                                    price: 100,
+                                    amount: 0,
+                                    slot: slot++,
+                                },
+                                {
+                                    ...this.itemService.getItem('halloween_shadow_needle'),
+                                    price: 50,
+                                    amount: 0,
+                                    slot: slot++,
+                                },
+                                {
+                                    ...this.itemService.getItem('halloween_midnight_hourglass'),
+                                    price: 100,
+                                    amount: 0,
+                                    slot: slot++,
+                                },
+                                {
+                                    ...this.itemService.getItem('halloween_immortaily_ring'),
+                                    price: 150,
+                                    amount: 0,
+                                    slot: slot++,
+                                },
+                                {
+                                    ...this.itemService.getItem('halloween_deamon_tapestry'),
+                                    price: 25,
+                                    amount: 0,
+                                    slot: slot++,
+                                },
+                                {
+                                    ...this.itemService.getItem('halloween_etheral_tomb_stone'),
+                                    price: 75,
+                                    amount: 0,
+                                    slot: slot++,
+                                },
+                                {
+                                    ...this.itemService.getItem('halloween_eternal_crystal_rose'),
+                                    price: 200,
+                                    amount: 0,
+                                    slot: slot++,
+                                },
+                                {
+                                    ...this.itemService.getItem('halloween_crypt_key'),
+                                    price: 25,
+                                    amount: 0,
+                                    slot: slot++,
+                                },
+                                {
+                                    ...this.itemService.getItem('halloween_suspended_clock'),
+                                    price: 100,
+                                    amount: 0,
+                                    slot: slot++,
+                                },
+                            ];
+
+                            this.inventoryManager.openShopInventory(
+                                products,
+                                'menu_shop_queen',
+                                null,
+                                'halloween_pure_blood'
+                            );
                         },
                     },
                 ],
