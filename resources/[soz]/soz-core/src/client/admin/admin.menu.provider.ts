@@ -110,7 +110,8 @@ export class AdminMenuProvider {
                         displayDebugSurface: this.vehicleOffroadProvider.displayDebugSurface,
                         displayPlayerNames:
                             this.adminMenuInteractiveProvider.intervalHandlers.displayPlayerNames !== null,
-                        displayPlayersOnMap: this.adminMenuInteractiveProvider.intervalHandlers.displayPlayersOnMap,
+                        displayPlayersOnMap:
+                            this.adminMenuInteractiveProvider.intervalHandlers.displayPlayersOnMap !== null,
                     },
                     skin: {
                         clothConfig: this.clothingService.getClothSet(),

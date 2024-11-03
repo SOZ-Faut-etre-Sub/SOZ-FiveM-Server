@@ -6,7 +6,6 @@ export enum ClientEvent {
     ADMIN_KILL_PLAYER = 'soz-core:client:admin:kill-player',
     ANIMATION_SURRENDER = 'soz-core:client:animation:surrender',
     ANIMATION_GIVE = 'soz-core:client:animation:give',
-    ADMIN_PLAYER_POSITION = 'soz-core:client:admin:player-position',
 
     BASE_ENTERED_VEHICLE = 'baseevents:enteredVehicle',
     BASE_ENTERING_VEHICLE = 'baseevents:enteringVehicle',

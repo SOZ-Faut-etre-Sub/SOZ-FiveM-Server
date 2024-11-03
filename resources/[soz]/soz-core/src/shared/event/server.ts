@@ -1,7 +1,6 @@
 export enum ServerEvent {
     PHONE_APP_NEWS_CREATE_BROADCAST = 'phone:app:news:createNewsBroadcast',
 
-    ADMIN_TOGGLE_PLAYER_POSITION = 'soz-core:server:admin:toggle-player-position',
     ADMIN_RESET_HALLOWEEN = 'soz-core:server:admin:reset-halloween',
     ADMIN_ADD_MONEY = 'soz-core:server:admin:add-money',
     ADMIN_ADD_LICENSE = 'soz-core:server:admin:add-license',
