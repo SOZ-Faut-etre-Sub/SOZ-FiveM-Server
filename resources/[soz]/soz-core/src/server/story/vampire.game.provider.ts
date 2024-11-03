@@ -2,7 +2,7 @@ import { Provider } from '@public/core/decorators/provider';
 import { wait } from '@public/core/utils';
 import { VampireGameStateProvider } from '@public/server/story/vampire.game.state.provider';
 import { PlayerData } from '@public/shared/player';
-import { Vector3 } from '@public/shared/polyzone/vector';
+import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import PCancelable from 'p-cancelable';
 
 import { On, Once, OnEvent } from '../../core/decorators/event';
@@ -920,15 +920,21 @@ export class VampireGameProvider {
                         return;
                     }
 
+                    const position = this.gameState.originalPlayerPositions.get(citizenId);
+                    if (position) {
+                        this.playerPositionProvider.teleportToCoords(player.source, [...position, 0] as Vector4);
+                        this.gameState.originalPlayerPositions.delete(citizenId);
+                    }
+
                     const playerState = this.playerStateService.getClientStateByCitizenId(citizenId);
                     if (!playerState.isKnockedOut) return;
 
+                    this.gameState.autoRespawn.get(citizenId)?.cancel();
                     TriggerClientEvent(
                         ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED,
                         player.source,
                         VampireGameRole.Mortal
                     );
-                    this.gameState.autoRespawn.get(citizenId)?.cancel();
                 });
 
                 this.playerStateService.setAllClientsState({
@@ -955,6 +961,8 @@ export class VampireGameProvider {
 
                 this.gameState.objectiveGauges.part1.reset();
                 this.gameState.objectiveGauges.part2.reset();
+
+                this.gameState.originalPlayerPositions.clear();
 
                 this.gameState.autoRespawn.clear();
                 this.gameState.playerRoles.clear();
@@ -1002,6 +1010,9 @@ export class VampireGameProvider {
             );
             return;
         }
+
+        const position = GetEntityCoords(GetPlayerPed(player.source), false) as Vector3;
+        this.gameState.originalPlayerPositions.set(player.citizenid, position);
 
         this.gameState.playerRoles.set(player.citizenid, role);
         this.gameState.gauges[role].inc();

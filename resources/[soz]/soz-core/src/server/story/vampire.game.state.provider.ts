@@ -13,6 +13,8 @@ export class VampireGameStateProvider {
     public excludedPlayers: Set<string> = new Set<string>();
     public playerRoles = new Map<string, VampireGameRole>();
 
+    public originalPlayerPositions = new Map<string, Vector3>();
+
     public mortalObjectivePart1 = new Map<VampireGameCollection, Vector3[]>();
     public mortalObjectivePart2 = {
         battery: { finished: false, players: new Set<string>() },
