@@ -5,7 +5,7 @@ import { PlayerData } from '@public/shared/player';
 import { fromVector4Object, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import PCancelable from 'p-cancelable';
 
-import { On, Once, OnEvent } from '../../core/decorators/event';
+import { On, Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Rpc } from '../../core/decorators/rpc';
 import { Tick, TickInterval } from '../../core/decorators/tick';
@@ -39,6 +39,7 @@ import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
 import { PlayerStateService } from '../player/player.state.service';
 import { ProgressService } from '../player/progress.service';
+import { ConfigurationRepository } from '../repository/configuration.repository';
 import { ServerStateService } from '../server.state.service';
 import { Store } from '../store/store';
 import { NpcProvider } from '../utils/npc.provider';
@@ -91,33 +92,33 @@ export class VampireGameProvider {
     @Inject(LockService)
     private lockService: LockService;
 
-    private gameDuration = 90; // minutes
+    @Inject(ConfigurationRepository)
+    private configurationRepository: ConfigurationRepository;
+
+    private gameDuration: number; // minutes
     private autoRespawnDuration = 20; // seconds
     private autoMortalRespawnDuration = 30; // seconds
 
-    private roleMaxNumber: Record<VampireGameRole, number> = {
-        [VampireGameRole.Vampire]: 20,
-        [VampireGameRole.Ghoul]: 0,
-        [VampireGameRole.Hunter]: 10,
-        [VampireGameRole.Mortal]: 60,
-        [VampireGameRole.Squire]: 5,
-        [VampireGameRole.Alchemist]: 5,
-    };
-    private mortalObjectivePart1: Record<Exclude<VampireGameCollection, 'player'>, number> = {
-        prop_streetlight: 30,
-        prop_fire_hydrant: 30,
-        prop_gas_pump: 10,
-        prop_elecbox: 30,
-    };
-    private mortalObjectivePart2: Record<VampireGameObjectiveTypePart2, number> = {
-        battery: 15,
-        dam: 15,
-        vampire: 20,
-        weapon: 15,
-    };
-    private mortalObjectivePart3Duration = 10; // minutes
+    private roleMaxNumber: Record<VampireGameRole, number>;
+    private mortalObjectivePart1: Record<Exclude<VampireGameCollection, 'player'>, number>;
+    private mortalObjectivePart2: Record<VampireGameObjectiveTypePart2, number>;
+    private mortalObjectivePart3Duration: number; // minutes
 
     private mortalTpList = new Map<string, number>();
+
+    @Once(OnceStep.DatabaseConnected)
+    async databaseReady() {
+        const vampireGameConfiguration = await this.configurationRepository.getValue('VampireGame');
+
+        this.gameDuration = vampireGameConfiguration.gameDuration;
+
+        this.roleMaxNumber = vampireGameConfiguration.roleMaxNumber;
+        this.gameState.excludedPlayers = new Set(vampireGameConfiguration.excludedPlayers);
+
+        this.mortalObjectivePart1 = vampireGameConfiguration.mortalObjectivePart1;
+        this.mortalObjectivePart2 = vampireGameConfiguration.mortalObjectivePart2;
+        this.mortalObjectivePart3Duration = vampireGameConfiguration.mortalObjectivePart3Duration;
+    }
 
     @Once()
     onStart() {
@@ -740,7 +741,7 @@ export class VampireGameProvider {
     }
 
     @OnEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_GAME_PLAYER_EXCLUSION)
-    public togglePlayerExclusion(source: number, citizenId: string, value: boolean): void {
+    public async togglePlayerExclusion(source: number, citizenId: string, value: boolean) {
         if (!this.permissionService.isStaff(source)) {
             return;
         }
@@ -752,20 +753,24 @@ export class VampireGameProvider {
             this.gameState.excludedPlayers.delete(citizenId);
             this.notifier.notify(source, `Le joueur ${citizenId} a été réintégré au jeu`, 'info');
         }
+
+        await this.updateConfiguration();
     }
 
     @OnEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_GAME_DURATION)
-    public updateGameDuration(source: number, value: number): void {
+    public async updateGameDuration(source: number, value: number) {
         if (!this.permissionService.isStaff(source)) {
             return;
         }
 
         this.gameDuration = value;
         this.notifier.notify(source, `La durée du jeu a été mise à jour, durée maximum: ${value} minutes`, 'info');
+
+        await this.updateConfiguration();
     }
 
     @OnEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_ROLE)
-    public toggleRole(source: number, role: VampireGameRole, value: number): void {
+    public async toggleRole(source: number, role: VampireGameRole, value: number) {
         if (!this.permissionService.isStaff(source)) {
             return;
         }
@@ -777,6 +782,8 @@ export class VampireGameProvider {
         }
 
         this.notifier.notify(source, `Le rôle ${role} a été mis à jour, chance de drop: ${value}%`, 'info');
+
+        await this.updateConfiguration();
     }
 
     @OnEvent(ServerEvent.ADMIN_HALLOWEEN_FOCE_TRANSFORM_PLAYER)
@@ -813,7 +820,7 @@ export class VampireGameProvider {
     }
 
     @OnEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_MORTAL_OBJECTIVE_PART1)
-    public toggleCollection(source: number, collection: VampireGameCollection, value: number): void {
+    public async toggleCollection(source: number, collection: VampireGameCollection, value: number) {
         if (!this.permissionService.isStaff(source)) {
             return;
         }
@@ -825,10 +832,12 @@ export class VampireGameProvider {
         }
 
         this.notifier.notify(source, `La collection ${collection} a été mise à jour, props maximum: ${value}`, 'info');
+
+        await this.updateConfiguration();
     }
 
     @OnEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_MORTAL_OBJECTIVE_PART2)
-    public updateObjectivePart2Player(source: number, objective: VampireGameCollection, value: number): void {
+    public async updateObjectivePart2Player(source: number, objective: VampireGameCollection, value: number) {
         if (!this.permissionService.isStaff(source)) {
             return;
         }
@@ -840,16 +849,20 @@ export class VampireGameProvider {
         }
 
         this.notifier.notify(source, `L'objectif ${objective} a été mise à jour, joueur requis: ${value}`, 'info');
+
+        await this.updateConfiguration();
     }
 
     @OnEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_MORTAL_OBJECTIVE_PART3)
-    public updateObjectivePart3(source: number, value: number): void {
+    public async updateObjectivePart3(source: number, value: number) {
         if (!this.permissionService.isStaff(source)) {
             return;
         }
 
         this.mortalObjectivePart3Duration = value;
         this.notifier.notify(source, `La durée de l'objectif 3 a été mise à jour, durée: ${value} minutes`, 'info');
+
+        await this.updateConfiguration();
     }
 
     @OnEvent(ServerEvent.PLAYER_MORTAL_TP)
@@ -1083,6 +1096,19 @@ export class VampireGameProvider {
         }
 
         return getRandomKeyWeighted<VampireGameRole>(this.roleMaxNumber, VampireGameRole.Vampire) as VampireGameRole;
+    }
+
+    private async updateConfiguration() {
+        return this.configurationRepository.update('VampireGame', {
+            gameDuration: this.gameDuration,
+
+            roleMaxNumber: this.roleMaxNumber,
+            excludedPlayers: [...this.gameState.excludedPlayers],
+
+            mortalObjectivePart1: this.mortalObjectivePart1,
+            mortalObjectivePart2: this.mortalObjectivePart2,
+            mortalObjectivePart3Duration: this.mortalObjectivePart3Duration,
+        });
     }
 
     private createObjectivePart1() {
