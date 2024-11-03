@@ -4,7 +4,6 @@ import { VampireGameStateProvider } from '@public/server/story/vampire.game.stat
 import { PlayerData } from '@public/shared/player';
 import { fromVector4Object, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import PCancelable from 'p-cancelable';
-import { property } from 'three/src/nodes/core/PropertyNode';
 
 import { On, Once, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
