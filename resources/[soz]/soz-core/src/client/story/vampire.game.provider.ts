@@ -143,16 +143,27 @@ export class VampireGameProvider {
 
         if (this.gameState.hasRole(VampireGameRole.Vampire)) {
             this.instructionalService.display(
-                ['Tu as failli à ta tâche...', "Tu as quand même droit à une nouvelle chance d'ici quelques secondes"],
+                [
+                    'Tu as ~r~failli à ta tâche...~s~',
+                    "Tu as quand même droit à une nouvelle chance d'ici quelques secondes !",
+                ],
                 true
             );
         } else if (this.gameState.hasRole(VampireGameRole.Ghoul)) {
             this.instructionalService.display(
-                ['Tu as failli à ta tâche...', "Ton vampire va te réanimer d'ici quelques secondes"],
+                [
+                    'Tu as ~r~failli à ta tâche...~s~',
+                    "Tu as quand même droit à une nouvelle chance d'ici quelques secondes !",
+                ],
                 true
             );
         } else {
-            this.instructionalService.display(["Tu es au sol, prie pour qu'un vampire ne te suce pas !"], true);
+            this.instructionalService.display(
+                [
+                    "Tu es ~y~inconscient~s~ ! Prie pour qu'un vampire ne te suce pas, car dans le cas contraire tu seras transformé en goule.",
+                ],
+                true
+            );
         }
 
         TriggerServerEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_PLAYER_KNOCKED_OUT);
@@ -682,12 +693,12 @@ export class VampireGameProvider {
             case VampireGameRole.Vampire:
                 this.instructionalService.display(
                     [
-                        "Dirige-toi en ville pour empêcher les survivants de rallumer l'électricité, et suce pour gagner des pouvoirs.",
+                        "Dirige-toi en ville pour ~r~empêcher les survivants de rallumer l'électricité~s~ ! Tu peux ~r~contaminer les Mortels~s~ en les tuant, puis en les suçant.",
                     ],
                     true
                 );
                 this.notifier.notify(
-                    'En tant que Vampire tu peux te transformer. Appuie sur H pour ouvrir le menu.',
+                    'En tant que Vampire tu peux te ~r~transformer~s~. Appuie sur ~r~H~s~ pour ouvrir le menu.',
                     'info',
                     45_000
                 );
@@ -695,7 +706,7 @@ export class VampireGameProvider {
             case VampireGameRole.Ghoul:
                 this.instructionalService.display(
                     [
-                        "Dirige-toi en ville pour empêcher les survivants de rallumer l'électricité, et suce pour gagner des pouvoirs.",
+                        "Dirige-toi en ville pour ~r~empêcher les survivants de rallumer l'électricité~s~ ! Tu peux ~r~contaminer les Mortels~s~ en les tuant, puis en les suçant.",
                     ],
                     true
                 );
@@ -703,7 +714,7 @@ export class VampireGameProvider {
             case VampireGameRole.Hunter:
                 this.instructionalService.display(
                     [
-                        'En tant que Chasseur, tu peux tuer les Vampires à l’aide de ton Mousquet et tes Balles en Argent.',
+                        'En tant que Chasseur, tu peux ~r~tuer les Vampires à l’aide de ton Mousquet~s~ et tes Balles en Argent.',
                     ],
                     true
                 );
@@ -711,7 +722,7 @@ export class VampireGameProvider {
             case VampireGameRole.Mortal:
                 this.instructionalService.display(
                     [
-                        "Dirige-toi en ville pour réparer l'électricité en accomplissant divers objectifs, et survie aux monstres.",
+                        "Dirige-toi en ville pour réparer l'électricité en ~g~accomplissant divers objectifs~r~ ! Fais attention, des ~r~vampires peuvent venir te sucer ton sang et te transformer~s~ en goule.",
                     ],
                     true
                 );
@@ -719,7 +730,7 @@ export class VampireGameProvider {
             case VampireGameRole.Squire:
                 this.instructionalService.display(
                     [
-                        'En tant qu’Écuyère, tu as le pouvoir de sentir la présence des vampires sur ta carte. Aide les Chasseurs à trouver les vampires et protège les Mortels.',
+                        'En tant qu’Écuyère, tu as le ~r~pouvoir de sentir la présence des vampires sur ta carte~s~. Aide les Chasseurs à trouver les vampires et protège les Mortels.',
                     ],
                     true
                 );
@@ -727,7 +738,7 @@ export class VampireGameProvider {
             case VampireGameRole.Alchemist:
                 this.instructionalService.display(
                     [
-                        'En tant qu’Alchimiste, tu as le pouvoir de réanimer les Goules en Mortel. Soigne-les dès que tu le peux.',
+                        "En tant qu’Alchimiste, tu as le ~r~pouvoir de guérir les Goules~s~ pour ~g~qu'elles redeviennent des Mortels~s~. Soigne les dès que tu le peux !",
                     ],
                     true
                 );

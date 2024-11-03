@@ -298,7 +298,11 @@ export class VampireGameProvider {
             this.mortalObjectivePart1[collection] - this.gameState.mortalObjectivePart1.get(collection).length
         );
 
-        this.notifier.notify(source, 'Objectif validé', 'success');
+        this.notifier.notify(
+            source,
+            `L'objectif ~g~${VampireGameLabel(collection)}~s~ vient d'être validé ! Consulte ta carte pour rejoindre un autre objectif.`,
+            'success'
+        );
 
         this.sendObjectivePart1();
 
@@ -391,7 +395,7 @@ export class VampireGameProvider {
             this.callFunctionOnNonEnemyPlayers(player => {
                 this.notifier.notify(
                     player.source,
-                    `L'objectif ~b~${VampireGameLabel(objective)}~s~ est validé.`,
+                    `L'objectif ~g~${VampireGameLabel(objective)}~s~ vient d'être validé ! Consulte ta carte pour rejoindre un autre objectif.`,
                     'success'
                 );
             });

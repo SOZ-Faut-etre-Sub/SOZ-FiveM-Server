@@ -7,6 +7,7 @@ import { bindKeyToName, BindName } from '../../../shared/utils/bind';
 import { useHudHasStreetNames, useMinimap } from '../../hook/data';
 import { useNuiEvent } from '../../hook/nui';
 import { RootState } from '../../store';
+import { formatText } from '../../utils/gta-format';
 import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
 
 export function InstructionalOverlay() {
@@ -30,7 +31,12 @@ export function InstructionalOverlay() {
     useNuiEvent('hud', 'SetInstructional', setText);
     useNuiEvent('hud', 'ForceDisplayInstructional', setForceDisplay);
 
-    const cleanText = string => string.replace(/^~/, '').replace(/~$/, '');
+    const cleanText = string => {
+        const formatted = formatText(string);
+
+        return formatted.replace(/^~/, '').replace(/~$/, '');
+    };
+
     const shouldBeDisplayAsKey = string => BindName[string] || (string.startsWith('~') && string.endsWith('~'));
 
     if (!forceDisplay && !showInstructionalOverlay) {
