@@ -159,6 +159,10 @@ export class VampireGameProvider {
         },
     };
 
+    public isGameStarted() {
+        return this.gameState.started;
+    }
+
     @Once()
     onStart() {
         VampireRespawnPoints.forEach(location => {

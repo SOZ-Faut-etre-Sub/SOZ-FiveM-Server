@@ -1,3 +1,4 @@
+import { VampireGameProvider } from '@public/server/story/vampire.game.provider';
 import { ClientEvent } from '@public/shared/event/client';
 
 import { Inject, Injectable } from '../../core/decorators/injectable';
@@ -14,6 +15,9 @@ export class ItemService {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(VampireGameProvider)
+    private vampireGameProvider: VampireGameProvider;
 
     private showCallbacks = new Map<string, (source: number, target: number, item: InventoryItem) => void>();
 
@@ -44,6 +48,10 @@ export class ItemService {
 
                 return;
             }
+            if (this.vampireGameProvider.isGameStarted()) {
+                return;
+            }
+
             return callback(player, itemDef, item);
         });
     }

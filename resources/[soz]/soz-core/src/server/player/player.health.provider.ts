@@ -1,6 +1,7 @@
 import { PriceService } from '@public/server/bank/price.service';
 import { FeatureProvider } from '@public/server/feature/feature.provider';
 import { PlayerZombieProvider } from '@public/server/player/player.zombie.provider';
+import { VampireGameProvider } from '@public/server/story/vampire.game.provider';
 import { TaxType } from '@public/shared/bank';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { Vector3 } from '@public/shared/polyzone/vector';
@@ -71,6 +72,9 @@ export class PlayerHealthProvider {
     @Inject(FeatureProvider)
     private featureProvider: FeatureProvider;
 
+    @Inject(VampireGameProvider)
+    private vampireGameProvider: VampireGameProvider;
+
     private yogaAndNaturalMultiplier: (source: number) => number = () => 1;
 
     @OnEvent(ServerEvent.PLAYER_NUTRITION_LOOP)
@@ -78,6 +82,10 @@ export class PlayerHealthProvider {
         const player = this.playerService.getPlayer(source);
 
         if (!player || player.metadata.godmode || player.metadata.isdead) {
+            return;
+        }
+
+        if (this.vampireGameProvider.isGameStarted()) {
             return;
         }
 
