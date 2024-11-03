@@ -40,7 +40,7 @@ export const MenuHalloweenVampire: FunctionComponent = () => {
                             fetchNui(NuiEvent.HalloweenVampireSwitchModel, 'wolf');
                         }}
                     >
-                        Forme de Loup
+                        Forme de Panthère
                     </MenuItemButton>
                 </MenuContent>
             </MainMenu>

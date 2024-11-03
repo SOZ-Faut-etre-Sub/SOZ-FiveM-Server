@@ -692,7 +692,7 @@ export class VampireGameProvider {
             if (model === 'crow') {
                 await this.skinService.setModel('a_c_crow');
             } else if (model === 'wolf') {
-                await this.skinService.setModel('a_c_coyote');
+                await this.skinService.setModel('A_C_MtLion_02');
             } else {
                 this.playerService.setTempClothes(VampireOutfit[player.skin.Model.Hash]);
             }

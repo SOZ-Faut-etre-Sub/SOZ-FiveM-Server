@@ -61,9 +61,10 @@ export function InstructionalOverlay() {
                             className={cn({
                                 'bg-white/10 border border-slate-300/10 px-2 rounded-md': shouldBeDisplayAsKey(t),
                             })}
-                        >
-                            {BindName[t] ? bindKeyToName(BindName[t]) : cleanText(t)}
-                        </span>
+                            dangerouslySetInnerHTML={{
+                                __html: BindName[t] ? bindKeyToName(BindName[t]) : cleanText(t),
+                            }}
+                        />
                     ))}
                 </GlassMorphismContainer>
             </div>
