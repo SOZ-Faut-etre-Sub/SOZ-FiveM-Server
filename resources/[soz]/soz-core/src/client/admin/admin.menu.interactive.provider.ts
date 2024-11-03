@@ -1,9 +1,9 @@
-import { OnNuiEvent } from '../../core/decorators/event';
+import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
 import { AdminPlayer, FullAdminPlayer } from '../../shared/admin/admin';
-import { NuiEvent } from '../../shared/event';
+import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import { BlipFactory } from '../blip';
@@ -20,7 +20,7 @@ export class AdminMenuInteractiveProvider {
     public intervalHandlers = {
         displayOwners: null,
         displayPlayerNames: null,
-        displayPlayersOnMap: null,
+        displayPlayersOnMap: false,
     };
 
     private multiplayerTags: Map<string, number> = new Map();
@@ -155,49 +155,41 @@ export class AdminMenuInteractiveProvider {
 
     @OnNuiEvent(NuiEvent.AdminToggleDisplayPlayersOnMap)
     public async toggleDisplayPlayersOnMap(value: boolean): Promise<void> {
-        if (!value) {
-            this.playerBlips.forEach((BlipValue, BlipKey) => {
+        this.intervalHandlers.displayPlayersOnMap = value;
+        TriggerServerEvent(ServerEvent.ADMIN_TOGGLE_PLAYER_POSITION, value);
+    }
+
+    @OnEvent(ClientEvent.ADMIN_PLAYER_POSITION)
+    async onPlayerPosition(players: FullAdminPlayer[]) {
+        this.playerBlips.forEach((BlipValue, BlipKey) => {
+            if (!players.some(player => player.citizenId === BlipKey)) {
                 this.blipFactory.remove('admin:player-blip:' + BlipKey);
                 this.playerBlips.delete(BlipKey);
-            });
-
-            clearInterval(this.intervalHandlers.displayPlayersOnMap);
-            return;
-        }
-
-        this.intervalHandlers.displayPlayersOnMap = setInterval(async () => {
-            const players = await emitRpc<FullAdminPlayer[]>(RpcServerEvent.ADMIN_GET_FULL_PLAYERS);
-
-            this.playerBlips.forEach((BlipValue, BlipKey) => {
-                if (!players.some(player => player.citizenId === BlipKey)) {
-                    this.blipFactory.remove('admin:player-blip:' + BlipKey);
-                    this.playerBlips.delete(BlipKey);
-                }
-            });
-
-            for (const player of players) {
-                const coords = player.coords;
-                const blipId = 'admin:player-blip:' + player.citizenId;
-                if (this.blipFactory.exist(blipId)) {
-                    this.blipFactory.update('admin:player-blip:' + player.citizenId, {
-                        position: coords as Vector3,
-                        heading: player.heading,
-                    });
-                } else {
-                    const createdBlip = this.blipFactory.create('admin:player-blip:' + player.citizenId, {
-                        position: coords as Vector3,
-                        heading: player.heading,
-                        name: player.rpFullName,
-                        playerId: player.id,
-                        showHeading: true,
-                        sprite: 1,
-                        category: 7,
-                    });
-
-                    this.playerBlips.set(player.citizenId, createdBlip);
-                }
             }
-        }, 2500);
+        });
+
+        for (const player of players) {
+            const coords = player.coords;
+            const blipId = 'admin:player-blip:' + player.citizenId;
+            if (this.blipFactory.exist(blipId)) {
+                this.blipFactory.update('admin:player-blip:' + player.citizenId, {
+                    position: coords as Vector3,
+                    heading: player.heading,
+                });
+            } else {
+                const createdBlip = this.blipFactory.create('admin:player-blip:' + player.citizenId, {
+                    position: coords as Vector3,
+                    heading: player.heading,
+                    name: player.rpFullName,
+                    playerId: player.id,
+                    showHeading: true,
+                    sprite: 1,
+                    category: 7,
+                });
+
+                this.playerBlips.set(player.citizenId, createdBlip);
+            }
+        }
     }
 
     private async displayPlayerNames(withDetails: boolean): Promise<void> {
