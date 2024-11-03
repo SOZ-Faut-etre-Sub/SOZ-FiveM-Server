@@ -311,7 +311,7 @@ export class VampireGameProvider {
                 player.source,
                 'Les Mortels ont ~g~réussi~s~ la première phase ! Leur périple continue avec de ~y~nouveaux objectifs à accomplir~s~.',
                 'info',
-                30_000
+                45_000
             );
         });
 
@@ -424,7 +424,7 @@ export class VampireGameProvider {
                 player.source,
                 `Tous les mortels ont reçu de quoi se défendre, les balles d’argent peuvent tuer les vampires ! La chasse se retourne contre eux, survivez ${this.mortalObjectivePart3Duration} minutes pour sortir victorieux de cette bataille.`,
                 'info',
-                30_000
+                45_000
             );
         });
 
@@ -433,7 +433,7 @@ export class VampireGameProvider {
                 player.source,
                 `Les mortels ont reçu de quoi se défendre, les balles d’argent peuvent te tuer ! Ne deviens pas la proie de ces chasseurs ! Il ne te reste que ${this.mortalObjectivePart3Duration} minutes pour les traquer et leur faire regretter leur audace.`,
                 'info',
-                30_000
+                45_000
             );
         });
     }
@@ -882,7 +882,7 @@ export class VampireGameProvider {
                         -1,
                         'Le tournage est terminé, l’ensemble de l’île peut retourner à ses occupations.',
                         'info',
-                        30_000
+                        45_000
                     );
                 }
 
@@ -891,7 +891,7 @@ export class VampireGameProvider {
                         -1,
                         'Les Vampires ont gagné ce scénario ! Le tournage est terminé, l’ensemble de l’île peut retourner à ses occupations, bravo pour votre prestation.',
                         'info',
-                        30_000
+                        45_000
                     );
                 }
 
@@ -900,7 +900,7 @@ export class VampireGameProvider {
                         -1,
                         'Les Mortels ont gagné ce scénario ! Le tournage est terminé, l’ensemble de l’île peut retourner à ses occupations, bravo pour votre prestation.',
                         'info',
-                        30_000
+                        45_000
                     );
                 }
 
