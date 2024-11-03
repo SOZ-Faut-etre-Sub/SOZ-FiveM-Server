@@ -74,7 +74,7 @@ export class TargetService {
 
     protected eventCheck(event: string): boolean {
         if (this.vampireGameStateProvider.isGameRunning()) {
-            return event === 'vampire:game';
+            return event === 'all' || event === 'vampire:game';
         }
 
         return true;

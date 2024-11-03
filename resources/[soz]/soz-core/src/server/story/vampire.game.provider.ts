@@ -278,7 +278,6 @@ export class VampireGameProvider {
 
         const { completed } = await this.progressService.progress(source, name, label, 5000, animation, {});
         if (!completed) {
-            this.notifier.error(source, 'Objectif abandonné');
             return;
         }
 
@@ -361,7 +360,6 @@ export class VampireGameProvider {
             }
         );
         if (!completed) {
-            this.notifier.error(source, 'Objectif abandonné');
             this.gameState.mortalObjectivePart2[objective].players.delete(player.citizenid);
             return;
         }

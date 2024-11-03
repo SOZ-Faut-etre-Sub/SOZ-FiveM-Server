@@ -93,6 +93,7 @@ export class HousingApartmentZoneProvider {
                     label: 'Sortir',
                     icon: 'housing/enter',
                     category: 'citizen',
+                    event: 'all',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
 

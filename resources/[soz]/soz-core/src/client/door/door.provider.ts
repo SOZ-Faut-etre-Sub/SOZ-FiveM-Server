@@ -273,6 +273,7 @@ export class DoorProvider {
                 subdoor.model,
                 {
                     label: 'Déverrouiller',
+                    event: 'all',
                     canInteract: entity => {
                         const [valid, locked] = this.canInterract(entity);
                         return valid && locked;
