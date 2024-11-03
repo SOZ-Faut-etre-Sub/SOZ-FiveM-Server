@@ -16,6 +16,7 @@ import { Feature } from '../../shared/features';
 import {
     GhoulOutfit,
     MortalRespawnPoints,
+    VampireGameAllyRoles,
     VampireGameClientState,
     VampireGameCollection,
     VampireGameEnemyRoles,
@@ -252,6 +253,31 @@ export class VampireGameProvider {
                         targetSource,
                         VampireGameRole.Mortal
                     );
+                },
+            },
+            {
+                label: 'Soigner',
+                icon: 'ems/heal',
+                category: 'citizen',
+                event: 'vampire:game',
+                canInteract: async entity => {
+                    if (!this.gameState.isGameRunning()) return false;
+                    if (!this.gameState.hasRole(VampireGameRole.Alchemist)) return false;
+
+                    const targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
+
+                    if (!this.playerListStateService.isKnockedOut(targetSource)) return false;
+
+                    const targetState = await emitRpc<PlayerClientState>(
+                        RpcServerEvent.PLAYER_GET_CLIENT_STATE,
+                        targetSource
+                    );
+
+                    return VampireGameAllyRoles.includes(targetState.halloweenRole);
+                },
+                action: async entity => {
+                    const targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
+                    TriggerServerEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_CONVERT_PLAYER, targetSource, null);
                 },
             },
         ]);
@@ -782,7 +808,7 @@ export class VampireGameProvider {
 
     private createMortalTeleports() {
         Object.entries(MortalRespawnPoints).forEach(([id, location]) => {
-            if (this.gameState.isGameRunning() && !this.gameState.hasEnemyRole()) {
+            if (this.gameState.isGameRunning() && this.gameState.hasAlliedRole()) {
                 if (this.blipFactory.exist(`mortal_tp_${id}`)) {
                     return;
                 }

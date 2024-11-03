@@ -93,6 +93,7 @@ export class VampireGameProvider {
 
     private gameDuration = 90; // minutes
     private autoRespawnDuration = 20; // seconds
+    private autoMortalRespawnDuration = 30; // seconds
 
     private roleMaxNumber: Record<VampireGameRole, number> = {
         [VampireGameRole.Vampire]: 20,
@@ -479,7 +480,7 @@ export class VampireGameProvider {
                     isCanceled = true;
                 });
 
-                await wait(this.autoRespawnDuration * 1000);
+                await wait(this.autoMortalRespawnDuration * 1000);
                 if (isCanceled) return;
 
                 this.gameState.gauges[playerRole].dec();
@@ -575,12 +576,7 @@ export class VampireGameProvider {
             if (!completed) {
                 return;
             }
-        } else if (role === VampireGameRole.Mortal) {
-            if (targetRole !== VampireGameRole.Ghoul) {
-                this.notifier.error(source, 'La cible doit être une Goule');
-                return;
-            }
-
+        } else {
             const { completed } = await this.progressService.progress(
                 source,
                 'analyze',
@@ -608,9 +604,14 @@ export class VampireGameProvider {
 
         this.gameState.autoRespawn.get(playerTarget.citizenid)?.cancel();
         this.gameState.autoRespawn.delete(playerTarget.citizenid);
-        this.gameState.gauges[targetRole].dec();
-        this.gameState.playerRoles.set(playerTarget.citizenid, role);
-        this.gameState.gauges[role].inc();
+
+        if (role) {
+            this.gameState.gauges[targetRole].dec();
+            this.gameState.playerRoles.set(playerTarget.citizenid, role);
+            this.gameState.gauges[role].inc();
+        } else {
+            role = targetRole;
+        }
 
         this.switchPlayerRole(target, role);
 

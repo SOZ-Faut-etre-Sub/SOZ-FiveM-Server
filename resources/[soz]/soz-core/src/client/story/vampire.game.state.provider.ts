@@ -2,6 +2,7 @@ import { Provider } from '@core/decorators/provider';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
 import {
+    VampireGameAllyRoles,
     VampireGameClientState,
     VampireGameCollection,
     VampireGameEnemyRoles,
@@ -50,6 +51,10 @@ export class VampireGameStateProvider {
 
     public hasEnemyRole() {
         return VampireGameEnemyRoles.includes(this.state.role);
+    }
+
+    public hasAlliedRole() {
+        return VampireGameAllyRoles.includes(this.state.role);
     }
 
     public hasRole(role: VampireGameRole) {
