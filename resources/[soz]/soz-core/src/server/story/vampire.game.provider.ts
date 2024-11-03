@@ -190,7 +190,7 @@ export class VampireGameProvider {
             await this.newPlayer(player);
         }
 
-        await wait(5_000);
+        await wait(15_000);
 
         this.npcProvider.disableNPC(true);
 
