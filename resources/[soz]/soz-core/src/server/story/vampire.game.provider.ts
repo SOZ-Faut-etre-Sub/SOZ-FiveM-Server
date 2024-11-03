@@ -624,8 +624,15 @@ export class VampireGameProvider {
 
         await wait(1000);
 
-        const roleGauge = await this.gameState.gauges[VampireGameRole.Mortal].get();
-        if (roleGauge.values[0].value > 0) return;
+        for (const role of [
+            VampireGameRole.Hunter,
+            VampireGameRole.Mortal,
+            VampireGameRole.Squire,
+            VampireGameRole.Alchemist,
+        ]) {
+            const roleGauge = await this.gameState.gauges[role].get();
+            if (roleGauge.values[0].value > 0) return;
+        }
 
         this.notifier.notify(
             -1,
