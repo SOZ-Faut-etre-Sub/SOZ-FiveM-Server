@@ -457,6 +457,20 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                             <MenuItemSelectOption value={true}>Activer</MenuItemSelectOption>
                             <MenuItemSelectOption value={false}>Désactiver</MenuItemSelectOption>
                         </MenuItemSelect>
+                        <MenuItemCheckbox
+                            disabled={!isAdminOrStaff}
+                            checked={player.vampireGameExcluded}
+                            onChange={async enabled => {
+                                await fetchNui(NuiEvent.AdminMenuHalloweenUpdateGamePlayerExclusion, {
+                                    citizenId: player.citizenId,
+                                    enabled,
+                                });
+                                player.vampireGameExcluded = enabled;
+                            }}
+                        >
+                            Exclure du jeu vampire
+                        </MenuItemCheckbox>
+
                         <MenuItemSelect
                             title={'Vampire Game Role'}
                             onConfirm={async (_, value) => {

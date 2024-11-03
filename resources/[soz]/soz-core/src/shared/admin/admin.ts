@@ -86,7 +86,7 @@ export type MeteorSubMenuState = {
 
 export type HalloweenSubMenuState = {
     started: boolean;
-    staffEnabled: Record<string, boolean>;
+    excludedPlayers: Partial<AdminPlayer>[];
     gameDuration: number;
     roleMaxNumber: Record<VampireGameRole, number>;
     mortalObjectivePart1: Record<Exclude<VampireGameCollection, 'player'>, number>;
@@ -125,6 +125,7 @@ export type AdminPlayer = {
     partyMember: SenatePartyMember | null;
     plate: boolean | null;
     specialPlate: boolean | null;
+    vampireGameExcluded?: boolean;
 };
 
 export type FullAdminPlayer = AdminPlayer & {

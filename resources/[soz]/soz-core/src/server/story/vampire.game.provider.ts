@@ -10,7 +10,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Rpc } from '../../core/decorators/rpc';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { Logger } from '../../core/logger';
-import { HalloweenSubMenuState } from '../../shared/admin/admin';
+import { AdminPlayer, HalloweenSubMenuState } from '../../shared/admin/admin';
 import { ClientEvent } from '../../shared/event/client';
 import { ServerEvent } from '../../shared/event/server';
 import { Feature } from '../../shared/features';
@@ -86,13 +86,6 @@ export class VampireGameProvider {
 
     private gameDuration = 90; // minutes
     private autoRespawnDuration = 20; // seconds
-
-    private staffEnabled = {
-        admin: true,
-        staff: true,
-        gamemaster: true,
-        helper: true,
-    };
 
     private roleMaxNumber: Record<VampireGameRole, number> = {
         [VampireGameRole.Vampire]: 20,
@@ -717,9 +710,21 @@ export class VampireGameProvider {
     /* Admin events */
     @Rpc(RpcServerEvent.ADMIN_HALLOWEEN_GAME_STATE)
     public getState(): HalloweenSubMenuState {
+        const excludedPlayers: Partial<AdminPlayer>[] = [];
+
+        this.gameState.excludedPlayers.forEach(citizenId => {
+            const player = this.playerService.getPlayerByCitizenId(citizenId);
+            if (!player) return;
+
+            excludedPlayers.push({
+                citizenId,
+                name: `${player.charinfo.firstname} ${player.charinfo.lastname}`,
+            });
+        });
+
         return {
             started: this.gameState.started,
-            staffEnabled: this.staffEnabled,
+            excludedPlayers,
             gameDuration: this.gameDuration,
             roleMaxNumber: this.roleMaxNumber,
             mortalObjectivePart1: this.mortalObjectivePart1,
@@ -728,14 +733,19 @@ export class VampireGameProvider {
         };
     }
 
-    @OnEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_GAME_STAFF_ENABLED)
-    public updateStaffEnabled(source: number, role: string, value: boolean): void {
+    @OnEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_GAME_PLAYER_EXCLUSION)
+    public togglePlayerExclusion(source: number, citizenId: string, value: boolean): void {
         if (!this.permissionService.isStaff(source)) {
             return;
         }
 
-        this.staffEnabled[role] = value;
-        this.notifier.notify(source, `Le rôle ${role} a été mis à jour: ${value ? 'activé' : 'désactivé'}`, 'info');
+        if (value) {
+            this.gameState.excludedPlayers.add(citizenId);
+            this.notifier.notify(source, `Le joueur ${citizenId} a été exclu du jeu`, 'info');
+        } else {
+            this.gameState.excludedPlayers.delete(citizenId);
+            this.notifier.notify(source, `Le joueur ${citizenId} a été réintégré au jeu`, 'info');
+        }
     }
 
     @OnEvent(ServerEvent.ADMIN_HALLOWEEN_UPDATE_GAME_DURATION)
@@ -896,8 +906,10 @@ export class VampireGameProvider {
     }
 
     private async newPlayer(player: PlayerData) {
-        const playerRole = this.permissionService.getPermission(player.source);
-        if (playerRole !== 'user' && !this.staffEnabled[playerRole]) {
+        if (this.gameState.excludedPlayers.has(player.citizenid)) {
+            this.logger.debug(
+                `${player.charinfo.firstname} ${player.charinfo.lastname} has been excluded from the game`
+            );
             return;
         }
 

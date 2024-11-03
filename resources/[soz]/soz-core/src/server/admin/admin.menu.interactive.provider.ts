@@ -7,6 +7,7 @@ import { PermissionService } from '../permission.service';
 import { PlayerService } from '../player/player.service';
 import { QBCore } from '../qbcore';
 import { ServerStateService } from '../server.state.service';
+import { VampireGameStateProvider } from '../story/vampire.game.state.provider';
 
 @Provider()
 export class AdminMenuInteractiveProvider {
@@ -21,6 +22,11 @@ export class AdminMenuInteractiveProvider {
 
     @Inject(QBCore)
     private QBCore: QBCore;
+
+    @Inject(VampireGameStateProvider)
+    private readonly vampireGameStateProvider: VampireGameStateProvider;
+
+    private interactivePlayerSubscriptions: Set<number> = new Set();
 
     @Rpc(RpcServerEvent.ADMIN_GET_PLAYERS)
     public getPlayers(source: number): AdminPlayer[] {
@@ -40,6 +46,7 @@ export class AdminMenuInteractiveProvider {
                 partyMember: playerData.partyMember,
                 plate: playerData.metadata.plate,
                 specialPlate: playerData.metadata.special_plate,
+                vampireGameExcluded: this.vampireGameStateProvider.excludedPlayers.has(playerData.citizenid),
             });
         }
         return players;

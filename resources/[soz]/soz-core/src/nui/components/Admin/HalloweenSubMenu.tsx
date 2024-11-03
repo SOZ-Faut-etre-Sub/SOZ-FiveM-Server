@@ -8,10 +8,10 @@ import { FunctionComponent } from 'react';
 import {
     MenuContent,
     MenuItemButton,
-    MenuItemCheckbox,
     MenuItemSelect,
     MenuItemSelectOption,
     MenuItemSubMenuLink,
+    MenuItemText,
     MenuTitle,
     SubMenu,
 } from '../Styleguide/Menu';
@@ -55,6 +55,31 @@ export const HalloweenSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner
                     <MenuItemSubMenuLink disabled={!isAdminOrStaff} id="halloween-vampire-game">
                         Vampire Game
                     </MenuItemSubMenuLink>
+                </MenuContent>
+            </SubMenu>
+
+            <SubMenu id="halloween-vampire-game-excluded-players">
+                <MenuTitle banner={banner}>Suce un cul...</MenuTitle>
+                <MenuContent>
+                    <MenuItemSubMenuLink disabled={!isAdminOrStaff} id="players">
+                        Afficher la liste des joueurs
+                    </MenuItemSubMenuLink>
+
+                    {state.excludedPlayers.map(player => (
+                        <MenuItemButton
+                            key={player.citizenId}
+                            description="Supprimer l'exclusion du joueur"
+                            onConfirm={async () => {
+                                await fetchNui(NuiEvent.AdminMenuHalloweenUpdateGamePlayerExclusion, {
+                                    citizenId: player.citizenId,
+                                    enabled: false,
+                                });
+                            }}
+                        >
+                            {player.name}
+                        </MenuItemButton>
+                    ))}
+                    {state.excludedPlayers.length === 0 && <MenuItemText>Aucun joueur exclu</MenuItemText>}
                 </MenuContent>
             </SubMenu>
 
@@ -104,16 +129,10 @@ export const HalloweenSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner
                             <span>{state.gameDuration} minutes</span>
                         </div>
                     </MenuItemButton>
-                    {['admin', 'staff', 'gamemaster', 'helper'].map(role => (
-                        <MenuItemCheckbox
-                            checked={state.staffEnabled[role]}
-                            onChange={enabled =>
-                                fetchNui(NuiEvent.AdminMenuHalloweenUpdateGameStaffEnabled, { role, enabled })
-                            }
-                        >
-                            {role}
-                        </MenuItemCheckbox>
-                    ))}
+
+                    <MenuItemSubMenuLink disabled={!isAdminOrStaff} id="halloween-vampire-game-excluded-players">
+                        Exclure des joueurs
+                    </MenuItemSubMenuLink>
 
                     <MenuTitle>Rôles</MenuTitle>
                     {Object.entries(state.roleMaxNumber).map(([role, amount]) => (

@@ -10,6 +10,7 @@ export class VampireGameStateProvider {
     public started = false;
     public timer = null;
 
+    public excludedPlayers: Set<string> = new Set<string>();
     public playerRoles = new Map<string, VampireGameRole>();
 
     public mortalObjectivePart1 = new Map<VampireGameCollection, Vector3[]>();
