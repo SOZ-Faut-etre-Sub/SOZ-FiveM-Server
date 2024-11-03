@@ -14,6 +14,7 @@ import { RpcServerEvent } from '../../../shared/rpc';
 import {
     Halloween2022Scenario4,
     Halloween2022Scenario4EnterFinal,
+    Halloween2022Scenario4ExitFinal,
 } from '../../../shared/story/halloween-2022/scenario4';
 import { Dialog } from '../../../shared/story/story';
 import { AnimationService } from '../../animation/animation.service';
@@ -438,7 +439,7 @@ export class Halloween2022Scenario4Provider {
                     icon: 'elevators/monter',
                     category: 'citizen',
                     action: async () => {
-                        this.playerPositionProvider.teleportPlayerToPosition(Halloween2022Scenario4EnterFinal);
+                        this.playerPositionProvider.teleportPlayerToPosition(Halloween2022Scenario4ExitFinal);
                     },
                 },
             ]
