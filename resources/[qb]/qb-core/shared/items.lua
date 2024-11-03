@@ -7600,7 +7600,7 @@ QBShared.Items = {
         ["combinable"] = nil,
         ["durability"] = 14,
         ["description"] = "Un cigare intense et complexe avec des arômes de cuir, de bois et une légère touche de cacao. Ce cigare offre une fumée épaisse, évoquant le voile de mystère qui entoure les créatures de la nuit. Son goût durable et épicé résonne longtemps en bouche, un véritable sceptre de pouvoir pour les initiés.",
-        ["illustrator"] = ".Nariiel",
+        ["illustrator"] = ".BaZ",
     },
     ["halloween_smoked_blood"] = {
         ["name"] = "halloween_smoked_blood",
@@ -7613,7 +7613,7 @@ QBShared.Items = {
         ["combinable"] = nil,
         ["durability"] = 14,
         ["description"] = "Un cigare robuste et épicé, aux arômes de bois vieilli, de tabac noir et de fruits rouges macérés. Chaque bouffée révèle une fumée dense avec une touche de muscade et de clou de girofle, comme une invitation à savourer le goût du sang ancien et lointain. Sang Fumé offre une expérience unique, puissante et élégante, idéale pour ceux qui apprécient la profondeur et l’intensité dans chaque tirage.",
-        ["illustrator"] = ".Nariiel",
+        ["illustrator"] = ".Ostinato",
     },
     ["halloween_bloody_tomb"] = {
         ["name"] = "halloween_bloody_tomb",

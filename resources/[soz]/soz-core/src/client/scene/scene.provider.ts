@@ -722,12 +722,12 @@ export class SceneProvider {
                     icon: 'inventory/ouvrir_le_stockage',
                     job: FDO.reduce((prev, cur) => ({ ...prev, [cur]: 0 }), {} as Record<JobType, number>),
                     category: 'society',
-                    canInteract: () => true,
+                    canInteract: () => !this.worldEventProvider.isSignaled(entity.inventoryId),
                     action: async () => {
                         const progress = await this.progressService.progress(
                             'world_event_signal',
                             'Signalement en cours...',
-                            180_000,
+                            10_000,
                             {
                                 dictionary: 'Rcm_epsilonism4',
                                 name: 'eps_4_ig_1_jimmy_lookaround_idle_a_jb',
