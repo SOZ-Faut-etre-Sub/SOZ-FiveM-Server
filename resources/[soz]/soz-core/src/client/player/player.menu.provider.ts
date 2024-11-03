@@ -89,10 +89,6 @@ export class PlayerMenuProvider {
             return;
         }
 
-        if (this.vampireGameStateProvider.isGameRunning()) {
-            return;
-        }
-
         this.menu.openMenu(MenuType.PlayerPersonal, {
             ...this.hudStateProvider.getState(),
             scaledNui: this.hudMinimapProvider.scaledNui,
@@ -169,6 +165,10 @@ export class PlayerMenuProvider {
 
     @OnNuiEvent(NuiEvent.PlayerMenuClothConfigUpdate)
     public async clothComponentUpdate({ key, value }: { key: keyof ClothConfig['Config']; value: boolean }) {
+        if (this.vampireGameStateProvider.isGameRunning()) {
+            return;
+        }
+
         const player = this.playerService.getPlayer();
 
         if (!player) {
