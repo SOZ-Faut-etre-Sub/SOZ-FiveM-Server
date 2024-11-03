@@ -27,6 +27,7 @@ import {
     VampireOutfit,
     VampireRespawnPoints,
 } from '../../shared/halloween';
+import { Font } from '../../shared/hud';
 import { BIN_MODELS } from '../../shared/job/garbage';
 import { MenuType } from '../../shared/nui/menu';
 import { PlayerClientState } from '../../shared/player';
@@ -36,6 +37,7 @@ import { RpcServerEvent } from '../../shared/rpc';
 import { VehicleSeat } from '../../shared/vehicle/vehicle';
 import { WeaponName } from '../../shared/weapons/weapon';
 import { BlipFactory } from '../blip';
+import { DrawService } from '../draw.service';
 import { FeatureProvider } from '../feature/feature.provider';
 import { InstructionalService } from '../instructional.service';
 import { Notifier } from '../notifier';
@@ -113,6 +115,9 @@ export class VampireGameProvider {
     @Inject(PlayerWalkstyleProvider)
     private readonly playerWalkstyleProvider: PlayerWalkstyleProvider;
 
+    @Inject(DrawService)
+    private readonly drawService: DrawService;
+
     private blipDisabled = new Set<string>();
     private objectiveInteractions = new Set<string>();
     private collectiveObjectives = new Set<string>();
@@ -160,19 +165,30 @@ export class VampireGameProvider {
 
         if (this.gameState.hasEnemyRole()) {
             RestorePlayerStamina(PlayerId(), 1.0);
-        } else {
-            const ped = PlayerPedId();
-
-            const vehicle = GetVehiclePedIsIn(ped, false);
-            if (!vehicle) return;
-
-            const isDriver = GetPedInVehicleSeat(vehicle, VehicleSeat.Driver) === ped;
-            if (!isDriver) return;
-
-            if (!GetIsVehicleEngineRunning(vehicle)) return;
-
-            SetVehicleEngineOn(vehicle, false, true, true);
         }
+
+        const ped = PlayerPedId();
+
+        const vehicle = GetVehiclePedIsIn(ped, false);
+        if (!vehicle) return;
+
+        const isDriver = GetPedInVehicleSeat(vehicle, VehicleSeat.Driver) === ped;
+        if (!isDriver) return;
+
+        if (!GetIsVehicleEngineRunning(vehicle)) return;
+
+        const model = GetEntityModel(vehicle);
+
+        if (IsThisModelABoat(model) || IsThisModelAHeli(model) || IsThisModelAPlane(model)) {
+            this.drawService.drawText('Véhicule non autorisé ! Rangez-le immédiatement !', [0.315, 0.015], {
+                font: Font.ChaletComprimeCologne,
+                size: 1.0,
+                color: [244, 43, 29, 255],
+            });
+            return;
+        }
+
+        SetVehicleEngineOn(vehicle, false, true, true);
     }
 
     @Once(OnceStep.PlayerLoaded)
@@ -542,7 +558,6 @@ export class VampireGameProvider {
 
     private async onGameStart() {
         const player = PlayerPedId();
-        FreezeEntityPosition(player, true);
         SwitchOutPlayer(player, 0, 2);
 
         this.playerWalkstyleProvider.updateWalkStyle('overloaded', null);
@@ -571,7 +586,6 @@ export class VampireGameProvider {
 
         this.instructionalService.clear();
         SwitchInPlayer(player);
-        FreezeEntityPosition(player, false);
     }
 
     private async onGameEnd() {
@@ -610,9 +624,10 @@ export class VampireGameProvider {
         const weapon = GetHashKey(WeaponName.MUSKET);
         const weaponAmmo = 500;
 
+        const isInsideVehicle = IsPedInAnyVehicle(ped, true);
         const [found, z] = GetGroundZFor_3dCoord_2(pos[0], pos[1], pos[2], false);
 
-        if (found) {
+        if (!isInsideVehicle && found) {
             SetPedCoordsKeepVehicle(ped, pos[0], pos[1], z + 1.0);
         }
 

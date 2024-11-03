@@ -142,6 +142,7 @@ export class VehicleGarageProvider {
                     garage.category == GarageCategory.Sea ? coordsWithOffset : coords,
                     {
                         label: 'Parking public',
+                        event: 'all',
                         action: () => {
                             this.enterGarage(garageIdentifier, garage);
                         },
@@ -156,6 +157,7 @@ export class VehicleGarageProvider {
                     coords,
                     {
                         label: 'Parking privé',
+                        event: 'all',
                         action: () => {
                             this.enterGarage(garageIdentifier, garage);
                         },
@@ -204,6 +206,7 @@ export class VehicleGarageProvider {
                     coordsWithOffset,
                     {
                         label: 'Parking entreprise',
+                        event: 'all',
                         canInteract: () => {
                             const player = this.playerService.getPlayer();
                             return player && player.job.id == garage.job;
