@@ -41,6 +41,7 @@ import { BlipFactory } from '../blip';
 import { DrawService } from '../draw.service';
 import { FeatureProvider } from '../feature/feature.provider';
 import { InstructionalService } from '../instructional.service';
+import { LSMCPlasterProvider } from '../job/lsmc/lsmc.plaster.provider';
 import { Notifier } from '../notifier';
 import { NuiMenu } from '../nui/nui.menu';
 import { ObjectProvider } from '../object/object.provider';
@@ -118,6 +119,9 @@ export class VampireGameProvider {
 
     @Inject(DrawService)
     private readonly drawService: DrawService;
+
+    @Inject(LSMCPlasterProvider)
+    private readonly lsmcPlasterProvider: LSMCPlasterProvider;
 
     private blipDisabled = new Set<string>();
     private objectiveInteractions = new Set<string>();
@@ -592,6 +596,7 @@ export class VampireGameProvider {
 
         this.playerWalkstyleProvider.updateWalkStyle('overloaded', null);
         this.weaponService.setDisabled('vampire-game', true);
+        this.lsmcPlasterProvider.disablePlaster();
 
         for (const [name] of this.blipFactory.getAll().entries()) {
             if (
@@ -633,8 +638,10 @@ export class VampireGameProvider {
             await wait(10);
         }
 
+        this.lsmcPlasterProvider.enablePlaster();
         this.weaponService.setDisabled('vampire-game', false);
         this.instructionalService.clear();
+
         await this.syncModel(null);
         this.syncEnemyPosition([], false);
         this.gameState.setPlayerRespawning(false);
