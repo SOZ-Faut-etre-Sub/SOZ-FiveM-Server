@@ -688,7 +688,8 @@ export class VampireGameProvider {
                 );
                 this.notifier.notify(
                     'En tant que Vampire tu peux te transformer. Appuie sur H pour ouvrir le menu.',
-                    'info'
+                    'info',
+                    30_000
                 );
                 break;
             case VampireGameRole.Ghoul:

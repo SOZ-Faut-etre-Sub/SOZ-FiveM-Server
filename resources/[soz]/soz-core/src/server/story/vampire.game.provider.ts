@@ -310,7 +310,8 @@ export class VampireGameProvider {
             this.notifier.notify(
                 player.source,
                 'Les Mortels ont ~g~réussi~s~ la première phase ! Leur périple continue avec de ~y~nouveaux objectifs à accomplir~s~.',
-                'info'
+                'info',
+                30_000
             );
         });
 
@@ -880,7 +881,8 @@ export class VampireGameProvider {
                     this.notifier.notify(
                         -1,
                         'Le tournage est terminé, l’ensemble de l’île peut retourner à ses occupations.',
-                        'info'
+                        'info',
+                        30_000
                     );
                 }
 
@@ -888,7 +890,8 @@ export class VampireGameProvider {
                     this.notifier.notify(
                         -1,
                         'Les Vampires ont gagné ce scénario ! Le tournage est terminé, l’ensemble de l’île peut retourner à ses occupations, bravo pour votre prestation.',
-                        'info'
+                        'info',
+                        30_000
                     );
                 }
 
@@ -896,7 +899,8 @@ export class VampireGameProvider {
                     this.notifier.notify(
                         -1,
                         'Les Mortels ont gagné ce scénario ! Le tournage est terminé, l’ensemble de l’île peut retourner à ses occupations, bravo pour votre prestation.',
-                        'info'
+                        'info',
+                        30_000
                     );
                 }
 
