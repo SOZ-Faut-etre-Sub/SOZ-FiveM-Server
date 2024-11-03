@@ -734,7 +734,7 @@ export class VampireGameProvider {
                 break;
         }
 
-        await wait(10000);
+        await wait(45_000);
         this.instructionalService.clear();
     }
 
