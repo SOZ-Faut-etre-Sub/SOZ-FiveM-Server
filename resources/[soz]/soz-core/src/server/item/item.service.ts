@@ -1,8 +1,7 @@
-import { VampireGameProvider } from '@public/server/story/vampire.game.provider';
+import { Inject, Injectable } from '@public/core/decorators/injectable';
 import { VampireGameStateProvider } from '@public/server/story/vampire.game.state.provider';
 import { ClientEvent } from '@public/shared/event/client';
 
-import { Inject, Injectable } from '../../core/decorators/injectable';
 import { InventoryItem, Item, ItemType } from '../../shared/item';
 import { Notifier } from '../notifier';
 import { QBCore } from '../qbcore';

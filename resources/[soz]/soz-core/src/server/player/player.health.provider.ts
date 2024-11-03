@@ -1,15 +1,14 @@
+import { OnEvent } from '@public/core/decorators/event';
+import { Inject } from '@public/core/decorators/injectable';
+import { Provider } from '@public/core/decorators/provider';
 import { PriceService } from '@public/server/bank/price.service';
 import { FeatureProvider } from '@public/server/feature/feature.provider';
 import { PlayerZombieProvider } from '@public/server/player/player.zombie.provider';
-import { VampireGameProvider } from '@public/server/story/vampire.game.provider';
 import { VampireGameStateProvider } from '@public/server/story/vampire.game.state.provider';
 import { TaxType } from '@public/shared/bank';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
-import { OnEvent } from '../../core/decorators/event';
-import { Inject } from '../../core/decorators/injectable';
-import { Provider } from '../../core/decorators/provider';
 import { ServerEvent } from '../../shared/event';
 import { Feature } from '../../shared/features';
 import { PlayerMetadata, PlayerServerStateExercise } from '../../shared/player';

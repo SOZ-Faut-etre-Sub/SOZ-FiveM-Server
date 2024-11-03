@@ -4,7 +4,6 @@ import { VampireGameStateProvider } from '@public/server/story/vampire.game.stat
 import { PlayerData } from '@public/shared/player';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import PCancelable from 'p-cancelable';
-import { Gauge } from 'prom-client';
 
 import { On, Once, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -25,7 +24,6 @@ import {
     VampireGameObjectiveProps,
     VampireGameObjectiveTypePart2,
     VampireGameRole,
-    VampireGameServerState,
     VampireRespawnPoints,
 } from '../../shared/halloween';
 import { ProgressAnimation } from '../../shared/progress';
@@ -323,14 +321,34 @@ export class VampireGameProvider {
 
         this.gameState.mortalObjectivePart2[objective].players.add(player.citizenid);
 
+        let animation = {};
+        if (objective === 'vampire') {
+            animation = {
+                dictionary: 'missheistdockssetup1clipboard@base',
+                name: 'base',
+            };
+        } else if (objective === 'battery') {
+            animation = {
+                dictionary: 'mp_fm_intro_cut',
+                name: 'fixing_a_ped',
+            };
+        } else if (objective === 'dam') {
+            animation = {
+                task: 'world_human_welding',
+            };
+        } else if (objective === 'weapon') {
+            animation = {
+                task: 'world_human_hammering',
+            };
+        }
+
         const { completed } = await this.progressService.progress(
             source,
             'halloween_part2',
             '',
             10_000,
             {
-                dictionary: 'anim@heists@ornate_bank@thermal_charge',
-                name: 'thermal_charge',
+                ...animation,
                 options: {
                     repeat: true,
                 },
