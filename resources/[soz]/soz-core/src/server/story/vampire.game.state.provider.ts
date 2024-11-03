@@ -1,5 +1,5 @@
 import { Provider } from '@public/core/decorators/provider';
-import { Vector3 } from '@public/shared/polyzone/vector';
+import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import PCancelable from 'p-cancelable';
 import { Gauge } from 'prom-client';
 
@@ -13,7 +13,7 @@ export class VampireGameStateProvider {
     public excludedPlayers: Set<string> = new Set<string>();
     public playerRoles = new Map<string, VampireGameRole>();
 
-    public originalPlayerPositions = new Map<string, Vector3>();
+    public originalPlayerPositions = new Map<string, Vector4>();
 
     public mortalObjectivePart1 = new Map<VampireGameCollection, Vector3[]>();
     public mortalObjectivePart2 = {

@@ -2,8 +2,9 @@ import { Provider } from '@public/core/decorators/provider';
 import { wait } from '@public/core/utils';
 import { VampireGameStateProvider } from '@public/server/story/vampire.game.state.provider';
 import { PlayerData } from '@public/shared/player';
-import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
+import { fromVector4Object, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import PCancelable from 'p-cancelable';
+import { property } from 'three/src/nodes/core/PropertyNode';
 
 import { On, Once, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -923,7 +924,7 @@ export class VampireGameProvider {
 
                     const position = this.gameState.originalPlayerPositions.get(citizenId);
                     if (position) {
-                        this.playerPositionProvider.teleportToCoords(player.source, [...position, 0] as Vector4);
+                        this.playerPositionProvider.teleportToCoords(player.source, position);
                         this.gameState.originalPlayerPositions.delete(citizenId);
                     }
 
@@ -1012,7 +1013,23 @@ export class VampireGameProvider {
             return;
         }
 
-        const position = GetEntityCoords(GetPlayerPed(player.source), false) as Vector3;
+        let position = [...GetEntityCoords(GetPlayerPed(player.source), false), 0] as Vector4;
+
+        if (player.metadata.inside.apartment && player.metadata.inside.exitCoord) {
+            this.playerPositionProvider.teleportToCoords(
+                player.source,
+                fromVector4Object(player.metadata.inside.exitCoord)
+            );
+
+            this.playerService.setPlayerMetadata(player.source, 'inside', {
+                apartment: false,
+                property: null,
+                exitCoord: player.metadata.inside.exitCoord, //keep exitCoord for command player-tp-entrance
+            });
+
+            position = fromVector4Object(player.metadata.inside.exitCoord);
+        }
+
         this.gameState.originalPlayerPositions.set(player.citizenid, position);
 
         this.gameState.playerRoles.set(player.citizenid, role);
