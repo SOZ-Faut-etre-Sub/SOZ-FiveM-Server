@@ -32,6 +32,7 @@ import { getRandomKeyWeighted } from '../../shared/random';
 import { RpcServerEvent } from '../../shared/rpc';
 import { FeatureProvider } from '../feature/feature.provider';
 import { LSMCDeathProvider } from '../job/lsmc/lsmc.death.provider';
+import { LockService } from '../lock.service';
 import { Notifier } from '../notifier';
 import { PermissionService } from '../permission.service';
 import { PlayerPositionProvider } from '../player/player.position.provider';
@@ -43,6 +44,8 @@ import { Store } from '../store/store';
 import { NpcProvider } from '../utils/npc.provider';
 
 const OBJECTIVE_Y_LIMITATION = [-3600, 1200];
+
+type StopReason = 'cancel' | 'mortal_victory' | 'vampire_victory';
 
 @Provider()
 export class VampireGameProvider {
@@ -84,6 +87,9 @@ export class VampireGameProvider {
 
     @Inject(VampireGameStateProvider)
     private gameState: VampireGameStateProvider;
+
+    @Inject(LockService)
+    private lockService: LockService;
 
     private gameDuration = 90; // minutes
     private autoRespawnDuration = 20; // seconds
@@ -195,13 +201,8 @@ export class VampireGameProvider {
         await wait(2000);
 
         this.gameState.timer = setTimeout(
-            () => {
-                this.notifier.notify(
-                    -1,
-                    'Les Vampires ont gagné ce scénario ! Le tournage est terminé, l’ensemble de l’île peut retourner à ses occupations, bravo pour votre prestation.',
-                    'info'
-                );
-                this.stopGame();
+            async () => {
+                await this.stopGame('vampire_victory');
             },
             this.gameDuration * 60 * 1000
         );
@@ -215,7 +216,7 @@ export class VampireGameProvider {
     }
 
     @OnEvent(ServerEvent.ADMIN_HALLOWEEN_STOP_GAME)
-    public stopGameEvent(source: number) {
+    public async stopGameEvent(source: number) {
         if (!this.permissionService.isStaff(source)) {
             return;
         }
@@ -225,13 +226,7 @@ export class VampireGameProvider {
             return;
         }
 
-        this.notifier.notify(
-            -1,
-            'Le tournage est terminé, l’ensemble de l’île peut retourner à ses occupations.',
-            'info'
-        );
-        this.stopGame();
-        this.notifier.notify(source, 'Le jeu a été arrêté', 'info');
+        await this.stopGame('cancel');
     }
 
     @OnEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_TAKE_OBJECTIVE_PART1)
@@ -635,12 +630,7 @@ export class VampireGameProvider {
             if (roleGauge.values[0].value > 0) return;
         }
 
-        this.notifier.notify(
-            -1,
-            'Les Vampires ont gagné ce scénario ! Le tournage est terminé, l’ensemble de l’île peut retourner à ses occupations, bravo pour votre prestation.',
-            'info'
-        );
-        this.stopGame();
+        await this.stopGame('vampire_victory');
     }
 
     @OnEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_KNOCK_PLAYER)
@@ -878,62 +868,100 @@ export class VampireGameProvider {
     }
 
     /* Private methods */
-    private stopGame() {
-        TriggerClientEvent('InteractSound_CL:PlayOnOne', -1, 'halloween/wolf', 0.8);
+    private async stopGame(reason: StopReason) {
+        await this.lockService.lock(
+            'stopVampireGame',
+            async () => {
+                if (!this.gameState.started) {
+                    return;
+                }
 
-        this.npcProvider.disableNPC(false);
+                if (reason === 'cancel') {
+                    this.notifier.notify(
+                        -1,
+                        'Le tournage est terminé, l’ensemble de l’île peut retourner à ses occupations.',
+                        'info'
+                    );
+                }
 
-        this.store.dispatch.global.update({
-            halloween: '',
-            blackout: false,
-            blackoutLevel: 0,
-            blackoutOverride: false,
-        });
+                if (reason === 'vampire_victory') {
+                    this.notifier.notify(
+                        -1,
+                        'Les Vampires ont gagné ce scénario ! Le tournage est terminé, l’ensemble de l’île peut retourner à ses occupations, bravo pour votre prestation.',
+                        'info'
+                    );
+                }
 
-        clearTimeout(this.gameState.timer);
-        clearTimeout(this.gameState.mortalObjectivePart3);
+                if (reason === 'mortal_victory') {
+                    this.notifier.notify(
+                        -1,
+                        'Les Mortels ont gagné ce scénario ! Le tournage est terminé, l’ensemble de l’île peut retourner à ses occupations, bravo pour votre prestation.',
+                        'info'
+                    );
+                }
 
-        this.gameState.playerRoles.forEach((_, citizenId) => {
-            const player = this.playerService.getPlayerByCitizenId(citizenId);
-            if (!player) {
-                return;
-            }
+                TriggerClientEvent('InteractSound_CL:PlayOnOne', -1, 'halloween/wolf', 0.8);
 
-            const playerState = this.playerStateService.getClientStateByCitizenId(citizenId);
-            if (!playerState.isKnockedOut) return;
+                this.npcProvider.disableNPC(false);
 
-            TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED, player.source, VampireGameRole.Mortal);
-            this.gameState.autoRespawn.get(citizenId)?.cancel();
-        });
+                this.store.dispatch.global.update({
+                    halloween: '',
+                    blackout: false,
+                    blackoutLevel: 0,
+                    blackoutOverride: false,
+                });
 
-        this.playerStateService.setAllClientsState({
-            halloweenRole: null,
-            isKnockedOut: false,
-        });
+                clearTimeout(this.gameState.timer);
+                clearTimeout(this.gameState.mortalObjectivePart3);
 
-        TriggerLatentClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_STATE, -1, 1024, {
-            inWaitingRoom: false,
-            started: false,
-            role: null,
-            objectivePart1: null,
-            objectivePart2: null,
-        } as VampireGameClientState);
+                this.gameState.playerRoles.forEach((_, citizenId) => {
+                    const player = this.playerService.getPlayerByCitizenId(citizenId);
+                    if (!player) {
+                        return;
+                    }
 
-        Object.values(this.gameState.gauges).forEach(gauge => gauge.reset());
+                    const playerState = this.playerStateService.getClientStateByCitizenId(citizenId);
+                    if (!playerState.isKnockedOut) return;
 
-        this.gameState.mortalObjectivePart1.clear();
-        Object.keys(this.gameState.mortalObjectivePart2).forEach(key => {
-            this.gameState.mortalObjectivePart2[key].finished = false;
-            this.gameState.mortalObjectivePart2[key].players.clear();
-        });
-        this.gameState.mortalObjectivePart3 = null;
+                    TriggerClientEvent(
+                        ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED,
+                        player.source,
+                        VampireGameRole.Mortal
+                    );
+                    this.gameState.autoRespawn.get(citizenId)?.cancel();
+                });
 
-        this.gameState.objectiveGauges.part1.reset();
-        this.gameState.objectiveGauges.part2.reset();
+                this.playerStateService.setAllClientsState({
+                    halloweenRole: null,
+                    isKnockedOut: false,
+                });
 
-        this.gameState.autoRespawn.clear();
-        this.gameState.playerRoles.clear();
-        this.gameState.started = false;
+                TriggerLatentClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_STATE, -1, 1024, {
+                    inWaitingRoom: false,
+                    started: false,
+                    role: null,
+                    objectivePart1: null,
+                    objectivePart2: null,
+                } as VampireGameClientState);
+
+                Object.values(this.gameState.gauges).forEach(gauge => gauge.reset());
+
+                this.gameState.mortalObjectivePart1.clear();
+                Object.keys(this.gameState.mortalObjectivePart2).forEach(key => {
+                    this.gameState.mortalObjectivePart2[key].finished = false;
+                    this.gameState.mortalObjectivePart2[key].players.clear();
+                });
+                this.gameState.mortalObjectivePart3 = null;
+
+                this.gameState.objectiveGauges.part1.reset();
+                this.gameState.objectiveGauges.part2.reset();
+
+                this.gameState.autoRespawn.clear();
+                this.gameState.playerRoles.clear();
+                this.gameState.started = false;
+            },
+            10_000
+        );
     }
 
     private async newPlayer(player: PlayerData) {
@@ -1146,13 +1174,8 @@ export class VampireGameProvider {
 
         clearInterval(this.gameState.mortalObjectivePart3);
         this.gameState.mortalObjectivePart3 = setTimeout(
-            () => {
-                this.notifier.notify(
-                    -1,
-                    'Les Mortels ont gagné ce scénario ! Le tournage est terminé, l’ensemble de l’île peut retourner à ses occupations, bravo pour votre prestation.',
-                    'info'
-                );
-                this.stopGame();
+            async () => {
+                await this.stopGame('mortal_victory');
             },
             this.mortalObjectivePart3Duration * 60 * 1000
         );
