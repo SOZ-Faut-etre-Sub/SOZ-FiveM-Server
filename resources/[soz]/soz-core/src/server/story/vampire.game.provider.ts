@@ -486,6 +486,10 @@ export class VampireGameProvider {
                 await wait(this.autoRespawnDuration * 1000);
                 if (isCanceled) return;
 
+                this.gameState.gauges[playerRole].dec();
+                this.gameState.playerRoles.set(player.citizenid, VampireGameRole.Ghoul);
+                this.gameState.gauges[VampireGameRole.Ghoul].inc();
+
                 this.switchPlayerRole(source, VampireGameRole.Ghoul);
                 resolve();
             });
