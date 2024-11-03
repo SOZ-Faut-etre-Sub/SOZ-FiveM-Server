@@ -106,6 +106,7 @@ export enum ClientEvent {
     JOB_OPEN_ON_DUTY_MENU = 'soz-job:client:OpenOnDutyMenu',
 
     LSMC_DISEASE_APPLY_CURRENT_EFFECT = 'lsmc:maladie:client:ApplyCurrentDiseaseEffect',
+    LSMC_SET_DEATH = 'soz-core:client:lsmc:set-death',
     LSMC_REVIVE = 'soz-core:lsmc:client:revive',
     LSMC_REVIVE_DOC = 'soz-core:lsmc:client:revive-doc',
     LSMC_CALL = 'soz-core:lsmc:client:call',

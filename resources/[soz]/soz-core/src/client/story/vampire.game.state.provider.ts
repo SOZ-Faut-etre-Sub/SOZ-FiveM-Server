@@ -12,7 +12,6 @@ import {
 
 @Provider()
 export class VampireGameStateProvider {
-    private respawning = false;
     private state: VampireGameClientState = {
         inWaitingRoom: false,
         started: false,
@@ -23,14 +22,6 @@ export class VampireGameStateProvider {
 
     public getCompleteState(state: Partial<VampireGameClientState> = {}) {
         return { ...this.state, ...state };
-    }
-
-    public playerRespawning() {
-        return this.respawning;
-    }
-
-    public setPlayerRespawning(respawning: boolean) {
-        this.respawning = respawning;
     }
 
     public isGameRunning() {

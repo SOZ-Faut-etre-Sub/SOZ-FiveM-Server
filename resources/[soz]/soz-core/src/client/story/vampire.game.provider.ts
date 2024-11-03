@@ -134,7 +134,6 @@ export class VampireGameProvider {
 
     public async handleOnDeath() {
         if (!this.gameState.isGameRunning()) return;
-        if (this.gameState.playerRespawning()) return;
         if (this.playerListStateService.isKnockedOut(GetPlayerServerId(PlayerId()))) return;
 
         if (GetEntityModel(PlayerPedId()) === GetHashKey('a_c_crow')) {
@@ -144,6 +143,11 @@ export class VampireGameProvider {
 
             NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, 1, false);
             SetEntityHealth(ped, GetPedMaxHealth(ped));
+
+            TriggerEvent(ClientEvent.LSMC_SET_DEATH, false);
+            await wait(500);
+            this.voipService.mutePlayer(false);
+
             return;
         }
 
@@ -375,8 +379,6 @@ export class VampireGameProvider {
 
     @OnEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED)
     public async onPlayerConverted(role: VampireGameRole) {
-        this.gameState.setPlayerRespawning(true);
-
         const ped = PlayerPedId();
         let pos = GetEntityCoords(ped);
         const heading = GetEntityHeading(ped);
@@ -396,13 +398,13 @@ export class VampireGameProvider {
         NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, 1, false);
         SetEntityHealth(ped, GetPedMaxHealth(ped));
 
+        TriggerEvent(ClientEvent.LSMC_SET_DEATH, false);
         this.voipService.mutePlayer(false);
 
         await this.syncModel(role);
         await this.displayRole();
 
         await this.displayRoleObjective(this.gameState.getRole());
-        this.gameState.setPlayerRespawning(false);
     }
 
     @OnEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_OBJECTIVE_PART1)
@@ -674,7 +676,6 @@ export class VampireGameProvider {
 
         await this.syncModel(null);
         this.syncEnemyPosition([], false);
-        this.gameState.setPlayerRespawning(false);
 
         const playerPed = PlayerPedId();
         const playerData = this.playerService.getPlayer();
