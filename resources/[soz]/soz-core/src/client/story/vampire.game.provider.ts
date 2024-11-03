@@ -56,6 +56,7 @@ import { InteractionProvider } from '../quick-interaction/interaction.provider';
 import { SkinService } from '../skin/skin.service';
 import { TargetFactory } from '../target/target.factory';
 import { BlurService } from '../utils/blur.service';
+import { VoipService } from '../voip/voip.service';
 import { WeaponService } from '../weapon/weapon.service';
 
 @Provider()
@@ -122,6 +123,9 @@ export class VampireGameProvider {
 
     @Inject(LSMCPlasterProvider)
     private readonly lsmcPlasterProvider: LSMCPlasterProvider;
+
+    @Inject(VoipService)
+    public readonly voipService: VoipService;
 
     private blipDisabled = new Set<string>();
     private objectiveInteractions = new Set<string>();
@@ -391,6 +395,8 @@ export class VampireGameProvider {
 
         NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, 1, false);
         SetEntityHealth(ped, GetPedMaxHealth(ped));
+
+        this.voipService.mutePlayer(false);
 
         await this.syncModel(role);
         await this.displayRole();
