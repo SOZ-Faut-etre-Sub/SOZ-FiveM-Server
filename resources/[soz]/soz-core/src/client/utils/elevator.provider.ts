@@ -279,6 +279,7 @@ export class ElevatorProvider {
                         icon: display.icon,
                         label: display.label + destinationFloor.label,
                         category: 'citizen',
+                        event: 'all',
                         action: () => {
                             this.playerPositionProvider.teleportAdminToPosition(destinationFloor.spawnPoint);
                         },
