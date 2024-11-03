@@ -84,7 +84,7 @@ export const GhoulOutfit = {
     [PlayerPedHash.Female]: {
         Components: {
             '1': { Drawable: 0, Texture: 0, Palette: 0 },
-            '3': { Drawable: 251, Texture: 0, Palette: 0 },
+            '3': { Drawable: 271, Texture: 0, Palette: 0 },
             '4': { Drawable: 63, Texture: 2, Palette: 0 },
             '5': { Drawable: 0, Texture: 0, Palette: 0 },
             '6': { Drawable: 160, Texture: 0, Palette: 0 },
