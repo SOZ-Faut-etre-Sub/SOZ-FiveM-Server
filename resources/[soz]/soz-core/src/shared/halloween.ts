@@ -122,25 +122,6 @@ export type VampireGameClientState = {
     >;
 };
 
-export type VampireGameServerState = {
-    started: boolean;
-    timer: NodeJS.Timeout;
-    playerRoles: Map<string, VampireGameRole>;
-
-    mortalObjectivePart1: Map<VampireGameCollection, Vector3[]>;
-    mortalObjectivePart2: Record<
-        VampireGameObjectiveTypePart2,
-        {
-            finished: boolean;
-            players: Set<string>;
-        }
-    >;
-    mortalObjectivePart3: NodeJS.Timeout;
-
-    autoRespawn: Map<string, PCancelable<void>>;
-    gauges: Record<VampireGameRole, Gauge>;
-};
-
 export type VampireGameCollection = 'prop_streetlight' | 'prop_fire_hydrant' | 'prop_gas_pump' | 'prop_elecbox';
 export const VampireGameObjectiveCollectionPart1: Record<VampireGameCollection, string[]> = {
     prop_streetlight: ['prop_streetlight_01'],

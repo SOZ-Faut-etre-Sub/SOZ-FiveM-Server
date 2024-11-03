@@ -50,6 +50,19 @@ export class VampireGameStateProvider {
         }),
     };
 
+    public objectiveGauges = {
+        part1: new Gauge({
+            name: 'soz_halloween_objective_part1_count',
+            help: 'Number of Remaining Mortal Objective Part 1',
+            labelNames: ['objective', 'total'],
+        }),
+        part2: new Gauge({
+            name: 'soz_halloween_objective_part2_count',
+            help: 'Number of active player on Mortal Objective Part 2',
+            labelNames: ['objective', 'total'],
+        }),
+    };
+
     public isGameStarted() {
         return this.started;
     }

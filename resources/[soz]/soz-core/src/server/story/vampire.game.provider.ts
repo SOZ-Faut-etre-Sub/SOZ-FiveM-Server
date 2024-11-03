@@ -166,6 +166,16 @@ export class VampireGameProvider {
 
         this.createObjectivePart1();
 
+        Object.keys(VampireGameObjectivePart2).forEach(objective => {
+            this.gameState.objectiveGauges.part2.set(
+                {
+                    objective,
+                    total: this.mortalObjectivePart2[objective],
+                },
+                0
+            );
+        });
+
         for (const player of this.serverStateService.getPlayers()) {
             await this.newPlayer(player);
         }
@@ -285,6 +295,14 @@ export class VampireGameProvider {
             collection,
             this.gameState.mortalObjectivePart1.get(collection).filter((_, idx) => idx !== objectiveIndex)
         );
+        this.gameState.objectiveGauges.part1.set(
+            {
+                objective: collection,
+                total: this.mortalObjectivePart1[collection],
+            },
+            this.mortalObjectivePart1[collection] - this.gameState.mortalObjectivePart1.get(collection).length
+        );
+
         this.notifier.notify(source, 'Objectif validé', 'success');
 
         this.sendObjectivePart1();
@@ -318,7 +336,13 @@ export class VampireGameProvider {
             return;
         }
 
+        const objectiveGaugeLabel = {
+            objective,
+            total: this.mortalObjectivePart2[objective],
+        };
+
         this.gameState.mortalObjectivePart2[objective].players.add(player.citizenid);
+        this.gameState.objectiveGauges.part2.labels(objectiveGaugeLabel).inc();
 
         let animation = {};
         if (objective === 'vampire') {
@@ -361,6 +385,7 @@ export class VampireGameProvider {
         );
         if (!completed) {
             this.gameState.mortalObjectivePart2[objective].players.delete(player.citizenid);
+            this.gameState.objectiveGauges.part2.labels(objectiveGaugeLabel).dec();
             return;
         }
 
@@ -388,6 +413,7 @@ export class VampireGameProvider {
         }
 
         this.gameState.mortalObjectivePart2[objective].players.delete(player.citizenid);
+        this.gameState.objectiveGauges.part2.labels(objectiveGaugeLabel).dec();
 
         this.sendObjectivePart2();
 
@@ -853,12 +879,17 @@ export class VampireGameProvider {
         } as VampireGameClientState);
 
         Object.values(this.gameState.gauges).forEach(gauge => gauge.reset());
+
         this.gameState.mortalObjectivePart1.clear();
         Object.keys(this.gameState.mortalObjectivePart2).forEach(key => {
             this.gameState.mortalObjectivePart2[key].finished = false;
             this.gameState.mortalObjectivePart2[key].players.clear();
         });
         this.gameState.mortalObjectivePart3 = null;
+
+        this.gameState.objectiveGauges.part1.reset();
+        this.gameState.objectiveGauges.part2.reset();
+
         this.gameState.autoRespawn.clear();
         this.gameState.playerRoles.clear();
         this.gameState.started = false;
@@ -949,6 +980,14 @@ export class VampireGameProvider {
             this.gameState.mortalObjectivePart1.set(
                 collection,
                 this.getCollectionContent(collection, this.mortalObjectivePart1[collection])
+            );
+
+            this.gameState.objectiveGauges.part1.set(
+                {
+                    objective: collection,
+                    total: this.mortalObjectivePart1[collection],
+                },
+                0
             );
         }
     }
