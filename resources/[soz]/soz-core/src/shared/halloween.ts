@@ -105,6 +105,12 @@ export const GhoulOutfit = {
 };
 
 export const VampireGameEnemyRoles = [VampireGameRole.Vampire, VampireGameRole.Ghoul];
+export const VampireGameAllyRoles = [
+    VampireGameRole.Hunter,
+    VampireGameRole.Mortal,
+    VampireGameRole.Squire,
+    VampireGameRole.Alchemist,
+];
 
 export type VampireGameClientState = {
     inWaitingRoom: boolean;

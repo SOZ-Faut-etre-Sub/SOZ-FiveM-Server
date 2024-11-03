@@ -16,6 +16,7 @@ import { Feature } from '../../shared/features';
 import {
     GhoulOutfit,
     MortalRespawnPoints,
+    VampireGameAllyRoles,
     VampireGameClientState,
     VampireGameCollection,
     VampireGameEnemyRoles,
@@ -40,6 +41,7 @@ import { BlipFactory } from '../blip';
 import { DrawService } from '../draw.service';
 import { FeatureProvider } from '../feature/feature.provider';
 import { InstructionalService } from '../instructional.service';
+import { LSMCPlasterProvider } from '../job/lsmc/lsmc.plaster.provider';
 import { Notifier } from '../notifier';
 import { NuiMenu } from '../nui/nui.menu';
 import { ObjectProvider } from '../object/object.provider';
@@ -117,6 +119,9 @@ export class VampireGameProvider {
 
     @Inject(DrawService)
     private readonly drawService: DrawService;
+
+    @Inject(LSMCPlasterProvider)
+    private readonly lsmcPlasterProvider: LSMCPlasterProvider;
 
     private blipDisabled = new Set<string>();
     private objectiveInteractions = new Set<string>();
@@ -263,6 +268,31 @@ export class VampireGameProvider {
                         targetSource,
                         VampireGameRole.Mortal
                     );
+                },
+            },
+            {
+                label: 'Soigner',
+                icon: 'ems/heal',
+                category: 'citizen',
+                event: 'vampire:game',
+                canInteract: async entity => {
+                    if (!this.gameState.isGameRunning()) return false;
+                    if (!this.gameState.hasRole(VampireGameRole.Alchemist)) return false;
+
+                    const targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
+
+                    if (!this.playerListStateService.isKnockedOut(targetSource)) return false;
+
+                    const targetState = await emitRpc<PlayerClientState>(
+                        RpcServerEvent.PLAYER_GET_CLIENT_STATE,
+                        targetSource
+                    );
+
+                    return VampireGameAllyRoles.includes(targetState.halloweenRole);
+                },
+                action: async entity => {
+                    const targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
+                    TriggerServerEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_CONVERT_PLAYER, targetSource, null);
                 },
             },
         ]);
@@ -459,6 +489,8 @@ export class VampireGameProvider {
         });
         this.vampirePositionBlip.clear();
 
+        if (!this.gameState.isGameRunning()) return;
+
         for (const [index, position] of positions.entries()) {
             const blipName = `halloween_vampire_position_${index}`;
 
@@ -571,12 +603,17 @@ export class VampireGameProvider {
         const player = PlayerPedId();
         SwitchOutPlayer(player, 0, 2);
 
+        SetEntityHealth(player, GetPedMaxHealth(player));
+
         this.playerWalkstyleProvider.updateWalkStyle('overloaded', null);
         this.weaponService.setDisabled('vampire-game', true);
+        this.lsmcPlasterProvider.disablePlaster();
 
         for (const [name] of this.blipFactory.getAll().entries()) {
             if (
                 name.startsWith('halloween_vampire_objective_') ||
+                name.startsWith('mortal_tp_') ||
+                name.startsWith('vampire_tp_') ||
                 this.blipFactory.isHidden(name) ||
                 this.blipDisabled.has(name)
             ) {
@@ -612,8 +649,10 @@ export class VampireGameProvider {
             await wait(10);
         }
 
+        this.lsmcPlasterProvider.enablePlaster();
         this.weaponService.setDisabled('vampire-game', false);
         this.instructionalService.clear();
+
         await this.syncModel(null);
         this.syncEnemyPosition([], false);
         this.gameState.setPlayerRespawning(false);
@@ -789,7 +828,7 @@ export class VampireGameProvider {
 
     private createMortalTeleports() {
         Object.entries(MortalRespawnPoints).forEach(([id, location]) => {
-            if (this.gameState.isGameRunning() && !this.gameState.hasEnemyRole()) {
+            if (this.gameState.isGameRunning() && this.gameState.hasAlliedRole()) {
                 if (this.blipFactory.exist(`mortal_tp_${id}`)) {
                     return;
                 }
