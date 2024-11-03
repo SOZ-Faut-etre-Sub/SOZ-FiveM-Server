@@ -557,8 +557,13 @@ export class VampireGameProvider {
     }
 
     private async onGameStart() {
+        this.notifier.notify('Quelque chose de sombre se prépare... Restez sur vos gardes !', 'info');
+        await wait(5_000);
+
         const player = PlayerPedId();
         SwitchOutPlayer(player, 0, 2);
+
+        SetEntityHealth(player, GetPedMaxHealth(player));
 
         this.playerWalkstyleProvider.updateWalkStyle('overloaded', null);
         this.weaponService.setDisabled('vampire-game', true);
