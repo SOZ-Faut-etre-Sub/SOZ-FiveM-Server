@@ -258,7 +258,6 @@ export class LSMCDeathProvider {
             // Skip death process during vampire game
             if (this.vampireGameStateProvider.isGameRunning()) {
                 await this.vampireGameProvider.handleOnDeath();
-                this.IsDead = false;
                 return;
             }
 
@@ -422,6 +421,11 @@ export class LSMCDeathProvider {
         EnableControlAction(0, 249, true);
         EnableControlAction(0, 46, true);
         EnableControlAction(0, 200, true);
+    }
+
+    @OnEvent(ClientEvent.LSMC_SET_DEATH)
+    public async setDeath(isDead: boolean) {
+        this.IsDead = isDead;
     }
 
     @OnEvent(ClientEvent.LSMC_REVIVE)
