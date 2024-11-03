@@ -608,7 +608,7 @@ export class VampireGameProvider {
         this.gameState.setPlayerRespawning(false);
 
         const playerPed = PlayerPedId();
-        SetEntityHealth(playerPed, GetPedMaxHealth(playerPed));
+        SetEntityHealth(playerPed, 200);
     }
 
     private async syncModel(role: VampireGameRole, model?: string) {
