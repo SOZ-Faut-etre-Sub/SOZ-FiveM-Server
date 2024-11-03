@@ -474,6 +474,8 @@ export class VampireGameProvider {
         });
         this.vampirePositionBlip.clear();
 
+        if (!this.gameState.isGameRunning()) return;
+
         for (const [index, position] of positions.entries()) {
             const blipName = `halloween_vampire_position_${index}`;
 
@@ -583,9 +585,6 @@ export class VampireGameProvider {
     }
 
     private async onGameStart() {
-        this.notifier.notify('Quelque chose de sombre se prépare... Restez sur vos gardes !', 'info');
-        await wait(5_000);
-
         const player = PlayerPedId();
         SwitchOutPlayer(player, 0, 2);
 
@@ -597,6 +596,8 @@ export class VampireGameProvider {
         for (const [name] of this.blipFactory.getAll().entries()) {
             if (
                 name.startsWith('halloween_vampire_objective_') ||
+                name.startsWith('mortal_tp_') ||
+                name.startsWith('vampire_tp_') ||
                 this.blipFactory.isHidden(name) ||
                 this.blipDisabled.has(name)
             ) {

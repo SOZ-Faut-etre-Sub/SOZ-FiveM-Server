@@ -184,11 +184,14 @@ export class VampireGameProvider {
             );
         });
 
+        this.notifier.notify(-1, 'Quelque chose de sombre se prépare... Restez sur vos gardes !', 'info');
+        await wait(10_000);
+
         for (const player of this.serverStateService.getPlayers()) {
             await this.newPlayer(player);
         }
 
-        await wait(5000);
+        await wait(5_000);
 
         this.npcProvider.disableNPC(true);
 
@@ -686,7 +689,7 @@ export class VampireGameProvider {
             TriggerLatentClientEvent(
                 ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_POSITION,
                 player.source,
-                1024,
+                16 * 1024,
                 enemyPositions,
                 true
             );
@@ -699,7 +702,7 @@ export class VampireGameProvider {
             TriggerLatentClientEvent(
                 ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_POSITION,
                 player.source,
-                1024,
+                16 * 1024,
                 victimPositions,
                 false
             );
@@ -997,6 +1000,8 @@ export class VampireGameProvider {
                 inWaitingRoom: true,
                 started: this.gameState.started,
                 role,
+                objectivePart1: !VampireGameEnemyRoles.includes(role) ? this.getObjectivePart1Progress() : null,
+                objectivePart2: !VampireGameEnemyRoles.includes(role) ? this.getObjectivePart2Progress() : null,
             });
 
             this.sendObjectivePart1();
@@ -1043,10 +1048,8 @@ export class VampireGameProvider {
             inWaitingRoom: true,
             started: this.gameState.started,
             role,
-            objectivePart1: !VampireGameEnemyRoles.includes(role)
-                ? Object.fromEntries(this.gameState.mortalObjectivePart1.entries())
-                : null,
-            objectivePart2: null,
+            objectivePart1: !VampireGameEnemyRoles.includes(role) ? this.getObjectivePart1Progress() : null,
+            objectivePart2: !VampireGameEnemyRoles.includes(role) ? this.getObjectivePart2Progress() : null,
         });
 
         if (player.metadata.isdead) {
