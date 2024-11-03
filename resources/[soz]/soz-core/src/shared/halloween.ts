@@ -1,9 +1,7 @@
 import { MapPickerLocation } from '@public/shared/picker';
 import { PlayerPedHash } from '@public/shared/player';
 import { Zone } from '@public/shared/polyzone/box.zone';
-import { Vector3 } from '@public/shared/polyzone/vector';
-import PCancelable from 'p-cancelable';
-import { Gauge } from 'prom-client';
+import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 
 export enum VampireGameRole {
     // Les méchants...
@@ -266,6 +264,15 @@ export const VampireRespawnPoints: MapPickerLocation[] = [
         icon: 'coffin',
     },
 ];
+
+export const MortalRespawnPoints: Record<string, Vector4> = {
+    stronk: [5.31, -707.35, 45.98, 205.19],
+    lspd: [638.92, 1.61, 82.79, 249.97],
+    mdr: [-545.11, -204.11, 38.21, 208.18],
+    gouv: [-555.52, -620.38, 34.67, 179.96],
+    lsmc: [341.56, -1397.09, 32.51, 49.5],
+    bcso: [1855.66, 3682.55, 34.28, 210.73],
+};
 
 export const VampireGameObjectiveProps: Record<string, Vector3[]> = {
     prop_streetlight_01: [

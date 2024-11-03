@@ -15,6 +15,7 @@ import { ServerEvent } from '../../shared/event/server';
 import { Feature } from '../../shared/features';
 import {
     GhoulOutfit,
+    MortalRespawnPoints,
     VampireGameClientState,
     VampireGameCollection,
     VampireGameEnemyRoles,
@@ -308,6 +309,7 @@ export class VampireGameProvider {
         this.syncObjectivePart1(this.gameState.getObjectivePart1());
         this.syncObjectivePart2(this.gameState.getObjectivePart2());
         this.createEnemyTeleports();
+        this.createMortalTeleports();
     }
 
     @OnEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED)
@@ -753,5 +755,37 @@ export class VampireGameProvider {
                 this.blipFactory.remove(`vampire_tp_${bin.id}`);
             }
         }
+    }
+
+    private createMortalTeleports() {
+        Object.entries(MortalRespawnPoints).forEach(([id, location]) => {
+            if (this.gameState.isGameRunning() && !this.gameState.hasEnemyRole()) {
+                if (this.blipFactory.exist(`mortal_tp_${id}`)) {
+                    return;
+                }
+
+                this.blipFactory.create(
+                    `mortal_tp_${id}`,
+                    {
+                        name: 'Safe Zone',
+                        coords: toVector3Object(location),
+                        sprite: 40,
+                    },
+                    true,
+                    [
+                        {
+                            label: 'Téléporter',
+                            action: async (blip: Blip, data: string) => {
+                                SetFrontendActive(false);
+                                TriggerServerEvent(ServerEvent.PLAYER_MORTAL_TP, data);
+                            },
+                            data: id,
+                        },
+                    ]
+                );
+            } else {
+                this.blipFactory.remove(`mortal_tp_${id}`);
+            }
+        });
     }
 }

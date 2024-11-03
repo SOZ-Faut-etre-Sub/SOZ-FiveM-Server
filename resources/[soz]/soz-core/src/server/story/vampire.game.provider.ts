@@ -15,6 +15,7 @@ import { ClientEvent } from '../../shared/event/client';
 import { ServerEvent } from '../../shared/event/server';
 import { Feature } from '../../shared/features';
 import {
+    MortalRespawnPoints,
     VampireGameClientState,
     VampireGameCollection,
     VampireGameEnemyRoles,
@@ -109,6 +110,8 @@ export class VampireGameProvider {
     };
     private mortalObjectivePart3Duration = 10; // minutes
 
+    private mortalTpList = new Map<string, number>();
+
     @Once()
     onStart() {
         VampireRespawnPoints.forEach(location => {
@@ -116,6 +119,10 @@ export class VampireGameProvider {
                 ...location.coords,
                 0,
             ]);
+        });
+
+        Object.entries(MortalRespawnPoints).forEach(([id, location]) => {
+            this.playerPositionProvider.registerZone(`halloween_mortal_respawn_${id}`, location);
         });
     }
 
@@ -844,6 +851,30 @@ export class VampireGameProvider {
 
         this.mortalObjectivePart3Duration = value;
         this.notifier.notify(source, `La durée de l'objectif 3 a été mise à jour, durée: ${value} minutes`, 'info');
+    }
+
+    @OnEvent(ServerEvent.PLAYER_MORTAL_TP)
+    public async tpMortal(source: number, locationId: string) {
+        const player = this.playerService.getPlayer(source);
+        if (!player) {
+            return;
+        }
+
+        const lastTp = this.mortalTpList.get(player.citizenid) || 0;
+        const now = Date.now();
+
+        if (now - lastTp < 60 * 1000) {
+            this.notifier.notify(source, 'Tu dois ~r~attendre~s~ avant de pouvoir te téléporter !');
+            return;
+        }
+
+        const location = MortalRespawnPoints[locationId];
+        if (!location) {
+            return;
+        }
+
+        this.playerPositionProvider.teleportToCoords(source, location);
+        this.mortalTpList.set(player.citizenid, now);
     }
 
     /* Private methods */
