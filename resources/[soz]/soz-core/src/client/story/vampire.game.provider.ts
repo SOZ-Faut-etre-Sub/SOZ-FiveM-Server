@@ -626,13 +626,26 @@ export class VampireGameProvider {
         this.blipFactory.qbHide('job_pawl', true);
         this.blipFactory.qbHide('job_upw', true);
 
-        this.instructionalService.display(['Tu es désormais', this.gameState.getRole()], true);
+        let roleText = 'Tu es désormais ~italic~';
+        if (this.gameState.hasEnemyRole()) {
+            roleText += '~r~';
+        } else if (this.gameState.getRole() === VampireGameRole.Mortal) {
+            roleText += '~w~';
+        } else {
+            roleText += '~g~';
+        }
+
+        roleText += this.gameState.getRole() + '~italic~~w~.';
 
         do {
+            this.drawService.drawText(roleText, [0.5, 0.15], {
+                font: Font.ChaletLondon,
+                size: 0.8,
+                centered: true,
+            });
             await wait(0);
         } while (this.gameState.isGameStarting() && !this.gameState.isGameRunning());
 
-        this.instructionalService.clear();
         SwitchInPlayer(player);
     }
 
