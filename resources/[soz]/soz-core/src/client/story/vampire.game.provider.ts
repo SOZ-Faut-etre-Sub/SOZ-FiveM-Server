@@ -33,7 +33,7 @@ import { BIN_MODELS } from '../../shared/job/garbage';
 import { MenuType } from '../../shared/nui/menu';
 import { PlayerClientState } from '../../shared/player';
 import { BoxZone } from '../../shared/polyzone/box.zone';
-import { toVector3Object, Vector3 } from '../../shared/polyzone/vector';
+import { getDistance, toVector3Object, Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import { VehicleSeat } from '../../shared/vehicle/vehicle';
 import { WeaponName } from '../../shared/weapons/weapon';
@@ -811,6 +811,14 @@ export class VampireGameProvider {
         for (const bin of bins) {
             if (this.gameState.isGameRunning() && this.gameState.hasEnemyRole()) {
                 if (this.blipFactory.exist(`vampire_tp_${bin.id}`)) {
+                    continue;
+                }
+
+                const isTooClose = Object.values(MortalRespawnPoints).some(location => {
+                    return getDistance(bin.position, location) < 500;
+                });
+
+                if (isTooClose) {
                     continue;
                 }
 
