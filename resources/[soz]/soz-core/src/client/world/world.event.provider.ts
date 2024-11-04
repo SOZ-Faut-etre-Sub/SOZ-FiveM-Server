@@ -209,9 +209,12 @@ export class WorldEventProvider {
                 continue;
             }
 
-            const obj = this.objectProvider.findObject(object.object.id);
+            let obj = this.objectProvider.getObject(object.object.id);
             if (!obj) {
-                continue;
+                obj = this.objectProvider.findObject(object.object.id);
+                if (!obj) {
+                    continue;
+                }
             }
 
             if (obj.vfx?.id) {

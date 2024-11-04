@@ -727,7 +727,7 @@ export class SceneProvider {
                         const progress = await this.progressService.progress(
                             'world_event_signal',
                             'Signalement en cours...',
-                            10_000,
+                            180_000,
                             {
                                 dictionary: 'Rcm_epsilonism4',
                                 name: 'eps_4_ig_1_jimmy_lookaround_idle_a_jb',
