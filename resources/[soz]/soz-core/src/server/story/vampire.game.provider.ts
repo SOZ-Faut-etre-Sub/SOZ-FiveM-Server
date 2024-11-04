@@ -5,6 +5,7 @@ import { PlayerData } from '@public/shared/player';
 import { fromVector4Object, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import PCancelable from 'p-cancelable';
 
+import { Command } from '../../core/decorators/command';
 import { On, Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Rpc } from '../../core/decorators/rpc';
@@ -105,6 +106,7 @@ export class VampireGameProvider {
     private mortalObjectivePart3Duration: number; // minutes
 
     private mortalTpList = new Map<string, number>();
+    private blipEnabled = true;
 
     @Once(OnceStep.DatabaseConnected)
     async databaseReady() {
@@ -658,9 +660,10 @@ export class VampireGameProvider {
         TriggerClientEvent(ClientEvent.ADMIN_KILL_PLAYER, target);
     }
 
-    @Tick(TickInterval.EVERY_SECOND)
+    @Tick(TickInterval.EVERY_SECOND, 'vampire-game:syncEnemyPosition')
     async syncEnemyPosition() {
         if (!this.gameState.started) return;
+        if (!this.blipEnabled) return;
 
         const squirePlayers = [];
         const enemyPlayers = [];
@@ -712,6 +715,12 @@ export class VampireGameProvider {
                 false
             );
         });
+    }
+
+    @Command('blip-vampire', { role: 'admin' })
+    public setVampireBlip(source: number, enabled: string) {
+        const ENABLE_VALUES = ['true', 'on', '1'];
+        this.blipEnabled = ENABLE_VALUES.includes(enabled.toLowerCase());
     }
 
     /* Admin events */
