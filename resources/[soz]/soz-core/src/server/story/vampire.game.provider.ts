@@ -666,14 +666,14 @@ export class VampireGameProvider {
         if (!this.blipEnabled) return;
 
         const squirePlayers = [];
-        const enemyPlayers = [];
+        const vampirePlayers = [];
 
         const victimPositions: Vector3[] = [];
         const enemyPositions: Vector3[] = [];
 
         this.gameState.playerRoles.forEach((role, citizenId) => {
-            if (VampireGameEnemyRoles.includes(role)) {
-                enemyPlayers.push(citizenId);
+            if (role === VampireGameRole.Vampire) {
+                vampirePlayers.push(citizenId);
             } else if (role === VampireGameRole.Squire) {
                 squirePlayers.push(citizenId);
             }
@@ -703,7 +703,7 @@ export class VampireGameProvider {
             );
         });
 
-        enemyPlayers.forEach(citizenId => {
+        vampirePlayers.forEach(citizenId => {
             const player = this.playerService.getPlayerByCitizenId(citizenId);
             if (!player) return;
 
