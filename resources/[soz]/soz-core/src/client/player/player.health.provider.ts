@@ -4,6 +4,7 @@ import { Provider } from '@core/decorators/provider';
 import { Tick, TickInterval } from '@core/decorators/tick';
 import { emitRpc } from '@core/rpc';
 import { FeatureProvider } from '@public/client/feature/feature.provider';
+import { VampireGameStateProvider } from '@public/client/story/vampire.game.state.provider';
 import { PlayerUpdate } from '@public/core/decorators/player';
 import { Rpc } from '@public/core/decorators/rpc';
 import { wait } from '@public/core/utils';
@@ -346,6 +347,9 @@ export class PlayerHealthProvider {
     @Inject(FeatureProvider)
     private featureProvider: FeatureProvider;
 
+    @Inject(VampireGameStateProvider)
+    private readonly vampireGameStateProvider: VampireGameStateProvider;
+
     private lastRunPosition = null;
 
     private unlimitedSprint = false;
@@ -641,6 +645,10 @@ export class PlayerHealthProvider {
         }
 
         if (player.metadata.isdead || player.metadata.disease) {
+            return;
+        }
+
+        if (this.vampireGameStateProvider.isGameRunning()) {
             return;
         }
 
