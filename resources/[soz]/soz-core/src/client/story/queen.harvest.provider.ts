@@ -1274,7 +1274,7 @@ export class QueenHarvestProvider {
             freeze: true,
             blockevents: true,
             animDict: 'missfbi3_party_d',
-            anim: 'stand_talk_loop_b_male1',
+            anim: 'stand_talk_loop_a_male1',
             flag: 1,
             target: {
                 distance: 1.5,
@@ -1424,7 +1424,7 @@ export class QueenHarvestProvider {
             freeze: true,
             blockevents: true,
             animDict: 'missfbi3_party_d',
-            anim: 'stand_talk_loop_b_male1',
+            anim: 'stand_talk_loop_a_male2',
             flag: 1,
             target: {
                 distance: 1.5,
@@ -2253,7 +2253,7 @@ export class QueenHarvestProvider {
             freeze: true,
             blockevents: true,
             animDict: 'missfbi3_party_d',
-            anim: 'stand_talk_loop_b_male1',
+            anim: 'stand_talk_loop_a_male3',
             flag: 1,
             target: {
                 distance: 1.5,
@@ -2453,7 +2453,7 @@ export class QueenHarvestProvider {
             freeze: true,
             blockevents: true,
             animDict: 'missfbi3_party_d',
-            anim: 'stand_talk_loop_b_male1',
+            anim: 'stand_talk_loop_a_male1',
             flag: 1,
             target: {
                 distance: 1.5,
@@ -2554,7 +2554,7 @@ export class QueenHarvestProvider {
             freeze: true,
             blockevents: true,
             animDict: 'missfbi3_party_d',
-            anim: 'stand_talk_loop_b_male1',
+            anim: 'stand_talk_loop_b_male2',
             flag: 1,
             target: {
                 distance: 1.5,
