@@ -542,7 +542,7 @@ export class VampireGameProvider {
         weaponHash: number
     ): Promise<void> {
         if (!this.gameState.isGameRunning()) return;
-        if (!this.gameState.hasRole(VampireGameRole.Vampire)) return;
+        if (this.gameState.hasAlliedRole()) return;
 
         const playerPed = PlayerPedId();
         const pos = GetEntityCoords(playerPed);
@@ -718,9 +718,6 @@ export class VampireGameProvider {
             }
         } else if (role === VampireGameRole.Ghoul) {
             this.playerService.setTempClothes(GhoulOutfit[player.skin.Model.Hash]);
-
-            SetPedArmour(PlayerPedId(), 100);
-            this.playerService.setNbArmorPlates(3);
         } else if (role === VampireGameRole.Hunter) {
             GiveWeaponToPed(ped, weapon, weaponAmmo, false, true);
             SetPedAmmo(ped, weapon, weaponAmmo);
