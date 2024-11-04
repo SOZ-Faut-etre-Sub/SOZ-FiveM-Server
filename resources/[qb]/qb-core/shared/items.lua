@@ -288,6 +288,17 @@ QBShared.Items = {
         ["description"] = "La magie de Noel.",
         ["illustrator"] = ".NariieL",
     },
+    ["weapon_stunrod"] = {
+        ["name"] = "weapon_stunrod",
+        ["label"] = "Matraque éléctrique",
+        ["weight"] = 500,
+        ["type"] = "weapon",
+        ["ammotype"] = nil,
+        ["unique"] = true,
+        ["useable"] = true,
+        ["description"] = "Lorsque le traumatisme contondant ne suffit pas, envisagez de diversifier votre approche pour une agression grave avec une dose de 30 000 volts.",
+        ["illustrator"] = ".",
+    },
 
     -- Handguns
     ["weapon_pistol"] = {
