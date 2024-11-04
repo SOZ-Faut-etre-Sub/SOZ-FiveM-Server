@@ -955,7 +955,7 @@ export class VampireGameProvider {
                     }
 
                     const position = this.gameState.originalPlayerPositions.get(citizenId);
-                    if (position && position[0] > 1 && position[1] > 1) {
+                    if (position && position[0] !== 0 && position[1] !== 0) {
                         this.playerPositionProvider.teleportToCoords(player.source, position);
                         this.gameState.originalPlayerPositions.delete(citizenId);
                     }
