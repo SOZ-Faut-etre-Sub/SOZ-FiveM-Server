@@ -90,6 +90,7 @@ export enum WeaponName {
     STONE_HATCHET = 'WEAPON_STONE_HATCHET',
     CANDYCANE = 'WEAPON_CANDYCANE',
     PICKAXE = 'WEAPON_PICKAXE',
+    STUNROD = 'WEAPON_STUNROD',
 
     // Handguns
     PISTOL = 'WEAPON_PISTOL',
@@ -316,6 +317,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     [WeaponName.PICKAXE]: {
         drawPosition: { model: 'w_me_pickaxe', ...DrawPositions['PIX'] },
     },
+    [WeaponName.STUNROD]: {},
 
     // Handguns
     [WeaponName.PISTOL]: {
