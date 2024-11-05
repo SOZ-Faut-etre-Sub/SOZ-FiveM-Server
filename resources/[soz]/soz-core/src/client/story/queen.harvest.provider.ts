@@ -760,7 +760,7 @@ export class QueenHarvestProvider {
                 distance: 1.5,
                 options: [
                     {
-                        label: 'Baz',
+                        label: 'BaZ',
                         icon: 'global/question',
                         category: 'citizen',
                         action: () => {},
