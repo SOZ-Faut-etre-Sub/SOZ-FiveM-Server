@@ -5,6 +5,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent } from '../../shared/event';
 import { PlayerData } from '../../shared/player';
+import { VampireGameStateProvider } from '../story/vampire.game.state.provider';
 import { PlayerService } from './player.service';
 import { PlayerWalkstyleProvider } from './player.walkstyle.provider';
 
@@ -15,6 +16,9 @@ export class PlayerEffectProvider {
 
     @Inject(PlayerWalkstyleProvider)
     private readonly playerWalkstyleProvider: PlayerWalkstyleProvider;
+
+    @Inject(VampireGameStateProvider)
+    private vampireGameStateProvider: VampireGameStateProvider;
 
     private forceDrugEffect = false;
 
@@ -46,6 +50,20 @@ export class PlayerEffectProvider {
 
     @PlayerUpdate()
     async onPlayerUpdate(player: PlayerData): Promise<void> {
+        if (this.vampireGameStateProvider.isGameRunning()) {
+            [
+                'DrugsMichaelAliensFightIn',
+                'DrugsMichaelAliensFight',
+                'DrugsTrevorClownsFightIn',
+                'DrugsTrevorClownsFight',
+            ].forEach(effect => {
+                AnimpostfxStopAndDoUnk(effect);
+            });
+
+            await this.playerWalkstyleProvider.updateWalkStyle('drugAlcool', null);
+            return;
+        }
+
         if ((this.forceDrugEffect || player.metadata.drug > 0) && !AnimpostfxIsRunning('DrugsMichaelAliensFight')) {
             AnimpostfxPlay('DrugsMichaelAliensFightIn', 0, false);
             AnimpostfxPlay('DrugsMichaelAliensFight', 0, true);

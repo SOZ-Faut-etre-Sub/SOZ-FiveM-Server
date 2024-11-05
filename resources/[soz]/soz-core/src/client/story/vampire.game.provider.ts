@@ -46,6 +46,7 @@ import { Notifier } from '../notifier';
 import { NuiMenu } from '../nui/nui.menu';
 import { ObjectProvider } from '../object/object.provider';
 import { MapPickerProvider } from '../picker/map.picker.provider';
+import { PlayerEffectProvider } from '../player/player.effect.provider';
 import { PlayerInOutService } from '../player/player.inout.service';
 import { PlayerListStateService } from '../player/player.list.state.service';
 import { PlayerPositionProvider } from '../player/player.position.provider';
@@ -126,6 +127,9 @@ export class VampireGameProvider {
 
     @Inject(VoipService)
     public readonly voipService: VoipService;
+
+    @Inject(PlayerEffectProvider)
+    public readonly playerEffectProvider: PlayerEffectProvider;
 
     private blipDisabled = new Set<string>();
     private objectiveInteractions = new Set<string>();
@@ -653,6 +657,8 @@ export class VampireGameProvider {
             });
             await wait(0);
         } while (this.gameState.isGameStarting() && !this.gameState.isGameRunning());
+
+        this.playerEffectProvider.onPlayerUpdate(this.playerService.getPlayer());
 
         SwitchInPlayer(player);
     }
