@@ -568,12 +568,14 @@ export class VampireGameProvider {
 
         if (weaponHash === GetHashKey('weapon_musket')) {
             SetEntityHealth(playerPed, 0);
-        } else if (isFatal) {
-            NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, 1, false);
-            SetEntityHealth(playerPed, GetPedMaxHealth(playerPed));
-            TriggerServerEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_CANCEL_VAMPIRE_KNOCKOUT);
-        } else {
-            SetEntityHealth(playerPed, GetPedMaxHealth(playerPed));
+        } else if (this.gameState.hasRole(VampireGameRole.Vampire)) {
+            if (isFatal) {
+                NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, 1, false);
+                SetEntityHealth(playerPed, GetPedMaxHealth(playerPed));
+                TriggerServerEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_CANCEL_VAMPIRE_KNOCKOUT);
+            } else {
+                SetEntityHealth(playerPed, GetPedMaxHealth(playerPed));
+            }
         }
     }
 
