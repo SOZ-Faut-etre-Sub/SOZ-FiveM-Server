@@ -1,4 +1,5 @@
 import { LogLevel } from '@core/logger';
+import { VampireGameCollection, VampireGameObjectiveTypePart2 } from '@public/shared/halloween';
 import { Vector2, Vector3 } from '@public/shared/polyzone/vector';
 
 export type LogEvent = {
@@ -265,4 +266,6 @@ export type MonitorEvent = {
     gang?: string;
     old_plate?: string;
     success?: boolean;
+    objective_part?: number;
+    objective?: VampireGameCollection | VampireGameObjectiveTypePart2;
 };

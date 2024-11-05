@@ -34,6 +34,7 @@ import { RpcServerEvent } from '../../shared/rpc';
 import { FeatureProvider } from '../feature/feature.provider';
 import { LSMCDeathProvider } from '../job/lsmc/lsmc.death.provider';
 import { LockService } from '../lock.service';
+import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
 import { PermissionService } from '../permission.service';
 import { PlayerPositionProvider } from '../player/player.position.provider';
@@ -95,6 +96,9 @@ export class VampireGameProvider {
 
     @Inject(ConfigurationRepository)
     private configurationRepository: ConfigurationRepository;
+
+    @Inject(Monitor)
+    private monitor: Monitor;
 
     private gameDuration: number; // minutes
     private autoRespawnDuration = 20; // seconds
@@ -306,6 +310,13 @@ export class VampireGameProvider {
             this.mortalObjectivePart1[collection] - this.gameState.mortalObjectivePart1.get(collection).length
         );
 
+        this.monitor.traceEvent('vampire_game_mortal_objective', {
+            player_source: source,
+            objective_part: 1,
+            objective: collection,
+            position: objective,
+        });
+
         this.notifier.notify(
             source,
             `L'objectif ~g~${VampireGameLabel(collection)}~s~ vient d'être validé ! Consulte ta carte pour rejoindre un autre objectif.`,
@@ -397,56 +408,63 @@ export class VampireGameProvider {
             return;
         }
 
-        if (this.gameState.mortalObjectivePart2[objective].players.size >= this.mortalObjectivePart2[objective]) {
-            this.gameState.mortalObjectivePart2[objective].finished = true;
+        await this.lockService.lock('vampireValidateObjectivePart2', async () => {
+            if (this.gameState.mortalObjectivePart2[objective].players.size >= this.mortalObjectivePart2[objective]) {
+                this.gameState.mortalObjectivePart2[objective].finished = true;
+
+                this.monitor.traceEvent('vampire_game_mortal_objective', {
+                    player_source: source,
+                    objective_part: 2,
+                    objective: objective,
+                });
+
+                this.callFunctionOnNonEnemyPlayers(player => {
+                    this.notifier.notify(
+                        player.source,
+                        `L'objectif ~g~${VampireGameLabel(objective)}~s~ vient d'être validé ! Consulte ta carte pour rejoindre un autre objectif.`,
+                        'success'
+                    );
+                });
+            }
+            if (!this.gameState.mortalObjectivePart2[objective].finished) {
+                const currentPlayers = this.gameState.mortalObjectivePart2[objective].players.size;
+                const requiredPlayers = this.mortalObjectivePart2[objective];
+
+                this.notifier.notify(
+                    player.source,
+                    `L'objectif ~b~${VampireGameLabel(objective)}~s~ ne peut pas être validé ! ~o~${currentPlayers}~s~/~b~${requiredPlayers} joueurs~s~ réfléchissent.`,
+                    'error'
+                );
+            }
+
+            this.gameState.mortalObjectivePart2[objective].players.delete(player.citizenid);
+            this.gameState.objectiveGauges.part2.labels(objectiveGaugeLabel).dec();
+
+            this.sendObjectivePart2();
+
+            for (const { finished } of Object.values(this.gameState.mortalObjectivePart2)) {
+                if (!finished) return;
+            }
+
+            this.triggerMortalObjectivePart3();
 
             this.callFunctionOnNonEnemyPlayers(player => {
                 this.notifier.notify(
                     player.source,
-                    `L'objectif ~g~${VampireGameLabel(objective)}~s~ vient d'être validé ! Consulte ta carte pour rejoindre un autre objectif.`,
-                    'success'
+                    `Tous les mortels ont reçu de quoi se défendre, les balles d’argent peuvent tuer les vampires ! La chasse se retourne contre eux, survivez ${this.mortalObjectivePart3Duration} minutes pour sortir victorieux de cette bataille.`,
+                    'info',
+                    45_000
                 );
             });
-        }
 
-        if (!this.gameState.mortalObjectivePart2[objective].finished) {
-            const currentPlayers = this.gameState.mortalObjectivePart2[objective].players.size;
-            const requiredPlayers = this.mortalObjectivePart2[objective];
-
-            this.notifier.notify(
-                player.source,
-                `L'objectif ~b~${VampireGameLabel(objective)}~s~ ne peut pas être validé ! ~o~${currentPlayers}~s~/~b~${requiredPlayers} joueurs~s~ réfléchissent.`,
-                'error'
-            );
-        }
-
-        this.gameState.mortalObjectivePart2[objective].players.delete(player.citizenid);
-        this.gameState.objectiveGauges.part2.labels(objectiveGaugeLabel).dec();
-
-        this.sendObjectivePart2();
-
-        for (const { finished } of Object.values(this.gameState.mortalObjectivePart2)) {
-            if (!finished) return;
-        }
-
-        this.triggerMortalObjectivePart3();
-
-        this.callFunctionOnNonEnemyPlayers(player => {
-            this.notifier.notify(
-                player.source,
-                `Tous les mortels ont reçu de quoi se défendre, les balles d’argent peuvent tuer les vampires ! La chasse se retourne contre eux, survivez ${this.mortalObjectivePart3Duration} minutes pour sortir victorieux de cette bataille.`,
-                'info',
-                45_000
-            );
-        });
-
-        this.callFunctionOnEnemyPlayers(player => {
-            this.notifier.notify(
-                player.source,
-                `Les mortels ont reçu de quoi se défendre, les balles d’argent peuvent te tuer ! Ne deviens pas la proie de ces chasseurs ! Il ne te reste que ${this.mortalObjectivePart3Duration} minutes pour les traquer et leur faire regretter leur audace.`,
-                'info',
-                45_000
-            );
+            this.callFunctionOnEnemyPlayers(player => {
+                this.notifier.notify(
+                    player.source,
+                    `Les mortels ont reçu de quoi se défendre, les balles d’argent peuvent te tuer ! Ne deviens pas la proie de ces chasseurs ! Il ne te reste que ${this.mortalObjectivePart3Duration} minutes pour les traquer et leur faire regretter leur audace.`,
+                    'info',
+                    45_000
+                );
+            });
         });
     }
 
