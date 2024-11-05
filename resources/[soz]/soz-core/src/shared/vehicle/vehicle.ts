@@ -476,6 +476,7 @@ export const VehicleElectricModels: Record<number, string> = {
     [joaat('buffalo5')]: 'Buffalo EVX',
     [joaat('vivanite')]: 'Vivanite',
     [joaat('pipistrello')]: 'Pipistrello',
+    [joaat('envisage')]: 'Envisage',
 };
 
 export const VehicleTrailerModels: Record<number, string> = {
