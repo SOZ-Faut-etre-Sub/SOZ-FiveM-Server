@@ -752,7 +752,7 @@ export class VampireGameProvider {
                 player.source,
                 16 * 1024,
                 vampirePositions,
-                false
+                true
             );
         });
     }

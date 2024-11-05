@@ -506,10 +506,17 @@ export class VampireGameProvider {
         for (const [index, position] of positions.entries()) {
             const blipName = `halloween_vampire_position_${index}`;
 
+            let label = 'Viande fraîche';
+            if (isEnemy && this.gameState.hasRole(VampireGameRole.Ghoul)) {
+                label = 'Vampire';
+            } else if (isEnemy) {
+                label = 'Danger';
+            }
+
             this.blipFactory.create(
                 blipName,
                 {
-                    name: isEnemy ? 'Danger' : 'Viande fraîche',
+                    name: label,
                     coords: toVector3Object(position),
                     sprite: 1,
                     color: isEnemy ? 1 : 0,
