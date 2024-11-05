@@ -5,3 +5,4 @@ import './migration.update_drug_maturation';
 import './migration.create_fourniture_trace';
 import './migration.update_gang';
 import './migration.update_heist';
+import './migration.create_vampire_game_trace';
