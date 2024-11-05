@@ -33,7 +33,7 @@ import { BIN_MODELS } from '../../shared/job/garbage';
 import { MenuType } from '../../shared/nui/menu';
 import { PlayerClientState } from '../../shared/player';
 import { BoxZone } from '../../shared/polyzone/box.zone';
-import { getDistance, toVector3Object, Vector3 } from '../../shared/polyzone/vector';
+import { getDistance, toVector3Object, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import { VehicleSeat } from '../../shared/vehicle/vehicle';
 import { WeaponName } from '../../shared/weapons/weapon';
@@ -728,8 +728,7 @@ export class VampireGameProvider {
         }
 
         // Reset ped and clothes
-        TriggerEvent('soz-character:Client:ApplyCurrentSkin');
-        TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
+        TriggerEvent('soz-character:Client:ApplyCurrent');
 
         if (!this.gameState.isGameRunning()) return;
 
@@ -830,6 +829,20 @@ export class VampireGameProvider {
         this.instructionalService.clear();
     }
 
+    private locationIsTooClose(position: Vector4, distance: number) {
+        const isTooCloseMortalRespawn = Object.values(MortalRespawnPoints).some(location => {
+            return getDistance(position, location) <= distance;
+        });
+
+        if (isTooCloseMortalRespawn) {
+            return true;
+        }
+
+        return Object.values(VampireGameObjectivePart2).some(zone => {
+            return getDistance(position, zone.center) <= distance;
+        });
+    }
+
     private createEnemyTeleports() {
         const bins = this.objectProvider.getObjects(object => BIN_MODELS.includes(object.model));
 
@@ -839,10 +852,7 @@ export class VampireGameProvider {
                     continue;
                 }
 
-                const isTooClose = Object.values(MortalRespawnPoints).some(location => {
-                    return getDistance(bin.position, location) < 500;
-                });
-
+                const isTooClose = this.locationIsTooClose(bin.position, 400);
                 if (isTooClose) {
                     continue;
                 }
