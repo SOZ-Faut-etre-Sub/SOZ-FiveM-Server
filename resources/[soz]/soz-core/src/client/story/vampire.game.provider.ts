@@ -357,6 +357,12 @@ export class VampireGameProvider {
 
             await this.onGameStart();
             await this.syncModel(this.gameState.getRole());
+
+            this.syncObjectivePart1(this.gameState.getObjectivePart1());
+            this.syncObjectivePart2(this.gameState.getObjectivePart2());
+            this.createEnemyTeleports();
+            this.createMortalTeleports();
+
             await this.displayRoleObjective(this.gameState.getRole());
         }, 10_000);
     }
@@ -530,16 +536,15 @@ export class VampireGameProvider {
     @OnGameEvent(GameEvent.CEventNetworkEntityDamage)
     async onPlayerAttack(victim: number, attacker: number): Promise<void> {
         if (!this.gameState.isGameRunning()) return;
+        if (this.gameState.hasAlliedRole()) return;
 
         const playerPed = PlayerPedId();
         if (playerPed !== attacker) return;
 
         if (!IsPedAPlayer(victim)) return;
 
-        if (this.gameState.hasEnemyRole()) {
-            const victimId = GetPlayerServerId(NetworkGetPlayerIndexFromPed(victim));
-            TriggerServerEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_KNOCK_PLAYER, victimId);
-        }
+        const victimId = GetPlayerServerId(NetworkGetPlayerIndexFromPed(victim));
+        TriggerServerEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_KNOCK_PLAYER, victimId);
     }
 
     @OnGameEvent(GameEvent.CEventNetworkEntityDamage)
