@@ -608,10 +608,13 @@ export class VampireGameProvider {
     }
 
     @Tick(10 * TickInterval.EVERY_SECOND)
-    public async onPlayerLeaveVehicle() {
+    public async ensureWeaponLoop() {
         if (!this.featureProvider.isFeatureEnabled(Feature.Halloween)) return;
         if (!this.gameState.isGameRunning()) return;
-        if (!this.gameState.hasRole(VampireGameRole.Hunter)) return;
+        if (!this.gameState.hasRole(VampireGameRole.Hunter)) {
+            await this.weaponService.clear();
+            return;
+        }
 
         const player = PlayerPedId();
         const weapon = GetHashKey(WeaponName.MUSKET);
