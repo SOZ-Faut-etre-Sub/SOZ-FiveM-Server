@@ -102,8 +102,8 @@ export class PoliceSpikeProvider {
     @OnEvent(ClientEvent.POLICE_REQUEST_ADD_SPIKE)
     public async requestAddSpike() {
         const ped = PlayerPedId();
-        const entityCoords = GetOffsetFromEntityInWorldCoords(ped, 0.0, 0.5, 0.0);
-        const entityHeading = GetEntityHeading(ped) + 90.0;
+        const entityCoords = GetOffsetFromEntityInWorldCoords(ped, 0.0, 2.25, 0.0);
+        const entityHeading = GetEntityHeading(ped);
 
         const { completed } = await this.progressService.progress(
             'spawn_object',
