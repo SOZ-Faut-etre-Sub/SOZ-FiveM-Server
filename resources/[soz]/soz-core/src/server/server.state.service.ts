@@ -18,6 +18,10 @@ export class ServerStateService {
         return this.connectedPlayers[source] || null;
     }
 
+    public getPlayerByCitizenId(citizenId: string): PlayerData | null {
+        return Object.values(this.connectedPlayers).find(player => player.citizenid === citizenId) || null;
+    }
+
     public updatePlayer(player: PlayerData) {
         if (!this.connectedPlayers[player.source]) {
             return;
