@@ -714,6 +714,8 @@ export class VampireGameProvider {
         TriggerEvent('soz-character:Client:ApplyCurrentSkin');
         TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
 
+        if (!this.gameState.isGameRunning()) return;
+
         if (role === VampireGameRole.Vampire) {
             if (model === 'crow') {
                 await this.skinService.setModel('a_c_crow');
