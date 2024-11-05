@@ -33,7 +33,7 @@ import { BIN_MODELS } from '../../shared/job/garbage';
 import { MenuType } from '../../shared/nui/menu';
 import { PlayerClientState } from '../../shared/player';
 import { BoxZone } from '../../shared/polyzone/box.zone';
-import { toVector3Object, Vector3 } from '../../shared/polyzone/vector';
+import { getDistance, toVector3Object, Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import { VehicleSeat } from '../../shared/vehicle/vehicle';
 import { WeaponName } from '../../shared/weapons/weapon';
@@ -46,6 +46,7 @@ import { Notifier } from '../notifier';
 import { NuiMenu } from '../nui/nui.menu';
 import { ObjectProvider } from '../object/object.provider';
 import { MapPickerProvider } from '../picker/map.picker.provider';
+import { PlayerEffectProvider } from '../player/player.effect.provider';
 import { PlayerInOutService } from '../player/player.inout.service';
 import { PlayerListStateService } from '../player/player.list.state.service';
 import { PlayerPositionProvider } from '../player/player.position.provider';
@@ -126,6 +127,9 @@ export class VampireGameProvider {
 
     @Inject(VoipService)
     public readonly voipService: VoipService;
+
+    @Inject(PlayerEffectProvider)
+    public readonly playerEffectProvider: PlayerEffectProvider;
 
     private blipDisabled = new Set<string>();
     private objectiveInteractions = new Set<string>();
@@ -502,10 +506,17 @@ export class VampireGameProvider {
         for (const [index, position] of positions.entries()) {
             const blipName = `halloween_vampire_position_${index}`;
 
+            let label = 'Viande fraîche';
+            if (isEnemy && this.gameState.hasRole(VampireGameRole.Ghoul)) {
+                label = 'Vampire';
+            } else if (isEnemy) {
+                label = 'Danger';
+            }
+
             this.blipFactory.create(
                 blipName,
                 {
-                    name: isEnemy ? 'Danger' : 'Viande fraîche',
+                    name: label,
                     coords: toVector3Object(position),
                     sprite: 1,
                     color: isEnemy ? 1 : 0,
@@ -542,7 +553,7 @@ export class VampireGameProvider {
         weaponHash: number
     ): Promise<void> {
         if (!this.gameState.isGameRunning()) return;
-        if (!this.gameState.hasRole(VampireGameRole.Vampire)) return;
+        if (this.gameState.hasAlliedRole()) return;
 
         const playerPed = PlayerPedId();
         const pos = GetEntityCoords(playerPed);
@@ -654,6 +665,8 @@ export class VampireGameProvider {
             await wait(0);
         } while (this.gameState.isGameStarting() && !this.gameState.isGameRunning());
 
+        this.playerEffectProvider.onPlayerUpdate(this.playerService.getPlayer());
+
         SwitchInPlayer(player);
     }
 
@@ -708,6 +721,8 @@ export class VampireGameProvider {
         TriggerEvent('soz-character:Client:ApplyCurrentSkin');
         TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
 
+        if (!this.gameState.isGameRunning()) return;
+
         if (role === VampireGameRole.Vampire) {
             if (model === 'crow') {
                 await this.skinService.setModel('a_c_crow');
@@ -718,9 +733,6 @@ export class VampireGameProvider {
             }
         } else if (role === VampireGameRole.Ghoul) {
             this.playerService.setTempClothes(GhoulOutfit[player.skin.Model.Hash]);
-
-            SetPedArmour(PlayerPedId(), 100);
-            this.playerService.setNbArmorPlates(3);
         } else if (role === VampireGameRole.Hunter) {
             GiveWeaponToPed(ped, weapon, weaponAmmo, false, true);
             SetPedAmmo(ped, weapon, weaponAmmo);
@@ -814,6 +826,14 @@ export class VampireGameProvider {
         for (const bin of bins) {
             if (this.gameState.isGameRunning() && this.gameState.hasEnemyRole()) {
                 if (this.blipFactory.exist(`vampire_tp_${bin.id}`)) {
+                    continue;
+                }
+
+                const isTooClose = Object.values(MortalRespawnPoints).some(location => {
+                    return getDistance(bin.position, location) < 500;
+                });
+
+                if (isTooClose) {
                     continue;
                 }
 
