@@ -147,7 +147,7 @@ export class VampireGameProvider {
     }
 
     @On('QBCore:Server:PlayerUnload', false)
-    onPlayerUnload(source: number) {
+    async onPlayerUnload(source: number) {
         if (!this.featureProvider.isFeatureEnabled(Feature.Halloween)) return;
         if (!this.gameState.started) return;
 
@@ -159,8 +159,9 @@ export class VampireGameProvider {
         const role = this.gameState.playerRoles.get(player.citizenid);
         if (!role) return;
 
-        this.gameState.gauges[role].dec();
         this.gameState.playerRoles.delete(player.citizenid);
+
+        await this.computeCurrentRoleGauge();
     }
 
     @OnEvent(ServerEvent.ADMIN_HALLOWEEN_START_GAME)
@@ -494,9 +495,9 @@ export class VampireGameProvider {
                 await wait(this.autoMortalRespawnDuration * 1000);
                 if (isCanceled) return;
 
-                this.gameState.gauges[playerRole].dec();
                 this.gameState.playerRoles.set(player.citizenid, VampireGameRole.Ghoul);
-                this.gameState.gauges[VampireGameRole.Ghoul].inc();
+
+                await this.computeCurrentRoleGauge();
 
                 this.switchPlayerRole(source, VampireGameRole.Ghoul);
                 resolve();
@@ -617,9 +618,7 @@ export class VampireGameProvider {
         this.gameState.autoRespawn.delete(playerTarget.citizenid);
 
         if (role) {
-            this.gameState.gauges[targetRole].dec();
             this.gameState.playerRoles.set(playerTarget.citizenid, role);
-            this.gameState.gauges[role].inc();
         } else {
             role = targetRole;
         }
@@ -629,6 +628,8 @@ export class VampireGameProvider {
         if (VampireGameEnemyRoles.includes(role)) {
             TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_OBJECTIVE_PART1, target, {});
         }
+
+        await this.computeCurrentRoleGauge();
 
         await wait(1000);
 
@@ -809,12 +810,8 @@ export class VampireGameProvider {
         this.gameState.autoRespawn.get(player.citizenid)?.cancel();
         this.gameState.autoRespawn.delete(player.citizenid);
 
-        const oldRole = this.gameState.playerRoles.get(player.citizenid);
-        if (oldRole) {
-            this.gameState.gauges[oldRole].dec();
-        }
         this.gameState.playerRoles.set(player.citizenid, role);
-        this.gameState.gauges[role].inc();
+        this.computeCurrentRoleGauge();
 
         TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_STATE, target, {
             inWaitingRoom: true,
@@ -1069,7 +1066,7 @@ export class VampireGameProvider {
         this.gameState.originalPlayerPositions.set(player.citizenid, position);
 
         this.gameState.playerRoles.set(player.citizenid, role);
-        this.gameState.gauges[role].inc();
+        await this.computeCurrentRoleGauge();
 
         this.playerStateService.setClientState(player.source, {
             halloweenRole: role,
@@ -1241,9 +1238,8 @@ export class VampireGameProvider {
                 return;
             }
 
-            this.gameState.gauges[role].dec();
             this.gameState.playerRoles.set(citizenId, VampireGameRole.Hunter);
-            this.gameState.gauges[VampireGameRole.Hunter].inc();
+            this.computeCurrentRoleGauge();
 
             this.switchPlayerRole(player.source, VampireGameRole.Hunter);
         });
@@ -1271,5 +1267,29 @@ export class VampireGameProvider {
         TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_PLAYER_CONVERTED, source, role);
 
         TriggerLatentClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_POSITION, source, 1024, [], false);
+    }
+
+    private async computeCurrentRoleGauge() {
+        return this.lockService.lock('computeCurrentRoleGauge', async () => {
+            const counter = {
+                [VampireGameRole.Vampire]: 0,
+                [VampireGameRole.Ghoul]: 0,
+                [VampireGameRole.Hunter]: 0,
+                [VampireGameRole.Mortal]: 0,
+                [VampireGameRole.Squire]: 0,
+                [VampireGameRole.Alchemist]: 0,
+            };
+
+            this.gameState.playerRoles.forEach(role => {
+                counter[role]++;
+            });
+
+            this.gameState.gauges[VampireGameRole.Vampire].set(counter[VampireGameRole.Vampire]);
+            this.gameState.gauges[VampireGameRole.Ghoul].set(counter[VampireGameRole.Ghoul]);
+            this.gameState.gauges[VampireGameRole.Hunter].set(counter[VampireGameRole.Hunter]);
+            this.gameState.gauges[VampireGameRole.Mortal].set(counter[VampireGameRole.Mortal]);
+            this.gameState.gauges[VampireGameRole.Squire].set(counter[VampireGameRole.Squire]);
+            this.gameState.gauges[VampireGameRole.Alchemist].set(counter[VampireGameRole.Alchemist]);
+        });
     }
 }
