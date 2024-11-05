@@ -1,5 +1,5 @@
 import { Provider } from '@public/core/decorators/provider';
-import { wait } from '@public/core/utils';
+import { wait, waitUntil } from '@public/core/utils';
 import { VampireGameStateProvider } from '@public/server/story/vampire.game.state.provider';
 import { PlayerData } from '@public/shared/player';
 import { fromVector4Object, Vector3, Vector4 } from '@public/shared/polyzone/vector';
@@ -1046,6 +1046,8 @@ export class VampireGameProvider {
             );
             return;
         }
+
+        await waitUntil(async () => GetPlayerPed(player.source) !== 0, 2_000);
 
         let position = [...GetEntityCoords(GetPlayerPed(player.source), false), 0] as Vector4;
 
