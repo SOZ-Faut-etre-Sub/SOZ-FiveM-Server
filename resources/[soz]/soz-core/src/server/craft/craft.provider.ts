@@ -61,7 +61,11 @@ export class CraftProvider {
                 continue;
             }
 
-            for (const recipe of Object.values(categoryList.recipes)) {
+            for (const [output, recipe] of Object.entries(categoryList.recipes)) {
+                if (recipe.feature && !this.featureProvider.isFeatureEnabled(recipe.feature)) {
+                    delete categoryList.recipes[output];
+                    continue;
+                }
                 recipe.canCraft = true;
 
                 for (const [inputItem, input] of Object.entries(recipe.inputs)) {

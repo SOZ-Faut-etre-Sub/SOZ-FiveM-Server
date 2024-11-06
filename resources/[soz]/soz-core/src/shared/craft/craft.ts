@@ -23,6 +23,7 @@ export type CraftRecipe = {
     amount: number;
     canCraft?: boolean;
     rewardTier?: Record<string, CraftRewardTier>;
+    feature?: Feature;
 };
 
 export type CraftRewardTier = {
