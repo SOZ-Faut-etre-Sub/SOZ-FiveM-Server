@@ -731,9 +731,10 @@ export class VampireGameProvider {
         TriggerEvent('soz-character:Client:ApplyCurrentSkin');
         this.playerService.resetClothConfig();
 
-        await wait(1000);
-
         if (!this.gameState.isGameRunning()) return;
+
+        // Wait for the player to be fully loaded
+        await wait(2_000);
 
         if (role === VampireGameRole.Vampire) {
             if (model === 'crow') {

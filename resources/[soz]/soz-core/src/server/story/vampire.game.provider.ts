@@ -1165,7 +1165,7 @@ export class VampireGameProvider {
                 .sort(() => Math.random() - 0.5)
                 ?.shift();
 
-            if (bin && locationIsTooClose(bin.position, 400)) {
+            if (bin && !locationIsTooClose(bin.position, 400)) {
                 object = bin;
             }
         } while (!object);
