@@ -15,6 +15,7 @@ import { ServerEvent } from '../../shared/event/server';
 import { Feature } from '../../shared/features';
 import {
     GhoulOutfit,
+    locationIsTooClose,
     MortalRespawnPoints,
     VampireGameAllyRoles,
     VampireGameClientState,
@@ -33,7 +34,7 @@ import { BIN_MODELS } from '../../shared/job/garbage';
 import { MenuType } from '../../shared/nui/menu';
 import { PlayerClientState } from '../../shared/player';
 import { BoxZone } from '../../shared/polyzone/box.zone';
-import { getDistance, toVector3Object, Vector3 } from '../../shared/polyzone/vector';
+import { toVector3Object, Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import { VehicleSeat } from '../../shared/vehicle/vehicle';
 import { WeaponName } from '../../shared/weapons/weapon';
@@ -53,6 +54,7 @@ import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
 import { PlayerStateProvider } from '../player/player.state.provider';
 import { PlayerWalkstyleProvider } from '../player/player.walkstyle.provider';
+import { PlayerWardrobe } from '../player/player.wardrobe';
 import { InteractionProvider } from '../quick-interaction/interaction.provider';
 import { SkinService } from '../skin/skin.service';
 import { TargetFactory } from '../target/target.factory';
@@ -130,6 +132,9 @@ export class VampireGameProvider {
 
     @Inject(PlayerEffectProvider)
     public readonly playerEffectProvider: PlayerEffectProvider;
+
+    @Inject(PlayerWardrobe)
+    private readonly playerWardrobe: PlayerWardrobe;
 
     private blipDisabled = new Set<string>();
     private objectiveInteractions = new Set<string>();
@@ -275,11 +280,7 @@ export class VampireGameProvider {
                 },
                 action: async entity => {
                     const targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-                    TriggerServerEvent(
-                        ServerEvent.HALLOWEEN_VAMPIRE_GAME_CONVERT_PLAYER,
-                        targetSource,
-                        VampireGameRole.Mortal
-                    );
+                    TriggerServerEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_CONVERT_PLAYER, targetSource, null);
                 },
             },
             {
@@ -352,13 +353,8 @@ export class VampireGameProvider {
         }
 
         // Trigger game start if a game is already running
-        setTimeout(async () => {
-            if (!this.gameState.isGameRunning()) return;
-
-            await this.onGameStart();
-            await this.syncModel(this.gameState.getRole());
-            await this.displayRoleObjective(this.gameState.getRole());
-        }, 10_000);
+        await wait(10_000);
+        TriggerServerEvent(ServerEvent.HALLOWEEN_VAMPIRE_NEW_PLAYER);
     }
 
     @OnEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_STATE)
@@ -371,8 +367,6 @@ export class VampireGameProvider {
 
         if (this.gameState.isGameStarting() && !this.gameState.isGameRunning()) {
             await this.onGameStart();
-            await this.syncModel(this.gameState.getRole());
-            await this.displayRoleObjective(this.gameState.getRole());
         }
 
         this.syncObjectivePart1(this.gameState.getObjectivePart1());
@@ -530,16 +524,15 @@ export class VampireGameProvider {
     @OnGameEvent(GameEvent.CEventNetworkEntityDamage)
     async onPlayerAttack(victim: number, attacker: number): Promise<void> {
         if (!this.gameState.isGameRunning()) return;
+        if (this.gameState.hasAlliedRole()) return;
 
         const playerPed = PlayerPedId();
         if (playerPed !== attacker) return;
 
         if (!IsPedAPlayer(victim)) return;
 
-        if (this.gameState.hasEnemyRole()) {
-            const victimId = GetPlayerServerId(NetworkGetPlayerIndexFromPed(victim));
-            TriggerServerEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_KNOCK_PLAYER, victimId);
-        }
+        const victimId = GetPlayerServerId(NetworkGetPlayerIndexFromPed(victim));
+        TriggerServerEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_KNOCK_PLAYER, victimId);
     }
 
     @OnGameEvent(GameEvent.CEventNetworkEntityDamage)
@@ -563,12 +556,14 @@ export class VampireGameProvider {
 
         if (weaponHash === GetHashKey('weapon_musket')) {
             SetEntityHealth(playerPed, 0);
-        } else if (isFatal) {
-            NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, 1, false);
-            SetEntityHealth(playerPed, GetPedMaxHealth(playerPed));
-            TriggerServerEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_CANCEL_VAMPIRE_KNOCKOUT);
-        } else {
-            SetEntityHealth(playerPed, GetPedMaxHealth(playerPed));
+        } else if (this.gameState.hasRole(VampireGameRole.Vampire)) {
+            if (isFatal) {
+                NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, 1, false);
+                SetEntityHealth(playerPed, GetPedMaxHealth(playerPed));
+                TriggerServerEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_CANCEL_VAMPIRE_KNOCKOUT);
+            } else {
+                SetEntityHealth(playerPed, GetPedMaxHealth(playerPed));
+            }
         }
     }
 
@@ -601,10 +596,13 @@ export class VampireGameProvider {
     }
 
     @Tick(10 * TickInterval.EVERY_SECOND)
-    public async onPlayerLeaveVehicle() {
+    public async ensureWeaponLoop() {
         if (!this.featureProvider.isFeatureEnabled(Feature.Halloween)) return;
         if (!this.gameState.isGameRunning()) return;
-        if (!this.gameState.hasRole(VampireGameRole.Hunter)) return;
+        if (!this.gameState.hasRole(VampireGameRole.Hunter)) {
+            await this.weaponService.clear();
+            return;
+        }
 
         const player = PlayerPedId();
         const weapon = GetHashKey(WeaponName.MUSKET);
@@ -618,6 +616,7 @@ export class VampireGameProvider {
         SetCurrentPedWeapon(player, weapon, true);
     }
 
+    @OnEvent(ClientEvent.HALLOWEEN_VAMPIRE_START_GAME)
     private async onGameStart() {
         const player = PlayerPedId();
         SwitchOutPlayer(player, 0, 2);
@@ -668,6 +667,9 @@ export class VampireGameProvider {
         this.playerEffectProvider.onPlayerUpdate(this.playerService.getPlayer());
 
         SwitchInPlayer(player);
+
+        await this.syncModel(this.gameState.getRole());
+        await this.displayRoleObjective(this.gameState.getRole());
     }
 
     private async onGameEnd() {
@@ -714,12 +716,22 @@ export class VampireGameProvider {
         const [found, z] = GetGroundZFor_3dCoord_2(pos[0], pos[1], pos[2], false);
 
         if (!isInsideVehicle && found) {
-            SetPedCoordsKeepVehicle(ped, pos[0], pos[1], z + 1.0);
+            SetEntityCoords(ped, pos[0], pos[1], z + 1.0, false, false, false, false);
         }
 
         // Reset ped and clothes
+        await this.playerWardrobe.setClothConfig('HideHead', true, true);
+        await this.playerWardrobe.setClothConfig('HideMask', true, true);
+        await this.playerWardrobe.setClothConfig('HideBag', true, true);
+        await this.playerWardrobe.setClothConfig('HideBulletproof', true, true);
+        await this.playerWardrobe.setClothConfig('HideTop', false, true);
+        await this.playerWardrobe.setClothConfig('HidePants', false, true);
+        await this.playerWardrobe.setClothConfig('HideShoes', false, true);
+
         TriggerEvent('soz-character:Client:ApplyCurrentSkin');
-        TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
+        this.playerService.resetClothConfig();
+
+        await wait(1000);
 
         if (!this.gameState.isGameRunning()) return;
 
@@ -829,11 +841,7 @@ export class VampireGameProvider {
                     continue;
                 }
 
-                const isTooClose = Object.values(MortalRespawnPoints).some(location => {
-                    return getDistance(bin.position, location) < 500;
-                });
-
-                if (isTooClose) {
+                if (locationIsTooClose(bin.position, 400)) {
                     continue;
                 }
 

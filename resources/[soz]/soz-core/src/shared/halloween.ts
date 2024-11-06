@@ -1,7 +1,7 @@
 import { MapPickerLocation } from '@public/shared/picker';
 import { PlayerPedHash } from '@public/shared/player';
 import { Zone } from '@public/shared/polyzone/box.zone';
-import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
+import { getDistance, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 
 export enum VampireGameRole {
     // Les méchants...
@@ -13,6 +13,20 @@ export enum VampireGameRole {
     Squire = 'Écuyère',
     Alchemist = 'Alchimiste',
 }
+
+export const locationIsTooClose = (position: Vector4, distance: number) => {
+    const isTooCloseMortalRespawn = Object.values(MortalRespawnPoints).some(location => {
+        return getDistance(position, location) <= distance;
+    });
+
+    if (isTooCloseMortalRespawn) {
+        return true;
+    }
+
+    return Object.values(VampireGameObjectivePart2).some(zone => {
+        return getDistance(position, zone.center) <= distance;
+    });
+};
 
 export const VampireOutfit = {
     [PlayerPedHash.Male]: {

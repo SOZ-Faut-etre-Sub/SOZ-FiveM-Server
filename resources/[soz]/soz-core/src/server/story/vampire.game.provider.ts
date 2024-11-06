@@ -1,8 +1,9 @@
 import { Provider } from '@public/core/decorators/provider';
-import { wait, waitUntil } from '@public/core/utils';
+import { wait } from '@public/core/utils';
 import { VampireGameStateProvider } from '@public/server/story/vampire.game.state.provider';
+import { WorldObject } from '@public/shared/object';
 import { PlayerData } from '@public/shared/player';
-import { fromVector4Object, Vector3, Vector4 } from '@public/shared/polyzone/vector';
+import { fromVector3Object, fromVector4Object, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import PCancelable from 'p-cancelable';
 
 import { Command } from '../../core/decorators/command';
@@ -16,6 +17,7 @@ import { ClientEvent } from '../../shared/event/client';
 import { ServerEvent } from '../../shared/event/server';
 import { Feature } from '../../shared/features';
 import {
+    locationIsTooClose,
     MortalRespawnPoints,
     VampireGameClientState,
     VampireGameCollection,
@@ -28,6 +30,7 @@ import {
     VampireGameRole,
     VampireRespawnPoints,
 } from '../../shared/halloween';
+import { BIN_MODELS } from '../../shared/job/garbage';
 import { ProgressAnimation } from '../../shared/progress';
 import { getRandomKeyWeighted } from '../../shared/random';
 import { RpcServerEvent } from '../../shared/rpc';
@@ -36,6 +39,7 @@ import { LSMCDeathProvider } from '../job/lsmc/lsmc.death.provider';
 import { LockService } from '../lock.service';
 import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
+import { ObjectProvider } from '../object/object.provider';
 import { PermissionService } from '../permission.service';
 import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
@@ -83,22 +87,25 @@ export class VampireGameProvider {
     private readonly npcProvider: NpcProvider;
 
     @Inject(PlayerPositionProvider)
-    private playerPositionProvider: PlayerPositionProvider;
+    private readonly playerPositionProvider: PlayerPositionProvider;
 
     @Inject(LSMCDeathProvider)
-    private lsmcDeathProvider: LSMCDeathProvider;
+    private readonly lsmcDeathProvider: LSMCDeathProvider;
 
     @Inject(VampireGameStateProvider)
-    private gameState: VampireGameStateProvider;
+    private readonly gameState: VampireGameStateProvider;
 
     @Inject(LockService)
-    private lockService: LockService;
+    private readonly lockService: LockService;
 
     @Inject(ConfigurationRepository)
-    private configurationRepository: ConfigurationRepository;
+    private readonly configurationRepository: ConfigurationRepository;
+
+    @Inject(ObjectProvider)
+    private readonly objectProvider: ObjectProvider;
 
     @Inject(Monitor)
-    private monitor: Monitor;
+    private readonly monitor: Monitor;
 
     private gameDuration: number; // minutes
     private autoRespawnDuration = 20; // seconds
@@ -140,14 +147,18 @@ export class VampireGameProvider {
         });
     }
 
-    @On('QBCore:Server:PlayerLoaded', false)
-    async onPlayerLoaded(data: any) {
+    @OnEvent(ServerEvent.HALLOWEEN_VAMPIRE_NEW_PLAYER)
+    async onNewPlayer(source: number) {
         if (!this.featureProvider.isFeatureEnabled(Feature.Halloween)) return;
         if (!this.gameState.started) return;
 
-        const player = data.PlayerData as PlayerData;
+        const player = this.serverStateService.getPlayer(source);
+        if (!player) {
+            return;
+        }
 
         await this.newPlayer(player);
+        TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_START_GAME, source);
     }
 
     @On('QBCore:Server:PlayerUnload', false)
@@ -155,7 +166,7 @@ export class VampireGameProvider {
         if (!this.featureProvider.isFeatureEnabled(Feature.Halloween)) return;
         if (!this.gameState.started) return;
 
-        const player = this.playerService.getPlayer(source);
+        const player = this.serverStateService.getPlayer(source);
         if (!player) {
             return;
         }
@@ -245,7 +256,7 @@ export class VampireGameProvider {
     public async takeObjectivePart1(source: number, collection: VampireGameCollection, objective: Vector3) {
         if (!this.gameState.started) return;
 
-        const player = this.playerService.getPlayer(source);
+        const player = this.serverStateService.getPlayer(source);
         if (!player) {
             return;
         }
@@ -345,7 +356,7 @@ export class VampireGameProvider {
     public async takeObjectivePart2(source: number, objective: VampireGameObjectiveTypePart2) {
         if (!this.gameState.started) return;
 
-        const player = this.playerService.getPlayer(source);
+        const player = this.serverStateService.getPlayer(source);
         if (!player) {
             return;
         }
@@ -473,7 +484,7 @@ export class VampireGameProvider {
         if (!this.gameState.started) return;
         if (this.playerStateService.getClientState(source).isKnockedOut) return;
 
-        const player = this.playerService.getPlayer(source);
+        const player = this.serverStateService.getPlayer(source);
         if (!player) {
             return;
         }
@@ -513,6 +524,7 @@ export class VampireGameProvider {
                 await wait(this.autoMortalRespawnDuration * 1000);
                 if (isCanceled) return;
 
+                this.gameState.ghoulOriginalRoles.set(player.citizenid, playerRole);
                 this.gameState.playerRoles.set(player.citizenid, VampireGameRole.Ghoul);
 
                 await this.computeCurrentRoleGauge();
@@ -535,7 +547,7 @@ export class VampireGameProvider {
 
         if (!this.playerStateService.getClientState(target).isKnockedOut) return;
 
-        const player = this.playerService.getPlayer(target);
+        const player = this.serverStateService.getPlayer(target);
         if (!player) {
             return;
         }
@@ -560,12 +572,12 @@ export class VampireGameProvider {
     public async convertPlayer(source: number, target: number, role: VampireGameRole) {
         if (!this.gameState.started) return;
 
-        const playerSource = this.playerService.getPlayer(source);
+        const playerSource = this.serverStateService.getPlayer(source);
         if (!playerSource) {
             return;
         }
 
-        const playerTarget = this.playerService.getPlayer(target);
+        const playerTarget = this.serverStateService.getPlayer(target);
         if (!playerTarget) {
             return;
         }
@@ -635,8 +647,14 @@ export class VampireGameProvider {
         this.gameState.autoRespawn.get(playerTarget.citizenid)?.cancel();
         this.gameState.autoRespawn.delete(playerTarget.citizenid);
 
+        if (role === VampireGameRole.Ghoul) {
+            this.gameState.ghoulOriginalRoles.set(playerTarget.citizenid, targetRole);
+        }
+
         if (role) {
             this.gameState.playerRoles.set(playerTarget.citizenid, role);
+        } else if (this.gameState.ghoulOriginalRoles.has(playerTarget.citizenid)) {
+            role = this.gameState.ghoulOriginalRoles.get(playerTarget.citizenid);
         } else {
             role = targetRole;
         }
@@ -673,7 +691,6 @@ export class VampireGameProvider {
             return;
         }
 
-        if (!VampireGameEnemyRoles.includes(this.gameState.playerRoles.get(player.citizenid))) return;
         if (this.playerStateService.getClientState(target).isKnockedOut) return;
 
         TriggerClientEvent(ClientEvent.ADMIN_KILL_PLAYER, target);
@@ -701,24 +718,25 @@ export class VampireGameProvider {
                 squirePlayers.push(citizenId);
             }
 
-            const player = this.playerService.getPlayerByCitizenId(citizenId);
+            const player = this.serverStateService.getPlayerByCitizenId(citizenId);
             if (!player) return;
 
-            const [x, y, z] = GetEntityCoords(GetPlayerPed(player.source));
+            const position = this.playerPositionProvider.getPlayerPosition(player.source);
+            if (!position) return;
 
             if (role === VampireGameRole.Vampire) {
-                vampirePositions.push([x, y, z]);
+                vampirePositions.push(position);
             } else if (role === VampireGameRole.Ghoul) {
-                ghoulPositions.push([x, y, z]);
+                ghoulPositions.push(position);
             } else {
-                victimPositions.push([x, y, z]);
+                victimPositions.push(position);
             }
         });
 
         const enemyPositions = [...vampirePositions, ...ghoulPositions];
 
         squirePlayers.forEach(citizenId => {
-            const player = this.playerService.getPlayerByCitizenId(citizenId);
+            const player = this.serverStateService.getPlayerByCitizenId(citizenId);
             if (!player) return;
 
             TriggerLatentClientEvent(
@@ -731,7 +749,7 @@ export class VampireGameProvider {
         });
 
         vampirePlayers.forEach(citizenId => {
-            const player = this.playerService.getPlayerByCitizenId(citizenId);
+            const player = this.serverStateService.getPlayerByCitizenId(citizenId);
             if (!player) return;
 
             TriggerLatentClientEvent(
@@ -744,7 +762,7 @@ export class VampireGameProvider {
         });
 
         ghoulPlayers.forEach(citizenId => {
-            const player = this.playerService.getPlayerByCitizenId(citizenId);
+            const player = this.serverStateService.getPlayerByCitizenId(citizenId);
             if (!player) return;
 
             TriggerLatentClientEvent(
@@ -769,7 +787,7 @@ export class VampireGameProvider {
         const excludedPlayers: Partial<AdminPlayer>[] = [];
 
         this.gameState.excludedPlayers.forEach(citizenId => {
-            const player = this.playerService.getPlayerByCitizenId(citizenId);
+            const player = this.serverStateService.getPlayerByCitizenId(citizenId);
             if (!player) return;
 
             excludedPlayers.push({
@@ -841,7 +859,7 @@ export class VampireGameProvider {
             return;
         }
 
-        const player = this.playerService.getPlayer(target);
+        const player = this.serverStateService.getPlayer(target);
         if (!player) {
             return;
         }
@@ -912,7 +930,7 @@ export class VampireGameProvider {
 
     @OnEvent(ServerEvent.PLAYER_MORTAL_TP)
     public async tpMortal(source: number, locationId: string) {
-        const player = this.playerService.getPlayer(source);
+        const player = this.serverStateService.getPlayer(source);
         if (!player) {
             return;
         }
@@ -985,7 +1003,7 @@ export class VampireGameProvider {
                 clearTimeout(this.gameState.mortalObjectivePart3);
 
                 this.gameState.playerRoles.forEach((_, citizenId) => {
-                    const player = this.playerService.getPlayerByCitizenId(citizenId);
+                    const player = this.serverStateService.getPlayerByCitizenId(citizenId);
                     if (!player) {
                         return;
                     }
@@ -1032,6 +1050,7 @@ export class VampireGameProvider {
                 this.gameState.objectiveGauges.part1.reset();
                 this.gameState.objectiveGauges.part2.reset();
 
+                this.gameState.ghoulOriginalRoles.clear();
                 this.gameState.originalPlayerPositions.clear();
 
                 this.gameState.autoRespawn.clear();
@@ -1058,6 +1077,7 @@ export class VampireGameProvider {
             );
 
             this.playerStateService.setClientState(player.source, {
+                isKnockedOut: false,
                 halloweenRole: role,
             });
 
@@ -1068,6 +1088,10 @@ export class VampireGameProvider {
                 objectivePart1: !VampireGameEnemyRoles.includes(role) ? this.getObjectivePart1Progress() : null,
                 objectivePart2: !VampireGameEnemyRoles.includes(role) ? this.getObjectivePart2Progress() : null,
             });
+
+            if (role === VampireGameRole.Vampire) {
+                this.teleportVampireRandomly(player);
+            }
 
             this.sendObjectivePart1();
             this.sendObjectivePart2();
@@ -1083,9 +1107,9 @@ export class VampireGameProvider {
             return;
         }
 
-        await waitUntil(async () => GetPlayerPed(player.source) !== 0, 2_000);
-
-        let position = [...GetEntityCoords(GetPlayerPed(player.source), false), 0] as Vector4;
+        const playerPosition =
+            this.playerPositionProvider.getPlayerPosition(player.source) ?? fromVector3Object(player.position);
+        let position = [...playerPosition, 0] as Vector4;
 
         if (player.metadata.inside.apartment && player.metadata.inside.exitCoord) {
             this.playerPositionProvider.teleportToCoords(
@@ -1111,7 +1135,7 @@ export class VampireGameProvider {
             halloweenRole: role,
         });
 
-        TriggerLatentClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_STATE, player.source, 1024, {
+        TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_STATE, player.source, {
             inWaitingRoom: true,
             started: this.gameState.started,
             role,
@@ -1123,9 +1147,30 @@ export class VampireGameProvider {
             await this.lsmcDeathProvider.revive(player.source, player.source, true, false, false);
         }
 
+        if (role === VampireGameRole.Vampire) {
+            this.teleportVampireRandomly(player);
+        }
+
         this.logger.debug(
             `Player ${player.charinfo.firstname} ${player.charinfo.lastname} has been assigned to role ${role}`
         );
+    }
+
+    private teleportVampireRandomly(player: PlayerData) {
+        let object: WorldObject | undefined;
+        do {
+            const bin = this.objectProvider
+                .getObjects()
+                .filter(object => BIN_MODELS.includes(object.model))
+                .sort(() => Math.random() - 0.5)
+                ?.shift();
+
+            if (bin && locationIsTooClose(bin.position, 400)) {
+                object = bin;
+            }
+        } while (!object);
+
+        this.playerPositionProvider.teleportToCoords(player.source, object.position);
     }
 
     private async getRandomRole(): Promise<VampireGameRole> {
@@ -1245,7 +1290,7 @@ export class VampireGameProvider {
         this.gameState.playerRoles.forEach((role, citizenId) => {
             if (VampireGameEnemyRoles.includes(role)) return;
 
-            const player = this.playerService.getPlayerByCitizenId(citizenId);
+            const player = this.serverStateService.getPlayerByCitizenId(citizenId);
             if (!player) {
                 return;
             }
@@ -1258,7 +1303,7 @@ export class VampireGameProvider {
         this.gameState.playerRoles.forEach((role, citizenId) => {
             if (!VampireGameEnemyRoles.includes(role)) return;
 
-            const player = this.playerService.getPlayerByCitizenId(citizenId);
+            const player = this.serverStateService.getPlayerByCitizenId(citizenId);
             if (!player) {
                 return;
             }
@@ -1272,7 +1317,7 @@ export class VampireGameProvider {
             if (VampireGameEnemyRoles.includes(role)) return;
             if (role === VampireGameRole.Hunter) return;
 
-            const player = this.playerService.getPlayerByCitizenId(citizenId);
+            const player = this.serverStateService.getPlayerByCitizenId(citizenId);
             if (!player) {
                 return;
             }

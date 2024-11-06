@@ -73,6 +73,7 @@ export type PlayerData = {
     cloth_config: ClothConfig;
     source: number;
     gang: GangPlayerData;
+    position: { x: number; y: number; z: number };
 };
 
 export type FakeId = {
