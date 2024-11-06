@@ -103,7 +103,7 @@ export class PlayerWardrobe {
         TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, outfit, merge);
     }
 
-    public async setClothConfig(key: keyof ClothConfig['Config'], value: boolean) {
+    public async setClothConfig(key: keyof ClothConfig['Config'], value: boolean, skipAnimation = false) {
         if (this.playerService.getState().isInHub) {
             return;
         }
@@ -165,7 +165,9 @@ export class PlayerWardrobe {
             return;
         }
 
-        await this.animationService.playAnimation(animation);
+        if (!skipAnimation) {
+            await this.animationService.playAnimation(animation);
+        }
 
         TriggerServerEvent('soz-character:server:UpdateClothConfig', key, value);
     }

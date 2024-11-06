@@ -6,6 +6,7 @@ import { VampireGameStateProvider } from '@public/client/story/vampire.game.stat
 import { Once, OnceStep, OnEvent, OnGameEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { uuidv4, wait } from '@public/core/utils';
 
+import { Exportable } from '../../core/decorators/exports';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { Blip } from '../../shared/blip';
 import { ClientEvent } from '../../shared/event/client';
@@ -54,6 +55,7 @@ import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
 import { PlayerStateProvider } from '../player/player.state.provider';
 import { PlayerWalkstyleProvider } from '../player/player.walkstyle.provider';
+import { PlayerWardrobe } from '../player/player.wardrobe';
 import { InteractionProvider } from '../quick-interaction/interaction.provider';
 import { SkinService } from '../skin/skin.service';
 import { TargetFactory } from '../target/target.factory';
@@ -131,6 +133,9 @@ export class VampireGameProvider {
 
     @Inject(PlayerEffectProvider)
     public readonly playerEffectProvider: PlayerEffectProvider;
+
+    @Inject(PlayerWardrobe)
+    private readonly playerWardrobe: PlayerWardrobe;
 
     private blipDisabled = new Set<string>();
     private objectiveInteractions = new Set<string>();
@@ -712,11 +717,22 @@ export class VampireGameProvider {
         const [found, z] = GetGroundZFor_3dCoord_2(pos[0], pos[1], pos[2], false);
 
         if (!isInsideVehicle && found) {
-            SetPedCoordsKeepVehicle(ped, pos[0], pos[1], z + 1.0);
+            SetEntityCoords(ped, pos[0], pos[1], z + 1.0, false, false, false, false);
         }
 
         // Reset ped and clothes
-        TriggerEvent('soz-character:Client:ApplyCurrent');
+        await this.playerWardrobe.setClothConfig('HideHead', true, true);
+        await this.playerWardrobe.setClothConfig('HideMask', true, true);
+        await this.playerWardrobe.setClothConfig('HideBag', true, true);
+        await this.playerWardrobe.setClothConfig('HideBulletproof', true, true);
+        await this.playerWardrobe.setClothConfig('HideTop', false, true);
+        await this.playerWardrobe.setClothConfig('HidePants', false, true);
+        await this.playerWardrobe.setClothConfig('HideShoes', false, true);
+
+        TriggerEvent('soz-character:Client:ApplyCurrentSkin');
+        this.playerService.resetClothConfig();
+
+        await wait(1000);
 
         if (!this.gameState.isGameRunning()) return;
 
