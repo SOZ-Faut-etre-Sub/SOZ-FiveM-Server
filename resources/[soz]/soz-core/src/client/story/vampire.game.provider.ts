@@ -6,7 +6,6 @@ import { VampireGameStateProvider } from '@public/client/story/vampire.game.stat
 import { Once, OnceStep, OnEvent, OnGameEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { uuidv4, wait } from '@public/core/utils';
 
-import { Exportable } from '../../core/decorators/exports';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { Blip } from '../../shared/blip';
 import { ClientEvent } from '../../shared/event/client';
