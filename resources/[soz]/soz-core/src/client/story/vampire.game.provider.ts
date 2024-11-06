@@ -15,6 +15,7 @@ import { ServerEvent } from '../../shared/event/server';
 import { Feature } from '../../shared/features';
 import {
     GhoulOutfit,
+    locationIsTooClose,
     MortalRespawnPoints,
     VampireGameAllyRoles,
     VampireGameClientState,
@@ -33,7 +34,7 @@ import { BIN_MODELS } from '../../shared/job/garbage';
 import { MenuType } from '../../shared/nui/menu';
 import { PlayerClientState } from '../../shared/player';
 import { BoxZone } from '../../shared/polyzone/box.zone';
-import { getDistance, toVector3Object, Vector3, Vector4 } from '../../shared/polyzone/vector';
+import { toVector3Object, Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import { VehicleSeat } from '../../shared/vehicle/vehicle';
 import { WeaponName } from '../../shared/weapons/weapon';
@@ -816,20 +817,6 @@ export class VampireGameProvider {
         this.instructionalService.clear();
     }
 
-    private locationIsTooClose(position: Vector4, distance: number) {
-        const isTooCloseMortalRespawn = Object.values(MortalRespawnPoints).some(location => {
-            return getDistance(position, location) <= distance;
-        });
-
-        if (isTooCloseMortalRespawn) {
-            return true;
-        }
-
-        return Object.values(VampireGameObjectivePart2).some(zone => {
-            return getDistance(position, zone.center) <= distance;
-        });
-    }
-
     private createEnemyTeleports() {
         const bins = this.objectProvider.getObjects(object => BIN_MODELS.includes(object.model));
 
@@ -839,8 +826,7 @@ export class VampireGameProvider {
                     continue;
                 }
 
-                const isTooClose = this.locationIsTooClose(bin.position, 400);
-                if (isTooClose) {
+                if (locationIsTooClose(bin.position, 400)) {
                     continue;
                 }
 

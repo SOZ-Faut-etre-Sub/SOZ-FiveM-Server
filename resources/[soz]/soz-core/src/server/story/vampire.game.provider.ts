@@ -1,6 +1,7 @@
 import { Provider } from '@public/core/decorators/provider';
 import { wait } from '@public/core/utils';
 import { VampireGameStateProvider } from '@public/server/story/vampire.game.state.provider';
+import { WorldObject } from '@public/shared/object';
 import { PlayerData } from '@public/shared/player';
 import { fromVector3Object, fromVector4Object, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import PCancelable from 'p-cancelable';
@@ -16,6 +17,7 @@ import { ClientEvent } from '../../shared/event/client';
 import { ServerEvent } from '../../shared/event/server';
 import { Feature } from '../../shared/features';
 import {
+    locationIsTooClose,
     MortalRespawnPoints,
     VampireGameClientState,
     VampireGameCollection,
@@ -28,6 +30,7 @@ import {
     VampireGameRole,
     VampireRespawnPoints,
 } from '../../shared/halloween';
+import { BIN_MODELS } from '../../shared/job/garbage';
 import { ProgressAnimation } from '../../shared/progress';
 import { getRandomKeyWeighted } from '../../shared/random';
 import { RpcServerEvent } from '../../shared/rpc';
@@ -36,6 +39,7 @@ import { LSMCDeathProvider } from '../job/lsmc/lsmc.death.provider';
 import { LockService } from '../lock.service';
 import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
+import { ObjectProvider } from '../object/object.provider';
 import { PermissionService } from '../permission.service';
 import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
@@ -97,8 +101,11 @@ export class VampireGameProvider {
     @Inject(ConfigurationRepository)
     private readonly configurationRepository: ConfigurationRepository;
 
+    @Inject(ObjectProvider)
+    private readonly objectProvider: ObjectProvider;
+
     @Inject(Monitor)
-    private monitor: Monitor;
+    private readonly monitor: Monitor;
 
     private gameDuration: number; // minutes
     private autoRespawnDuration = 20; // seconds
@@ -1082,6 +1089,10 @@ export class VampireGameProvider {
                 objectivePart2: !VampireGameEnemyRoles.includes(role) ? this.getObjectivePart2Progress() : null,
             });
 
+            if (role === VampireGameRole.Vampire) {
+                this.teleportVampireRandomly(player);
+            }
+
             this.sendObjectivePart1();
             this.sendObjectivePart2();
 
@@ -1136,9 +1147,36 @@ export class VampireGameProvider {
             await this.lsmcDeathProvider.revive(player.source, player.source, true, false, false);
         }
 
+        if (role === VampireGameRole.Vampire) {
+            this.teleportVampireRandomly(player);
+        }
+
         this.logger.debug(
             `Player ${player.charinfo.firstname} ${player.charinfo.lastname} has been assigned to role ${role}`
         );
+    }
+
+    private teleportVampireRandomly(player: PlayerData) {
+        let object: WorldObject | undefined;
+        do {
+            const bin = this.objectProvider
+                .getObjects()
+                .filter(object => BIN_MODELS.includes(object.model))
+                .sort(() => Math.random() - 0.5)
+                ?.shift();
+            if (!bin) {
+                this.logger.error('No bins found');
+                return;
+            }
+
+            if (locationIsTooClose(bin.position, 400)) {
+                return;
+            }
+
+            object = bin;
+        } while (!object);
+
+        this.playerPositionProvider.teleportToCoords(player.source, object.position);
     }
 
     private async getRandomRole(): Promise<VampireGameRole> {
