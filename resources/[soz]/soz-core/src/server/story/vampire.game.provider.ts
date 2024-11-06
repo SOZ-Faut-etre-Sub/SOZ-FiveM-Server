@@ -1164,16 +1164,10 @@ export class VampireGameProvider {
                 .filter(object => BIN_MODELS.includes(object.model))
                 .sort(() => Math.random() - 0.5)
                 ?.shift();
-            if (!bin) {
-                this.logger.error('No bins found');
-                return;
-            }
 
-            if (locationIsTooClose(bin.position, 400)) {
-                return;
+            if (bin && locationIsTooClose(bin.position, 400)) {
+                object = bin;
             }
-
-            object = bin;
         } while (!object);
 
         this.playerPositionProvider.teleportToCoords(player.source, object.position);
