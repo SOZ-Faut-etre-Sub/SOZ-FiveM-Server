@@ -352,19 +352,8 @@ export class VampireGameProvider {
         }
 
         // Trigger game start if a game is already running
-        setTimeout(async () => {
-            if (!this.gameState.isGameRunning()) return;
-
-            await this.onGameStart();
-            await this.syncModel(this.gameState.getRole());
-
-            this.syncObjectivePart1(this.gameState.getObjectivePart1());
-            this.syncObjectivePart2(this.gameState.getObjectivePart2());
-            this.createEnemyTeleports();
-            this.createMortalTeleports();
-
-            await this.displayRoleObjective(this.gameState.getRole());
-        }, 10_000);
+        await wait(10_000);
+        TriggerServerEvent(ServerEvent.HALLOWEEN_VAMPIRE_NEW_PLAYER);
     }
 
     @OnEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_STATE)
@@ -377,8 +366,6 @@ export class VampireGameProvider {
 
         if (this.gameState.isGameStarting() && !this.gameState.isGameRunning()) {
             await this.onGameStart();
-            await this.syncModel(this.gameState.getRole());
-            await this.displayRoleObjective(this.gameState.getRole());
         }
 
         this.syncObjectivePart1(this.gameState.getObjectivePart1());
@@ -628,6 +615,7 @@ export class VampireGameProvider {
         SetCurrentPedWeapon(player, weapon, true);
     }
 
+    @OnEvent(ClientEvent.HALLOWEEN_VAMPIRE_START_GAME)
     private async onGameStart() {
         const player = PlayerPedId();
         SwitchOutPlayer(player, 0, 2);
@@ -678,6 +666,9 @@ export class VampireGameProvider {
         this.playerEffectProvider.onPlayerUpdate(this.playerService.getPlayer());
 
         SwitchInPlayer(player);
+
+        await this.syncModel(this.gameState.getRole());
+        await this.displayRoleObjective(this.gameState.getRole());
     }
 
     private async onGameEnd() {

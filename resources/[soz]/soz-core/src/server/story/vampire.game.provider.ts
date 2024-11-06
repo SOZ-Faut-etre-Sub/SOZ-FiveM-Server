@@ -140,14 +140,18 @@ export class VampireGameProvider {
         });
     }
 
-    @On('QBCore:Server:PlayerLoaded', false)
-    async onPlayerLoaded(data: any) {
+    @OnEvent(ServerEvent.HALLOWEEN_VAMPIRE_NEW_PLAYER)
+    async onNewPlayer(source: number) {
         if (!this.featureProvider.isFeatureEnabled(Feature.Halloween)) return;
         if (!this.gameState.started) return;
 
-        const player = data.PlayerData as PlayerData;
+        const player = this.serverStateService.getPlayer(source);
+        if (!player) {
+            return;
+        }
 
         await this.newPlayer(player);
+        TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_START_GAME, source);
     }
 
     @On('QBCore:Server:PlayerUnload', false)
@@ -1058,6 +1062,7 @@ export class VampireGameProvider {
             );
 
             this.playerStateService.setClientState(player.source, {
+                isKnockedOut: false,
                 halloweenRole: role,
             });
 
@@ -1111,7 +1116,7 @@ export class VampireGameProvider {
             halloweenRole: role,
         });
 
-        TriggerLatentClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_STATE, player.source, 1024, {
+        TriggerClientEvent(ClientEvent.HALLOWEEN_VAMPIRE_UPDATE_STATE, player.source, {
             inWaitingRoom: true,
             started: this.gameState.started,
             role,

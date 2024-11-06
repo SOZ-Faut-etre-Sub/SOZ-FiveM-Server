@@ -272,7 +272,6 @@ export enum ServerEvent {
     HALLOWEEN_SUCK_NPC = 'soz-core:server:halloween:npc-suck',
     HALLOWEEN_SUCK_PLAYER_START = 'soz-core:server:halloween:player-suck-start',
     HALLOWEEN_SUCK_PLAYER_END = 'soz-core:server:halloween:player-suck-end',
-
     HALLOWEEN_BLOOD_HARVEST = 'soz-core:server:halloween:blood-harvest',
 
     STORAGE_REMOVE_ITEM = 'soz-core:server:storage:remove-item',
@@ -648,6 +647,7 @@ export enum ServerEvent {
     HALLOWEEN_VAMPIRE_GAME_CONVERT_PLAYER = 'soz-core:server:halloween:vampire-game-convert-player',
     HALLOWEEN_VAMPIRE_GAME_PLAYER_KNOCKED_OUT = 'soz-core:server:halloween:vampire-game-player-knocked-out',
     HALLOWEEN_VAMPIRE_GAME_CANCEL_VAMPIRE_KNOCKOUT = 'soz-core:server:halloween:vampire-game-cancel-vampire-knockout',
+    HALLOWEEN_VAMPIRE_NEW_PLAYER = 'soz-core:server:halloween:vampire-new-player',
 
     DRONE_NEW = 'soz-core:server:drone-new',
     DRONE_DELETE = 'soz-core:server:drone-delete',

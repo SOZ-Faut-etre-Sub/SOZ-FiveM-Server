@@ -62,6 +62,7 @@ export enum ClientEvent {
     HALLOWEEN_VAMPIRE_UPDATE_OBJECTIVE_PART2 = 'soz-core:client:halloween:vampire-update-objective-part2',
     HALLOWEEN_VAMPIRE_UPDATE_POSITION = 'soz-core:client:halloween:vampire-update-position',
     HALLOWEEN_VAMPIRE_PLAYER_CONVERTED = 'soz-core:client:halloween:vampire-player-converted',
+    HALLOWEEN_VAMPIRE_START_GAME = 'soz-core:client:halloween:vampire-start-game',
 
     HALLOWEEN_SUCK_PLAYER_START = 'soz-core:client:halloween:halloween:player-suck-start',
     HALLOWEEN_SUCK_PLAYER_END = 'soz-core:client:halloween:player-suck-end',
