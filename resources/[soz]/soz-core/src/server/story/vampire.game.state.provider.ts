@@ -12,6 +12,7 @@ export class VampireGameStateProvider {
 
     public excludedPlayers: Set<string> = new Set<string>();
     public playerRoles = new Map<string, VampireGameRole>();
+    public ghoulOriginalRoles = new Map<string, VampireGameRole>();
 
     public originalPlayerPositions = new Map<string, Vector4>();
 

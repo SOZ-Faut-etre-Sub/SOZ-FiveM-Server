@@ -1,5 +1,5 @@
 import { Provider } from '@public/core/decorators/provider';
-import { wait, waitUntil } from '@public/core/utils';
+import { wait } from '@public/core/utils';
 import { VampireGameStateProvider } from '@public/server/story/vampire.game.state.provider';
 import { PlayerData } from '@public/shared/player';
 import { fromVector3Object, fromVector4Object, Vector3, Vector4 } from '@public/shared/polyzone/vector';
@@ -517,6 +517,7 @@ export class VampireGameProvider {
                 await wait(this.autoMortalRespawnDuration * 1000);
                 if (isCanceled) return;
 
+                this.gameState.ghoulOriginalRoles.set(player.citizenid, playerRole);
                 this.gameState.playerRoles.set(player.citizenid, VampireGameRole.Ghoul);
 
                 await this.computeCurrentRoleGauge();
@@ -639,8 +640,14 @@ export class VampireGameProvider {
         this.gameState.autoRespawn.get(playerTarget.citizenid)?.cancel();
         this.gameState.autoRespawn.delete(playerTarget.citizenid);
 
+        if (role === VampireGameRole.Ghoul) {
+            this.gameState.ghoulOriginalRoles.set(playerTarget.citizenid, targetRole);
+        }
+
         if (role) {
             this.gameState.playerRoles.set(playerTarget.citizenid, role);
+        } else if (this.gameState.ghoulOriginalRoles.has(playerTarget.citizenid)) {
+            role = this.gameState.ghoulOriginalRoles.get(playerTarget.citizenid);
         } else {
             role = targetRole;
         }
@@ -1036,6 +1043,7 @@ export class VampireGameProvider {
                 this.gameState.objectiveGauges.part1.reset();
                 this.gameState.objectiveGauges.part2.reset();
 
+                this.gameState.ghoulOriginalRoles.clear();
                 this.gameState.originalPlayerPositions.clear();
 
                 this.gameState.autoRespawn.clear();

@@ -275,11 +275,7 @@ export class VampireGameProvider {
                 },
                 action: async entity => {
                     const targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-                    TriggerServerEvent(
-                        ServerEvent.HALLOWEEN_VAMPIRE_GAME_CONVERT_PLAYER,
-                        targetSource,
-                        VampireGameRole.Mortal
-                    );
+                    TriggerServerEvent(ServerEvent.HALLOWEEN_VAMPIRE_GAME_CONVERT_PLAYER, targetSource, null);
                 },
             },
             {
