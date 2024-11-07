@@ -762,41 +762,6 @@ export const FDFCraftsLists: Record<string, CraftCategory> = {
                     orange: { count: 2 },
                 },
             },
-            halloween_bruschetta_exorciste: {
-                amount: 4,
-                inputs: {
-                    garlic: { count: 16 },
-                    halloween_pure_blood: { count: 8 },
-                    halloween_blessed_water: { count: 4 },
-                },
-            },
-            halloween_sacred_stew: {
-                amount: 4,
-                inputs: {
-                    garlic: { count: 16 },
-                    halloween_pure_blood: { count: 8 },
-                    halloween_blessed_water: { count: 8 },
-                },
-            },
-            halloween_eternal_red_beef: {
-                amount: 4,
-                inputs: {
-                    garlic: { count: 16 },
-                    halloween_pure_blood: { count: 4 },
-                    raw_coal: { count: 2 },
-                    viande: { count: 4 },
-                    halloween_blessed_water: { count: 2 },
-                },
-            },
-            halloween_black_shadow_ribs: {
-                amount: 4,
-                inputs: {
-                    garlic: { count: 16 },
-                    halloween_pure_blood: { count: 4 },
-                    viande: { count: 4 },
-                    halloween_blessed_water: { count: 2 },
-                },
-            },
         },
     },
     Boisson: {
@@ -888,6 +853,41 @@ export const FDFCraftsLists: Record<string, CraftCategory> = {
                 amount: 3,
                 inputs: {
                     pumpkin_fresh: { count: 2 },
+                },
+            },
+            halloween_bruschetta_exorciste: {
+                amount: 4,
+                inputs: {
+                    garlic: { count: 16 },
+                    halloween_pure_blood: { count: 8 },
+                    halloween_blessed_water: { count: 4 },
+                },
+            },
+            halloween_sacred_stew: {
+                amount: 4,
+                inputs: {
+                    garlic: { count: 16 },
+                    halloween_pure_blood: { count: 8 },
+                    halloween_blessed_water: { count: 8 },
+                },
+            },
+            halloween_eternal_red_beef: {
+                amount: 4,
+                inputs: {
+                    garlic: { count: 16 },
+                    halloween_pure_blood: { count: 4 },
+                    raw_coal: { count: 2 },
+                    viande: { count: 4 },
+                    halloween_blessed_water: { count: 2 },
+                },
+            },
+            halloween_black_shadow_ribs: {
+                amount: 4,
+                inputs: {
+                    garlic: { count: 16 },
+                    halloween_pure_blood: { count: 4 },
+                    viande: { count: 4 },
+                    halloween_blessed_water: { count: 2 },
                 },
             },
         },
