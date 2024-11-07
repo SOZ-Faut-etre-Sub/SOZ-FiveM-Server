@@ -1469,7 +1469,7 @@
             </SubHandlingData>
         </Item>
         <Item type="CHandlingData">
-          <handlingName>holloween2024bike</handlingName>
+          <handlingName>motovampire</handlingName>
           <fMass value="250.0" />
           <fInitialDragCoeff value="2.0" />
           <fPercentSubmerged value="95.0" />
