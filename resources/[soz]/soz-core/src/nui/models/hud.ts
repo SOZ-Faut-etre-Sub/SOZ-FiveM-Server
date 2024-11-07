@@ -1,6 +1,6 @@
 import { createModel } from '@rematch/core';
 
-import { HudSettings, HudState } from '../../shared/hud';
+import { HudSettings, HudState, HudTheme } from '../../shared/hud';
 import type { RootModel } from './';
 
 export const hud = createModel<RootModel>()({
@@ -8,7 +8,8 @@ export const hud = createModel<RootModel>()({
         hasWatch: false,
         armorPlates: 0,
         settings: {
-            theme: 'auto',
+            theme: HudTheme.Auto,
+            availableTheme: [HudTheme.Auto],
             zoom: 1,
             showDateTime: false,
             showWeather: false,

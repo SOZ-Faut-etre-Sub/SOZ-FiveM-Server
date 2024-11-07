@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
-import { HudSettings } from '../../../shared/hud';
+import { AllThemesConfig, HudSettings } from '../../../shared/hud';
 import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';
 import { usePlayer } from '../../hook/data';
@@ -41,12 +41,11 @@ export const MenuWatch: FunctionComponent<MenuWatchProps> = ({ data }) => {
                             await fetchNui(NuiEvent.WatchMenuSetTheme, value);
                         }}
                     >
-                        <MenuItemSelectOption value="auto">Auto</MenuItemSelectOption>
-                        <MenuItemSelectOption value="daltonism">Daltonien</MenuItemSelectOption>
-                        <MenuItemSelectOption value="dark">Dark Mode</MenuItemSelectOption>
-                        <MenuItemSelectOption value="light">Light Mode</MenuItemSelectOption>
-                        <MenuItemSelectOption value="uwu">UwU Mode</MenuItemSelectOption>
-                        <MenuItemSelectOption value="green">Green Mode</MenuItemSelectOption>
+                        {data.availableTheme.map(id => (
+                            <MenuItemSelectOption key={id} value={id}>
+                                {AllThemesConfig[id]?.label ?? id}
+                            </MenuItemSelectOption>
+                        ))}
                     </MenuItemSelect>
 
                     <MenuItemSelect
