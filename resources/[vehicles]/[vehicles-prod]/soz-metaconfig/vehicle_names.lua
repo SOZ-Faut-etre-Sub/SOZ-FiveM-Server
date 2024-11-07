@@ -137,5 +137,7 @@ Citizen.CreateThread(function()
     AddTextEntryByHash(GetHashKey("elegyr"), "Elegy R")
     AddTextEntryByHash(GetHashKey("oracxsle"), "Oracle XS-LE")
     AddTextEntryByHash(GetHashKey("rumpo4"), "Bravado Rumpo")
+    AddTextEntryByHash(GetHashKey("motovampire"), "Douce Démoniaque")
+
 
 end)

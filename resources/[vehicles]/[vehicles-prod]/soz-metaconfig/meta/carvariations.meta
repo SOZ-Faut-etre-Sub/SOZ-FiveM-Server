@@ -5025,7 +5025,7 @@
             <sirenSettings value="5014" />
         </Item>
         <Item>
-              <modelName>holloween2024bike</modelName>
+              <modelName>motovampire</modelName>
               <colors>
                 <Item>
                   <indices content="char_array">
@@ -5085,7 +5085,7 @@
                 </Item>
               </colors>
               <kits>
-                <Item>728102_holloween2024bike_modkit</Item>
+                <Item>728102_motovampire_modkit</Item>
               </kits>
               <windowsWithExposedEdges />
               <plateProbabilities>

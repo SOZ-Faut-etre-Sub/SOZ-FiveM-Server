@@ -5284,10 +5284,10 @@
             </firstPersonDrivebyData>
         </Item>
         <Item>
-              <modelName>holloween2024bike</modelName>
-              <txdName>holloween2024bike</txdName>
-              <handlingId>holloween2024bike</handlingId>
-              <gameName>holloween2024bike</gameName>
+              <modelName>motovampire</modelName>
+              <txdName>motovampire</txdName>
+              <handlingId>motovampire</handlingId>
+              <gameName>motovampire</gameName>
               <vehicleMakeName>NAGASAKI</vehicleMakeName>
               <expressionDictName>null</expressionDictName>
               <expressionName>null</expressionName>
@@ -5583,7 +5583,7 @@
         </Item>
         <Item>
             <parent>vehicles_sportbk_interior</parent>
-            <child>holloween2024bike</child>
+            <child>motovampire</child>
         </Item>
     </txdRelationships>
 </CVehicleModelInfo__InitDataList>
