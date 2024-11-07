@@ -4,6 +4,7 @@ import { GangRepository } from '@private/server/resources/gang.repository';
 import { PlayerService } from '@public/server/player/player.service';
 import { HousingRepository } from '@public/server/repository/housing.repository';
 import { ClientEvent } from '@public/shared/event/client';
+import { isAdminApartment } from '@public/shared/housing/housing';
 import { PlayerData } from '@public/shared/player';
 import { toVector2Object, Vector3 } from '@public/shared/polyzone/vector';
 
@@ -266,6 +267,9 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
                 if (apartment) {
                     accountLabel = apartment.label;
                     accountMaxCapacity = HouseSafeStorageTiers[apartment.money_tier ?? 0];
+                    if (isAdminApartment(apartment)) {
+                        accountMaxCapacity = 10_000_000;
+                    }
                 }
 
                 break;
