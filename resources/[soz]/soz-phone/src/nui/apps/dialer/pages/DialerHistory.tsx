@@ -8,6 +8,7 @@ import {
     UserAddIcon,
 } from '@heroicons/react/solid';
 import { useCall } from '@os/call/hooks/useCall';
+import { CallHistoryItem } from '@typings/call';
 import { Button } from '@ui/old_components/Button';
 import cn from 'classnames';
 import React from 'react';
@@ -32,7 +33,7 @@ export const DialerHistory: React.FC = () => {
     const navigate = useNavigate();
     const [t] = useTranslation();
 
-    const handleCall = phoneNumber => {
+    const handleCall = (phoneNumber) => {
         initializeCall(phoneNumber);
     };
 
@@ -60,9 +61,10 @@ export const DialerHistory: React.FC = () => {
                 >
                     {calls
                         .sort((a, b) => b.start - a.start)
-                        .map(call => {
+                        .map((call) => {
                             const contactNumber = call.transmitter === myNumber ? call.receiver : call.transmitter;
                             const isContactRegistered = getDisplayByNumber(contactNumber) !== contactNumber;
+
                             return (
                                 <Menu
                                     key={call.id}
@@ -74,7 +76,7 @@ export const DialerHistory: React.FC = () => {
                                 >
                                     <Menu.Button className="w-full">
                                         <div
-                                            className={cn('relative px-6 py-2 flex items-center space-x-3', {
+                                            className={cn('relative px-4 py-2 flex items-center space-x-3', {
                                                 'hover:bg-ios-600': config.theme.value === 'dark',
                                                 'hover:bg-gray-200': config.theme.value === 'light',
                                             })}
@@ -82,44 +84,33 @@ export const DialerHistory: React.FC = () => {
                                             <div className="flex-shrink-0">
                                                 <ContactPicture picture={getPictureByNumber(contactNumber)} />
                                             </div>
-                                            <div className="flex flex-1 min-w-0 cursor-pointer">
-                                                <div className="shrink self-center">
-                                                    {!call.is_accepted ? (
-                                                        <PhoneMissedCallIcon className="h-5 w-5 text-red-500 mr-3" />
-                                                    ) : call.transmitter === myNumber ? (
-                                                        <PhoneOutgoingIcon className="h-5 w-5 text-green-500 mr-3" />
-                                                    ) : (
-                                                        <PhoneIncomingIcon className="h-5 w-5 text-green-700 mr-3" />
-                                                    )}
-                                                </div>
+                                            <div className="flex flex-1 min-w-0 cursor-pointer ">
                                                 <div
                                                     className={cn(
-                                                        'grid grid-rows-2 text-left text-sm font-medium truncate',
                                                         {
                                                             'text-gray-100': config.theme.value === 'dark',
                                                             'text-gray-600': config.theme.value === 'light',
-                                                        }
+                                                        },
+                                                        'shrink self-center text-base flex w-3/5',
                                                     )}
                                                 >
-                                                    <p
-                                                        className={cn({
-                                                            'row-span-2':
-                                                                getDisplayByNumber(contactNumber) === contactNumber,
-                                                            'row-span-1':
-                                                                getDisplayByNumber(contactNumber) !== contactNumber,
-                                                        })}
-                                                    >
-                                                        {getDisplayByNumber(contactNumber)}
-                                                    </p>
-                                                    {getDisplayByNumber(contactNumber) != contactNumber && (
-                                                        <p className="text-left text-sm font-medium truncate row-span-1">
-                                                            {contactNumber}
+                                                    <div className="flex justify-center items-center w-1/4">
+                                                        {getIcon(myNumber, call)}
+                                                    </div>
+                                                    <div className="flex flex-col w-3/4 items-start">
+                                                        <p className={cn('truncate text-left w-full')}>
+                                                            {isContactRegistered
+                                                                ? getDisplayByNumber(contactNumber)
+                                                                : contactNumber}
                                                         </p>
-                                                    )}
+                                                        {getText(myNumber, call)}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div className="text-gray-500 text-sm">
-                                                <DayAgo timestamp={call.start} />
+                                                <div className="text-right w-2/5">
+                                                    <div className="text-gray-500 text-sm">
+                                                        <DayAgo timestamp={call.start} />
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </Menu.Button>
@@ -147,7 +138,7 @@ export const DialerHistory: React.FC = () => {
                                                         className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
                                                         onClick={() =>
                                                             navigate(
-                                                                `/contacts/-1?addNumber=${contactNumber}&referral=/phone/contacts`
+                                                                `/contacts/-1?addNumber=${contactNumber}&referral=/phone/contacts`,
                                                             )
                                                         }
                                                     >
@@ -183,5 +174,27 @@ export const DialerHistory: React.FC = () => {
                 </ul>
             </div>
         </nav>
+    );
+};
+
+const getIcon = (myNumber: string, call: CallHistoryItem) => {
+    return !call.is_accepted ? (
+        <PhoneMissedCallIcon className="h-5 w-5 text-red-500 mr-3" />
+    ) : call.transmitter === myNumber ? (
+        <PhoneOutgoingIcon className="h-5 w-5 text-green-500 mr-3" />
+    ) : (
+        <PhoneIncomingIcon className="h-5 w-5 text-green-700 mr-3" />
+    );
+};
+
+const getText = (myNumber: string, call: CallHistoryItem) => {
+    return !call.is_accepted ? (
+        <span className="flex gap-4 items-center text-red-500 italic text-sm ">
+            {call.transmitter === myNumber ? 'Appel non abouti' : 'Appel manqué'}
+        </span>
+    ) : call.transmitter === myNumber ? (
+        <span className="flex gap-4 items-center text-green-500 italic text-sm">Appel sortant</span>
+    ) : (
+        <span className="flex gap-4 items-center text-green-700 italic text-sm">Appel entrant</span>
     );
 };
