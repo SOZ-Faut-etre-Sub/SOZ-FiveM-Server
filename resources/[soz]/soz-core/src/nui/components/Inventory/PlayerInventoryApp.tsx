@@ -107,7 +107,7 @@ export const PlayerInventoryApp: FunctionComponent = () => {
             onDragEnd={createHandleDragAndDrop(true)}
             sensors={sensors}
         >
-            <div className="absolute h-full w-full font-prompt">
+            <div className="z-10 absolute h-full w-full font-prompt">
                 <main className="m-8 w-[400px] wide:ml-[94vh]">
                     <Inventory
                         title="Inventaire"
