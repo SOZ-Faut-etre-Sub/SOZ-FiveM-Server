@@ -149,9 +149,15 @@ export class VehicleMenuProvider {
                 }
             );
 
-            if (!speedLimit) {
+            if (speedLimit == null) {
                 return false;
             }
+        }
+
+        if (GetVehicleClass(vehicle) == VehicleClass.Trains) {
+            SetTrainCruiseSpeed(vehicle, speedLimit / 3.6);
+            this.notifier.notify(`Vitesse de croisière: ${speedLimit} km/h.`);
+            return;
         }
 
         this.vehicleStateService.updateVehicleState(vehicle, { speedLimit }, false);
