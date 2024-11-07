@@ -86,9 +86,9 @@ export const DefaultFeatureConfig: FeaturesConfig = {
         test: false,
     },
     [Feature.Boat]: {
-        production: false,
-        development: false,
-        test: false,
+        production: true,
+        development: true,
+        test: true,
     },
     [Feature.Easter]: {
         production: false,
