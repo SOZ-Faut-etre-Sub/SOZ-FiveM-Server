@@ -171,7 +171,7 @@ export const Inventory: FunctionComponent<InventoryProps> = ({
         setCurrentInventoryItem,
     ]);
 
-    const height = Math.min((nbLines + 1) * 80, 560);
+    const height = Math.min((nbLines + 1) * 80, 480);
 
     return (
         <InventoryDiv
@@ -217,7 +217,6 @@ type InventoryDivProps = {
     };
     price?: number;
     maxHeight?: string;
-    useGrid?: boolean;
 };
 
 export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps>> = ({
@@ -230,7 +229,6 @@ export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps
     isCart = false,
     maxHeight = 'max-h-[45vh]',
     price = 0,
-    useGrid = false,
 }) => {
     const [showSort, setShowSort] = useState(false);
 
@@ -269,7 +267,11 @@ export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps
                                 className="cursor-pointer inline-block justify-center relative"
                                 onClick={() => giveKeysCallback('vehicle')}
                             >
-                                <GlassMorphismContainer borderClassName="rounded" showBorderOnHover>
+                                <GlassMorphismContainer
+                                    duration="duration-0"
+                                    borderClassName="rounded"
+                                    showBorderOnHover
+                                >
                                     <img
                                         className="h-6 px-4"
                                         src="https://cfx-nui-soz-core/public/images/inventory/icon/car.webp"
@@ -281,7 +283,11 @@ export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps
                                 className="ml-1 cursor-pointer inline-block justify-center relative"
                                 onClick={() => giveKeysCallback('apartment')}
                             >
-                                <GlassMorphismContainer borderClassName="rounded" showBorderOnHover>
+                                <GlassMorphismContainer
+                                    duration="duration-0"
+                                    borderClassName="rounded"
+                                    showBorderOnHover
+                                >
                                     <img
                                         className="h-6 px-4"
                                         src="https://cfx-nui-soz-core/public/images/inventory/icon/key.webp"
@@ -294,7 +300,11 @@ export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps
                     {sortCallback && (
                         <div className="text-white" onClick={() => setShowSort(!showSort)}>
                             <div className="cursor-pointer relative inline-block">
-                                <GlassMorphismContainer borderClassName="rounded" showBorderOnHover>
+                                <GlassMorphismContainer
+                                    duration="duration-0"
+                                    borderClassName="rounded"
+                                    showBorderOnHover
+                                >
                                     <div className="text-white px-2 py-1">Trier ↑↓</div>
                                 </GlassMorphismContainer>
                             </div>
@@ -326,15 +336,7 @@ export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps
                         maxHeight
                     )}
                 >
-                    <GameCanvasBox blur={false}>
-                        <div
-                            className={classNames({
-                                'grid grid-cols-5 gap-2': useGrid,
-                            })}
-                        >
-                            {children}
-                        </div>
-                    </GameCanvasBox>
+                    <GameCanvasBox blur={false}>{children}</GameCanvasBox>
                 </div>
                 {description}
             </div>
@@ -353,6 +355,7 @@ const WeightGauge: FunctionComponent<{ current: number; max: number }> = ({ curr
                 borderClassName="rounded-full"
                 className="flex justify-center items-center"
                 style={{ width: '36px', height: '36px' }}
+                duration="duration-0"
                 disableBorder
             >
                 <WeightIcon className="text-white w-[16x] h-[16px]" />

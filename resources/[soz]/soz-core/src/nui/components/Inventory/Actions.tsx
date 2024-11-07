@@ -1,9 +1,11 @@
 import { DragEndEvent } from '@dnd-kit/core';
+import { DrugSkill } from '@private/shared/drugs';
 import { FunctionComponent } from 'react';
 
 import { NuiEvent } from '../../../shared/event/nui';
 import { InventoryItem } from '../../../shared/inventory';
 import { Item } from '../../../shared/item';
+import { PlayerData } from '../../../shared/player';
 import { fetchNui } from '../../fetch';
 
 type DraggableDataInventoryItem = {
@@ -438,7 +440,8 @@ export const ActionItem: FunctionComponent<ActionItemProps> = ({ action, invento
 export const getActions = (
     inventoryItem: InventoryItem | 'wallet' | 'keychain' | 'money',
     item: Item | null,
-    allowForceConsume = false
+    allowForceConsume = false,
+    player: PlayerData
 ): ActionItemType[] => {
     const actions = [];
 
@@ -475,6 +478,8 @@ export const getActions = (
         if (allowForceConsume) {
             actions.push(ActionItemType.ForceConsume);
         }
+    } else if (item.type === 'fish' && player.metadata.drugs_skills.includes(DrugSkill.Zoologiste)) {
+        actions.push(ActionItemType.Use);
     }
 
     if (item.canShow) {

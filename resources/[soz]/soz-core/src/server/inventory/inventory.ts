@@ -39,9 +39,14 @@ export class Inventory {
         private _type: InventoryType,
         private _configuration: InventoryConfiguration,
         private readonly _items: Record<number, InventoryItem> = {},
-        private _itemService: ItemService
+        private _itemService: ItemService,
+        private _accessChecker: (source: number, inventory: Inventory) => boolean | Promise<boolean>
     ) {
         this.observer = observe(this._items);
+    }
+
+    canAccess(source: number): boolean | Promise<boolean> {
+        return this._accessChecker(source, this);
     }
 
     type(): InventoryType {
@@ -319,8 +324,9 @@ export class Inventory {
         }
 
         const item = this._itemService.getItem(inventoryItem.name);
+        const existingItemObject = this._itemService.getItem(existingItem.name);
 
-        if (!item) {
+        if (!item || !existingItemObject) {
             return Err('item_not_found');
         }
 
@@ -487,6 +493,16 @@ export class Inventory {
             this._hasChanges = true;
 
             return Ok(1);
+        }
+
+        // Case 7: Armor plate
+        if (inventoryItem.name === 'armor_plate' && existingItemObject.maxplates) {
+            if (!existingItem.metadata.plates || existingItem.metadata.plates < existingItemObject.maxplates) {
+                existingItem.metadata.plates = existingItem.metadata.plates || 0;
+                existingItem.metadata.plates += 1;
+
+                return Ok(1);
+            }
         }
 
         return Err('cannot_merge');

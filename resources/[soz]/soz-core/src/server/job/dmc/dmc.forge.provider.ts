@@ -1,5 +1,4 @@
-import { OnEvent } from '@public/core/decorators/event';
-import { Exportable } from '@public/core/decorators/exports';
+import { Once, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { Rpc } from '@public/core/decorators/rpc';
@@ -12,6 +11,8 @@ import { ServerEvent } from '@public/shared/event';
 import { JobType } from '@public/shared/job';
 import { DmcConverterConfig, DmcConverterState, DmcIncineratorConfig } from '@public/shared/job/dmc';
 import { RpcServerEvent } from '@public/shared/rpc';
+
+import { InventoryType } from '../../../shared/inventory';
 
 @Provider()
 export class DmcForgeProvider {
@@ -32,6 +33,22 @@ export class DmcForgeProvider {
         temperature: 0,
         targetTemperature: 0,
     };
+
+    @Once()
+    public async onModuleInit() {
+        this.inventoryFactory.addAccessChecker(
+            (_id, type) => type === InventoryType.MetalConverter,
+            source => {
+                if (this.converterState.temperature === this.converterState.targetTemperature) {
+                    return true;
+                }
+
+                this.notifier.error(source, `Impossible d'accéder au Convertisseur lorsque sa température s'ajuste.`);
+
+                return false;
+            }
+        );
+    }
 
     @Rpc(RpcServerEvent.DMC_GET_CONVERTER_STATE)
     public getConverterState() {
@@ -159,8 +176,7 @@ export class DmcForgeProvider {
         }
     }
 
-    @Exportable('CanAccessConverter')
-    public CanAccessConverter() {
+    public canAccessConverter() {
         return this.converterState.temperature == this.converterState.targetTemperature;
     }
 }

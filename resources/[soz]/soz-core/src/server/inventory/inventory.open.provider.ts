@@ -84,6 +84,10 @@ export class InventoryOpenProvider {
             return;
         }
 
+        if (!inventory.canAccess(source)) {
+            return;
+        }
+
         this.doSubscribe(source, inventory);
 
         const inventoryPosition: InventoryPosition = position

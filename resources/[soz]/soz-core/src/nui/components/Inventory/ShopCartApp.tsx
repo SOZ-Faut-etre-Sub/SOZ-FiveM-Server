@@ -186,64 +186,62 @@ export const ShopCartApp: FunctionComponent = () => {
             <div className="absolute h-full w-full font-prompt">
                 <div className="m-8">
                     <div className="flex max-h-[40vh]">
-                        <div className="max-h-full w-[390px] xl:ml-[94vh]">
-                            <InventoryDiv title={shopContent.title} useGrid>
-                                {[...Array(nbLines)].map((_, i) => {
-                                    return (
-                                        <Fragment key={i}>
-                                            {[...Array(5)].map((_, j) => {
-                                                const index = i * 5 + j;
-                                                const item = shopContent.items[index] || null;
+                        <div className="max-h-full w-[400px] xl:ml-[94vh]">
+                            <InventoryDiv
+                                description={
+                                    <ItemDescription
+                                        position="right"
+                                        inventoryItem={
+                                            currentShopItem
+                                                ? {
+                                                      name: currentShopItem.name,
+                                                      type: currentShopItem.type,
+                                                      slot: 0,
+                                                      amount: currentShopItem.amount || 1,
+                                                      metadata: currentShopItem.metadata || {},
+                                                  }
+                                                : null
+                                        }
+                                    />
+                                }
+                                title={shopContent.title}
+                            >
+                                <div className="grid grid-cols-5 gap-2">
+                                    {[...Array(nbLines)].map((_, i) => {
+                                        return (
+                                            <Fragment key={i}>
+                                                {[...Array(5)].map((_, j) => {
+                                                    const index = i * 5 + j;
+                                                    const item = shopContent.items[index] || null;
 
-                                                if (!item) {
+                                                    if (!item) {
+                                                        return (
+                                                            <EmptySlot
+                                                                droppable={false}
+                                                                key={index}
+                                                                inventoryId={'shop'}
+                                                                slot={index}
+                                                            />
+                                                        );
+                                                    }
+
                                                     return (
-                                                        <EmptySlot
-                                                            droppable={false}
+                                                        <ShopItem
+                                                            addItem={addItem}
+                                                            index={index}
+                                                            item={item}
+                                                            setCurrentShopItem={setCurrentShopItem}
                                                             key={index}
-                                                            inventoryId={'shop'}
-                                                            slot={index}
+                                                            tax={shopContent.tax}
+                                                            moneyType={shopContent.moneyType}
                                                         />
                                                     );
-                                                }
-
-                                                return (
-                                                    <ShopItem
-                                                        addItem={addItem}
-                                                        index={index}
-                                                        item={item}
-                                                        setCurrentShopItem={setCurrentShopItem}
-                                                        key={index}
-                                                        tax={shopContent.tax}
-                                                        moneyType={shopContent.moneyType}
-                                                    />
-                                                );
-                                            })}
-                                        </Fragment>
-                                    );
-                                })}
+                                                })}
+                                            </Fragment>
+                                        );
+                                    })}
+                                </div>
                             </InventoryDiv>
-                        </div>
-                        <div
-                            className="ml-4"
-                            style={{
-                                width: 'fit-content',
-                                maxWidth: '36vh',
-                            }}
-                        >
-                            <ItemDescription
-                                position="right"
-                                inventoryItem={
-                                    currentShopItem
-                                        ? {
-                                              name: currentShopItem.name,
-                                              type: currentShopItem.type,
-                                              slot: 0,
-                                              amount: currentShopItem.amount || 1,
-                                              metadata: currentShopItem.metadata || {},
-                                          }
-                                        : null
-                                }
-                            />
                         </div>
                     </div>
                     <CartInventory
@@ -300,7 +298,11 @@ const ShopItem: FunctionComponent<{
                     addItem(item);
                 }}
             >
-                <GlassMorphismContainer borderClassName="rounded-xl aspect-square" showBorderOnHover>
+                <GlassMorphismContainer
+                    duration="duration-0"
+                    borderClassName="rounded-xl aspect-square"
+                    showBorderOnHover
+                >
                     <div className={getItemSlotClassnames(false)}>
                         <div ref={setDraggableNodeRef} {...listeners} {...attributes}>
                             <div className="relative">
@@ -365,43 +367,47 @@ const CartInventory: FunctionComponent<{
 
     return (
         <div className="flex max-h-[30vh] mt-4">
-            <div ref={setDroppableNodeRef} className={classNames('max-h-full rounded w-[390px] xl:ml-[94vh]')}>
-                <InventoryDiv price={getPrice(amount, tax)} maxHeight="max-h-[20vh]" isCart title="Panier" useGrid>
-                    {[...Array(nbLines)].map((_, i) => {
-                        return (
-                            <Fragment key={i}>
-                                {[...Array(5)].map((_, j) => {
-                                    const index = i * 5 + j;
-                                    const item = items[index] || null;
+            <div ref={setDroppableNodeRef} className={classNames('max-h-full rounded w-[400px] xl:ml-[94vh]')}>
+                <InventoryDiv price={getPrice(amount, tax)} isCart title="Panier">
+                    <div className="max-h-[310px] overflow-y-scroll w-[400px] scrollbar scrollbar-w-1 scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
+                        <div className="grid grid-cols-5 w-full gap-2 max-h-full">
+                            {[...Array(nbLines)].map((_, i) => {
+                                return (
+                                    <Fragment key={i}>
+                                        {[...Array(5)].map((_, j) => {
+                                            const index = i * 5 + j;
+                                            const item = items[index] || null;
 
-                                    if (!item) {
-                                        return (
-                                            <EmptySlot
-                                                droppable={false}
-                                                key={index}
-                                                inventoryId={'shop'}
-                                                slot={index}
-                                                isOver={isOver}
-                                            />
-                                        );
-                                    }
+                                            if (!item) {
+                                                return (
+                                                    <EmptySlot
+                                                        droppable={false}
+                                                        key={index}
+                                                        inventoryId={'shop'}
+                                                        slot={index}
+                                                        isOver={isOver}
+                                                    />
+                                                );
+                                            }
 
-                                    return (
-                                        <CartItem
-                                            removeItem={removeItem}
-                                            cartItem={item}
-                                            index={index}
-                                            setCurrentCartItem={setCurrentCartItem}
-                                            key={index}
-                                            isOver={isOver}
-                                        />
-                                    );
-                                })}
-                            </Fragment>
-                        );
-                    })}
+                                            return (
+                                                <CartItem
+                                                    removeItem={removeItem}
+                                                    cartItem={item}
+                                                    index={index}
+                                                    setCurrentCartItem={setCurrentCartItem}
+                                                    key={index}
+                                                    isOver={isOver}
+                                                />
+                                            );
+                                        })}
+                                    </Fragment>
+                                );
+                            })}
+                        </div>
+                    </div>
                 </InventoryDiv>
-                <div className="p-2 flex justify-between items-center w-full text-white">
+                <div className="flex px-1 py-2 justify-between items-center w-full text-white">
                     <span></span>
                     <button
                         className="bg-spring-green-500/50 hover:bg-spring-green-500 p-2 rounded text-white"
@@ -462,8 +468,13 @@ const CartItem: FunctionComponent<{
                 onDoubleClick={() => {
                     removeItem(index);
                 }}
+                className="h-[70px] w-[70px] aspect-square"
             >
-                <GlassMorphismContainer borderClassName="rounded-xl aspect-square" showBorderOnHover={!isOver}>
+                <GlassMorphismContainer
+                    duration="duration-0"
+                    borderClassName="rounded-xl aspect-square"
+                    showBorderOnHover={!isOver}
+                >
                     <div
                         ref={setDraggableNodeRef}
                         {...listeners}

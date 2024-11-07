@@ -83,8 +83,8 @@ export const KeychainApp: FunctionComponent = () => {
                         title="Porte-clés"
                         description={
                             currentKey ? (
-                                <div className="mt-2w-[370px]">
-                                    <GlassMorphismContainer borderClassName="rounded-xl">
+                                <div className="mt-2 w-[370px]">
+                                    <GlassMorphismContainer duration="duration-0" borderClassName="rounded-xl">
                                         <div className="p-2 rounded text-gray-100 w-full">
                                             <div className="flex justify-between align-items-center w-full">
                                                 <strong>
@@ -112,11 +112,17 @@ export const KeychainApp: FunctionComponent = () => {
                                 });
                             }
                         }}
-                        useGrid={true}
                     >
-                        {keys.map((key, index) => (
-                            <KeychainItem key={index} index={index} inventoryKey={key} setCurrentKey={setCurrentKey} />
-                        ))}
+                        <div className="grid grid-cols-5 w-full gap-2 max-h-full">
+                            {keys.map((key, index) => (
+                                <KeychainItem
+                                    key={index}
+                                    index={index}
+                                    inventoryKey={key}
+                                    setCurrentKey={setCurrentKey}
+                                />
+                            ))}
+                        </div>
                     </InventoryDiv>
                 </main>
             </div>
@@ -169,7 +175,11 @@ const KeychainItem: FunctionComponent<{
                     }}
                     className={getItemSlotClassnames(false)}
                 >
-                    <GlassMorphismContainer borderClassName="rounded-xl aspect-square" showBorderOnHover={!isOver}>
+                    <GlassMorphismContainer
+                        duration="duration-0"
+                        borderClassName="rounded-xl aspect-square"
+                        showBorderOnHover={!isOver}
+                    >
                         <div ref={setDraggableNodeRef} {...listeners} {...attributes}>
                             <div className="relative">
                                 <img className="h-full w-full" src={imgSrc} alt={inventoryKey.type} />

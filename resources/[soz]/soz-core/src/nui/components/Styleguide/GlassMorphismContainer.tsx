@@ -65,6 +65,7 @@ type BorderBoxProps = {
     disableBorder?: boolean;
     showBorderOnHover?: boolean;
     blur?: boolean;
+    duration?: string;
 };
 
 export const BorderBox: FunctionComponent<PropsWithChildren<BorderBoxProps>> = ({
@@ -74,6 +75,7 @@ export const BorderBox: FunctionComponent<PropsWithChildren<BorderBoxProps>> = (
     showBorderOnHover,
     children,
     blur = true,
+    duration = 'duration-1000',
 }) => {
     const currentTheme = useHudTheme();
     const { glassmorphismColors } = useDaltonism();
@@ -100,7 +102,8 @@ export const BorderBox: FunctionComponent<PropsWithChildren<BorderBoxProps>> = (
         >
             <div
                 className={cn(
-                    'absolute h-full w-full transition-opacity duration-1000 border-transparent z-10',
+                    'absolute h-full w-full transition-opacity border-transparent z-10',
+                    duration,
                     borderClassName,
                     {
                         'border-2': !disableBorder || showBorderOnHover,
@@ -136,6 +139,7 @@ interface GlassMorphismContainerProps extends HTMLAttributes<any>, PropsWithChil
     disableBorder?: boolean;
     showBorderOnHover?: boolean;
     blur?: boolean;
+    duration?: string;
 }
 
 export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerProps> = ({
@@ -147,6 +151,7 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
     showBorderOnHover,
     children,
     blur = true,
+    duration = 'duration-1000',
 }) => {
     const currentTheme = useHudTheme();
     const { glassmorphismColors } = useDaltonism();
@@ -172,8 +177,9 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
             <GameCanvasBox borderClassName={borderClassName} blur={blur}>
                 <div
                     className={cn(
-                        'absolute h-full w-full transition-opacity duration-1000 border-transparent z-10',
+                        'absolute h-full w-full transition-opacity border-transparent z-10',
                         borderClassName,
+                        duration,
                         {
                             'border-2': !disableBorder || showBorderOnHover,
                             'opacity-0 group-hover:opacity-100': showBorderOnHover,
@@ -205,6 +211,7 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
 
 interface GlassMorphismBoxProps extends HTMLAttributes<HTMLDivElement> {
     childrenClassName?: string;
+    duration?: string;
 }
 
 export const GlassMorphismBox: FunctionComponent<PropsWithChildren<GlassMorphismBoxProps>> = ({
@@ -212,6 +219,7 @@ export const GlassMorphismBox: FunctionComponent<PropsWithChildren<GlassMorphism
     childrenClassName,
     style,
     children,
+    duration = 'duration-1000',
 }) => {
     const currentTheme = useHudTheme();
     const { glassmorphismColors } = useDaltonism();
@@ -228,7 +236,7 @@ export const GlassMorphismBox: FunctionComponent<PropsWithChildren<GlassMorphism
                 {children}
             </div>
             <div
-                className={cn('absolute transition-all duration-1000 border-2 border-transparent', className)}
+                className={cn('absolute transition-all border-2 border-transparent', duration, className)}
                 style={{
                     height,
                     ...style,

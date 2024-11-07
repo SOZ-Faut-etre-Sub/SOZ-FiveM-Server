@@ -77,11 +77,10 @@ export class InventoryOpenProvider {
                             cancelled === AnimationStopReason.Finished &&
                             (await emitRpc<boolean>(RpcServerEvent.BIN_IS_NOT_LOCKED, id))
                         ) {
-                            this.inventoryManager.openInventory(
-                                InventoryType.Bin,
-                                id,
-                                GetEntityCoords(entity) as Vector3
-                            );
+                            const playerPed = PlayerPedId();
+                            const coords = GetEntityCoords(playerPed);
+
+                            this.inventoryManager.openInventory(InventoryType.Bin, id, coords as Vector3);
                         }
                     },
                     canInteract: async (entity: number) => {
@@ -115,10 +114,13 @@ export class InventoryOpenProvider {
                             return player.job.onduty;
                         },
                         action: async () => {
+                            const playerPed = PlayerPedId();
+                            const coords = GetEntityCoords(playerPed);
+
                             this.inventoryManager.openInventory(
                                 inventory.data.type,
                                 inventory.data.storage,
-                                inventory.center
+                                coords as Vector3
                             );
                         },
                     },

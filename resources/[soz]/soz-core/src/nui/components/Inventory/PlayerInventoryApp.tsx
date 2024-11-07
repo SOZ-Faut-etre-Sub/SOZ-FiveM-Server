@@ -8,8 +8,9 @@ import {
     useSensor,
     useSensors,
 } from '@dnd-kit/core';
+import { DrugSkill } from '@private/shared/drugs';
 import classNames from 'classnames';
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent, useCallback, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import { NuiEvent } from '../../../shared/event/nui';
@@ -59,36 +60,43 @@ export const PlayerInventoryApp: FunctionComponent = () => {
 
     const sensors = useSensors(mouseSensor);
 
+    const onDoubleClick = useCallback(
+        (inventoryItem: InventoryItem | 'money' | 'wallet' | 'keychain' | null, item?: Item | null) => {
+            if (inventoryItem === 'money') {
+                return fetchNui(NuiEvent.InventoryActionGiveMoney, {
+                    mode: 'closest',
+                    money: 'money',
+                });
+            }
+
+            if (inventoryItem === 'wallet') {
+                return fetchNui(NuiEvent.InventoryActionOpenWallet);
+            }
+
+            if (inventoryItem === 'keychain') {
+                return fetchNui(NuiEvent.InventoryActionOpenKeychain);
+            }
+
+            if (item && item.useable) {
+                fetchNui(NuiEvent.InventoryActionUse, {
+                    inventoryId: `player_${player?.citizenid}`,
+                    inventoryItem,
+                });
+            }
+
+            if (item && item.type === 'fish' && player.metadata.drugs_skills.includes(DrugSkill.Zoologiste)) {
+                fetchNui(NuiEvent.InventoryActionUse, {
+                    inventoryId: `player_${player?.citizenid}`,
+                    inventoryItem,
+                });
+            }
+        },
+        [player]
+    );
+
     if (!open) {
         return null;
     }
-
-    const onDoubleClick = (
-        inventoryItem: InventoryItem | 'money' | 'wallet' | 'keychain' | null,
-        item?: Item | null
-    ) => {
-        if (inventoryItem === 'money') {
-            return fetchNui(NuiEvent.InventoryActionGiveMoney, {
-                mode: 'closest',
-                money: 'money',
-            });
-        }
-
-        if (inventoryItem === 'wallet') {
-            return fetchNui(NuiEvent.InventoryActionOpenWallet);
-        }
-
-        if (inventoryItem === 'keychain') {
-            return fetchNui(NuiEvent.InventoryActionOpenKeychain);
-        }
-
-        if (item && item.useable) {
-            fetchNui(NuiEvent.InventoryActionUse, {
-                inventoryId: `player_${player?.citizenid}`,
-                inventoryItem,
-            });
-        }
-    };
 
     return (
         <DndContext
@@ -119,11 +127,11 @@ export const PlayerInventoryApp: FunctionComponent = () => {
                         <div className="relative w-full">
                             <div
                                 className={classNames(
-                                    'overflow-visible w-[400px] scrollbar scrollbar-w-1 scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full'
+                                    'overflow-visible w-[390px] scrollbar scrollbar-w-1 scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full'
                                 )}
                             >
                                 <GameCanvasBox blur={false}>
-                                    <div className="grid grid-cols-5 gap-2">
+                                    <div className="grid grid-cols-5 gap-[10px]">
                                         {[...Array(10).keys()].map(index => {
                                             return (
                                                 <ShortcutSlot
@@ -188,7 +196,7 @@ const ShortcutSlot: FunctionComponent<ShortcutSlotProps> = ({ shortcut, inventor
     return (
         <>
             <div className="aspect-square w-[70px] h-[70px]">
-                <BorderBox borderClassName="rounded-xl aspect-square" showBorderOnHover={!isOver}>
+                <BorderBox duration="duration-0" borderClassName="rounded-xl aspect-square" showBorderOnHover={!isOver}>
                     <div ref={setDroppableNodeRef} className={getItemSlotClassnames(isOver)}>
                         {item && (
                             <div ref={setDraggableNodeRef} {...listeners} {...attributes}>

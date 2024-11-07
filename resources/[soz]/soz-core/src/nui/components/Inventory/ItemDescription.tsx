@@ -79,7 +79,7 @@ export const ItemDescription: FunctionComponent<ItemDescriptionProps> = ({
                 'left-[-102%]': position === 'left',
             })}
         >
-            <GlassMorphismContainer borderClassName="rounded-xl">
+            <GlassMorphismContainer duration="duration-0" borderClassName="rounded-xl">
                 <div className="w-[400px] p-2 text-lsm font-prompt text-gray-100">
                     <div className="flex justify-between align-items-center w-full">
                         {inventoryItem.metadata?.label && (

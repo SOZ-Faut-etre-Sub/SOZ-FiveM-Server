@@ -83,11 +83,10 @@ export const WalletApp: FunctionComponent = () => {
                 <main className="m-8 h-[45vh] w-[370px] xl:ml-[94vh]">
                     <InventoryDiv
                         title="Cartes"
-                        useGrid
                         description={
                             currentCard ? (
                                 <div className="mt-2 w-[370px]">
-                                    <GlassMorphismContainer borderClassName="rounded-xl">
+                                    <GlassMorphismContainer duration="duration-0" borderClassName="rounded-xl">
                                         <div className="p-2 rounded text-gray-100">
                                             <div className="flex justify-between align-items-center w-full">
                                                 <h2 className="font-semibold">{currentCard.label}</h2>
@@ -108,9 +107,11 @@ export const WalletApp: FunctionComponent = () => {
                             ) : null
                         }
                     >
-                        {cards.map((card, index) => (
-                            <CardItem key={index} index={index} card={card} setCurrentCard={setCurrentCard} />
-                        ))}
+                        <div className="grid grid-cols-5 w-full gap-2 max-h-full">
+                            {cards.map((card, index) => (
+                                <CardItem key={index} index={index} card={card} setCurrentCard={setCurrentCard} />
+                            ))}
+                        </div>
                     </InventoryDiv>
                 </main>
             </div>
@@ -175,7 +176,11 @@ const CardItem: FunctionComponent<{
                     setContextData({ visible: false, posX: 0, posY: 0 });
                 }}
             >
-                <GlassMorphismContainer borderClassName="rounded-xl aspect-square" showBorderOnHover={!isOver}>
+                <GlassMorphismContainer
+                    duration="duration-0"
+                    borderClassName="rounded-xl aspect-square"
+                    showBorderOnHover={!isOver}
+                >
                     <div ref={setDroppableNodeRef} className={getItemSlotClassnames(false)}>
                         <div ref={setDraggableNodeRef} {...listeners} {...attributes}>
                             <div className="relative">

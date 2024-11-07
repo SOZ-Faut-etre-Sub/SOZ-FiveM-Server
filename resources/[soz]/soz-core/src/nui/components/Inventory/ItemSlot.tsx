@@ -77,14 +77,14 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
     if (!inventoryItem || hidden) {
         return (
             <div className="aspect-square w-[70px] h-[70px]">
-                <BorderBox borderClassName="rounded-xl aspect-square" showBorderOnHover={!isOver}>
+                <BorderBox duration="duration-0" borderClassName="rounded-xl aspect-square" showBorderOnHover={!isOver}>
                     <div ref={setDroppableNodeRef} className={getItemSlotClassnames(isOver)}></div>
                 </BorderBox>
             </div>
         );
     }
 
-    const actions = allowActions ? getActions(inventoryItem, item, allowForceConsume) : [];
+    const actions = allowActions ? getActions(inventoryItem, item, allowForceConsume, playerData) : [];
 
     return (
         <>
@@ -116,7 +116,7 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
                     }
                 }}
             >
-                <BorderBox borderClassName="rounded-xl aspect-square" showBorderOnHover={!isOver}>
+                <BorderBox duration="duration-0" borderClassName="rounded-xl aspect-square" showBorderOnHover={!isOver}>
                     <div
                         ref={!disabled && slot > 0 ? setDroppableNodeRef : null}
                         onDoubleClick={() => {
@@ -271,7 +271,7 @@ export const EmptySlot: FunctionComponent<EmptySlotProps> = ({
 
     return (
         <div className="aspect-square w-[70px] h-[70px]">
-            <BorderBox borderClassName="rounded-xl aspect-square" showBorderOnHover={!isOver}>
+            <BorderBox duration="duration-0" borderClassName="rounded-xl aspect-square" showBorderOnHover={!isOver}>
                 <div
                     ref={droppable ? setDroppableNodeRef : null}
                     className={getItemSlotClassnames(isOver || isItemOver)}

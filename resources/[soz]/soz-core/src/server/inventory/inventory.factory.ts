@@ -20,6 +20,11 @@ import { LockService } from '../lock.service';
 import { PlayerService } from '../player/player.service';
 import { Inventory } from './inventory';
 
+type AccessChecker = {
+    filter: (id: string, type: InventoryType, config: InventoryConfiguration) => boolean;
+    check: (source: number, inventory: Inventory) => boolean;
+};
+
 @Injectable()
 export class InventoryFactory {
     @Inject(PrismaService)
@@ -35,6 +40,12 @@ export class InventoryFactory {
     private itemService: ItemService;
 
     private inventories: Map<string, Inventory> = new Map();
+
+    private accessCheckers: AccessChecker[] = [];
+
+    addAccessChecker(filter: AccessChecker['filter'], check: AccessChecker['check']) {
+        this.accessCheckers.push({ filter, check });
+    }
 
     async getPlayerInventory(source: number): Promise<Inventory | null> {
         const player = this.playerService.getPlayer(source);
@@ -224,7 +235,9 @@ export class InventoryFactory {
         config: InventoryConfiguration,
         items: Record<number, InventoryItem>
     ): Inventory {
-        const inventory = new Inventory(id, type, config, items, this.itemService);
+        const accessChecker = this.accessCheckers.find(checker => checker.filter(id, type, config));
+        const accessCheck = accessChecker ? accessChecker.check : () => true;
+        const inventory = new Inventory(id, type, config, items, this.itemService, accessCheck);
 
         if (config.persistent) {
             inventory.subscribe(async (_, items, configuration) => {
