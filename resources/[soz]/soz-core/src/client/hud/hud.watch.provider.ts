@@ -7,7 +7,7 @@ import { PlayerUpdate } from '@public/core/decorators/player';
 
 import { ClientEvent } from '../../shared/event/client';
 import { NuiEvent } from '../../shared/event/nui';
-import { HudSettings, HudTheme } from '../../shared/hud';
+import { AllThemesConfig, AvailableTheme, HudSettings, HudTheme } from '../../shared/hud';
 import { MenuType } from '../../shared/nui/menu';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { AudioService } from '../nui/audio.service';
@@ -42,6 +42,16 @@ export class HudWatchProvider {
     private _hideStamina = GetResourceKvpInt('soz_hud_stamina_hide') === 1;
     private _hideInstructionalOverlay = GetResourceKvpInt('soz_hud_instructional_overlay_hide') === 1;
 
+    private _availableTheme: AvailableTheme = {
+        [HudTheme.Auto]: true,
+        [HudTheme.Daltonism]: true,
+        [HudTheme.Light]: true,
+        [HudTheme.Dark]: true,
+        [HudTheme.Green]: true,
+        [HudTheme.Uwu]: true,
+        [HudTheme.HalloweenVein]: false,
+    };
+
     protected get zoomFromKvp(): number {
         const kvpValue = Number(GetResourceKvpFloat('soz_hud_zoom').toPrecision(2));
         if (kvpValue === null) return 1;
@@ -55,16 +65,52 @@ export class HudWatchProvider {
         return this._haveWatch;
     }
 
+    private get availableTheme(): HudTheme[] {
+        return Object.entries(this._availableTheme)
+            .filter(([, value]) => value)
+            .map(([key]) => key as HudTheme);
+    }
+
+    private async updateAvailableThemes(): Promise<void> {
+        let updated = false;
+
+        for (const [id, config] of Object.entries(AllThemesConfig)) {
+            if (config.item) {
+                const hasItem = this.inventoryManager.hasEnoughItem(config.item, 1, true);
+
+                if (this._availableTheme[id] !== hasItem) {
+                    this._availableTheme[id] = hasItem;
+                    updated = true;
+                }
+
+                if (!hasItem && this._theme === id) {
+                    this.theme = HudTheme.Auto;
+                }
+            } else {
+                if (!this._availableTheme[id]) {
+                    this._availableTheme[id] = true;
+                    updated = true;
+                }
+            }
+        }
+
+        if (updated) {
+            this.nuiDispatch.dispatch('hud', 'SetAvailableTheme', this.availableTheme);
+        }
+    }
+
     @PlayerUpdate()
     async onPlayerUpdate(): Promise<void> {
         const haveWatch =
             this.inventoryManager.hasEnoughItem('smartwatchuiwi', 1, true) ||
             this.inventoryManager.hasEnoughItem('halloween_smartwatch_nocturnal_vein', 1, true);
-        if (this._haveWatch === haveWatch) return;
+        if (this._haveWatch !== haveWatch) {
+            this._haveWatch = haveWatch;
+            this.nuiDispatch.dispatch('hud', 'UpdateHasWatch', this.haveWatch);
+            TriggerEvent(ClientEvent.UPDATE_MINIMAP_POSITION);
+        }
 
-        this._haveWatch = haveWatch;
-        this.nuiDispatch.dispatch('hud', 'UpdateHasWatch', this.haveWatch);
-        TriggerEvent(ClientEvent.UPDATE_MINIMAP_POSITION);
+        await this.updateAvailableThemes();
     }
 
     public disableWatch(value: boolean): void {
@@ -103,6 +149,7 @@ export class HudWatchProvider {
         TriggerEvent(ClientEvent.UPDATE_MINIMAP_POSITION);
         this.nuiDispatch.dispatch('hud', 'UpdateSettings', {
             theme: this._theme,
+            availableTheme: this.availableTheme,
             zoom: this._zoom,
             showDateTime: true,
             showWeather: true,
@@ -170,6 +217,7 @@ export class HudWatchProvider {
     public getSettings(): HudSettings {
         return {
             theme: this._theme,
+            availableTheme: this.availableTheme,
             zoom: this._zoom,
             showDateTime: !this._hideDateTime,
             showWeather: !this._hideWeather,

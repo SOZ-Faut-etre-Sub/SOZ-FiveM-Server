@@ -13,10 +13,13 @@ export const useDaltonism = () => {
 
     const daltonism = currentTheme === HudTheme.Daltonism;
 
-    const glassmorphismColors = useMemo(() => {
+    const glassmorphismColors: Record<
+        Exclude<HudTheme, HudTheme.Auto>,
+        { background: string; border: string }
+    > = useMemo(() => {
         if (isHalloween) {
             const background = '#00000073';
-            const border = '#F02B2B'; // : '#F0882D';
+            const border = '#F0882D';
 
             return {
                 [HudTheme.Light]: { background, border },
@@ -24,6 +27,7 @@ export const useDaltonism = () => {
                 [HudTheme.Green]: { background, border },
                 [HudTheme.Uwu]: { background, border },
                 [HudTheme.Daltonism]: { background, border },
+                [HudTheme.HalloweenVein]: { background, border },
             };
         }
 
@@ -47,6 +51,10 @@ export const useDaltonism = () => {
             [HudTheme.Daltonism]: {
                 background: '#00000073',
                 border: '#FFFFFF',
+            },
+            [HudTheme.HalloweenVein]: {
+                background: '#00000073',
+                border: '#F02B2B',
             },
         };
     }, [isHalloween, halloweenMoon]);

@@ -62,10 +62,28 @@ export enum HudTheme {
     Dark = 'dark',
     Green = 'green',
     Uwu = 'uwu',
+    HalloweenVein = 'halloween-vein',
 }
+
+export type AvailableTheme = Record<HudTheme, boolean>;
+export type ThemeConfig = {
+    label: string;
+    item?: string;
+};
+
+export const AllThemesConfig: Record<HudTheme, ThemeConfig> = {
+    [HudTheme.Auto]: { label: 'Auto' },
+    [HudTheme.Daltonism]: { label: 'Daltonien' },
+    [HudTheme.Light]: { label: 'Light Mode' },
+    [HudTheme.Dark]: { label: 'Dark Mode' },
+    [HudTheme.Green]: { label: 'Green Mode' },
+    [HudTheme.Uwu]: { label: 'UwU Mode' },
+    [HudTheme.HalloweenVein]: { label: 'Halloween', item: 'halloween_smartwatch_nocturnal_vein' },
+};
 
 export type HudSettings = {
     theme: HudTheme;
+    availableTheme: HudTheme[];
     zoom: number;
     showDateTime: boolean;
     showWeather: boolean;
