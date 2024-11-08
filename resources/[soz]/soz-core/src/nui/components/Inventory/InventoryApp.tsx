@@ -218,7 +218,7 @@ const getInventoryTitle = (type: InventoryType): string => {
             return 'Véhicule';
 
         case InventoryType.HouseStash:
-            return 'Armoire';
+            return 'Réserve';
 
         case InventoryType.HouseFridge:
             return 'Frigo';
