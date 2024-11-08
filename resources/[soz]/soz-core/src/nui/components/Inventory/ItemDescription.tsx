@@ -83,7 +83,7 @@ export const ItemDescription: FunctionComponent<ItemDescriptionProps> = ({
                 <div className="w-[400px] p-2 text-lsm font-prompt text-gray-100">
                     <div className="flex justify-between align-items-center w-full">
                         {inventoryItem.metadata?.label && (
-                            <h2 className="truncate flex-1">
+                            <h2 className="font-bold uppercase truncate flex-1 text-sm">
                                 {inventoryItem.metadata?.label} <span className="text-2xs">{itemLabel}</span>
                             </h2>
                         )}

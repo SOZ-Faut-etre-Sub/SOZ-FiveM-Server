@@ -150,7 +150,7 @@ export class VehicleLockProvider {
             return;
         }
 
-        if (!inventory.removeAtSlot(inventoryItem.slot)) {
+        if (!inventory.removeAtSlot(inventoryItem.slot, 1)) {
             this.notifier.notify(source, 'Aucun lockpick', 'error');
 
             return;

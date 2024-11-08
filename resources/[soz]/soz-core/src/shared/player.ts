@@ -4,7 +4,6 @@ import { Talent } from '@private/shared/talent';
 import { BankMoneyType } from '@public/shared/bank';
 import { VampireGameRole } from '@public/shared/halloween';
 import { ApartementTiers } from '@public/shared/housing/housing';
-import { InventoryItem } from '@public/shared/inventory';
 import { SenatePartyMember } from '@public/shared/senate';
 
 import { ClothConfig } from './cloth';
@@ -335,7 +334,16 @@ export type PlayerMetadata = PlayerHealthBook & {
     halloween2022: Halloween2022 | null;
     halloween2023: Halloween2023 | null;
     licences: Partial<Record<PlayerLicenceType, number>>;
-    shortcuts: Record<number, Partial<InventoryItem>>;
+    shortcuts: Record<
+        number,
+        {
+            name: string;
+            metadata?: {
+                type?: string;
+                serial?: string;
+            };
+        }
+    >;
     mort: string | null;
     missive_count: number;
     criminal_state: PlayerCriminalState;

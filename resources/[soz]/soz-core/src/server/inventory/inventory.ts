@@ -496,7 +496,7 @@ export class Inventory {
         }
 
         // Case 7: Armor plate
-        if (inventoryItem.name === 'armor_plate' && existingItemObject.maxplates) {
+        if (inventoryItem.name === 'armor_plate' && existingItemObject.maxplates && existingItem.amount === 1) {
             if (!existingItem.metadata.plates || existingItem.metadata.plates < existingItemObject.maxplates) {
                 existingItem.metadata.plates = existingItem.metadata.plates || 0;
                 existingItem.metadata.plates += 1;
@@ -552,7 +552,7 @@ export class Inventory {
         this._hasChanges = true;
     }
 
-    removeAtSlot(slot: number, amount?: number): boolean {
+    removeAtSlot(slot: number, amount: number | 'all'): boolean {
         const inventoryItem = this._items[slot];
 
         if (!inventoryItem) {
@@ -561,7 +561,7 @@ export class Inventory {
 
         this._hasChanges = true;
 
-        if (amount && inventoryItem.amount > amount) {
+        if (amount !== 'all' && inventoryItem.amount > amount) {
             inventoryItem.amount -= amount;
 
             return true;

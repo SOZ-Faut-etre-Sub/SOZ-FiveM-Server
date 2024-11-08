@@ -123,7 +123,7 @@ export class Halloween2023Scenario1Provider {
             case 7:
                 {
                     const cocktail = inventory.findItem(item => Halloween2023Scenario1Alcool.includes(item.name));
-                    inventory.removeAtSlot(cocktail.slot);
+                    inventory.removeAtSlot(cocktail.slot, 1);
 
                     this.playerService.setPlayerMetadata(source, 'halloween2023', {
                         ...player.metadata.halloween2023,

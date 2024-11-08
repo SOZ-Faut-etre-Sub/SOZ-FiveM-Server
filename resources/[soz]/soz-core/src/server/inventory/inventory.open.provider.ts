@@ -271,7 +271,7 @@ export class InventoryOpenProvider {
         const id = inventoryItem.metadata.id;
         const subInventory = await this.inventoryFactory.getOrCreate(
             id,
-            InventoryType.EvidenceStorage,
+            item.storageItemType as InventoryType,
             {
                 allowedItemTypes: [item.storageItemType],
                 notAllowedItems: ['detective_board'],

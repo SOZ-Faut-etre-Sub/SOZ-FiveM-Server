@@ -281,7 +281,15 @@ export const EmptySlot: FunctionComponent<EmptySlotProps> = ({
     );
 };
 
-export const getItemIcon = (inventoryItem: InventoryItem | Item | 'money' | 'keychain' | 'wallet'): string => {
+type ItemIconProps = {
+    name: string;
+    metadata?: {
+        type?: string;
+        tier?: number;
+    };
+};
+
+export const getItemIcon = (inventoryItem: ItemIconProps | 'money' | 'keychain' | 'wallet'): string => {
     if (inventoryItem === 'money') {
         return `https://cfx-nui-soz-core/public/images/inventory/icon/money.webp`;
     }
@@ -316,17 +324,11 @@ export const getItemIcon = (inventoryItem: InventoryItem | Item | 'money' | 'key
     }
 
     // if inventoryItem is an InventoryItem
-    if (inventoryItem instanceof Object && isInventoryItem(inventoryItem)) {
-        if ((inventoryItem.name === 'outfit' || inventoryItem.name === 'armor') && inventoryItem.metadata?.type) {
-            path += `_${inventoryItem.metadata?.type}`;
-        } else if (inventoryItem.name === 'cabinet_zkea') {
-            path += `_${inventoryItem.metadata?.tier}`;
-        }
+    if ((inventoryItem.name === 'outfit' || inventoryItem.name === 'armor') && inventoryItem.metadata?.type) {
+        path += `_${inventoryItem.metadata?.type}`;
+    } else if (inventoryItem.name === 'cabinet_zkea') {
+        path += `_${inventoryItem.metadata?.tier}`;
     }
 
     return `https://cfx-nui-soz-core/public/images/items/${path}.webp`;
-};
-
-export const isInventoryItem = (item: InventoryItem | Item): item is InventoryItem => {
-    return 'metadata' in item;
 };

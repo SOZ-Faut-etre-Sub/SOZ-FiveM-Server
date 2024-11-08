@@ -116,7 +116,7 @@ export class WeaponProvider {
         }
 
         if (weaponGroup == GetHashKey('GROUP_THROWN') && weapon.metadata.ammo <= 1) {
-            playerInventory.removeAtSlot(weaponSlot);
+            playerInventory.removeAtSlot(weaponSlot, 1);
         } else if (weaponGroup == GetHashKey('GROUP_FIREEXTINGUISHER')) {
             playerInventory.updateMetadataAtSlot(weaponSlot, {
                 ammo: playerAmmo || 0,

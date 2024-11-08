@@ -68,7 +68,7 @@ export const InventoryApp: FunctionComponent = () => {
 
     const sensors = useSensors(mouseSensor);
 
-    if (!open) {
+    if (!open || !player) {
         return null;
     }
 

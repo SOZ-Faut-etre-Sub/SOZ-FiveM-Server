@@ -62,7 +62,11 @@ export class InventoryUsageProvider {
         }
 
         Object.entries(player.PlayerData.metadata.shortcuts).forEach(([key, value]) => {
-            if (value.name === item.name && value.metadata.serial === item.metadata.serial) {
+            if (
+                value.name === item.name &&
+                value.metadata.serial === item.metadata.serial &&
+                value.metadata.type === item.metadata.type
+            ) {
                 player.PlayerData.metadata.shortcuts[key] = null;
             }
             if (parseInt(key) < 0 || parseInt(key) > 9) {
@@ -74,6 +78,7 @@ export class InventoryUsageProvider {
             player.PlayerData.metadata.shortcuts[shortcut] = {
                 name: item.name,
                 metadata: {
+                    type: item.metadata.type,
                     serial: item.metadata.serial,
                 },
             };
@@ -166,6 +171,11 @@ export class InventoryUsageProvider {
             if (shortcutItem.metadata.serial) {
                 return item.name === shortcutItem.name && item.metadata.serial === shortcutItem.metadata.serial;
             }
+
+            if (shortcutItem.metadata.type) {
+                return item.name === shortcutItem.name && item.metadata.type === shortcutItem.metadata.type;
+            }
+
             return item.name === shortcutItem.name;
         });
         if (!item) {

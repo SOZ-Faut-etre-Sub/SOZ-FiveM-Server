@@ -94,7 +94,7 @@ export const PlayerInventoryApp: FunctionComponent = () => {
         [player]
     );
 
-    if (!open) {
+    if (!open || !player) {
         return null;
     }
 
@@ -185,13 +185,13 @@ const ShortcutSlot: FunctionComponent<ShortcutSlotProps> = ({ shortcut, inventor
         },
     });
 
-    const [imageSrc, setImageSrc] = useState<string | null>(item ? getItemIcon(item) : null);
+    const [imageSrc, setImageSrc] = useState<string | null>(shortcutData ? getItemIcon(shortcutData) : null);
 
     useEffect(() => {
-        if (item) {
-            setImageSrc(getItemIcon(item));
+        if (shortcutData) {
+            setImageSrc(getItemIcon(shortcutData));
         }
-    }, [item]);
+    }, [shortcutData]);
 
     return (
         <>
