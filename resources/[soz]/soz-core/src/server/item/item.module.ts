@@ -6,6 +6,7 @@ import { ItemGouvProvider } from './item.gouv.provider';
 import { ItemHalloweenProvider } from './item.halloween.provider';
 import { ItemHealthProvider } from './item.health.provider';
 import { ItemHudProvider } from './item.hud.provider';
+import { ItemJobsProvider } from './item.jobs.provider';
 import { ItemNewsProvider } from './item.news.provider';
 import { ItemNutritionProvider } from './item.nutrition.provider';
 import { ItemPanelProvider } from './item.panel.provider';
@@ -26,6 +27,7 @@ import { ItemVoipProvider } from './item.voip.provider';
         ItemVoipProvider,
         ItemHalloweenProvider,
         ItemHudProvider,
+        ItemJobsProvider,
     ],
 })
 export class ItemModule {}

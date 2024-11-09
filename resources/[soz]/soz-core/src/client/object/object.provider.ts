@@ -1,4 +1,4 @@
-import { Once, OnceStep, OnEvent, OnNuiEvent } from '@core/decorators/event';
+import { Once, OnceStep, OnEvent } from '@core/decorators/event';
 import { Exportable } from '@core/decorators/exports';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
@@ -18,7 +18,7 @@ import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { RpcClientEvent, RpcServerEvent } from '@public/shared/rpc';
 import { TargetOption } from '@public/shared/target';
 
-import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
+import { ClientEvent, ServerEvent } from '../../shared/event';
 import { WorldObject } from '../../shared/object';
 import { DnDCallback, InventoryDragAndDropProvider } from '../inventory/inventory.draganddrop.provider';
 
@@ -424,7 +424,7 @@ export class ObjectProvider {
         console.log(propsIds);
     }
 
-    @OnNuiEvent(NuiEvent.ObjectPlace)
+    @OnEvent(ClientEvent.OBJECT_PLACE_JOB)
     public async onPlaceObject({
         item,
         props,

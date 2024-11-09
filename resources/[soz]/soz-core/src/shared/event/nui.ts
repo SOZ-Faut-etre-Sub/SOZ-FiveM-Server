@@ -156,8 +156,6 @@ export enum NuiEvent {
 
     NewsCreateAnnounce = 'soz-core:nui:news:create-announce',
 
-    ObjectPlace = 'soz-core:nui:object:place',
-
     ObjectEditorReset = 'soz-core:nui:object-editor:reset',
     ObjectEditorCancel = 'soz-core:nui:object-editor:cancel',
     ObjectEditorSave = 'soz-core:nui:object-editor:save',
@@ -333,8 +331,6 @@ export enum NuiEvent {
     PoliceDeleteWantedPlayer = 'soz-core:client:police:delete-wantedPlayer',
     PoliceGatherMoneyMarked = 'soz-core:client:police:gather-money-marked',
     PoliceSaveDetectiveBoard = 'soz-core:client:police:save-detective-board',
-    PolicePlaceSpike = 'soz-core:nui:police:place-spike',
-    PolicePlaceSpeedZone = 'soz-core:nui:police:place-speedzone',
 
     IllegalShopBuyItem = 'soz-core:client:hubshop:buy',
 

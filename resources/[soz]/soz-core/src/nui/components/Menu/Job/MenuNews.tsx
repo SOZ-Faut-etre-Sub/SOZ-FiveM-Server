@@ -68,29 +68,6 @@ export const MenuNews: FunctionComponent<MenuNewsProps> = ({ data }) => {
                         <MenuItemSelectOption value="fait-divers">Fait Divers</MenuItemSelectOption>
                         <MenuItemSelectOption value="info-trafic">Info Trafic</MenuItemSelectOption>
                     </MenuItemSelect>
-                    <MenuItemSelect
-                        title="Poser un objet"
-                        onConfirm={(i, value) => {
-                            fetchNui(NuiEvent.ObjectPlace, value);
-                        }}
-                    >
-                        <MenuItemSelectOption value={{ item: 'n_fix_greenscreen', props: 'prop_ld_greenscreen_01' }}>
-                            Fond vert
-                        </MenuItemSelectOption>
-                        <MenuItemSelectOption
-                            value={{ item: 'n_fix_camera', props: 'prop_tv_cam_02', rotation: 180.0 }}
-                        >
-                            Caméra fixe
-                        </MenuItemSelectOption>
-                        <MenuItemSelectOption
-                            value={{ item: 'n_fix_light', props: 'prop_kino_light_01', rotation: 180.0 }}
-                        >
-                            Lumière fixe
-                        </MenuItemSelectOption>
-                        <MenuItemSelectOption value={{ item: 'n_fix_mic', props: 'v_ilev_fos_mic' }}>
-                            Micro sur pied
-                        </MenuItemSelectOption>
-                    </MenuItemSelect>
                 </MenuContent>
             </MainMenu>
         </Menu>

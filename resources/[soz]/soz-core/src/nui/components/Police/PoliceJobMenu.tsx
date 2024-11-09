@@ -12,8 +12,6 @@ import {
     MenuContent,
     MenuItemButton,
     MenuItemCheckbox,
-    MenuItemSelect,
-    MenuItemSelectOption,
     MenuItemSubMenuLink,
     MenuItemText,
     MenuTitle,
@@ -27,12 +25,6 @@ type PoliceJobStateProps = {
 export const PoliceJobMenu: FunctionComponent<PoliceJobStateProps> = ({ data }) => {
     const player = usePlayer();
     const banner = `https://cfx-nui-soz-core/public/images/banner/menu_job_${player.job.id}.webp`;
-    const propsList = [
-        { label: 'Cône de circulation', item: 'cone', props: 'prop_air_conelight', offset: -0.15 },
-        { label: 'Barrière', item: 'police_barrier', props: 'prop_barrier_work05' },
-        { label: 'Herse', item: 'spike' },
-        { label: 'Panneau de vitesse', item: 'speed_speed_sign' },
-    ];
 
     const [wantedPlayers, setWantedPlayers] = useState(null);
 
@@ -97,24 +89,6 @@ export const PoliceJobMenu: FunctionComponent<PoliceJobStateProps> = ({ data }) 
                     >
                         🚨 | Code rouge
                     </MenuItemButton>
-                    <MenuItemSelect
-                        title="🚧 Poser un objet"
-                        onConfirm={async selectedIndex => {
-                            const item = propsList[selectedIndex];
-
-                            if (item.item == 'spike') {
-                                await fetchNui(NuiEvent.PolicePlaceSpike, item);
-                            } else if (item.item == 'speed_speed_sign') {
-                                await fetchNui(NuiEvent.PolicePlaceSpeedZone);
-                            } else {
-                                await fetchNui(NuiEvent.ObjectPlace, item);
-                            }
-                        }}
-                    >
-                        {propsList.map(prop => (
-                            <MenuItemSelectOption key={prop.item}>{prop.label}</MenuItemSelectOption>
-                        ))}
-                    </MenuItemSelect>
                     <MenuItemButton
                         onConfirm={async () => {
                             await fetchNui(NuiEvent.PoliceShowBadge);
