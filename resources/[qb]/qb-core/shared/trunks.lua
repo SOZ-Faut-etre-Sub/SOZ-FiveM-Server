@@ -164,4 +164,13 @@ QBShared.Trunks = {
     [GetHashKey('streamer216')] = { slot = 50, weight = 500000 },
     [GetHashKey('dodo')] = { slot = 50, weight = 200000 },
     [GetHashKey('microlight')] = { slot = 50, weight = 50000 },
+
+    -- Trains
+    [GetHashKey('freightcar')] = { slot = 50, weight = 200000 },
+    [GetHashKey('freightcar2')] = { slot = 50, weight = 200000 },
+    [GetHashKey('freightcont1')] = { slot = 50, weight = 200000 },
+    [GetHashKey('freightcont2')] = { slot = 50, weight = 200000 },
+    [GetHashKey('freightgrain')] = { slot = 50, weight = 200000 },
+    [GetHashKey('tankercar')] = { slot = 50, weight = 200000 },
+
 }

@@ -227,6 +227,7 @@ export enum ClientEvent {
     VEHICLE_RELEASE = 'soz-core:client:vehicle:release',
     VEH_FEATURE_SURFACE_RESET = 'reset-feature-surface',
     VEH_HAS_BEEN_TPM = 'soz-core:client:offroad:setTpm',
+    VEHICLE_SYNC_DOOR_TRAIN = 'soz-core:client:vehicle:train-door-sync',
 
     VEHICLE_SYNC_PUSHING_STATE = 'soz-core:client:vehicle:sync-pushing-state',
 

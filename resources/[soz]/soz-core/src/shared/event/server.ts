@@ -358,6 +358,7 @@ export enum ServerEvent {
     VEHICLE_NOS_END = 'soz-core:server:vehicle:nos-end',
     VEHICLE_HANDLING_BASE_SAVE = 'soz-core:server:vehicle:handling-base-save',
     VEHICLE_RESET_SURFACE_STATE_TO_OWNER = 'soz-core:server:vehicle:reset-surface-effect-to-owner',
+    VEHICLE_SYNC_DOOR_TRAIN = 'soz-core:server:vehicle:train-door-sync',
 
     VEHICLE_UPDATE_PUSHING_OWNER = 'soz-core:server:vehicle:update-pushing-owner',
     VEHICLE_START_PUSHING = 'soz-core:server:vehicle:start-pushing',

@@ -8,7 +8,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { emitRpc } from '../../core/rpc';
-import { NuiEvent } from '../../shared/event';
+import { NuiEvent, ServerEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { Err, Ok } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
@@ -126,6 +126,8 @@ export class VehicleMenuProvider {
             return false;
         }
 
+        const isTrain = IsMissionTrain(vehicle);
+
         // -1 is for current speed
         if (speedLimit === -1) {
             const currentSpeed = GetEntitySpeed(vehicle) * 3.6;
@@ -141,7 +143,7 @@ export class VehicleMenuProvider {
                 (input: string) => {
                     const value = parseInt(input);
 
-                    if (isNaN(value) || value < 0) {
+                    if (isNaN(value) || (!isTrain && value < 0)) {
                         return Err('Veuillez entrer un nombre supérieur à 0');
                     }
 
@@ -154,7 +156,7 @@ export class VehicleMenuProvider {
             }
         }
 
-        if (GetVehicleClass(vehicle) == VehicleClass.Trains) {
+        if (isTrain) {
             SetTrainCruiseSpeed(vehicle, speedLimit / 3.6);
             this.notifier.notify(`Vitesse de croisière: ${speedLimit} km/h.`);
             return;
@@ -184,6 +186,19 @@ export class VehicleMenuProvider {
             SetVehicleDoorOpen(vehicle, doorIndex, false, false);
         } else {
             SetVehicleDoorShut(vehicle, doorIndex, false);
+        }
+
+        if (GetEntityModel(vehicle) == GetHashKey('metrotrain')) {
+            const carriage = GetTrainCarriage(vehicle, 1);
+            if (carriage) {
+                if (open) {
+                    SetVehicleDoorOpen(carriage, 3 - doorIndex, false, false);
+                } else {
+                    SetVehicleDoorShut(carriage, 3 - doorIndex, false);
+                }
+            }
+
+            TriggerServerEvent(ServerEvent.VEHICLE_SYNC_DOOR_TRAIN, VehToNet(vehicle), doorIndex, open);
         }
 
         return true;
