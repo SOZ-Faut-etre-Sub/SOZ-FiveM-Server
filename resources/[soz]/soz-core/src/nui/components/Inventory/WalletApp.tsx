@@ -80,7 +80,7 @@ export const WalletApp: FunctionComponent = () => {
             }}
         >
             <div className="absolute h-full w-full font-prompt">
-                <main className="m-8 h-[45vh] w-[370px] xl:ml-[94vh]">
+                <main className="m-8 h-[45vh] w-[370px] wide:ml-[94vh]">
                     <InventoryDiv
                         title="Cartes"
                         description={

@@ -186,7 +186,7 @@ export const ShopCartApp: FunctionComponent = () => {
             <div className="absolute h-full w-full font-prompt">
                 <div className="m-8">
                     <div className="flex max-h-[40vh]">
-                        <div className="max-h-full w-[400px] xl:ml-[94vh]">
+                        <div className="max-h-full w-[400px] wide:ml-[94vh]">
                             <InventoryDiv
                                 description={
                                     <ItemDescription
@@ -369,7 +369,7 @@ const CartInventory: FunctionComponent<{
 
     return (
         <div className="flex max-h-[30vh] mt-4">
-            <div ref={setDroppableNodeRef} className={classNames('max-h-full rounded w-[400px] xl:ml-[94vh]')}>
+            <div ref={setDroppableNodeRef} className={classNames('max-h-full rounded w-[400px] wide:ml-[94vh]')}>
                 <InventoryDiv price={getPrice(amount, tax)} isCart title="Panier">
                     <div className="max-h-[310px] overflow-y-scroll w-[400px] scrollbar scrollbar-w-1 scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
                         <div className="grid grid-cols-5 w-full gap-[10px] max-h-full">

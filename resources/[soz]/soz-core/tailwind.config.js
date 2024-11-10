@@ -56,8 +56,6 @@ module.exports = {
             sm: '1680px',
             md: '1920px',
             lg: '2560px',
-            xl: '3079px',
-            xxl: '5000px',
             wide: {
                 raw: '(min-width: 5000px) and (max-height: 1500px), (min-width: 3079px) and (max-height: 1200px)',
             },
