@@ -77,7 +77,7 @@ export const PlayerInventoryApp: FunctionComponent = () => {
                 return fetchNui(NuiEvent.InventoryActionOpenKeychain);
             }
 
-            if (item && item.useable) {
+            if (item && (item.useable || item.type === 'weapon')) {
                 fetchNui(NuiEvent.InventoryActionUse, {
                     inventoryId: `player_${player?.citizenid}`,
                     inventoryItem,
@@ -170,7 +170,14 @@ const ShortcutSlot: FunctionComponent<ShortcutSlotProps> = ({ shortcut, inventor
 
     const shortcutData = player.metadata.shortcuts[shortcut % 10] || null;
     const item = shortcutData ? resolver(shortcutData.name) : null;
-    const hasItem = item && Object.values(inventoryItems).some(inventoryItem => inventoryItem.name === item?.name);
+    const hasItem =
+        item &&
+        Object.values(inventoryItems).some(
+            inventoryItem =>
+                inventoryItem.name === shortcutData?.name &&
+                inventoryItem.metadata?.type === shortcutData?.metadata?.type &&
+                inventoryItem.metadata?.serial === shortcutData?.metadata?.serial
+        );
 
     const {
         attributes,
@@ -207,7 +214,7 @@ const ShortcutSlot: FunctionComponent<ShortcutSlotProps> = ({ shortcut, inventor
                                     })}
                                     src={imageSrc}
                                     onError={() => {
-                                        setImageSrc('https://loremflickr.com/70/70');
+                                        setImageSrc('https://cfx-nui-soz-core/public/images/default/cat.webp');
                                     }}
                                     alt="Name"
                                 />

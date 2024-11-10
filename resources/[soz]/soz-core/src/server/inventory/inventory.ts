@@ -227,20 +227,20 @@ export class Inventory {
             return Err('invalid_slot');
         }
 
-        if (itemObject.unique) {
-            let lastSlot = null;
-
-            for (let i = 0; i < amount; i++) {
-                lastSlot = this.doAddItem(itemObject, 1, metadata, slot);
-            }
-
-            return Ok(lastSlot);
-        }
-
         const existingItemAtSlot = slot ? this.doGetItemAtSlot(slot) : null;
 
         if (existingItemAtSlot && !isSameInventoryItem(existingItemAtSlot, { name: id, metadata })) {
             slot = null;
+        }
+
+        if (itemObject.unique) {
+            let lastSlot = null;
+
+            for (let i = 0; i < amount; i++) {
+                lastSlot = this.doAddItem(itemObject, 1, metadata, i === 0 ? slot : null);
+            }
+
+            return Ok(lastSlot);
         }
 
         const existingItem = slot ? existingItemAtSlot : this.filterItems(id, true, metadata)[0];

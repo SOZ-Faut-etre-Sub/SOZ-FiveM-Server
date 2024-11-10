@@ -206,40 +206,42 @@ export const ShopCartApp: FunctionComponent = () => {
                                 }
                                 title={shopContent.title}
                             >
-                                <div className="grid grid-cols-5 gap-2">
-                                    {[...Array(nbLines)].map((_, i) => {
-                                        return (
-                                            <Fragment key={i}>
-                                                {[...Array(5)].map((_, j) => {
-                                                    const index = i * 5 + j;
-                                                    const item = shopContent.items[index] || null;
+                                <div className="max-h-[390px] overflow-y-scroll w-[400px] scrollbar scrollbar-w-1 scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
+                                    <div className="grid grid-cols-5 gap-[10px]">
+                                        {[...Array(nbLines)].map((_, i) => {
+                                            return (
+                                                <Fragment key={i}>
+                                                    {[...Array(5)].map((_, j) => {
+                                                        const index = i * 5 + j;
+                                                        const item = shopContent.items[index] || null;
 
-                                                    if (!item) {
+                                                        if (!item) {
+                                                            return (
+                                                                <EmptySlot
+                                                                    droppable={false}
+                                                                    key={index}
+                                                                    inventoryId={'shop'}
+                                                                    slot={index}
+                                                                />
+                                                            );
+                                                        }
+
                                                         return (
-                                                            <EmptySlot
-                                                                droppable={false}
+                                                            <ShopItem
+                                                                addItem={addItem}
+                                                                index={index}
+                                                                item={item}
+                                                                setCurrentShopItem={setCurrentShopItem}
                                                                 key={index}
-                                                                inventoryId={'shop'}
-                                                                slot={index}
+                                                                tax={shopContent.tax}
+                                                                moneyType={shopContent.moneyType}
                                                             />
                                                         );
-                                                    }
-
-                                                    return (
-                                                        <ShopItem
-                                                            addItem={addItem}
-                                                            index={index}
-                                                            item={item}
-                                                            setCurrentShopItem={setCurrentShopItem}
-                                                            key={index}
-                                                            tax={shopContent.tax}
-                                                            moneyType={shopContent.moneyType}
-                                                        />
-                                                    );
-                                                })}
-                                            </Fragment>
-                                        );
-                                    })}
+                                                    })}
+                                                </Fragment>
+                                            );
+                                        })}
+                                    </div>
                                 </div>
                             </InventoryDiv>
                         </div>
@@ -370,7 +372,7 @@ const CartInventory: FunctionComponent<{
             <div ref={setDroppableNodeRef} className={classNames('max-h-full rounded w-[400px] xl:ml-[94vh]')}>
                 <InventoryDiv price={getPrice(amount, tax)} isCart title="Panier">
                     <div className="max-h-[310px] overflow-y-scroll w-[400px] scrollbar scrollbar-w-1 scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
-                        <div className="grid grid-cols-5 w-full gap-2 max-h-full">
+                        <div className="grid grid-cols-5 w-full gap-[10px] max-h-full">
                             {[...Array(nbLines)].map((_, i) => {
                                 return (
                                     <Fragment key={i}>

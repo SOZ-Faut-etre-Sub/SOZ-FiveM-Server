@@ -135,7 +135,7 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
                                     className="aspect-square"
                                     src={imageSrc}
                                     onError={() => {
-                                        setImageSrc('https://loremflickr.com/70/70');
+                                        setImageSrc('https://cfx-nui-soz-core/public/images/default/cat.webp');
                                     }}
                                     alt="Name"
                                 />

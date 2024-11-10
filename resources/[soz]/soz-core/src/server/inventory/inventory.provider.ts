@@ -398,8 +398,8 @@ export class InventoryProvider {
             sourceInventory.removeAtSlot(sourceItem.slot, amount);
             targetInventory.removeAtSlot(targetItem.slot, targetItem.amount);
 
-            sourceInventory.add(targetItem.name, targetItem.amount, targetItem.metadata, sourceSlot, true);
             targetInventory.add(sourceItem.name, amount, sourceItem.metadata, targetSlot, true);
+            sourceInventory.add(targetItem.name, targetItem.amount, targetItem.metadata, sourceSlot, true);
 
             await sourceInventory.observe(); // Force refresh of the inventory
             await targetInventory.observe(); // Force refresh of the inventory
