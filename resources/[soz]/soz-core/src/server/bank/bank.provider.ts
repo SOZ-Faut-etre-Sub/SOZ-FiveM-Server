@@ -44,6 +44,19 @@ export class BankProvider {
     @Inject(BankStatementsService)
     private bankStatementsService: BankStatementsService;
 
+    @Command('removemoney', {
+        description: 'Remove money of a account',
+        role: 'admin',
+    })
+    public async removeMoneyCommand(source: number, account: string, amount: number) {
+        const success = await this.bankService.removeAccountMoney(account, amount, 'money');
+        if (success) {
+            this.notifier.notify(source, `Suppression de ~r~${amount}$~s~ du compte ~b~${account}~s~.`, 'success');
+        } else {
+            this.notifier.error(source, `~r~Echec~s~ de la suppression d'argent.`);
+        }
+    }
+
     @Command('transfermoney', {
         description: 'Transfer money between two accounts',
         role: 'admin',
