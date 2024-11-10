@@ -468,16 +468,18 @@ export const getActions = (
         return actions;
     }
 
+    if (item.useable && item.type !== 'weapon' && allowForceConsume) {
+        actions.push(ActionItemType.ForceConsume);
+
+        return actions;
+    }
+
     if (item.type === 'weapon') {
         actions.push(ActionItemType.Equip);
     }
 
     if (item.useable && item.type !== 'weapon') {
         actions.push(ActionItemType.Use);
-
-        if (allowForceConsume) {
-            actions.push(ActionItemType.ForceConsume);
-        }
     } else if (item.type === 'fish' && player.metadata.drugs_skills.includes(DrugSkill.Zoologiste)) {
         actions.push(ActionItemType.Use);
     }

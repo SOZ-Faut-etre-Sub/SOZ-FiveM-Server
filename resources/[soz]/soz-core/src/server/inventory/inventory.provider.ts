@@ -525,7 +525,9 @@ export class InventoryProvider {
             return;
         }
 
-        if (target.metadata.isdead || target.metadata.ishandcuffed || target.metadata.inlaststand) {
+        if (target.metadata.isdead || target.metadata.inlaststand) {
+            this.notifier.error(source, "Le joueur est dans un état où il ne peut pas consommer d'objet.");
+
             return;
         }
 
@@ -536,6 +538,11 @@ export class InventoryProvider {
         this.notifier.notify(
             source,
             `Vous avez forcé le joueur à utiliser ~b~${itemObject.label || inventoryItem.name}`
+        );
+
+        this.notifier.notify(
+            target.source,
+            `Vous avez été forcé à utiliser ~b~${itemObject.label || inventoryItem.name}`
         );
 
         await inventory.observe();

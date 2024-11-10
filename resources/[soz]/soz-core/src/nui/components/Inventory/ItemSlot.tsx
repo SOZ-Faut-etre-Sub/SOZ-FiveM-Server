@@ -84,7 +84,8 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
         );
     }
 
-    const actions = allowActions ? getActions(inventoryItem, item, allowForceConsume, playerData) : [];
+    const actions =
+        allowActions || allowForceConsume ? getActions(inventoryItem, item, allowForceConsume, playerData) : [];
 
     return (
         <>
@@ -213,7 +214,7 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
                         </div>
                     </div>
                 </BorderBox>
-                {allowActions &&
+                {(allowActions || allowForceConsume) &&
                     createPortal(
                         <div
                             className="font-prompt absolute text-white rounded p-2 h-auto w-fit flex flex-col justify-center items-center bg-black/80"
