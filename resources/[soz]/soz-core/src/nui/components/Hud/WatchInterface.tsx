@@ -14,7 +14,7 @@ import { Location } from './components/Location';
 import { PlayerStats } from './components/PlayerStats';
 import { VoiceIcon } from './components/VoiceIcon';
 import { Weather } from './components/Weather';
-import { useDaltonism } from './hooks/useDaltonism';
+import { useHudColor } from './hooks/useHudColor';
 
 export const WatchInterface: FunctionComponent = () => {
     const hasWatch = useSelector((state: RootState) => state.hud.hasWatch);
@@ -26,7 +26,7 @@ export const WatchInterface: FunctionComponent = () => {
     const [voiceMode, setVoiceMode] = useState(VoiceMode.Normal);
     const [voiceActive, setVoiceActive] = useState(true);
 
-    const { imagePrefix } = useDaltonism();
+    const { imagePrefix } = useHudColor();
 
     useNuiEvent('hud', 'UpdateVoiceMode', setVoiceMode);
     useNuiEvent('hud', 'UpdateVoiceActive', setVoiceActive);

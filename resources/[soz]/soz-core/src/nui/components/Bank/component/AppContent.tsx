@@ -1,17 +1,18 @@
 import classnames from 'classnames';
 import React, { forwardRef, FunctionComponent, PropsWithChildren } from 'react';
 
+import { GlassMorphismContainer } from '../../Styleguide/GlassMorphismContainer';
+
 export const AppContent: FunctionComponent = forwardRef<HTMLDivElement, PropsWithChildren<{ className?: string }>>(
     ({ children, className }, ref) => {
         return (
-            <div
-                ref={ref}
-                className={classnames(
-                    'flex gap-4 bg-gradient-to-b from-[#0B302E] to-[#082524] from-60%  text-white/80 h-full w-full rounded-2xl p-4 shadow-2xl overflow-hidden',
-                    className
-                )}
-            >
-                {children}
+            <div ref={ref} className="flex h-full w-full overflow-hidden shadow-2xl">
+                <GlassMorphismContainer
+                    borderClassName="rounded-3xl"
+                    className={classnames('flex gap-10 h-full w-full p-10', className)}
+                >
+                    {children}
+                </GlassMorphismContainer>
             </div>
         );
     }

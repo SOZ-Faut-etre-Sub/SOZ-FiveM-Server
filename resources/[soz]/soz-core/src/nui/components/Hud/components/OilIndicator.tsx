@@ -1,10 +1,10 @@
 import cn from 'classnames';
 import { FunctionComponent } from 'react';
 
-import { useDaltonism } from '../hooks/useDaltonism';
+import { useHudColor } from '../hooks/useHudColor';
 
 export const OilIndicator: FunctionComponent<{ oil: number; fuelType: string }> = ({ oil, fuelType }) => {
-    const { imagePrefix } = useDaltonism();
+    const { imagePrefix } = useHudColor();
 
     let oilStatus = 'yellow';
 

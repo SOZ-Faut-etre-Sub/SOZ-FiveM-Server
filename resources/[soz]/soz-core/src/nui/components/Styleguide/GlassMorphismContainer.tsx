@@ -11,10 +11,9 @@ import {
 } from 'react';
 
 import { uuidv4 } from '../../../core/utils';
-import { useHudTheme } from '../../hook/data';
 import { useInterval } from '../../hook/useInterval';
 import { GlassMorphismContext } from '../../providers/GlassMorphismProvider';
-import { useDaltonism } from '../Hud/hooks/useDaltonism';
+import { useHudColor } from '../Hud/hooks/useHudColor';
 
 type GameCanvasBoxProps = {
     blur?: boolean;
@@ -111,8 +110,7 @@ export const BorderBox: FunctionComponent<PropsWithChildren<BorderBoxProps>> = (
     blur = true,
     duration = 'duration-1000',
 }) => {
-    const currentTheme = useHudTheme();
-    const { glassmorphismColors } = useDaltonism();
+    const { glassmorphismColors } = useHudColor();
     const childrenRef = useRef<HTMLDivElement>(null);
 
     const { height } = childrenRef.current?.getBoundingClientRect() || { height: undefined };
@@ -122,8 +120,8 @@ export const BorderBox: FunctionComponent<PropsWithChildren<BorderBoxProps>> = (
             return borderColor;
         }
 
-        return glassmorphismColors[currentTheme].border;
-    }, [glassmorphismColors, currentTheme, borderColor]);
+        return glassmorphismColors.border;
+    }, [glassmorphismColors, borderColor]);
 
     return (
         <div
@@ -160,7 +158,7 @@ export const BorderBox: FunctionComponent<PropsWithChildren<BorderBoxProps>> = (
             <div
                 className="absolute inset-0 transition-all duration-1000"
                 style={{
-                    background: glassmorphismColors[currentTheme].background,
+                    background: glassmorphismColors.background,
                 }}
             />
         </div>
@@ -187,8 +185,7 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
     blur = true,
     duration = 'duration-1000',
 }) => {
-    const currentTheme = useHudTheme();
-    const { glassmorphismColors } = useDaltonism();
+    const { glassmorphismColors } = useHudColor();
     const childrenRef = useRef<HTMLDivElement>(null);
 
     const { height } = childrenRef.current?.getBoundingClientRect() || { height: undefined };
@@ -198,8 +195,8 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
             return borderColor;
         }
 
-        return glassmorphismColors[currentTheme].border;
-    }, [glassmorphismColors, currentTheme, borderColor]);
+        return glassmorphismColors.border;
+    }, [glassmorphismColors, borderColor]);
 
     return (
         <div
@@ -232,7 +229,7 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
                 <div
                     className="absolute inset-0 transition-all duration-1000"
                     style={{
-                        background: glassmorphismColors[currentTheme].background,
+                        background: glassmorphismColors.background,
                     }}
                 />
             </GameCanvasBox>
@@ -252,14 +249,13 @@ export const GlassMorphismBox: FunctionComponent<PropsWithChildren<GlassMorphism
     children,
     duration = 'duration-1000',
 }) => {
-    const currentTheme = useHudTheme();
-    const { glassmorphismColors } = useDaltonism();
+    const { glassmorphismColors } = useHudColor();
 
     const childrenRef = useRef<HTMLDivElement>(null);
 
     const { height } = childrenRef.current?.getBoundingClientRect() || { height: undefined };
 
-    const currentBorderColor = glassmorphismColors[currentTheme].border;
+    const currentBorderColor = glassmorphismColors.border;
 
     return (
         <div className="relative w-full h-full">
