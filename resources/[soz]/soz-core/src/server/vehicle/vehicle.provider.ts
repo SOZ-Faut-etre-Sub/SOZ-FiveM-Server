@@ -5,7 +5,7 @@ import { VehicleClass } from '@public/shared/vehicle/vehicle';
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { ServerEvent } from '../../shared/event';
+import { ClientEvent, ServerEvent } from '../../shared/event';
 import { PrismaService } from '../database/prisma.service';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { Notifier } from '../notifier';
@@ -144,5 +144,10 @@ export class VehicleProvider {
                 handling: JSON.stringify(vehConf.handling),
             },
         });
+    }
+
+    @OnEvent(ServerEvent.VEHICLE_SYNC_DOOR_TRAIN)
+    public async syncTrainDoors(source: number, netVeh: number, doorIndex: number, open: boolean) {
+        TriggerLatentClientEvent(ClientEvent.VEHICLE_SYNC_DOOR_TRAIN, -1, 1024, netVeh, doorIndex, open);
     }
 }
