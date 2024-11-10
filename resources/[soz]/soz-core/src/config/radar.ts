@@ -49,6 +49,7 @@ export const RadarAllowedVehicle: number[] = [
     GetHashKey('fbi2'),
     GetHashKey('cogfbi'),
     GetHashKey('paragonfbi'),
+    GetHashKey('paragonsfbi'),
     GetHashKey('dodgebana'),
     GetHashKey('polgauntlet'),
     // Gouv

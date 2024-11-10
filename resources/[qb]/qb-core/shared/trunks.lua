@@ -123,6 +123,7 @@ QBShared.Trunks = {
     -- FBI
     [GetHashKey('polgauntlet')] = { slot = 5, weight = 80000 },
     [GetHashKey('fbi2')] = { slot = 5, weight = 200000 },
+    [GetHashKey('paragonsfbi')] = { slot = 5, weight = 80000 },
 
     -- FFS
     [GetHashKey('rumpo4')] = { slot = 10, weight = 200000 },
