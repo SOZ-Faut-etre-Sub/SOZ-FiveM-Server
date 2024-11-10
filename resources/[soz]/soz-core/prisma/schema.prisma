@@ -509,6 +509,7 @@ model Vehicle {
     radio           Boolean @default(false)
     maxStock        Int?    @default(2)
     handling        String? @db.Text
+    transferable    Boolean @default(true)
 
     @@index([category])
     @@index([dealershipId], map: "vehicles_dealership_idx")
