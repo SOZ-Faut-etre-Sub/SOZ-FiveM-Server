@@ -1,3 +1,5 @@
+import { InventoryItemMetadata } from '@public/shared/inventory';
+
 export type ItemType =
     | 'item'
     | 'weapon'
@@ -48,6 +50,8 @@ type BaseItem = {
     expiresIn?: number;
     durability?: number;
     storageItemType?: ItemType;
+    storageItemWeight?: number;
+    storageItemMandatoryMetadata?: keyof InventoryItemMetadata;
     onlyone?: boolean;
     illustrator?: Record<string, string> | string;
     canShow?: boolean;

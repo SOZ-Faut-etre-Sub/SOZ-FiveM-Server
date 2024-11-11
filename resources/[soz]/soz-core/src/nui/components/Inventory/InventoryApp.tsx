@@ -172,7 +172,7 @@ const getInventoryTitle = (type: InventoryType): string => {
             return 'Frigo';
 
         case InventoryType.FurnitureStorage:
-            return 'Meubles';
+            return 'Fournitures';
 
         case InventoryType.Inverter:
             return 'Energie';
@@ -202,13 +202,13 @@ const getInventoryTitle = (type: InventoryType): string => {
             return 'Planches';
 
         case InventoryType.RecyclerProcessing:
-            return 'Recyclage';
+            return 'Incinerateur';
 
         case InventoryType.SawdustStorage:
             return 'Sciure';
 
         case InventoryType.Seizure:
-            return 'Saisie';
+            return 'Saisies';
 
         case InventoryType.SnackStorage:
             return 'Snacks';
@@ -226,7 +226,7 @@ const getInventoryTitle = (type: InventoryType): string => {
             return 'Frigo';
 
         case InventoryType.IceMachine:
-            return 'Machine à glaçons';
+            return 'Glaçons';
 
         case InventoryType.Distillery:
             return 'Distillerie';

@@ -49,6 +49,9 @@ export enum InventoryType {
     SmugglingBox = 'smuggling_box',
     SmugglingConnected = 'smuggling_connected',
     SmugglingExport = 'smuggling_export',
+    SmugglingOre = 'smuggling_ore',
+    SmugglingElectronic = 'smuggling_electronic',
+    SmugglingConvoyExport = 'smuggling_convoy_export',
     Stash = 'stash',
     Storage = 'storage',
     StorageTank = 'storage_tank',
@@ -97,6 +100,7 @@ export type InventoryConfiguration = {
     notAllowedItems?: string[];
     owner?: string;
     parentInventoryId?: string;
+    requiredMetadata?: keyof InventoryItemMetadata;
 };
 
 export type Inventory = {
@@ -845,7 +849,12 @@ export const VEHICLE_CONFIGURATION_BY_VEHICLE_MODEL: Record<number, Partial<Inve
  *         [4] = {slot = 10, weight = 1000000},
  */
 
-export const isItemAllowed = (type: ItemType, name: string, configuration: InventoryConfiguration): boolean => {
+export const isItemAllowed = (
+    type: ItemType,
+    name: string,
+    metadata: InventoryItemMetadata,
+    configuration: InventoryConfiguration
+): boolean => {
     let isAllowed = true;
 
     if (configuration.allowedItemTypes) {
@@ -864,6 +873,10 @@ export const isItemAllowed = (type: ItemType, name: string, configuration: Inven
     }
 
     if (isAllowed && configuration.notAllowedItems && configuration.notAllowedItems.includes(name)) {
+        return false;
+    }
+
+    if (isAllowed && configuration.requiredMetadata && !metadata[configuration.requiredMetadata]) {
         return false;
     }
 

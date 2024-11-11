@@ -273,6 +273,8 @@ export class InventoryOpenProvider {
                 allowedItemTypes: [item.storageItemType],
                 notAllowedItems: ['detective_board'],
                 persistent: false,
+                maxWeight: item.storageItemWeight || 1_000_000,
+                requiredMetadata: item.storageItemMandatoryMetadata,
             },
             () => inventoryItem.metadata.storageElements
         );

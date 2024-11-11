@@ -210,7 +210,7 @@ export class Inventory {
             };
         }
 
-        if (!bypassCheck && !isItemAllowed(itemObject.type, id, this._configuration)) {
+        if (!bypassCheck && !isItemAllowed(itemObject.type, id, metadata, this._configuration)) {
             return Err('not_allowed');
         }
 

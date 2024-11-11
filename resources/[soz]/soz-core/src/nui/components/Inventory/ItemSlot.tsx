@@ -61,7 +61,7 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
         hidden ||
         (targetConfiguration &&
             inventoryItem instanceof Object &&
-            !isItemAllowed(inventoryItem.type, inventoryItem.name, targetConfiguration));
+            !isItemAllowed(inventoryItem.type, inventoryItem.name, inventoryItem.metadata, targetConfiguration));
 
     const {
         attributes,
@@ -215,6 +215,7 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
                     </div>
                 </BorderBox>
                 {(allowActions || allowForceConsume) &&
+                    actions.length > 0 &&
                     createPortal(
                         <div
                             className="font-prompt absolute text-white rounded p-2 h-auto w-fit flex flex-col justify-center items-center bg-black/80"
