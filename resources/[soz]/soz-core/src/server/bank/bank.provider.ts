@@ -292,6 +292,7 @@ export class BankProvider {
         }
 
         this.notifier.advancedNotify(sourcePlayer.source, 'Fleeca Banque', `~r~$${money}~s~`, reason, 'CHAR_BANK_MAZE');
+        this.notifier.advancedNotify(destPlayer.source, 'Fleeca Banque', `~g~$${money}~s~`, reason, 'CHAR_BANK_MAZE');
 
         return [true, null];
     }
