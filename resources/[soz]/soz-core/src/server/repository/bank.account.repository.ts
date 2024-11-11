@@ -268,7 +268,7 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
                     accountLabel = apartment.label;
                     accountMaxCapacity = HouseSafeStorageTiers[apartment.money_tier ?? 0];
                     if (isAdminApartment(apartment)) {
-                        accountMaxCapacity = 10_000_000;
+                        accountMaxCapacity = 1_000_000_000;
                     }
                 }
 
