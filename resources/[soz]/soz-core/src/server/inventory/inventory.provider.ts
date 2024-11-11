@@ -231,6 +231,13 @@ export class InventoryProvider {
         targetSlot: number | null,
         amount: number | null
     ) {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        const playerInventoryId = `player_${player.citizenid}`;
         const sourceInventory = await this.inventoryFactory.get(sourceInventoryId);
         const targetInventory = await this.inventoryFactory.get(targetInventoryId);
 
@@ -257,31 +264,14 @@ export class InventoryProvider {
             amount = sourceItem.amount;
         }
 
+        // 1. Case : no target item, simply move item if possible
         if (!targetSlot) {
-            const amountMoved = await this.moveItem(
-                source,
-                sourceInventory,
-                targetInventory,
-                sourceItem,
-                amount,
-                targetSlot
-            );
-
-            if (amountMoved > 0) {
-                if (sourceInventory.id !== targetInventory.id) {
-                    const itemObject = this.itemService.getItem(sourceItem.name);
-
-                    this.notifier.notify(
-                        source,
-                        `Vous avez transféré ~o~${amountMoved} ~b~${itemObject.label || sourceItem.name}`
-                    );
-                }
-            }
+            await this.moveItem(source, sourceInventory, targetInventory, sourceItem, amount, targetSlot);
 
             return;
         }
 
-        // Try to merge items
+        // 2. case : try to merge items
         const mergeResult = targetInventory.merge(
             targetSlot,
             sourceItem,
@@ -295,12 +285,7 @@ export class InventoryProvider {
             await targetInventory.observe();
 
             if (sourceInventory.id !== targetInventory.id) {
-                const itemObject = this.itemService.getItem(sourceItem.name);
-
-                this.notifier.notify(
-                    source,
-                    `Vous avez transféré ~o~${mergeResult.ok} ~b~${itemObject.label || sourceItem.name}`
-                );
+                this.notifyMoveItem(source, sourceInventory, targetInventory, sourceItem, mergeResult.ok);
 
                 this.monitor.traceEvent('merge_item', {
                     player_source: source,
@@ -317,25 +302,7 @@ export class InventoryProvider {
         const error = mergeResult.err;
 
         if (error === 'no_item_to_merge') {
-            const amountMoved = await this.moveItem(
-                source,
-                sourceInventory,
-                targetInventory,
-                sourceItem,
-                amount,
-                targetSlot
-            );
-
-            if (amountMoved > 0) {
-                if (sourceInventory.id !== targetInventory.id) {
-                    const itemObject = this.itemService.getItem(sourceItem.name);
-
-                    this.notifier.notify(
-                        source,
-                        `Vous avez transféré ~o~${amountMoved} ~b~${itemObject.label || sourceItem.name}`
-                    );
-                }
-            }
+            await this.moveItem(source, sourceInventory, targetInventory, sourceItem, amount, targetSlot);
 
             return;
         }
@@ -408,11 +375,24 @@ export class InventoryProvider {
             const targetItemDef = this.itemService.getItem(targetItem.name);
 
             if (targetInventory.id !== sourceInventory.id) {
-                // Only trace and notify when the items are moved between different inventories
-                this.notifier.notify(
-                    source,
-                    `Vous avez échangé ~o~${amount} ~b~${sourceItemDef?.label || sourceItem.name}~s~ contre ~o~${targetItem.amount} ~b~${targetItemDef?.label || targetItem.name}`
-                );
+                let targetPlayerId = null;
+
+                if (playerInventoryId === sourceInventory.id && targetInventory.getPlayerCitizenId()) {
+                    targetPlayerId = targetInventory.getPlayerCitizenId();
+                } else if (playerInventoryId === targetInventory.id && sourceInventory.getPlayerCitizenId()) {
+                    targetPlayerId = sourceInventory.getPlayerCitizenId();
+                }
+
+                if (targetPlayerId) {
+                    const targetPlayer = this.playerService.getPlayerByCitizenId(targetPlayerId);
+
+                    if (targetPlayer) {
+                        this.notifier.notify(
+                            targetPlayer.source,
+                            `On vous a échangé ~o~${targetItem.amount} ~b~${targetItemDef?.label || targetItem.name}~s~ contre ~o~${amount} ~b~${sourceItemDef?.label || sourceItem.name}`
+                        );
+                    }
+                }
 
                 this.monitor.traceEvent('move_item', {
                     player_source: source,
@@ -625,11 +605,6 @@ export class InventoryProvider {
             return;
         }
 
-        const item = this.itemService.getItem(sourceItem.name);
-
-        this.notifier.notify(source, `Vous avez donné ~o~${amountMoved} ~b~${item?.label || sourceItem.name}`);
-        this.notifier.notify(target, `Vous avez reçu ~o~${amountMoved} ~b~${item?.label || sourceItem.name}`);
-
         TriggerClientEvent(ClientEvent.ANIMATION_GIVE, source);
         TriggerClientEvent(ClientEvent.ANIMATION_GIVE, target);
     }
@@ -679,11 +654,60 @@ export class InventoryProvider {
                 inventory_source_id: sourceInventory.id,
                 inventory_target_id: targetInventory.id,
             });
+
+            this.notifyMoveItem(source, sourceInventory, targetInventory, sourceItem, amount);
         }
 
         await sourceInventory.observe(); // Force refresh of the inventory
         await targetInventory.observe(); // Force refresh of the inventory
 
         return amount;
+    }
+
+    private notifyMoveItem(
+        source: number,
+        sourceInventory: Inventory,
+        targetInventory: Inventory,
+        sourceItem: InventoryItem,
+        amount: number
+    ) {
+        if (sourceInventory.id === targetInventory.id) {
+            return;
+        }
+
+        const itemObject = this.itemService.getItem(sourceItem.name);
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        const playerInventoryId = `player_${player.citizenid}`;
+
+        if (playerInventoryId === sourceInventory.id) {
+            if (targetInventory.getPlayerCitizenId()) {
+                const targetPlayer = this.playerService.getPlayerByCitizenId(targetInventory.getPlayerCitizenId());
+
+                if (targetPlayer) {
+                    this.notifier.notify(
+                        targetPlayer.source,
+                        `Vous avez reçu ~o~${amount} ~b~${itemObject.label || sourceItem.name}`
+                    );
+                }
+            }
+        }
+
+        if (playerInventoryId === targetInventory.id) {
+            if (sourceInventory.getPlayerCitizenId()) {
+                const targetPlayer = this.playerService.getPlayerByCitizenId(sourceInventory.getPlayerCitizenId());
+
+                if (targetPlayer) {
+                    this.notifier.notify(
+                        targetPlayer.source,
+                        `On vous a pris ~o~${amount} ~b~${itemObject.label || sourceItem.name}`
+                    );
+                }
+            }
+        }
     }
 }

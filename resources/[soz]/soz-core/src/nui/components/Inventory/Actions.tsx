@@ -482,6 +482,10 @@ export const getActions = (
         return actions;
     }
 
+    if (allowForceConsume) {
+        return [];
+    }
+
     if (item.type === 'weapon') {
         actions.push(ActionItemType.Equip);
     }

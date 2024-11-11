@@ -113,7 +113,7 @@ export class InventoryOpenProvider {
     }
 
     @OnEvent(ServerEvent.INVENTORY_OPEN_TARGET)
-    public async onOpenTarget(source: number, target: number, lockTarget: boolean = false) {
+    public async onOpenTarget(source: number, target: number, canForceConsume: boolean) {
         const sourcePlayer = this.playerService.getPlayer(source);
         const targetPlayer = this.playerService.getPlayer(target);
 
@@ -169,10 +169,6 @@ export class InventoryOpenProvider {
 
         this.inventoryPositionChecker.openInventory(inventory.id, inventoryPosition);
 
-        if (lockTarget) {
-            TriggerClientEvent(ClientEvent.INVENTORY_LOCK, target, true, 'search');
-        }
-
         TriggerClientEvent(
             ClientEvent.INVENTORY_OPEN,
             source,
@@ -180,7 +176,8 @@ export class InventoryOpenProvider {
             inventory.type(),
             inventory.configuration(),
             inventory.items(),
-            inventoryPosition
+            inventoryPosition,
+            canForceConsume
         );
 
         this.monitor.traceEvent('job_police_search_player', {
@@ -316,16 +313,6 @@ export class InventoryOpenProvider {
 
         this.subscriptions.get(storageId).delete(source);
         this.inventoryPositionChecker.closeInventory(source, storageId);
-
-        if (inventory.type() === InventoryType.Player && this.subscriptions.get(storageId).size <= 1) {
-            const citizenId = inventory.id.replace('player_', '');
-            const player = this.playerService.getPlayerByCitizenId(citizenId);
-
-            if (player && this.subscriptions.get(storageId).has(player.source)) {
-                // unlock player inventory
-                TriggerClientEvent(ClientEvent.INVENTORY_LOCK, player.source, false, 'search');
-            }
-        }
     }
 
     public closeInventory(storageId: string) {

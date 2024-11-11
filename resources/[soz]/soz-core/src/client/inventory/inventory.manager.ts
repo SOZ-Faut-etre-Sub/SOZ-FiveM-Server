@@ -135,7 +135,8 @@ export class InventoryManager {
         type: InventoryType,
         configuration: InventoryConfiguration,
         items: Record<number, InventoryItem>,
-        position: InventoryPosition
+        position: InventoryPosition,
+        canForceConsume: boolean = false
     ) {
         this._subscribedInventoryId = inventoryId;
         this._subscribedInventory = items;
@@ -148,6 +149,7 @@ export class InventoryManager {
             items: this._subscribedInventory,
             id: this._subscribedInventoryId,
             type: type,
+            canForceConsume,
         });
     }
 
@@ -279,10 +281,6 @@ export class InventoryManager {
         const [min, max] = GetModelDimensions(model) as [Vector3, Vector3];
 
         TriggerServerEvent(ServerEvent.INVENTORY_OPEN_TRUNK, vehicleNetworkId, vehicleClass, { min, max });
-    }
-
-    public getPlayerInventoryId() {
-        return this._playerInventoryId;
     }
 
     @Exportable('hasPlayerPhone')

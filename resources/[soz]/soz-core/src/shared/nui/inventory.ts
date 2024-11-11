@@ -14,6 +14,7 @@ export interface NuiInventoryMethodMap {
         configuration: InventoryConfiguration;
         items: Record<number, InventoryItem>;
         type: InventoryType;
+        canForceConsume: boolean;
     };
     UpdateInventory: {
         id: string;

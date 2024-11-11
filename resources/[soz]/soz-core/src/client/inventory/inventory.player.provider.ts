@@ -1,8 +1,7 @@
 import { Command } from '../../core/decorators/command';
-import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
+import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { ClientEvent } from '../../shared/event/client';
 import { NuiEvent } from '../../shared/event/nui';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { NuiMenu } from '../nui/nui.menu';
@@ -37,19 +36,6 @@ export class InventoryPlayerProvider {
         this.openPlayerInventory();
     }
 
-    @OnEvent(ClientEvent.INVENTORY_LOCK)
-    public async onLockInventory(lock: boolean, reason: string) {
-        if (lock) {
-            this.isLocked.add(reason);
-        } else {
-            this.isLocked.delete(reason);
-        }
-
-        if (lock) {
-            this.nuiDispatch.closeEverything();
-        }
-    }
-
     @Command('inventory', {
         description: "Ouvrir l'inventaire",
         passthroughNuiFocus: true,
@@ -67,11 +53,16 @@ export class InventoryPlayerProvider {
             return;
         }
 
+        if (player.metadata.isdead || player.metadata.inlaststand || player.metadata.ishandcuffed) {
+            return;
+        }
+
+        const playerPed = PlayerPedId();
+
+        // Can't open inventory while playing some animations
         if (
-            player.metadata.isdead ||
-            player.metadata.inlaststand ||
-            player.metadata.ishandcuffed ||
-            this.isLocked.size > 0
+            IsEntityPlayingAnim(playerPed, 'missminuteman_1ig_2', 'handsup_base', 3) ||
+            IsEntityPlayingAnim(playerPed, 'mp_arresting', 'idle', 3)
         ) {
             return;
         }

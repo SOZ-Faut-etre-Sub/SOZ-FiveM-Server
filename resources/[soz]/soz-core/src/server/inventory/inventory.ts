@@ -628,6 +628,14 @@ export class Inventory {
         this.subscribers.delete(id);
     }
 
+    getPlayerCitizenId(): string | null {
+        if (this._type !== InventoryType.Player) {
+            return null;
+        }
+
+        return this.id.replace('player_', '');
+    }
+
     public async observe() {
         if (!this._hasChanges) {
             return;

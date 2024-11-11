@@ -1,10 +1,15 @@
-import { Injectable } from '../../core/decorators/injectable';
+import { Inject, Injectable } from '@core/decorators/injectable';
+import { PlayerService } from '@public/server/player/player.service';
+
 import { ClientEvent } from '../../shared/event/client';
 import { DEFAULT_MAX_INVENTORY_DISTANCE, getPositionZone, InventoryPosition } from '../../shared/inventory';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 
 @Injectable()
 export class InventoryPositionChecker {
+    @Inject(PlayerService)
+    private playerService: PlayerService;
+
     private trunkOpened: Record<string, { networkId: number; players: Set<number> }> = {};
 
     private inventoriesPositions: Record<string, InventoryPosition> = {};
@@ -60,6 +65,17 @@ export class InventoryPositionChecker {
 
     public checkPlayerDistance(source: number, inventoryId: string): boolean {
         const playerPosition = GetEntityCoords(GetPlayerPed(source), true) as Vector3;
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return true;
+        }
+
+        const playerInventoryId = `player_${player.citizenid}`;
+
+        if (playerInventoryId === inventoryId) {
+            return true;
+        }
 
         return this.checkDistance(playerPosition, inventoryId);
     }

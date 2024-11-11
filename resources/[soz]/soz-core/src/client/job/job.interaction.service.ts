@@ -12,7 +12,7 @@ export class JobInteractionService {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
-    public async searchPlayer(entity: number) {
+    public async searchPlayer(entity: number, canForceConsume: boolean) {
         const player = NetworkGetPlayerIndexFromPed(entity);
 
         const playerPed = GetPlayerPed(player);
@@ -22,7 +22,7 @@ export class JobInteractionService {
             IsEntityPlayingAnim(playerPed, 'missminuteman_1ig_2', 'handsup_base', 3) ||
             IsEntityPlayingAnim(playerPed, 'mp_arresting', 'idle', 3)
         ) {
-            TriggerServerEvent(ServerEvent.INVENTORY_OPEN_TARGET, playerId, true);
+            TriggerServerEvent(ServerEvent.INVENTORY_OPEN_TARGET, playerId, canForceConsume);
         }
     }
 

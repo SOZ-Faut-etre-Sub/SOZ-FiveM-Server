@@ -17,14 +17,16 @@ export const InventoryApp: FunctionComponent = () => {
     const [inventoryId, setInventoryId] = useState<string>(null);
     const [inventoryItems, setInventoryItems] = useState<Record<number, InventoryItem>>(null);
     const [configuration, setConfiguration] = useState<InventoryConfiguration>(null);
+    const [canForceConsume, setCanForceConsume] = useState<boolean>(false);
     const [type, setType] = useState<InventoryType>(null);
     const open = inventoryId !== null;
 
-    useNuiEvent('inventory', 'OpenInventory', ({ id, configuration, type, items }) => {
+    useNuiEvent('inventory', 'OpenInventory', ({ id, configuration, type, items, canForceConsume }) => {
         setInventoryId(id);
         setConfiguration(configuration);
         setType(type);
         setInventoryItems(items);
+        setCanForceConsume(canForceConsume);
     });
 
     useNuiEvent('inventory', 'CloseInventory', () => {
@@ -117,7 +119,7 @@ export const InventoryApp: FunctionComponent = () => {
                             inventoryItems={inventoryItems}
                             inventoryId={inventoryId}
                             prefixId="target_"
-                            allowForceConsume={type === InventoryType.Player}
+                            allowForceConsume={canForceConsume}
                             itemDescriptionPosition="right"
                             onDoubleClick={inventoryItem => {
                                 if (inventoryItem === null || !(inventoryItem instanceof Object)) {

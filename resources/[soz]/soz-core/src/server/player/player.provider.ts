@@ -109,17 +109,6 @@ export class PlayerProvider {
         }
 
         if (playerInventory.maxWeight() !== weight) {
-            console.log(
-                'set weight to',
-                weight,
-                'for',
-                player.source,
-                'from',
-                playerInventory.maxWeight(),
-                'to',
-                weight
-            );
-
             playerInventory.updateConfiguration({
                 maxWeight: weight,
             });

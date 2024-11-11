@@ -280,7 +280,7 @@ export class PolicePlayerProvider {
                             );
                         },
                         action: async entity => {
-                            await this.jobInteractionService.searchPlayer(entity);
+                            await this.jobInteractionService.searchPlayer(entity, false);
                         },
                     },
                 ],
