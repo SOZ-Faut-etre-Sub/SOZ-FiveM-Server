@@ -58,6 +58,7 @@ export const VehicleWithSirens = {
     [GetHashKey('fbi2')]: true,
     [GetHashKey('cogfbi')]: true,
     [GetHashKey('paragonfbi')]: true,
+    [GetHashKey('paragonsfbi')]: true,
     [GetHashKey('dodgebana')]: true,
     [GetHashKey('polgauntlet')]: true,
 };
