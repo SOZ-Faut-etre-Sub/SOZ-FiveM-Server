@@ -254,4 +254,26 @@ export class ApiProvider {
             return Response.internalServerError(error);
         }
     }
+
+    @Post('/transfert-money')
+    public async transfertMoney(request: Request): Promise<Response> {
+        try {
+            const data = JSON.parse(await request.body);
+            const [success, msg] = await this.bankProvider.transfertBetweenPlayers(
+                data.sourceCitizenId,
+                data.destCitizenId,
+                data.money,
+                data.reason
+            );
+
+            return Response.ok(
+                JSON.stringify({
+                    success,
+                    msg,
+                })
+            );
+        } catch (error) {
+            return Response.internalServerError(error);
+        }
+    }
 }

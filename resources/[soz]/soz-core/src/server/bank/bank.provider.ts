@@ -254,10 +254,44 @@ export class BankProvider {
         );
 
         if (!success) {
-            return [false, 'Echec du payement'];
+            return [false, 'Echec du paiement'];
         }
 
         this.notifier.advancedNotify(player.source, 'Fleeca Banque', `~r~$${money}~s~`, reason, 'CHAR_BANK_MAZE');
+
+        return [true, null];
+    }
+
+    public async transfertBetweenPlayers(
+        sourceCitizenId: string,
+        destCitizenId: string,
+        money: number,
+        reason: string
+    ): Promise<[boolean, string]> {
+        const sourcePlayer = this.playerService.getPlayerByCitizenId(sourceCitizenId);
+        if (!sourcePlayer) {
+            return [false, 'Joueur source inconnu ou pas connecté'];
+        }
+
+        const destPlayer = this.playerService.getPlayerByCitizenId(destCitizenId);
+        if (!destPlayer) {
+            return [false, 'Joueur destinataire inconnu ou pas connecté'];
+        }
+
+        const success = await this.bankService.transferBankMoney(
+            sourcePlayer.charinfo.account,
+            destPlayer.charinfo.account,
+            'money',
+            money,
+            true,
+            reason
+        );
+
+        if (!success) {
+            return [false, 'Echec du paiement'];
+        }
+
+        this.notifier.advancedNotify(sourcePlayer.source, 'Fleeca Banque', `~r~$${money}~s~`, reason, 'CHAR_BANK_MAZE');
 
         return [true, null];
     }
