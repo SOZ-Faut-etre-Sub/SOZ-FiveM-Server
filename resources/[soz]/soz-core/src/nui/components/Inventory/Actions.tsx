@@ -468,7 +468,15 @@ export const getActions = (
         return actions;
     }
 
-    if (item.useable && item.type !== 'weapon' && allowForceConsume) {
+    if (
+        item.useable &&
+        (item.type === 'food' ||
+            item.type === 'drink' ||
+            item.type === 'cocktail' ||
+            item.type === 'liquor' ||
+            item.type === 'drug') &&
+        allowForceConsume
+    ) {
         actions.push(ActionItemType.ForceConsume);
 
         return actions;
