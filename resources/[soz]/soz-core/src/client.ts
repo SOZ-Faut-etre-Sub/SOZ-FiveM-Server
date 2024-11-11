@@ -5,6 +5,7 @@ import { modules as PrivateModules } from '@private/client/modules';
 
 import { AdminModule } from './client/admin/admin.module';
 import { AfkModule } from './client/afk/afk.module';
+import { AimModule } from './client/aim/aim.module';
 import { AnimationModule } from './client/animation/animation.module';
 import { BankModule } from './client/bank/bank.module';
 import { BillboardModule } from './client/billboard/billboard.module';
@@ -95,6 +96,7 @@ async function bootstrap() {
         NuiModule,
         FoodModule,
         TargetModule,
+        AimModule,
         FightForStyleModule,
         BaunModule,
         StreamModule,
