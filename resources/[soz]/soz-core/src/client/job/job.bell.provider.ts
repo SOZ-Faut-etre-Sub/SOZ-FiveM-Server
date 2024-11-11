@@ -41,7 +41,7 @@ const BELL_ZONES: BellProps[] = [
         number: '555-YOUN',
     },
     {
-        coords: [-1884.4, 2063.0, 141.25],
+        coords: [-1885.13, 2058.63, 140.87],
         job: JobType.Food,
         number: '555-MARIUS',
     },

@@ -14,21 +14,21 @@ export const FoodHuntConfig = {
 export const CraftZones: NamedZone[] = [
     {
         name: 'food_craft_1',
-        center: [-1882.53, 2069.2, 141.0],
-        length: 2.2,
-        width: 1.15,
-        heading: 340,
-        minZ: 140.0,
-        maxZ: 141.45,
+        center: [-1895.98, 2067.29, 140.33],
+        length: 1.8,
+        width: 4.2,
+        heading: 321.79,
+        minZ: 139.33,
+        maxZ: 141.33,
     },
     {
         name: 'food_craft_2',
-        center: [-1880.22, 2068.34, 141.0],
-        length: 2.15,
-        width: 1.15,
-        heading: 340,
-        minZ: 140.0,
-        maxZ: 141.45,
+        center: [-1900.68, 2071.03, 140.19],
+        length: 1.8,
+        width: 4.4,
+        heading: 321.21,
+        minZ: 139.19,
+        maxZ: 141.19,
     },
 ];
 

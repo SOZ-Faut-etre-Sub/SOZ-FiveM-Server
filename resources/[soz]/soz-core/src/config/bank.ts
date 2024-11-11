@@ -161,12 +161,12 @@ export const SocietySafeStorage: Partial<Record<JobType, Zone>> = {
         maxZ: 35.89,
     },
     [JobType.Food]: {
-        center: [-1898.62, 2065.6, 141.0],
+        center: [-1877.15, 2055.42, 154.09],
         length: 0.8,
-        width: 2.2,
-        heading: 340,
-        minZ: 140.0,
-        maxZ: 142.0,
+        width: 0.8,
+        heading: 249.99,
+        minZ: 153.49,
+        maxZ: 154.49,
     },
     [JobType.Upw]: {
         center: [602.59, 2760.5, 47.76],

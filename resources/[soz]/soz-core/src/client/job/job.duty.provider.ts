@@ -126,18 +126,15 @@ const DutyZoneConfig: Zone<JobType>[] = [
         maxZ: 46.45,
         heading: 200,
     },
-    //meteor
-    /*
     {
         data: JobType.Food,
-        center: [-1876.2, 2059.5, 141.0],
-        length: 0.6,
-        width: 0.7,
-        minZ: 140.75,
-        maxZ: 141.5,
-        heading: 70.25,
+        center: [-1867.1, 2063.91, 141.57],
+        length: 1.0,
+        width: 3.2,
+        heading: 179.08,
+        minZ: 140.97,
+        maxZ: 142.17,
     },
-    */
     {
         data: JobType.Baun,
         center: [-1388.11, -606.23, 30.32],

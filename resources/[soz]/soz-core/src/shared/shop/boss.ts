@@ -93,12 +93,12 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
         name: 'food',
         job: JobType.Food,
         zone: {
-            center: [-1881.68, 2058.03, 140.0],
+            center: [-1876.41, 2057.23, 154.89],
             length: 0.8,
-            width: 2.15,
-            heading: 70,
-            minZ: 140.0,
-            maxZ: 143.0,
+            width: 3.15,
+            heading: 250.7,
+            minZ: 154.29,
+            maxZ: 155.49,
         },
         targets: [],
         products: [
