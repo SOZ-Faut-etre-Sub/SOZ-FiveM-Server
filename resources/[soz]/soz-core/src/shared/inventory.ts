@@ -729,6 +729,7 @@ export const VEHICLE_CONFIGURATION_BY_VEHICLE_MODEL: Record<number, Partial<Inve
     [joaat('lspd50')]: { maxWeight: 80000 },
     [joaat('lspd51')]: { maxWeight: 80000 },
     [joaat('polmav')]: { maxWeight: 200000 },
+    [joaat('policet')]: { maxWeight: 500000 },
     [joaat('riot')]: { maxWeight: 500000 },
 
     // BCSO
@@ -756,7 +757,7 @@ export const VEHICLE_CONFIGURATION_BY_VEHICLE_MODEL: Record<number, Partial<Inve
     [joaat('polmav')]: { maxWeight: 200000 },
 
     // STONKS
-    [joaat('stockade')]: { maxWeight: 600000 },
+    [joaat('stockade')]: { maxWeight: 1000000 },
     [joaat('baller9')]: { maxWeight: 80000 },
 
     // Twitch News
