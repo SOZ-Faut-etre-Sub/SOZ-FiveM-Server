@@ -1021,17 +1021,17 @@ export const INVENTORY_ITEM_CREATORS: Partial<Record<InventoryType, Record<strin
     [InventoryType.Bin]: {
         metalscrap: {
             chance: 10,
-            min: 1,
+            min: 0,
             max: 1,
         },
         aluminum: {
             chance: 10,
-            min: 1,
+            min: 0,
             max: 2,
         },
         rubber: {
             chance: 10,
-            min: 1,
+            min: 0,
             max: 2,
         },
         rolex: {

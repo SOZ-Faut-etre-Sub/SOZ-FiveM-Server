@@ -227,28 +227,32 @@ export class InventoryFactory {
                             continue;
                         }
 
-                        const amount = getRandomInt(creatorConfig.min, creatorConfig.max);
+                        const max = getRandomInt(creatorConfig.min, creatorConfig.max);
 
-                        const newItem: InventoryItem = {
-                            slot,
-                            name: itemName,
-                            amount,
-                            type: item.type,
-                            metadata: {},
-                        };
+                        for (let amount = max; amount > 0; amount--) {
+                            const newItem: InventoryItem = {
+                                slot,
+                                name: itemName,
+                                amount,
+                                type: item.type,
+                                metadata: {},
+                            };
 
-                        const newItems = Object.values(items);
-                        newItems.push(newItem);
+                            const newItems = Object.values(items);
+                            newItems.push(newItem);
 
-                        if (
-                            getItemsWeight(newItems, this.itemService.getItem.bind(this.itemService)) >
-                            inventoryConfiguration.maxWeight
-                        ) {
-                            continue;
+                            if (
+                                getItemsWeight(newItems, this.itemService.getItem.bind(this.itemService)) >
+                                inventoryConfiguration.maxWeight
+                            ) {
+                                continue;
+                            }
+
+                            items[slot] = newItem;
+                            slot++;
+
+                            break;
                         }
-
-                        items[slot] = newItem;
-                        slot++;
                     }
 
                     return items;
