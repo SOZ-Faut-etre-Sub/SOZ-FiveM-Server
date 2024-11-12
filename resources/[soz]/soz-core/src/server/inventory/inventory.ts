@@ -498,7 +498,7 @@ export class Inventory {
 
             this._hasChanges = true;
 
-            return Ok(1);
+            return Ok(0);
         }
 
         // Case 7: Armor plate
