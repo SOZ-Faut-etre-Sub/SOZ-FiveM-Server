@@ -3,7 +3,7 @@ import { Once, OnceStep, OnEvent, OnNuiEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { wait } from '@core/utils';
-import { PlayerUpdate } from '@public/core/decorators/player';
+import { PlayerInventoryUpdate } from '@public/core/decorators/player';
 
 import { ClientEvent } from '../../shared/event/client';
 import { NuiEvent } from '../../shared/event/nui';
@@ -99,8 +99,8 @@ export class HudWatchProvider {
         }
     }
 
-    @PlayerUpdate()
-    async onPlayerUpdate(): Promise<void> {
+    @PlayerInventoryUpdate()
+    async onInventoryUpdate(): Promise<void> {
         const haveWatch =
             this.inventoryManager.hasEnoughItem('smartwatchuiwi', 1, true) ||
             this.inventoryManager.hasEnoughItem('halloween_smartwatch_nocturnal_vein', 1, true);
