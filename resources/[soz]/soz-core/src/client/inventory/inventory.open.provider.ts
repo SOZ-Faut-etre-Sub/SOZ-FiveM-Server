@@ -2,6 +2,7 @@ import { Provider } from '@core/decorators/provider';
 import { InventoryManager } from '@public/client/inventory/inventory.manager';
 import { BaunCraftProvider } from '@public/client/job/baun/baun.craft.provider';
 import { JobCloakroomProvider } from '@public/client/job/job.cloakroom.provider';
+import { JobService } from '@public/client/job/job.service';
 import { PlayerService } from '@public/client/player/player.service';
 import { Once, OnceStep } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
@@ -9,7 +10,7 @@ import { emitRpc } from '@public/core/rpc';
 import { wait } from '@public/core/utils';
 import { ServerEvent } from '@public/shared/event/server';
 import { InventoryType, isInventoryItemExpired } from '@public/shared/inventory';
-import { JobType } from '@public/shared/job';
+import { JobPermission, JobType } from '@public/shared/job';
 import { computeBinId } from '@public/shared/job/garbage';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
@@ -43,6 +44,9 @@ export class InventoryOpenProvider {
 
     @Inject(BaunCraftProvider)
     private baunCraftProvider: BaunCraftProvider;
+
+    @Inject(JobService)
+    private jobService: JobService;
 
     public getBinModels() {
         return [
@@ -104,6 +108,13 @@ export class InventoryOpenProvider {
                         icon: 'inventory/ouvrir_le_stockage',
                         category: 'society',
                         job: openJob,
+                        canInteract: () => {
+                            if (!inventory.data.permission) {
+                                return true;
+                            }
+
+                            return this.jobService.hasPermission(openJob, inventory.data.permission);
+                        },
                         action: async () => {
                             const playerPed = PlayerPedId();
                             const coords = GetEntityCoords(playerPed);

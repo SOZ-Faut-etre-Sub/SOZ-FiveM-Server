@@ -1,10 +1,11 @@
 import { InventoryType } from '../inventory';
-import { JobType } from '../job';
+import { JobPermission, JobType } from '../job';
 import { Zone } from '../polyzone/box.zone';
 
 export type JobInventory = {
     storage: string;
     type: InventoryType;
+    permission?: JobPermission;
 };
 
 export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
@@ -79,6 +80,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'baun_bahama_boss_storage',
                 type: InventoryType.BossStorage,
+                permission: JobPermission.SocietyPrivateStorage,
             },
         },
         {
@@ -91,6 +93,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'baun_unicorn_boss_storage',
                 type: InventoryType.BossStorage,
+                permission: JobPermission.SocietyPrivateStorage,
             },
         },
         {
@@ -379,6 +382,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'baun_bahama_storage',
                 type: InventoryType.Storage,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -391,6 +395,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'baun_unicorn_storage',
                 type: InventoryType.Storage,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -403,6 +408,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'baun_yellowjack_storage',
                 type: InventoryType.Storage,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
     ],
@@ -429,6 +435,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'bcso_armory',
                 type: InventoryType.Armory,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -441,6 +448,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'bcso_seizure1',
                 type: InventoryType.Seizure,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -453,6 +461,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'bcso_seizure2',
                 type: InventoryType.Seizure,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -465,6 +474,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'bcso_seizure3',
                 type: InventoryType.Seizure,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -477,6 +487,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'bcso_boss_storage',
                 type: InventoryType.BossStorage,
+                permission: JobPermission.SocietyPrivateStorage,
             },
         },
         {
@@ -489,6 +500,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'bcso_storage',
                 type: InventoryType.Storage,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -501,6 +513,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'bcso_evidence_storage',
                 type: InventoryType.EvidenceStorage,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -513,6 +526,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'bcso_ammo',
                 type: InventoryType.Ammo,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -551,6 +565,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'stonk_storage',
                 type: InventoryType.Storage,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -563,6 +578,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'stonk_boss_storage',
                 type: InventoryType.BossStorage,
+                permission: JobPermission.SocietyPrivateStorage,
             },
         },
         {
@@ -575,6 +591,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'stonk_armory',
                 type: InventoryType.Armory,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -587,6 +604,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'stonk_ammo',
                 type: InventoryType.Ammo,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -625,6 +643,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'dmc_boss_storage',
                 type: InventoryType.BossStorage,
+                permission: JobPermission.SocietyPrivateStorage,
             },
         },
         {
@@ -697,6 +716,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'dmc_armory',
                 type: InventoryType.Armory,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
     ],
@@ -711,6 +731,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'fbi_storage',
                 type: InventoryType.Storage,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -723,6 +744,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'fbi_armory',
                 type: InventoryType.Armory,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -735,6 +757,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'fbi_ammo',
                 type: InventoryType.Ammo,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
     ],
@@ -773,6 +796,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'fdf_stash',
                 type: InventoryType.Storage,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -785,6 +809,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'fdf_boss_storage',
                 type: InventoryType.BossStorage,
+                permission: JobPermission.SocietyPrivateStorage,
             },
         },
         {
@@ -811,6 +836,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'ffs_storage',
                 type: InventoryType.Storage,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -823,6 +849,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'ffs_boss_storage',
                 type: InventoryType.BossStorage,
+                permission: JobPermission.SocietyPrivateStorage,
             },
         },
         {
@@ -909,6 +936,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'food_storage',
                 type: InventoryType.Storage,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -921,6 +949,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'food_boss_storage',
                 type: InventoryType.BossStorage,
+                permission: JobPermission.SocietyPrivateStorage,
             },
         },
         {
@@ -947,6 +976,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'garbage_storage',
                 type: InventoryType.Storage,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -983,6 +1013,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'garbage_boss_storage',
                 type: InventoryType.BossStorage,
+                permission: JobPermission.SocietyPrivateStorage,
             },
         },
         {
@@ -1021,6 +1052,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'gouv_storage',
                 type: InventoryType.Storage,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -1033,6 +1065,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'gouv_boss_storage',
                 type: InventoryType.BossStorage,
+                permission: JobPermission.SocietyPrivateStorage,
             },
         },
         {
@@ -1059,6 +1092,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'lscs_storage',
                 type: InventoryType.Storage,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -1109,6 +1143,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'lsmc_armory',
                 type: InventoryType.Armory,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -1121,6 +1156,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'lsmc_stash',
                 type: InventoryType.Storage,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -1133,6 +1169,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'lsmc_north_stash',
                 type: InventoryType.Storage,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -1145,6 +1182,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'lsmc_boss_storage',
                 type: InventoryType.BossStorage,
+                permission: JobPermission.SocietyPrivateStorage,
             },
         },
         {
@@ -1157,6 +1195,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'lsmc_north_boss_storage',
                 type: InventoryType.BossStorage,
+                permission: JobPermission.SocietyPrivateStorage,
             },
         },
         {
@@ -1231,6 +1270,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'lspd_boss_storage',
                 type: InventoryType.BossStorage,
+                permission: JobPermission.SocietyPrivateStorage,
             },
         },
         {
@@ -1243,6 +1283,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'lspd_ammo',
                 type: InventoryType.Ammo,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -1255,6 +1296,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'lspd_storage',
                 type: InventoryType.Storage,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -1267,6 +1309,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'lspd_evidence_storage',
                 type: InventoryType.EvidenceStorage,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -1279,6 +1322,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'lspd_seizure1',
                 type: InventoryType.Seizure,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -1291,6 +1335,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'lspd_seizure2',
                 type: InventoryType.Seizure,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -1303,6 +1348,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'lspd_seizure3',
                 type: InventoryType.Seizure,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -1327,6 +1373,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'lspd_armory',
                 type: InventoryType.Armory,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -1365,6 +1412,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'mdr_boss_storage',
                 type: InventoryType.BossStorage,
+                permission: JobPermission.SocietyPrivateStorage,
             },
         },
         {
@@ -1377,6 +1425,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'mdr_storage',
                 type: InventoryType.Storage,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -1427,6 +1476,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'bennys_stash',
                 type: InventoryType.Storage,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -1439,6 +1489,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'bennys_stash_north',
                 type: InventoryType.Storage,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -1451,6 +1502,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'bennys_boss_storage',
                 type: InventoryType.BossStorage,
+                permission: JobPermission.SocietyPrivateStorage,
             },
         },
         {
@@ -1463,6 +1515,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'bennys_boss_storage_north',
                 type: InventoryType.BossStorage,
+                permission: JobPermission.SocietyPrivateStorage,
             },
         },
         {
@@ -1525,6 +1578,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'news_storage',
                 type: InventoryType.Storage,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -1537,6 +1591,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'news_boss_storage',
                 type: InventoryType.BossStorage,
+                permission: JobPermission.SocietyPrivateStorage,
             },
         },
         {
@@ -1575,6 +1630,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'oil_boss_storage',
                 type: InventoryType.BossStorage,
+                permission: JobPermission.SocietyPrivateStorage,
             },
         },
         {
@@ -1587,6 +1643,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'oil_storage',
                 type: InventoryType.Storage,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -1673,6 +1730,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'pawl_armory',
                 type: InventoryType.Armory,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -1685,6 +1743,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'pawl_boss_storage',
                 type: InventoryType.BossStorage,
+                permission: JobPermission.SocietyPrivateStorage,
             },
         },
         {
@@ -1733,6 +1792,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'pawl_storage',
                 type: InventoryType.Storage,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -1771,6 +1831,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'sasp_storage',
                 type: InventoryType.Storage,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -1783,6 +1844,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'sasp_boss_storage',
                 type: InventoryType.BossStorage,
+                permission: JobPermission.SocietyPrivateStorage,
             },
         },
         {
@@ -1795,6 +1857,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'sasp_armory',
                 type: InventoryType.Armory,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -1807,6 +1870,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'sasp_ammo',
                 type: InventoryType.Ammo,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -1857,6 +1921,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'taxi_storage',
                 type: InventoryType.Storage,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -1869,6 +1934,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'taxi_boss_storage',
                 type: InventoryType.BossStorage,
+                permission: JobPermission.SocietyPrivateStorage,
             },
         },
     ],
@@ -1895,6 +1961,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'upw_stash',
                 type: InventoryType.Storage,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -1907,6 +1974,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'upw_boss_storage',
                 type: InventoryType.BossStorage,
+                permission: JobPermission.SocietyPrivateStorage,
             },
         },
         {
@@ -1957,6 +2025,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'you_news_storage',
                 type: InventoryType.Storage,
+                permission: JobPermission.SocietyGeneralStorage,
             },
         },
         {
@@ -1969,6 +2038,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             data: {
                 storage: 'you_news_boss_storage',
                 type: InventoryType.BossStorage,
+                permission: JobPermission.SocietyPrivateStorage,
             },
         },
         {
