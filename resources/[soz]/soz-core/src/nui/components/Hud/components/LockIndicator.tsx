@@ -4,14 +4,14 @@ import { useSelector } from 'react-redux';
 
 import { VehicleLockStatus } from '../../../../shared/vehicle/vehicle';
 import { RootState } from '../../../store';
-import { useHudColor } from '../hooks/useHudColor';
+import { useDaltonism } from '../hooks/useDaltonism';
 import { useZoom } from '../hooks/useZoom';
 
 export const LockIndicator: FunctionComponent = () => {
     const state = useSelector((state: RootState) => state.vehicle.lockStatus);
     const { width, height } = useZoom();
 
-    const { imagePrefix } = useHudColor();
+    const { imagePrefix } = useDaltonism();
 
     const styles = useSpring({
         from: {

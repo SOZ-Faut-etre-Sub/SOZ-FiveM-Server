@@ -8,15 +8,11 @@ import { FaPlus, FaTrash } from 'react-icons/fa';
 import { BankAccount, BankContact } from '../../../../shared/bank';
 import { NuiEvent } from '../../../../shared/event/nui';
 import { fetchNui } from '../../../fetch';
-import { usePlayer } from '../../../hook/data';
-import { Button } from '../component/Button';
 import { Card } from '../component/Card';
-import { ContactCard } from '../component/ContactCard';
 import { Header } from '../component/Header';
 import { Input } from '../component/Input';
+import { QuickActionForm } from '../component/QuickActionForm';
 import { TextWithCopy } from '../component/TextWithCopy';
-import { Title } from '../component/Title';
-import { TransferActionForm } from '../component/TransferActionForm';
 import { moneyFormat } from '../utils/format';
 import { DashboardProps } from './DashboardPage';
 
@@ -32,12 +28,21 @@ interface AddContactFormInputs {
 }
 
 export const ContactPage: FunctionComponent<HistoryProps> = ({ bankType, account, contacts }) => {
-    const player = usePlayer();
+    const [isOpen, setIsOpen] = useState(false);
 
     const styles = useSpring({
         from: { y: 30, opacity: 0 },
         to: { y: 0, opacity: 1 },
     });
+
+    function openModal() {
+        setIsOpen(true);
+    }
+
+    function closeModal() {
+        setIsOpen(false);
+        reset();
+    }
 
     const {
         register,
@@ -52,7 +57,7 @@ export const ContactPage: FunctionComponent<HistoryProps> = ({ bankType, account
             iban: data.accountid,
         });
 
-        reset();
+        closeModal();
     };
 
     const deleteContact = async (contact: BankContact) => {
@@ -62,106 +67,187 @@ export const ContactPage: FunctionComponent<HistoryProps> = ({ bankType, account
     };
 
     return (
-        <>
-            <Header category="Paramètres" title="Mes bénéficiaires" />
+        <div className="space-y-10 h-full">
+            <Header title="Mes bénéficiaires" />
 
-            <animated.div className="flex grow gap-2.5 min-h-0" style={styles}>
+            <Transition appear show={isOpen} as={Fragment}>
+                <Dialog as="div" className="relative z-30" onClose={closeModal}>
+                    <Transition.Child
+                        as={Fragment}
+                        enter="ease-out duration-300"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="ease-in duration-200"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                    >
+                        <div className="fixed inset-0 bg-black/25" data-ignore-click-outside={true} />
+                    </Transition.Child>
+
+                    <div className="fixed inset-0 overflow-y-auto" data-ignore-click-outside={true}>
+                        <div className="flex min-h-full items-center justify-center p-4 text-center">
+                            <Transition.Child
+                                as={Fragment}
+                                enter="ease-out duration-300"
+                                enterFrom="opacity-0 scale-95"
+                                enterTo="opacity-100 scale-100"
+                                leave="ease-in duration-200"
+                                leaveFrom="opacity-100 scale-100"
+                                leaveTo="opacity-0 scale-95"
+                            >
+                                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-[#0B302E] p-6 text-left align-middle shadow-xl transition-all">
+                                    <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-100">
+                                        Ajouter un bénéficiaire
+                                    </Dialog.Title>
+
+                                    <div className="absolute right-0 top-0 hidden pr-4 pt-4 sm:block">
+                                        <button
+                                            onClick={closeModal}
+                                            type="button"
+                                            className="rounded-md text-gray-400 hover:text-gray-500 focus:outline-none"
+                                        >
+                                            <span className="sr-only">Close</span>
+                                            <svg
+                                                className="h-6 w-6"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                strokeWidth="1.5"
+                                                stroke="currentColor"
+                                                aria-hidden="true"
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    d="M6 18L18 6M6 6l12 12"
+                                                />
+                                            </svg>
+                                        </button>
+                                    </div>
+
+                                    <form onSubmit={handleSubmit(submitForm)} className="mt-2">
+                                        <div className="flex flex-col gap-4 text-sm text-gray-500">
+                                            <div>
+                                                <label
+                                                    htmlFor="label"
+                                                    className="block text-sm font-medium leading-6 text-gray-100"
+                                                >
+                                                    Nom
+                                                </label>
+                                                <Input
+                                                    type="text"
+                                                    {...register('label', {
+                                                        minLength: 2,
+                                                        maxLength: 50,
+                                                        required: true,
+                                                    })}
+                                                    placeholder="Mon compte"
+                                                    error={errors.label}
+                                                />
+                                            </div>
+
+                                            <div>
+                                                <label
+                                                    htmlFor="accountid"
+                                                    className="block text-sm font-medium leading-6 text-gray-100"
+                                                >
+                                                    IBAN
+                                                </label>
+                                                <Input
+                                                    type="text"
+                                                    {...register('accountid', {
+                                                        minLength: 2,
+                                                        maxLength: 50,
+                                                        required: true,
+                                                    })}
+                                                    placeholder="XXXZXXXXTXXX"
+                                                    error={errors.accountid}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="flex justify-end mt-4">
+                                            <button className="inline-flex justify-center rounded-md text-white px-2 py-1 text-sm font-medium bg-teal-400/10 hover:bg-teal-500/10 ring-1 ring-inset ring-teal-400/10 hover:ring-teal-500/10 focus:outline-none">
+                                                Ajouter
+                                            </button>
+                                        </div>
+                                    </form>
+                                </Dialog.Panel>
+                            </Transition.Child>
+                        </div>
+                    </div>
+                </Dialog>
+            </Transition>
+
+            <animated.div className="flex gap-10 h-[85%]" style={styles}>
                 {/* Left pane */}
-                <div className="flex flex-col gap-2.5 w-4/6">
-                    <div className="flex flex-none gap-2.5">
-                        <Card className="w-1/2">
-                            <Title size="small">Solde bancaire</Title>
-
-                            <div className="flex flex-col justify-center items-center py-2.5">
-                                <Title size="xlarge">{moneyFormat(account.money)}</Title>
-                            </div>
-                        </Card>
-
-                        <Card className="w-1/2">
-                            <Title size="small">Portefeuille</Title>
-
-                            <div className="flex flex-col justify-center items-center py-2.5">
-                                <Title size="xlarge">{moneyFormat(Number(player.money.money))}</Title>
-                            </div>
-                        </Card>
+                <div className="w-4/6 space-y-10">
+                    <div className="flex justify-end">
+                        <button
+                            onClick={openModal}
+                            className="flex items-center gap-2 py-1 px-2 cursor-pointer bg-teal-400/10 hover:bg-teal-500/10 ring-1 ring-inset ring-teal-400/10 hover:ring-teal-500/10 rounded-md"
+                        >
+                            <FaPlus className="h-4 w-4" />
+                            Ajouter
+                        </button>
                     </div>
 
-                    <Card className="flex flex-col grow gap-5 min-h-0">
-                        <Title size="xsmall">Annuaire</Title>
-
-                        <div className="grid grid-cols-2 gap-2.5 overflow-y-auto scrollbar-thin scrollbar-thumb-black/20">
-                            {contacts.map(contact => (
-                                <ContactCard
-                                    key={contact.id}
-                                    contact={contact}
-                                    onDelete={() => deleteContact(contact)}
+                    <div className="grid grid-cols-3 gap-4 max-h-full overflow-y-auto scrollbar-thin scrollbar-thumb-white/20">
+                        {contacts.map(contact => (
+                            <div key={contact.id} className="col-span-1 flex rounded-md shadow-sm">
+                                <div
+                                    className={classnames(
+                                        'flex w-16 flex-shrink-0 items-center justify-center rounded-l-md bg-cover bg-center',
+                                        {
+                                            'bg-gray-200/15': !contact?.avatar,
+                                        }
+                                    )}
+                                    style={{
+                                        backgroundImage: `url(${contact?.avatar})`,
+                                    }}
                                 />
-                            ))}
-
-                            {contacts.length === 0 && (
-                                <div className="col-span-3 flex items-center justify-center text-gray-300 py-10">
-                                    Vous n'avez pas de bénéficiaire
+                                <div className="flex flex-1 items-center justify-between truncate rounded-r-md border-b border-r border-t border-gray-200/10 bg-white/5">
+                                    <div className="flex-1 truncate pl-4 py-2 text-sm">
+                                        <p className="font-medium text-gray-100">{contact.label}</p>
+                                        <TextWithCopy text={contact.accountid} buttonClassName="text-gray-500">
+                                            <p className="text-gray-500">{contact.accountid}</p>
+                                        </TextWithCopy>
+                                    </div>
+                                    <div className="flex-shrink-0">
+                                        <button
+                                            type="button"
+                                            className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-transparent text-gray-400 hover:text-gray-500 focus:outline-none"
+                                            onClick={() => deleteContact(contact)}
+                                        >
+                                            <FaTrash className="h-3 w-3 text-red-400" />
+                                        </button>
+                                    </div>
                                 </div>
-                            )}
-                        </div>
-                    </Card>
+                            </div>
+                        ))}
+
+                        {contacts.length === 0 && (
+                            <div className="col-span-3 flex items-center justify-center text-gray-300">
+                                Vous n'avez pas de bénéficiaire
+                            </div>
+                        )}
+                    </div>
                 </div>
 
                 {/* Right pane */}
-                <div className="w-2/6 space-y-2.5">
-                    <Card className="space-y-2.5">
-                        <Title size="xsmall">Nouveau bénéficiaire</Title>
-
-                        <form onSubmit={handleSubmit(submitForm)} className="mt-2">
-                            <div className="flex flex-col gap-4 text-sm text-gray-500">
-                                <div>
-                                    <label
-                                        htmlFor="label"
-                                        className="block text-sm font-medium leading-6 text-gray-100"
-                                    >
-                                        Nom
-                                    </label>
-                                    <Input
-                                        type="text"
-                                        {...register('label', {
-                                            minLength: 2,
-                                            maxLength: 50,
-                                            required: true,
-                                        })}
-                                        placeholder="Mon compte"
-                                        error={errors.label}
-                                    />
-                                </div>
-
-                                <div>
-                                    <label
-                                        htmlFor="accountid"
-                                        className="block text-sm font-medium leading-6 text-gray-100"
-                                    >
-                                        IBAN
-                                    </label>
-                                    <Input
-                                        type="text"
-                                        {...register('accountid', {
-                                            minLength: 2,
-                                            maxLength: 50,
-                                            required: true,
-                                        })}
-                                        placeholder="XXXZXXXXTXXX"
-                                        error={errors.accountid}
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="flex justify-end mt-4">
-                                <Button>Ajouter</Button>
-                            </div>
-                        </form>
+                <div className="w-2/6 space-y-10">
+                    <Card className="space-y-6">
+                        <h2 className="uppercase text-sm font-light text-gray-300">Solde bancaire actuel</h2>
+                        <p className="text-center font-semibold text-6xl">{moneyFormat(account.money)}</p>
+                        <div className="text-sm">
+                            <TextWithCopy text={account?.id}>
+                                IBAN: <span className="font-semibold">{account?.id}</span>
+                            </TextWithCopy>
+                        </div>
                     </Card>
 
-                    <TransferActionForm account={account} contacts={contacts} />
+                    <QuickActionForm bankType={bankType} account={account} />
                 </div>
             </animated.div>
-        </>
+        </div>
     );
 };

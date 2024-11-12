@@ -13,8 +13,6 @@ import { ApplicationContainer } from './component/Application';
 import { Button } from './component/Button';
 import { Card } from './component/Card';
 import { Input } from './component/Input';
-import { Tabs } from './component/Tabs';
-import { Title } from './component/Title';
 import { moneyFormat } from './utils/format';
 
 type SafeAppInputs = {
@@ -128,14 +126,18 @@ export const SafeApp: FunctionComponent = () => {
                     </div>
 
                     <div className="space-y-6">
-                        <Tabs
-                            selected={action}
+                        <Tab.Group
+                            selectedIndex={action}
                             onChange={index => {
                                 setAction(index);
                                 reset();
                             }}
-                            tabs={['Retirer', 'Déposer']}
-                        />
+                        >
+                            <Tab.List className="grid grid-cols-2 gap-3 p-1 bg-white/5 text-gray-200 rounded-md">
+                                <Tab className={tabClass}>Retirer</Tab>
+                                <Tab className={tabClass}>Déposer</Tab>
+                            </Tab.List>
+                        </Tab.Group>
 
                         {account?.type !== 'housestorages' && account?.type !== 'gang' && (
                             <Card
@@ -144,7 +146,7 @@ export const SafeApp: FunctionComponent = () => {
                                 })}
                             >
                                 <div className="flex justify-between mb-4">
-                                    <Title size="xsmall">Argent</Title>
+                                    <span className="text-white font-semibold">Argent</span>
                                     <span className="text-sm text-green-500/70">{moneyFormat(account?.money)}</span>
                                 </div>
 
@@ -173,12 +175,11 @@ export const SafeApp: FunctionComponent = () => {
                             })}
                         >
                             <div className="flex justify-between mb-4">
-                                <Title size="xsmall">Argent marqué</Title>
-
+                                <span className="text-white font-semibold">Argent marqué</span>
                                 <span className="text-sm text-red-400/70">
-                                    {moneyFormat(account?.marked_money, false)}
+                                    {moneyFormat(account?.marked_money)}
                                     {['housestorages', 'gang'].includes(account?.type) && (
-                                        <span> / {moneyFormat(account?.maxCapacity, false)}</span>
+                                        <span> / {moneyFormat(account?.maxCapacity)}</span>
                                     )}
                                 </span>
                             </div>

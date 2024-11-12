@@ -7,7 +7,6 @@ import { MemoryRouter } from 'react-router-dom';
 import { NuiEvent } from '../../../shared/event/nui';
 import { NuiMethodMap } from '../../../shared/nui';
 import { fetchNui } from '../../fetch';
-import { usePlayer } from '../../hook/data';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 import { AppContent } from './component/AppContent';
 import { ApplicationContainer } from './component/Application';
@@ -16,7 +15,6 @@ import { Card } from './component/Card';
 import { Header } from './component/Header';
 import { Input } from './component/Input';
 import { MenuLink } from './component/MenuLink';
-import { Title } from './component/Title';
 import { moneyFormat } from './utils/format';
 
 type AtmAppInputs = {
@@ -24,8 +22,6 @@ type AtmAppInputs = {
 };
 
 export const AtmApp: FunctionComponent = () => {
-    const player = usePlayer();
-
     const [showApp, setShowApp] = useState<boolean>(false);
     const [keepFocus, setKeepFocus] = useState<boolean>(false);
 
@@ -102,34 +98,15 @@ export const AtmApp: FunctionComponent = () => {
                 leaveTo="translate-y-full opacity-0"
             >
                 <MemoryRouter>
-                    <div className="flex flex-col w-full gap-2.5">
+                    <div className="flex flex-col w-full gap-4 m-4">
                         <Header
-                            category={
-                                <img className="h-14 ml-6" src="/public/images/bank/logo.webp" alt="Fleeca Logo" />
-                            }
+                            title={<img className="h-20" src="/public/images/bank/logo.webp" alt="Fleeca Logo" />}
+                            bankMoney={account?.account?.money}
                         />
 
-                        <div className="flex gap-2.5">
-                            <Card className="w-1/2">
-                                <Title size="xsmall">Solde bancaire</Title>
-
-                                <div className="flex flex-col justify-center items-center">
-                                    <Title size="medium">{moneyFormat(account?.account?.money)}</Title>
-                                </div>
-                            </Card>
-
-                            <Card className="w-1/2">
-                                <Title size="xsmall">Portefeuille</Title>
-
-                                <div className="flex flex-col justify-center items-center">
-                                    <Title size="medium">{moneyFormat(Number(player.money.money))}</Title>
-                                </div>
-                            </Card>
-                        </div>
-
                         <form onSubmit={handleSubmit(submitForm)} className="flex-grow">
-                            <Card className="flex flex-col justify-between h-full gap-2.5">
-                                <Title size="xsmall">Retirer de l'argent</Title>
+                            <Card className="flex flex-col justify-between h-full">
+                                <h2 className="uppercase text-sm font-light text-gray-300">Retirer de l'argent</h2>
 
                                 <Input
                                     type="number"
@@ -147,16 +124,18 @@ export const AtmApp: FunctionComponent = () => {
                                     error={errors.withdraw}
                                 />
 
-                                <div className="flex gap-2.5">
-                                    <Button type="reset" variant="secondary" onClick={() => resetApp()}>
-                                        Annuler
-                                    </Button>
-                                    <Button type="submit" disabled={isSubmitting}>
-                                        Retirer
-                                    </Button>
-                                </div>
+                                <Button disabled={isSubmitting}>Retirer</Button>
                             </Card>
                         </form>
+
+                        <footer className="flex justify-end">
+                            <MenuLink
+                                title="Se déconnecter"
+                                onClick={() => resetApp()}
+                                icon={<FaArrowRightFromBracket className="h-4 w-4" />}
+                                className="hover:bg-red-500/50"
+                            />
+                        </footer>
                     </div>
                 </MemoryRouter>
             </Transition>

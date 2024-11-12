@@ -1,14 +1,12 @@
 import { animated, useSpring } from '@react-spring/web';
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 
 import { BankAccount, BankContact, BankStatement } from '../../../../shared/bank';
-import { usePlayer } from '../../../hook/data';
 import { Card } from '../component/Card';
 import { Header } from '../component/Header';
 import { HistoryTable } from '../component/HistoryTable';
 import { QuickActionForm } from '../component/QuickActionForm';
-import { Title } from '../component/Title';
-import { TransferActionForm } from '../component/TransferActionForm';
+import { TextWithCopy } from '../component/TextWithCopy';
 import { moneyFormat } from '../utils/format';
 
 interface HistoryProps {
@@ -16,11 +14,10 @@ interface HistoryProps {
     account: BankAccount;
     history?: BankStatement[];
     contacts?: BankContact[];
+    showIban?: boolean;
 }
 
-export const HistoryPage: FunctionComponent<HistoryProps> = ({ bankType, account, contacts, history }) => {
-    const player = usePlayer();
-
+export const HistoryPage: FunctionComponent<HistoryProps> = ({ bankType, account, contacts, history, showIban }) => {
     const [styles] = useSpring(
         () => ({
             from: { y: 30, opacity: 0 },
@@ -31,45 +28,40 @@ export const HistoryPage: FunctionComponent<HistoryProps> = ({ bankType, account
     );
 
     return (
-        <>
-            <Header category={account.type === 'player' ? 'Compte Personnel' : 'Compte Société'} title="Historique" />
+        <div className="space-y-10 h-full">
+            <Header title="Historique" />
 
-            <animated.div className="flex grow gap-2.5 min-h-0" style={styles}>
+            <animated.div className="flex gap-10 h-full" style={styles}>
                 {/* Left pane */}
-                <Card className="flex flex-col grow w-4/6">
-                    <Title size="xsmall">Transactions récentes</Title>
+                <div className="w-4/6 h-full">
+                    <h2 className="uppercase text-sm font-light text-gray-300">Transactions récentes</h2>
 
-                    <div className="overflow-y-auto scrollbar-thin scrollbar-thumb-black/20">
+                    <div className="h-[90%] overflow-y-auto scrollbar-thin scrollbar-thumb-white/20">
                         <HistoryTable account={account} history={history} contacts={contacts} />
                     </div>
-                </Card>
+                </div>
 
                 {/* Right pane */}
-                <div className="w-2/6 space-y-2.5">
-                    <div className="flex gap-2.5">
-                        <Card className="w-1/2">
-                            <Title size="xsmall" className="truncate">
-                                Solde bancaire
-                            </Title>
-
-                            <div className="flex flex-col justify-center items-center py-2.5">
-                                <Title size="large">{moneyFormat(account.money)}</Title>
-                            </div>
-                        </Card>
-
-                        <Card className="w-1/2">
-                            <Title size="xsmall">Portefeuille</Title>
-
-                            <div className="flex flex-col justify-center items-center py-2.5">
-                                <Title size="large">{moneyFormat(Number(player.money.money))}</Title>
-                            </div>
-                        </Card>
-                    </div>
+                <div className="w-2/6 space-y-10">
+                    <Card className="space-y-6">
+                        <h2 className="uppercase text-sm font-light text-gray-300">Solde bancaire actuel</h2>
+                        <p className="text-center font-semibold text-6xl">{moneyFormat(account.money)}</p>
+                        <div className="text-sm">
+                            {showIban ? (
+                                <TextWithCopy text={account?.id}>
+                                    IBAN: <span className="font-semibold">{account?.id}</span>
+                                </TextWithCopy>
+                            ) : (
+                                <>
+                                    Propriétaire: <span className="font-semibold">{account?.label}</span>
+                                </>
+                            )}
+                        </div>
+                    </Card>
 
                     <QuickActionForm bankType={bankType} account={account} />
-                    <TransferActionForm account={account} contacts={contacts} />
                 </div>
             </animated.div>
-        </>
+        </div>
     );
 };
