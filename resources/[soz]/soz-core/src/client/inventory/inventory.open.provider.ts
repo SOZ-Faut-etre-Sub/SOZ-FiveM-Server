@@ -1,3 +1,4 @@
+import { Exportable } from '@core/decorators/exports';
 import { Provider } from '@core/decorators/provider';
 import { InventoryManager } from '@public/client/inventory/inventory.manager';
 import { BaunCraftProvider } from '@public/client/job/baun/baun.craft.provider';
@@ -286,5 +287,12 @@ export class InventoryOpenProvider {
                 this.targetFactory.createForBoxZone(`inventory_${inventory.data.storage}`, inventory, options);
             }
         }
+    }
+
+    @Exportable('OpenInventory')
+    public openInventory(type: InventoryType, storage: string) {
+        const coords = GetEntityCoords(PlayerPedId()) as Vector3;
+
+        this.inventoryManager.openInventory(type, storage, coords);
     }
 }

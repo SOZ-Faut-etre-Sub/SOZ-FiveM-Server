@@ -38,6 +38,12 @@ export const KeychainApp: FunctionComponent = () => {
     useKeyPress('Escape', () => {
         setKeys(null);
     });
+    useKeyPress('F2', () => {
+        if (open) {
+            fetchNui(NuiEvent.InventoryGoBackPlayerInventory);
+            setKeys(null);
+        }
+    });
     useKeyPress('Backspace', () => {
         if (open) {
             fetchNui(NuiEvent.InventoryGoBackPlayerInventory);

@@ -243,20 +243,6 @@ export class InventoryProvider {
             return;
         }
 
-        // Case where we try to find the closest player
-        const [entityClosest, distanceClosest] = this.playerService.getClosestPlayer();
-        const closestPlayerId = entityClosest && entityClosest > 0 ? GetPlayerServerId(entityClosest) : null;
-
-        if (
-            closestPlayerId !== null &&
-            closestPlayerId !== selfPlayerId &&
-            distanceClosest < DEFAULT_MAX_INVENTORY_DISTANCE
-        ) {
-            await this.giveItemToPlayer(closestPlayerId, inventoryId, inventoryItem, item);
-
-            return;
-        }
-
         this.notifier.error('Aucune intéraction possible.');
     }
 

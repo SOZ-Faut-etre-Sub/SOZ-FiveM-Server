@@ -206,14 +206,14 @@ export const ItemDescription: FunctionComponent<ItemDescriptionProps> = ({
                                         </div>
                                         <div>
                                             <strong>Récupéré dans la zone de : </strong>
-                                            {inventoryItem.metadata.evidenceInfos.generalInfo}
+                                            {inventoryItem.metadata?.evidenceInfos?.zone}
                                         </div>
                                         <div>
-                                            <strong>Sur : </strong> {inventoryItem.metadata.evidenceInfos.generalInfo}
+                                            <strong>Sur : </strong> {inventoryItem.metadata?.evidenceInfos?.support}
                                         </div>
                                         <div>
                                             <strong>Informations : </strong>{' '}
-                                            {inventoryItem.metadata.evidenceInfos.generalInfo}
+                                            {inventoryItem.metadata?.evidenceInfos?.generalInfo}
                                         </div>
                                     </>
                                 )}
