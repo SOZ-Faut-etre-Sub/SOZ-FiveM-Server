@@ -15,7 +15,7 @@ global.isPhoneDrowned = false;
 global.isPhoneDisabled = false;
 global.isPlayerLoaded = false;
 global.isPlayerHasItem = true;
-global.isPlayerHasDongle = true;
+global.isPlayerHasDongle = false;
 global.isBlackout = false;
 
 const exps = global.exports;
@@ -205,8 +205,10 @@ onNet('QBCore:Player:SetPlayerData', async (playerData: PlayerData) => {
     sendMessage('PHONE', PhoneEvents.SET_DARKWEB, global.isPlayerHasDongle);
 });
 
-on('soz-phone:client:phone:setHasPhone', async (hasPhone: boolean) => {
+on('soz-phone:client:phone:setHasItems', async (hasPhone: boolean, hasDongle: boolean) => {
     global.isPlayerHasItem = hasPhone;
+    global.isPlayerHasDongle = hasDongle;
+
     updateAvailability();
 });
 

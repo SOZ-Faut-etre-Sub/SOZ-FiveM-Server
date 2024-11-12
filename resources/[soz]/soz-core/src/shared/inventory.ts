@@ -660,7 +660,7 @@ export const VEHICLE_CONFIGURATION_BY_VEHICLE_CLASS: Record<VehicleClass, Partia
     [VehicleClass.SportsClassics]: { maxWeight: 20000 },
     [VehicleClass.Sports]: { maxWeight: 20000 },
     [VehicleClass.Super]: { maxWeight: 20000 },
-    [VehicleClass.Motorcycles]: { maxWeight: 10000 },
+    [VehicleClass.Motorcycles]: { maxWeight: 40000 },
     [VehicleClass.OffRoad]: { maxWeight: 100000 },
     [VehicleClass.Industrial]: { maxWeight: 0 },
     [VehicleClass.Utility]: { maxWeight: 0 },

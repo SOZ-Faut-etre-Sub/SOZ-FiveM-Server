@@ -329,7 +329,8 @@ export class InventoryManager {
     @PlayerInventoryUpdate()
     public updatePlayerInventory() {
         const hasPhone = this.hasEnoughItem('phone', 1);
+        const hasDongle = this.hasEnoughItem('cyber_darkweb_module', 1);
 
-        TriggerEvent('soz-phone:client:phone:setHasPhone', hasPhone);
+        TriggerEvent('soz-phone:client:phone:setHasItems', hasPhone, hasDongle);
     }
 }

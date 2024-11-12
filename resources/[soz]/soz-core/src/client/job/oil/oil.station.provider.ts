@@ -129,7 +129,9 @@ export class OilStationProvider {
             return;
         }
 
-        TriggerServerEvent(ServerEvent.OIL_REFILL_ESSENCE_STATION, stationId, refill, vehicleNetworkId);
+        const vehicleClass = GetVehicleClass(vehicle);
+
+        TriggerServerEvent(ServerEvent.OIL_REFILL_ESSENCE_STATION, stationId, refill, vehicleNetworkId, vehicleClass);
     }
 
     @OnEvent(ClientEvent.OIL_REFILL_KEROSENE_STATION)

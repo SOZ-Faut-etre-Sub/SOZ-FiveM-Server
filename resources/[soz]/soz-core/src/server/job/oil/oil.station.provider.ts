@@ -9,6 +9,7 @@ import { FuelStation, FuelStationType, FuelType } from '../../../shared/fuel';
 import { JobPermission, JobType } from '../../../shared/job';
 import { toVector3Object, Vector3, Vector4 } from '../../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../../shared/rpc';
+import { VehicleClass } from '../../../shared/vehicle/vehicle';
 import { BankService } from '../../bank/bank.service';
 import { PrismaService } from '../../database/prisma.service';
 import { JobService } from '../../job.service';
@@ -147,9 +148,9 @@ export class OilStationProvider {
         source: number,
         stationId: number,
         amount: number,
-        vehicleNetworkId: number
+        vehicleNetworkId: number,
+        vehicleClass: VehicleClass
     ): Promise<void> {
-        const vehicleEntityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
         const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
 
         if (!state) {
@@ -157,8 +158,7 @@ export class OilStationProvider {
         }
 
         const itemCount = Math.ceil(amount / 10);
-        const plate = state.volatile.plate || GetVehicleNumberPlateText(vehicleEntityId);
-        const inventory = await this.inventoryFactory.getVehicleInventoryByPlate(plate);
+        const inventory = await this.inventoryFactory.getVehicleInventory(vehicleNetworkId, vehicleClass, state);
 
         if (!inventory) {
             return;

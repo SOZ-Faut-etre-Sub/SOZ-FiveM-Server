@@ -86,15 +86,50 @@ export class InventoryFactory {
         return this.getOrCreate('trunk_' + plate, InventoryType.Trunk, configuration);
     }
 
-    async getVehicleInventoryByPlate(plate: string): Promise<Inventory | null> {
-        return this.get('trunk_' + plate, true);
+    async getVehicleWeight(plate: string): Promise<number> {
+        const inventoryId = `trunk_${plate}`;
+
+        if (this.inventories.has(inventoryId)) {
+            const inventory = this.inventories.get(inventoryId);
+
+            return inventory.weight();
+        }
+
+        const databaseInventory = await this.database.inventories.findUnique({
+            select: {
+                items: true,
+            },
+            where: {
+                id: inventoryId,
+            },
+        });
+
+        if (!databaseInventory) {
+            return 0;
+        }
+
+        let items = databaseInventory.items as Record<number, InventoryItem> | InventoryItem[];
+
+        if (Array.isArray(databaseInventory.items)) {
+            items = {};
+
+            for (const item of databaseInventory.items as InventoryItem[]) {
+                items[item.slot] = item;
+            }
+        }
+
+        return getItemsWeight(Object.values(items), this.itemService.getItem.bind(this.itemService));
     }
 
     getLoadedInventories(): Map<string, Inventory> {
         return this.inventories;
     }
 
-    async get(id: string, fromDatabase = true): Promise<Inventory | null> {
+    async get(
+        id: string,
+        fromDatabase = true,
+        config: Partial<InventoryConfiguration> = {}
+    ): Promise<Inventory | null> {
         return await this.lockService.lock(`get_inventory_${id}`, async () => {
             if (this.inventories.has(id)) {
                 return this.inventories.get(id);
@@ -117,6 +152,7 @@ export class InventoryFactory {
             const configuration = {
                 ...DEFAULT_INVENTORY_CONFIGURATION,
                 ...(INVENTORY_CONFIGURATIONS[databaseInventory.type] || {}),
+                ...config,
                 ...(databaseInventory.configuration as Partial<InventoryConfiguration>),
             };
 
@@ -152,7 +188,7 @@ export class InventoryFactory {
                 ...config,
             } as InventoryConfiguration;
 
-            const existingInventory = await this.get(id, inventoryConfiguration.persistent);
+            const existingInventory = await this.get(id, inventoryConfiguration.persistent, inventoryConfiguration);
 
             if (existingInventory) {
                 return existingInventory;

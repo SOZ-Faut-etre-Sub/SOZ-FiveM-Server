@@ -199,9 +199,7 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
     }, [glassmorphismColors, borderColor]);
 
     return (
-        <div
-            className={cn('relative bg-opacity-10 h-full w-full overflow-hidden group z-10', borderClassName)}
-        >
+        <div className={cn('relative bg-opacity-10 h-full w-full overflow-hidden group z-10', borderClassName)}>
             <GameCanvasBox borderClassName={borderClassName} blur={blur}>
                 <div
                     className={cn(

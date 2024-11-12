@@ -604,12 +604,12 @@ export class VehicleGarageProvider {
                 price = Math.min(200, hours * 20);
             }
 
-            const inventory = await this.inventoryFactory.getVehicleInventoryByPlate(playerVehicle.plate);
+            const weight = await this.inventoryFactory.getVehicleWeight(playerVehicle.plate);
 
             playerVehiclesMapped.push({
                 vehicle: playerVehicle,
                 price,
-                weight: inventory ? inventory.weight() : 0,
+                weight,
                 name: vehiclesByModel[playerVehicle.modelName]?.name || null,
             } as GarageVehicle);
         }
@@ -1110,9 +1110,7 @@ export class VehicleGarageProvider {
             return;
         }
 
-        const inventory = await this.inventoryFactory.getVehicleInventoryByPlate(playerVehicle.plate);
-        const weight = inventory ? inventory.weight() : 0;
-
+        const weight = await this.inventoryFactory.getVehicleWeight(playerVehicle.plate);
         const transferPrice = getTransferPrice(weight);
 
         if (!(await this.playerMoneyService.buy(source, transferPrice, TaxType.TRAVEL))) {
