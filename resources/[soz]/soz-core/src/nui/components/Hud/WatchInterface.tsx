@@ -89,7 +89,7 @@ export const WatchInterface: FunctionComponent = () => {
     return (
         <>
             <animated.div
-                className={cn('absolute flex justify-between items-end text-white -z-10', {
+                className={cn('absolute flex justify-between items-end text-white', {
                     'px-5': minimap.isHidden,
                 })}
                 style={headerStyles}

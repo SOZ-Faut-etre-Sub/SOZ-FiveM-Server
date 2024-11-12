@@ -1,56 +1,25 @@
-import { FunctionComponent, useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
+import { FunctionComponent, useContext, useEffect, useRef } from 'react';
 
-import { createGameView, GameView } from '../../hook/createGameView';
+import { GlassMorphismContext } from '../../providers/GlassMorphismProvider';
 
 export const GlassMorphism: FunctionComponent = () => {
-    const [gameView, setGameView] = useState<GameView>(null);
-
-    const onWindowResize = () => {
-        if (gameView === null) return;
-
-        gameView.resize(window.innerWidth, window.innerHeight);
-    };
+    const glassmorphismWorker = useContext(GlassMorphismContext);
+    const canvas = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
-        if (gameView !== null) {
-            const canvas = window.parent.document.body.getElementsByTagName('canvas');
-            if (canvas.length > 1) {
-                canvas[0].remove();
-            }
-        }
+        if (canvas.current.hasAttribute('transfered')) return;
+        canvas.current.setAttribute('transfered', 'true');
 
-        if (gameView !== null) {
-            gameView.startRender();
-        }
+        const context = canvas.current.transferControlToOffscreen();
 
-        window.addEventListener('resize', onWindowResize);
+        glassmorphismWorker.postMessage(
+            {
+                type: 'canvas',
+                canvas: context,
+            },
+            [context]
+        );
+    }, []);
 
-        return () => {
-            if (gameView !== null) {
-                gameView.stopRender();
-            }
-
-            window.removeEventListener('resize', onWindowResize);
-        };
-    }, [gameView]);
-
-    return (
-        <>
-            {createPortal(
-                <canvas
-                    ref={ref => {
-                        if (ref && !gameView) {
-                            setGameView(createGameView(ref));
-                        }
-                    }}
-                    style={{
-                        display: 'block',
-                        opacity: 0,
-                    }}
-                />,
-                window.parent.document.body
-            )}
-        </>
-    );
+    return <canvas className="absolute" ref={canvas} width={window.innerWidth} height={window.innerHeight} />;
 };

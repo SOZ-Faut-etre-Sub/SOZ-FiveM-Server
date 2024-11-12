@@ -41,6 +41,7 @@ export const StatusGauge: FunctionComponent<PropsWithChildren<StatusBarProps>> =
                     className="flex justify-center items-center"
                     style={{ width, height }}
                     disableBorder
+                    circle
                 >
                     {children}
                     {secondaryValue != null && secondaryValue > 0 && (

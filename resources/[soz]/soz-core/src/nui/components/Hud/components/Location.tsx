@@ -38,6 +38,8 @@ export const Location: FunctionComponent = () => {
                 borderClassName="rounded-full"
                 className="flex items-center gap-2 px-5 w-full"
                 style={{ height }}
+                rounded={Number(height.replace('px', '')) / 2}
+                disableGameClone={!hasStreetNamesEnabled}
             >
                 <PinIcon className="shrink" style={{ width: smallIconSize, height: smallIconSize }} />
 
