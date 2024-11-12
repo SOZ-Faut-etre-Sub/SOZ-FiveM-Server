@@ -176,15 +176,15 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
             return
         end
 
-        item = firstItem.item.name
+        item = firstItem.name
 
         -- Remove energy cell from inventory
-        local invChanged = exports["soz-core"]:RemovePlayerItem(Player.PlayerData.source, firstItem.item.name, 1)
+        local invChanged = exports["soz-core"]:RemovePlayerItem(Player.PlayerData.source, firstItem.name, 1)
 
         if invChanged and facility.scope == "default" then
             -- Add payment from San Andreas State on default terminals only
             exports["soz-core"]:TransferFarmMoney(Player.PlayerData.source, Config.Upw.Accounts.FarmAccount, Config.Upw.Accounts.SafeAccount,
-                                                  Config.Upw.Resale.EnergyCellPriceGlobal[firstItem.item.name] or 0)
+                                                  Config.Upw.Resale.EnergyCellPriceGlobal[firstItem.name] or 0)
         end
 
         exports["soz-core"]:TraceEvent("job_upw_energy_restock", {
