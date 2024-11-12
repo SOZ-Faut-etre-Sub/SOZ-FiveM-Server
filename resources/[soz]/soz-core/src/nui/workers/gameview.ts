@@ -1,12 +1,13 @@
 type GameCanvas = GameCanvasOptions & {
-    canvas: OffscreenCanvas;
     x: number;
     y: number;
+    width: number;
+    height: number;
     options: GameCanvasOptions;
 };
 
 export type GameCanvasOptions = {
-    blur?: number;
+    rounded?: number;
 };
 
 const contextOptions: CanvasRenderingContext2DSettings | WebGLContextAttributes = {
@@ -124,6 +125,7 @@ function createProgram(gl: WebGLRenderingContext): {
 
 export class GameViewRenderer {
     private rootCanvas: OffscreenCanvas;
+    private gameCanvas: OffscreenCanvasRenderingContext2D;
     private gl: WebGLRenderingContext;
     private animationFrame: number;
     private targetCanvas: Record<string, GameCanvas> = {};
@@ -172,10 +174,14 @@ export class GameViewRenderer {
         }
     }
 
-    addCanvas(uuid: string, canvas: OffscreenCanvas, x: number, y: number, options: GameCanvasOptions) {
+    setGameCanvas(canvas: OffscreenCanvas) {
+        this.gameCanvas = canvas.getContext('2d', contextOptions);
+    }
+
+    addCanvas(uuid: string, x: number, y: number, width: number, height: number, options: GameCanvasOptions) {
         if (this.targetCanvas[uuid]) return;
 
-        this.targetCanvas[uuid] = { canvas, x, y, options };
+        this.targetCanvas[uuid] = { x, y, width, height, options };
     }
 
     updateCanvas(uuid: string, x: number, y: number, width: number, height: number) {
@@ -184,8 +190,8 @@ export class GameViewRenderer {
 
         target.x = x;
         target.y = y;
-        target.canvas.width = width;
-        target.canvas.height = height;
+        target.width = width;
+        target.height = height;
     }
 
     removeCanvas(uuid: string) {
@@ -196,14 +202,32 @@ export class GameViewRenderer {
         this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, 4);
         this.gl.finish();
 
-        for (const { canvas, x, y, options } of Object.values(this.targetCanvas)) {
-            const tx = canvas.getContext('2d', contextOptions);
+        this.gameCanvas?.reset();
 
-            if (options?.blur) {
-                tx.filter = `blur(${options.blur}px)`;
+        for (const { x, y, width, height, options } of Object.values(this.targetCanvas)) {
+            if (options.rounded) {
+                this.gameCanvas?.save();
+
+                this.gameCanvas?.beginPath();
+                this.gameCanvas?.moveTo(x + options.rounded, y);
+                this.gameCanvas?.lineTo(x + width - options.rounded, y);
+                this.gameCanvas?.quadraticCurveTo(x + width, y, x + width, y + options.rounded);
+                this.gameCanvas?.lineTo(x + width, y + height - options.rounded);
+                this.gameCanvas?.quadraticCurveTo(x + width, y + height, x + width - options.rounded, y + height);
+                this.gameCanvas?.lineTo(x + options.rounded, y + height);
+                this.gameCanvas?.quadraticCurveTo(x, y + height, x, y + height - options.rounded);
+                this.gameCanvas?.lineTo(x, y + options.rounded);
+                this.gameCanvas?.quadraticCurveTo(x, y, x + options.rounded, y);
+                this.gameCanvas?.closePath();
+
+                this.gameCanvas?.clip();
             }
 
-            tx.drawImage(this.rootCanvas, -x, -y);
+            this.gameCanvas?.drawImage(this.rootCanvas, x, y, width, height, x, y, width, height);
+
+            if (options.rounded) {
+                this.gameCanvas?.restore();
+            }
         }
 
         this.animationFrame = requestAnimationFrame(this.render);
