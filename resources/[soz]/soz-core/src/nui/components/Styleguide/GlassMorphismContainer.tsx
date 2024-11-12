@@ -1,19 +1,7 @@
-import { GlassMorphismContext } from '@public/nui/providers/GlassMorphismProvider';
 import cn from 'classnames';
-import {
-    FunctionComponent,
-    HTMLAttributes,
-    PropsWithChildren,
-    useContext,
-    useEffect,
-    useMemo,
-    useRef,
-    useState,
-} from 'react';
+import { FunctionComponent, HTMLAttributes, PropsWithChildren, useEffect, useMemo, useRef } from 'react';
 
-import { uuidv4 } from '../../../core/utils';
 import { useHudTheme } from '../../hook/data';
-import { useInterval } from '../../hook/useInterval';
 import { useDaltonism } from '../Hud/hooks/useDaltonism';
 
 type GameCanvasBoxProps = {
@@ -26,76 +14,40 @@ export const GameCanvasBox: FunctionComponent<PropsWithChildren<GameCanvasBoxPro
     borderClassName,
     children,
 }) => {
-    const glassmorphismWorker = useContext(GlassMorphismContext);
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const [canvasUUID] = useState(uuidv4());
-
-    const currentTheme = useHudTheme();
-    const { glassmorphismColors } = useDaltonism();
-
     const containerRef = useRef<HTMLDivElement>(null);
-    const childrenRef = useRef<HTMLDivElement>(null);
-
-    const { height } = childrenRef.current?.getBoundingClientRect() || { height: undefined };
-
-    const currentBorderColor = useMemo(() => {
-        if (borderColor) {
-            return borderColor;
-        }
-
-        return glassmorphismColors[currentTheme].border;
-    }, [glassmorphismColors, currentTheme, borderColor]);
 
     useEffect(() => {
-        if (!containerRef.current) return;
-        if (canvasRef.current.hasAttribute('transfered')) return;
+        let animation = null;
+        const renderLoop = () => {
+            try {
+                const container = containerRef.current.getBoundingClientRect();
 
-        const container = containerRef.current?.getBoundingClientRect();
+                const canvas = window.parent.document.body.getElementsByTagName('canvas')[0];
+                const tCtx = canvasRef.current.getContext('2d');
 
-        canvasRef.current.setAttribute('transfered', 'true');
-        const context = canvasRef.current?.transferControlToOffscreen();
+                canvasRef.current.width = container.width;
+                canvasRef.current.height = container.height;
 
-        glassmorphismWorker.postMessage(
-            {
-                type: 'add',
-                uuid: canvasUUID,
-                canvas: context,
-                x: container?.x,
-                y: container?.y,
-                options: {
-                    blur: 15,
-                },
-            },
-            [context]
-        );
-    }, [containerRef.current]);
+                if (blur) {
+                    tCtx.filter = `blur(5px)`;
+                }
 
-    useInterval(
-        () => {
-            if (!containerRef.current) return;
+                if (!canvas) return;
 
-            const container = containerRef.current?.getBoundingClientRect();
+                const context = canvas.getContext('2d');
+                context?.fillRect(0, 0, canvas.width, canvas.height);
 
-            glassmorphismWorker.postMessage({
-                type: 'update',
-                uuid: canvasUUID,
-                width: container?.width,
-                height: container?.height,
-                x: container?.x,
-                y: container?.y,
-            });
-        },
-        100,
-        [containerRef.current]
-    );
+                tCtx.drawImage(canvas, -container.x, -container.y);
 
-    useEffect(() => {
-        return () => {
-            glassmorphismWorker.postMessage({
-                type: 'remove',
-                uuid: canvasUUID,
-            });
+                animation = requestAnimationFrame(renderLoop);
+            } catch (e) {
+                // ignore error
+            }
         };
+
+        renderLoop();
+        return () => cancelAnimationFrame(animation);
     }, []);
 
     return (
@@ -216,7 +168,12 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
     }, [glassmorphismColors, currentTheme, borderColor]);
 
     return (
-        <div className={cn('relative bg-opacity-10 h-full w-full overflow-hidden group z-10', borderClassName)}>
+        <div
+            className={cn('relative bg-opacity-10 h-full w-full overflow-hidden group z-10', borderClassName)}
+            style={{
+                opacity: 0.99,
+            }}
+        >
             <GameCanvasBox borderClassName={borderClassName} blur={blur}>
                 <div
                     className={cn(
