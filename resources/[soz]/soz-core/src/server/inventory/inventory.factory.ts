@@ -8,9 +8,12 @@ import {
     DEFAULT_INVENTORY_CONFIGURATION,
     getItemsWeight,
     INVENTORY_CONFIGURATIONS,
+    INVENTORY_DEFAULT_STATE,
     INVENTORY_ITEM_CREATORS,
+    INVENTORY_STATES,
     InventoryConfiguration,
     InventoryItem,
+    InventoryState,
     InventoryType,
     VEHICLE_CONFIGURATION_BY_VEHICLE_CLASS,
     VEHICLE_CONFIGURATION_BY_VEHICLE_MODEL,
@@ -23,6 +26,11 @@ import { Inventory } from './inventory';
 type AccessChecker = {
     filter: (id: string, type: InventoryType, config: InventoryConfiguration) => boolean;
     check: (source: number, inventory: Inventory) => boolean;
+};
+
+type AccessCreator = {
+    filter: (id: string, type: InventoryType, config: InventoryConfiguration) => boolean;
+    accessCreator: (source: number, inventory: Inventory) => InventoryState | Promise<InventoryState>;
 };
 
 @Injectable()
@@ -43,8 +51,14 @@ export class InventoryFactory {
 
     private accessCheckers: AccessChecker[] = [];
 
+    private stateCreators: AccessCreator[] = [];
+
     addAccessChecker(filter: AccessChecker['filter'], check: AccessChecker['check']) {
         this.accessCheckers.push({ filter, check });
+    }
+
+    addStateCreator(filter: AccessCreator['filter'], accessCreator: AccessCreator['accessCreator']) {
+        this.stateCreators.push({ filter, accessCreator: accessCreator });
     }
 
     async getPlayerInventory(source: number): Promise<Inventory | null> {
@@ -273,7 +287,15 @@ export class InventoryFactory {
     ): Inventory {
         const accessChecker = this.accessCheckers.find(checker => checker.filter(id, type, config));
         const accessCheck = accessChecker ? accessChecker.check : () => true;
-        const inventory = new Inventory(id, type, config, items, this.itemService, accessCheck);
+
+        const stateCreator = this.stateCreators.find(creator => creator.filter(id, type, config));
+        const stateCreate = stateCreator
+            ? stateCreator.accessCreator
+            : (_, inventory: Inventory) => {
+                  return INVENTORY_STATES[inventory.type()] || INVENTORY_DEFAULT_STATE;
+              };
+
+        const inventory = new Inventory(id, type, config, items, this.itemService, accessCheck, stateCreate);
 
         if (config.persistent) {
             inventory.subscribe(async (_, items, configuration) => {

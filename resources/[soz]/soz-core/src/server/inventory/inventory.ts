@@ -14,6 +14,7 @@ import {
     InventoryItem,
     InventoryItemMetadata,
     InventorySort,
+    InventoryState,
     InventoryType,
     isInventoryItemExpired,
     isItemAllowed,
@@ -40,7 +41,8 @@ export class Inventory {
         private _configuration: InventoryConfiguration,
         private readonly _items: Record<number, InventoryItem> = {},
         private _itemService: ItemService,
-        private _accessChecker: (source: number, inventory: Inventory) => boolean | Promise<boolean>
+        private _accessChecker: (source: number, inventory: Inventory) => boolean | Promise<boolean>,
+        private _stateCreator: (source: number, inventory: Inventory) => Promise<InventoryState> | InventoryState
     ) {
         this.observer = observe(this._items);
     }
@@ -51,6 +53,10 @@ export class Inventory {
 
     type(): InventoryType {
         return this._type;
+    }
+
+    async state(source: number): Promise<InventoryState> {
+        return this._stateCreator(source, this);
     }
 
     items(): Record<number, Readonly<InventoryItem>> {

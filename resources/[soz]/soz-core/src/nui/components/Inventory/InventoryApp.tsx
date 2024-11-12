@@ -2,7 +2,7 @@ import { DndContext, MouseSensor, rectIntersection, useSensor, useSensors } from
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event/nui';
-import { InventoryConfiguration, InventoryItem, InventoryType } from '../../../shared/inventory';
+import { InventoryConfiguration, InventoryItem, InventoryState, InventoryType } from '../../../shared/inventory';
 import { fetchNui } from '../../fetch';
 import { useKeyPress } from '../../hook/control';
 import { usePlayer, usePlayerInventoryConfiguration, usePlayerInventoryItems } from '../../hook/data';
@@ -19,14 +19,16 @@ export const InventoryApp: FunctionComponent = () => {
     const [configuration, setConfiguration] = useState<InventoryConfiguration>(null);
     const [canForceConsume, setCanForceConsume] = useState<boolean>(false);
     const [type, setType] = useState<InventoryType>(null);
+    const [inventoryState, setInventoryState] = useState<InventoryState>(null);
     const open = inventoryId !== null;
 
-    useNuiEvent('inventory', 'OpenInventory', ({ id, configuration, type, items, canForceConsume }) => {
+    useNuiEvent('inventory', 'OpenInventory', ({ id, configuration, type, items, canForceConsume, state }) => {
         setInventoryId(id);
         setConfiguration(configuration);
         setType(type);
         setInventoryItems(items);
         setCanForceConsume(canForceConsume);
+        setInventoryState(state);
     });
 
     useNuiEvent('inventory', 'CloseInventory', () => {
@@ -34,6 +36,8 @@ export const InventoryApp: FunctionComponent = () => {
         setConfiguration(null);
         setInventoryItems(null);
         setType(null);
+        setCanForceConsume(false);
+        setInventoryState(null);
     });
 
     useNuiEvent('inventory', 'UpdateInventory', ({ id, configuration, items }) => {
@@ -95,6 +99,7 @@ export const InventoryApp: FunctionComponent = () => {
                             prefixId="source_"
                             player
                             itemDescriptionPosition="left"
+                            allDisabled={!inventoryState?.canPutContent}
                             onDoubleClick={inventoryItem => {
                                 if (inventoryItem === null || !(inventoryItem instanceof Object)) {
                                     return;
@@ -121,6 +126,7 @@ export const InventoryApp: FunctionComponent = () => {
                             prefixId="target_"
                             allowForceConsume={canForceConsume}
                             itemDescriptionPosition="right"
+                            allDisabled={!inventoryState?.canGetContent}
                             onDoubleClick={inventoryItem => {
                                 if (inventoryItem === null || !(inventoryItem instanceof Object)) {
                                     return;

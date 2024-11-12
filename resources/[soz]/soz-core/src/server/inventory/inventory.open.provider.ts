@@ -108,7 +108,9 @@ export class InventoryOpenProvider {
             inventory.type(),
             inventory.configuration(),
             inventory.items(),
-            inventoryPosition
+            inventoryPosition,
+            false,
+            await inventory.state(source)
         );
     }
 
@@ -177,7 +179,8 @@ export class InventoryOpenProvider {
             inventory.configuration(),
             inventory.items(),
             inventoryPosition,
-            canForceConsume
+            canForceConsume,
+            await inventory.state(source)
         );
 
         this.monitor.traceEvent('job_police_search_player', {
@@ -218,7 +221,9 @@ export class InventoryOpenProvider {
             inventory.type(),
             inventory.configuration(),
             inventory.items(),
-            inventoryPosition
+            inventoryPosition,
+            false,
+            await inventory.state(source)
         );
     }
 
@@ -291,7 +296,9 @@ export class InventoryOpenProvider {
             subInventory.type(),
             subInventory.configuration(),
             subInventory.items(),
-            null
+            null,
+            false,
+            await inventory.state(source)
         );
     }
 

@@ -28,6 +28,7 @@ type ItemSlotProps = {
     allowActions?: boolean;
     allowForceConsume?: boolean;
     allowHidden?: boolean;
+    allDisabled?: boolean;
     onDoubleClick?: (inventoryItem: InventoryItem | 'money' | 'wallet' | 'keychain' | null, item?: Item | null) => void;
 };
 
@@ -44,6 +45,7 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
     showWeight = false,
     allowForceConsume = false,
     allowHidden = false,
+    allDisabled = false,
     onDoubleClick,
 }) => {
     const hidden =
@@ -59,6 +61,7 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
     const [imageSrc, setImageSrc] = useState<string | null>(inventoryItem ? getItemIcon(inventoryItem) : null);
     const disabled =
         hidden ||
+        allDisabled ||
         (targetConfiguration &&
             inventoryItem instanceof Object &&
             !isItemAllowed(inventoryItem.type, inventoryItem.name, inventoryItem.metadata, targetConfiguration));

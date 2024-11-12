@@ -29,6 +29,7 @@ export type InventoryProps = {
     player?: boolean;
     allowForceConsume?: boolean;
     allowHiddenItem?: boolean;
+    allDisabled?: boolean;
     onDoubleClick?: (inventoryItem: InventoryItem | 'money' | 'wallet' | 'keychain' | null, item?: Item | null) => void;
     itemDescriptionPosition: 'left' | 'right';
 };
@@ -44,6 +45,7 @@ export const Inventory: FunctionComponent<InventoryProps> = ({
     allowForceConsume = false,
     onDoubleClick,
     allowHiddenItem = false,
+    allDisabled = false,
     itemDescriptionPosition = 'right',
 }) => {
     const [currentInventoryItem, setCurrentInventoryItem] = useState<InventoryItem | null>(null);
@@ -154,6 +156,7 @@ export const Inventory: FunctionComponent<InventoryProps> = ({
                         onDoubleClick={onDoubleClick}
                         allowForceConsume={allowForceConsume}
                         allowHidden={allowHiddenItem}
+                        allDisabled={allDisabled}
                     />
                 </div>
             );

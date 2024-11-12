@@ -17,6 +17,7 @@ import {
     InventoryConfiguration,
     InventoryItem,
     InventoryPosition,
+    InventoryState,
     InventoryType,
     isInventoryItemExpired,
 } from '@public/shared/inventory';
@@ -136,7 +137,8 @@ export class InventoryManager {
         configuration: InventoryConfiguration,
         items: Record<number, InventoryItem>,
         position: InventoryPosition,
-        canForceConsume: boolean = false
+        canForceConsume: boolean = false,
+        state: InventoryState
     ) {
         this._subscribedInventoryId = inventoryId;
         this._subscribedInventory = items;
@@ -150,6 +152,7 @@ export class InventoryManager {
             id: this._subscribedInventoryId,
             type: type,
             canForceConsume,
+            state,
         });
     }
 

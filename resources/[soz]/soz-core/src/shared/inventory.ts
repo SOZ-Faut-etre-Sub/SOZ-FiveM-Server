@@ -1099,3 +1099,28 @@ export const getPositionZone = (
         }
     );
 };
+
+export type InventoryState = {
+    canPutContent: boolean;
+    canGetContent: boolean;
+};
+
+export const INVENTORY_DEFAULT_STATE: InventoryState = {
+    canPutContent: true,
+    canGetContent: true,
+};
+
+export const INVENTORY_STATES: Partial<Record<InventoryType, InventoryState>> = {
+    [InventoryType.LogProcessing]: {
+        canPutContent: true,
+        canGetContent: false,
+    },
+    [InventoryType.MetalIncinerator]: {
+        canPutContent: true,
+        canGetContent: false,
+    },
+    [InventoryType.RecyclerProcessing]: {
+        canPutContent: true,
+        canGetContent: false,
+    },
+};

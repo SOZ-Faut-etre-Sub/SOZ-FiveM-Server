@@ -3,6 +3,7 @@ import {
     InventoryConfiguration,
     InventoryItem,
     InventoryKey,
+    InventoryState,
     InventoryType,
 } from '@public/shared/inventory';
 import { ShopContent } from '@public/shared/shop';
@@ -15,6 +16,7 @@ export interface NuiInventoryMethodMap {
         items: Record<number, InventoryItem>;
         type: InventoryType;
         canForceConsume: boolean;
+        state: InventoryState;
     };
     UpdateInventory: {
         id: string;
