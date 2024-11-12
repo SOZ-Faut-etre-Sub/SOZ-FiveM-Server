@@ -172,7 +172,7 @@ export class DmcForgeProvider {
         }
 
         for (const item of itemsToProcess) {
-            inventory.removeAtSlot(item.item.slot, item.amount);
+            inventory.removeAtSlot(item.slot, item.amount);
         }
     }
 
