@@ -40,6 +40,13 @@ export const WalletApp: FunctionComponent = () => {
         setCards(null);
     });
 
+    useKeyPress('F2', () => {
+        if (open) {
+            fetchNui(NuiEvent.InventoryGoBackPlayerInventory);
+            setCards(null);
+        }
+    });
+
     useKeyPress('Backspace', () => {
         if (open) {
             fetchNui(NuiEvent.InventoryGoBackPlayerInventory);
