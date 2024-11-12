@@ -16,43 +16,36 @@ import { GlassMorphismContext } from '../../providers/GlassMorphismProvider';
 import { useHudColor } from '../Hud/hooks/useHudColor';
 
 type GameCanvasBoxProps = {
+    rounded?: number;
     blur?: boolean;
     borderClassName?: string;
 };
 
 export const GameCanvasBox: FunctionComponent<PropsWithChildren<GameCanvasBoxProps>> = ({
     blur = true,
+    rounded,
     borderClassName,
     children,
 }) => {
     const glassmorphismWorker = useContext(GlassMorphismContext);
-    const canvasRef = useRef<HTMLCanvasElement>(null);
     const [canvasUUID] = useState(uuidv4());
 
     const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (!containerRef.current) return;
-        if (canvasRef.current.hasAttribute('transfered')) return;
 
         const container = containerRef.current?.getBoundingClientRect();
 
-        canvasRef.current.setAttribute('transfered', 'true');
-        const context = canvasRef.current?.transferControlToOffscreen();
-
-        glassmorphismWorker.postMessage(
-            {
-                type: 'add',
-                uuid: canvasUUID,
-                canvas: context,
-                x: container?.x,
-                y: container?.y,
-                options: {
-                    blur: blur ? 15 : null,
-                },
+        glassmorphismWorker.postMessage({
+            type: 'add',
+            uuid: canvasUUID,
+            x: container?.x,
+            y: container?.y,
+            options: {
+                rounded,
             },
-            [context]
-        );
+        });
     }, [containerRef.current]);
 
     useInterval(
@@ -85,9 +78,13 @@ export const GameCanvasBox: FunctionComponent<PropsWithChildren<GameCanvasBoxPro
 
     return (
         <>
-            <div ref={containerRef} className={cn('absolute -z-10 h-full w-full overflow-hidden', borderClassName)} />
+            <div
+                ref={containerRef}
+                className={cn('absolute -z-10 h-full w-full overflow-hidden ', borderClassName, {
+                    'backdrop-blur-[5px]': blur,
+                })}
+            />
             {children}
-            <canvas ref={canvasRef} className="absolute inset-0 -z-10" />
         </>
     );
 };
@@ -171,6 +168,7 @@ interface GlassMorphismContainerProps extends HTMLAttributes<any>, PropsWithChil
     disableBorder?: boolean;
     showBorderOnHover?: boolean;
     blur?: boolean;
+    rounded?: number;
     duration?: string;
 }
 
@@ -183,6 +181,7 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
     showBorderOnHover,
     children,
     blur = true,
+    rounded,
     duration = 'duration-1000',
 }) => {
     const { glassmorphismColors } = useHudColor();
@@ -199,8 +198,8 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
     }, [glassmorphismColors, borderColor]);
 
     return (
-        <div className={cn('relative bg-opacity-10 h-full w-full overflow-hidden group z-10', borderClassName)}>
-            <GameCanvasBox borderClassName={borderClassName} blur={blur}>
+        <div className={cn('relative h-full w-full overflow-hidden group z-10', borderClassName, {})}>
+            <GameCanvasBox borderClassName={borderClassName} rounded={rounded} blur={blur}>
                 <div
                     className={cn(
                         'absolute h-full w-full transition-opacity border-transparent z-10',
@@ -225,7 +224,7 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
                 </div>
 
                 <div
-                    className="absolute inset-0 transition-all duration-1000"
+                    className={cn('absolute inset-0 transition-all duration-1000', {})}
                     style={{
                         background: glassmorphismColors.background,
                     }}
