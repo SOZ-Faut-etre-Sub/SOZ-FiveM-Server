@@ -148,10 +148,12 @@ export const AtmApp: FunctionComponent = () => {
                                 />
 
                                 <div className="flex gap-2.5">
-                                    <Button variant="secondary" onClick={() => resetApp()}>
+                                    <Button type="reset" variant="secondary" onClick={() => resetApp()}>
                                         Annuler
                                     </Button>
-                                    <Button disabled={isSubmitting}>Retirer</Button>
+                                    <Button type="submit" disabled={isSubmitting}>
+                                        Retirer
+                                    </Button>
                                 </div>
                             </Card>
                         </form>
