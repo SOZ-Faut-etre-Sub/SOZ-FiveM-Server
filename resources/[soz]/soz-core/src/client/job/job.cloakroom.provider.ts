@@ -86,7 +86,7 @@ export class JobCloakroomProvider {
         this.notifier.notify(`Il reste ${result} tenues de travail dans le vestiaire.`);
     }
 
-    private async openCloakroom(storageIdToSave: string, config: WardrobeConfig, customLabel?: string) {
+    public async openCloakroom(storageIdToSave: string, config: WardrobeConfig, customLabel?: string) {
         if (!config) {
             return;
         }
@@ -146,7 +146,7 @@ export class JobCloakroomProvider {
                 }
             }
 
-            return await this.openCloakroom(storageIdToSave, configs);
+            return await this.openCloakroom(storageIdToSave, configs, 'Tenue Personnalisée');
         }
 
         await this.openCloakroom(storageIdToSave, jobStorage[job]);
