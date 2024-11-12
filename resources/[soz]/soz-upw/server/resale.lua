@@ -8,8 +8,9 @@ QBCore.Functions.CreateCallback("soz-upw:server:ResaleEnergy", function(source, 
             return
         end
 
-        local count = exports["soz-core"]:GetPlayerItem(Player.PlayerData.source, item.name, nil, true)
-        if count == 0 then
+        local inventoryItem = exports["soz-core"]:GetPlayerItem(Player.PlayerData.source, item.name, nil, true)
+
+        if not inventoryItem then
             goto continue
         end
 

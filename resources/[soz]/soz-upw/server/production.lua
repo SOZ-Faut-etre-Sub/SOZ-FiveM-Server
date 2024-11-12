@@ -217,6 +217,8 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
             facility_scope = facility.scope,
             facility_job = facility.job,
         })
+
+        p:resolve(true, nil)
     end
 
     local success, reason = Citizen.Await(p)

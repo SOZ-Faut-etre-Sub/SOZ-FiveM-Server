@@ -104,15 +104,6 @@ export class InventoryOpenProvider {
                         icon: 'inventory/ouvrir_le_stockage',
                         category: 'society',
                         job: openJob,
-                        canInteract: async () => {
-                            const player = this.playerService.getPlayer();
-
-                            if (!player) {
-                                return false;
-                            }
-
-                            return player.job.onduty;
-                        },
                         action: async () => {
                             const playerPed = PlayerPedId();
                             const coords = GetEntityCoords(playerPed);
@@ -130,8 +121,16 @@ export class InventoryOpenProvider {
                     options.push({
                         label: 'Ouvrir mon casier',
                         icon: 'inventory/archive',
-                        job: job as JobType,
                         category: 'society',
+                        canInteract: async () => {
+                            const player = this.playerService.getPlayer();
+
+                            if (!player) {
+                                return false;
+                            }
+
+                            return player.job.id === job;
+                        },
                         action: async () => {
                             const player = this.playerService.getPlayer();
 
@@ -153,7 +152,15 @@ export class InventoryOpenProvider {
                         label: 'Se changer',
                         icon: 'jobs/habiller',
                         category: 'society',
-                        job: job as JobType,
+                        canInteract: async () => {
+                            const player = this.playerService.getPlayer();
+
+                            if (!player) {
+                                return false;
+                            }
+
+                            return player.job.id === job;
+                        },
                         action: async () => {
                             await this.jobCloakroomProvider.openJobCloakroom(inventory.data.storage, job as JobType);
                         },
@@ -164,15 +171,6 @@ export class InventoryOpenProvider {
                         icon: 'jobs/check-stock',
                         category: 'society',
                         job: job as JobType,
-                        canInteract: async () => {
-                            const player = this.playerService.getPlayer();
-
-                            if (!player) {
-                                return false;
-                            }
-
-                            return player.job.onduty;
-                        },
                         action: async () => {
                             await this.jobCloakroomProvider.checkCloakroomStorage(inventory.data.storage);
                         },
