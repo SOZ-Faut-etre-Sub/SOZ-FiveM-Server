@@ -10,6 +10,8 @@ import { usePlayer } from '../../../hook/data';
 import { Button } from './Button';
 import { Card } from './Card';
 import { Input } from './Input';
+import { Tabs } from './Tabs';
+import { Title } from './Title';
 
 type QuickActionInputs = {
     amount: number;
@@ -30,9 +32,6 @@ export const QuickActionForm: FunctionComponent<QuickActionFormProps> = ({
 
     // 0 => withdraw, 1 => deposit
     const [quickAction, setQuickAction] = useState<number>(0);
-    const tabClass = (tab: any) => {
-        return classnames('p-1 rounded-md focus:ring-0 ', { 'bg-white/10': tab.selected });
-    };
 
     const {
         register,
@@ -60,20 +59,17 @@ export const QuickActionForm: FunctionComponent<QuickActionFormProps> = ({
     }, [account.id]);
 
     return (
-        <Card>
-            <h2 className="uppercase text-sm font-light text-gray-300">Actions rapides</h2>
-            <Tab.Group
-                selectedIndex={quickAction}
+        <Card className="space-y-2.5">
+            <Title size="xsmall">Actions rapides</Title>
+
+            <Tabs
+                selected={quickAction}
                 onChange={index => {
                     setQuickAction(index);
                     reset();
                 }}
-            >
-                <Tab.List className="grid grid-cols-2 gap-3 p-1 my-3 bg-white/5 text-gray-200 rounded-md">
-                    <Tab className={tabClass}>Retirer</Tab>
-                    <Tab className={tabClass}>Déposer</Tab>
-                </Tab.List>
-            </Tab.Group>
+                tabs={['Retirer', 'Déposer']}
+            />
 
             <form onSubmit={handleSubmit(submitForm)}>
                 <Input

@@ -6,8 +6,8 @@ type DividerProps = {
 
 export const MenuGroup: FunctionComponent<PropsWithChildren<DividerProps>> = ({ title, children }) => {
     return (
-        <div className="bg-black/10 shadow-md rounded-md p-1.5 space-y-1.5">
-            {title && <span className="px-2 text-sm text-gray-300/30">{title}</span>}
+        <div>
+            {title && <h2 className="px-2 text-lg font-semibold uppercase pb-5">{title}</h2>}
             {children}
         </div>
     );

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { getDefaultVehicleCondition, VehicleClassFuelStorageMultiplier } from '../../../../shared/vehicle/vehicle';
 import { RootState } from '../../../store';
-import { useDaltonism } from '../hooks/useDaltonism';
+import { useHudColor } from '../hooks/useHudColor';
 import { useZoom } from '../hooks/useZoom';
 import { StatusGauge } from './StatusGauge';
 
@@ -12,7 +12,7 @@ export const FuelGauge: FunctionComponent = () => {
     const fuelLevel = useSelector((state: RootState) => state.vehicle.fuelLevel);
     const vehCategory = useSelector((state: RootState) => state.vehicle.vehCategory);
 
-    const { gaugeColors } = useDaltonism();
+    const { gaugeColors } = useHudColor();
     const { iconSize } = useZoom();
 
     const maxFuel = getDefaultVehicleCondition().fuelLevel * (VehicleClassFuelStorageMultiplier[vehCategory] || 1.0);
