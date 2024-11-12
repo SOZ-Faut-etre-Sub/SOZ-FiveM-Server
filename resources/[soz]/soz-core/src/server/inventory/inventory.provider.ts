@@ -77,15 +77,15 @@ export class InventoryProvider {
 
                 const amount = getRandomInt(creatorConfig.min, creatorConfig.max);
 
-                if (amount > 0) {
-                    inventory.add(itemName, amount);
+                for (let i = 0; i < amount; i++) {
+                    inventory.add(itemName, 1);
                 }
             }
 
             await inventory.observe();
         }
 
-        await wait(getRandomInt(1, 3) * 3600 * 100);
+        await wait(getRandomInt(1, 3) * 3600 * 1000);
     }
 
     @Rpc(RpcServerEvent.BIN_IS_NOT_LOCKED)
