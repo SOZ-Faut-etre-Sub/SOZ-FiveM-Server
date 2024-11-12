@@ -6,6 +6,7 @@ interface ButtonProps {
     onClick?: () => void;
     disabled?: boolean;
     variant?: 'primary' | 'secondary';
+    type?: 'button' | 'submit' | 'reset';
 }
 
 export const Button = forwardRef<HTMLButtonElement, PropsWithChildren<ButtonProps>>((props, ref) => {
