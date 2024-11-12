@@ -1,3 +1,4 @@
+import { GlassMorphismContext } from '@public/nui/providers/GlassMorphismProvider';
 import cn from 'classnames';
 import {
     FunctionComponent,
@@ -13,7 +14,6 @@ import {
 import { uuidv4 } from '../../../core/utils';
 import { useHudTheme } from '../../hook/data';
 import { useInterval } from '../../hook/useInterval';
-import { GlassMorphismContext } from '../../providers/GlassMorphismProvider';
 import { useDaltonism } from '../Hud/hooks/useDaltonism';
 
 type GameCanvasBoxProps = {
@@ -30,7 +30,21 @@ export const GameCanvasBox: FunctionComponent<PropsWithChildren<GameCanvasBoxPro
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [canvasUUID] = useState(uuidv4());
 
+    const currentTheme = useHudTheme();
+    const { glassmorphismColors } = useDaltonism();
+
     const containerRef = useRef<HTMLDivElement>(null);
+    const childrenRef = useRef<HTMLDivElement>(null);
+
+    const { height } = childrenRef.current?.getBoundingClientRect() || { height: undefined };
+
+    const currentBorderColor = useMemo(() => {
+        if (borderColor) {
+            return borderColor;
+        }
+
+        return glassmorphismColors[currentTheme].border;
+    }, [glassmorphismColors, currentTheme, borderColor]);
 
     useEffect(() => {
         if (!containerRef.current) return;
@@ -49,7 +63,7 @@ export const GameCanvasBox: FunctionComponent<PropsWithChildren<GameCanvasBoxPro
                 x: container?.x,
                 y: container?.y,
                 options: {
-                    blur: blur ? 15 : null,
+                    blur: 15,
                 },
             },
             [context]
