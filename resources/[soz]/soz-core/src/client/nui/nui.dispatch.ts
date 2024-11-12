@@ -23,11 +23,18 @@ export class NuiDispatch {
     }
 
     closeEverything() {
+        this.closeMenu();
+        this.closeInventory();
+    }
+
+    closeMenu() {
         if (this.menuOpened) {
             this.dispatch('menu', 'CloseMenu', false);
             this.menuOpened = null;
         }
+    }
 
+    closeInventory() {
         this.dispatch('inventory', 'SetOpen', false);
         this.dispatch('inventory', 'CloseInventory');
         this.dispatch('inventory', 'CloseKeychain');

@@ -307,6 +307,7 @@ export class InventoryProvider {
             return;
         }
 
+        // 4. Case we swap items
         if (error === 'cannot_merge') {
             const targetItem = targetInventory.getItemAtSlot(targetSlot);
 
@@ -357,6 +358,32 @@ export class InventoryProvider {
                     )
                 ) {
                     this.notifier.error(source, 'Pas assez de place pour échanger les objets.');
+
+                    return;
+                }
+
+                // Check onlyone
+                const sourceItemDef = this.itemService.getItem(sourceItem.name);
+                const targetItemDef = this.itemService.getItem(targetItem.name);
+
+                if (
+                    sourceItemDef?.onlyone &&
+                    targetInventory.hasEnoughItem(sourceItem.name, 1, false) &&
+                    targetItem.name !== sourceItem.name &&
+                    targetInventory.type() === InventoryType.Player
+                ) {
+                    this.notifier.error(source, "Vous ne pouvez porter ~r~qu'un seul exemplaire~s~ de cet objet.");
+
+                    return;
+                }
+
+                if (
+                    targetItemDef?.onlyone &&
+                    sourceInventory.hasEnoughItem(targetItem.name, 1, false) &&
+                    targetItem.name !== sourceItem.name &&
+                    sourceInventory.type() === InventoryType.Player
+                ) {
+                    this.notifier.error(source, "Vous ne pouvez porter ~r~qu'un seul exemplaire~s~ de cet objet.");
 
                     return;
                 }
@@ -630,6 +657,18 @@ export class InventoryProvider {
 
                 return 0;
             }
+        }
+
+        const itemObject = this.itemService.getItem(sourceItem.name);
+
+        if (
+            itemObject?.onlyone &&
+            targetInventory.hasEnoughItem(sourceItem.name, 1, false) &&
+            targetInventory.type() === InventoryType.Player
+        ) {
+            this.notifier.error(source, "Vous ne pouvez porter ~r~qu'un seul exemplaire~s~ de cet objet.");
+
+            return 0;
         }
 
         if (!sourceInventory.removeAtSlot(sourceItem.slot, amount)) {
