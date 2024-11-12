@@ -197,3 +197,20 @@ export const JobResellZones: Record<string, ResellZone> = {
         inventory_id: 'cabinet_storage',
     },
 };
+
+export const LOW_RANGE_JOBS_ITEMS = {
+    prop_roadcone02a: {
+        interactionDistance: 0.8,
+        drawDistance: 1.2,
+        jobs: {
+            [JobType.LSMC]: 0,
+            [JobType.Bennys]: 0,
+            [JobType.CashTransfer]: 0,
+            [JobType.BCSO]: 0,
+            [JobType.FBI]: 0,
+            [JobType.SASP]: 0,
+            [JobType.LSPD]: 0,
+            [JobType.LSCS]: 0,
+        },
+    },
+};

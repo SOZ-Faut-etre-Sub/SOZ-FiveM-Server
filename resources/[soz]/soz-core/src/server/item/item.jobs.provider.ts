@@ -6,6 +6,7 @@ import { PoliceSpikeProvider } from '@public/server/job/police/police.spike.prov
 import { Notifier } from '@public/server/notifier';
 import { PlayerService } from '@public/server/player/player.service';
 import { ClientEvent } from '@public/shared/event';
+import { Item } from '@public/shared/item';
 import { FDO, JobType } from '@public/shared/job';
 
 @Provider()
@@ -59,55 +60,61 @@ export class ItemJobsProvider {
     @Once()
     public async onInit() {
         this.item.setItemUseCallback('cone', this.useJobsCone.bind(this));
-        this.item.setItemUseCallback('police_barrier', this.useJobsItem.bind(this, 'police_barrier'));
+        this.item.setItemUseCallback('police_barrier', this.useJobsItem.bind(this));
         this.item.setItemUseCallback('spike', this.useJobsSpike.bind(this));
         this.item.setItemUseCallback('speed_speed_sign', this.useJobsSpeedSign.bind(this));
 
-        this.item.setItemUseCallback('n_fix_greenscreen', this.useJobsItem.bind(this, 'n_fix_greenscreen'));
-        this.item.setItemUseCallback('n_fix_camera', this.useJobsItem.bind(this, 'n_fix_camera'));
-        this.item.setItemUseCallback('n_fix_light', this.useJobsItem.bind(this, 'n_fix_light'));
-        this.item.setItemUseCallback('n_fix_mic', this.useJobsItem.bind(this, 'n_fix_mic'));
+        this.item.setItemUseCallback('n_fix_greenscreen', this.useJobsItem.bind(this));
+        this.item.setItemUseCallback('n_fix_camera', this.useJobsItem.bind(this));
+        this.item.setItemUseCallback('n_fix_light', this.useJobsItem.bind(this));
+        this.item.setItemUseCallback('n_fix_mic', this.useJobsItem.bind(this));
     }
 
-    private useJobsItem(source: number, itemName: string) {
-        if (!this.checkJob(source, itemName)) {
-            this.notifier.error(source, "Vous n'êtes pas habilité à utiliser cet objet");
-
+    private useJobsItem(source: number, item: Item) {
+        if (!this.checkJob(source, item.name)) {
+            this.notify(source);
             return;
         }
 
         TriggerClientEvent(ClientEvent.OBJECT_PLACE_JOB, source, {
-            item: itemName,
-            props: this.items[itemName].prop,
-            rotation: this.items[itemName].rotation,
+            item: item.name,
+            props: this.items[item.name].prop,
+            rotation: this.items[item.name].rotation,
         });
     }
 
-    private useJobsCone(source: number) {
-        if (!this.checkJob(source, 'cone')) {
+    private useJobsCone(source: number, item: Item) {
+        if (!this.checkJob(source, item.name)) {
             this.notify(source);
             return;
         }
 
         const player = this.playerService.getPlayer(source);
 
-        TriggerClientEvent(ClientEvent.OBJECT_PLACE_JOB, source, {
-            item: 'cone',
-            props: FDO.includes(player.job.id) ? 'prop_air_conelight' : 'prop_roadcone02a',
-        });
+        const coneConfig = FDO.includes(player.job.id)
+            ? {
+                  item: item.name,
+                  props: 'prop_air_conelight',
+                  offset: -0.15,
+              }
+            : {
+                  item: item.name,
+                  props: 'prop_roadcone02a',
+              };
+        TriggerClientEvent(ClientEvent.OBJECT_PLACE_JOB, source, coneConfig);
     }
 
-    private async useJobsSpike(source: number) {
-        if (!this.checkJob(source, 'spike')) {
+    private async useJobsSpike(source: number, item: Item) {
+        if (!this.checkJob(source, item.name)) {
             this.notify(source);
             return;
         }
 
-        await this.policeSpikeProvider.placeSpike(source, 'spike');
+        await this.policeSpikeProvider.placeSpike(source, item.name);
     }
 
-    private useJobsSpeedSign(source: number) {
-        if (!this.checkJob(source, 'speed_speed_sign')) {
+    private useJobsSpeedSign(source: number, item: Item) {
+        if (!this.checkJob(source, item.name)) {
             this.notify(source);
             return;
         }
@@ -121,12 +128,11 @@ export class ItemJobsProvider {
             return false;
         }
 
-        const item = this.items[itemName];
-        if (!item) {
+        if (!this.items[itemName]) {
             return false;
         }
 
-        return item.jobs.includes(player.job.id) && player.job.onduty;
+        return this.items[itemName].jobs.includes(player.job.id) && player.job.onduty;
     }
 
     private notify(source: number) {

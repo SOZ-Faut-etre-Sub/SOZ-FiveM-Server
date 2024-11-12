@@ -67,8 +67,8 @@ export class PoliceSpikeProvider {
                 job: jobsTarget,
             },
             undefined,
-            1.5,
-            6
+            1.1,
+            1.4
         );
 
         [GetHashKey('prop_barrier_work05'), GetHashKey('prop_air_conelight')].map(model => {
@@ -91,8 +91,8 @@ export class PoliceSpikeProvider {
                     job: jobsTarget,
                 },
                 undefined,
-                1.5,
-                6
+                0.8,
+                1.2
             );
         });
 

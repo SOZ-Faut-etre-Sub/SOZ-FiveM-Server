@@ -14,6 +14,7 @@ import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { wait } from '@public/core/utils';
 import { getChunkId, getGridChunks } from '@public/shared/grid';
 import { InventoryType } from '@public/shared/inventory';
+import { LOW_RANGE_JOBS_ITEMS } from '@public/shared/job';
 import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { RpcClientEvent, RpcServerEvent } from '@public/shared/rpc';
 import { TargetOption } from '@public/shared/target';
@@ -119,7 +120,17 @@ export class ObjectProvider {
             await this.createObject(object);
         }
 
+        const lowJobsItem = {};
+        for (const [modelString, value] of Object.entries(LOW_RANGE_JOBS_ITEMS)) {
+            lowJobsItem[GetHashKey(modelString)] = value;
+        }
+
         RemovableObjects.forEach(model => {
+            const config = lowJobsItem[model] || {
+                interactionDistance: 1.5,
+                drawDistance: 6.0,
+            };
+
             this.interactionProvider.createInteractionForModels(
                 model,
                 {
@@ -136,10 +147,11 @@ export class ObjectProvider {
 
                         TriggerServerEvent(ServerEvent.OBJECT_COLLECT, id);
                     },
+                    job: config.jobs,
                 },
                 undefined,
-                1.5,
-                6
+                config.interactionDistance,
+                config.drawDistance
             );
         });
 

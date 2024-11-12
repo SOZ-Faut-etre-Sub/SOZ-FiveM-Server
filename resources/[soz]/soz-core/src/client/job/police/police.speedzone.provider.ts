@@ -41,38 +41,44 @@ export class PoliceSpeedZoneProvider {
 
     @Once(OnceStep.Start)
     public async onStart() {
-        this.interactionProvider.createInteractionForModels(roadSignModel, {
-            label: 'Démonter',
-            action: async (entity: number) => {
-                const id = this.objectProvider.getIdFromEntity(entity);
-                const { completed } = await this.progressService.progress(
-                    'remove_object',
-                    'Démontage du panneau',
-                    2500,
-                    {
-                        dictionary: 'weapons@first_person@aim_rng@generic@projectile@thermal_charge@',
-                        name: 'plant_floor',
-                        options: {
-                            onlyUpperBody: true,
+        this.interactionProvider.createInteractionForModels(
+            roadSignModel,
+            {
+                label: 'Démonter',
+                action: async (entity: number) => {
+                    const id = this.objectProvider.getIdFromEntity(entity);
+                    const { completed } = await this.progressService.progress(
+                        'remove_object',
+                        'Démontage du panneau',
+                        2500,
+                        {
+                            dictionary: 'weapons@first_person@aim_rng@generic@projectile@thermal_charge@',
+                            name: 'plant_floor',
+                            options: {
+                                onlyUpperBody: true,
+                            },
                         },
-                    },
-                    {
-                        useWhileDead: false,
-                        canCancel: true,
-                        disableMovement: true,
-                        disableCarMovement: true,
-                        disableMouse: false,
-                        disableCombat: true,
+                        {
+                            useWhileDead: false,
+                            canCancel: true,
+                            disableMovement: true,
+                            disableCarMovement: true,
+                            disableMouse: false,
+                            disableCombat: true,
+                        }
+                    );
+                    if (!completed) {
+                        return;
                     }
-                );
-                if (!completed) {
-                    return;
-                }
 
-                TriggerServerEvent(ServerEvent.POLICE_REMOVE_SPEEDZONE, id);
+                    TriggerServerEvent(ServerEvent.POLICE_REMOVE_SPEEDZONE, id);
+                },
+                job: jobsTarget,
             },
-            job: jobsTarget,
-        });
+            undefined,
+            0.8,
+            1.2
+        );
         this.interactionOffsetProvider.setModelOffset(roadSignModel, [0, 0, 1.0]);
 
         TriggerServerEvent(ServerEvent.POLICE_INIT_SPEEDZONE);
