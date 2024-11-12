@@ -145,7 +145,7 @@ export class InventoryManager {
         this._subscribedInventoryConfiguration = configuration;
         this._subscribedInventoryPosition = position;
 
-        this.nuiDispatch.closeEverything();
+        this.nuiDispatch.closeInventory();
         this.nuiDispatch.dispatch('inventory', 'OpenInventory', {
             configuration: this._subscribedInventoryConfiguration,
             items: this._subscribedInventory,
