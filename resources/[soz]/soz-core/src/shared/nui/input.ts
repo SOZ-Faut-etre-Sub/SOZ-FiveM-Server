@@ -28,6 +28,10 @@ export const PositiveNumberValidator: ValidateInput<number> = (input: string) =>
         return Err('Veuillez entrer un nombre positif');
     }
 
+    if (inputNumber % 1 !== 0) {
+        return Err(`La valeur doit être un nombre entier.`);
+    }
+
     return Ok(inputNumber);
 };
 
@@ -55,6 +59,10 @@ export const NumberValidatorFactory = (min?: number, max?: number): ValidateInpu
 
         if (max && inputNumber > max) {
             return Err(`La valeur doit être inférieure ou égale à ${max}.`);
+        }
+
+        if (inputNumber % 1 !== 0) {
+            return Err(`La valeur doit être un nombre entier.`);
         }
 
         return Ok(inputNumber);
