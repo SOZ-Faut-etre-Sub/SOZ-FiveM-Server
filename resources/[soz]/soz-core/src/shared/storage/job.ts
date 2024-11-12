@@ -488,7 +488,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             heading: 28.0,
             data: {
                 storage: 'bcso_storage',
-                type: InventoryType.Stash,
+                type: InventoryType.Storage,
             },
         },
         {
@@ -550,7 +550,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             heading: 235.7,
             data: {
                 storage: 'stonk_storage',
-                type: InventoryType.Stash,
+                type: InventoryType.Storage,
             },
         },
         {
@@ -710,7 +710,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             heading: 250,
             data: {
                 storage: 'fbi_storage',
-                type: InventoryType.Stash,
+                type: InventoryType.Storage,
             },
         },
         {
@@ -772,7 +772,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             heading: 224.77,
             data: {
                 storage: 'fdf_stash',
-                type: InventoryType.Stash,
+                type: InventoryType.Storage,
             },
         },
         {
@@ -810,7 +810,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             heading: 0,
             data: {
                 storage: 'ffs_storage',
-                type: InventoryType.Stash,
+                type: InventoryType.Storage,
             },
         },
         {
@@ -908,7 +908,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             maxZ: 141.97,
             data: {
                 storage: 'food_storage',
-                type: InventoryType.Stash,
+                type: InventoryType.Storage,
             },
         },
         {
@@ -1020,7 +1020,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             heading: 270.0,
             data: {
                 storage: 'gouv_storage',
-                type: InventoryType.Stash,
+                type: InventoryType.Storage,
             },
         },
         {
@@ -1058,7 +1058,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             heading: 180.77,
             data: {
                 storage: 'lscs_storage',
-                type: InventoryType.Stash,
+                type: InventoryType.Storage,
             },
         },
         {
@@ -1120,7 +1120,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             heading: 320,
             data: {
                 storage: 'lsmc_stash',
-                type: InventoryType.Stash,
+                type: InventoryType.Storage,
             },
         },
         {
@@ -1132,7 +1132,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             heading: 320,
             data: {
                 storage: 'lsmc_north_stash',
-                type: InventoryType.Stash,
+                type: InventoryType.Storage,
             },
         },
         {
@@ -1254,7 +1254,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             heading: 158.27,
             data: {
                 storage: 'lspd_storage',
-                type: InventoryType.Stash,
+                type: InventoryType.Storage,
             },
         },
         {
@@ -1376,7 +1376,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             heading: 30,
             data: {
                 storage: 'mdr_storage',
-                type: InventoryType.Stash,
+                type: InventoryType.Storage,
             },
         },
         {
@@ -1426,7 +1426,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             heading: 0,
             data: {
                 storage: 'bennys_stash',
-                type: InventoryType.Stash,
+                type: InventoryType.Storage,
             },
         },
         {
@@ -1438,7 +1438,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             heading: 0,
             data: {
                 storage: 'bennys_stash_north',
-                type: InventoryType.Stash,
+                type: InventoryType.Storage,
             },
         },
         {
@@ -1524,7 +1524,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             heading: 0,
             data: {
                 storage: 'news_storage',
-                type: InventoryType.Stash,
+                type: InventoryType.Storage,
             },
         },
         {
@@ -1586,7 +1586,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             heading: 45,
             data: {
                 storage: 'oil_storage',
-                type: InventoryType.Stash,
+                type: InventoryType.Storage,
             },
         },
         {
@@ -1732,7 +1732,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             heading: 70,
             data: {
                 storage: 'pawl_storage',
-                type: InventoryType.Stash,
+                type: InventoryType.Storage,
             },
         },
         {
@@ -1770,7 +1770,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             heading: 180.0,
             data: {
                 storage: 'sasp_storage',
-                type: InventoryType.Stash,
+                type: InventoryType.Storage,
             },
         },
         {
@@ -1856,7 +1856,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             heading: 238,
             data: {
                 storage: 'taxi_storage',
-                type: InventoryType.Stash,
+                type: InventoryType.Storage,
             },
         },
         {
@@ -1894,7 +1894,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             heading: 4,
             data: {
                 storage: 'upw_stash',
-                type: InventoryType.Stash,
+                type: InventoryType.Storage,
             },
         },
         {
@@ -1956,7 +1956,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             heading: 207.26,
             data: {
                 storage: 'you_news_storage',
-                type: InventoryType.Stash,
+                type: InventoryType.Storage,
             },
         },
         {
