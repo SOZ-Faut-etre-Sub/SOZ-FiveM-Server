@@ -358,7 +358,7 @@ export const INVENTORY_CONFIGURATIONS: Partial<Record<InventoryType, Partial<Inv
         allowedItemTypes: ['log'],
     },
     [InventoryType.CabinetStorage]: {
-        maxWeight: 1600000,
+        maxWeight: 24000000,
         allowedItemTypes: ['item'],
     },
     [InventoryType.Inverter]: {
@@ -476,6 +476,7 @@ export const INVENTORY_CONFIGURATIONS: Partial<Record<InventoryType, Partial<Inv
     [InventoryType.Distillery]: {
         maxWeight: 48000,
         allowedItems: ['smuggling_flower_zoublon'],
+        allowedItemTypes: [],
     },
     [InventoryType.GangStash]: {
         allowedItemTypes: [

@@ -1,4 +1,5 @@
 import { FeatureProvider } from '@public/client/feature/feature.provider';
+import { InventoryDragAndDropProvider } from '@public/client/inventory/inventory.draganddrop.provider';
 import { BrandConfig, BrandsConfig, ShopBrand, ShopsConfig } from '@public/config/shops';
 import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Exportable } from '@public/core/decorators/exports';
@@ -6,9 +7,11 @@ import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { Feature } from '@public/shared/features';
+import { InventoryItem } from '@public/shared/inventory';
 import { JobPermission, JobType } from '@public/shared/job';
 import { StonkConfig } from '@public/shared/job/stonk';
 import { MenuType } from '@public/shared/nui/menu';
+import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { TargetOption } from '@public/shared/target';
 
@@ -71,6 +74,9 @@ export class ShopProvider {
 
     @Inject(FeatureProvider)
     private featureProvider: FeatureProvider;
+
+    @Inject(InventoryDragAndDropProvider)
+    private inventoryDragAndDropProvider: InventoryDragAndDropProvider;
 
     private currentShop: string = null;
     private currentShopBrand: ShopBrand = null;
@@ -247,19 +253,37 @@ export class ShopProvider {
                     invincible: true,
                     blockevents: true,
                     scenario: 'WORLD_HUMAN_STAND_IMPATIENT',
-                    dropItemCallback:
-                        config.brand !== ShopBrand.Zkea
-                            ? undefined
-                            : (inventoryId, inventoryItem, amount) => {
-                                  TriggerServerEvent(
-                                      ServerEvent.JOB_RESELL_ITEM,
-                                      inventoryId,
-                                      inventoryItem,
-                                      amount,
-                                      'Resell:Zkea'
-                                  );
-                              },
                 });
+
+                if (config.brand === ShopBrand.Zkea) {
+                    this.inventoryDragAndDropProvider.registerZoneTarget(
+                        'zkea_' + shop,
+                        BoxZone.fromZone({
+                            center: [config.location[0], config.location[1], config.location[2] - 1],
+                            heading: config.location[3],
+                            width: 0.8,
+                            length: 0.8,
+                            minZ: config.location[2] - 2,
+                            maxZ: config.location[2] + 2,
+                        }),
+                        [
+                            async (invItem: InventoryItem) => {
+                                const player = this.playerService.getPlayer();
+
+                                TriggerServerEvent(
+                                    ServerEvent.JOB_RESELL_ITEM,
+                                    `player_${player.citizenid}`,
+                                    invItem,
+                                    invItem.amount,
+                                    'Resell:Zkea'
+                                );
+
+                                return true;
+                            },
+                        ]
+                    );
+                }
+
                 this.shopsPedEntity[shop] = { entity: pedId, location: config.location } as shopPedData;
             }
         }

@@ -84,7 +84,7 @@ QBCore.Functions.CreateCallback("pawl:server:harvestTreeSap", function(source, c
             for _, item in pairs(Config.Harvest.SecondaryRewardItems) do
                 local result = exports["soz-core"]:AddPlayerItem(Player.PlayerData.source, item.name, item.amount, nil, nil)
 
-                if result.ok then
+                if not result.ok then
                     cb(false)
 
                     return
