@@ -57,6 +57,13 @@ export class InventoryPositionChecker {
         const owner = NetworkGetEntityOwner(entityId);
 
         if (!owner) {
+            TriggerClientEvent(
+                ClientEvent.VEHICLE_SET_TRUNK_STATE,
+                playerId,
+                this.trunkOpened[inventoryId].networkId,
+                false
+            );
+
             return;
         }
 
