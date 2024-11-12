@@ -195,7 +195,7 @@ export class InventoryOpenProvider {
 
                                 const numberOfCocktails = this.inventoryManager
                                     .getItems()
-                                    .filter(item => item.name === 'cocktail' && !isInventoryItemExpired(item))
+                                    .filter(item => item.type === 'cocktail' && !isInventoryItemExpired(item))
                                     .reduce((acc, item) => acc + item.amount, 0);
 
                                 return player.job.onduty && numberOfCocktails >= 10;

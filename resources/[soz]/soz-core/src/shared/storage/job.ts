@@ -378,7 +378,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             heading: 303,
             data: {
                 storage: 'baun_bahama_storage',
-                type: InventoryType.Stash,
+                type: InventoryType.Storage,
             },
         },
         {
@@ -390,7 +390,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             heading: 120.28,
             data: {
                 storage: 'baun_unicorn_storage',
-                type: InventoryType.Stash,
+                type: InventoryType.Storage,
             },
         },
         {
@@ -402,7 +402,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             heading: -31.96,
             data: {
                 storage: 'baun_yellowjack_storage',
-                type: InventoryType.Stash,
+                type: InventoryType.Storage,
             },
         },
     ],
