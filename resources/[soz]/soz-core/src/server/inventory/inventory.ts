@@ -225,7 +225,7 @@ export class Inventory {
             return Err('not_enough_space');
         }
 
-        if (!bypassCheck && itemObject.onlyone && this.getItem(id) !== null) {
+        if (!bypassCheck && itemObject.onlyone && this.getItem(id) !== null && this._type === InventoryType.Player) {
             return Err('already_exists');
         }
 

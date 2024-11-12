@@ -369,12 +369,10 @@ export class InventoryProvider {
                 if (
                     sourceItemDef?.onlyone &&
                     targetInventory.hasEnoughItem(sourceItem.name, 1, false) &&
-                    targetItem.name !== sourceItem.name
+                    targetItem.name !== sourceItem.name &&
+                    targetInventory.type() === InventoryType.Player
                 ) {
-                    this.notifier.error(
-                        source,
-                        "Impossible d'ajouter l'objet, ~r~un seul exemplaire~s~ par inventaire."
-                    );
+                    this.notifier.error(source, "Vous ne pouvez porter ~r~qu'un seul exemplaire~s~ de cet objet.");
 
                     return;
                 }
@@ -382,12 +380,10 @@ export class InventoryProvider {
                 if (
                     targetItemDef?.onlyone &&
                     sourceInventory.hasEnoughItem(targetItem.name, 1, false) &&
-                    targetItem.name !== sourceItem.name
+                    targetItem.name !== sourceItem.name &&
+                    sourceInventory.type() === InventoryType.Player
                 ) {
-                    this.notifier.error(
-                        source,
-                        "Impossible d'ajouter l'objet, ~r~un seul exemplaire~s~ par inventaire."
-                    );
+                    this.notifier.error(source, "Vous ne pouvez porter ~r~qu'un seul exemplaire~s~ de cet objet.");
 
                     return;
                 }
@@ -665,8 +661,12 @@ export class InventoryProvider {
 
         const itemObject = this.itemService.getItem(sourceItem.name);
 
-        if (itemObject?.onlyone && targetInventory.hasEnoughItem(sourceItem.name, 1, false)) {
-            this.notifier.error(source, "Impossible d'ajouter l'objet, ~r~un seul exemplaire~s~ par inventaire.");
+        if (
+            itemObject?.onlyone &&
+            targetInventory.hasEnoughItem(sourceItem.name, 1, false) &&
+            targetInventory.type() === InventoryType.Player
+        ) {
+            this.notifier.error(source, "Vous ne pouvez porter ~r~qu'un seul exemplaire~s~ de cet objet.");
 
             return 0;
         }
