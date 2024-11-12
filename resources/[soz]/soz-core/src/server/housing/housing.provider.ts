@@ -628,10 +628,10 @@ export class HousingProvider {
 
         if (apartmentTier.tier !== undefined) {
             apartmentInventory?.updateConfiguration({
-                maxWeight: HOUSE_STORAGE_TIER_WEIGHTS[apartment.tier] || HOUSE_STORAGE_TIER_WEIGHTS[0],
+                maxWeight: HOUSE_STORAGE_TIER_WEIGHTS[apartmentTier.tier] || HOUSE_STORAGE_TIER_WEIGHTS[0],
             });
             apartmentFridge?.updateConfiguration({
-                maxWeight: HOUSE_FRIDGE_TIER_WEIGHTS[apartment.tier] || HOUSE_FRIDGE_TIER_WEIGHTS[0],
+                maxWeight: HOUSE_FRIDGE_TIER_WEIGHTS[apartmentTier.tier] || HOUSE_FRIDGE_TIER_WEIGHTS[0],
             });
         }
 
