@@ -254,8 +254,10 @@ export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps
                         {weight && (
                             <h2 className="flex z-100 text-white bottom-0 right-0 py-1 px-2 items-center">
                                 <span className="flex items-end">
-                                    <span className="font-semibold text-xl">{(weight.current / 1000).toFixed(2)}</span>
-                                    <span className="text-sm">/{(weight.max / 1000).toFixed(0)} Kg</span>
+                                    <span className="font-semibold text-xl">
+                                        {Number((weight.current / 1000).toFixed(2))}
+                                    </span>
+                                    <span className="text-sm">/{Number((weight.max / 1000).toFixed(2))} Kg</span>
                                 </span>
                                 <WeightGauge current={weight.current} max={weight.max} />
                             </h2>
