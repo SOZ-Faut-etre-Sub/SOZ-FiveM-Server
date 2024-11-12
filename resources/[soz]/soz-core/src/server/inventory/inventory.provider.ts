@@ -307,6 +307,7 @@ export class InventoryProvider {
             return;
         }
 
+        // 4. Case we swap items
         if (error === 'cannot_merge') {
             const targetItem = targetInventory.getItemAtSlot(targetSlot);
 
@@ -357,6 +358,36 @@ export class InventoryProvider {
                     )
                 ) {
                     this.notifier.error(source, 'Pas assez de place pour échanger les objets.');
+
+                    return;
+                }
+
+                // Check onlyone
+                const sourceItemDef = this.itemService.getItem(sourceItem.name);
+                const targetItemDef = this.itemService.getItem(targetItem.name);
+
+                if (
+                    sourceItemDef?.onlyone &&
+                    targetInventory.hasEnoughItem(sourceItem.name, 1, false) &&
+                    targetItem.name !== sourceItem.name
+                ) {
+                    this.notifier.error(
+                        source,
+                        "Impossible d'ajouter l'objet, ~r~un seul exemplaire~s~ par inventaire."
+                    );
+
+                    return;
+                }
+
+                if (
+                    targetItemDef?.onlyone &&
+                    sourceInventory.hasEnoughItem(targetItem.name, 1, false) &&
+                    targetItem.name !== sourceItem.name
+                ) {
+                    this.notifier.error(
+                        source,
+                        "Impossible d'ajouter l'objet, ~r~un seul exemplaire~s~ par inventaire."
+                    );
 
                     return;
                 }
@@ -630,6 +661,14 @@ export class InventoryProvider {
 
                 return 0;
             }
+        }
+
+        const itemObject = this.itemService.getItem(sourceItem.name);
+
+        if (itemObject?.onlyone && targetInventory.hasEnoughItem(sourceItem.name, 1, false)) {
+            this.notifier.error(source, "Impossible d'ajouter l'objet, ~r~un seul exemplaire~s~ par inventaire.");
+
+            return 0;
         }
 
         if (!sourceInventory.removeAtSlot(sourceItem.slot, amount)) {
