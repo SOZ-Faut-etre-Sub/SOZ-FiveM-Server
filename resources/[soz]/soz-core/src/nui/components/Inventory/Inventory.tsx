@@ -1,6 +1,5 @@
 import { ShoppingBagIcon } from '@heroicons/react/outline';
-import classNames from 'classnames';
-import { FunctionComponent, PropsWithChildren, ReactNode, useEffect, useMemo, useState } from 'react';
+import { FunctionComponent, PropsWithChildren, ReactNode, useMemo, useState } from 'react';
 import { FixedSizeGrid } from 'react-window';
 
 import { NuiEvent } from '../../../shared/event/nui';
@@ -18,6 +17,7 @@ import WeightIcon from '../../icons/inventory/weight.svg';
 import { GameCanvasBox, GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
 import { ItemDescription } from './ItemDescription';
 import { ItemSlot } from './ItemSlot';
+import { useInventorySize } from './size';
 
 export type InventoryProps = {
     inventoryId: string;
@@ -52,19 +52,12 @@ export const Inventory: FunctionComponent<InventoryProps> = ({
     const resolver = useItemResolver();
     const itemsAsArray = Object.values(inventoryItems).filter(item => item !== null);
     const inventoryWeight = getItemsWeight(itemsAsArray, resolver);
+    const inventorySize = useInventorySize(6);
     const maxInventorySlot =
         itemsAsArray.reduce((acc, item) => {
             return Math.max(acc, item.slot);
         }, 0) + (player ? 3 : 0);
-    const nbLines = Math.max(Math.ceil(maxInventorySlot / 5) + (player ? 0 : 1), 3);
-
-    useEffect(() => {
-        if (currentInventoryItem) {
-            if (inventoryItems[currentInventoryItem.slot] !== currentInventoryItem) {
-                setCurrentInventoryItem(null);
-            }
-        }
-    }, [inventoryItems, currentInventoryItem]);
+    const nbLines = Math.max(Math.ceil(maxInventorySlot / 5), 4) + (player ? 0 : 1);
 
     const itemRender = useMemo(() => {
         return ({ columnIndex, rowIndex, style }) => {
@@ -72,11 +65,11 @@ export const Inventory: FunctionComponent<InventoryProps> = ({
 
             style = {
                 ...style,
-                left: columnIndex === 0 ? style.left : Number(style.left) + columnIndex * 10,
+                left: columnIndex === 0 ? style.left : Number(style.left) + columnIndex * inventorySize.gapSize,
                 right: style.right
                     ? columnIndex === 5
                         ? style.right
-                        : Number(style.right) + columnIndex * 10
+                        : Number(style.right) + columnIndex * inventorySize.gapSize
                     : undefined,
             };
 
@@ -172,9 +165,8 @@ export const Inventory: FunctionComponent<InventoryProps> = ({
         allowForceConsume,
         allowHiddenItem,
         setCurrentInventoryItem,
+        inventorySize,
     ]);
-
-    const height = Math.min((nbLines + 1) * 80, 480);
 
     return (
         <InventoryDiv
@@ -186,17 +178,17 @@ export const Inventory: FunctionComponent<InventoryProps> = ({
                 current: inventoryWeight,
                 max: configuration.maxWeight,
             }}
-            description={<ItemDescription position={itemDescriptionPosition} inventoryItem={currentInventoryItem} />}
+            description={<ItemDescription inventoryItem={currentInventoryItem} position={itemDescriptionPosition} />}
         >
             <FixedSizeGrid
                 columnCount={5}
-                columnWidth={70}
-                width={400}
+                columnWidth={inventorySize.itemSize}
+                width={inventorySize.width + 10}
                 rowCount={nbLines + 1}
-                rowHeight={80}
-                height={height}
+                rowHeight={inventorySize.itemSize + inventorySize.gapSize}
+                height={Math.min(nbLines + 1, 6) * (inventorySize.itemSize + inventorySize.gapSize)}
                 overscanRowCount={7}
-                className="scrollbar scrollbar-w-1 scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full"
+                className="scrollbar scrollbar-w-[5px] scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full"
                 style={{
                     overflowY: 'auto',
                     overflowX: 'hidden',
@@ -219,7 +211,6 @@ type InventoryDivProps = {
         max: number;
     };
     price?: number;
-    maxHeight?: string;
 };
 
 export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps>> = ({
@@ -230,10 +221,10 @@ export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps
     weight = null,
     description = undefined,
     isCart = false,
-    maxHeight = 'max-h-[45vh]',
     price = 0,
 }) => {
     const [showSort, setShowSort] = useState(false);
+    const inventorySize = useInventorySize(6);
 
     return (
         <div className="w-full">
@@ -336,10 +327,10 @@ export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps
             )}
             <div className="relative w-full">
                 <div
-                    className={classNames(
-                        'overflow-visible w-[400px] scrollbar scrollbar-w-1 scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full',
-                        maxHeight
-                    )}
+                    className="overflow-visible scrollbar scrollbar-w-1 scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full"
+                    style={{
+                        width: `${inventorySize.width + 10}px`,
+                    }}
                 >
                     <GameCanvasBox blur={false}>{children}</GameCanvasBox>
                 </div>

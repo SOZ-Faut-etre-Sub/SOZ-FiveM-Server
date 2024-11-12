@@ -20,11 +20,13 @@ import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
 import { InventoryDiv } from './Inventory';
 import { getItemSlotClassnames } from './ItemSlot';
+import { useInventorySize, useItemSize } from './size';
 
 export const WalletApp: FunctionComponent = () => {
     const [cards, setCards] = useState<InventoryCard[]>(null);
     const [currentCard, setCurrentCard] = useState<InventoryCard>(null);
     const open = cards !== null;
+    const inventorySize = useInventorySize(6);
 
     useNuiEvent('inventory', 'OpenWallet', ({ cards }) => {
         setCards(cards);
@@ -114,7 +116,13 @@ export const WalletApp: FunctionComponent = () => {
                             ) : null
                         }
                     >
-                        <div className="grid grid-cols-5 w-full gap-2 max-h-full">
+                        <div
+                            className="grid grid-cols-5 w-full max-h-full"
+                            style={{
+                                gap: `${inventorySize.gapSize}px`,
+                                width: `${inventorySize.width}px`,
+                            }}
+                        >
                             {cards.map((card, index) => (
                                 <CardItem key={index} index={index} card={card} setCurrentCard={setCurrentCard} />
                             ))}
@@ -136,6 +144,7 @@ const CardItem: FunctionComponent<{
         data: card,
     });
     const [contextData, setContextData] = useState({ visible: false, posX: 0, posY: 0 });
+    const itemSize = useItemSize();
 
     const {
         attributes,
@@ -168,7 +177,11 @@ const CardItem: FunctionComponent<{
     return (
         <>
             <div
-                className="aspect-square w-[70px] h-[70px]"
+                className="aspect-square"
+                style={{
+                    width: `${itemSize}px`,
+                    height: `${itemSize}px`,
+                }}
                 onContextMenu={event => {
                     setContextData({
                         visible: true,

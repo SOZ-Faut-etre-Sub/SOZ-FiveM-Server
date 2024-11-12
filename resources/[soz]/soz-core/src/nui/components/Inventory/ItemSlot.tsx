@@ -8,6 +8,7 @@ import { Item } from '../../../shared/item';
 import { usePlayer } from '../../hook/data';
 import { BorderBox } from '../Styleguide/GlassMorphismContainer';
 import { ActionItem, getActions } from './Actions';
+import { useItemSize } from './size';
 
 export const getItemSlotClassnames = (isOver: boolean) => {
     return classNames('cursor-pointer aspect-square flex justify-center items-center text-white', {
@@ -22,7 +23,6 @@ type ItemSlotProps = {
     targetConfiguration?: InventoryConfiguration;
     item: Item | null;
     slot: number;
-    setCurrentInventoryItem: (item: InventoryItem) => void;
     resolver: (id: string) => Item | null;
     showWeight?: boolean;
     allowActions?: boolean;
@@ -30,6 +30,7 @@ type ItemSlotProps = {
     allowHidden?: boolean;
     allDisabled?: boolean;
     onDoubleClick?: (inventoryItem: InventoryItem | 'money' | 'wallet' | 'keychain' | null, item?: Item | null) => void;
+    setCurrentInventoryItem: (item: InventoryItem) => void;
 };
 
 export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
@@ -39,8 +40,8 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
     targetConfiguration,
     item,
     slot,
-    setCurrentInventoryItem,
     resolver,
+    setCurrentInventoryItem,
     allowActions = false,
     showWeight = false,
     allowForceConsume = false,
@@ -61,6 +62,10 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
     const [contextData, setContextData] = useState({ visible: false, posX: 0, posY: 0 });
     const playerData = usePlayer();
     const [imageSrc, setImageSrc] = useState<string | null>(inventoryItem ? getItemIcon(inventoryItem) : null);
+    const [previousInventoryItem, setPreviousInventoryItem] = useState<
+        InventoryItem | 'money' | 'wallet' | 'keychain' | null
+    >(inventoryItem);
+    const itemSize = useItemSize();
     const disabled =
         hidden ||
         allDisabled ||
@@ -92,6 +97,18 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
         };
     }, [visibleRef]);
 
+    useEffect(() => {
+        if (previousInventoryItem !== inventoryItem) {
+            setPreviousInventoryItem(inventoryItem);
+        }
+    }, [inventoryItem]);
+
+    useEffect(() => {
+        if (inventoryItem) {
+            setImageSrc(getItemIcon(inventoryItem));
+        }
+    }, [previousInventoryItem]);
+
     const {
         attributes,
         listeners,
@@ -105,7 +122,14 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
 
     if (!inventoryItem || hidden) {
         return (
-            <div ref={visibleRef} className="aspect-square w-[70px] h-[70px]">
+            <div
+                ref={visibleRef}
+                className="aspect-square"
+                style={{
+                    width: `${itemSize}px`,
+                    height: `${itemSize}px`,
+                }}
+            >
                 <BorderBox duration="duration-0" borderClassName="rounded-xl aspect-square" showBorderOnHover={!isOver}>
                     <div ref={setDroppableNodeRef} className={getItemSlotClassnames(isOver)}></div>
                 </BorderBox>
@@ -120,7 +144,11 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
         <>
             <div
                 ref={visibleRef}
-                className="aspect-square w-[70px] h-[70px] relative"
+                className="aspect-square relative"
+                style={{
+                    width: `${itemSize}px`,
+                    height: `${itemSize}px`,
+                }}
                 onMouseEnter={() => {
                     if (inventoryItem instanceof Object) {
                         setCurrentInventoryItem(inventoryItem);
@@ -300,9 +328,16 @@ export const EmptySlot: FunctionComponent<EmptySlotProps> = ({
         id: `${prefixId}droppable_${inventoryId}_${slot}`,
         data: { inventoryId, slot, type: 'inventoryItem' },
     });
+    const itemSize = useItemSize();
 
     return (
-        <div className="aspect-square w-[70px] h-[70px]">
+        <div
+            className="aspect-square w-[70px] h-[70px]"
+            style={{
+                width: `${itemSize}px`,
+                height: `${itemSize}px`,
+            }}
+        >
             <BorderBox duration="duration-0" borderClassName="rounded-xl aspect-square" showBorderOnHover={!isOver}>
                 <div
                     ref={droppable ? setDroppableNodeRef : null}

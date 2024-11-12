@@ -15,7 +15,7 @@ import { createPortal } from 'react-dom';
 
 import { BankMoneyType, TaxType } from '../../../shared/bank';
 import { NuiEvent } from '../../../shared/event/nui';
-import { isSameInventoryItem } from '../../../shared/inventory';
+import { InventoryItem, isSameInventoryItem } from '../../../shared/inventory';
 import { AskInput } from '../../../shared/nui/input';
 import { RpcServerEvent } from '../../../shared/rpc';
 import { ShopContent } from '../../../shared/shop';
@@ -28,6 +28,7 @@ import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
 import { InventoryDiv } from './Inventory';
 import { ItemDescription } from './ItemDescription';
 import { EmptySlot, getItemIcon, getItemSlotClassnames } from './ItemSlot';
+import { useInventorySize, useItemSize } from './size';
 
 type DraggableDateShopItem = {
     type: 'shop_item';
@@ -50,8 +51,9 @@ type ShopData = {
 export const ShopCartApp: FunctionComponent = () => {
     const [shopContent, setShopContent] = useState<ShopContent>(null);
     const [cartContent, setCartContent] = useState<CartElement[]>([]);
-    const [currentShopItem, setCurrentShopItem] = useState<ShopItem>(null);
+    const [currentDescription, setCurrentDescription] = useState<InventoryItem>(null);
     const open = shopContent !== null;
+    const inventorySize = useInventorySize(6);
 
     useNuiEvent('inventory', 'OpenShop', data => {
         setShopContent(data);
@@ -172,6 +174,7 @@ export const ShopCartApp: FunctionComponent = () => {
             await addItem(data.item, modifier);
         }
     };
+
     const nbLines = Math.max(Math.ceil(shopContent.items.length / 5), 4);
 
     return (
@@ -186,28 +189,30 @@ export const ShopCartApp: FunctionComponent = () => {
             <div className="absolute h-full w-full font-prompt">
                 <div className="m-8">
                     <div className="flex max-h-[40vh]">
-                        <div className="max-h-full w-[400px] wide:ml-[94vh]">
+                        <div
+                            className="max-h-full wide:ml-[94vh]"
+                            style={{
+                                width: `${inventorySize.width}px`,
+                            }}
+                        >
                             <InventoryDiv
-                                description={
-                                    <ItemDescription
-                                        position="right"
-                                        inventoryItem={
-                                            currentShopItem
-                                                ? {
-                                                      name: currentShopItem.name,
-                                                      type: currentShopItem.type,
-                                                      slot: 0,
-                                                      amount: currentShopItem.amount || 1,
-                                                      metadata: currentShopItem.metadata || {},
-                                                  }
-                                                : null
-                                        }
-                                    />
-                                }
+                                description={<ItemDescription inventoryItem={currentDescription} position="right" />}
                                 title={shopContent.title}
                             >
-                                <div className="max-h-[390px] overflow-y-scroll w-[400px] scrollbar scrollbar-w-1 scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
-                                    <div className="grid grid-cols-5 gap-[10px]">
+                                <div
+                                    className="overflow-y-scroll scrollbar scrollbar-w-1 scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full"
+                                    style={{
+                                        width: `${inventorySize.width}px`,
+                                        maxHeight: `${inventorySize.maxHeight}px`,
+                                    }}
+                                >
+                                    <div
+                                        className="grid grid-cols-5"
+                                        style={{
+                                            gap: `${inventorySize.gapSize}px`,
+                                            width: `${inventorySize.width}px`,
+                                        }}
+                                    >
                                         {[...Array(nbLines)].map((_, i) => {
                                             return (
                                                 <Fragment key={i}>
@@ -228,10 +233,10 @@ export const ShopCartApp: FunctionComponent = () => {
 
                                                         return (
                                                             <ShopItem
+                                                                setCurrentDescription={setCurrentDescription}
                                                                 addItem={addItem}
                                                                 index={index}
                                                                 item={item}
-                                                                setCurrentShopItem={setCurrentShopItem}
                                                                 key={index}
                                                                 tax={shopContent.tax}
                                                                 moneyType={shopContent.moneyType}
@@ -261,11 +266,11 @@ export const ShopCartApp: FunctionComponent = () => {
 const ShopItem: FunctionComponent<{
     index: number;
     item: ShopItem;
-    setCurrentShopItem: (item: ShopItem) => void;
+    setCurrentDescription: (item: InventoryItem) => void;
     addItem: (item: ShopItem) => Promise<void>;
     moneyType: string | BankMoneyType;
     tax?: TaxType;
-}> = ({ index, item, setCurrentShopItem, addItem, moneyType, tax }) => {
+}> = ({ index, item, addItem, moneyType, tax, setCurrentDescription }) => {
     const {
         attributes,
         listeners,
@@ -279,6 +284,7 @@ const ShopItem: FunctionComponent<{
         },
     });
     const getPrice = useGetPrice();
+    const itemSize = useItemSize();
 
     const itemForIcon = {
         name: item.name,
@@ -291,10 +297,22 @@ const ShopItem: FunctionComponent<{
     return (
         <>
             <div
-                className="aspect-square w-[70px] h-[70px]"
-                onMouseEnter={() => setCurrentShopItem(item)}
+                className="aspect-square"
+                style={{
+                    width: `${itemSize}px`,
+                    height: `${itemSize}px`,
+                }}
+                onMouseEnter={() =>
+                    setCurrentDescription({
+                        name: item.name,
+                        type: item.type,
+                        slot: 0,
+                        amount: item.amount || 1,
+                        metadata: item.metadata || {},
+                    })
+                }
                 onMouseLeave={() => {
-                    setCurrentShopItem(null);
+                    setCurrentDescription(null);
                 }}
                 onDoubleClick={() => {
                     addItem(item);
@@ -359,20 +377,39 @@ const CartInventory: FunctionComponent<{
     shopData: ShopData;
     removeItem: (index: number) => void;
 }> = ({ items, tax, shopData, removeItem }) => {
-    const [currentCartItem, setCurrentCartItem] = useState<CartElement>(null);
     const { isOver, setNodeRef: setDroppableNodeRef } = useDroppable({
         id: `droppable_cart_content`,
     });
+    const [currentDescription, setCurrentDescription] = useState<InventoryItem>(null);
     const getPrice = useGetPrice();
+    const inventorySize = useInventorySize(4);
     const amount = items.reduce((acc, item) => acc + item.amount * item.price, 0);
     const nbLines = Math.max(Math.ceil(items.length / 5), 2);
 
     return (
         <div className="flex max-h-[30vh] mt-4">
-            <div ref={setDroppableNodeRef} className={classNames('max-h-full rounded w-[400px] wide:ml-[94vh]')}>
+            <div
+                ref={setDroppableNodeRef}
+                className={classNames('max-h-full rounded wide:ml-[94vh]')}
+                style={{
+                    width: `${inventorySize.width}px`,
+                }}
+            >
                 <InventoryDiv price={getPrice(amount, tax)} isCart title="Panier">
-                    <div className="max-h-[310px] overflow-y-scroll w-[400px] scrollbar scrollbar-w-1 scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
-                        <div className="grid grid-cols-5 w-full gap-[10px] max-h-full">
+                    <div
+                        className="overflow-y-scroll scrollbar scrollbar-w-1 scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full"
+                        style={{
+                            width: `${inventorySize.width + 10}px`,
+                            maxHeight: `${inventorySize.maxHeight}px`,
+                        }}
+                    >
+                        <div
+                            className="grid grid-cols-5 w-full max-h-full"
+                            style={{
+                                gap: `${inventorySize.gapSize}px`,
+                                width: `${inventorySize.width}px`,
+                            }}
+                        >
                             {[...Array(nbLines)].map((_, i) => {
                                 return (
                                     <Fragment key={i}>
@@ -397,7 +434,7 @@ const CartInventory: FunctionComponent<{
                                                     removeItem={removeItem}
                                                     cartItem={item}
                                                     index={index}
-                                                    setCurrentCartItem={setCurrentCartItem}
+                                                    setCurrentDescription={setCurrentDescription}
                                                     key={index}
                                                     isOver={isOver}
                                                 />
@@ -434,7 +471,7 @@ const CartInventory: FunctionComponent<{
                     maxWidth: '36vh',
                 }}
             >
-                <ItemDescription position="right" inventoryItem={currentCartItem} />
+                <ItemDescription inventoryItem={currentDescription} position="right" />
             </div>
         </div>
     );
@@ -443,10 +480,10 @@ const CartInventory: FunctionComponent<{
 const CartItem: FunctionComponent<{
     cartItem: CartElement;
     index: number;
-    setCurrentCartItem: (item: CartElement) => void;
+    setCurrentDescription: (item: InventoryItem) => void;
     removeItem: (index: number) => void;
     isOver?: boolean;
-}> = ({ cartItem, index, setCurrentCartItem, removeItem, isOver = false }) => {
+}> = ({ cartItem, index, setCurrentDescription, removeItem, isOver = false }) => {
     const {
         attributes,
         listeners,
@@ -459,18 +496,23 @@ const CartItem: FunctionComponent<{
             index,
         },
     });
+    const itemSize = useItemSize();
 
     return (
         <>
             <div
-                onMouseEnter={() => setCurrentCartItem(cartItem)}
+                onMouseEnter={() => setCurrentDescription(cartItem)}
                 onMouseLeave={() => {
-                    setCurrentCartItem(null);
+                    setCurrentDescription(null);
                 }}
                 onDoubleClick={() => {
                     removeItem(index);
                 }}
-                className="h-[70px] w-[70px] aspect-square"
+                className="aspect-square"
+                style={{
+                    width: `${itemSize}px`,
+                    height: `${itemSize}px`,
+                }}
             >
                 <GlassMorphismContainer
                     duration="duration-0"

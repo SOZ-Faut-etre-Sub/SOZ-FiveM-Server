@@ -49,11 +49,26 @@ export const MenuWatch: FunctionComponent<MenuWatchProps> = ({ data }) => {
                     </MenuItemSelect>
 
                     <MenuItemSelect
-                        title="Zoom"
+                        title="Taille UWUI"
                         value={data.zoom}
                         description={`Zoom de la montre connectée`}
                         onConfirm={async (_, value) => {
                             await fetchNui(NuiEvent.WatchMenuSetZoom, value);
+                        }}
+                    >
+                        <MenuItemSelectOption value={0.5}>50%</MenuItemSelectOption>
+                        <MenuItemSelectOption value={0.75}>75%</MenuItemSelectOption>
+                        <MenuItemSelectOption value={1}>100%</MenuItemSelectOption>
+                        <MenuItemSelectOption value={1.25}>125%</MenuItemSelectOption>
+                        <MenuItemSelectOption value={1.5}>150%</MenuItemSelectOption>
+                    </MenuItemSelect>
+
+                    <MenuItemSelect
+                        title="Taille Inventaire"
+                        value={data.inventorySize}
+                        description={`Taille de l'inventaire`}
+                        onConfirm={async (_, value) => {
+                            await fetchNui(NuiEvent.WatchMenuSetInventorySize, value);
                         }}
                     >
                         <MenuItemSelectOption value={0.5}>50%</MenuItemSelectOption>

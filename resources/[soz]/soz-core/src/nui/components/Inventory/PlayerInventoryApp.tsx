@@ -24,12 +24,14 @@ import { BorderBox, GameCanvasBox } from '../Styleguide/GlassMorphismContainer';
 import { createHandleDragAndDrop } from './Actions';
 import { Inventory } from './Inventory';
 import { getItemIcon, getItemSlotClassnames } from './ItemSlot';
+import { useInventorySize, useItemSize } from './size';
 
 export const PlayerInventoryApp: FunctionComponent = () => {
     const [open, setOpen] = useState(false);
     const inventoryItems = usePlayerInventoryItems();
     const configuration = usePlayerInventoryConfiguration();
     const player = usePlayer();
+    const inventorySize = useInventorySize(6);
 
     useNuiEvent('inventory', 'SetOpen', open => {
         setOpen(open);
@@ -108,7 +110,12 @@ export const PlayerInventoryApp: FunctionComponent = () => {
             sensors={sensors}
         >
             <div className="z-10 absolute h-full w-full font-prompt">
-                <main className="m-8 w-[400px] wide:ml-[94vh]">
+                <main
+                    className="m-8 wide:ml-[94vh]"
+                    style={{
+                        width: `${inventorySize.width + 10}px`,
+                    }}
+                >
                     <Inventory
                         title="Inventaire"
                         configuration={configuration}
@@ -118,7 +125,7 @@ export const PlayerInventoryApp: FunctionComponent = () => {
                         onDoubleClick={onDoubleClick}
                         itemDescriptionPosition="right"
                     />
-                    <div className="w-full">
+                    <div className="w-full mt-4">
                         <header className="relative w-full">
                             <div className="drop-shadow-bg h-[40px] flex w-full justify-between items-center">
                                 <h1 className="font-semibold uppercase text-white text-2xl">Raccourcis</h1>
@@ -127,11 +134,20 @@ export const PlayerInventoryApp: FunctionComponent = () => {
                         <div className="relative w-full">
                             <div
                                 className={classNames(
-                                    'overflow-visible w-[390px] scrollbar scrollbar-w-1 scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full'
+                                    'overflow-y-scroll scrollbar scrollbar-w-[5px] scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full'
                                 )}
+                                style={{
+                                    width: `${inventorySize.width + 10}px`,
+                                }}
                             >
                                 <GameCanvasBox blur={false}>
-                                    <div className="grid grid-cols-5 gap-[10px]">
+                                    <div
+                                        className="grid grid-cols-5"
+                                        style={{
+                                            gap: `${inventorySize.gapSize}px`,
+                                            width: `${inventorySize.width}px`,
+                                        }}
+                                    >
                                         {[...Array(10).keys()].map(index => {
                                             return (
                                                 <ShortcutSlot
@@ -199,10 +215,17 @@ const ShortcutSlot: FunctionComponent<ShortcutSlotProps> = ({ shortcut, inventor
             setImageSrc(getItemIcon(shortcutData));
         }
     }, [shortcutData]);
+    const itemSize = useItemSize();
 
     return (
         <>
-            <div className="aspect-square w-[70px] h-[70px]">
+            <div
+                className="aspect-square"
+                style={{
+                    width: `${itemSize}px`,
+                    height: `${itemSize}px`,
+                }}
+            >
                 <BorderBox duration="duration-0" borderClassName="rounded-xl aspect-square" showBorderOnHover={!isOver}>
                     <div ref={setDroppableNodeRef} className={getItemSlotClassnames(isOver)}>
                         {item && (

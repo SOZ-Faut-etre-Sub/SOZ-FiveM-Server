@@ -85,6 +85,7 @@ export type HudSettings = {
     theme: HudTheme;
     availableTheme: HudTheme[];
     zoom: number;
+    inventorySize: number;
     showDateTime: boolean;
     showWeather: boolean;
     showStreetName: boolean;

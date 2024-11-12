@@ -34,6 +34,7 @@ export class HudWatchProvider {
 
     private _theme = (GetResourceKvpString('soz_hud_theme') as HudTheme) ?? HudTheme.Auto;
     private _zoom = this.zoomFromKvp;
+    private _inventorySize = this.inventorySizeFromKvp;
     private _hideDateTime = GetResourceKvpInt('soz_hud_datetime_hide') === 1;
     private _hideWeather = GetResourceKvpInt('soz_hud_weather_hide') === 1;
     private _hideStreetName = GetResourceKvpInt('soz_hud_street_name_hide') === 1;
@@ -54,6 +55,13 @@ export class HudWatchProvider {
 
     protected get zoomFromKvp(): number {
         const kvpValue = Number(GetResourceKvpFloat('soz_hud_zoom').toPrecision(2));
+        if (kvpValue === null) return 1;
+        if (kvpValue < 0.5 || kvpValue > 1.5) return 1;
+        return kvpValue;
+    }
+
+    protected get inventorySizeFromKvp(): number {
+        const kvpValue = Number(GetResourceKvpFloat('soz_hud_inventory_size').toPrecision(2));
         if (kvpValue === null) return 1;
         if (kvpValue < 0.5 || kvpValue > 1.5) return 1;
         return kvpValue;
@@ -151,6 +159,7 @@ export class HudWatchProvider {
             theme: this._theme,
             availableTheme: this.availableTheme,
             zoom: this._zoom,
+            inventorySize: this._inventorySize,
             showDateTime: true,
             showWeather: true,
             showStreetName: true,
@@ -177,6 +186,11 @@ export class HudWatchProvider {
     public async setZoom(value: number) {
         this.zoom = value;
         TriggerEvent(ClientEvent.UPDATE_MINIMAP_POSITION);
+    }
+
+    @OnNuiEvent(NuiEvent.WatchMenuSetInventorySize)
+    public async setInventorySize(value: number) {
+        this.inventorySize = value;
     }
 
     @OnNuiEvent(NuiEvent.WatchMenuSetShowDateTime)
@@ -219,6 +233,7 @@ export class HudWatchProvider {
             theme: this._theme,
             availableTheme: this.availableTheme,
             zoom: this._zoom,
+            inventorySize: this._inventorySize,
             showDateTime: !this._hideDateTime,
             showWeather: !this._hideWeather,
             showStreetName: !this._hideStreetName,
@@ -239,6 +254,12 @@ export class HudWatchProvider {
         this._zoom = value;
         SetResourceKvpFloat('soz_hud_zoom', value);
         this.nuiDispatch.dispatch('hud', 'SetZoom', this._zoom);
+    }
+
+    public set inventorySize(value: number) {
+        this._inventorySize = value;
+        SetResourceKvpFloat('soz_hud_inventory_size', value);
+        this.nuiDispatch.dispatch('hud', 'SetInventorySize', this._inventorySize);
     }
 
     public set dateTime(value: boolean) {

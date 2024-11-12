@@ -34,6 +34,7 @@ export interface NuiHudMethodMap {
     SetTheme: HudTheme;
     SetAvailableTheme: HudTheme[];
     SetZoom: number;
+    SetInventorySize: number;
     SetShowDateTime: boolean;
     SetShowWeather: boolean;
     SetShowStreetName: boolean;
