@@ -105,7 +105,8 @@ export class VehicleCustomProvider {
             // LS Custom upgrade parts
             const upgradedParts = this.getLSCustomUpgradedPart(originalConfiguration, mods);
 
-            if (upgradedParts > 0 && !inventory.remove('ls_custom_upgrade_part', upgradedParts)) {
+            const lsCustomInventory = await this.inventoryFactory.get('ls_custom_storage');
+            if (upgradedParts > 0 && !lsCustomInventory.remove('ls_custom_upgrade_part', upgradedParts)) {
                 this.notifier.notify(
                     source,
                     `Le stock du LS Custom n'est pas suffisant. Impossible d'améliorer votre véhicule !`,
