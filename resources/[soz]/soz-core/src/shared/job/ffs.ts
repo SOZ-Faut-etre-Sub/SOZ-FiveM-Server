@@ -395,7 +395,6 @@ export const FFSCraftZones: NamedZone[] = [
         minZ: 30.4,
         maxZ: 30.8,
         heading: 270,
-        debugPoly: false,
     },
     {
         name: 'ffs_craft2',
@@ -405,7 +404,6 @@ export const FFSCraftZones: NamedZone[] = [
         minZ: 30.4,
         maxZ: 30.85,
         heading: 0,
-        debugPoly: false,
     },
     {
         name: 'ffs_craft3',
@@ -415,7 +413,6 @@ export const FFSCraftZones: NamedZone[] = [
         minZ: 30.4,
         maxZ: 30.8,
         heading: 0,
-        debugPoly: false,
     },
     {
         name: 'ffs_craft4',
@@ -425,7 +422,6 @@ export const FFSCraftZones: NamedZone[] = [
         minZ: 30.4,
         maxZ: 30.8,
         heading: 0,
-        debugPoly: false,
     },
     {
         name: 'ffs_craft5',
@@ -435,7 +431,6 @@ export const FFSCraftZones: NamedZone[] = [
         minZ: 30.2,
         maxZ: 30.85,
         heading: 0,
-        debugPoly: false,
     },
     {
         name: 'ffs_luxury_craft1',
@@ -445,7 +440,6 @@ export const FFSCraftZones: NamedZone[] = [
         minZ: 30.2,
         maxZ: 30.65,
         heading: 0,
-        debugPoly: false,
     },
     {
         name: 'ffs_luxury_craft2',
@@ -455,7 +449,6 @@ export const FFSCraftZones: NamedZone[] = [
         minZ: 30.2,
         maxZ: 30.6,
         heading: 0,
-        debugPoly: false,
     },
     {
         name: 'ffs_luxury_craft3',
@@ -465,7 +458,6 @@ export const FFSCraftZones: NamedZone[] = [
         minZ: 30.2,
         maxZ: 30.65,
         heading: 0,
-        debugPoly: false,
     },
     {
         name: 'ffs_shoes_craft1',
@@ -475,7 +467,6 @@ export const FFSCraftZones: NamedZone[] = [
         minZ: 30.05,
         maxZ: 30.4,
         heading: 0,
-        debugPoly: false,
     },
 ];
 

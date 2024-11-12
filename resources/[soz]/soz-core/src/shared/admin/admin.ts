@@ -67,6 +67,7 @@ export type DeveloperSubMenuState = {
     displayMileage: boolean;
     displayMouseDebug: boolean;
     doors: boolean;
+    debugPoly: boolean;
 };
 
 export type VehicleSubMenuState = {

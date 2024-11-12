@@ -17,6 +17,7 @@ import { HudMinimapProvider } from '../hud/hud.minimap.provider';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
 import { SenateRepository } from '../repository/senate.repository';
+import { TargetProvider } from '../target/target.provider';
 import { VehicleDamageProvider } from '../vehicle/vehicle.damage.provider';
 import { VehicleOffroadProvider } from '../vehicle/vehicle.offroad.provider';
 import { VehiclePoliceLocator } from '../vehicle/vehicle.police.locator.provider';
@@ -61,6 +62,9 @@ export class AdminMenuProvider {
 
     @Inject(DoorProvider)
     private doorProvider: DoorProvider;
+
+    @Inject(TargetProvider)
+    private targetProvider: TargetProvider;
 
     @OnEvent(ClientEvent.ADMIN_OPEN_MENU)
     @Command('admin', {
@@ -123,6 +127,7 @@ export class AdminMenuProvider {
                         displayMileage: this.adminMenuDeveloperProvider.showMileage,
                         displayMouseDebug: this.adminMenuDeveloperProvider.showMouseDebug,
                         doors: this.doorProvider.isAdminEnabled(),
+                        debugPoly: this.targetProvider.isDebugPoly(),
                     },
                     vehicule: {
                         noStall: this.vehicleDamageProvider.getAdminNoStall(),

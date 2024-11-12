@@ -5,7 +5,6 @@ import { Point3D, rotatePoint, Vector2, Vector3, Vector4 } from './vector';
 
 type BoxZoneOptions<T> = PolygonZoneOptions<T> & {
     heading?: number;
-    debugPoly?: boolean;
 };
 
 export type Zone<T = never> = {
@@ -15,7 +14,6 @@ export type Zone<T = never> = {
     heading?: number;
     minZ?: number;
     maxZ?: number;
-    debugPoly?: boolean;
     data?: T;
 };
 
@@ -104,7 +102,6 @@ export class BoxZone<T = never> extends PolygonZone<T> {
     public readonly length: number;
     public readonly width: number;
     public readonly heading: number;
-    public readonly debugPoly: boolean;
 
     public static fromZone<T>(zone: Zone<T>): BoxZone<T> {
         return new BoxZone(zone.center, zone.length || 1, zone.width || 1, {
@@ -112,7 +109,6 @@ export class BoxZone<T = never> extends PolygonZone<T> {
             maxZ: zone.maxZ,
             data: zone.data,
             heading: zone.heading,
-            debugPoly: zone.debugPoly,
         });
     }
 
@@ -147,7 +143,6 @@ export class BoxZone<T = never> extends PolygonZone<T> {
         this.length = length;
         this.width = width;
         this.heading = heading;
-        this.debugPoly = options?.debugPoly;
     }
 
     public draw(wallColor: RGBAColor | RGBColor, alpha?: number, text?: string) {
@@ -229,7 +224,6 @@ export class BoxZone<T = never> extends PolygonZone<T> {
             heading: this.heading,
             minZ: this.minZ,
             maxZ: this.maxZ,
-            debugPoly: this.debugPoly,
             data: this.data,
         };
     }

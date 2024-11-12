@@ -1224,7 +1224,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
         },
         {
             center: [365.05, -1391.05, 37.99],
-            length: 0.8,
+            length: 1.2,
             width: 4.0,
             minZ: 36.99,
             maxZ: 38.99,
@@ -1236,7 +1236,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
         },
         {
             center: [356.14, -1384.64, 37.99],
-            length: 0.8,
+            length: 1.0,
             width: 5.6,
             minZ: 36.99,
             maxZ: 38.99,

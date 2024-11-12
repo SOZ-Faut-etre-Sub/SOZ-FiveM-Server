@@ -6,14 +6,12 @@ export type PolygonZoneOptions<T> = {
     minZ?: number;
     maxZ?: number;
     data?: T;
-    debugPoly?: boolean;
 };
 
 export class PolygonZone<T = never> implements AbstractZone {
     public readonly data?: T;
     public readonly minZ?: number;
     public readonly maxZ?: number;
-    public readonly debugPoly: boolean;
 
     protected points: (Vector2 | Vector3)[];
 
@@ -33,7 +31,6 @@ export class PolygonZone<T = never> implements AbstractZone {
         }
 
         this.data = options?.data;
-        this.debugPoly = options?.debugPoly;
 
         if (points[0][0] != points[this.points.length - 1][0] || points[0][1] != points[this.points.length - 1][1]) {
             this.points.push(points[0]);

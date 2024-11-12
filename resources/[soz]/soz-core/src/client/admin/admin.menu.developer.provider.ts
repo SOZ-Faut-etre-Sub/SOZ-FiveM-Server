@@ -15,6 +15,7 @@ import { InputService } from '../nui/input.service';
 import { NuiZoneProvider } from '../nui/nui.zone.provider';
 import { ObjectProvider } from '../object/object.provider';
 import { ScreenService } from '../screen.service';
+import { TargetProvider } from '../target/target.provider';
 import { NoClipProvider } from '../utils/noclip.provider';
 import { VehicleConditionProvider } from '../vehicle/vehicle.condition.provider';
 import { VehicleOffroadProvider } from '../vehicle/vehicle.offroad.provider';
@@ -48,6 +49,9 @@ export class AdminMenuDeveloperProvider {
     @Inject(VehicleOffroadProvider)
     public vehicleOffroadProvider: VehicleOffroadProvider;
 
+    @Inject(TargetProvider)
+    public targetProvider: TargetProvider;
+
     @Inject(ScreenService)
     public screenService: ScreenService;
 
@@ -72,6 +76,11 @@ export class AdminMenuDeveloperProvider {
                 maxZ: ${(zone.maxZ || zone.center[2] + 2.0).toFixed(2)},
             });`
         );
+    }
+
+    @OnNuiEvent(NuiEvent.AdminSetDisplayZones)
+    public async displayZones(value: boolean): Promise<void> {
+        this.targetProvider.setDebugPoly(value);
     }
 
     @OnNuiEvent(NuiEvent.AdminToggleNoClip)

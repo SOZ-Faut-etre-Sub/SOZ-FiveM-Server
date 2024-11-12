@@ -114,6 +114,16 @@ export const DeveloperSubMenu: FunctionComponent<DeveloperSubMenuProps> = ({ ban
                     Créer une zone
                 </MenuItemButton>
                 <MenuItemCheckbox
+                    checked={state.debugPoly}
+                    disabled={!isAdminOrStaff}
+                    onChange={async value => {
+                        state.doors = value;
+                        await fetchNui(NuiEvent.AdminSetDisplayZones, value);
+                    }}
+                >
+                    🧊Affichage des zones
+                </MenuItemCheckbox>
+                <MenuItemCheckbox
                     checked={state.doors}
                     disabled={!isAdminOrStaff}
                     onChange={async value => {

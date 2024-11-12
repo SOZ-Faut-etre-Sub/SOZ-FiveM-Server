@@ -11,7 +11,6 @@ const orderZone: NamedZone = {
     minZ: 34.49,
     maxZ: 35.09,
     heading: 0,
-    debugPoly: false,
 };
 
 export const orderNorthZone: NamedZone = {
@@ -22,7 +21,6 @@ export const orderNorthZone: NamedZone = {
     minZ: 46.58,
     maxZ: 46.98,
     heading: 243.28,
-    debugPoly: false,
 };
 
 const defaultUpgradeConfiguration: VehicleConfiguration = {
