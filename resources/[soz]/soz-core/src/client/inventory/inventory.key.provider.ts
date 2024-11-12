@@ -12,7 +12,7 @@ import { Command } from '../../core/decorators/command';
 import { NuiEvent } from '../../shared/event/nui';
 import { ServerEvent } from '../../shared/event/server';
 import { CardType } from '../../shared/nui/card';
-import { Vector3 } from '../../shared/polyzone/vector';
+import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { AnimationService } from '../animation/animation.service';
 import { Notifier } from '../notifier';
 import { PlayerFinderService } from '../player/player.finder.service';
@@ -123,6 +123,12 @@ export class InventoryKeyProvider {
         if (keys.length === 0) {
             this.notifier.error('Aucune clef à donner.');
 
+            return;
+        }
+
+        const sourcePosition = GetEntityCoords(PlayerPedId()) as Vector3;
+        if (getDistance(sourcePosition, player.position) > 4.0) {
+            this.notifier.notify('Vous êtes trop loin, rapprochez-vous.', 'error');
             return;
         }
 
