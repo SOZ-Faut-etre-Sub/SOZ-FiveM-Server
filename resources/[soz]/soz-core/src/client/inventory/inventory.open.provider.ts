@@ -10,7 +10,7 @@ import { emitRpc } from '@public/core/rpc';
 import { wait } from '@public/core/utils';
 import { ServerEvent } from '@public/shared/event/server';
 import { InventoryType, isInventoryItemExpired } from '@public/shared/inventory';
-import { JobPermission, JobType } from '@public/shared/job';
+import { JobType } from '@public/shared/job';
 import { computeBinId } from '@public/shared/job/garbage';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
