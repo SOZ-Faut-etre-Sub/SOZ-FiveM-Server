@@ -4,6 +4,7 @@ export enum NuiEvent {
     AdminTriggerNotification = 'soz-core:client:admin:trigger-notification',
     AdminCopyCoords = 'soz-core:client:admin:copy-coords',
     AdminCreateZone = 'soz-core:client:admin:create-zone',
+    AdminSetDisplayZones = 'soz-core:client:admin:display-zone',
     AdminGetJobGrades = 'soz-core:client:admin:get-job-grades',
     AdminGetPlayers = 'soz-core:client:admin:get-players',
     AdminGetVehicles = 'soz-core:client:admin:get-vehicles',

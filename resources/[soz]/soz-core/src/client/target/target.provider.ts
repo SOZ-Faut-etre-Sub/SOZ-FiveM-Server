@@ -47,6 +47,8 @@ export class TargetProvider {
 
     private _activeTargetedEntity: Array<number> = [];
 
+    private _debugPoly = false;
+
     @Command('+target', {
         description: 'Activer le mode ciblage',
         keys: [{ mapper: 'keyboard', key: 'LMENU' }],
@@ -208,7 +210,7 @@ export class TargetProvider {
 
         if (nearbyZones && nearbyZones.length > 0) {
             for (const [, { zone, targets, distance }] of nearbyZones) {
-                if (zone.debugPoly) zone.draw([0, 255, 0, 100], 0.5);
+                if (this._debugPoly) zone.draw([0, 255, 0, 100], 0.5);
                 if (playerDistance > distance) continue;
 
                 if (zone.isPointInside(entityCoords)) {
@@ -344,5 +346,13 @@ export class TargetProvider {
         this.nuiDispatch.dispatch('target', 'SetTargeting', this._targetActive);
         this.nuiDispatch.dispatch('target', 'SetTargetFound', this._targetFound);
         this.nuiDispatch.dispatch('target', 'SetTargets', this._targetOptions);
+    }
+
+    public setDebugPoly(value: boolean) {
+        this._debugPoly = value;
+    }
+
+    public isDebugPoly() {
+        return this._debugPoly;
     }
 }

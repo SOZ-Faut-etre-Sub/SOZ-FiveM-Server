@@ -413,7 +413,6 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
             heading: 0,
             minZ: 40.85,
             maxZ: 42.85,
-            debugPoly: false,
         },
         targets: [],
         products: [
@@ -432,7 +431,6 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
             heading: 180.0,
             minZ: 33.68,
             maxZ: 35.68,
-            debugPoly: false,
         },
         targets: [],
         products: [
@@ -487,7 +485,6 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
             heading: 0,
             minZ: 33.68,
             maxZ: 35.68,
-            debugPoly: false,
         },
         targets: [],
         products: [
@@ -505,7 +502,6 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
             heading: 225.64,
             minZ: 45.82,
             maxZ: 47.82,
-            debugPoly: false,
         },
         targets: [],
         products: [
@@ -526,7 +522,6 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
             heading: 147,
             minZ: 31.27,
             maxZ: 32.07,
-            debugPoly: false,
         },
         targets: [],
         products: [

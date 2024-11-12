@@ -14,7 +14,6 @@ export type Auction = {
             heading: number;
             minZ: number;
             maxZ: number;
-            debugPoly?: boolean;
         };
     };
     minimumBidPrice: number;

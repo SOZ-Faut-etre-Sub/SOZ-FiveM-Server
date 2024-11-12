@@ -208,7 +208,6 @@ const orderZone: NamedZone = {
     minZ: 41.7,
     maxZ: 42.25,
     heading: 365,
-    debugPoly: false,
 };
 
 export const UpwConfig = {

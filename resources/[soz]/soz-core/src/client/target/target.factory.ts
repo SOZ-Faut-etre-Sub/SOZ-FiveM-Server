@@ -12,7 +12,6 @@ export type PedOptions = Ped & {
     length?: number;
     width?: number;
     minusOne?: boolean;
-    debugPoly?: boolean;
     target: {
         options: TargetOption[];
         distance: number;
@@ -69,7 +68,6 @@ export class TargetFactory {
             length: ped.length || 0.8,
             minZ: ped.coords.z - 1,
             maxZ: ped.coords.z + 2,
-            debugPoly: ped.debugPoly,
         };
         this.createForBoxZone(`entity_${id}`, zone, ped.target.options);
         if (ped.dragAndDrop) {

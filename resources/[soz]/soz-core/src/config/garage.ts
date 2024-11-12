@@ -2524,7 +2524,6 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
                 data: {
                     capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
                 },
-                debugPoly: true,
             }),
             new BoxZone([1057.94, -1972.02, 31.01], 11.4, 4.8, {
                 heading: 323.98,
@@ -2533,7 +2532,6 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
                 data: {
                     capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
                 },
-                debugPoly: true,
             }),
             new BoxZone([1062.71, -1977.14, 31.02], 9.8, 5.2, {
                 heading: 325.17,
@@ -2542,7 +2540,6 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
                 data: {
                     capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
                 },
-                debugPoly: true,
             }),
         ],
     },
