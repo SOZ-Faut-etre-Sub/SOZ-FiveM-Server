@@ -729,6 +729,7 @@ export const VEHICLE_CONFIGURATION_BY_VEHICLE_MODEL: Record<number, Partial<Inve
     [joaat('lspd50')]: { maxWeight: 80000 },
     [joaat('lspd51')]: { maxWeight: 80000 },
     [joaat('polmav')]: { maxWeight: 200000 },
+    [joaat('riot')]: { maxWeight: 500000 },
 
     // BCSO
     [joaat('sheriff')]: { maxWeight: 60000 },
@@ -752,6 +753,7 @@ export const VEHICLE_CONFIGURATION_BY_VEHICLE_MODEL: Record<number, Partial<Inve
     [joaat('ambcar')]: { maxWeight: 80000 },
     [joaat('lguard')]: { maxWeight: 80000 },
     [joaat('firetruk')]: { maxWeight: 80000 },
+    [joaat('polmav')]: { maxWeight: 200000 },
 
     // STONKS
     [joaat('stockade')]: { maxWeight: 600000 },
@@ -801,6 +803,8 @@ export const VEHICLE_CONFIGURATION_BY_VEHICLE_MODEL: Record<number, Partial<Inve
 
     // FBI
     [joaat('polgauntlet')]: { maxWeight: 80000 },
+    [joaat('fbi2')]: { maxWeight: 200000 },
+    [joaat('paragonsfbi')]: { maxWeight: 80000 },
 
     // FFS
     [joaat('rumpo4')]: { maxWeight: 200000 },
@@ -837,6 +841,22 @@ export const VEHICLE_CONFIGURATION_BY_VEHICLE_MODEL: Record<number, Partial<Inve
 
     // ZKEA
     [joaat('mule3')]: { maxWeight: 210000, allowedItems: ['zkea_crate'], allowedItemTypes: [] },
+
+    // Other
+    [joaat('vagrant')]: { maxWeight: 10000 },
+
+    // Planes
+    [joaat('streamer216')]: { maxWeight: 500000 },
+    [joaat('dodo')]: { maxWeight: 200000 },
+    [joaat('microlight')]: { maxWeight: 50000 },
+
+    // Trains
+    [joaat('freightcar')]: { maxWeight: 200000 },
+    [joaat('freightcar2')]: { maxWeight: 200000 },
+    [joaat('freightcont1')]: { maxWeight: 200000 },
+    [joaat('freightcont2')]: { maxWeight: 200000 },
+    [joaat('freightgrain')]: { maxWeight: 200000 },
+    [joaat('tankercar')]: { maxWeight: 200000 },
 };
 
 /**
