@@ -175,7 +175,7 @@ export const ItemDescription: FunctionComponent<ItemDescriptionProps> = ({
                     {inventoryItem.type === 'zkea_crate' && (
                         <>
                             {(inventoryItem.metadata?.zkeaCrateElements || []).map((element, index) => (
-                                <div key={index}>- ${element.name}</div>
+                                <div key={index}>- {element.name}</div>
                             ))}
                         </>
                     )}
