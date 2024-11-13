@@ -75,7 +75,7 @@ export class HousingFournitureProvider {
             return;
         }
 
-        const crates = Object.values(inventory.items()).filter(item => item.metadata.zkeaCrateElements);
+        const crates = Object.values(inventory.items()).filter(item => item.metadata?.zkeaCrateElements);
 
         if (!crates) {
             return;
