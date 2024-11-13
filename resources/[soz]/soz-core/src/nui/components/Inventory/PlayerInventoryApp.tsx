@@ -35,8 +35,12 @@ export const PlayerInventoryApp: FunctionComponent = () => {
         setOpen(open);
     });
 
-    useNuiFocus(open, open, open, null, open);
+    useNuiFocus(open, open, false);
     useKeyPress('Escape', () => {
+        setOpen(false);
+    });
+
+    useKeyPress('F2', () => {
         setOpen(false);
     });
 

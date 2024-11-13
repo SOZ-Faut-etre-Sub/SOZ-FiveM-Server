@@ -220,7 +220,7 @@ export class InventoryProvider {
                 const amount = await this.inputService.askInput(
                     {
                         title: 'Quantité :',
-                        defaultValue: '1',
+                        defaultValue: inventoryItem.amount.toString(),
                         maxCharacters: 5,
                     },
                     inventoryItem instanceof Object
