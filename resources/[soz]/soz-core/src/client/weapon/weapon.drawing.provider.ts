@@ -16,7 +16,6 @@ export class WeaponDrawingProvider {
     private shouldAdminDrawWeapon = true;
     private weaponsToDraw: WeaponDrawPosition[] = [];
     private weaponAttached: Record<string, number> = {};
-    private playerLoaded = false;
 
     @Inject(AttachedObjectService)
     private attachedObjectService: AttachedObjectService;
@@ -79,9 +78,6 @@ export class WeaponDrawingProvider {
 
     @PlayerInventoryUpdate()
     async setupPlayerWeaponsDraw(items: Record<number, InventoryItem>) {
-        this.shouldDrawWeapon = true;
-        this.playerLoaded = true;
-
         await this.updateWeaponDrawList(items);
         const weapon = this.weaponService.getCurrentWeapon();
 
@@ -172,7 +168,6 @@ export class WeaponDrawingProvider {
     @On('QBCore:Client:OnPlayerUnload')
     async playerUnLoaded() {
         this.shouldDrawWeapon = false;
-        this.playerLoaded = false;
         await this.undrawWeapon();
     }
 }
