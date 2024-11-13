@@ -341,7 +341,8 @@ export class InventoryOpenProvider {
     }
 
     public hasSubscription(storageId: string) {
-        return this.subscriptions.has(storageId);
+        const subscriptions = this.subscriptions.get(storageId);
+        return subscriptions && subscriptions.size > 0;
     }
 
     private doSubscribe(source: number, inventory: Inventory) {

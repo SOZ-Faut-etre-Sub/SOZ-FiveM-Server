@@ -349,6 +349,9 @@ export class InventoryFactory {
             this.inventories.delete('trunk_' + oldPlate);
             this.inventories.set('trunk_' + newPlate, inventory);
 
+            // @ts-expect-error Needed as the id is really changed when updating plate
+            inventory.id = 'trunk_' + newPlate;
+
             await this.database.inventories.update({
                 where: {
                     id: 'trunk_' + oldPlate,
