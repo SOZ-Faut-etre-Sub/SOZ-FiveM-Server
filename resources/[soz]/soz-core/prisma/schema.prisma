@@ -240,11 +240,11 @@ model scene_entity {
 }
 
 model scene_ped {
-    id           String   @id @default(uuid())
-    ped          Json
-    created_at   DateTime @default(now()) @db.Timestamp(0)
-    scene_id     String
-    scene        scene    @relation(fields: [scene_id], references: [id], onDelete: Cascade, map: "FK_scene_ped_scene")
+    id         String   @id @default(uuid())
+    ped        Json
+    created_at DateTime @default(now()) @db.Timestamp(0)
+    scene_id   String
+    scene      scene    @relation(fields: [scene_id], references: [id], onDelete: Cascade, map: "FK_scene_ped_scene")
 }
 
 model collection_prop {
@@ -391,7 +391,6 @@ model player {
     gang                    String?                  @db.Text
     position                String                   @db.Text
     metadata                String                   @db.Text
-    inventory               String?                  @db.LongText
     last_updated            DateTime                 @default(now()) @db.Timestamp(0)
     created_at              DateTime                 @default(now()) @db.Timestamp(0)
     is_default              Int                      @default(0)
@@ -473,24 +472,11 @@ model PlayerVehicle {
     @@map("player_vehicles")
 }
 
-model storages {
-    name       String  @id @db.VarChar(50)
-    type       String? @db.VarChar(50)
-    owner      String? @db.VarChar(64)
-    max_slots  Int?    @default(10)
-    max_weight Int?    @default(250000)
-    inventory  String? @db.LongText
-
-    @@index([owner], map: "owner")
-    @@index([type], map: "type")
-    @@index([name, type, owner], name: "storageTypeOwner")
-}
-
 model inventories {
-    id              String  @id @db.VarChar(255)
-    type            String  @db.VarChar(50)
-    configuration   Json
-    items           Json
+    id            String @id @db.VarChar(255)
+    type          String @db.VarChar(50)
+    configuration Json
+    items         Json
 }
 
 model upw_facility {
@@ -1010,7 +996,7 @@ model darkweb_participants {
 }
 
 model heist {
-    id     String   @db.VarChar(128) @id
+    id     String   @id @db.VarChar(128)
     update DateTime @default(now()) @db.Timestamp(0)
     data   String   @db.Text
 }
