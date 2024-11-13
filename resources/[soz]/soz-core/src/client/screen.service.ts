@@ -1,7 +1,6 @@
 import { Injectable } from '@core/decorators/injectable';
 import { wait } from '@core/utils';
 
-import { Control } from '../shared/input';
 import { add2Vector3, multVector3, sub2Vector3, Vector2, Vector3 } from '../shared/polyzone/vector';
 
 @Injectable()
@@ -52,12 +51,10 @@ export class ScreenService {
     }
 
     public async getEntityOnMousePosition(): Promise<[number, Vector3]> {
-        const posX = GetControlNormal(0, Control.CursorX);
-        const posY = GetControlNormal(0, Control.CursorY);
+        const [screenX, screenY] = GetActiveScreenResolution();
+        const [x, y] = GetNuiCursorPosition();
 
-        const cursor = [posX, posY] as Vector2;
-
-        return this.getEntityOnPosition(cursor);
+        return await this.getEntityOnPosition([x / screenX, y / screenY]);
     }
 
     public async getEntityOnPosition(
