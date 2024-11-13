@@ -450,7 +450,7 @@ export class Inventory {
         }
 
         // Case 4: Kerosene + Chainsaw
-        if (existingItem.name === 'chainsaw' && inventoryItem.name === 'kerosene') {
+        if (existingItem.name === 'chainsaw' && inventoryItem.name === 'kerosene_jerrycan') {
             existingItem.metadata = {
                 ...(existingItem.metadata || {}),
                 fuel: 20,
