@@ -33,7 +33,7 @@ export const DialerHistory: React.FC = () => {
     const navigate = useNavigate();
     const [t] = useTranslation();
 
-    const handleCall = (phoneNumber) => {
+    const handleCall = phoneNumber => {
         initializeCall(phoneNumber);
     };
 
@@ -61,7 +61,7 @@ export const DialerHistory: React.FC = () => {
                 >
                     {calls
                         .sort((a, b) => b.start - a.start)
-                        .map((call) => {
+                        .map(call => {
                             const contactNumber = call.transmitter === myNumber ? call.receiver : call.transmitter;
                             const isContactRegistered = getDisplayByNumber(contactNumber) !== contactNumber;
 
@@ -91,7 +91,7 @@ export const DialerHistory: React.FC = () => {
                                                             'text-gray-100': config.theme.value === 'dark',
                                                             'text-gray-600': config.theme.value === 'light',
                                                         },
-                                                        'shrink self-center text-base flex w-3/5',
+                                                        'shrink self-center text-base flex w-3/5'
                                                     )}
                                                 >
                                                     <div className="flex justify-center items-center w-1/4">
@@ -138,7 +138,7 @@ export const DialerHistory: React.FC = () => {
                                                         className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
                                                         onClick={() =>
                                                             navigate(
-                                                                `/contacts/-1?addNumber=${contactNumber}&referral=/phone/contacts`,
+                                                                `/contacts/-1?addNumber=${contactNumber}&referral=/phone/contacts`
                                                             )
                                                         }
                                                     >
