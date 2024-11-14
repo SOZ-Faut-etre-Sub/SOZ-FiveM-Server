@@ -64,13 +64,19 @@ export class NewsProvider {
         });
 
         RemovableObjects.forEach(model => {
-            this.interactionProvider.createInteractionForModels(model, {
-                label: 'Récupérer',
-                job: { [JobType.News]: 0, [JobType.YouNews]: 0 },
-                action: object => {
-                    this.objectProvider.collectObject(object);
+            this.interactionProvider.createInteractionForModels(
+                model,
+                {
+                    label: 'Récupérer',
+                    job: { [JobType.News]: 0, [JobType.YouNews]: 0 },
+                    action: object => {
+                        this.objectProvider.collectObject(object);
+                    },
                 },
-            });
+                undefined,
+                0.8,
+                1.2
+            );
         });
 
         this.targetFactory.createForBoxZone(

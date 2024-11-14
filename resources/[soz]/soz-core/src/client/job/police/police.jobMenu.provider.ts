@@ -1,10 +1,10 @@
 import { AnimationService } from '@public/client/animation/animation.service';
 import { Notifier } from '@public/client/notifier';
-import { OnNuiEvent } from '@public/core/decorators/event';
+import { OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { emitRpc } from '@public/core/rpc';
-import { NuiEvent, ServerEvent } from '@public/shared/event';
+import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import { RpcServerEvent } from '@public/shared/rpc';
 
 import { PositiveNumberValidator } from '../../../shared/nui/input';
@@ -26,14 +26,7 @@ export class PoliceJobMenuProvider {
     @Inject(PoliceAnimationProvider)
     private policeAnimationProvider: PoliceAnimationProvider;
 
-    @OnNuiEvent(NuiEvent.PolicePlaceSpike)
-    public async onPlaceSpike() {
-        TriggerServerEvent(ServerEvent.POLICE_PLACE_SPIKE, 'spike');
-
-        return Ok(true);
-    }
-
-    @OnNuiEvent(NuiEvent.PolicePlaceSpeedZone)
+    @OnEvent(ClientEvent.POLICE_PLACE_SPEED_ZONE)
     public async onNuiPlaceSpeedZone() {
         const distances = Math.floor(
             await this.inputService.askInput({ title: 'Distances (entre 1 et 5 mètre)' }, PositiveNumberValidator)

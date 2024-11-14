@@ -1,4 +1,4 @@
-import { Once, OnceStep, OnEvent, OnNuiEvent } from '@core/decorators/event';
+import { Once, OnceStep, OnEvent } from '@core/decorators/event';
 import { Exportable } from '@core/decorators/exports';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
@@ -14,11 +14,12 @@ import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { wait } from '@public/core/utils';
 import { getChunkId, getGridChunks } from '@public/shared/grid';
 import { InventoryType } from '@public/shared/inventory';
+import { LOW_RANGE_JOBS_ITEMS } from '@public/shared/job';
 import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { RpcClientEvent, RpcServerEvent } from '@public/shared/rpc';
 import { TargetOption } from '@public/shared/target';
 
-import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
+import { ClientEvent, ServerEvent } from '../../shared/event';
 import { WorldObject } from '../../shared/object';
 import { DnDCallback, InventoryDragAndDropProvider } from '../inventory/inventory.draganddrop.provider';
 
@@ -119,7 +120,17 @@ export class ObjectProvider {
             await this.createObject(object);
         }
 
+        const lowJobsItem = {};
+        for (const [modelString, value] of Object.entries(LOW_RANGE_JOBS_ITEMS)) {
+            lowJobsItem[GetHashKey(modelString)] = value;
+        }
+
         RemovableObjects.forEach(model => {
+            const config = lowJobsItem[model] || {
+                interactionDistance: 1.5,
+                drawDistance: 6.0,
+            };
+
             this.interactionProvider.createInteractionForModels(
                 model,
                 {
@@ -136,10 +147,11 @@ export class ObjectProvider {
 
                         TriggerServerEvent(ServerEvent.OBJECT_COLLECT, id);
                     },
+                    job: config.jobs,
                 },
                 undefined,
-                1.5,
-                6
+                config.interactionDistance,
+                config.drawDistance
             );
         });
 
@@ -424,7 +436,7 @@ export class ObjectProvider {
         console.log(propsIds);
     }
 
-    @OnNuiEvent(NuiEvent.ObjectPlace)
+    @OnEvent(ClientEvent.OBJECT_PLACE_JOB)
     public async onPlaceObject({
         item,
         props,

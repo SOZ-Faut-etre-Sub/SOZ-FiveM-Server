@@ -5,16 +5,7 @@ import { NuiEvent } from '../../../../shared/event';
 import { MenuType } from '../../../../shared/nui/menu';
 import { fetchNui } from '../../../fetch';
 import { usePlayer } from '../../../hook/data';
-import {
-    MainMenu,
-    Menu,
-    MenuContent,
-    MenuItemButton,
-    MenuItemSelect,
-    MenuItemSelectOption,
-    MenuItemText,
-    MenuTitle,
-} from '../../Styleguide/Menu';
+import { MainMenu, Menu, MenuContent, MenuItemButton, MenuItemText, MenuTitle } from '../../Styleguide/Menu';
 
 type MenuBennysProps = {
     data: {
@@ -54,21 +45,6 @@ export const MenuBennys: FunctionComponent<MenuBennysProps> = ({ data }) => {
                             🔧 Améliorer le véhicule
                         </MenuItemButton>
                     )}
-                    <MenuItemSelect
-                        onConfirm={(index, value) => {
-                            fetchNui(NuiEvent.ObjectPlace, value);
-                        }}
-                        title="🚧 Poser un objet"
-                    >
-                        <MenuItemSelectOption
-                            value={{
-                                item: 'cone',
-                                props: 'prop_roadcone02a',
-                            }}
-                        >
-                            Cône de circulation
-                        </MenuItemSelectOption>
-                    </MenuItemSelect>
                 </MenuContent>
             </MainMenu>
         </Menu>

@@ -4,16 +4,7 @@ import { FunctionComponent, useEffect, useState } from 'react';
 import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';
-import {
-    MainMenu,
-    Menu,
-    MenuContent,
-    MenuItemCheckbox,
-    MenuItemSelect,
-    MenuItemSelectOption,
-    MenuItemText,
-    MenuTitle,
-} from '../Styleguide/Menu';
+import { MainMenu, Menu, MenuContent, MenuItemCheckbox, MenuItemText, MenuTitle } from '../Styleguide/Menu';
 
 type FightForStyleStateProps = {
     data: {
@@ -31,8 +22,6 @@ export const StonkJobMenu: FunctionComponent<FightForStyleStateProps> = ({ data 
     const banner = 'https://cfx-nui-soz-core/public/images/banner/menu_job_cash-transfer.webp';
     const [blips, setBlips] = useState(null);
     const player = usePlayer();
-
-    const propsList = [{ label: 'Cône de circulation', item: 'cone', props: 'prop_roadcone02a' }];
 
     useEffect(() => {
         if (data && data.state) {
@@ -97,17 +86,6 @@ export const StonkJobMenu: FunctionComponent<FightForStyleStateProps> = ({ data 
                     >
                         Afficher la revente de petits sacs d'argent
                     </MenuItemCheckbox>
-
-                    <MenuItemSelect
-                        title="🚧 Poser un objet"
-                        onConfirm={async selectedIndex => {
-                            await fetchNui(NuiEvent.ObjectPlace, propsList[selectedIndex]);
-                        }}
-                    >
-                        {propsList.map(prop => (
-                            <MenuItemSelectOption key={prop.item}>{prop.label}</MenuItemSelectOption>
-                        ))}
-                    </MenuItemSelect>
                 </MenuContent>
             </MainMenu>
         </Menu>

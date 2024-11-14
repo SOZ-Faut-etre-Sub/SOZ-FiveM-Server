@@ -153,6 +153,7 @@ export enum ClientEvent {
     OBJECT_DELETE = 'soz-core:client:object:delete',
     OBJECT_EDIT = 'soz-core:client:object:edit',
     OBJECT_PLACE_ITEM = 'soz-core:client:object:place',
+    OBJECT_PLACE_JOB = 'soz-core:client:job-object:place',
 
     PROP_OPEN_MENU = 'soz-core:client:prop:open-menu',
 
@@ -302,6 +303,7 @@ export enum ClientEvent {
     POLICE_GATHERED_CLUE = 'soz-core:client:police:cleaned-clue',
     POLICE_DESTROYED_CLUE = 'soz-core:client:police:destroyed-clue',
     POLICE_DRUG_IN_TRUNK = 'soz-core:client:police:drug-in-trunk',
+    POLICE_PLACE_SPEED_ZONE = 'soz-core:client:police:place-speed-zone',
 
     SET_ESCORTING = 'soz-core:client:police:set-escorting',
     GET_ESCORTED = 'soz-core:client:police:get-escorted',
