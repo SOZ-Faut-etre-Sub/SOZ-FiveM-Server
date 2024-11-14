@@ -23,8 +23,10 @@ export class ItemToolsProvider {
 
     @Once()
     public onStart() {
-        this.item.setItemUseCallback('umbrella', source => {
-            TriggerClientEvent(ClientEvent.ITEM_UMBRELLA_TOGGLE, source);
+        ['umbrella', 'umbrella_white', 'umbrella_black'].forEach(item => {
+            this.item.setItemUseCallback(item, (source, item: Item) => {
+                TriggerClientEvent(ClientEvent.ITEM_UMBRELLA_TOGGLE, source, item.name);
+            });
         });
 
         this.item.setItemUseCallback('walkstick', source => {
