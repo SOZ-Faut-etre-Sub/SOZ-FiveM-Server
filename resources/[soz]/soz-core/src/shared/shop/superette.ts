@@ -28,6 +28,8 @@ const SuperetteContent: ShopContent = [
     { id: 'protestsign', type: 'item', price: 180 },
     { id: 'phone', type: 'item', price: 450 },
     { id: 'umbrella', type: 'item', price: 900 },
+    { id: 'umbrella_white', type: 'item', price: 900 },
+    { id: 'umbrella_black', type: 'item', price: 900 },
     { id: 'diving_gear', type: 'item', price: 2340 },
     { id: 'zpad', type: 'item', price: 2160 },
     { id: 'instantazouille', type: 'food', price: 9 },
