@@ -7820,6 +7820,17 @@ QBShared.Items = {
         },
         ["description"] = "Un flacon ancien et gravé, contenant une eau sacrée aux propriétés redoutées par les créatures de la nuit. Bénie sous les auspices d’un rituel antique, cette eau cristalline brille d’une lueur argentée sous la lumière de la lune. Utilisée avec précaution, elle a le pouvoir de repousser ou affaiblir les vampires et autres êtres surnaturels, purifiant tout ce qu’elle touche.",
     },
+    ["halloween_news_trophy"] = {
+        ["name"] = "halloween_news_trophy",
+        ["label"] = "Trophée Halloweeks - 1ère édition",
+        ["weight"] = 1000,
+        ["useable"] = false,
+        ["type"] = "item",
+        ["shouldClose"] = false,
+        ["unique"] = false,
+        ["combinable"] = nil,
+        ["description"] = "Description : Un trophée d'Halloween en forme de citrouille violette, au visage effrayant. Remis par Twitch News pour récompenser la créativité exceptionnelle lors du Halloweeks. Il brille sous les lumières sombres, symbolisant le triomphe de l'originalité macabre et festive de l'entreprise gagnante.",
+    },
     ["new_year_bottle_2023"] = {
         ["name"] = "new_year_bottle_2023",
         ["label"] = "Joyeuze année 2023",
