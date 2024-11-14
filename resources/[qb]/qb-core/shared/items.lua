@@ -3369,6 +3369,30 @@ QBShared.Items = {
         ["description"] = "Pour rester au sec sous la drache",
         ["illustrator"] = ".Sniteur",
     },
+    ['umbrella_white'] = {
+        ['name'] = 'umbrella_white',
+        ['label'] = 'Parapluie blanc',
+        ['weight'] = 600,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Pour rester au sec avec classe',
+        ['illustrator'] = '.Exaustia'
+    },
+    ['umbrella_black'] = {
+        ['name'] = 'umbrella_black',
+        ['label'] = 'Parapluie noir',
+        ['weight'] = 600,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Pour rester au sec',
+        ['illustrator'] = '.Exaustia'
+    },
     ["protestsign"] = {
         ["name"] = "protestsign",
         ["label"] = "Pancarte de manifestation",

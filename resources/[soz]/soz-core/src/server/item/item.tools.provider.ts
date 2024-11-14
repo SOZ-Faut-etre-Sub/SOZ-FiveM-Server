@@ -23,17 +23,17 @@ export class ItemToolsProvider {
 
     @Once()
     public onStart() {
-        ['umbrella', 'umbrella_white', 'umbrella_black'].forEach((item) => {
+        ['umbrella', 'umbrella_white', 'umbrella_black'].forEach(item => {
             this.item.setItemUseCallback(item, (source, item: Item) => {
                 TriggerClientEvent(ClientEvent.ITEM_UMBRELLA_TOGGLE, source, item.name);
             });
         });
 
-        this.item.setItemUseCallback('walkstick', (source) => {
+        this.item.setItemUseCallback('walkstick', source => {
             TriggerClientEvent(ClientEvent.ITEM_WALK_STICK_TOGGLE, source);
         });
 
-        this.item.setItemUseCallback('protestsign', (source) => {
+        this.item.setItemUseCallback('protestsign', source => {
             TriggerClientEvent(ClientEvent.ITEM_PROTEST_SIGN_TOGGLE, source);
         });
 
@@ -42,9 +42,9 @@ export class ItemToolsProvider {
         });
 
         this.item.setItemUseCallback('binoculars', (source: number) =>
-            TriggerClientEvent(ClientEvent.BINOCULARS_TOGGLE, source),
+            TriggerClientEvent(ClientEvent.BINOCULARS_TOGGLE, source)
         );
-        this.item.setItemUseCallback('cardbord', async (source) => {
+        this.item.setItemUseCallback('cardbord', async source => {
             const position = await this.objectProvider.getGroundPositionForObject(source, 'prop_cardbordbox_03a', 90);
 
             await this.objectProvider.onPlaceObject(source, 'cardbord', 'prop_cardbordbox_03a', position);
