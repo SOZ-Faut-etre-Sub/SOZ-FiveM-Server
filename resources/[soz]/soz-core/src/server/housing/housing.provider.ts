@@ -464,8 +464,17 @@ export class HousingProvider {
     }
 
     public async clearApartment(property: Property, apartment: Apartment, notify = true) {
-        const inventory = await this.inventoryFactory.get(apartment.identifier);
-        inventory?.clear();
+        const apartmentInventory = await this.inventoryFactory.get(`house_stash_${apartment.identifier}`);
+        const apartmentFridge = await this.inventoryFactory.get(`house_fridge_${apartment.identifier}`);
+        apartmentInventory?.clear();
+        apartmentFridge?.clear();
+
+        apartmentInventory?.updateConfiguration({
+            maxWeight: HOUSE_STORAGE_TIER_WEIGHTS[0],
+        });
+        apartmentFridge?.updateConfiguration({
+            maxWeight: HOUSE_FRIDGE_TIER_WEIGHTS[0],
+        });
 
         await this.bankService.clearAccount(apartment.identifier);
 

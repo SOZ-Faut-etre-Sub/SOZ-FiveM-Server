@@ -618,11 +618,19 @@ export class HousingFournitureProvider {
         this.menu.closeMenu(false);
 
         if (type === 'storage') {
-            this.inventoryManager.openInventory(InventoryType.HouseStash, this.lastApartment.identifier, null);
+            this.inventoryManager.openInventory(
+                InventoryType.HouseStash,
+                `house_stash_${this.lastApartment.identifier}`,
+                null
+            );
         } else if (type === 'safe') {
             this.bankService.openHouseSafe(this.lastApartment);
         } else if (type === 'fridge') {
-            this.inventoryManager.openInventory(InventoryType.HouseFridge, this.lastApartment.identifier, null);
+            this.inventoryManager.openInventory(
+                InventoryType.HouseFridge,
+                `house_stash_${this.lastApartment.identifier}`,
+                null
+            );
         }
     }
 
