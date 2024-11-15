@@ -115,7 +115,7 @@ export class InventoryCommandProvider {
             { name: 'id', help: 'Player ID' },
             { name: 'weight', help: 'New weight for the inventory' },
         ],
-        role: 'admin',
+        role: ['admin', 'staff'],
     })
     public async setInventoryWeight(source: number, target: string, weight: string) {
         let inventory = await this.inventoryFactory.getPlayerInventory(parseInt(target, 10));
