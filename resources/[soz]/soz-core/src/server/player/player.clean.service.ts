@@ -81,36 +81,27 @@ export class PlayerCleanService {
             },
         });
 
-        await this.prismaService.inventories.updateMany({
+        await this.prismaService.inventories.deleteMany({
             where: {
                 id: {
                     in: housingOwnerIdentifiers.map(h => h.identifier),
                 },
             },
-            data: {
-                items: {},
-            },
         });
 
-        await this.prismaService.inventories.updateMany({
+        await this.prismaService.inventories.deleteMany({
             where: {
                 id: {
                     in: housingOwnerIdentifiers.map(h => `house_stash_${h.identifier}`),
                 },
             },
-            data: {
-                items: {},
-            },
         });
 
-        await this.prismaService.inventories.updateMany({
+        await this.prismaService.inventories.deleteMany({
             where: {
                 id: {
                     in: housingOwnerIdentifiers.map(h => `house_fridge_${h.identifier}`),
                 },
-            },
-            data: {
-                items: {},
             },
         });
 
