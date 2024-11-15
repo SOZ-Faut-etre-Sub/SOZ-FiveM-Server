@@ -67,6 +67,7 @@ type BaseItem = {
     };
     maxStack?: number;
     notSearchable?: boolean;
+    notGiveable?: boolean;
 };
 
 export type Nutrition = {
