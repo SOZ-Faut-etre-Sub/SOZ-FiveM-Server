@@ -17,7 +17,7 @@ import {
 } from '../../shared/inventory';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { getRandomInt } from '../../shared/random';
-import { isOk } from '../../shared/result';
+import { isErr, isOk } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
 import { ItemService } from '../item/item.service';
 import { LockBinService } from '../job/bluebird/lock.bin.service';
@@ -406,8 +406,27 @@ export class InventoryProvider {
             sourceInventory.removeAtSlot(sourceItem.slot, amount);
             targetInventory.removeAtSlot(targetItem.slot, targetItem.amount);
 
-            targetInventory.add(sourceItem.name, amount, sourceItem.metadata, targetSlot, true);
-            sourceInventory.add(targetItem.name, targetItem.amount, targetItem.metadata, sourceSlot, true);
+            const targetResult = targetInventory.add(sourceItem.name, amount, sourceItem.metadata, targetSlot, true);
+
+            if (isErr(targetResult)) {
+                this.notifier.error(source, ADD_ERROR_MESSAGE[targetResult.err]);
+
+                sourceInventory.add(sourceItem.name, amount, sourceItem.metadata, null, true);
+            }
+
+            const sourceResult = sourceInventory.add(
+                targetItem.name,
+                targetItem.amount,
+                targetItem.metadata,
+                sourceSlot,
+                true
+            );
+
+            if (isErr(sourceResult)) {
+                this.notifier.error(source, ADD_ERROR_MESSAGE[sourceResult.err]);
+
+                targetInventory.add(targetItem.name, targetItem.amount, targetItem.metadata, null, true);
+            }
 
             await sourceInventory.observe(); // Force refresh of the inventory
             await targetInventory.observe(); // Force refresh of the inventory
