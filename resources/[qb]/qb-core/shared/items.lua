@@ -7829,7 +7829,7 @@ QBShared.Items = {
         ["shouldClose"] = false,
         ["unique"] = false,
         ["combinable"] = nil,
-        ["description"] = "Description : Un trophée d'Halloween en forme de citrouille violette, au visage effrayant. Remis par Twitch News pour récompenser la créativité exceptionnelle lors du Halloweeks. Il brille sous les lumières sombres, symbolisant le triomphe de l'originalité macabre et festive de l'entreprise gagnante.",
+        ["description"] = "Un trophée d'Halloween en forme de citrouille violette, au visage effrayant. Remis par Twitch News pour récompenser la créativité exceptionnelle lors du Halloweeks. Il brille sous les lumières sombres, symbolisant le triomphe de l'originalité macabre et festive de l'entreprise gagnante.",
     },
     ["new_year_bottle_2023"] = {
         ["name"] = "new_year_bottle_2023",
