@@ -81,14 +81,36 @@ export class PlayerCleanService {
             },
         });
 
-        await this.prismaService.storages.updateMany({
+        await this.prismaService.inventories.updateMany({
             where: {
-                owner: {
+                id: {
                     in: housingOwnerIdentifiers.map(h => h.identifier),
                 },
             },
             data: {
-                inventory: null,
+                items: {},
+            },
+        });
+
+        await this.prismaService.inventories.updateMany({
+            where: {
+                id: {
+                    in: housingOwnerIdentifiers.map(h => `house_stash_${h.identifier}`),
+                },
+            },
+            data: {
+                items: {},
+            },
+        });
+
+        await this.prismaService.inventories.updateMany({
+            where: {
+                id: {
+                    in: housingOwnerIdentifiers.map(h => `house_fridge_${h.identifier}`),
+                },
+            },
+            data: {
+                items: {},
             },
         });
 
