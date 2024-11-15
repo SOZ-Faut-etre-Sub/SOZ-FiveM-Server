@@ -23,7 +23,6 @@ import { ItemService } from '../item/item.service';
 import { LockBinService } from '../job/bluebird/lock.bin.service';
 import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
-import { PermissionService } from '../permission.service';
 import { PlayerMoneyService } from '../player/player.money.service';
 import { PlayerService } from '../player/player.service';
 import { Inventory } from './inventory';
@@ -58,9 +57,6 @@ export class InventoryProvider {
 
     @Inject(Monitor)
     private monitor: Monitor;
-
-    @Inject(PermissionService)
-    private permissionService: PermissionService;
 
     @Tick()
     public async populateInventories() {
@@ -391,16 +387,6 @@ export class InventoryProvider {
 
                     return;
                 }
-
-                if (
-                    targetInventory.id !== sourceInventory.id &&
-                    !targetItemDef.giveable &&
-                    !this.permissionService.isStaff(source)
-                ) {
-                    this.notifier.error(source, 'Vous ne pouvez pas ~r~manipuler~s~ de cet objet.');
-
-                    return 0;
-                }
             }
 
             sourceInventory.removeAtSlot(sourceItem.slot, amount);
@@ -681,16 +667,6 @@ export class InventoryProvider {
             targetInventory.type() === InventoryType.Player
         ) {
             this.notifier.error(source, "Vous ne pouvez porter ~r~qu'un seul exemplaire~s~ de cet objet.");
-
-            return 0;
-        }
-
-        if (
-            targetInventory.id !== sourceInventory.id &&
-            !itemObject.giveable &&
-            !this.permissionService.isStaff(source)
-        ) {
-            this.notifier.error(source, 'Vous ne pouvez pas ~r~manipuler~s~ de cet objet.');
 
             return 0;
         }
