@@ -394,10 +394,10 @@ export class InventoryProvider {
 
                 if (
                     targetInventory.id !== sourceInventory.id &&
-                    !targetItemDef.giveable &&
+                    (targetItemDef.notGiveable || sourceItemDef.notGiveable) &&
                     !this.permissionService.isStaff(source)
                 ) {
-                    this.notifier.error(source, 'Vous ne pouvez pas ~r~manipuler~s~ de cet objet.');
+                    this.notifier.error(source, 'Vous ne pouvez pas ~r~transférer~s~ de cet objet.');
 
                     return 0;
                 }
@@ -687,10 +687,10 @@ export class InventoryProvider {
 
         if (
             targetInventory.id !== sourceInventory.id &&
-            !itemObject.giveable &&
+            itemObject.notGiveable &&
             !this.permissionService.isStaff(source)
         ) {
-            this.notifier.error(source, 'Vous ne pouvez pas ~r~manipuler~s~ de cet objet.');
+            this.notifier.error(source, 'Vous ne pouvez pas ~r~transférer~s~ de cet objet.');
 
             return 0;
         }
