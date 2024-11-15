@@ -100,7 +100,7 @@ export class JobResellProvider {
                 createAmount = Math.min(createAmount, availableAmount);
 
                 if (createAmount > 0) {
-                    targetInventory.add(inventoryItem.name, createAmount, inventoryItem.metadata);
+                    targetInventory.add(inventoryItem.name, createAmount);
                     this.notifier.error(source, `${createAmount} objet(s) ajouté(s) au stock.`);
                 } else {
                     this.notifier.error(source, 'Aucun objet ajouté au stock, il est déjà plein.');
