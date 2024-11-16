@@ -103,7 +103,7 @@ export const ItemDescription: FunctionComponent<ItemDescriptionProps> = ({
                             {inventoryItem.name === 'chainsaw' && inventoryItem.metadata?.fuel && (
                                 <span>[{inventoryItem.metadata?.fuel} L]</span>
                             )}
-                            {inventoryItem.name === 'crate' && inventoryItem.metadata?.crateElements?.length && (
+                            {inventoryItem.type === 'crate' && inventoryItem.metadata?.crateElements?.length && (
                                 <span>
                                     [
                                     {getItemWeight(
