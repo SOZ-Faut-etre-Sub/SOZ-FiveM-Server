@@ -67,6 +67,10 @@ export class ClothingShopProvider {
 
     private currentShop: string = undefined;
 
+    public isInShop(): boolean {
+        return !!this.currentShop;
+    }
+
     @On(ClientEvent.SHOP_OPEN_MENU)
     public async openShop(brand: ShopBrand, shop: string) {
         if (

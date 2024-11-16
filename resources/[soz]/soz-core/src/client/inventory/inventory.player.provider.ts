@@ -6,6 +6,7 @@ import { NuiEvent } from '../../shared/event/nui';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
+import { ClothingShopProvider } from '../shop/cloth.shop.provider';
 import { InventoryManager } from './inventory.manager';
 
 @Provider()
@@ -22,9 +23,10 @@ export class InventoryPlayerProvider {
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
 
-    private isOpen = false;
+    @Inject(ClothingShopProvider)
+    private clothingShopProvider: ClothingShopProvider;
 
-    private isLocked: Set<string> = new Set();
+    private isOpen = false;
 
     @OnNuiEvent(NuiEvent.InventoryOpenPlayerInventory)
     public async onOpenPlayerInventory({ isOpen }: { isOpen: boolean }) {
@@ -54,6 +56,10 @@ export class InventoryPlayerProvider {
         }
 
         if (player.metadata.isdead || player.metadata.inlaststand || player.metadata.ishandcuffed) {
+            return;
+        }
+
+        if (this.clothingShopProvider.isInShop()) {
             return;
         }
 
