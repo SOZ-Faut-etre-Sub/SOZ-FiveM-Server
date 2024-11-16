@@ -11617,6 +11617,7 @@ QBShared.Items = {
         ["useable"] = false,
         ["storageItemType"] = "smuggling_convoy_export",
         ["type"] = "smuggling_export",
+        ["storageItemWeight"] = 40000,
         ["shouldClose"] = false,
         ["unique"] = true,
         ["combinable"] = nil,
