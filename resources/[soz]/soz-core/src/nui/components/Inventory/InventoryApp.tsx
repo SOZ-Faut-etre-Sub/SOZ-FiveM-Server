@@ -9,6 +9,7 @@ import { usePlayer, usePlayerInventoryConfiguration, usePlayerInventoryItems } f
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 import { createHandleDragAndDrop } from './Actions';
 import { Inventory } from './Inventory';
+import { useInventorySize } from './size';
 
 export const InventoryApp: FunctionComponent = () => {
     const playerInventoryItems = usePlayerInventoryItems();
@@ -21,6 +22,7 @@ export const InventoryApp: FunctionComponent = () => {
     const [type, setType] = useState<InventoryType>(null);
     const [inventoryState, setInventoryState] = useState<InventoryState>(null);
     const open = inventoryId !== null;
+    const inventorySize = useInventorySize(5);
 
     useNuiEvent('inventory', 'OpenInventory', ({ id, configuration, type, items, canForceConsume, state }) => {
         setInventoryId(id);
@@ -91,7 +93,12 @@ export const InventoryApp: FunctionComponent = () => {
         >
             <main className="absolute h-full w-full font-prompt">
                 <div className="flex mt-8 justify-center">
-                    <div className="mr-4 w-[400px]">
+                    <div
+                        className="mr-4"
+                        style={{
+                            width: `${inventorySize.width}px`,
+                        }}
+                    >
                         <Inventory
                             title="Inventaire"
                             configuration={playerInventoryConfiguration}
@@ -118,7 +125,12 @@ export const InventoryApp: FunctionComponent = () => {
                             }}
                         />
                     </div>
-                    <div className="ml-4 w-[400px]">
+                    <div
+                        className="ml-4"
+                        style={{
+                            width: `${inventorySize.width}px`,
+                        }}
+                    >
                         <Inventory
                             title={getInventoryTitle(type)}
                             configuration={configuration}

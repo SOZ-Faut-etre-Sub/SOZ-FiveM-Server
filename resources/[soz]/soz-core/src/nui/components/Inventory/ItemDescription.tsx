@@ -5,6 +5,7 @@ import { getItemWeight, InventoryItem, isInventoryItemExpired } from '../../../s
 import { WeaponAmmo } from '../../../shared/weapons/weapon';
 import { useItemResolver } from '../../hook/data';
 import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
+import { useInventorySize } from './size';
 
 export type ItemDescriptionProps = {
     inventoryItem: InventoryItem | null;
@@ -24,6 +25,7 @@ export const ItemDescription: FunctionComponent<ItemDescriptionProps> = ({
     position = 'right',
 }: ItemDescriptionProps) => {
     const resolver = useItemResolver();
+    const inventorySize = useInventorySize(6);
     const item = resolver(inventoryItem?.name);
 
     if (!inventoryItem || !item) {
@@ -80,7 +82,12 @@ export const ItemDescription: FunctionComponent<ItemDescriptionProps> = ({
             })}
         >
             <GlassMorphismContainer duration="duration-0" borderClassName="rounded-xl">
-                <div className="w-[400px] p-2 text-lsm font-prompt text-gray-100">
+                <div
+                    className="p-2 text-lsm font-prompt text-gray-100"
+                    style={{
+                        width: `${inventorySize.width}px`,
+                    }}
+                >
                     <div className="flex justify-between align-items-center w-full">
                         {inventoryItem.metadata?.label && (
                             <h2 className="font-bold uppercase truncate flex-1 text-sm">

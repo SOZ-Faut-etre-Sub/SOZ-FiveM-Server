@@ -1,6 +1,5 @@
 import { ShoppingBagIcon } from '@heroicons/react/outline';
-import classNames from 'classnames';
-import { FunctionComponent, PropsWithChildren, ReactNode, useEffect, useMemo, useState } from 'react';
+import { FunctionComponent, PropsWithChildren, ReactNode, useEffect, useState } from 'react';
 import { FixedSizeGrid } from 'react-window';
 
 import { NuiEvent } from '../../../shared/event/nui';
@@ -18,6 +17,7 @@ import WeightIcon from '../../icons/inventory/weight.svg';
 import { GameCanvasBox, GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
 import { ItemDescription } from './ItemDescription';
 import { ItemSlot } from './ItemSlot';
+import { InventorySize, useInventorySize } from './size';
 
 export type InventoryProps = {
     inventoryId: string;
@@ -52,11 +52,12 @@ export const Inventory: FunctionComponent<InventoryProps> = ({
     const resolver = useItemResolver();
     const itemsAsArray = Object.values(inventoryItems).filter(item => item !== null);
     const inventoryWeight = getItemsWeight(itemsAsArray, resolver);
+    const inventorySize = useInventorySize(6);
     const maxInventorySlot =
         itemsAsArray.reduce((acc, item) => {
             return Math.max(acc, item.slot);
         }, 0) + (player ? 3 : 0);
-    const nbLines = Math.max(Math.ceil(maxInventorySlot / 5) + (player ? 0 : 1), 3);
+    const nbLines = Math.max(Math.ceil(maxInventorySlot / 5), 4) + (player ? 0 : 1);
 
     useEffect(() => {
         if (currentInventoryItem) {
@@ -65,116 +66,6 @@ export const Inventory: FunctionComponent<InventoryProps> = ({
             }
         }
     }, [inventoryItems, currentInventoryItem]);
-
-    const itemRender = useMemo(() => {
-        return ({ columnIndex, rowIndex, style }) => {
-            const index = rowIndex * 5 + columnIndex - (player ? 3 : 0);
-
-            style = {
-                ...style,
-                left: columnIndex === 0 ? style.left : Number(style.left) + columnIndex * 10,
-                right: style.right
-                    ? columnIndex === 5
-                        ? style.right
-                        : Number(style.right) + columnIndex * 10
-                    : undefined,
-            };
-
-            if (index === -3) {
-                return (
-                    <div style={style}>
-                        <ItemSlot
-                            prefixId={prefixId}
-                            inventoryId={inventoryId}
-                            targetConfiguration={targetConfiguration}
-                            allowActions={true}
-                            slot={-2}
-                            inventoryItem={'money'}
-                            item={null}
-                            setCurrentInventoryItem={setCurrentInventoryItem}
-                            resolver={resolver}
-                            onDoubleClick={onDoubleClick}
-                        />
-                    </div>
-                );
-            }
-
-            if (index === -2) {
-                return (
-                    <div style={style}>
-                        <ItemSlot
-                            prefixId={prefixId}
-                            inventoryId={inventoryId}
-                            targetConfiguration={targetConfiguration}
-                            allowActions={true}
-                            slot={-1}
-                            inventoryItem={'wallet'}
-                            item={null}
-                            setCurrentInventoryItem={setCurrentInventoryItem}
-                            resolver={resolver}
-                            onDoubleClick={onDoubleClick}
-                        />
-                    </div>
-                );
-            }
-
-            if (index === -1) {
-                return (
-                    <div style={style}>
-                        <ItemSlot
-                            prefixId={prefixId}
-                            inventoryId={inventoryId}
-                            targetConfiguration={targetConfiguration}
-                            allowActions={true}
-                            slot={0}
-                            inventoryItem={'keychain'}
-                            item={null}
-                            setCurrentInventoryItem={setCurrentInventoryItem}
-                            resolver={resolver}
-                            onDoubleClick={onDoubleClick}
-                        />
-                    </div>
-                );
-            }
-
-            const slot = index + 1;
-            const inventoryItem = inventoryItems[slot] || null;
-            const item = inventoryItem ? resolver(inventoryItem?.name) : null;
-
-            return (
-                <div style={style}>
-                    <ItemSlot
-                        prefixId={prefixId}
-                        inventoryId={inventoryId}
-                        targetConfiguration={targetConfiguration}
-                        slot={slot}
-                        inventoryItem={inventoryItem}
-                        item={item}
-                        setCurrentInventoryItem={setCurrentInventoryItem}
-                        resolver={resolver}
-                        allowActions={player}
-                        onDoubleClick={onDoubleClick}
-                        allowForceConsume={allowForceConsume}
-                        allowHidden={allowHiddenItem}
-                        allDisabled={allDisabled}
-                    />
-                </div>
-            );
-        };
-    }, [
-        prefixId,
-        inventoryId,
-        targetConfiguration,
-        inventoryItems,
-        resolver,
-        onDoubleClick,
-        player,
-        allowForceConsume,
-        allowHiddenItem,
-        setCurrentInventoryItem,
-    ]);
-
-    const height = Math.min((nbLines + 1) * 80, 480);
 
     return (
         <InventoryDiv
@@ -186,25 +77,158 @@ export const Inventory: FunctionComponent<InventoryProps> = ({
                 current: inventoryWeight,
                 max: configuration.maxWeight,
             }}
-            description={<ItemDescription position={itemDescriptionPosition} inventoryItem={currentInventoryItem} />}
+            description={<ItemDescription inventoryItem={currentInventoryItem} position={itemDescriptionPosition} />}
         >
             <FixedSizeGrid
                 columnCount={5}
-                columnWidth={70}
-                width={400}
+                columnWidth={inventorySize.itemSize}
+                width={inventorySize.width + 10}
                 rowCount={nbLines + 1}
-                rowHeight={80}
-                height={height}
+                rowHeight={inventorySize.itemSize + inventorySize.gapSize}
+                height={Math.min(nbLines + 1, 6) * (inventorySize.itemSize + inventorySize.gapSize)}
                 overscanRowCount={7}
-                className="scrollbar scrollbar-w-1 scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full"
+                className="scrollbar scrollbar-w-[5px] scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full"
                 style={{
                     overflowY: 'auto',
                     overflowX: 'hidden',
                 }}
+                itemData={{
+                    inventoryId,
+                    prefixId,
+                    configuration,
+                    targetConfiguration,
+                    inventoryItems,
+                    player,
+                    allowForceConsume,
+                    allowHiddenItem,
+                    allDisabled,
+                    onDoubleClick,
+                    inventorySize,
+                    resolver,
+                    setCurrentInventoryItem,
+                }}
             >
-                {itemRender}
+                {ItemRenderer}
             </FixedSizeGrid>
         </InventoryDiv>
+    );
+};
+
+type ItemRendererData = {
+    inventoryId: string;
+    prefixId?: string;
+    configuration: InventoryConfiguration;
+    targetConfiguration?: InventoryConfiguration;
+    inventoryItems: Record<number, InventoryItem>;
+    player?: boolean;
+    allowForceConsume?: boolean;
+    allowHiddenItem?: boolean;
+    allDisabled?: boolean;
+    onDoubleClick?: (inventoryItem: InventoryItem | 'money' | 'wallet' | 'keychain' | null, item?: Item | null) => void;
+    inventorySize: InventorySize;
+    resolver: (name: string) => Item;
+    setCurrentInventoryItem: (inventoryItem: InventoryItem | null) => void;
+};
+
+type ItemRendererProps = {
+    data: ItemRendererData;
+    rowIndex: number;
+    columnIndex: number;
+    style: React.CSSProperties;
+};
+
+const ItemRenderer: FunctionComponent<ItemRendererProps> = ({ data, rowIndex, columnIndex, style }) => {
+    const index = rowIndex * 5 + columnIndex - (data.player ? 3 : 0);
+
+    style = {
+        ...style,
+        left: columnIndex === 0 ? style.left : Number(style.left) + columnIndex * data.inventorySize.gapSize,
+        right: style.right
+            ? columnIndex === 5
+                ? style.right
+                : Number(style.right) + columnIndex * data.inventorySize.gapSize
+            : undefined,
+    };
+
+    if (index === -3) {
+        return (
+            <div style={style}>
+                <ItemSlot
+                    prefixId={data.prefixId}
+                    inventoryId={data.inventoryId}
+                    targetConfiguration={data.targetConfiguration}
+                    allowActions={true}
+                    slot={-2}
+                    inventoryItem={'money'}
+                    item={null}
+                    setCurrentInventoryItem={data.setCurrentInventoryItem}
+                    resolver={data.resolver}
+                    onDoubleClick={data.onDoubleClick}
+                />
+            </div>
+        );
+    }
+
+    if (index === -2) {
+        return (
+            <div style={style}>
+                <ItemSlot
+                    prefixId={data.prefixId}
+                    inventoryId={data.inventoryId}
+                    targetConfiguration={data.targetConfiguration}
+                    allowActions={true}
+                    slot={-1}
+                    inventoryItem={'wallet'}
+                    item={null}
+                    setCurrentInventoryItem={data.setCurrentInventoryItem}
+                    resolver={data.resolver}
+                    onDoubleClick={data.onDoubleClick}
+                />
+            </div>
+        );
+    }
+
+    if (index === -1) {
+        return (
+            <div style={style}>
+                <ItemSlot
+                    prefixId={data.prefixId}
+                    inventoryId={data.inventoryId}
+                    targetConfiguration={data.targetConfiguration}
+                    allowActions={true}
+                    slot={0}
+                    inventoryItem={'keychain'}
+                    item={null}
+                    setCurrentInventoryItem={data.setCurrentInventoryItem}
+                    resolver={data.resolver}
+                    onDoubleClick={data.onDoubleClick}
+                />
+            </div>
+        );
+    }
+
+    const slot = index + 1;
+    const inventoryItem = data.inventoryItems[slot] || null;
+    const item = inventoryItem ? data.resolver(inventoryItem?.name) : null;
+
+    return (
+        <div style={style}>
+            <ItemSlot
+                prefixId={data.prefixId}
+                inventoryId={data.inventoryId}
+                targetConfiguration={data.targetConfiguration}
+                slot={slot}
+                inventoryItem={inventoryItem}
+                item={item}
+                setCurrentInventoryItem={data.setCurrentInventoryItem}
+                resolver={data.resolver}
+                allowActions={data.player}
+                onDoubleClick={data.onDoubleClick}
+                allowForceConsume={data.allowForceConsume}
+                allowHidden={data.allowHiddenItem}
+                allDisabled={data.allDisabled}
+            />
+        </div>
     );
 };
 
@@ -219,7 +243,6 @@ type InventoryDivProps = {
         max: number;
     };
     price?: number;
-    maxHeight?: string;
 };
 
 export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps>> = ({
@@ -230,10 +253,10 @@ export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps
     weight = null,
     description = undefined,
     isCart = false,
-    maxHeight = 'max-h-[45vh]',
     price = 0,
 }) => {
     const [showSort, setShowSort] = useState(false);
+    const inventorySize = useInventorySize(6);
 
     return (
         <div className="w-full">
@@ -336,10 +359,10 @@ export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps
             )}
             <div className="relative w-full">
                 <div
-                    className={classNames(
-                        'overflow-visible w-[400px] scrollbar scrollbar-w-1 scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full',
-                        maxHeight
-                    )}
+                    className="overflow-visible scrollbar scrollbar-w-1 scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full"
+                    style={{
+                        width: `${inventorySize.width + 10}px`,
+                    }}
                 >
                     <GameCanvasBox blur={false}>{children}</GameCanvasBox>
                 </div>

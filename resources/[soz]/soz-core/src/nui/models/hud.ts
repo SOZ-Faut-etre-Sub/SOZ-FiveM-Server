@@ -11,6 +11,7 @@ export const hud = createModel<RootModel>()({
             theme: HudTheme.Auto,
             availableTheme: [HudTheme.Auto],
             zoom: 1,
+            inventorySize: 1,
             showDateTime: false,
             showWeather: false,
             showStreetName: false,
@@ -18,7 +19,6 @@ export const hud = createModel<RootModel>()({
             showStress: false,
             showStamina: false,
         },
-
         voiceMode: 0,
         streetName: [],
         compass: {

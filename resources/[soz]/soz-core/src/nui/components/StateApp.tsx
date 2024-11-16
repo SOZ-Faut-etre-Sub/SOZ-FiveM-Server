@@ -41,6 +41,10 @@ export const StateApp: FunctionComponent = () => {
         dispatch.hud.updateSettings({ zoom });
     });
 
+    useNuiEvent('hud', 'SetInventorySize', inventorySize => {
+        dispatch.hud.updateSettings({ inventorySize });
+    });
+
     useNuiEvent('hud', 'SetShowDateTime', showDateTime => {
         dispatch.hud.updateSettings({ showDateTime });
     });

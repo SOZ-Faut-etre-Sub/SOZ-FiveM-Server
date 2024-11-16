@@ -20,11 +20,13 @@ import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
 import { InventoryDiv } from './Inventory';
 import { getItemSlotClassnames } from './ItemSlot';
+import { useInventorySize } from './size';
 
 export const KeychainApp: FunctionComponent = () => {
     const [keys, setKeys] = useState<InventoryKey[]>(null);
     const open = keys !== null;
     const [currentKey, setCurrentKey] = useState<InventoryKey>(null);
+    const inventorySize = useInventorySize(6);
 
     useNuiEvent('inventory', 'OpenKeychain', ({ keys }) => {
         setKeys(keys);
@@ -84,12 +86,22 @@ export const KeychainApp: FunctionComponent = () => {
             }}
         >
             <div className="absolute h-full w-full font-prompt">
-                <main className="m-8 h-[45vh] w-[370px] wide:ml-[94vh]">
+                <main
+                    className="m-8 h-[45vh] wide:ml-[94vh]"
+                    style={{
+                        width: `${inventorySize.width}px`,
+                    }}
+                >
                     <InventoryDiv
                         title="Porte-clés"
                         description={
                             currentKey ? (
-                                <div className="mt-2 w-[370px]">
+                                <div
+                                    className="mt-2"
+                                    style={{
+                                        width: `${inventorySize.width}px`,
+                                    }}
+                                >
                                     <GlassMorphismContainer duration="duration-0" borderClassName="rounded-xl">
                                         <div className="p-2 rounded text-gray-100 w-full">
                                             <div className="flex justify-between align-items-center w-full">
@@ -119,7 +131,13 @@ export const KeychainApp: FunctionComponent = () => {
                             }
                         }}
                     >
-                        <div className="grid grid-cols-5 w-full gap-2 max-h-full">
+                        <div
+                            className="grid grid-cols-5 w-full max-h-full"
+                            style={{
+                                gap: `${inventorySize.gapSize}px`,
+                                width: `${inventorySize.width}px`,
+                            }}
+                        >
                             {keys.map((key, index) => (
                                 <KeychainItem
                                     key={index}
