@@ -120,7 +120,7 @@ export class InventoryOpenProvider {
             : null;
 
         if (position) {
-            this.inventoryPositionChecker.openInventory(inventory.id, inventoryPosition);
+            this.inventoryPositionChecker.openInventory(source, inventory.id, inventoryPosition);
         }
 
         TriggerClientEvent(
@@ -191,7 +191,7 @@ export class InventoryOpenProvider {
             entity: NetworkGetNetworkIdFromEntity(GetPlayerPed(target)),
         };
 
-        this.inventoryPositionChecker.openInventory(inventory.id, inventoryPosition);
+        this.inventoryPositionChecker.openInventory(source, inventory.id, inventoryPosition);
 
         TriggerClientEvent(
             ClientEvent.INVENTORY_OPEN,
@@ -233,7 +233,11 @@ export class InventoryOpenProvider {
             dimension,
         };
 
-        this.inventoryPositionChecker.openInventory(inventory.id, inventoryPosition as InventoryPositionDynamic);
+        this.inventoryPositionChecker.openInventory(
+            source,
+            inventory.id,
+            inventoryPosition as InventoryPositionDynamic
+        );
         this.inventoryPositionChecker.openTrunk(source, inventory.id, vehicleNetworkId);
 
         TriggerClientEvent(

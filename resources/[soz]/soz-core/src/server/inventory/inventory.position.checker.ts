@@ -12,7 +12,7 @@ export class InventoryPositionChecker {
 
     private trunkOpened: Record<string, { networkId: number; players: Set<number> }> = {};
 
-    private inventoriesPositions: Record<string, InventoryPosition> = {};
+    private inventoriesPositions: Map<string, Map<number, InventoryPosition>> = new Map();
 
     public openTrunk(playerId: number, inventoryId: string, vehicleNetworkId: number): void {
         if (!this.trunkOpened[inventoryId]) {
@@ -34,8 +34,12 @@ export class InventoryPositionChecker {
         }
     }
 
-    public openInventory(inventoryId: string, position: InventoryPosition): void {
-        this.inventoriesPositions[inventoryId] = position;
+    public openInventory(source: number, inventoryId: string, position: InventoryPosition): void {
+        if (!this.inventoriesPositions[inventoryId]) {
+            this.inventoriesPositions[inventoryId] = new Map();
+        }
+
+        this.inventoriesPositions[inventoryId].set(source, position);
     }
 
     public closeInventory(playerId: number, inventoryId: string): void {
@@ -67,6 +71,10 @@ export class InventoryPositionChecker {
             return;
         }
 
+        if (this.inventoriesPositions[inventoryId]) {
+            this.inventoriesPositions[inventoryId].delete(playerId);
+        }
+
         TriggerClientEvent(ClientEvent.VEHICLE_SET_TRUNK_STATE, owner, this.trunkOpened[inventoryId].networkId, false);
     }
 
@@ -84,16 +92,21 @@ export class InventoryPositionChecker {
             return true;
         }
 
-        return this.checkDistance(playerPosition, inventoryId);
+        return this.checkDistance(source, playerPosition, inventoryId);
     }
 
-    public checkDistance(position: Vector3, inventoryId: string): boolean {
+    public checkDistance(source: number, position: Vector3, inventoryId: string): boolean {
         if (!this.inventoriesPositions[inventoryId]) {
             // Some inventories don't have a position, like the player inventory
             return true;
         }
 
-        const inventoryPosition = this.inventoriesPositions[inventoryId];
+        if (!this.inventoriesPositions[inventoryId].has(source)) {
+            // Some inventories don't have a position, like the player inventory
+            return true;
+        }
+
+        const inventoryPosition = this.inventoriesPositions[inventoryId].get(source);
         const maxDistance = inventoryPosition.maxDistance || DEFAULT_MAX_INVENTORY_DISTANCE;
 
         if (inventoryPosition.type === 'fixed' && getDistance(position, inventoryPosition.position) <= maxDistance) {
