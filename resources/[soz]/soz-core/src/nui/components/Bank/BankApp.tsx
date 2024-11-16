@@ -69,16 +69,7 @@ export const BankApp: FunctionComponent = () => {
 
     return (
         <ApplicationContainer size="full" onClickOutside={resetApp}>
-            <Transition
-                as={AppContent}
-                show={showApp}
-                enter="transform ease-out duration-300 transition"
-                enterFrom="translate-y-full opacity-0"
-                enterTo="translate-y-0 opacity-1"
-                leave="transform ease-in duration-300 transition"
-                leaveFrom="translate-y-0 opacity-1"
-                leaveTo="translate-y-full opacity-0"
-            >
+            <AppContent open={showApp}>
                 <MemoryRouter>
                     <div className="flex flex-col gap-10 w-3/12">
                         <div className="flex justify-center items-center h-24">
@@ -241,7 +232,7 @@ export const BankApp: FunctionComponent = () => {
                         </Routes>
                     </div>
                 </MemoryRouter>
-            </Transition>
+            </AppContent>
         </ApplicationContainer>
     );
 };

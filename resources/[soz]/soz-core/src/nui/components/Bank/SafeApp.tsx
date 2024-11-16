@@ -93,27 +93,11 @@ export const SafeApp: FunctionComponent = () => {
         };
     }, [onKeyUpReceived]);
 
-    const tabClass = (tab: any) => {
-        return classnames('font-lighter uppercase text-sm p-1 rounded-md focus:outline-none', {
-            'bg-green-300/5': tab.selected,
-        });
-    };
-
     if (!showApp) return null;
 
     return (
         <ApplicationContainer size="small" onClickOutside={resetApp}>
-            <Transition
-                as={AppContent}
-                show={showApp}
-                appear={true}
-                enter="transform ease-out duration-300 transition"
-                enterFrom="translate-y-full opacity-0"
-                enterTo="translate-y-0 opacity-1"
-                leave="transform ease-in duration-300 transition"
-                leaveFrom="translate-y-0 opacity-1"
-                leaveTo="translate-y-full opacity-0"
-            >
+            <AppContent open={showApp}>
                 <form onSubmit={handleSubmit(submitForm)} className="flex flex-col w-full justify-around">
                     <div className="flex flex-col justify-center items-center gap-4">
                         <img
@@ -210,7 +194,7 @@ export const SafeApp: FunctionComponent = () => {
 
                     <Button disabled={isSubmitting}>{action === 0 ? 'Retirer' : 'Déposer'} l'argent</Button>
                 </form>
-            </Transition>
+            </AppContent>
         </ApplicationContainer>
     );
 };

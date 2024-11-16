@@ -91,16 +91,7 @@ export const AtmApp: FunctionComponent = () => {
 
     return (
         <ApplicationContainer size="large" onClickOutside={resetApp}>
-            <Transition
-                as={AppContent}
-                show={showApp}
-                enter="transform ease-out duration-300 transition"
-                enterFrom="translate-y-full opacity-0"
-                enterTo="translate-y-0 opacity-1"
-                leave="transform ease-in duration-300 transition"
-                leaveFrom="translate-y-0 opacity-1"
-                leaveTo="translate-y-full opacity-0"
-            >
+            <AppContent open={showApp}>
                 <MemoryRouter>
                     <div className="flex flex-col w-full gap-2.5">
                         <Header
@@ -159,7 +150,7 @@ export const AtmApp: FunctionComponent = () => {
                         </form>
                     </div>
                 </MemoryRouter>
-            </Transition>
+            </AppContent>
         </ApplicationContainer>
     );
 };
