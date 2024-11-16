@@ -15,6 +15,7 @@ import { Notifier } from '../notifier';
 import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
 import { PlayerStateService } from '../player/player.state.service';
+import { VehicleStateService } from '../vehicle/vehicle.state.service';
 
 @Provider()
 export class ApiProvider {
@@ -44,6 +45,9 @@ export class ApiProvider {
 
     @Inject(BankProvider)
     private bankProvider: BankProvider;
+
+    @Inject(VehicleStateService)
+    private vehicleStateService: VehicleStateService;
 
     @Get('/active-players')
     public async getActivePlayers(): Promise<Response> {
@@ -269,6 +273,30 @@ export class ApiProvider {
             return Response.ok(
                 JSON.stringify({
                     success,
+                    msg,
+                })
+            );
+        } catch (error) {
+            return Response.internalServerError(error);
+        }
+    }
+
+    @Post('/veh-position')
+    public async vehPosition(request: Request): Promise<Response> {
+        try {
+            const data = JSON.parse(await request.body);
+            const states = this.vehicleStateService.getStates();
+            let msg = '';
+            for (const veh of states.values()) {
+                if (veh.volatile.plate === data.plate) {
+                    msg += `[${veh.position[0]} ${veh.position[1]} ${veh.position[2]}]`;
+                }
+            }
+            if (msg.length == 0) {
+                msg = 'Pas de véhicule trouvé avec la plaque ' + data.plate;
+            }
+            return Response.ok(
+                JSON.stringify({
                     msg,
                 })
             );
