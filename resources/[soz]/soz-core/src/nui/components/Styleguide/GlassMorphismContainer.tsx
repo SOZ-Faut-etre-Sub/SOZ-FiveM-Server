@@ -12,6 +12,7 @@ import {
 } from 'react';
 
 import { uuidv4 } from '../../../core/utils';
+import { useInterval } from '../../hook/useInterval';
 import { GlassMorphismContext } from '../../providers/GlassMorphismProvider';
 import { useHudColor } from '../Hud/hooks/useHudColor';
 
@@ -37,20 +38,22 @@ export const GameCanvasBox: FunctionComponent<PropsWithChildren<GameCanvasBoxPro
     const containerRef = useRef<HTMLDivElement>(null);
     const containerRect = useRef<DOMRect | null>(null);
 
-    const updateContainerRect = useCallback(() => {
-        const container = containerRef.current?.getBoundingClientRect();
-        if (!container) return;
-
-        if (
-            containerRect.current?.x !== container?.x ||
-            containerRect.current?.y !== container?.y ||
-            containerRect.current?.width !== container?.width ||
-            containerRect.current?.height !== container?.height
-        ) {
-            containerRect.current = container;
-            setTimeout(updateContainerRect, 100);
-        }
-    }, []);
+    const updateGlassmorphism = () => {
+        glassmorphismWorker.postMessage({
+            type: 'update',
+            uuid: canvasUUID,
+            x: containerRect.current?.x,
+            y: containerRect.current?.y,
+            width: containerRect.current?.width,
+            height: containerRect.current?.height,
+            options: {
+                disableGameClone,
+                blur,
+                rounded,
+                circle,
+            },
+        });
+    };
 
     useEffect(() => {
         if (!containerRef.current) return;
@@ -73,25 +76,24 @@ export const GameCanvasBox: FunctionComponent<PropsWithChildren<GameCanvasBoxPro
         });
 
         containerRect.current = container;
-        setTimeout(updateContainerRect, 100);
-    }, [containerRef.current, updateContainerRect]);
+    }, [containerRef.current]);
 
-    useEffect(() => {
-        glassmorphismWorker.postMessage({
-            type: 'update',
-            uuid: canvasUUID,
-            x: containerRect.current?.x,
-            y: containerRect.current?.y,
-            width: containerRect.current?.width,
-            height: containerRect.current?.height,
-            options: {
-                disableGameClone,
-                blur,
-                rounded,
-                circle,
-            },
-        });
-    }, [containerRect.current, disableGameClone, blur, rounded, circle]);
+    useEffect(updateGlassmorphism, [disableGameClone, blur, rounded, circle]);
+
+    useInterval(() => {
+        const container = containerRef.current?.getBoundingClientRect();
+        if (!container) return;
+
+        if (
+            containerRect.current?.x !== container?.x ||
+            containerRect.current?.y !== container?.y ||
+            containerRect.current?.width !== container?.width ||
+            containerRect.current?.height !== container?.height
+        ) {
+            containerRect.current = container;
+            updateGlassmorphism();
+        }
+    }, 10);
 
     useEffect(() => {
         return () => {
