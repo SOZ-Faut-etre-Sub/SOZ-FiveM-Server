@@ -21,6 +21,8 @@ export class ItemService {
     @Inject(VampireGameStateProvider)
     private vampireGameStateProvider: VampireGameStateProvider;
 
+    private items: Record<string, Item> = null;
+
     private showCallbacks = new Map<string, (source: number, target: number, item: InventoryItem) => void>();
     private usingItems = new Set<number>();
 
@@ -29,12 +31,44 @@ export class ItemService {
         (player: number, item: Item, inventoryItem: InventoryItem, inventory: Inventory) => Promise<void> | void
     >();
 
-    public getItems<T extends Item = Item>(type?: ItemType): Record<string, T> {
-        return this.qbcore.getItems(type);
+    public loadItems() {
+        if (this.items) {
+            return;
+        }
+
+        this.items = this.qbcore.getItems();
     }
 
-    public getItem<T extends Item = Item>(id: string): T | null {
-        return this.qbcore.getItem<T>(id);
+    public getItems<T extends Readonly<Item> = Readonly<Item>>(type?: ItemType): Record<string, Readonly<T>> {
+        if (!this.items) {
+            this.loadItems();
+        }
+
+        if (type) {
+            const values = {};
+
+            for (const [key, value] of Object.entries(this.items)) {
+                if (value.type === type) {
+                    values[key] = value;
+                }
+            }
+
+            return values as Record<string, Readonly<T>>;
+        }
+
+        return { ...this.items } as Record<string, Readonly<T>>;
+    }
+
+    public getItem<T extends Item = Item>(id: string): Readonly<T> | null {
+        if (!this.items) {
+            this.loadItems();
+        }
+
+        if (!this.items[id]) {
+            return null;
+        }
+
+        return this.items[id] as Readonly<T>;
     }
 
     public getItemsWeight(items: { name: string; amount?: number; metadata?: InventoryItemMetadata | null }[]): number {
@@ -52,7 +86,7 @@ export class ItemService {
             }
 
             this.usingItems.add(source);
-            await cb(source, this.qbcore.getItem(item.name), item, inventory);
+            await cb(source, this.getItem(item.name), item, inventory);
             this.usingItems.delete(source);
         }
 
