@@ -1,5 +1,6 @@
 import { On, OnEvent } from '@public/core/decorators/event';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
+import { Gauge } from 'prom-client';
 
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -50,6 +51,27 @@ export class InventoryOpenProvider {
     private monitor: Monitor;
 
     private subscriptions: Map<string, Map<number, string>> = new Map();
+
+    private subscriptionGauge: Gauge<string> = new Gauge({
+        name: 'soz_inventory_subscriptions',
+        help: 'number of subscriptions to inventories',
+        labelNames: ['inventory_id'],
+    });
+
+    private loadedGauge: Gauge<string> = new Gauge({
+        name: 'soz_inventory_loaded',
+        help: 'number of loaded inventories',
+        labelNames: [],
+    });
+
+    @Tick(5000, 'monitor:inventory:metrics')
+    public async collectMetrics() {
+        for (const [inventoryId, subscriptions] of this.subscriptions) {
+            this.subscriptionGauge.set({ inventory_id: inventoryId }, subscriptions.size);
+        }
+
+        this.loadedGauge.set({}, this.inventoryFactory.getLoadedInventories().size);
+    }
 
     @Tick()
     public async tick() {
