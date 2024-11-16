@@ -140,6 +140,10 @@ export class InventoryManager {
         canForceConsume: boolean = false,
         state: InventoryState
     ) {
+        if (this._subscribedInventoryId) {
+            this.unsubscribeInventory();
+        }
+
         this._subscribedInventoryId = inventoryId;
         this._subscribedInventory = items;
         this._subscribedInventoryConfiguration = configuration;
@@ -160,18 +164,25 @@ export class InventoryManager {
     public closeInventory(inventoryId: string) {
         if (this._subscribedInventoryId === inventoryId) {
             this.nuiDispatch.dispatch('inventory', 'CloseInventory');
+            this.unsubscribeInventory(inventoryId);
         }
     }
 
-    public unsubscribeInventory() {
-        if (this._subscribedInventoryId && this._subscribedInventoryId !== this._playerInventoryId) {
+    public unsubscribeInventory(inventoryId?: string) {
+        if (!inventoryId) {
+            inventoryId = this._subscribedInventoryId;
+        }
+
+        if (inventoryId && inventoryId !== this._playerInventoryId) {
             TriggerServerEvent(ServerEvent.INVENTORY_UNSUBSCRIBE, this._subscribedInventoryId);
         }
 
-        this._subscribedInventoryId = null;
-        this._subscribedInventory = [];
-        this._subscribedInventoryConfiguration = null;
-        this._subscribedInventoryPosition = null;
+        if (inventoryId === this._subscribedInventoryId) {
+            this._subscribedInventoryId = null;
+            this._subscribedInventory = [];
+            this._subscribedInventoryConfiguration = null;
+            this._subscribedInventoryPosition = null;
+        }
     }
 
     @OnEvent(ClientEvent.INVENTORY_UPDATE)
@@ -193,6 +204,8 @@ export class InventoryManager {
                 items: this._subscribedInventory,
                 id: this._subscribedInventoryId,
             });
+
+            return;
         }
 
         if (id === this._playerInventoryId) {
@@ -212,7 +225,12 @@ export class InventoryManager {
             });
 
             await this.playerInventoryLoader.trigger(this._playerInventory, this._playerInventoryConfiguration);
+
+            return;
         }
+
+        // event received for another inventory not subscribed close it
+        TriggerServerEvent(ServerEvent.INVENTORY_UNSUBSCRIBE, id);
     }
 
     public getItems(): InventoryItem[] {
