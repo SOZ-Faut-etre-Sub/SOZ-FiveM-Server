@@ -101,8 +101,8 @@ export const App: FunctionComponent = () => {
                 <StateApp />
                 <StatePrivateApp />
                 <AudioApp />
-                <GlassMorphism />
                 <div className={classes}>
+                    <GlassMorphism />
                     <MapPickerApp />
                     <TargetOverlay />
                     <HudApp />
