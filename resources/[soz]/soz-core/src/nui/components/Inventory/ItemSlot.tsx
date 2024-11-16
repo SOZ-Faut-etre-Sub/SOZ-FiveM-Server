@@ -1,6 +1,6 @@
 import { DragOverlay, useDraggable, useDroppable } from '@dnd-kit/core';
 import classNames from 'classnames';
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import { getItemWeight, InventoryConfiguration, InventoryItem, isItemAllowed } from '../../../shared/inventory';
@@ -51,10 +51,12 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
     const hidden =
         allowHidden &&
         (item?.notSearchable || (inventoryItem instanceof Object && inventoryItem.metadata?.notSearchable));
+    const [isVisible, setIsVisible] = useState(false);
+    const visibleRef = useRef(null);
     const { isOver, setNodeRef: setDroppableNodeRef } = useDroppable({
         id: `${prefixId}droppable_${inventoryId}_${slot}`,
         data: { inventoryId, slot, type: 'inventoryItem' },
-        disabled: hidden,
+        disabled: hidden || !isVisible,
     });
     const [contextData, setContextData] = useState({ visible: false, posX: 0, posY: 0 });
     const playerData = usePlayer();
@@ -65,6 +67,30 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
         (targetConfiguration &&
             inventoryItem instanceof Object &&
             !isItemAllowed(inventoryItem.type, inventoryItem.name, inventoryItem.metadata, targetConfiguration));
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                setIsVisible(entry.isIntersecting);
+            },
+            {
+                root: null, // viewport
+                rootMargin: '0px', // no margin
+                threshold: 0.25, // 50% of target visible
+            }
+        );
+
+        if (visibleRef.current) {
+            observer.observe(visibleRef.current);
+        }
+
+        // Clean up the observer
+        return () => {
+            if (visibleRef.current) {
+                observer.unobserve(visibleRef.current);
+            }
+        };
+    }, [visibleRef]);
 
     const {
         attributes,
@@ -79,7 +105,7 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
 
     if (!inventoryItem || hidden) {
         return (
-            <div className="aspect-square w-[70px] h-[70px]">
+            <div ref={visibleRef} className="aspect-square w-[70px] h-[70px]">
                 <BorderBox duration="duration-0" borderClassName="rounded-xl aspect-square" showBorderOnHover={!isOver}>
                     <div ref={setDroppableNodeRef} className={getItemSlotClassnames(isOver)}></div>
                 </BorderBox>
@@ -93,6 +119,7 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
     return (
         <>
             <div
+                ref={visibleRef}
                 className="aspect-square w-[70px] h-[70px] relative"
                 onMouseEnter={() => {
                     if (inventoryItem instanceof Object) {

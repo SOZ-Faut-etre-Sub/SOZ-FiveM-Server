@@ -5,6 +5,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { Tick } from '../../core/decorators/tick';
+import { Logger } from '../../core/logger';
 import { wait } from '../../core/utils';
 import { BankMoneyType } from '../../shared/bank';
 import {
@@ -61,6 +62,9 @@ export class InventoryProvider {
 
     @Inject(PermissionService)
     private permissionService: PermissionService;
+
+    @Inject(Logger)
+    private logger: Logger;
 
     @Tick()
     public async populateInventories() {
@@ -297,6 +301,7 @@ export class InventoryProvider {
                     amount,
                     inventory_source_id: sourceInventory.id,
                     inventory_target_id: targetInventory.id,
+                    item_slot: targetSlot,
                 });
             }
 
@@ -411,7 +416,14 @@ export class InventoryProvider {
             if (isErr(targetResult)) {
                 this.notifier.error(source, ADD_ERROR_MESSAGE[targetResult.err]);
 
+                this.logger.error(
+                    `Error while adding item to target inventory : ${ADD_ERROR_MESSAGE[targetResult.err]} from ${sourceInventory.id} to ${targetInventory.id}, item: ${sourceItem.name}, amount: ${amount}, metadata: ${JSON.stringify(sourceItem.metadata)}`
+                );
+
                 sourceInventory.add(sourceItem.name, amount, sourceItem.metadata, null, true);
+                targetInventory.add(targetItem.name, targetItem.amount, targetItem.metadata, null, true);
+
+                return;
             }
 
             const sourceResult = sourceInventory.add(
@@ -425,7 +437,15 @@ export class InventoryProvider {
             if (isErr(sourceResult)) {
                 this.notifier.error(source, ADD_ERROR_MESSAGE[sourceResult.err]);
 
+                this.logger.error(
+                    `Error while adding item to source inventory : ${ADD_ERROR_MESSAGE[sourceResult.err]} from ${targetInventory.id} to ${sourceInventory.id}, item: ${targetItem.name}, amount: ${targetItem.amount}, metadata: ${JSON.stringify(targetItem.metadata)}`
+                );
+
+                targetInventory.remove(sourceItem.name, amount, true, sourceItem.metadata);
                 targetInventory.add(targetItem.name, targetItem.amount, targetItem.metadata, null, true);
+                sourceInventory.add(sourceItem.name, amount, sourceItem.metadata, null, true);
+
+                return;
             }
 
             await sourceInventory.observe(); // Force refresh of the inventory
@@ -460,6 +480,7 @@ export class InventoryProvider {
                     amount,
                     inventory_source_id: sourceInventory.id,
                     inventory_target_id: targetInventory.id,
+                    item_slot: targetResult.ok.slot,
                 });
 
                 this.monitor.traceEvent('move_item', {
@@ -468,6 +489,7 @@ export class InventoryProvider {
                     amount: targetItem.amount,
                     inventory_source_id: targetInventory.id,
                     inventory_target_id: sourceInventory.id,
+                    item_slot: sourceResult.ok.slot,
                 });
             }
 
@@ -720,13 +742,25 @@ export class InventoryProvider {
             return 0;
         }
 
-        targetInventory.add(
+        const addResult = targetInventory.add(
             sourceItem.name,
             amount,
             sourceItem.metadata,
             targetSlot,
             sourceInventory.id === targetInventory.id
         );
+
+        if (isErr(addResult)) {
+            this.notifier.error(source, ADD_ERROR_MESSAGE[addResult.err]);
+
+            this.logger.error(
+                `Error while adding item to target inventory : ${ADD_ERROR_MESSAGE[addResult.err]} from ${sourceInventory.id} to ${targetInventory.id}, item: ${sourceItem.name}, amount: ${amount}, metadata: ${JSON.stringify(sourceItem.metadata)}`
+            );
+
+            sourceInventory.add(sourceItem.name, amount, sourceItem.metadata, null, true);
+
+            return 0;
+        }
 
         if (targetInventory.id !== sourceInventory.id) {
             this.monitor.traceEvent('transfer_item', {
@@ -735,6 +769,7 @@ export class InventoryProvider {
                 amount,
                 inventory_source_id: sourceInventory.id,
                 inventory_target_id: targetInventory.id,
+                item_slot: addResult.ok.slot,
             });
 
             this.notifyMoveItem(source, sourceInventory, targetInventory, sourceItem, amount);
