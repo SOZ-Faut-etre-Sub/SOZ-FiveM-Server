@@ -147,6 +147,7 @@ export class WorldEventProvider {
             currentSceneId: sceneId,
             startTimestamp: Date.now(),
             signaledInvs: [],
+            unlockInvs: [],
         };
 
         const gang = this.gangRepository.find(player.gang.id);
@@ -228,8 +229,20 @@ export class WorldEventProvider {
         }
     }
 
+    @OnEvent(ClientEvent.WORLD_EVENT_UNLOCK_INVENTORY)
+    public async onUnlockInventory(unlockInvs: string[]) {
+        if (!this.currentEvent) {
+            return;
+        }
+        this.currentEvent.unlockInvs = unlockInvs;
+    }
+
     public isSignaled(inventoryId: string) {
         return this.currentEvent && this.currentEvent.signaledInvs.includes(inventoryId);
+    }
+
+    public isUnlock(inventoryId: string) {
+        return this.currentEvent && this.currentEvent.unlockInvs.includes(inventoryId);
     }
 
     @OnEvent(ClientEvent.WORLD_EVENT_INIT_PED)
