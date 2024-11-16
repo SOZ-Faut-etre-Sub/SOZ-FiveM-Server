@@ -1,7 +1,6 @@
-import { BrandsConfig, ShopBrand, UndershirtDrawablesToExclude } from '@public/config/shops';
+import { BrandsConfig, ShopBrand } from '@public/config/shops';
 import { usePlayer } from '@public/nui/hook/data';
 import { useNuiEvent } from '@public/nui/hook/nui';
-import { Component } from '@public/shared/cloth';
 import { ClothingCategoryID, ClothingShop, ClothingShopCategory } from '@public/shared/shop';
 import { FunctionComponent, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -40,8 +39,8 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({
     const [shopCategories, setShopCategories] = useState<Record<number, ClothingShopCategory>>(shop_categories);
     const playerData = usePlayer();
 
-    const banner = BrandsConfig[brand].banner || 'https://nui-img/soz/menu_shop_clothe_normal';
-    const shopName = BrandsConfig[brand].label || 'Magasin';
+    const banner = BrandsConfig[brand]?.banner || 'https://nui-img/soz/menu_shop_clothe_normal';
+    const shopName = BrandsConfig[brand]?.label || 'Magasin';
     const navigate = useNavigate();
     const location = useLocation();
     const state = location.state as { activeIndex: number } | undefined;
@@ -119,8 +118,10 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({
                                 !product[0].undershirtType ||
                                 (playerData.cloth_config.BaseClothSet.TopID != null &&
                                     under_types[playerData.cloth_config.BaseClothSet.TopID] &&
-                                    under_types[playerData.cloth_config.BaseClothSet.TopID]?.includes(
-                                        product[0].undershirtType
+                                    !!product.find(item =>
+                                        under_types[playerData.cloth_config.BaseClothSet.TopID]?.includes(
+                                            item.undershirtType
+                                        )
                                     ))
                         ).length > 0)
                 );
@@ -174,12 +175,11 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({
                                         !items[0].undershirtType ||
                                         (playerData.cloth_config.BaseClothSet.TopID != null &&
                                             under_types[playerData.cloth_config.BaseClothSet.TopID] &&
-                                            under_types[playerData.cloth_config.BaseClothSet.TopID]?.includes(
-                                                items[0].undershirtType
-                                            ) &&
-                                            !UndershirtDrawablesToExclude[playerData.skin.Model.Hash][
-                                                playerData.cloth_config.BaseClothSet.Components[Component.Tops].Drawable
-                                            ]?.includes(items[0].components[Component.Undershirt].Drawable))
+                                            !!items.find(item =>
+                                                under_types[playerData.cloth_config.BaseClothSet.TopID]?.includes(
+                                                    item.undershirtType
+                                                )
+                                            ))
                                 )
                                 .sort((a, b) => a[0].localeCompare(b[0]))
                                 .map(([modelLabel, items]) => (
@@ -198,7 +198,21 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({
                                                 <>
                                                     <div>{modelLabel}</div>
                                                     <div>
-                                                        {items.length} Coloris - Prix : $
+                                                        {
+                                                            items.filter(
+                                                                item =>
+                                                                    !item.undershirtType ||
+                                                                    (playerData.cloth_config.BaseClothSet.TopID !=
+                                                                        null &&
+                                                                        under_types[
+                                                                            playerData.cloth_config.BaseClothSet.TopID
+                                                                        ] &&
+                                                                        under_types[
+                                                                            playerData.cloth_config.BaseClothSet.TopID
+                                                                        ]?.includes(item.undershirtType))
+                                                            ).length
+                                                        }{' '}
+                                                        Coloris - Prix : $
                                                         {getPrice(item.price, isInCayo ? null : TaxType.SUPPLY)} - 📦
                                                         Stock : {item.stock}
                                                     </div>
@@ -206,23 +220,34 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({
                                             );
                                         }}
                                     >
-                                        {items.map(item => (
-                                            <MenuItemSelectOption
-                                                key={item.id}
-                                                value={item}
-                                                description={`💸 Prix : $${getPrice(
-                                                    item.price,
-                                                    isInCayo ? null : TaxType.SUPPLY
-                                                )} - 📦 Stock : ${item.stock}`}
-                                                disabled={item.stock == 0}
-                                                onSelected={async () =>
-                                                    await fetchNui(NuiEvent.ClothingShopPreview, item)
-                                                }
-                                                helper={item.colorLabel}
-                                            >
-                                                <span className="capitalize">{item.colorLabel}</span>
-                                            </MenuItemSelectOption>
-                                        ))}
+                                        {items
+                                            .filter(
+                                                item =>
+                                                    !item.undershirtType ||
+                                                    (playerData.cloth_config.BaseClothSet.TopID != null &&
+                                                        under_types[playerData.cloth_config.BaseClothSet.TopID] &&
+                                                        under_types[
+                                                            playerData.cloth_config.BaseClothSet.TopID
+                                                        ]?.includes(item.undershirtType))
+                                            )
+                                            .sort((a, b) => a.colorLabel.localeCompare(b.colorLabel))
+                                            .map(item => (
+                                                <MenuItemSelectOption
+                                                    key={item.id}
+                                                    value={item}
+                                                    description={`💸 Prix : $${getPrice(
+                                                        item.price,
+                                                        isInCayo ? null : TaxType.SUPPLY
+                                                    )} - 📦 Stock : ${item.stock}`}
+                                                    disabled={item.stock == 0}
+                                                    onSelected={async () =>
+                                                        await fetchNui(NuiEvent.ClothingShopPreview, item)
+                                                    }
+                                                    helper={item.colorLabel}
+                                                >
+                                                    <span className="capitalize">{item.colorLabel}</span>
+                                                </MenuItemSelectOption>
+                                            ))}
                                     </MenuItemSelect>
                                 ))}
                         </MenuContent>

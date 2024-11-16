@@ -1,4 +1,6 @@
+import { ShopBrand } from '@public/config/shops';
 import { NotificationPoliceLogoType, NotificationPoliceType, NotificationType } from '@public/shared/notification';
+import { MenuType } from '@public/shared/nui/menu';
 
 import { Command } from '../../core/decorators/command';
 import { OnNuiEvent } from '../../core/decorators/event';
@@ -12,8 +14,11 @@ import { DrawService } from '../draw.service';
 import { GetObjectList, GetPedList, GetPickupList, GetVehicleList } from '../enumerate';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
+import { NuiMenu } from '../nui/nui.menu';
 import { NuiZoneProvider } from '../nui/nui.zone.provider';
 import { ObjectProvider } from '../object/object.provider';
+import { ClothingShopRepository } from '../repository/shop.repository';
+import { UnderTypesShopRepository } from '../repository/under_types.shop.repository';
 import { ScreenService } from '../screen.service';
 import { TargetProvider } from '../target/target.provider';
 import { NoClipProvider } from '../utils/noclip.provider';
@@ -54,6 +59,15 @@ export class AdminMenuDeveloperProvider {
 
     @Inject(ScreenService)
     public screenService: ScreenService;
+
+    @Inject(NuiMenu)
+    public nuiMenu: NuiMenu;
+
+    @Inject(ClothingShopRepository)
+    public clothingShopRepository: ClothingShopRepository;
+
+    @Inject(UnderTypesShopRepository)
+    private underTypesShopRepository: UnderTypesShopRepository;
 
     public showCoordinates = false;
 
@@ -355,5 +369,20 @@ export class AdminMenuDeveloperProvider {
             } not networked, ${countPickupsNetworked} networked, ${GetMaxNumNetworkPickups()} max networked`
         );
         console.log(`Object from soz : ${this.objectProvider.getLoadedObjectsCount()} total`);
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuClothes)
+    public async onClothes(brand: ShopBrand): Promise<void> {
+        const { shop: shop_content, content: shop_categories } =
+            await this.clothingShopRepository.getShopContent(brand);
+        const under_types = this.underTypesShopRepository.getAllUnderTypes();
+
+        this.nuiMenu.openMenu(MenuType.ClothShop, {
+            brand: brand,
+            shop_content,
+            shop_categories,
+            under_types,
+            isInCayo: true,
+        });
     }
 }

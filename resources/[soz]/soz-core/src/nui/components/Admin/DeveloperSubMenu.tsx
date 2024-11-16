@@ -1,3 +1,4 @@
+import { ShopBrand } from '@public/config/shops';
 import { SozRole } from '@public/core/permissions';
 import { DeveloperSubMenuState } from '@public/shared/admin/admin';
 import { FunctionComponent } from 'react';
@@ -133,6 +134,18 @@ export const DeveloperSubMenu: FunctionComponent<DeveloperSubMenuProps> = ({ ban
                 >
                     🚪Gestions des portes
                 </MenuItemCheckbox>
+                <MenuItemSelect
+                    title="Magasin"
+                    onConfirm={async (_, brand) => {
+                        await fetchNui(NuiEvent.AdminMenuClothes, brand);
+                    }}
+                >
+                    {[ShopBrand.Ponsonbys, ShopBrand.Binco, ShopBrand.Mask].map(option => (
+                        <MenuItemSelectOption key={'cloth_shop' + option} value={option}>
+                            {option}
+                        </MenuItemSelectOption>
+                    ))}
+                </MenuItemSelect>
             </MenuContent>
         </SubMenu>
     );

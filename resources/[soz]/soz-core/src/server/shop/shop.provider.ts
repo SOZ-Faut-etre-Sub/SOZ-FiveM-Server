@@ -5,7 +5,7 @@ import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { PlayerPositionProvider } from '@public/server/player/player.position.provider';
 import { VehicleSpawner } from '@public/server/vehicle/vehicle.spawner';
 import { VehicleStateService } from '@public/server/vehicle/vehicle.state.service';
-import { Component, OutfitItem, Prop } from '@public/shared/cloth';
+import { Component, Prop } from '@public/shared/cloth';
 import { TenueIdToHide } from '@public/shared/player';
 import {
     BarberShopItem,
@@ -443,18 +443,23 @@ export class ShopProvider {
         }
 
         // Adapt torso to undershirt
-        const playerModel = this.playerService.getPlayer(source).skin.Model.Hash;
-        if (product.undershirtType && UndershirtCategoryNeedingReplacementTorso[playerModel][product.undershirtType]) {
+        if (product.undershirtType) {
+            const playerModel = this.playerService.getPlayer(source).skin.Model.Hash;
+            const replacement = UndershirtCategoryNeedingReplacementTorso[playerModel][product.undershirtType];
             const baseTorsoDrawable =
                 ProperTorsos[playerModel][clothConfig.BaseClothSet.Components[Component.Tops].Drawable];
-            const replacementTorsoDrawable =
-                UndershirtCategoryNeedingReplacementTorso[playerModel][product.undershirtType][baseTorsoDrawable];
-            if (replacementTorsoDrawable != null) {
+            if (replacement && replacement[baseTorsoDrawable] != null) {
                 clothConfig.BaseClothSet.Components[Component.Torso] = {
-                    Drawable: replacementTorsoDrawable,
+                    Drawable: replacement[baseTorsoDrawable],
                     Texture: 0,
                     Palette: 0,
-                } as OutfitItem;
+                };
+            } else {
+                clothConfig.BaseClothSet.Components[Component.Torso] = {
+                    Drawable: baseTorsoDrawable,
+                    Texture: 0,
+                    Palette: 0,
+                };
             }
         }
 
