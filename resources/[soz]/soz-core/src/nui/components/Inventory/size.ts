@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 
 import { RootState } from '../../store';
 
-type InventorySize = {
+export type InventorySize = {
     itemSize: number;
     gapSize: number;
     maxHeight: number;
