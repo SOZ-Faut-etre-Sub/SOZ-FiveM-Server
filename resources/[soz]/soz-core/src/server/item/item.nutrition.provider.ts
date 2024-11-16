@@ -42,6 +42,10 @@ export class ItemNutritionProvider {
         inventoryItem: InventoryItem,
         inventory: Inventory
     ): Promise<void> {
+        if (!inventory.removeAtSlot(inventoryItem.slot, 1)) {
+            return;
+        }
+
         const name = item.type === 'food' ? 'eat_something' : 'drink_something';
         const prop =
             item.prop ||
@@ -83,10 +87,6 @@ export class ItemNutritionProvider {
         });
 
         if (!completed && progress === 0) {
-            return;
-        }
-
-        if (!inventory.removeAtSlot(inventoryItem.slot, 1)) {
             return;
         }
 
