@@ -13,15 +13,6 @@ export type GameCanvasOptions = {
     circle?: boolean;
 };
 
-const contextOptions: CanvasRenderingContext2DSettings | WebGLContextAttributes = {
-    antialias: false,
-    depth: false,
-    alpha: true,
-    stencil: false,
-    desynchronized: true,
-    powerPreference: 'high-performance',
-};
-
 const vertexShaderSrc = `
   attribute vec2 a_position;
   attribute vec2 a_texcoord;
@@ -136,7 +127,17 @@ export class GameViewRenderer {
     constructor() {
         this.rootCanvas = new OffscreenCanvas(1, 1);
 
-        const gl = this.rootCanvas.getContext('webgl', contextOptions);
+        const gl = this.rootCanvas.getContext('webgl', {
+            alpha: false,
+            antialias: false,
+            depth: false,
+            desynchronized: true,
+            failIfMajorPerformanceCaveat: false,
+            powerPreference: 'high-performance',
+            premultipliedAlpha: false,
+            preserveDrawingBuffer: false,
+            stencil: false,
+        });
 
         if (!gl) {
             throw new Error('Failed to acquire webgl context for GameViewRenderer');
@@ -178,7 +179,11 @@ export class GameViewRenderer {
     }
 
     setGameCanvas(canvas: OffscreenCanvas) {
-        this.gameCanvas = canvas.getContext('2d', contextOptions);
+        this.gameCanvas = canvas.getContext('2d', {
+            alpha: true,
+            desynchronized: true,
+            willReadFrequently: false,
+        });
     }
 
     addCanvas(uuid: string, x: number, y: number, width: number, height: number, options: GameCanvasOptions) {
@@ -204,9 +209,9 @@ export class GameViewRenderer {
 
     private render = () => {
         this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, 4);
-        this.gl.finish();
 
         if (!this.gameCanvas) {
+            this.gl.finish();
             this.animationFrame = requestAnimationFrame(this.render);
             return;
         }
@@ -259,6 +264,7 @@ export class GameViewRenderer {
             }
         }
 
+        this.gl.finish();
         this.animationFrame = requestAnimationFrame(this.render);
     };
 }
