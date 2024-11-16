@@ -51,6 +51,7 @@ export type MonitorTraceEvent = {
     item_id?: string;
     item_count?: number;
     item_label?: string;
+    item_slot?: number;
     type?: string;
     category?: string;
     house_id?: string;
@@ -177,6 +178,7 @@ export type MonitorEvent = {
     item_id?: string;
     item_count?: number;
     item_label?: string;
+    item_slot?: number;
     type?: string;
     category?: string;
     house_id?: string;

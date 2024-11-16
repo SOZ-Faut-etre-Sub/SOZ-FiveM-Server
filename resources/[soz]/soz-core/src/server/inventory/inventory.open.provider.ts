@@ -1,4 +1,4 @@
-import { OnEvent } from '@public/core/decorators/event';
+import { On, OnEvent } from '@public/core/decorators/event';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 
 import { Inject } from '../../core/decorators/injectable';
@@ -309,6 +309,8 @@ export class InventoryOpenProvider {
         }
 
         if (!this.subscriptions.get(storageId).has(source)) {
+            this.inventoryPositionChecker.closeInventory(source, storageId);
+
             return;
         }
 
@@ -359,5 +361,19 @@ export class InventoryOpenProvider {
         });
 
         this.subscriptions.get(inventory.id).set(source, id);
+    }
+
+    @On('QBCore:Server:PlayerUnload', false)
+    async onPlayerUnload(source: number) {
+        for (const [storageId, subscriptions] of this.subscriptions) {
+            if (subscriptions.has(source)) {
+                const inventory = await this.inventoryFactory.get(storageId);
+                inventory.unsubscribe(subscriptions.get(source));
+
+                this.inventoryPositionChecker.closeInventory(source, storageId);
+
+                subscriptions.delete(source);
+            }
+        }
     }
 }

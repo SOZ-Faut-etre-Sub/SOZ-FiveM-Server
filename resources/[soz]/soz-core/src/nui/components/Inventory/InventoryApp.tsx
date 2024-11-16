@@ -44,6 +44,8 @@ export const InventoryApp: FunctionComponent = () => {
         if (inventoryId === id) {
             setInventoryItems(items);
             setConfiguration(configuration);
+        } else {
+            fetchNui(NuiEvent.InventoryClose, id);
         }
     });
 

@@ -114,8 +114,8 @@ export class InventoryProvider {
     }
 
     @OnNuiEvent(NuiEvent.InventoryClose)
-    public async onInventoryClose() {
-        this.inventoryManager.unsubscribeInventory();
+    public async onInventoryClose(inventoryId: string) {
+        this.inventoryManager.unsubscribeInventory(inventoryId);
     }
 
     @OnNuiEvent(NuiEvent.InventoryActionUse)
