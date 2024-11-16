@@ -1,4 +1,4 @@
-import { PlayerUpdate } from '@public/core/decorators/player';
+import { PlayerInventoryUpdate, PlayerUpdate } from '@public/core/decorators/player';
 
 import { Command } from '../../core/decorators/command';
 import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
@@ -39,7 +39,7 @@ export class VoipRadioProvider {
 
     private radioInUse = false;
 
-    @PlayerUpdate()
+    @PlayerInventoryUpdate()
     async onPlayerUpdate(): Promise<void> {
         const hasRadio = this.inventoryManager.hasEnoughItem('radio', 1, true);
 

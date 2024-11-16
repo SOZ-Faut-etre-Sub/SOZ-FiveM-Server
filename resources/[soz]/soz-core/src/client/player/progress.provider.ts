@@ -26,13 +26,13 @@ export class ProgressProvider {
             return;
         }
 
-        if (this.progressService.current.disableMouse) {
+        if (this.progressService.current?.disableMouse) {
             DisableControlAction(0, Control.LookLeftRight, true);
             DisableControlAction(0, Control.LookUpDown, true);
             DisableControlAction(0, Control.VehicleMouseControlOverride, true);
         }
 
-        if (this.progressService.current.disableMovement) {
+        if (this.progressService.current?.disableMovement) {
             DisableControlAction(0, Control.Jump, true);
             DisableControlAction(0, Control.Enter, true);
             DisableControlAction(0, Control.MoveLeftRight, true);
@@ -41,7 +41,7 @@ export class ProgressProvider {
             DisableControlAction(0, Control.Sprint, true);
         }
 
-        if (this.progressService.current.disableCarMovement) {
+        if (this.progressService.current?.disableCarMovement) {
             DisableControlAction(0, Control.VehicleMoveLeftOnly, true);
             DisableControlAction(0, Control.VehicleMoveRightOnly, true);
             DisableControlAction(0, Control.VehicleAccelerate, true);
@@ -49,7 +49,7 @@ export class ProgressProvider {
             DisableControlAction(0, Control.VehicleExit, true);
         }
 
-        if (this.progressService.current.disableCombat) {
+        if (this.progressService.current?.disableCombat) {
             DisablePlayerFiring(PlayerId(), true);
             DisableControlAction(0, Control.Attack, true);
             DisableControlAction(0, Control.Aim, true);
@@ -67,7 +67,7 @@ export class ProgressProvider {
             DisableControlAction(0, Control.Attack2, true);
         }
 
-        if (!this.progressService.current.canCancel) return;
+        if (!this.progressService.current?.canCancel) return;
 
         if (IsControlJustPressed(0, Control.FrontendRRight) || IsControlJustPressed(0, Control.CursorCancel)) {
             this.progressService.cancel();

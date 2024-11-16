@@ -64,8 +64,8 @@ export class InventoryUsageProvider {
         Object.entries(player.PlayerData.metadata.shortcuts).forEach(([key, value]) => {
             if (
                 value.name === item.name &&
-                value.metadata.serial === item.metadata.serial &&
-                value.metadata.type === item.metadata.type
+                value.metadata?.serial === item.metadata?.serial &&
+                value.metadata?.type === item.metadata?.type
             ) {
                 player.PlayerData.metadata.shortcuts[key] = null;
             }
@@ -78,8 +78,8 @@ export class InventoryUsageProvider {
             player.PlayerData.metadata.shortcuts[shortcut] = {
                 name: item.name,
                 metadata: {
-                    type: item.metadata.type,
-                    serial: item.metadata.serial,
+                    type: item.metadata?.type,
+                    serial: item.metadata?.serial,
                 },
             };
         }

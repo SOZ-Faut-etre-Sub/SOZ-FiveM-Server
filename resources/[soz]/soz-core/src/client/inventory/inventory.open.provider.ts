@@ -150,10 +150,13 @@ export class InventoryOpenProvider {
                                 return false;
                             }
 
+                            const playerPed = PlayerPedId();
+                            const coords = GetEntityCoords(playerPed);
+
                             this.inventoryManager.openInventory(
                                 InventoryType.Stash,
                                 `stash_${player.job.id}_${player.citizenid}`,
-                                inventory.center
+                                coords as Vector3
                             );
                         },
                     });
