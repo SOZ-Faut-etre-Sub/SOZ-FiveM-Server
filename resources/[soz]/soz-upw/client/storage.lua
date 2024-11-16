@@ -18,7 +18,7 @@ function CreateInverterZone(identifier, data)
                 return OnDuty()
             end,
             action = function()
-                exports["soz-core"]:OpenInventory("inverter", identifier)
+                exports["soz-core"]:OpenInventory("inverter", "inverter_" .. identifier)
             end,
         },
     }

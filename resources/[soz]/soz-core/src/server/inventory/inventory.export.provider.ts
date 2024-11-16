@@ -2,6 +2,7 @@ import { Exportable } from '../../core/decorators/exports';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { InventoryItemMetadata } from '../../shared/inventory';
+import { ItemService } from '../item/item.service';
 import { InventoryFactory } from './inventory.factory';
 
 /**
@@ -12,11 +13,16 @@ export class InventoryExportProvider {
     @Inject(InventoryFactory)
     private inventoryFactory: InventoryFactory;
 
+    @Inject(ItemService)
+    private itemService: ItemService;
+
     @Exportable('GetItemsByType')
     public async legacyExportGetItemsByType(inventoryId: string, type: string) {
         const inventory = await this.inventoryFactory.get(inventoryId);
 
-        return Object.values(inventory.items()).filter(item => item.type === type);
+        return Object.values(inventory.items())
+            .filter(item => item.type === type)
+            .map(item => ({ ...item, item: this.itemService.getItem(item.name) }));
     }
 
     @Exportable('GetItem')
