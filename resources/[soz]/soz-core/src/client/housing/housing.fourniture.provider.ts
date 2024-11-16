@@ -628,7 +628,7 @@ export class HousingFournitureProvider {
         } else if (type === 'fridge') {
             this.inventoryManager.openInventory(
                 InventoryType.HouseFridge,
-                `house_stash_${this.lastApartment.identifier}`,
+                `house_fridge_${this.lastApartment.identifier}`,
                 null
             );
         }
