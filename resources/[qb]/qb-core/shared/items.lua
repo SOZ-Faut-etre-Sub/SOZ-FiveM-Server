@@ -11852,6 +11852,7 @@ QBShared.Items = {
         ["useable"] = true,
         ["weight"] = 30000,
         ["type"] = "item",
+        ["expiresIn"] = 720,
         ["description"] = "Conçue pour les unités spécialisées dans la lutte contre la cybercriminalité, la Valkyrie X1 peut anéantir des bases de données cryptées et saboter les serveurs clandestins. Elle dispose d’un puissant logiciel de cryptanalyse et de destruction de pare-feu, rendant impossible toute récupération de données.",
         ["illustrator"] = ".Nariiel",
     },

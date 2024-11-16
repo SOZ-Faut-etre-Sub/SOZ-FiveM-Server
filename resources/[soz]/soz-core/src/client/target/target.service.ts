@@ -94,10 +94,10 @@ export class TargetService {
     }
 
     protected itemCheck(item: string): boolean {
-        const inventoryItem = this.inventoryManager.findItem(i => i.name === item);
+        const inventoryItem = this.inventoryManager.findItem(i => i.name === item && !this.itemService.isExpired(i));
         if (!inventoryItem) return false;
 
-        return inventoryItem.amount >= 1 && !this.itemService.isExpired(inventoryItem);
+        return inventoryItem.amount >= 1;
     }
 
     protected blackoutGlobalCheck(): boolean {
