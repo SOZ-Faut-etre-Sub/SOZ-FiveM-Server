@@ -115,14 +115,16 @@ export const SafeApp: FunctionComponent = () => {
                     </div>
 
                     <div className="space-y-6">
-                        <Tabs
-                            selected={action}
-                            onChange={index => {
-                                setAction(index);
-                                reset();
-                            }}
-                            tabs={['Retirer', 'Déposer']}
-                        />
+                        <div className="h-14">
+                            <Tabs
+                                selected={action}
+                                onChange={index => {
+                                    setAction(index);
+                                    reset();
+                                }}
+                                tabs={['Retirer', 'Déposer']}
+                            />
+                        </div>
 
                         {account?.type !== 'housestorages' && account?.type !== 'gang' && (
                             <Card

@@ -1,5 +1,4 @@
 import React, { FunctionComponent, KeyboardEvent, useEffect, useMemo, useState } from 'react';
-import { FaArrowRightArrowLeft } from 'react-icons/fa6';
 import { GiPalmTree } from 'react-icons/gi';
 import { MemoryRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 

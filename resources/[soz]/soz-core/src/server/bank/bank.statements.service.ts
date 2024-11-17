@@ -1,6 +1,6 @@
 import { bank_statements } from '@prisma/client';
 import { PrismaService } from '@public/server/database/prisma.service';
-import { BankActionType, BankHistoryFilter, BankStatement } from '@public/shared/bank';
+import { BankHistoryFilter, BankStatement } from '@public/shared/bank';
 import { ClientEvent } from '@public/shared/event/client';
 
 import { Exportable } from '../../core/decorators/exports';
