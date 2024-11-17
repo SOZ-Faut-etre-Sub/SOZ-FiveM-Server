@@ -331,6 +331,8 @@ export class InventoryOpenProvider {
     @OnEvent(ServerEvent.INVENTORY_UNSUBSCRIBE)
     public async onUnsubscribe(source: number, storageId: string) {
         if (!this.subscriptions.has(storageId)) {
+            this.inventoryPositionChecker.closeInventory(source, storageId);
+
             return;
         }
 
@@ -343,6 +345,8 @@ export class InventoryOpenProvider {
         const inventory = await this.inventoryFactory.get(storageId);
 
         if (!inventory) {
+            this.inventoryPositionChecker.closeInventory(source, storageId);
+
             return;
         }
 
@@ -399,6 +403,19 @@ export class InventoryOpenProvider {
                 this.inventoryPositionChecker.closeInventory(source, storageId);
 
                 subscriptions.delete(source);
+            }
+        }
+    }
+
+    @Tick(100)
+    async checkInventoryTrunkOpened() {
+        for (const [storageId, subscriptions] of this.subscriptions) {
+            if (subscriptions.size > 0) {
+                continue;
+            }
+
+            if (this.inventoryPositionChecker.isTrunkOpened(storageId)) {
+                this.inventoryPositionChecker.forceCloseTrunk(storageId);
             }
         }
     }
