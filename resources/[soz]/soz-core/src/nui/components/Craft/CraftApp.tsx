@@ -15,7 +15,7 @@ export type Selected = {
 };
 
 const itemIcon = (item: Item) => {
-    return `https://cfx-nui-soz-core/public/images/items/${item.name}.webp`;
+    return `https://soz.zerator.com/static/game/images/items/${item.name}.webp`;
 };
 
 export const CraftApp: FunctionComponent = () => {
@@ -196,7 +196,7 @@ const ItemTierList: FunctionComponent<ItemTierListProps> = ({
                                     src={itemIcon(item)}
                                     onError={e =>
                                         (e.currentTarget.src =
-                                            'https://cfx-nui-soz-core/public/images/default/cat.webp')
+                                            'https://soz.zerator.com/static/game/images/default/cat.webp')
                                     }
                                 />
                             </div>
@@ -249,7 +249,7 @@ const SelectedItem: FunctionComponent<SelectedItemProps> = ({ selected, craftLis
                             className="aspect-square object-contain"
                             src={itemIcon(selectedItem)}
                             onError={e =>
-                                (e.currentTarget.src = 'https://cfx-nui-soz-core/public/images/default/cat.webp')
+                                (e.currentTarget.src = 'https://soz.zerator.com/static/game/images/default/cat.webp')
                             }
                         />
                     </div>
@@ -295,7 +295,7 @@ const SelectedItem: FunctionComponent<SelectedItemProps> = ({ selected, craftLis
                                             src={itemIcon(requiredItem)}
                                             onError={e =>
                                                 (e.currentTarget.src =
-                                                    'https://cfx-nui-soz-core/public/images/default/cat.webp')
+                                                    'https://soz.zerator.com/static/game/images/default/cat.webp')
                                             }
                                         />
                                         <span className="ml-4">

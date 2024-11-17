@@ -20,7 +20,7 @@ export const TargetItem: FunctionComponent<TargetOption & { onSelect: () => void
     const imageUrl = useMemo(() => {
         if (!icon) return null;
 
-        return `/public/images/target/${icon}.webp`;
+        return `https://soz.zerator.com/static/game/images/target/${icon}.webp`;
     }, [icon]);
 
     return (

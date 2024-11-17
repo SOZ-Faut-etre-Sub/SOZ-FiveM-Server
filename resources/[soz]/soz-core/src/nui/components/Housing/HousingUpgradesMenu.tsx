@@ -125,8 +125,8 @@ export const HousingUpgradesMenu: FunctionComponent<HousingUpgradesMenuProps> = 
                                                 className="ml-2 w-8 h-8"
                                                 src={
                                                     type === 'park_tier'
-                                                        ? `/public/images/housing/garage.webp`
-                                                        : `/public/images/housing/maison.webp`
+                                                        ? `https://soz.zerator.com/static/game/images/housing/garage.webp`
+                                                        : `https://soz.zerator.com/static/game/images/housing/maison.webp`
                                                 }
                                             />
                                             <h3 className="ml-4">{label}</h3>
@@ -159,7 +159,7 @@ export const HousingUpgradesMenu: FunctionComponent<HousingUpgradesMenuProps> = 
                                             <img
                                                 alt="engine"
                                                 className="ml-2 w-8 h-8"
-                                                src={`/public/images/housing/garage.webp`}
+                                                src={`https://soz.zerator.com/static/game/images/housing/garage.webp`}
                                             />
                                             <h3 className="ml-4">{TYPE_LABEL.park_tier}</h3>
                                         </div>

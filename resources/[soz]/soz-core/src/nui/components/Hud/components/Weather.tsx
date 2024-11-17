@@ -70,7 +70,10 @@ export const Weather: FunctionComponent = () => {
                 <span className="font-semibold">{forecast?.temperature}</span>
                 <span className="font-light">°C</span>
             </div>
-            <img style={{ height: largeIconSize }} src={`/public/images/hud/weather/${weather}.webp`} />
+            <img
+                style={{ height: largeIconSize }}
+                src={`https://soz.zerator.com/static/game/images/hud/weather/${weather}.webp`}
+            />
         </div>
     );
 };

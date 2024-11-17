@@ -31,7 +31,7 @@ export const MenuNews: FunctionComponent<MenuNewsProps> = ({ data }) => {
     const banner =
         data.job === JobType.News
             ? 'https://nui-img/soz/menu_job_news'
-            : '/public/images/banner/menu_job_you-news.webp';
+            : 'https://soz.zerator.com/static/game/images/banner/menu_job_you-news.webp';
 
     const jobLabel = data.job === JobType.News ? 'Twitch News' : 'You News';
 

@@ -177,8 +177,8 @@ const KeychainItem: FunctionComponent<{
 
     const imgSrc =
         inventoryKey.type === 'vehicle'
-            ? `https://cfx-nui-soz-core/public/images/inventory/icon/vehicle_key.webp`
-            : `https://cfx-nui-soz-core/public/images/inventory/icon/apartment_key.webp`;
+            ? `https://soz.zerator.com/static/game/images/inventory/icon/vehicle_key.webp`
+            : `https://soz.zerator.com/static/game/images/inventory/icon/apartment_key.webp`;
 
     return (
         <>

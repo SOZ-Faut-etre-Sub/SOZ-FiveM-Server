@@ -78,7 +78,7 @@ export const BankApp: FunctionComponent = () => {
                     <div className="flex flex-col w-1/6">
                         <img
                             className="flex-none py-10 self-center"
-                            src="/public/images/bank/logo.webp"
+                            src="https://soz.zerator.com/static/game/images/bank/logo.webp"
                             alt="Fleeca Logo"
                         />
                         <div className="flex flex-col grow gap-8">

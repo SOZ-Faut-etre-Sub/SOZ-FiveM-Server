@@ -237,7 +237,7 @@ const ShortcutSlot: FunctionComponent<ShortcutSlotProps> = ({ shortcut, inventor
                                     })}
                                     src={imageSrc}
                                     onError={() => {
-                                        setImageSrc('https://cfx-nui-soz-core/public/images/default/cat.webp');
+                                        setImageSrc('https://soz.zerator.com/static/game/images/default/cat.webp');
                                     }}
                                     alt="Name"
                                 />

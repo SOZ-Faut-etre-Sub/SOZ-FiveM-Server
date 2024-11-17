@@ -24,7 +24,7 @@ export const SeatbeltIndicator: FunctionComponent = () => {
     return (
         <animated.img
             style={{ ...styles, width, height }}
-            src={`/public/images/hud/vehicle/${imagePrefix}seatbelt.webp`}
+            src={`https://soz.zerator.com/static/game/images/hud/vehicle/${imagePrefix}seatbelt.webp`}
         />
     );
 };

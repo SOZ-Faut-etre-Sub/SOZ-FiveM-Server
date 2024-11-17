@@ -54,29 +54,29 @@ const Banner: FunctionComponent<BannerProps> = ({ index, news, onDelete }) => {
 
     switch (news.type) {
         case 'lspd':
-            backgroundImage = '/public/images/twitch-news/lspd.webp';
+            backgroundImage = 'https://soz.zerator.com/static/game/images/twitch-news/lspd.webp';
             authorType = 'Agent:';
             break;
         case 'bcso':
-            backgroundImage = '/public/images/twitch-news/bcso.webp';
+            backgroundImage = 'https://soz.zerator.com/static/game/images/twitch-news/bcso.webp';
             authorType = 'Agent:';
             break;
         case 'fbi':
         case 'fbi_annoncement':
-            backgroundImage = '/public/images/twitch-news/fbi.webp';
+            backgroundImage = 'https://soz.zerator.com/static/game/images/twitch-news/fbi.webp';
             authorType = 'Agent:';
             break;
         case 'sasp':
         case 'sasp_annoncement':
-            backgroundImage = '/public/images/twitch-news/sasp.webp';
+            backgroundImage = 'https://soz.zerator.com/static/game/images/twitch-news/sasp.webp';
             authorType = 'Agent:';
             break;
         case 'gouv':
-            backgroundImage = '/public/images/twitch-news/gouv.webp';
+            backgroundImage = 'https://soz.zerator.com/static/game/images/twitch-news/gouv.webp';
             authorType = 'Agent:';
             break;
         case 'presidence':
-            backgroundImage = '/public/images/twitch-news/presidence.webp';
+            backgroundImage = 'https://soz.zerator.com/static/game/images/twitch-news/presidence.webp';
             authorType = '';
             break;
         case 'reboot_5':
@@ -86,19 +86,19 @@ const Banner: FunctionComponent<BannerProps> = ({ index, news, onDelete }) => {
             backgroundImage = 'https://soz.zerator.com/static/images/reboot_15.png';
             break;
         case 'sandstorm':
-            backgroundImage = '/public/images/twitch-news/sandstorm.webp';
+            backgroundImage = 'https://soz.zerator.com/static/game/images/twitch-news/sandstorm.webp';
             break;
         case 'earthquake':
-            backgroundImage = '/public/images/twitch-news/earthquake.webp';
+            backgroundImage = 'https://soz.zerator.com/static/game/images/twitch-news/earthquake.webp';
             break;
         case 'flood':
-            backgroundImage = '/public/images/twitch-news/flood.webp';
+            backgroundImage = 'https://soz.zerator.com/static/game/images/twitch-news/flood.webp';
             break;
         default:
             if (news.job === JobType.YouNews) {
-                backgroundImage = '/public/images/twitch-news/younews.webp';
+                backgroundImage = 'https://soz.zerator.com/static/game/images/twitch-news/younews.webp';
             } else {
-                backgroundImage = '/public/images/twitch-news/default.webp';
+                backgroundImage = 'https://soz.zerator.com/static/game/images/twitch-news/default.webp';
             }
             break;
     }

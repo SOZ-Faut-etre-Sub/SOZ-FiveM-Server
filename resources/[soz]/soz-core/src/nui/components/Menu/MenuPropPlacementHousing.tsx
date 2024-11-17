@@ -30,7 +30,7 @@ type MenuPropPlacementProps = {
 };
 
 export const MenuPropPlacementHousing: FunctionComponent<MenuPropPlacementProps> = ({ data }) => {
-    const banner = 'https://cfx-nui-soz-core/public/images/banner/menu_housing.webp';
+    const banner = 'https://soz.zerator.com/static/game/images/banner/menu_housing.webp';
     const player = usePlayer();
     const navigate = useNavigate();
     const location = useLocation();
@@ -210,7 +210,11 @@ export const MenuPropPlacementHousing: FunctionComponent<MenuPropPlacementProps>
                     <MenuItemSelect
                         title={
                             <div className="flex items-center">
-                                <img alt="engine" className="ml-2 w-8 h-8" src={`/public/images/housing/maison.webp`} />
+                                <img
+                                    alt="engine"
+                                    className="ml-2 w-8 h-8"
+                                    src={`https://soz.zerator.com/static/game/images/housing/maison.webp`}
+                                />
                                 <h3 className="ml-4">Housing</h3>
                             </div>
                         }

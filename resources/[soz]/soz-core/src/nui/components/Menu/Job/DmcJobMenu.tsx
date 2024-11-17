@@ -19,7 +19,7 @@ const labels = {
 };
 
 export const DmcJobMenu: FunctionComponent<DmcStateProps> = ({ data }) => {
-    const banner = 'https://cfx-nui-soz-core/public/images/banner/menu_job_dmc.webp';
+    const banner = 'https://soz.zerator.com/static/game/images/banner/menu_job_dmc.webp';
     const player = usePlayer();
 
     if (!player.job.onduty) {

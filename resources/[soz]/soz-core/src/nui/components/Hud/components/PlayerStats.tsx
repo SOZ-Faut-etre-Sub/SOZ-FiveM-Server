@@ -84,7 +84,7 @@ export const PlayerStats: FunctionComponent = () => {
                         width: iconSize,
                         height: iconSize,
                     }}
-                    src="/public/images/hud/player/health.webp"
+                    src="https://soz.zerator.com/static/game/images/hud/player/health.webp"
                     alt=""
                 />
             </StatusGauge>
@@ -100,7 +100,7 @@ export const PlayerStats: FunctionComponent = () => {
                         width: iconSize,
                         height: iconSize,
                     }}
-                    src="/public/images/hud/player/armor.webp"
+                    src="https://soz.zerator.com/static/game/images/hud/player/armor.webp"
                     alt="armor"
                 />
             </StatusGauge>
@@ -116,7 +116,7 @@ export const PlayerStats: FunctionComponent = () => {
                             width: iconSize,
                             height: iconSize,
                         }}
-                        src="/public/images/hud/player/syringe.webp"
+                        src="https://soz.zerator.com/static/game/images/hud/player/syringe.webp"
                         alt="syringe"
                     />
                 </StatusGauge>
@@ -133,7 +133,7 @@ export const PlayerStats: FunctionComponent = () => {
                             width: iconSize,
                             height: iconSize,
                         }}
-                        src="/public/images/hud/player/drug.webp"
+                        src="https://soz.zerator.com/static/game/images/hud/player/drug.webp"
                         alt="drug"
                     />
                 </StatusGauge>
@@ -150,7 +150,7 @@ export const PlayerStats: FunctionComponent = () => {
                             width: iconSize,
                             height: iconSize,
                         }}
-                        src="/public/images/hud/player/alcohol.webp"
+                        src="https://soz.zerator.com/static/game/images/hud/player/alcohol.webp"
                         alt="alcohol"
                     />
                 </StatusGauge>
@@ -167,7 +167,7 @@ export const PlayerStats: FunctionComponent = () => {
                         width: iconSize,
                         height: iconSize,
                     }}
-                    src="/public/images/hud/player/hunger.webp"
+                    src="https://soz.zerator.com/static/game/images/hud/player/hunger.webp"
                     alt="hunger"
                 />
             </StatusGauge>
@@ -183,7 +183,7 @@ export const PlayerStats: FunctionComponent = () => {
                         width: iconSize,
                         height: iconSize,
                     }}
-                    src="/public/images/hud/player/thirst.webp"
+                    src="https://soz.zerator.com/static/game/images/hud/player/thirst.webp"
                     alt="thirst"
                 />
             </StatusGauge>
@@ -199,7 +199,7 @@ export const PlayerStats: FunctionComponent = () => {
                             width: iconSize,
                             height: iconSize,
                         }}
-                        src="/public/images/hud/player/stress.webp"
+                        src="https://soz.zerator.com/static/game/images/hud/player/stress.webp"
                         alt="stress"
                     />
                 </StatusGauge>
@@ -217,7 +217,7 @@ export const PlayerStats: FunctionComponent = () => {
                             width: iconSize,
                             height: iconSize,
                         }}
-                        src="/public/images/hud/player/stamina.webp"
+                        src="https://soz.zerator.com/static/game/images/hud/player/stamina.webp"
                         alt="stamina"
                     />
                 </StatusGauge>
@@ -234,7 +234,7 @@ export const PlayerStats: FunctionComponent = () => {
                         width: iconSize,
                         height: iconSize,
                     }}
-                    src="/public/images/hud/vehicle/battery.webp"
+                    src="https://soz.zerator.com/static/game/images/hud/vehicle/battery.webp"
                     alt="battery"
                 />
             </StatusGauge>

@@ -116,7 +116,7 @@ export const SafeApp: FunctionComponent = () => {
                     <div className="flex flex-col justify-center items-center gap-4">
                         <img
                             className="h-32 w-32"
-                            src={`/public/images/society/${account.id?.replace(/safe_/, '')}.webp`}
+                            src={`https://soz.zerator.com/static/game/images/society/${account.id?.replace(/safe_/, '')}.webp`}
                             alt={account?.label}
                             onError={e => (e.currentTarget.style.display = 'none')}
                         ></img>

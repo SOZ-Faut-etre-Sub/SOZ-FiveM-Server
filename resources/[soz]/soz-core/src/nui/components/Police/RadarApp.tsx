@@ -27,7 +27,7 @@ export const RadarApp: FunctionComponent = () => {
     return (
         <div
             style={{
-                backgroundImage: `url(/public/images/police/zadar.webp)`,
+                backgroundImage: `url(https://soz.zerator.com/static/game/images/police/zadar.webp)`,
                 width: '342px',
                 height: '418px',
                 top: '50px',

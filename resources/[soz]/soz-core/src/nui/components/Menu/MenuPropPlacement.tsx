@@ -29,7 +29,7 @@ type MenuPropPlacementProps = {
 };
 
 export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ data }) => {
-    const banner = 'https://cfx-nui-soz-core/public/images/banner/soz_hammer.webp';
+    const banner = 'https://soz.zerator.com/static/game/images/banner/soz_hammer.webp';
     const player = usePlayer();
     const [collectionList, setCollectionList] = useState<PropCollectionData[]>(data.collections);
     const [serverData, setServerData] = useState<PropServerData>(data.serverData);

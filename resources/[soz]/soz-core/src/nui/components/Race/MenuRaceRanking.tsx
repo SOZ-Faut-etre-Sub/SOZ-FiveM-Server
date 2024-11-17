@@ -24,7 +24,7 @@ function getDurationStr(ms: number) {
 
 export const MenuRaceRank: FunctionComponent<MenuRaceRankingProps> = ({ data }) => {
     const [ranks, setRanks] = useState<RaceRankingInfo>({ ranks: [], max: 0 });
-    const banner = 'https://cfx-nui-soz-core/public/images/banner/MenuRaceRank.webp';
+    const banner = 'https://soz.zerator.com/static/game/images/banner/MenuRaceRank.webp';
 
     const fetch = useCallback(() => {
         fetchNui<any, RaceRankingInfo>(NuiEvent.RaceGetRanking, data.id).then(values => setRanks(values));

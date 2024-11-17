@@ -31,7 +31,7 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
         return null;
     }
 
-    let banner = 'https://cfx-nui-soz-core/public/images/banner/soz_hammer.webp';
+    let banner = 'https://soz.zerator.com/static/game/images/banner/soz_hammer.webp';
 
     if (data.context === 'admin') {
         banner = 'https://nui-img/soz/menu_mapper';

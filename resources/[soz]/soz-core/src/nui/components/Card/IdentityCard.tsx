@@ -12,7 +12,7 @@ export const IdentityCard: FunctionComponent<IdentityCardProps> = ({ player }) =
     return (
         <div
             style={{
-                backgroundImage: `url(/public/images/identity/identity.webp)`,
+                backgroundImage: `url(https://soz.zerator.com/static/game/images/identity/identity.webp)`,
             }}
             className="bg-contain bg-no-repeat aspect-[855/539] h-[340px]"
         >
