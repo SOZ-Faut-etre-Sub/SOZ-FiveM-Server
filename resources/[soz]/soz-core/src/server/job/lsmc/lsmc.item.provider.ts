@@ -377,12 +377,18 @@ export class LSMCItemProvider {
     @OnEvent(ServerEvent.LSMC_MORPHINE)
     public async onMorphine(source: number, target: number, item: InventoryItem, inventory: Inventory | null) {
         const player = this.playerService.getPlayer(target);
+
         if (!player) {
             return;
         }
 
+        if (!inventory) {
+            inventory = await this.inventoryFactory.getPlayerInventory(source);
+        }
+
         if (!item) {
             item = inventory.findItem(item => item.name == 'morphine' && !isInventoryItemExpired(item));
+
             if (!item) {
                 return;
             }
