@@ -17,6 +17,7 @@ import { InventoryCard } from '../../../shared/inventory';
 import { fetchNui } from '../../fetch';
 import { useKeyPress } from '../../hook/control';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
+import { BorderBox } from '../Styleguide/BorderBox';
 import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
 import { InventoryDiv } from './Inventory';
 import { getItemSlotClassnames } from './ItemSlot';
@@ -196,11 +197,7 @@ const CardItem: FunctionComponent<{
                     setContextData({ visible: false, posX: 0, posY: 0 });
                 }}
             >
-                <GlassMorphismContainer
-                    duration="duration-0"
-                    borderClassName="rounded-xl aspect-square"
-                    showBorderOnHover={!isOver}
-                >
+                <BorderBox duration="duration-0" borderClassName="rounded-xl aspect-square" showBorderOnHover={!isOver}>
                     <div ref={setDroppableNodeRef} className={getItemSlotClassnames(false)}>
                         <div ref={setDraggableNodeRef} {...listeners} {...attributes}>
                             <div className="relative">
@@ -208,7 +205,7 @@ const CardItem: FunctionComponent<{
                             </div>
                         </div>
                     </div>
-                </GlassMorphismContainer>
+                </BorderBox>
                 <div
                     className="fixed text-white rounded p-2 h-auto w-fit flex flex-col justify-center items-center bg-black/80"
                     style={{

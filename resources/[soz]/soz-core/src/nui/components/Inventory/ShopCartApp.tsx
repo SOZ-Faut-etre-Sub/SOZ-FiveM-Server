@@ -24,7 +24,7 @@ import { fetchNui } from '../../fetch';
 import { useKeyPress } from '../../hook/control';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 import { useGetPrice } from '../../hook/price';
-import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
+import { BorderBox } from '../Styleguide/BorderBox';
 import { InventoryDiv } from './Inventory';
 import { ItemDescription } from './ItemDescription';
 import { EmptySlot, getItemIcon, getItemSlotClassnames } from './ItemSlot';
@@ -317,11 +317,7 @@ const ShopItem: FunctionComponent<{
                     addItem(item);
                 }}
             >
-                <GlassMorphismContainer
-                    duration="duration-0"
-                    borderClassName="rounded-xl aspect-square"
-                    showBorderOnHover
-                >
+                <BorderBox duration="duration-0" borderClassName="rounded-xl aspect-square" showBorderOnHover>
                     <div className={getItemSlotClassnames(false)}>
                         <div ref={setDraggableNodeRef} {...listeners} {...attributes}>
                             <div
@@ -364,7 +360,7 @@ const ShopItem: FunctionComponent<{
                             </div>
                         </div>
                     </div>
-                </GlassMorphismContainer>
+                </BorderBox>
             </div>
             {createPortal(
                 <DragOverlay dropAnimation={null}>
@@ -519,11 +515,7 @@ const CartItem: FunctionComponent<{
                     height: `${itemSize}px`,
                 }}
             >
-                <GlassMorphismContainer
-                    duration="duration-0"
-                    borderClassName="rounded-xl aspect-square"
-                    showBorderOnHover={!isOver}
-                >
+                <BorderBox duration="duration-0" borderClassName="rounded-xl aspect-square" showBorderOnHover={!isOver}>
                     <div
                         ref={setDraggableNodeRef}
                         {...listeners}
@@ -554,7 +546,7 @@ const CartItem: FunctionComponent<{
                             </div>
                         </div>
                     </div>
-                </GlassMorphismContainer>
+                </BorderBox>
             </div>
             {createPortal(
                 <DragOverlay dropAnimation={null}>

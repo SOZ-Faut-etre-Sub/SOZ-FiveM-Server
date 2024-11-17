@@ -17,6 +17,7 @@ import { InventoryKey } from '../../../shared/inventory';
 import { fetchNui } from '../../fetch';
 import { useKeyPress } from '../../hook/control';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
+import { BorderBox } from '../Styleguide/BorderBox';
 import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
 import { InventoryDiv } from './Inventory';
 import { getItemSlotClassnames } from './ItemSlot';
@@ -199,7 +200,7 @@ const KeychainItem: FunctionComponent<{
                     }}
                     className={getItemSlotClassnames(false)}
                 >
-                    <GlassMorphismContainer
+                    <BorderBox
                         duration="duration-0"
                         borderClassName="rounded-xl aspect-square"
                         showBorderOnHover={!isOver}
@@ -221,7 +222,7 @@ const KeychainItem: FunctionComponent<{
                                 )}
                             </div>
                         </div>
-                    </GlassMorphismContainer>
+                    </BorderBox>
                     <div
                         className="fixed rounded p-2 h-auto w-fit flex flex-col justify-center items-center bg-black/80"
                         style={{
