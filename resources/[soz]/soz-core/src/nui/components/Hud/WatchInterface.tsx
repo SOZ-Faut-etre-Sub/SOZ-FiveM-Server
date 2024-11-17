@@ -7,7 +7,7 @@ import { VoiceMode } from '../../../shared/hud';
 import { useHudHasStreetNames } from '../../hook/data';
 import { useNuiEvent } from '../../hook/nui';
 import { RootState } from '../../store';
-import { GlassMorphismBox } from '../Styleguide/GlassMorphismContainer';
+import { GlassMorphismBox } from '../Styleguide/GlassMorphismBox';
 import { Compass } from './components/Compass';
 import { DateTime } from './components/DateTime';
 import { Location } from './components/Location';

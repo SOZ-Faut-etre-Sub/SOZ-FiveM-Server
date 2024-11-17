@@ -102,6 +102,7 @@ export const ProgressApp: FunctionComponent = () => {
                         className="flex gap-10 px-5 py-1 w-fit"
                         borderClassName="rounded-full"
                         borderColor={progress?.color}
+                        disableGameClone={!progress}
                     >
                         <span>{progress?.label}</span>
 
@@ -142,11 +143,16 @@ export const ProgressSegment: FunctionComponent<ProgressSegmentProps> = ({
     const barPercentage = Math.min(100, (Math.max(0, progressForSection) / sectionMax) * 100);
 
     return (
-        <GlassMorphismContainer className="w-10" borderClassName="rounded-md" disableBorder>
+        <GlassMorphismContainer
+            className="w-10"
+            borderClassName="rounded-md"
+            disableGameClone={!progress}
+            disableBorder
+        >
             <div
                 className="bg-white h-2.5 rounded-md"
                 style={{ width: `${barPercentage}%`, background: glassmorphismColors.border }}
-            ></div>
+            />
         </GlassMorphismContainer>
     );
 };

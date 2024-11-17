@@ -31,6 +31,7 @@ import { Provider } from 'react-redux';
 import { NuiEvent } from '../../shared/event';
 import { fetchNui } from '../fetch';
 import { useNuiEvent } from '../hook/nui';
+import { useInterval } from '../hook/useInterval';
 import { GlassMorphismProvider } from '../providers/GlassMorphismProvider';
 import { store } from '../store';
 import { AudioApp } from './Audio/AudioApp';
@@ -87,13 +88,12 @@ export const App: FunctionComponent = () => {
     });
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            fetchNui(NuiEvent.Ping);
-        }, 1000);
         store.dispatch.api.loadApi();
-
-        return () => clearInterval(interval);
     }, []);
+
+    useInterval(async () => {
+        await fetchNui(NuiEvent.Ping);
+    }, 1000);
 
     return (
         <GlassMorphismProvider>
@@ -101,8 +101,10 @@ export const App: FunctionComponent = () => {
                 <StateApp />
                 <StatePrivateApp />
                 <AudioApp />
-                <div className={classes}>
+                <div className={menuClasses}>
                     <GlassMorphism />
+                </div>
+                <div className={classes}>
                     <MapPickerApp />
                     <TargetOverlay />
                     <HudApp />

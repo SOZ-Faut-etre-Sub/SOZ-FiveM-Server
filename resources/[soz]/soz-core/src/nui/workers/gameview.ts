@@ -218,12 +218,10 @@ export class GameViewRenderer {
 
         this.gameCanvas.reset();
 
-        for (const { x, y, width, height, options } of Object.values(this.targetCanvas)) {
-            this.gameCanvas.filter = 'none';
+        const canvasToRender = Object.values(this.targetCanvas).filter(c => !c.options.disableGameClone);
 
-            if (options.disableGameClone) {
-                continue;
-            }
+        for (const { x, y, width, height, options } of canvasToRender) {
+            this.gameCanvas.filter = 'none';
 
             if (options.rounded || options.circle) {
                 this.gameCanvas.save();

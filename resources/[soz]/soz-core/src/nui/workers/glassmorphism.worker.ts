@@ -8,6 +8,10 @@ onmessage = function (event) {
             gameViewRenderer.resize(event.data.width, event.data.height);
             break;
 
+        case 'destroy':
+            gameViewRenderer.destroy();
+            break;
+
         case 'canvas':
             gameViewRenderer.setGameCanvas(event.data.canvas);
             break;

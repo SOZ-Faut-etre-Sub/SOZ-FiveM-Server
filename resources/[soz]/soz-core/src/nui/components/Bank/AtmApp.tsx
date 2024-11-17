@@ -15,9 +15,8 @@ import { Button } from './component/Button';
 import { Card } from './component/Card';
 import { Header } from './component/Header';
 import { Input } from './component/Input';
-import { MenuLink } from './component/MenuLink';
 import { Title } from './component/Title';
-import { moneyFormat } from './utils/format';
+import { FORMAT_CURRENCY, moneyFormat } from './utils/format';
 
 type AtmAppInputs = {
     withdraw: number;
@@ -129,7 +128,7 @@ export const AtmApp: FunctionComponent = () => {
                                         min: 1,
                                         max: {
                                             value: account?.atm?.config?.maxMoney,
-                                            message: `La capacité de cet ATM est de ${moneyFormat(account?.atm?.config?.maxMoney)}`,
+                                            message: `La capacité de cet ATM est de ${account?.atm?.config?.maxMoney?.toLocaleString('en-US', { ...FORMAT_CURRENCY, style: 'currency' })}`,
                                         },
                                         required: true,
                                         onBlur: e => setValue('withdraw', parseInt(e.target.value) || undefined),
