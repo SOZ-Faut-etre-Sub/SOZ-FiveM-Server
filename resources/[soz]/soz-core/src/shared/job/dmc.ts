@@ -172,7 +172,7 @@ export const DMC_FIELDS: Record<string, Field> = {
             },
             {
                 name: 'raw_coal',
-                amount: 6,
+                amount: 8,
             },
         ],
         capacity: 240,
