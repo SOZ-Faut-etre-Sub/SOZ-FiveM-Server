@@ -207,6 +207,18 @@ const KeychainItem: FunctionComponent<{
                         <div ref={setDraggableNodeRef} {...listeners} {...attributes}>
                             <div className="relative">
                                 <img className="h-full w-full" src={imgSrc} alt={inventoryKey.type} />
+                                {inventoryKey.type === 'vehicle' && (
+                                    <div
+                                        className="absolute text-gray-200 text-[0.78rem]"
+                                        style={{
+                                            bottom: 0,
+                                            right: 0,
+                                            margin: '0.1rem 0.2rem',
+                                        }}
+                                    >
+                                        {inventoryKey.plate}
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </GlassMorphismContainer>

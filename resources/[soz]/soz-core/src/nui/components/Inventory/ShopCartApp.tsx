@@ -192,7 +192,7 @@ export const ShopCartApp: FunctionComponent = () => {
                         <div
                             className="max-h-full wide:ml-[94vh]"
                             style={{
-                                width: `${inventorySize.width}px`,
+                                width: `${inventorySize.width + 10}px`,
                             }}
                         >
                             <InventoryDiv
@@ -202,7 +202,7 @@ export const ShopCartApp: FunctionComponent = () => {
                                 <div
                                     className="overflow-y-scroll scrollbar scrollbar-w-1 scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full"
                                     style={{
-                                        width: `${inventorySize.width}px`,
+                                        width: `${inventorySize.width + 10}px`,
                                         maxHeight: `${inventorySize.maxHeight}px`,
                                     }}
                                 >
@@ -297,7 +297,6 @@ const ShopItem: FunctionComponent<{
     return (
         <>
             <div
-                className="aspect-square"
                 style={{
                     width: `${itemSize}px`,
                     height: `${itemSize}px`,
@@ -325,9 +324,15 @@ const ShopItem: FunctionComponent<{
                 >
                     <div className={getItemSlotClassnames(false)}>
                         <div ref={setDraggableNodeRef} {...listeners} {...attributes}>
-                            <div className="relative">
+                            <div
+                                className="relative"
+                                style={{
+                                    width: `${itemSize}px`,
+                                    height: `${itemSize}px`,
+                                }}
+                            >
                                 <img
-                                    className="h-full w-full aspect-square"
+                                    className="h-full w-full object-contain"
                                     src={getItemIcon(itemForIcon)}
                                     alt={item.name}
                                 />
@@ -525,8 +530,18 @@ const CartItem: FunctionComponent<{
                         {...attributes}
                         className={getItemSlotClassnames(isOver)}
                     >
-                        <div className="relative">
-                            <img className="h-full w-full" src={getItemIcon(cartItem)} alt={cartItem.name} />
+                        <div
+                            className="relative"
+                            style={{
+                                width: `${itemSize}px`,
+                                height: `${itemSize}px`,
+                            }}
+                        >
+                            <img
+                                className="h-full w-full object-contain"
+                                src={getItemIcon(cartItem)}
+                                alt={cartItem.name}
+                            />
                             <div
                                 className="absolute text-gray-200 text-xs"
                                 style={{

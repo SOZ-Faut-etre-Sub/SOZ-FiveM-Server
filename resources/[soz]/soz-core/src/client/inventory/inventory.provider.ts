@@ -150,9 +150,10 @@ export class InventoryProvider {
         inventoryItem: InventoryItem;
         inventoryId: string;
     }) {
-        const [playerId, distance] = this.playerService.getClosestPlayer();
+        const [entity, distance] = this.playerService.getClosestPlayer();
+        const playerId = GetPlayerServerId(entity);
 
-        if (playerId !== null && distance < DEFAULT_MAX_INVENTORY_DISTANCE) {
+        if (playerId > 0 && distance < DEFAULT_MAX_INVENTORY_DISTANCE) {
             TriggerServerEvent(ServerEvent.INVENTORY_ITEM_SHOW, playerId, inventoryId, inventoryItem.slot);
 
             return;

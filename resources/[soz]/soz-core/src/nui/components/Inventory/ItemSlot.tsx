@@ -11,7 +11,7 @@ import { ActionItem, getActions } from './Actions';
 import { useItemSize } from './size';
 
 export const getItemSlotClassnames = (isOver: boolean) => {
-    return classNames('cursor-pointer aspect-square flex justify-center items-center text-white', {
+    return classNames('cursor-pointer flex justify-center items-center text-white', {
         'bg-white/10': isOver,
     });
 };
@@ -124,14 +124,20 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
         return (
             <div
                 ref={visibleRef}
-                className="aspect-square"
                 style={{
                     width: `${itemSize}px`,
                     height: `${itemSize}px`,
                 }}
             >
-                <BorderBox duration="duration-0" borderClassName="rounded-xl aspect-square" showBorderOnHover={!isOver}>
-                    <div ref={setDroppableNodeRef} className={getItemSlotClassnames(isOver)}></div>
+                <BorderBox duration="duration-0" borderClassName="rounded-xl" showBorderOnHover={!isOver}>
+                    <div
+                        ref={setDroppableNodeRef}
+                        className={getItemSlotClassnames(isOver)}
+                        style={{
+                            width: `${itemSize}px`,
+                            height: `${itemSize}px`,
+                        }}
+                    ></div>
                 </BorderBox>
             </div>
         );
@@ -144,7 +150,7 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
         <>
             <div
                 ref={visibleRef}
-                className="aspect-square relative"
+                className="relative"
                 style={{
                     width: `${itemSize}px`,
                     height: `${itemSize}px`,
@@ -175,7 +181,7 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
                     }
                 }}
             >
-                <BorderBox duration="duration-0" borderClassName="rounded-xl aspect-square" showBorderOnHover={!isOver}>
+                <BorderBox duration="duration-0" borderClassName="rounded-xl" showBorderOnHover={!isOver}>
                     <div
                         ref={!disabled && slot > 0 ? setDroppableNodeRef : null}
                         onDoubleClick={() => {
@@ -189,9 +195,13 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
                                     grayscale: disabled,
                                     'opacity-70': disabled,
                                 })}
+                                style={{
+                                    width: `${itemSize}px`,
+                                    height: `${itemSize}px`,
+                                }}
                             >
                                 <img
-                                    className="aspect-square"
+                                    className="w-full h-full object-contain"
                                     src={imageSrc}
                                     onError={() => {
                                         setImageSrc('https://cfx-nui-soz-core/public/images/default/cat.webp');
@@ -301,7 +311,9 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
             </div>
             {createPortal(
                 <DragOverlay dropAnimation={null}>
-                    {isDragging && <img className="absolute z-50" src={imageSrc} alt={item?.label} />}
+                    {isDragging && (
+                        <img className="absolute w-full h-full object-contain z-50" src={imageSrc} alt={item?.label} />
+                    )}
                 </DragOverlay>,
                 document.body
             )}
@@ -338,10 +350,14 @@ export const EmptySlot: FunctionComponent<EmptySlotProps> = ({
                 height: `${itemSize}px`,
             }}
         >
-            <BorderBox duration="duration-0" borderClassName="rounded-xl aspect-square" showBorderOnHover={!isOver}>
+            <BorderBox duration="duration-0" borderClassName="rounded-xl" showBorderOnHover={!isOver}>
                 <div
                     ref={droppable ? setDroppableNodeRef : null}
                     className={getItemSlotClassnames(isOver || isItemOver)}
+                    style={{
+                        width: `${itemSize}px`,
+                        height: `${itemSize}px`,
+                    }}
                 ></div>
             </BorderBox>
         </div>

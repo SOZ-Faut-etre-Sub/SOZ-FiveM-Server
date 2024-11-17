@@ -227,7 +227,14 @@ const ShortcutSlot: FunctionComponent<ShortcutSlotProps> = ({ shortcut, inventor
                 }}
             >
                 <BorderBox duration="duration-0" borderClassName="rounded-xl aspect-square" showBorderOnHover={!isOver}>
-                    <div ref={setDroppableNodeRef} className={getItemSlotClassnames(isOver)}>
+                    <div
+                        ref={setDroppableNodeRef}
+                        className={getItemSlotClassnames(isOver)}
+                        style={{
+                            width: `${itemSize}px`,
+                            height: `${itemSize}px`,
+                        }}
+                    >
                         {item && (
                             <div ref={setDraggableNodeRef} {...listeners} {...attributes}>
                                 <img
