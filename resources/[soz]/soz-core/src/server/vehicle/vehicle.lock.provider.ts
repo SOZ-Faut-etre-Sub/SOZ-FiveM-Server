@@ -14,6 +14,7 @@ import { Item } from '../../shared/item';
 import { getRandomInt } from '../../shared/random';
 import { RpcServerEvent } from '../../shared/rpc';
 import { Inventory } from '../inventory/inventory';
+import { InventoryOpenProvider } from '../inventory/inventory.open.provider';
 import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
@@ -47,6 +48,9 @@ export class VehicleLockProvider {
     @Inject(Monitor)
     private monitor: Monitor;
 
+    @Inject(InventoryOpenProvider)
+    private inventoryOpenProvider: InventoryOpenProvider;
+
     @Once()
     public onStart() {
         this.item.setItemUseCallback('lockpick', this.useLockpick.bind(this));
@@ -67,7 +71,15 @@ export class VehicleLockProvider {
             true
         );
 
+        const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
+        const entity = NetworkGetEntityFromNetworkId(vehicleNetworkId);
+        const plate = state.volatile.plate || GetVehicleNumberPlateText(entity);
+
         this.vehicleStateService.handleVehicleOpenChange(vehicleNetworkId);
+
+        if (!isOpen) {
+            this.inventoryOpenProvider.closeInventory(`trunk_${plate}`);
+        }
     }
 
     @Rpc(RpcServerEvent.VEHICLE_GET_OPENED)
