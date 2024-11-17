@@ -209,8 +209,8 @@ export class TargetProvider {
         );
 
         if (nearbyZones && nearbyZones.length > 0) {
-            for (const [, { zone, targets, distance }] of nearbyZones) {
-                if (this._debugPoly) zone.draw([0, 255, 0, 100], 0.5);
+            for (const [id, { zone, targets, distance }] of nearbyZones) {
+                if (this._debugPoly) zone.draw([0, 255, 0, 100], 0.5, id);
                 if (playerDistance > distance) continue;
 
                 if (zone.isPointInside(entityCoords)) {

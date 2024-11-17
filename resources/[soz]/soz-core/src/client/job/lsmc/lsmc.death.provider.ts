@@ -274,6 +274,10 @@ export class LSMCDeathProvider {
                 return;
             }
 
+            if (this.playerService.getState()?.inCyberHeist) {
+                TriggerServerEvent(ServerEvent.GANG_CYBER_EXIT_HEIST);
+            }
+
             this.blurService.add('dead', 5);
             StartScreenEffect('DeathFailOut', 0, true);
 

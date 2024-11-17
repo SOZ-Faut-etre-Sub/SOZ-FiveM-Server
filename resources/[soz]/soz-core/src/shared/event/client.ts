@@ -363,6 +363,8 @@ export enum ClientEvent {
 
     ANIMATION_FX = 'soz-core:client:animation:fx',
     ANIMATION_FX_POSITION = 'soz-core:client:animation:fx-position',
+    ANIMATION_OBJECT_WORLD = 'soz-core:client:animation:world-object',
+    ANIMATION_OBJECT_GRID = 'soz-core:client:animation:grid-object',
 
     METEOR_START = 'soz-core:client:meteor:start',
     METEOR_MUSIC = 'soz-core:client:meteor:music',
@@ -413,6 +415,7 @@ export enum ClientEvent {
     GANG_CYBER_VISION_USE = 'soz-core:server:gang:cyber:vision-use',
     GANG_CYBER_REPORT_USE = 'soz-core:server:gang:cyber:report-use',
     GANG_CYBER_ALERT = 'soz-core:server:gang:cyber:alert',
+    GANG_CYBER_ENTRER_HEIST_INIT_PED = 'soz-core:server:gang:cyber:heist-init-ped',
 
     GANG_CARTEL_CONTAINER_USE = 'soz-core:client:gang:container-use',
 

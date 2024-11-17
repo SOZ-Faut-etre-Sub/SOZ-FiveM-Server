@@ -78,6 +78,16 @@ export class RepositoryProvider {
         this.onceLoader.trigger(OnceStep.RepositoriesLoaded);
     }
 
+    @Once(OnceStep.NuiLoaded)
+    public async onNuiLoaded() {
+        for (const repository of this.repositories) {
+            const type = repository.type;
+            const data = repository.raw();
+
+            this.nuiDispatch.dispatch('repository', 'Set', { type, data });
+        }
+    }
+
     @OnEvent(ClientEvent.REPOSITORY_PATCH_DATA)
     onPatchData(type: string, patch: Operation[]) {
         const repository = this.repositories.find(repository => repository.type === type);

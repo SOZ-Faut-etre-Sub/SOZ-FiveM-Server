@@ -27,6 +27,8 @@ export class TimeProvider {
     @Inject(FeatureProvider)
     private featureProvider: FeatureProvider;
 
+    private override: number;
+
     private init = false;
     private baseSpeed = (DayDurationInMinutes * 60_000) / IRLDayDurationInMinutes;
     private coefSpeed = 1;
@@ -36,7 +38,7 @@ export class TimeProvider {
 
     @OnEvent(ClientEvent.STATE_UPDATE_TIME)
     async onTimeChange(time: Time) {
-        if (this.featureProvider.isFeatureEnabled(Feature.Halloween)) {
+        if (this.featureProvider.isFeatureEnabled(Feature.Halloween) && this.override == null) {
             NetworkOverrideClockTime(time.hour, time.minute, time.second);
             return;
         }
@@ -48,6 +50,11 @@ export class TimeProvider {
     @Tick(100)
     public manageClockSpeed() {
         if (!this.serverTime) {
+            return;
+        }
+
+        if (this.override != null) {
+            NetworkOverrideClockTime(this.override, 0, 0);
             return;
         }
 
@@ -142,5 +149,17 @@ export class TimeProvider {
 
         NetworkOverrideClockMillisecondsPerGameMinute(Math.round(this.baseSpeed / this.coefSpeed));
         NetworkOverrideClockTime(cur.hour, cur.minute, cur.second);
+    }
+
+    public setOverride(value: number) {
+        this.override = value;
+        if (value == null) {
+            NetworkOverrideClockMillisecondsPerGameMinute(this.baseSpeed);
+            NetworkOverrideClockTime(this.serverTime.hour, this.serverTime.minute, this.serverTime.second);
+            return;
+        }
+
+        NetworkOverrideClockMillisecondsPerGameMinute(this.baseSpeed);
+        NetworkOverrideClockTime(value, 0, 0);
     }
 }

@@ -91,7 +91,7 @@ AddEventHandler('InteractSound_CL:PlayWithinDistance', function(otherPlayerCoord
 	end
 end)
 
-local loop
+local loop = {}
 RegisterNetEvent('InteractSound_CL:PlayWithinDistanceRatioLoop')
 AddEventHandler('InteractSound_CL:PlayWithinDistanceRatioLoop', function(id, location, maxDistance, soundFile, soundVolume)
 	if hasPlayerLoaded then
@@ -111,10 +111,10 @@ AddEventHandler('InteractSound_CL:PlayWithinDistanceRatioLoop', function(id, loc
             id = id,
         })
 
-        loop = true
+        loop[id] = true
 
         CreateThread(function()
-            while loop do
+            while loop[id] do
                 Wait(1000)
                 local myCoords = GetEntityCoords(PlayerPedId())
                 local distance = #(myCoords - locationCoords)
@@ -134,9 +134,24 @@ AddEventHandler('InteractSound_CL:PlayWithinDistanceRatioLoop', function(id, loc
 	end
 end)
 
+
+RegisterNetEvent('InteractSound_CL:PlayLoop')
+AddEventHandler('InteractSound_CL:PlayLoop', function(id, soundFile, soundVolume)
+	if hasPlayerLoaded then
+        local volume = soundVolume or standardVolumeOutput
+
+        SendNUIMessage({
+            transactionType = 'playLoopSound',
+            transactionFile  = soundFile,
+            transactionVolume = volume,
+            id = id,
+        })
+	end
+end)
+
 RegisterNetEvent('InteractSound_CL:Stoploop')
 AddEventHandler('InteractSound_CL:Stoploop', function(id)
-    loop = false
+    loop[id] = false
     SendNUIMessage({
         transactionType = 'stopLoopSound',
         id = id

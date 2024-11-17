@@ -74,14 +74,18 @@ export class PlayerPositionProvider {
         this.endTp(playerPed, null);
     }
 
+    public async removeProps() {
+        await this.weaponDrawingProvider.undrawWeapons();
+        this.LSMCPlasterProvider.disablePlaster();
+        this.attachedObjectService.detachAll();
+    }
+
     private async startTp(playerPed: number) {
         FreezeEntityPosition(playerPed, true);
         DoScreenFadeOut(this.fadeDelay);
         await wait(this.fadeDelay);
 
-        await this.weaponDrawingProvider.undrawWeapons();
-        this.LSMCPlasterProvider.disablePlaster();
-        this.attachedObjectService.detachAll();
+        await this.removeProps();
 
         await this.LSMCStretcherProvider.startTp();
         await this.LSMCWheelChairProvider.startTp();

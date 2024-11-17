@@ -168,6 +168,7 @@ export class PlayerStateService {
             isZipped: false,
             carryBox: false,
             halloweenRole: null,
+            inCyberHeist: false,
         };
     }
 

@@ -49,6 +49,14 @@ export class SoundService {
         }
     }
 
+    public playLoopForPlayer(source: number, sound: GlobalSound) {
+        TriggerClientEvent('InteractSound_CL:PlayLoop', source, sound.id, sound.name, sound.volume);
+    }
+
+    public stopLoopForPlayer(source: number, id: string) {
+        TriggerClientEvent('InteractSound_CL:Stoploop', source, id);
+    }
+
     public play(source: number, name: string, volume: number) {
         TriggerClientEvent('InteractSound_CL:PlayOnOne', source, name, volume);
     }

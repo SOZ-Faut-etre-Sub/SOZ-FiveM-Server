@@ -568,6 +568,8 @@ export enum NuiEvent {
     BusinessCyberFarmRetrieve = 'soz-core:client:;business:cyber:retrieve-farm',
     BusinessCyberAppExit = 'soz-core:client:;business:cyber:exit-farm',
     BusinessCyberShowStations = 'soz-core:client:;business:cyber:show-stations',
+    BusinessCyberHeistLocation = 'soz-core:client:;business:cyber:heist-location',
+    BusinessCyberHeistStart = 'soz-core:client:;business:cyber:heist-start',
 
     AdminDoorSetState = 'soz-core:client:door:set-state',
     AdminDoorAddSub = 'soz-core:client:door:add-subdoor',

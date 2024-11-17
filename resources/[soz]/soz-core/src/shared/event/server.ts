@@ -537,6 +537,8 @@ export enum ServerEvent {
 
     ANIMATION_FX = 'soz-core:server:animation:fx',
     ANIMATION_FX_POSITION = 'soz-core:server:animation:fx-position',
+    ANIMATION_OBJECT_WORLD = 'soz-core:server:animation:world-object',
+    ANIMATION_OBJECT_GRID = 'soz-core:server:animation:grid-object',
 
     DISPENSER_BUY = 'soz-core:server:dispenser:buy',
 
@@ -649,6 +651,13 @@ export enum ServerEvent {
     GANG_CYBER_CRYPTO_DESTROY_FDO = 'soz-core:server:gang:cyber:destroy-fdo',
     GANG_CYBER_CRYPTO_STEAL = 'soz-core:server:gang:cyber:steal',
     GANG_CYBER_CRYPTO_ALERT = 'soz-core:server:gang:cyber:alert',
+    GANG_CYBER_EXIT_HEIST = 'soz-core:server:gang:cyber:heist-exit',
+    GANG_CYBER_UNLOCK_HEIST = 'soz-core:server:gang:cyber:heist-unlock',
+    GANG_CYBER_COMPUTER_HEIST = 'soz-core:server:gang:cyber:heist-computer',
+    GANG_CYBER_COMPUTER_HEIST_INIT = 'soz-core:server:gang:cyber:heist-computer-init',
+    GANG_CYBER_ZCOIN_HEIST = 'soz-core:server:gang:cyber:heist-computer-zcoin',
+    GANG_CYBER_LEVER_HEIST = 'soz-core:server:gang:cyber:heist-lever',
+    GANG_CYBER_STORAGE_HEIST = 'soz-core:server:gang:cyber:heist-storage',
 
     DOOR_ADD_UPDATE = 'soz-core:server:door:add-update',
     DOOR_DELETE = 'soz-core:server:door:delete',

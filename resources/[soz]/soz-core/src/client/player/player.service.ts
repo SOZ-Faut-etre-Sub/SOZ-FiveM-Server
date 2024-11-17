@@ -59,6 +59,7 @@ export class PlayerService {
         escorting: null,
         carryBox: false,
         halloweenRole: null,
+        inCyberHeist: false,
     };
 
     @Inject(Qbcore)

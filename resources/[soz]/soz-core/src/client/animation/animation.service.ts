@@ -30,7 +30,7 @@ export class AnimationService {
         const playerPed = PlayerPedId();
         TaskGoStraightToCoord(PlayerPedId(), coords[0], coords[1], coords[2], 1.0, duration, coords[3], 0.1);
 
-        const zone: BoxZone = new BoxZone([coords[0], coords[1], coords[2]], 1, 1);
+        const zone: BoxZone = new BoxZone([coords[0], coords[1], coords[2]], 1.0, 1.0);
         const interval = 500;
         for (let i = 0; i < duration - interval; i += interval) {
             if (

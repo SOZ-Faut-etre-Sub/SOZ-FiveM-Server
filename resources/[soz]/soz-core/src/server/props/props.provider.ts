@@ -17,6 +17,7 @@ import {
     WorldPlacedProp,
 } from '@public/shared/object';
 import { isStaff } from '@public/shared/player';
+import { Vector3 } from '@public/shared/polyzone/vector';
 import { Err } from '@public/shared/result';
 import { RpcServerEvent } from '@public/shared/rpc';
 
@@ -574,6 +575,27 @@ export class PropsProvider {
     public onAnimationFxPosition(source: number, fx: Vfx, players: number[]) {
         for (const player of players) {
             TriggerClientEvent(ClientEvent.ANIMATION_FX_POSITION, player, fx);
+        }
+    }
+
+    @OnEvent(ServerEvent.ANIMATION_OBJECT_WORLD)
+    public onAnimationObjectWorld(
+        source: number,
+        players: number[],
+        dict: string,
+        name: string,
+        model: number,
+        position: Vector3
+    ) {
+        for (const player of players) {
+            TriggerClientEvent(ClientEvent.ANIMATION_OBJECT_WORLD, player, dict, name, model, position);
+        }
+    }
+
+    @OnEvent(ServerEvent.ANIMATION_OBJECT_GRID)
+    public onAnimationObjectGrid(source: number, players: number[], dict: string, name: string, id: string) {
+        for (const player of players) {
+            TriggerClientEvent(ClientEvent.ANIMATION_OBJECT_GRID, player, dict, name, id);
         }
     }
 }

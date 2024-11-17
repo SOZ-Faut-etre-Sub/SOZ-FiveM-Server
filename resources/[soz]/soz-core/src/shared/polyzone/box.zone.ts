@@ -39,19 +39,21 @@ export enum ZoneType {
     SmugglingBizExport = 'SmugglingBizExport',
     SmugglingBizConvoy = 'SmugglingBizConvoy',
     NoHackCam = 'NoHackCam',
+    CyberHeistEntry = 'CyberHeistEntry',
 }
 
 export const ZoneTypeLabel: Record<ZoneType, string> = {
     NoStress: 'No stress zone',
-    VehBizSpawn: 'VehBiz Spawn',
-    VehBizDelivery: 'VehBiz Delivery',
-    VehBizResell: 'VehBiz Resell',
+    VehBizSpawn: 'VehBiz Spawn de véhicule',
+    VehBizDelivery: 'VehBiz Conteneur de livraison',
+    VehBizResell: 'VehBiz Revente de caisse',
     VehBizGarage: 'VehBiz Garage',
     SmugglingBizStorage: 'Coffre contrebande connecté',
     SmugglingBizContainer: 'Contrebande import',
     SmugglingBizExport: 'Contrebande Export',
     SmugglingBizConvoy: 'Contrebande Convoi',
     NoHackCam: 'Protection Hack Caméra',
+    CyberHeistEntry: 'Entrée de braquage cyber',
 };
 
 export type ZoneExtra = {

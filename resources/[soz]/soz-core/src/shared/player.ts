@@ -236,6 +236,7 @@ export type PlayerClientState = {
     isLooted: boolean;
     carryBox: boolean;
     halloweenRole: VampireGameRole | null;
+    inCyberHeist: boolean;
 };
 
 export enum PlayerLicenceType {
