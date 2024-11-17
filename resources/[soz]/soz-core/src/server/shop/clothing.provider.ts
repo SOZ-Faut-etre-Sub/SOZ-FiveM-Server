@@ -1,8 +1,6 @@
 import { Provider } from '@core/decorators/provider';
 import {
     ExcludedClothes,
-    MissingTexturesClothes,
-    NewClothes,
     SameUnder,
     UndershirtTypeCategory,
     UndershirtTypeForTop,
@@ -311,103 +309,6 @@ export class ClothingProvider {
                         const shopItemData = shopData.data;
                         shopItemData.underTypes = type;
                         sql += `UPDATE shop_content set data = '${JSON.stringify(shopItemData).replace("'", "\\'")}' WHERE id =${shopData.id};\r\n`;
-                    }
-                }
-                await wait(0);
-            }
-        }
-
-        console.log('Start create new clothes');
-        for (const [genderStr, data] of Object.entries(NewClothes)) {
-            const gender = parseInt(genderStr);
-
-            for (const [compStr, compdata] of Object.entries(data)) {
-                const comp = parseInt(compStr) as Component;
-                for (const [drawableStr, drawabledata] of Object.entries(compdata)) {
-                    const drawable = parseInt(drawableStr);
-
-                    let index = 0;
-                    for (const texture of drawabledata.textures) {
-                        const textureIndex = index++;
-                        if (texture == null) {
-                            continue;
-                        }
-
-                        const label = drawabledata.label + ' ' + texture;
-                        const comps: Partial<Record<Component, OutfitItem>> = {};
-                        comps[comp] = {
-                            Drawable: drawable,
-                            Texture: textureIndex,
-                        };
-
-                        if (drawabledata.legs != null) {
-                            comps[Component.Legs] = {
-                                Drawable: drawabledata.legs,
-                                Texture: 0,
-                            };
-                        }
-
-                        if (drawabledata.undershirt != null) {
-                            comps[Component.Undershirt] = {
-                                Drawable: drawabledata.undershirt,
-                                Texture: 0,
-                            };
-                        }
-
-                        const types = comp == Component.Tops ? UndershirtTypeForTop[gender][drawable] ?? [] : undefined;
-                        const itemData: ClothingShopItemData = {
-                            colorLabel: texture,
-                            modelHash: gender,
-                            modelLabel: drawabledata.label,
-                            components: comps,
-                            underTypes: types,
-                        };
-
-                        for (const shop of drawabledata.shops) {
-                            sql += `INSERT INTO shop_content (shop_id, category_id, label, price, data, stock) VALUES (${shop}, ${drawabledata.category}, '${label.replace("'", "\\'")}', 70, '${JSON.stringify(itemData).replace("'", "\\'")}', 0);\r\n`;
-                        }
-                    }
-                }
-                await wait(0);
-            }
-        }
-
-        console.log('Start add missing texture');
-        for (const [genderStr, data] of Object.entries(MissingTexturesClothes)) {
-            const gender = parseInt(genderStr);
-
-            for (const [compStr, compdata] of Object.entries(data)) {
-                const comp = parseInt(compStr) as Component;
-                for (const [drawableStr, drawabledata] of Object.entries(compdata)) {
-                    const drawable = parseInt(drawableStr);
-
-                    let cat = 0;
-                    let itemData: ClothingShopItemData = null;
-                    const shops = new Set<number>();
-                    for (const item of parsedItem[gender][comp]) {
-                        const shopItemData = item.data;
-
-                        if (shopItemData.components[comp].Drawable != drawable) {
-                            continue;
-                        }
-                        itemData = shopItemData;
-                        shops.add(item.shop);
-                        cat = item.cat;
-                    }
-
-                    if (!itemData) {
-                        console.log('Not found', gender, comp, drawable);
-                        continue;
-                    }
-
-                    for (const drawabledataelem of drawabledata) {
-                        const label = itemData.modelLabel + ' ' + drawabledataelem.texture;
-                        itemData.components[comp].Texture = drawabledataelem.color;
-                        itemData.colorLabel = drawabledataelem.texture;
-                        itemData.underTypes = Component.Tops ? UndershirtTypeForTop[gender][drawable] ?? [] : undefined;
-                        for (const shop of shops.values()) {
-                            sql += `INSERT INTO shop_content (shop_id, category_id, label, price, data, stock) VALUES (${shop}, ${cat}, '${label.replace("'", "\\'")}', 70, '${JSON.stringify(itemData).replace("'", "\\'")}', 0);\r\n`;
-                        }
                     }
                 }
                 await wait(0);
