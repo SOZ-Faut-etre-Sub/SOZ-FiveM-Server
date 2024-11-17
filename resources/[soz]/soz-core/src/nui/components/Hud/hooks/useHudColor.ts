@@ -13,6 +13,7 @@ interface GlassmorphismColors {
     card: string;
     button: { primary: { background: string; color: string }; secondary: { background: string; color: string } };
     imagePrefix: string;
+    isDaltonism: boolean;
 }
 
 export const useHudColor = (): GlassmorphismColors => {
@@ -180,5 +181,6 @@ export const useHudColor = (): GlassmorphismColors => {
         button: _buttons[currentTheme],
         card: _cards[currentTheme],
         imagePrefix: daltonism ? 'daltonism/' : '',
+        isDaltonism: daltonism,
     };
 };

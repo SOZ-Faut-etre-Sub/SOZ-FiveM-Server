@@ -4,6 +4,7 @@ import cn from 'classnames';
 import React, { FunctionComponent } from 'react';
 
 import { BankAccount, BankContact, BankStatement } from '../../../../shared/bank';
+import { useHudColor } from '../../Hud/hooks/useHudColor';
 import FileIcon from '../assets/file.svg';
 import { moneyFormat, PlayerAccountRegExp } from '../utils/format';
 import { TextWithCopy } from './TextWithCopy';
@@ -15,6 +16,8 @@ interface HistoryRowProps {
 }
 
 export const HistoryRow: FunctionComponent<HistoryRowProps> = ({ account, contacts, history }) => {
+    const { isDaltonism } = useHudColor();
+
     const isSource = history.source_accountid === account.id;
 
     const title = isSource ? 'Paiement à' : 'Virement de';
@@ -60,8 +63,10 @@ export const HistoryRow: FunctionComponent<HistoryRowProps> = ({ account, contac
 
             <span
                 className={cn('font-semibold rounded-lg shadow px-2.5 py-1', {
-                    'bg-[#AD1F1F33] text-[#AD1F1F]': isSource,
-                    'bg-[#32912133] text-[#268116]': !isSource,
+                    'bg-[#AD1F1F33] text-[#AD1F1F]': !isDaltonism && isSource,
+                    'bg-[#32912133] text-[#268116]': !isDaltonism && !isSource,
+                    'bg-[#B314E833] text-[#B314E8]': isDaltonism && isSource,
+                    'bg-[#00FFFF33] text-[#00FFFF]': isDaltonism && !isSource,
                 })}
             >
                 {isSource ? '- ' : '+ '}
