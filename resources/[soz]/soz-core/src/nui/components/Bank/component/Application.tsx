@@ -48,7 +48,7 @@ export const ApplicationContainer: FunctionComponent<PropsWithChildren<Applicati
                     ref={refOutside}
                     style={contentStyles}
                     className={cn('h-full w-full mx-auto my-auto', {
-                        'max-w-[1536px] max-h-[90vh]': size === 'full',
+                        'max-h-[850px] max-w-[1536px]': size === 'full',
                         'max-h-[450px] max-w-[700px]': size === 'large',
                         'max-h-[800px] max-w-[536px]': size === 'small',
                     })}
