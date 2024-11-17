@@ -192,6 +192,93 @@ export class InventoryProvider {
         TriggerClientEvent(ClientEvent.ANIMATION_GIVE, targetId);
     }
 
+    @Rpc(RpcServerEvent.INVENTORY_TRANSFER_MONEY)
+    public async onTransferMoney(source: number, sourceInventoryId: string, targetInventoryId: string, amount: number) {
+        const sourceInventory = await this.inventoryFactory.get(sourceInventoryId);
+        const targetInventory = await this.inventoryFactory.get(targetInventoryId);
+
+        if (!sourceInventory || !targetInventory) {
+            this.notifier.error(source, "Impossible de transfer de l'argent dans cette inventaire");
+
+            return null;
+        }
+
+        const sourceCitizenId = sourceInventory.getPlayerCitizenId();
+        const targetCitizenId = targetInventory.getPlayerCitizenId();
+
+        if (!sourceCitizenId || !targetCitizenId) {
+            this.notifier.error(source, "Impossible de transfer de l'argent dans cette inventaire");
+
+            return null;
+        }
+
+        const player = this.playerService.getPlayerByCitizenId(sourceCitizenId);
+        const target = this.playerService.getPlayerByCitizenId(targetCitizenId);
+
+        if (!player || !target) {
+            this.notifier.error(source, "Impossible de transfer de l'argent dans cette inventaire");
+
+            return null;
+        }
+
+        if (amount <= 0) {
+            return null;
+        }
+
+        const playerPosition = GetEntityCoords(GetPlayerPed(player.source)) as Vector3;
+        const targetPosition = GetEntityCoords(GetPlayerPed(target.source)) as Vector3;
+
+        if (getDistance(playerPosition, targetPosition) > 2) {
+            this.notifier.error(source, "Personne n'est à portée de vous");
+
+            return null;
+        }
+
+        let moneyToGive = 0;
+        let markedMoneyToGive = 0;
+
+        const moneyAmount = this.playerMoneyService.get(player.source, 'money');
+        const markedMoneyAmount = this.playerMoneyService.get(player.source, 'marked_money');
+
+        if (amount > markedMoneyAmount + moneyAmount) {
+            this.notifier.error(source, "Pas assez d'argent");
+
+            return null;
+        }
+
+        moneyToGive = Math.min(amount, moneyAmount);
+        markedMoneyToGive = amount - moneyToGive;
+
+        this.playerMoneyService.remove(player.source, moneyToGive, 'money');
+        this.playerMoneyService.remove(player.source, markedMoneyToGive, 'marked_money');
+
+        this.playerMoneyService.add(target.source, moneyToGive, 'money');
+        this.playerMoneyService.add(target.source, markedMoneyToGive, 'marked_money');
+
+        this.notifier.notify(player.source, `Vous avez donné ~r~${amount}$`);
+        this.notifier.notify(target.source, `Vous avez reçu ~g~${amount}$`);
+
+        this.monitor.traceEvent('transfer_money', {
+            player_source: source === player.source ? source : target.source,
+            target_source: source === player.source ? target.source : source,
+            money: amount,
+            money_type: 'money_and_marked',
+        });
+
+        // we wait because we don't know if qbcore has already updated the money so let's wait some ticks
+        await wait(100);
+
+        if (source === player.source) {
+            const refreshedTargetPlayer = this.playerService.getPlayerByCitizenId(targetCitizenId);
+
+            return refreshedTargetPlayer.money.money + refreshedTargetPlayer.money.marked_money;
+        }
+
+        const refreshedTargetPlayer = this.playerService.getPlayerByCitizenId(sourceCitizenId);
+
+        return refreshedTargetPlayer.money.money + refreshedTargetPlayer.money.marked_money;
+    }
+
     @OnEvent(ServerEvent.INVENTORY_DROP_ITEM)
     public async onDropItem(source: number, inventoryId: string, inventoryItemSlot: number) {
         const inventory = await this.inventoryFactory.get(inventoryId);

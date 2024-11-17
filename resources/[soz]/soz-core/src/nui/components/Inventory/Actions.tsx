@@ -68,6 +68,21 @@ export const createHandleDragAndDrop = (allowOver = true) => {
                 return;
             }
 
+            if (inventoryItem === 'money') {
+                const droppableData = event.over.data.current as DroppableData;
+
+                if (droppableData.type === 'inventoryItem') {
+                    const { inventoryId: targetInventoryId } = droppableData;
+
+                    if (sourceInventoryId !== targetInventoryId) {
+                        fetchNui(NuiEvent.InventoryActionTransferMoney, {
+                            sourceInventoryId,
+                            targetInventoryId,
+                        });
+                    }
+                }
+            }
+
             if (
                 event.active.id === 'draggable_money' ||
                 event.active.id === 'draggable_wallet' ||

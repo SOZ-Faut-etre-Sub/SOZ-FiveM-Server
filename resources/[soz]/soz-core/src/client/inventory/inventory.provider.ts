@@ -349,6 +349,63 @@ export class InventoryProvider {
         this.notifier.error("Personne n'est à portée de vous.");
     }
 
+    @OnNuiEvent(NuiEvent.InventoryActionTransferMoney)
+    public async onInventoryActionTransferMoney({
+        sourceInventoryId,
+        targetInventoryId,
+    }: {
+        sourceInventoryId: string;
+        targetInventoryId: string;
+    }) {
+        const player = this.playerService.getState();
+
+        if (player.isInHub) {
+            this.notifier.error("Pas d'échange dans le Hub.");
+        }
+
+        const amount = await this.inputService.askInput<number>(
+            {
+                title: 'Montant :',
+                defaultValue: '',
+                maxCharacters: 10,
+            },
+            ((input: string) => {
+                const inputNumber = Number(input);
+
+                if (isNaN(inputNumber) || inputNumber <= 0) {
+                    return Err('Veuillez entrer un nombre positif');
+                }
+
+                if (Math.round(inputNumber) !== inputNumber) {
+                    return Err('Veuillez entrer un nombre entier');
+                }
+
+                return Ok(inputNumber);
+            }) as ValidateInput<number>
+        );
+
+        if (amount === null) {
+            return;
+        }
+
+        if (amount <= 0) {
+            return;
+        }
+
+        const amountTarget = await emitRpc<number | null>(
+            RpcServerEvent.INVENTORY_TRANSFER_MONEY,
+            sourceInventoryId,
+            targetInventoryId,
+            amount
+        );
+
+        if (amountTarget === null) {
+            return;
+        }
+
+        this.nuiDispatch.dispatch('inventory', 'SetInventoryMoney', amountTarget);
+    }
+
     @OnNuiEvent(NuiEvent.InventoryActionForceConsume)
     public async onInventoryForceConsume({
         inventoryId,
