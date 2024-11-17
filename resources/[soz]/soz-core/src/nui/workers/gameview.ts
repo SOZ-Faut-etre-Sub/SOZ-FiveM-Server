@@ -123,6 +123,7 @@ export class GameViewRenderer {
     private gl: WebGLRenderingContext;
     private animationFrame: number;
     private targetCanvas: Record<string, GameCanvas> = {};
+    private lastFrameTimeStamp: DOMHighResTimeStamp = performance.now();
 
     constructor() {
         this.rootCanvas = new OffscreenCanvas(1, 1);
@@ -208,6 +209,16 @@ export class GameViewRenderer {
     }
 
     private render = () => {
+        const now = performance.now();
+        const delta = now - this.lastFrameTimeStamp;
+
+        if (delta < 16) {
+            this.animationFrame = requestAnimationFrame(this.render);
+            return;
+        }
+
+        this.lastFrameTimeStamp = now;
+
         this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, 4);
 
         if (!this.gameCanvas) {
