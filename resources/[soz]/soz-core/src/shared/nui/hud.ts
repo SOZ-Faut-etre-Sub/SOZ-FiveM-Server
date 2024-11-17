@@ -30,6 +30,7 @@ export interface NuiHudMethodMap {
     CancelNotification: string;
     AddNews: Omit<News, 'id'>;
     VoipDebug: VoiceDebugInfo | null;
+    SetGlassmorphism: boolean;
     // Watch Settings
     SetTheme: HudTheme;
     SetAvailableTheme: HudTheme[];

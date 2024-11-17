@@ -29,7 +29,7 @@ export const GlassMorphismProvider: FunctionComponent<PropsWithChildren> = ({ ch
         return () => {
             window.removeEventListener('resize', initGlassmorphism);
             sharedWorker.postMessage({
-                type: 'destroy',
+                type: 'disable',
             });
             sharedWorker.terminate();
         };

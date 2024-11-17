@@ -108,6 +108,7 @@ export type HudState = {
     halloween: {
         moon: boolean;
     };
+    useGlassmorphism: boolean;
 };
 
 export enum Font {

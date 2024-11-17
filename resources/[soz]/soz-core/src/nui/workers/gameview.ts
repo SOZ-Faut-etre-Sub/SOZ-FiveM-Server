@@ -173,10 +173,18 @@ export class GameViewRenderer {
         this.gl.canvas.height = height;
     }
 
-    destroy() {
-        if (this.animationFrame) {
-            cancelAnimationFrame(this.animationFrame);
-        }
+    enable() {
+        if (this.animationFrame) return;
+
+        this.render();
+    }
+
+    disable() {
+        if (!this.animationFrame) return;
+
+        cancelAnimationFrame(this.animationFrame);
+        this.gameCanvas.reset();
+        this.animationFrame = null;
     }
 
     setGameCanvas(canvas: OffscreenCanvas) {

@@ -1,6 +1,8 @@
 import cn from 'classnames';
 import { FunctionComponent, PropsWithChildren, useMemo, useRef } from 'react';
+import { useSelector } from 'react-redux';
 
+import { RootState } from '../../store';
 import { useHudColor } from '../Hud/hooks/useHudColor';
 
 type BorderBoxProps = {
@@ -21,6 +23,8 @@ export const BorderBox: FunctionComponent<PropsWithChildren<BorderBoxProps>> = (
     blur = true,
     duration = 'duration-1000',
 }) => {
+    const glassmorphism = useSelector((state: RootState) => state.hud.useGlassmorphism);
+
     const { glassmorphismColors } = useHudColor();
     const childrenRef = useRef<HTMLDivElement>(null);
 
@@ -37,7 +41,7 @@ export const BorderBox: FunctionComponent<PropsWithChildren<BorderBoxProps>> = (
     return (
         <div
             className={cn('relative bg-opacity-10 h-full w-full overflow-hidden group z-10', borderClassName, {
-                'backdrop-blur-[5px]': blur,
+                'backdrop-blur-[5px]': glassmorphism && blur,
             })}
             style={{
                 opacity: 0.99,

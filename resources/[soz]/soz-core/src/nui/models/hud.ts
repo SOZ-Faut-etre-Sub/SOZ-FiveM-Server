@@ -49,6 +49,7 @@ export const hud = createModel<RootModel>()({
         halloween: {
             moon: false,
         },
+        useGlassmorphism: true,
     } as HudState,
     reducers: {
         update(state, hud: Partial<HudState>) {
