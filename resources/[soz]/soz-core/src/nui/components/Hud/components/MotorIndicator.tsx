@@ -6,10 +6,10 @@ import {
     VehicleHighDamageThreshold,
     VehicleMidDamageThreshold,
 } from '../../../../shared/vehicle/vehicle';
-import { useDaltonism } from '../hooks/useDaltonism';
+import { useHudColor } from '../hooks/useHudColor';
 
 export const MotorIndicator: FunctionComponent<{ motor: number }> = ({ motor }) => {
-    const { imagePrefix } = useDaltonism();
+    const { imagePrefix } = useHudColor();
 
     let motorStatus = 'yellow';
 

@@ -125,13 +125,13 @@ export const PlayerInventoryApp: FunctionComponent = () => {
                         onDoubleClick={onDoubleClick}
                         itemDescriptionPosition="right"
                     />
-                    <div className="w-full mt-4">
-                        <header className="relative w-full">
+                    <div className="relative w-full mt-4">
+                        <header className="w-full">
                             <div className="drop-shadow-bg h-[40px] flex w-full justify-between items-center">
                                 <h1 className="font-semibold uppercase text-white text-2xl">Raccourcis</h1>
                             </div>
                         </header>
-                        <div className="relative w-full">
+                        <GameCanvasBox blur={false}>
                             <div
                                 className={classNames(
                                     'overflow-y-scroll scrollbar scrollbar-w-[5px] scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full'
@@ -140,27 +140,25 @@ export const PlayerInventoryApp: FunctionComponent = () => {
                                     width: `${inventorySize.width + 10}px`,
                                 }}
                             >
-                                <GameCanvasBox blur={false}>
-                                    <div
-                                        className="grid grid-cols-5"
-                                        style={{
-                                            gap: `${inventorySize.gapSize}px`,
-                                            width: `${inventorySize.width}px`,
-                                        }}
-                                    >
-                                        {[...Array(10).keys()].map(index => {
-                                            return (
-                                                <ShortcutSlot
-                                                    inventoryItems={inventoryItems}
-                                                    key={index}
-                                                    shortcut={index + 1}
-                                                />
-                                            );
-                                        })}
-                                    </div>
-                                </GameCanvasBox>
+                                <div
+                                    className="grid grid-cols-5 gap-[10px]"
+                                    style={{
+                                        gap: `${inventorySize.gapSize}px`,
+                                        width: `${inventorySize.width}px`,
+                                    }}
+                                >
+                                    {[...Array(10).keys()].map(index => {
+                                        return (
+                                            <ShortcutSlot
+                                                inventoryItems={inventoryItems}
+                                                key={index}
+                                                shortcut={index + 1}
+                                            />
+                                        );
+                                    })}
+                                </div>
                             </div>
-                        </div>
+                        </GameCanvasBox>
                     </div>
                 </main>
             </div>

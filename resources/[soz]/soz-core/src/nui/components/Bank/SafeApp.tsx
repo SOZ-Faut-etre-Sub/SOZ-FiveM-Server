@@ -13,6 +13,8 @@ import { ApplicationContainer } from './component/Application';
 import { Button } from './component/Button';
 import { Card } from './component/Card';
 import { Input } from './component/Input';
+import { Tabs } from './component/Tabs';
+import { Title } from './component/Title';
 import { moneyFormat } from './utils/format';
 
 type SafeAppInputs = {
@@ -91,27 +93,11 @@ export const SafeApp: FunctionComponent = () => {
         };
     }, [onKeyUpReceived]);
 
-    const tabClass = (tab: any) => {
-        return classnames('font-lighter uppercase text-sm p-1 rounded-md focus:outline-none', {
-            'bg-green-300/5': tab.selected,
-        });
-    };
-
     if (!showApp) return null;
 
     return (
         <ApplicationContainer size="small" onClickOutside={resetApp}>
-            <Transition
-                as={AppContent}
-                show={showApp}
-                appear={true}
-                enter="transform ease-out duration-300 transition"
-                enterFrom="translate-y-full opacity-0"
-                enterTo="translate-y-0 opacity-1"
-                leave="transform ease-in duration-300 transition"
-                leaveFrom="translate-y-0 opacity-1"
-                leaveTo="translate-y-full opacity-0"
-            >
+            <AppContent open={showApp}>
                 <form onSubmit={handleSubmit(submitForm)} className="flex flex-col w-full justify-around">
                     <div className="flex flex-col justify-center items-center gap-4">
                         <img
@@ -126,18 +112,14 @@ export const SafeApp: FunctionComponent = () => {
                     </div>
 
                     <div className="space-y-6">
-                        <Tab.Group
-                            selectedIndex={action}
+                        <Tabs
+                            selected={action}
                             onChange={index => {
                                 setAction(index);
                                 reset();
                             }}
-                        >
-                            <Tab.List className="grid grid-cols-2 gap-3 p-1 bg-white/5 text-gray-200 rounded-md">
-                                <Tab className={tabClass}>Retirer</Tab>
-                                <Tab className={tabClass}>Déposer</Tab>
-                            </Tab.List>
-                        </Tab.Group>
+                            tabs={['Retirer', 'Déposer']}
+                        />
 
                         {account?.type !== 'housestorages' && account?.type !== 'gang' && (
                             <Card
@@ -146,7 +128,7 @@ export const SafeApp: FunctionComponent = () => {
                                 })}
                             >
                                 <div className="flex justify-between mb-4">
-                                    <span className="text-white font-semibold">Argent</span>
+                                    <Title size="xsmall">Argent</Title>
                                     <span className="text-sm text-green-500/70">{moneyFormat(account?.money)}</span>
                                 </div>
 
@@ -175,11 +157,12 @@ export const SafeApp: FunctionComponent = () => {
                             })}
                         >
                             <div className="flex justify-between mb-4">
-                                <span className="text-white font-semibold">Argent marqué</span>
+                                <Title size="xsmall">Argent marqué</Title>
+
                                 <span className="text-sm text-red-400/70">
-                                    {moneyFormat(account?.marked_money)}
+                                    {moneyFormat(account?.marked_money, false)}
                                     {['housestorages', 'gang'].includes(account?.type) && (
-                                        <span> / {moneyFormat(account?.maxCapacity)}</span>
+                                        <span> / {moneyFormat(account?.maxCapacity, false)}</span>
                                     )}
                                 </span>
                             </div>
@@ -211,7 +194,7 @@ export const SafeApp: FunctionComponent = () => {
 
                     <Button disabled={isSubmitting}>{action === 0 ? 'Retirer' : 'Déposer'} l'argent</Button>
                 </form>
-            </Transition>
+            </AppContent>
         </ApplicationContainer>
     );
 };

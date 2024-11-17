@@ -1,61 +1,112 @@
 import cn from 'classnames';
-import { FunctionComponent, HTMLAttributes, PropsWithChildren, useEffect, useMemo, useRef } from 'react';
+import {
+    FunctionComponent,
+    HTMLAttributes,
+    PropsWithChildren,
+    useContext,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from 'react';
 
-import { useHudTheme } from '../../hook/data';
-import { useDaltonism } from '../Hud/hooks/useDaltonism';
+import { uuidv4 } from '../../../core/utils';
+import { useInterval } from '../../hook/useInterval';
+import { GlassMorphismContext } from '../../providers/GlassMorphismProvider';
+import { useHudColor } from '../Hud/hooks/useHudColor';
 
 type GameCanvasBoxProps = {
-    blur?: boolean;
+    disableGameClone?: boolean;
     borderClassName?: string;
+    rounded?: number;
+    circle?: boolean;
+    blur?: boolean;
 };
 
 export const GameCanvasBox: FunctionComponent<PropsWithChildren<GameCanvasBoxProps>> = ({
-    blur = true,
     borderClassName,
+    disableGameClone = false,
+    blur = true,
+    rounded,
+    circle,
     children,
 }) => {
-    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const glassmorphismWorker = useContext(GlassMorphismContext);
+    const [canvasUUID] = useState(uuidv4());
+
     const containerRef = useRef<HTMLDivElement>(null);
+    const containerRect = useRef<DOMRect | null>(null);
+
+    const updateGlassmorphism = () => {
+        glassmorphismWorker.postMessage({
+            type: 'update',
+            uuid: canvasUUID,
+            x: containerRect.current?.x,
+            y: containerRect.current?.y,
+            width: containerRect.current?.width,
+            height: containerRect.current?.height,
+            options: {
+                disableGameClone,
+                blur,
+                rounded,
+                circle,
+            },
+        });
+    };
 
     useEffect(() => {
-        let animation = null;
-        const renderLoop = () => {
-            try {
-                const container = containerRef.current.getBoundingClientRect();
+        if (!containerRef.current) return;
 
-                const canvas = window.parent.document.body.getElementsByTagName('canvas')[0];
-                const tCtx = canvasRef.current.getContext('2d');
+        const container = containerRef.current?.getBoundingClientRect();
 
-                canvasRef.current.width = container.width;
-                canvasRef.current.height = container.height;
+        glassmorphismWorker.postMessage({
+            type: 'add',
+            uuid: canvasUUID,
+            x: container?.x,
+            y: container?.y,
+            width: container?.width,
+            height: container?.height,
+            options: {
+                disableGameClone,
+                blur,
+                rounded,
+                circle,
+            },
+        });
 
-                if (blur) {
-                    tCtx.filter = `blur(5px)`;
-                }
+        containerRect.current = container;
+    }, [containerRef.current]);
 
-                if (!canvas) return;
+    useEffect(updateGlassmorphism, [disableGameClone, blur, rounded, circle]);
 
-                const context = canvas.getContext('2d');
-                context?.fillRect(0, 0, canvas.width, canvas.height);
+    useInterval(() => {
+        const container = containerRef.current?.getBoundingClientRect();
+        if (!container) return;
 
-                tCtx.drawImage(canvas, -container.x, -container.y);
+        if (
+            containerRect.current?.x !== container?.x ||
+            containerRect.current?.y !== container?.y ||
+            containerRect.current?.width !== container?.width ||
+            containerRect.current?.height !== container?.height
+        ) {
+            containerRect.current = container;
+            updateGlassmorphism();
+        }
+    }, 10);
 
-                animation = requestAnimationFrame(renderLoop);
-            } catch (e) {
-                // ignore error
-            }
+    useEffect(() => {
+        return () => {
+            glassmorphismWorker.postMessage({
+                type: 'remove',
+                uuid: canvasUUID,
+            });
         };
-
-        renderLoop();
-        return () => cancelAnimationFrame(animation);
     }, []);
 
     return (
-        <>
-            <div ref={containerRef} className={cn('absolute -z-10 h-full w-full overflow-hidden', borderClassName)} />
+        <div ref={containerRef} className={cn('relative h-full w-full', borderClassName)}>
             {children}
-            <canvas ref={canvasRef} className="absolute inset-0 -z-10" />
-        </>
+        </div>
     );
 };
 
@@ -77,8 +128,7 @@ export const BorderBox: FunctionComponent<PropsWithChildren<BorderBoxProps>> = (
     blur = true,
     duration = 'duration-1000',
 }) => {
-    const currentTheme = useHudTheme();
-    const { glassmorphismColors } = useDaltonism();
+    const { glassmorphismColors } = useHudColor();
     const childrenRef = useRef<HTMLDivElement>(null);
 
     const { height } = childrenRef.current?.getBoundingClientRect() || { height: undefined };
@@ -88,8 +138,8 @@ export const BorderBox: FunctionComponent<PropsWithChildren<BorderBoxProps>> = (
             return borderColor;
         }
 
-        return glassmorphismColors[currentTheme].border;
-    }, [glassmorphismColors, currentTheme, borderColor]);
+        return glassmorphismColors.border;
+    }, [glassmorphismColors, borderColor]);
 
     return (
         <div
@@ -126,7 +176,7 @@ export const BorderBox: FunctionComponent<PropsWithChildren<BorderBoxProps>> = (
             <div
                 className="absolute inset-0 transition-all duration-1000"
                 style={{
-                    background: glassmorphismColors[currentTheme].background,
+                    background: glassmorphismColors.background,
                 }}
             />
         </div>
@@ -138,7 +188,10 @@ interface GlassMorphismContainerProps extends HTMLAttributes<any>, PropsWithChil
     borderClassName?: string;
     disableBorder?: boolean;
     showBorderOnHover?: boolean;
+    disableGameClone?: boolean;
     blur?: boolean;
+    rounded?: number;
+    circle?: boolean;
     duration?: string;
 }
 
@@ -149,12 +202,14 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
     borderClassName,
     disableBorder,
     showBorderOnHover,
+    disableGameClone,
     children,
     blur = true,
+    rounded,
+    circle,
     duration = 'duration-1000',
 }) => {
-    const currentTheme = useHudTheme();
-    const { glassmorphismColors } = useDaltonism();
+    const { glassmorphismColors } = useHudColor();
     const childrenRef = useRef<HTMLDivElement>(null);
 
     const { height } = childrenRef.current?.getBoundingClientRect() || { height: undefined };
@@ -164,17 +219,18 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
             return borderColor;
         }
 
-        return glassmorphismColors[currentTheme].border;
-    }, [glassmorphismColors, currentTheme, borderColor]);
+        return glassmorphismColors.border;
+    }, [glassmorphismColors, borderColor]);
 
     return (
-        <div
-            className={cn('relative bg-opacity-10 h-full w-full overflow-hidden group z-10', borderClassName)}
-            style={{
-                opacity: 0.99,
-            }}
-        >
-            <GameCanvasBox borderClassName={borderClassName} blur={blur}>
+        <div className={cn('relative bg-opacity-10 h-full w-full overflow-hidden group z-10', borderClassName)}>
+            <GameCanvasBox
+                borderClassName={borderClassName}
+                disableGameClone={disableGameClone}
+                rounded={rounded}
+                blur={blur}
+                circle={circle}
+            >
                 <div
                     className={cn(
                         'absolute h-full w-full transition-opacity border-transparent z-10',
@@ -201,7 +257,7 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
                 <div
                     className="absolute inset-0 transition-all duration-1000"
                     style={{
-                        background: glassmorphismColors[currentTheme].background,
+                        background: glassmorphismColors.background,
                     }}
                 />
             </GameCanvasBox>
@@ -221,14 +277,13 @@ export const GlassMorphismBox: FunctionComponent<PropsWithChildren<GlassMorphism
     children,
     duration = 'duration-1000',
 }) => {
-    const currentTheme = useHudTheme();
-    const { glassmorphismColors } = useDaltonism();
+    const { glassmorphismColors } = useHudColor();
 
     const childrenRef = useRef<HTMLDivElement>(null);
 
     const { height } = childrenRef.current?.getBoundingClientRect() || { height: undefined };
 
-    const currentBorderColor = glassmorphismColors[currentTheme].border;
+    const currentBorderColor = glassmorphismColors.border;
 
     return (
         <div className="relative w-full h-full">

@@ -3,13 +3,13 @@ import { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux';
 
 import { RootState } from '../../../store';
-import { useDaltonism } from '../hooks/useDaltonism';
+import { useHudColor } from '../hooks/useHudColor';
 import { useZoom } from '../hooks/useZoom';
 
 export const SeatbeltIndicator: FunctionComponent = () => {
     const state = useSelector((state: RootState) => state.vehicle.seatbelt);
 
-    const { imagePrefix } = useDaltonism();
+    const { imagePrefix } = useHudColor();
     const { width, height } = useZoom();
 
     const styles = useSpring({

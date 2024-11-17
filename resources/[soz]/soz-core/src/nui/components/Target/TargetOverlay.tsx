@@ -5,7 +5,7 @@ import { NuiEvent } from '../../../shared/event/nui';
 import { TargetOption } from '../../../shared/target';
 import { fetchNui } from '../../fetch';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
-import { useDaltonism } from '../Hud/hooks/useDaltonism';
+import { useHudColor } from '../Hud/hooks/useHudColor';
 import { TargetConnector } from './components/TargetConnector';
 import { TargetOptions } from './components/TargetOptions';
 
@@ -17,7 +17,7 @@ export const TargetOverlay: FunctionComponent = () => {
     const [targets, setTargets] = useState<TargetOption[]>([]);
     const closeTimeout = useRef<NodeJS.Timeout>();
 
-    const { targetColors } = useDaltonism();
+    const { targetColors } = useHudColor();
 
     const container = useRef<HTMLDivElement>(null);
     const origin = useRef<SVGSVGElement>(null);

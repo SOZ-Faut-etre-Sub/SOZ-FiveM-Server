@@ -50,6 +50,7 @@ export const SpeedGauge: FunctionComponent = () => {
             <GlassMorphismContainer
                 borderClassName="rounded-full"
                 style={{ width: speedometerSize, height: speedometerSize }}
+                circle
             >
                 <div className="absolute h-full w-full">
                     <svg className="mt-1.5 mx-1.5" viewBox="0 0 114 109" fill="none" xmlns="http://www.w3.org/2000/svg">
