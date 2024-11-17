@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
+import { Logger } from '@core/logger';
 import { PlayerService } from '@public/server/player/player.service';
 
 import { ClientEvent } from '../../shared/event/client';
@@ -10,9 +11,71 @@ export class InventoryPositionChecker {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
+    @Inject(Logger)
+    private logger: Logger;
+
     private trunkOpened: Record<string, { networkId: number; players: Set<number> }> = {};
 
     private inventoriesPositions: Map<string, Map<number, InventoryPosition>> = new Map();
+
+    public isTrunkOpened(inventoryId: string): boolean {
+        if (!this.trunkOpened[inventoryId]) {
+            return false;
+        }
+
+        return this.trunkOpened[inventoryId].players.size > 0;
+    }
+
+    public forceCloseTrunk(inventoryId: string): void {
+        if (!this.trunkOpened[inventoryId]) {
+            this.logger.error(`Cannot force trunk opened to close as there is no more state: ${inventoryId}`);
+
+            return;
+        }
+
+        const networkId = this.trunkOpened[inventoryId].networkId;
+        const entityId = NetworkGetEntityFromNetworkId(networkId);
+
+        if (!entityId) {
+            // Send event to everyone to close the trunk
+            TriggerLatentClientEvent(
+                ClientEvent.VEHICLE_SET_TRUNK_STATE,
+                -1,
+                16 * 1024,
+                this.trunkOpened[inventoryId].networkId,
+                false
+            );
+
+            this.logger.error(`Trying to close an inventory where we cannot get entityId: ${inventoryId}`);
+
+            delete this.trunkOpened[inventoryId];
+
+            return;
+        }
+
+        const owner = NetworkGetEntityOwner(entityId);
+
+        if (!owner) {
+            // Send event to everyone to close the trunk
+            TriggerLatentClientEvent(
+                ClientEvent.VEHICLE_SET_TRUNK_STATE,
+                -1,
+                16 * 1024,
+                this.trunkOpened[inventoryId].networkId,
+                false
+            );
+
+            this.logger.error(`Trying to close an inventory where we cannot get owner: ${inventoryId}`);
+
+            delete this.trunkOpened[inventoryId];
+
+            return;
+        }
+
+        TriggerClientEvent(ClientEvent.VEHICLE_SET_TRUNK_STATE, owner, this.trunkOpened[inventoryId].networkId, false);
+
+        delete this.trunkOpened[inventoryId];
+    }
 
     public openTrunk(playerId: number, inventoryId: string, vehicleNetworkId: number): void {
         if (!this.trunkOpened[inventoryId]) {
@@ -44,6 +107,8 @@ export class InventoryPositionChecker {
 
     public closeInventory(playerId: number, inventoryId: string): void {
         if (!this.trunkOpened[inventoryId]) {
+            this.logger.error(`Trying to close an inventory that is not opened: ${inventoryId}`);
+
             return;
         }
 
@@ -53,11 +118,29 @@ export class InventoryPositionChecker {
             return;
         }
 
+        if (this.inventoriesPositions[inventoryId]) {
+            this.inventoriesPositions[inventoryId].delete(playerId);
+        }
+
         const entityId = NetworkGetEntityFromNetworkId(this.trunkOpened[inventoryId].networkId);
 
         if (!entityId) {
+            // Send event to everyone to close the trunk
+            TriggerLatentClientEvent(
+                ClientEvent.VEHICLE_SET_TRUNK_STATE,
+                -1,
+                16 * 1024,
+                this.trunkOpened[inventoryId].networkId,
+                false
+            );
+
+            this.logger.error(`Trying to close an inventory where we cannot get entityId: ${inventoryId}`);
+
+            delete this.trunkOpened[inventoryId];
+
             return;
         }
+
         const owner = NetworkGetEntityOwner(entityId);
 
         if (!owner) {
@@ -68,14 +151,16 @@ export class InventoryPositionChecker {
                 false
             );
 
+            this.logger.error(`Trying to close an inventory where we cannot get owner: ${inventoryId}`);
+
+            delete this.trunkOpened[inventoryId];
+
             return;
         }
 
-        if (this.inventoriesPositions[inventoryId]) {
-            this.inventoriesPositions[inventoryId].delete(playerId);
-        }
-
         TriggerClientEvent(ClientEvent.VEHICLE_SET_TRUNK_STATE, owner, this.trunkOpened[inventoryId].networkId, false);
+
+        delete this.trunkOpened[inventoryId];
     }
 
     public checkPlayerDistance(source: number, inventoryId: string): boolean {
