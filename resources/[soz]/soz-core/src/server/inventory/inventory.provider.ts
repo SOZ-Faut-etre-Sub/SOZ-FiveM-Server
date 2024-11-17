@@ -772,7 +772,7 @@ export class InventoryProvider {
                 item_slot: addResult.ok.slot,
             });
 
-            this.notifyMoveItem(source, sourceInventory, targetInventory, sourceItem, amount);
+            this.notifyMoveItem(source, sourceInventory, targetInventory, sourceItem, addResult.ok.amount);
         }
 
         await sourceInventory.observe(); // Force refresh of the inventory
