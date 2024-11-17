@@ -1,8 +1,7 @@
-import { Transition } from '@headlessui/react';
-import React, { FunctionComponent, KeyboardEvent, useEffect, useState } from 'react';
+import React, { FunctionComponent, KeyboardEvent, useEffect, useMemo, useState } from 'react';
 import { FaArrowRightArrowLeft } from 'react-icons/fa6';
 import { GiPalmTree } from 'react-icons/gi';
-import { MemoryRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { MemoryRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
 import { BankUiData } from '../../../shared/bank';
 import { NuiEvent } from '../../../shared/event/nui';
@@ -16,6 +15,7 @@ import { AppContent } from './component/AppContent';
 import { ApplicationContainer } from './component/Application';
 import { Button } from './component/Button';
 import { Card } from './component/Card';
+import { Header } from './component/Header';
 import { MenuGroup } from './component/MenuGroup';
 import { MenuLink } from './component/MenuLink';
 import { ContactPage } from './pages/ContactPage';
@@ -141,6 +141,8 @@ export const BankApp: FunctionComponent = () => {
                         </Card>
                     </div>
                     <div className="flex flex-col w-9/12 gap-10 rounded-xl">
+                        <BankHeader />
+
                         <Routes>
                             {/* Personal */}
                             <Route
@@ -235,4 +237,42 @@ export const BankApp: FunctionComponent = () => {
             </AppContent>
         </ApplicationContainer>
     );
+};
+
+const BankHeader: FunctionComponent = () => {
+    const location = useLocation();
+
+    const [category, title] = useMemo(() => {
+        if (location.pathname.startsWith('/personal')) {
+            const category = 'Compte personnel';
+
+            if (location.pathname.endsWith('/history')) {
+                return [category, 'Historique'];
+            }
+
+            return [category, 'Tableau de bord'];
+        } else if (location.pathname.startsWith('/enterprise')) {
+            const category = 'Compte société';
+
+            if (location.pathname.endsWith('/history')) {
+                return [category, 'Historique'];
+            } else if (location.pathname.endsWith('/history-transfer')) {
+                return [category, 'Historique de transfert'];
+            }
+
+            return [category, 'Tableau de bord'];
+        } else if (location.pathname.startsWith('/settings')) {
+            const category = 'Paramètres';
+
+            if (location.pathname.endsWith('/contacts')) {
+                return [category, 'Mes bénéficiaires'];
+            }
+
+            return [category, ''];
+        }
+
+        return ['', ''];
+    }, [location.pathname]);
+
+    return <Header category={category} title={title} />;
 };

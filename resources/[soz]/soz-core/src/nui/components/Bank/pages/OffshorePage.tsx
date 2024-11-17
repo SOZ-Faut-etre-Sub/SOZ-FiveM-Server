@@ -3,7 +3,6 @@ import { FunctionComponent } from 'react';
 
 import { BankAccount, BankStatement } from '../../../../shared/bank';
 import { Card } from '../component/Card';
-import { Header } from '../component/Header';
 import { HistoryTable } from '../component/HistoryTable';
 import { QuickActionForm } from '../component/QuickActionForm';
 import { moneyFormat } from '../utils/format';
@@ -26,8 +25,6 @@ export const OffshorePage: FunctionComponent<OffshoreProps> = ({ bankType, accou
 
     return (
         <div className="space-y-10 h-full">
-            <Header title="On entend les oiseaux d'ici..." />
-
             <animated.div className="flex gap-10 h-full" style={styles}>
                 {/* Left pane */}
                 <div className="w-4/6 h-full">
