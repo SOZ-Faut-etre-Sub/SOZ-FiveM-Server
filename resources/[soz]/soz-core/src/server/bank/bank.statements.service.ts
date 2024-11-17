@@ -1,6 +1,6 @@
 import { bank_statements } from '@prisma/client';
 import { PrismaService } from '@public/server/database/prisma.service';
-import { BankStatement } from '@public/shared/bank';
+import { BankActionType, BankHistoryFilter, BankStatement } from '@public/shared/bank';
 import { ClientEvent } from '@public/shared/event/client';
 
 import { Exportable } from '../../core/decorators/exports';
@@ -28,14 +28,31 @@ export class BankStatementsService {
         return this.getStatementsForAccount(player.charinfo.account);
     }
 
-    public async getStatementsForAccount(accountId: string, onlyTransfer: boolean = false, limit: number = 50) {
+    public async getStatementsForAccount(accountId: string, filter: BankHistoryFilter = 'all', limit: number = 50) {
         const history = [];
+        let queryFilter = {};
+
+        if (filter === 'all') {
+            queryFilter = {
+                OR: [{ source_accountid: accountId }, { target_accountid: accountId }],
+            };
+        } else if (filter === 'withdraw') {
+            queryFilter = {
+                source_accountid: accountId,
+            };
+        } else if (filter === 'deposit') {
+            queryFilter = {
+                target_accountid: accountId,
+            };
+        } else if (filter === 'transfer') {
+            queryFilter = {
+                OR: [{ source_accountid: accountId }, { target_accountid: accountId }],
+                is_transfer: true,
+            };
+        }
 
         const rawHistory = await this.prismaService.bank_statements.findMany({
-            where: {
-                OR: [{ source_accountid: accountId }, { target_accountid: accountId }],
-                ...(onlyTransfer ? { is_transfer: true } : {}),
-            },
+            where: queryFilter,
             orderBy: {
                 date: 'desc',
             },

@@ -462,6 +462,7 @@ export enum NuiEvent {
 
     BankAnimation = 'soz-core:nui:bank:animation',
     BankAtmAction = 'soz-core:nui:bank-atm:action',
+    BankHistoryFilter = 'soz-core:nui:bank:history-filter',
     BankTransferAction = 'soz-core:nui:bank:transfer-action',
     BankSafeTransferAction = 'soz-core:nui:bank-safe:transfer-action',
     BankCreateOffshoreAccount = 'soz-core:nui:bank:create-offshore-account',

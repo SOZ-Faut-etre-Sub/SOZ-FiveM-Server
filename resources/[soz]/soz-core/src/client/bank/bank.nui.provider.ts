@@ -2,7 +2,7 @@ import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
-import { BankMoneyType, BankUiData } from '../../shared/bank';
+import { BankHistoryFilter, BankMoneyType, BankUiData } from '../../shared/bank';
 import { NuiEvent } from '../../shared/event/nui';
 import { RpcServerEvent } from '../../shared/rpc';
 import { NuiDispatch } from '../nui/nui.dispatch';
@@ -15,6 +15,12 @@ export class BankNuiProvider {
 
     @Inject(BankService)
     private bankService: BankService;
+
+    @OnNuiEvent(NuiEvent.BankHistoryFilter)
+    public async refreshAccountData(historyFilter?: BankHistoryFilter) {
+        const accountUiData = await emitRpc<BankUiData>(RpcServerEvent.BANK_GET_ACCOUNT_UI, historyFilter);
+        this.nuiDispatch.dispatch('bank', 'UpdateAccountData', accountUiData);
+    }
 
     @OnNuiEvent(NuiEvent.BankAnimation)
     public async triggerAnimation({ type }: { type: 'enter' | 'exit' }) {

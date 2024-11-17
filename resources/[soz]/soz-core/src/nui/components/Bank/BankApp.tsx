@@ -50,7 +50,10 @@ export const BankApp: FunctionComponent = () => {
     });
 
     useNuiEvent('bank', 'UpdateAccountData', (data: BankUiData) => {
-        setData(data);
+        setData(account => ({
+            ...account,
+            ...data,
+        }));
     });
 
     useNuiEvent('bank', 'CloseInterface', resetApp);
@@ -105,11 +108,6 @@ export const BankApp: FunctionComponent = () => {
                                             to="/enterprise/history"
                                             title="Historique"
                                             icon={<ArchiveIcon className="size-5" />}
-                                        />
-                                        <MenuLink
-                                            to="/enterprise/history-transfer"
-                                            title="Historique de transfert"
-                                            icon={<FaArrowRightArrowLeft className="h-4 w-4" />}
                                         />
                                     </MenuGroup>
                                 )}
@@ -189,17 +187,6 @@ export const BankApp: FunctionComponent = () => {
                                         bankType={data.bankType}
                                         account={data.accounts.enterprise}
                                         history={data.history.enterprise}
-                                        contacts={data.contacts}
-                                    />
-                                }
-                            />
-                            <Route
-                                path="/enterprise/history-transfer"
-                                element={
-                                    <HistoryPage
-                                        bankType={data.bankType}
-                                        account={data.accounts.enterprise}
-                                        history={data.history.enterprise_transfer}
                                         contacts={data.contacts}
                                     />
                                 }

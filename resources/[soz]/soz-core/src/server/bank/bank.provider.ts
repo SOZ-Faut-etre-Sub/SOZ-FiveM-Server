@@ -7,7 +7,7 @@ import { Exportable } from '../../core/decorators/exports';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
-import { BankContact, BankMoneyType, BankUiData } from '../../shared/bank';
+import { BankContact, BankHistoryFilter, BankMoneyType, BankUiData } from '../../shared/bank';
 import { ServerEvent } from '../../shared/event/server';
 import { JobPermission } from '../../shared/job';
 import { PlayerData } from '../../shared/player';
@@ -98,7 +98,7 @@ export class BankProvider {
     }
 
     @Rpc(RpcServerEvent.BANK_GET_ACCOUNT_UI)
-    public async getAccountUiData(source: number): Promise<BankUiData> {
+    public async getAccountUiData(source: number, historyFilter?: BankHistoryFilter): Promise<BankUiData> {
         const position = GetEntityCoords(GetPlayerPed(source), false) as Vector3;
 
         const player = this.playerService.getPlayer(source);
@@ -112,7 +112,10 @@ export class BankProvider {
             },
             contacts: await this.getBankContacts(player.citizenid),
             history: {
-                personal: await this.bankStatementsService.getStatementsForAccount(player.charinfo.account),
+                personal: await this.bankStatementsService.getStatementsForAccount(
+                    player.charinfo.account,
+                    historyFilter
+                ),
             },
         };
 
@@ -127,13 +130,13 @@ export class BankProvider {
             accountPayload.accounts.enterprise = await this.bankAccountRepository.find(player.job.id);
             accountPayload.accounts.offshore = await this.bankAccountRepository.find(`offshore_${player.job.id}`);
 
-            accountPayload.history.enterprise = await this.bankStatementsService.getStatementsForAccount(player.job.id);
-            accountPayload.history.enterprise_transfer = await this.bankStatementsService.getStatementsForAccount(
+            accountPayload.history.enterprise = await this.bankStatementsService.getStatementsForAccount(
                 player.job.id,
-                true
+                historyFilter
             );
             accountPayload.history.offshore = await this.bankStatementsService.getStatementsForAccount(
-                `offshore_${player.job.id}`
+                `offshore_${player.job.id}`,
+                historyFilter
             );
         }
 

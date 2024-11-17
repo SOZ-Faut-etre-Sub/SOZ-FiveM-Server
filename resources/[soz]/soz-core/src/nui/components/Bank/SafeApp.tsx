@@ -60,7 +60,10 @@ export const SafeApp: FunctionComponent = () => {
     });
 
     useNuiEvent('bank_safe', 'UpdateAccountData', (data: BankAccount) => {
-        setAccount(data);
+        setAccount(account => ({
+            ...account,
+            ...data,
+        }));
     });
 
     useNuiEvent('bank', 'CloseInterface', resetApp);
