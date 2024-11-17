@@ -64,29 +64,6 @@ export class FoodFieldProvider {
                 ]);
             }
         }
-
-        this.targetFactory.createForBoxZone(
-            'food_milk_harvest',
-            {
-                center: [2416.83, 4994.29, 46.5],
-                length: 1,
-                width: 5.0,
-                heading: 133.3,
-                minZ: 45.5,
-                maxZ: 49.5,
-            },
-            [
-                {
-                    label: 'Récupérer',
-                    icon: 'food/collecter',
-                    blackoutGlobal: true,
-                    blackoutJob: JobType.Food,
-                    job: JobType.Food,
-                    category: 'society',
-                    action: this.harvestMilk.bind(this),
-                },
-            ]
-        );
     }
 
     public async collectIngredients(type: FoodFieldType, index: string) {
@@ -99,13 +76,5 @@ export class FoodFieldProvider {
 
     public harvestZeed() {
         TriggerEvent(ClientEvent.DRUGS_HARVEST_ZEED, { location: 'food' });
-    }
-
-    public harvestMilk() {
-        if (IsPedInAnyVehicle(PlayerPedId(), false)) {
-            return;
-        }
-
-        TriggerServerEvent(ServerEvent.FOOD_MILK_COLLECT, GetClockHours());
     }
 }

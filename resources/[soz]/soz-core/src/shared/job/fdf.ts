@@ -295,6 +295,10 @@ export const FDFFields: Record<string, PolygonZone<Vector4>> = {
     ),
 };
 
+export const MILK_TIME = 30_000;
+export const MILK_QTY = 1;
+export const MILK_ITEM = 'cow_milk';
+
 export const FDFGreenHouse: Record<string, PolygonZone<Vector4>> = {
     4: new PolygonZone(
         [
@@ -829,6 +833,30 @@ export const FDFCraftsLists: Record<string, CraftCategory> = {
                 inputs: {
                     cabage: { count: 1 },
                     tomato: { count: 2 },
+                },
+            },
+        },
+    },
+    Lait: {
+        duration: 6000,
+        event: 'job_fdf_craft',
+        recipes: {
+            milk: {
+                amount: 4,
+                inputs: {
+                    cow_milk: { count: 1 },
+                },
+            },
+            semi_skimmed_milk: {
+                amount: 4,
+                inputs: {
+                    cow_milk: { count: 1 },
+                },
+            },
+            skimmed_milk: {
+                amount: 4,
+                inputs: {
+                    cow_milk: { count: 1 },
                 },
             },
         },

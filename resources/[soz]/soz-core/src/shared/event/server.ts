@@ -116,6 +116,7 @@ export enum ServerEvent {
     FOOD_HUNT_RESPAWN = 'soz-core:server:food:hunt-respawn',
     FOOD_COLLECT = 'soz-core:server:job:food:collect',
     FOOD_MILK_COLLECT = 'soz-core:server:job:food:milk-collect',
+    FOOD_FISH_PREPARATION = 'soz-core:server:job:food:fish-preparation',
 
     EASTER_HUNT = 'soz-core:server:easter:hunt',
 
@@ -532,6 +533,7 @@ export enum ServerEvent {
     FDF_FIELD_CHECK = 'soz-core:server:fdf:field-check',
     FDF_TRACTOR_HARVEST = 'soz-core:server:fdf:field-tractor-harvest',
     FDF_GARLIC_HARVEST = 'soz-core:server:fdf:garlic-harvest',
+    FDF_MILK_COLLECT = 'soz-core:server:fdf:cow-milk-collect',
 
     ANIMATION_FX = 'soz-core:server:animation:fx',
     ANIMATION_FX_POSITION = 'soz-core:server:animation:fx-position',

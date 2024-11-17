@@ -7,6 +7,7 @@ import { CraftsList } from '@public/shared/craft/craft';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import { Feature } from '@public/shared/features';
 import { JobType } from '@public/shared/job';
+import { CraftZones } from '@public/shared/job/food';
 import { MenuType } from '@public/shared/nui/menu';
 import { RpcServerEvent } from '@public/shared/rpc';
 
@@ -33,7 +34,6 @@ export class FoodProvider {
     private featureProvider: FeatureProvider;
 
     private state = {
-        displayMilkBlip: false,
         displayEasterEggBlip: false,
         easterEnabled: false,
     };
@@ -46,14 +46,24 @@ export class FoodProvider {
 
     @Once(OnceStep.PlayerLoaded)
     public setupFoodJob() {
-        this.blipFactory.create('displayMilkBlip', {
-            name: 'Point de récolte du lait',
-            coords: { x: 2416.01, y: 4993.49, z: 46.22 },
-            sprite: 176,
-            scale: 0.9,
-        });
-
-        this.blipFactory.hide('displayMilkBlip', true);
+        CraftZones.forEach(zone =>
+            this.targetFactory.createForBoxZone(`${zone.name}-fish`, zone, [
+                {
+                    icon: 'food/fish',
+                    label: 'Préparation marine',
+                    job: JobType.Food,
+                    blackoutGlobal: true,
+                    blackoutJob: JobType.Food,
+                    category: 'citizen', // fixme?
+                    canInteract: () => {
+                        return true;
+                    },
+                    action: async () => {
+                        TriggerServerEvent(ServerEvent.FOOD_FISH_PREPARATION);
+                    },
+                },
+            ])
+        );
 
         if (this.featureProvider.isFeatureEnabled(Feature.EasterFood)) {
             this.state.easterEnabled = true;

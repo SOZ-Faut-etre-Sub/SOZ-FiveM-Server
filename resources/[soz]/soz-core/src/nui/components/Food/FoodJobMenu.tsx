@@ -23,7 +23,6 @@ type FoodStateProps = {
     data: {
         recipes: Record<string, CraftCategory>;
         state: {
-            displayMilkBlip: boolean;
             displayEasterEggBlip: boolean;
             easterEnabled: boolean;
         };
@@ -76,12 +75,6 @@ export const FoodJobMenu: FunctionComponent<FoodStateProps> = ({ data }) => {
                             key={`recipe_${category}`}
                         >{`Livre de recettes ${data.recipes[category].icon} ${category}`}</MenuItemSubMenuLink>
                     ))}
-                    <MenuItemCheckbox
-                        checked={data.state.displayMilkBlip}
-                        onChange={value => displayBlip('displayMilkBlip', value)}
-                    >
-                        Afficher le point de collecte de lait
-                    </MenuItemCheckbox>
                     {data.state.easterEnabled && (
                         <MenuItemCheckbox
                             checked={data.state.displayEasterEggBlip}

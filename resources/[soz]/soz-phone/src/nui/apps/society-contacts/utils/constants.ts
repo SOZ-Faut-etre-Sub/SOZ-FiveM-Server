@@ -54,13 +54,13 @@ export const SocietyContactsState: Society[] = [
         avatar: 'media/society_icon/taxi.webp',
         type: 'Entreprise Privée',
     },
-    // {
-    //     id: 8,
-    //     display: 'Château Marius',
-    //     number: '555-MARIUS',
-    //     avatar: 'media/society_icon/food.webp',
-    //     type: 'Entreprise Privée',
-    // },
+    {
+        id: 8,
+        display: 'Château Marius',
+        number: '555-MARIUS',
+        avatar: 'media/society_icon/food.webp',
+        type: 'Entreprise Privée',
+    },
     {
         id: 9,
         display: 'Michel Transport Petrol',

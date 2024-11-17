@@ -26,13 +26,15 @@ import {
     FDFHarvestStatus,
     FDFPlowStatus,
     harvestDiff,
+    MILK_ITEM,
+    MILK_QTY,
 } from '@public/shared/job/fdf';
 import { getLocationHash } from '@public/shared/locationhash';
 import { getDistance, toVector3Object, Vector3 } from '@public/shared/polyzone/vector';
 import { RpcClientEvent, RpcServerEvent } from '@public/shared/rpc';
 import { formatDuration } from '@public/shared/utils/timeformat';
 
-import { InventoryItem } from '../../../shared/inventory';
+import { ADD_ERROR_MESSAGE, InventoryItem } from '../../../shared/inventory';
 import { isOk } from '../../../shared/result';
 import { VehicleClass } from '../../../shared/vehicle/vehicle';
 import { Inventory } from '../../inventory/inventory';
@@ -518,6 +520,28 @@ export class FDFFieldProvider {
         }
 
         return returnOject;
+    }
+
+    @OnEvent(ServerEvent.FDF_MILK_COLLECT)
+    async cowMilkCollect(source: number) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        const result = inventory.add(MILK_ITEM, MILK_QTY);
+
+        if (isOk(result)) {
+            this.notifier.notify(
+                source,
+                `Vous avez récupéré ~g~${MILK_QTY}~s~ seau de ~b~${this.itemService.getItem(MILK_ITEM).label}.`,
+                'success'
+            );
+        } else if (result.err == 'not_enough_space') {
+            this.notifier.error(source, 'Vos poches sont pleines...');
+            return false;
+        } else {
+            this.notifier.error(source, `Il y a eu une erreur: ${MILK_ITEM} ${ADD_ERROR_MESSAGE[result.err]}`);
+            return false;
+        }
+        return true;
     }
 
     @OnEvent(ServerEvent.FDF_FIELD_CHECK)

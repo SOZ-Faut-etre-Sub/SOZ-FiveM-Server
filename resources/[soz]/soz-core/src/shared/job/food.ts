@@ -251,6 +251,131 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
             },
         },
     },
+    ['Plats à base de viande']: {
+        duration: 8000,
+        icon: '🥩',
+        event: 'job_cm_food_craft',
+        recipes: {
+            beef_symfony_truffle: {
+                inputs: {
+                    viande: { count: 4 },
+                    mushroom: { count: 3 },
+                    wine1: { count: 1 },
+                },
+                amount: 4,
+            },
+            crunchy_lamp_chop: {
+                inputs: {
+                    viande: { count: 2 },
+                    vegetable_palette: { count: 1 },
+                    milk: { count: 1 },
+                },
+                amount: 4,
+            },
+            rosmarino_veal_filet: {
+                inputs: {
+                    viande: { count: 2 },
+                    potato: { count: 2 },
+                    milk: { count: 1 },
+                },
+                amount: 4,
+            },
+            spicy_sichuan_duck_breast: {
+                inputs: {
+                    viande: { count: 2 },
+                    potato: { count: 2 },
+                    wine4: { count: 1 },
+                },
+                amount: 4,
+            },
+        },
+    },
+    ['Plats à base de poissons/crustacés']: {
+        duration: 8000,
+        icon: '🐟',
+        event: 'job_cm_food_craft',
+        recipes: {
+            scallops_goldn_corn: {
+                inputs: {
+                    fish_preparation: { count: 4 },
+                    corn: { count: 2 },
+                    milk: { count: 1 },
+                    sausage3: { count: 1 },
+                },
+                amount: 4,
+            },
+            deep_sea_turbot: {
+                inputs: {
+                    fish_preparation: { count: 4 },
+                    tomato: { count: 1 },
+                    lemon: { count: 1 },
+                    cabage: { count: 1 },
+                },
+                amount: 4,
+            },
+            herbarium_cod: {
+                inputs: {
+                    fish_preparation: { count: 4 },
+                    potato: { count: 1 },
+                    vegetable_palette: { count: 1 },
+                    wine3: { count: 1 },
+                },
+                amount: 4,
+            },
+            ocean_awakening: {
+                inputs: {
+                    fish_preparation: { count: 4 },
+                    apple: { count: 1 },
+                    milk: { count: 1 },
+                    wine3: { count: 1 },
+                },
+                amount: 4,
+            },
+        },
+    },
+    ['Plats exotiques']: {
+        duration: 8000,
+        icon: '🌴',
+        event: 'job_cm_food_craft',
+        recipes: {
+            tropical_goat_curry: {
+                inputs: {
+                    viande: { count: 2 },
+                    potato: { count: 1 },
+                    tomato: { count: 1 },
+                    lemon: { count: 1 },
+                },
+                amount: 4,
+            },
+            tikka_royal: {
+                inputs: {
+                    viande: { count: 2 },
+                    milk: { count: 1 },
+                    vegetable_palette: { count: 1 },
+                    lemon: { count: 1 },
+                },
+                amount: 4,
+            },
+            sand_tagine: {
+                inputs: {
+                    viande: { count: 2 },
+                    vegetable_palette: { count: 1 },
+                    lemon: { count: 1 },
+                    orange: { count: 1 },
+                },
+                amount: 4,
+            },
+            end_world_tataki: {
+                inputs: {
+                    viande: { count: 2 },
+                    potato: { count: 2 },
+                    lemon: { count: 1 },
+                    smuggling_zibwasser_zoublon: { count: 1 },
+                },
+                amount: 4,
+            },
+        },
+    },
     Halloween: {
         feature: Feature.Halloween,
         duration: 5000,

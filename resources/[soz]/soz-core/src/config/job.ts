@@ -36,12 +36,12 @@ export const JobBlips: Partial<Record<JobType, Blip[]>> = {
             coords: { x: -251.75, y: 6099.03, z: 31.39 },
         },
     ],
-    // METEOR [JobType.Food]: [
-    //     {
-    //         name: 'Château Marius',
-    //         sprite: 176,
-    //         scale: 0.9,
-    //         coords: { x: -1889.54, y: 2045.27 },
-    //     },
-    // ],
+    [JobType.Food]: [
+        {
+            name: 'Château Marius',
+            sprite: 176,
+            scale: 0.9,
+            coords: { x: -1889.54, y: 2045.27 },
+        },
+    ],
 };

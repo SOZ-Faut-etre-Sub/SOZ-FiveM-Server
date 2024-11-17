@@ -9,7 +9,7 @@ import { ProgressService } from '@public/server/player/progress.service';
 import { ServerEvent } from '@public/shared/event';
 import { JobType } from '@public/shared/job';
 
-import { ADD_ERROR_MESSAGE } from '../../../shared/inventory';
+import { ADD_ERROR_MESSAGE, InventoryItem } from '../../../shared/inventory';
 import { isOk } from '../../../shared/result';
 
 const EasterHarvestDrop: Record<string, number> = {
@@ -53,6 +53,86 @@ export class FoodHarvestProvider {
                 amount: 1,
             },
         });
+    }
+
+    @OnEvent(ServerEvent.FOOD_FISH_PREPARATION)
+    async onFishPreparation(source: number) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        const inventoryFishes: InventoryItem[] = [];
+        Object.values(inventory.items()).filter(item => {
+            if (item.type === 'fish') {
+                inventoryFishes.push(item);
+            }
+        });
+
+        if (!inventoryFishes || !inventoryFishes[0] || !inventoryFishes[0].amount || inventoryFishes[0].amount < 1) {
+            this.notifier.notify(source, `Vous n'avez pas de poisson.`);
+            return false;
+        }
+
+        this.notifier.notify(
+            source,
+            `Vous commencez à préparer des ~b~${this.itemService.getItem('fish_preparation').label}.`
+        );
+
+        while (
+            await this.doPrepareFish(source, `Vous préparez des ${this.itemService.getItem('fish_preparation').label}.`)
+        ) {
+            /* Empty*/
+        }
+
+        this.notifier.notify(
+            source,
+            `Vous avez terminé de préparer des ~b~${this.itemService.getItem('fish_preparation').label}.`,
+            'success'
+        );
+    }
+
+    async doPrepareFish(source: number, label: string) {
+        const { completed } = await this.progressService.progress(source, 'food_easter_harvest', label, 5000, {
+            dictionary: 'amb@prop_human_bbq@male@idle_a',
+            name: 'idle_c',
+            flags: 1,
+        });
+
+        if (!completed) {
+            return false;
+        }
+
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        const inventoryFishes: InventoryItem[] = [];
+        Object.values(inventory.items()).filter(item => {
+            if (item.type === 'fish') {
+                inventoryFishes.push(item);
+            }
+        });
+
+        if (!inventoryFishes || !inventoryFishes[0] || !inventoryFishes[0].amount) {
+            this.notifier.notify(source, `Vous n'avez pas de poisson.`);
+            return false;
+        }
+
+        const result = inventory.add('fish_preparation', 2);
+        if (isOk(result)) {
+            inventory.removeAtSlot(inventoryFishes[0].slot, 1);
+            this.notifier.notify(
+                source,
+                `Vous avez préparé un ~b~${this.itemService.getItem('fish_preparation').label}~s~.`
+            );
+        } else if (result.err == 'not_enough_space') {
+            this.notifier.notify(source, 'Vos poches sont pleines...', 'error');
+            return false;
+        } else {
+            this.notifier.notify(
+                source,
+                `Il y a eu une erreur: ${'fish_preparation'} ${ADD_ERROR_MESSAGE[result.err]}`,
+                'error'
+            );
+            return false;
+        }
+        return true;
     }
 
     @OnEvent(ServerEvent.FOOD_EASTER_HARVEST)

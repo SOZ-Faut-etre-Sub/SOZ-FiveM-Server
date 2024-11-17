@@ -1,11 +1,13 @@
 import { Once, OnceStep } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
+import { AnimationService } from '@public/client/animation/animation.service';
 import { ItemService } from '@public/client/item/item.service';
 import { Notifier } from '@public/client/notifier';
 import { ObjectProvider } from '@public/client/object/object.provider';
 import { PlayerService } from '@public/client/player/player.service';
 import { ProgressService } from '@public/client/progress.service';
+import { ResourceLoader } from '@public/client/repository/resource.loader';
 import { Rpc } from '@public/core/decorators/rpc';
 import { emitRpc } from '@public/core/rpc';
 import { wait } from '@public/core/utils';
@@ -22,9 +24,10 @@ import {
     FDFGreenHouse,
     FDFHarvestStatus,
     FDFPlowStatus,
+    MILK_TIME,
 } from '@public/shared/job/fdf';
 import { PolygonZone } from '@public/shared/polyzone/polygon.zone';
-import { getDistance, Vector2, Vector3, Vector4 } from '@public/shared/polyzone/vector';
+import { getDistance, rad, Vector2, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { getRandomItems } from '@public/shared/random';
 import { RpcClientEvent, RpcServerEvent } from '@public/shared/rpc';
 
@@ -58,6 +61,12 @@ export class FDFFieldProvider {
 
     @Inject(ItemService)
     private itemService: ItemService;
+
+    @Inject(ResourceLoader)
+    private resourceLoader: ResourceLoader;
+
+    @Inject(AnimationService)
+    private animationService: AnimationService;
 
     @Inject(Notifier)
     private notifier: Notifier;
@@ -276,6 +285,60 @@ export class FDFFieldProvider {
                 },
             },
         ]);
+
+        this.targetFactory.createForModel('a_c_cow', [
+            {
+                icon: 'fdf/milking',
+                label: 'Traire',
+                blackoutJob: JobType.FDF,
+                job: JobType.FDF,
+                category: 'society',
+                action: async entity => {
+                    this.milkCow(entity);
+                },
+            },
+        ]);
+    }
+
+    private loc(pos: number[], w: number): number[] {
+        return [pos[0] - Math.cos(rad(w)), pos[1] - Math.sin(rad(w)), (w + 270) % 360];
+    }
+
+    private async milkCow(cow: number) {
+        const coord = GetEntityCoords(cow);
+        const heading = GetEntityHeading(cow);
+        const array = this.loc(coord, heading);
+
+        this.resourceLoader.loadAnimationDictionary('creatures@cow@move');
+        SetEntityAsMissionEntity(cow, true, true);
+        TaskPlayAnim(cow, 'creatures@cow@move', 'idle', 1.0, 1.0, -1, 1, 0.0, true, true, true);
+
+        await this.animationService.walkToCoords([array[0], array[1], coord[2], array[2]], 3000);
+        const env = GetConvar('soz_core_environment', 'development');
+        const { completed } = await this.progressService.progress(
+            'fdf_crop_destroy',
+            'Traite en cours ...',
+            env === 'production' ? MILK_TIME : MILK_TIME / 10,
+            {
+                dictionary: 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@',
+                name: 'machinic_loop_mechandplayer',
+                options: {
+                    repeat: true,
+                },
+            }
+        );
+
+        ClearPedTasks(cow);
+        SetEntityAsNoLongerNeeded(cow);
+        TaskStartScenarioInPlace(cow, 'WORLD_COW_GRAZING', -1, true);
+
+        this.resourceLoader.unloadAnimationDictionary('creatures@cow@move');
+        if (!completed) {
+            this.notifier.notify(`Vous avez ~r~arrêté~s~ de récolter.`, 'error');
+            return false;
+        }
+
+        TriggerServerEvent(ServerEvent.FDF_MILK_COLLECT);
     }
 
     private async tractorHarvest(trailer: number) {

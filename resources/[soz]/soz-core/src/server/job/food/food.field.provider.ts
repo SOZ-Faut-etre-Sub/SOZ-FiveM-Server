@@ -8,9 +8,7 @@ import { getAmount } from '../../../shared/field';
 import { ADD_ERROR_MESSAGE } from '../../../shared/inventory';
 import { JobType } from '../../../shared/job';
 import { FoodFields, FoodFieldType } from '../../../shared/job/food';
-import { PollutionLevel } from '../../../shared/pollution';
 import { toVector3Object, Vector3 } from '../../../shared/polyzone/vector';
-import { isErr } from '../../../shared/result';
 import { FieldProvider } from '../../farm/field.provider';
 import { ItemService } from '../../item/item.service';
 import { Monitor } from '../../monitor/monitor';
@@ -166,76 +164,6 @@ export class FoodFieldProvider {
                     position: toVector3Object(position),
                 });
             }
-        }
-    }
-
-    @OnEvent(ServerEvent.FOOD_MILK_COLLECT)
-    public async onMilkCollect(source: number, hours: number) {
-        const player = this.playerService.getPlayer(source);
-
-        if (!player) {
-            return;
-        }
-
-        // eslint-disable-next-line no-constant-condition
-        while (true) {
-            const { completed } = await this.progressService.progress(
-                source,
-                'food-harvest-milk',
-                'Vous récupérez des pots de lait',
-                10000,
-                {
-                    name: 'action_a',
-                    dictionary: 'anim@mp_radio@garage@low',
-                },
-                {
-                    disableMovement: true,
-                    disableCarMovement: true,
-                    disableMouse: false,
-                    disableCombat: true,
-                }
-            );
-
-            if (!completed) {
-                return;
-            }
-
-            const amount = { min: 1, max: 4 };
-
-            if (this.pollution.getPollutionLevel() === PollutionLevel.Low) {
-                amount.min = 2;
-                amount.max = 5;
-            }
-
-            const amountToHarvest = getAmount(amount);
-            const hoursTypeItem = Math.floor((hours % 24) / 8);
-            let item = 'milk';
-
-            if (hoursTypeItem === 1) {
-                item = 'semi_skimmed_milk';
-            } else if (hoursTypeItem === 2) {
-                item = 'skimmed_milk';
-            }
-
-            const inventory = await this.inventoryFactory.getPlayerInventory(source);
-
-            if (isErr(inventory.add(item, amountToHarvest))) {
-                this.notifier.error(player.source, 'Vos poches sont pleines...');
-
-                return;
-            }
-
-            const itemData = this.itemService.getItem(item);
-
-            this.notifier.notify(player.source, `Vous avez récolté ${amountToHarvest} ${itemData.label}`);
-
-            this.monitor.traceEvent('job_cm_food_collect', {
-                player_source: source,
-                item_id: item,
-                item_label: itemData.label,
-                amount: amountToHarvest,
-                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
-            });
         }
     }
 }

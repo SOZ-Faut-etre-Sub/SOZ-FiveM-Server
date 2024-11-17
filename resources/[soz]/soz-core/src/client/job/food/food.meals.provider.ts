@@ -1,4 +1,4 @@
-import { Once, OnceStep, OnEvent } from '../../../core/decorators/event';
+import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ClientEvent, ServerEvent } from '../../../shared/event';
@@ -20,39 +20,39 @@ export class FoodMealsProvider {
         this.orderInProgress = order;
     }
 
-    @Once(OnceStep.PlayerLoaded)
-    setupFoodMeals() {
-        TriggerServerEvent(ServerEvent.FOOD_RETRIEVE_STATE);
-        this.targetFactory.createForBoxZone(
-            'food_meals_provider',
-            {
-                center: [-1388.57, -744.79, 24.63],
-                width: 1.0,
-                length: 3.9,
-                heading: 37,
-                minZ: 23.63,
-                maxZ: 26.08,
-            },
-            [
-                {
-                    label: 'Commander',
-                    icon: 'food/order',
-                    job: 'food',
-                    category: 'society',
-                    canInteract: () => !this.orderInProgress,
-                    action: this.doOrderMeals.bind(this),
-                },
-                {
-                    label: 'Récupérer la commande',
-                    icon: 'food/retrieve-order',
-                    job: 'food',
-                    category: 'society',
-                    canInteract: () => this.orderInProgress,
-                    action: this.doRetrieveOrder.bind(this),
-                },
-            ]
-        );
-    }
+    // @Once(OnceStep.PlayerLoaded)
+    // setupFoodMeals() {
+    //     TriggerServerEvent(ServerEvent.FOOD_RETRIEVE_STATE);
+    //     this.targetFactory.createForBoxZone(
+    //         'food_meals_provider',
+    //         {
+    //             center: [-1388.57, -744.79, 24.63],
+    //             width: 1.0,
+    //             length: 3.9,
+    //             heading: 37,
+    //             minZ: 23.63,
+    //             maxZ: 26.08,
+    //         },
+    //         [
+    //             {
+    //                 label: 'Commander',
+    //                 icon: 'food/order',
+    //                 job: 'food',
+    //                 category: 'society',
+    //                 canInteract: () => !this.orderInProgress,
+    //                 action: this.doOrderMeals.bind(this),
+    //             },
+    //             {
+    //                 label: 'Récupérer la commande',
+    //                 icon: 'food/retrieve-order',
+    //                 job: 'food',
+    //                 category: 'society',
+    //                 canInteract: () => this.orderInProgress,
+    //                 action: this.doRetrieveOrder.bind(this),
+    //             },
+    //         ]
+    //     );
+    // }
 
     private doOrderMeals() {
         TriggerServerEvent(ServerEvent.FOOD_ORDER_MEALS);
