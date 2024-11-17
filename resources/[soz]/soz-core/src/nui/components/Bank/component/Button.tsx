@@ -1,27 +1,15 @@
 import React, { forwardRef, PropsWithChildren } from 'react';
 
-import { useHudColor } from '../../Hud/hooks/useHudColor';
-
 interface ButtonProps {
     onClick?: () => void;
     disabled?: boolean;
-    variant?: 'primary' | 'secondary';
-    type?: 'button' | 'submit' | 'reset';
 }
 
 export const Button = forwardRef<HTMLButtonElement, PropsWithChildren<ButtonProps>>((props, ref) => {
-    const { button } = useHudColor();
-
-    const variant = props.variant ?? 'primary';
-
     return (
         <button
             ref={ref}
-            className="mt-3 w-full p-2 rounded-xl font-semibold"
-            style={{
-                backgroundColor: button[variant].background,
-                color: button[variant].color,
-            }}
+            className="bg-teal-400/10 hover:bg-teal-500/10 ring-1 ring-inset ring-teal-400/10 hover:ring-teal-500/10 mt-3 w-full p-2 rounded-md"
             {...props}
         >
             {props.children}

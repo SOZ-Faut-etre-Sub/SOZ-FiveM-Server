@@ -28,9 +28,8 @@ export const TargetItem: FunctionComponent<TargetOption & { onSelect: () => void
             <GlassMorphismContainer
                 borderClassName="rounded-full"
                 className="flex items-center gap-3 px-5 h-12 w-fit"
-                rounded={34}
-                showBorderOnHover
                 disableBorder
+                showBorderOnHover
             >
                 {imageUrl && <img className="size-8" src={imageUrl} alt="" />}
 

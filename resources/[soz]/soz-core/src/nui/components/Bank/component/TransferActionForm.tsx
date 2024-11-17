@@ -3,17 +3,15 @@ import { CheckIcon } from '@heroicons/react/solid';
 import classnames from 'classnames';
 import React, { Fragment, FunctionComponent, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { HiChevronUpDown } from 'react-icons/hi2';
 
 import { BankAccount, BankContact } from '../../../../shared/bank';
 import { NuiEvent } from '../../../../shared/event/nui';
 import { fetchNui } from '../../../fetch';
-import { useHudColor } from '../../Hud/hooks/useHudColor';
-import MoveIcon from '../assets/move.svg';
 import { inputErrorMessage } from '../utils/format';
 import { Button } from './Button';
 import { Card } from './Card';
 import { Input } from './Input';
-import { Title } from './Title';
 
 type TransferActionInputs = {
     account: string;
@@ -29,8 +27,6 @@ interface TransferActionFormProps {
 export const TransferActionForm: FunctionComponent<TransferActionFormProps> = ({ account, contacts }) => {
     const [selected, setSelected] = useState<BankContact>();
     const [query, setQuery] = useState<string>('');
-
-    const { glassmorphismColors, button, color } = useHudColor();
 
     const filteredContacts =
         query === ''
@@ -71,8 +67,8 @@ export const TransferActionForm: FunctionComponent<TransferActionFormProps> = ({
 
     return (
         <Card>
-            <form onSubmit={handleSubmit(submitForm)} className="space-y-2.5">
-                <Title size="xsmall">Transfert d'argent</Title>
+            <form onSubmit={handleSubmit(submitForm)} className="space-y-4">
+                <h2 className="uppercase text-sm font-light text-gray-300">Transfert d'argent</h2>
 
                 <div className="relative rounded-md shadow-sm">
                     <Combobox
@@ -81,19 +77,15 @@ export const TransferActionForm: FunctionComponent<TransferActionFormProps> = ({
                             setSelected(v);
                         }}
                     >
-                        <div className="relative w-full cursor-default overflow-hidden rounded-md ring-0 text-left focus:outline-none">
+                        <div className="relative w-full cursor-default overflow-hidden rounded-md ring-1 ring-inset ring-gray-500/10 text-left focus:outline-none">
                             <Combobox.Input
                                 placeholder="Rechercher un bénéficiaire"
-                                className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 focus:ring-0 placeholder:text-inherit placeholder:opacity-50"
+                                className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 bg-white/5 text-gray-100 focus:ring-0"
                                 displayValue={(contact: BankContact) => contact.label}
                                 onChange={event => setQuery(event.target.value)}
-                                style={{
-                                    backgroundColor: glassmorphismColors.background,
-                                    color,
-                                }}
                             />
                             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
-                                <MoveIcon className="size-5" aria-hidden="true" />
+                                <HiChevronUpDown className="h-5 w-5 text-gray-400" aria-hidden="true" />
                             </Combobox.Button>
                         </div>
                         <Transition
@@ -106,11 +98,7 @@ export const TransferActionForm: FunctionComponent<TransferActionFormProps> = ({
                                 {...register('account', {
                                     required: true,
                                 })}
-                                className="absolute z-10 mt-1 max-h-60 w-full rounded-md py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm overflow-y-auto scrollbar-thin scrollbar-thumb-black/20 backdrop-blur-xl"
-                                style={{
-                                    backgroundColor: button.secondary.background,
-                                    color: button.secondary.color,
-                                }}
+                                className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-[#3d4547] py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm"
                             >
                                 {filteredContacts.length === 0 && query !== '' ? (
                                     <Combobox.Option
@@ -121,15 +109,18 @@ export const TransferActionForm: FunctionComponent<TransferActionFormProps> = ({
                                     </Combobox.Option>
                                 ) : (
                                     filteredContacts.map(contact => (
-                                        <Combobox.Option key={contact.id} value={contact}>
+                                        <Combobox.Option
+                                            key={contact.id}
+                                            className={({ active }) =>
+                                                classnames(`relative cursor-pointer select-none py-2 pl-10 pr-4`, {
+                                                    'bg-teal-600/50 text-white': active,
+                                                    'text-gray-100': !active,
+                                                })
+                                            }
+                                            value={contact}
+                                        >
                                             {({ selected, active }) => (
-                                                <div
-                                                    className="relative cursor-pointer select-none py-2 pl-10 pr-4"
-                                                    style={{
-                                                        backgroundColor: active && button.primary.background,
-                                                        color: active && button.primary.color,
-                                                    }}
-                                                >
+                                                <>
                                                     <span
                                                         className={classnames(`block truncate`, {
                                                             'font-medium': selected,
@@ -140,17 +131,18 @@ export const TransferActionForm: FunctionComponent<TransferActionFormProps> = ({
                                                     </span>
                                                     {selected ? (
                                                         <span
-                                                            className="absolute inset-y-0 left-0 flex items-center pl-3"
-                                                            style={{
-                                                                color: active
-                                                                    ? button.primary.color
-                                                                    : button.secondary.color,
-                                                            }}
+                                                            className={classnames(
+                                                                `absolute inset-y-0 left-0 flex items-center pl-3`,
+                                                                {
+                                                                    'text-white': active,
+                                                                    'text-teal-600/50': !active,
+                                                                }
+                                                            )}
                                                         >
                                                             <CheckIcon className="h-5 w-5" aria-hidden="true" />
                                                         </span>
                                                     ) : null}
-                                                </div>
+                                                </>
                                             )}
                                         </Combobox.Option>
                                     ))

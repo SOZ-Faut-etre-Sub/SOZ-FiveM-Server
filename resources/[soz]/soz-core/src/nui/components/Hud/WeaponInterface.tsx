@@ -24,7 +24,7 @@ export const WeaponInterface: FunctionComponent = () => {
 
     return (
         <animated.div
-            className={cn('absolute flex gap-1 items-center justify-center text-white w-fit drop-shadow-bg', {
+            className={cn('absolute flex gap-1 items-center justify-center text-white w-fit drop-shadow-bg -z-10', {
                 '-mt-14': !hasStreetNamesEnabled,
             })}
             style={ammoStyles}

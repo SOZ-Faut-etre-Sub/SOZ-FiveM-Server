@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { usePlayer } from '../../../hook/data';
 import { useNuiEvent } from '../../../hook/nui';
 import { RootState } from '../../../store';
-import { useHudColor } from '../hooks/useHudColor';
+import { useDaltonism } from '../hooks/useDaltonism';
 import { useZoom } from '../hooks/useZoom';
 import { StatusGauge } from './StatusGauge';
 
@@ -23,7 +23,7 @@ export const PlayerStats: FunctionComponent = () => {
     const showStamina = useSelector((state: RootState) => state.hud.settings.showStamina);
 
     const player = usePlayer();
-    const { gaugeColors } = useHudColor();
+    const { gaugeColors } = useDaltonism();
     const { iconSize } = useZoom();
 
     const health = useSelector((state: RootState) => state.playerStats.health);

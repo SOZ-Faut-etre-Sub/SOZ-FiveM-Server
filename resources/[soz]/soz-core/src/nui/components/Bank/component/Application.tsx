@@ -3,7 +3,6 @@ import cn from 'classnames';
 import { FunctionComponent, PropsWithChildren } from 'react';
 
 import { useOutside } from '../../../hook/outside';
-import { useHudColor } from '../../Hud/hooks/useHudColor';
 
 interface ApplicationContainerProps {
     size: 'full' | 'large' | 'small';
@@ -15,16 +14,14 @@ export const ApplicationContainer: FunctionComponent<PropsWithChildren<Applicati
     size,
     onClickOutside,
 }) => {
-    const { color } = useHudColor();
-
     const backgroundStyles = useSpring({
         from: { opacity: 0 },
-        to: { opacity: 0.99999 }, // prevent black background when doing backdrop-blur
+        to: { opacity: 1 },
     });
 
     const contentStyles = useSpring({
         from: { y: 50, opacity: 0 },
-        to: { y: 0, opacity: 0.99999, color }, // prevent black background when doing backdrop-blur
+        to: { y: 0, opacity: 1 },
     });
 
     const refOutside = useOutside({
@@ -43,13 +40,13 @@ export const ApplicationContainer: FunctionComponent<PropsWithChildren<Applicati
 
     return (
         <>
-            <div className="absolute font-prompt flex justify-center items-center h-full w-full z-10 overflow-hidden">
+            <div className="absolute flex justify-center items-center h-full w-full z-10">
                 <animated.div
                     ref={refOutside}
                     style={contentStyles}
                     className={cn('h-full w-full mx-auto my-auto', {
                         'max-w-[1536px] max-h-[90vh]': size === 'full',
-                        'max-h-[450px] max-w-[700px]': size === 'large',
+                        'max-h-[400px] max-w-[700px]': size === 'large',
                         'max-h-[800px] max-w-[536px]': size === 'small',
                     })}
                 >

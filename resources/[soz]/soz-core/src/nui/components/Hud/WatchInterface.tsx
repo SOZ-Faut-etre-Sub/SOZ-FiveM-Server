@@ -14,7 +14,7 @@ import { Location } from './components/Location';
 import { PlayerStats } from './components/PlayerStats';
 import { VoiceIcon } from './components/VoiceIcon';
 import { Weather } from './components/Weather';
-import { useHudColor } from './hooks/useHudColor';
+import { useDaltonism } from './hooks/useDaltonism';
 
 export const WatchInterface: FunctionComponent = () => {
     const hasWatch = useSelector((state: RootState) => state.hud.hasWatch);
@@ -26,7 +26,7 @@ export const WatchInterface: FunctionComponent = () => {
     const [voiceMode, setVoiceMode] = useState(VoiceMode.Normal);
     const [voiceActive, setVoiceActive] = useState(true);
 
-    const { imagePrefix } = useHudColor();
+    const { imagePrefix } = useDaltonism();
 
     useNuiEvent('hud', 'UpdateVoiceMode', setVoiceMode);
     useNuiEvent('hud', 'UpdateVoiceActive', setVoiceActive);
@@ -89,7 +89,7 @@ export const WatchInterface: FunctionComponent = () => {
     return (
         <>
             <animated.div
-                className={cn('absolute flex justify-between items-end text-white', {
+                className={cn('absolute flex justify-between items-end text-white -z-10', {
                     'px-5': minimap.isHidden,
                 })}
                 style={headerStyles}

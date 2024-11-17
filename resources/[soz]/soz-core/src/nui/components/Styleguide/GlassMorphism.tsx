@@ -1,25 +1,56 @@
-import { FunctionComponent, useContext, useEffect, useRef } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 
-import { GlassMorphismContext } from '../../providers/GlassMorphismProvider';
+import { createGameView, GameView } from '../../hook/createGameView';
 
 export const GlassMorphism: FunctionComponent = () => {
-    const glassmorphismWorker = useContext(GlassMorphismContext);
-    const canvas = useRef<HTMLCanvasElement>(null);
+    const [gameView, setGameView] = useState<GameView>(null);
+
+    const onWindowResize = () => {
+        if (gameView === null) return;
+
+        gameView.resize(window.innerWidth, window.innerHeight);
+    };
 
     useEffect(() => {
-        if (canvas.current.hasAttribute('transfered')) return;
-        canvas.current.setAttribute('transfered', 'true');
+        if (gameView !== null) {
+            const canvas = window.parent.document.body.getElementsByTagName('canvas');
+            if (canvas.length > 1) {
+                canvas[0].remove();
+            }
+        }
 
-        const context = canvas.current.transferControlToOffscreen();
+        if (gameView !== null) {
+            gameView.startRender();
+        }
 
-        glassmorphismWorker.postMessage(
-            {
-                type: 'canvas',
-                canvas: context,
-            },
-            [context]
-        );
-    }, []);
+        window.addEventListener('resize', onWindowResize);
 
-    return <canvas className="absolute" ref={canvas} width={window.innerWidth} height={window.innerHeight} />;
+        return () => {
+            if (gameView !== null) {
+                gameView.stopRender();
+            }
+
+            window.removeEventListener('resize', onWindowResize);
+        };
+    }, [gameView]);
+
+    return (
+        <>
+            {createPortal(
+                <canvas
+                    ref={ref => {
+                        if (ref && !gameView) {
+                            setGameView(createGameView(ref));
+                        }
+                    }}
+                    style={{
+                        display: 'block',
+                        opacity: 0,
+                    }}
+                />,
+                window.parent.document.body
+            )}
+        </>
+    );
 };
