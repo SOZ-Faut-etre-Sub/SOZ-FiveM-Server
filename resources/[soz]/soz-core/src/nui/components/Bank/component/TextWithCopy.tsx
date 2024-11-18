@@ -1,5 +1,3 @@
-import { ClipboardCheckIcon, ClipboardCopyIcon } from '@heroicons/react/outline';
-import classnames from 'classnames';
 import cn from 'classnames';
 import { FunctionComponent, PropsWithChildren, useEffect, useState } from 'react';
 
