@@ -8,7 +8,8 @@ export class HudGlassmorphismProvider {
     @Inject(NuiDispatch)
     private readonly nuiDispatch: NuiDispatch;
 
-    private _disableGlassmorphism = GetResourceKvpInt('soz_hud_glassmorphism_disabled') === 1;
+    // Disabled for now
+    private _disableGlassmorphism = false; //GetResourceKvpInt('soz_hud_glassmorphism_disabled') === 1;
 
     public get glassmorphism(): boolean {
         return !this._disableGlassmorphism;
