@@ -674,6 +674,10 @@ export class Inventory {
 
             if (metadata) {
                 for (const key of Object.keys(metadata)) {
+                    if (!item.metadata) {
+                        return false;
+                    }
+
                     if (metadata[key] !== item.metadata[key]) {
                         return false;
                     }
