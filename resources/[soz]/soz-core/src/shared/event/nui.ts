@@ -623,6 +623,7 @@ export enum NuiEvent {
     InventoryActionGiveKey = 'soz-core:nui:inventory:action-give-key',
     InventoryActionRename = 'soz-core:nui:inventory:action-rename',
     InventoryActionGiveMoney = 'soz-core:nui:inventory:action-give-money',
+    InventoryActionTransferMoney = 'soz-core:nui:inventory:action-transfer-money',
     InventoryActionOpenWallet = 'soz-core:nui:inventory:action-open-wallet',
     InventoryActionOpenKeychain = 'soz-core:nui:inventory:action-open-keychain',
     InventoryActionShowCard = 'soz-core:nui:inventory:action-show-card',

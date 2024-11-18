@@ -138,7 +138,8 @@ export class InventoryManager {
         items: Record<number, InventoryItem>,
         position: InventoryPosition,
         canForceConsume: boolean = false,
-        state: InventoryState
+        state: InventoryState,
+        money: number | null
     ) {
         if (this._subscribedInventoryId) {
             this.unsubscribeInventory();
@@ -157,6 +158,7 @@ export class InventoryManager {
             type: type,
             canForceConsume,
             state,
+            money,
         });
     }
 

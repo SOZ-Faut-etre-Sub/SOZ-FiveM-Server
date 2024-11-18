@@ -21,16 +21,18 @@ export const InventoryApp: FunctionComponent = () => {
     const [canForceConsume, setCanForceConsume] = useState<boolean>(false);
     const [type, setType] = useState<InventoryType>(null);
     const [inventoryState, setInventoryState] = useState<InventoryState>(null);
+    const [inventoryTargetMoney, setInventoryTargetMoney] = useState<number>(null);
     const open = inventoryId !== null;
     const inventorySize = useInventorySize(5);
 
-    useNuiEvent('inventory', 'OpenInventory', ({ id, configuration, type, items, canForceConsume, state }) => {
+    useNuiEvent('inventory', 'OpenInventory', ({ id, configuration, type, items, canForceConsume, state, money }) => {
         setInventoryId(id);
         setConfiguration(configuration);
         setType(type);
         setInventoryItems(items);
         setCanForceConsume(canForceConsume);
         setInventoryState(state);
+        setInventoryTargetMoney(money);
     });
 
     useNuiEvent('inventory', 'CloseInventory', () => {
@@ -40,6 +42,13 @@ export const InventoryApp: FunctionComponent = () => {
         setType(null);
         setCanForceConsume(false);
         setInventoryState(null);
+        setInventoryTargetMoney(null);
+    });
+
+    useNuiEvent('inventory', 'SetInventoryMoney', money => {
+        if (inventoryId) {
+            setInventoryTargetMoney(money);
+        }
     });
 
     useNuiEvent('inventory', 'UpdateInventory', ({ id, configuration, items }) => {
@@ -156,6 +165,7 @@ export const InventoryApp: FunctionComponent = () => {
                                 });
                             }}
                             allowHiddenItem={type === InventoryType.Player}
+                            targetMoney={inventoryTargetMoney}
                         />
                     </div>
                 </div>

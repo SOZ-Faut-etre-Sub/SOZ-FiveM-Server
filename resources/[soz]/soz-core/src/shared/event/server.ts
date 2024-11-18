@@ -392,6 +392,7 @@ export enum ServerEvent {
     INVENTORY_RENAME_ITEM = 'soz-core:server:inventory:rename-item',
     INVENTORY_GIVE_ITEM = 'soz-core:server:inventory:give-item',
     INVENTORY_GIVE_MONEY = 'soz-core:server:inventory:give-money',
+    INVENTORY_TRANSFER_MONEY = 'soz-core:server:inventory:transfer-money',
     INVENTORY_DROP_ITEM = 'soz-core:server:inventory:drop-item',
     INVENTORY_FORCE_CONSUME = 'soz-core:server:inventory:force-consume',
     INVENTORY_REMOVE_PLAYER_ITEM = 'soz-core:server:inventory:remove-player-item',

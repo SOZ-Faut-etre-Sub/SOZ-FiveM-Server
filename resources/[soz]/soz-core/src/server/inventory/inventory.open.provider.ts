@@ -202,7 +202,8 @@ export class InventoryOpenProvider {
             inventory.items(),
             inventoryPosition,
             canForceConsume,
-            await inventory.state(source)
+            await inventory.state(source),
+            targetPlayer.money.money + targetPlayer.money.marked_money
         );
 
         this.monitor.traceEvent('job_police_search_player', {

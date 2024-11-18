@@ -32,6 +32,7 @@ export type InventoryProps = {
     allDisabled?: boolean;
     onDoubleClick?: (inventoryItem: InventoryItem | 'money' | 'wallet' | 'keychain' | null, item?: Item | null) => void;
     itemDescriptionPosition: 'left' | 'right';
+    targetMoney?: number | null;
 };
 
 export const Inventory: FunctionComponent<InventoryProps> = ({
@@ -47,6 +48,7 @@ export const Inventory: FunctionComponent<InventoryProps> = ({
     allowHiddenItem = false,
     allDisabled = false,
     itemDescriptionPosition = 'right',
+    targetMoney = null,
 }) => {
     const [currentInventoryItem, setCurrentInventoryItem] = useState<InventoryItem | null>(null);
     const resolver = useItemResolver();
@@ -56,8 +58,8 @@ export const Inventory: FunctionComponent<InventoryProps> = ({
     const maxInventorySlot =
         itemsAsArray.reduce((acc, item) => {
             return Math.max(acc, item.slot);
-        }, 0) + (player ? 3 : 0);
-    const nbLines = Math.max(Math.ceil(maxInventorySlot / 5), 4) + (player ? 0 : 1);
+        }, 0) + (player ? 3 : targetMoney !== null ? 1 : 0);
+    const nbLines = Math.max(Math.ceil(maxInventorySlot / 5), 4) + (player || targetMoney !== null ? 0 : 1);
 
     useEffect(() => {
         if (currentInventoryItem) {
@@ -106,6 +108,7 @@ export const Inventory: FunctionComponent<InventoryProps> = ({
                     inventorySize,
                     resolver,
                     setCurrentInventoryItem,
+                    targetMoney,
                 }}
             >
                 {ItemRenderer}
@@ -128,6 +131,7 @@ type ItemRendererData = {
     inventorySize: InventorySize;
     resolver: (name: string) => Item;
     setCurrentInventoryItem: (inventoryItem: InventoryItem | null) => void;
+    targetMoney?: number | null;
 };
 
 type ItemRendererProps = {
@@ -138,7 +142,7 @@ type ItemRendererProps = {
 };
 
 const ItemRenderer: FunctionComponent<ItemRendererProps> = ({ data, rowIndex, columnIndex, style }) => {
-    const index = rowIndex * 5 + columnIndex - (data.player ? 3 : 0);
+    const index = rowIndex * 5 + columnIndex - (data.player ? 3 : data.targetMoney !== null ? 1 : 0);
 
     style = {
         ...style,
@@ -188,7 +192,7 @@ const ItemRenderer: FunctionComponent<ItemRendererProps> = ({ data, rowIndex, co
         );
     }
 
-    if (index === -1) {
+    if (index === -1 && data.targetMoney === null) {
         return (
             <div style={style}>
                 <ItemSlot
@@ -202,6 +206,26 @@ const ItemRenderer: FunctionComponent<ItemRendererProps> = ({ data, rowIndex, co
                     setCurrentInventoryItem={data.setCurrentInventoryItem}
                     resolver={data.resolver}
                     onDoubleClick={data.onDoubleClick}
+                />
+            </div>
+        );
+    }
+
+    if (index === -1 && data.targetMoney !== null) {
+        return (
+            <div style={style}>
+                <ItemSlot
+                    prefixId={data.prefixId}
+                    inventoryId={data.inventoryId}
+                    targetConfiguration={data.targetConfiguration}
+                    allowActions={true}
+                    slot={-2}
+                    inventoryItem={'money'}
+                    item={null}
+                    setCurrentInventoryItem={data.setCurrentInventoryItem}
+                    resolver={data.resolver}
+                    onDoubleClick={data.onDoubleClick}
+                    money={data.targetMoney}
                 />
             </div>
         );

@@ -31,6 +31,7 @@ type ItemSlotProps = {
     allDisabled?: boolean;
     onDoubleClick?: (inventoryItem: InventoryItem | 'money' | 'wallet' | 'keychain' | null, item?: Item | null) => void;
     setCurrentInventoryItem: (item: InventoryItem) => void;
+    money?: number;
 };
 
 export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
@@ -48,6 +49,7 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
     allowHidden = false,
     allDisabled = false,
     onDoubleClick,
+    money = null,
 }) => {
     const hidden =
         allowHidden &&
@@ -239,7 +241,10 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
                                             margin: '0.1rem 0.2rem',
                                         }}
                                     >
-                                        {playerData?.money.money + playerData?.money.marked_money}$
+                                        {money !== null
+                                            ? money
+                                            : playerData?.money.money + playerData?.money.marked_money}
+                                        $
                                     </div>
                                 )}
                                 {inventoryItem === 'wallet' && (
