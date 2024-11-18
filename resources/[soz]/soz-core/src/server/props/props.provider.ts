@@ -342,10 +342,20 @@ export class PropsProvider {
     @OnEvent(ServerEvent.PROP_REQUEST_EDIT_PROP)
     public async editProp(source: number, prop: WorldObject, loaded: boolean) {
         const collectionName = this.collectionOfProp[prop.id];
-        const collection = this.collections[collectionName];
 
         if (!collectionName) {
             this.notifier.notify(source, `Impossible de modifier l'objet ${prop.id} car il n'existe pas.`, 'error');
+            return;
+        }
+
+        const collection = this.collections[collectionName];
+
+        if (!collection) {
+            this.notifier.notify(
+                source,
+                `Impossible de modifier l'objet ${prop.id} car sa collection ${collectionName} n'existe pas.`,
+                'error'
+            );
             return;
         }
 

@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
+import { Logger } from '@core/logger';
 import { ItemService } from '@public/server/item/item.service';
 import { getRandomInt } from '@public/shared/random';
 import { deepEqual } from '@public/shared/util';
@@ -46,6 +47,9 @@ export class InventoryFactory {
 
     @Inject(ItemService)
     private itemService: ItemService;
+
+    @Inject(Logger)
+    private logger: Logger;
 
     private inventories: Map<string, Inventory> = new Map();
 
@@ -317,15 +321,19 @@ export class InventoryFactory {
                     persistedConfiguration[key] = configuration[key];
                 }
 
-                await this.database.inventories.update({
-                    where: {
-                        id,
-                    },
-                    data: {
-                        configuration: persistedConfiguration,
-                        items,
-                    },
-                });
+                try {
+                    await this.database.inventories.update({
+                        where: {
+                            id,
+                        },
+                        data: {
+                            configuration: persistedConfiguration,
+                            items,
+                        },
+                    });
+                } catch (e) {
+                    this.logger.error(`Failed to update inventory ${id}`, e);
+                }
             });
         }
 
@@ -352,14 +360,21 @@ export class InventoryFactory {
             // @ts-expect-error Needed as the id is really changed when updating plate
             inventory.id = 'trunk_' + newPlate;
 
-            await this.database.inventories.update({
-                where: {
-                    id: 'trunk_' + oldPlate,
-                },
-                data: {
-                    id: 'trunk_' + newPlate,
-                },
-            });
+            try {
+                await this.database.inventories.update({
+                    where: {
+                        id: 'trunk_' + oldPlate,
+                    },
+                    data: {
+                        id: 'trunk_' + newPlate,
+                    },
+                });
+            } catch (e) {
+                this.logger.error(
+                    `Failed to update inventory trunk : ${'trunk_' + oldPlate} to ${'trunk_' + newPlate}`,
+                    e
+                );
+            }
         }
     }
 

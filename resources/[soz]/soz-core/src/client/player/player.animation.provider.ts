@@ -262,6 +262,10 @@ export class PlayerAnimationProvider {
             }
         );
 
+        if (!number) {
+            return;
+        }
+
         const key = `animation_shortcut_${number.toLocaleString('en-US', {
             minimumIntegerDigits: 2,
             useGrouping: false,
