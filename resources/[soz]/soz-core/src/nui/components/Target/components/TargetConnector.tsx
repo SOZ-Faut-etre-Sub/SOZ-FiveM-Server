@@ -27,16 +27,12 @@ export const TargetConnector: FunctionComponent<ConnectorProp> = ({
         origin.current?.getBoundingClientRect(),
     ];
 
-    useInterval(
-        () => {
-            const targetBounding = target.current?.getBoundingClientRect();
-            if (targetRect?.y === targetBounding?.y) return;
+    useInterval(() => {
+        const targetBounding = target.current?.getBoundingClientRect();
+        if (targetRect?.y === targetBounding?.y) return;
 
-            setTargetRect(targetBounding);
-        },
-        20,
-        [target]
-    );
+        setTargetRect(targetBounding);
+    }, 20);
 
     useLayoutEffect(() => {
         setRerender(rerender => rerender + 1);

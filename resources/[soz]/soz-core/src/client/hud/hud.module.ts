@@ -1,5 +1,6 @@
 import { Module } from '../../core/decorators/module';
 import { HudCompassProvider } from './hud.compass.provider';
+import { HudGlassmorphismProvider } from './hud.glassmorphism.provider';
 import { HudMinimapProvider } from './hud.minimap.provider';
 import { HudNewsProvider } from './hud.news.provider';
 import { HudNotificationsProvider } from './hud.notifications.provider';
@@ -22,6 +23,7 @@ import { HudWeatherIconProvider } from './hud.weathericon.provider';
         HudWatchProvider,
         HudWeaponProvider,
         HudWeatherIconProvider,
+        HudGlassmorphismProvider,
     ],
 })
 export class HudModule {}

@@ -1,9 +1,11 @@
-import { MinusIcon, PlusIcon } from '@heroicons/react/solid';
-import classnames from 'classnames';
+import cn from 'classnames';
 import React, { FunctionComponent } from 'react';
 
 import { BankAccount, BankContact, BankStatement } from '../../../../shared/bank';
-import { moneyFormat, PlayerAccountRegExp } from '../utils/format';
+import { useHudColor } from '../../Hud/hooks/useHudColor';
+import FileIcon from '../assets/file.svg';
+import { PlayerAccountRegExp } from '../utils/format';
+import { Money } from './Money';
 import { TextWithCopy } from './TextWithCopy';
 
 interface HistoryRowProps {
@@ -13,9 +15,10 @@ interface HistoryRowProps {
 }
 
 export const HistoryRow: FunctionComponent<HistoryRowProps> = ({ account, contacts, history }) => {
+    const { isDaltonism } = useHudColor();
+
     const isSource = history.source_accountid === account.id;
 
-    const Icon = isSource ? MinusIcon : PlusIcon;
     const title = isSource ? 'Paiement à' : 'Virement de';
     const targetAccount = isSource ? history.target_accountid : history.source_accountid;
     const targetLabel = isSource ? history.target_label : history.source_label;
@@ -36,12 +39,7 @@ export const HistoryRow: FunctionComponent<HistoryRowProps> = ({ account, contac
 
     return (
         <div className="flex items-center gap-4">
-            <Icon
-                className={classnames('flex-none text-gray-300 border shadow-xl rounded-xl h-10 w-10 p-3', {
-                    'bg-red-300/5 border-red-500/50': isSource,
-                    'bg-green-300/5 border-green-500/50': !isSource,
-                })}
-            />
+            <FileIcon className="size-5" />
             <div className="flex flex-col min-w-0 grow">
                 {history.source_accountid === '' || history.target_accountid === '' ? (
                     <span>Action effectuée sur votre compte</span>
@@ -62,7 +60,17 @@ export const HistoryRow: FunctionComponent<HistoryRowProps> = ({ account, contac
                 <span className="text-sm truncate">{history.reason}</span>
             </div>
 
-            <span>{moneyFormat(history.amount)}</span>
+            <span
+                className={cn('font-semibold rounded-lg shadow px-2.5 py-1', {
+                    'bg-[#AD1F1F33] text-[#AD1F1F]': !isDaltonism && isSource,
+                    'bg-[#32912133] text-[#268116]': !isDaltonism && !isSource,
+                    'bg-[#B314E833] text-[#B314E8]': isDaltonism && isSource,
+                    'bg-[#00FFFF33] text-[#00FFFF]': isDaltonism && !isSource,
+                })}
+            >
+                {isSource ? '- ' : '+ '}
+                <Money amount={history.amount} useColor={false} />
+            </span>
         </div>
     );
 };

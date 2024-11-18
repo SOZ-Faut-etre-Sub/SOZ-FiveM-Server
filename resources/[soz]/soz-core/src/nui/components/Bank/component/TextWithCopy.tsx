@@ -1,6 +1,7 @@
-import { ClipboardCheckIcon, ClipboardCopyIcon } from '@heroicons/react/outline';
-import classnames from 'classnames';
+import cn from 'classnames';
 import { FunctionComponent, PropsWithChildren, useEffect, useState } from 'react';
+
+import FileIcon from '../assets/file.svg';
 
 interface TextWithCopyProps {
     text: string;
@@ -38,16 +39,15 @@ export const TextWithCopy: FunctionComponent<PropsWithChildren<TextWithCopyProps
     }, [isCopied]);
 
     return (
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-2.5">
             <div className={className}>{children}</div>
-            {isCopied ? (
-                <ClipboardCheckIcon className="h-4 w-4 text-green-500" />
-            ) : (
-                <ClipboardCopyIcon
-                    onClick={copyToClipboard}
-                    className={classnames('cursor-pointer h-4 w-4', buttonClassName)}
-                />
-            )}
+            <FileIcon
+                onClick={copyToClipboard}
+                className={cn('size-5', buttonClassName, {
+                    'text-green-500': isCopied,
+                    'cursor-pointer': !isCopied,
+                })}
+            />
         </div>
     );
 };

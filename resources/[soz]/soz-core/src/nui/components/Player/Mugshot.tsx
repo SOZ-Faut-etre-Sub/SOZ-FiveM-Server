@@ -26,7 +26,7 @@ export const Mugshot: FunctionComponent<MugshotProps> = ({ player, containerClas
     return (
         <div
             className={classnames('bg-black flex justify-around items-end', containerClass, {
-                'w-[150px] h-[150px]': !containerClass,
+                'size-[150px]': !containerClass,
             })}
         >
             {mugshot && (
@@ -34,7 +34,7 @@ export const Mugshot: FunctionComponent<MugshotProps> = ({ player, containerClas
                     src={`https://nui-img/${mugshot}/${mugshot}`}
                     alt="Mugshot"
                     className={classnames(mugshotClass, {
-                        'w-[130px] h-[130px]': !mugshotClass,
+                        'size-[130px]': !mugshotClass,
                     })}
                 />
             )}

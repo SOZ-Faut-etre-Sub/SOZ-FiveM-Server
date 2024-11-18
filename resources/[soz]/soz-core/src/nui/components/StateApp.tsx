@@ -149,5 +149,9 @@ export const StateApp: FunctionComponent = () => {
         dispatch.hud.update({ halloween: { moon } });
     });
 
+    useNuiEvent('hud', 'SetGlassmorphism', enabled => {
+        dispatch.hud.update({ useGlassmorphism: enabled });
+    });
+
     return null;
 };

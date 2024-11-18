@@ -10,6 +10,7 @@ export type BankAccountType =
     | 'bank_atm'
     | 'gang';
 export type BankActionType = 'deposit' | 'withdraw';
+export type BankHistoryFilter = 'all' | BankActionType | 'transfer';
 
 export type BankAtmConfig = { type?: AtmType; maxMoney: number; maxWithdrawal?: number; limit?: number };
 
@@ -60,7 +61,6 @@ export type BankUiData = {
     history: {
         personal: BankStatement[];
         enterprise?: BankStatement[];
-        enterprise_transfer?: BankStatement[];
         offshore?: BankStatement[];
     };
     bankType?: string;

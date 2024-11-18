@@ -49,7 +49,7 @@ export const VehicleInterface: FunctionComponent = () => {
     });
 
     return (
-        <animated.div className="absolute inset-x-0 w-full -z-10" style={styles}>
+        <animated.div className="absolute inset-x-0 w-full" style={styles}>
             <div
                 className={cn('relative flex justify-center gap-1', {
                     'top-12': hasStreetNamesEnabled,

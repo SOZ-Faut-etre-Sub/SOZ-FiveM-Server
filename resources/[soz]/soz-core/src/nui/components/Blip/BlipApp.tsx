@@ -14,7 +14,7 @@ export const BlipApp: FunctionComponent = () => {
 
     useNuiEvent('blip', 'SetActions', setActions);
     useNuiEvent('global', 'PauseMenuActive', active => {
-        if (!active) {
+        if (actions.length > 0 && !active) {
             setActions([]);
         }
 

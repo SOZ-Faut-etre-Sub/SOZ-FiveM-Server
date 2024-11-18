@@ -8,6 +8,7 @@ import { ClothConfig } from '../../shared/cloth';
 import { NuiEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { AnimationService } from '../animation/animation.service';
+import { HudGlassmorphismProvider } from '../hud/hud.glassmorphism.provider';
 import { HudMinimapProvider } from '../hud/hud.minimap.provider';
 import { HudStateProvider } from '../hud/hud.state.provider';
 import { JobMenuProvider } from '../job/job.menu.provider';
@@ -66,6 +67,9 @@ export class PlayerMenuProvider {
     @Inject(VampireGameStateProvider)
     private vampireGameStateProvider: VampireGameStateProvider;
 
+    @Inject(HudGlassmorphismProvider)
+    private hudGlassmorphismProvider: HudGlassmorphismProvider;
+
     @Once()
     public async init() {
         await this.halloweenSpiderService.init();
@@ -95,6 +99,7 @@ export class PlayerMenuProvider {
             deguisement: this.playerService.hasDeguisement(),
             naked: this.playerService.getPlayer().cloth_config.Config.Naked,
             arachnophobe: this.halloweenSpiderService.isArachnophobeMode(),
+            isGlassmorphismActive: this.hudGlassmorphismProvider.glassmorphism,
         });
     }
 
@@ -146,6 +151,11 @@ export class PlayerMenuProvider {
     @OnNuiEvent(NuiEvent.PlayerMenuHudSetScaledNui)
     public async hudComponentSetScaledNui({ value }: { value: boolean }) {
         this.hudMinimapProvider.scaledNui = value;
+    }
+
+    @OnNuiEvent(NuiEvent.PlayerMenuHudSetGlassmorphism)
+    public async hudComponentSetGlassmorphism({ value }: { value: boolean }) {
+        this.hudGlassmorphismProvider.glassmorphism = value;
     }
 
     @OnNuiEvent(NuiEvent.PlayerMenuVoipReset)

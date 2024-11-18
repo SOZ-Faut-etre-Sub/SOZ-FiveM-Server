@@ -40,6 +40,7 @@ export type PlayerPersonalMenuData = {
     isCinematicCameraActive: boolean;
     isHudVisible: boolean;
     scaledNui: boolean;
+    isGlassmorphismActive: boolean;
     shortcuts: Record<string, Shortcut>;
     job: JobMenuData;
     deguisement: boolean;

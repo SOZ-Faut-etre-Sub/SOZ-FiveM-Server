@@ -14,7 +14,8 @@ import { Item } from '../../../shared/item';
 import { fetchNui } from '../../fetch';
 import { useItemResolver } from '../../hook/data';
 import WeightIcon from '../../icons/inventory/weight.svg';
-import { GameCanvasBox, GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
+import { GameCanvasBox } from '../Styleguide/GameCanvasBox';
+import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
 import { ItemDescription } from './ItemDescription';
 import { ItemSlot } from './ItemSlot';
 import { InventorySize, useInventorySize } from './size';
@@ -409,6 +410,7 @@ const WeightGauge: FunctionComponent<{ current: number; max: number }> = ({ curr
                 style={{ width: '36px', height: '36px' }}
                 duration="duration-0"
                 disableBorder
+                circle
             >
                 <WeightIcon className="text-white w-[16x] h-[16px]" />
                 <div className="absolute -inset-[1px] flex justify-center">

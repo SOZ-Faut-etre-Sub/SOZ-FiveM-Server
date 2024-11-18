@@ -26,6 +26,7 @@ export const Compass: FunctionComponent = () => {
                 className="flex justify-center items-center text-white"
                 style={{ width, height }}
                 disableBorder
+                circle
             >
                 <span className="text-sm pt-0.5" style={{ zoom: settings.zoom }}>
                     {compass.cardinal}

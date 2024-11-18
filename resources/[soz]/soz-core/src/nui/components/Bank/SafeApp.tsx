@@ -1,5 +1,5 @@
-import { Tab, Transition } from '@headlessui/react';
 import classnames from 'classnames';
+import cn from 'classnames';
 import React, { FunctionComponent, KeyboardEvent, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
@@ -8,12 +8,15 @@ import { NuiEvent } from '../../../shared/event/nui';
 import { fetchNui } from '../../fetch';
 import { usePlayer } from '../../hook/data';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
+import { useHudColor } from '../Hud/hooks/useHudColor';
 import { AppContent } from './component/AppContent';
 import { ApplicationContainer } from './component/Application';
 import { Button } from './component/Button';
 import { Card } from './component/Card';
 import { Input } from './component/Input';
-import { moneyFormat } from './utils/format';
+import { Money } from './component/Money';
+import { Tabs } from './component/Tabs';
+import { Title } from './component/Title';
 
 type SafeAppInputs = {
     money: number;
@@ -22,6 +25,7 @@ type SafeAppInputs = {
 
 export const SafeApp: FunctionComponent = () => {
     const player = usePlayer();
+    const { isDaltonism } = useHudColor();
 
     const [showApp, setShowApp] = useState<boolean>(false);
 
@@ -58,7 +62,10 @@ export const SafeApp: FunctionComponent = () => {
     });
 
     useNuiEvent('bank_safe', 'UpdateAccountData', (data: BankAccount) => {
-        setAccount(data);
+        setAccount(account => ({
+            ...account,
+            ...data,
+        }));
     });
 
     useNuiEvent('bank', 'CloseInterface', resetApp);
@@ -91,27 +98,11 @@ export const SafeApp: FunctionComponent = () => {
         };
     }, [onKeyUpReceived]);
 
-    const tabClass = (tab: any) => {
-        return classnames('font-lighter uppercase text-sm p-1 rounded-md focus:outline-none', {
-            'bg-green-300/5': tab.selected,
-        });
-    };
-
     if (!showApp) return null;
 
     return (
         <ApplicationContainer size="small" onClickOutside={resetApp}>
-            <Transition
-                as={AppContent}
-                show={showApp}
-                appear={true}
-                enter="transform ease-out duration-300 transition"
-                enterFrom="translate-y-full opacity-0"
-                enterTo="translate-y-0 opacity-1"
-                leave="transform ease-in duration-300 transition"
-                leaveFrom="translate-y-0 opacity-1"
-                leaveTo="translate-y-full opacity-0"
-            >
+            <AppContent open={showApp}>
                 <form onSubmit={handleSubmit(submitForm)} className="flex flex-col w-full justify-around">
                     <div className="flex flex-col justify-center items-center gap-4">
                         <img
@@ -126,18 +117,16 @@ export const SafeApp: FunctionComponent = () => {
                     </div>
 
                     <div className="space-y-6">
-                        <Tab.Group
-                            selectedIndex={action}
-                            onChange={index => {
-                                setAction(index);
-                                reset();
-                            }}
-                        >
-                            <Tab.List className="grid grid-cols-2 gap-3 p-1 bg-white/5 text-gray-200 rounded-md">
-                                <Tab className={tabClass}>Retirer</Tab>
-                                <Tab className={tabClass}>Déposer</Tab>
-                            </Tab.List>
-                        </Tab.Group>
+                        <div className="h-14">
+                            <Tabs
+                                selected={action}
+                                onChange={index => {
+                                    setAction(index);
+                                    reset();
+                                }}
+                                tabs={['Retirer', 'Déposer']}
+                            />
+                        </div>
 
                         {account?.type !== 'housestorages' && account?.type !== 'gang' && (
                             <Card
@@ -146,8 +135,15 @@ export const SafeApp: FunctionComponent = () => {
                                 })}
                             >
                                 <div className="flex justify-between mb-4">
-                                    <span className="text-white font-semibold">Argent</span>
-                                    <span className="text-sm text-green-500/70">{moneyFormat(account?.money)}</span>
+                                    <Title size="xsmall">Argent</Title>
+                                    <span
+                                        className={cn('text-sm', {
+                                            'text-[#268116]': !isDaltonism,
+                                            'text-[#00FFFF]': isDaltonism,
+                                        })}
+                                    >
+                                        <Money amount={account?.money} useColor={false} />
+                                    </span>
                                 </div>
 
                                 <Input
@@ -175,11 +171,20 @@ export const SafeApp: FunctionComponent = () => {
                             })}
                         >
                             <div className="flex justify-between mb-4">
-                                <span className="text-white font-semibold">Argent marqué</span>
-                                <span className="text-sm text-red-400/70">
-                                    {moneyFormat(account?.marked_money)}
+                                <Title size="xsmall">Argent marqué</Title>
+
+                                <span
+                                    className={cn('text-sm', {
+                                        'text-[#AD1F1F]': !isDaltonism,
+                                        'text-[#B314E8]': isDaltonism,
+                                    })}
+                                >
+                                    <Money amount={account?.marked_money} useColor={false} />
                                     {['housestorages', 'gang'].includes(account?.type) && (
-                                        <span> / {moneyFormat(account?.maxCapacity)}</span>
+                                        <span>
+                                            {' '}
+                                            / <Money amount={account?.maxCapacity} useColor={false} />
+                                        </span>
                                     )}
                                 </span>
                             </div>
@@ -211,7 +216,7 @@ export const SafeApp: FunctionComponent = () => {
 
                     <Button disabled={isSubmitting}>{action === 0 ? 'Retirer' : 'Déposer'} l'argent</Button>
                 </form>
-            </Transition>
+            </AppContent>
         </ApplicationContainer>
     );
 };

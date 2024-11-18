@@ -54,6 +54,7 @@ export function InstructionalOverlay() {
                 <GlassMorphismContainer
                     borderClassName="rounded-full"
                     className="flex items-center gap-2 text-white px-5 py-1.5 w-full h-10"
+                    disableGameClone={text.length === 0}
                 >
                     {text.map(t => (
                         <span

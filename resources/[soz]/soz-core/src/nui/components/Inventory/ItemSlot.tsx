@@ -6,7 +6,7 @@ import { createPortal } from 'react-dom';
 import { getItemWeight, InventoryConfiguration, InventoryItem, isItemAllowed } from '../../../shared/inventory';
 import { Item } from '../../../shared/item';
 import { usePlayer } from '../../hook/data';
-import { BorderBox } from '../Styleguide/GlassMorphismContainer';
+import { BorderBox } from '../Styleguide/BorderBox';
 import { ActionItem, getActions } from './Actions';
 import { useItemSize } from './size';
 

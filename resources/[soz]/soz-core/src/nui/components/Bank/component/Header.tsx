@@ -1,51 +1,35 @@
-import React, { FunctionComponent, ReactNode, useMemo } from 'react';
-import { FaMoneyBillWave, FaPiggyBank } from 'react-icons/fa';
+import React, { FunctionComponent, ReactNode } from 'react';
 
 import { usePlayer } from '../../../hook/data';
 import { Mugshot } from '../../Player/Mugshot';
-import { moneyFormat } from '../utils/format';
+import { Title } from './Title';
 
 type HeaderProps = {
-    title: ReactNode;
-    bankMoney?: number;
-    showMarkedMoney?: boolean;
+    category?: ReactNode;
+    title?: ReactNode;
 };
 
-export const Header: FunctionComponent<HeaderProps> = ({ title, bankMoney, showMarkedMoney }) => {
+export const Header: FunctionComponent<HeaderProps> = ({ category, title }) => {
     const player = usePlayer();
 
-    const playerMoney = useMemo<number>(() => {
-        if (!player) return 0;
-
-        if (showMarkedMoney) {
-            return Number(player.money.money) + Number(player.money.marked_money);
-        }
-
-        return Number(player.money.money);
-    }, [player.money]);
-
     return (
-        <div className="flex justify-between items-center">
-            <span className="text-3xl font-semibold">{title}</span>
-            <span className="flex items-center gap-3 text-md">
+        <div className="flex flex-none justify-between items-center h-24">
+            <div className="flex flex-col">
+                <Title size="small" uppercase={false}>
+                    {category}
+                </Title>
+                <Title size="large">{title}</Title>
+            </div>
+
+            <span className="flex flex-col items-center gap-1.5 text-md">
                 <Mugshot
                     player={player}
-                    containerClass="h-10 w-10 rounded-full"
-                    mugshotClass="h-10 w-10 rounded-full"
+                    containerClass="h-12 w-12 rounded-full"
+                    mugshotClass="h-12 w-12 rounded-full"
                 />
-                <div className="flex flex-col">
-                    <span>
-                        {player?.charinfo?.firstname || 'John'} {player?.charinfo?.lastname || 'Doe'}
-                    </span>
-                    <span className="flex items-center gap-2 text-sm text-white/70">
-                        {bankMoney && (
-                            <>
-                                <FaPiggyBank /> {moneyFormat(bankMoney)}
-                            </>
-                        )}
-                        <FaMoneyBillWave /> {moneyFormat(playerMoney)}
-                    </span>
-                </div>
+                <span>
+                    {player?.charinfo?.firstname || 'John'} {player?.charinfo?.lastname || 'Doe'}
+                </span>
             </span>
         </div>
     );
