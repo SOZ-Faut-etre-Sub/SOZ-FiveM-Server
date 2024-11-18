@@ -262,7 +262,7 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
                     mushroom: { count: 3 },
                     wine1: { count: 1 },
                 },
-                amount: 4,
+                amount: 10,
             },
             crunchy_lamp_chop: {
                 inputs: {
@@ -270,7 +270,7 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
                     vegetable_palette: { count: 1 },
                     milk: { count: 1 },
                 },
-                amount: 4,
+                amount: 10,
             },
             rosmarino_veal_filet: {
                 inputs: {
@@ -278,7 +278,7 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
                     potato: { count: 2 },
                     milk: { count: 1 },
                 },
-                amount: 4,
+                amount: 10,
             },
             spicy_sichuan_duck_breast: {
                 inputs: {
@@ -286,7 +286,7 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
                     potato: { count: 2 },
                     wine4: { count: 1 },
                 },
-                amount: 4,
+                amount: 10,
             },
         },
     },
@@ -302,7 +302,7 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
                     milk: { count: 1 },
                     sausage3: { count: 1 },
                 },
-                amount: 4,
+                amount: 10,
             },
             deep_sea_turbot: {
                 inputs: {
@@ -311,7 +311,7 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
                     lemon: { count: 1 },
                     cabage: { count: 1 },
                 },
-                amount: 4,
+                amount: 10,
             },
             herbarium_cod: {
                 inputs: {
@@ -320,7 +320,7 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
                     vegetable_palette: { count: 1 },
                     wine3: { count: 1 },
                 },
-                amount: 4,
+                amount: 10,
             },
             ocean_awakening: {
                 inputs: {
@@ -329,7 +329,7 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
                     milk: { count: 1 },
                     wine3: { count: 1 },
                 },
-                amount: 4,
+                amount: 10,
             },
         },
     },
@@ -345,7 +345,7 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
                     tomato: { count: 1 },
                     lemon: { count: 1 },
                 },
-                amount: 4,
+                amount: 10,
             },
             tikka_royal: {
                 inputs: {
@@ -354,7 +354,7 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
                     vegetable_palette: { count: 1 },
                     lemon: { count: 1 },
                 },
-                amount: 4,
+                amount: 10,
             },
             sand_tagine: {
                 inputs: {
@@ -363,7 +363,7 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
                     lemon: { count: 1 },
                     orange: { count: 1 },
                 },
-                amount: 4,
+                amount: 10,
             },
             end_world_tataki: {
                 inputs: {
@@ -372,7 +372,7 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
                     lemon: { count: 1 },
                     smuggling_zibwasser_zoublon: { count: 1 },
                 },
-                amount: 4,
+                amount: 10,
             },
         },
     },
