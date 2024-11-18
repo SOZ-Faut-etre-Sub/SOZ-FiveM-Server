@@ -14025,8 +14025,8 @@ QBShared.Items = {
         ["sozedex_id"] = 66,
         ["price"] = 52,
     },
-    ["reggaeToad"] = {
-        ["name"] = "reggaeToad",
+    ["reggaetoad"] = {
+        ["name"] = "reggaetoad",
         ["label"] = "ReggaeToad",
         ["useable"] = false,
         ["weight"] = 200,
