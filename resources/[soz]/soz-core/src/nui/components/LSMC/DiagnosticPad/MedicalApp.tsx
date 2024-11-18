@@ -80,7 +80,10 @@ export const ConstantMedicalApp: FunctionComponent<ConstantMedicalProps> = ({ me
 
             <div className="flex flex-row items-center">
                 <div className="flex-col w-[20%] ">
-                    <img className="w-[3vh] mx-auto" src={`/public/images/lsmc/icons/icon_heartbeat.webp`}></img>
+                    <img
+                        className="w-[3vh] mx-auto"
+                        src={`https://soz.zerator.com/static/game/images/lsmc/icons/icon_heartbeat.webp`}
+                    ></img>
                 </div>
                 <div className="flex-col w-[80%]">
                     <div className="uppercase flex flex-row">
@@ -92,7 +95,10 @@ export const ConstantMedicalApp: FunctionComponent<ConstantMedicalProps> = ({ me
             </div>
             <div className="flex flex-row items-center pb-2">
                 <div className="flex-col w-[20%] ">
-                    <img className="w-[3vh] mx-auto" src={`/public/images/lsmc/icons/icon_o2.webp`}></img>
+                    <img
+                        className="w-[3vh] mx-auto"
+                        src={`https://soz.zerator.com/static/game/images/lsmc/icons/icon_o2.webp`}
+                    ></img>
                 </div>
                 <div className="flex-col w-[80%]">
                     <div className="uppercase flex flex-row">
@@ -459,7 +465,7 @@ export const MedicalApp: FunctionComponent = () => {
                                     </p>
                                     <img
                                         className="p-1 w-[3vh] h-[3vh] opacity-80"
-                                        src={`/public/images/lsmc/icons/icon_death.webp`}
+                                        src={`https://soz.zerator.com/static/game/images/lsmc/icons/icon_death.webp`}
                                     ></img>
                                 </span>
                             )}
@@ -468,7 +474,7 @@ export const MedicalApp: FunctionComponent = () => {
                             {
                                 <img
                                     width="80%"
-                                    src={`/public/images/lsmc/icons/${getIconByDamageType(damage.damageType)}.webp`}
+                                    src={`https://soz.zerator.com/static/game/images/lsmc/icons/${getIconByDamageType(damage.damageType)}.webp`}
                                 ></img>
                             }
                         </div>
@@ -488,7 +494,7 @@ export const MedicalApp: FunctionComponent = () => {
                 <div
                     className="flex justify-center items-center w-full h-full"
                     style={{
-                        backgroundImage: `url(/public/images/lsmc/icons/default_zone_background.webp)`,
+                        backgroundImage: `url(https://soz.zerator.com/static/game/images/lsmc/icons/default_zone_background.webp)`,
                         backgroundSize: '85%',
                         backgroundPosition: 'center',
                         backgroundRepeat: 'no-repeat',
@@ -496,7 +502,7 @@ export const MedicalApp: FunctionComponent = () => {
                 >
                     {/* <img
                         className="w-[90%] h-[90%]"
-                        src={`/public/images/lsmc/icons/default_zone_background.webp`}
+                        src={`https://soz.zerator.com/static/game/images/lsmc/icons/default_zone_background.webp`}
                     ></img> */}
                 </div>
             );
@@ -507,7 +513,7 @@ export const MedicalApp: FunctionComponent = () => {
                 <div
                     className={`h-[6vh] w-[6vh] bg-opacity-50 border-solid border-4 rounded-lg flex items-center  justify-center cursor-pointer group m-[0.5vh] p-[1vh] bg-[#0000005e]`}
                     style={{
-                        backgroundImage: `url(/public/images/lsmc/icons/default_zone_background.webp)`,
+                        backgroundImage: `url(https://soz.zerator.com/static/game/images/lsmc/icons/default_zone_background.webp)`,
                         backgroundSize: '85%',
                         backgroundPosition: 'center',
                         backgroundRepeat: 'no-repeat',
@@ -536,7 +542,7 @@ export const MedicalApp: FunctionComponent = () => {
                                 key={index}
                                 className={`h-[7vh] w-[7vh] bg-opacity-50 border-solid border-4 rounded-lg flex items-center  justify-center cursor-pointer group m-[0.5vh] p-[1vh] bg-[#0000005e]`}
                                 style={{
-                                    backgroundImage: `url(/public/images/lsmc/icons/default_zone_background.webp)`,
+                                    backgroundImage: `url(https://soz.zerator.com/static/game/images/lsmc/icons/default_zone_background.webp)`,
                                     backgroundSize: '85%',
                                     backgroundPosition: 'center',
                                     backgroundRepeat: 'no-repeat',
@@ -569,7 +575,7 @@ export const MedicalApp: FunctionComponent = () => {
                                 {fatal && (
                                     <img
                                         className="p-1 fixed mb-[-5vh] w-[3vh] ml-[-5vh] opacity-70"
-                                        src={`/public/images/lsmc/icons/icon_death.webp`}
+                                        src={`https://soz.zerator.com/static/game/images/lsmc/icons/icon_death.webp`}
                                     ></img>
                                 )}
                                 {false && damages.length > 1 && (
@@ -578,7 +584,7 @@ export const MedicalApp: FunctionComponent = () => {
                                 {
                                     <img
                                         className="p-1"
-                                        src={`/public/images/lsmc/icons/${getIconByDamageType(
+                                        src={`https://soz.zerator.com/static/game/images/lsmc/icons/${getIconByDamageType(
                                             damages[0].damageType
                                         )}.webp`}
                                     ></img>
@@ -607,7 +613,7 @@ export const MedicalApp: FunctionComponent = () => {
                         <div className="flex-col w-[20%]">
                             <img
                                 className="w-[3vh] mx-auto"
-                                src={`/public/images/lsmc/icons/icon_informations.webp`}
+                                src={`https://soz.zerator.com/static/game/images/lsmc/icons/icon_informations.webp`}
                             ></img>
                         </div>
                         <div className="flex flex-col w-[80%]">
@@ -628,7 +634,10 @@ export const MedicalApp: FunctionComponent = () => {
                     </div>
                     <div className="flex flex-row items-center pb-4">
                         <div className="flex-col w-[20%] ">
-                            <img className="w-[2vh] mx-auto" src={`/public/images/lsmc/icons/icon_time.webp`}></img>
+                            <img
+                                className="w-[2vh] mx-auto"
+                                src={`https://soz.zerator.com/static/game/images/lsmc/icons/icon_time.webp`}
+                            ></img>
                         </div>
                         <div className="flex flex-col w-[80%]">
                             <div className="uppercase flex flex-row">
@@ -651,7 +660,10 @@ export const MedicalApp: FunctionComponent = () => {
                     <div className="flex flex-col py-[1vh]">
                         <div className="flex flex-row">
                             <div className="flex-col w-[20%] ">
-                                <img className="w-[3vh] mx-auto" src={`/public/images/lsmc/icons/icon_list.webp`}></img>
+                                <img
+                                    className="w-[3vh] mx-auto"
+                                    src={`https://soz.zerator.com/static/game/images/lsmc/icons/icon_list.webp`}
+                                ></img>
                             </div>
                             <div className="flex-col w-[80%]">
                                 <div className="flex flex-row items-center pb-2">
@@ -717,7 +729,7 @@ export const MedicalApp: FunctionComponent = () => {
                             <div className="flex-col w-[20%] ">
                                 <img
                                     className="w-[3vh] mx-auto"
-                                    src={`/public/images/lsmc/icons/icon_physical_condition.webp`}
+                                    src={`https://soz.zerator.com/static/game/images/lsmc/icons/icon_physical_condition.webp`}
                                 ></img>
                             </div>
                             <div className="flex-col w-[80%]">
@@ -753,7 +765,7 @@ export const MedicalApp: FunctionComponent = () => {
                                 <div className="flex-col w-[20%] ">
                                     <img
                                         className="w-[3.5vh] mx-auto"
-                                        src={`/public/images/lsmc/icons/icon_injuries.webp`}
+                                        src={`https://soz.zerator.com/static/game/images/lsmc/icons/icon_injuries.webp`}
                                     ></img>
                                 </div>
                                 <div className="flex-col">
@@ -785,7 +797,7 @@ export const MedicalApp: FunctionComponent = () => {
                 <div
                     ref={refOutside}
                     style={{
-                        backgroundImage: `url(/public/images/lsmc/medical_app_background_${
+                        backgroundImage: `url(https://soz.zerator.com/static/game/images/lsmc/medical_app_background_${
                             patient.hash === PlayerPedHash.Male ? 'male' : 'female'
                         }.webp)`,
                         width: '100%',

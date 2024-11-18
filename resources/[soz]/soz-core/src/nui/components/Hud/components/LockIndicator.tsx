@@ -23,6 +23,9 @@ export const LockIndicator: FunctionComponent = () => {
     });
 
     return (
-        <animated.img style={{ ...styles, width, height }} src={`/public/images/hud/vehicle/${imagePrefix}lock.webp`} />
+        <animated.img
+            style={{ ...styles, width, height }}
+            src={`https://soz.zerator.com/static/game/images/hud/vehicle/${imagePrefix}lock.webp`}
+        />
     );
 };

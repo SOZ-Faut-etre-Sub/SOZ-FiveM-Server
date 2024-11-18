@@ -15,14 +15,14 @@ export const TwitchNewsOverlay: FunctionComponent = () => {
     if (job === JobType.YouNews) {
         return (
             <div className="absolute bottom-[3vh] right-[5vh] width-[30vw] z-20 text-right">
-                <img src="/public/images/twitch-news/logo-younews.webp" alt="TN logo" />
+                <img src="https://soz.zerator.com/static/game/images/twitch-news/logo-younews.webp" alt="TN logo" />
             </div>
         );
     }
 
     return (
         <div className="absolute bottom-[3vh] right-[5vh] width-[30vw] z-20 text-right">
-            <img src="/public/images/twitch-news/logo.webp" alt="TN logo" />
+            <img src="https://soz.zerator.com/static/game/images/twitch-news/logo.webp" alt="TN logo" />
         </div>
     );
 };

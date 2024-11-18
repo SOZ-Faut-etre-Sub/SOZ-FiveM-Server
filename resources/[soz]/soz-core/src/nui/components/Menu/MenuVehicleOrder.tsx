@@ -34,9 +34,9 @@ export const VehicleOrderMenu: FunctionComponent<VehicleOrderMenuProps> = ({ dat
     const player = usePlayer();
     let banner = `https://nui-img/soz/menu_job_${player.job.id}`;
     if (data.mode == VehicleOrderMode.Crimi) {
-        banner = 'https://cfx-nui-soz-core/public/images/banner/menu_vehbiz_import.webp';
+        banner = 'https://soz.zerator.com/static/game/images/banner/menu_vehbiz_import.webp';
     } else if (data.mode == VehicleOrderMode.Cartel) {
-        banner = 'https://cfx-nui-soz-core/public/images/banner/menu_cartel_plane.webp';
+        banner = 'https://soz.zerator.com/static/game/images/banner/menu_cartel_plane.webp';
     }
 
     useState(() => {

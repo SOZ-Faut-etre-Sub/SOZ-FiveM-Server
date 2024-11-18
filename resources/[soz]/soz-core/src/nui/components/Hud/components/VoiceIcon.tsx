@@ -35,7 +35,12 @@ export const VoiceIcon: FunctionComponent<{ icon: string; disableAutoHide?: bool
     return (
         <animated.div
             className="bg-cover bg-center"
-            style={{ ...styles, width, height, backgroundImage: `url(/public/images/hud/voice/${icon}.webp)` }}
+            style={{
+                ...styles,
+                width,
+                height,
+                backgroundImage: `url(https://soz.zerator.com/static/game/images/hud/voice/${icon}.webp)`,
+            }}
         />
     );
 };

@@ -159,19 +159,19 @@ const CardItem: FunctionComponent<{
     let imgSrc = null;
 
     if (card.type === 'health') {
-        imgSrc = `https://cfx-nui-soz-core/public/images/inventory/icon/health.webp`;
+        imgSrc = `https://soz.zerator.com/static/game/images/inventory/icon/health.webp`;
     }
 
     if (card.type === 'license') {
-        imgSrc = `https://cfx-nui-soz-core/public/images/inventory/icon/license.webp`;
+        imgSrc = `https://soz.zerator.com/static/game/images/inventory/icon/license.webp`;
     }
 
     if (card.type === 'identity') {
-        imgSrc = `https://cfx-nui-soz-core/public/images/inventory/icon/identity.webp`;
+        imgSrc = `https://soz.zerator.com/static/game/images/inventory/icon/identity.webp`;
     }
 
     if (card.type === 'bank') {
-        imgSrc = `https://cfx-nui-soz-core/public/images/inventory/icon/bank.webp`;
+        imgSrc = `https://soz.zerator.com/static/game/images/inventory/icon/bank.webp`;
     }
 
     return (

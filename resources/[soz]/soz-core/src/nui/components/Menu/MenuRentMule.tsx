@@ -13,7 +13,7 @@ export const MenuRentMule: FunctionComponent = () => {
     return (
         <Menu type={MenuType.RentMule}>
             <MainMenu>
-                <MenuTitle banner="https://cfx-nui-soz-core/public/images/banner/menu_rant_mule.webp">
+                <MenuTitle banner="https://soz.zerator.com/static/game/images/banner/menu_rant_mule.webp">
                     Location de camion de déménagement
                 </MenuTitle>
                 <MenuContent>

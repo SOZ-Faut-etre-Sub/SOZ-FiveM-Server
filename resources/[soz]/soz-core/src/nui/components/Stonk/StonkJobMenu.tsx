@@ -19,7 +19,7 @@ type FightForStyleStateProps = {
 };
 
 export const StonkJobMenu: FunctionComponent<FightForStyleStateProps> = ({ data }) => {
-    const banner = 'https://cfx-nui-soz-core/public/images/banner/menu_job_cash-transfer.webp';
+    const banner = 'https://soz.zerator.com/static/game/images/banner/menu_job_cash-transfer.webp';
     const [blips, setBlips] = useState(null);
     const player = usePlayer();
 

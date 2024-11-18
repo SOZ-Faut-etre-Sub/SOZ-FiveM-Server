@@ -29,7 +29,7 @@ export const MenuWatch: FunctionComponent<MenuWatchProps> = ({ data }) => {
     return (
         <Menu type={MenuType.WatchMenu}>
             <MainMenu>
-                <MenuTitle banner="https://cfx-nui-soz-core/public/images/banner/menu_watch.webp">
+                <MenuTitle banner="https://soz.zerator.com/static/game/images/banner/menu_watch.webp">
                     Montre connectée
                 </MenuTitle>
                 <MenuContent>

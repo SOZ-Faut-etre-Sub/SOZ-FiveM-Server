@@ -206,7 +206,7 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
                                     className="w-full h-full object-contain"
                                     src={imageSrc}
                                     onError={() => {
-                                        setImageSrc('https://cfx-nui-soz-core/public/images/default/cat.webp');
+                                        setImageSrc('https://soz.zerator.com/static/game/images/default/cat.webp');
                                     }}
                                     alt="Name"
                                 />
@@ -379,36 +379,36 @@ type ItemIconProps = {
 
 export const getItemIcon = (inventoryItem: ItemIconProps | 'money' | 'keychain' | 'wallet'): string => {
     if (inventoryItem === 'money') {
-        return `https://cfx-nui-soz-core/public/images/inventory/icon/money.webp`;
+        return `https://soz.zerator.com/static/game/images/inventory/icon/money.webp`;
     }
 
     if (inventoryItem === 'keychain') {
-        return `https://cfx-nui-soz-core/public/images/inventory/icon/keychain.webp`;
+        return `https://soz.zerator.com/static/game/images/inventory/icon/keychain.webp`;
     }
 
     if (inventoryItem === 'wallet') {
-        return `https://cfx-nui-soz-core/public/images/inventory/icon/wallet.webp`;
+        return `https://soz.zerator.com/static/game/images/inventory/icon/wallet.webp`;
     }
 
     let path = inventoryItem.name;
 
     if (inventoryItem.name === 'vehicle_key') {
-        return `https://cfx-nui-soz-core/public/images/inventory/icon/vehicle_key.webp`;
+        return `https://soz.zerator.com/static/game/images/inventory/icon/vehicle_key.webp`;
     }
     if (inventoryItem.name === 'apartment_key') {
-        return `https://cfx-nui-soz-core/public/images/inventory/icon/apartment_key.webp`;
+        return `https://soz.zerator.com/static/game/images/inventory/icon/apartment_key.webp`;
     }
     if (inventoryItem.name === 'health') {
-        return `https://cfx-nui-soz-core/public/images/inventory/icon/health.webp`;
+        return `https://soz.zerator.com/static/game/images/inventory/icon/health.webp`;
     }
     if (inventoryItem.name === 'license') {
-        return `https://cfx-nui-soz-core/public/images/inventory/icon/license.webp`;
+        return `https://soz.zerator.com/static/game/images/inventory/icon/license.webp`;
     }
     if (inventoryItem.name === 'identity') {
-        return `https://cfx-nui-soz-core/public/images/inventory/icon/identity.webp`;
+        return `https://soz.zerator.com/static/game/images/inventory/icon/identity.webp`;
     }
     if (inventoryItem.name === 'bank') {
-        return `https://cfx-nui-soz-core/public/images/inventory/icon/bank.webp`;
+        return `https://soz.zerator.com/static/game/images/inventory/icon/bank.webp`;
     }
 
     // if inventoryItem is an InventoryItem
@@ -418,5 +418,5 @@ export const getItemIcon = (inventoryItem: ItemIconProps | 'money' | 'keychain' 
         path += `_${inventoryItem.metadata?.tier}`;
     }
 
-    return `https://cfx-nui-soz-core/public/images/items/${path}.webp`;
+    return `https://soz.zerator.com/static/game/images/items/${path}.webp`;
 };

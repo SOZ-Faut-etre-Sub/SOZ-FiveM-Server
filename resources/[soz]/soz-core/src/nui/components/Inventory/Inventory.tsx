@@ -326,7 +326,7 @@ export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps
                                 >
                                     <img
                                         className="h-6 px-4"
-                                        src="https://cfx-nui-soz-core/public/images/inventory/icon/car.webp"
+                                        src="https://soz.zerator.com/static/game/images/inventory/icon/car.webp"
                                         alt="Vehicle keys"
                                     />
                                 </GlassMorphismContainer>
@@ -342,7 +342,7 @@ export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps
                                 >
                                     <img
                                         className="h-6 px-4"
-                                        src="https://cfx-nui-soz-core/public/images/inventory/icon/key.webp"
+                                        src="https://soz.zerator.com/static/game/images/inventory/icon/key.webp"
                                         alt="Apartment keys"
                                     />
                                 </GlassMorphismContainer>

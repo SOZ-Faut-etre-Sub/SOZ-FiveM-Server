@@ -22,7 +22,7 @@ export const OilIndicator: FunctionComponent<{ oil: number; fuelType: string }> 
                 'opacity-5': oil > 10,
                 'opacity-100': oil <= 10,
             })}
-            src={`/public/images/hud/vehicle/${imagePrefix}${fuelType === 'essence' ? 'oil' : 'battery'}-${oilStatus}.webp`}
+            src={`https://soz.zerator.com/static/game/images/hud/vehicle/${imagePrefix}${fuelType === 'essence' ? 'oil' : 'battery'}-${oilStatus}.webp`}
             alt="oil"
         />
     );

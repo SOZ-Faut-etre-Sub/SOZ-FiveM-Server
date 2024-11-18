@@ -9,7 +9,7 @@ export const BankCard: FunctionComponent<HealthCardProps> = ({ name, account }) 
     return (
         <div
             style={{
-                backgroundImage: `url(/public/images/identity/bank.webp)`,
+                backgroundImage: `url(https://soz.zerator.com/static/game/images/identity/bank.webp)`,
             }}
             className="transition bg-cover bg-no-repeat aspect-[855/539] h-[340px]"
         >

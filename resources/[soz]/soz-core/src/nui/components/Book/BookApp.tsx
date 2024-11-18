@@ -31,7 +31,7 @@ export const BookApp = () => {
                                 className="flex justify-center align-center items-center"
                             >
                                 <img
-                                    src={`/public/images/book/${book.images[imageIndex]}`}
+                                    src={`https://soz.zerator.com/static/game/images/book/${book.images[imageIndex]}`}
                                     alt={imageIndex.toString()}
                                     style={{
                                         height: '90vh',

@@ -135,7 +135,7 @@ export const RadioVehicleApp: FunctionComponent = () => {
                 <img
                     className="absolute w-full h-full"
                     style={{ zIndex: 5 }}
-                    src="/public/images/radio/vehicle.webp"
+                    src="https://soz.zerator.com/static/game/images/radio/vehicle.webp"
                     alt="radio"
                 />
                 <div

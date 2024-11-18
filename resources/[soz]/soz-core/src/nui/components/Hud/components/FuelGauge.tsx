@@ -48,7 +48,7 @@ export const FuelGauge: FunctionComponent = () => {
                     width: iconSize,
                     height: iconSize,
                 }}
-                src={`/public/images/hud/vehicle/${fuelType === 'electric' ? 'battery' : 'motor'}.webp`}
+                src={`https://soz.zerator.com/static/game/images/hud/vehicle/${fuelType === 'electric' ? 'battery' : 'motor'}.webp`}
                 alt="fuel"
             />
         </StatusGauge>

@@ -24,7 +24,7 @@ type PoliceJobStateProps = {
 
 export const PoliceJobMenu: FunctionComponent<PoliceJobStateProps> = ({ data }) => {
     const player = usePlayer();
-    const banner = `https://cfx-nui-soz-core/public/images/banner/menu_job_${player.job.id}.webp`;
+    const banner = `https://soz.zerator.com/static/game/images/banner/menu_job_${player.job.id}.webp`;
 
     const [wantedPlayers, setWantedPlayers] = useState(null);
 

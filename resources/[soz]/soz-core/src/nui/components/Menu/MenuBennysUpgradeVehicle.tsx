@@ -333,7 +333,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
     const item = useItem('veh_strip_piece_std');
     const crimi = ![LSCustomMode.Admin, LSCustomMode.LsCustom, LSCustomMode.NewGahray].includes(data.mode);
     const banner = crimi
-        ? 'https://cfx-nui-soz-core/public/images/banner/menu_vehbiz_customs.webp'
+        ? 'https://soz.zerator.com/static/game/images/banner/menu_vehbiz_customs.webp'
         : 'https://nui-img/soz/menu_job_bennys';
 
     useEffect(() => {

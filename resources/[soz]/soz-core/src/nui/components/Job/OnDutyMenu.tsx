@@ -13,7 +13,7 @@ const banners_in_core = ['dmc', 'you-news', 'cash-transfer'];
 export const JobOnDutyMenu: FunctionComponent<MenuJobOnDutyProps> = ({ data }) => {
     let banner;
     if (banners_in_core.includes(data.job)) {
-        banner = `https://cfx-nui-soz-core/public/images/banner/menu_job_${data.job}.webp`;
+        banner = `https://soz.zerator.com/static/game/images/banner/menu_job_${data.job}.webp`;
     } else {
         banner = `https://nui-img/soz/menu_job_${data.job}`;
     }

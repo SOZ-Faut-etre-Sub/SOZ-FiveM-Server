@@ -54,7 +54,11 @@ export const MenuItemSelectVehicleCustomLevel: FunctionComponent<MenuItemSelectV
             onChange={(index, value) => onChange(value)}
             title={
                 <div className="flex items-center w-[9.3em]">
-                    <img alt={image} className="ml-4 w-8 h-8" src={`/public/images/vehicle/${image}.webp`} />
+                    <img
+                        alt={image}
+                        className="ml-4 w-8 h-8"
+                        src={`https://soz.zerator.com/static/game/images/vehicle/${image}.webp`}
+                    />
                     <h3 className="ml-2 uppercase">{title}</h3>
                 </div>
             }
@@ -78,7 +82,7 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
     const items = useItems();
     const crimi = ![LSCustomMode.Admin, LSCustomMode.LsCustom].includes(data.mode);
     const banner = crimi
-        ? 'https://cfx-nui-soz-core/public/images/banner/menu_vehbiz_perf.webp'
+        ? 'https://soz.zerator.com/static/game/images/banner/menu_vehbiz_perf.webp'
         : 'https://nui-img/soz/menu_shop_lscustoms';
 
     useEffect(() => {
@@ -204,7 +208,11 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
                             onChange={(index, value) => createOnChange('turbo')(value)}
                             title={
                                 <div className="flex items-center w-[9.3rem]">
-                                    <img alt="Turbo" className="ml-4 w-8 h-8" src="/public/images/vehicle/turbo.webp" />
+                                    <img
+                                        alt="Turbo"
+                                        className="ml-4 w-8 h-8"
+                                        src="https://soz.zerator.com/static/game/images/vehicle/turbo.webp"
+                                    />
                                     <h3 className="ml-2 uppercase">Turbo</h3>
                                 </div>
                             }
@@ -223,7 +231,7 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
                                     <img
                                         alt="Manual"
                                         className="ml-4 w-8 h-8"
-                                        src="/public/images/vehicle/transmission.webp"
+                                        src="https://soz.zerator.com/static/game/images/vehicle/transmission.webp"
                                     />
                                     <h3 className="ml-2 uppercase">Boite manuelle</h3>
                                 </div>

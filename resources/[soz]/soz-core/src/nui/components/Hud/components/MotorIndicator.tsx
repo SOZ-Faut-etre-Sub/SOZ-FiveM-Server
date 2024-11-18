@@ -27,7 +27,7 @@ export const MotorIndicator: FunctionComponent<{ motor: number }> = ({ motor }) 
                 'opacity-5': motor >= VehicleMidDamageThreshold,
                 'opacity-100': motor < VehicleMidDamageThreshold,
             })}
-            src={`/public/images/hud/vehicle/${imagePrefix}motor-${motorStatus}.webp`}
+            src={`https://soz.zerator.com/static/game/images/hud/vehicle/${imagePrefix}motor-${motorStatus}.webp`}
             alt="motor"
         />
     );

@@ -21,5 +21,10 @@ export const LightIndicator: FunctionComponent = () => {
         },
     });
 
-    return <animated.img style={{ ...styles, width, height }} src={`/public/images/hud/vehicle/light-${icon}.webp`} />;
+    return (
+        <animated.img
+            style={{ ...styles, width, height }}
+            src={`https://soz.zerator.com/static/game/images/hud/vehicle/light-${icon}.webp`}
+        />
+    );
 };

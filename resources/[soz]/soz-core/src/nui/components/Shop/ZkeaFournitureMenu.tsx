@@ -18,7 +18,7 @@ import {
 } from '../Styleguide/Menu';
 
 export const ZkeaFournitureMenu: FunctionComponent = () => {
-    const banner = 'https://cfx-nui-soz-core/public/images/banner/menu_zkea_fourniture.webp';
+    const banner = 'https://soz.zerator.com/static/game/images/banner/menu_zkea_fourniture.webp';
     const [textFilter, setTextFilter] = useState<string>();
 
     const fournituresByType: FormatedFournitureItemList = {};

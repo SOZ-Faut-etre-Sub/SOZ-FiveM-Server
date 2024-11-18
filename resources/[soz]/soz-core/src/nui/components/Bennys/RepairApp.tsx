@@ -251,7 +251,7 @@ export const MenuRouter: FunctionComponent = () => {
             <div
                 ref={refOutside}
                 style={{
-                    backgroundImage: `url(/public/images/vehicle/repair_app.webp)`,
+                    backgroundImage: `url(https://soz.zerator.com/static/game/images/vehicle/repair_app.webp)`,
                     height: '720px',
                     width: '1280px',
                 }}

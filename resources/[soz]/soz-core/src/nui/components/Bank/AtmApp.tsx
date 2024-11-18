@@ -100,7 +100,13 @@ export const AtmApp: FunctionComponent = () => {
                 <MemoryRouter>
                     <div className="flex flex-col w-full gap-4 m-4">
                         <Header
-                            title={<img className="h-20" src="/public/images/bank/logo.webp" alt="Fleeca Logo" />}
+                            title={
+                                <img
+                                    className="h-20"
+                                    src="https://soz.zerator.com/static/game/images/bank/logo.webp"
+                                    alt="Fleeca Logo"
+                                />
+                            }
                             bankMoney={account?.account?.money}
                         />
 

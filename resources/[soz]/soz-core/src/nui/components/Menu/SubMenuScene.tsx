@@ -40,7 +40,7 @@ export const SubMenuScene: FunctionComponent<SubMenuSceneProps> = ({ scene, cont
         };
     }, [inSubMenu]);
 
-    let banner = 'https://cfx-nui-soz-core/public/images/banner/soz_hammer.webp';
+    let banner = 'https://soz.zerator.com/static/game/images/banner/soz_hammer.webp';
 
     if (context === 'admin') {
         banner = 'https://nui-img/soz/menu_mapper';

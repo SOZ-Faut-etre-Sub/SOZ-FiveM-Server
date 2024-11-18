@@ -64,21 +64,30 @@ export const PanelApp: FunctionComponent = () => {
                     className="flex flex-row items-start"
                 >
                     <div
-                        style={{ width: '99px', backgroundImage: `url(/public/images/panel/top-left.webp)` }}
+                        style={{
+                            width: '99px',
+                            backgroundImage: `url(https://soz.zerator.com/static/game/images/panel/top-left.webp)`,
+                        }}
                         className="h-full z-30"
                     ></div>
                     <div
-                        style={{ backgroundImage: `url(/public/images/panel/top.webp)` }}
+                        style={{ backgroundImage: `url(https://soz.zerator.com/static/game/images/panel/top.webp)` }}
                         className="grow h-[73px] bg-center z-30"
                     ></div>
                     <div
-                        style={{ width: '103px', backgroundImage: `url(/public/images/panel/top-right.webp)` }}
+                        style={{
+                            width: '103px',
+                            backgroundImage: `url(https://soz.zerator.com/static/game/images/panel/top-right.webp)`,
+                        }}
                         className="h-full z-30"
                     ></div>
                 </div>
                 <div className="flex flex-row items-center grow">
                     <div
-                        style={{ width: '73px', backgroundImage: `url(/public/images/panel/left.webp)` }}
+                        style={{
+                            width: '73px',
+                            backgroundImage: `url(https://soz.zerator.com/static/game/images/panel/left.webp)`,
+                        }}
                         className="h-full bg-center z-30"
                     ></div>
                     <div className="grow h-full relative z-20">
@@ -107,7 +116,10 @@ export const PanelApp: FunctionComponent = () => {
                         </div>
                     </div>
                     <div
-                        style={{ width: '77px', backgroundImage: `url(/public/images/panel/right.webp)` }}
+                        style={{
+                            width: '77px',
+                            backgroundImage: `url(https://soz.zerator.com/static/game/images/panel/right.webp)`,
+                        }}
                         className="h-full bg-center  z-30"
                     ></div>
                 </div>
@@ -118,15 +130,21 @@ export const PanelApp: FunctionComponent = () => {
                     className="flex flex-row items-end"
                 >
                     <div
-                        style={{ width: '99px', backgroundImage: `url(/public/images/panel/bottom-left.webp)` }}
+                        style={{
+                            width: '99px',
+                            backgroundImage: `url(https://soz.zerator.com/static/game/images/panel/bottom-left.webp)`,
+                        }}
                         className="h-full  z-30"
                     ></div>
                     <div
-                        style={{ backgroundImage: `url(/public/images/panel/bottom.webp)` }}
+                        style={{ backgroundImage: `url(https://soz.zerator.com/static/game/images/panel/bottom.webp)` }}
                         className="h-[76px] grow bg-center z-30"
                     ></div>
                     <div
-                        style={{ width: '103px', backgroundImage: `url(/public/images/panel/bottom-right.webp)` }}
+                        style={{
+                            width: '103px',
+                            backgroundImage: `url(https://soz.zerator.com/static/game/images/panel/bottom-right.webp)`,
+                        }}
                         className="h-full z-30"
                     ></div>
                 </div>

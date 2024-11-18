@@ -10,13 +10,13 @@ export const BrowserContactsState: Contact[] = [
         id: 2,
         display: 'Taso',
         number: '215-8139',
-        avatar: 'https://cfx-nui-soz-core/public/images/default/cat.webp',
+        avatar: 'https://soz.zerator.com/static/game/images/default/cat.webp',
     },
     {
         id: 3,
         display: 'Chip',
         number: '603-275-8373',
-        avatar: 'https://cfx-nui-soz-core/public/images/default/cat.webp',
+        avatar: 'https://soz.zerator.com/static/game/images/default/cat.webp',
     },
     {
         id: 4,

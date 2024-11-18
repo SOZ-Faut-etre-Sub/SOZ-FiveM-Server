@@ -50,7 +50,7 @@ export const HistoryRow: FunctionComponent<HistoryRowProps> = ({ account, contac
                         {title}
                         <img
                             className="w-5 h-5"
-                            src={`/public/images/society/${targetImage}.webp`}
+                            src={`https://soz.zerator.com/static/game/images/society/${targetImage}.webp`}
                             alt={targetLabel}
                             onError={e => (e.currentTarget.style.display = 'none')}
                         ></img>

@@ -111,7 +111,7 @@ export const TargetOverlay: FunctionComponent = () => {
                 ) : (
                     <img
                         className="absolute inset-0 size-10 opacity-50"
-                        src="/public/images/hud/target.webp"
+                        src="https://soz.zerator.com/static/game/images/hud/target.webp"
                         alt="target"
                     />
                 )}

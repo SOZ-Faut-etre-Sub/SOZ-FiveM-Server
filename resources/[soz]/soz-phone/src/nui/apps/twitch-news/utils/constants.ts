@@ -11,7 +11,7 @@ export const MockTwitchNewsMessages: TwitchNewsMessage[] = [
     {
         id: 2,
         type: 'breaking-news',
-        image: 'https://cfx-nui-soz-core/public/images/default/cat.webp',
+        image: 'https://soz.zerator.com/static/game/images/default/cat.webp',
         message: 'Lorem ipsum dolor sit amet, conse ctetur adip iscing elit.',
         createdAt: '2022-01-14T09:58:18.000Z',
         job: 'you-news',
@@ -26,7 +26,7 @@ export const MockTwitchNewsMessages: TwitchNewsMessage[] = [
     {
         id: 4,
         type: 'fait-divers',
-        image: 'https://cfx-nui-soz-core/public/images/default/cat.webp',
+        image: 'https://soz.zerator.com/static/game/images/default/cat.webp',
         message: 'Lorem ipsum dolor sit amet, conse ctetur adip iscing elit.',
         createdAt: '2022-01-14T09:58:18.000Z',
         job: 'news',
@@ -34,7 +34,7 @@ export const MockTwitchNewsMessages: TwitchNewsMessage[] = [
     {
         id: 5,
         type: 'info-trafic',
-        image: 'https://cfx-nui-soz-core/public/images/default/cat.webp',
+        image: 'https://soz.zerator.com/static/game/images/default/cat.webp',
         message: 'Lorem ipsum dolor sit amet, conse ctetur adip iscing elit.',
         createdAt: '2022-01-14T09:58:18.000Z',
         job: 'news',

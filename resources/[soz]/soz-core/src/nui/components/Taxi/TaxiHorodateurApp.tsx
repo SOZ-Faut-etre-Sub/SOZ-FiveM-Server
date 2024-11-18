@@ -35,7 +35,7 @@ export const TaxiHorodateurApp: FunctionComponent = () => {
         <div
             className={`${rightOffset} absolute bottom-[8vh] right-5 font-lato`}
             style={{
-                backgroundImage: `url(/public/images/taxi/Brouznouf_Z7_.webp)`,
+                backgroundImage: `url(https://soz.zerator.com/static/game/images/taxi/Brouznouf_Z7_.webp)`,
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: 'contain',
                 width: '45vh',

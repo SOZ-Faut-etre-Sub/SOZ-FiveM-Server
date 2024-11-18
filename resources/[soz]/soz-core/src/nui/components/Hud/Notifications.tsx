@@ -255,18 +255,18 @@ const PoliceNotification: FunctionComponent<PoliceNotificationProps> = ({ notifi
     };
 
     const image = (): string => {
-        let image = '/public/images/hud/notification/fdo.webp';
+        let image = 'https://soz.zerator.com/static/game/images/hud/notification/fdo.webp';
 
         if (notification.logo === 'lspd') {
-            image = '/public/images/hud/notification/lspd.webp';
+            image = 'https://soz.zerator.com/static/game/images/hud/notification/lspd.webp';
         }
 
         if (notification.logo === 'bcso') {
-            image = '/public/images/hud/notification/bcso.webp';
+            image = 'https://soz.zerator.com/static/game/images/hud/notification/bcso.webp';
         }
 
         if (notification.logo === 'sasp') {
-            image = '/public/images/hud/notification/sasp.webp';
+            image = 'https://soz.zerator.com/static/game/images/hud/notification/sasp.webp';
         }
         return image;
     };
