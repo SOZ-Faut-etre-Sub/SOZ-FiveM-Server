@@ -1,9 +1,6 @@
-import { Dialog, Transition } from '@headlessui/react';
 import { animated, useSpring } from '@react-spring/web';
-import classnames from 'classnames';
-import React, { Fragment, FunctionComponent, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { FaPlus, FaTrash } from 'react-icons/fa';
 
 import { BankAccount, BankContact } from '../../../../shared/bank';
 import { NuiEvent } from '../../../../shared/event/nui';
@@ -12,12 +9,10 @@ import { usePlayer } from '../../../hook/data';
 import { Button } from '../component/Button';
 import { Card } from '../component/Card';
 import { ContactCard } from '../component/ContactCard';
-import { Header } from '../component/Header';
 import { Input } from '../component/Input';
-import { TextWithCopy } from '../component/TextWithCopy';
+import { Money } from '../component/Money';
 import { Title } from '../component/Title';
 import { TransferActionForm } from '../component/TransferActionForm';
-import { moneyFormat } from '../utils/format';
 import { DashboardProps } from './DashboardPage';
 
 interface HistoryProps extends DashboardProps {
@@ -70,7 +65,9 @@ export const ContactPage: FunctionComponent<HistoryProps> = ({ bankType, account
                         <Title size="small">Solde bancaire</Title>
 
                         <div className="flex flex-col justify-center items-center py-2.5">
-                            <Title size="xlarge">{moneyFormat(account.money)}</Title>
+                            <Title size="xlarge">
+                                <Money amount={account.money} />
+                            </Title>
                         </div>
                     </Card>
 
@@ -78,7 +75,9 @@ export const ContactPage: FunctionComponent<HistoryProps> = ({ bankType, account
                         <Title size="small">Portefeuille</Title>
 
                         <div className="flex flex-col justify-center items-center py-2.5">
-                            <Title size="xlarge">{moneyFormat(Number(player.money.money))}</Title>
+                            <Title size="xlarge">
+                                <Money amount={player.money.money} />
+                            </Title>
                         </div>
                     </Card>
                 </div>

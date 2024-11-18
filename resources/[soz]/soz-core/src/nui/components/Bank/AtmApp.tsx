@@ -13,8 +13,9 @@ import { Button } from './component/Button';
 import { Card } from './component/Card';
 import { Header } from './component/Header';
 import { Input } from './component/Input';
+import { Money } from './component/Money';
 import { Title } from './component/Title';
-import { FORMAT_CURRENCY, moneyFormat } from './utils/format';
+import { FORMAT_CURRENCY } from './utils/format';
 
 type AtmAppInputs = {
     withdraw: number;
@@ -106,7 +107,9 @@ export const AtmApp: FunctionComponent = () => {
                                 <Title size="xsmall">Solde bancaire</Title>
 
                                 <div className="flex flex-col justify-center items-center">
-                                    <Title size="medium">{moneyFormat(account?.account?.money)}</Title>
+                                    <Title size="medium">
+                                        <Money amount={account?.account?.money} />
+                                    </Title>
                                 </div>
                             </Card>
 
@@ -114,7 +117,9 @@ export const AtmApp: FunctionComponent = () => {
                                 <Title size="xsmall">Portefeuille</Title>
 
                                 <div className="flex flex-col justify-center items-center">
-                                    <Title size="medium">{moneyFormat(Number(player.money.money))}</Title>
+                                    <Title size="medium">
+                                        <Money amount={player.money.money} />
+                                    </Title>
                                 </div>
                             </Card>
                         </div>

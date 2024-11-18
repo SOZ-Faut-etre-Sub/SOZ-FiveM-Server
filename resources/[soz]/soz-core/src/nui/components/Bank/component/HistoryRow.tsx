@@ -1,12 +1,11 @@
-import { MinusIcon, PlusIcon } from '@heroicons/react/solid';
-import classnames from 'classnames';
 import cn from 'classnames';
 import React, { FunctionComponent } from 'react';
 
 import { BankAccount, BankContact, BankStatement } from '../../../../shared/bank';
 import { useHudColor } from '../../Hud/hooks/useHudColor';
 import FileIcon from '../assets/file.svg';
-import { moneyFormat, PlayerAccountRegExp } from '../utils/format';
+import { PlayerAccountRegExp } from '../utils/format';
+import { Money } from './Money';
 import { TextWithCopy } from './TextWithCopy';
 
 interface HistoryRowProps {
@@ -70,7 +69,7 @@ export const HistoryRow: FunctionComponent<HistoryRowProps> = ({ account, contac
                 })}
             >
                 {isSource ? '- ' : '+ '}
-                {moneyFormat(history.amount, false)}
+                <Money amount={history.amount} useColor={false} />
             </span>
         </div>
     );

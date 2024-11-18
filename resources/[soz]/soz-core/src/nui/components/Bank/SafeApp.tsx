@@ -12,9 +12,9 @@ import { ApplicationContainer } from './component/Application';
 import { Button } from './component/Button';
 import { Card } from './component/Card';
 import { Input } from './component/Input';
+import { Money } from './component/Money';
 import { Tabs } from './component/Tabs';
 import { Title } from './component/Title';
-import { moneyFormat } from './utils/format';
 
 type SafeAppInputs = {
     money: number;
@@ -133,7 +133,9 @@ export const SafeApp: FunctionComponent = () => {
                             >
                                 <div className="flex justify-between mb-4">
                                     <Title size="xsmall">Argent</Title>
-                                    <span className="text-sm text-green-500/70">{moneyFormat(account?.money)}</span>
+                                    <span className="text-sm text-green-500/70">
+                                        <Money amount={account?.money} />
+                                    </span>
                                 </div>
 
                                 <Input
@@ -164,9 +166,12 @@ export const SafeApp: FunctionComponent = () => {
                                 <Title size="xsmall">Argent marqué</Title>
 
                                 <span className="text-sm text-red-400/70">
-                                    {moneyFormat(account?.marked_money, false)}
+                                    <Money amount={account?.marked_money} useColor={false} />
                                     {['housestorages', 'gang'].includes(account?.type) && (
-                                        <span> / {moneyFormat(account?.maxCapacity, false)}</span>
+                                        <span>
+                                            {' '}
+                                            / <Money amount={account?.maxCapacity} useColor={false} />
+                                        </span>
                                     )}
                                 </span>
                             </div>

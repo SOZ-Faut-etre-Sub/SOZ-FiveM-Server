@@ -7,13 +7,12 @@ import { fetchNui } from '../../../fetch';
 import { usePlayer } from '../../../hook/data';
 import { Button } from '../component/Button';
 import { Card } from '../component/Card';
-import { Header } from '../component/Header';
 import { HistoryTable } from '../component/HistoryTable';
+import { Money } from '../component/Money';
 import { QuickActionForm } from '../component/QuickActionForm';
 import { TextWithCopy } from '../component/TextWithCopy';
 import { Title } from '../component/Title';
 import { TransferActionForm } from '../component/TransferActionForm';
-import { moneyFormat } from '../utils/format';
 
 export interface DashboardProps {
     bankType: string;
@@ -59,7 +58,9 @@ export const DashboardPage: FunctionComponent<DashboardProps> = ({
                         <Title size="small">Solde bancaire</Title>
 
                         <div className="flex flex-col justify-center items-center py-2.5">
-                            <Title size="xlarge">{moneyFormat(account.money)}</Title>
+                            <Title size="xlarge">
+                                <Money amount={account.money} />
+                            </Title>
                         </div>
                     </Card>
 
@@ -67,7 +68,9 @@ export const DashboardPage: FunctionComponent<DashboardProps> = ({
                         <Title size="small">Portefeuille</Title>
 
                         <div className="flex flex-col justify-center items-center py-2.5">
-                            <Title size="xlarge">{moneyFormat(Number(player.money.money))}</Title>
+                            <Title size="xlarge">
+                                <Money amount={player.money.money} />
+                            </Title>
                         </div>
                     </Card>
                 </div>

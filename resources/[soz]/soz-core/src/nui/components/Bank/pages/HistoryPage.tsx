@@ -7,11 +7,11 @@ import { fetchNui } from '../../../fetch';
 import { usePlayer } from '../../../hook/data';
 import { Card } from '../component/Card';
 import { HistoryTable } from '../component/HistoryTable';
+import { Money } from '../component/Money';
 import { QuickActionForm } from '../component/QuickActionForm';
 import { Tabs } from '../component/Tabs';
 import { Title } from '../component/Title';
 import { TransferActionForm } from '../component/TransferActionForm';
-import { moneyFormat } from '../utils/format';
 
 interface HistoryProps {
     bankType: string;
@@ -82,7 +82,9 @@ export const HistoryPage: FunctionComponent<HistoryProps> = ({ bankType, account
                             </Title>
 
                             <div className="flex flex-col justify-center items-center">
-                                <Title size="small">{moneyFormat(account.money)}</Title>
+                                <Title size="small">
+                                    <Money amount={account.money} />
+                                </Title>
                             </div>
                         </Card>
 
@@ -90,7 +92,9 @@ export const HistoryPage: FunctionComponent<HistoryProps> = ({ bankType, account
                             <Title size="xxsmall">Portefeuille</Title>
 
                             <div className="flex flex-col justify-center items-center">
-                                <Title size="small">{moneyFormat(Number(player.money.money))}</Title>
+                                <Title size="small">
+                                    <Money amount={player.money.money} />
+                                </Title>
                             </div>
                         </Card>
                     </div>
