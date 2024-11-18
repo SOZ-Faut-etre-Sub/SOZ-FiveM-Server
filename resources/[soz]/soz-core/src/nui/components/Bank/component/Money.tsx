@@ -20,6 +20,7 @@ export const Money: FunctionComponent<MoneyProps> = ({ amount, useColor = true }
                     'text-[#268116]': useColor && !isDaltonism && amount > 0,
                     'text-[#B314E8]': useColor && isDaltonism && amount <= 0,
                     'text-[#00FFFF]': useColor && isDaltonism && amount > 0,
+                    'text-inherit': !useColor,
                 })}
             >
                 $

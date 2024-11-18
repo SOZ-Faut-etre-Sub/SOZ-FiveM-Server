@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import cn from 'classnames';
 import React, { FunctionComponent, KeyboardEvent, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
@@ -7,6 +8,7 @@ import { NuiEvent } from '../../../shared/event/nui';
 import { fetchNui } from '../../fetch';
 import { usePlayer } from '../../hook/data';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
+import { useHudColor } from '../Hud/hooks/useHudColor';
 import { AppContent } from './component/AppContent';
 import { ApplicationContainer } from './component/Application';
 import { Button } from './component/Button';
@@ -23,6 +25,7 @@ type SafeAppInputs = {
 
 export const SafeApp: FunctionComponent = () => {
     const player = usePlayer();
+    const { isDaltonism } = useHudColor();
 
     const [showApp, setShowApp] = useState<boolean>(false);
 
@@ -133,8 +136,13 @@ export const SafeApp: FunctionComponent = () => {
                             >
                                 <div className="flex justify-between mb-4">
                                     <Title size="xsmall">Argent</Title>
-                                    <span className="text-sm text-green-500/70">
-                                        <Money amount={account?.money} />
+                                    <span
+                                        className={cn('text-sm', {
+                                            'text-[#268116]': !isDaltonism,
+                                            'text-[#00FFFF]': isDaltonism,
+                                        })}
+                                    >
+                                        <Money amount={account?.money} useColor={false} />
                                     </span>
                                 </div>
 
@@ -165,7 +173,12 @@ export const SafeApp: FunctionComponent = () => {
                             <div className="flex justify-between mb-4">
                                 <Title size="xsmall">Argent marqué</Title>
 
-                                <span className="text-sm text-red-400/70">
+                                <span
+                                    className={cn('text-sm', {
+                                        'text-[#AD1F1F]': !isDaltonism,
+                                        'text-[#B314E8]': isDaltonism,
+                                    })}
+                                >
                                     <Money amount={account?.marked_money} useColor={false} />
                                     {['housestorages', 'gang'].includes(account?.type) && (
                                         <span>
