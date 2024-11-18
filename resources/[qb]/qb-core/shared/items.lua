@@ -4338,7 +4338,7 @@ QBShared.Items = {
         ["shouldClose"] = true,
         ["combinable"] = nil,
         ["description"] = "",
-        ["illustrator"] = {["lsmc"] = ".Smogogo", ["lspd"] = ".Sniteur", ["bcso"] = ".Sniteur"},
+        ["illustrator"] = {["lsmc"] = ".Smogogo", ["lspd"] = ".Sniteur", ["bcso"] = ".Sniteur", ["stonk"] = ".Kaemy"},
     },
     ["handcuffs"] = {
         ["name"] = "handcuffs",
