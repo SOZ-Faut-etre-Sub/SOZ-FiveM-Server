@@ -295,7 +295,7 @@ export const FDFFields: Record<string, PolygonZone<Vector4>> = {
     ),
 };
 
-export const MILK_TIME = 30_000;
+export const MILK_TIME = 10_000;
 export const MILK_QTY = 1;
 export const MILK_ITEM = 'cow_milk';
 
