@@ -6,6 +6,7 @@ export type EventInfo = {
     currentSceneId: string | null;
     startTimestamp: number;
     signaledInvs: string[];
+    unlockInvs: string[];
 };
 
 export type WorldEvent = {

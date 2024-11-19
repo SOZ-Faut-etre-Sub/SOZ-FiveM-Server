@@ -1,3 +1,4 @@
+import { MinigameProvider } from '@private/client/minigames/minigames.provider';
 import { toVector4Object } from '@public/shared/polyzone/vector';
 import { WeaponName } from '@public/shared/weapons/weapon';
 
@@ -20,6 +21,7 @@ import { Err, Ok } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
 import { Scene, ScenePedBehavior, ScenePedData } from '../../shared/scene';
 import { TargetOption } from '../../shared/target';
+import { AnimationService } from '../animation/animation.service';
 import { PedFactory } from '../factory/ped.factory';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { InputService } from '../nui/input.service';
@@ -75,6 +77,12 @@ export class SceneProvider {
 
     @Inject(ResourceLoader)
     private resourceLoader: ResourceLoader;
+
+    @Inject(MinigameProvider)
+    private minigameProvider: MinigameProvider;
+
+    @Inject(AnimationService)
+    private animationService: AnimationService;
 
     private highlightedObjectId: string = null;
 
@@ -712,13 +720,69 @@ export class SceneProvider {
                     label: 'Ouvrir',
                     icon: 'inventory/ouvrir_le_stockage',
                     category: 'criminal',
-                    canInteract: () => true,
+                    canInteract: () =>
+                        this.worldEventProvider.isUnlock(entity.inventoryId) &&
+                        !this.worldEventProvider.isSignaled(entity.inventoryId),
                     action: () => {
                         this.inventoryManager.openInventory(
                             InventoryType.ObjectStorage,
                             entity.inventoryId,
                             entity.object.position
                         );
+                    },
+                });
+
+                targets.push({
+                    label: 'Dévérouiller',
+                    icon: 'crimi/unlock',
+                    category: 'criminal',
+                    canInteract: () =>
+                        !this.worldEventProvider.isUnlock(entity.inventoryId) &&
+                        !this.worldEventProvider.isSignaled(entity.inventoryId),
+                    action: async () => {
+                        const anim = this.animationService.playAnimation({
+                            enter: {
+                                dictionary: 'anim@heists@humane_labs@emp@hack_door',
+                                name: 'hack_intro',
+                                duration: 6433,
+                                options: {
+                                    onlyUpperBody: true,
+                                },
+                            },
+                            base: {
+                                dictionary: 'anim@heists@humane_labs@emp@hack_door',
+                                name: 'hack_loop',
+                                options: {
+                                    repeat: true,
+                                    onlyUpperBody: true,
+                                },
+                            },
+                            exit: {
+                                dictionary: 'anim@heists@humane_labs@emp@hack_door',
+                                name: 'hack_outro',
+                                duration: 4033,
+                                options: {
+                                    onlyUpperBody: true,
+                                },
+                            },
+                            props: [
+                                {
+                                    bone: 28422,
+                                    model: 'prop_police_phone',
+                                    position: [0.0, 0.0, 0.0301],
+                                    rotation: [0.0, 0.0, 0.0],
+                                },
+                            ],
+                        });
+                        const success = await this.minigameProvider.runGame('ShowPincraker', {
+                            delay: 20,
+                            nbDigit: 3,
+                        });
+
+                        if (success) {
+                            TriggerServerEvent(ServerEvent.WORLD_EVENT_UNLOCK_INVENTORY, entity.inventoryId);
+                        }
+                        anim.cancel();
                     },
                 });
 
@@ -732,7 +796,7 @@ export class SceneProvider {
                         const progress = await this.progressService.progress(
                             'world_event_signal',
                             'Signalement en cours...',
-                            180_000,
+                            GetConvar('soz_core_environment', 'development') == 'production' ? 180_000 : 10_000,
                             {
                                 dictionary: 'Rcm_epsilonism4',
                                 name: 'eps_4_ig_1_jimmy_lookaround_idle_a_jb',

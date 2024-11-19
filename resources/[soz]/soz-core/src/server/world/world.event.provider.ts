@@ -29,6 +29,7 @@ type CurrentEvent = {
     scene: Scene;
     startTimestamp: number | null;
     signaledInvs: Set<string>;
+    unlockInvs: Set<string>;
 };
 
 @Provider()
@@ -83,6 +84,7 @@ export class WorldEventProvider {
             currentSceneId: this.currentEvent.scene.id,
             startTimestamp: this.currentEvent.startTimestamp,
             signaledInvs: Array.from(this.currentEvent.signaledInvs),
+            unlockInvs: Array.from(this.currentEvent.unlockInvs),
         };
     }
 
@@ -105,7 +107,7 @@ export class WorldEventProvider {
 
         for (const object of objects) {
             if (object.inventoryId === inventoryId) {
-                this.notifier.notify(source, `Le contenu a été signalé`);
+                this.notifier.notify(source, `Le contenu a été ~g~signalé~s~.`);
                 const inventory = await this.inventoryFactory.get(object.inventoryId);
 
                 if (inventory) {
@@ -117,6 +119,28 @@ export class WorldEventProvider {
                     ClientEvent.WORLD_EVENT_SIGNAL_INVENTORY,
                     -1,
                     Array.from(this.currentEvent.signaledInvs)
+                );
+            }
+        }
+    }
+
+    @OnEvent(ServerEvent.WORLD_EVENT_UNLOCK_INVENTORY)
+    public async onUnlockInventory(source: number, inventoryId: string) {
+        if (!this.currentEvent) {
+            return;
+        }
+
+        const objects = Object.values(this.currentEvent.scene.entities);
+
+        for (const object of objects) {
+            if (object.inventoryId === inventoryId) {
+                this.notifier.notify(source, `Le conteneur a a été ~g~dévérouillé~s~.`);
+
+                this.currentEvent.unlockInvs.add(object.inventoryId);
+                TriggerClientEvent(
+                    ClientEvent.WORLD_EVENT_UNLOCK_INVENTORY,
+                    -1,
+                    Array.from(this.currentEvent.unlockInvs)
                 );
             }
         }
@@ -175,6 +199,7 @@ export class WorldEventProvider {
                 currentSceneId: null,
                 startTimestamp: null,
                 signaledInvs: [],
+                unlockInvs: [],
             };
         }
 
@@ -183,6 +208,7 @@ export class WorldEventProvider {
             currentSceneId: this.currentEvent.scene.id,
             startTimestamp: this.currentEvent.startTimestamp,
             signaledInvs: Array.from(this.currentEvent.signaledInvs),
+            unlockInvs: Array.from(this.currentEvent.unlockInvs),
         };
     }
 
@@ -291,7 +317,13 @@ export class WorldEventProvider {
             }
         }
 
-        this.currentEvent = { event, scene, startTimestamp: Date.now(), signaledInvs: new Set<string>() };
+        this.currentEvent = {
+            event,
+            scene,
+            startTimestamp: Date.now(),
+            signaledInvs: new Set<string>(),
+            unlockInvs: new Set<string>(),
+        };
         const firstEntityPosition = Object.values(scene.entities)[0]?.object.position;
 
         TriggerClientEvent(ClientEvent.WORLD_EVENT_START, -1, event.id, scene.id, firstEntityPosition);
