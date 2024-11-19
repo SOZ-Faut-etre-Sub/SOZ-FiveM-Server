@@ -8,3 +8,5 @@ export const SmugglingBusinessImportContainerConfig = {
 export const SmugglingBusinessExportContainerConfig = {
     prop: 0,
 };
+
+export const PlaneCostMultiplier = 0;

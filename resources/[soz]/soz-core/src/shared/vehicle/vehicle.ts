@@ -1,3 +1,4 @@
+import { PlaneCostMultiplier } from '@private/shared/business.smuggling';
 import { VehicleBusinessImportConf } from '@private/shared/business.vehicle';
 import { joaat } from '@public/shared/joaat';
 import { PlayerLicenceType } from '@public/shared/player';
@@ -665,5 +666,5 @@ export type VehicleOrderConfig = {
 export const VehicleOrderCostMuliplier: Record<VehicleOrderMode, number> = {
     [VehicleOrderMode.Crimi]: VehicleBusinessImportConf.CostMuliplier,
     [VehicleOrderMode.Job]: 0.01,
-    [VehicleOrderMode.Cartel]: 1,
+    [VehicleOrderMode.Cartel]: PlaneCostMultiplier,
 };
