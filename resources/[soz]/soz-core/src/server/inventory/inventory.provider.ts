@@ -805,6 +805,7 @@ export class InventoryProvider {
 
         if (
             itemObject?.onlyone &&
+            sourceInventory.id !== targetInventory.id &&
             targetInventory.hasEnoughItem(sourceItem.name, 1, false) &&
             targetInventory.type() === InventoryType.Player
         ) {
