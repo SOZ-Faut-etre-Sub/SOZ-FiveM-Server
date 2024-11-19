@@ -130,8 +130,8 @@ export const useHudColor = (): GlassmorphismColors => {
                     color: '#22232A',
                 },
                 secondary: {
-                    background: '#F3FBFA',
-                    color: '#22232A',
+                    background: '#22232A',
+                    color: '#F3FBFA',
                 },
             },
             [HudTheme.HalloweenVein]: {
@@ -140,8 +140,8 @@ export const useHudColor = (): GlassmorphismColors => {
                     color: '#22232A',
                 },
                 secondary: {
-                    background: '#F3FBFA',
-                    color: '#22232A',
+                    background: '#22232A',
+                    color: '#F3FBFA',
                 },
             },
         }),
