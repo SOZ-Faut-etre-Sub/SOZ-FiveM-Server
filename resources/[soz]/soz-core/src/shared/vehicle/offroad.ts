@@ -487,18 +487,18 @@ export const VehWheelTypeData = {
         driftThreshold: 0.65,
     },
     11: {
-        rating: 0,
-        tractionOnSoft: 0,
+        rating: -20,
+        tractionOnSoft: -15,
         tractionOnHard: 0,
-        sinkageSpeed: 1,
-        driftThreshold: 0.65,
+        sinkageSpeed: 1.25,
+        driftThreshold: 1.1,
     },
     12: {
-        rating: 0,
-        tractionOnSoft: 0,
+        rating: -20,
+        tractionOnSoft: -15,
         tractionOnHard: 0,
-        sinkageSpeed: 1,
-        driftThreshold: 0.65,
+        sinkageSpeed: 1.25,
+        driftThreshold: 1.1,
     },
 };
 
