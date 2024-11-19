@@ -107,8 +107,6 @@ export class InventoryPositionChecker {
 
     public closeInventory(playerId: number, inventoryId: string): void {
         if (!this.trunkOpened[inventoryId]) {
-            this.logger.error(`Trying to close an inventory that is not opened: ${inventoryId}`);
-
             return;
         }
 
