@@ -24,7 +24,7 @@ export class VehicleCommandProvider {
             this.logger.error(`Vehicle ${model} could not be spawned`);
         }
     }
-    @Command('dv', { role: ['staff', 'admin'], description: 'Delete Vehicle (Admin Only)' })
+    @Command('dv', { role: ['staff', 'admin', 'helper'], description: 'Delete Vehicle (Admin Only)' })
     async deleteCarCommand(source: number) {
         const closestVehicle = await this.vehicleSpawner.getClosestVehicle(source);
 
