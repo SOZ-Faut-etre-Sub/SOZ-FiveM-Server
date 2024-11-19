@@ -232,7 +232,7 @@ const getInventoryTitle = (type: InventoryType): string => {
             return 'Planches';
 
         case InventoryType.RecyclerProcessing:
-            return 'Incinerateur';
+            return 'Bruleur-Chad';
 
         case InventoryType.SawdustStorage:
             return 'Sciure';
