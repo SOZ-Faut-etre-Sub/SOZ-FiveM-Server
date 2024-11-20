@@ -30,6 +30,9 @@ const BasePermissions: Partial<Record<JobPermission, JobPermissionData>> = {
     [JobPermission.ReadDocumentation]: { label: 'Lecture de la documentation sur le panel entreprise' },
     [JobPermission.WriteDocumentation]: { label: 'Edition de la documentation sur le panel entreprise' },
     [JobPermission.ManageDocumentation]: { label: 'Gestion de la documentation sur le panel entreprise' },
+    [JobPermission.AssignCertification]: { label: 'Assigner des certifications/formations sur le panel' },
+    [JobPermission.ManageCertification]: { label: 'Gérer les certifications/formations sur le panel' },
+    [JobPermission.ManageRoster]: { label: 'Gérer les photos & matricules dans les effectifs panel' },
 };
 
 export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
@@ -84,9 +87,6 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
             [JobPermission.VehicleTransfert]: { label: 'Accès aux transferts de véhicules' },
             [JobPermission.Investigation]: { label: 'Accès aux enquêtes' },
             [JobPermission.ManageInvestigation]: { label: 'Gérer les enquêtes' },
-            [JobPermission.AssignCertification]: { label: 'Assigner des certifications aux agents' },
-            [JobPermission.ManageCertification]: { label: 'Gérer les certifications' },
-            [JobPermission.ManageRoster]: { label: 'Gérer les photos/matricules dans les effectifs panel' },
             [JobPermission.FDOFedPound]: { label: 'Mise en fourrière fédérale' },
         },
         bossZones: [
@@ -114,9 +114,6 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
             [JobPermission.VehicleTransfert]: { label: 'Accès aux transferts de véhicules' },
             [JobPermission.Investigation]: { label: 'Accès aux enquêtes' },
             [JobPermission.ManageInvestigation]: { label: 'Gérer les enquêtes' },
-            [JobPermission.AssignCertification]: { label: 'Assigner des certifications aux agents' },
-            [JobPermission.ManageCertification]: { label: 'Gérer les certifications' },
-            [JobPermission.ManageRoster]: { label: 'Gérer les photos/matricules dans les effectifs panel' },
             [JobPermission.FDOFedPound]: { label: 'Mise en fourrière fédérale' },
         },
         bossZones: [
@@ -144,9 +141,6 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
             [JobPermission.VehicleTransfert]: { label: 'Accès aux transferts de véhicules' },
             [JobPermission.Investigation]: { label: 'Accès aux enquêtes' },
             [JobPermission.ManageInvestigation]: { label: 'Gérer les enquêtes' },
-            [JobPermission.AssignCertification]: { label: 'Assigner des certifications aux agents' },
-            [JobPermission.ManageCertification]: { label: 'Gérer les certifications' },
-            [JobPermission.ManageRoster]: { label: 'Gérer les photos/matricules dans les effectifs panel' },
             [JobPermission.FDOFedPound]: { label: 'Mise en fourrière fédérale' },
         },
         bossZones: [
@@ -555,8 +549,6 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
             [JobPermission.VehicleTransfert]: { label: 'Accès aux transferts de véhicules' },
             [JobPermission.Investigation]: { label: 'Accès aux enquêtes' },
             [JobPermission.ManageInvestigation]: { label: 'Gérer les enquêtes' },
-            [JobPermission.AssignCertification]: { label: 'Assigner des certifications aux agents' },
-            [JobPermission.ManageCertification]: { label: 'Gérer les certifications' },
             [JobPermission.FDOFedPound]: { label: 'Mise en fourrière fédérale' },
         },
         bossZones: [
