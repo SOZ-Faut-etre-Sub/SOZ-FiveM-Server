@@ -12,6 +12,7 @@ type BorderBoxProps = {
     showBorderOnHover?: boolean;
     blur?: boolean;
     duration?: string;
+    useCardColor?: boolean;
 };
 
 export const BorderBox: FunctionComponent<PropsWithChildren<BorderBoxProps>> = ({
@@ -22,10 +23,11 @@ export const BorderBox: FunctionComponent<PropsWithChildren<BorderBoxProps>> = (
     children,
     blur = true,
     duration = 'duration-1000',
+    useCardColor = false,
 }) => {
     const glassmorphism = useSelector((state: RootState) => state.hud.useGlassmorphism);
 
-    const { glassmorphismColors } = useHudColor();
+    const { glassmorphismColors, card } = useHudColor();
     const childrenRef = useRef<HTMLDivElement>(null);
 
     const { height } = childrenRef.current?.getBoundingClientRect() || { height: undefined };
@@ -73,7 +75,7 @@ export const BorderBox: FunctionComponent<PropsWithChildren<BorderBoxProps>> = (
             <div
                 className="absolute inset-0 transition-all duration-1000"
                 style={{
-                    background: glassmorphismColors.background,
+                    background: useCardColor ? card : glassmorphismColors.background,
                 }}
             />
         </div>

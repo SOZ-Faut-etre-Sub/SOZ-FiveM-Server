@@ -33,6 +33,7 @@ export type CraftRewardTier = {
 
 export type CraftInput = {
     check?: boolean;
+    checkAmount?: number;
     count: number;
     metadata?: InventoryItemMetadata;
 };
