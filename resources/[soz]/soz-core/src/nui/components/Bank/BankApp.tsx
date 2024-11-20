@@ -6,12 +6,11 @@ import { BankUiData } from '../../../shared/bank';
 import { NuiEvent } from '../../../shared/event/nui';
 import { fetchNui } from '../../fetch';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
+import { ApplicationContainer, ApplicationContent } from '../Styleguide/Application';
 import ArchiveIcon from './assets/archive.svg';
 import HomeIcon from './assets/home.svg';
 import SignOutIcon from './assets/sign_out.svg';
 import UserAddIcon from './assets/user_add.svg';
-import { AppContent } from './component/AppContent';
-import { ApplicationContainer } from './component/Application';
 import { Button } from './component/Button';
 import { Card } from './component/Card';
 import { Header } from './component/Header';
@@ -71,7 +70,7 @@ export const BankApp: FunctionComponent = () => {
 
     return (
         <ApplicationContainer size="full" onClickOutside={resetApp}>
-            <AppContent open={showApp}>
+            <ApplicationContent open={showApp}>
                 <MemoryRouter>
                     <div className="flex flex-col gap-10 w-3/12">
                         <div className="flex justify-center items-center h-24">
@@ -220,7 +219,7 @@ export const BankApp: FunctionComponent = () => {
                         </Routes>
                     </div>
                 </MemoryRouter>
-            </AppContent>
+            </ApplicationContent>
         </ApplicationContainer>
     );
 };
