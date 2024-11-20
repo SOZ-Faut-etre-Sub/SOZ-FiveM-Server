@@ -21,9 +21,15 @@ const BasePermissions: Partial<Record<JobPermission, JobPermissionData>> = {
     },
     [JobPermission.SocietyPublicPort]: { label: 'Ranger/sortir les véhicules des ports publics' },
     [JobPermission.SocietyPrivatePort]: { label: 'Ranger/sortir les véhicules des ports privés' },
-    [JobPermission.SocietyViewCompanyPanel]: { label: 'Accès au panel entreprise' },
     [JobPermission.SocietyShop]: { label: 'Accès aux magasins de société' },
     [JobPermission.OnDutyView]: { label: 'Voir les employé(e)s en service' },
+    [JobPermission.SocietyViewCompanyPanel]: { label: 'Accès au panel patron' },
+    [JobPermission.NewCompanyPanelAccess]: { label: 'Accès au panel entreprise' },
+    [JobPermission.EmployeesListRead]: { label: 'Accès aux données employés sur le panel entreprise' },
+    [JobPermission.EmployeesListWrite]: { label: 'Edition des données employés sur le panel entreprise' },
+    [JobPermission.ReadDocumentation]: { label: 'Lecture de la documentation sur le panel entreprise' },
+    [JobPermission.WriteDocumentation]: { label: 'Edition de la documentation sur le panel entreprise' },
+    [JobPermission.ManageDocumentation]: { label: 'Gestion de la documentation sur le panel entreprise' },
 };
 
 export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
