@@ -2,6 +2,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
 import { WeaponName } from '../../shared/weapons/weapon';
+import { WEAPON_DIGISCANNER } from '../job/police/police.provider';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { WeaponService } from '../weapon/weapon.service';
 
@@ -13,7 +14,11 @@ export class HudWeaponProvider {
     @Inject(NuiDispatch)
     private readonly nuiDispatch: NuiDispatch;
 
-    private weaponWithoutHud: number[] = [GetHashKey(WeaponName.UNARMED), GetHashKey(WeaponName.STUNGUN)];
+    private weaponWithoutHud: number[] = [
+        GetHashKey(WeaponName.UNARMED),
+        GetHashKey(WeaponName.STUNGUN),
+        WEAPON_DIGISCANNER,
+    ];
 
     private _haveWeapon = false;
 
