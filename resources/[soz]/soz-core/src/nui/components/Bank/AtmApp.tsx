@@ -7,8 +7,7 @@ import { NuiMethodMap } from '../../../shared/nui';
 import { fetchNui } from '../../fetch';
 import { usePlayer } from '../../hook/data';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
-import { AppContent } from './component/AppContent';
-import { ApplicationContainer } from './component/Application';
+import { ApplicationContainer, ApplicationContent } from '../Styleguide/Application';
 import { Button } from './component/Button';
 import { Card } from './component/Card';
 import { Header } from './component/Header';
@@ -89,7 +88,7 @@ export const AtmApp: FunctionComponent = () => {
 
     return (
         <ApplicationContainer size="large" onClickOutside={resetApp}>
-            <AppContent open={showApp}>
+            <ApplicationContent open={showApp}>
                 <MemoryRouter>
                     <div className="flex flex-col w-full gap-2.5">
                         <Header
@@ -156,7 +155,7 @@ export const AtmApp: FunctionComponent = () => {
                         </form>
                     </div>
                 </MemoryRouter>
-            </AppContent>
+            </ApplicationContent>
         </ApplicationContainer>
     );
 };

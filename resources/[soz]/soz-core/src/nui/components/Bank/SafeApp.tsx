@@ -9,8 +9,7 @@ import { fetchNui } from '../../fetch';
 import { usePlayer } from '../../hook/data';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 import { useHudColor } from '../Hud/hooks/useHudColor';
-import { AppContent } from './component/AppContent';
-import { ApplicationContainer } from './component/Application';
+import { ApplicationContainer, ApplicationContent } from '../Styleguide/Application';
 import { Button } from './component/Button';
 import { Card } from './component/Card';
 import { Input } from './component/Input';
@@ -102,7 +101,7 @@ export const SafeApp: FunctionComponent = () => {
 
     return (
         <ApplicationContainer size="small" onClickOutside={resetApp}>
-            <AppContent open={showApp}>
+            <ApplicationContent open={showApp}>
                 <form onSubmit={handleSubmit(submitForm)} className="flex flex-col w-full justify-around">
                     <div className="flex flex-col justify-center items-center gap-4">
                         <img
@@ -216,7 +215,7 @@ export const SafeApp: FunctionComponent = () => {
 
                     <Button disabled={isSubmitting}>{action === 0 ? 'Retirer' : 'Déposer'} l'argent</Button>
                 </form>
-            </AppContent>
+            </ApplicationContent>
         </ApplicationContainer>
     );
 };

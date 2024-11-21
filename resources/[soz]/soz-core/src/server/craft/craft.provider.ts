@@ -76,6 +76,7 @@ export class CraftProvider {
 
                 for (const [inputItem, input] of Object.entries(recipe.inputs)) {
                     input.check = inventory.hasEnoughItem(inputItem, input.count, true, input.metadata);
+                    input.checkAmount = inventory.getItemCount(inputItem, false, input.metadata);
                     recipe.canCraft = recipe.canCraft && input.check;
                 }
             }
