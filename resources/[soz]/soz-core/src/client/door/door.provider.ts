@@ -355,7 +355,7 @@ export class DoorProvider {
                             subdoor.coords[0],
                             subdoor.coords[1],
                             subdoor.coords[2],
-                            1.0,
+                            2.0,
                             subdoor.model,
                             false,
                             false,
