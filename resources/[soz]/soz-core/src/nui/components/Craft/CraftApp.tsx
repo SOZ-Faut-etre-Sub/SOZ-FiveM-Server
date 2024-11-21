@@ -96,59 +96,57 @@ export const CraftApp: FunctionComponent = () => {
     }
 
     return (
-        <>
-            <ApplicationContainer size="full" onClickOutside={() => setCraftList(null)}>
-                <ApplicationContent open={Boolean(craftList)}>
-                    <div className="flex flex-col gap-5 w-full">
-                        <header className="flex gap-10">
-                            <div className="flex justify-between items-center w-4/5">
-                                <div>
-                                    <h1 className="uppercase text-base font-light">{subtitle}</h1>
-                                    <h2 className="uppercase text-2xl font-semibold">{title}</h2>
-                                </div>
-                                <div className="flex items-center gap-1">
-                                    <ApplicationCheckbox
-                                        checked={showUnavailable}
-                                        onChange={() => setShowUnavailable(show => !show)}
-                                    />
-                                    <label className="ml-2">Afficher les objets indisponibles</label>
-                                </div>
+        <ApplicationContainer size="full" onClickOutside={() => setCraftList(null)}>
+            <ApplicationContent open={Boolean(craftList)}>
+                <div className="flex flex-col gap-5 w-full">
+                    <header className="flex gap-10">
+                        <div className="flex justify-between items-center w-4/5">
+                            <div>
+                                <h1 className="uppercase text-base font-light">{subtitle}</h1>
+                                <h2 className="uppercase text-2xl font-semibold">{title}</h2>
                             </div>
-                            <div className="flex justify-end items-center w-1/5">
-                                <ApplicationButton variant="secondary" onClick={() => setCraftList(null)}>
-                                    Fermer
-                                </ApplicationButton>
-                            </div>
-                        </header>
-                        <section className="flex gap-10 min-h-0">
-                            <div className="flex flex-col w-4/5 gap-5 overflow-y-auto h-full pr-4 scrollbar scrollbar-w-1.5 scrollbar-thumb-white scrollbar-track-[#111111CC] scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
-                                {Object.keys(craftList.categories)
-                                    .sort((a, b) => a.localeCompare(b))
-                                    .map(item => (
-                                        <ItemTierList
-                                            key={'craft_' + item}
-                                            craftList={craftList}
-                                            itemIcon={itemIcon}
-                                            selected={selected}
-                                            setSelected={setSelected}
-                                            category={item}
-                                            showUnavailable={showUnavailable}
-                                        />
-                                    ))}
-                            </div>
-                            <div className="flex justify-end items-center w-1/5">
-                                <SelectedItem
-                                    isCrafting={isCrafting}
-                                    craftList={craftList}
-                                    doCraft={doCraft}
-                                    selected={selected}
+                            <div className="flex items-center gap-1">
+                                <ApplicationCheckbox
+                                    checked={showUnavailable}
+                                    onChange={() => setShowUnavailable(show => !show)}
                                 />
+                                <label className="ml-2">Afficher les objets indisponibles</label>
                             </div>
-                        </section>
-                    </div>
-                </ApplicationContent>
-            </ApplicationContainer>
-        </>
+                        </div>
+                        <div className="flex justify-end items-center w-1/5">
+                            <ApplicationButton variant="secondary" onClick={() => setCraftList(null)}>
+                                Fermer
+                            </ApplicationButton>
+                        </div>
+                    </header>
+                    <section className="flex gap-10 min-h-0">
+                        <div className="flex flex-col w-4/5 gap-5 overflow-y-auto h-full pr-4 scrollbar scrollbar-w-1.5 scrollbar-thumb-white scrollbar-track-[#111111CC] scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
+                            {Object.keys(craftList.categories)
+                                .sort((a, b) => a.localeCompare(b))
+                                .map(item => (
+                                    <ItemTierList
+                                        key={'craft_' + item}
+                                        craftList={craftList}
+                                        itemIcon={itemIcon}
+                                        selected={selected}
+                                        setSelected={setSelected}
+                                        category={item}
+                                        showUnavailable={showUnavailable}
+                                    />
+                                ))}
+                        </div>
+                        <div className="flex justify-end items-center w-1/5">
+                            <SelectedItem
+                                isCrafting={isCrafting}
+                                craftList={craftList}
+                                doCraft={doCraft}
+                                selected={selected}
+                            />
+                        </div>
+                    </section>
+                </div>
+            </ApplicationContent>
+        </ApplicationContainer>
     );
 };
 
@@ -192,6 +190,7 @@ const ItemTierList: FunctionComponent<ItemTierListProps> = ({
 
                         return (
                             <div
+                                key={itemId}
                                 className="size-40 rounded-xl cursor-pointer"
                                 onClick={() =>
                                     setSelected({
@@ -200,12 +199,7 @@ const ItemTierList: FunctionComponent<ItemTierListProps> = ({
                                     })
                                 }
                             >
-                                <BorderBox
-                                    key={itemId}
-                                    disableBorder={!isSelected}
-                                    borderClassName="rounded-xl"
-                                    useCardColor
-                                >
+                                <BorderBox disableBorder={!isSelected} borderClassName="rounded-xl" useCardColor>
                                     <img
                                         alt={item.name}
                                         className={cn('h-full w-full object-contain', {
@@ -250,17 +244,15 @@ const SelectedItem: FunctionComponent<SelectedItemProps> = ({ selected, craftLis
         input => input.checkAmount >= 0 && input.checkAmount >= input.count
     );
 
-    const maxCraftableItem = useMemo(
-        () =>
-            Object.values(recipe.inputs).reduce((acc, input) => {
-                if (input.checkAmount <= 0) {
-                    return 0;
-                }
+    const maxCraftableItem = useMemo(() => {
+        return Object.values(recipe.inputs).reduce((acc, input) => {
+            if (input.checkAmount <= 0) {
+                return 0;
+            }
 
-                return Math.max(acc, Math.floor(input.checkAmount / input.count));
-            }, 0),
-        [recipe]
-    );
+            return Math.min(acc, Math.floor(input.checkAmount / input.count));
+        }, Number.MAX_VALUE);
+    }, [recipe]);
 
     const cancelDrugTransform = async () => {
         if (isCrafting) {
@@ -274,11 +266,7 @@ const SelectedItem: FunctionComponent<SelectedItemProps> = ({ selected, craftLis
     });
 
     const increaseAmount = useCallback(() => {
-        const amount = getValues('amount');
-        if (amount >= maxCraftableItem) {
-            return;
-        }
-        setValue('amount', amount + 1);
+        setValue('amount', getValues('amount') + 1);
     }, [getValues, setValue, maxCraftableItem]);
 
     const decreaseAmount = useCallback(() => {
@@ -325,16 +313,17 @@ const SelectedItem: FunctionComponent<SelectedItemProps> = ({ selected, craftLis
                 </h2>
                 <section className="space-y-2.5 overflow-y-auto h-full pr-2.5 scrollbar scrollbar-w-1.5 scrollbar-thumb-white scrollbar-track-[#111111CC] scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
                     {Object.entries(recipe.inputs)
-                        .sort(([, a], [, b]) => b.checkAmount - a.checkAmount)
+                        .sort(([, a], [, b]) => a.checkAmount - b.checkAmount)
                         .sort(([, a], [, b]) => Number(a.check) - Number(b.check))
                         .map(([name, input]) => {
                             const requiredItem = items.find(i => i.name === name);
+                            const itemAmount = watch('amount') * input.count;
 
                             return (
                                 <div key={name} className="flex justify-between items-center gap-2">
                                     <img
                                         alt={requiredItem.label}
-                                        className="h-8 w-8"
+                                        className="size-8"
                                         src={itemIcon(requiredItem)}
                                         onError={e =>
                                             (e.currentTarget.src =
@@ -348,15 +337,15 @@ const SelectedItem: FunctionComponent<SelectedItemProps> = ({ selected, craftLis
                                     <div className="flex flex-col items-end">
                                         <span
                                             className={cn('leading-4', {
-                                                'text-[#AD1F1F]': !isDaltonism && input.checkAmount <= 0,
-                                                'text-[#268116]': !isDaltonism && input.checkAmount > 0,
-                                                'text-[#B314E8]': isDaltonism && input.checkAmount <= 0,
-                                                'text-[#00FFFF]': isDaltonism && input.checkAmount > 0,
+                                                'text-[#AD1F1F]': !isDaltonism && input.checkAmount <= itemAmount,
+                                                'text-[#268116]': !isDaltonism && input.checkAmount > itemAmount,
+                                                'text-[#B314E8]': isDaltonism && input.checkAmount <= itemAmount,
+                                                'text-[#00FFFF]': isDaltonism && input.checkAmount > itemAmount,
                                             })}
                                         >
                                             {input.checkAmount}
                                         </span>
-                                        <span className="leading-4">/{input.count}</span>
+                                        <span className="leading-4">/{itemAmount}</span>
                                     </div>
                                 </div>
                             );
@@ -389,7 +378,6 @@ const SelectedItem: FunctionComponent<SelectedItemProps> = ({ selected, craftLis
                         variant="secondary"
                         btnClassName="aspect-square"
                         onClick={increaseAmount}
-                        disabled={watch('amount') >= maxCraftableItem}
                     >
                         +
                     </ApplicationButton>

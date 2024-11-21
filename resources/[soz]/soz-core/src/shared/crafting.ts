@@ -15,6 +15,7 @@ export type CriminalCraftingRequirements = {
 
 export type CriminalCraftingCheckItem = {
     check: boolean;
+    checkAmount: number;
     count: number;
 };
 
