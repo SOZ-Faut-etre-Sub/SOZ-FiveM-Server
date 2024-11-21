@@ -526,263 +526,199 @@ export const VehBacklist = {
 };
 export const UnknownVehData = {
     rating: 0,
-    tractionOnSoft: 100,
-    tractionOnHard: 100,
 };
 
 // rating: Effect of the wheel ability to get out of mood. 0 neutral - Negative more difficult - Positive easier
-// tractionSpeedLostOnSoft: Affect the max speed of the vehicle on soft surface
 export const VehData = {
     models: {
         seminole2: {
             rating: 20,
-            tractionSpeedLostOnSoft: false,
         },
         sandking: {
             rating: 20,
-            tractionSpeedLostOnSoft: false,
         },
         sandking2: {
             rating: 20,
-            tractionSpeedLostOnSoft: false,
         },
         issi2: {
             rating: -10,
-            tractionSpeedLostOnSoft: true,
         },
         panto: {
             rating: -20,
-            tractionSpeedLostOnSoft: true,
         },
         comet4: {
             rating: 30,
-            tractionSpeedLostOnSoft: false,
         },
 
         // Bicycle
         bmx: {
             rating: 50,
-            tractionSpeedLostOnSoft: false,
         },
         inductor: {
             rating: 80,
-            tractionSpeedLostOnSoft: false,
         },
         scorcher: {
             rating: 80,
-            tractionSpeedLostOnSoft: false,
         },
 
         // dirt bikes
         avarus: {
             rating: 40,
-            tractionSpeedLostOnSoft: false,
         },
         bcso30: {
             rating: 70,
-            tractionSpeedLostOnSoft: false,
         },
         bf400: {
             rating: 70,
-            tractionSpeedLostOnSoft: false,
         },
         blazer: {
             rating: 65,
-            tractionSpeedLostOnSoft: false,
         },
         blazer2: {
             rating: 65,
-            tractionSpeedLostOnSoft: false,
         },
         blazer3: {
             rating: 50,
-            tractionSpeedLostOnSoft: false,
         },
         blazer4: {
             rating: 40,
-            tractionSpeedLostOnSoft: false,
         },
         blazer5: {
             rating: 40,
-            tractionSpeedLostOnSoft: false,
         },
         cliffhanger: {
             rating: 60,
-            tractionSpeedLostOnSoft: false,
         },
         deamon: {
             rating: 50,
-            tractionSpeedLostOnSoft: false,
         },
         deamon2: {
             rating: 50,
-            tractionSpeedLostOnSoft: false,
         },
         enduro: {
             rating: 60,
-            tractionSpeedLostOnSoft: false,
         },
         esskey: {
             rating: 60,
-            tractionSpeedLostOnSoft: false,
         },
         gargoyle: {
             rating: 70,
-            tractionSpeedLostOnSoft: false,
         },
         hexer: {
             rating: 50,
-            tractionSpeedLostOnSoft: false,
         },
         innovation: {
             rating: 50,
-            tractionSpeedLostOnSoft: false,
         },
         manchez: {
             rating: 60,
-            tractionSpeedLostOnSoft: false,
         },
         manchez3: {
             rating: 60,
-            tractionSpeedLostOnSoft: false,
         },
         manchez2: {
             rating: 60,
-            tractionSpeedLostOnSoft: false,
         },
         nemesis: {
             rating: 40,
-            tractionSpeedLostOnSoft: false,
         },
         nightblade: {
             rating: 40,
-            tractionSpeedLostOnSoft: false,
         },
         pcj: {
             rating: 40,
-            tractionSpeedLostOnSoft: false,
         },
         powersurge: {
             rating: 40,
-            tractionSpeedLostOnSoft: false,
         },
         ratbike: {
             rating: 50,
-            tractionSpeedLostOnSoft: false,
         },
         rrocket: {
             rating: 60,
-            tractionSpeedLostOnSoft: false,
         },
         sanchez: {
             rating: 60,
-            tractionSpeedLostOnSoft: false,
         },
         sanchez2: {
             rating: 60,
-            tractionSpeedLostOnSoft: false,
         },
         sanctus: {
             rating: 60,
-            tractionSpeedLostOnSoft: false,
         },
         sovereign: {
             rating: 60,
-            tractionSpeedLostOnSoft: false,
         },
         stryder: {
             rating: 60,
-            tractionSpeedLostOnSoft: false,
         },
         vader: {
             rating: 70,
-            tractionSpeedLostOnSoft: false,
         },
         verus: {
             rating: 70,
-            tractionSpeedLostOnSoft: false,
         },
         wolfsbane: {
             rating: 50,
-            tractionSpeedLostOnSoft: false,
         },
         zombiea: {
             rating: 50,
-            tractionSpeedLostOnSoft: false,
         },
         zombie2: {
             rating: 50,
-            tractionSpeedLostOnSoft: false,
         },
     },
     classes: {
         0: {
             rating: 5,
-            tractionSpeedLostOnSoft: true,
         }, // Compacts
         1: {
             rating: -5,
-            tractionSpeedLostOnSoft: true,
         }, // Sedans
         2: {
             rating: 15,
-            tractionSpeedLostOnSoft: false,
         }, // SUVs
         3: {
             rating: 0,
-            tractionSpeedLostOnSoft: true,
         }, // Coupes
         4: {
             rating: -5,
-            tractionSpeedLostOnSoft: true,
         }, // Muscle
         5: {
             rating: 5,
-            tractionSpeedLostOnSoft: false,
         }, // Sports Classics
         6: {
             rating: 5,
-            tractionSpeedLostOnSoft: true,
         }, // Sports
         7: {
             rating: 5,
-            tractionSpeedLostOnSoft: true,
         }, // Super
         8: {
             rating: -10,
-            tractionSpeedLostOnSoft: true,
         }, // Motorcycles
         9: {
             rating: 35,
-            tractionSpeedLostOnSoft: false,
         }, // Off-road
         10: {
             rating: -10,
-            tractionSpeedLostOnSoft: false,
         }, // Industrial
         11: {
             rating: -10,
-            tractionSpeedLostOnSoft: false,
         }, // Utility
         12: {
             rating: -5,
-            tractionSpeedLostOnSoft: true,
         }, // Vans
         17: {
             rating: 10,
-            tractionSpeedLostOnSoft: false,
         }, // Service
         18: {
             rating: 10,
-            tractionSpeedLostOnSoft: false,
         }, // Emergency
         19: {
             rating: 15,
-            tractionSpeedLostOnSoft: false,
         }, // Military
         20: {
             rating: -5,
-            tractionSpeedLostOnSoft: false,
         }, // Commercial
     },
 };
