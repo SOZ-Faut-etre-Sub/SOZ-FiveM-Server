@@ -19,7 +19,7 @@ import { rad, Vector3 } from '@public/shared/polyzone/vector';
 import { AnimationStopReason } from '../../../shared/animation';
 import { AnimationService } from '../../animation/animation.service';
 
-const WEAPON_DIGISCANNER = -38085395;
+export const WEAPON_DIGISCANNER = -38085395;
 const RadarRange = 40;
 const stations = {
     LSPD: { label: 'Los Santos Police Department', blip: { sprite: 60 }, coords: [632.76, 7.31, 82.63] },
