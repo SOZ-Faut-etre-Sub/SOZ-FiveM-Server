@@ -5,9 +5,9 @@ import { useNuiEvent, useNuiFocus } from '@public/nui/hook/nui';
 import { CraftsList } from '@public/shared/craft/craft';
 import { NuiEvent } from '@public/shared/event';
 import { Item } from '@public/shared/item';
-import classNames from 'classnames';
 import cn from 'classnames';
-import { FunctionComponent, useCallback, useState } from 'react';
+import { FunctionComponent, useCallback, useEffect, useMemo, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { useHudColor } from '../Hud/hooks/useHudColor';
 import {
@@ -54,34 +54,42 @@ export const CraftApp: FunctionComponent = () => {
         setCraftList(null);
     });
 
-    const doCraft = useCallback(async () => {
-        if (!selected) {
-            return;
-        }
-
-        setIsCrafting(true);
-
-        let list: CraftsList = null;
-        do {
-            list = await fetchNui<any, CraftsList>(NuiEvent.CraftDoRecipe, {
-                itemId: selected.id,
-                category: selected.category,
-                type: craftList.type,
-            });
-
-            setCraftList(list);
-        } while (list.categories[selected.category].recipes[selected.id].canCraft && !list.cancelled);
-
-        setIsCrafting(false);
-
-        setCraftList(state => {
-            if (!state) {
-                return null;
+    const doCraft = useCallback(
+        async (amount: number) => {
+            if (!selected) {
+                return;
             }
 
-            return list;
-        });
-    }, [selected]);
+            setIsCrafting(true);
+
+            let list: CraftsList = null;
+
+            for (let i = 0; i < amount; i++) {
+                list = await fetchNui<any, CraftsList>(NuiEvent.CraftDoRecipe, {
+                    itemId: selected.id,
+                    category: selected.category,
+                    type: craftList.type,
+                });
+
+                setCraftList(list);
+
+                if (!list.categories[selected.category].recipes[selected.id].canCraft || list.cancelled) {
+                    break;
+                }
+            }
+
+            setIsCrafting(false);
+
+            setCraftList(state => {
+                if (!state) {
+                    return null;
+                }
+
+                return list;
+            });
+        },
+        [selected]
+    );
 
     if (!craftList || !selected) {
         return null;
@@ -173,9 +181,6 @@ const ItemTierList: FunctionComponent<ItemTierListProps> = ({
                         const item = items.find(i => i.name === itemId);
                         const check = recipe;
                         const isSelected = selected.id === itemId && selected.category === category;
-                        const classes = classNames('size-36 rounded-xl cursor-pointer', {
-                            grayscale: !check.canCraft,
-                        });
 
                         if (!showUnavailable && !check.canCraft) {
                             return null;
@@ -187,7 +192,7 @@ const ItemTierList: FunctionComponent<ItemTierListProps> = ({
 
                         return (
                             <div
-                                className={classes}
+                                className="size-40 rounded-xl cursor-pointer"
                                 onClick={() =>
                                     setSelected({
                                         id: itemId,
@@ -203,7 +208,9 @@ const ItemTierList: FunctionComponent<ItemTierListProps> = ({
                                 >
                                     <img
                                         alt={item.name}
-                                        className="h-full w-full object-contain"
+                                        className={cn('h-full w-full object-contain', {
+                                            grayscale: !check.canCraft,
+                                        })}
                                         src={itemIcon(item)}
                                         onError={e =>
                                             (e.currentTarget.src =
@@ -222,13 +229,19 @@ const ItemTierList: FunctionComponent<ItemTierListProps> = ({
 type SelectedItemProps = {
     selected: Selected;
     craftList: CraftsList;
-    doCraft: () => void;
+    doCraft: (amount: number) => void;
     isCrafting: boolean;
+};
+
+type CraftInputs = {
+    amount: number;
 };
 
 const SelectedItem: FunctionComponent<SelectedItemProps> = ({ selected, craftList, doCraft, isCrafting }) => {
     const items = useItems();
     const { isDaltonism } = useHudColor();
+
+    const { glassmorphismColors, color } = useHudColor();
 
     const selectedItem = items.find(i => i.name === selected.id);
     const recipe = craftList.categories[selected.category].recipes[selected.id];
@@ -237,11 +250,59 @@ const SelectedItem: FunctionComponent<SelectedItemProps> = ({ selected, craftLis
         input => input.checkAmount >= 0 && input.checkAmount >= input.count
     );
 
+    const maxCraftableItem = useMemo(
+        () =>
+            Object.values(recipe.inputs).reduce((acc, input) => {
+                if (input.checkAmount <= 0) {
+                    return 0;
+                }
+
+                return Math.max(acc, Math.floor(input.checkAmount / input.count));
+            }, 0),
+        [recipe]
+    );
+
     const cancelDrugTransform = async () => {
         if (isCrafting) {
             fetchNui(NuiEvent.CraftCancel);
         }
     };
+
+    const { register, handleSubmit, watch, reset, getValues, setValue } = useForm<CraftInputs>({
+        mode: 'onChange',
+        defaultValues: { amount: maxCraftableItem },
+    });
+
+    const increaseAmount = useCallback(() => {
+        const amount = getValues('amount');
+        if (amount >= maxCraftableItem) {
+            return;
+        }
+        setValue('amount', amount + 1);
+    }, [getValues, setValue, maxCraftableItem]);
+
+    const decreaseAmount = useCallback(() => {
+        const amount = getValues('amount');
+        if (amount <= 0) {
+            return;
+        }
+        setValue('amount', amount - 1);
+    }, [getValues, setValue, maxCraftableItem]);
+
+    const submitForm: SubmitHandler<CraftInputs> = async data => {
+        if (data.amount <= 0) {
+            return;
+        }
+
+        doCraft(data.amount);
+    };
+
+    const resetForm = useCallback(() => {
+        reset();
+        setValue('amount', maxCraftableItem);
+    }, [reset, setValue, maxCraftableItem]);
+
+    useEffect(resetForm, [recipe, maxCraftableItem]);
 
     if (!selectedItem) {
         return null;
@@ -284,9 +345,9 @@ const SelectedItem: FunctionComponent<SelectedItemProps> = ({ selected, craftLis
                                         {input.count}x {requiredItem.label}
                                     </span>
 
-                                    <div>
+                                    <div className="flex flex-col items-end">
                                         <span
-                                            className={cn({
+                                            className={cn('leading-4', {
                                                 'text-[#AD1F1F]': !isDaltonism && input.checkAmount <= 0,
                                                 'text-[#268116]': !isDaltonism && input.checkAmount > 0,
                                                 'text-[#B314E8]': isDaltonism && input.checkAmount <= 0,
@@ -295,7 +356,7 @@ const SelectedItem: FunctionComponent<SelectedItemProps> = ({ selected, craftLis
                                         >
                                             {input.checkAmount}
                                         </span>
-                                        <span>/{input.count}</span>
+                                        <span className="leading-4">/{input.count}</span>
                                     </div>
                                 </div>
                             );
@@ -303,19 +364,55 @@ const SelectedItem: FunctionComponent<SelectedItemProps> = ({ selected, craftLis
                 </section>
             </ApplicationCard>
 
-            {isCrafting ? (
-                <ApplicationButton
-                    variant="secondary"
-                    onClick={cancelDrugTransform}
-                    btnClassName="text-xl uppercase py-4"
-                >
-                    Annuler
-                </ApplicationButton>
-            ) : (
-                <ApplicationButton onClick={doCraft} disabled={!canCraft} btnClassName="text-xl uppercase py-4">
-                    Fabriquer
-                </ApplicationButton>
-            )}
+            <form onSubmit={handleSubmit(submitForm)} className="flex flex-col gap-5">
+                <div className="flex gap-2.5">
+                    <ApplicationButton
+                        type="button"
+                        variant="secondary"
+                        btnClassName="aspect-square"
+                        onClick={decreaseAmount}
+                        disabled={watch('amount') <= 0}
+                    >
+                        -
+                    </ApplicationButton>
+                    <input
+                        type="number"
+                        style={{
+                            color,
+                            backgroundColor: glassmorphismColors.background,
+                        }}
+                        className="block text-right w-full rounded-xl border-0 py-1.5 px-3 shadow-sm ring-1 ring-[#454754] ring-inset focus:ring-1 focus:ring-inset sm:text-sm sm:leading-6 placeholder:text-inherit placeholder:opacity-50"
+                        {...register('amount')}
+                    />
+                    <ApplicationButton
+                        type="button"
+                        variant="secondary"
+                        btnClassName="aspect-square"
+                        onClick={increaseAmount}
+                        disabled={watch('amount') >= maxCraftableItem}
+                    >
+                        +
+                    </ApplicationButton>
+                    <ApplicationButton type="button" variant="secondary" onClick={resetForm}>
+                        Tout
+                    </ApplicationButton>
+                </div>
+
+                {isCrafting ? (
+                    <ApplicationButton
+                        variant="secondary"
+                        type="reset"
+                        onClick={cancelDrugTransform}
+                        btnClassName="text-xl uppercase py-4"
+                    >
+                        Annuler
+                    </ApplicationButton>
+                ) : (
+                    <ApplicationButton type="submit" disabled={!canCraft} btnClassName="text-xl uppercase py-4">
+                        Fabriquer
+                    </ApplicationButton>
+                )}
+            </form>
         </div>
     );
 };
