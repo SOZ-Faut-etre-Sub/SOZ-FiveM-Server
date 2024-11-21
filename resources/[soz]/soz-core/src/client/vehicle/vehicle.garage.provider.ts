@@ -154,7 +154,7 @@ export class VehicleGarageProvider {
 
             if (garage.type === GarageType.Private) {
                 this.interactionProvider.createInteractionForCoords(
-                    coords,
+                    garage.id === 'lsmc_privateparking' ? coordsWithOffset : coords,
                     {
                         label: 'Parking privé',
                         event: 'all',
