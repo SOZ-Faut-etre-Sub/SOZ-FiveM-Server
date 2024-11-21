@@ -177,13 +177,15 @@ export class ProgressService {
         const beforeCallback = () => {
             options.start?.();
 
-            this.instructionalService.display([
-                'Appuyez sur',
-                Control.FrontendRRight,
-                'ou',
-                Control.CursorCancel,
-                'pour annuler',
-            ]);
+            if (options.canCancel) {
+                this.instructionalService.display([
+                    'Appuyez sur',
+                    Control.FrontendRRight,
+                    'ou',
+                    Control.CursorCancel,
+                    'pour annuler',
+                ]);
+            }
             this.nuiDispatch.dispatch('progress', 'Start', {
                 label,
                 duration,
