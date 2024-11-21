@@ -434,10 +434,6 @@ export class Inventory {
 
         // Case 3: Fishing bait + Fishing rod
         if (existingItem.type === 'fishing_rod' && inventoryItem.type === 'fishing_bait') {
-            if (existingItem.metadata?.bait) {
-                return Err('cannot_attach_bait');
-            }
-
             existingItem.metadata = {
                 ...(existingItem.metadata || {}),
                 bait: {
