@@ -1685,7 +1685,7 @@ export const ProperTorsos: Record<PlayerPedHash, Record<number, number>> = {
         [199]: 0,
         [200]: 1,
         [201]: 1,
-        [202]: 4,
+        [202]: 3,
         [203]: 8,
         [204]: 11,
         [205]: 3,
