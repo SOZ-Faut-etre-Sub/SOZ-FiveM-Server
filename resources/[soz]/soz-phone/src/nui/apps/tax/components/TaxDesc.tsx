@@ -6,7 +6,6 @@ import getImg from '../utils/getImg';
 type TaxDescType = {
     title: string;
     description: string;
-    consequences: string;
     taxAmount: number;
     whoModifies: string;
     id: string;
@@ -60,10 +59,6 @@ const TaxDesc = ({ tax, taxAmount }: { tax: TaxDescType; taxAmount?: string }) =
                 <section className="flex flex-col gap-4">
                     <span className="font-semibold text-green-500 text-lg">Qui la modifie?</span>
                     {getText(tax.whoModifies)}
-                </section>
-                <section className="flex flex-col gap-4">
-                    <span className="font-semibold text-green-500 text-lg">Quelles sont les conséquences?</span>
-                    {getText(tax.consequences)}
                 </section>
             </div>
             <div className="h-14 bg-white shadow-lg rounded-lg p-4 flex justify-between mt-14">
