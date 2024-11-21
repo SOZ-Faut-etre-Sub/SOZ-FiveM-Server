@@ -1352,7 +1352,7 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
         ],
     },
     bennys_luxury: {
-        name: 'Bennys - Concessionnaire',
+        name: 'New Gahray - Concessionnaire',
         type: GarageType.JobLuxury,
         job: JobType.Bennys,
         category: GarageCategory.Car,
@@ -1370,7 +1370,7 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
         ],
     },
     bennys_air: {
-        name: 'Bennys Air Parking',
+        name: 'New Gahray - Air Parking',
         type: GarageType.Job,
         job: JobType.Bennys,
         category: GarageCategory.Air,
