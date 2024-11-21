@@ -190,14 +190,22 @@ const Elevators: Record<ElevatorFloorName, ElevatorFloor> = {
     //MTP
     [ElevatorFloorName.mtp0]: {
         label: 'Rez-de-chaussée',
-        button: new BoxZone([-247.31, 6082.99, 30.39], 0.2, 0.4, { minZ: 30.39, maxZ: 33.39, heading: 315 }),
+        button: new BoxZone([-247.36, 6083.0, 31.38], 0.4, 0.6, {
+            heading: 135.27,
+            minZ: 30.38,
+            maxZ: 32.98,
+        }),
         upTo: [ElevatorFloorName.mtp1, ElevatorFloorName.mtp2],
         downTo: [],
         spawnPoint: [-247.59, 6081.25, 30.39, 313.56],
     },
     [ElevatorFloorName.mtp1]: {
         label: 'Étage',
-        button: new BoxZone([-247.31, 6082.99, 39.57], 0.1, 0.4, { minZ: 39.57, maxZ: 42.57, heading: 315 }),
+        button: new BoxZone([-247.36, 6083.0, 39.57], 0.4, 0.6, {
+            heading: 135.27,
+            minZ: 39.57,
+            maxZ: 42.57,
+        }),
         upTo: [ElevatorFloorName.mtp2],
         downTo: [ElevatorFloorName.mtp0],
         spawnPoint: [-247.32, 6081.62, 39.57, 328.02],
