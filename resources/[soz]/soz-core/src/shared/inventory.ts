@@ -70,7 +70,6 @@ export type MergeError =
     | 'item_not_found'
     | 'not_enough_space'
     | 'no_item_to_merge'
-    | 'cannot_attach_bait'
     | 'cannot_merge'
     | 'scientist_photo_expired';
 
@@ -87,7 +86,6 @@ export const MERGE_ERROR_MESSAGE: Record<MergeError, string> = {
     item_not_found: "L'objet n'a pas été trouvé !",
     not_enough_space: "L'inventaire n'a plus de place !",
     no_item_to_merge: 'Aucun objet à fusionner !',
-    cannot_attach_bait: "Vous ne pouvez pas attacher d'appât à cet objet !",
     cannot_merge: 'Vous ne pouvez pas fusionner ces objets !',
     scientist_photo_expired: "Cette preuve est périmée, elle n'est plus utilisable.",
 };
