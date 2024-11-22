@@ -224,6 +224,8 @@ export class ItemNutritionProvider {
             this.item.setItemUseCallback<LiquorItem>(liquorId, this.useFoodOrDrink.bind(this));
         }
 
+        this.item.setItemUseCallback<Item>('mushroom', this.useFoodOrDrink.bind(this));
+
         this.item.setItemUseCallback('lunchbox', this.useLunchbox.bind(this));
     }
 }

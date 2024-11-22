@@ -96,6 +96,7 @@ export type InventoryConfiguration = {
     allowedItemTypes?: ItemType[];
     allowedItems?: string[];
     notAllowedItems?: string[];
+    notAllowedItemTypes?: ItemType[];
     owner?: string;
     parentInventoryId?: string;
     requiredMetadata?: keyof InventoryItemMetadata;
@@ -154,6 +155,7 @@ export const INVENTORY_CONFIGURATIONS: Partial<Record<InventoryType, Partial<Inv
     [InventoryType.Fridge]: {
         maxWeight: 10000000,
         allowedItemTypes: ['food', 'drink', 'cocktail', 'liquor', 'crate', 'drug'],
+        allowedItems: ['mushroom'],
     },
     [InventoryType.Trunk]: {
         allowedItemTypes: [
@@ -835,7 +837,7 @@ export const VEHICLE_CONFIGURATION_BY_VEHICLE_MODEL: Record<number, Partial<Inve
     [joaat('speeder2')]: { maxWeight: 80000 },
 
     // FDF
-    [joaat('benson')]: { maxWeight: 250000 },
+    [joaat('benson')]: { maxWeight: 400000, notAllowedItemTypes: ['weapon', 'weapon_ammo'] },
     [joaat('tractor2')]: { maxWeight: 20000 },
     [joaat('graintrailer')]: { maxWeight: 100000 },
 
@@ -883,6 +885,15 @@ export const isItemAllowed = (
         for (const allowedType of configuration.allowedItemTypes) {
             if (type === allowedType) {
                 isAllowed = true;
+                break;
+            }
+        }
+    }
+
+    if (configuration.notAllowedItemTypes) {
+        for (const notAllowedType of configuration.notAllowedItemTypes) {
+            if (type === notAllowedType) {
+                isAllowed = false;
                 break;
             }
         }
