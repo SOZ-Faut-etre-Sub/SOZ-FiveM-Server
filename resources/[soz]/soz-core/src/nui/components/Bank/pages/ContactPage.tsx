@@ -105,9 +105,9 @@ export const ContactPage: FunctionComponent<HistoryProps> = ({ bankType, account
                     <Title size="xsmall">Nouveau bénéficiaire</Title>
 
                     <form onSubmit={handleSubmit(submitForm)} className="mt-2">
-                        <div className="flex flex-col gap-4 text-sm text-gray-500">
+                        <div className="flex flex-col gap-4 text-sm">
                             <div>
-                                <label htmlFor="label" className="block text-sm font-medium leading-6 text-gray-100">
+                                <label htmlFor="label" className="block text-sm font-medium leading-6">
                                     Nom
                                 </label>
                                 <Input
@@ -123,10 +123,7 @@ export const ContactPage: FunctionComponent<HistoryProps> = ({ bankType, account
                             </div>
 
                             <div>
-                                <label
-                                    htmlFor="accountid"
-                                    className="block text-sm font-medium leading-6 text-gray-100"
-                                >
+                                <label htmlFor="accountid" className="block text-sm font-medium leading-6">
                                     IBAN
                                 </label>
                                 <Input
