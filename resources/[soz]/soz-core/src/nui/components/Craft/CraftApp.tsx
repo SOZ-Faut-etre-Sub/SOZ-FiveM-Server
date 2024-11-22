@@ -94,7 +94,7 @@ export const CraftApp: FunctionComponent = () => {
     return (
         <ApplicationContainer size="full" onClickOutside={() => setCraftList(null)}>
             <ApplicationContent open={Boolean(craftList)}>
-                <div className="flex flex-col gap-5 w-full">
+                <div className="flex flex-col gap-5 w-full text-white">
                     <header className="flex gap-10">
                         <div className="flex justify-between items-center w-4/5">
                             <div>
@@ -225,7 +225,7 @@ const ItemTier: FunctionComponent<ItemTierProps> = ({
             <GlassMorphismContainer disableGameClone={true} borderClassName="rounded-xl" disableBorder={!isSelected}>
                 <ItemIcon
                     item={item}
-                    className={cn('h-full w-full object-contain', {
+                    className={cn('size-40', {
                         grayscale: !canCraft,
                     })}
                 />
@@ -247,9 +247,8 @@ type CraftInputs = {
 
 const SelectedItem: FunctionComponent<SelectedItemProps> = ({ selected, craftList, doCraft, isCrafting }) => {
     const items = useItems();
-    const { isDaltonism } = useHudColor();
 
-    const { glassmorphismColors, color } = useHudColor();
+    const { glassmorphismColors, isDaltonism, card } = useHudColor();
 
     const selectedItem = items.find(i => i.name === selected.id);
     const recipe = craftList.categories[selected.category].recipes[selected.id];
@@ -368,7 +367,7 @@ const SelectedItem: FunctionComponent<SelectedItemProps> = ({ selected, craftLis
                     <ApplicationButton
                         type="button"
                         variant="secondary"
-                        btnClassName="aspect-square"
+                        btnClassName="h-full aspect-square"
                         onClick={decreaseAmount}
                         disabled={watch('amount') <= 0}
                     >
@@ -377,16 +376,16 @@ const SelectedItem: FunctionComponent<SelectedItemProps> = ({ selected, craftLis
                     <input
                         type="number"
                         style={{
-                            color,
+                            boxShadow: `${card} 0px 0px 0px 0px inset, ${card} 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px`,
                             backgroundColor: glassmorphismColors.background,
                         }}
-                        className="block text-right w-full rounded-xl border-0 py-1.5 px-3 shadow-sm ring-1 ring-[#454754] ring-inset focus:ring-1 focus:ring-inset sm:text-sm sm:leading-6 placeholder:text-inherit placeholder:opacity-50"
+                        className="block text-right w-full rounded-xl border-0 py-1.5 px-3 shadow-sm focus:ring-1 focus:ring-inset sm:text-sm sm:leading-6 placeholder:text-inherit placeholder:opacity-50"
                         {...register('amount')}
                     />
                     <ApplicationButton
                         type="button"
                         variant="secondary"
-                        btnClassName="aspect-square"
+                        btnClassName="h-full aspect-square"
                         onClick={increaseAmount}
                     >
                         +
