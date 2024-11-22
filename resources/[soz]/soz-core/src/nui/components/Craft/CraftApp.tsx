@@ -320,7 +320,7 @@ const SelectedItem: FunctionComponent<SelectedItemProps> = ({ selected, craftLis
                             const itemAmount = watch('amount') * input.count;
 
                             return (
-                                <div key={name} className="flex justify-between items-center gap-2">
+                                <div key={name} className="flex items-center gap-2">
                                     <img
                                         alt={requiredItem.label}
                                         className="size-8"
@@ -330,17 +330,25 @@ const SelectedItem: FunctionComponent<SelectedItemProps> = ({ selected, craftLis
                                                 'https://soz.zerator.com/static/game/images/default/cat.webp')
                                         }
                                     />
-                                    <span>
+                                    <span className="grow">
                                         {input.count}x {requiredItem.label}
                                     </span>
 
                                     <div className="flex flex-col items-end">
                                         <span
                                             className={cn('leading-4', {
-                                                'text-[#AD1F1F]': !isDaltonism && input.checkAmount <= itemAmount,
-                                                'text-[#268116]': !isDaltonism && input.checkAmount > itemAmount,
-                                                'text-[#B314E8]': isDaltonism && input.checkAmount <= itemAmount,
-                                                'text-[#00FFFF]': isDaltonism && input.checkAmount > itemAmount,
+                                                'text-[#AD1F1F]':
+                                                    !isDaltonism &&
+                                                    (input.checkAmount === 0 || input.checkAmount < itemAmount),
+                                                'text-[#268116]':
+                                                    !isDaltonism &&
+                                                    (input.checkAmount !== 0 || input.checkAmount >= itemAmount),
+                                                'text-[#B314E8]':
+                                                    isDaltonism &&
+                                                    (input.checkAmount === 0 || input.checkAmount < itemAmount),
+                                                'text-[#00FFFF]':
+                                                    isDaltonism &&
+                                                    (input.checkAmount !== 0 || input.checkAmount >= itemAmount),
                                             })}
                                         >
                                             {input.checkAmount}
