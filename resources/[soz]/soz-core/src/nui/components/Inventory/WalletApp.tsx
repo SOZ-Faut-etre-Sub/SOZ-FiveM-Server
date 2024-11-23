@@ -37,17 +37,10 @@ export const WalletApp: FunctionComponent = () => {
         setCards(null);
     });
 
-    useNuiFocus(open, open, false);
+    useNuiFocus(open, open, open, null, open);
 
     useKeyPress('Escape', () => {
         setCards(null);
-    });
-
-    useKeyPress('F2', () => {
-        if (open) {
-            fetchNui(NuiEvent.InventoryGoBackPlayerInventory);
-            setCards(null);
-        }
     });
 
     useKeyPress('Backspace', () => {
