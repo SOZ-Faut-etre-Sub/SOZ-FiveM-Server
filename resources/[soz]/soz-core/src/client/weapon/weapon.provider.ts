@@ -171,7 +171,7 @@ export class WeaponProvider {
 
         const weapon = await emitRpc<InventoryItem | null>(
             RpcServerEvent.WEAPON_USE_AMMO,
-            this.weapon.getCurrentWeapon().slot,
+            this.weapon.getCurrentWeapon().metadata?.serial,
             ammoName,
             this.weapon.getMaxAmmoInClip()
         );
@@ -256,7 +256,7 @@ export class WeaponProvider {
         const isWearingGloves = this.clothingService.checkWearingGloves();
         emitNet(
             ServerEvent.WEAPON_SHOOTING,
-            weapon.slot,
+            weapon.metadata?.serial,
             weaponGroup,
             GetAmmoInClip(player, weapon.name)[1],
             isWearingGloves

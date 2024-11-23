@@ -98,7 +98,7 @@ export class WeaponProvider {
     @OnEvent(ServerEvent.WEAPON_SHOOTING)
     async onWeaponShooting(
         source: number,
-        weaponSlot: number,
+        weaponSerial: string,
         weaponGroup: number,
         playerAmmo: number,
         isWearingGloves: boolean
@@ -109,20 +109,20 @@ export class WeaponProvider {
             return;
         }
 
-        const weapon = playerInventory.getItemAtSlot(weaponSlot);
+        const weapon = playerInventory.findItem(item => item.metadata?.serial == weaponSerial);
 
         if (!weapon) {
             return;
         }
 
         if (weaponGroup == GetHashKey('GROUP_THROWN') && weapon.metadata.ammo <= 1) {
-            playerInventory.removeAtSlot(weaponSlot, 1);
+            playerInventory.removeAtSlot(weapon.slot, 1);
         } else if (weaponGroup == GetHashKey('GROUP_FIREEXTINGUISHER')) {
-            playerInventory.updateMetadataAtSlot(weaponSlot, {
+            playerInventory.updateMetadataAtSlot(weapon.slot, {
                 ammo: playerAmmo || 0,
             });
         } else {
-            playerInventory.updateMetadataAtSlot(weaponSlot, {
+            playerInventory.updateMetadataAtSlot(weapon.slot, {
                 ammo: weapon.metadata.ammo > 0 ? weapon.metadata.ammo - 1 : 0,
                 health: weapon.metadata.health > 0 ? weapon.metadata.health - 1 : 0,
             });
@@ -287,7 +287,7 @@ export class WeaponProvider {
     @Rpc(RpcServerEvent.WEAPON_USE_AMMO)
     async onUseAmmo(
         source: number,
-        weaponSlot: number,
+        weaponSerial: string,
         ammoName: string,
         ammoInClip: number
     ): Promise<InventoryItem | null> {
@@ -297,7 +297,7 @@ export class WeaponProvider {
             return;
         }
 
-        const weapon = inventory.getItemAtSlot(weaponSlot);
+        const weapon = inventory.findItem(item => item.metadata?.serial == weaponSerial);
 
         if (!weapon) {
             return;
@@ -323,11 +323,11 @@ export class WeaponProvider {
             return;
         }
 
-        inventory.updateMetadataAtSlot(weaponSlot, {
+        inventory.updateMetadataAtSlot(weapon.slot, {
             ammo: (weapon.metadata.ammo || 0) + ammoInClip,
         });
 
-        return inventory.getItemAtSlot(weaponSlot);
+        return inventory.getItemAtSlot(weapon.slot);
     }
 
     @OnEvent(ServerEvent.WEAPON_GET_SNOW)
