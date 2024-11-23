@@ -109,7 +109,7 @@ export class ShopProvider {
                     !IsEntityPlayingAnim(entity, 'random@robbery', 'robbery_main_female', 3)
                 );
             },
-            action: () => TriggerEvent('soz-core:client:weapon:open-gunsmith'),
+            action: () => TriggerEvent(ClientEvent.WEAPON_OPEN_GUNSMITH),
         },
         {
             icon: 'stonk/collecter',

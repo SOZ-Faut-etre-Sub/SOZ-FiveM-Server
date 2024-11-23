@@ -12,6 +12,7 @@ import { AdminMenuPlayerProvider } from './admin.menu.player.provider';
 import { AdminMenuProvider } from './admin.menu.provider';
 import { AdminMenuSkinProvider } from './admin.menu.skin.provider';
 import { AdminMenuVehicleProvider } from './admin.menu.vehicle.provider';
+import { AdminShopProvider } from './admin.shop.provider';
 import { AdminSpectateProvider } from './admin.spectate.provider';
 import { AdminZoneProvider } from './admin.zone.provider';
 
@@ -32,6 +33,7 @@ import { AdminZoneProvider } from './admin.zone.provider';
         AdminMenuMeteorProvider,
         AdminMenuHalloweenProvider,
         AdminZoneProvider,
+        AdminShopProvider,
     ],
 })
 export class AdminModule {}

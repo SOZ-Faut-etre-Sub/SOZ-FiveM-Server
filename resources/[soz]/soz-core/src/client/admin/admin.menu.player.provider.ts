@@ -187,7 +187,7 @@ export class AdminMenuPlayerProvider {
 
     @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleOpenGunSmith)
     public async handleOpenGunSmith(): Promise<void> {
-        emit(ClientEvent.WEAPON_OPEN_GUNSMITH);
+        emit(ClientEvent.WEAPON_OPEN_GUNSMITH, true);
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleSetAttribute)
