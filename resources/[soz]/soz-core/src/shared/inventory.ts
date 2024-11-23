@@ -71,7 +71,9 @@ export type MergeError =
     | 'not_enough_space'
     | 'no_item_to_merge'
     | 'cannot_merge'
-    | 'scientist_photo_expired';
+    | 'scientist_photo_expired'
+    | 'max_plates_reached'
+    | 'add_plates_on_stack';
 
 export const ADD_ERROR_MESSAGE: Record<AddError, string> = {
     item_not_found: "L'objet n'a pas été trouvé !",
@@ -88,6 +90,8 @@ export const MERGE_ERROR_MESSAGE: Record<MergeError, string> = {
     no_item_to_merge: 'Aucun objet à fusionner !',
     cannot_merge: 'Vous ne pouvez pas fusionner ces objets !',
     scientist_photo_expired: "Cette preuve est périmée, elle n'est plus utilisable.",
+    max_plates_reached: "Impossible d'attacher plus de ~b~plaques balistiques~s~ à ce ~b~gilet~s~.",
+    add_plates_on_stack: "Impossible d'attacher une ~b~plaque balistique~s~ à une ~b~pile de gilets.~s~",
 };
 
 export type InventoryConfiguration = {

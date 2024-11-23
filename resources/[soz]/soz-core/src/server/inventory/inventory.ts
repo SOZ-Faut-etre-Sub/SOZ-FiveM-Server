@@ -307,7 +307,7 @@ export class Inventory {
             name: item.name,
             type: item.type,
             amount,
-            metadata: metadata || {},
+            metadata: { ...metadata },
             slot,
         };
 
@@ -508,7 +508,11 @@ export class Inventory {
                 existingItem.metadata.plates += 1;
 
                 return Ok(1);
+            } else if (existingItem.metadata.plates === existingItemObject.maxplates) {
+                return Err('max_plates_reached');
             }
+        } else if (inventoryItem.name === 'armor_plate' && existingItemObject.maxplates && existingItem.amount > 1) {
+            return Err('add_plates_on_stack');
         }
 
         return Err('cannot_merge');
