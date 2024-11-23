@@ -2090,7 +2090,7 @@ export const getVehicleCustomPrice = (
         }
     }
 
-    return price;
+    return Math.round(price);
 };
 
 export const VehicleModificationCrimiPricing: Partial<
