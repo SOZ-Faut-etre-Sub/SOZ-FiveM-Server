@@ -67,7 +67,13 @@ export const CraftApp: FunctionComponent = () => {
                     type: craftList.type,
                 });
 
-                setCraftList(list);
+                setCraftList(state => {
+                    if (!state) {
+                        return null;
+                    }
+
+                    return list;
+                });
 
                 if (!list.categories[selected.category].recipes[selected.id].canCraft || list.cancelled) {
                     break;
