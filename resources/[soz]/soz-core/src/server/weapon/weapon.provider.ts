@@ -156,7 +156,7 @@ export class WeaponProvider {
                 '11': 0,
                 '12': position[0],
                 '13': position[1],
-                '14': position[2],
+                '14': position[2] - 0.9,
                 '15': 1,
             },
             {
@@ -174,7 +174,7 @@ export class WeaponProvider {
                 '11': 0,
                 '12': position[0],
                 '13': position[1],
-                '14': position[2],
+                '14': position[2] - 0.9,
                 '15': 1,
             },
             {
@@ -192,7 +192,7 @@ export class WeaponProvider {
                 '11': 0,
                 '12': position[0],
                 '13': position[1],
-                '14': position[2],
+                '14': position[2] - 0.9,
                 '15': 1,
             },
             {
@@ -210,7 +210,7 @@ export class WeaponProvider {
                 '11': 0,
                 '12': position[0],
                 '13': position[1],
-                '14': position[2],
+                '14': position[2] - 0.9,
                 '15': 1,
             },
         ];
