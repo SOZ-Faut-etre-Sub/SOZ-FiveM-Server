@@ -67,7 +67,13 @@ export const CraftApp: FunctionComponent = () => {
                     type: craftList.type,
                 });
 
-                setCraftList(list);
+                setCraftList(state => {
+                    if (!state) {
+                        return null;
+                    }
+
+                    return list;
+                });
 
                 if (!list.categories[selected.category].recipes[selected.id].canCraft || list.cancelled) {
                     break;
@@ -168,6 +174,7 @@ const ItemTierList: FunctionComponent<ItemTierListProps> = ({
                     .sort((a, b) => a[0].localeCompare(b[0]))
                     .map(([itemId, recipe]) => (
                         <ItemTier
+                            key={itemId}
                             category={category}
                             itemId={itemId}
                             canCraft={recipe.canCraft}
