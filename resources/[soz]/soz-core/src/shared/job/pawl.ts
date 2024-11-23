@@ -234,3 +234,8 @@ export const PawlCraftsLists: Record<string, CraftCategory> = {
         },
     },
 };
+
+export type MenuPawlData = {
+    showFields: boolean;
+    showResell: boolean;
+};

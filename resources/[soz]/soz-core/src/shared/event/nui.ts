@@ -187,6 +187,8 @@ export enum NuiEvent {
     OilShowRefinery = 'soz-core:nui:job:oil:show-refinery',
     OilShowReseller = 'soz-core:nui:job:oil:show-reseller',
     UpwDisplayBlips = 'soz-core:nui:job:upw:display-blips',
+    PawlShowFields = 'soz-core:nui:job:pawl:show-fields',
+    PawlShowResell = 'soz-core:nui:job:pawl:show-resell',
 
     PanelClosed = 'soz-core:nui:panel:closed',
 

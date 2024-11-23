@@ -159,6 +159,14 @@ export class BlipFactory {
         }
     }
 
+    public hideGroup(group: string, value: boolean): void {
+        for (const [id, gameBlip] of this.blips) {
+            if (gameBlip.blip.group === group) {
+                this.hide(id, value);
+            }
+        }
+    }
+
     public isHidden(id: string) {
         const gameBlip = this.blips.get(id);
 
