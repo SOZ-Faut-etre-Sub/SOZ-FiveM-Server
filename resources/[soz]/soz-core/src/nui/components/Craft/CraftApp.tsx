@@ -174,6 +174,7 @@ const ItemTierList: FunctionComponent<ItemTierListProps> = ({
                     .sort((a, b) => a[0].localeCompare(b[0]))
                     .map(([itemId, recipe]) => (
                         <ItemTier
+                            key={itemId}
                             category={category}
                             itemId={itemId}
                             canCraft={recipe.canCraft}
