@@ -216,7 +216,7 @@ export class GameViewRenderer {
         delete this.targetCanvas[uuid];
     }
 
-    private render = () => {
+    private render = async () => {
         const now = performance.now();
         const delta = now - this.lastFrameTimeStamp;
 
@@ -228,18 +228,18 @@ export class GameViewRenderer {
         this.lastFrameTimeStamp = now;
 
         this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, 4);
+        this.gl.finish();
 
         if (!this.gameCanvas) {
-            this.gl.finish();
             this.animationFrame = requestAnimationFrame(this.render);
             return;
         }
 
         this.gameCanvas.reset();
 
-        const canvasToRender = Object.values(this.targetCanvas).filter(c => !c.options.disableGameClone);
+        for (const { x, y, width, height, options } of Object.values(this.targetCanvas)) {
+            if (options.disableGameClone) continue;
 
-        for (const { x, y, width, height, options } of canvasToRender) {
             this.gameCanvas.filter = 'none';
 
             if (options.rounded || options.circle) {
@@ -281,7 +281,6 @@ export class GameViewRenderer {
             }
         }
 
-        this.gl.finish();
         this.animationFrame = requestAnimationFrame(this.render);
     };
 }

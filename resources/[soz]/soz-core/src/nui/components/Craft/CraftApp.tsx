@@ -1,10 +1,9 @@
 import { fetchNui } from '@public/nui/fetch';
 import { useBackspace } from '@public/nui/hook/control';
-import { useItems } from '@public/nui/hook/data';
+import { useItem, useItems } from '@public/nui/hook/data';
 import { useNuiEvent, useNuiFocus } from '@public/nui/hook/nui';
 import { CraftsList } from '@public/shared/craft/craft';
 import { NuiEvent } from '@public/shared/event';
-import { Item } from '@public/shared/item';
 import cn from 'classnames';
 import { FunctionComponent, useCallback, useEffect, useMemo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -17,15 +16,12 @@ import {
     ApplicationContainer,
     ApplicationContent,
 } from '../Styleguide/Application';
-import { BorderBox } from '../Styleguide/BorderBox';
+import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
+import { ItemIcon } from './ItemIcon';
 
 export type Selected = {
     id: string;
     category: string;
-};
-
-const itemIcon = (item: Item) => {
-    return `https://soz.zerator.com/static/game/images/items/${item.name}.webp`;
 };
 
 export const CraftApp: FunctionComponent = () => {
@@ -98,7 +94,7 @@ export const CraftApp: FunctionComponent = () => {
     return (
         <ApplicationContainer size="full" onClickOutside={() => setCraftList(null)}>
             <ApplicationContent open={Boolean(craftList)}>
-                <div className="flex flex-col gap-5 w-full">
+                <div className="flex flex-col gap-5 w-full text-white">
                     <header className="flex gap-10">
                         <div className="flex justify-between items-center w-4/5">
                             <div>
@@ -127,7 +123,6 @@ export const CraftApp: FunctionComponent = () => {
                                     <ItemTierList
                                         key={'craft_' + item}
                                         craftList={craftList}
-                                        itemIcon={itemIcon}
                                         selected={selected}
                                         setSelected={setSelected}
                                         category={item}
@@ -155,7 +150,6 @@ type ItemTierListProps = {
     setSelected: (selected: Selected) => void;
     craftList: CraftsList;
     category: string;
-    itemIcon: (item: Item) => string;
     showUnavailable: boolean;
 };
 
@@ -164,59 +158,79 @@ const ItemTierList: FunctionComponent<ItemTierListProps> = ({
     setSelected,
     craftList,
     category,
-    itemIcon,
     showUnavailable,
 }) => {
-    const items = useItems();
-
     return (
         <>
             <h3 className="font-light uppercase text-lg">{category}</h3>
             <div className="flex flex-wrap gap-5">
                 {Object.entries(craftList.categories[category].recipes)
                     .sort((a, b) => a[0].localeCompare(b[0]))
-                    .map(([itemId, recipe]) => {
-                        const item = items.find(i => i.name === itemId);
-                        const check = recipe;
-                        const isSelected = selected.id === itemId && selected.category === category;
-
-                        if (!showUnavailable && !check.canCraft) {
-                            return null;
-                        }
-
-                        if (!item) {
-                            return null;
-                        }
-
-                        return (
-                            <div
-                                key={itemId}
-                                className="size-40 rounded-xl cursor-pointer"
-                                onClick={() =>
-                                    setSelected({
-                                        id: itemId,
-                                        category: category,
-                                    })
-                                }
-                            >
-                                <BorderBox disableBorder={!isSelected} borderClassName="rounded-xl" useCardColor>
-                                    <img
-                                        alt={item.name}
-                                        className={cn('h-full w-full object-contain', {
-                                            grayscale: !check.canCraft,
-                                        })}
-                                        src={itemIcon(item)}
-                                        onError={e =>
-                                            (e.currentTarget.src =
-                                                'https://soz.zerator.com/static/game/images/default/cat.webp')
-                                        }
-                                    />
-                                </BorderBox>
-                            </div>
-                        );
-                    })}
+                    .map(([itemId, recipe]) => (
+                        <ItemTier
+                            category={category}
+                            itemId={itemId}
+                            canCraft={recipe.canCraft}
+                            selected={selected}
+                            setSelected={setSelected}
+                            showUnavailable={showUnavailable}
+                        />
+                    ))}
             </div>
         </>
+    );
+};
+
+interface ItemTierProps {
+    category: string;
+
+    itemId: string;
+    canCraft: boolean;
+
+    selected: Selected;
+    setSelected: (selected: Selected) => void;
+
+    showUnavailable: boolean;
+}
+
+const ItemTier: FunctionComponent<ItemTierProps> = ({
+    category,
+    itemId,
+    canCraft,
+    selected,
+    setSelected,
+    showUnavailable,
+}) => {
+    const item = useItem(itemId);
+    const isSelected = selected.id === itemId && selected.category === category;
+
+    if (!item) {
+        return null;
+    }
+
+    if (!showUnavailable && !canCraft) {
+        return null;
+    }
+
+    return (
+        <div
+            className="size-40 rounded-xl cursor-pointer"
+            onClick={() =>
+                setSelected({
+                    id: itemId,
+                    category: category,
+                })
+            }
+        >
+            <GlassMorphismContainer disableGameClone={true} borderClassName="rounded-xl" disableBorder={!isSelected}>
+                <ItemIcon
+                    item={item}
+                    className={cn('size-40', {
+                        grayscale: !canCraft,
+                    })}
+                />
+            </GlassMorphismContainer>
+        </div>
     );
 };
 
@@ -233,9 +247,8 @@ type CraftInputs = {
 
 const SelectedItem: FunctionComponent<SelectedItemProps> = ({ selected, craftList, doCraft, isCrafting }) => {
     const items = useItems();
-    const { isDaltonism } = useHudColor();
 
-    const { glassmorphismColors, color } = useHudColor();
+    const { glassmorphismColors, isDaltonism, card } = useHudColor();
 
     const selectedItem = items.find(i => i.name === selected.id);
     const recipe = craftList.categories[selected.category].recipes[selected.id];
@@ -299,12 +312,7 @@ const SelectedItem: FunctionComponent<SelectedItemProps> = ({ selected, craftLis
     return (
         <div className="flex flex-col gap-5 h-full w-full justify-between">
             <ApplicationCard>
-                <img
-                    alt={selectedItem.name}
-                    className="aspect-square w-full object-contain"
-                    src={itemIcon(selectedItem)}
-                    onError={e => (e.currentTarget.src = 'https://soz.zerator.com/static/game/images/default/cat.webp')}
-                />
+                <ItemIcon item={selectedItem} className="aspect-square w-full object-contain" />
             </ApplicationCard>
 
             <ApplicationCard className="flex flex-col gap-5 h-full min-h-0">
@@ -320,27 +328,28 @@ const SelectedItem: FunctionComponent<SelectedItemProps> = ({ selected, craftLis
                             const itemAmount = watch('amount') * input.count;
 
                             return (
-                                <div key={name} className="flex justify-between items-center gap-2">
-                                    <img
-                                        alt={requiredItem.label}
-                                        className="size-8"
-                                        src={itemIcon(requiredItem)}
-                                        onError={e =>
-                                            (e.currentTarget.src =
-                                                'https://soz.zerator.com/static/game/images/default/cat.webp')
-                                        }
-                                    />
-                                    <span>
+                                <div key={name} className="flex items-center gap-2">
+                                    <ItemIcon item={requiredItem} className="size-8" />
+
+                                    <span className="grow">
                                         {input.count}x {requiredItem.label}
                                     </span>
 
                                     <div className="flex flex-col items-end">
                                         <span
                                             className={cn('leading-4', {
-                                                'text-[#AD1F1F]': !isDaltonism && input.checkAmount <= itemAmount,
-                                                'text-[#268116]': !isDaltonism && input.checkAmount > itemAmount,
-                                                'text-[#B314E8]': isDaltonism && input.checkAmount <= itemAmount,
-                                                'text-[#00FFFF]': isDaltonism && input.checkAmount > itemAmount,
+                                                'text-[#AD1F1F]':
+                                                    !isDaltonism &&
+                                                    (input.checkAmount === 0 || input.checkAmount < itemAmount),
+                                                'text-[#268116]':
+                                                    !isDaltonism &&
+                                                    (input.checkAmount !== 0 || input.checkAmount >= itemAmount),
+                                                'text-[#B314E8]':
+                                                    isDaltonism &&
+                                                    (input.checkAmount === 0 || input.checkAmount < itemAmount),
+                                                'text-[#00FFFF]':
+                                                    isDaltonism &&
+                                                    (input.checkAmount !== 0 || input.checkAmount >= itemAmount),
                                             })}
                                         >
                                             {input.checkAmount}
@@ -358,7 +367,7 @@ const SelectedItem: FunctionComponent<SelectedItemProps> = ({ selected, craftLis
                     <ApplicationButton
                         type="button"
                         variant="secondary"
-                        btnClassName="aspect-square"
+                        btnClassName="h-full aspect-square"
                         onClick={decreaseAmount}
                         disabled={watch('amount') <= 0}
                     >
@@ -367,16 +376,16 @@ const SelectedItem: FunctionComponent<SelectedItemProps> = ({ selected, craftLis
                     <input
                         type="number"
                         style={{
-                            color,
+                            boxShadow: `${card} 0px 0px 0px 0px inset, ${card} 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px`,
                             backgroundColor: glassmorphismColors.background,
                         }}
-                        className="block text-right w-full rounded-xl border-0 py-1.5 px-3 shadow-sm ring-1 ring-[#454754] ring-inset focus:ring-1 focus:ring-inset sm:text-sm sm:leading-6 placeholder:text-inherit placeholder:opacity-50"
+                        className="block text-right w-full rounded-xl border-0 py-1.5 px-3 shadow-sm focus:ring-1 focus:ring-inset sm:text-sm sm:leading-6 placeholder:text-inherit placeholder:opacity-50"
                         {...register('amount')}
                     />
                     <ApplicationButton
                         type="button"
                         variant="secondary"
-                        btnClassName="aspect-square"
+                        btnClassName="h-full aspect-square"
                         onClick={increaseAmount}
                     >
                         +
