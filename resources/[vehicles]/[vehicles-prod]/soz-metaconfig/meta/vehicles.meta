@@ -4632,7 +4632,7 @@
             <swankness>SWANKNESS_4</swankness>
             <maxNum value="3"/>
             <flags>FLAG_SPORTS FLAG_PARKING_SENSORS FLAG_RICH_CAR FLAG_NO_BROKEN_DOWN_SCENARIO
-                FLAG_RECESSED_HEADLIGHT_CORONAS FLAG_RECESSED_TAILLIGHT_CORONAS FLAG_CAN_HAVE_NEONS
+                FLAG_RECESSED_HEADLIGHT_CORONAS FLAG_RECESSED_TAILLIGHT_CORONAS FLAG_CARGOBOB_HOOK_UP_CHASSIS FLAG_CAN_HAVE_NEONS
             </flags>
             <type>VEHICLE_TYPE_CAR</type>
             <plateType>VPT_BACK_PLATES</plateType>
@@ -4986,7 +4986,7 @@
             <frequency value="10" />
             <swankness>SWANKNESS_3</swankness>
             <maxNum value="10" />
-            <flags>FLAG_SPORTS FLAG_AVERAGE_CAR FLAG_HAS_LIVERY</flags>
+            <flags>FLAG_SPORTS FLAG_AVERAGE_CAR FLAG_HAS_LIVERY FLAG_CARGOBOB_HOOK_UP_CHASSIS</flags>
             <type>VEHICLE_TYPE_CAR</type>
             <plateType>VPT_BACK_PLATES</plateType>
             <dashboardType>VDT_ZTYPE</dashboardType>
@@ -5105,7 +5105,7 @@
             <frequency value="100" />
             <swankness>SWANKNESS_1</swankness>
             <maxNum value="1" />
-            <flags>FLAG_HAS_LIVERY FLAG_EXTRAS_STRONG FLAG_AVERAGE_CAR FLAG_IS_OFFROAD_VEHICLE FLAG_IS_BULKY FLAG_HAS_INTERIOR_EXTRAS</flags>
+            <flags>FLAG_HAS_LIVERY FLAG_EXTRAS_STRONG FLAG_CARGOBOB_HOOK_UP_CHASSIS FLAG_AVERAGE_CAR FLAG_IS_OFFROAD_VEHICLE FLAG_IS_BULKY FLAG_HAS_INTERIOR_EXTRAS</flags>
             <type>VEHICLE_TYPE_CAR</type>
             <plateType>VPT_FRONT_AND_BACK_PLATES</plateType>
             <vehicleClass>VC_OFF_ROAD</vehicleClass>
@@ -5232,7 +5232,7 @@
             <frequency value="100" />
             <swankness>SWANKNESS_3</swankness>
             <maxNum value="999" />
-            <flags>FLAG_PARKING_SENSORS FLAG_AVERAGE_CAR FLAG_RECESSED_HEADLIGHT_CORONAS FLAG_HAS_INTERIOR_EXTRAS</flags>
+            <flags>FLAG_PARKING_SENSORS FLAG_CARGOBOB_HOOK_UP_CHASSIS FLAG_AVERAGE_CAR FLAG_RECESSED_HEADLIGHT_CORONAS FLAG_HAS_INTERIOR_EXTRAS</flags>
             <type>VEHICLE_TYPE_CAR</type>
             <plateType>VPT_FRONT_AND_BACK_PLATES</plateType>
             <dashboardType>VDT_RACE</dashboardType>
@@ -5349,7 +5349,7 @@
             <frequency value="100" />
             <swankness>SWANKNESS_3</swankness>
             <maxNum value="999" />
-            <flags>FLAG_NO_BOOT FLAG_PEDS_CAN_STAND_ON_TOP FLAG_GEN_NAVMESH FLAG_LAW_ENFORCEMENT FLAG_DONT_SPAWN_IN_CARGEN FLAG_HEADLIGHTS_USE_ACTUAL_BONE_POS FLAG_DONT_SPAWN_AS_AMBIENT</flags>
+            <flags>FLAG_NO_BOOT FLAG_CARGOBOB_HOOK_UP_CHASSIS FLAG_PEDS_CAN_STAND_ON_TOP FLAG_GEN_NAVMESH FLAG_LAW_ENFORCEMENT FLAG_DONT_SPAWN_IN_CARGEN FLAG_HEADLIGHTS_USE_ACTUAL_BONE_POS FLAG_DONT_SPAWN_AS_AMBIENT</flags>
             <type>VEHICLE_TYPE_BOAT</type>
             <plateType>VPT_NONE</plateType>
             <dashboardType>VDT_TRUCK</dashboardType>
