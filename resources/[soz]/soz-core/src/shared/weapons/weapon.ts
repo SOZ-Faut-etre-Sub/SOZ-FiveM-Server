@@ -7,6 +7,7 @@ export type WeaponsMenuData = {
     weapons: InventoryItem[];
     tints: { slot: number; tints: Record<WeaponTintColor, WeaponTintColorChoiceItem> }[];
     attachments: { slot: number; attachments: WeaponAttachment[] }[];
+    admin: boolean;
 };
 
 export type WeaponConfiguration = {

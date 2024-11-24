@@ -54,7 +54,7 @@ export class WeaponGunsmithProvider {
     private weaponDrawingProvider: WeaponDrawingProvider;
 
     @OnEvent(ClientEvent.WEAPON_OPEN_GUNSMITH)
-    async openGunsmith() {
+    async openGunsmith(admin = false) {
         const weapons = this.inventoryManager.getItems().filter(item => item.type === 'weapon');
         const coords = GetEntityCoords(PlayerPedId(), true);
 
@@ -82,6 +82,7 @@ export class WeaponGunsmithProvider {
                         attachments: this.weaponService.getWeaponConfig(weapon.name)?.attachments ?? [],
                     };
                 }),
+                admin,
             },
             {
                 position: {
@@ -162,7 +163,14 @@ export class WeaponGunsmithProvider {
     }
 
     @OnNuiEvent(NuiEvent.GunSmithApplyConfiguration)
-    async applyConfiguration({ slot, label, repair, tint, attachments }: WeaponConfiguration & { slot: number }) {
+    async applyConfiguration({
+        slot,
+        label,
+        repair,
+        tint,
+        attachments,
+        admin,
+    }: WeaponConfiguration & { slot: number; admin: boolean }) {
         const weapon = this.weaponService.getWeaponFromSlot(slot);
         if (!weapon) {
             return;
@@ -187,7 +195,7 @@ export class WeaponGunsmithProvider {
                 }
             );
 
-            const applied = await emitRpc<boolean>(RpcServerEvent.WEAPON_SET_LABEL, weapon.slot, weaponLabel);
+            const applied = await emitRpc<boolean>(RpcServerEvent.WEAPON_SET_LABEL, weapon.slot, weaponLabel, admin);
             if (applied) {
                 this.notifier.notify(`Vous avez renommé votre arme en ~b~${weaponLabel}`);
             } else {
@@ -196,7 +204,7 @@ export class WeaponGunsmithProvider {
         }
 
         if (repair) {
-            const applied = await emitRpc<boolean>(RpcServerEvent.WEAPON_REPAIR, weapon.slot);
+            const applied = await emitRpc<boolean>(RpcServerEvent.WEAPON_REPAIR, weapon.slot, admin);
             if (applied) {
                 this.notifier.notify(`Vous avez réparé votre arme (~b~${item.label}~s~)`);
             } else {
@@ -205,7 +213,7 @@ export class WeaponGunsmithProvider {
         }
 
         if (tint !== weapon.metadata.tint && (tint !== 0 || weapon.metadata.tint !== undefined)) {
-            const applied = await emitRpc<boolean>(RpcServerEvent.WEAPON_SET_TINT, weapon.slot, tint);
+            const applied = await emitRpc<boolean>(RpcServerEvent.WEAPON_SET_TINT, weapon.slot, tint, admin);
             if (applied) {
                 this.notifier.notify(
                     `Vous avez changé la couleur de votre arme en ~b~${
@@ -224,7 +232,8 @@ export class WeaponGunsmithProvider {
                         RpcServerEvent.WEAPON_SET_ATTACHMENTS,
                         weapon.slot,
                         type,
-                        attachment
+                        attachment,
+                        admin
                     );
                     if (!applied) {
                         customValidated = false;

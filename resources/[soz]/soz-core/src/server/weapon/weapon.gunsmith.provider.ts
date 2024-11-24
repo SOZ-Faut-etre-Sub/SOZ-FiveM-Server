@@ -21,7 +21,7 @@ export class WeaponGunsmithProvider {
     private playerMoneyService: PlayerMoneyService;
 
     @Rpc(RpcServerEvent.WEAPON_SET_LABEL)
-    async renameWeapon(source: number, slot: number, label: string): Promise<boolean> {
+    async renameWeapon(source: number, slot: number, label: string, admin: boolean): Promise<boolean> {
         const inventory = await this.inventoryFactory.getPlayerInventory(source);
         const weapon = inventory.getItemAtSlot(slot);
         if (!weapon) {
@@ -36,7 +36,7 @@ export class WeaponGunsmithProvider {
             return false;
         }
 
-        if (await this.playerMoneyService.buy(source, WEAPON_CUSTOM_PRICE.label, TaxType.WEAPON)) {
+        if (await this.payUpgrade(source, WEAPON_CUSTOM_PRICE.label, admin)) {
             inventory.updateMetadataAtSlot(slot, { label: label.replace(WEAPON_NAME_REGEX, '') });
             return true;
         }
@@ -45,7 +45,7 @@ export class WeaponGunsmithProvider {
     }
 
     @Rpc(RpcServerEvent.WEAPON_REPAIR)
-    async repairWeapon(source: number, slot: number): Promise<boolean> {
+    async repairWeapon(source: number, slot: number, admin: boolean): Promise<boolean> {
         const inventory = await this.inventoryFactory.getPlayerInventory(source);
         const weapon = inventory.getItemAtSlot(slot);
         if (!weapon) {
@@ -68,7 +68,7 @@ export class WeaponGunsmithProvider {
 
         const price = WEAPON_CUSTOM_PRICE.repair * Math.floor(100 - (health / maxHealth) * 100);
 
-        if (await this.playerMoneyService.buy(source, price, TaxType.WEAPON)) {
+        if (await this.payUpgrade(source, price, admin)) {
             const heal = maxHealth * REPAIR_HEALTH_REDUCER;
 
             inventory.updateMetadataAtSlot(slot, { maxHealth: heal, health: heal });
@@ -79,7 +79,12 @@ export class WeaponGunsmithProvider {
     }
 
     @Rpc(RpcServerEvent.WEAPON_SET_TINT)
-    async applyTint(source: number, slot: number, tint: WeaponTintColor | WeaponMk2TintColor): Promise<boolean> {
+    async applyTint(
+        source: number,
+        slot: number,
+        tint: WeaponTintColor | WeaponMk2TintColor,
+        admin: boolean
+    ): Promise<boolean> {
         const inventory = await this.inventoryFactory.getPlayerInventory(source);
         const weapon = inventory.getItemAtSlot(slot);
         if (!weapon) {
@@ -94,7 +99,7 @@ export class WeaponGunsmithProvider {
             return false;
         }
 
-        if (await this.payUpgrade(source, WEAPON_CUSTOM_PRICE.tint, Number(tint) === weapon.metadata.tint)) {
+        if (await this.payUpgrade(source, WEAPON_CUSTOM_PRICE.tint, admin || Number(tint) === weapon.metadata.tint)) {
             inventory.updateMetadataAtSlot(slot, { tint: Number(tint) });
 
             return true;
@@ -108,7 +113,8 @@ export class WeaponGunsmithProvider {
         source: number,
         slot: number,
         attachmentType: WeaponComponentType,
-        attachment: string
+        attachment: string,
+        admin: boolean
     ): Promise<boolean> {
         const inventory = await this.inventoryFactory.getPlayerInventory(source);
         const weapon = inventory.getItemAtSlot(slot);
@@ -120,7 +126,7 @@ export class WeaponGunsmithProvider {
             return false;
         }
 
-        if (await this.payUpgrade(source, WEAPON_CUSTOM_PRICE.attachment, attachment === null)) {
+        if (await this.payUpgrade(source, WEAPON_CUSTOM_PRICE.attachment, admin || attachment === null)) {
             if (weapon.metadata.attachments === undefined) {
                 weapon.metadata.attachments = {
                     clip: null,
@@ -142,7 +148,7 @@ export class WeaponGunsmithProvider {
         return false;
     }
 
-    private async payUpgrade(source, price, skipMoneyCheck = false) {
+    private async payUpgrade(source: number, price: number, skipMoneyCheck = false) {
         if (skipMoneyCheck) {
             return true;
         }

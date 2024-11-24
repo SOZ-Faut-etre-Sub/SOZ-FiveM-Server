@@ -36,7 +36,8 @@ const GunSmithWeaponSubMenu: FunctionComponent<{
     weapon: InventoryItem;
     tint: Record<WeaponTintColor, WeaponTintColorChoiceItem>;
     attachments: WeaponAttachment[];
-}> = ({ submenu_id, banner, weapon, tint, attachments }) => {
+    admin: boolean;
+}> = ({ submenu_id, banner, weapon, tint, attachments, admin }) => {
     const [configuration, setConfiguration] = useState<WeaponConfiguration>({});
     const getPrice = useGetPrice();
 
@@ -161,12 +162,13 @@ const GunSmithWeaponSubMenu: FunctionComponent<{
                         fetchNui(NuiEvent.GunSmithApplyConfiguration, {
                             slot: weapon.slot,
                             ...configuration,
+                            admin,
                         });
                     }}
                 >
                     <div className="flex w-full justify-between items-center">
                         <span>✅ Confirmer les changements</span>
-                        <span>${getPrice(price, TaxType.WEAPON).toFixed(0)}</span>
+                        {!admin && <span>${getPrice(price, TaxType.WEAPON).toFixed(0)}</span>}
                     </div>
                 </MenuItemButton>
             </MenuContent>
@@ -212,7 +214,9 @@ const MenuWeaponComponentSelect: FunctionComponent<{
     );
 };
 
-export const MenuGunSmith: FunctionComponent<MenuGunSmithStateProps> = ({ data: { weapons, tints, attachments } }) => {
+export const MenuGunSmith: FunctionComponent<MenuGunSmithStateProps> = ({
+    data: { weapons, tints, attachments, admin },
+}) => {
     const banner = 'https://nui-img/soz/menu_job_gunsmith';
     const items = useItems();
 
@@ -240,6 +244,7 @@ export const MenuGunSmith: FunctionComponent<MenuGunSmithStateProps> = ({ data: 
                     weapon={weapon}
                     tint={tints.find(t => t.slot === weapon.slot).tints}
                     attachments={attachments?.find(t => t.slot === weapon.slot)?.attachments || []}
+                    admin={admin}
                 />
             ))}
         </Menu>
