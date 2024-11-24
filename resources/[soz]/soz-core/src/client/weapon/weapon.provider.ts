@@ -7,7 +7,7 @@ import { uuidv4, wait } from '@public/core/utils';
 import { FuelStationType } from '@public/shared/fuel';
 import { Control } from '@public/shared/input';
 import { PlasterConfigs } from '@public/shared/job/lsmc';
-import { BoxZone } from '@public/shared/polyzone/box.zone';
+import { BoxZone, ZoneType } from '@public/shared/polyzone/box.zone';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { getRandomItem } from '@public/shared/random';
 
@@ -28,6 +28,7 @@ import { PhoneService } from '../phone/phone.service';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../progress.service';
 import { FuelStationRepository } from '../repository/fuel.station.repository';
+import { ZoneRepository } from '../repository/zone.repository';
 import { VoipRadioProvider } from '../voip/voip.radio.provider';
 import { WeaponDrawingProvider } from './weapon.drawing.provider';
 import { WeaponHolsterProvider } from './weapon.holster.provider';
@@ -86,6 +87,9 @@ export class WeaponProvider {
 
     @Inject(FuelStationRepository)
     private fuelStationRepository: FuelStationRepository;
+
+    @Inject(ZoneRepository)
+    private zoneRepository: ZoneRepository;
 
     private lastPoliceCall = 0;
 
@@ -269,8 +273,25 @@ export class WeaponProvider {
             Math.random() < 0.6 &&
             Date.now() - this.lastPoliceCall > 60000
         ) {
-            this.lastPoliceCall = Date.now();
-            this.sendShootingAlert();
+            const coords = GetEntityCoords(player) as Vector3;
+            const zone = this.zoneRepository.get().find(zone => {
+                if (zone.data.type !== ZoneType.NoStress) {
+                    return false;
+                }
+
+                const boxZone = BoxZone.fromZone(zone);
+
+                if (!boxZone.isPointInside(coords)) {
+                    return false;
+                }
+
+                return true;
+            });
+
+            if (!zone) {
+                this.lastPoliceCall = Date.now();
+                this.sendShootingAlert();
+            }
         }
         await this.weapon.recoil();
     }
@@ -281,6 +302,7 @@ export class WeaponProvider {
 
         const zoneID = GetNameOfZone(coords[0], coords[1], coords[2]);
 
+        console.log(zoneID, this.playerService.getState()?.inCyberHeist);
         if ('ARMYB' != zoneID && 'ISHEIST' != zoneID && !this.playerService.getState()?.inCyberHeist) {
             const zone = GetLabelText(zoneID);
             const [street, street2] = GetStreetNameAtCoord(coords[0], coords[1], coords[2]);
