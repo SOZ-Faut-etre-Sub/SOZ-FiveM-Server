@@ -5740,7 +5740,7 @@
           <AmmoInfo ref="AMMO_SMG" />
           <AimingInfo ref="RIFLE_LO_BASE_STRAFE" />
           <ClipSize value="30" />
-          <AccuracySpread value="3.500000" />
+          <AccuracySpread value="2.500000" />
           <AccurateModeAccuracyModifier value="0.500000" />
           <RunAndGunAccuracyModifier value="2.000000" />
           <RunAndGunAccuracyMaxModifier value="1.000000" />
@@ -5755,7 +5755,7 @@
           <MinHeadShotDistancePlayer value="5.000000" />
           <MaxHeadShotDistancePlayer value="40.000000" />
           <HeadShotDamageModifierPlayer value="18.000000" />
-          <Damage value="22.000000" />
+          <Damage value="25.000000" />
           <DamageTime value="0.000000" />
           <DamageTimeInVehicle value="0.000000" />
           <DamageTimeInVehicleHeadShot value="0.000000" />
@@ -6043,7 +6043,7 @@
           <AmmoInfo ref="AMMO_SMG" />
           <AimingInfo ref="SMG_2H_BASE_STRAFE" />
           <ClipSize value="30" />
-          <AccuracySpread value="3.000000" />
+          <AccuracySpread value="2.500000" />
           <AccurateModeAccuracyModifier value="0.500000" />
           <RunAndGunAccuracyModifier value="2.000000" />
           <RunAndGunAccuracyMaxModifier value="1.000000" />
@@ -6058,7 +6058,7 @@
           <MinHeadShotDistancePlayer value="5.000000" />
           <MaxHeadShotDistancePlayer value="40.000000" />
           <HeadShotDamageModifierPlayer value="18.000000" />
-          <Damage value="23.000000" />
+          <Damage value="25.000000" />
           <DamageTime value="0.000000" />
           <DamageTimeInVehicle value="0.000000" />
           <DamageTimeInVehicleHeadShot value="0.000000" />

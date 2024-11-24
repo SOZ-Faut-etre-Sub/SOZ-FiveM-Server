@@ -302,7 +302,6 @@ export class WeaponProvider {
 
         const zoneID = GetNameOfZone(coords[0], coords[1], coords[2]);
 
-        console.log(zoneID, this.playerService.getState()?.inCyberHeist);
         if ('ARMYB' != zoneID && 'ISHEIST' != zoneID && !this.playerService.getState()?.inCyberHeist) {
             const zone = GetLabelText(zoneID);
             const [street, street2] = GetStreetNameAtCoord(coords[0], coords[1], coords[2]);
