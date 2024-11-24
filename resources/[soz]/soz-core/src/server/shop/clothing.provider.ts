@@ -210,7 +210,7 @@ export class ClothingProvider {
             });
         }
 
-        let sql = "INSERT INTO category (id, name, parent_id, warm_score) VALUES (67, 'Décolté', 60, 0);\r\n";
+        let sql = '';
 
         console.log('Start recreate Unders');
         for (const [genderStr, data] of Object.entries(UndershirtTypes)) {

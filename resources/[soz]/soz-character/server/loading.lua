@@ -12,7 +12,7 @@ QBCore.Functions.CreateCallback("soz-character:server:LoginPlayer", function(sou
         Wait(0)
         QBCore.Commands.Refresh(source)
 
-        exports["soz-core"]:TraceEvent("player_login", {player_source = source})
+        exports["soz-core"]:TraceEvent("player_login", {player_source = source, id = source})
 
         cb(QBCore.Functions.GetPlayer(source))
     else

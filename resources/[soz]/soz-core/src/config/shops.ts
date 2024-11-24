@@ -8135,28 +8135,10 @@ export const UndershirtTypeForTop: Record<PlayerPedHash, Record<number, number[]
         268: [...BlousonCol, UType.ChemiseVentreLong, UType.ChemiseVentreOuverte],
         269: [...Blouson, UType.ChemiseVentreOuverte],
         290: Veston,
-        292: [
-            UType.ManchetteFin,
-            UType.Manchette,
-            UType.ColRouleVentre,
-            UType.ManchetteLarge,
-            UType.ManchetteCourteFin,
-        ],
-        293: [UType.ManchetteCourteHautFin, UType.Manchette, UType.ColRouleVentreHaut],
-        294: [
-            UType.ManchetteFin,
-            UType.Manchette,
-            UType.ColRouleVentre,
-            UType.ManchetteLarge,
-            UType.ManchetteCourteFin,
-        ], // 99
-        295: [
-            UType.ManchetteHautFin,
-            UType.Manchette,
-            UType.ColRouleVentre,
-            UType.ManchetteLarge,
-            UType.ManchetteCourteHautFin,
-        ], // 100
+        292: VesteOuverte, // 31
+        293: VesteSerreeFermee, // 32
+        294: VesteOuverte, // 99
+        295: VesteSerreeFermee, // 100
         303: [
             ...BlousonTrèsOuvert,
             UType.ChemiseGiletLarge,
