@@ -88,6 +88,10 @@ export const ApplicationContent: FunctionComponent<PropsWithChildren<Application
         [open]
     );
 
+    if (!open) {
+        return null;
+    }
+
     return (
         <animated.div style={styles} className="flex h-full w-full overflow-hidden shadow-2xl">
             <GlassMorphismContainer
