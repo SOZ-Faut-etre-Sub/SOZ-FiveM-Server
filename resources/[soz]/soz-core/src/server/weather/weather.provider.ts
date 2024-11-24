@@ -1,5 +1,5 @@
 import { On, Once } from '@public/core/decorators/event';
-import { PollutionLevel } from '@public/shared/pollution';
+import { UpwPollution } from '@public/shared/job/upw';
 import { getRandomInt, getRandomKeyWeighted } from '@public/shared/random';
 import axios from 'axios';
 import { addMinutes, addSeconds, differenceInSeconds, format } from 'date-fns';
@@ -27,8 +27,8 @@ import {
     Weather,
 } from '../../shared/weather';
 import { FeatureProvider } from '../feature/feature.provider';
+import { UpwPollutionProvider } from '../job/upw/upw.pollution.provider';
 import { Monitor } from '../monitor/monitor';
-import { Pollution } from '../pollution';
 import { Store } from '../store/store';
 import { Halloween, Polluted, Winter, WMOWeatherMapping } from './forecast';
 import { DayWinterTemperature, ForecastAdderTemperatures, NightWinterTemperature } from './temperature';
@@ -38,8 +38,8 @@ const UPDATE_TIME_INTERVAL = 5;
 
 @Provider()
 export class WeatherProvider {
-    @Inject(Pollution)
-    private pollution: Pollution;
+    @Inject(UpwPollutionProvider)
+    private pollution: UpwPollutionProvider;
 
     @Inject('Store')
     private store: Store;
@@ -54,8 +54,6 @@ export class WeatherProvider {
     private featureProvider: FeatureProvider;
 
     private shouldUpdateWeather = true;
-    private pollutionManagerReady = false;
-
     private weatherSyncWithLA = false;
 
     private timeReady = false;
@@ -139,9 +137,6 @@ export class WeatherProvider {
     @Tick(TickInterval.EVERY_SECOND, 'weather:next-weather')
     async updateWeather() {
         if (!this.shouldUpdateWeather) {
-            return;
-        }
-        if (!this.pollutionManagerReady) {
             return;
         }
 
@@ -325,11 +320,6 @@ export class WeatherProvider {
         }
     }
 
-    @On('soz-upw:server:onPollutionManagerReady', true)
-    public onPollutionManagerReady() {
-        this.pollutionManagerReady = true;
-    }
-
     @Command('rain', { role: 'admin' })
     setRain(source: number, rain: number): void {
         this.store.dispatch.global.update({ rain: rain });
@@ -391,11 +381,11 @@ export class WeatherProvider {
 
     private getNextWeather(currentWeather: Weather): Weather {
         let currentForecast = this.forecast;
-        const pollutionLevel: PollutionLevel = this.pollution.getPollutionLevel();
+        const pollutionLevel = this.pollution.getPollutionLevel();
 
-        if (pollutionLevel === PollutionLevel.High) {
+        if (pollutionLevel === UpwPollution.High) {
             currentForecast = Polluted;
-        } else if (pollutionLevel === PollutionLevel.Low) {
+        } else if (pollutionLevel === UpwPollution.Neutral) {
             const multipliers: { [key in Weather]?: number } = { EXTRASUNNY: 1.0, SMOG: 0.5, FOGGY: 0.5, CLOUDS: 0.5 };
             const any = 1;
 

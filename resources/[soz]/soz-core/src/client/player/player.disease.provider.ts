@@ -1,3 +1,5 @@
+import { UpwPollution } from '@public/shared/job/upw';
+
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -6,18 +8,17 @@ import { wait } from '../../core/utils';
 import { Disease } from '../../shared/disease';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { PlayerData } from '../../shared/player';
-import { PollutionLevel } from '../../shared/pollution';
 import { AnimationService } from '../animation/animation.service';
+import { UpwPollutionProvider } from '../job/upw/upw.pollution.provider';
 import { Notifier } from '../notifier';
-import { Pollution } from '../pollution';
 import { VampireGameStateProvider } from '../story/vampire.game.state.provider';
 import { BlurService } from '../utils/blur.service';
 import { PlayerService } from './player.service';
 
-const DISEASE_RANGE: Record<PollutionLevel, number> = {
-    [PollutionLevel.Low]: 2000,
-    [PollutionLevel.Neutral]: 1000,
-    [PollutionLevel.High]: 500,
+const DISEASE_RANGE: Record<UpwPollution, number> = {
+    [UpwPollution.Low]: 2000,
+    [UpwPollution.Neutral]: 1000,
+    [UpwPollution.High]: 500,
 };
 
 @Provider()
@@ -31,8 +32,8 @@ export class PlayerDiseaseProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @Inject(Pollution)
-    private pollution: Pollution;
+    @Inject(UpwPollutionProvider)
+    private upwPollutionProvider: UpwPollutionProvider;
 
     @Inject(BlurService)
     private blurService: BlurService;
@@ -219,7 +220,7 @@ export class PlayerDiseaseProvider {
             return;
         }
 
-        const range = Math.max(DISEASE_RANGE[this.pollution.getPollutionLevel()], 10);
+        const range = Math.max(DISEASE_RANGE[this.upwPollutionProvider.getPollutionLevel()], 10);
         const diseaseApply = Math.round(Math.random() * range);
 
         if (diseaseApply == 1) {

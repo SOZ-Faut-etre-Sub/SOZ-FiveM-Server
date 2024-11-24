@@ -21,7 +21,7 @@ import { JobType } from '../../shared/job';
 import { NotEmptyStringValidator, PositiveNumberValidator } from '../../shared/nui/input';
 import { MenuType } from '../../shared/nui/menu';
 import { BoxZone, Zone, ZoneType } from '../../shared/polyzone/box.zone';
-import { toVector4Object, Vector3 } from '../../shared/polyzone/vector';
+import { Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import { DrawService } from '../draw.service';
 import { Notifier } from '../notifier';
@@ -503,14 +503,8 @@ export class AdminMenuMapperProvider {
             return;
         }
 
-        const vector4Position = toVector4Object(createdObject.position);
-
-        if (object === 'soz_prop_elec01') {
-            TriggerServerEvent('soz-upw:server:AddFacility', object, vector4Position, 'default', job);
-        } else if (object === 'soz_prop_elec02') {
-            TriggerServerEvent('soz-upw:server:AddFacility', object, vector4Position, 'entreprise', job);
-        } else if (object === 'upwpile') {
-            TriggerServerEvent('soz-upw:server:AddFacility', object, vector4Position, null, job);
+        if (['soz_prop_elec01', 'soz_prop_elec02', 'upwpile'].includes(object)) {
+            TriggerServerEvent(ServerEvent.UPW_ADD_FACILITY, object, createdObject.position, job);
         } else {
             TriggerServerEvent(
                 ServerEvent.ADMIN_ADD_PERSISTENT_PROP,

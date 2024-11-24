@@ -14,7 +14,6 @@ shared_scripts {
     'shared/vehicles.lua',
     'shared/uuid.lua',
     'shared/trunks.lua',
-    'shared/upw.lua',
 }
 
 client_scripts {

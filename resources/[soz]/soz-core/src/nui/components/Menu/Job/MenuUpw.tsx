@@ -27,8 +27,7 @@ export const MenuUpw: FunctionComponent<MenuUpwProps> = ({ data }) => {
     }
 
     const displayBlip = async (blip: UpwFacilityType, value: boolean) => {
-        setBlips({ ...blips, [blip]: value });
-        await fetchNui(NuiEvent.UpwDisplayBlips, { blip, value });
+        await fetchNui(NuiEvent.UpwDisplayBlips, { type: blip, value });
     };
 
     if (!player?.job.onduty) {
@@ -49,28 +48,40 @@ export const MenuUpw: FunctionComponent<MenuUpwProps> = ({ data }) => {
             <MainMenu>
                 <MenuTitle banner={banner}>Services UPW</MenuTitle>
                 <MenuContent>
-                    <MenuItemCheckbox checked={blips['inverter']} onChange={value => displayBlip('inverter', value)}>
+                    <MenuItemCheckbox
+                        checked={blips[UpwFacilityType.inverter]}
+                        onChange={value => displayBlip(UpwFacilityType.inverter, value)}
+                    >
                         Afficher les Onduleurs
                     </MenuItemCheckbox>
                     <MenuItemCheckbox
-                        checked={blips['jobTerminal']}
-                        onChange={value => displayBlip('jobTerminal', value)}
+                        checked={blips[UpwFacilityType.jobTerminal]}
+                        onChange={value => displayBlip(UpwFacilityType.jobTerminal, value)}
                     >
                         Afficher les Bornes entreprises
                     </MenuItemCheckbox>
                     <MenuItemCheckbox
-                        checked={blips['globalTerminal']}
-                        onChange={value => displayBlip('globalTerminal', value)}
+                        checked={blips[UpwFacilityType.terminal]}
+                        onChange={value => displayBlip(UpwFacilityType.terminal, value)}
                     >
                         Afficher les Bornes civiles
                     </MenuItemCheckbox>
-                    <MenuItemCheckbox checked={blips['plant']} onChange={value => displayBlip('plant', value)}>
+                    <MenuItemCheckbox
+                        checked={blips[UpwFacilityType.plant]}
+                        onChange={value => displayBlip(UpwFacilityType.plant, value)}
+                    >
                         Afficher les Installations électriques
                     </MenuItemCheckbox>
-                    <MenuItemCheckbox checked={blips['resell']} onChange={value => displayBlip('resell', value)}>
+                    <MenuItemCheckbox
+                        checked={blips[UpwFacilityType.resell]}
+                        onChange={value => displayBlip(UpwFacilityType.resell, value)}
+                    >
                         Afficher le Stockage de revente
                     </MenuItemCheckbox>
-                    <MenuItemCheckbox checked={blips['charger']} onChange={value => displayBlip('charger', value)}>
+                    <MenuItemCheckbox
+                        checked={blips[UpwFacilityType.charger]}
+                        onChange={value => displayBlip(UpwFacilityType.charger, value)}
+                    >
                         Afficher les Emplacements de chargeurs
                     </MenuItemCheckbox>
                 </MenuContent>

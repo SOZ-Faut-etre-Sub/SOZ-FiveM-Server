@@ -484,8 +484,9 @@ model inventories {
 model upw_facility {
     id         Int     @id @default(autoincrement())
     type       String  @db.VarChar(50)
-    identifier String  @db.VarChar(50)
+    identifier String  @unique @db.VarChar(50)
     data       String? @db.LongText
+    config     String? @db.LongText
 
     @@index([identifier], map: "identifier")
 }

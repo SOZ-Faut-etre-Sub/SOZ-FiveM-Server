@@ -105,8 +105,15 @@ export class VehicleDealershipProvider {
 
     @Tick(20)
     public async onDisplayVehicleTick() {
+        const playerPed = PlayerPedId();
+        const coords = GetEntityCoords(playerPed) as Vector3;
+
         for (const [, vehicle] of Object.entries(this.electricShowVehicles)) {
             if (vehicle.entity === null) {
+                return;
+            }
+
+            if (getDistance(vehicle.position, coords)) {
                 return;
             }
 

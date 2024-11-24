@@ -249,6 +249,9 @@ export enum ClientEvent {
 
     UPW_OPEN_CLOAKROOM = 'soz-core:client:job:upw:open-cloakroom',
     UPW_CREATE_CHARGER = 'soz-core:client:job:upw:create-charger',
+    UPW_POLLUTION_UPDATE = 'soz-core:client:job:upw:pollution-update',
+    UPW_DISPLAY_WASTE = 'soz-core:client:job:upw:display-waste',
+    UPW_ADD_FACILITY = 'soz-core:client:job:upw:add-facility',
 
     PAWL_FAST_HARVEST_TREE = 'soz-core:client:job:pawl:fast-harvest-tree',
     PAWL_OPEN_SOCIETY_MENU = 'soz-core:client:job:pawl:open-society-menu',

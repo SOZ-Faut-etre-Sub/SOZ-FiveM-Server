@@ -15,8 +15,6 @@ import { Monitor } from '../../monitor/monitor';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
 import { ProgressService } from '../../player/progress.service';
-import { Pollution } from '../../pollution';
-
 @Provider()
 export class FoodFieldProvider {
     @Inject(PlayerService)
@@ -39,9 +37,6 @@ export class FoodFieldProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
-
-    @Inject(Pollution)
-    private pollution: Pollution;
 
     @Once(OnceStep.RepositoriesLoaded)
     public async init() {

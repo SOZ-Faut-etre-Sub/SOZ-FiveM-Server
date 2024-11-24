@@ -5,21 +5,13 @@ import { ServerEvent } from '../../../shared/event';
 import { JobType } from '../../../shared/job';
 import { StonkBagType, StonkConfig } from '../../../shared/job/stonk';
 import { TargetOption } from '../../../shared/target';
-import { InventoryManager } from '../../inventory/inventory.manager';
 import { ItemService } from '../../item/item.service';
-import { PlayerService } from '../../player/player.service';
 import { TargetFactory } from '../../target/target.factory';
 
 @Provider()
 export class StonkResellProvider {
     @Inject(ItemService)
     private itemService: ItemService;
-
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
-
-    @Inject(PlayerService)
-    private playerService: PlayerService;
 
     @Inject(TargetFactory)
     private targetFactory: TargetFactory;

@@ -10,6 +10,7 @@ export type WorldObjectMetadata = {
     zoneId?: string;
     locked?: boolean;
     closed?: boolean;
+    job?: JobType;
 };
 
 export type WorldObjectGrowth = {

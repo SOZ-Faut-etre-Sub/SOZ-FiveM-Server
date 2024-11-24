@@ -12,6 +12,7 @@ import PCancelable from 'p-cancelable';
 
 import { ProgressAnimation, ProgressOptions, ProgressResult } from '../shared/progress';
 import { AnimationService } from './animation/animation.service';
+import { UpwPollutionProvider } from './job/upw/upw.pollution.provider';
 import { Notifier } from './notifier';
 
 @Injectable()
@@ -33,6 +34,9 @@ export class ProgressService {
 
     @Inject(InstructionalService)
     private readonly instructionalService: InstructionalService;
+
+    @Inject(UpwPollutionProvider)
+    private readonly upwPollutionProvider: UpwPollutionProvider;
 
     private currentAction: Partial<ProgressOptions> | null = null;
     private currentPromise: PCancelable<ProgressResult> | null = null;
@@ -90,7 +94,7 @@ export class ProgressService {
         }
 
         if (!options.ignorePollution) {
-            duration = exports['soz-upw'].CalculateDuration(duration);
+            duration = this.upwPollutionProvider.calculateDuration(duration);
         }
 
         let audioId = null;

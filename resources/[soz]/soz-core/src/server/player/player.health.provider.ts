@@ -6,15 +6,15 @@ import { FeatureProvider } from '@public/server/feature/feature.provider';
 import { PlayerZombieProvider } from '@public/server/player/player.zombie.provider';
 import { VampireGameStateProvider } from '@public/server/story/vampire.game.state.provider';
 import { TaxType } from '@public/shared/bank';
+import { UpwPollution } from '@public/shared/job/upw';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
 import { ServerEvent } from '../../shared/event';
 import { Feature } from '../../shared/features';
 import { PlayerMetadata, PlayerServerStateExercise } from '../../shared/player';
-import { PollutionLevel } from '../../shared/pollution';
+import { UpwPollutionProvider } from '../job/upw/upw.pollution.provider';
 import { Notifier } from '../notifier';
-import { Pollution } from '../pollution';
 import { PlayerHealthService } from './player.health.service';
 import { PlayerMoneyService } from './player.money.service';
 import { PlayerService } from './player.service';
@@ -51,9 +51,6 @@ export class PlayerHealthProvider {
     @Inject(PlayerStateService)
     private playerStateService: PlayerStateService;
 
-    @Inject(Pollution)
-    private pollution: Pollution;
-
     @Inject(Notifier)
     private notifier: Notifier;
 
@@ -74,6 +71,9 @@ export class PlayerHealthProvider {
 
     @Inject(VampireGameStateProvider)
     private vampireGameStateProvider: VampireGameStateProvider;
+
+    @Inject(UpwPollutionProvider)
+    private upwPollutionProvider: UpwPollutionProvider;
 
     private yogaAndNaturalMultiplier: (source: number) => number = () => 1;
 
@@ -105,7 +105,7 @@ export class PlayerHealthProvider {
             thirstDiff *= 1.2;
         }
 
-        if (this.pollution.getPollutionLevel() == PollutionLevel.High) {
+        if (this.upwPollutionProvider.getPollutionLevel() == UpwPollution.High) {
             hungerDiff *= 1.2;
             thirstDiff *= 1.2;
         }

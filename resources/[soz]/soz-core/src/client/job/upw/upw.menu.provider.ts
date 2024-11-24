@@ -6,9 +6,10 @@ import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { emitRpc } from '@public/core/rpc';
 import { wait } from '@public/core/utils';
+import { Blip } from '@public/shared/blip';
 import { ClientEvent, NuiEvent } from '@public/shared/event';
 import { JobType } from '@public/shared/job';
-import { UpwFacility, UpwFacilityType } from '@public/shared/job/upw';
+import { UpwConfig, UpwFacility, UpwFacilityType } from '@public/shared/job/upw';
 import { MenuType } from '@public/shared/nui/menu';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
@@ -27,7 +28,7 @@ export class UpwMenuProvider {
     private displayedBlips = {
         inverter: false,
         jobTerminal: false,
-        globalTerminal: false,
+        terminal: false,
         plant: false,
         resell: false,
     };
@@ -47,8 +48,8 @@ export class UpwMenuProvider {
     }
 
     @OnNuiEvent(NuiEvent.UpwDisplayBlips)
-    public async onDisplayBlip({ blip, value }) {
-        if (blip == 'charger') {
+    public async onDisplayBlip({ type, value }: { type: UpwFacilityType; value: boolean }) {
+        if (type == 'charger') {
             this.upwChargerRepository.updateDisplayLocation(value);
 
             const chargers = this.upwChargerRepository.get();
@@ -79,28 +80,29 @@ export class UpwMenuProvider {
             return;
         }
 
-        this.displayedBlips[blip] = value;
-        const facilityType: UpwFacilityType = blip == 'jobTerminal' || blip == 'globalTerminal' ? 'terminal' : blip;
+        this.displayedBlips[type] = value;
 
-        if (facilityType == 'resell') {
-            this.blipFactory.qbHide('job_upw_resell', !value);
+        if (type == 'resell') {
+            this.blipFactory.hide('job_upw_resell', !value);
 
             return;
         }
 
-        const facilities = await emitRpc<UpwFacility[]>(RpcServerEvent.UPW_GET_FACILITIES, facilityType);
+        const facilities = await emitRpc<UpwFacility[]>(RpcServerEvent.UPW_GET_FACILITIES, [type]);
 
         for (const facility of facilities) {
-            const data = JSON.parse(facility.data);
-            const blip_id = 'job_upw_' + facility.identifier;
-            if (
-                (blip == 'jobTerminal' && data.scope != 'entreprise') ||
-                (blip == 'globalTerminal' && data.scope == 'entreprise')
-            ) {
-                continue;
-            }
-
-            this.blipFactory.qbHide(blip_id, !value);
+            const blip_id = `job_upw_${facility.identifier}`;
+            this.blipFactory.hide(blip_id, !value);
         }
+    }
+
+    @OnEvent(ClientEvent.UPW_ADD_FACILITY)
+    public onAddFacility(facility: UpwFacility) {
+        const blip_id = `job_upw_${facility.identifier}`;
+        const blip: Blip = {
+            ...UpwConfig.FacilitiesBlip[facility.type],
+            position: facility.position || facility.energyZone.center,
+        };
+        this.blipFactory.create(blip_id, blip, this.displayedBlips[facility.type]);
     }
 }
