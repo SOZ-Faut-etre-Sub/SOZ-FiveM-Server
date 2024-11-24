@@ -123,7 +123,7 @@ export const ZkeaFournitureMenu: FunctionComponent = () => {
                                                 ? `⚠ ${fourniture.name}`
                                                 : `${fourniture.name}`}
                                         </span>
-                                        <span className="mr-1">${getPrice(fourniture.price, TaxType.SUPPLY)}</span>
+                                        <span className="mr-1">${getPrice(fourniture.price, TaxType.HOUSING)}</span>
                                     </div>
                                 </MenuItemButton>
                             ))}

@@ -239,7 +239,11 @@ export class ShopProvider {
                 break;
             case ShopBrand.Zkea:
                 if ((product as ZkeaFournitureItem).model) {
-                    this.shopZkeaFournitureBuy(source, product as ZkeaFournitureItem, isInCayo ? null : TaxType.SUPPLY);
+                    this.shopZkeaFournitureBuy(
+                        source,
+                        product as ZkeaFournitureItem,
+                        isInCayo ? null : TaxType.HOUSING
+                    );
                 } else {
                     this.shopGeneralBuy(source, product as ShopProduct, quantity, isInCayo ? null : TaxType.SUPPLY);
                 }
