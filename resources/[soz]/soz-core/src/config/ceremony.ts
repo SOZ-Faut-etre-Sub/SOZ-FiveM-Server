@@ -109,7 +109,7 @@ const BCSO_LOCATION: Location = {
             distance: 100,
             radius: 50,
             duration: 1_000,
-            brightness: 100,
+            brightness: 10,
             roundness: 50,
             triggerAt: 10,
         },
@@ -123,7 +123,7 @@ const BCSO_LOCATION: Location = {
         {
             action: 'update',
             id: 'bcso-spotlight-1',
-            brightness: 100,
+            brightness: 20,
             duration: 2_000,
             triggerAt: 7000,
         },

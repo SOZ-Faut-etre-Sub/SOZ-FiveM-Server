@@ -32,10 +32,12 @@ export class SpotlightProvider {
             distance,
             radius,
             roundness,
-            duration,
 
             currentBrightness: 0,
             targetBrightness: brightness,
+
+            currentDuration: 0,
+            targetDuration: duration,
         };
 
         return id;
@@ -45,7 +47,8 @@ export class SpotlightProvider {
     public async updateSpotlight(id: string, brightness: number, duration: number): Promise<void> {
         if (!this.spotlights[id]) return;
 
-        this.spotlights[id].duration = duration;
+        this.spotlights[id].currentDuration = 0;
+        this.spotlights[id].targetDuration = duration;
         this.spotlights[id].targetBrightness = brightness;
     }
 
@@ -75,13 +78,30 @@ export class SpotlightProvider {
                 0
             );
 
-            // if (spotlight.currentBrightness < spotlight.targetBrightness) {
-            //     spotlight.currentBrightness += spotlight.targetBrightness - spotlight.currentBrightness;
-            //         (spotlight.targetBrightness - spotlight.currentBrightness) / spotlight.duration;
-            // } else if (spotlight.currentBrightness > spotlight.targetBrightness) {
-            //     spotlight.currentBrightness -=
-            //         (spotlight.currentBrightness - spotlight.targetBrightness) / spotlight.duration;
-            // }
+            const remainingDuration = spotlight.targetDuration - spotlight.currentDuration;
+            const durationDelta = (GetFrameTime() * 1000) / remainingDuration;
+
+            if (spotlight.currentBrightness < spotlight.targetDuration) {
+                const brightnessDelta = (spotlight.targetBrightness - spotlight.currentBrightness) * durationDelta;
+
+                if (spotlight.currentDuration >= spotlight.targetDuration) {
+                    spotlight.currentBrightness = spotlight.targetBrightness;
+                    continue;
+                }
+
+                spotlight.currentDuration += GetFrameTime() * 1000;
+                spotlight.currentBrightness += brightnessDelta;
+            } else if (spotlight.currentBrightness > spotlight.targetDuration) {
+                const brightnessDelta = (spotlight.currentBrightness - spotlight.targetBrightness) * durationDelta;
+
+                if (spotlight.currentDuration >= spotlight.targetDuration) {
+                    spotlight.currentBrightness = spotlight.targetBrightness;
+                    continue;
+                }
+
+                spotlight.currentDuration += GetFrameTime() * 1000;
+                spotlight.currentBrightness -= brightnessDelta;
+            }
         }
     }
 }
