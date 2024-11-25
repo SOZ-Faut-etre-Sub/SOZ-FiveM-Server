@@ -487,6 +487,7 @@ export enum NuiEvent {
     GangAdminUpdatePlayerToPed = 'soz-core:client:gang:admin-player-to-ped',
     GangAdminUpdatePropLocation = 'soz-core:client:gang:admin-update-prop-location',
     GangAdminUpdateZone = 'soz-core:client:gang:admin-update-zone',
+    GangAdminUpdateCryptoCoef = 'soz-core:client:gang:admin-update-crypto-coef',
     GangBusinessSkillBuy = 'soz-core:client:gang:business-buy',
     GangBusinessReset = 'soz-core:client:gang:business-reset',
     GangInfluenceZoneGet = 'soz-core:client:gang:influence-get',
