@@ -1,3 +1,4 @@
+import { DrugSkill } from '@private/shared/drugs';
 import { InventoryManager } from '@public/client/inventory/inventory.manager';
 import { Notifier } from '@public/client/notifier';
 import { PlayerService } from '@public/client/player/player.service';
@@ -6,7 +7,6 @@ import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 
-import { DrugSkill } from '../../../../../../../../private/soz-core-src/shared/drugs';
 import { RepositoryUpdate } from '../../../core/decorators/repository';
 import { Tick, TickInterval } from '../../../core/decorators/tick';
 import { emitRpc } from '../../../core/rpc';
