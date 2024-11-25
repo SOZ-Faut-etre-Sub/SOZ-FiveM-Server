@@ -1,7 +1,15 @@
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
-import { Field, getAmount } from '../../shared/field';
+import {
+    Field,
+    getAmount,
+    getTreeIdentifier,
+    isItemField,
+    isPawlField,
+    isTreeCutted,
+    PawlFieldTree,
+} from '../../shared/field';
 import { FieldRepository } from '../repository/field.repository';
 
 @Provider()
@@ -20,6 +28,10 @@ export class FieldProvider {
     public async harvestField(identifier: string, amount: number) {
         const field = await this.getField(identifier);
 
+        if (!isItemField(field)) {
+            return;
+        }
+
         if (!field) {
             return false;
         }
@@ -34,11 +46,56 @@ export class FieldProvider {
         return true;
     }
 
+    public async getTree(fieldIdentifier: string, treeIdentifier: string): Promise<PawlFieldTree> {
+        const field = await this.getField(fieldIdentifier);
+
+        if (!isPawlField(field)) {
+            return null;
+        }
+
+        let treeFound = null;
+
+        for (const tree of field.field) {
+            const identifier = getTreeIdentifier(field, tree);
+
+            if (identifier === treeIdentifier) {
+                treeFound = tree;
+                break;
+            }
+        }
+
+        if (!treeFound) {
+            return null;
+        }
+
+        if (isTreeCutted(field, treeFound)) {
+            return null;
+        }
+
+        return treeFound;
+    }
+
+    public async harvestTree(fieldIdentifier: string, treeIdentifier: string) {
+        const tree = await this.getTree(fieldIdentifier, treeIdentifier);
+
+        if (!tree) {
+            return false;
+        }
+
+        tree.harvestTime = Math.round(new Date().getTime() / 1000);
+
+        return true;
+    }
+
     @Tick(TickInterval.EVERY_SECOND, 'field:refill')
     public async onTick() {
         const fields = await this.fieldRepository.get();
 
         for (const field of fields) {
+            if (!isItemField(field)) {
+                return;
+            }
+
             if (!field.refill) {
                 console.log('Field is missing refill options', field);
                 continue;

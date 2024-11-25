@@ -3,6 +3,7 @@ import { Gauge } from 'prom-client';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
+import { isItemField } from '../../shared/field';
 import { FieldRepository } from '../repository/field.repository';
 
 @Provider()
@@ -21,6 +22,10 @@ export class MonitorFieldProvider {
         const fields = await this.fieldRepository.get();
 
         for (const field of fields) {
+            if (!isItemField(field)) {
+                return;
+            }
+
             this.fieldAmount.set(
                 {
                     identifier: field.identifier,

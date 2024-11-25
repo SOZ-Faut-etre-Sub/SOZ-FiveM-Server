@@ -4,7 +4,7 @@ import { NuiEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
 import { FunctionComponent } from 'react';
 
-import { MenuPawlData } from '../../../../shared/job/pawl';
+import { MenuPawlData } from '../../../../shared/nui/pawl';
 import { MainMenu, Menu, MenuContent, MenuItemCheckbox, MenuItemText, MenuTitle } from '../../Styleguide/Menu';
 
 type MenuPawlProps = {

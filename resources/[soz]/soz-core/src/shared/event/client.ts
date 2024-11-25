@@ -257,6 +257,7 @@ export enum ClientEvent {
 
     PAWL_FAST_HARVEST_TREE = 'soz-core:client:job:pawl:fast-harvest-tree',
     PAWL_OPEN_SOCIETY_MENU = 'soz-core:client:job:pawl:open-society-menu',
+    PAWL_SYNC_PROCESSING = 'soz-core:client:job:pawl:sync-processing',
 
     RADAR_TOGGLE_BLIP = 'soz-core:client:radar:toggle-blip',
 
