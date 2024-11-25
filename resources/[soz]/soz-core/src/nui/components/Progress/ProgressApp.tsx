@@ -8,6 +8,7 @@ import { fetchNui } from '../../fetch';
 import { useHudHasStreetNames, useMinimap, useVehicle } from '../../hook/data';
 import { useNuiEvent } from '../../hook/nui';
 import { useHudColor } from '../Hud/hooks/useHudColor';
+import { GameCanvasBox } from '../Styleguide/GameCanvasBox';
 import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
 
 const PROGRESS_BAR_SEGMENTS = 10;
@@ -71,6 +72,10 @@ export const ProgressApp: FunctionComponent = () => {
         }
     }, [currentProgress]);
 
+    if (!progress) {
+        return null;
+    }
+
     return (
         <animated.div
             style={styles}
@@ -84,16 +89,18 @@ export const ProgressApp: FunctionComponent = () => {
                 }
             )}
         >
-            <div className="flex justify-center items-center gap-2">
-                {Array.from({ length: PROGRESS_BAR_SEGMENTS }, (_, index) => (
-                    <ProgressSegment
-                        key={index}
-                        currentSegment={index}
-                        maxSegment={PROGRESS_BAR_SEGMENTS}
-                        progress={progress}
-                        currentProgress={currentProgress}
-                    />
-                ))}
+            <div className="flex justify-center items-center">
+                <GameCanvasBox borderClassName="flex items-center gap-2" blur={false}>
+                    {Array.from({ length: PROGRESS_BAR_SEGMENTS }, (_, index) => (
+                        <ProgressSegment
+                            key={index}
+                            currentSegment={index}
+                            maxSegment={PROGRESS_BAR_SEGMENTS}
+                            progress={progress}
+                            currentProgress={currentProgress}
+                        />
+                    ))}
+                </GameCanvasBox>
             </div>
 
             {vehicle.seat === null && (progress?.label || progress?.units?.length > 0) && (
@@ -143,16 +150,19 @@ export const ProgressSegment: FunctionComponent<ProgressSegmentProps> = ({
     const barPercentage = Math.min(100, (Math.max(0, progressForSection) / sectionMax) * 100);
 
     return (
-        <GlassMorphismContainer
-            className="w-10"
-            borderClassName="rounded-md"
-            disableGameClone={!progress}
-            disableBorder
-        >
-            <div
-                className="bg-white h-2.5 rounded-md"
-                style={{ width: `${barPercentage}%`, background: glassmorphismColors.border }}
-            />
-        </GlassMorphismContainer>
+        <div className="w-10 rounded-md overflow-hidden">
+            <div className="relative backdrop-blur-[5px]">
+                <div
+                    className="absolute inset-0 transition-all duration-1000"
+                    style={{
+                        background: glassmorphismColors.background,
+                    }}
+                />
+                <div
+                    className="bg-white h-2.5 rounded-md"
+                    style={{ width: `${barPercentage}%`, background: glassmorphismColors.border }}
+                />
+            </div>
+        </div>
     );
 };

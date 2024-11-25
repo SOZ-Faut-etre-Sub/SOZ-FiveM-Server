@@ -1,7 +1,7 @@
+import { uuidv4 } from '@core/utils';
 import cn from 'classnames';
 import { FunctionComponent, PropsWithChildren, useCallback, useContext, useEffect, useRef, useState } from 'react';
 
-import { uuidv4 } from '../../../core/utils';
 import { useInterval } from '../../hook/useInterval';
 import { GlassMorphismContext } from '../../providers/GlassMorphismProvider';
 
