@@ -45,8 +45,8 @@ export class Election2024CeremonyProvider {
         this.cameraService.renderCamera();
     }
 
-    @OnEvent(ClientEvent.CEREMONY_MOVE_CAMERA)
-    async moveCamera(position: Vector3, target: Vector3) {
+    @OnEvent(ClientEvent.CEREMONY_SET_CAMERA)
+    async setCamera(position: Vector3, target: Vector3) {
         DoScreenFadeOut(500);
         await wait(500);
 
@@ -56,6 +56,12 @@ export class Election2024CeremonyProvider {
 
         await wait(1_000);
         DoScreenFadeIn(500);
+    }
+
+    @OnEvent(ClientEvent.CEREMONY_MOVE_CAMERA)
+    async moveCamera(position: Vector3, rotation: Vector3, duration: number) {
+        this.cameraService.updateCameraPosition(this.camera, position, rotation, duration);
+        this.cameraService.renderCamera();
     }
 
     @OnEvent(ClientEvent.CEREMONY_DELETE_CAMERA)

@@ -10,6 +10,7 @@ export type Location = {
         position: Vector3;
         rotation: Vector3;
         duration: number;
+        triggerAt: number;
     }[];
     fireworks: {
         type: FireworkType;
@@ -37,7 +38,7 @@ const BCSO_LOCATION: Location = {
     camera: [1864.99, 3606.66, 63.28],
     center: [1850.94, 3689.7, 50.26],
     positions: [
-        // { position: [1927.22, 3685.23, 162.57], rotation: [0, 0, 0], duration: 10_000 },
+        { position: [1927.22, 3685.23, 162.57], rotation: [0, 0, 0], duration: 12_000, triggerAt: 0 },
         // { position: [1851.52, 3727.56, 34.8], rotation: [0, 0, 0], duration: 6_000 },
         // { position: [1870.93, 3688.03, 34.79], rotation: [0, 0, 0], duration: 6_000 },
         // { position: [1858.3, 3678.72, 34.12], rotation: [0, 0, 0], duration: 6_000 },
@@ -103,14 +104,14 @@ const BCSO_LOCATION: Location = {
         {
             action: 'add',
             id: 'bcso-spotlight-1',
-            position: [1852.61, 3654.53, 39.4],
-            target: [1850.94, 3689.7, 34.26],
-            color: [255, 0, 0],
-            distance: 100,
+            position: [1860.75, 3635.25, 90.0],
+            target: [1850.94, 3689.7, 50.26],
+            color: [255, 255, 255],
+            distance: 200,
             radius: 50,
             duration: 1_000,
-            brightness: 10,
-            roundness: 50,
+            brightness: 2,
+            roundness: 1,
             triggerAt: 10,
         },
         {
@@ -123,7 +124,7 @@ const BCSO_LOCATION: Location = {
         {
             action: 'update',
             id: 'bcso-spotlight-1',
-            brightness: 20,
+            brightness: 2,
             duration: 2_000,
             triggerAt: 7000,
         },

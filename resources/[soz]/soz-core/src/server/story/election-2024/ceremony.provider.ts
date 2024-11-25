@@ -38,8 +38,20 @@ export class Election2024CeremonyProvider {
     }
 
     async runLocation(location: Location) {
-        TriggerClientEvent(ClientEvent.CEREMONY_MOVE_CAMERA, -1, location.camera, location.center);
+        TriggerClientEvent(ClientEvent.CEREMONY_SET_CAMERA, -1, location.camera, location.center);
         await wait(CAMERA_TRANSITION_DURATION);
+
+        for (const position of location.positions) {
+            setTimeout(() => {
+                TriggerClientEvent(
+                    ClientEvent.CEREMONY_MOVE_CAMERA,
+                    -1,
+                    position.position,
+                    position.rotation,
+                    position.duration
+                );
+            }, position.triggerAt);
+        }
 
         for (const firework of location.fireworks) {
             setTimeout(() => {

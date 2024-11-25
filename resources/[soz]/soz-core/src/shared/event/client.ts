@@ -446,5 +446,6 @@ export enum ClientEvent {
 
     CEREMONY_CREATE_CAMERA = 'soz-core:client:ceremony:create-camera',
     CEREMONY_DELETE_CAMERA = 'soz-core:client:ceremony:delete-camera',
+    CEREMONY_SET_CAMERA = 'soz-core:client:ceremony:set-camera',
     CEREMONY_MOVE_CAMERA = 'soz-core:client:ceremony:move-camera',
 }
