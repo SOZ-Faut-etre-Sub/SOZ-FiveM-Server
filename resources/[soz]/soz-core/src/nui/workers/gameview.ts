@@ -220,7 +220,7 @@ export class GameViewRenderer {
         const now = performance.now();
         const delta = now - this.lastFrameTimeStamp;
 
-        if (delta < 16) {
+        if (delta < 1000 / 30) {
             this.animationFrame = requestAnimationFrame(this.render);
             return;
         }
