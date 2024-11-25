@@ -437,4 +437,14 @@ export enum ClientEvent {
     GIFT_PLAY_TOKEN_ANIM = 'soz-core:server:gift:token',
     GIFT_PLAY_GIFT_ANIM = 'soz-core:server:gift:gift',
     GIFT_PLAY_ZRT_BLIZZARD_ANIM = 'soz-core:server:gift:zrt_blizzard',
+
+    CREATE_FIREWORK = 'soz-core:client:create-firework',
+
+    CREATE_SPOTLIGHT = 'soz-core:client:create-spotlight',
+    UPDATE_SPOTLIGHT = 'soz-core:client:update-spotlight',
+    DELETE_SPOTLIGHT = 'soz-core:client:delete-spotlight',
+
+    CEREMONY_CREATE_CAMERA = 'soz-core:client:ceremony:create-camera',
+    CEREMONY_DELETE_CAMERA = 'soz-core:client:ceremony:delete-camera',
+    CEREMONY_MOVE_CAMERA = 'soz-core:client:ceremony:move-camera',
 }
