@@ -1,6 +1,7 @@
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
+import { BlipType } from '../../../shared/blip';
 import { ClientEvent } from '../../../shared/event/client';
 import { NuiEvent } from '../../../shared/event/nui';
 import { MenuType } from '../../../shared/nui/menu';
@@ -56,10 +57,12 @@ export class PawlMenuProvider {
             const field = PAWL_FIELDS[i];
 
             this.blipFactory.create(`pawl_field_${i}`, {
-                name: 'Pipe And Wooden Leg',
+                name: 'Forêt',
+                type: BlipType.Radius,
                 radius: field.radius,
                 position: field.position as Vector3,
                 color: 0,
+                alpha: 128,
                 sprite: 9,
                 group: 'pawl_field',
             });
