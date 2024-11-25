@@ -147,3 +147,14 @@ export const clampMagnitudeVector3 = (v: Vector3, max: number) => {
     }
     return v;
 };
+
+export const applyOffset = (v: Vector4, offset: Vector3): Vector4 => {
+    const radAngle = rad(v[3]);
+
+    const coords = [...v] as Vector4;
+    coords[0] += offset[0] * Math.cos(radAngle) - offset[1] * Math.sin(radAngle);
+    coords[1] += offset[0] * Math.sin(radAngle) + offset[1] * Math.cos(radAngle);
+    coords[2] += offset[2];
+
+    return coords;
+};

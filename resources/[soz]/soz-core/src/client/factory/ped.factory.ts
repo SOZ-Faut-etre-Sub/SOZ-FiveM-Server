@@ -3,7 +3,7 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { uuidv4 } from '@core/utils';
 import { AnimationProps } from '@public/shared/animation';
-import { Outfit } from '@public/shared/cloth';
+import { Outfit, Prop } from '@public/shared/cloth';
 import { ClientEvent } from '@public/shared/event/client';
 import { getChunkId } from '@public/shared/grid';
 import { InventoryItem } from '@public/shared/inventory';
@@ -21,6 +21,11 @@ export type Ped = {
     components?: { [key: number]: [number, number, number] };
     props?: { [key: number]: [number, number, number] };
     outfit?: Outfit;
+    face?: { [key: string]: number };
+    hair?: { [key: string]: number | any };
+    makeup?: { [key: string]: number };
+    modelCustomization?: { [key: string]: number };
+    tattoos?: { collection: number; overlay: number }[];
     skin?: Skin;
     freeze?: boolean;
     invincible?: boolean;
@@ -205,6 +210,20 @@ export class PedFactory {
 
         DeletePed(spawned.entity);
         delete this.loadedPeds[id];
+    }
+
+    public unspawnEntity(entity: number): void {
+        const props = this.pedProps.get(entity);
+
+        if (props) {
+            for (const prop of props) {
+                DeleteObject(prop);
+            }
+        }
+
+        this.pedProps.delete(entity);
+
+        DeletePed(entity);
     }
 
     public async updateSpawnPedOnGridChange(grid: number[]) {

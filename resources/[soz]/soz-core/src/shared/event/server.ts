@@ -71,6 +71,8 @@ export enum ServerEvent {
     ADMIN_HALLOWEEN_UPDATE_MORTAL_OBJECTIVE_PART2 = 'soz-core:server:admin:halloween:update-mortal-objective-part2',
     ADMIN_HALLOWEEN_UPDATE_MORTAL_OBJECTIVE_PART3 = 'soz-core:server:admin:halloween:update-mortal-objective-part3',
     ADMIN_CEREMONY_START = 'soz-core:server:admin:ceremony:start',
+    ADMIN_CEREMONY_TIME = 'soz-core:server:admin:ceremony:time',
+    ADMIN_PARADE_START = 'soz-core:server:admin:parade:start',
 
     BASE_ENTERED_VEHICLE = 'baseevents:enteredVehicle',
     BASE_LEFT_VEHICLE = 'baseevents:leftVehicle',

@@ -13,6 +13,7 @@ import { Halloween2023Scenario1Provider } from './halloween-2023/scenario1.provi
 import { Halloween2023Scenario2Provider } from './halloween-2023/scenario2.provider';
 import { Halloween2023Scenario3Provider } from './halloween-2023/scenario3.provider';
 import { Halloween2023Scenario4Provider } from './halloween-2023/scenario4.provider';
+import { ParadeProvider } from './parade.provider';
 import { QueenHarvestProvider } from './queen.harvest.provider';
 import { StoryProvider } from './story.provider';
 import { VampireGameProvider } from './vampire.game.provider';
@@ -40,6 +41,7 @@ import { ZombieProvider } from './zombie.provider';
         VampireGameStateProvider,
         VampireGameProvider,
         Election2024CeremonyProvider,
+        ParadeProvider,
     ],
 })
 export class StoryModule {}

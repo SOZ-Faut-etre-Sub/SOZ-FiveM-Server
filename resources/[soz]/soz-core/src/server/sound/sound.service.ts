@@ -61,6 +61,10 @@ export class SoundService {
         TriggerClientEvent('InteractSound_CL:PlayOnOne', source, name, volume);
     }
 
+    public stop(source: number, name: string) {
+        TriggerClientEvent('InteractSound_CL:StopOnOne', source, name);
+    }
+
     public playAround(source: number, name: string, distance: number, volume: number) {
         TriggerEvent('InteractSound_SV:PlayWithinDistance', distance, name, volume);
     }

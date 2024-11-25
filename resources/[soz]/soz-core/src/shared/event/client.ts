@@ -200,6 +200,7 @@ export enum ClientEvent {
 
     STATE_UPDATE_GLOBAL = 'soz-core:client:state:update-global',
     STATE_UPDATE_TIME = 'soz-core:client:state:update-time',
+    STATE_FORCE_TIME = 'soz-core:client:state:force-time',
 
     VEHICLE_CONDITION_REGISTER = 'soz-core:client:vehicle:condition:register',
     VEHICLE_CONDITION_UNREGISTER = 'soz-core:client:vehicle:condition:unregister',
@@ -319,8 +320,8 @@ export enum ClientEvent {
     CRIMI_HOOD = 'soz-core:client:crimi:hood',
     CRIMI_SMOKE = 'soz-core:client:crimi:smoke',
 
-    FISHING_ROD_TOGGLE = 'soz-core:server:fishing:toggle-rod',
-    FISHING_BAIT_TOGGLE = 'soz-core:server:fishing:toggle-bait',
+    FISHING_ROD_TOGGLE = 'soz-core:client:fishing:toggle-rod',
+    FISHING_BAIT_TOGGLE = 'soz-core:client:fishing:toggle-bait',
 
     EASTER_EAR_TOGGLE = 'soz-core:client:easter:toogle-ear',
     FULL_SCARF_TOGGLE = 'soz-core:client:easter:toggle-full-scarf',
@@ -403,14 +404,14 @@ export enum ClientEvent {
     GANG_SMUGGLING_UPDATE_OPENED_RESALERS = 'soz-core:client:gang:smuggling:update-resalers',
     GANG_SMUGGLING_SPAWN_GUARD_RESALER = 'soz-core:client:gang:smuggling:spawn-guard-resalers',
 
-    GANG_CYBER_HACK_VEHICLE = 'soz-core:server:gang:cyber:hack-vehicle',
-    GANG_CYBER_ALERT_INJECTOR_USE = 'soz-core:server:gang:cyber:use-alert-injector',
-    GANG_CYBER_SCANNER_USE = 'soz-core:server:gang:cyber:use-scanner',
-    GANG_CYBER_TRACKER_UPDATE = 'soz-core:server:gang:cyber:tracker-update',
-    GANG_CYBER_VISION_USE = 'soz-core:server:gang:cyber:vision-use',
-    GANG_CYBER_REPORT_USE = 'soz-core:server:gang:cyber:report-use',
-    GANG_CYBER_ALERT = 'soz-core:server:gang:cyber:alert',
-    GANG_CYBER_ENTRER_HEIST_INIT_PED = 'soz-core:server:gang:cyber:heist-init-ped',
+    GANG_CYBER_HACK_VEHICLE = 'soz-core:client:gang:cyber:hack-vehicle',
+    GANG_CYBER_ALERT_INJECTOR_USE = 'soz-core:client:gang:cyber:use-alert-injector',
+    GANG_CYBER_SCANNER_USE = 'soz-core:client:gang:cyber:use-scanner',
+    GANG_CYBER_TRACKER_UPDATE = 'soz-core:client:gang:cyber:tracker-update',
+    GANG_CYBER_VISION_USE = 'soz-core:client:gang:cyber:vision-use',
+    GANG_CYBER_REPORT_USE = 'soz-core:client:gang:cyber:report-use',
+    GANG_CYBER_ALERT = 'soz-core:client:gang:cyber:alert',
+    GANG_CYBER_ENTRER_HEIST_INIT_PED = 'soz-core:client:gang:cyber:heist-init-ped',
 
     GANG_CARTEL_CONTAINER_USE = 'soz-core:client:gang:container-use',
 
@@ -429,8 +430,11 @@ export enum ClientEvent {
     WEATHER_UPDATE_FORECASTS = 'soz-core:client:weather:update-forecasts',
     UPDATE_MINIMAP_POSITION = 'soz-core:client:update-minimap-position',
 
-    OILRIG_HEIST_UPDATE = 'soz-core:server:oilrig-heist:update',
-    OILRIG_HEIST_RESET = 'soz-core:server:oilrig-heist:reset',
+    OILRIG_HEIST_UPDATE = 'soz-core:client:oilrig-heist:update',
+    OILRIG_HEIST_RESET = 'soz-core:client:oilrig-heist:reset',
+
+    PARADE_SPAWN = 'soz-core:client:parade:spawn',
+    PARADE_DELETE = 'soz-core:client:parade:delete',
 
     GIFT_PLAY_JOKER_ANIM = 'soz-core:server:gift:joker',
     GIFT_PLAY_BOUQUET_ANIM = 'soz-core:server:gift:bouquet',

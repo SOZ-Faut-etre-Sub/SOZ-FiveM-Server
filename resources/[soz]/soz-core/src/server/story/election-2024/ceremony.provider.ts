@@ -43,4 +43,13 @@ export class Election2024CeremonyProvider {
         this.npcProvider.disableNPC(false);
         this.showRunning = false;
     }
+
+    @OnEvent(ServerEvent.ADMIN_CEREMONY_TIME)
+    async time(source: number, value: number): Promise<void> {
+        if (!this.permissionService.isStaff(source)) {
+            return;
+        }
+
+        TriggerClientEvent(ClientEvent.STATE_FORCE_TIME, -1, value);
+    }
 }

@@ -10,9 +10,21 @@ export class AdminMenuCeremonyProvider {
     private readonly nuiMenu: NuiMenu;
 
     @OnNuiEvent(NuiEvent.AdminMenuCeremonyStart)
-    public async activateMeteor(): Promise<void> {
+    public async activateCeremony(): Promise<void> {
         TriggerServerEvent(ServerEvent.ADMIN_CEREMONY_START);
 
         this.nuiMenu.closeMenu();
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuCeremonyParadeStart)
+    public async activateParade(value: boolean): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_PARADE_START, value);
+
+        this.nuiMenu.closeMenu();
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuCeremonyTime)
+    public async setForcedTime({ value }: { value: number }): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_CEREMONY_TIME, value);
     }
 }

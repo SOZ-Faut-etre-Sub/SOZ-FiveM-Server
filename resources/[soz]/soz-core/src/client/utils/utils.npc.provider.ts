@@ -356,6 +356,11 @@ export class UtilsNPCProvider {
 
     @On('populationPedCreating')
     public async onPopulationPedCreating(x: number, y: number, z: number) {
+        if (this.density[PedDensityType.peds] == 0) {
+            CancelEvent();
+            return;
+        }
+
         const waterLevel = this.oceanProvider.getCurrent();
         if (waterLevel > 0 && 0 < z && z < this.oceanProvider.getCurrent() + 3) {
             CancelEvent();
