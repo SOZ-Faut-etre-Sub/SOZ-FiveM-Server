@@ -153,13 +153,13 @@ export const ProgressSegment: FunctionComponent<ProgressSegmentProps> = ({
         <div className="w-10 rounded-md overflow-hidden">
             <div className="relative backdrop-blur-[5px]">
                 <div
-                    className="absolute inset-0 transition-all duration-1000"
+                    className="absolute inset-0"
                     style={{
                         background: glassmorphismColors.background,
                     }}
                 />
                 <div
-                    className="bg-white h-2.5 rounded-md"
+                    className="relative h-2.5 rounded-md z-10"
                     style={{ width: `${barPercentage}%`, background: glassmorphismColors.border }}
                 />
             </div>
