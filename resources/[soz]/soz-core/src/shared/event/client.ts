@@ -425,6 +425,8 @@ export enum ClientEvent {
     WORLD_EVENT_UNLOCK_INVENTORY = 'soz-core:client:world-event:unlock-inventory',
     WORLD_EVENT_INIT_PED = 'soz-core:client:world-event:ped-init',
 
+    PED_RELEASE = 'soz-core:client:ped:release',
+
     DRONE_USE = 'soz-core:client:drone-use',
     DRONE_ADD_REMOTE = 'soz-core:client:drone-add-remote',
     DRONE_REMOVE_REMOTE = 'soz-core:client:drone-remove-remote',
