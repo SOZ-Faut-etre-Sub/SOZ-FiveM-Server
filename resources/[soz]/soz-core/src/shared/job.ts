@@ -66,6 +66,8 @@ export enum JobPermission {
     NewCompanyPanelAccess = 'new-company-panel-read',
     EmployeesListRead = 'employees-list-read',
     EmployeesListWrite = 'employees-list-write',
+    PricingRead = 'pricing-read',
+    PricingManage = 'pricing-manage',
     NewsManageArticle = 'manage-article',
     NewsManageBillboards = 'manage-billboards',
     CashTransfer_CollectBags = 'collect-bags',
