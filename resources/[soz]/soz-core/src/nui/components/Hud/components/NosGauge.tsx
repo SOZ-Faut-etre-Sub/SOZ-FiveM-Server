@@ -16,7 +16,7 @@ export const NosGauge: FunctionComponent = () => {
 
     return (
         <div
-            className="absolute z-50"
+            className="absolute"
             style={{
                 marginTop: '-' + nosPaddingTopSize,
                 marginLeft: '-' + nosPaddingLeftSize,
