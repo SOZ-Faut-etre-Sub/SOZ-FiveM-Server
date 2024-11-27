@@ -160,6 +160,9 @@ export class PawlHarvestProvider {
                     blackoutGlobal: true,
                     blackoutJob: JobType.Pawl,
                     category: 'society',
+                    canInteract: () => {
+                        return !this.harvestedTreeSap.has(identifier);
+                    },
                     action: () => {
                         this.harvestTreeSap(field.identifier, identifier);
                     },

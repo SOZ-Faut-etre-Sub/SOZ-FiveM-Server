@@ -66,6 +66,8 @@ export class PawlProcessingProvider {
         this.startedAt = Date.now();
 
         this.notifier.notify(source, 'Le traitement ~g~commence~s~.', 'success');
+
+        TriggerLatentClientEvent(ClientEvent.PAWL_SYNC_PROCESSING, -1, 16 * 1024, true);
     }
 
     @OnEvent(ServerEvent.PAWL_PROCESSING_STOP)
