@@ -1,24 +1,36 @@
 import { FireworkType } from '../shared/firework';
-import { Vector3, Vector4 } from '../shared/polyzone/vector';
+import { Vector3 } from '../shared/polyzone/vector';
+import { SENAT_LOCATION } from './ceremony.senat';
 
 export const CAMERA_TRANSITION_DURATION = 1_500;
+
+export type TriggerableAction<T> = T & {
+    triggerAt: number[] | number;
+};
 
 export type Location = {
     camera: Vector3;
     center: Vector3;
-    positions: {
+    music?: {
+        name: 'society1' | 'society2' | 'senat';
+        volume: number;
+    };
+    targets?: TriggerableAction<{
+        position: Vector3;
+    }>[];
+    positions: TriggerableAction<{
         position: Vector3;
         rotation: Vector3;
         duration: number;
-        triggerAt: number;
-    }[];
-    fireworks: {
+    }>[];
+    fireworks: TriggerableAction<{
         type: FireworkType;
-        trigger: Vector4;
-        explosive: Vector3;
-        triggerAt: number;
-    }[];
-    spotlights: {
+        position: Vector3;
+        height: number;
+        scale?: number;
+        color?: Vector3;
+    }>[];
+    spotlights: TriggerableAction<{
         id: string;
         action: 'add' | 'update' | 'remove';
         position?: Vector3;
@@ -29,145 +41,24 @@ export type Location = {
         roundness?: number;
         duration: number;
         brightness: number;
-        triggerAt: number;
-    }[];
+    }>[];
     duration: number;
 };
 
-const BCSO_LOCATION: Location = {
-    camera: [1864.99, 3606.66, 63.28],
-    center: [1850.94, 3689.7, 50.26],
-    positions: [
-        { position: [1927.22, 3685.23, 162.57], rotation: [0, 0, 0], duration: 12_000, triggerAt: 0 },
-        // { position: [1851.52, 3727.56, 34.8], rotation: [0, 0, 0], duration: 6_000 },
-        // { position: [1870.93, 3688.03, 34.79], rotation: [0, 0, 0], duration: 6_000 },
-        // { position: [1858.3, 3678.72, 34.12], rotation: [0, 0, 0], duration: 6_000 },
-        // { position: [1856.27, 3628.85, 59.36], rotation: [0, 0, 0], duration: 10_000 },
-    ],
-    fireworks: [
-        {
-            type: FireworkType.Fountain,
-            trigger: [1834.43, 3698.72, 38.02, 0.0],
-            explosive: [1834.43, 3698.72, 38.02],
-            triggerAt: 1_000,
-        },
-        {
-            type: FireworkType.Fountain,
-            trigger: [1830.38, 3696.58, 38.01, 0.0],
-            explosive: [1830.38, 3696.58, 38.01],
-            triggerAt: 1_000,
-        },
-        {
-            type: FireworkType.Fountain,
-            trigger: [1824.7, 3693.26, 38.02, 0.0],
-            explosive: [1824.7, 3693.26, 38.02],
-            triggerAt: 1_000,
-        },
-        {
-            type: FireworkType.RingBurst,
-            trigger: [1833.4, 3672.3, 38.28, 0.0],
-            explosive: [1833.4, 3672.3, 58.28],
-            triggerAt: 2_000,
-        },
-        {
-            type: FireworkType.Burst,
-            trigger: [1826.46, 3667.72, 38.28, 0.0],
-            explosive: [1826.46, 3667.72, 58.28],
-            triggerAt: 2_500,
-        },
-        {
-            type: FireworkType.SpiralBurst,
-            trigger: [1845.93, 3680.04, 38.28, 0.0],
-            explosive: [1845.93, 3680.04, 58.28],
-            triggerAt: 2_500,
-        },
-        {
-            type: FireworkType.Burst,
-            trigger: [1865.88, 3680.82, 34.22, 0.0],
-            explosive: [1865.88, 3680.82, 54.22],
-            triggerAt: 3_000,
-        },
-        {
-            type: FireworkType.SpiralBurst2,
-            trigger: [1868.39, 3684.16, 34.27, 0.0],
-            explosive: [1868.39, 3684.16, 54.27],
-            triggerAt: 4_000,
-        },
-        {
-            type: FireworkType.Burst,
-            trigger: [1861.55, 3681.45, 34.3, 0.0],
-            explosive: [1861.55, 3681.45, 54.3],
-            triggerAt: 5_000,
-        },
-    ],
-    spotlights: [
-        {
-            action: 'add',
-            id: 'bcso-spotlight-1',
-            position: [1860.75, 3635.25, 90.0],
-            target: [1850.94, 3689.7, 50.26],
-            color: [255, 255, 255],
-            distance: 200,
-            radius: 50,
-            duration: 1_000,
-            brightness: 2,
-            roundness: 1,
-            triggerAt: 10,
-        },
-        {
-            action: 'update',
-            id: 'bcso-spotlight-1',
-            brightness: 0,
-            duration: 2_000,
-            triggerAt: 3000,
-        },
-        {
-            action: 'update',
-            id: 'bcso-spotlight-1',
-            brightness: 2,
-            duration: 2_000,
-            triggerAt: 7000,
-        },
-    ],
-    duration: 10_000,
+export const ALL_LOCATIONS: Record<string, Location> = {
+    // bcso: BCSO_LOCATION,
+    // lspd: LSPD_LOCATION,
+    // lsmc: LSMC_LOCATION,
+    // stonk: STONK_LOCATION,
+    // mandatory: MANDATORY_LOCATION,
+    senat: SENAT_LOCATION,
+    // final: FINAL_LOCATION,
 };
 
-// const LSPD_LOCATION: Location = {
-//     camera: [703.74, 11.11, 104.62],
-//     center: [630.97, 4.98, 82.92],
-//     positions: [],
-//     fireworks: [],
-//     duration: 1000,
-// };
-
-// const STONK_LOCATION: Location = {
-//     camera: [26.49, -752.73, 47.0],
-//     center: [-1.28, -692.8, 47.31],
-//     positions: [],
-//     fireworks: [],
-//     duration: 1000,
-// };
-
-// const MANDATORY_LOCATION: Location = {
-//     camera: [-475.88, -296.41, 63.21],
-//     center: [-551.4, -193.3, 38.19],
-//     positions: [],
-//     fireworks: [],
-//     duration: 1000,
-// };
-
-// const SENAT_LOCATION: Location = {
-//     camera: [-529.69, -698.66, 66.3],
-//     center: [-556.14, -599.25, 34.92],
-//     positions: [],
-//     fireworks: [],
-//     duration: 1000,
-// };
-
-export const ALL_LOCATIONS: Location[] = [
-    BCSO_LOCATION,
-    // LSPD_LOCATION,
-    // STONK_LOCATION,
-    // MANDATORY_LOCATION,
-    // SENAT_LOCATION,
-];
+export function triggerPeriodic(start: number, end: number, padding: number) {
+    const times = [];
+    for (let i = start; i < end; i += padding) {
+        times.push(i);
+    }
+    return times;
+}

@@ -59,8 +59,8 @@ export class CameraService {
             rotation[2],
             GetCamFov(cam),
             duration,
-            0,
-            0,
+            duration / 4,
+            duration / 4,
             2
         );
         SetFocusPosAndVel(position[0], position[1], position[2], rotation[0], rotation[1], rotation[2]);

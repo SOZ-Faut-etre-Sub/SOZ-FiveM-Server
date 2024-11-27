@@ -4,6 +4,7 @@ import { NuiBlipMethodMap } from '@public/shared/nui/blip';
 import { NuiBookMethodMap } from '@public/shared/nui/book';
 import { NuiCardMethodMap } from '@public/shared/nui/card';
 import { NuiCraftingMethodMap } from '@public/shared/nui/crafting';
+import { NuiElectionMap } from '@public/shared/nui/election';
 import { NuiFeatureMethodMap } from '@public/shared/nui/feature';
 import { NuiHalloweenMethodMap, NuiZombieMethodMap } from '@public/shared/nui/halloween';
 import { NuiHudMethodMap } from '@public/shared/nui/hud';
@@ -99,6 +100,7 @@ export interface NuiMethodMap {
     feature: NuiFeatureMethodMap;
     blip: NuiBlipMethodMap;
     picker: NuiPickerMethodMap;
+    election: NuiElectionMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(

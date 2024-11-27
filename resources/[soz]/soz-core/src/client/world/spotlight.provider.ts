@@ -60,7 +60,7 @@ export class SpotlightProvider {
     @Tick()
     public async tick() {
         for (const spotlight of Object.values(this.spotlights)) {
-            DrawSpotLightWithShadow(
+            DrawSpotLight(
                 spotlight.position[0],
                 spotlight.position[1],
                 spotlight.position[2],
@@ -74,7 +74,6 @@ export class SpotlightProvider {
                 spotlight.currentBrightness,
                 spotlight.roundness,
                 spotlight.radius,
-                0,
                 0
             );
 
