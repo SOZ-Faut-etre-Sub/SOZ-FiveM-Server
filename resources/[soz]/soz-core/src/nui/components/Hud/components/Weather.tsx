@@ -19,12 +19,7 @@ export const Weather: FunctionComponent = () => {
     const [forecast, setForecast] = useState<ForecastWithTemperature>();
     useNuiEvent('weather', 'forecast', setForecast);
 
-    const [icon, setIcon] = useState<string>(null);
-    useNuiEvent('weather', 'icon', setIcon);
-
     const weather = useMemo(() => {
-        if (icon) return icon;
-
         const variant = isDay ? 'day' : 'night';
 
         switch (forecast?.weather) {
@@ -53,7 +48,7 @@ export const Weather: FunctionComponent = () => {
             default:
                 return `${variant}/cloudy`;
         }
-    }, [forecast, icon, isDay]);
+    }, [forecast, isDay]);
 
     if (!hasWatch || !forecast || !showWeather) {
         return null;

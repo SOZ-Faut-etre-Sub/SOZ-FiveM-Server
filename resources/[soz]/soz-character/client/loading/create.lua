@@ -69,20 +69,20 @@ function CharacterCreate(SpawnId, charInfo, character)
     character = CreateCharacterWizard(SpawnId, character)
 
     -- Winter
-    -- character.ClothConfig.BaseClothSet.Components[ComponentType.Chain] = GetHashKey("mp_m_freemode_01") == character.Skin.Model.Hash and
-    --                                                                         {Drawable = 35, Texture = 1, Palette = 0} or
-    --                                                                         {Drawable = 18, Texture = 1, Palette = 0}
-    -- character.ClothConfig.BaseClothSet.Props[tostring(PropType.Head)] = GetHashKey("mp_m_freemode_01") == character.Skin.Model.Hash and
-    --                                                                        {Drawable = 98, Texture = 0, Palette = 0} or
-    --                                                                        {Drawable = 97, Texture = 0, Palette = 0}
+    character.ClothConfig.BaseClothSet.Components[ComponentType.Chain] = GetHashKey("mp_m_freemode_01") == character.Skin.Model.Hash and
+                                                                             {Drawable = 35, Texture = 1, Palette = 0} or
+                                                                             {Drawable = 18, Texture = 1, Palette = 0}
+    character.ClothConfig.BaseClothSet.Props[tostring(PropType.Head)] = GetHashKey("mp_m_freemode_01") == character.Skin.Model.Hash and
+                                                                            {Drawable = 98, Texture = 0, Palette = 0} or
+                                                                            {Drawable = 97, Texture = 0, Palette = 0}
 
     -- Meteor
-    character.ClothConfig.BaseClothSet.Components[tostring(ComponentType.Mask)] = {
-        Drawable = 175,
-        Texture = 0,
-        Palette = 0,
-    }
-    character.ClothConfig.Config.HideMask = true
+    -- character.ClothConfig.BaseClothSet.Components[tostring(ComponentType.Mask)] = {
+    --     Drawable = 175,
+    --     Texture = 0,
+    --     Palette = 0,
+    -- }
+    -- character.ClothConfig.Config.HideMask = true
 
     local connected = QBCore.Functions.TriggerRpc("soz-character:server:CreatePlayer", charInfo, character.Skin, character.ClothConfig);
 
