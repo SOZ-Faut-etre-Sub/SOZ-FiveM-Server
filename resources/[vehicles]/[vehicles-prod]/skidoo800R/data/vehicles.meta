@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CVehicleModelInfo__InitDataList>
+  <residentTxd>vehshare</residentTxd>
+  <residentAnims />
+  <InitDatas>
+	<Item>
+      <modelName>skidoo800R</modelName>
+      <txdName>skidoo800R</txdName>
+      <handlingId>skidoo800R</handlingId>
+      <gameName>skidoo800R</gameName>
+      <vehicleMakeName>Polaris</vehicleMakeName>
+      <expressionDictName>null</expressionDictName>
+      <expressionName>null</expressionName>
+      <animConvRoofDictName>null</animConvRoofDictName>
+      <animConvRoofName>null</animConvRoofName>
+      <animConvRoofWindowsAffected />
+      <ptfxAssetName>null</ptfxAssetName>
+      <audioNameHash>DEFILER</audioNameHash>
+      <layout>LAYOUT_BIKE_QUAD</layout>
+      <coverBoundOffsets>BLAZER_COVER_OFFSET_INFO</coverBoundOffsets>
+	    <POVTuningInfo>BLAZER_POV_TUNING</POVTuningInfo>
+      <explosionInfo>EXPLOSION_INFO_DEFAULT</explosionInfo>
+      <scenarioLayout />
+      <cameraName>FOLLOW_UPRIGHT_BIKE_CAMERA</cameraName>
+      <aimCameraName>BIKE_AIM_CAMERA</aimCameraName>
+      <bonnetCameraName>BIKE_BLAZER3_POV_CAMERA</bonnetCameraName>
+      <povCameraName>BIKE_BLAZER3_POV_CAMERA</povCameraName>
+      <FirstPersonDriveByIKOffset x="0.020000" y="-0.060000" z="-0.020000" />
+      <FirstPersonDriveByUnarmedIKOffset x="0.000000" y="0.000000" z="-0.020000" />
+	  <FirstPersonProjectileDriveByIKOffset x="0.075000" y="-0.128000" z="-0.020000" />
+	  <FirstPersonProjectileDriveByPassengerIKOffset x="0.020000" y="0.060000" z="-0.090000" />
+	  <FirstPersonProjectileDriveByRearLeftIKOffset x="0.000000" y="0.000000" z="-0.055000" />
+	  <FirstPersonProjectileDriveByRearRightIKOffset x="0.000000" y="0.000000" z="-0.055000" />
+	  <FirstPersonDriveByLeftPassengerIKOffset x="0.000000" y="0.000000" z="-0.040000" />
+	  <FirstPersonDriveByRightPassengerIKOffset x="0.013000" y="-0.028000" z="-0.020000" />
+	  <FirstPersonDriveByRightRearPassengerIKOffset x="0.000000" y="0.000000" z="-0.040000" />
+	  <FirstPersonDriveByLeftPassengerUnarmedIKOffset x="0.000000" y="0.000000" z="-0.020000" />
+	  <FirstPersonDriveByRightPassengerUnarmedIKOffset x="0.000000" y="0.000000" z="-0.020000" />
+	  <FirstPersonMobilePhoneOffset x="0.143000" y="0.233000" z="0.508000" />
+      <FirstPersonPassengerMobilePhoneOffset x="0.136000" y="0.223000" z="0.490000" />
+      <PovCameraOffset x="0.000000" y="-0.125000" z="0.625000" />
+      <PovCameraVerticalAdjustmentForRollCage value="0.000000" />
+      <PovPassengerCameraOffset x="0.000000" y="0.040000" z="0.085000" />
+      <PovRearPassengerCameraOffset x="0.000000" y="0.040000" z="0.085000" />
+      <vfxInfoName>VFXVEHICLEINFO_MOTORBIKE_GENERIC</vfxInfoName>
+      <shouldUseCinematicViewMode value="true" />
+      <shouldCameraTransitionOnClimbUpDown value="false" />
+      <shouldCameraIgnoreExiting value="false" />
+      <AllowPretendOccupants value="true" />
+      <AllowJoyriding value="true" />
+      <AllowSundayDriving value="true" />
+      <AllowBodyColorMapping value="true" />
+      <wheelScale value="0.328500" />
+      <wheelScaleRear value="0.328500" />
+      <dirtLevelMin value="0.000000" />
+      <dirtLevelMax value="100.000000" />
+      <envEffScaleMin value="0.000000" />
+      <envEffScaleMax value="1.000000" />
+      <envEffScaleMin2 value="0.000000" />
+      <envEffScaleMax2 value="1.000000" />
+      <damageMapScale value="0.600000" />
+      <damageOffsetScale value="1.000000" />
+      <diffuseTint value="0x00FFFFFF" />
+      <steerWheelMult value="1.000000" />
+      <HDTextureDist value="5.000000" />
+      <lodDistances content="float_array">
+        500.000000
+        1000.000000
+        2000.000000
+        3000.000000
+        4000.000000
+        5000.000000
+      </lodDistances>
+      <minSeatHeight value="1.006" />
+      <identicalModelSpawnDistance value="20" />
+      <maxNumOfSameColor value="10" />
+      <defaultBodyHealth value="1000.000000" />
+      <pretendOccupantsScale value="1.000000" />
+      <visibleSpawnDistScale value="1.000000" />
+      <trackerPathWidth value="2.000000" />
+      <weaponForceMult value="1.000000" />
+      <frequency value="30" />
+      <swankness>SWANKNESS_1</swankness>
+      <maxNum value="5" />
+      <flags>FLAG_AVERAGE_CAR FLAG_POOR_CAR FLAG_IS_OFFROAD_VEHICLE FLAG_HEADLIGHTS_USE_ACTUAL_BONE_POS FLAG_IS_BULKY FLAG_HAS_INTERIOR_EXTRAS FLAG_HAS_GULL_WING_DOORS FLAG_HAS_LIVERY</flags>
+      <type>VEHICLE_TYPE_QUADBIKE</type>
+      <plateType>VPT_FRONT_AND_BACK_PLATES</plateType>
+      <dashboardType>VDT_DUKES</dashboardType>
+      <vehicleClass>VC_OFF_ROAD</vehicleClass>
+      <wheelType>VWT_SUV</wheelType>
+      <trailers>
+	    <Item>ctrailer2</Item>
+      	<Item>carhauler2</Item>
+		<Item>ctrailer</Item>
+		<Item>cotrailer</Item>
+		<Item>cartrailer</Item>
+	</trailers>
+      <additionalTrailers />
+      <drivers />
+      <extraIncludes />
+      <doorsWithCollisionWhenClosed>
+        <Item>VEH_EXT_BOOT</Item>
+      </doorsWithCollisionWhenClosed>
+      <driveableDoors />
+      <bumpersNeedToCollideWithMap value="false" />
+      <needsRopeTexture value="false" />
+      <requiredExtras>EXTRA_1</requiredExtras>
+      <rewards />
+      <cinematicPartCamera>
+        <Item>WHEEL_FRONT_RIGHT_CAMERA</Item>
+        <Item>WHEEL_FRONT_LEFT_CAMERA</Item>
+        <Item>WHEEL_WIDE_REAR_RIGHT_CAMERA</Item>
+        <Item>WHEEL_WIDE_REAR_LEFT_CAMERA</Item>
+      </cinematicPartCamera>
+      <NmBraceOverrideSet>Truck</NmBraceOverrideSet>
+      <buoyancySphereOffset x="0.000000" y="0.000000" z="0.000000" />
+      <buoyancySphereSizeScale value="1.000000" />
+      <pOverrideRagdollThreshold type="NULL" />
+	    <firstPersonDrivebyData>
+        <Item>BIKE_BLAZER3_FRONT</Item>
+      </firstPersonDrivebyData>
+    </Item>
+  </InitDatas>
+  <txdRelationships>
+    <Item>
+      <parent>vehicles_race_interior</parent>
+      <child>vehicles_race_generic</child>
+    </Item>
+    <Item>
+      <parent>vehicles_race_generic</parent>
+      <child>trophytruck</child>
+    </Item> 
+    <Item>
+      <parent>vehicles_race_generic</parent>
+      <child>trophytruck2</child>
+    </Item>
+    <Item>
+      <parent>vehshare_truck</parent>
+      <child>rallytruck</child>
+    </Item>
+    <Item>
+      <parent>vehicles_race_generic</parent>
+      <child>omnis</child>
+    </Item>
+    <Item>
+      <parent>vehicles_race_generic</parent>
+      <child>tyrus</child>
+    </Item>
+    <Item>
+      <parent>vehicles_race_generic</parent>
+      <child>sheava</child>
+    </Item>        
+    <Item>
+      <parent>vehicles_race_generic</parent>
+      <child>tampa2</child>
+    </Item>
+    <Item>
+      <parent>vehicles_race_generic</parent>
+      <child>tropos</child>
+    </Item>
+    <Item>
+      <parent>vehicles_race_generic</parent>
+      <child>reb800pro</child>
+    </Item>      
+    <Item>
+      <parent>vehicles_cav_interior</parent>
+      <child>contender</child>
+    </Item>
+    <Item>
+      <parent>vehicles_chopperbk_interior</parent>
+      <child>cliffhanger</child>
+    </Item>
+    <Item>
+      <parent>vehicles_sportbk_interior</parent>
+      <child>bf400</child>
+    </Item>
+     <Item>
+      <parent>vehicles_cav_interior</parent>
+      <child>brioso</child>
+    </Item>
+    <Item>
+      <parent>vehicles_chopperbk_interior</parent>
+      <child>gargoyle</child>
+    </Item>
+    <Item>
+      <parent>vehicles_supergt_interior</parent>
+      <child>lynx</child>
+    </Item> 
+  </txdRelationships>
+</CVehicleModelInfo__InitDataList>
