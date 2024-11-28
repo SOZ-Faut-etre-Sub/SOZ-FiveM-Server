@@ -1,4 +1,5 @@
 import { wait } from '@public/core/utils';
+import { Feature } from '@public/shared/features';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 
 import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
@@ -36,6 +37,7 @@ import {
 } from '../../shared/vehicle/offroad';
 import { VehicleSeat } from '../../shared/vehicle/vehicle';
 import { DrawService } from '../draw.service';
+import { FeatureProvider } from '../feature/feature.provider';
 import { NoClipProvider } from '../utils/noclip.provider';
 import { VehicleStateService } from './vehicle.state.service';
 
@@ -94,6 +96,9 @@ export class VehicleOffroadProvider {
 
     @Inject(VehicleStateService)
     private vehicleStateService: VehicleStateService;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     @OnNuiEvent(NuiEvent.AdminToggleNoSurfaceCalc)
     public async setNoSurfaceCalc(value: boolean): Promise<void> {
@@ -371,6 +376,17 @@ export class VehicleOffroadProvider {
         const wheelData = this.getWheelData(GetVehicleWheelType(playerVeh));
         if (!this.isSurfaceSoft(this.averageSoftness)) {
             vehTraction += wheelData.tractionOnHard;
+
+            /**
+             * Adjust traction if winter on offroad wheels and others
+             */
+            if (this.featureProvider.isFeatureEnabled(Feature.Winter)) {
+                if (GetVehicleWheelType(playerVeh) !== 4) {
+                    vehTraction -= 50;
+                } else {
+                    vehTraction += 10;
+                }
+            }
         } else {
             vehTraction += wheelData.tractionOnSoft;
         }
@@ -393,11 +409,22 @@ export class VehicleOffroadProvider {
             return;
         }
 
-        if (this.averageSoftness > 0 && this.isVehDrifting(playerVeh)) {
+        const wheelType = GetVehicleWheelType(playerVeh);
+        if (
+            (this.averageSoftness > 0 ||
+                (this.featureProvider.isFeatureEnabled(Feature.Winter) &&
+                    this.averageSoftness === 0 &&
+                    wheelType !== 4)) &&
+            this.isVehDrifting(playerVeh)
+        ) {
             const softnessMulitplier = this.averageSoftness / 25;
             SetVehicleReduceTraction(playerVeh, 1);
             SetVehicleReduceGrip(playerVeh, true);
-            await wait(Math.min(175, 100 * softnessMulitplier * GeneralTractionLoss));
+            let driftTime = Math.min(175, 100 * softnessMulitplier * GeneralTractionLoss);
+            if (this.averageSoftness === 0) {
+                driftTime /= 2;
+            }
+            await wait(driftTime);
             SetVehicleReduceTraction(playerVeh, 0);
             SetVehicleReduceGrip(playerVeh, false);
 
@@ -745,6 +772,13 @@ export class VehicleOffroadProvider {
 
         if (sinkageSpeed > 0) {
             sinkageSpeed *= GeneralSinkageSpeed;
+
+            /**
+             * Double Sinkage speed without offroad wheels and Winter feature
+             */
+            if (this.featureProvider.isFeatureEnabled(Feature.Winter) && wheelType !== 4) {
+                sinkageSpeed *= 2;
+            }
         }
 
         return sinkageSpeed;
