@@ -31,6 +31,13 @@ video {
     border-radius: .3rem;
 }
 
+.box {
+    color: #ffffff;
+    padding: .3rem 1rem;
+    background: rgba(0,0,0,.6);
+    border-radius: .3rem;
+}
+
 .container {
     position: absolute;
     bottom: 0;
