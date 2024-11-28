@@ -410,6 +410,10 @@ export class ShopProvider {
             case ShopBrand.RobsliquorSouth:
             case ShopBrand.Ammunation:
             case ShopBrand.Zkea:
+            case ShopBrand.SouvenirJewel:
+            case ShopBrand.SouvenirMemory:
+            case ShopBrand.SouvenirOther:
+            case ShopBrand.SouvenirPlush:
                 this.superetteShopProvider.openShop(this.currentShopBrand, this.currentShop);
                 break;
             case ShopBrand.Ponsonbys:

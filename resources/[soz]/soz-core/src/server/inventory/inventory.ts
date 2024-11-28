@@ -10,6 +10,7 @@ import {
     CRATE_MAX_WEIGHT,
     CRATE_TYPE_ALLOWED,
     getItemWeight,
+    GIFT_TYPE_ALLOWED,
     InventoryConfiguration,
     InventoryItem,
     InventoryItemMetadata,
@@ -513,6 +514,35 @@ export class Inventory {
             }
         } else if (inventoryItem.name === 'armor_plate' && existingItemObject.maxplates && existingItem.amount > 1) {
             return Err('add_plates_on_stack');
+        }
+
+        // Case 8: Wrapping paper + items
+        if (
+            existingItem.name.startsWith('wrapping_') &&
+            !inventoryItem.name.startsWith('gift_') &&
+            !item.notGiveable &&
+            !item.carrybox &&
+            GIFT_TYPE_ALLOWED.includes(inventoryItem.type)
+        ) {
+            const gift = this._itemService.getItem(existingItem.name.replace('wrapping_', 'gift_'));
+            if (!gift || !gift.name.startsWith('gift_')) {
+                return Err('cannot_merge');
+            }
+
+            this.removeAtSlot(existingItem.slot, 1);
+            this.doAddItem(gift, 1, {
+                crateElements: [
+                    {
+                        name: inventoryItem.name,
+                        amount: 1,
+                        metadata: inventoryItem.metadata,
+                        label: item.label,
+                    },
+                ],
+            });
+
+            this._hasChanges = true;
+            return Ok(1);
         }
 
         return Err('cannot_merge');

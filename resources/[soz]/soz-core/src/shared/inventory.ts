@@ -997,6 +997,20 @@ export const isSameInventoryItem = (item1: InventoryItemCompareItem, item2: Inve
     return deepEqual(item1Metadata, item2Metadata);
 };
 
+export const GIFT_TYPE_ALLOWED: ItemType[] = [
+    'item',
+    'drug',
+    'food',
+    'drink',
+    'cocktail',
+    'flavor',
+    'liquor',
+    'fish',
+    'fishing_garbage',
+    'fishing_rod',
+    'fishing_bait',
+];
+
 export const CRATE_TYPE_ALLOWED: ItemType[] = ['food', 'liquor', 'drink', 'cocktail'];
 
 export const CRATE_MAX_WEIGHT = 12000;
