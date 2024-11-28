@@ -52,6 +52,7 @@ export class GouvProvider {
             {
                 label: "Valider l'identité",
                 job: JobType.Gouv,
+                icon: 'gouv/identity',
                 category: 'society',
                 canInteract: entity => {
                     const targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
