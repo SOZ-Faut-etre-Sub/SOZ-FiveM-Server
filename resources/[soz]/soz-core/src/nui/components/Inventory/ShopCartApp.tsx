@@ -53,7 +53,7 @@ export const ShopCartApp: FunctionComponent = () => {
     const [cartContent, setCartContent] = useState<CartElement[]>([]);
     const [currentDescription, setCurrentDescription] = useState<InventoryItem>(null);
     const open = shopContent !== null;
-    const inventorySize = useInventorySize(6);
+    const inventorySize = useInventorySize(5);
 
     useNuiEvent('inventory', 'OpenShop', data => {
         setShopContent(data);
@@ -188,7 +188,7 @@ export const ShopCartApp: FunctionComponent = () => {
         >
             <div className="absolute h-full w-full font-prompt">
                 <div className="m-8">
-                    <div className="flex max-h-[40vh]">
+                    <div className="flex">
                         <div
                             className="max-h-full wide:ml-[94vh]"
                             style={{
