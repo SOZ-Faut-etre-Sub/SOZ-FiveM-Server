@@ -18,6 +18,7 @@ export interface NuiPLayerMethodMap {
     UpdatePosition: Vector3;
     UpdatePlayerStats: PlayerStats;
     UpdateAnimationShortcuts: Record<string, Shortcut>;
+    UpdateCombatMode: boolean;
     UpdateInvoices: Invoice[];
     UpdateInventory: {
         configuration: InventoryConfiguration;
@@ -42,6 +43,7 @@ export type PlayerPersonalMenuData = {
     scaledNui: boolean;
     isGlassmorphismActive: boolean;
     shortcuts: Record<string, Shortcut>;
+    combatMode: boolean;
     job: JobMenuData;
     deguisement: boolean;
     naked: boolean;

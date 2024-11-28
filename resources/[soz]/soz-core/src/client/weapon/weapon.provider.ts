@@ -294,6 +294,11 @@ export class WeaponProvider {
             }
         }
         await this.weapon.recoil();
+        const removeCombatMode = GetResourceKvpInt('soz_remove_combat_mode') === 1;
+
+        if (removeCombatMode) {
+            SetPedUsingActionMode(player, false, -1, 'DEFAULT_ACTION');
+        }
     }
 
     public sendShootingAlert() {
