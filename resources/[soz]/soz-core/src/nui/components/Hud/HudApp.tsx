@@ -8,6 +8,7 @@ import { TwitchNewsOverlay } from './TwitchNewsOverlay';
 import { VehicleInterface } from './VehicleInterface';
 import { WatchInterface } from './WatchInterface';
 import { WeaponInterface } from './WeaponInterface';
+import { WeatherOverlay } from './WeatherIcon';
 import { ZombieOverlay } from './ZombieIcon';
 
 export const HudApp: FunctionComponent = () => {
@@ -24,6 +25,7 @@ export const HudApp: FunctionComponent = () => {
             <TwitchNewsOverlay />
 
             <ZombieOverlay />
+            <WeatherOverlay />
             <DebugVoip />
         </main>
     );

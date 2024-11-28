@@ -753,7 +753,6 @@
     <TimeCycleFilename>resources:/soz-mapdata/W_SNOW.XML</TimeCycleFilename>
     <CloudSettingsName>SUNNYclouds</CloudSettingsName>
   </Item>
-  <!--
   <Item>
     <Name>BLIZZARD</Name>
     <Sun value="0"/>
@@ -794,8 +793,8 @@
 	<TimeCycleFilename>resources:/soz-mapdata/W_BLIZZARD.XML</TimeCycleFilename>
     <CloudSettingsName>SUNNYclouds</CloudSettingsName>
   </Item>
-  In summer Replace BLIZZARD by a SANDSTORM
-  -->
+  <!--
+  SANDSTORM
   <Item>
     <Name>BLIZZARD</Name>
     <Sun value="0.89"/>
@@ -836,6 +835,7 @@
 	  <TimeCycleFilename>resources:/soz-mapdata/W_BLIZZARD.XML</TimeCycleFilename>
     <CloudSettingsName>HEAVYclouds</CloudSettingsName>
   </Item>
+  -->
   <Item>
     <Name>SNOWLIGHT</Name>
     <Sun value="0"/>

@@ -9,7 +9,7 @@ AddEventHandler("soz-character:client:create-new-character", function(spawnId, f
 
     local character = CreateAndApplyDefaultCharacter(0)
 
-    SpawnPlayer(spawnId)
+    SpawnPlayer(spawnId, true)
     CharacterCreate(spawnId, charInfo, character)
 end)
 

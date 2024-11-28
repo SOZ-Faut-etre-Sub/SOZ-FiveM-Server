@@ -165,7 +165,7 @@ export class PlayerSnowProvider {
         }
 
         let coldScore = 0;
-        [Component.Tops, Component.Legs, Component.Shoes].forEach(component => {
+        [Component.Tops, Component.Legs, Component.Shoes, Component.Undershirt].forEach(component => {
             if (data[component] == null) {
                 const extra = ExtraWarnCloths[player.skin.Model.Hash].find(
                     item =>
@@ -174,18 +174,15 @@ export class PlayerSnowProvider {
                         item.Components[component].Drawable == outfit.Components[component].Drawable
                 );
                 if (extra) {
-                    coldScore++;
+                    coldScore += 2;
                 }
-            }
-        });
-
-        for (const score of Object.values(data)) {
-            if (score == 0) {
+            } else if (data[component] == 0) {
                 this.coldProtected = false;
                 return;
+            } else {
+                coldScore += data[component];
             }
-            coldScore + score;
-        }
+        });
 
         if (this.clothingService.checkWearingGloves()) {
             coldScore++;
@@ -230,7 +227,7 @@ export class PlayerSnowProvider {
         }
 
         this.coldProtected = coldScore >= 6;
-        this.blizzardProtected = this.blizzardProtected && coldScore >= 9;
+        this.blizzardProtected = this.blizzardProtected && coldScore >= 10;
     }
 
     private setCold(cold: boolean) {
