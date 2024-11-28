@@ -8,11 +8,14 @@ import { MenuType } from '@public/shared/nui/menu';
 
 import { TaxType } from '../../../shared/bank';
 import { JobTaxTier } from '../../../shared/configuration';
+import { JobType } from '../../../shared/job';
 import { Err, Ok } from '../../../shared/result';
 import { BlipFactory } from '../../blip';
 import { NuiMenu } from '../../nui/nui.menu';
+import { PlayerListStateService } from '../../player/player.list.state.service';
 import { PlayerService } from '../../player/player.service';
 import { ConfigurationRepository } from '../../repository/configuration.repository';
+import { TargetFactory } from '../../target/target.factory';
 import { VehicleRadarProvider } from '../../vehicle/vehicle.radar.provider';
 
 @Provider()
@@ -35,9 +38,33 @@ export class GouvProvider {
     @Inject(VehicleRadarProvider)
     private vehicleRadarProvider: VehicleRadarProvider;
 
+    @Inject(TargetFactory)
+    private targetFactory: TargetFactory;
+
+    @Inject(PlayerListStateService)
+    private playerListStateService: PlayerListStateService;
+
     @Once(OnceStep.PlayerLoaded)
     public setupMdrJob() {
         this.createBlips();
+
+        this.targetFactory.createForAllPlayer([
+            {
+                label: "Valider l'identité",
+                job: JobType.Gouv,
+                category: 'society',
+                canInteract: entity => {
+                    const targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
+
+                    return !this.playerListStateService.isValidated(targetSource);
+                },
+                action: entity => {
+                    const targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
+
+                    TriggerServerEvent(ServerEvent.GOUV_VALIDATE_IDENTITY, targetSource);
+                },
+            },
+        ]);
     }
 
     @OnEvent(ClientEvent.JOBS_GOUV_OPEN_SOCIETY_MENU)

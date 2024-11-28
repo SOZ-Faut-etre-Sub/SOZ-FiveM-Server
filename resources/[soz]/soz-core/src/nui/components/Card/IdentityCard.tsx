@@ -8,11 +8,21 @@ type IdentityCardProps = {
     player: PlayerData;
 };
 
+const FORMAT_LOCALIZED: Intl.DateTimeFormatOptions = {
+    day: 'numeric',
+    month: 'numeric',
+    year: 'numeric',
+};
+
 export const IdentityCard: FunctionComponent<IdentityCardProps> = ({ player }) => {
+    console.log(player.created_at);
+
     return (
         <div
             style={{
-                backgroundImage: `url(https://soz.zerator.com/static/game/images/identity/identity.webp)`,
+                backgroundImage: player.is_validated
+                    ? `url(https://soz.zerator.com/static/game/images/identity/identity.webp)`
+                    : `url(https://soz.zerator.com/static/game/images/identity/identity_temp.webp)`,
             }}
             className="bg-contain bg-no-repeat aspect-[855/539] h-[340px]"
         >
@@ -47,6 +57,17 @@ export const IdentityCard: FunctionComponent<IdentityCardProps> = ({ player }) =
                         <h3 className="text-xs leading-none">Numéro de téléphone</h3>
                         <p className="uppercase leading-none">{player.charinfo.phone}</p>
                     </div>
+                    {!player.is_validated && (
+                        <div>
+                            <h3 className="text-xs leading-none">Date d'éxpiration</h3>
+                            <p className="uppercase leading-none">
+                                {new Date(player.created_at + 2 * 7 * 24 * 3600 * 1000).toLocaleDateString(
+                                    'fr-FR',
+                                    FORMAT_LOCALIZED
+                                )}
+                            </p>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

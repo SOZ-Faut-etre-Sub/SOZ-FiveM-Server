@@ -160,6 +160,14 @@ export class PlayerService {
         }
     }
 
+    public setPlayerValidated(source: number, validated: boolean) {
+        const player = this.QBCore.getPlayer(source);
+
+        if (player) {
+            player.Functions.SetValidated(validated);
+        }
+    }
+
     public setPlayerDisease(source: number, disease: Disease = false): Disease {
         const player = this.QBCore.getPlayer(source);
 

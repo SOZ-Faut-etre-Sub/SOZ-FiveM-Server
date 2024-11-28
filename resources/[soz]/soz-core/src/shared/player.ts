@@ -22,6 +22,7 @@ export type QBCorePlayer = {
         SetApartmentHasParkingPlace: (hasParkingPlace: boolean) => void;
         SetMetaData: (key: string, val: any) => void;
         SetMetaDatas: (data: Record<string, any>) => void;
+        SetValidated: (validated: boolean) => void;
         UpdateMaxWeight: () => void;
         AddMoney: (type: BankMoneyType, amount: number) => boolean;
         RemoveMoney: (type: BankMoneyType, amount: number) => boolean;
@@ -72,6 +73,8 @@ export type PlayerData = {
     source: number;
     gang: GangPlayerData;
     position: { x: number; y: number; z: number };
+    is_validated: boolean;
+    created_at: number;
 };
 
 export type FakeId = {
@@ -287,7 +290,7 @@ export const ShortPlayerLicenceLabels = {
     [PlayerLicenceType.Rescuer]: 'Secouriste',
 };
 
-export type PlayerListStateKey = 'dead' | 'zipped' | 'wearingPatientOutfit' | 'escorted' | 'knockedOut';
+export type PlayerListStateKey = 'dead' | 'zipped' | 'wearingPatientOutfit' | 'escorted' | 'knockedOut' | 'validated';
 
 export enum PlayerCriminalState {
     None,

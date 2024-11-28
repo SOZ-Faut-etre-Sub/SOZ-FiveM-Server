@@ -96,6 +96,8 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.name = GetPlayerName(src)
     PlayerData.cid = PlayerData.cid or 1
     PlayerData.money = PlayerData.money or {}
+    PlayerData.is_validated = PlayerData.is_validated or 0
+    PlayerData.created_at = PlayerData.created_at or os.time() * 1000
     for moneytype, startamount in pairs(QBCore.Config.Money.MoneyTypes) do
         PlayerData.money[moneytype] = math.floor(PlayerData.money[moneytype] or startamount)
     end
@@ -357,6 +359,11 @@ function QBCore.Player.CreatePlayer(PlayerData)
         self.Functions.UpdatePlayerData(true)
     end
 
+    self.Functions.SetValidated = function(validated)
+        self.PlayerData.is_validated = validated
+        self.Functions.UpdatePlayerData(true)
+    end
+
     self.Functions.AddJobReputation = function(amount)
         local amount = tonumber(amount)
         self.PlayerData.metadata["jobrep"][self.PlayerData.job.id] = self.PlayerData.metadata["jobrep"][self.PlayerData.job.id] + amount
@@ -603,7 +610,7 @@ function QBCore.Player.Save(source)
         end
 
         exports.oxmysql:insert(
-            "INSERT INTO player (citizenid, cid, license, name, money, charinfo, job, gang, position, metadata, skin, cloth_config, is_default, features) VALUES (:citizenid, :cid, :license, :name, :money, :charinfo, :job, :gang, :position, :metadata, :skin, :cloth_config, :is_default, :features) ON DUPLICATE KEY UPDATE cid = :cid, name = :name, money = :money, charinfo = :charinfo, job = :job, gang = :gang, position = :position, metadata = :metadata, skin = :skin, cloth_config = :cloth_config, is_default = :is_default, features = :features",
+            "INSERT INTO player (citizenid, cid, license, name, money, charinfo, job, gang, position, metadata, skin, cloth_config, is_default, features, is_validated) VALUES (:citizenid, :cid, :license, :name, :money, :charinfo, :job, :gang, :position, :metadata, :skin, :cloth_config, :is_default, :features, :is_validated) ON DUPLICATE KEY UPDATE cid = :cid, name = :name, money = :money, charinfo = :charinfo, job = :job, gang = :gang, position = :position, metadata = :metadata, skin = :skin, cloth_config = :cloth_config, is_default = :is_default, features = :features, is_validated = :is_validated",
             {
                 citizenid = PlayerData.citizenid,
                 cid = tonumber(PlayerData.cid),
@@ -619,6 +626,7 @@ function QBCore.Player.Save(source)
                 cloth_config = json.encode(PlayerData.cloth_config),
                 is_default = PlayerData.is_default,
                 features = json.encode(PlayerData.features),
+                is_validated = PlayerData.is_validated,
             })
     else
         exports["soz-core"]:Log("ERROR", "Save player error ! PlayerData is empty", {player = PlayerData})
