@@ -1,8 +1,9 @@
-import { Once, OnceStep } from '@core/decorators/event';
+import { Once, OnceStep, OnEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { uuidv4 } from '@core/utils';
 import { AnimationProps } from '@public/shared/animation';
+import { ClientEvent } from '@public/shared/event/client';
 import { getChunkId } from '@public/shared/grid';
 import { InventoryItem } from '@public/shared/inventory';
 import { Vector3 } from '@public/shared/polyzone/vector';
@@ -409,5 +410,21 @@ export class PedFactory {
         }
 
         this.loadedPeds = {};
+    }
+
+    @OnEvent(ClientEvent.PED_RELEASE)
+    public onPedRelease(netId: number) {
+        if (!NetworkDoesNetworkIdExist(netId)) {
+            return;
+        }
+
+        const ped = NetworkGetEntityFromNetworkId(netId);
+
+        if (!DoesEntityExist(ped)) {
+            return;
+        }
+
+        SetEntityAsNoLongerNeeded(ped);
+        return;
     }
 }

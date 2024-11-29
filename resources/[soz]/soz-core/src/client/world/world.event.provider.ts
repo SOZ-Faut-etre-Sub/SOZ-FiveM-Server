@@ -47,11 +47,14 @@ export class WorldEventProvider {
                 GetHashKey('RelationGroup' + behavior),
                 GetHashKey('PLAYER')
             );
-            SetRelationshipBetweenGroups(
-                0,
-                GetHashKey('RelationGroup' + behavior),
-                GetHashKey('RelationGroup' + behavior)
-            );
+
+            for (const behavior2 of Object.values(ScenePedBehavior)) {
+                SetRelationshipBetweenGroups(
+                    0,
+                    GetHashKey('RelationGroup' + behavior),
+                    GetHashKey('RelationGroup' + behavior2)
+                );
+            }
         }
     }
 
