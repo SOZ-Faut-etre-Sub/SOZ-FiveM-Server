@@ -406,7 +406,7 @@
 	<Item>
 	  <filename>platform:/data/cdimages/moviesubs.rpf</filename>
 	  <fileType>RPF_FILE</fileType>
-	</Item>    
+	</Item>
 	<Item>
 	  <filename>platform:/levels/gta5/generic/gtxd.ityp</filename>
 	  <fileType>PERMANENT_ITYP_FILE</fileType>
@@ -415,7 +415,7 @@
 	  <filename>platform:/levels/gta5/generic/gtxd.rpf</filename>
 	  <fileType>RPF_FILE</fileType>
 	  <contents>CONTENTS_MAP</contents>
-	</Item>	
+	</Item>
 	<Item>
 	  <filename>platform:/data/effects/ptfx.rpf</filename>
 	  <fileType>RPF_FILE</fileType>
@@ -424,7 +424,7 @@
 	<Item>
 	  <filename>resources:/soz-mapdata/water/water.xml</filename>
 	  <fileType>WATER_FILE</fileType>
-	</Item>
+    </Item>
 	<Item>
 	  <filename>common:/data/levels/gta5/time.xml</filename>
 	  <fileType>TIME_FILE</fileType>
@@ -1109,11 +1109,11 @@
 	<Item>
 	  <filename>commoncrc:/data/levels/gta5/vehiclepopulation.xml</filename>
 	  <fileType>VEHICLE_POPULATION_FILE</fileType>
-	</Item>	
+	</Item>
 	<Item>
 	  <filename>common:/data/levels/gta5/vehgen_markup.xml</filename>
 	  <fileType>VEHGEN_MARKUP_FILE</fileType>
-	</Item>	
+	</Item>
 	<Item>
 	  <filename>common:/data/levels/gta5/streetvehicleassoc.xml</filename>
 	  <fileType>STREET_VEHICLE_ASSOCIATION_FILE</fileType>
