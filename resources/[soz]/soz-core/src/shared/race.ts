@@ -21,7 +21,7 @@ export type Race = {
     carModel: string;
     enabled: boolean;
     display?: boolean;
-    npc?: number;
+    npc?: string;
     fps: boolean;
     garageLocation: Vector4;
     vehicleConfiguration: VehicleConfiguration;

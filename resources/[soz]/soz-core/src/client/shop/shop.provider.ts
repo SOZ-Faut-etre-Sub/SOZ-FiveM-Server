@@ -2,7 +2,6 @@ import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { InventoryDragAndDropProvider } from '@public/client/inventory/inventory.draganddrop.provider';
 import { BrandConfig, BrandsConfig, ShopBrand, ShopsConfig } from '@public/config/shops';
 import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
-import { Exportable } from '@public/core/decorators/exports';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
@@ -30,7 +29,7 @@ import { TattooShopProvider } from './tattoo.shop.provider';
 import { ZkeaFournitureShopProvider } from './zkea.fourniture.shop.provider';
 
 type shopPedData = {
-    entity: number;
+    pedId: string;
     location: number[];
 };
 
@@ -241,7 +240,7 @@ export class ShopProvider {
                 });
             }
             if (brandConfig.pedModel) {
-                const pedId = await this.pedFactory.createPed({
+                const pedId = await this.pedFactory.createPedOnGrid({
                     model: this.getBrandPedModel(brandConfig),
                     coords: {
                         x: config.location[0],
@@ -284,7 +283,7 @@ export class ShopProvider {
                     );
                 }
 
-                this.shopsPedEntity[shop] = { entity: pedId, location: config.location } as shopPedData;
+                this.shopsPedEntity[shop] = { pedId: pedId, location: config.location } as shopPedData;
             }
         }
 
@@ -332,19 +331,6 @@ export class ShopProvider {
             ]
         );
         TriggerEvent('shops:client:shop:PedSpawned');
-    }
-
-    @Once(OnceStep.Stop)
-    public async onPlayerStop() {
-        for (const shop in ShopsConfig) {
-            if (
-                !this.shopsPedEntity[shop] == null &&
-                this.shopsPedEntity[shop].entity != null &&
-                DoesEntityExist(this.shopsPedEntity[shop].entity)
-            ) {
-                DeleteEntity(this.shopsPedEntity[shop].entity);
-            }
-        }
     }
 
     @OnEvent(ClientEvent.LOCATION_ENTER)
@@ -439,19 +425,24 @@ export class ShopProvider {
         return this.featureProvider.isFeatureEnabled(Feature.Halloween) ? 'u_m_y_zombie_01' : brandConfig.pedModel;
     }
 
-    @Exportable('GetCurrentShop')
     public getCurrentShop(): ShopInfo {
-        const entity =
+        const pedId =
             this.currentShop && this.shopsPedEntity[this.currentShop]
-                ? this.shopsPedEntity[this.currentShop].entity
-                : 0;
-        return { shopId: this.currentShop, shopbrand: this.currentShopBrand, shopPedEntity: entity } as ShopInfo;
+                ? this.shopsPedEntity[this.currentShop].pedId
+                : null;
+        return {
+            shopId: this.currentShop,
+            shopbrand: this.currentShopBrand,
+            shopPedEntity: this.pedFactory.findLoadedPed(pedId)?.entity,
+        };
     }
 
-    @Exportable('GetShopPedEntity')
     public getShopPedEntity(shopId: string): ShopPedEntity {
-        const entity = shopId && this.shopsPedEntity[shopId] ? this.shopsPedEntity[shopId].entity : 0;
+        const pedId =
+            this.currentShop && this.shopsPedEntity[this.currentShop]
+                ? this.shopsPedEntity[this.currentShop].pedId
+                : null;
         const location = shopId && this.shopsPedEntity[shopId] ? this.shopsPedEntity[shopId].location : [0, 0, 0, 0];
-        return { entity: entity, location: location as Vector4 } as ShopPedEntity;
+        return { entity: this.pedFactory.findLoadedPed(pedId)?.entity, location: location as Vector4 };
     }
 }

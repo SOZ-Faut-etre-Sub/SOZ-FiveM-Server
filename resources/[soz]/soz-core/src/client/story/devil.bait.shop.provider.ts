@@ -2031,7 +2031,7 @@ export class DevilBaitShopProvider {
     }
 
     private async createOjymasDevil() {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 'mp_m_freemode_01',
             coords: toVector4Object([2.11, 662.92, 202.57, 156.09]),
             modelCustomization: {
