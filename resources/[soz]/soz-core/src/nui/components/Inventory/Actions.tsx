@@ -534,6 +534,7 @@ export const getActions = (
     if (
         (item.type === 'crate' && inventoryItem.metadata?.crateElements?.length) ||
         (item.name === 'detective_board' && inventoryItem.metadata?.originalDetectiveBoard) ||
+        item.name.startsWith('gift_') ||
         item.name === 'scientist_photo'
     ) {
         actions.push(ActionItemType.Rename);

@@ -35,6 +35,10 @@ export enum ShopBrand {
     Barber = 'barber',
     Ammunation = 'ammunation',
     Zkea = 'zkea',
+    SouvenirOther = 'souvenir-other',
+    SouvenirPlush = 'souvenir-plush',
+    SouvenirMemory = 'souvenir-memory',
+    SouvenirJewel = 'souvenir-jewel',
     LsCustom = 'ls-custom',
 }
 
@@ -154,6 +158,34 @@ export const BrandsConfig: Record<ShopBrand, BrandConfig> = {
         blipSprite: 72,
         blipColor: 46,
         pedModel: 'S_F_M_Autoshop_01',
+        banner: 'https://nui-img/soz/menu_shop_supermarket',
+    },
+    [ShopBrand.SouvenirOther]: {
+        label: 'Boutique de souvenir - Autres',
+        blipSprite: 781,
+        blipColor: 13,
+        pedModel: 'cs_ashley',
+        banner: 'https://nui-img/soz/menu_shop_supermarket',
+    },
+    [ShopBrand.SouvenirMemory]: {
+        label: 'Boutique de souvenir',
+        blipSprite: 781,
+        blipColor: 13,
+        pedModel: 'cs_ashley',
+        banner: 'https://nui-img/soz/menu_shop_supermarket',
+    },
+    [ShopBrand.SouvenirPlush]: {
+        label: 'Boutique de souvenir - Peluches',
+        blipSprite: 781,
+        blipColor: 13,
+        pedModel: 'cs_ashley',
+        banner: 'https://nui-img/soz/menu_shop_supermarket',
+    },
+    [ShopBrand.SouvenirJewel]: {
+        label: 'Boutique de souvenir - Luxes',
+        blipSprite: 781,
+        blipColor: 13,
+        pedModel: 'u_m_m_jewelthief',
         banner: 'https://nui-img/soz/menu_shop_supermarket',
     },
 };
@@ -482,6 +514,22 @@ export const ShopsConfig: Record<string, ShopConfig> = {
     ['ls-custom5']: {
         brand: ShopBrand.LsCustom,
         location: [1172.25, 2636.44, 37.79, 314.48],
+    },
+    [ShopBrand.SouvenirOther]: {
+        brand: ShopBrand.SouvenirOther,
+        location: [1655.16, 4874.3, 42.13, 277.77],
+    },
+    [ShopBrand.SouvenirPlush]: {
+        brand: ShopBrand.SouvenirPlush,
+        location: [-315.65, 6193.99, 31.65, 43.4],
+    },
+    [ShopBrand.SouvenirMemory]: {
+        brand: ShopBrand.SouvenirMemory,
+        location: [-1045.06, -2514.4, 20.26, 243.02],
+    },
+    [ShopBrand.SouvenirJewel]: {
+        brand: ShopBrand.SouvenirJewel,
+        location: [-715.15, -248.64, 36.98, 349.29],
     },
 };
 
