@@ -287,6 +287,16 @@ export class PlayerAnimationProvider {
         this.nuiDispatch.dispatch('player', 'UpdateAnimationShortcuts', this.getShortcuts());
     }
 
+    @OnNuiEvent(NuiEvent.PlayerAnimationUpdateCombatMode)
+    public async updateCombatMode(value: boolean) {
+        SetResourceKvpInt('soz_remove_combat_mode', value ? 1 : 0);
+        this.nuiDispatch.dispatch('player', 'UpdateCombatMode', value);
+    }
+
+    public getCombatMode(): boolean {
+        return Boolean(GetResourceKvpInt('soz_remove_combat_mode'));
+    }
+
     public getShortcuts(): Record<string, Shortcut> {
         const shortcuts = {};
 

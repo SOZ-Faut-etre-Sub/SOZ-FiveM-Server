@@ -78,7 +78,7 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                 </MenuContent>
             </MainMenu>
             <MenuClothing />
-            <MenuAnimation shortcuts={data.shortcuts} />
+            <MenuAnimation shortcuts={data.shortcuts} combatMode={data.combatMode} />
             <SubMenu id="hud">
                 <MenuTitle banner="https://nui-img/soz/menu_personal">HUD</MenuTitle>
                 <MenuContent>
@@ -233,13 +233,21 @@ const MenuClothing: FunctionComponent = () => {
 
 type MenuAnimationProps = {
     shortcuts: Record<string, Shortcut>;
+    combatMode: boolean;
 };
 
-const MenuAnimation: FunctionComponent<MenuAnimationProps> = ({ shortcuts: intialShortcuts }) => {
+const MenuAnimation: FunctionComponent<MenuAnimationProps> = ({
+    shortcuts: intialShortcuts,
+    combatMode: initialCombatMode,
+}) => {
     const [shortcuts, setShortcuts] = useState(intialShortcuts);
-
+    const [removeCombatMode, setRemoveCombatMode] = useState(initialCombatMode);
     useNuiEvent('player', 'UpdateAnimationShortcuts', shortcuts => {
         setShortcuts(shortcuts);
+    });
+
+    useNuiEvent('player', 'UpdateCombatMode', combatMode => {
+        setRemoveCombatMode(combatMode);
     });
 
     return (
@@ -251,6 +259,15 @@ const MenuAnimation: FunctionComponent<MenuAnimationProps> = ({ shortcuts: intia
                     <MenuItemSubMenuLink id="walk_list">Démarches</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="mood_list">Humeurs</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="favorite_list">Mes animations</MenuItemSubMenuLink>
+                    <MenuItemCheckbox
+                        onChange={value => {
+                            fetchNui(NuiEvent.PlayerAnimationUpdateCombatMode, value);
+                            setRemoveCombatMode(value);
+                        }}
+                        checked={removeCombatMode}
+                    >
+                        Désactiver la posture de combat
+                    </MenuItemCheckbox>
                 </MenuContent>
             </SubMenu>
             <SubMenu id="mood_list">
@@ -285,9 +302,15 @@ const MenuAnimation: FunctionComponent<MenuAnimationProps> = ({ shortcuts: intia
                                     if (value === 'delete') {
                                         fetchNui(NuiEvent.PlayerMenuAnimationFavoriteDelete, { key });
                                     }
+                                    if (value === 'play') {
+                                        fetchNui(NuiEvent.PlayerMenuAnimationPlay, {
+                                            animationItem: shortcut.animation,
+                                        });
+                                    }
                                 }}
                                 key={key}
                             >
+                                <MenuItemSelectOption value="play">Jouer</MenuItemSelectOption>
                                 <MenuItemSelectOption value="delete">Supprimer</MenuItemSelectOption>
                             </MenuItemSelect>
                         );

@@ -205,6 +205,7 @@ export enum NuiEvent {
     PlayerMenuAnimationStop = 'soz-core:nui:player:menu:animation-stop',
     PlayerMenuAnimationFavorite = 'soz-core:nui:player:menu:animation-favorite',
     PlayerMenuAnimationFavoriteDelete = 'soz-core:nui:player:menu:animation-favorite-delete',
+    PlayerAnimationUpdateCombatMode = 'soz-core:nui:player:menu:animation:keep-combat-mode',
     PlayerMenuHudSetGlobal = 'soz-core:nui:player:menu:hud-set-global',
     PlayerMenuHudSetCinematicMode = 'soz-core:nui:player:menu:hud-set-cinematic-mode',
     PlayerMenuHudSetCinematicCameraActive = 'soz-core:nui:player:menu:hud-set-cinematic-camera-active',
