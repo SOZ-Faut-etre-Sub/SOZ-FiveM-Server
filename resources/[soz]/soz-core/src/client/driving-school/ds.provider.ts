@@ -117,7 +117,7 @@ export class DrivingSchoolProvider {
 
             targetOptions.push({
                 label: `${license.label}`,
-                subLabel: `$${price}`,
+                subLabel: `$${price} ou 1 Bon pour des leçons de conduite`,
                 icon: license.icon,
                 blackoutGlobal: true,
                 category: 'citizen',

@@ -58,7 +58,7 @@ export const TaxeDescription = [
     {
         title: 'Taxe sur les fournitures',
         description:
-            "La taxe sur les fournitures est une imposition qui s'applique à tous les achats effectués chez un coiffeur, un tatoueur, une boutique de vêtements ou à la bijouterie.",
+            "La taxe sur les fournitures est une imposition qui s'applique à tous les achats effectués chez un coiffeur, un tatoueur, une boutique de vêtements, à la bijouterie ou une boutique de souvenir.",
         taxAmount: 10,
         whoModifies: 'Le gouvernement',
         id: 'supply',

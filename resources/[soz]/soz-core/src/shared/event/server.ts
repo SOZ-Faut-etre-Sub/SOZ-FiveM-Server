@@ -700,4 +700,7 @@ export enum ServerEvent {
     OILRIG_HEIST_STOP_ALARM = 'soz-core:server:oilrig-heist:alarm-stop',
 
     PLAYER_MORTAL_TP = 'soz-core:server:player:mortal-tp',
+
+    GIFT_TOSS_COIN = 'soz-core:server:gift:toss-coin',
+    GIFT_OPEN_GIFT = 'soz-core:server:gift:open-gift',
 }

@@ -17,6 +17,12 @@ import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
 
+const SOUVENIR_BRAND = [
+    ShopBrand.SouvenirJewel,
+    ShopBrand.SouvenirMemory,
+    ShopBrand.SouvenirOther,
+    ShopBrand.SouvenirPlush,
+];
 @Provider()
 export class SuperetteShopProvider {
     @Inject(NuiMenu)
@@ -51,6 +57,8 @@ export class SuperetteShopProvider {
             let taxes = null;
             if (brand === ShopBrand.Zkea) {
                 taxes = TaxType.SERVICE;
+            } else if (SOUVENIR_BRAND.includes(brand)) {
+                taxes = TaxType.SUPPLY;
             } else if (brand !== ShopBrand.Supermarket247Cayo) {
                 taxes = TaxType.FOOD;
             }
