@@ -21,9 +21,9 @@ const BasePermissions: Partial<Record<JobPermission, JobPermissionData>> = {
     },
     [JobPermission.SocietyPublicPort]: { label: 'Ranger/sortir les véhicules des ports publics' },
     [JobPermission.SocietyPrivatePort]: { label: 'Ranger/sortir les véhicules des ports privés' },
-    [JobPermission.SocietyViewCompanyPanel]: { label: 'Accès au panel entreprise' },
     [JobPermission.SocietyShop]: { label: 'Accès aux magasins de société' },
     [JobPermission.OnDutyView]: { label: 'Voir les employé(e)s en service' },
+    [JobPermission.SocietyViewCompanyPanel]: { label: 'Accès au panel patron' },
 };
 
 export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
@@ -169,9 +169,9 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
             [JobPermission.MedicalPatientAccess]: { label: 'Accéder aux dossiers patients panel' },
             [JobPermission.MedicalPatientEdit]: { label: 'Editer les dossiers patients panel' },
             [JobPermission.MedicalPatientDelete]: { label: 'Supprimer les dossiers patients panel' },
+            [JobPermission.MedicalPatientHistoryAccess]: { label: 'Accéder à la liste des interventions panel' },
             [JobPermission.MedicalPatientHistoryEdit]: { label: 'Créer / Editer une intervention panel' },
             [JobPermission.MedicalPatientHistoryDelete]: { label: 'Supprimer une intervention panel' },
-            [JobPermission.MedicalPatientHistoryAccess]: { label: 'Accéder à la liste des interventions panel' },
         },
         bossZones: [
             new BoxZone([383.87, -1411.63, 37.99], 21.0, 25.6, {
@@ -190,6 +190,16 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
         canInvoice: true,
         permissions: {
             ...BasePermissions,
+            [JobPermission.NewCompanyPanelAccess]: { label: 'Accès au panel entreprise' },
+            [JobPermission.EmployeesListRead]: { label: 'Accès aux données employés sur le panel entreprise' },
+            [JobPermission.PricingRead]: { label: 'Accès aux devis sur le panel entreprise' },
+            [JobPermission.PricingManage]: { label: 'Gestion des données des devis sur le panel entreprise' },
+            [JobPermission.ReadDocumentation]: { label: 'Lecture de la documentation sur le panel entreprise' },
+            [JobPermission.WriteDocumentation]: { label: 'Edition de la documentation sur le panel entreprise' },
+            [JobPermission.ManageDocumentation]: { label: 'Gestion de la documentation sur le panel entreprise' },
+            [JobPermission.AssignCertification]: { label: 'Assigner des formations sur le panel' },
+            [JobPermission.ManageCertification]: { label: 'Gérer les formations sur le panel' },
+            [JobPermission.ManageRoster]: { label: 'Gérer les photos dans les effectifs panel' },
         },
         bossZones: [
             {
@@ -214,6 +224,16 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
             ...BasePermissions,
             [JobPermission.Harvest]: { label: 'Récolter des ingrédients' },
             [JobPermission.Craft]: { label: 'Cuisiner' },
+            [JobPermission.NewCompanyPanelAccess]: { label: 'Accès au panel entreprise' },
+            [JobPermission.EmployeesListRead]: { label: 'Accès aux données employés sur le panel entreprise' },
+            [JobPermission.PricingRead]: { label: 'Accès aux devis sur le panel entreprise' },
+            [JobPermission.PricingManage]: { label: 'Gestion des données des devis sur le panel entreprise' },
+            [JobPermission.ReadDocumentation]: { label: 'Lecture de la documentation sur le panel entreprise' },
+            [JobPermission.WriteDocumentation]: { label: 'Edition de la documentation sur le panel entreprise' },
+            [JobPermission.ManageDocumentation]: { label: 'Gestion de la documentation sur le panel entreprise' },
+            [JobPermission.AssignCertification]: { label: 'Assigner des formations sur le panel' },
+            [JobPermission.ManageCertification]: { label: 'Gérer les formations sur le panel' },
+            [JobPermission.ManageRoster]: { label: 'Gérer les photos dans les effectifs panel' },
         },
         resell: {
             coords: [-57.01, -2448.4, 7.24, 145.77],
@@ -244,6 +264,16 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
             ...BasePermissions,
             [JobPermission.NewsManageArticle]: { label: 'Gérer les articles sur le panel' },
             [JobPermission.NewsManageBillboards]: { label: 'Gérer les panneaux sur le panel' },
+            [JobPermission.NewCompanyPanelAccess]: { label: 'Accès au panel entreprise' },
+            [JobPermission.EmployeesListRead]: { label: 'Accès aux données employés sur le panel entreprise' },
+            [JobPermission.PricingRead]: { label: 'Accès aux devis sur le panel entreprise' },
+            [JobPermission.PricingManage]: { label: 'Gestion des données des devis sur le panel entreprise' },
+            [JobPermission.ReadDocumentation]: { label: 'Lecture de la documentation sur le panel entreprise' },
+            [JobPermission.WriteDocumentation]: { label: 'Edition de la documentation sur le panel entreprise' },
+            [JobPermission.ManageDocumentation]: { label: 'Gestion de la documentation sur le panel entreprise' },
+            [JobPermission.AssignCertification]: { label: 'Assigner des formations sur le panel' },
+            [JobPermission.ManageCertification]: { label: 'Gérer les formations sur le panel' },
+            [JobPermission.ManageRoster]: { label: 'Gérer les photos dans les effectifs panel' },
         },
         bossZones: [
             {
@@ -267,6 +297,16 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
             ...BasePermissions,
             [JobPermission.NewsManageArticle]: { label: 'Gérer les articles sur le panel' },
             [JobPermission.NewsManageBillboards]: { label: 'Gérer les panneaux sur le panel' },
+            [JobPermission.NewCompanyPanelAccess]: { label: 'Accès au panel entreprise' },
+            [JobPermission.EmployeesListRead]: { label: 'Accès aux données employés sur le panel entreprise' },
+            [JobPermission.PricingRead]: { label: 'Accès aux devis sur le panel entreprise' },
+            [JobPermission.PricingManage]: { label: 'Gestion des données des devis sur le panel entreprise' },
+            [JobPermission.ReadDocumentation]: { label: 'Lecture de la documentation sur le panel entreprise' },
+            [JobPermission.WriteDocumentation]: { label: 'Edition de la documentation sur le panel entreprise' },
+            [JobPermission.ManageDocumentation]: { label: 'Gestion de la documentation sur le panel entreprise' },
+            [JobPermission.AssignCertification]: { label: 'Assigner des formations sur le panel' },
+            [JobPermission.ManageCertification]: { label: 'Gérer les formations sur le panel' },
+            [JobPermission.ManageRoster]: { label: 'Gérer les photos dans les effectifs panel' },
         },
         bossZones: [
             { center: [-1054.43, -232.09, 44.02], length: 6.2, width: 5.8, heading: 116.65, minZ: 43.02, maxZ: 45.02 },
@@ -304,6 +344,16 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
         permissions: {
             ...BasePermissions,
             [JobPermission.FuelerChangePrice]: { label: 'Changer le prix des stations publiques' },
+            [JobPermission.NewCompanyPanelAccess]: { label: 'Accès au panel entreprise' },
+            [JobPermission.EmployeesListRead]: { label: 'Accès aux données employés sur le panel entreprise' },
+            [JobPermission.PricingRead]: { label: 'Accès aux devis sur le panel entreprise' },
+            [JobPermission.PricingManage]: { label: 'Gestion des données des devis sur le panel entreprise' },
+            [JobPermission.ReadDocumentation]: { label: 'Lecture de la documentation sur le panel entreprise' },
+            [JobPermission.WriteDocumentation]: { label: 'Edition de la documentation sur le panel entreprise' },
+            [JobPermission.ManageDocumentation]: { label: 'Gestion de la documentation sur le panel entreprise' },
+            [JobPermission.AssignCertification]: { label: 'Assigner des formations sur le panel' },
+            [JobPermission.ManageCertification]: { label: 'Gérer les formations sur le panel' },
+            [JobPermission.ManageRoster]: { label: 'Gérer les photos dans les effectifs panel' },
         },
         bossZones: [
             {
@@ -330,6 +380,16 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
             [JobPermission.CashTransfer_CollectBags]: { label: "Collecte sacs d'argent" },
             [JobPermission.CashTransfer_ResaleBags]: { label: "Déposer sacs d'argent" },
             [JobPermission.CashTransfer_FillIn]: { label: 'Remplir banque / ATM' },
+            [JobPermission.NewCompanyPanelAccess]: { label: 'Accès au panel entreprise' },
+            [JobPermission.EmployeesListRead]: { label: 'Accès aux données employés sur le panel entreprise' },
+            [JobPermission.PricingRead]: { label: 'Accès aux devis sur le panel entreprise' },
+            [JobPermission.PricingManage]: { label: 'Gestion des données des devis sur le panel entreprise' },
+            [JobPermission.ReadDocumentation]: { label: 'Lecture de la documentation sur le panel entreprise' },
+            [JobPermission.WriteDocumentation]: { label: 'Edition de la documentation sur le panel entreprise' },
+            [JobPermission.ManageDocumentation]: { label: 'Gestion de la documentation sur le panel entreprise' },
+            [JobPermission.AssignCertification]: { label: 'Assigner des formations sur le panel' },
+            [JobPermission.ManageCertification]: { label: 'Gérer les formations sur le panel' },
+            [JobPermission.ManageRoster]: { label: 'Gérer les photos dans les effectifs panel' },
         },
         bossZones: [
             {
@@ -354,6 +414,16 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
             [JobPermission.Order]: { label: "Commander un véhicule d'essai" },
             [JobPermission.BennysResell]: { label: 'Revendre un véhicule' },
             [JobPermission.BennysPitStopPrice]: { label: 'Changer le prix du Pit Stop' },
+            [JobPermission.NewCompanyPanelAccess]: { label: 'Accès au panel entreprise' },
+            [JobPermission.EmployeesListRead]: { label: 'Accès aux données employés sur le panel entreprise' },
+            [JobPermission.PricingRead]: { label: 'Accès aux devis sur le panel entreprise' },
+            [JobPermission.PricingManage]: { label: 'Gestion des données des devis sur le panel entreprise' },
+            [JobPermission.ReadDocumentation]: { label: 'Lecture de la documentation sur le panel entreprise' },
+            [JobPermission.WriteDocumentation]: { label: 'Edition de la documentation sur le panel entreprise' },
+            [JobPermission.ManageDocumentation]: { label: 'Gestion de la documentation sur le panel entreprise' },
+            [JobPermission.AssignCertification]: { label: 'Assigner des formations sur le panel' },
+            [JobPermission.ManageCertification]: { label: 'Gérer les formations sur le panel' },
+            [JobPermission.ManageRoster]: { label: 'Gérer les photos dans les effectifs panel' },
         },
         bossZones: [
             {
@@ -381,6 +451,16 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
         permissions: {
             ...BasePermissions,
             [JobPermission.Order]: { label: 'Commander des véhicules éléctriques' },
+            [JobPermission.NewCompanyPanelAccess]: { label: 'Accès au panel entreprise' },
+            [JobPermission.EmployeesListRead]: { label: 'Accès aux données employés sur le panel entreprise' },
+            [JobPermission.PricingRead]: { label: 'Accès aux devis sur le panel entreprise' },
+            [JobPermission.PricingManage]: { label: 'Gestion des données des devis sur le panel entreprise' },
+            [JobPermission.ReadDocumentation]: { label: 'Lecture de la documentation sur le panel entreprise' },
+            [JobPermission.WriteDocumentation]: { label: 'Edition de la documentation sur le panel entreprise' },
+            [JobPermission.ManageDocumentation]: { label: 'Gestion de la documentation sur le panel entreprise' },
+            [JobPermission.AssignCertification]: { label: 'Assigner des formations sur le panel' },
+            [JobPermission.ManageCertification]: { label: 'Gérer les formations sur le panel' },
+            [JobPermission.ManageRoster]: { label: 'Gérer les photos dans les effectifs panel' },
         },
         bossZones: [
             {
@@ -403,6 +483,16 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
         canInvoice: true,
         permissions: {
             ...BasePermissions,
+            [JobPermission.NewCompanyPanelAccess]: { label: 'Accès au panel entreprise' },
+            [JobPermission.EmployeesListRead]: { label: 'Accès aux données employés sur le panel entreprise' },
+            [JobPermission.PricingRead]: { label: 'Accès aux devis sur le panel entreprise' },
+            [JobPermission.PricingManage]: { label: 'Gestion des données des devis sur le panel entreprise' },
+            [JobPermission.ReadDocumentation]: { label: 'Lecture de la documentation sur le panel entreprise' },
+            [JobPermission.WriteDocumentation]: { label: 'Edition de la documentation sur le panel entreprise' },
+            [JobPermission.ManageDocumentation]: { label: 'Gestion de la documentation sur le panel entreprise' },
+            [JobPermission.AssignCertification]: { label: 'Assigner des formations sur le panel' },
+            [JobPermission.ManageCertification]: { label: 'Gérer les formations sur le panel' },
+            [JobPermission.ManageRoster]: { label: 'Gérer les photos dans les effectifs panel' },
         },
         resell: {
             primary: {
@@ -437,6 +527,16 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
             [JobPermission.Harvest]: { label: 'Récolter des ingrédients' },
             [JobPermission.Restock]: { label: 'Réapprovisionner le matériel' },
             [JobPermission.Craft]: { label: 'Fabriquer un cocktail' },
+            [JobPermission.NewCompanyPanelAccess]: { label: 'Accès au panel entreprise' },
+            [JobPermission.EmployeesListRead]: { label: 'Accès aux données employés sur le panel entreprise' },
+            [JobPermission.PricingRead]: { label: 'Accès aux devis sur le panel entreprise' },
+            [JobPermission.PricingManage]: { label: 'Gestion des données des devis sur le panel entreprise' },
+            [JobPermission.ReadDocumentation]: { label: 'Lecture de la documentation sur le panel entreprise' },
+            [JobPermission.WriteDocumentation]: { label: 'Edition de la documentation sur le panel entreprise' },
+            [JobPermission.ManageDocumentation]: { label: 'Gestion de la documentation sur le panel entreprise' },
+            [JobPermission.AssignCertification]: { label: 'Assigner des formations sur le panel' },
+            [JobPermission.ManageCertification]: { label: 'Gérer les formations sur le panel' },
+            [JobPermission.ManageRoster]: { label: 'Gérer les photos dans les effectifs panel' },
         },
         bossZones: [
             {
@@ -470,6 +570,16 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
             [JobPermission.Harvest]: { label: 'Récolter des matériaux' },
             [JobPermission.Restock]: { label: "Réapprovisionner l'atelier" },
             [JobPermission.Craft]: { label: 'Coudre un vêtement' },
+            [JobPermission.NewCompanyPanelAccess]: { label: 'Accès au panel entreprise' },
+            [JobPermission.EmployeesListRead]: { label: 'Accès aux données employés sur le panel entreprise' },
+            [JobPermission.PricingRead]: { label: 'Accès aux devis sur le panel entreprise' },
+            [JobPermission.PricingManage]: { label: 'Gestion des données des devis sur le panel entreprise' },
+            [JobPermission.ReadDocumentation]: { label: 'Lecture de la documentation sur le panel entreprise' },
+            [JobPermission.WriteDocumentation]: { label: 'Edition de la documentation sur le panel entreprise' },
+            [JobPermission.ManageDocumentation]: { label: 'Gestion de la documentation sur le panel entreprise' },
+            [JobPermission.AssignCertification]: { label: 'Assigner des formations sur le panel' },
+            [JobPermission.ManageCertification]: { label: 'Gérer les formations sur le panel' },
+            [JobPermission.ManageRoster]: { label: 'Gérer les photos dans les effectifs panel' },
         },
         bossZones: [
             {
@@ -523,6 +633,9 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
             [JobPermission.GouvUpdateTax]: { label: 'Mettre à jour les taxes' },
             [JobPermission.GouvManageRadar]: { label: 'Permet de gérer les radars' },
             [JobPermission.GouvManageFine]: { label: 'Ajouter, mettre à jour et supprimer les amendes' },
+            [JobPermission.VehicleRegistrar]: { label: 'Accès au registre des véhicules sur le panel' },
+            [JobPermission.VehicleTransfert]: { label: 'Accès aux transferts de véhicules sur le panel' },
+            [JobPermission.MdrViewCitizenData]: { label: 'Accès aux casiers judiciaires' },
         },
         bossZones: [
             {
@@ -551,6 +664,7 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
             [JobPermission.ManageInvestigation]: { label: 'Gérer les enquêtes' },
             [JobPermission.AssignCertification]: { label: 'Assigner des certifications aux agents' },
             [JobPermission.ManageCertification]: { label: 'Gérer les certifications' },
+            [JobPermission.ManageRoster]: { label: 'Gérer les photos/matricules dans les effectifs panel' },
             [JobPermission.FDOFedPound]: { label: 'Mise en fourrière fédérale' },
         },
         bossZones: [
@@ -573,6 +687,16 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
         menuCallback: ClientEvent.JOBS_FDF_OPEN_SOCIETY_MENU,
         permissions: {
             ...BasePermissions,
+            [JobPermission.NewCompanyPanelAccess]: { label: 'Accès au panel entreprise' },
+            [JobPermission.EmployeesListRead]: { label: 'Accès aux données employés sur le panel entreprise' },
+            [JobPermission.PricingRead]: { label: 'Accès aux devis sur le panel entreprise' },
+            [JobPermission.PricingManage]: { label: 'Gestion des données des devis sur le panel entreprise' },
+            [JobPermission.ReadDocumentation]: { label: 'Lecture de la documentation sur le panel entreprise' },
+            [JobPermission.WriteDocumentation]: { label: 'Edition de la documentation sur le panel entreprise' },
+            [JobPermission.ManageDocumentation]: { label: 'Gestion de la documentation sur le panel entreprise' },
+            [JobPermission.AssignCertification]: { label: 'Assigner des formations sur le panel' },
+            [JobPermission.ManageCertification]: { label: 'Gérer les formations sur le panel' },
+            [JobPermission.ManageRoster]: { label: 'Gérer les photos dans les effectifs panel' },
         },
         bossZones: [
             {
@@ -595,6 +719,16 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
         menuCallback: ClientEvent.JOBS_DMC_OPEN_SOCIETY_MENU,
         permissions: {
             ...BasePermissions,
+            [JobPermission.NewCompanyPanelAccess]: { label: 'Accès au panel entreprise' },
+            [JobPermission.EmployeesListRead]: { label: 'Accès aux données employés sur le panel entreprise' },
+            [JobPermission.PricingRead]: { label: 'Accès aux devis sur le panel entreprise' },
+            [JobPermission.PricingManage]: { label: 'Gestion des données des devis sur le panel entreprise' },
+            [JobPermission.ReadDocumentation]: { label: 'Lecture de la documentation sur le panel entreprise' },
+            [JobPermission.WriteDocumentation]: { label: 'Edition de la documentation sur le panel entreprise' },
+            [JobPermission.ManageDocumentation]: { label: 'Gestion de la documentation sur le panel entreprise' },
+            [JobPermission.AssignCertification]: { label: 'Assigner des formations sur le panel' },
+            [JobPermission.ManageCertification]: { label: 'Gérer les formations sur le panel' },
+            [JobPermission.ManageRoster]: { label: 'Gérer les photos dans les effectifs panel' },
         },
         bossZones: [
             {
