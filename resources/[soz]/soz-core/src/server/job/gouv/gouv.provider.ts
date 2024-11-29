@@ -127,4 +127,19 @@ export class GouvProvider {
 
         this.notifier.notify(source, `Vous avez mis à jour la taxe ~g~"${label}"~s~ à ~g~${value}~s~`);
     }
+
+    @OnEvent(ServerEvent.GOUV_VALIDATE_IDENTITY)
+    public async onValidateIdentity(source: number, target: number) {
+        const sourcePlayer = this.playerService.getPlayer(source);
+        const targetPlayer = this.playerService.getPlayer(target);
+
+        if (!sourcePlayer || !targetPlayer) {
+            return;
+        }
+
+        this.playerService.setPlayerValidated(target, true);
+
+        this.notifier.notify(target, `Votre identité a été ~g~validée~s~.`);
+        this.notifier.notify(source, `Vous avez ~g~validé~s~ l'identité.`);
+    }
 }

@@ -9,6 +9,7 @@ export class PlayerListStateService {
         wearingPatientOutfit: new Set<number>(),
         escorted: new Set<number>(),
         knockedOut: new Set<number>(),
+        validated: new Set<number>(),
     };
 
     public updateList(key: PlayerListStateKey, players: number[]) {
@@ -33,5 +34,9 @@ export class PlayerListStateService {
 
     public isWearingPatientOutfit(player: number) {
         return this.lists.wearingPatientOutfit.has(player);
+    }
+
+    public isValidated(player: number) {
+        return this.lists.validated.has(player);
     }
 }

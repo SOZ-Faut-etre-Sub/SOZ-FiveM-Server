@@ -554,6 +554,7 @@ export enum ServerEvent {
     GOUV_RADAR_SET_SPEED = 'soz-core:server:gouv:radar-set-speed',
     GOUV_RADAR_SET_DISABLED = 'soz-core:server:gouv:radar-set-disabled',
     GOUV_RADAR_REMOVE = 'soz-core:server:gouv:radar-remove',
+    GOUV_VALIDATE_IDENTITY = 'soz-core:server:gouv:validate-identity',
 
     LUXURY_DELETE_GUARD = 'soz-core:server:luxury:delete-guard',
     LUXURY_CREATED_GUARD = 'soz-core:server:luxury:created-guard',
