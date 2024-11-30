@@ -67,6 +67,7 @@ export enum MenuType {
     SuperetteShop = 'superette_shop',
     TattooShop = 'tattoo_shop',
     JewelryShop = 'jewelry_shop',
+    JewelryEngraveShop = 'jewelry_engrave_shop',
     BarberShop = 'barber_shop',
     FightForStyleJobMenu = 'ffs_job',
     FoodJobMenu = 'food_job_menu',

@@ -21285,6 +21285,7 @@ QBShared.Items = {
         ["type"] = "item",
         ["unique"] = false,
         ["combinable"] = nil,
+        ["canEngrave"] = true,
         ["description"] = "Pour le meilleur et pour le pire !",
         ["illustrator"] = ".RazkalHead"
     },
@@ -21307,6 +21308,7 @@ QBShared.Items = {
         ["type"] = "item",
         ["unique"] = false,
         ["combinable"] = nil,
+        ["canEngrave"] = true,
         ["description"] = "Une rose gravée sur votre clé pour symboliser l'amour et la passion. Ce porte-clés n'attend qu'une chose : retrouver sa moitié lunaire.",
         ["illustrator"] = ".Miki-kl"
     },
@@ -21318,6 +21320,7 @@ QBShared.Items = {
         ["type"] = "item",
         ["unique"] = false,
         ["combinable"] = nil,
+        ["canEngrave"] = true,
         ["description"] = "Une lune et des étoiles gravées sur votre clé pour symboliser l'amour éternel et la connexion. Ce porte-clés n'attend qu'une chose : retrouver sa moitié florale.",
         ["illustrator"] = ".Miki-kl"
     },
@@ -21417,6 +21420,7 @@ QBShared.Items = {
         ["type"] = "item",
         ["unique"] = false,
         ["combinable"] = nil,
+        ["canEngrave"] = true,
         ["description"] = "Pour se la péter avec une montre de riche (attention aux vols...)\n.",
         ["illustrator"] = ".Chuk"
     },
@@ -21580,6 +21584,7 @@ QBShared.Items = {
         ["type"] = "item",
         ["unique"] = false,
         ["combinable"] = nil,
+        ["canEngrave"] = true,
         ["description"] = "Sculptée dans les entrailles des étoiles, chaque détail de cette bague de 18 000 carats est conçu pour faire pleurer les anges de jalousie. Si cette œuvre céleste n’accompagne pas votre demande, c’est que vos sentiments ne sont pas sincères...",
         ["illustrator"] = ".Sniteur"
     },
@@ -21635,6 +21640,7 @@ QBShared.Items = {
         ["type"] = "item",
         ["unique"] = false,
         ["combinable"] = nil,
+        ["canEngrave"] = true,
         ["description"] = "Cette montre à gousset est réservé aux personnes de la haute société selon le propriétaire. En vérité cette montre ne vous indiquera jamais l'heure mais au moins vous serez nostalgique.",
         ["illustrator"] = ".Miki-kl"
     },
@@ -21811,6 +21817,7 @@ QBShared.Items = {
         ["type"] = "item",
         ["unique"] = false,
         ["combinable"] = nil,
+        ["canEngrave"] = true,
         ["description"] = "Il verrouille vos clés... Et vos ex, si seulement ça marchait aussi bien.",
         ["illustrator"] = ".Coleen_"
     },

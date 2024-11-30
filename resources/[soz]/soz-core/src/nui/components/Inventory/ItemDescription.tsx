@@ -89,12 +89,12 @@ export const ItemDescription: FunctionComponent<ItemDescriptionProps> = ({
                     }}
                 >
                     <div className="flex justify-between align-items-center w-full">
-                        {inventoryItem.metadata?.label && (
+                        {!item.canEngrave && inventoryItem.metadata?.label && (
                             <h2 className="font-bold uppercase truncate flex-1 text-sm">
                                 {inventoryItem.metadata?.label} <span className="text-2xs">{itemLabel}</span>
                             </h2>
                         )}
-                        {!inventoryItem.metadata?.label && (
+                        {(item.canEngrave || !inventoryItem.metadata?.label) && (
                             <h2 className="font-bold uppercase truncate flex-1 text-sm">{itemLabel}</h2>
                         )}
                         <div className="flex-0">
@@ -148,6 +148,7 @@ export const ItemDescription: FunctionComponent<ItemDescriptionProps> = ({
                             {inventoryItem.metadata?.notSearchable && <span>[Caché]</span>}
                             {inventoryItem.metadata?.crafted && <span>[Illégal]</span>}
                             {inventoryItem.metadata?.printed && <span>[Réplique]</span>}
+                            {item.canEngrave && <span>{inventoryItem.metadata?.label || ''}★</span>}
                         </div>
                     </div>
                     <div className="flex mt-1 justify-between align-items-center w-full">{itemDescription}</div>

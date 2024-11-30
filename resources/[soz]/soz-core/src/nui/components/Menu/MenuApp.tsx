@@ -52,6 +52,7 @@ import { MenuRaceRank } from '../Race/MenuRaceRanking';
 import { BarberShopMenu } from '../Shop/BarberShopMenu';
 import { ClothShopMenu } from '../Shop/ClothShopMenu';
 import { EasterShopMenu } from '../Shop/EasterShopMenu';
+import { JewelryEngraveShopMenu } from '../Shop/JewelryEngraveShopMenu';
 import { JewelryShopMenu } from '../Shop/JewelryShopMenu';
 import { SuperetteShopMenu } from '../Shop/SuperetteShopMenu';
 import { TattooShopMenu } from '../Shop/TattooShopMenu';
@@ -222,6 +223,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.SuperetteShop}/*`} element={<SuperetteShopMenu data={menuData} />} />
             <Route path={`/${MenuType.TattooShop}/*`} element={<TattooShopMenu data={menuData} />} />
             <Route path={`/${MenuType.JewelryShop}/*`} element={<JewelryShopMenu catalog={menuData} />} />
+            <Route path={`/${MenuType.JewelryEngraveShop}/*`} element={<JewelryEngraveShopMenu data={menuData} />} />
             <Route path={`/${MenuType.BarberShop}/*`} element={<BarberShopMenu data={menuData} />} />
             <Route path={`/${MenuType.SetHealthState}/*`} element={<MenuSetHealthState source={menuData} />} />
             <Route path={`/${MenuType.Wardrobe}/*`} element={<MenuWardrobe wardrobe={menuData} />} />

@@ -1,4 +1,6 @@
 import { InventoryDragAndDropProvider } from '@public/client/inventory/inventory.draganddrop.provider';
+import { InventoryManager } from '@public/client/inventory/inventory.manager';
+import { ItemService } from '@public/client/item/item.service';
 import { BrandsConfig, ShopBrand, ShopsConfig } from '@public/config/shops';
 import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
@@ -72,6 +74,11 @@ export class ShopProvider {
 
     @Inject(FightForStyleRestockService)
     private fightForStyleRestockService: FightForStyleRestockService;
+    @Inject(InventoryManager)
+    private inventoryManager: InventoryManager;
+
+    @Inject(ItemService)
+    private itemService: ItemService;
 
     @Inject(ShopService)
     private shopService: ShopService;
@@ -89,6 +96,29 @@ export class ShopProvider {
                     ),
                 blackoutGlobal: true,
                 action: this.openShop.bind(this),
+            },
+            {
+                icon: 'magasin/acheter',
+                label: 'Service de gravure',
+                category: 'citizen',
+                canInteract: entity => {
+                    if (!this.shopService.checkTarget([ShopBrand.Jewelry], entity)) {
+                        return false;
+                    }
+
+                    const inventoryItems = this.inventoryManager.getItems();
+
+                    return inventoryItems.some(inventoryItem => {
+                        const item = this.itemService.getItem(inventoryItem.name);
+                        if (!item) {
+                            return false;
+                        }
+
+                        return item.canEngrave && !inventoryItem.metadata?.label;
+                    });
+                },
+                blackoutGlobal: true,
+                action: async () => await this.jewelryShopProvider.openEngraveShop(),
             },
             {
                 icon: 'shop/store',

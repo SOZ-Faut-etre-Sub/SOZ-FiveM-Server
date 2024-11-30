@@ -733,6 +733,27 @@ export class InventoryProvider {
         await inventory.observe();
     }
 
+    public async engraveItem(
+        source: number,
+        inventory: Inventory,
+        inventoryItem: InventoryItem,
+        label: string,
+        price: number = 0
+    ) {
+        inventory.removeAtSlot(inventoryItem.slot, 1);
+        inventory.add(inventoryItem.name, 1, {
+            label,
+        });
+
+        const itemObject = this.itemService.getItem(inventoryItem.name);
+        this.notifier.notify(
+            source,
+            `Vous avez gravé votre ~b~${itemObject.label}~s~ avec l'inscription ~b~${label}~s~ pour ~g~$${price}~s~ !`
+        );
+
+        await inventory.observe();
+    }
+
     @OnEvent(ServerEvent.INVENTORY_GIVE_ITEM)
     public async onGiveItem(source: number, target: number, inventoryId: string, slot: number, amount: number) {
         const sourceInventory = await this.inventoryFactory.get(inventoryId);

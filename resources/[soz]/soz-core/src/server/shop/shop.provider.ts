@@ -2,6 +2,7 @@ import { ItemService } from '@public/client/item/item.service';
 import { ProperTorsos, ShopBrand, UndershirtCategoryNeedingReplacementTorso } from '@public/config/shops';
 import { BankService } from '@public/server/bank/bank.service';
 import { InventoryFactory } from '@public/server/inventory/inventory.factory';
+import { InventoryProvider } from '@public/server/inventory/inventory.provider';
 import { PlayerPositionProvider } from '@public/server/player/player.position.provider';
 import { VehicleSpawner } from '@public/server/vehicle/vehicle.spawner';
 import { VehicleStateService } from '@public/server/vehicle/vehicle.state.service';
@@ -11,6 +12,7 @@ import {
     BarberShopItem,
     ClothingCategoryID,
     ClothingShopItem,
+    ENGRAVE_PRICE,
     JewelryShopItem,
     ShopProduct,
     TattooShopItem,
@@ -55,6 +57,9 @@ export class ShopProvider {
 
     @Inject(InventoryFactory)
     private inventoryFactory: InventoryFactory;
+
+    @Inject(InventoryProvider)
+    private inventoryProvider: InventoryProvider;
 
     @Inject(PlayerService)
     private playerService: PlayerService;
@@ -327,6 +332,28 @@ export class ShopProvider {
         )}.`;
 
         this.notifier.notify(source, notif, 'success');
+    }
+
+    @OnEvent(ServerEvent.INVENTORY_ENGRAVE_ITEM)
+    public async shopJewelryEngraveBuy(source: number, slot: number, label: string | null) {
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!inventory) {
+            return;
+        }
+
+        const inventoryItem = inventory.getItemAtSlot(slot);
+        if (!inventoryItem) {
+            return;
+        }
+
+        if (!(await this.shopPay(source, ENGRAVE_PRICE, TaxType.SUPPLY))) {
+            this.notifier.notify(source, `Ah mais t'es pauvre en fait ! Reviens quand t'auras de quoi payer.`, 'error');
+            return;
+        }
+
+        const price = await this.priceService.getPrice(ENGRAVE_PRICE, TaxType.SUPPLY);
+        await this.inventoryProvider.engraveItem(source, inventory, inventoryItem, label, price);
     }
 
     public async shopJewelryBuy(source: number, product: JewelryShopItem, isInCayo: boolean) {

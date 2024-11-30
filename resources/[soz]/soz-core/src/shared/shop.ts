@@ -215,3 +215,5 @@ export type ShopContent = {
     shopId: string;
     rpcServerEvent: RpcServerEvent;
 };
+
+export const ENGRAVE_PRICE = 10_000;

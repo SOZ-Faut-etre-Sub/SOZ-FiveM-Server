@@ -68,6 +68,7 @@ type BaseItem = {
     maxStack?: number;
     notSearchable?: boolean;
     notGiveable?: boolean;
+    canEngrave?: boolean;
 };
 
 export type Nutrition = {
