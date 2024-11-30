@@ -2,6 +2,7 @@ import { Module } from '../../core/decorators/module';
 import { ItemBookProvider } from './item.book.provider';
 import { ItemFoodProvider } from './item.food.provider';
 import { ItemFuelProvider } from './item.fuel.provider';
+import { ItemGiftProvider } from './item.gift.provider';
 import { ItemGouvProvider } from './item.gouv.provider';
 import { ItemHalloweenProvider } from './item.halloween.provider';
 import { ItemHealthProvider } from './item.health.provider';
@@ -30,6 +31,7 @@ import { ItemVoipProvider } from './item.voip.provider';
         ItemHudProvider,
         ItemJobsProvider,
         ItemLoaderProvider,
+        ItemGiftProvider,
     ],
 })
 export class ItemModule {}

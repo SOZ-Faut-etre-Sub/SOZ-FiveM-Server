@@ -436,4 +436,9 @@ export enum ClientEvent {
 
     OILRIG_HEIST_UPDATE = 'soz-core:server:oilrig-heist:update',
     OILRIG_HEIST_RESET = 'soz-core:server:oilrig-heist:reset',
+
+    GIFT_PLAY_JOKER_ANIM = 'soz-core:server:gift:joker',
+    GIFT_PLAY_BOUQUET_ANIM = 'soz-core:server:gift:bouquet',
+    GIFT_PLAY_TOKEN_ANIM = 'soz-core:server:gift:token',
+    GIFT_PLAY_GIFT_ANIM = 'soz-core:server:gift:gift',
 }

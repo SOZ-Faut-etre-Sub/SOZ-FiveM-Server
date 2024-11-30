@@ -11,6 +11,7 @@ import { Vector4 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import { PriceService } from '../bank/price.service';
 import { PrismaService } from '../database/prisma.service';
+import { InventoryFactory } from '../inventory/inventory.factory';
 import { Notifier } from '../notifier';
 import { PlayerMoneyService } from '../player/player.money.service';
 import { PlayerPositionProvider } from '../player/player.position.provider';
@@ -40,6 +41,9 @@ export class DrivingSchoolProvider {
     @Inject(PriceService)
     private priceService: PriceService;
 
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
+
     @Once()
     public onStart() {
         this.playerPositionProvider.registerZone(
@@ -50,14 +54,22 @@ export class DrivingSchoolProvider {
 
     @On(ServerEvent.DRIVING_SCHOOL_PLAYER_PAY)
     public async makePlayerPay(source: number, licenseType: DrivingSchoolLicenseType, spawnPoint: Vector4) {
-        const lData = DrivingSchoolConfig.licenses[licenseType];
-        if (!lData || typeof lData.price !== 'number') {
-            return;
-        }
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+        if (!inventory || !inventory.getItem('licence_gift')) {
+            const lData = DrivingSchoolConfig.licenses[licenseType];
+            if (!lData || typeof lData.price !== 'number') {
+                return;
+            }
 
-        if (!(await this.playerMoneyService.buy(source, lData.price, TaxType.VEHICLE))) {
-            this.notifier.notify(source, "Vous n'avez pas assez d'argent", 'error');
-            return;
+            if (!(await this.playerMoneyService.buy(source, lData.price, TaxType.VEHICLE))) {
+                this.notifier.notify(source, "Vous n'avez pas assez d'argent", 'error');
+                return;
+            }
+        } else {
+            if (!inventory.remove('licence_gift')) {
+                this.notifier.notify(source, "Le bon n'est pas valide", 'error');
+                return;
+            }
         }
 
         const spawnName = 'PERMIS_SPAWN_POINT_' + source;

@@ -164,21 +164,21 @@ export const BrandsConfig: Record<ShopBrand, BrandConfig> = {
         label: 'Boutique de souvenir - Autres',
         blipSprite: 781,
         blipColor: 13,
-        pedModel: 'cs_ashley',
+        pedModel: 'u_m_y_rsranger_01',
         banner: 'https://nui-img/soz/menu_shop_supermarket',
     },
     [ShopBrand.SouvenirMemory]: {
         label: 'Boutique de souvenir',
         blipSprite: 781,
         blipColor: 13,
-        pedModel: 'cs_ashley',
+        pedModel: 'u_m_y_mani',
         banner: 'https://nui-img/soz/menu_shop_supermarket',
     },
     [ShopBrand.SouvenirPlush]: {
         label: 'Boutique de souvenir - Peluches',
         blipSprite: 781,
         blipColor: 13,
-        pedModel: 'cs_ashley',
+        pedModel: 'a_m_m_farmer_01',
         banner: 'https://nui-img/soz/menu_shop_supermarket',
     },
     [ShopBrand.SouvenirJewel]: {
@@ -517,7 +517,7 @@ export const ShopsConfig: Record<string, ShopConfig> = {
     },
     [ShopBrand.SouvenirOther]: {
         brand: ShopBrand.SouvenirOther,
-        location: [1655.16, 4874.3, 42.13, 277.77],
+        location: [1695.58, 4785.2, 42.0, 90.45],
     },
     [ShopBrand.SouvenirPlush]: {
         brand: ShopBrand.SouvenirPlush,
@@ -525,7 +525,7 @@ export const ShopsConfig: Record<string, ShopConfig> = {
     },
     [ShopBrand.SouvenirMemory]: {
         brand: ShopBrand.SouvenirMemory,
-        location: [-1045.06, -2514.4, 20.26, 243.02],
+        location: [172.54, 183.4, 105.73, 336.78],
     },
     [ShopBrand.SouvenirJewel]: {
         brand: ShopBrand.SouvenirJewel,

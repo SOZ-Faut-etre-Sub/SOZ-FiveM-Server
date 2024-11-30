@@ -1,10 +1,10 @@
 Locations["souvenir-other"] = {
-    [1] = BoxZone:Create(vector3(1655.16, 4874.3, 42.13), 10.0, 10.0,
+    [1] = BoxZone:Create(vector3(1695.58, 4785.2, 42.0), 10.0, 10.0,
                          {
         name = "souvenir-other",
-        heading = 277.77,
-        minZ = 41.13,
-        maxZ = 44.13,
+        heading = 90.45,
+        minZ = 41.0,
+        maxZ = 44.0,
         debugPoly = LocationDebugPoly,
     }),
 }
@@ -21,12 +21,12 @@ Locations["souvenir-plush"] = {
 }
 
 Locations["souvenir-memory"] = {
-    [1] = BoxZone:Create(vector3(-1045.06, -2514.40, 20.17), 10.0, 10.0,
+    [1] = BoxZone:Create(vector3(172.54, 183.4, 105.73), 10.0, 10.0,
                          {
         name = "souvenir-memory",
-        heading = 243.02,
-        minZ = 19.17,
-        maxZ = 22.17,
+        heading = 336.78,
+        minZ = 104.73,
+        maxZ = 107.73,
         debugPoly = LocationDebugPoly,
     }),
 }

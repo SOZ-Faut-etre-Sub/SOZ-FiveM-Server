@@ -6,8 +6,6 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent } from '../../shared/event';
 import { InventoryItem, isInventoryItemExpired } from '../../shared/inventory';
-import { Inventory } from '../inventory/inventory';
-import { Notifier } from '../notifier';
 import { ObjectProvider } from '../object/object.provider';
 import { PlayerService } from '../player/player.service';
 import { ItemService } from './item.service';
@@ -22,9 +20,6 @@ export class ItemToolsProvider {
 
     @Inject(ObjectProvider)
     private objectProvider: ObjectProvider;
-
-    @Inject(Notifier)
-    private notifier: Notifier;
 
     @Once()
     public onStart() {
@@ -55,11 +50,6 @@ export class ItemToolsProvider {
             await this.objectProvider.onPlaceObject(source, 'cardbord', 'prop_cardbordbox_03a', position);
         });
         this.item.setItemUseCallback('diving_gear', this.useDrivingGear.bind(this));
-
-        this.item.setItemUseCallback('gift_blue', this.useGift.bind(this));
-        this.item.setItemUseCallback('gift_gold', this.useGift.bind(this));
-        this.item.setItemUseCallback('gift_green', this.useGift.bind(this));
-        this.item.setItemUseCallback('gift_red', this.useGift.bind(this));
     }
 
     public useDrivingGear(source: number) {
@@ -67,24 +57,6 @@ export class ItemToolsProvider {
 
         const scuba = player.metadata.scuba;
         TriggerClientEvent(ClientEvent.ITEM_SCUBA_TOOGLE, source, !scuba);
-    }
-
-    public async useGift(source: number, item: Item, inventoryItem: InventoryItem, inventory: Inventory) {
-        if (!inventory.removeAtSlot(inventoryItem.slot, 1)) {
-            return;
-        }
-
-        inventoryItem.metadata.crateElements.map(gift => {
-            inventory.add(gift.name, gift.amount, { ...gift.metadata });
-        });
-
-        let giftLabel = item.label;
-
-        if (inventoryItem.metadata.label) {
-            giftLabel = item.label + ' "' + inventoryItem.metadata.label + '"';
-        }
-
-        this.notifier.notify(source, 'Vous avez ouvert votre ~g~' + giftLabel + '~s~ !', 'success');
     }
 
     @Exportable('ItemIsExpired')
