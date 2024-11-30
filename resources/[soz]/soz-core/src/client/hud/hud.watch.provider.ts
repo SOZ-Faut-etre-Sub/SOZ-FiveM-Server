@@ -45,7 +45,8 @@ export class HudWatchProvider {
 
     private _availableTheme: AvailableTheme = {
         [HudTheme.Auto]: true,
-        [HudTheme.Daltonism]: true,
+        [HudTheme.Deuteranopie]: true,
+        [HudTheme.Trichromatisme]: true,
         [HudTheme.Light]: true,
         [HudTheme.Dark]: true,
         [HudTheme.Green]: true,
