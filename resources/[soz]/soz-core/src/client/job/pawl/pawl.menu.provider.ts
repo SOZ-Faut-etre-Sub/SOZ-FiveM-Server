@@ -69,8 +69,8 @@ export class PawlMenuProvider {
         }
 
         this.blipFactory.create(`pawl_resell`, {
-            name: 'Zone de rente',
-            position: [-272.22, -2496.57, 7.3] as Vector3,
+            name: 'Zone de revente',
+            position: [955.87, -2176.36, 30.15] as Vector3,
             sprite: 607,
             scale: 0.8,
         });

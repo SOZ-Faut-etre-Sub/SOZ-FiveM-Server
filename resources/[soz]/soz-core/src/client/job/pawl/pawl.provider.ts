@@ -2,6 +2,7 @@ import { Once, OnceStep } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 
+import { ServerEvent } from '../../../shared/event/server';
 import { toVector4Object } from '../../../shared/polyzone/vector';
 import { BlipFactory } from '../../blip';
 import { PedFactory } from '../../factory/ped.factory';
@@ -23,6 +24,15 @@ export class PawlProvider {
             invincible: true,
             blockevents: true,
             scenario: 'WORLD_HUMAN_CLIPBOARD',
+            dropItemCallback: (inventoryId, inventoryItem, amount) => {
+                TriggerServerEvent(
+                    ServerEvent.JOB_RESELL_ITEM,
+                    inventoryId,
+                    inventoryItem,
+                    amount,
+                    'Resell:LSPort:Pawl'
+                );
+            },
         });
 
         this.blipFactory.create('job_pawl', {
