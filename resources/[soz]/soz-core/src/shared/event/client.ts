@@ -42,9 +42,6 @@ export enum ClientEvent {
     DRIVING_SCHOOL_START_EXAM = 'soz-core:client:driving-school:start-exam',
     DRIVING_SCHOOL_SETUP_EXAM = 'soz-core:client:driving-school:spawn-veh',
 
-    FFS_ENTER_CLOTHING_SHOP = 'soz-core:client:job:ffs:enter-clothing-shop',
-    FFS_EXIT_CLOTHING_SHOP = 'soz-core:client:job:ffs:exit-clothing-shop',
-
     FOOD_UPDATE_ORDER = 'soz-core:client:food:update-order',
     FOOD_HUNT_SYNC = 'soz-core:client:food:hunt-sync',
 
@@ -132,9 +129,6 @@ export enum ClientEvent {
     LSMC_SHOW_MEDICAL_DIAG = 'soz-core:lsmc:client:show-medical-diag',
     LSMC_BED_PUT_ON = 'soz-core:client:job:lsmc:bed-put-on',
     LSMC_VEH_PUT_ON = 'soz-core:client:job:lsmc:veh-put-on',
-
-    LSC_ENTER_SHOP = 'soz-core:client:job:lsc:enter-shop',
-    LSC_EXIT_SHOP = 'soz-core:client:job:lsc:exit-shop',
 
     MISSIVE_SHOW_ITEM = 'soz-core:client:missive:show-item',
     MONITOR_START_TRACING = 'soz-core:client:monitor:start-tracing',

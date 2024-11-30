@@ -11,12 +11,6 @@ import { PlayerLicenceType } from './player';
 import { Zone } from './polyzone/box.zone';
 import { Vector3 } from './polyzone/vector';
 
-export enum ClothingBrand {
-    PONSONBYS = 'ponsonbys',
-    SUBURBAN = 'suburban',
-    BINCO = 'binco',
-}
-
 // Superette
 export type ShopProduct = {
     id: string;
