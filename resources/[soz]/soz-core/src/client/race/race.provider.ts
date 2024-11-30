@@ -116,10 +116,12 @@ export class RaceProvider {
                 icon: 'race/launch',
                 category: 'citizen',
                 canInteract: entity => {
-                    return !!Object.values(this.raceRepository.get()).find(race => race.npc == entity);
+                    const ped = this.pedFactory.getPedByEntity(entity);
+                    return ped && !!Object.values(this.raceRepository.get()).find(race => race.npc == ped.id);
                 },
                 action: entity => {
-                    const race = Object.values(this.raceRepository.get()).find(race => race.npc == entity);
+                    const ped = this.pedFactory.getPedByEntity(entity);
+                    const race = Object.values(this.raceRepository.get()).find(race => race.npc == ped.id);
                     this.startRace(race.id, false, false);
                 },
             },
@@ -128,10 +130,12 @@ export class RaceProvider {
                 icon: 'race/score',
                 category: 'citizen',
                 canInteract: entity => {
-                    return !!Object.values(this.raceRepository.get()).find(race => race.npc == entity);
+                    const ped = this.pedFactory.getPedByEntity(entity);
+                    return ped && !!Object.values(this.raceRepository.get()).find(race => race.npc == ped.id);
                 },
                 action: entity => {
-                    const race = Object.values(this.raceRepository.get()).find(race => race.npc == entity);
+                    const ped = this.pedFactory.getPedByEntity(entity);
+                    const race = Object.values(this.raceRepository.get()).find(race => race.npc == ped.id);
                     this.nuiMenu.openMenu(MenuType.RaceRank, { id: race.id, name: race.name });
                 },
             },
@@ -140,11 +144,13 @@ export class RaceProvider {
                 icon: 'garage/ParkingPublic',
                 category: 'citizen',
                 canInteract: entity => {
-                    const race = Object.values(this.raceRepository.get()).find(race => race.npc == entity);
+                    const ped = this.pedFactory.getPedByEntity(entity);
+                    const race = Object.values(this.raceRepository.get()).find(race => race.npc == ped.id);
                     return race && race.garageLocation != null;
                 },
                 action: entity => {
-                    const race = Object.values(this.raceRepository.get()).find(race => race.npc == entity);
+                    const ped = this.pedFactory.getPedByEntity(entity);
+                    const race = Object.values(this.raceRepository.get()).find(race => race.npc == ped.id);
                     const id = 'race' + race.id;
                     this.vehicleGarageProvider.enterGarage(id, {
                         category: GarageCategory.All,
@@ -912,28 +918,17 @@ export class RaceProvider {
     }
 
     private async addNpc(race: Race) {
-        if (race.npc && DoesEntityExist(race.npc)) {
-            SetEntityCoords(
-                race.npc,
-                race.npcPosition[0],
-                race.npcPosition[1],
-                race.npcPosition[2],
-                false,
-                false,
-                false,
-                false
-            );
-            SetEntityHeading(race.npc, race.npcPosition[3]);
-        } else {
-            race.npc = await this.pedFactory.createPed({
-                model: npcModel,
-                coords: toVector4Object(race.npcPosition),
-                blockevents: true,
-                freeze: true,
-                invincible: true,
-                scenario: 'WORLD_HUMAN_STAND_IMPATIENT',
-            });
+        if (race.npc) {
+            this.pedFactory.deletePedOnGrid(race.npc);
         }
+        race.npc = await this.pedFactory.createPedOnGrid({
+            model: npcModel,
+            coords: toVector4Object(race.npcPosition),
+            blockevents: true,
+            freeze: true,
+            invincible: true,
+            scenario: 'WORLD_HUMAN_STAND_IMPATIENT',
+        });
 
         const blibId = 'race' + race.id;
         if (this.blipFactory.exist(blibId)) {
@@ -951,8 +946,8 @@ export class RaceProvider {
     }
 
     private async removeNpc(race: Race) {
-        if (race.npc && DoesEntityExist(race.npc)) {
-            DeleteEntity(race.npc);
+        if (race.npc) {
+            this.pedFactory.deletePedOnGrid(race.npc);
         }
 
         const blibId = 'race' + race.id;

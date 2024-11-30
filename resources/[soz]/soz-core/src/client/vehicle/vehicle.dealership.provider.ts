@@ -593,7 +593,7 @@ export class VehicleDealershipProvider {
 
     async spwanStaticsGuard() {
         for (const guard of luxuryStaticGuard) {
-            await this.pedFactory.createPed(guard);
+            await this.pedFactory.createPedOnGrid(guard);
         }
     }
 
