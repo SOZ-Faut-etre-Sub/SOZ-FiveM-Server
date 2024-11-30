@@ -10,7 +10,7 @@ import { StonkConfig } from '../../../shared/job/stonk';
 import { NamedZone } from '../../../shared/polyzone/box.zone';
 import { isOk } from '../../../shared/result';
 import { BankService } from '../../bank/bank.service';
-import { FieldProvider } from '../../farm/field.provider';
+import { FieldProvider } from '../../field/field.provider';
 import { ItemService } from '../../item/item.service';
 import { JobService } from '../../job.service';
 import { Notifier } from '../../notifier';

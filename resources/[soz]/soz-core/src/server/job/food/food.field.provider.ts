@@ -4,12 +4,12 @@ import { Once, OnceStep, OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event/server';
-import { getAmount } from '../../../shared/field';
+import { getAmount, isItemField } from '../../../shared/field';
 import { ADD_ERROR_MESSAGE } from '../../../shared/inventory';
 import { JobType } from '../../../shared/job';
 import { FoodFields, FoodFieldType } from '../../../shared/job/food';
 import { toVector3Object, Vector3 } from '../../../shared/polyzone/vector';
-import { FieldProvider } from '../../farm/field.provider';
+import { FieldProvider } from '../../field/field.provider';
 import { ItemService } from '../../item/item.service';
 import { Monitor } from '../../monitor/monitor';
 import { Notifier } from '../../notifier';
@@ -85,6 +85,10 @@ export class FoodFieldProvider {
         const field = await this.fieldService.getField(fieldIdentifier);
 
         if (!field) {
+            return;
+        }
+
+        if (!isItemField(field)) {
             return;
         }
 
