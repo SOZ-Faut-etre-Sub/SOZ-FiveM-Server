@@ -1,11 +1,9 @@
-import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { InventoryDragAndDropProvider } from '@public/client/inventory/inventory.draganddrop.provider';
-import { BrandConfig, BrandsConfig, ShopBrand, ShopsConfig } from '@public/config/shops';
+import { BrandsConfig, ShopBrand, ShopsConfig } from '@public/config/shops';
 import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
-import { Feature } from '@public/shared/features';
 import { InventoryItem } from '@public/shared/inventory';
 import { JobPermission, JobType } from '@public/shared/job';
 import { StonkConfig } from '@public/shared/job/stonk';
@@ -15,7 +13,7 @@ import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { TargetOption } from '@public/shared/target';
 
 import { BlipFactory } from '../blip';
-import { PedFactory } from '../factory/ped.factory';
+import { FightForStyleRestockService } from '../job/ffs/ffs.restock.service';
 import { JobService } from '../job/job.service';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
@@ -23,14 +21,15 @@ import { TargetFactory } from '../target/target.factory';
 import { BarberShopProvider } from './barber.shop.provider';
 import { ClothingShopProvider } from './cloth.shop.provider';
 import { JewelryShopProvider } from './jewelry.shop.provider';
-import { ShopInfo, ShopPedEntity } from './shop.service';
+import { ShopService } from './shop.service';
 import { SuperetteShopProvider } from './superette.shop.provider';
 import { TattooShopProvider } from './tattoo.shop.provider';
 import { ZkeaFournitureShopProvider } from './zkea.fourniture.shop.provider';
 
-type shopPedData = {
-    pedId: string;
-    location: number[];
+export type ShopInfo = {
+    shopId: string;
+    shopbrand: string;
+    shopPedEntity: number;
 };
 
 @Provider()
@@ -40,9 +39,6 @@ export class ShopProvider {
 
     @Inject(BlipFactory)
     private blipFactory: BlipFactory;
-
-    @Inject(PedFactory)
-    private pedFactory: PedFactory;
 
     @Inject(SuperetteShopProvider)
     private superetteShopProvider: SuperetteShopProvider;
@@ -71,160 +67,151 @@ export class ShopProvider {
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
 
-    @Inject(FeatureProvider)
-    private featureProvider: FeatureProvider;
-
     @Inject(InventoryDragAndDropProvider)
     private inventoryDragAndDropProvider: InventoryDragAndDropProvider;
 
-    private currentShop: string = null;
-    private currentShopBrand: ShopBrand = null;
+    @Inject(FightForStyleRestockService)
+    private fightForStyleRestockService: FightForStyleRestockService;
 
-    private shopsPedEntity: Record<string, shopPedData> = {};
+    @Inject(ShopService)
+    private shopService: ShopService;
 
-    public shopActions: TargetOption[] = [
-        {
-            icon: 'magasin/cart',
-            label: 'Accéder au magasin',
-            category: 'citizen',
-            canInteract: entity => {
-                return (
-                    this.currentShop !== null &&
-                    this.currentShopBrand !== ShopBrand.LsCustom &&
-                    !IsEntityPlayingAnim(entity, 'random@robbery', 'robbery_main_female', 3)
-                );
+    public getShopActions(): TargetOption[] {
+        return [
+            {
+                icon: 'magasin/cart',
+                label: 'Accéder au magasin',
+                category: 'citizen',
+                canInteract: entity =>
+                    this.shopService.checkTarget(
+                        Object.values(ShopBrand).filter(elem => elem != ShopBrand.LsCustom),
+                        entity
+                    ),
+                blackoutGlobal: true,
+                action: this.openShop.bind(this),
             },
-            blackoutGlobal: true,
-            action: this.openShop.bind(this),
-        },
-        {
-            icon: 'shop/store',
-            label: 'Accéder au GunSmith',
-            category: 'citizen',
-            canInteract: entity => {
-                return (
-                    this.currentShop !== null &&
-                    this.currentShopBrand === ShopBrand.Ammunation &&
-                    !IsEntityPlayingAnim(entity, 'random@robbery', 'robbery_main_female', 3)
-                );
+            {
+                icon: 'shop/store',
+                label: 'Accéder au GunSmith',
+                category: 'citizen',
+                canInteract: entity => this.shopService.checkTarget([ShopBrand.Ammunation], entity),
+                action: () => TriggerEvent(ClientEvent.WEAPON_OPEN_GUNSMITH),
             },
-            action: () => TriggerEvent(ClientEvent.WEAPON_OPEN_GUNSMITH),
-        },
-        {
-            icon: 'stonk/collecter',
-            label: 'Collecter',
-            job: JobType.CashTransfer,
-            category: 'society',
-            canInteract: () => {
-                return Object.values(StonkConfig.collection).some(item =>
-                    item.takeInAvailableIn.includes(this.currentShopBrand)
-                );
+            {
+                icon: 'stonk/collecter',
+                label: 'Collecter',
+                job: JobType.CashTransfer,
+                category: 'society',
+                canInteract: () => {
+                    const currentShop = this.shopService.getCurrentShopInfo();
+                    return Object.values(StonkConfig.collection).some(item =>
+                        item.takeInAvailableIn.includes(currentShop.shopbrand)
+                    );
+                },
+                blackoutGlobal: true,
+                blackoutJob: JobType.CashTransfer,
+                action: () => {
+                    const currentShop = this.shopService.getCurrentShopInfo();
+                    TriggerServerEvent(ServerEvent.STONK_COLLECT, currentShop.shopbrand, currentShop.shopId);
+                },
             },
-            blackoutGlobal: true,
-            blackoutJob: JobType.CashTransfer,
-            action: () => {
-                TriggerServerEvent(ServerEvent.STONK_COLLECT, this.currentShopBrand, this.currentShop);
+            {
+                icon: 'shop/store',
+                label: 'Vérifier le stock',
+                category: 'citizen',
+                canInteract: entity => this.shopService.checkTarget([ShopBrand.LsCustom, ShopBrand.Zkea], entity),
+                blackoutGlobal: true,
+                action: () => {
+                    const currentShop = this.shopService.getCurrentShopInfo();
+                    switch (currentShop.shopbrand) {
+                        case ShopBrand.Zkea:
+                            TriggerServerEvent(ServerEvent.ZKEA_CHECK_STOCK);
+                            break;
+                        case ShopBrand.LsCustom:
+                            TriggerServerEvent(ServerEvent.LSC_CHECK_STOCK);
+                            break;
+                    }
+                },
             },
-        },
-        {
-            icon: 'shop/store',
-            label: 'Vérifier le stock',
-            category: 'citizen',
-            canInteract: () => {
-                return (
-                    this.currentShop !== null &&
-                    (this.currentShopBrand === ShopBrand.Zkea || this.currentShopBrand === ShopBrand.LsCustom)
-                );
+            {
+                icon: 'magasin/cart',
+                label: "Accéder à l'entrepôt",
+                category: 'citizen',
+                canInteract: entity => this.shopService.checkTarget([ShopBrand.Zkea], entity),
+                blackoutGlobal: true,
+                action: async () => await this.zkeaFournitureShopProvider.openShop(),
             },
-            blackoutGlobal: true,
-            action: () => {
-                switch (this.currentShopBrand) {
-                    case ShopBrand.Zkea:
-                        TriggerServerEvent(ServerEvent.ZKEA_CHECK_STOCK);
-                        break;
-                    case ShopBrand.LsCustom:
-                        TriggerServerEvent(ServerEvent.LSC_CHECK_STOCK);
-                        break;
-                }
+            {
+                label: 'Location de camion de déménagement',
+                icon: 'vehicle/truck',
+                category: 'citizen',
+                canInteract: entity => this.shopService.checkTarget([ShopBrand.Zkea], entity),
+                action: async () => {
+                    this.nuiMenu.openMenu(MenuType.RentMule, null, {
+                        position: {
+                            position: ShopsConfig['zkea'].location as Vector4,
+                            distance: 2.5,
+                        },
+                    });
+                },
             },
-        },
-        {
-            icon: 'magasin/cart',
-            label: "Accéder à l'entrepôt",
-            category: 'citizen',
-            canInteract: () => {
-                return this.currentShop !== null && this.currentShopBrand === ShopBrand.Zkea;
+            {
+                icon: 'mechanic/reparer',
+                label: 'Prix Pit Stop',
+                category: 'citizen',
+                canInteract: entity =>
+                    this.shopService.checkTarget([ShopBrand.LsCustom], entity) &&
+                    this.jobService.hasPermission(JobType.Bennys, JobPermission.BennysPitStopPrice),
+                blackoutGlobal: true,
+                action: async () => {
+                    this.nuiMenu.openMenu(MenuType.PitStopPriceMenu);
+                },
             },
-            blackoutGlobal: true,
-            action: async () => await this.zkeaFournitureShopProvider.openShop(),
-        },
-        {
-            label: 'Location de camion de déménagement',
-            icon: 'vehicle/truck',
-            category: 'citizen',
-            canInteract: () => {
-                return this.currentShop !== null && this.currentShopBrand === ShopBrand.Zkea;
+            {
+                icon: 'shop/store',
+                label: 'Améliorations',
+                category: 'citizen',
+                blackoutGlobal: true,
+                canInteract: entity => {
+                    const player = this.playerService.getPlayer();
+                    if (!player.apartment || !player.apartment.owner) {
+                        return false;
+                    }
+                    if (player.apartment.owner !== player.citizenid) {
+                        return false;
+                    }
+                    return this.shopService.checkTarget([ShopBrand.Zkea], entity);
+                },
+                action: () => TriggerEvent(ClientEvent.HOUSING_OPEN_UPGRADES_MENU),
             },
-            action: async () => {
-                this.nuiMenu.openMenu(MenuType.RentMule, null, {
-                    position: {
-                        position: ShopsConfig['zkea'].location as Vector4,
-                        distance: 2.5,
-                    },
-                });
+            {
+                label: 'Enlever la tenue temporaire',
+                category: 'criminal',
+                canInteract: entity => {
+                    const player = this.playerService.getPlayer();
+                    if (player.cloth_config.TemporaryClothSet == null) {
+                        return false;
+                    }
+                    this.shopService.checkTarget([ShopBrand.Ponsonbys, ShopBrand.Suburban, ShopBrand.Binco], entity);
+                },
+                action: () => TriggerEvent(ClientEvent.CRIMI_REMOVE_CLOTH),
             },
-        },
-        {
-            icon: 'mechanic/reparer',
-            label: 'Prix Pit Stop',
-            category: 'citizen',
-            canInteract: () => {
-                return (
-                    this.currentShop !== null &&
-                    this.currentShopBrand === ShopBrand.LsCustom &&
-                    this.jobService.hasPermission(JobType.Bennys, JobPermission.BennysPitStopPrice)
-                );
+            {
+                label: 'Restock: Pièces d’Améliorations Certifiées',
+                icon: 'ffs/restock',
+                job: JobType.DMC,
+                blackoutGlobal: true,
+                blackoutJob: JobType.DMC,
+                category: 'society',
+                canInteract: entity => this.shopService.checkTarget([ShopBrand.LsCustom], entity),
+                action: () => {
+                    TriggerServerEvent(ServerEvent.DMC_RESTOCK);
+                },
+                item: 'ls_custom_upgrade_part',
             },
-            blackoutGlobal: true,
-            action: async () => {
-                this.nuiMenu.openMenu(MenuType.PitStopPriceMenu);
-            },
-        },
-        {
-            icon: 'shop/store',
-            label: 'Améliorations',
-            category: 'citizen',
-            blackoutGlobal: true,
-            canInteract: () => {
-                const player = this.playerService.getPlayer();
-                if (!player.apartment || !player.apartment.owner) {
-                    return false;
-                }
-                if (player.apartment.owner !== player.citizenid) {
-                    return false;
-                }
-                return this.currentShop !== null && this.currentShopBrand === ShopBrand.Zkea;
-            },
-            action: () => TriggerEvent(ClientEvent.HOUSING_OPEN_UPGRADES_MENU),
-        },
-        {
-            label: 'Enlever la tenue temporaire',
-            category: 'criminal',
-            canInteract: () => {
-                const player = this.playerService.getPlayer();
-                if (player.cloth_config.TemporaryClothSet == null) {
-                    return false;
-                }
-                return (
-                    this.currentShop !== null &&
-                    (this.currentShopBrand === ShopBrand.Ponsonbys ||
-                        this.currentShopBrand === ShopBrand.Suburban ||
-                        this.currentShopBrand === ShopBrand.Binco)
-                );
-            },
-            action: () => TriggerEvent(ClientEvent.CRIMI_REMOVE_CLOTH),
-        },
-    ];
+            ...this.fightForStyleRestockService.getStockTargets(),
+        ];
+    }
 
     @Once(OnceStep.PlayerLoaded)
     public async setupShopConfig() {
@@ -240,8 +227,8 @@ export class ShopProvider {
                 });
             }
             if (brandConfig.pedModel) {
-                const pedId = await this.pedFactory.createPedOnGrid({
-                    model: this.getBrandPedModel(brandConfig),
+                const pedId = await this.targetFactory.createForPed({
+                    model: this.shopService.getBrandPedModel(brandConfig),
                     coords: {
                         x: config.location[0],
                         y: config.location[1],
@@ -252,6 +239,10 @@ export class ShopProvider {
                     invincible: true,
                     blockevents: true,
                     scenario: 'WORLD_HUMAN_STAND_IMPATIENT',
+                    target: {
+                        options: this.getShopActions(),
+                        distance: 2.5,
+                    },
                 });
 
                 if (config.brand === ShopBrand.Zkea) {
@@ -283,21 +274,13 @@ export class ShopProvider {
                     );
                 }
 
-                this.shopsPedEntity[shop] = { pedId: pedId, location: config.location } as shopPedData;
+                this.shopService.addShopPed(shop, pedId);
             }
         }
 
         // Special for mask shop
         this.targetFactory.createForBoxZone(
             'shops:mask',
-            // { FLOOD
-            //     center: ShopsConfig[ShopBrand.Mask].location as Vector3,
-            //     length: 3.0,
-            //     width: 3.2,
-            //     minZ: 102.11,
-            //     maxZ: 104.11,
-            //     heading: 159.76,
-            // },
             {
                 center: ShopsConfig[ShopBrand.Mask].location as Vector3,
                 length: 1.6,
@@ -335,58 +318,17 @@ export class ShopProvider {
 
     @OnEvent(ClientEvent.LOCATION_ENTER)
     public onLocationEnter(brand: ShopBrand, shop: string) {
-        this.currentShop = shop;
-        this.currentShopBrand = brand;
-        this.addTargetModel();
-
-        if (brand == ShopBrand.Ponsonbys || brand == ShopBrand.Suburban || brand == ShopBrand.Binco) {
-            TriggerEvent(ClientEvent.FFS_ENTER_CLOTHING_SHOP, brand);
-        }
-
-        if (brand == ShopBrand.LsCustom) {
-            TriggerEvent(ClientEvent.LSC_ENTER_SHOP, brand);
-        }
+        this.shopService.onLocationEnter(brand, shop);
     }
 
     @OnEvent(ClientEvent.LOCATION_EXIT)
-    public async onLocationExit(brand) {
-        await this.removeTargetModel();
-        this.currentShop = null;
-        this.currentShopBrand = null;
-
-        if (brand == ShopBrand.Ponsonbys || brand == ShopBrand.Suburban || brand == ShopBrand.Binco) {
-            TriggerEvent(ClientEvent.FFS_EXIT_CLOTHING_SHOP, brand);
-        }
-        if (brand == ShopBrand.LsCustom) {
-            TriggerEvent(ClientEvent.LSC_EXIT_SHOP, brand);
-        }
-    }
-
-    public async addTargetModel() {
-        if (
-            this.currentShopBrand &&
-            BrandsConfig[this.currentShopBrand] &&
-            BrandsConfig[this.currentShopBrand].pedModel
-        ) {
-            this.targetFactory.createForModel(
-                this.getBrandPedModel(BrandsConfig[this.currentShopBrand]),
-                this.shopActions
-            );
-        }
-    }
-
-    public async removeTargetModel() {
-        if (
-            this.currentShopBrand &&
-            BrandsConfig[this.currentShopBrand] &&
-            BrandsConfig[this.currentShopBrand].pedModel
-        ) {
-            this.targetFactory.removeTargetModel([this.getBrandPedModel(BrandsConfig[this.currentShopBrand])]);
-        }
+    public async onLocationExit() {
+        this.shopService.onLocationExit();
     }
 
     public async openShop() {
-        switch (this.currentShopBrand) {
+        const currentShop = this.shopService.getCurrentShopInfo();
+        switch (currentShop.shopbrand) {
             case ShopBrand.Supermarket247North:
             case ShopBrand.Supermarket247South:
             case ShopBrand.Supermarket247Cayo:
@@ -400,18 +342,18 @@ export class ShopProvider {
             case ShopBrand.SouvenirMemory:
             case ShopBrand.SouvenirOther:
             case ShopBrand.SouvenirPlush:
-                this.superetteShopProvider.openShop(this.currentShopBrand, this.currentShop);
+                this.superetteShopProvider.openShop(currentShop.shopbrand, currentShop.shopId);
                 break;
             case ShopBrand.Ponsonbys:
             case ShopBrand.Suburban:
             case ShopBrand.Binco:
-                this.clothingShopProvider.openShop(this.currentShopBrand, this.currentShop);
+                this.clothingShopProvider.openShop(currentShop.shopbrand, currentShop.shopId);
                 break;
             case ShopBrand.Mask:
                 this.clothingShopProvider.openShop(ShopBrand.Mask, 'mask');
                 break;
             case ShopBrand.Tattoo:
-                this.tattooShopProvider.openShop(this.currentShopBrand, this.currentShop);
+                this.tattooShopProvider.openShop(currentShop.shopbrand, currentShop.shopId);
                 break;
             case ShopBrand.Jewelry:
                 this.jewelryShopProvider.openShop();
@@ -419,30 +361,5 @@ export class ShopProvider {
             case ShopBrand.Barber:
                 this.barberShopProvider.openShop();
         }
-    }
-
-    public getBrandPedModel(brandConfig: BrandConfig) {
-        return this.featureProvider.isFeatureEnabled(Feature.Halloween) ? 'u_m_y_zombie_01' : brandConfig.pedModel;
-    }
-
-    public getCurrentShop(): ShopInfo {
-        const pedId =
-            this.currentShop && this.shopsPedEntity[this.currentShop]
-                ? this.shopsPedEntity[this.currentShop].pedId
-                : null;
-        return {
-            shopId: this.currentShop,
-            shopbrand: this.currentShopBrand,
-            shopPedEntity: this.pedFactory.findLoadedPed(pedId)?.entity,
-        };
-    }
-
-    public getShopPedEntity(shopId: string): ShopPedEntity {
-        const pedId =
-            this.currentShop && this.shopsPedEntity[this.currentShop]
-                ? this.shopsPedEntity[this.currentShop].pedId
-                : null;
-        const location = shopId && this.shopsPedEntity[shopId] ? this.shopsPedEntity[shopId].location : [0, 0, 0, 0];
-        return { entity: this.pedFactory.findLoadedPed(pedId)?.entity, location: location as Vector4 };
     }
 }

@@ -145,6 +145,15 @@ export class PedFactory {
         return this.loadedPeds[id];
     }
 
+    public findPed(id: string) {
+        for (const peds of this.pedsByChunk.values()) {
+            const ped = peds.find(ped => ped.id == id);
+            if (ped) {
+                return ped;
+            }
+        }
+    }
+
     public isPedLoaded(id: string) {
         const spawned = this.loadedPeds[id];
 
