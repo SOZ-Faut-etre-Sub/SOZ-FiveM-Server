@@ -1,0 +1,241 @@
+QBCore = exports["qb-core"]:GetCoreObject()
+
+Fields = {}
+Processing = {Enabled = false, StartedAt = 0}
+
+MySQL.ready(function()
+    MySQL.query("SELECT * FROM field WHERE owner = 'pawl'", function(fields)
+        for _, v in pairs(fields or {}) do
+            local data = json.decode(v.data)
+
+            Fields[v.identifier] = Field:new(v.identifier, data.field, data.refillDelay, data.position, data.radius)
+            Fields[v.identifier]:RunBackgroundTasks()
+        end
+    end)
+end)
+
+RegisterNetEvent("pawl:server:getFieldData", function(identifier)
+    local field = Fields[identifier]
+    if field ~= nil then
+        TriggerLatentClientEvent("pawl:client:syncField", source, 16 * 1024, identifier, field:GetField())
+    end
+end)
+
+QBCore.Functions.CreateCallback("pawl:server:harvestTree", function(source, cb, identifier, position)
+    local Player = QBCore.Functions.GetPlayer(source)
+    if Player == nil then
+        cb(false)
+        return
+    end
+
+    local field = Fields[identifier]
+    if field == nil then
+        cb(false)
+        return
+    end
+
+    if exports["soz-core"]:CanPlayerCarryItems(Player.PlayerData.source, Config.Harvest.RewardItems) then
+        local harvest = field:Harvest(position)
+        if harvest then
+            for _, item in pairs(Config.Harvest.RewardItems) do
+                local result = exports["soz-core"]:AddPlayerItem(Player.PlayerData.source, item.name, item.amount)
+
+                if not result.ok then
+                    cb(false)
+                    return
+                end
+            end
+
+            exports["soz-core"]:TraceEvent("job_pawl_harvest_tree",
+                                           {
+                player_source = Player.PlayerData.source,
+                field = identifier,
+                position = position,
+                amount = 1,
+            })
+
+            cb(true)
+            return
+        end
+        cb(false)
+    else
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous ne pouvez pas recevoir d'objet !", "error")
+        cb(false)
+    end
+end)
+
+QBCore.Functions.CreateCallback("pawl:server:harvestTreeSap", function(source, cb, identifier, position)
+    local Player = QBCore.Functions.GetPlayer(source)
+    if Player == nil then
+        cb(false)
+        return
+    end
+
+    local field = Fields[identifier]
+    if field == nil then
+        cb(false)
+        return
+    end
+
+    if exports["soz-core"]:CanPlayerCarryItems(Player.PlayerData.source, Config.Harvest.SecondaryRewardItems) then
+        local harvest = field:TreeExistAtPosition(position)
+
+        if harvest then
+            for _, item in pairs(Config.Harvest.SecondaryRewardItems) do
+                local result = exports["soz-core"]:AddPlayerItem(Player.PlayerData.source, item.name, item.amount, nil, nil)
+
+                if not result.ok then
+                    cb(false)
+
+                    return
+                end
+            end
+
+            exports["soz-core"]:TraceEvent("job_pawl_sap_tree", {
+                player_source = Player.PlayerData.source,
+                field = identifier,
+                position = position,
+                amount = 1,
+            })
+
+            cb(true)
+            return
+        end
+
+        cb(false)
+    else
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous ne pouvez pas recevoir d'objet !", "error")
+        cb(false)
+    end
+end)
+
+--- Processing
+local function millisecondToMinuteDisplay(time)
+    local minutes = math.floor(time / 60000)
+    local seconds = math.floor((time % 60000) / 1000)
+    return minutes .. "m " .. seconds .. "s"
+end
+
+QBCore.Functions.CreateCallback("pawl:server:processingTreeIsEnabled", function(source, cb)
+    cb(Processing.Enabled)
+end)
+
+RegisterNetEvent("pawl:server:statusProcessingTree", function()
+    local Player = QBCore.Functions.GetPlayer(source)
+    if Player == nil then
+        return
+    end
+
+    if Processing.Enabled then
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Il reste " ..
+                               millisecondToMinuteDisplay(Processing.StartedAt + Config.Processing.Duration - GetGameTimer()) ..
+                               " avant la fin du traitement de l'arbre.", "info")
+        return
+    end
+
+    TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Aucun traitement n'est en cours.", "info")
+end)
+
+RegisterNetEvent("pawl:server:stopProcessingTree", function()
+    local Player = QBCore.Functions.GetPlayer(source)
+    if Player == nil then
+        return
+    end
+
+    if Processing.Enabled then
+        Processing = {Enabled = false, StartedAt = 0}
+
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Le traitement est arrêté.", "info")
+        return
+    end
+
+    TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Aucun traitement est en cours.", "info")
+end)
+
+RegisterNetEvent("pawl:server:startProcessingTree", function(data)
+    local Player = QBCore.Functions.GetPlayer(source)
+    if Player == nil then
+        return
+    end
+
+    if Processing.Enabled then
+        return
+    end
+
+    if not exports["soz-core"]:CanCarryItem(Config.Processing.PlankStorage, Config.Processing.PlankItem, Config.Processing.PlankAmount) then
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Le stockage de planches est plein !", "error")
+        return
+    end
+
+    if not exports["soz-core"]:CanCarryItem(Config.Processing.SawdustStorage, Config.Processing.SawdustItem, Config.Processing.SawdustAmount) then
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Le stockage de sciure est plein !", "error")
+        return
+    end
+
+    Processing.Enabled = true
+    Processing.StartedAt = GetGameTimer()
+    TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Le traitement ~g~commence~s~.")
+
+    Citizen.CreateThread(function()
+        while Processing.Enabled do
+            local globalState = exports["soz-core"]:GetGlobalState()
+
+            if globalState.blackoutLevel > 3 or globalState.blackout == true then
+                Processing.StartedAt = 0
+                Processing.Enabled = false
+                return
+            end
+
+            if GetGameTimer() - Processing.StartedAt >= Config.Processing.Duration then
+                if exports["soz-core"]:RemoveItem(Config.Processing.ProcessingStorage, Config.Processing.ProcessingItem, Config.Processing.ProcessingAmount) then
+                    exports["soz-core"]:AddItem(Config.Processing.PlankStorage, Config.Processing.PlankItem, Config.Processing.PlankAmount)
+                    exports["soz-core"]:AddItem(Config.Processing.SawdustStorage, Config.Processing.SawdustItem, Config.Processing.SawdustAmount)
+
+                    if exports["soz-core"]:GetItemCount(Config.Processing.ProcessingStorage, Config.Processing.ProcessingItem) >= 1 then
+                        Processing.StartedAt = GetGameTimer()
+                    else
+                        Processing.StartedAt = 0
+                        Processing.Enabled = false
+                        break
+                    end
+                else
+                    Processing.StartedAt = 0
+                    Processing.Enabled = false
+                    break
+                end
+            end
+
+            Citizen.Wait(1000)
+        end
+    end)
+end)
+
+function pairsByKeys(t)
+    local a = {}
+    for n in pairs(t) do
+        table.insert(a, n)
+    end
+    table.sort(a)
+    local i = 0
+    local iter = function()
+        i = i + 1
+        if a[i] == nil then
+            return nil
+        else
+            return a[i], t[a[i]]
+        end
+    end
+    return iter
+end
+
+exports("GetMetrics", function()
+    local metrics = {degradation_percent = GetDegradationPercentage(), fields = {}}
+
+    -- Fields
+    for identifier, field in pairs(Fields) do
+        local metric = {["identifier"] = identifier, value = field:GetTrees() - field:GetCuttedTrees()}
+        table.insert(metrics.fields, metric)
+    end
+
+    return metrics
+end)

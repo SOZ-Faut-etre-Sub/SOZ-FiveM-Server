@@ -154,16 +154,8 @@ export class BlipFactory {
             SetBlipAlpha(gameBlip.gameId, 0);
             SetBlipHiddenOnLegend(gameBlip.gameId, true);
         } else {
-            SetBlipAlpha(gameBlip.gameId, gameBlip.blip.alpha || 255);
+            SetBlipAlpha(gameBlip.gameId, 255);
             SetBlipHiddenOnLegend(gameBlip.gameId, false);
-        }
-    }
-
-    public hideGroup(group: string, value: boolean): void {
-        for (const [id, gameBlip] of this.blips) {
-            if (gameBlip.blip.group === group) {
-                this.hide(id, value);
-            }
         }
     }
 
@@ -225,7 +217,7 @@ export class BlipFactory {
     }
 
     private updateGameBlip(id: string, gameId: number, blip: Partial<Blip>) {
-        if (blip.position !== undefined && blip.type !== BlipType.Radius) {
+        if (blip.position !== undefined) {
             SetBlipCoords(gameId, blip.position[0], blip.position[1], blip.position[2]);
         }
 

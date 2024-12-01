@@ -1,6 +1,7 @@
 import { Once, OnceStep, OnEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
+import { FieldProvider } from '@public/server/farm/field.provider';
 import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { ItemService } from '@public/server/item/item.service';
 import { Notifier } from '@public/server/notifier';
@@ -10,7 +11,6 @@ import { JobType } from '@public/shared/job';
 
 import { ADD_ERROR_MESSAGE, InventoryItem } from '../../../shared/inventory';
 import { isOk } from '../../../shared/result';
-import { FieldProvider } from '../../field/field.provider';
 
 const EasterHarvestDrop: Record<string, number> = {
     golden_egg: 0.01,

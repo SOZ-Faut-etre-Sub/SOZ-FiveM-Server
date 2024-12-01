@@ -287,9 +287,6 @@ export enum ServerEvent {
     UPW_GET_BLESSED_WATER = 'soz-core:server:job:upw:get-blessed-water',
 
     PAWL_DECREASE_CHAINSAW_FUEL = 'soz-core:server:job:pawl:decrease-chainsaw-fuel',
-    PAWL_PROCESSING_STATUS = 'soz-core:server:job:pawl:processing-status',
-    PAWL_PROCESSING_START = 'soz-core:server:job:pawl:processing-start',
-    PAWL_PROCESSING_STOP = 'soz-core:server:job:pawl:processing-stop',
 
     SHOP_BUY = 'soz-core:server:shop:buy',
     SHOP_TATTOO_RESET = 'soz-core:server:shop:tattoo-reset',

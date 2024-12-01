@@ -76,7 +76,6 @@ export enum MenuType {
     JobUpw = 'job_upw',
     JobNews = 'job_news',
     JobOil = 'job_oil',
-    JobPawl = 'job_pawl',
     VehicleOrderMenu = 'vehicle_order',
     OilSetStationPrice = 'oil_set_station_price',
     SetHealthState = 'set_health_state',

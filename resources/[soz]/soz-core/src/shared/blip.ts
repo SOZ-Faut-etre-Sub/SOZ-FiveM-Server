@@ -30,7 +30,7 @@ export type QbBlip = {
     routeColor?: number;
     scale?: number;
     route?: boolean;
-    name?: string;
+    name: string;
     coords: { x: number; y: number; z?: number };
     position?: Vector3 | Vector4;
     category?: number;
