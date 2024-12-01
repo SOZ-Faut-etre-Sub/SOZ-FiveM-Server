@@ -15,7 +15,7 @@ export class FieldRepository extends Repository<RepositoryType.Field> {
         return {};
     }
 
-    public async createField(field: Field) {
+    public async createField(field: Field): Promise<Field> {
         const databaseField = await this.prismaService.field.findFirst({
             where: {
                 identifier: field.identifier,
@@ -32,6 +32,8 @@ export class FieldRepository extends Repository<RepositoryType.Field> {
         this.data[field.identifier] = {
             ...field,
         };
+
+        return this.data[field.identifier];
     }
 
     public async save() {

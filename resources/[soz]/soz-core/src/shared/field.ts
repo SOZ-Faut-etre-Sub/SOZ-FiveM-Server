@@ -37,6 +37,7 @@ export type ItemField = {
 };
 
 export type PawlFieldTree = {
+    identifier: string;
     model: string;
     harvestTime: number;
     position: { x: number; y: number; z: number; w: number };

@@ -11,15 +11,7 @@ import { RepositoryUpdate } from '../../../core/decorators/repository';
 import { Tick, TickInterval } from '../../../core/decorators/tick';
 import { emitRpc } from '../../../core/rpc';
 import { wait } from '../../../core/utils';
-import {
-    Field,
-    getTreeIdentifier,
-    isPawlField,
-    isTreeCutted,
-    PAWL_FIELD_LIST,
-    PawlField,
-    PawlFieldTree,
-} from '../../../shared/field';
+import { Field, isPawlField, isTreeCutted, PAWL_FIELD_LIST, PawlField, PawlFieldTree } from '../../../shared/field';
 import { JobType } from '../../../shared/job';
 import { RepositoryType } from '../../../shared/repository';
 import { RpcServerEvent } from '../../../shared/rpc';
@@ -87,7 +79,7 @@ export class PawlHarvestProvider {
         }
     }
 
-    @Tick(TickInterval.EVERY_SECOND)
+    @Tick(TickInterval.EVERY_MINUTE)
     public async checkTreeCut() {
         for (const identifier of PAWL_FIELD_LIST) {
             const field = this.fieldRepository.find(identifier);
@@ -103,16 +95,17 @@ export class PawlHarvestProvider {
             for (const tree of field.field) {
                 await this.handleTreeSpawn(field, tree);
             }
+
+            await wait(0);
         }
     }
 
     private async handleTreeSpawn(field: PawlField, tree: PawlFieldTree) {
-        const identifier = getTreeIdentifier(field, tree);
         const isTreeUp = !isTreeCutted(field, tree);
-        const hasObject = this.objectProvider.hasObject(identifier);
+        const hasObject = this.objectProvider.hasObject(tree.identifier);
 
         if (!isTreeUp) {
-            this.objectProvider.deleteObject(identifier);
+            this.objectProvider.deleteObject(tree.identifier);
 
             return;
         }
@@ -125,7 +118,7 @@ export class PawlHarvestProvider {
             {
                 model: GetHashKey(tree.model),
                 position: [tree.position.x, tree.position.y, tree.position.z, tree.position.w || 0],
-                id: identifier,
+                id: tree.identifier,
             },
             [
                 {
@@ -137,7 +130,7 @@ export class PawlHarvestProvider {
                     blackoutJob: JobType.Pawl,
                     category: 'society',
                     action: () => {
-                        this.harvestTree(field.identifier, identifier);
+                        this.harvestTree(field.identifier, tree.identifier);
                     },
                 },
                 {
@@ -149,7 +142,7 @@ export class PawlHarvestProvider {
                     blackoutJob: JobType.Pawl,
                     category: 'society',
                     action: () => {
-                        this.harvestTreeChainsaw(field.identifier, identifier);
+                        this.harvestTreeChainsaw(field.identifier, tree.identifier);
                     },
                 },
                 {
@@ -161,10 +154,10 @@ export class PawlHarvestProvider {
                     blackoutJob: JobType.Pawl,
                     category: 'society',
                     canInteract: () => {
-                        return !this.harvestedTreeSap.has(identifier);
+                        return !this.harvestedTreeSap.has(tree.identifier);
                     },
                     action: () => {
-                        this.harvestTreeSap(field.identifier, identifier);
+                        this.harvestTreeSap(field.identifier, tree.identifier);
                     },
                 },
                 {

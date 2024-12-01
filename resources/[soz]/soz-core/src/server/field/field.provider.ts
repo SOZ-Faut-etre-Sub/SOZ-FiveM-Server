@@ -1,15 +1,7 @@
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
-import {
-    Field,
-    getAmount,
-    getTreeIdentifier,
-    isItemField,
-    isPawlField,
-    isTreeCutted,
-    PawlFieldTree,
-} from '../../shared/field';
+import { Field, getAmount, isItemField, isPawlField, isTreeCutted, PawlFieldTree } from '../../shared/field';
 import { FieldRepository } from '../repository/field.repository';
 
 @Provider()
@@ -56,9 +48,7 @@ export class FieldProvider {
         let treeFound = null;
 
         for (const tree of field.field) {
-            const identifier = getTreeIdentifier(field, tree);
-
-            if (identifier === treeIdentifier) {
+            if (tree.identifier === treeIdentifier) {
                 treeFound = tree;
                 break;
             }
