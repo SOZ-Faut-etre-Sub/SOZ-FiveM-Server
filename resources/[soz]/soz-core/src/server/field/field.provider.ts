@@ -93,7 +93,7 @@ export class FieldProvider {
 
         for (const field of fields) {
             if (!isItemField(field)) {
-                return;
+                continue;
             }
 
             if (!field.refill) {
