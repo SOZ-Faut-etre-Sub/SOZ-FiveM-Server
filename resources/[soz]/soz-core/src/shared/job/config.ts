@@ -325,6 +325,17 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
         canInvoice: true,
         permissions: {
             ...BasePermissions,
+            [JobPermission.NewCompanyPanelAccess]: { label: 'Accès au panel entreprise' },
+            [JobPermission.EmployeesListRead]: { label: 'Accès aux données employés sur le panel entreprise' },
+            [JobPermission.EmployeesListWrite]: { label: 'Editer les données employés sur le panel entreprise' },
+            [JobPermission.PricingRead]: { label: 'Accès aux devis sur le panel entreprise' },
+            [JobPermission.PricingManage]: { label: 'Gestion des données des devis sur le panel entreprise' },
+            [JobPermission.ReadDocumentation]: { label: 'Lecture de la documentation sur le panel entreprise' },
+            [JobPermission.WriteDocumentation]: { label: 'Edition de la documentation sur le panel entreprise' },
+            [JobPermission.ManageDocumentation]: { label: 'Gestion de la documentation sur le panel entreprise' },
+            [JobPermission.AssignCertification]: { label: 'Assigner des formations sur le panel' },
+            [JobPermission.ManageCertification]: { label: 'Gérer les formations sur le panel' },
+            [JobPermission.ManageRoster]: { label: 'Gérer les photos dans les effectifs panel' },
         },
         bossZones: [
             {
