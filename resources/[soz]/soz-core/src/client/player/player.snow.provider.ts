@@ -165,6 +165,7 @@ export class PlayerSnowProvider {
         }
 
         let coldScore = 0;
+        console.log(data);
         [Component.Tops, Component.Legs, Component.Shoes, Component.Undershirt].forEach(component => {
             if (data[component] == null) {
                 const extra = ExtraWarnCloths[player.skin.Model.Hash].find(
@@ -203,7 +204,7 @@ export class PlayerSnowProvider {
         const scarfs = Object.keys(neckJewels.items['Echarpes']).map(item => Number(item));
         const neckProtected = scarfs.includes(outfit.Components[neckJewels.componentId].Drawable);
         if (neckProtected) {
-            coldScore++;
+            coldScore += 2;
         }
 
         const hatJewels = jewels['Chapeaux'];
@@ -216,7 +217,7 @@ export class PlayerSnowProvider {
             !!hasCustomCagoule ||
             data[Component.Mask] > 1;
         if (headProtected) {
-            coldScore++;
+            coldScore += 2;
         }
 
         //Cagoule - bandana - écharpes
@@ -225,6 +226,8 @@ export class PlayerSnowProvider {
         } else {
             this.blizzardProtected = false;
         }
+
+        console.log('coldScore', coldScore);
 
         this.coldProtected = coldScore >= 6;
         this.blizzardProtected = this.blizzardProtected && coldScore >= 10;
