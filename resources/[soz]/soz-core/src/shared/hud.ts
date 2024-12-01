@@ -105,7 +105,9 @@ export type HudState = {
     streetName: string[];
     compass: HudCompass;
     ammo: HudWeaponAmmo;
-    dateTime: HudDateTime;
+    dateTime: HudDateTime & {
+        isNight: boolean;
+    };
     minimap: Minimap;
     halloween: {
         moon: boolean;

@@ -90,7 +90,12 @@ export const StateApp: FunctionComponent = () => {
     });
 
     useNuiEvent('hud', 'UpdateDateTime', dateTime => {
-        dispatch.hud.update({ dateTime });
+        dispatch.hud.update({
+            dateTime: {
+                ...dateTime,
+                isNight: dateTime.hour < 6 || dateTime.hour > 20,
+            },
+        });
     });
 
     useNuiEvent('hud', 'UpdateWeaponAmmo', ammo => {

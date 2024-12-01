@@ -34,6 +34,7 @@ export const hud = createModel<RootModel>()({
             dayOfWeek: 0,
             hour: 0,
             minute: 0,
+            isNight: false,
         },
         minimap: {
             isHidden: true,
