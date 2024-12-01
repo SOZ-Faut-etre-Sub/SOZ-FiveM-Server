@@ -115,6 +115,9 @@ export class WeaponService {
             return;
         }
 
+        const ped = PlayerPedId();
+        const veh = GetVehiclePedIsIn(ped, false);
+
         const recoil = this.getWeaponConfig(this.currentWeapon.name)?.recoil ?? 0;
         const recoilHorizontal = Math.random() - 0.5;
         const weaponHealth = this.currentWeapon.metadata.health > 0 ? this.currentWeapon.metadata.health : 1;
@@ -126,8 +129,6 @@ export class WeaponService {
 
         let backveh = 0;
         if (GetFollowVehicleCamViewMode() == 4) {
-            const ped = PlayerPedId();
-            const veh = GetVehiclePedIsIn(ped, false);
             if (veh) {
                 const model = GetEntityModel(veh);
                 if (backVeh.includes(model)) {
@@ -149,7 +150,7 @@ export class WeaponService {
         const pitch = GetGameplayCamRelativePitch();
         const heading = GetGameplayCamRelativeHeading();
 
-        SetGameplayCamRelativeRotation(heading + recoilX + backveh, pitch + recoilY, 1.0);
+        SetGameplayCamRelativeRotation(heading + recoilX + backveh, pitch + recoilY, veh ? 0.0 : 1.0);
     }
 
     getWeaponConfig(weaponName: string): WeaponConfig | null {
