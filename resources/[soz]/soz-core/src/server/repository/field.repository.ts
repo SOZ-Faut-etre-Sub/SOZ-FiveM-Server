@@ -26,7 +26,7 @@ export class FieldRepository extends Repository<RepositoryType.Field> {
         if (databaseField) {
             this.data[field.identifier] = { ...field, ...JSON.parse(databaseField.data) };
 
-            return;
+            return this.data[field.identifier];
         }
 
         this.data[field.identifier] = {
