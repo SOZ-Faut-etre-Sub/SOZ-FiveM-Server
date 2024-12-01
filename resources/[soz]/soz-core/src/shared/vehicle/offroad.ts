@@ -562,6 +562,9 @@ export const VehData = {
         },
 
         // dirt bikes
+        zrtblizzard: {
+            rating: 80,
+        },
         avarus: {
             rating: 40,
         },

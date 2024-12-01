@@ -30,6 +30,7 @@ const shop = {
         'ammo_16',
         'ammo_17',
         'ammo_18',
+        'ammo_19',
     ],
     Pistolet: [
         'weapon_pistol',

@@ -148,10 +148,15 @@ export const ItemDescription: FunctionComponent<ItemDescriptionProps> = ({
                             {inventoryItem.metadata?.notSearchable && <span>[Caché]</span>}
                             {inventoryItem.metadata?.crafted && <span>[Illégal]</span>}
                             {inventoryItem.metadata?.printed && <span>[Réplique]</span>}
-                            {item.canEngrave && <span>{inventoryItem.metadata?.label || ''}★</span>}
                         </div>
                     </div>
                     <div className="flex mt-1 justify-between align-items-center w-full">{itemDescription}</div>
+                    {item.canEngrave && (
+                        <div className="flex mt-1 justify-between align-items-center w-full">
+                            <span></span>
+                            <span>{inventoryItem.metadata?.label || ''} ★</span>
+                        </div>
+                    )}
                     {item.type === 'fish' && (inventoryItem.metadata?.weight || inventoryItem.metadata?.length) && (
                         <div className="mt-1">
                             <div>

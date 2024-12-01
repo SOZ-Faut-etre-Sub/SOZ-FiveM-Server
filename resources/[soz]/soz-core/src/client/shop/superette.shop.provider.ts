@@ -1,6 +1,6 @@
 import { Logger } from '@core/logger';
 import { InventoryManager } from '@public/client/inventory/inventory.manager';
-import { ShopBrand, ShopsConfig } from '@public/config/shops';
+import { NoZoneShopBrand, ShopBrand, ShopsConfig } from '@public/config/shops';
 import { OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
@@ -22,7 +22,9 @@ const SOUVENIR_BRAND = [
     ShopBrand.SouvenirMemory,
     ShopBrand.SouvenirOther,
     ShopBrand.SouvenirPlush,
+    NoZoneShopBrand.SouvenirFIB,
 ];
+
 @Provider()
 export class SuperetteShopProvider {
     @Inject(NuiMenu)
@@ -43,13 +45,14 @@ export class SuperetteShopProvider {
     @Inject(Logger)
     private logger: Logger;
 
-    public openShop(brand: ShopBrand, shop: string) {
+    public openShop(brand: ShopBrand | NoZoneShopBrand, shop: string, shopLabel: string = 'Boutique') {
         if (brand != ShopBrand.Ammunation) {
             const superetteContent: ShopItem[] = [];
             for (let i = 0; i < ShopsContent[brand].length; i++) {
                 const sharedItem = {
                     ...this.itemService.getItem(ShopsContent[brand][i].id),
                     price: ShopsContent[brand][i].price,
+                    metadata: ShopsContent[brand][i].metadata,
                 } as ShopItem;
                 superetteContent.push(sharedItem);
             }
@@ -62,7 +65,7 @@ export class SuperetteShopProvider {
             } else if (brand !== ShopBrand.Supermarket247Cayo) {
                 taxes = TaxType.FOOD;
             }
-            this.inventoryManager.openShopInventory(superetteContent, 'Boutique', taxes);
+            this.inventoryManager.openShopInventory(superetteContent, shopLabel, taxes);
         } else {
             // Ammunation are handled by soz-core here
             const licences = this.playerService.getPlayer().metadata.licences;

@@ -78,7 +78,7 @@ export class ItemGiftProvider {
             return;
         }
 
-        const aroundPlayers = this.playerService.getPlayersAround(GetEntityCoords(PlayerPedId()) as Vector3, 2.0);
+        const aroundPlayers = this.playerService.getPlayersAround(GetEntityCoords(PlayerPedId()) as Vector3, 2.5);
         TriggerServerEvent(ServerEvent.GIFT_TOSS_COIN, aroundPlayers);
     }
 

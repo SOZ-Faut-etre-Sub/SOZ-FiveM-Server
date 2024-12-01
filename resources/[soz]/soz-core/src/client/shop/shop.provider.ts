@@ -1,7 +1,7 @@
 import { InventoryDragAndDropProvider } from '@public/client/inventory/inventory.draganddrop.provider';
 import { InventoryManager } from '@public/client/inventory/inventory.manager';
 import { ItemService } from '@public/client/item/item.service';
-import { BrandsConfig, ShopBrand, ShopsConfig } from '@public/config/shops';
+import { BrandsConfig, NoZoneShopBrand, NoZonesShopConfig, ShopBrand, ShopsConfig } from '@public/config/shops';
 import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
@@ -15,6 +15,7 @@ import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { TargetOption } from '@public/shared/target';
 
 import { BlipFactory } from '../blip';
+import { FeatureProvider } from '../feature/feature.provider';
 import { FightForStyleRestockService } from '../job/ffs/ffs.restock.service';
 import { JobService } from '../job/job.service';
 import { NuiMenu } from '../nui/nui.menu';
@@ -82,6 +83,9 @@ export class ShopProvider {
 
     @Inject(ShopService)
     private shopService: ShopService;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     public getShopActions(): TargetOption[] {
         return [
@@ -308,6 +312,38 @@ export class ShopProvider {
             }
         }
 
+        for (const shop of NoZonesShopConfig) {
+            if (shop.feature && !this.featureProvider.isFeatureEnabled(shop.feature)) {
+                continue;
+            }
+
+            if (shop.blipSprite) {
+                this.blipFactory.create('shops_' + shop, {
+                    name: shop.label,
+                    coords: { x: shop.ped.coords.x, y: shop.ped.coords.y, z: shop.ped.coords.z },
+                    sprite: shop.blipSprite,
+                    color: shop.blipColor,
+                });
+            }
+            await this.targetFactory.createForPed({
+                ...shop.ped,
+                target: {
+                    options: [
+                        {
+                            icon: shop.targetIcon || 'magasin/cart',
+                            label: shop.targetLabel || 'Accéder au magasin',
+                            category: 'citizen',
+                            blackoutGlobal: true,
+                            action: () => {
+                                this.openNoZoneShop(shop.brand, shop.shopLabel);
+                            },
+                        },
+                    ],
+                    distance: shop.distance,
+                },
+            });
+        }
+
         // Special for mask shop
         this.targetFactory.createForBoxZone(
             'shops:mask',
@@ -390,6 +426,14 @@ export class ShopProvider {
                 break;
             case ShopBrand.Barber:
                 this.barberShopProvider.openShop();
+        }
+    }
+
+    public async openNoZoneShop(brand: string, shopLabel: string) {
+        switch (brand) {
+            case NoZoneShopBrand.SouvenirFIB:
+                this.superetteShopProvider.openShop(brand, brand, shopLabel);
+                break;
         }
     }
 }

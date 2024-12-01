@@ -1,4 +1,4 @@
-import { ShopBrand } from '@public/config/shops';
+import { NoZoneShopBrand, ShopBrand } from '@public/config/shops';
 import { InventoryItem, InventoryItemMetadata } from '@public/shared/inventory';
 import { Item } from '@public/shared/item';
 
@@ -151,7 +151,23 @@ const SouvenirJewelContent: ShopContent = [
     { id: 'wrapping_red', type: 'item', price: 250 },
 ];
 
-export const ShopsContent: Partial<Record<ShopBrand, ShopContent>> = {
+const SouvenirFIBContent: ShopContent = [
+    { id: 'zrt_blizzard', type: 'item', price: 10_000 },
+    { id: 'weapon_snowlauncher', type: 'weapon', price: 2_500 },
+    { id: 'ammo_19', type: 'weapon_ammo', price: 200 },
+    { id: 'weapon_firework', type: 'weapon', metadata: { ammo: 1 }, price: 20_000 },
+    { id: 'weapon_candycane', type: 'weapon', price: 1_000 },
+    { id: 'mulled_wine', type: 'item', price: 150 },
+    { id: 'gold_milk', type: 'item', price: 200 },
+    { id: 'matcha_latte', type: 'item', price: 100 },
+    { id: 'gingerbread_plate', type: 'item', price: 150 },
+    { id: 'christmas_waffle', type: 'item', price: 200 },
+    { id: 'papillotes', type: 'item', price: 150 },
+    { id: 'christmas_train', type: 'item', price: 2_000 },
+    // { id: 'wrapping_zt', type: 'item', price: 250 },
+];
+
+export const ShopsContent: Partial<Record<ShopBrand | NoZoneShopBrand, ShopContent>> = {
     [ShopBrand.LtdGasolineNorth]: SuperetteContent,
     [ShopBrand.LtdGasolineSouth]: SuperetteContent,
     [ShopBrand.RobsliquorNorth]: SuperetteContent,
@@ -164,5 +180,6 @@ export const ShopsContent: Partial<Record<ShopBrand, ShopContent>> = {
     [ShopBrand.SouvenirPlush]: SouvenirPlushContent,
     [ShopBrand.SouvenirMemory]: SouvenirMemoryContent,
     [ShopBrand.SouvenirJewel]: SouvenirJewelContent,
+    [NoZoneShopBrand.SouvenirFIB]: SouvenirFIBContent,
     [ShopBrand.Ammunation]: AmmunationContent,
 };

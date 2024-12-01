@@ -1,4 +1,6 @@
+import { Ped } from '@public/client/factory/ped.factory';
 import { Component } from '@public/shared/cloth';
+import { Feature } from '@public/shared/features';
 import { PlayerPedHash } from '@public/shared/player';
 import { TattooShopCategory } from '@public/shared/shop';
 
@@ -16,6 +18,19 @@ export type BrandConfig = {
     blipColor?: number;
     pedModel?: string;
     banner?: string;
+};
+
+export type NoZoneShopConfig = {
+    ped: Ped;
+    brand: NoZoneShopBrand;
+    label: string;
+    targetLabel?: string;
+    targetIcon?: string;
+    shopLabel?: string;
+    feature?: Feature;
+    distance?: number;
+    blipSprite?: number;
+    blipColor?: number;
 };
 
 export enum ShopBrand {
@@ -41,6 +56,117 @@ export enum ShopBrand {
     SouvenirJewel = 'souvenir-jewel',
     LsCustom = 'ls-custom',
 }
+
+export enum NoZoneShopBrand {
+    SouvenirFIB = 'souvenir-fib',
+}
+
+export const NoZonesShopConfig: NoZoneShopConfig[] = [
+    {
+        label: 'Mère Noël',
+        brand: NoZoneShopBrand.SouvenirFIB,
+        distance: 3,
+        blipSprite: 781,
+        blipColor: 13,
+        feature: Feature.Winter,
+        targetLabel: 'Mère Noël',
+        shopLabel: 'Mère Noël',
+        targetIcon: 'shop/christmas_ball',
+        ped: {
+            model: 'mp_f_freemode_01',
+            freeze: true,
+            invincible: true,
+            blockevents: true,
+            animDict: 'oddjobs@taxi@gyn@cc@intro',
+            anim: 'f_impatient_a',
+            coords: {
+                x: 138.14,
+                y: -881.53,
+                z: 29.74,
+                w: 255.17,
+            },
+            modelCustomization: { Hash: -1667301416, Father: 6, ShapeMix: 0.9, Mother: 21, SkinMix: 0.4 },
+            tattoos: [],
+            components: {
+                1: [0, 0, 0],
+                2: [98, 0, 0],
+                3: [258, 0, 0],
+                4: [19, 0, 0],
+                5: [112, 25, 0],
+                6: [161, 2, 0],
+                7: [17, 1, 0],
+                8: [2, 0, 0],
+                9: [0, 0, 0],
+                10: [0, 0, 0],
+                11: [630, 0, 0],
+            },
+            props: {
+                0: [23, 0, 0],
+                1: [-1, -1, 0],
+                2: [7, 1, 0],
+                6: [22, 0, 0],
+                7: [19, 1, 0],
+            },
+            makeup: {
+                LipstickType: 1,
+                BlushType: 0,
+                FullMakeupPrimaryColor: 0,
+                FullMakeupDefaultColor: 1,
+                FullMakeupType: 7,
+                BlushColor: 6,
+                FullMakeupOpacity: 0.9,
+                LipstickOpacity: 0.7,
+                BlushOpacity: 0.7,
+                LipstickColor: 24,
+                FullMakeupSecondaryColor: 0,
+            },
+            hair: {
+                ChestHairOpacity: 1,
+                EyebrowType: 1,
+                EyebrowColor: 7,
+                HairSecondaryColor: 15,
+                EyebrowOpacity: 0.9,
+                ChestHairColor: 0,
+                ChestHairType: -1,
+                BeardType: -1,
+                BeardOpacity: 1,
+                HairType: 98,
+                Scalp: { Overlay: 'FM_F_Hair_long_e', Collection: 'multiplayer_overlays' },
+                HairColor: 16,
+                BeardColor: 0,
+            },
+            face: {
+                JawBoneBackLength: 0,
+                EyesOpening: 0,
+                Moles: -1,
+                BodyBlemish: -1,
+                LipsThickness: -0.3,
+                CheeksWidth: 0,
+                Blemish: -1,
+                EyeColor: 2,
+                ChimpHole: 0,
+                ChimpBoneWidth: 0,
+                NoseWidth: 0,
+                AddBodyBlemish: -1,
+                ChimpBoneLower: 0,
+                NosePeakLower: 0,
+                NoseBoneHigh: 0,
+                ChimpBoneLength: 0,
+                NoseBoneTwist: 0,
+                EyebrowForward: 0,
+                Ageing: -1,
+                CheeksBoneHigh: 0,
+                NeckThickness: 0,
+                JawBoneWidth: 0,
+                NosePeakHeight: 0,
+                CheeksBoneWidth: 0,
+                NosePeakLength: 0,
+                Complexion: -1,
+                EyebrowHigh: 0,
+            },
+        },
+    },
+];
 
 export const BrandsConfig: Record<ShopBrand, BrandConfig> = {
     [ShopBrand.Ponsonbys]: {

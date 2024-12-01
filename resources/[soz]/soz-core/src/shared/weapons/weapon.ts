@@ -19,7 +19,7 @@ export type WeaponConfiguration = {
 
 export const GlobalWeaponConfig = {
     MaxAmmoRefill: (weapon_name: string) => {
-        if (weapon_name === 'weapon_musket') {
+        if (weapon_name === 'weapon_musket' || weapon_name === 'weapon_snowlauncher') {
             return 1;
         }
 
@@ -64,7 +64,8 @@ export type WeaponConfig = {
         | 'ammo_15'
         | 'ammo_16'
         | 'ammo_17'
-        | 'ammo_18';
+        | 'ammo_18'
+        | 'ammo_19';
     drawPosition?: WeaponDrawPosition;
     attachments?: WeaponAttachment[];
 };
@@ -198,6 +199,7 @@ export enum WeaponName {
     PETROLCAN = 'WEAPON_PETROLCAN',
     FIREEXTINGUISHER = 'WEAPON_FIREEXTINGUISHER',
     HAZARDCAN = 'WEAPON_HAZARDCAN',
+    SNOWLAUNCHER = 'WEAPON_SNOWLAUNCHER',
 }
 
 export const WeaponType = {
@@ -1113,6 +1115,9 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     [WeaponName.MOLOTOV]: { attachments: [] },
     [WeaponName.STICKYBOMB]: { attachments: [] },
     [WeaponName.PROXMINE]: { attachments: [] },
+    [WeaponName.SNOWLAUNCHER]: {
+        ammo: 'ammo_19',
+    },
     [WeaponName.SNOWBALL]: { attachments: [] },
     [WeaponName.PIPEBOMB]: { attachments: [] },
     [WeaponName.BALL]: { attachments: [] },
@@ -1238,4 +1243,5 @@ export const WeaponAmmo: Partial<Record<WeaponName, string>> = {
     [WeaponName.MARKSMANRIFLE]: '7.62x51 M62',
     [WeaponName.MARKSMANRIFLE_MK2]: '7.62x51 M62',
     [WeaponName.PRECISIONRIFLE]: '.50 BMG',
+    [WeaponName.SNOWLAUNCHER]: 'Munition de neige',
 };
