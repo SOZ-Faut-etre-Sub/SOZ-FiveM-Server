@@ -4,6 +4,7 @@ import { ItemService } from '@public/server/item/item.service';
 import { ClothingShopRepository } from '@public/server/repository/cloth.shop.repository';
 import { PlayerPedHash } from '@public/shared/player';
 
+import { ShopBrand } from '../../../config/shops';
 import { Once, OnceStep, OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
@@ -12,7 +13,7 @@ import { ServerEvent } from '../../../shared/event';
 import { isInventoryItemExpired } from '../../../shared/inventory';
 import { FfsConfig, Garment, LuxuryGarment } from '../../../shared/job/ffs';
 import { toVector3Object, Vector3 } from '../../../shared/polyzone/vector';
-import { ClothingBrand, ClothingShopItem } from '../../../shared/shop';
+import { ClothingShopItem } from '../../../shared/shop';
 import { BankService } from '../../bank/bank.service';
 import { PrismaService } from '../../database/prisma.service';
 import { Monitor } from '../../monitor/monitor';
@@ -88,7 +89,7 @@ export class FightForStyleRestockProvider {
     }
 
     @OnEvent(ServerEvent.FFS_RESTOCK)
-    public async onRestock(source: number, brand: ClothingBrand, garment: Garment | LuxuryGarment) {
+    public async onRestock(source: number, brand: ShopBrand, garment: Garment | LuxuryGarment) {
         const inventory = await this.inventoryFactory.getPlayerInventory(source);
 
         if (!inventory) {
@@ -138,7 +139,7 @@ export class FightForStyleRestockProvider {
         this.notifier.notify(source, 'Vous avez ~r~terminé~s~ de restocker le magasin de vêtements.', 'success');
     }
 
-    public async restockLoop(brand: ClothingBrand, garment: Garment | LuxuryGarment, amount: number) {
+    public async restockLoop(brand: ShopBrand, garment: Garment | LuxuryGarment, amount: number) {
         const sexes = [PlayerPedHash.Male, PlayerPedHash.Female];
         const category = this.garmentToCategory(garment);
 

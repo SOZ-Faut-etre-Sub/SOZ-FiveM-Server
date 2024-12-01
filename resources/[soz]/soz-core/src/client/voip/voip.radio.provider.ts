@@ -1,4 +1,4 @@
-import { PlayerInventoryUpdate, PlayerUpdate } from '@public/core/decorators/player';
+import { PlayerInventoryUpdate } from '@public/core/decorators/player';
 
 import { Command } from '../../core/decorators/command';
 import { OnEvent, OnNuiEvent } from '../../core/decorators/event';

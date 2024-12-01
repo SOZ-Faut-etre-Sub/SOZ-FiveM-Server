@@ -346,7 +346,7 @@ end)
 CreateThread(function()
     SetZoneEnabled(GetZoneFromNameId("PrLog"), false) -- REMOVES SNOW FROM CP
     local islandCoords = vector3(4840.571, -5174.425, 2.0)
-    
+
     -- Ice Ocean
     SetDeepOceanScaler(0.0)
 
@@ -355,7 +355,7 @@ CreateThread(function()
 
         if #(pCoords - islandCoords) < 2000.0 then
             if not islandLoaded then
-                --SetDeepOceanScaler(0.0) IceOcean
+                -- SetDeepOceanScaler(0.0) IceOcean
                 SetAiGlobalPathNodesType(1) -- island path nodes (from Disquse)
                 SetScenarioGroupEnabled("Heist_Island_Peds", 1)
                 SetAudioFlag("PlayerOnDLCHeist4Island", 1)
@@ -367,7 +367,7 @@ CreateThread(function()
         else
             if islandLoaded then
                 islandLoaded = false
-                --ResetDeepOceanScaler() IceOcean
+                -- ResetDeepOceanScaler() IceOcean
                 SetAiGlobalPathNodesType(0)
                 SetScenarioGroupEnabled("Heist_Island_Peds", 0)
                 SetAudioFlag("PlayerOnDLCHeist4Island", 0)
