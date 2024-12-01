@@ -1,7 +1,6 @@
 import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
-import { FieldProvider } from '@public/server/farm/field.provider';
 import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { ItemService } from '@public/server/item/item.service';
 import { Monitor } from '@public/server/monitor/monitor';
@@ -14,6 +13,7 @@ import { toVector3Object, Vector3 } from '@public/shared/polyzone/vector';
 
 import { ADD_ERROR_MESSAGE } from '../../../shared/inventory';
 import { isOk } from '../../../shared/result';
+import { FieldProvider } from '../../field/field.provider';
 
 const fieldMessage = {
     dmc_iron_field: 'de fer et charbon',

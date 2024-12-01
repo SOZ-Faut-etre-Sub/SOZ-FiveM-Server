@@ -7,7 +7,7 @@ import { DmcCraftsLists } from '../job/dmc';
 import { FDFCraftsLists } from '../job/fdf';
 import { FFSCraftsLists } from '../job/ffs';
 import { FoodCraftsLists } from '../job/food';
-import { PawlCraftsLists } from '../job/pawl';
+import { PawlCraftsLists } from './pawl';
 
 export type CraftCategory = {
     recipes: Record<string, CraftRecipe>;

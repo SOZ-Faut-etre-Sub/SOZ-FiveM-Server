@@ -12,7 +12,7 @@ import { isErr } from '../../../shared/result';
 import { RpcServerEvent } from '../../../shared/rpc';
 import { VehicleClass } from '../../../shared/vehicle/vehicle';
 import { BankService } from '../../bank/bank.service';
-import { FieldProvider } from '../../farm/field.provider';
+import { FieldProvider } from '../../field/field.provider';
 import { Monitor } from '../../monitor/monitor';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';

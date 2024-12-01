@@ -235,6 +235,10 @@ export class InventoryManager {
         TriggerServerEvent(ServerEvent.INVENTORY_UNSUBSCRIBE, id);
     }
 
+    public getItem(itemId: string): InventoryItem | null {
+        return Object.values(this._playerInventory).find(item => item.name === itemId) || null;
+    }
+
     public getItems(): InventoryItem[] {
         return Object.values(this._playerInventory);
     }

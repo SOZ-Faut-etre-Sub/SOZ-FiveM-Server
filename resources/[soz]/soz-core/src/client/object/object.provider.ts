@@ -68,6 +68,10 @@ export class ObjectProvider {
         return Object.keys(this.loadedObjects).length;
     }
 
+    public hasObject(id: string): boolean {
+        return this.findObject(id) !== null;
+    }
+
     public getObject(id: string): WorldObject | null {
         const object = this.loadedObjects[id];
 

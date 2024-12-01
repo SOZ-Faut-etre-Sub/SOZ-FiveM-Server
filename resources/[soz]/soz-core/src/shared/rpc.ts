@@ -153,6 +153,10 @@ export enum RpcServerEvent {
 
     HELICO_INIT_LIGHT = 'soz-core:server:helico:init-spotlight',
 
+    PAWL_IS_PROCESSING_ENABLED = 'soz-core:server:pawl:is-processing-enabled',
+    PAWL_HARVEST_TREE = 'soz-core:server:pawl:harvest-tree',
+    PAWL_HARVEST_TREE_SAP = 'soz-core:server:pawl:harvest-tree-sap',
+
     POLICE_ALCOOLLEVEL = 'soz-core:server:police:alcool-level',
     POLICE_DRUGLEVEL_AND_TYPE = 'soz-core:server:police:drug-level',
     POLICE_GET_WANTED_PLAYERS = 'soz-core:server:police:get-wanted-players',
