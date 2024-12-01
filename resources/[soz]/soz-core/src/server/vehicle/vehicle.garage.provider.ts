@@ -131,10 +131,10 @@ export class VehicleGarageProvider {
     @Once(OnceStep.RepositoriesLoaded)
     public async init(): Promise<void> {
         const queries = `
-            UPDATE player_vehicles SET state = 1, garage = 'airport_public' WHERE state = 0 AND job IS NULL AND category = 'car';
-            UPDATE player_vehicles SET state = 3, garage = job WHERE state = 0 AND job IS NOT NULL AND category = 'car';
-            UPDATE player_vehicles SET state = 1, garage = 'airport_air' WHERE state = 0 AND job IS NULL AND category = 'air';
-            UPDATE player_vehicles SET state = 3, garage = concat(job,'_air') WHERE state = 0 AND job IS NOT NULL AND category = 'air';
+            UPDATE player_vehicles SET state = 1, garage = 'airport_public' WHERE state = 0 AND job IS NULL AND category NOT IN ('air', 'Helicopters', 'Planes', 'Boats');
+            UPDATE player_vehicles SET state = 3, garage = job WHERE state = 0 AND job IS NOT NULL AND category NOT IN ('air', 'Helicopters', 'Planes', 'Boats');
+            UPDATE player_vehicles SET state = 1, garage = 'airport_air' WHERE state = 0 AND job IS NULL AND category IN ('air', 'Helicopters', 'Planes');
+            UPDATE player_vehicles SET state = 3, garage = concat(job,'_air') WHERE state = 0 AND job IS NOT NULL AND category IN ('air', 'Helicopters', 'Planes');
             UPDATE player_vehicles SET state = 1, garage = 'docks_boat' WHERE state = 0 AND category = 'Boats';
             UPDATE player_vehicles SET garage = 'mtp' WHERE garage = 'oil';
             UPDATE player_vehicles SET garage = 'stonk' WHERE garage = 'cash-transfer';
@@ -160,6 +160,9 @@ export class VehicleGarageProvider {
                         PlayerVehicleState.InFedPound,
                         PlayerVehicleState.Missing,
                     ],
+                },
+                category: {
+                    not: 'Boats',
                 },
             },
         });
