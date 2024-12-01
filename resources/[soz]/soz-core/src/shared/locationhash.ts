@@ -1,3 +1,5 @@
+import { joaat } from '@public/shared/joaat';
+
 import { Vector3, Vector4 } from './polyzone/vector';
 
 function twoDigitsFloor(u: number) {
@@ -6,5 +8,5 @@ function twoDigitsFloor(u: number) {
 }
 
 export function getLocationHash(coords: Vector3 | Vector4) {
-    return GetHashKey(`${twoDigitsFloor(coords[0])}_${twoDigitsFloor(coords[1])}_${twoDigitsFloor(coords[2])}`);
+    return joaat(`${twoDigitsFloor(coords[0])}_${twoDigitsFloor(coords[1])}_${twoDigitsFloor(coords[2])}`);
 }

@@ -13,7 +13,7 @@ export class PawlResellProvider {
     public setupFoodResell() {
         this.pedFactory.createPedOnGrid({
             model: 's_m_y_construct_01',
-            coords: { x: 955.87, y: -2176.36, z: 31.15, w: 90.14 },
+            coords: { x: 955.87, y: -2176.36, z: 30.15, w: 90.14 },
             freeze: true,
             invincible: true,
             blockevents: true,

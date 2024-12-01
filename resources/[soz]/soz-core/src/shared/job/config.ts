@@ -487,7 +487,7 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
     [JobType.Pawl]: {
         label: 'Pipe And Wooden Leg',
         platePrefix: 'PAWL',
-        menuCallback: 'pawl:client:OpenSocietyMenu',
+        menuCallback: ClientEvent.PAWL_OPEN_SOCIETY_MENU,
         canInvoice: true,
         permissions: {
             ...BasePermissions,

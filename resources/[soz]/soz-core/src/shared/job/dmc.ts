@@ -1,7 +1,7 @@
 import { WardrobeConfig } from '../cloth';
 import { CraftCategory } from '../craft/craft';
 import { Feature } from '../features';
-import { Field } from '../field';
+import { ItemField } from '../field';
 import { JobType } from '../job';
 import { BoxZone, NamedZone } from '../polyzone/box.zone';
 
@@ -161,7 +161,7 @@ export const DMC_HALLOWEEN_FIELDS_ZONES: Record<string, BoxZone[]> = {
 
 // 20 minutes to harvest full field
 // 1 hour to refill full field
-export const DMC_FIELDS: Record<string, Field> = {
+export const DMC_FIELDS: Record<string, ItemField> = {
     ['dmc_iron_field']: {
         identifier: 'dmc_iron_field',
         owner: JobType.DMC,
@@ -175,11 +175,11 @@ export const DMC_FIELDS: Record<string, Field> = {
                 amount: 8,
             },
         ],
-        capacity: 240,
-        maxCapacity: 240,
+        capacity: 2400,
+        maxCapacity: 2400,
         refill: {
             delay: 5 * 60 * 1000,
-            amount: 20,
+            amount: 200,
         },
         harvest: {
             delay: 0,
@@ -195,11 +195,11 @@ export const DMC_FIELDS: Record<string, Field> = {
                 amount: 2,
             },
         ],
-        capacity: 240,
-        maxCapacity: 240,
+        capacity: 2400,
+        maxCapacity: 2400,
         refill: {
             delay: 5 * 60 * 1000,
-            amount: 20,
+            amount: 200,
         },
         harvest: {
             delay: 0,
@@ -215,11 +215,11 @@ export const DMC_FIELDS: Record<string, Field> = {
                 amount: 2,
             },
         ],
-        capacity: 240,
-        maxCapacity: 240,
+        capacity: 2400,
+        maxCapacity: 2400,
         refill: {
             delay: 5 * 60 * 1000,
-            amount: 20,
+            amount: 200,
         },
         harvest: {
             delay: 0,

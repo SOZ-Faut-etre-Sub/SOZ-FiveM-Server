@@ -59,6 +59,8 @@ export class ObjectProvider {
 
     private objectsByChunk = new Map<number, SpawnableObject[]>();
 
+    private objectsById = new Map<string, SpawnableObject>();
+
     private currentChunks: number[] = [];
 
     private disabled = false;
@@ -66,6 +68,10 @@ export class ObjectProvider {
 
     public getLoadedObjectsCount(): number {
         return Object.keys(this.loadedObjects).length;
+    }
+
+    public hasObject(id: string): boolean {
+        return this.findObject(id) !== null;
     }
 
     public getObject(id: string): WorldObject | null {
@@ -79,12 +85,8 @@ export class ObjectProvider {
     }
 
     public findObject(id: string): WorldObject | null {
-        for (const chunk of this.objectsByChunk.values()) {
-            for (const object of chunk) {
-                if (object.object.id == id) {
-                    return object.object;
-                }
-            }
+        if (this.objectsById.has(id)) {
+            return this.objectsById.get(id).object;
         }
 
         return null;
@@ -198,6 +200,7 @@ export class ObjectProvider {
         }
 
         this.objectsByChunk.get(chunk).push(spawnableObject);
+        this.objectsById.set(object.id, spawnableObject);
 
         if (this.currentChunks.includes(chunk)) {
             await this.spawnObject(spawnableObject);
@@ -254,6 +257,7 @@ export class ObjectProvider {
             }
         }
 
+        this.objectsById.delete(id);
         this.unspawnObject(id);
     }
 
