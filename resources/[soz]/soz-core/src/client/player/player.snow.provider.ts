@@ -165,7 +165,6 @@ export class PlayerSnowProvider {
         }
 
         let coldScore = 0;
-        console.log(data);
         [Component.Tops, Component.Legs, Component.Shoes, Component.Undershirt].forEach(component => {
             if (data[component] == null) {
                 const extra = ExtraWarnCloths[player.skin.Model.Hash].find(
@@ -226,8 +225,6 @@ export class PlayerSnowProvider {
         } else {
             this.blizzardProtected = false;
         }
-
-        console.log('coldScore', coldScore);
 
         this.coldProtected = coldScore >= 6;
         this.blizzardProtected = this.blizzardProtected && coldScore >= 10;
