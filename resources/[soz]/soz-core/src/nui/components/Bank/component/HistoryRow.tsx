@@ -2,8 +2,6 @@ import cn from 'classnames';
 import React, { FunctionComponent } from 'react';
 
 import { BankAccount, BankContact, BankStatement } from '../../../../shared/bank';
-import { HudTheme } from '../../../../shared/hud';
-import { useHudTheme } from '../../../hook/data';
 import { useHudColor } from '../../Hud/hooks/useHudColor';
 import FileIcon from '../assets/file.svg';
 import { PlayerAccountRegExp } from '../utils/format';
@@ -17,7 +15,6 @@ interface HistoryRowProps {
 }
 
 export const HistoryRow: FunctionComponent<HistoryRowProps> = ({ account, contacts, history }) => {
-    const currentTheme = useHudTheme();
     const { isDaltonism } = useHudColor();
 
     const isSource = history.source_accountid === account.id;
@@ -67,10 +64,8 @@ export const HistoryRow: FunctionComponent<HistoryRowProps> = ({ account, contac
                 className={cn('font-semibold rounded-lg shadow px-2.5 py-1', {
                     'bg-[#AD1F1F33] text-[#AD1F1F]': !isDaltonism && isSource,
                     'bg-[#32912133] text-[#268116]': !isDaltonism && !isSource,
-                    'bg-[#B314E833] text-[#B314E8]': currentTheme === HudTheme.Deuteranopie && isSource,
-                    'bg-[#00FFFF33] text-[#00FFFF]': currentTheme === HudTheme.Deuteranopie && !isSource,
-                    'bg-[#111111CC] text-[#B314E8]': currentTheme === HudTheme.Trichromatisme && isSource,
-                    'bg-[#111111CC] text-[#00FFFF]': currentTheme === HudTheme.Trichromatisme && !isSource,
+                    'bg-[#B314E833] text-[#B314E8]': isDaltonism && isSource,
+                    'bg-[#00FFFF33] text-[#00FFFF]': isDaltonism && !isSource,
                 })}
             >
                 {isSource ? '- ' : '+ '}

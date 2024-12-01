@@ -24,7 +24,6 @@ export const LightIndicator: FunctionComponent = () => {
     return (
         <animated.img
             style={{ ...styles, width, height }}
-            className="drop-shadow-bg"
             src={`https://soz.zerator.com/static/game/images/hud/vehicle/light-${icon}.webp`}
         />
     );

@@ -45,21 +45,13 @@ export class HudWatchProvider {
 
     private _availableTheme: AvailableTheme = {
         [HudTheme.Auto]: true,
-        [HudTheme.Deuteranopie]: true,
-        [HudTheme.Trichromatisme]: true,
+        [HudTheme.Daltonism]: true,
         [HudTheme.Light]: true,
         [HudTheme.Dark]: true,
         [HudTheme.Green]: true,
         [HudTheme.Uwu]: true,
         [HudTheme.HalloweenVein]: false,
     };
-
-    @Once(OnceStep.PlayerLoaded)
-    public async onPlayerLoaded(): Promise<void> {
-        if (Object.keys(AllThemesConfig).includes(this._theme)) return;
-
-        this.theme = HudTheme.Auto;
-    }
 
     protected get zoomFromKvp(): number {
         const kvpValue = Number(GetResourceKvpFloat('soz_hud_zoom').toPrecision(2));

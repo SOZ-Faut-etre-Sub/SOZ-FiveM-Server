@@ -57,8 +57,7 @@ export enum VoiceMode {
 
 export enum HudTheme {
     Auto = 'auto',
-    Deuteranopie = 'deuteranopie',
-    Trichromatisme = 'trichromatisme',
+    Daltonism = 'daltonism',
     Light = 'light',
     Dark = 'dark',
     Green = 'green',
@@ -74,8 +73,7 @@ export type ThemeConfig = {
 
 export const AllThemesConfig: Record<HudTheme, ThemeConfig> = {
     [HudTheme.Auto]: { label: 'Auto' },
-    [HudTheme.Deuteranopie]: { label: 'Deutéranopie' },
-    [HudTheme.Trichromatisme]: { label: 'Trichromatisme' },
+    [HudTheme.Daltonism]: { label: 'Daltonien' },
     [HudTheme.Light]: { label: 'Light Mode' },
     [HudTheme.Dark]: { label: 'Dark Mode' },
     [HudTheme.Green]: { label: 'Green Mode' },
