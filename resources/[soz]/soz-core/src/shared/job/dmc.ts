@@ -175,11 +175,11 @@ export const DMC_FIELDS: Record<string, ItemField> = {
                 amount: 8,
             },
         ],
-        capacity: 240,
-        maxCapacity: 240,
+        capacity: 2400,
+        maxCapacity: 2400,
         refill: {
             delay: 5 * 60 * 1000,
-            amount: 20,
+            amount: 200,
         },
         harvest: {
             delay: 0,
@@ -195,11 +195,11 @@ export const DMC_FIELDS: Record<string, ItemField> = {
                 amount: 2,
             },
         ],
-        capacity: 240,
-        maxCapacity: 240,
+        capacity: 2400,
+        maxCapacity: 2400,
         refill: {
             delay: 5 * 60 * 1000,
-            amount: 20,
+            amount: 200,
         },
         harvest: {
             delay: 0,
@@ -215,11 +215,11 @@ export const DMC_FIELDS: Record<string, ItemField> = {
                 amount: 2,
             },
         ],
-        capacity: 240,
-        maxCapacity: 240,
+        capacity: 2400,
+        maxCapacity: 2400,
         refill: {
             delay: 5 * 60 * 1000,
-            amount: 20,
+            amount: 200,
         },
         harvest: {
             delay: 0,
