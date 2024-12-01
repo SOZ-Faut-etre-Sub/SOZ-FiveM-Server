@@ -24,6 +24,7 @@ export const SeatbeltIndicator: FunctionComponent = () => {
     return (
         <animated.img
             style={{ ...styles, width, height }}
+            className="drop-shadow-bg"
             src={`https://soz.zerator.com/static/game/images/hud/vehicle/${imagePrefix}seatbelt.webp`}
         />
     );

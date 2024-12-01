@@ -57,7 +57,8 @@ export enum VoiceMode {
 
 export enum HudTheme {
     Auto = 'auto',
-    Daltonism = 'daltonism',
+    Deuteranopie = 'deuteranopie',
+    Trichromatisme = 'trichromatisme',
     Light = 'light',
     Dark = 'dark',
     Green = 'green',
@@ -73,7 +74,8 @@ export type ThemeConfig = {
 
 export const AllThemesConfig: Record<HudTheme, ThemeConfig> = {
     [HudTheme.Auto]: { label: 'Auto' },
-    [HudTheme.Daltonism]: { label: 'Daltonien' },
+    [HudTheme.Deuteranopie]: { label: 'Deutéranopie' },
+    [HudTheme.Trichromatisme]: { label: 'Trichromatisme' },
     [HudTheme.Light]: { label: 'Light Mode' },
     [HudTheme.Dark]: { label: 'Dark Mode' },
     [HudTheme.Green]: { label: 'Green Mode' },
@@ -103,7 +105,9 @@ export type HudState = {
     streetName: string[];
     compass: HudCompass;
     ammo: HudWeaponAmmo;
-    dateTime: HudDateTime;
+    dateTime: HudDateTime & {
+        isNight: boolean;
+    };
     minimap: Minimap;
     halloween: {
         moon: boolean;
