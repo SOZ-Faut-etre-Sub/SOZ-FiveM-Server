@@ -22,7 +22,7 @@ export const useHudColor = (): GlassmorphismColors => {
     const isHalloween = useSelector((state: RootState) => state.features.Halloween);
     const halloweenMoon = useSelector((state: RootState) => state.hud.halloween.moon);
 
-    const daltonism = currentTheme === HudTheme.Daltonism;
+    const daltonism = [HudTheme.Trichromatisme, HudTheme.Deuteranopie].includes(currentTheme);
 
     const _glassmorphismColors: Record<
         Exclude<HudTheme, HudTheme.Auto>,
@@ -37,7 +37,8 @@ export const useHudColor = (): GlassmorphismColors => {
                 [HudTheme.Dark]: { background, border },
                 [HudTheme.Green]: { background, border },
                 [HudTheme.Uwu]: { background, border },
-                [HudTheme.Daltonism]: { background, border },
+                [HudTheme.Deuteranopie]: { background, border },
+                [HudTheme.Trichromatisme]: { background, border },
                 [HudTheme.HalloweenVein]: { background, border },
             };
         }
@@ -59,7 +60,11 @@ export const useHudColor = (): GlassmorphismColors => {
                 background: '#E3A7EC4D',
                 border: '#E3A7EC',
             },
-            [HudTheme.Daltonism]: {
+            [HudTheme.Deuteranopie]: {
+                background: '#00000073',
+                border: '#FFFFFF',
+            },
+            [HudTheme.Trichromatisme]: {
                 background: '#00000073',
                 border: '#FFFFFF',
             },
@@ -76,7 +81,8 @@ export const useHudColor = (): GlassmorphismColors => {
             [HudTheme.Dark]: '#F3FBFA',
             [HudTheme.Green]: '#F3FBFA',
             [HudTheme.Uwu]: '#F3FBFA',
-            [HudTheme.Daltonism]: '#F3FBFA',
+            [HudTheme.Deuteranopie]: '#F3FBFA',
+            [HudTheme.Trichromatisme]: '#F3FBFA',
             [HudTheme.HalloweenVein]: '#F3FBFA',
         }),
         []
@@ -124,7 +130,17 @@ export const useHudColor = (): GlassmorphismColors => {
                     color: '#22232A',
                 },
             },
-            [HudTheme.Daltonism]: {
+            [HudTheme.Deuteranopie]: {
+                primary: {
+                    background: '#F3FBFA',
+                    color: '#22232A',
+                },
+                secondary: {
+                    background: '#22232A',
+                    color: '#F3FBFA',
+                },
+            },
+            [HudTheme.Trichromatisme]: {
                 primary: {
                     background: '#F3FBFA',
                     color: '#22232A',
@@ -154,24 +170,66 @@ export const useHudColor = (): GlassmorphismColors => {
             [HudTheme.Dark]: '#3D405C4D',
             [HudTheme.Green]: '#3F7B344D',
             [HudTheme.Uwu]: '#E3A7EC4D',
-            [HudTheme.Daltonism]: '#4547544D',
+            [HudTheme.Deuteranopie]: '#4547544D',
+            [HudTheme.Trichromatisme]: '#4547544D',
             [HudTheme.HalloweenVein]: '#4547544D',
         }),
         []
     );
 
+    const _gaugeColors = useMemo(() => {
+        if (currentTheme === HudTheme.Deuteranopie) {
+            return {
+                green_light: '#FFFFFF',
+                green_dark: '#000000',
+                blue_light: '#B314E8',
+                blue_dark: '#000000',
+                red_light: '#00FFFF',
+                red_dark: '#000000',
+                orange_light: '#FFFF00',
+                orange_dark: '#000000',
+            };
+        }
+
+        if (currentTheme === HudTheme.Trichromatisme) {
+            return {
+                green_light: '#11B916',
+                green_dark: '#000000',
+                blue_light: '#3E91FF',
+                blue_dark: '#000000',
+                red_light: '#B314E8',
+                red_dark: '#000000',
+                orange_light: '#FFFFFF',
+                orange_dark: '#000000',
+            };
+        }
+
+        return {
+            green_light: '#329121',
+            green_dark: '#283525',
+            blue_light: '#00A5E7',
+            blue_dark: '#263136',
+            red_light: '#92212B',
+            red_dark: '#362628',
+            orange_light: '#FCAF40',
+            orange_dark: '#362F26',
+        };
+    }, [currentTheme]);
+
+    const _imagePrefix = useMemo(() => {
+        if (currentTheme === HudTheme.Deuteranopie) {
+            return 'deuteranopie/';
+        }
+        if (currentTheme === HudTheme.Trichromatisme) {
+            return 'trichromatisme/';
+        }
+
+        return '';
+    }, [currentTheme]);
+
     return {
         glassmorphismColors: _glassmorphismColors[currentTheme],
-        gaugeColors: {
-            green_light: daltonism ? '#FFFFFF' : '#329121',
-            green_dark: daltonism ? '#000000' : '#283525',
-            blue_light: daltonism ? '#B314E8' : '#00A5E7',
-            blue_dark: daltonism ? '#000000' : '#263136',
-            red_light: daltonism ? '#00FFFF' : '#92212B',
-            red_dark: daltonism ? '#000000' : '#362628',
-            orange_light: daltonism ? '#FFFF00' : '#FCAF40',
-            orange_dark: daltonism ? '#000000' : '#362F26',
-        },
+        gaugeColors: _gaugeColors,
         targetColors: {
             citizen: daltonism ? '#FFFFFF' : '#FFFFFF',
             society: daltonism ? '#B314E8' : '#0984E3',
@@ -180,7 +238,7 @@ export const useHudColor = (): GlassmorphismColors => {
         color: _colors[currentTheme],
         button: _buttons[currentTheme],
         card: _cards[currentTheme],
-        imagePrefix: daltonism ? 'daltonism/' : '',
+        imagePrefix: _imagePrefix,
         isDaltonism: daltonism,
     };
 };
