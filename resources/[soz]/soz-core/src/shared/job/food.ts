@@ -399,6 +399,48 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
             },
         },
     },
+    Noël: {
+        feature: Feature.Winter,
+        duration: 5000,
+        icon: '🎅',
+        event: 'job_cm_food_craft',
+        recipes: {
+            christmas_wine: {
+                inputs: {
+                    grape1: { count: 2 },
+                    grape2: { count: 2 },
+                    grape3: { count: 2 },
+                    grape4: { count: 2 },
+                },
+                amount: 10,
+            },
+            christmas_roast_turkey: {
+                inputs: {
+                    viande: { count: 1 },
+                    abat: { count: 2 },
+                    rognon: { count: 2 },
+                    orange: { count: 2 },
+                },
+                amount: 10,
+            },
+            christmas_pudding: {
+                inputs: {
+                    milk: { count: 2 },
+                    rhum: { count: 1 },
+                    orange: { count: 1 },
+                    lemon: { count: 1 },
+                },
+                amount: 10,
+            },
+            christmas_mille_feuille: {
+                inputs: {
+                    semi_skimmed_milk: { count: 3 },
+                    skimmed_milk: { count: 3 },
+                },
+                amount: 10,
+            },
+        },
+    },
 };
 
 export const FoodCloakroom: WardrobeConfig = {
