@@ -7,6 +7,7 @@ import { ProgressService } from '@public/client/progress.service';
 import { AnimationStopReason } from '@public/shared/animation';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { Vector3 } from '@public/shared/polyzone/vector';
+import { ProgressResult } from '@public/shared/progress';
 
 @Provider()
 export class ItemGiftProvider {
@@ -84,7 +85,22 @@ export class ItemGiftProvider {
 
     @OnEvent(ClientEvent.GIFT_PLAY_GIFT_ANIM)
     public async onPlayGift(slot: number, name: string) {
-        const { completed } = await this.progressService.progress('open-gift', 'Ouverture du cadeau...', 5000, {
+        const { completed } = await this.playGiftAnim('Ouverture du cadeau...');
+        if (completed) {
+            TriggerServerEvent(ServerEvent.GIFT_OPEN_GIFT, slot, name);
+        }
+    }
+
+    @OnEvent(ClientEvent.GIFT_PLAY_ZRT_BLIZZARD_ANIM)
+    public async onPlayZrtBlizzard() {
+        const { completed } = await this.playGiftAnim('Découverte de la ZRT Blizzard...');
+        if (completed) {
+            TriggerServerEvent(ServerEvent.GIFT_GIVE_ZRT_BLIZZARD);
+        }
+    }
+
+    private async playGiftAnim(label: string): Promise<ProgressResult> {
+        return await this.progressService.progress('open-gift', label, 5000, {
             dictionary: 'anim@heists@humane_labs@emp@hack_door',
             name: 'hack_loop',
             options: {
@@ -101,9 +117,5 @@ export class ItemGiftProvider {
                 },
             ],
         });
-
-        if (completed) {
-            TriggerServerEvent(ServerEvent.GIFT_OPEN_GIFT, slot, name);
-        }
     }
 }

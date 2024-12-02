@@ -156,6 +156,7 @@ const SouvenirFIBContent: ShopContent = [
     { id: 'weapon_snowlauncher', type: 'weapon', price: 2_500 },
     { id: 'ammo_19', type: 'weapon_ammo', price: 200 },
     { id: 'weapon_firework', type: 'weapon', metadata: { ammo: 1 }, price: 20_000 },
+    { id: 'ammo_13', type: 'weapon_ammo', price: 1_000 },
     { id: 'weapon_candycane', type: 'weapon', price: 1_000 },
     { id: 'mulled_wine', type: 'item', price: 150 },
     { id: 'gold_milk', type: 'item', price: 200 },

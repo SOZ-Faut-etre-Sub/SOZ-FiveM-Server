@@ -16,6 +16,8 @@ import { InventoryItem } from '@public/shared/inventory';
 import { Item } from '@public/shared/item';
 import { PlayerVehicleState } from '@public/shared/vehicle/player.vehicle';
 
+const ZRT_BLIZZARD_MODEL = 'zrtblizzard';
+
 @Provider()
 export class ItemGiftProvider {
     @Inject(ItemService)
@@ -86,7 +88,7 @@ export class ItemGiftProvider {
         TriggerClientEvent(ClientEvent.GIFT_PLAY_TOKEN_ANIM, source);
     }
 
-    private async useZRTBlizzard(source: number, item: Item, inventoryItem: InventoryItem, inventory: Inventory) {
+    private async useZRTBlizzard(source: number) {
         if (!this.featureProvider.isFeatureEnabled(Feature.Winter)) {
             this.notifier.error(source, "L'hiver est fini !");
             return;
@@ -97,10 +99,9 @@ export class ItemGiftProvider {
             return;
         }
 
-        const model = 'zrtblizzard';
         const playerVeh = await this.prismaService.playerVehicle.count({
             where: {
-                vehicle: model,
+                vehicle: ZRT_BLIZZARD_MODEL,
                 citizenid: player.citizenid,
                 state: { notIn: [PlayerVehicleState.Missing, PlayerVehicleState.Destroyed] },
             },
@@ -111,7 +112,23 @@ export class ItemGiftProvider {
             return;
         }
 
-        if (!inventory.removeAtSlot(inventoryItem.slot, 1)) {
+        TriggerClientEvent(ClientEvent.GIFT_PLAY_ZRT_BLIZZARD_ANIM, source);
+    }
+
+    @OnEvent(ServerEvent.GIFT_GIVE_ZRT_BLIZZARD)
+    public async onGiveZRTBlizzard(source: number) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Winter)) {
+            this.notifier.error(source, "L'hiver est fini !");
+            return;
+        }
+
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+        const player = this.playerService.getPlayer(source);
+        if (!inventory || !player) {
+            return;
+        }
+
+        if (!inventory.remove('zrt_blizzard', 1)) {
             return;
         }
 
@@ -120,8 +137,8 @@ export class ItemGiftProvider {
             data: {
                 license: player.license,
                 citizenid: player.citizenid,
-                vehicle: model,
-                hash: GetHashKey(model).toString(),
+                vehicle: ZRT_BLIZZARD_MODEL,
+                hash: GetHashKey(ZRT_BLIZZARD_MODEL).toString(),
                 plate: await this.vehicleService.generatePlate(),
                 garage: garage,
                 category: 'Motorcycles',
