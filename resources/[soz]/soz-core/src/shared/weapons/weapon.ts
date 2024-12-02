@@ -26,7 +26,7 @@ export const GlobalWeaponConfig = {
         return 5;
     },
     MaxHealth: 2000,
-    RecoilOnUsedWeapon: 2.0,
+    RecoilOnUsedWeapon: 1.0,
 };
 
 export const DrawPositions: Record<string, Omit<WeaponDrawPosition, 'model'>> = {
