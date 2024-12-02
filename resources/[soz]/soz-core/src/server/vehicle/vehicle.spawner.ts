@@ -117,6 +117,8 @@ const VEHICLE_HAS_RADIO = [
     'supervolito1',
     'coach',
     'coach2',
+    'policeold1',
+    'policeold2',
 ];
 
 const DISALLOWED_VEHICLE_MODELS = {
