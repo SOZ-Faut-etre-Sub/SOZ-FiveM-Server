@@ -82,7 +82,7 @@ export const NoZonesShopConfig: NoZoneShopConfig[] = [
             coords: {
                 x: 138.14,
                 y: -881.53,
-                z: 29.74,
+                z: 29.78,
                 w: 255.17,
             },
             modelCustomization: { Hash: -1667301416, Father: 6, ShapeMix: 0.9, Mother: 21, SkinMix: 0.4 },
