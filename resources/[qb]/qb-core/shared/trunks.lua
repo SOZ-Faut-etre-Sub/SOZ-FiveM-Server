@@ -32,6 +32,10 @@ QBShared.Trunks = {
     [GetHashKey('moonbeam')] = { slot = 10, weight = 200000 },
     [GetHashKey('moonbeam2')] = { slot = 10, weight = 200000 },
 
+    --police old
+    [GetHashKey('policeold1')] = { slot = 5, weight = 80000 },
+    [GetHashKey('policeold2')] = { slot = 5, weight = 80000 },
+
     --- LSPD
     [GetHashKey('police')] = { slot = 5, weight = 60000 },
     [GetHashKey('police2')] = { slot = 5, weight = 60000 },

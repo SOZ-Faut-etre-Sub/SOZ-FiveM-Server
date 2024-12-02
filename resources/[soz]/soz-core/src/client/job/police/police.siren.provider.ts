@@ -61,6 +61,9 @@ export const VehicleWithSirens = {
     [GetHashKey('paragonsfbi')]: true,
     [GetHashKey('dodgebana')]: true,
     [GetHashKey('polgauntlet')]: true,
+    // policeold
+    [GetHashKey('policeold1')]: true,
+    [GetHashKey('policeold2')]: true,
 };
 
 @Provider()

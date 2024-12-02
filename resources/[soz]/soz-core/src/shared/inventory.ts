@@ -717,6 +717,10 @@ export const VEHICLE_CONFIGURATION_BY_VEHICLE_MODEL: Record<number, Partial<Inve
     [joaat('moonbeam')]: { maxWeight: 200000 },
     [joaat('moonbeam2')]: { maxWeight: 200000 },
 
+    // policeold
+    [joaat('policeold1')]: { maxWeight: 80000 },
+    [joaat('policeold2')]: { maxWeight: 80000 },
+
     // LSPD
     [joaat('police')]: { maxWeight: 60000 },
     [joaat('police2')]: { maxWeight: 60000 },
