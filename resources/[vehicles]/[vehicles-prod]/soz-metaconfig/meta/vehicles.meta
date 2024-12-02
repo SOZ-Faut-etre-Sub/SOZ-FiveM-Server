@@ -5621,8 +5621,8 @@
             <animConvRoofWindowsAffected />
             <ptfxAssetName>null</ptfxAssetName>
             <audioNameHash>DEFILER</audioNameHash>
-            <layout>LAYOUT_BIKE_QUAD</layout>
-            <coverBoundOffsets>BLAZER_COVER_OFFSET_INFO</coverBoundOffsets>
+            <layout>LAYOUT_BIKE_FREEWAY</layout>
+            <coverBoundOffsets>BIKE_COVER_OFFSET_INFO</coverBoundOffsets>
             <POVTuningInfo>BLAZER_POV_TUNING</POVTuningInfo>
             <explosionInfo>EXPLOSION_INFO_DEFAULT</explosionInfo>
             <scenarioLayout />
