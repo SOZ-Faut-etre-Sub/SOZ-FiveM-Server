@@ -67,7 +67,7 @@ export const NoZonesShopConfig: NoZoneShopConfig[] = [
         brand: NoZoneShopBrand.SouvenirFIB,
         distance: 3,
         blipSprite: 781,
-        blipColor: 13,
+        blipColor: 1,
         feature: Feature.Winter,
         targetLabel: 'Mère Noël',
         shopLabel: 'Mère Noël',
