@@ -437,4 +437,5 @@ export enum ClientEvent {
     GIFT_PLAY_BOUQUET_ANIM = 'soz-core:server:gift:bouquet',
     GIFT_PLAY_TOKEN_ANIM = 'soz-core:server:gift:token',
     GIFT_PLAY_GIFT_ANIM = 'soz-core:server:gift:gift',
+    GIFT_PLAY_ZRT_BLIZZARD_ANIM = 'soz-core:server:gift:zrt_blizzard',
 }

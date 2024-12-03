@@ -707,4 +707,5 @@ export enum ServerEvent {
 
     GIFT_TOSS_COIN = 'soz-core:server:gift:toss-coin',
     GIFT_OPEN_GIFT = 'soz-core:server:gift:open-gift',
+    GIFT_GIVE_ZRT_BLIZZARD = 'soz-core:server:gift:give-zrt-blizzard',
 }
