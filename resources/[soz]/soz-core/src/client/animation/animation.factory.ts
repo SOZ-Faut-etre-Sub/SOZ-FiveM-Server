@@ -124,19 +124,40 @@ const doAnimation = async (
     const lockY = animation.lockY ? animation.lockY : false;
     const lockZ = animation.lockZ ? animation.lockZ : false;
 
-    TaskPlayAnim(
-        ped,
-        animation.dictionary,
-        animation.name,
-        blendInSpeed,
-        blendOutSpeed,
-        -1, // always loop, if there is a duration we will stop it manually, so we are sure than animation is always longer than the duration even on slow machines
-        flags,
-        playbackRate,
-        lockX,
-        lockY,
-        lockZ
-    );
+    if (animation.coords) {
+        TaskPlayAnimAdvanced(
+            ped,
+            animation.dictionary,
+            animation.name,
+            animation.coords[0],
+            animation.coords[1],
+            animation.coords[2],
+            0,
+            0,
+            animation.coords[3],
+            blendInSpeed,
+            blendOutSpeed,
+            -1,
+            flags,
+            playbackRate,
+            2,
+            0
+        );
+    } else {
+        TaskPlayAnim(
+            ped,
+            animation.dictionary,
+            animation.name,
+            blendInSpeed,
+            blendOutSpeed,
+            -1, // always loop, if there is a duration we will stop it manually, so we are sure than animation is always longer than the duration even on slow machines
+            flags,
+            playbackRate,
+            lockX,
+            lockY,
+            lockZ
+        );
+    }
 
     // await for animation start
     await waitUntil(async () => IsEntityPlayingAnim(ped, animation.dictionary, animation.name, 3), 1000);

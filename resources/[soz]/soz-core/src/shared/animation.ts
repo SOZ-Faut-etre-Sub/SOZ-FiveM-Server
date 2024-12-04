@@ -121,6 +121,7 @@ export type AnimationInfo = {
     lockY?: boolean;
     lockZ?: boolean;
     options?: AnimationOptions;
+    coords?: Vector4;
 };
 
 export type PlayOptions = {
@@ -138,6 +139,9 @@ export type AnimationOptions = {
     onlyUpperBody?: boolean;
     enablePlayerControl?: boolean;
     cancellable?: boolean;
+    turnOffCollision?: boolean;
+    ignoreGravity?: boolean;
+    hideWeapon?: boolean;
 };
 
 type ObjectEffect = {
@@ -217,6 +221,18 @@ export const animationOptionsToFlags = (options: AnimationOptions): number => {
 
     if (options.cancellable) {
         flags |= 64;
+    }
+
+    if (options.turnOffCollision) {
+        flags |= 512;
+    }
+
+    if (options.ignoreGravity) {
+        flags |= 2048;
+    }
+
+    if (options.hideWeapon) {
+        flags |= 1048576;
     }
 
     return flags;

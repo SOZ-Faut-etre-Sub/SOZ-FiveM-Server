@@ -12948,6 +12948,56 @@ export const Animations: AnimationConfigList = [
                         },
                     },
                     {
+                        type: 'animation',
+                        name: "S'asseoir (Sol homme)",
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            enter: {
+                                dictionary: 'amb@world_human_picnic@male@enter',
+                                name: 'enter',
+                                duration: 7933,
+                            },
+                            base: {
+                                dictionary: 'amb@world_human_picnic@male@base',
+                                name: 'base',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                            exit: {
+                                dictionary: 'amb@world_human_picnic@male@exit',
+                                name: 'exit',
+                                duration: 2099,
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: "S'asseoir (Sol femme)",
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            enter: {
+                                dictionary: 'amb@world_human_picnic@female@enter',
+                                name: 'enter',
+                                duration: 6700,
+                            },
+                            base: {
+                                dictionary: 'amb@world_human_picnic@female@base',
+                                name: 'base',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                            exit: {
+                                dictionary: 'amb@world_human_picnic@female@exit',
+                                name: 'exit',
+                                duration: 3666,
+                            },
+                        },
+                    },
+                    {
                         type: 'scenario',
                         name: "S'asseoir (Stripclub)",
                         rightLabel: null,
