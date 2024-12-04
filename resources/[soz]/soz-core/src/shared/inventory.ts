@@ -867,6 +867,9 @@ export const VEHICLE_CONFIGURATION_BY_VEHICLE_MODEL: Record<number, Partial<Inve
     [joaat('freightcont2')]: { maxWeight: 200000 },
     [joaat('freightgrain')]: { maxWeight: 200000 },
     [joaat('tankercar')]: { maxWeight: 200000 },
+
+    // Other
+    [joaat('zrtblizzard')]: { maxWeight: 40000 },
 };
 
 /**
