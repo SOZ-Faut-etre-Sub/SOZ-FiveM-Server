@@ -1,3 +1,4 @@
+import { CeremonySubMenu } from '@public/nui/components/Admin/CeremonySubMenu';
 import { EventSubMenu } from '@public/nui/components/Admin/EventSubMenu';
 import { HalloweenSubMenu } from '@public/nui/components/Admin/HalloweenSubMenu';
 import { RootState } from '@public/nui/store';
@@ -54,6 +55,9 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
                     <MenuItemSubMenuLink disabled={!isStaffOrAdmin} id="meteor">
                         ☄️ Météorite
                     </MenuItemSubMenuLink>
+                    <MenuItemSubMenuLink disabled={!isStaffOrAdmin} id="ceremony">
+                        🎉 Cérémonie
+                    </MenuItemSubMenuLink>
                     <MenuItemSubMenuLink disabled={!isStaffOrAdminOrGM} id="event">
                         📅 Gestion des evenements HC
                     </MenuItemSubMenuLink>
@@ -75,6 +79,7 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
             <EventSubMenu banner={data.banner} event={data.event} />
             <CharacterSubMenu banner={data.banner} characters={data.characters} />
             <MeteorSubMenu banner={data.banner} state={data.state.meteor} />
+            <CeremonySubMenu banner={data.banner} />
             {isHalloween && (
                 <HalloweenSubMenu banner={data.banner} permission={data.permission} state={data.state.halloween} />
             )}

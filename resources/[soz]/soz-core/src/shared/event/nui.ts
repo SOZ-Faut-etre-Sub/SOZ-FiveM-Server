@@ -140,6 +140,7 @@ export enum NuiEvent {
     AdminMenuHalloweenUpdateObjectivePart2 = 'soz-core:nui:admin:halloween:update-objective-part2',
     AdminMenuHalloweenUpdateObjectivePart3 = 'soz-core:nui:admin:halloween:update-objective-part3',
     AdminMenuEventSetStartSound = 'soz-core:nui:admin:event:set-start-sound',
+    AdminMenuCeremonyStart = 'soz-core:nui:admin:ceremony:start',
     AdminMenuClothes = 'soz-core:client:admin:clothes',
 
     BlipAction = 'soz-core:client:blip:action',

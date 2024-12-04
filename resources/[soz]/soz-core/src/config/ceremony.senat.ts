@@ -219,7 +219,7 @@ export const SENAT_LOCATION: Location = {
             position: [-613.2411, -638.339966, 31.4505463],
             height: 15,
             scale: 0.5,
-            triggerAt: [11_850, 14_700, 56_500, 59_300],
+            triggerAt: [11_850, 14_700, 55_500, 56_500, 59_300],
         },
         {
             type: FireworkType.Burst, // 49
@@ -229,8 +229,9 @@ export const SENAT_LOCATION: Location = {
             triggerAt: [
                 11_600,
                 14_950,
-                ...triggerPeriodic(26_350, 39_150, 1_100),
-                ...triggerPeriodic(43_400, 55_500, 1_100),
+                ...triggerPeriodic(25_800, 39_150, 1_100),
+                ...triggerPeriodic(42_900, 55_000, 1_100),
+                55_500,
                 56_500,
                 59_300,
             ],
@@ -240,7 +241,7 @@ export const SENAT_LOCATION: Location = {
             position: [-597.359436, -638.339966, 31.4505463],
             height: 25,
             scale: 0.5,
-            triggerAt: [11_350, 15_200, 56_500, 59_300],
+            triggerAt: [11_350, 15_200, 55_500, 56_500, 59_300],
         },
         {
             type: FireworkType.Burst, // 51
@@ -250,8 +251,9 @@ export const SENAT_LOCATION: Location = {
             triggerAt: [
                 11_100,
                 15_400,
-                ...triggerPeriodic(26_350, 39_150, 2_200),
-                ...triggerPeriodic(43_400, 55_500, 2_200),
+                ...triggerPeriodic(25_800, 39_150, 2_200),
+                ...triggerPeriodic(42_900, 55_000, 2_200),
+                55_500,
                 56_500,
                 59_300,
             ],
@@ -261,7 +263,7 @@ export const SENAT_LOCATION: Location = {
             position: [-584.546631, -638.831543, 31.0665588],
             height: 35,
             scale: 0.5,
-            triggerAt: [10_900, 15_700, 56_500, 59_300],
+            triggerAt: [10_900, 15_700, 55_500, 56_500, 59_300],
         },
         {
             type: FireworkType.Burst, // 53
@@ -271,8 +273,9 @@ export const SENAT_LOCATION: Location = {
             triggerAt: [
                 10_600,
                 15_950,
-                ...triggerPeriodic(26_350, 39_150, 3_300),
-                ...triggerPeriodic(43_400, 55_500, 3_300),
+                ...triggerPeriodic(25_800, 39_150, 3_300),
+                ...triggerPeriodic(42_900, 55_000, 3_300),
+                55_500,
                 56_500,
                 59_300,
             ],
@@ -282,7 +285,7 @@ export const SENAT_LOCATION: Location = {
             position: [-574.0825, -638.3956, 32.78203],
             height: 45,
             scale: 0.5,
-            triggerAt: [10_350, 16_200, 56_500, 59_300],
+            triggerAt: [10_350, 16_200, 55_500, 56_500, 59_300],
         },
         {
             type: FireworkType.Burst, // 55
@@ -292,8 +295,9 @@ export const SENAT_LOCATION: Location = {
             triggerAt: [
                 10_100,
                 16_500,
-                ...triggerPeriodic(26_350, 39_150, 4_400),
-                ...triggerPeriodic(43_400, 55_500, 4_400),
+                ...triggerPeriodic(25_800, 39_150, 4_400),
+                ...triggerPeriodic(42_900, 55_000, 4_400),
+                55_500,
                 56_500,
                 59_300,
             ],
@@ -306,9 +310,10 @@ export const SENAT_LOCATION: Location = {
             triggerAt: [
                 10_100,
                 16_500,
-                ...triggerPeriodic(26_350, 39_150, 4_400),
-                ...triggerPeriodic(43_400, 55_500, 4_400),
+                ...triggerPeriodic(25_800, 39_150, 4_400),
+                ...triggerPeriodic(42_900, 55_000, 4_400),
                 55_500,
+                56_500,
                 59_300,
             ],
         },
@@ -317,7 +322,7 @@ export const SENAT_LOCATION: Location = {
             position: [-537.0716, -638.3956, 32.78203],
             height: 45,
             scale: 0.5,
-            triggerAt: [10_350, 16_200, 55_500, 59_300],
+            triggerAt: [10_350, 16_200, 55_500, 56_500, 59_300],
         },
         {
             type: FireworkType.Burst, // 58
@@ -327,9 +332,10 @@ export const SENAT_LOCATION: Location = {
             triggerAt: [
                 10_600,
                 15_950,
-                ...triggerPeriodic(26_350, 39_150, 3_300),
-                ...triggerPeriodic(43_400, 55_500, 3_300),
+                ...triggerPeriodic(25_800, 39_150, 3_300),
+                ...triggerPeriodic(42_900, 55_000, 3_300),
                 55_500,
+                56_500,
                 59_300,
             ],
         },
@@ -338,7 +344,7 @@ export const SENAT_LOCATION: Location = {
             position: [-527.6547, -637.570068, 30.1786728],
             height: 35,
             scale: 0.5,
-            triggerAt: [10_900, 15_700, 55_500, 59_300],
+            triggerAt: [10_900, 15_700, 55_500, 56_500, 59_300],
         },
         {
             type: FireworkType.Burst, // 60
@@ -348,9 +354,10 @@ export const SENAT_LOCATION: Location = {
             triggerAt: [
                 11_100,
                 15_400,
-                ...triggerPeriodic(26_350, 39_150, 2_200),
-                ...triggerPeriodic(43_400, 55_500, 2_200),
+                ...triggerPeriodic(25_800, 39_150, 2_200),
+                ...triggerPeriodic(42_900, 55_000, 2_200),
                 55_500,
+                56_500,
                 59_300,
             ],
         },
@@ -359,7 +366,7 @@ export const SENAT_LOCATION: Location = {
             position: [-511.6333, -637.570068, 30.1786728],
             height: 25,
             scale: 0.5,
-            triggerAt: [11_350, 15_200, 55_500, 59_300],
+            triggerAt: [11_350, 15_200, 55_500, 56_500, 59_300],
         },
         {
             type: FireworkType.Burst, // 62
@@ -369,9 +376,10 @@ export const SENAT_LOCATION: Location = {
             triggerAt: [
                 11_600,
                 14_950,
-                ...triggerPeriodic(26_350, 39_150, 1_100),
-                ...triggerPeriodic(43_400, 55_500, 1_100),
+                ...triggerPeriodic(25_800, 39_150, 1_100),
+                ...triggerPeriodic(42_900, 55_000, 1_100),
                 55_500,
+                56_500,
                 59_300,
             ],
         },
@@ -380,7 +388,7 @@ export const SENAT_LOCATION: Location = {
             position: [-501.214355, -637.570068, 32.88919],
             height: 15,
             scale: 0.5,
-            triggerAt: [11_850, 14_700, 55_500, 59_300],
+            triggerAt: [11_850, 14_700, 55_500, 56_500, 59_300],
         },
     ],
     spotlights: [

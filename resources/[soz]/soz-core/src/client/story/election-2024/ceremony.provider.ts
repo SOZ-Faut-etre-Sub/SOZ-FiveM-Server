@@ -113,18 +113,18 @@ export class Election2024CeremonyProvider {
         this.hudStateProvider.setHudVisible(false);
         this.hudStateProvider.setCinematicMode(true, 3000);
 
-        // this.cameraService.updateCameraPosition(
-        //     this.camera,
-        //     add2Vector3(playerPosition, [0, 0, 1000]),
-        //     [0, 0, 0],
-        //     5_000
-        // );
-        // this.cameraService.setCameraPointAt(this.camera, playerPosition);
-        //
-        // await wait(5_000);
-        //
-        // this.cameraService.updateCameraPosition(this.camera, this.skyCameraPosition, [0, 0, 0], 5_000);
-        // this.cameraService.setCameraPointAt(this.camera, this.skyCameraTarget);
+        this.cameraService.updateCameraPosition(
+            this.camera,
+            add2Vector3(playerPosition, [0, 0, 1000]),
+            [0, 0, 0],
+            5_000
+        );
+        this.cameraService.setCameraPointAt(this.camera, playerPosition);
+
+        await wait(5_000);
+
+        this.cameraService.updateCameraPosition(this.camera, this.skyCameraPosition, [0, 0, 0], 5_000);
+        this.cameraService.setCameraPointAt(this.camera, this.skyCameraTarget);
     }
 
     @OnEvent(ClientEvent.CEREMONY_SET_CAMERA)
@@ -148,10 +148,10 @@ export class Election2024CeremonyProvider {
 
     @OnEvent(ClientEvent.CEREMONY_DELETE_CAMERA)
     async deleteCamera() {
-        // this.cameraService.updateCameraPosition(this.camera, this.skyCameraPosition, [0, 0, 0], 5_000);
-        // this.cameraService.setCameraPointAt(this.camera, this.skyCameraTarget);
-        //
-        // await wait(5_000);
+        this.cameraService.updateCameraPosition(this.camera, this.skyCameraPosition, [0, 0, 0], 5_000);
+        this.cameraService.setCameraPointAt(this.camera, this.skyCameraTarget);
+
+        await wait(5_000);
 
         DoScreenFadeOut(500);
         await wait(500);
@@ -233,6 +233,8 @@ export class Election2024CeremonyProvider {
         }
 
         setTimeout(async () => {
+            DoScreenFadeOut(500);
+
             if (location.music) {
                 this.nuiDispatch.dispatch('election', location.music.name, 0);
             }

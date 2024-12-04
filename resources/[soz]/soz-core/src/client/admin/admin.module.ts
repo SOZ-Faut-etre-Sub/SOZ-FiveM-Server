@@ -1,4 +1,5 @@
 import { Module } from '../../core/decorators/module';
+import { AdminMenuCeremonyProvider } from './admin.menu.ceremony.provider';
 import { AdminMenuCharacterProvider } from './admin.menu.character.provider';
 import { AdminMenuDeveloperProvider } from './admin.menu.developer.provider';
 import { AdminMenuEventProvider } from './admin.menu.event.provider';
@@ -32,6 +33,7 @@ import { AdminZoneProvider } from './admin.zone.provider';
         AdminSpectateProvider,
         AdminMenuMeteorProvider,
         AdminMenuHalloweenProvider,
+        AdminMenuCeremonyProvider,
         AdminZoneProvider,
         AdminShopProvider,
     ],
