@@ -15,8 +15,6 @@ const FORMAT_LOCALIZED: Intl.DateTimeFormatOptions = {
 };
 
 export const IdentityCard: FunctionComponent<IdentityCardProps> = ({ player }) => {
-    console.log(player.created_at);
-
     return (
         <div
             style={{
