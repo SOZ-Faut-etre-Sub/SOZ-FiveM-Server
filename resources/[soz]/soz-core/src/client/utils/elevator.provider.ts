@@ -100,21 +100,21 @@ const Elevators: Record<ElevatorFloorName, ElevatorFloor> = {
     //LSMC
     [ElevatorFloorName.lsmc0]: {
         label: 'Rez-de-chaussée',
-        button: new BoxZone([362.97, -1427.64, 32.91], 0.4, 0.2, { minZ: 32.91, maxZ: 33.31, heading: 227.56 }),
+        button: new BoxZone([362.97, -1427.64, 32.91], 0.5, 0.3, { minZ: 32.91, maxZ: 33.31, heading: 227.56 }),
         upTo: [ElevatorFloorName.lsmc1, ElevatorFloorName.lsmc2],
         downTo: [],
         spawnPoint: [364.94, -1426.28, 32.51, 228.85],
     },
     [ElevatorFloorName.lsmc1]: {
         label: '1er Etage',
-        button: new BoxZone([362.62, -1427.32, 38.44], 0.2, 0.8, { minZ: 38.44, maxZ: 38.79, heading: 318.33 }),
+        button: new BoxZone([362.62, -1427.32, 38.44], 0.3, 0.9, { minZ: 38.44, maxZ: 38.79, heading: 318.33 }),
         upTo: [ElevatorFloorName.lsmc2],
         downTo: [ElevatorFloorName.lsmc0],
         spawnPoint: [365.18, -1426.5, 37.98, 228.85],
     },
     [ElevatorFloorName.lsmc2]: {
         label: 'Toit',
-        button: new BoxZone([333.35, -1430.19, 47.21], 0.2, 0.3, { heading: 138.09, minZ: 47.01, maxZ: 47.31 }),
+        button: new BoxZone([333.35, -1430.19, 47.21], 0.3, 0.4, { heading: 138.09, minZ: 47.01, maxZ: 47.31 }),
         upTo: [],
         downTo: [ElevatorFloorName.lsmc0, ElevatorFloorName.lsmc1],
         spawnPoint: [334.41, -1432.06, 46.52, 134.22],
@@ -270,7 +270,7 @@ export class ElevatorProvider {
     @Once()
     public onStart() {
         for (const [id, value] of Object.entries(Elevators)) {
-            this.targetFactory.createForBoxZone('Elevator:' + id, value.button, this.createTargetOptions(value));
+            this.targetFactory.createForBoxZone('Elevator:' + id, value.button, this.createTargetOptions(value), 3.0);
         }
     }
 
