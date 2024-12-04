@@ -286,7 +286,6 @@ QBShared.Items = {
         ["unique"] = true,
         ["useable"] = true,
         ["description"] = "Plus qu'une friandise, cette canne à sucre se manie aussi comme une arme ! Entre douceurs sucrées et défenses improvisées, ce symbole de Noël peut croquer vos ennemis ou votre gourmandise.",
-        ["illustrator"] = ".NariieL",
     },
     ["weapon_stunrod"] = {
         ["name"] = "weapon_stunrod",
@@ -1460,7 +1459,8 @@ QBShared.Items = {
         ["useable"] = true,
         ["shouldClose"] = true,
         ["combinable"] = nil,
-        ["description"] = "",
+        ["description"] = "Une munition de lance-roquette festif qui s'envole vers d'autres cieux pour illuminer la nuit de couleurs étincelantes, créant une explosion de joie et de magie visuelle lors des célébrations.",
+        ["illustrator"] = ".Kaemy",
     },
     ["ammo_14"] = {
         ["name"] = "ammo_14",
