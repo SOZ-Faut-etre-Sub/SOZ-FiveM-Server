@@ -15,14 +15,15 @@ export class ViewModeProvider {
         ],
     })
     toggleViewMode() {
-        const currentViewMode = GetFollowPedCamViewMode();
+        const viewModeContext = GetCamActiveViewModeContext();
+        const currentViewMode = GetCamViewModeForContext(viewModeContext);
 
         if (currentViewMode !== 4) {
             this.camViewMode = currentViewMode;
-            SetFollowPedCamViewMode(4);
+            SetCamViewModeForContext(viewModeContext, 4);
             return;
         }
 
-        SetFollowPedCamViewMode(this.camViewMode || 0);
+        SetCamViewModeForContext(viewModeContext, this.camViewMode || 0);
     }
 }
