@@ -16,6 +16,14 @@ onmessage = function (event) {
             gameViewRenderer.disable();
             break;
 
+        case 'show':
+            gameViewRenderer.show();
+            break;
+
+        case 'hide':
+            gameViewRenderer.hide();
+            break;
+
         case 'canvas':
             gameViewRenderer.setGameCanvas(event.data.canvas);
             break;

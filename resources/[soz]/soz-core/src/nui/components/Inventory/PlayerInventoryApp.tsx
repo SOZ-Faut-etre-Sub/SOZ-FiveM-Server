@@ -128,7 +128,7 @@ export const PlayerInventoryApp: FunctionComponent = () => {
                                 <h1 className="font-semibold uppercase text-white text-2xl">Raccourcis</h1>
                             </div>
                         </header>
-                        <GameCanvasBox blur={false}>
+                        <GameCanvasBox blur={false} cantBeHidden>
                             <div
                                 className={classNames(
                                     'overflow-y-scroll scrollbar scrollbar-w-[5px] scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full'

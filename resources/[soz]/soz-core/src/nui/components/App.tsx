@@ -101,9 +101,7 @@ export const App: FunctionComponent = () => {
                 <StateApp />
                 <StatePrivateApp />
                 <AudioApp />
-                <div className={menuClasses}>
-                    <GlassMorphism />
-                </div>
+                <GlassMorphism globalHide={pauseMenuActive || hideHud} />
                 <div className={classes}>
                     <MapPickerApp />
                     <TargetOverlay />

@@ -8,6 +8,7 @@ import { GlassMorphismContext } from '../../providers/GlassMorphismProvider';
 type GameCanvasBoxProps = {
     disableGameClone?: boolean;
     borderClassName?: string;
+    cantBeHidden?: boolean;
     rounded?: number;
     circle?: boolean;
     blur?: boolean;
@@ -17,6 +18,7 @@ export const GameCanvasBox: FunctionComponent<PropsWithChildren<GameCanvasBoxPro
     borderClassName,
     disableGameClone = false,
     blur = true,
+    cantBeHidden = false,
     rounded,
     circle,
     children,
@@ -36,6 +38,7 @@ export const GameCanvasBox: FunctionComponent<PropsWithChildren<GameCanvasBoxPro
             width: containerRect.current?.width,
             height: containerRect.current?.height,
             options: {
+                cantBeHidden,
                 disableGameClone,
                 blur,
                 rounded,
@@ -57,6 +60,7 @@ export const GameCanvasBox: FunctionComponent<PropsWithChildren<GameCanvasBoxPro
             width: container?.width,
             height: container?.height,
             options: {
+                cantBeHidden,
                 disableGameClone,
                 blur,
                 rounded,
@@ -76,6 +80,7 @@ export const GameCanvasBox: FunctionComponent<PropsWithChildren<GameCanvasBoxPro
             width: containerRect.current?.width,
             height: containerRect.current?.height,
             options: {
+                cantBeHidden,
                 disableGameClone,
                 blur,
                 rounded,

@@ -7,6 +7,7 @@ type GameCanvas = GameCanvasOptions & {
 };
 
 export type GameCanvasOptions = {
+    cantBeHidden?: boolean;
     disableGameClone?: boolean;
     blur?: boolean;
     rounded?: number;
@@ -120,9 +121,13 @@ function createProgram(gl: WebGLRenderingContext): {
 export class GameViewRenderer {
     private rootCanvas: OffscreenCanvas;
     private gameCanvas: OffscreenCanvasRenderingContext2D;
+
     private gl: WebGLRenderingContext;
-    private animationFrame: number;
+
+    private globalHide = false;
     private targetCanvas: Record<string, GameCanvas> = {};
+
+    private animationFrame: number;
     private lastFrameTimeStamp: DOMHighResTimeStamp = performance.now();
 
     constructor() {
@@ -187,6 +192,14 @@ export class GameViewRenderer {
         this.animationFrame = null;
     }
 
+    show() {
+        this.globalHide = false;
+    }
+
+    hide() {
+        this.globalHide = true;
+    }
+
     setGameCanvas(canvas: OffscreenCanvas) {
         this.gameCanvas = canvas.getContext('2d', {
             alpha: true,
@@ -238,6 +251,7 @@ export class GameViewRenderer {
         this.gameCanvas.reset();
 
         for (const { x, y, width, height, options } of Object.values(this.targetCanvas)) {
+            if (this.globalHide && !options.cantBeHidden) continue;
             if (options.disableGameClone) continue;
 
             this.gameCanvas.filter = 'none';
