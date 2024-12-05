@@ -36,6 +36,13 @@ QBShared.Trunks = {
     [GetHashKey('policeold1')] = { slot = 5, weight = 80000 },
     [GetHashKey('policeold2')] = { slot = 5, weight = 80000 },
 
+    --police new
+    [GetHashKey('polimpaler6')] = { slot = 5, weight = 80000 },
+    [GetHashKey('poldominator10')] = { slot = 5, weight = 80000 },
+    [GetHashKey('polimpaler5')] = { slot = 5, weight = 80000 },
+    [GetHashKey('polgreenwood')] = { slot = 5, weight = 80000 },
+    [GetHashKey('poldorado')] = { slot = 5, weight = 80000 },
+
     --- LSPD
     [GetHashKey('police')] = { slot = 5, weight = 60000 },
     [GetHashKey('police2')] = { slot = 5, weight = 60000 },
