@@ -21,7 +21,7 @@ function QBCore.Player.Login(source, citizenid, newData)
     if src then
         if citizenid then
             local license = QBCore.Functions.GetSozIdentifier(src)
-            local PlayerData = exports.oxmysql:singleSync("SELECT * FROM player where citizenid = ?", {citizenid})
+            local PlayerData = exports.oxmysql:singleSync("SELECT *, unix_timestamp(last_updated)  as updatedAt FROM player where citizenid = ?", {citizenid})
             local apartment = exports.oxmysql:singleSync(
                                   "SELECT id,property_id,label,price,owner,tier,cloth_tier,money_tier,park_tier,shell,has_parking_place FROM housing_apartment where ? IN (owner, roommate)",
                                   {citizenid})
@@ -159,7 +159,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.metadata["gym_subscription_expire_at"] = PlayerData.metadata["gym_subscription_expire_at"] or nil
     PlayerData.metadata["drug"] = PlayerData.metadata["drug"] or 0
     PlayerData.metadata["itt_end"] = PlayerData.metadata["itt_end"] or 0
-    PlayerData.metadata["armor"] = {current = 0, hidden = false}
+    PlayerData.metadata["armor"] = PlayerData.metadata["armor"] or {current = 0, hidden = false}
     PlayerData.metadata["inlaststand"] = PlayerData.metadata["inlaststand"] or false
     PlayerData.metadata["ishandcuffed"] = PlayerData.metadata["ishandcuffed"] or false
     PlayerData.metadata["tracker"] = PlayerData.metadata["tracker"] or false
@@ -236,9 +236,6 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     -- Skin
     PlayerData.skin = PlayerData.skin or {}
     PlayerData.cloth_config = PlayerData.cloth_config or {}
-    if PlayerData.cloth_config["JobClothSet"] and PlayerData.cloth_config["JobClothSet"].Components and PlayerData.cloth_config["JobClothSet"].Components["9"] then
-        PlayerData.cloth_config["JobClothSet"].Components["9"] = nil
-    end
 
     -- Job
     if not PlayerData.job or type(PlayerData.job) ~= "table" then
@@ -246,8 +243,12 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     end
 
     PlayerData.job.id = PlayerData.job.id or "unemployed"
-    PlayerData.job.onduty = false
+    PlayerData.job.onduty = PlayerData.job.onduty or false
     PlayerData.job.grade = tostring(PlayerData.job.grade) or "1"
+    if PlayerData.updatedAt ~= nil and PlayerData.job.onduty and PlayerData.updatedAt + 20 * 60 < os.time() then
+        PlayerData.job.onduty = false
+    end
+
     -- Gang
     PlayerData.gang = PlayerData.gang or {}
     PlayerData.gang.id = PlayerData.gang.id or 0
