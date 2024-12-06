@@ -545,7 +545,8 @@ export class WeaponProvider {
         });
 
         if (completed) {
-            TriggerServerEvent(ServerEvent.WEAPON_GET_SNOW);
+            const cur = this.weapon.getCurrentWeapon();
+            TriggerServerEvent(ServerEvent.WEAPON_GET_SNOW, cur);
         }
     }
 }
