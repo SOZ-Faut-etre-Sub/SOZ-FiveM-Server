@@ -298,7 +298,6 @@ export enum ClientEvent {
     POLICE_IDENTIFIED_CLUE = 'soz-core:client:police:identified-clue',
     POLICE_GATHERED_CLUE = 'soz-core:client:police:cleaned-clue',
     POLICE_DESTROYED_CLUE = 'soz-core:client:police:destroyed-clue',
-    POLICE_DRUG_IN_TRUNK = 'soz-core:client:police:drug-in-trunk',
     POLICE_PLACE_SPEED_ZONE = 'soz-core:client:police:place-speed-zone',
 
     SET_ESCORTING = 'soz-core:client:police:set-escorting',
