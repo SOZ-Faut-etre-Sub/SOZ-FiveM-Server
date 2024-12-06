@@ -20,10 +20,23 @@ export const ContactList: React.FC = () => {
     const contacts = getContacts();
     const filteredContacts = useMemo(() => {
         const list = new Map<string, Society[]>();
-        const regExp = new RegExp(searchValue.replace(/[^a-zA-Z\d]/g, ''), 'gi');
+        const regExp = new RegExp(
+            searchValue
+                .toLocaleLowerCase()
+                .normalize('NFD')
+                .replace(/\p{Diacritic}/gu, ''),
+            'gi'
+        );
 
         contacts
-            .filter(contact => contact?.display?.match(regExp) || contact.number.match(regExp))
+            .filter(
+                contact =>
+                    contact?.display
+                        ?.toLocaleLowerCase()
+                        .normalize('NFD')
+                        .replace(/\p{Diacritic}/gu, '')
+                        .match(regExp) || contact.number.match(regExp)
+            )
             .forEach(contact => {
                 if (list.get(contact.type) === undefined) {
                     list.set(contact.type, []);
