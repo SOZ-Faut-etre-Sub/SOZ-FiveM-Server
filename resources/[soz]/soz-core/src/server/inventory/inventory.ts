@@ -552,11 +552,14 @@ export class Inventory {
         const toRemove: { slot: number; amount: number }[] = [];
 
         for (const item of this.filterItems(id, allowExpired, metadata)) {
-            if (amount >= item.amount) {
+            const findAmount = toRemove.reduce((acc, { amount }) => acc + amount, 0);
+            if (amount - findAmount >= item.amount) {
                 toRemove.push({ slot: item.slot, amount: item.amount });
-                amount -= item.amount;
+                if (amount - findAmount === item.amount) {
+                    break;
+                }
             } else {
-                toRemove.push({ slot: item.slot, amount });
+                toRemove.push({ slot: item.slot, amount: amount - findAmount });
                 break;
             }
         }
