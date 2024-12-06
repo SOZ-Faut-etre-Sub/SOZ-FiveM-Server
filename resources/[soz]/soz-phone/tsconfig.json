@@ -1,7 +1,7 @@
 {
     "extends": "./tsconfig.paths.json",
     "compilerOptions": {
-        "target": "es5",
+        "target": "es6",
         "types": ["@citizenfx/server", "@citizenfx/client", "@types/node"],
         "lib": ["dom", "dom.iterable", "esnext"],
         "allowJs": true,
