@@ -1,26 +1,22 @@
+import { VehicleStateService } from '@public/server/vehicle/vehicle.state.service';
+
 import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
 import { BennysConfig } from '../../../shared/job/bennys';
 import { isErr } from '../../../shared/result';
-import { VehicleConfiguration } from '../../../shared/vehicle/modification';
 import { Notifier } from '../../notifier';
 import { ProgressService } from '../../player/progress.service';
-import { QBCore } from '../../qbcore';
-import { VehicleService } from '../../vehicle/vehicle.service';
 import { EstimationService } from './estimationService';
 
 @Provider()
 export class BennysEstimateProvider {
-    @Inject(QBCore)
-    private QBCore: QBCore;
-
     @Inject(ProgressService)
     private progressService: ProgressService;
 
-    @Inject(VehicleService)
-    private vehicleService: VehicleService;
+    @Inject(VehicleStateService)
+    private vehicleStateService: VehicleStateService;
 
     @Inject(Notifier)
     private notifier: Notifier;
@@ -29,7 +25,7 @@ export class BennysEstimateProvider {
     private estimateService: EstimationService;
 
     @OnEvent(ServerEvent.BENNYS_ESTIMATE_VEHICLE)
-    public async onEstimateVehicle(source: number, networkId: number, configuration: VehicleConfiguration) {
+    public async onEstimateVehicle(source: number, networkId: number) {
         const { completed } = await this.progressService.progress(
             source,
             'vehicle_estimate',
@@ -64,7 +60,12 @@ export class BennysEstimateProvider {
             return;
         }
 
-        const result = await this.estimateService.estimateVehicle(source, networkId, configuration);
+        const state = this.vehicleStateService.getVehicleState(networkId);
+        if (!state) {
+            return;
+        }
+
+        const result = await this.estimateService.estimateVehicle(source, networkId, state.configuration);
 
         if (isErr(result)) {
             this.notifier.notify(source, result.err);

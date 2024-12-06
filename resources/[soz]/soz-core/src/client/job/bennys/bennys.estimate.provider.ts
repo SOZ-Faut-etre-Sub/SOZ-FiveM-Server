@@ -35,9 +35,7 @@ export class BennysEstimateProvider {
                 },
                 action: async vehicle => {
                     const networkId = NetworkGetNetworkIdFromEntity(vehicle);
-                    const configuration = this.vehicleModificationService.getVehicleConfiguration(vehicle);
-
-                    TriggerServerEvent(ServerEvent.BENNYS_ESTIMATE_VEHICLE, networkId, configuration);
+                    TriggerServerEvent(ServerEvent.BENNYS_ESTIMATE_VEHICLE, networkId);
                 },
             },
         ]);
