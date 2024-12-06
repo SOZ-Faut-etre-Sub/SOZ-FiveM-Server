@@ -7,7 +7,7 @@ const pilarSpotlightDefault = {
     distance: 30,
     radius: 5,
     duration: 50,
-    brightness: 2,
+    brightness: 3,
     roundness: 5,
 };
 
@@ -27,7 +27,13 @@ export const SENAT_LOCATION: Location = {
             position: [-564.6331, -625.104248, 54.7464676],
             height: 0,
             scale: 0.5,
-            triggerAt: [59_560, 18_000, 20_300],
+            triggerAt: [
+                59_560,
+                18_000,
+                20_300,
+                ...triggerPeriodic(25_800, 39_150, 1_100),
+                ...triggerPeriodic(42_900, 55_000, 1_100),
+            ],
         },
         {
             type: FireworkType.Shotburst, // 1
@@ -41,7 +47,13 @@ export const SENAT_LOCATION: Location = {
             position: [-576.73114, -625.104248, 54.7464676],
             height: 0,
             scale: 0.5,
-            triggerAt: [59_520, 18_000, 20_300],
+            triggerAt: [
+                59_520,
+                18_000,
+                20_300,
+                ...triggerPeriodic(25_800, 39_150, 1_100),
+                ...triggerPeriodic(42_900, 55_000, 1_100),
+            ],
         },
         {
             type: FireworkType.Shotburst, // 3
@@ -55,7 +67,13 @@ export const SENAT_LOCATION: Location = {
             position: [-588.7431, -625.104248, 54.7464676],
             height: 0,
             scale: 0.5,
-            triggerAt: [59_480, 18_000, 20_300],
+            triggerAt: [
+                59_480,
+                18_000,
+                20_300,
+                ...triggerPeriodic(25_800, 39_150, 1_100),
+                ...triggerPeriodic(42_900, 55_000, 1_100),
+            ],
         },
         {
             type: FireworkType.Shotburst, // 5
@@ -69,7 +87,13 @@ export const SENAT_LOCATION: Location = {
             position: [-546.470947, -625.104248, 54.7464676],
             height: 0,
             scale: 0.5,
-            triggerAt: [59_560, 18_300, 20_000],
+            triggerAt: [
+                59_560,
+                18_300,
+                20_000,
+                ...triggerPeriodic(26_350, 39_150, 1_100),
+                ...triggerPeriodic(43_400, 55_000, 1_100),
+            ],
         },
         {
             type: FireworkType.Shotburst, // 7
@@ -83,7 +107,13 @@ export const SENAT_LOCATION: Location = {
             position: [-534.3865, -625.104248, 54.7464676],
             height: 0,
             scale: 0.5,
-            triggerAt: [59_520, 18_300, 20_000],
+            triggerAt: [
+                59_520,
+                18_300,
+                20_000,
+                ...triggerPeriodic(26_350, 39_150, 1_100),
+                ...triggerPeriodic(43_400, 55_000, 1_100),
+            ],
         },
         {
             type: FireworkType.Shotburst, // 9
@@ -97,7 +127,13 @@ export const SENAT_LOCATION: Location = {
             position: [-522.407166, -625.104248, 54.7464676],
             height: 0,
             scale: 0.5,
-            triggerAt: [59_480, 18_300, 20_000],
+            triggerAt: [
+                59_480,
+                18_300,
+                20_000,
+                ...triggerPeriodic(26_350, 39_150, 1_100),
+                ...triggerPeriodic(43_400, 55_000, 1_100),
+            ],
         },
         {
             type: FireworkType.Shotburst, // 11
@@ -841,7 +877,7 @@ export const SENAT_LOCATION: Location = {
         {
             action: 'update',
             id: 'senat-spotlight-pilar-1',
-            brightness: 2,
+            brightness: 3,
             duration: 50,
             triggerAt: [
                 3_000,
@@ -864,7 +900,7 @@ export const SENAT_LOCATION: Location = {
         {
             action: 'update',
             id: 'senat-spotlight-pilar-2',
-            brightness: 2,
+            brightness: 3,
             duration: 50,
             triggerAt: [
                 3_000,
@@ -887,7 +923,7 @@ export const SENAT_LOCATION: Location = {
         {
             action: 'update',
             id: 'senat-spotlight-pilar-3',
-            brightness: 2,
+            brightness: 3,
             duration: 50,
             triggerAt: [
                 3_000,
@@ -910,7 +946,7 @@ export const SENAT_LOCATION: Location = {
         {
             action: 'update',
             id: 'senat-spotlight-pilar-4',
-            brightness: 2,
+            brightness: 3,
             duration: 50,
             triggerAt: [
                 3_000,
@@ -933,7 +969,7 @@ export const SENAT_LOCATION: Location = {
         {
             action: 'update',
             id: 'senat-spotlight-pilar-5',
-            brightness: 2,
+            brightness: 3,
             duration: 50,
             triggerAt: [
                 3_000,
@@ -956,7 +992,7 @@ export const SENAT_LOCATION: Location = {
         {
             action: 'update',
             id: 'senat-spotlight-pilar-6',
-            brightness: 2,
+            brightness: 3,
             duration: 50,
             triggerAt: [
                 3_000,
@@ -979,7 +1015,7 @@ export const SENAT_LOCATION: Location = {
         {
             action: 'update',
             id: 'senat-spotlight-pilar-7',
-            brightness: 2,
+            brightness: 3,
             duration: 50,
             triggerAt: [
                 3_000,
@@ -1002,7 +1038,7 @@ export const SENAT_LOCATION: Location = {
         {
             action: 'update',
             id: 'senat-spotlight-pilar-8',
-            brightness: 2,
+            brightness: 3,
             duration: 50,
             triggerAt: [
                 3_350,
@@ -1025,7 +1061,7 @@ export const SENAT_LOCATION: Location = {
         {
             action: 'update',
             id: 'senat-spotlight-pilar-9',
-            brightness: 2,
+            brightness: 3,
             duration: 50,
             triggerAt: [
                 3_350,
@@ -1048,7 +1084,7 @@ export const SENAT_LOCATION: Location = {
         {
             action: 'update',
             id: 'senat-spotlight-pilar-10',
-            brightness: 2,
+            brightness: 3,
             duration: 50,
             triggerAt: [
                 3_350,
@@ -1071,7 +1107,7 @@ export const SENAT_LOCATION: Location = {
         {
             action: 'update',
             id: 'senat-spotlight-pilar-11',
-            brightness: 2,
+            brightness: 3,
             duration: 50,
             triggerAt: [
                 3_350,
@@ -1094,7 +1130,7 @@ export const SENAT_LOCATION: Location = {
         {
             action: 'update',
             id: 'senat-spotlight-pilar-12',
-            brightness: 2,
+            brightness: 3,
             duration: 50,
             triggerAt: [
                 3_350,
@@ -1117,7 +1153,7 @@ export const SENAT_LOCATION: Location = {
         {
             action: 'update',
             id: 'senat-spotlight-pilar-13',
-            brightness: 2,
+            brightness: 3,
             duration: 50,
             triggerAt: [
                 3_350,
@@ -1140,7 +1176,7 @@ export const SENAT_LOCATION: Location = {
         {
             action: 'update',
             id: 'senat-spotlight-pilar-14',
-            brightness: 2,
+            brightness: 3,
             duration: 50,
             triggerAt: [
                 3_350,
