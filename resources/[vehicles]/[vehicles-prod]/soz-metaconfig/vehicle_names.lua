@@ -58,6 +58,8 @@ Citizen.CreateThread(function()
     AddTextEntryByHash(GetHashKey('SASP1_LIV_1'), "SASP Livery")
     AddTextEntryByHash(GetHashKey('volatus_sign_1'), "Default")
     AddTextEntryByHash(GetHashKey('volatus_sign_2'), "GOUV")
+    AddTextEntryByHash(GetHashKey('polgreen_livery23'), "SASP")
+    AddTextEntryByHash(GetHashKey('POLGRE_LIV23'), "SASP")
 
     AddTextEntryByHash(GetHashKey('POLICE_ANTENNA'), "Antenna")
     AddTextEntryByHash(GetHashKey('POLICE_DIVIDER'), "Divider")
