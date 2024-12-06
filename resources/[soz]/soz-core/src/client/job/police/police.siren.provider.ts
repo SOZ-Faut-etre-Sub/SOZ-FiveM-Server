@@ -64,6 +64,12 @@ export const VehicleWithSirens = {
     // policeold
     [GetHashKey('policeold1')]: true,
     [GetHashKey('policeold2')]: true,
+    // policenew
+    [GetHashKey('polimpaler6')]: true,
+    [GetHashKey('poldominator10')]: true,
+    [GetHashKey('polimpaler5')]: true,
+    [GetHashKey('polgreenwood')]: true,
+    [GetHashKey('poldorado')]: true,
 };
 
 @Provider()

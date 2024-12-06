@@ -721,6 +721,13 @@ export const VEHICLE_CONFIGURATION_BY_VEHICLE_MODEL: Record<number, Partial<Inve
     [joaat('policeold1')]: { maxWeight: 80000 },
     [joaat('policeold2')]: { maxWeight: 80000 },
 
+    // policenew
+    [joaat('polimpaler6')]: { maxWeight: 80000 },
+    [joaat('poldominator10')]: { maxWeight: 80000 },
+    [joaat('polimpaler5')]: { maxWeight: 80000 },
+    [joaat('polgreenwood')]: { maxWeight: 80000 },
+    [joaat('poldorado')]: { maxWeight: 80000 },
+
     // LSPD
     [joaat('police')]: { maxWeight: 60000 },
     [joaat('police2')]: { maxWeight: 60000 },

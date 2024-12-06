@@ -58,6 +58,12 @@ export const RadarAllowedVehicle: number[] = [
     // policeold
     GetHashKey('policeold1'),
     GetHashKey('policeold2'),
+    // policenew
+    GetHashKey('polimpaler6'),
+    GetHashKey('poldominator10'),
+    GetHashKey('polimpaler5'),
+    GetHashKey('polgreenwood'),
+    GetHashKey('poldorado'),
 ];
 
 export const RadarInformedVehicle: number[] = [
@@ -100,4 +106,10 @@ export const RadarInformedVehicle: number[] = [
     // policeold
     GetHashKey('policeold1'),
     GetHashKey('policeold2'),
+    // policenew
+    GetHashKey('polimpaler6'),
+    GetHashKey('poldominator10'),
+    GetHashKey('polimpaler5'),
+    GetHashKey('polgreenwood'),
+    GetHashKey('poldorado'),
 ];

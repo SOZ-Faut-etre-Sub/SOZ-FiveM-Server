@@ -119,6 +119,11 @@ const VEHICLE_HAS_RADIO = [
     'coach2',
     'policeold1',
     'policeold2',
+    'polimpaler6',
+    'poldominator10',
+    'polimpaler5',
+    'polgreenwood',
+    'poldorado',
 ];
 
 const DISALLOWED_VEHICLE_MODELS = {
