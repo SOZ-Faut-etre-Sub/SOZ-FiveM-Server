@@ -389,7 +389,9 @@ export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps
                         width: `${inventorySize.width + 10}px`,
                     }}
                 >
-                    <GameCanvasBox blur={false}>{children}</GameCanvasBox>
+                    <GameCanvasBox blur={false} cantBeHidden>
+                        {children}
+                    </GameCanvasBox>
                 </div>
                 {description}
             </div>
