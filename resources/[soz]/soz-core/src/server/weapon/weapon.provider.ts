@@ -337,7 +337,7 @@ export class WeaponProvider {
     }
 
     @OnEvent(ServerEvent.WEAPON_GET_SNOW)
-    public async snow(source: number) {
+    public async snow(source: number, curWeapon: InventoryItem) {
         if (!this.store.getState().global.snow) {
             this.notifier.notify(source, 'Où tu as vu de la neige ???', 'error');
             return;
@@ -349,7 +349,10 @@ export class WeaponProvider {
             return;
         }
 
-        const weapon = inventory.getItem('weapon_snowball');
+        //Updating ammo of equipped weapon is pain as display is not updated, so create a new one instead
+        const weapon = inventory.findItem(
+            item => item.name === 'weapon_snowball' && (!curWeapon || item.slot != curWeapon.slot)
+        );
 
         if (weapon) {
             if (weapon.metadata.ammo >= 10) {
