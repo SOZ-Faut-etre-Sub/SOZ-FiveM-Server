@@ -32,6 +32,8 @@ exps('setPhoneVisible', async (bool: boolean | number) => {
 // Getter equivalent of above
 exps('isPhoneVisible', () => global.isPhoneOpen);
 
+exps('hasAnActiveCall', () => callService.hasAnActiveCall());
+
 exps('setPhoneFocus', (bool: boolean) => {
     SetNuiFocus(bool, bool);
     SetNuiFocusKeepInput(bool);

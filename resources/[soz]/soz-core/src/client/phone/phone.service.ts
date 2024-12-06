@@ -8,6 +8,10 @@ export class PhoneService {
         return exports['soz-phone'].isPhoneVisible();
     }
 
+    hasAnActiveCall(): boolean {
+        return exports['soz-phone'].hasAnActiveCall();
+    }
+
     setPhoneFocus(status: boolean): void {
         exports['soz-phone'].setPhoneFocus(status);
     }
