@@ -1,5 +1,6 @@
 import { uuidv4 } from '@core/utils';
 import { ItemService } from '@public/server/item/item.service';
+import { ServerEvent } from '@public/shared/event';
 import { DrugPotItem, Item } from '@public/shared/item';
 import { Err, Ok, Result } from '@public/shared/result';
 import { addDays, addMinutes, startOfDay, startOfMinute } from 'date-fns';
@@ -314,6 +315,10 @@ export class Inventory {
 
         this._items[slot] = inventoryItem;
         this._hasChanges = true;
+
+        if (this._type == InventoryType.Trunk) {
+            TriggerEvent(ServerEvent.POLICE_DRUG_IN_TRUNK, this.id, item);
+        }
 
         return inventoryItem;
     }
