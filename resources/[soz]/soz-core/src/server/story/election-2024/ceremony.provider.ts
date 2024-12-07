@@ -29,7 +29,7 @@ export class Election2024CeremonyProvider {
         this.showRunning = true;
 
         TriggerClientEvent(ClientEvent.CEREMONY_CREATE_CAMERA, -1);
-        await wait(10_000);
+        await wait(5_000);
 
         this.npcProvider.disableNPC(true);
 

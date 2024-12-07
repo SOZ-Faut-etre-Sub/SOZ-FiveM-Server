@@ -8,11 +8,10 @@ import { Tick } from '../../../core/decorators/tick';
 import { SozRole } from '../../../core/permissions';
 import { wait } from '../../../core/utils';
 import { ClientEvent } from '../../../shared/event/client';
-import { add2Vector3, getDistance, Vector3 } from '../../../shared/polyzone/vector';
+import { getDistance, Vector3 } from '../../../shared/polyzone/vector';
 import { CameraService } from '../../camera';
 import { HudStateProvider } from '../../hud/hud.state.provider';
 import { NuiDispatch } from '../../nui/nui.dispatch';
-import { ObjectService } from '../../object/object.service';
 import { FireworkProvider } from '../../world/firework.provider';
 import { SpotlightProvider } from '../../world/spotlight.provider';
 
@@ -20,9 +19,6 @@ import { SpotlightProvider } from '../../world/spotlight.provider';
 export class Election2024CeremonyProvider {
     @Inject(CameraService)
     private readonly cameraService: CameraService;
-
-    @Inject(ObjectService)
-    private readonly objectService: ObjectService;
 
     @Inject(NuiDispatch)
     private readonly nuiDispatch: NuiDispatch;
@@ -36,8 +32,8 @@ export class Election2024CeremonyProvider {
     @Inject(HudStateProvider)
     private readonly hudStateProvider: HudStateProvider;
 
-    private readonly skyCameraPosition: Vector3 = [-417.33, 1153.93, 3000.0];
-    private readonly skyCameraTarget: Vector3 = [-351.17, 1171.26, 1000.0];
+    private readonly startCameraPosition: Vector3 = [-547.84, -686.97, 51.28];
+    private readonly startCameraTarget: Vector3 = [-554.47, -599.45, 40.83];
 
     private debug = false;
     private camera: number;
@@ -102,29 +98,14 @@ export class Election2024CeremonyProvider {
 
     @OnEvent(ClientEvent.CEREMONY_CREATE_CAMERA)
     async createCamera() {
-        const playerPosition = GetEntityCoords(PlayerPedId(), true) as Vector3;
-
-        this.camera = this.cameraService.createCamera(add2Vector3(playerPosition, [0, 0, 1]), 80);
+        this.camera = this.cameraService.createCamera(this.startCameraPosition, 80);
         this.cameraService.setCameraActive(this.camera, true);
-        this.cameraService.setCameraPointAt(this.camera, this.skyCameraTarget);
-
-        this.cameraService.renderCamera();
+        this.cameraService.setCameraPointAt(this.camera, this.startCameraTarget);
 
         this.hudStateProvider.setHudVisible(false);
-        this.hudStateProvider.setCinematicMode(true, 3000);
+        this.hudStateProvider.setCinematicMode(true, 5_000);
 
-        this.cameraService.updateCameraPosition(
-            this.camera,
-            add2Vector3(playerPosition, [0, 0, 1000]),
-            [0, 0, 0],
-            5_000
-        );
-        this.cameraService.setCameraPointAt(this.camera, playerPosition);
-
-        await wait(5_000);
-
-        this.cameraService.updateCameraPosition(this.camera, this.skyCameraPosition, [0, 0, 0], 5_000);
-        this.cameraService.setCameraPointAt(this.camera, this.skyCameraTarget);
+        this.cameraService.renderCamera(5_000);
     }
 
     @OnEvent(ClientEvent.CEREMONY_SET_CAMERA)
@@ -148,11 +129,6 @@ export class Election2024CeremonyProvider {
 
     @OnEvent(ClientEvent.CEREMONY_DELETE_CAMERA)
     async deleteCamera() {
-        this.cameraService.updateCameraPosition(this.camera, this.skyCameraPosition, [0, 0, 0], 5_000);
-        this.cameraService.setCameraPointAt(this.camera, this.skyCameraTarget);
-
-        await wait(5_000);
-
         DoScreenFadeOut(500);
         await wait(500);
 
@@ -160,7 +136,7 @@ export class Election2024CeremonyProvider {
         this.hudStateProvider.setHudVisible(true);
         this.hudStateProvider.setCinematicMode(false);
 
-        await wait(500);
+        await wait(1000);
         DoScreenFadeIn(500);
     }
 
