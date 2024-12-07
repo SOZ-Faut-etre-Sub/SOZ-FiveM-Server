@@ -11,6 +11,15 @@ const spotlightDefault = {
     roundness: 2,
 };
 
+const globalLightDefault = {
+    color: [255, 255, 255] as Vector3,
+    distance: 50,
+    radius: 40,
+    duration: 50,
+    brightness: 2,
+    roundness: 0,
+};
+
 const colorBlue = [10, 49, 255] as Vector3;
 const colorRed = [255, 25, 66] as Vector3;
 
@@ -385,9 +394,53 @@ export const LSMC_LOCATION: Location = {
         {
             action: 'add',
             id: 'lsmc-spotlight-5',
-            position: [336.0011, -1446.61121, 30.6181221],
+            position: [336.0011, -1446.61121, 20.6181221],
             target: [340.262177, -1441.49219, 65.19251],
             ...spotlightDefault,
+            color: colorRed,
+            triggerAt: 2_100,
+        },
+        {
+            action: 'add',
+            id: 'lsmc-spotlight-6',
+            position: [350.2458, -1470.4408, 28.36135],
+            target: [322.7048, -1470.80566, 41.6090164],
+            ...globalLightDefault,
+            color: colorBlue,
+            triggerAt: 2_100,
+        },
+        {
+            action: 'add',
+            id: 'lsmc-spotlight-7',
+            position: [381.123016, -1456.696, 22.7501373],
+            target: [368.571838, -1447.16235, 71.04322],
+            ...globalLightDefault,
+            triggerAt: 2_100,
+        },
+        {
+            action: 'add',
+            id: 'lsmc-spotlight-8',
+            position: [408.048645, -1425.038, 33.3093071],
+            target: [394.275574, -1416.64221, 71.04322],
+            ...globalLightDefault,
+            color: colorRed,
+            triggerAt: 2_100,
+        },
+        {
+            action: 'add',
+            id: 'lsmc-spotlight-9',
+            position: [258.9968, -1491.50037, 36.3140526],
+            target: [285.7824, -1455.01819, 36.3140526],
+            ...globalLightDefault,
+            color: colorBlue,
+            triggerAt: 2_100,
+        },
+        {
+            action: 'add',
+            id: 'lsmc-spotlight-10',
+            position: [275.292, -1507.62817, 36.3140526],
+            target: [307.273956, -1473.07068, 36.3140526],
+            ...globalLightDefault,
             color: colorRed,
             triggerAt: 2_100,
         },
@@ -427,6 +480,41 @@ export const LSMC_LOCATION: Location = {
             duration: 50,
             triggerAt: [2_400, 3_300, 6_200, 7_600],
         },
+        {
+            action: 'update',
+            id: 'lsmc-spotlight-6',
+            brightness: 0,
+            duration: 50,
+            triggerAt: [2_400, 3_100, 6_200, 7_300],
+        },
+        {
+            action: 'update',
+            id: 'lsmc-spotlight-7',
+            brightness: 0,
+            duration: 50,
+            triggerAt: [2_400, 3_300, 6_200, 7_600],
+        },
+        {
+            action: 'update',
+            id: 'lsmc-spotlight-8',
+            brightness: 0,
+            duration: 50,
+            triggerAt: [2_400, 3_300, 6_200, 7_600],
+        },
+        {
+            action: 'update',
+            id: 'lsmc-spotlight-9',
+            brightness: 0,
+            duration: 50,
+            triggerAt: [2_400, 3_100, 6_200, 7_300],
+        },
+        {
+            action: 'update',
+            id: 'lsmc-spotlight-10',
+            brightness: 0,
+            duration: 50,
+            triggerAt: [2_400, 3_300, 6_200, 7_600],
+        },
         // ---
         {
             action: 'update',
@@ -459,6 +547,41 @@ export const LSMC_LOCATION: Location = {
         {
             action: 'update',
             id: 'lsmc-spotlight-5',
+            brightness: 2,
+            duration: 50,
+            triggerAt: [3_100, 3_600, 6_400, 7_300, 7_800],
+        },
+        {
+            action: 'update',
+            id: 'lsmc-spotlight-6',
+            brightness: 2,
+            duration: 50,
+            triggerAt: [3_300, 3_600, 6_400, 7_600],
+        },
+        {
+            action: 'update',
+            id: 'lsmc-spotlight-7',
+            brightness: 2,
+            duration: 50,
+            triggerAt: [3_100, 3_600, 6_400, 7_300, 7_800],
+        },
+        {
+            action: 'update',
+            id: 'lsmc-spotlight-8',
+            brightness: 2,
+            duration: 50,
+            triggerAt: [3_100, 3_600, 6_400, 7_300, 7_800],
+        },
+        {
+            action: 'update',
+            id: 'lsmc-spotlight-9',
+            brightness: 2,
+            duration: 50,
+            triggerAt: [3_300, 3_600, 6_400, 7_600],
+        },
+        {
+            action: 'update',
+            id: 'lsmc-spotlight-10',
             brightness: 2,
             duration: 50,
             triggerAt: [3_100, 3_600, 6_400, 7_300, 7_800],
