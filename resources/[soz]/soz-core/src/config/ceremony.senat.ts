@@ -7,7 +7,7 @@ const pilarSpotlightDefault = {
     distance: 30,
     radius: 5,
     duration: 50,
-    brightness: 3,
+    brightness: 10,
     roundness: 5,
 };
 
@@ -877,7 +877,7 @@ export const SENAT_LOCATION: Location = {
         {
             action: 'update',
             id: 'senat-spotlight-pilar-1',
-            brightness: 3,
+            brightness: 10,
             duration: 50,
             triggerAt: [
                 3_000,
@@ -900,7 +900,7 @@ export const SENAT_LOCATION: Location = {
         {
             action: 'update',
             id: 'senat-spotlight-pilar-2',
-            brightness: 3,
+            brightness: 10,
             duration: 50,
             triggerAt: [
                 3_000,
@@ -923,7 +923,7 @@ export const SENAT_LOCATION: Location = {
         {
             action: 'update',
             id: 'senat-spotlight-pilar-3',
-            brightness: 3,
+            brightness: 10,
             duration: 50,
             triggerAt: [
                 3_000,
@@ -946,7 +946,7 @@ export const SENAT_LOCATION: Location = {
         {
             action: 'update',
             id: 'senat-spotlight-pilar-4',
-            brightness: 3,
+            brightness: 10,
             duration: 50,
             triggerAt: [
                 3_000,
@@ -969,7 +969,7 @@ export const SENAT_LOCATION: Location = {
         {
             action: 'update',
             id: 'senat-spotlight-pilar-5',
-            brightness: 3,
+            brightness: 10,
             duration: 50,
             triggerAt: [
                 3_000,
@@ -992,7 +992,7 @@ export const SENAT_LOCATION: Location = {
         {
             action: 'update',
             id: 'senat-spotlight-pilar-6',
-            brightness: 3,
+            brightness: 10,
             duration: 50,
             triggerAt: [
                 3_000,
@@ -1015,7 +1015,7 @@ export const SENAT_LOCATION: Location = {
         {
             action: 'update',
             id: 'senat-spotlight-pilar-7',
-            brightness: 3,
+            brightness: 10,
             duration: 50,
             triggerAt: [
                 3_000,
@@ -1038,7 +1038,7 @@ export const SENAT_LOCATION: Location = {
         {
             action: 'update',
             id: 'senat-spotlight-pilar-8',
-            brightness: 3,
+            brightness: 10,
             duration: 50,
             triggerAt: [
                 3_350,
@@ -1061,7 +1061,7 @@ export const SENAT_LOCATION: Location = {
         {
             action: 'update',
             id: 'senat-spotlight-pilar-9',
-            brightness: 3,
+            brightness: 10,
             duration: 50,
             triggerAt: [
                 3_350,
@@ -1084,7 +1084,7 @@ export const SENAT_LOCATION: Location = {
         {
             action: 'update',
             id: 'senat-spotlight-pilar-10',
-            brightness: 3,
+            brightness: 10,
             duration: 50,
             triggerAt: [
                 3_350,
@@ -1107,7 +1107,7 @@ export const SENAT_LOCATION: Location = {
         {
             action: 'update',
             id: 'senat-spotlight-pilar-11',
-            brightness: 3,
+            brightness: 10,
             duration: 50,
             triggerAt: [
                 3_350,
@@ -1130,7 +1130,7 @@ export const SENAT_LOCATION: Location = {
         {
             action: 'update',
             id: 'senat-spotlight-pilar-12',
-            brightness: 3,
+            brightness: 10,
             duration: 50,
             triggerAt: [
                 3_350,
@@ -1153,7 +1153,7 @@ export const SENAT_LOCATION: Location = {
         {
             action: 'update',
             id: 'senat-spotlight-pilar-13',
-            brightness: 3,
+            brightness: 10,
             duration: 50,
             triggerAt: [
                 3_350,
@@ -1176,7 +1176,7 @@ export const SENAT_LOCATION: Location = {
         {
             action: 'update',
             id: 'senat-spotlight-pilar-14',
-            brightness: 3,
+            brightness: 10,
             duration: 50,
             triggerAt: [
                 3_350,
