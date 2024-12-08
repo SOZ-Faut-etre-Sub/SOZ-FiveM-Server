@@ -324,9 +324,9 @@ export class PawlHarvestProvider {
             }
         );
 
-        if (!completed) {
-            await this.weaponProvider.clearCurrentWeapon();
+        await this.weaponProvider.clearCurrentWeapon();
 
+        if (!completed) {
             return;
         }
 

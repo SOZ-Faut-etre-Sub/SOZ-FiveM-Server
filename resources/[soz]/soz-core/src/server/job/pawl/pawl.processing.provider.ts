@@ -90,16 +90,26 @@ export class PawlProcessingProvider {
             const remaining = end - Date.now();
 
             if (remaining > 0) {
-                this.notifier.notify(
-                    source,
-                    `Il reste ${Math.round(remaining / 1000)} secondes avant la fin du traitement de l'arbre.`,
-                    'info'
-                );
+                const remainingSeconds = Math.round(remaining / 1000);
+                const remainingMinutes = Math.floor(remainingSeconds / 60);
+                const remainingSecondsFormatted = remainingSeconds % 60;
+
+                if (remainingMinutes === 0) {
+                    this.notifier.notify(
+                        source,
+                        `Il reste ${remainingSecondsFormatted} seconde(s) avant la fin du traitement de l'arbre.`,
+                        'info'
+                    );
+                } else {
+                    this.notifier.notify(
+                        source,
+                        `Il reste ${remainingMinutes} minute(s) et ${remainingSecondsFormatted} seconde(s) avant la fin du traitement de l'arbre.`,
+                        'info'
+                    );
+                }
 
                 return;
             }
-
-            return;
         }
 
         this.notifier.notify(source, "Aucun traitement n'est en cours.", 'info');
