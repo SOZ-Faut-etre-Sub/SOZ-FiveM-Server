@@ -354,10 +354,9 @@ export class PropsProvider {
         if (!collection) {
             this.notifier.notify(
                 source,
-                `Impossible de modifier l'objet ${prop.id} car sa collection ${collectionName} n'existe pas.`,
-                'error'
+                `L'objet ${prop.id} a un conflit de collection : ${collectionName} n'existe pas/plus.`,
+                'warning'
             );
-            return;
         }
 
         await this.prismaService.placed_prop.update({
