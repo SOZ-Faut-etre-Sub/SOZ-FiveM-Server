@@ -27,12 +27,17 @@ export const Election: FunctionComponent = () => {
         }
 
         const now = audioCtx.current.currentTime;
+
         gain.current.gain.setValueAtTime(current, now);
-        gain.current.gain.linearRampToValueAtTime(value / 50, now + 1);
 
         if (value == 0) {
-            gain.current.gain.linearRampToValueAtTime(0, now + 1);
-            setTimeout(() => audioElement.pause(), 1000);
+            gain.current.gain.linearRampToValueAtTime(current / 2, now + 3);
+            setTimeout(() => {
+                audioElement.pause();
+                gain.current.gain.value = 0;
+            }, 5_000);
+        } else {
+            gain.current.gain.linearRampToValueAtTime(value / 50, now + 2);
         }
     }
 

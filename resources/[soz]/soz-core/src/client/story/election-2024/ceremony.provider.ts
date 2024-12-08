@@ -208,12 +208,14 @@ export class Election2024CeremonyProvider {
             }
         }
 
+        if (location.music) {
+            setTimeout(async () => {
+                this.nuiDispatch.dispatch('election', location.music.name, 0);
+            }, location.duration - 2_000);
+        }
+
         setTimeout(async () => {
             DoScreenFadeOut(500);
-
-            if (location.music) {
-                this.nuiDispatch.dispatch('election', location.music.name, 0);
-            }
 
             for (const spotlight of location.spotlights) {
                 setTimeout(async () => {

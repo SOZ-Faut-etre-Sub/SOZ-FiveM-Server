@@ -5,7 +5,7 @@ import { Vector3 } from '../shared/polyzone/vector';
 @Injectable()
 export class CameraService {
     public createCamera(position: Vector3, fov: number = 60) {
-        return CreateCamWithParams(
+        const cam = CreateCamWithParams(
             'DEFAULT_SCRIPTED_CAMERA',
             position[0],
             position[1],
@@ -17,6 +17,8 @@ export class CameraService {
             false,
             0
         );
+        SetFocusPosAndVel(position[0], position[1], position[2], 0, 0, 0);
+        return cam;
     }
 
     public setupCamera(position: Vector3, target: Vector3) {
