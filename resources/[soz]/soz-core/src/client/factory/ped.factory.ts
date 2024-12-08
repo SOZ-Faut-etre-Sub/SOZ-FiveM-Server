@@ -3,11 +3,14 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { uuidv4 } from '@core/utils';
 import { AnimationProps } from '@public/shared/animation';
+import { Outfit } from '@public/shared/cloth';
 import { ClientEvent } from '@public/shared/event/client';
 import { getChunkId } from '@public/shared/grid';
 import { InventoryItem } from '@public/shared/inventory';
+import { Skin } from '@public/shared/player';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
+import { ClothingService } from '../clothing/clothing.service';
 import { ResourceLoader } from '../repository/resource.loader';
 
 export type Ped = {
@@ -17,11 +20,8 @@ export type Ped = {
     id?: string;
     components?: { [key: number]: [number, number, number] };
     props?: { [key: number]: [number, number, number] };
-    face?: { [key: string]: number };
-    hair?: { [key: string]: number | any };
-    makeup?: { [key: string]: number };
-    modelCustomization?: { [key: string]: number };
-    tattoos?: { collection: number; overlay: number }[];
+    outfit?: Outfit;
+    skin?: Skin;
     freeze?: boolean;
     invincible?: boolean;
     blockevents?: boolean;
@@ -98,6 +98,9 @@ export class PedFactory {
 
     @Inject(ResourceLoader)
     private resourceLoader: ResourceLoader;
+
+    @Inject(ClothingService)
+    private clothingService: ClothingService;
 
     public getPedByEntity(entity: number): GridPed | null {
         for (const ped of Object.values(this.loadedPeds)) {
@@ -266,72 +269,131 @@ export class PedFactory {
 
         if (ped.components) {
             for (const [key, value] of Object.entries(ped.components)) {
-                SetPedComponentVariation(pedId, Number(key), value[0], value[1], value[2]);
+                this.clothingService.applyPedComponentWithFix(pedId, Number(key), {
+                    Drawable: value[0],
+                    Texture: value[1],
+                    Palette: value[2],
+                });
             }
         }
 
         if (ped.props) {
             for (const [key, value] of Object.entries(ped.props)) {
-                SetPedPropIndex(pedId, Number(key), value[0], value[1], true);
+                this.clothingService.applyPedProp(pedId, Number(key), {
+                    Drawable: value[0],
+                    Texture: value[1],
+                });
             }
         }
 
-        if (ped.tattoos) {
-            Object.entries(ped.tattoos).forEach(([, tattoo]) => {
-                AddPedDecorationFromHashes(pedId, tattoo.collection, tattoo.overlay);
-            });
+        if (ped.outfit) {
+            this.clothingService.applyPedOutfit(pedId, ped.outfit);
         }
 
-        if (ped.modelCustomization) {
-            SetPedHeadBlendData(
-                pedId,
-                ped.modelCustomization.Father,
-                ped.modelCustomization.Mother,
-                0,
-                ped.modelCustomization.Father,
-                ped.modelCustomization.Mother,
-                0,
-                ped.modelCustomization.ShapeMix,
-                ped.modelCustomization.SkinMix,
-                0,
-                false
-            );
-        }
-
-        if (ped.face) {
-            SetPedEyeColor(pedId, ped.face['EyeColor']);
-
-            Object.entries(ped.face).forEach(([key, value]) => {
-                if (PedHeadOverlay[key]) {
-                    SetPedHeadOverlay(pedId, PedHeadOverlay[key], Number(value), 1.0);
-                }
-                if (PedFaceFeature[key]) {
-                    SetPedFaceFeature(pedId, PedFaceFeature[key], Number(value));
-                }
-            });
-        }
-
-        if (ped.hair) {
-            SetPedComponentVariation(pedId, 2, ped.hair.HairType, 0, 0);
-            SetPedHairColor(pedId, ped.hair.HairColor, ped.hair.HairSecondaryColor || 0);
-            SetPedHeadOverlay(pedId, 2, ped.hair.EyebrowType, ped.hair.EyebrowOpacity || 1.0);
-            SetPedHeadOverlayColor(pedId, 2, 1, ped.hair.EyebrowColor, 0);
-            SetPedHeadOverlay(pedId, 1, ped.hair.BeardType, ped.hair.BeardOpacity || 1.0);
-            SetPedHeadOverlayColor(pedId, 1, 1, ped.hair.BeardColor, 0);
-            SetPedHeadOverlay(pedId, 10, ped.hair.ChestHairType, ped.hair.ChestHairOpacity || 1.0);
-            SetPedHeadOverlayColor(pedId, 10, 1, ped.hair.ChestHairColor, 0);
-
-            if (ped.hair.Scalp) {
-                AddPedDecorationFromHashes(pedId, ped.hair.Scalp.Collection, ped.hair.Scalp.Overlay);
+        if (ped.skin) {
+            if (ped.skin.Tattoos) {
+                Object.entries(ped.skin.Tattoos).forEach(([, tattoo]) => {
+                    AddPedDecorationFromHashes(pedId, tattoo.Collection, tattoo.Overlay);
+                });
             }
-        }
 
-        if (ped.makeup) {
-            SetPedHeadOverlay(pedId, 8, ped.makeup.LipstickType, ped.makeup.LipstickOpacity || 1.0);
-            SetPedHeadOverlayColor(pedId, 8, 2, ped.makeup.LipstickColor, 0);
-            SetPedHeadOverlay(pedId, 5, ped.makeup.BlushType, ped.makeup.BlushOpacity || 1.0);
-            SetPedHeadOverlayColor(pedId, 5, 2, ped.makeup.BlushColor, 0);
-            SetPedHeadOverlay(pedId, 4, ped.makeup.FullMakeupType, ped.makeup.FullMakeupOpacity || 1.0);
+            if (ped.skin.Model) {
+                SetPedHeadBlendData(
+                    pedId,
+                    ped.skin.Model.Father,
+                    ped.skin.Model.Mother,
+                    0,
+                    ped.skin.Model.Father,
+                    ped.skin.Model.Mother,
+                    0,
+                    ped.skin.Model.ShapeMix,
+                    ped.skin.Model.SkinMix,
+                    0,
+                    false
+                );
+            }
+
+            if (ped.skin.FaceTrait) {
+                SetPedEyeColor(pedId, ped.skin.FaceTrait.EyeColor);
+
+                SetPedHeadOverlay(pedId, PedHeadOverlay.Blemishes, ped.skin.FaceTrait.Blemish, 1.0);
+                SetPedHeadOverlay(pedId, PedHeadOverlay.Ageing, ped.skin.FaceTrait.Ageing, 1.0);
+                SetPedHeadOverlay(pedId, PedHeadOverlay.Complexion, ped.skin.FaceTrait.Complexion, 1.0);
+                SetPedHeadOverlay(pedId, PedHeadOverlay.Moles, ped.skin.FaceTrait.Moles, 1.0);
+                SetPedHeadOverlay(pedId, PedHeadOverlay.BodyBlemishes, ped.skin.FaceTrait.BodyBlemish, 1.0);
+                SetPedHeadOverlay(pedId, PedHeadOverlay.AddBodyBlemishes, ped.skin.FaceTrait.AddBodyBlemish, 1.0);
+
+                SetPedFaceFeature(pedId, PedFaceFeature.EyebrowHigh, ped.skin.FaceTrait.EyebrowHigh);
+                SetPedFaceFeature(pedId, PedFaceFeature.EyebrowForward, ped.skin.FaceTrait.EyebrowForward);
+                SetPedFaceFeature(pedId, PedFaceFeature.EyesOpening, ped.skin.FaceTrait.EyesOpening);
+                SetPedFaceFeature(pedId, PedFaceFeature.CheeksBoneHigh, ped.skin.FaceTrait.CheeksBoneHigh);
+                SetPedFaceFeature(pedId, PedFaceFeature.CheeksBoneWidth, ped.skin.FaceTrait.CheeksBoneWidth);
+                SetPedFaceFeature(pedId, PedFaceFeature.CheeksWidth, ped.skin.FaceTrait.CheeksWidth);
+                SetPedFaceFeature(pedId, PedFaceFeature.ChimpBoneLength, ped.skin.FaceTrait.ChimpBoneLength);
+                SetPedFaceFeature(pedId, PedFaceFeature.ChimpBoneLowering, ped.skin.FaceTrait.ChimpBoneLower);
+                SetPedFaceFeature(pedId, PedFaceFeature.ChimpBoneWidth, ped.skin.FaceTrait.ChimpBoneWidth);
+                SetPedFaceFeature(pedId, PedFaceFeature.ChimpHole, ped.skin.FaceTrait.ChimpHole);
+                SetPedFaceFeature(pedId, PedFaceFeature.JawBoneBackLength, ped.skin.FaceTrait.JawBoneBackLength);
+                SetPedFaceFeature(pedId, PedFaceFeature.JawBoneWidth, ped.skin.FaceTrait.JawBoneWidth);
+                SetPedFaceFeature(pedId, PedFaceFeature.LipsThickness, ped.skin.FaceTrait.LipsThickness);
+                SetPedFaceFeature(pedId, PedFaceFeature.NeckThickness, ped.skin.FaceTrait.NeckThickness);
+                SetPedFaceFeature(pedId, PedFaceFeature.NoseBoneHigh, ped.skin.FaceTrait.NoseBoneHigh);
+                SetPedFaceFeature(pedId, PedFaceFeature.NoseBoneTwist, ped.skin.FaceTrait.NoseBoneTwist);
+                SetPedFaceFeature(pedId, PedFaceFeature.NosePeakLength, ped.skin.FaceTrait.NosePeakLength);
+                SetPedFaceFeature(pedId, PedFaceFeature.NosePeakLowering, ped.skin.FaceTrait.NosePeakLower);
+                SetPedFaceFeature(pedId, PedFaceFeature.NosePeakHeight, ped.skin.FaceTrait.NosePeakHeight);
+                SetPedFaceFeature(pedId, PedFaceFeature.NoseWidth, ped.skin.FaceTrait.NoseWidth);
+            }
+
+            if (ped.skin.Hair) {
+                SetPedComponentVariation(pedId, 2, ped.skin.Hair.HairType, 0, 0);
+                SetPedHairColor(pedId, ped.skin.Hair.HairColor, ped.skin.Hair.HairSecondaryColor || 0);
+                SetPedHeadOverlay(pedId, 2, ped.skin.Hair.EyebrowType, ped.skin.Hair.EyebrowOpacity || 1.0);
+                SetPedHeadOverlayColor(pedId, 2, 1, ped.skin.Hair.EyebrowColor, 0);
+                SetPedHeadOverlay(pedId, 1, ped.skin.Hair.BeardType, ped.skin.Hair.BeardOpacity || 1.0);
+                SetPedHeadOverlayColor(pedId, 1, 1, ped.skin.Hair.BeardColor, 0);
+                SetPedHeadOverlay(pedId, 10, ped.skin.Hair.ChestHairType, ped.skin.Hair.ChestHairOpacity || 1.0);
+                SetPedHeadOverlayColor(pedId, 10, 1, ped.skin.Hair.ChestHairColor, 0);
+
+                if (ped.skin.Hair.Scalp) {
+                    AddPedDecorationFromHashes(pedId, ped.skin.Hair.Scalp.Collection, ped.skin.Hair.Scalp.Overlay);
+                }
+            }
+
+            if (ped.skin.Makeup) {
+                SetPedHeadOverlay(
+                    pedId,
+                    PedHeadOverlay.Lipstick,
+                    ped.skin.Makeup.LipstickType,
+                    ped.skin.Makeup.LipstickOpacity || 1.0
+                );
+                SetPedHeadOverlayColor(pedId, PedHeadOverlay.Lipstick, 2, ped.skin.Makeup.LipstickColor, 0);
+                SetPedHeadOverlay(
+                    pedId,
+                    PedHeadOverlay.Blush,
+                    ped.skin.Makeup.BlushType,
+                    ped.skin.Makeup.BlushOpacity || 1.0
+                );
+                SetPedHeadOverlayColor(pedId, PedHeadOverlay.Blush, 2, ped.skin.Makeup.BlushColor, 0);
+                SetPedHeadOverlay(
+                    pedId,
+                    PedHeadOverlay.Makeup,
+                    ped.skin.Makeup.FullMakeupType,
+                    ped.skin.Makeup.FullMakeupOpacity || 1.0
+                );
+
+                if (ped.skin.Makeup.FullMakeupDefaultColor) {
+                    SetPedHeadOverlayColor(pedId, PedHeadOverlay.Makeup, 0, 0, 0);
+                } else {
+                    SetPedHeadOverlayColor(
+                        pedId,
+                        PedHeadOverlay.Makeup,
+                        2,
+                        ped.skin.Makeup.FullMakeupPrimaryColor,
+                        ped.skin.Makeup.FullMakeupSecondaryColor
+                    );
+                }
+            }
         }
 
         if (ped.freeze) {

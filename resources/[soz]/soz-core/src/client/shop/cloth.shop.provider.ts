@@ -11,7 +11,6 @@ import { CAYO } from '@public/shared/cayo';
 import { Component, GlovesItem } from '@public/shared/cloth';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
-import { PlayerPedHash } from '@public/shared/player';
 import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { ClothingShopID, ClothingShopItem } from '@public/shared/shop';
 
@@ -154,24 +153,7 @@ export class ClothingShopProvider {
 
         if (product.components && !product.correspondingDrawables) {
             for (const [compId, comp] of Object.entries(product.components)) {
-                let drawable = comp.Drawable;
-                const texture = comp.Texture;
-
-                if (
-                    Number(compId) == Component.Mask &&
-                    drawable >= 190 &&
-                    GetEntityModel(ped) == PlayerPedHash.Female
-                ) {
-                    drawable = drawable + 1;
-                }
-
-                SetPedComponentVariation(ped, parseInt(compId), drawable, texture, 0);
-                if (Number(compId) == Component.Mask) {
-                    const hair = this.clothingService.displayHairWithMask(drawable)
-                        ? this.playerService.getPlayer().skin.Hair.HairType
-                        : 0;
-                    SetPedComponentVariation(ped, Component.Hair, hair, 0, 0);
-                }
+                this.clothingService.applyComponentWithFix(parseInt(compId), comp);
             }
         }
         if (product.props) {
@@ -283,8 +265,8 @@ export class ClothingShopProvider {
     }
 
     @Exportable('DisplayHairWithMask')
-    displayHairWithMask(maskDrawable: number): boolean {
-        return this.clothingService.displayHairWithMask(maskDrawable);
+    displayHairWithMask(maskDrawable: number, collection: string): boolean {
+        return this.clothingService.displayHairWithMask(maskDrawable, collection);
     }
 
     @Exportable('GetGloves')

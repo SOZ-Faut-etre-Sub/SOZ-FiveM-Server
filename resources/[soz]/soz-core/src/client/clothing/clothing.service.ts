@@ -1,3 +1,5 @@
+import { PlayerPedHash } from '@public/shared/player';
+
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { Component, KeepHairWithMask, Outfit, OutfitItem, Prop } from '../../shared/cloth';
 import { PlayerService } from '../player/player.service';
@@ -7,55 +9,131 @@ export class ClothingService {
     @Inject(PlayerService)
     public playerService: PlayerService;
 
-    public applyComponent(component: Component, outfitItem: OutfitItem) {
-        SetPedComponentVariation(
-            PlayerPedId(),
-            Number(component),
-            Number(outfitItem.Drawable),
-            Number(outfitItem.Texture),
-            Number(outfitItem.Palette)
-        );
-    }
-
-    public displayHairWithMask(maskDrawable: number): boolean {
-        return KeepHairWithMask[maskDrawable];
-    }
-
-    public applyProp(prop: Prop, outfitItem: OutfitItem) {
-        if (outfitItem.Clear) {
-            ClearPedProp(PlayerPedId(), Number(prop));
+    public applyPedComponent(ped: number, component: Component, outfitItem: OutfitItem) {
+        if (outfitItem.Collection) {
+            SetPedCollectionComponentVariation(
+                ped,
+                Number(component),
+                outfitItem.Collection,
+                Number(outfitItem.Drawable),
+                Number(outfitItem.Texture),
+                Number(outfitItem.Palette)
+            );
         } else {
-            SetPedPropIndex(PlayerPedId(), Number(prop), outfitItem.Drawable || 0, outfitItem.Texture || 0, true);
+            SetPedComponentVariation(
+                ped,
+                Number(component),
+                Number(outfitItem.Drawable),
+                Number(outfitItem.Texture),
+                Number(outfitItem.Palette)
+            );
+        }
+    }
+
+    public applyComponent(component: Component, outfitItem: OutfitItem) {
+        this.applyPedComponent(PlayerPedId(), component, outfitItem);
+    }
+
+    public applyPedComponentWithFix(ped: number, component: Component, outfitItem: OutfitItem) {
+        if (outfitItem.Collection) {
+            SetPedCollectionComponentVariation(
+                ped,
+                Number(component),
+                outfitItem.Collection,
+                Number(outfitItem.Drawable),
+                Number(outfitItem.Texture),
+                Number(outfitItem.Palette)
+            );
+        } else {
+            let drawable = Number(outfitItem.Drawable);
+
+            if (Number(component) == Component.Mask && drawable >= 190 && GetEntityModel(ped) == PlayerPedHash.Female) {
+                drawable = drawable + 1;
+            }
+
+            SetPedComponentVariation(
+                ped,
+                Number(component),
+                drawable,
+                Number(outfitItem.Texture),
+                Number(outfitItem.Palette)
+            );
+        }
+
+        if (Number(component) == Component.Mask) {
+            let hair = 0;
+            let collection = '';
+            if (this.displayHairWithMask(outfitItem.Drawable, outfitItem.Collection)) {
+                hair = this.playerService.getPlayer().skin.Hair.HairType;
+                collection = this.playerService.getPlayer().skin.Hair.Collection;
+            }
+            if (collection) {
+                SetPedCollectionComponentVariation(ped, Component.Hair, collection, hair, 0, 0);
+            } else {
+                SetPedComponentVariation(ped, Component.Hair, hair, 0, 0);
+            }
+        }
+    }
+
+    public applyComponentWithFix(component: Component, outfitItem: OutfitItem) {
+        this.applyPedComponentWithFix(PlayerPedId(), component, outfitItem);
+    }
+
+    public displayHairWithMask(maskDrawable: number, collection: string): boolean {
+        return KeepHairWithMask[collection ?? 'base'][maskDrawable];
+    }
+
+    public applyPedProp(ped: number, prop: Prop, outfitItem: OutfitItem) {
+        const propFix = prop == Prop.Helmet ? Prop.Hat : Number(prop);
+        if (outfitItem.Clear) {
+            ClearPedProp(ped, propFix);
+        } else if (outfitItem.Collection) {
+            SetPedCollectionPropIndex(
+                ped,
+                propFix,
+                outfitItem.Collection,
+                outfitItem.Drawable || 0,
+                outfitItem.Texture || 0,
+                true
+            );
+        } else {
+            SetPedPropIndex(ped, propFix, outfitItem.Drawable || 0, outfitItem.Texture || 0, true);
+        }
+    }
+    public applyProp(prop: Prop, outfitItem: OutfitItem) {
+        this.applyPedProp(PlayerPedId(), prop, outfitItem);
+    }
+
+    public applyPedOutfit(ped: number, outfit: Outfit) {
+        for (const [componentIndex, component] of Object.entries(outfit.Components)) {
+            this.applyPedComponentWithFix(ped, Number(componentIndex), component);
+        }
+
+        for (const [propIndex, prop] of Object.entries(outfit.Props)) {
+            this.applyPedProp(ped, Number(propIndex), prop);
         }
     }
 
     public applyOutfit(outfit: Outfit) {
-        for (const [componentIndex, component] of Object.entries(outfit.Components)) {
-            this.applyComponent(Number(componentIndex), component);
-
-            if (Number(componentIndex) == Component.Mask) {
-                let hair = 0;
-                if (this.displayHairWithMask(component.Drawable)) {
-                    hair = this.playerService.getPlayer().skin.Hair.HairType;
-                }
-                SetPedComponentVariation(PlayerPedId(), Component.Hair, hair, 0, 0);
-            }
-        }
-
-        for (const [propIndex, prop] of Object.entries(outfit.Props)) {
-            this.applyProp(Number(propIndex), prop);
-        }
+        this.applyPedOutfit(PlayerPedId(), outfit);
     }
 
-    public getClothSet(): Outfit {
+    public getClothSet(ped?: number): Outfit {
+        if (ped == null) {
+            ped = PlayerPedId();
+        }
+
         const components: Outfit['Components'] = {};
 
         for (const componentIndex of Object.keys(Component).filter(key => !isNaN(Number(key)))) {
-            const componentId = Number(componentIndex);
-            const drawableId = GetPedDrawableVariation(PlayerPedId(), componentId);
-            const textureId = GetPedTextureVariation(PlayerPedId(), componentId);
+            const componentId = Number(componentIndex) as Component;
 
-            components[componentIndex] = {
+            const collection = GetPedDrawableVariationCollectionName(ped, componentId);
+            const drawableId = GetPedDrawableVariationCollectionLocalIndex(ped, componentId);
+            const textureId = GetPedTextureVariation(ped, componentId);
+
+            components[componentId] = {
+                Collection: collection,
                 Drawable: drawableId,
                 Texture: textureId,
                 Palette: 0,
@@ -65,8 +143,8 @@ export class ClothingService {
         const props: Outfit['Props'] = {};
         for (const propIndex of Object.values(Prop).filter(key => !isNaN(Number(key)))) {
             const propId = Number(propIndex);
-            const drawableId = GetPedPropIndex(PlayerPedId(), propId);
-            const textureId = GetPedPropTextureIndex(PlayerPedId(), propId);
+            const drawableId = GetPedPropIndex(ped, propId);
+            const textureId = GetPedPropTextureIndex(ped, propId);
 
             props[propIndex] = {
                 Drawable: drawableId,

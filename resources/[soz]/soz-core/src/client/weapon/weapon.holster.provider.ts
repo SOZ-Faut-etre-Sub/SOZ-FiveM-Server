@@ -4,9 +4,8 @@ import { Provider } from '@core/decorators/provider';
 import { wait } from '@core/utils';
 import { Tick } from '@public/core/decorators/tick';
 import { Component } from '@public/shared/cloth';
-import { VanillaComponentDrawableIndexMaxValue } from '@public/shared/drawable';
 import { JobType } from '@public/shared/job';
-import { PlayerPedHash } from '@public/shared/player';
+import { PlayerData, PlayerPedHash } from '@public/shared/player';
 
 import { AnimationService } from '../animation/animation.service';
 import { PlayerService } from '../player/player.service';
@@ -28,8 +27,8 @@ const UndershirtHolster: Record<PlayerPedHash, number> = {
 };
 
 const AccessoriesHolster: Record<PlayerPedHash, number> = {
-    [PlayerPedHash.Male]: VanillaComponentDrawableIndexMaxValue[PlayerPedHash.Male][Component.Accessories] + 4,
-    [PlayerPedHash.Female]: VanillaComponentDrawableIndexMaxValue[PlayerPedHash.Female][Component.Accessories] + 4,
+    [PlayerPedHash.Male]: 4,
+    [PlayerPedHash.Female]: 4,
 };
 
 @Provider()
@@ -47,6 +46,26 @@ export class WeaponHolsterProvider {
     public resetHolster() {
         this.inAnimation = false;
         this.currWeapon = GetHashKey('WEAPON_UNARMED');
+    }
+
+    private isFastAllowed(player: PlayerData, ped: number) {
+        if (AllowedJob.includes(player.job.id) && player.cloth_config.JobClothSet) {
+            return true;
+        }
+
+        if (UndershirtHolster[GetEntityModel(ped)] == GetPedDrawableVariation(ped, Component.Undershirt)) {
+            return true;
+        }
+
+        if (
+            AccessoriesHolster[GetEntityModel(ped)] ==
+                GetPedDrawableVariationCollectionLocalIndex(ped, Component.Accessories) &&
+            GetPedDrawableVariationCollectionName(ped, Component.Accessories) == 'soz_bcso'
+        ) {
+            return true;
+        }
+
+        return false;
     }
 
     @Tick(5)
@@ -72,14 +91,7 @@ export class WeaponHolsterProvider {
                 SetCurrentPedWeapon(ped, this.currWeapon, true);
 
                 if (this.currWeapon != GetHashKey('WEAPON_UNARMED')) {
-                    if (
-                        this.isWeaponHolsterable(this.currWeapon) &&
-                        ((AllowedJob.includes(player.job.id) && player.cloth_config.JobClothSet) ||
-                            UndershirtHolster[GetEntityModel(ped)] ==
-                                GetPedDrawableVariation(ped, Component.Undershirt) ||
-                            AccessoriesHolster[GetEntityModel(ped)] ==
-                                GetPedDrawableVariation(ped, Component.Accessories))
-                    ) {
+                    if (this.isWeaponHolsterable(this.currWeapon) && this.isFastAllowed(player, ped)) {
                         await this.putWeaponInHolster();
                     } else {
                         await this.putWeaponBehind();
@@ -88,14 +100,7 @@ export class WeaponHolsterProvider {
                 }
 
                 if (newWeap != GetHashKey('WEAPON_UNARMED')) {
-                    if (
-                        this.isWeaponHolsterable(newWeap) &&
-                        ((AllowedJob.includes(player.job.id) && player.cloth_config.JobClothSet) ||
-                            UndershirtHolster[GetEntityModel(ped)] ==
-                                GetPedDrawableVariation(ped, Component.Undershirt) ||
-                            AccessoriesHolster[GetEntityModel(ped)] ==
-                                GetPedDrawableVariation(ped, Component.Accessories))
-                    ) {
+                    if (this.isWeaponHolsterable(newWeap) && this.isFastAllowed(player, ped)) {
                         await this.drawWeaponFromHolster(ped, newWeap);
                     } else {
                         await this.drawWeaponFromBehind(ped, newWeap);
