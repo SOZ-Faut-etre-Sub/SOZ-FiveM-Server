@@ -1,11 +1,6 @@
 import { FireworkType } from '../shared/firework';
 import { Vector3 } from '../shared/polyzone/vector';
-import { BCSO_LOCATION } from './ceremony.bcso';
-import { LSMC_LOCATION } from './ceremony.lsmc';
-import { LSPD_LOCATION } from './ceremony.lspd';
-import { MANDATORY_LOCATION } from './ceremony.mandatory';
-import { SENAT_LOCATION } from './ceremony.senat';
-import { STONK_LOCATION } from './ceremony.stonk';
+import { FINAL_LOCATION } from './ceremony.final';
 
 export const CAMERA_TRANSITION_DURATION = 1_500;
 export const WAIT_BETWEEN_CEREMONY = 2_000;
@@ -52,13 +47,13 @@ export type Location = {
 };
 
 export const ALL_LOCATIONS: Record<string, Location> = {
-    bcso: BCSO_LOCATION,
-    lspd: LSPD_LOCATION,
-    lsmc: LSMC_LOCATION,
-    stonk: STONK_LOCATION,
-    mandatory: MANDATORY_LOCATION,
-    senat: SENAT_LOCATION,
-    // final: FINAL_LOCATION,
+    // bcso: BCSO_LOCATION,
+    // lspd: LSPD_LOCATION,
+    // lsmc: LSMC_LOCATION,
+    // stonk: STONK_LOCATION,
+    // mandatory: MANDATORY_LOCATION,
+    // senat: SENAT_LOCATION,
+    final: FINAL_LOCATION,
 };
 
 export function triggerPeriodic(start: number, end: number, padding: number) {

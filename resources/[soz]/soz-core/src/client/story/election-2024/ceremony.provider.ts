@@ -32,8 +32,8 @@ export class Election2024CeremonyProvider {
     @Inject(HudStateProvider)
     private readonly hudStateProvider: HudStateProvider;
 
-    private readonly startCameraPosition: Vector3 = [-547.84, -686.97, 51.28];
-    private readonly startCameraTarget: Vector3 = [-554.47, -599.45, 40.83];
+    private readonly startCameraPosition: Vector3 = [-557.12, -629.84, 48.63];
+    private readonly startCameraTarget: Vector3 = [-545.13, -688.23, 36.52];
 
     private debug = false;
     private camera: number;
@@ -145,13 +145,7 @@ export class Election2024CeremonyProvider {
         const location = ALL_LOCATIONS[locationName];
         if (!location) return;
 
-        if (locationName === 'final') {
-            this.moveCamera(location.camera, [0, 0, 0], 2_000);
-            this.cameraService.setCameraPointAt(this.camera, location.center);
-            await wait(2_000);
-        } else {
-            await this.setCamera(location.camera, location.center);
-        }
+        await this.setCamera(location.camera, location.center);
 
         if (location.music) {
             this.nuiDispatch.dispatch('election', location.music.name, location.music.volume);
