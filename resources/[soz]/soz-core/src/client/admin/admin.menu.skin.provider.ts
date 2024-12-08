@@ -1,7 +1,7 @@
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { Component, OutfitItem, Prop } from '../../shared/cloth';
+import { ClothingFields, CollectionInfo, Component, OutfitItem, Prop } from '../../shared/cloth';
 import { NuiEvent, ServerEvent } from '../../shared/event';
 import { Err, Ok } from '../../shared/result';
 import { ClipboardService } from '../clipboard.service';
@@ -150,5 +150,60 @@ export class AdminMenuSkinProvider {
         ) as Record<Prop, OutfitItem>;
 
         TriggerServerEvent(ServerEvent.ADMIN_SET_CLOTHES, { Components, Props });
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuClothCollectionFetch)
+    public async collectionData(): Promise<CollectionInfo> {
+        const ped = PlayerPedId();
+        const ret: CollectionInfo = {
+            data: {},
+            dlc: [],
+        };
+        const nbCollection = GetPedCollectionsCount(ped);
+        for (let i = 0; i < nbCollection; i++) {
+            const name = GetPedCollectionName(ped, i);
+            ret.dlc.push(name);
+            ret.data[i] = {};
+
+            ClothingFields.forEach((field, index) => {
+                const max =
+                    field.type == 'comp'
+                        ? GetNumberOfPedCollectionDrawableVariations(ped, field.index, name)
+                        : GetNumberOfPedCollectionPropDrawableVariations(ped, field.index, name);
+                ret.data[i][index] = {};
+                for (let u = 0; u < max; u++) {
+                    const isGen9 =
+                        field.type == 'comp' &&
+                        IsPedCollectionComponentVariationGen9Exclusive(ped, field.index, name, u);
+                    if (isGen9) {
+                        continue;
+                    }
+
+                    ret.data[i][index][u] =
+                        field.type == 'comp'
+                            ? GetNumberOfPedCollectionTextureVariations(ped, field.index, name, u)
+                            : GetNumberOfPedCollectionPropTextureVariations(ped, field.index, name, u);
+                }
+            });
+        }
+
+        return ret;
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuClothCollectionPreview)
+    public async collectionPreview(data) {
+        if (data.dlc == null) {
+            return;
+        }
+        if (data.index == null) {
+            return;
+        }
+
+        const ped = PlayerPedId();
+        if (data.type == 'comp') {
+            SetPedCollectionComponentVariation(ped, data.index, data.dlc, Number(data.drawable), data.texture, 0);
+        } else {
+            SetPedCollectionPropIndex(ped, data.index, data.dlc, Number(data.drawable), data.texture, true);
+        }
     }
 }

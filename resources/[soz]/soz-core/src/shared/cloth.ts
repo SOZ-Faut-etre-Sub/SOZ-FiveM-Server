@@ -157,6 +157,108 @@ export const KeepHairWithMask = {
         [234]: true,
         [235]: true,
     },
+    Male_freemode_valentines: {
+        [0]: true,
+        [1]: true,
+    },
+    Male_freemode_business: {
+        [0]: true,
+        [1]: true,
+        [2]: true,
+    },
+    Male_freemode_mpLTS: {
+        [1]: true,
+        [2]: true,
+    },
+    Male_xmas2: {
+        [2]: true,
+    },
+    Male_Heist: {
+        [1]: true,
+        [3]: true,
+        [8]: true,
+        [9]: true,
+        [10]: true,
+        [15]: true,
+        [16]: true,
+    },
+    Male_Apt01: {
+        [0]: true,
+    },
+    mp_m_xmas_03: {
+        [0]: true,
+        [1]: true,
+    },
+    mp_m_bikerdlc_01: {
+        [0]: true,
+    },
+    mp_m_importexport_01: {
+        [10]: true,
+    },
+    mp_m_gunrunning_01: {
+        [2]: true,
+        [4]: true,
+        [5]: true,
+    },
+    mp_m_smuggler_01: {
+        [1]: true,
+        [6]: true,
+        [10]: true,
+    },
+    mp_m_christmas2017: {
+        [0]: true,
+        [3]: true,
+        [6]: true,
+        [7]: true,
+    },
+    mp_m_battle: {
+        [0]: true,
+    },
+    mp_m_vinewood: {
+        [0]: true,
+    },
+    mp_m_heist3: {
+        [0]: true,
+        [1]: true,
+        [4]: true,
+        [5]: true,
+        [6]: true,
+        [8]: true,
+        [9]: true,
+        [15]: true,
+        [19]: true,
+    },
+    mp_m_sum: {
+        [3]: true,
+    },
+    mp_m_heist4: {
+        [1]: true,
+        [2]: true,
+    },
+    mp_m_sum2: {
+        [0]: true,
+        [1]: true,
+        [3]: true,
+        [4]: true,
+        [6]: true,
+        [8]: true,
+        [9]: true,
+    },
+    mp_m_christmas3: {
+        [0]: true,
+    },
+    mp_m_2023_01: {
+        [0]: true,
+        [1]: true,
+        [2]: true,
+        [3]: true,
+        [4]: true,
+    },
+    mp_m_2023_02: {
+        [4]: true,
+        [8]: true,
+        [9]: true,
+    },
 };
 
 export type PlayerCloakroomItem = {
@@ -186,4 +288,92 @@ export const ScubaOutfit: Record<PlayerPedHash, Outfit> = {
         },
         Props: {},
     },
+};
+
+export const ClothingFields: { label: string; index: number; type: 'comp' | 'prop' }[] = [
+    {
+        index: 1,
+        label: 'Masque',
+        type: 'comp',
+    },
+    {
+        index: 2,
+        label: 'Coupe de cheveux',
+        type: 'comp',
+    },
+    {
+        index: 3,
+        label: 'Torse',
+        type: 'comp',
+    },
+    {
+        index: 4,
+        label: 'Jambes',
+        type: 'comp',
+    },
+    {
+        index: 5,
+        label: 'Sac',
+        type: 'comp',
+    },
+    {
+        index: 6,
+        label: 'Chaussures',
+        type: 'comp',
+    },
+    {
+        index: 7,
+        label: 'Accessoires',
+        type: 'comp',
+    },
+    {
+        index: 8,
+        label: 'Undershirt',
+        type: 'comp',
+    },
+    {
+        index: 9,
+        label: 'Armure',
+        type: 'comp',
+    },
+    {
+        index: 10,
+        label: 'Décalques',
+        type: 'comp',
+    },
+    {
+        index: 11,
+        label: 'Hauts',
+        type: 'comp',
+    },
+    {
+        index: 0,
+        label: 'Chapeau',
+        type: 'prop',
+    },
+    {
+        index: 1,
+        label: 'Lunettes',
+        type: 'prop',
+    },
+    {
+        index: 2,
+        label: 'oreilles',
+        type: 'prop',
+    },
+    {
+        index: 6,
+        label: 'Bras gauche',
+        type: 'prop',
+    },
+    {
+        index: 7,
+        label: 'Bras droit',
+        type: 'prop',
+    },
+];
+
+export type CollectionInfo = {
+    dlc: string[];
+    data: Record<string, Record<number, Record<number, number>>>;
 };

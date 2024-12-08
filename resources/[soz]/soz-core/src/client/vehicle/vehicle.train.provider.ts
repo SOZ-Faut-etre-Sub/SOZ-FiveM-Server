@@ -63,15 +63,6 @@ export class VehicleTrainProvider {
         }
     }
 
-    @Command('cloth')
-    async cloth() {
-        const playerPed = PlayerPedId();
-        const count = GetPedCollectionsCount(playerPed);
-        for (let i = 0; i < count; i++) {
-            console.log(i, GetPedCollectionName(playerPed, i));
-        }
-    }
-
     @Command('dtrain')
     public async dtrain() {
         if (this.train) {
