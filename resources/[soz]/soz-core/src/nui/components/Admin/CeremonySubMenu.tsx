@@ -5,6 +5,7 @@ import { fetchNui } from '../../fetch';
 import {
     MenuContent,
     MenuItemButton,
+    MenuItemCheckbox,
     MenuItemSelect,
     MenuItemSelectOption,
     MenuTitle,
@@ -13,43 +14,24 @@ import {
 
 export type CeremonySubMenuProps = {
     banner: string;
+    state: {
+        disableNpc: boolean;
+    };
 };
 
-export const CeremonySubMenu: FunctionComponent<CeremonySubMenuProps> = ({ banner }) => {
+export const CeremonySubMenu: FunctionComponent<CeremonySubMenuProps> = ({ banner, state }) => {
     return (
         <SubMenu id="ceremony">
             <MenuTitle banner={banner}>Cérémonie</MenuTitle>
             <MenuContent>
-                {/*<MenuItemCheckbox*/}
-                {/*    checked={state.disableNpc}*/}
-                {/*    onChange={async value => {*/}
-                {/*        await fetchNui(NuiEvent.AdminMenuMeteorDisableNpc, value);*/}
-                {/*    }}*/}
-                {/*>*/}
-                {/*    Désactiver le spawn de PNJ*/}
-                {/*</MenuItemCheckbox>*/}
-                <MenuTitle>Election 2024</MenuTitle>
-                <MenuItemButton
-                    onConfirm={async () => {
-                        await fetchNui(NuiEvent.AdminMenuCeremonyStart);
+                <MenuItemCheckbox
+                    checked={state.disableNpc}
+                    onChange={async value => {
+                        await fetchNui(NuiEvent.AdminMenuMeteorDisableNpc, value);
                     }}
                 >
-                    Lancer la cérémonie
-                </MenuItemButton>
-                <MenuItemButton
-                    onConfirm={async () => {
-                        await fetchNui(NuiEvent.AdminMenuCeremonyParadeStart, true);
-                    }}
-                >
-                    Lancer la parade
-                </MenuItemButton>
-                <MenuItemButton
-                    onConfirm={async () => {
-                        await fetchNui(NuiEvent.AdminMenuCeremonyParadeStart, false);
-                    }}
-                >
-                    Arreter la parade
-                </MenuItemButton>
+                    Désactiver le spawn de PNJ
+                </MenuItemCheckbox>
                 <MenuItemSelect
                     title={`Forcer l'heure`}
                     value={-1}
@@ -68,6 +50,38 @@ export const CeremonySubMenu: FunctionComponent<CeremonySubMenuProps> = ({ banne
                             </MenuItemSelectOption>
                         ))}
                 </MenuItemSelect>
+
+                <MenuTitle>Cérémonie parade</MenuTitle>
+                <MenuItemButton
+                    onConfirm={async () => {
+                        await fetchNui(NuiEvent.AdminMenuCeremonyParadeStart, true);
+                    }}
+                >
+                    Lancer la parade
+                </MenuItemButton>
+                <MenuItemButton
+                    onConfirm={async () => {
+                        await fetchNui(NuiEvent.AdminMenuCeremonyParadeStart, false);
+                    }}
+                >
+                    Arreter la parade
+                </MenuItemButton>
+
+                <MenuTitle>Cérémonie jeux de lumière</MenuTitle>
+                <MenuItemButton
+                    onConfirm={async () => {
+                        await fetchNui(NuiEvent.AdminMenuPublicCeremonyStart);
+                    }}
+                >
+                    Lumière sur les bâtiments publics
+                </MenuItemButton>
+                <MenuItemButton
+                    onConfirm={async () => {
+                        await fetchNui(NuiEvent.AdminMenuFinalCeremonyStart);
+                    }}
+                >
+                    Lumière sur la ville
+                </MenuItemButton>
             </MenuContent>
         </SubMenu>
     );

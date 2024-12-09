@@ -86,6 +86,10 @@ export type MeteorSubMenuState = {
     sandstormmusic: number;
 };
 
+export type CeremonySubMenuState = {
+    disableNpc: boolean;
+};
+
 export type HalloweenSubMenuState = {
     started: boolean;
     excludedPlayers: Partial<AdminPlayer>[];
@@ -110,6 +114,7 @@ export type AdminMenuData = {
         vehicule: VehicleSubMenuState;
         meteor: MeteorSubMenuState;
         halloween: HalloweenSubMenuState;
+        ceremony: CeremonySubMenuState;
     };
 };
 

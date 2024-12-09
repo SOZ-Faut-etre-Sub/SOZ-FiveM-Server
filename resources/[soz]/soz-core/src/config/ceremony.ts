@@ -1,6 +1,12 @@
 import { FireworkType } from '../shared/firework';
 import { Vector3 } from '../shared/polyzone/vector';
+import { BCSO_LOCATION } from './ceremony.bcso';
 import { FINAL_LOCATION } from './ceremony.final';
+import { LSMC_LOCATION } from './ceremony.lsmc';
+import { LSPD_LOCATION } from './ceremony.lspd';
+import { MANDATORY_LOCATION } from './ceremony.mandatory';
+import { SENAT_LOCATION } from './ceremony.senat';
+import { STONK_LOCATION } from './ceremony.stonk';
 
 export const CAMERA_TRANSITION_DURATION = 1_500;
 export const WAIT_BETWEEN_CEREMONY = 2_000;
@@ -13,7 +19,7 @@ export type Location = {
     camera: Vector3;
     center: Vector3;
     music?: {
-        name: 'society1' | 'society2' | 'senat';
+        name: 'society1' | 'society2' | 'senat' | 'hymne';
         volume: number;
     };
     targets?: TriggerableAction<{
@@ -46,14 +52,22 @@ export type Location = {
     duration: number;
 };
 
-export const ALL_LOCATIONS: Record<string, Location> = {
-    // bcso: BCSO_LOCATION,
-    // lspd: LSPD_LOCATION,
-    // lsmc: LSMC_LOCATION,
-    // stonk: STONK_LOCATION,
-    // mandatory: MANDATORY_LOCATION,
-    // senat: SENAT_LOCATION,
+export const PUBLIC_CEREMONY: Record<string, Location> = {
+    bcso: BCSO_LOCATION,
+    lspd: LSPD_LOCATION,
+    lsmc: LSMC_LOCATION,
+    stonk: STONK_LOCATION,
+    mandatory: MANDATORY_LOCATION,
+    senat: SENAT_LOCATION,
+};
+
+export const FINAL_CEREMONY: Record<string, Location> = {
     final: FINAL_LOCATION,
+};
+
+export const ALL_LOCATIONS: Record<string, Location> = {
+    ...PUBLIC_CEREMONY,
+    ...FINAL_CEREMONY,
 };
 
 export function triggerPeriodic(start: number, end: number, padding: number) {

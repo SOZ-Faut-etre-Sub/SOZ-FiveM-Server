@@ -21,7 +21,7 @@ const globalLightDefault = {
 };
 
 const colorBlue = [10, 49, 255] as Vector3;
-const colorRed = [255, 25, 66] as Vector3;
+const colorYellow = [249, 198, 11] as Vector3;
 
 export const LSMC_LOCATION: Location = {
     camera: [349.5, -1525.39, 29.27],
@@ -388,7 +388,7 @@ export const LSMC_LOCATION: Location = {
             position: [320.7715, -1433.60132, 30.6152954],
             target: [325.1648, -1428.95435, 65.1899261],
             ...spotlightDefault,
-            color: colorRed,
+            color: colorYellow,
             triggerAt: 2_100,
         },
         {
@@ -397,7 +397,7 @@ export const LSMC_LOCATION: Location = {
             position: [336.0011, -1446.61121, 20.6181221],
             target: [340.262177, -1441.49219, 65.19251],
             ...spotlightDefault,
-            color: colorRed,
+            color: colorYellow,
             triggerAt: 2_100,
         },
         {
@@ -423,7 +423,7 @@ export const LSMC_LOCATION: Location = {
             position: [408.048645, -1425.038, 33.3093071],
             target: [394.275574, -1416.64221, 71.04322],
             ...globalLightDefault,
-            color: colorRed,
+            color: colorYellow,
             triggerAt: 2_100,
         },
         {
@@ -441,7 +441,7 @@ export const LSMC_LOCATION: Location = {
             position: [275.292, -1507.62817, 36.3140526],
             target: [307.273956, -1473.07068, 36.3140526],
             ...globalLightDefault,
-            color: colorRed,
+            color: colorYellow,
             triggerAt: 2_100,
         },
         // ---

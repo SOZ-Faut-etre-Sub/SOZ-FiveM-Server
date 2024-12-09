@@ -2,6 +2,7 @@ import { Inject } from '@public/core/decorators/injectable';
 
 import { OnEvent } from '../../core/decorators/event';
 import { Provider } from '../../core/decorators/provider';
+import { wait } from '../../core/utils';
 import { ClientEvent } from '../../shared/event/client';
 import { FireworkType } from '../../shared/firework';
 import { add2Vector3, Vector3 } from '../../shared/polyzone/vector';
@@ -134,11 +135,7 @@ export class FireworkProvider {
 
         UseParticleFxAsset(asset);
 
-        if (color) {
-            SetParticleFxNonLoopedColour(color[0], color[1], color[2]);
-        }
-
-        StartParticleFxNonLoopedAtCoord(
+        const fx = StartParticleFxNonLoopedAtCoord(
             effect,
             position[0],
             position[1],
@@ -151,5 +148,14 @@ export class FireworkProvider {
             false,
             false
         );
+
+        if (color) {
+            SetParticleFxLoopedColour(fx, color[0], color[1], color[2], false);
+        }
+
+        SetParticleFxLoopedFarClipDist(fx, 0xfff);
+
+        await wait(100);
+        StopParticleFxLooped(fx, false);
     }
 }

@@ -1,6 +1,7 @@
 import { Command } from '@core/decorators/command';
 
 import { ALL_LOCATIONS, TriggerableAction } from '../../../config/ceremony';
+import { FINAL_LOCATION } from '../../../config/ceremony.final';
 import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
@@ -34,6 +35,7 @@ export class Election2024CeremonyProvider {
 
     private readonly startCameraPosition: Vector3 = [-557.12, -629.84, 48.63];
     private readonly startCameraTarget: Vector3 = [-545.13, -688.23, 36.52];
+    private readonly finalStartCameraPosition: Vector3 = [-562.97, -596.48, 83.45];
 
     private debug = false;
     private camera: number;
@@ -80,6 +82,18 @@ export class Election2024CeremonyProvider {
             for (const spotlight of location.spotlights) {
                 if (spotlight.action !== 'add') continue;
 
+                const isNear = getDistance(playerPosition, spotlight.position) < 10;
+
+                if (isNear) {
+                    SetDrawOrigin(spotlight.position[0], spotlight.position[1], spotlight.position[2], 0);
+                    SetTextScale(0.0, 0.25);
+                    SetTextEntry('STRING');
+                    AddTextComponentString(`Spotlight ${spotlight.id}`);
+                    SetTextCentre(true);
+                    DrawText(0, 0);
+                    ClearDrawOrigin();
+                }
+
                 DrawLine(
                     spotlight.position[0],
                     spotlight.position[1],
@@ -97,10 +111,21 @@ export class Election2024CeremonyProvider {
     }
 
     @OnEvent(ClientEvent.CEREMONY_CREATE_CAMERA)
-    async createCamera() {
-        this.camera = this.cameraService.createCamera(this.startCameraPosition, 80);
-        this.cameraService.setCameraActive(this.camera, true);
-        this.cameraService.setCameraPointAt(this.camera, this.startCameraTarget);
+    async createCamera(isFinal: boolean) {
+        if (isFinal) {
+            this.camera = this.cameraService.createCamera(this.finalStartCameraPosition, 80);
+            this.cameraService.setCameraActive(this.camera, true);
+            this.cameraService.setCameraPointAt(this.camera, FINAL_LOCATION.center);
+
+            this.cameraService.renderCamera(5_000);
+            await wait(5_000);
+
+            this.moveCamera(FINAL_LOCATION.camera, [0, 0, 0], 5_000);
+        } else {
+            this.camera = this.cameraService.createCamera(this.startCameraPosition, 80);
+            this.cameraService.setCameraActive(this.camera, true);
+            this.cameraService.setCameraPointAt(this.camera, this.startCameraTarget);
+        }
 
         this.hudStateProvider.setHudVisible(false);
         this.hudStateProvider.setCinematicMode(true, 5_000);
@@ -145,7 +170,9 @@ export class Election2024CeremonyProvider {
         const location = ALL_LOCATIONS[locationName];
         if (!location) return;
 
-        await this.setCamera(location.camera, location.center);
+        if (locationName !== 'final') {
+            await this.setCamera(location.camera, location.center);
+        }
 
         if (location.music) {
             this.nuiDispatch.dispatch('election', location.music.name, location.music.volume);

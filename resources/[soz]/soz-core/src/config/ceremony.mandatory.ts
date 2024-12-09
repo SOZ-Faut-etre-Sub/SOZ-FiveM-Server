@@ -12,7 +12,7 @@ const spotlightDefault = {
 };
 
 const colorBlue = [10, 49, 255] as Vector3;
-const colorRed = [255, 25, 66] as Vector3;
+const colorYellow = [249, 198, 11] as Vector3;
 
 export const MANDATORY_LOCATION: Location = {
     camera: [-487.57, -275.5, 35.61],
@@ -258,7 +258,7 @@ export const MANDATORY_LOCATION: Location = {
             position: [-513.74, -244.36, 51.6],
             target: [-517.44, -194.22, 42.31],
             ...spotlightDefault,
-            color: colorRed,
+            color: colorYellow,
             triggerAt: 2_100,
         },
         {
@@ -267,7 +267,7 @@ export const MANDATORY_LOCATION: Location = {
             position: [-527.27, -251.05, 51.59],
             target: [-566.25, -223.49, 40.3],
             ...spotlightDefault,
-            color: colorRed,
+            color: colorYellow,
             triggerAt: 2_100,
         },
         // ---

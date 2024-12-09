@@ -12,7 +12,7 @@ const spotlightDefault = {
 };
 
 const colorBlue = [10, 49, 255] as Vector3;
-const colorRed = [255, 25, 66] as Vector3;
+const colorYellow = [249, 198, 11] as Vector3;
 
 export const STONK_LOCATION: Location = {
     camera: [17.33, -731.89, 43.98],
@@ -314,7 +314,7 @@ export const STONK_LOCATION: Location = {
             position: [23.0248184, -714.477356, 35.1673355],
             target: [19.7089615, -706.7466, 73.66516],
             ...spotlightDefault,
-            color: colorRed,
+            color: colorYellow,
             triggerAt: 600,
         },
         {
@@ -332,7 +332,7 @@ export const STONK_LOCATION: Location = {
             position: [115.768639, -689.1783, 33.39071],
             target: [117.755257, -671.511963, 85.1288147],
             ...spotlightDefault,
-            color: colorRed,
+            color: colorYellow,
             triggerAt: 100,
         },
         // ---

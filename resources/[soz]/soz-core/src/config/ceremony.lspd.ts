@@ -12,7 +12,7 @@ const spotlightDefault = {
 };
 
 const colorBlue = [20, 20, 255] as Vector3;
-const colorRed = [255, 20, 20] as Vector3;
+const colorYellow = [249, 198, 11] as Vector3;
 
 export const LSPD_LOCATION: Location = {
     camera: [693.05, 23.45, 87.18],
@@ -147,7 +147,7 @@ export const LSPD_LOCATION: Location = {
             position: [650.8879, -12.8159027, 95.90329],
             target: [635.947449, -8.382746, 83.4381943],
             ...spotlightDefault,
-            color: colorRed,
+            color: colorYellow,
             triggerAt: 900,
         },
         {
@@ -165,7 +165,7 @@ export const LSPD_LOCATION: Location = {
             position: [657.0791, 3.98216724, 95.90329],
             target: [642.183838, 8.415426, 83.44022],
             ...spotlightDefault,
-            color: colorRed,
+            color: colorYellow,
             triggerAt: 1_300,
         },
         // ---

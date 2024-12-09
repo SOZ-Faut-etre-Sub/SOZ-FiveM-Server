@@ -7,6 +7,7 @@ export const Election: FunctionComponent = () => {
     const gainSociety1 = useRef<GainNode>(null);
     const gainSociety2 = useRef<GainNode>(null);
     const gainSenat = useRef<GainNode>(null);
+    const gainHymne = useRef<GainNode>(null);
 
     function handleVolume(id: string, gain: MutableRefObject<GainNode>, value: number) {
         const audioElement = document.querySelector(id) as HTMLMediaElement;
@@ -50,12 +51,14 @@ export const Election: FunctionComponent = () => {
         gainSociety2,
     ]);
     useNuiEvent('election', 'senat', value => handleVolume('#election-senat', gainSenat, value), [audioCtx, gainSenat]);
+    useNuiEvent('election', 'hymne', value => handleVolume('#election-hymne', gainHymne, value), [audioCtx, gainHymne]);
 
     return (
         <>
             <audio id="election-society1" src="https://cfx-nui-soz-sounds/election/society1.mp3"></audio>
             <audio id="election-society2" src="https://cfx-nui-soz-sounds/election/society2.mp3"></audio>
             <audio id="election-senat" src="https://cfx-nui-soz-sounds/election/senat.mp3"></audio>
+            <audio id="election-hymne" src="https://cfx-nui-soz-sounds/election/hymne.mp3"></audio>
         </>
     );
 };

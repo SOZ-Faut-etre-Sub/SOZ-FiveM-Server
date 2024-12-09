@@ -11,6 +11,9 @@ const pilarSpotlightDefault = {
     roundness: 5,
 };
 
+const colorBlue = [10, 49, 255] as Vector3;
+const colorYellow = [249, 198, 11] as Vector3;
+
 export const SENAT_LOCATION: Location = {
     camera: [-547.84, -686.97, 51.28],
     center: [-554.47, -599.45, 40.83],
@@ -434,7 +437,7 @@ export const SENAT_LOCATION: Location = {
             position: [-594.9418, -626.717468, 23.9076576],
             target: [-594.9418, -624.4694, 53.8437271],
             ...pilarSpotlightDefault,
-            color: [10, 49, 97],
+            color: colorBlue,
             triggerAt: 2_000,
         },
         {
@@ -443,7 +446,7 @@ export const SENAT_LOCATION: Location = {
             position: [-588.818359, -626.717468, 23.9076576],
             target: [-588.818359, -624.4694, 53.8437271],
             ...pilarSpotlightDefault,
-            color: [10, 49, 97],
+            color: colorBlue,
             triggerAt: 2_000,
         },
         {
@@ -452,7 +455,7 @@ export const SENAT_LOCATION: Location = {
             position: [-582.720642, -626.717468, 23.9076576],
             target: [-582.720642, -624.4694, 53.8437271],
             ...pilarSpotlightDefault,
-            color: [10, 49, 97],
+            color: colorBlue,
             triggerAt: 2_000,
         },
         {
@@ -461,7 +464,7 @@ export const SENAT_LOCATION: Location = {
             position: [-576.788147, -626.717468, 23.9076576],
             target: [-576.788147, -624.4694, 53.8437271],
             ...pilarSpotlightDefault,
-            color: [10, 49, 97],
+            color: colorBlue,
             triggerAt: 2_000,
         },
         {
@@ -470,7 +473,7 @@ export const SENAT_LOCATION: Location = {
             position: [-570.7728, -626.717468, 23.9076576], // -6.015347
             target: [-570.7728, -624.4694, 53.8437271],
             ...pilarSpotlightDefault,
-            color: [179, 25, 66],
+            color: colorYellow,
             triggerAt: 2_000,
         },
         {
@@ -479,7 +482,7 @@ export const SENAT_LOCATION: Location = {
             position: [-564.696655, -626.717468, 23.9076576],
             target: [-564.696655, -624.4694, 53.8437271],
             ...pilarSpotlightDefault,
-            color: [179, 25, 66],
+            color: colorYellow,
             triggerAt: 2_000,
         },
         {
@@ -488,7 +491,7 @@ export const SENAT_LOCATION: Location = {
             position: [-558.5947, -626.717468, 23.9076576],
             target: [-558.5947, -624.4694, 53.8437271],
             ...pilarSpotlightDefault,
-            color: [179, 25, 66],
+            color: colorYellow,
             triggerAt: 2_000,
         },
         {
@@ -505,7 +508,7 @@ export const SENAT_LOCATION: Location = {
             position: [-546.6245, -626.717468, 23.9076576],
             target: [-546.6245, -624.4694, 53.8437271],
             ...pilarSpotlightDefault,
-            color: [179, 25, 66],
+            color: colorYellow,
             triggerAt: 2_300,
         },
         {
@@ -522,7 +525,7 @@ export const SENAT_LOCATION: Location = {
             position: [-534.371155, -626.717468, 23.9076576],
             target: [-534.371155, -624.4694, 53.8437271],
             ...pilarSpotlightDefault,
-            color: [179, 25, 66],
+            color: colorYellow,
             triggerAt: 2_300,
         },
         {
@@ -539,7 +542,7 @@ export const SENAT_LOCATION: Location = {
             position: [-522.334839, -626.717468, 23.9076576],
             target: [-522.334839, -624.4694, 53.8437271],
             ...pilarSpotlightDefault,
-            color: [179, 25, 66],
+            color: colorYellow,
             triggerAt: 2_300,
         },
         {

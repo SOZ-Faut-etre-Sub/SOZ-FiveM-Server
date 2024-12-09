@@ -9,9 +9,16 @@ export class AdminMenuCeremonyProvider {
     @Inject(NuiMenu)
     private readonly nuiMenu: NuiMenu;
 
-    @OnNuiEvent(NuiEvent.AdminMenuCeremonyStart)
-    public async activateCeremony(): Promise<void> {
-        TriggerServerEvent(ServerEvent.ADMIN_CEREMONY_START);
+    @OnNuiEvent(NuiEvent.AdminMenuPublicCeremonyStart)
+    public async activatePublicCeremony(): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_CEREMONY_PUBLIC_PART_START);
+
+        this.nuiMenu.closeMenu();
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuFinalCeremonyStart)
+    public async activateFinalCeremony(): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_CEREMONY_FINAL_PART_START);
 
         this.nuiMenu.closeMenu();
     }

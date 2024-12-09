@@ -12,7 +12,7 @@ const spotlightDefault = {
 };
 
 const colorBlue = [10, 49, 255] as Vector3;
-const colorRed = [255, 25, 66] as Vector3;
+const colorYellow = [249, 198, 11] as Vector3;
 
 export const BCSO_LOCATION: Location = {
     camera: [1825.95, 3626.55, 35.17],
@@ -216,7 +216,7 @@ export const BCSO_LOCATION: Location = {
             position: [1880.87, 3684.88, 35.4],
             target: [1851.63, 3690.72, 38.07],
             ...spotlightDefault,
-            color: colorRed,
+            color: colorYellow,
             triggerAt: 2_100,
         },
         {
@@ -234,7 +234,7 @@ export const BCSO_LOCATION: Location = {
             position: [1856.88, 3661.95, 37.05],
             target: [1834.32, 3672.02, 36.0],
             ...spotlightDefault,
-            color: colorRed,
+            color: colorYellow,
             triggerAt: 2_100,
         },
         // ---

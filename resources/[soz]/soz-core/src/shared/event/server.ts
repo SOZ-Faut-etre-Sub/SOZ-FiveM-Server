@@ -70,7 +70,8 @@ export enum ServerEvent {
     ADMIN_HALLOWEEN_UPDATE_MORTAL_OBJECTIVE_PART1 = 'soz-core:server:admin:halloween:update-mortal-objective-part1',
     ADMIN_HALLOWEEN_UPDATE_MORTAL_OBJECTIVE_PART2 = 'soz-core:server:admin:halloween:update-mortal-objective-part2',
     ADMIN_HALLOWEEN_UPDATE_MORTAL_OBJECTIVE_PART3 = 'soz-core:server:admin:halloween:update-mortal-objective-part3',
-    ADMIN_CEREMONY_START = 'soz-core:server:admin:ceremony:start',
+    ADMIN_CEREMONY_PUBLIC_PART_START = 'soz-core:server:admin:ceremony:start:public',
+    ADMIN_CEREMONY_FINAL_PART_START = 'soz-core:server:admin:ceremony:start:final',
     ADMIN_CEREMONY_TIME = 'soz-core:server:admin:ceremony:time',
     ADMIN_PARADE_START = 'soz-core:server:admin:parade:start',
 

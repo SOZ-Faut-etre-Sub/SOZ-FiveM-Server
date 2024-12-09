@@ -136,6 +136,9 @@ export class AdminMenuProvider {
                     },
                     meteor: meteorState,
                     halloween: halloweenState,
+                    ceremony: {
+                        disableNpc: meteorState.disableNpc,
+                    },
                 },
             },
             { subMenuId }
