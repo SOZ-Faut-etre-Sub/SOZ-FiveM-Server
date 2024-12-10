@@ -274,7 +274,7 @@ export class HousingPropertyZoneProvider {
                         },
                         {
                             position: {
-                                distance: 3,
+                                distance: Math.max(3, property.entryZone.width + property.entryZone.length),
                                 position: property.entryZone.center,
                             },
                         }
@@ -316,7 +316,7 @@ export class HousingPropertyZoneProvider {
                         },
                         {
                             position: {
-                                distance: 3,
+                                distance: Math.max(3, property.entryZone.width + property.entryZone.length),
                                 position: property.entryZone.center,
                             },
                         }
@@ -501,7 +501,7 @@ export class HousingPropertyZoneProvider {
                 },
                 {
                     position: {
-                        distance: 3,
+                        distance: Math.max(3, property.entryZone.width + property.entryZone.length),
                         position: property.entryZone.center,
                     },
                 }
@@ -556,7 +556,7 @@ export class HousingPropertyZoneProvider {
                 },
                 {
                     position: {
-                        distance: 3,
+                        distance: Math.max(3, property.entryZone.width + property.entryZone.length),
                         position: property.entryZone.center,
                     },
                 }
@@ -591,7 +591,7 @@ export class HousingPropertyZoneProvider {
                 },
                 {
                     position: {
-                        distance: 3,
+                        distance: Math.max(3, property.entryZone.width + property.entryZone.length),
                         position: property.entryZone.center,
                     },
                 }
@@ -627,7 +627,7 @@ export class HousingPropertyZoneProvider {
                 },
                 {
                     position: {
-                        distance: 3,
+                        distance: Math.max(3, property.entryZone.width + property.entryZone.length),
                         position: property.entryZone.center,
                     },
                 }
@@ -663,7 +663,7 @@ export class HousingPropertyZoneProvider {
                 },
                 {
                     position: {
-                        distance: 3,
+                        distance: Math.max(3, property.entryZone.width + property.entryZone.length),
                         position: property.entryZone.center,
                     },
                 }
