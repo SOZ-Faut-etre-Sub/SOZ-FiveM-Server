@@ -588,6 +588,7 @@ model player_records_history {
     created_at       DateTime? @default(now()) @db.Timestamp(0)
     updated_at       DateTime? @default(now()) @db.Timestamp(0)
     deleted_at       DateTime? @db.Timestamp(0)
+    service          String    @default("police") @db.VarChar(128)
     concerned_player player    @relation(fields: [citizenid], references: [citizenid], onDelete: Cascade, map: "FK_playerrecordshistory_target", name: "records_history_player")
     author           player    @relation(fields: [author_citizenid], references: [citizenid], onDelete: Cascade, map: "FK_playerrecordshistory_author", name: "records_history_author")
     deletor          player?   @relation(fields: [delete_citizenid], references: [citizenid], onDelete: Cascade, map: "FK_playerrecordshistory_deletor", name: "records_history_deletor")
