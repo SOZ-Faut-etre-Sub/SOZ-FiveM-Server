@@ -25,7 +25,7 @@ export const LS_CUSTOM_ZONE = new MultiZone([
     }),
     new BoxZone([1175.88, 2640.3, 37.79], 10, 10, {
         heading: 45,
-        minZ: 36.79,
+        minZ: 36.39,
         maxZ: 40.79,
     }),
     /* Cayo when custom on boats are OK
