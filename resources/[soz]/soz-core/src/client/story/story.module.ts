@@ -18,6 +18,7 @@ import { QueenHarvestProvider } from './queen.harvest.provider';
 import { StoryProvider } from './story.provider';
 import { VampireGameProvider } from './vampire.game.provider';
 import { VampireGameStateProvider } from './vampire.game.state.provider';
+import { XmasProvider } from './xmas.provider';
 import { ZombieProvider } from './zombie.provider';
 
 @Module({
@@ -42,6 +43,7 @@ import { ZombieProvider } from './zombie.provider';
         VampireGameProvider,
         Election2024CeremonyProvider,
         ParadeProvider,
+        XmasProvider,
     ],
 })
 export class StoryModule {}

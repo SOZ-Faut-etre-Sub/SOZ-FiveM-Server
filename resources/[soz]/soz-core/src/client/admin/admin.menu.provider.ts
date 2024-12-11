@@ -17,6 +17,7 @@ import { HudMinimapProvider } from '../hud/hud.minimap.provider';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
 import { SenateRepository } from '../repository/senate.repository';
+import { XmasProvider } from '../story/xmas.provider';
 import { TargetProvider } from '../target/target.provider';
 import { VehicleDamageProvider } from '../vehicle/vehicle.damage.provider';
 import { VehicleOffroadProvider } from '../vehicle/vehicle.offroad.provider';
@@ -65,6 +66,9 @@ export class AdminMenuProvider {
 
     @Inject(TargetProvider)
     private targetProvider: TargetProvider;
+
+    @Inject(XmasProvider)
+    private xmasProvider: XmasProvider;
 
     @OnEvent(ClientEvent.ADMIN_OPEN_MENU)
     @Command('admin', {
@@ -139,6 +143,7 @@ export class AdminMenuProvider {
                     ceremony: {
                         disableNpc: meteorState.disableNpc,
                     },
+                    xmasSceneState: this.xmasProvider.sceneState,
                 },
             },
             { subMenuId }

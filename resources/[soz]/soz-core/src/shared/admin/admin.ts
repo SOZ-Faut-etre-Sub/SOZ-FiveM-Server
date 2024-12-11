@@ -3,6 +3,7 @@ import { VampireGameCollection, VampireGameObjectiveTypePart2, VampireGameRole }
 import { PlayerCharInfo } from '@public/shared/player';
 import { EventInfo } from '@public/shared/scene';
 import { SenateParty, SenatePartyMember } from '@public/shared/senate';
+import { XmasSceneState } from '@public/shared/story/story';
 
 import { Component, Outfit, Prop } from '../cloth';
 
@@ -115,6 +116,7 @@ export type AdminMenuData = {
         meteor: MeteorSubMenuState;
         halloween: HalloweenSubMenuState;
         ceremony: CeremonySubMenuState;
+        xmasSceneState: XmasSceneState;
     };
 };
 

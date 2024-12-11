@@ -1,6 +1,7 @@
 import { CeremonySubMenu } from '@public/nui/components/Admin/CeremonySubMenu';
 import { EventSubMenu } from '@public/nui/components/Admin/EventSubMenu';
 import { HalloweenSubMenu } from '@public/nui/components/Admin/HalloweenSubMenu';
+import { XmasSubMenu } from '@public/nui/components/Admin/XmasSubMenu';
 import { RootState } from '@public/nui/store';
 import { AdminMenuData } from '@public/shared/admin/admin';
 import { MenuType } from '@public/shared/nui/menu';
@@ -66,6 +67,9 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
                             🎃 Halloween
                         </MenuItemSubMenuLink>
                     )}
+                    <MenuItemSubMenuLink disabled={!isStaffOrAdmin} id="christmas">
+                        🎄 Noël
+                    </MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="developer">🛠 Outils pour développeur</MenuItemSubMenuLink>
                 </MenuContent>
             </MainMenu>
@@ -83,6 +87,7 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
             {isHalloween && (
                 <HalloweenSubMenu banner={data.banner} permission={data.permission} state={data.state.halloween} />
             )}
+            <XmasSubMenu banner={data.banner} permission={data.permission} state={data.state.xmasSceneState} />
         </Menu>
     );
 };

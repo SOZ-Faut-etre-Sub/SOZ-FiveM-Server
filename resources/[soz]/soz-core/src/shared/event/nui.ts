@@ -145,6 +145,7 @@ export enum NuiEvent {
     AdminMenuCeremonyParadeStart = 'soz-core:nui:admin:parade:start',
     AdminMenuCeremonyTime = 'soz-core:nui:admin:parade:time',
     AdminMenuClothes = 'soz-core:client:admin:clothes',
+    AdminMenuXmasSetState = 'soz-core:nui:admin:xmas:set-state',
 
     BlipAction = 'soz-core:client:blip:action',
 

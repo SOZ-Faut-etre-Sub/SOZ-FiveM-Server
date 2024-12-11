@@ -455,4 +455,6 @@ export enum ClientEvent {
     CEREMONY_RUN_LOCATION = 'soz-core:client:ceremony:run-location',
     CEREMONY_SET_CAMERA = 'soz-core:client:ceremony:set-camera',
     CEREMONY_MOVE_CAMERA = 'soz-core:client:ceremony:move-camera',
+
+    XMAS_UPDATE_SCENE_STATE = 'soz-core:client:xmas:update-scene-state',
 }

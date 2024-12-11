@@ -75,6 +75,8 @@ export enum ServerEvent {
     ADMIN_CEREMONY_TIME = 'soz-core:server:admin:ceremony:time',
     ADMIN_PARADE_START = 'soz-core:server:admin:parade:start',
 
+    ADMIN_XMAS_UPDATE_SCENE = 'soz-core:server:admin:xmas:update-scene',
+
     BASE_ENTERED_VEHICLE = 'baseevents:enteredVehicle',
     BASE_LEFT_VEHICLE = 'baseevents:leftVehicle',
     BASE_CHANGE_VEHICLE_SEAT = 'baseevents:changeVehicleSeat',
