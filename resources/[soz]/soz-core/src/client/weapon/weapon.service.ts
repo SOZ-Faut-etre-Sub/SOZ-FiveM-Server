@@ -54,6 +54,10 @@ export class WeaponService {
         return this.currentWeapon;
     }
 
+    updateCurrentWeapon(weapon: InventoryItem) {
+        this.currentWeapon = weapon;
+    }
+
     async set(weapon: InventoryItem) {
         if (this.disabledReasons.size > 0) {
             return;
