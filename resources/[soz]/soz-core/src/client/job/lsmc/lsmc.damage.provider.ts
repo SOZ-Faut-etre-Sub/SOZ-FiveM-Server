@@ -19,6 +19,9 @@ export class LSMCDamageProvider {
     private lastWeaponHash = 0;
     private lastAttacker = 0;
 
+    private overrideLastDamageType: number = 0;
+    private overrideLastDamageBone: number = null;
+
     @Once(OnceStep.PlayerLoaded)
     public onInit(player: PlayerData) {
         if (player) {
@@ -68,6 +71,11 @@ export class LSMCDamageProvider {
             bone = damagedBone;
         }
 
+        if (this.overrideLastDamageBone != null) {
+            bone = this.overrideLastDamageBone;
+            this.overrideLastDamageBone = null;
+        }
+
         let damageType = 0;
         let weapon: string = Object.values(WeaponName).find(elem => GetHashKey(elem) == this.lastWeaponHash);
         if (!weapon) {
@@ -77,8 +85,14 @@ export class LSMCDamageProvider {
             weapon = this.lastWeaponHash.toString();
         }
 
-        damageType = GetWeaponDamageType(this.lastWeaponHash);
+        if (this.overrideLastDamageType) {
+            damageType = this.overrideLastDamageType;
+            this.overrideLastDamageType = 0;
+        } else {
+            damageType = GetWeaponDamageType(this.lastWeaponHash);
+        }
         const group = GetWeapontypeGroup(this.lastWeaponHash);
+        this.lastWeaponHash = 0;
 
         if (damageType == 1) {
             return;
@@ -117,6 +131,7 @@ export class LSMCDamageProvider {
             weapon == WeaponName.BATTLEAXE ||
             weapon == WeaponName.STONE_HATCHET ||
             weapon == ExtraWeaponName.WEAPON_COUGAR ||
+            weapon == ExtraWeaponName.WEAPON_ANIMAL ||
             weapon == WeaponName.HATCHET
         ) {
             damageType = 907;
@@ -165,5 +180,10 @@ export class LSMCDamageProvider {
         };
 
         TriggerServerEvent(ServerEvent.LSMC_DAMAGE_ADD, data);
+    }
+
+    public overrideLastDamage(type: number, bone: number) {
+        this.overrideLastDamageType = type;
+        this.overrideLastDamageBone = bone ?? 31086;
     }
 }
