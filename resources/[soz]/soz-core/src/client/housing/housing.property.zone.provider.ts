@@ -31,6 +31,7 @@ import { RepositoryType } from '../../shared/repository';
 import { RpcServerEvent } from '../../shared/rpc';
 import { BlipFactory } from '../blip';
 import { InventoryManager } from '../inventory/inventory.manager';
+import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
 import { HousingRepository } from '../repository/housing.repository';
@@ -74,6 +75,9 @@ export class HousingPropertyZoneProvider {
 
     @Inject(BlipFactory)
     private blipFactory: BlipFactory;
+
+    @Inject(InputService)
+    private inputService: InputService;
 
     private temporaryAccess = new Set<number>();
 
@@ -672,6 +676,13 @@ export class HousingPropertyZoneProvider {
             return;
         }
 
+        const confirm = await this.inputService.askConfirm(
+            "Voulez-vous vraiment retirer l'accès de cette habituation au colocataire ? Entrez OUI pour confirmer"
+        );
+
+        if (!confirm) {
+            return;
+        }
         await this.housingMenuProvider.removeRoommate({ apartmentId: apartments[0].id, propertyId: property.id });
     }
 

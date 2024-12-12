@@ -86,7 +86,7 @@ export class HousingMenuProvider {
     @OnNuiEvent(NuiEvent.HousingSell)
     public async sell({ apartmentId, propertyId }: { apartmentId: number; propertyId: number }) {
         const confirm = await this.inputService.askConfirm(
-            'Voulez-vous vraiment vendre cet habitation ? Entrez OUI pour confirmer.'
+            'Voulez-vous vraiment vendre cette habitation ? Entrez OUI pour confirmer.'
         );
 
         if (confirm) {

@@ -337,14 +337,15 @@ export class HousingProvider {
         });
 
         this.playerService.setPlayerApartment(player.source, apartment, property);
-
+        const taxedPrice = await this.priceService.getPrice(
+            apartment.price,
+            TaxType.HOUSING
+        )
         this.notifier.notify(
             player.source,
-            `Vous venez ~g~d'acquérir~s~ une maison pour ~b~$${await this.priceService.getPrice(
-                apartment.price,
-                TaxType.HOUSING
-            )}.${isApartmentExcludeFromHousing(apartment) ? `` : `~s~<br>Entrez dans votre logement et consultez les plans d'aménagement de vos meubles à l'aide du Menu ~g~H~s~ !`}`,
-            'success'
+            `Vous venez ~g~d'acquérir~s~ une maison pour ~b~$${taxedPrice.toLocaleString('FR-fr')}.${isApartmentExcludeFromHousing(apartment) ? `` : `~s~<br><br>Entrez dans votre logement et consultez les plans d'aménagement de vos meubles à l'aide du Menu ~g~H~s~ !`}`,
+            'success',
+            30_000
         );
     }
 
@@ -555,7 +556,7 @@ export class HousingProvider {
 
         this.notifier.notify(
             player.source,
-            `Vous venez de ~r~céder~s~ votre maison pour ~b~$${resellPrice}.`,
+            `Vous venez de ~r~céder~s~ votre maison pour ~b~$${resellPrice.toLocaleString('FR-fr')}.`,
             'success'
         );
     }
@@ -651,7 +652,7 @@ export class HousingProvider {
         const priceWithTaxes = await this.priceService.getPrice(price, TaxType.HOUSING);
         this.notifier.notify(
             player.source,
-            `Vous venez ~g~d'améliorer~s~ votre habitation pour ~b~$${priceWithTaxes}~s~:<br>- ${Object.keys(
+            `Vous venez ~g~d'améliorer~s~ votre habitation pour ~b~$${priceWithTaxes.toLocaleString('FR-fr')}~s~:<br>- ${Object.keys(
                 apartmentTier
             )
                 .map(tier => `${TYPE_LABEL[tier]} au palier ~g~${apartmentTier[tier] + 1}~s~`)
@@ -714,12 +715,13 @@ export class HousingProvider {
 
         await this.housingRepository.setApartmentHasParking(apartment.id, hasParking);
 
+        const taxedPrice = await this.priceService.getPrice(
+            price,
+            TaxType.HOUSING
+        )
         this.notifier.notify(
             player.source,
-            `Vous venez ~g~d'ajouter~s~ une place de parking à votre caravane pour ~b~$${await this.priceService.getPrice(
-                price,
-                TaxType.HOUSING
-            )}~s~.`,
+            `Vous venez ~g~d'ajouter~s~ une place de parking à votre caravane pour ~b~$${taxedPrice.toLocaleString('FR-fr')}~s~.`,
             'success'
         );
     }
