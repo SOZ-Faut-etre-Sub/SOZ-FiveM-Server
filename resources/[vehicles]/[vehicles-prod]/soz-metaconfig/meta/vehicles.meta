@@ -5687,7 +5687,7 @@
             <frequency value="30" />
             <swankness>SWANKNESS_1</swankness>
             <maxNum value="5" />
-            <flags>FLAG_AVERAGE_CAR FLAG_POOR_CAR FLAG_IS_OFFROAD_VEHICLE FLAG_HEADLIGHTS_USE_ACTUAL_BONE_POS FLAG_IS_BULKY FLAG_HAS_INTERIOR_EXTRAS FLAG_HAS_GULL_WING_DOORS FLAG_HAS_LIVERY</flags>
+            <flags>FLAG_AVERAGE_CAR FLAG_POOR_CAR FLAG_IS_OFFROAD_VEHICLE FLAG_CARGOBOB_HOOK_UP_CHASSIS  FLAG_HEADLIGHTS_USE_ACTUAL_BONE_POS FLAG_IS_BULKY FLAG_HAS_INTERIOR_EXTRAS FLAG_HAS_GULL_WING_DOORS FLAG_HAS_LIVERY</flags>
             <type>VEHICLE_TYPE_QUADBIKE</type>
             <plateType>VPT_FRONT_AND_BACK_PLATES</plateType>
             <dashboardType>VDT_DUKES</dashboardType>
@@ -5709,7 +5709,7 @@
             <driveableDoors />
             <bumpersNeedToCollideWithMap value="false" />
             <needsRopeTexture value="false" />
-            <requiredExtras>EXTRA_1</requiredExtras>
+            <requiredExtras/>
             <rewards />
             <cinematicPartCamera>
                 <Item>WHEEL_FRONT_RIGHT_CAMERA</Item>
