@@ -147,7 +147,7 @@ class PhonePenalty extends Penalty {
     protected failMsg = 'Le téléphone est interdit au volant !';
 
     public isValid(): boolean {
-        return !this.context.phoneService.isPhoneVisible();
+        return !this.context.phoneService.isPhoneVisible() && !this.context.phoneService.hasAnActiveCall();
     }
 }
 
