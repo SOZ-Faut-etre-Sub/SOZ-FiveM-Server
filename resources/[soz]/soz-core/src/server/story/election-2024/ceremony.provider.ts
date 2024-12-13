@@ -29,6 +29,7 @@ export class Election2024CeremonyProvider {
 
         this.showRunning = true;
 
+        TriggerClientEvent(ClientEvent.CEREMONY_SET_RUNNING, -1, true);
         TriggerClientEvent(ClientEvent.CEREMONY_CREATE_CAMERA, -1);
         await wait(5_000);
 
@@ -38,6 +39,7 @@ export class Election2024CeremonyProvider {
         }
 
         TriggerClientEvent(ClientEvent.CEREMONY_DELETE_CAMERA, -1);
+        TriggerClientEvent(ClientEvent.CEREMONY_SET_RUNNING, -1, false);
 
         this.showRunning = false;
     }
@@ -52,6 +54,7 @@ export class Election2024CeremonyProvider {
 
         this.showRunning = true;
 
+        TriggerClientEvent(ClientEvent.CEREMONY_SET_RUNNING, -1, true);
         TriggerClientEvent(ClientEvent.CEREMONY_CREATE_CAMERA, -1, true);
         await wait(10_000);
 
@@ -61,6 +64,7 @@ export class Election2024CeremonyProvider {
         }
 
         TriggerClientEvent(ClientEvent.CEREMONY_DELETE_CAMERA, -1);
+        TriggerClientEvent(ClientEvent.CEREMONY_SET_RUNNING, -1, false);
 
         this.showRunning = false;
     }

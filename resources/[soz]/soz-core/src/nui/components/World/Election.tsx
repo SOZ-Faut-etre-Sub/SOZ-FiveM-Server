@@ -42,7 +42,7 @@ export const Election: FunctionComponent = () => {
                 gain.current.gain.setValueAtTime(0.05, now);
 
                 gain.current.gain.linearRampToValueAtTime(value / 50, now + 10);
-                return
+                return;
             }
 
             gain.current.gain.linearRampToValueAtTime(value / 50, now + 2);

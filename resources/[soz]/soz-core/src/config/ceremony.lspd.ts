@@ -12,7 +12,7 @@ const spotlightDefault = {
 };
 
 const colorBlue = [20, 20, 255] as Vector3;
-const colorYellow = [249, 198, 11] as Vector3;
+const colorYellow = [225, 194, 75] as Vector3;
 
 export const LSPD_LOCATION: Location = {
     camera: [693.05, 23.45, 87.18],

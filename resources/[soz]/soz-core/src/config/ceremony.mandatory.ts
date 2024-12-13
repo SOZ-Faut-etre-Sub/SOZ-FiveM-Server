@@ -12,7 +12,7 @@ const spotlightDefault = {
 };
 
 const colorBlue = [10, 49, 255] as Vector3;
-const colorYellow = [249, 198, 11] as Vector3;
+const colorYellow = [225, 194, 75] as Vector3;
 
 export const MANDATORY_LOCATION: Location = {
     camera: [-487.57, -275.5, 35.61],

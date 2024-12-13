@@ -448,6 +448,7 @@ export enum ClientEvent {
     UPDATE_SPOTLIGHT = 'soz-core:client:update-spotlight',
     DELETE_SPOTLIGHT = 'soz-core:client:delete-spotlight',
 
+    CEREMONY_SET_RUNNING = 'soz-core:client:ceremony:set-running',
     CEREMONY_CREATE_CAMERA = 'soz-core:client:ceremony:create-camera',
     CEREMONY_DELETE_CAMERA = 'soz-core:client:ceremony:delete-camera',
     CEREMONY_RUN_LOCATION = 'soz-core:client:ceremony:run-location',

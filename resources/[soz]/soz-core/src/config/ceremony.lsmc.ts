@@ -21,7 +21,7 @@ const globalLightDefault = {
 };
 
 const colorBlue = [10, 49, 255] as Vector3;
-const colorYellow = [249, 198, 11] as Vector3;
+const colorYellow = [225, 194, 75] as Vector3;
 
 export const LSMC_LOCATION: Location = {
     camera: [349.5, -1525.39, 29.27],

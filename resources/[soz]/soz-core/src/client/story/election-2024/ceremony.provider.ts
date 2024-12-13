@@ -1,15 +1,12 @@
-import { Command } from '@core/decorators/command';
-
 import { ALL_LOCATIONS, TriggerableAction } from '../../../config/ceremony';
 import { FINAL_LOCATION } from '../../../config/ceremony.final';
 import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { Tick } from '../../../core/decorators/tick';
-import { SozRole } from '../../../core/permissions';
 import { wait } from '../../../core/utils';
 import { ClientEvent } from '../../../shared/event/client';
-import { getDistance, Vector3 } from '../../../shared/polyzone/vector';
+import { Vector3 } from '../../../shared/polyzone/vector';
 import { CameraService } from '../../camera';
 import { HudStateProvider } from '../../hud/hud.state.provider';
 import { NuiDispatch } from '../../nui/nui.dispatch';
@@ -37,77 +34,20 @@ export class Election2024CeremonyProvider {
     private readonly startCameraTarget: Vector3 = [-545.13, -688.23, 36.52];
     private readonly finalStartCameraPosition: Vector3 = [-562.97, -596.48, 83.45];
 
-    private debug = false;
+    private _running = false;
+
     private camera: number;
 
-    @Command('debug-ceremony', { role: ['admin', 'staff'] as SozRole[] })
-    async toggleDebug() {
-        this.debug = !this.debug;
+    @Tick()
+    async onTick() {
+        if (!this._running) return;
+
+        DisableAllControlActions(0);
     }
 
-    @Tick()
-    async debugLoop() {
-        if (!this.debug) return;
-
-        const playerPosition = GetEntityCoords(PlayerPedId(), true) as Vector3;
-
-        for (const location of Object.values(ALL_LOCATIONS)) {
-            for (const [index, firework] of Object.entries(location.fireworks)) {
-                const isNear = getDistance(playerPosition, firework.position) < 10;
-
-                if (isNear) {
-                    SetDrawOrigin(firework.position[0], firework.position[1], firework.position[2], 0);
-                    SetTextScale(0.0, 0.25);
-                    SetTextEntry('STRING');
-                    AddTextComponentString(`Firework ${index}`);
-                    SetTextCentre(true);
-                    DrawText(0, 0);
-                    ClearDrawOrigin();
-                }
-
-                DrawLine(
-                    firework.position[0],
-                    firework.position[1],
-                    firework.position[2],
-                    firework.position[0],
-                    firework.position[1],
-                    firework.position[2] + (firework.height || 1),
-                    255,
-                    0,
-                    0,
-                    255
-                );
-            }
-
-            for (const spotlight of location.spotlights) {
-                if (spotlight.action !== 'add') continue;
-
-                const isNear = getDistance(playerPosition, spotlight.position) < 10;
-
-                if (isNear) {
-                    SetDrawOrigin(spotlight.position[0], spotlight.position[1], spotlight.position[2], 0);
-                    SetTextScale(0.0, 0.25);
-                    SetTextEntry('STRING');
-                    AddTextComponentString(`Spotlight ${spotlight.id}`);
-                    SetTextCentre(true);
-                    DrawText(0, 0);
-                    ClearDrawOrigin();
-                }
-
-                DrawLine(
-                    spotlight.position[0],
-                    spotlight.position[1],
-                    spotlight.position[2],
-                    spotlight.target[0],
-                    spotlight.target[1],
-                    spotlight.target[2],
-                    255,
-                    255,
-                    255,
-                    255
-                );
-            }
-        }
+    @OnEvent(ClientEvent.CEREMONY_SET_RUNNING)
+    async updateRunning(running: boolean) {
+        this._running = running;
     }
 
     @OnEvent(ClientEvent.CEREMONY_CREATE_CAMERA)
