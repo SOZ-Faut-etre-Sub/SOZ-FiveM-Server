@@ -164,7 +164,7 @@ export class VehicleCustomProvider {
             this.vehicleService.applyVehicleConfiguration(input.vehicleEntityId, newVehicleConfiguration);
         }
 
-        this.nuiMenu.closeMenu();
+        this.nuiMenu.closeMenu(true);
     }
 
     public async upgradeVehicle(vehicleEntityId: number, mode: LSCustomMode) {
