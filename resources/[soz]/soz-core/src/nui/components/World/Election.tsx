@@ -38,6 +38,13 @@ export const Election: FunctionComponent = () => {
                 gain.current.gain.value = 0;
             }, 5_000);
         } else {
+            if (id === '#election-hymne') {
+                gain.current.gain.setValueAtTime(0.05, now);
+
+                gain.current.gain.linearRampToValueAtTime(value / 50, now + 10);
+                return
+            }
+
             gain.current.gain.linearRampToValueAtTime(value / 50, now + 2);
         }
     }
