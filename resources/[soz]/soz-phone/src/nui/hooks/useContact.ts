@@ -33,23 +33,10 @@ export const useContact = () => {
 
     const getFilteredContacts = useCallback(
         search => {
-            const list = [];
-
-            contacts
-                .filter(
-                    contact =>
-                        contact?.display?.toLowerCase().includes(search.toLowerCase()) ||
-                        contact.number.includes(search)
-                )
-                .forEach(contact => {
-                    const letter = (contact.display ? contact.display[0] : '#').toUpperCase();
-                    if (list[letter] === undefined) {
-                        list[letter] = [];
-                    }
-                    list[letter].push(contact);
-                });
-
-            return list;
+            return contacts.filter(
+                contact =>
+                    contact?.display?.toLowerCase().includes(search.toLowerCase()) || contact.number.includes(search)
+            );
         },
         [contacts]
     );
