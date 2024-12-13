@@ -82,11 +82,10 @@ export class WeaponDrawingProvider {
         const weapon = this.weaponService.getCurrentWeapon();
 
         if (weapon) {
-            if (
-                !Object.values(items)
-                    .map(i => i.slot)
-                    .includes(weapon.slot)
-            ) {
+            const newWeapon = Object.values(items).find(item => item.metadata?.serial == weapon.metadata?.serial);
+            if (newWeapon) {
+                this.weaponService.updateCurrentWeapon(newWeapon);
+            } else {
                 await this.weaponService.clear();
             }
         }
