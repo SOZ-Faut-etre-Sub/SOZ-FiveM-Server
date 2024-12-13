@@ -63,7 +63,9 @@ exports("ReApplyHeadConfig", function()
     local prop = clothSet.Props[tostring(PropType.Head)] or clothSet.Components[PropType.Head]
     if prop == nil or prop.Clear == true then
         ClearPedProp(ped, PropType.Head)
+    elseif prop.Collection then
+        SetPedCollectionPropIndex(ped, PropType.Head, prop.Collection, prop.Drawable, prop.Texture or 0, true)
     else
-        SetPedPropIndex(ped, PropType.Head, prop.Drawable, prop.Texture or 0, prop.Palette or 0)
+        SetPedPropIndex(ped, PropType.Head, prop.Drawable, prop.Texture or 0, true)
     end
 end)
