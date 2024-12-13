@@ -178,9 +178,11 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, state
                         ))}
                     </MenuItemSelect>
                     <MenuItemSubMenuLink id={'player_style'}>Modifier les éléments du personnage</MenuItemSubMenuLink>
+                    {/*
                     <MenuItemSubMenuLink id={'player_style2'}>
                         Modifier les éléments du personnage 2
                     </MenuItemSubMenuLink>
+                    */}
                 </MenuContent>
             </SubMenu>
             <SubMenu id={'player_style'}>
