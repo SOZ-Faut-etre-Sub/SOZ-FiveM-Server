@@ -9,7 +9,7 @@ import { Feature } from '@public/shared/features';
 import { joaat } from '@public/shared/joaat';
 import { JobType } from '@public/shared/job';
 import { HAZMAT_OUTFIT_NAME, LsmcCloakroom } from '@public/shared/job/lsmc';
-import { ObjectOutFits, POLICE_CLOAKROOM } from '@public/shared/job/police';
+import { DUTY_OUTFIT_NAME, ObjectOutFits, POLICE_CLOAKROOM, SASP_DARK } from '@public/shared/job/police';
 import { StonkCloakroom } from '@public/shared/job/stonk';
 import { PlayerPedHash } from '@public/shared/player';
 import { getRandomItem } from '@public/shared/random';
@@ -42,6 +42,8 @@ const ExtraWarnCloths: Record<number, Outfit[]> = {
         LsmcCloakroom[joaat('mp_m_freemode_01')][HAZMAT_OUTFIT_NAME],
         LsmcCloakroom[joaat('mp_m_freemode_01')]['Tenue Hiver'],
         StonkCloakroom[joaat('mp_m_freemode_01')]['Tenue Hiver'],
+        POLICE_CLOAKROOM[JobType.SASP][joaat('mp_m_freemode_01')][DUTY_OUTFIT_NAME],
+        POLICE_CLOAKROOM[JobType.SASP][joaat('mp_m_freemode_01')][SASP_DARK],
     ],
     [joaat('mp_f_freemode_01')]: [
         POLICE_CLOAKROOM[JobType.LSPD][joaat('mp_f_freemode_01')]['Tenue Hiver'],
@@ -58,6 +60,8 @@ const ExtraWarnCloths: Record<number, Outfit[]> = {
         LsmcCloakroom[joaat('mp_f_freemode_01')][HAZMAT_OUTFIT_NAME],
         LsmcCloakroom[joaat('mp_f_freemode_01')]['Tenue Hiver'],
         StonkCloakroom[joaat('mp_f_freemode_01')]['Tenue Hiver'],
+        POLICE_CLOAKROOM[JobType.SASP][joaat('mp_f_freemode_01')][DUTY_OUTFIT_NAME],
+        POLICE_CLOAKROOM[JobType.SASP][joaat('mp_f_freemode_01')][SASP_DARK],
     ],
 };
 
@@ -237,7 +241,7 @@ export class PlayerSnowProvider {
             bonnets.includes(outfit.Props[hatJewels.propId]?.Drawable) ||
             helmets.includes(outfit.Props[helmetJewels.propId]?.Drawable) ||
             !!hasCustomCagoule ||
-            data[Component.Mask] > 1;
+            data[Component.Mask] > 0;
         if (headProtected) {
             coldScore += 2;
         } else {

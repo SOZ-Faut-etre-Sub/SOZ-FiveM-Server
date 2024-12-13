@@ -109,7 +109,8 @@ export class ClothingProvider {
                             elem =>
                                 elem.components[component] &&
                                 outfit[component] &&
-                                elem.components[component].Drawable == outfit[component].Drawable
+                                elem.components[component].Drawable == outfit[component].Drawable &&
+                                elem.components[component].Collection == outfit[component].Collection
                         );
                     });
                 });
