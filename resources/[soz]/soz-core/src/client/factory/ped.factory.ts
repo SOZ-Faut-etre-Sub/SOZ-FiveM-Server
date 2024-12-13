@@ -3,7 +3,7 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { uuidv4 } from '@core/utils';
 import { AnimationProps } from '@public/shared/animation';
-import { Outfit, Prop } from '@public/shared/cloth';
+import { Outfit } from '@public/shared/cloth';
 import { ClientEvent } from '@public/shared/event/client';
 import { getChunkId } from '@public/shared/grid';
 import { InventoryItem } from '@public/shared/inventory';
