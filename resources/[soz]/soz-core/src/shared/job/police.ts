@@ -1,8 +1,7 @@
-import { Component, Prop, WardrobeConfig } from '../cloth';
-import { VanillaComponentDrawableIndexMaxValue, VanillaPropDrawableIndexMaxValue } from '../drawable';
+import { Component, OutfitItem, Prop, WardrobeConfig } from '../cloth';
 import { joaat } from '../joaat';
 import { JobType } from '../job';
-import { PlayerLicenceType } from '../player';
+import { PlayerLicenceType, PlayerPedHash } from '../player';
 import { Vector4 } from '../polyzone/vector';
 
 export const DUTY_OUTFIT_NAME = 'Tenue de service';
@@ -65,68 +64,30 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             [DUTY_OUTFIT_NAME]: {
                 Components: {
                     [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Legs] + 1,
-                        Texture: 0,
-                        Palette: 0,
-                    },
-                    [Component.Bag]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Bag],
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Undershirt] + 4,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Tops] + 4,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
-                    [Prop.Hat]: {
-                        Drawable: VanillaPropDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Prop.Hat],
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
             },
             [WINTER]: {
                 Components: {
                     [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Legs] + 1,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Undershirt] + 4,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
                     [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Tops] + 8,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 8, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
-                    [Prop.Hat]: {
-                        Drawable: VanillaPropDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Prop.Hat],
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
             },
             /*["Tenue SWAT"]:  {
@@ -150,85 +111,47 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             ['Tenue de pilote']: {
                 Components: {
                     [Component.Torso]: { Drawable: 16, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Legs] + 5,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 5, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 24, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Undershirt] + 2,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Undershirt]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
                     [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Tops] + 1,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
-                    [Prop.Helmet]: {
-                        Drawable: VanillaPropDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Prop.Hat] + 4,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Prop.Helmet]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
             },
             [MOTO]: {
                 Components: {
                     [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Legs] + 3,
-                        Texture: 0,
-                        Palette: 0,
-                    },
-                    [Component.Bag]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Bag],
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 13, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Undershirt] + 4,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
                     [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Tops] + 2,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
-                    [Prop.Helmet]: {
-                        Drawable: VanillaPropDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Prop.Hat] + 1,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Prop.Helmet]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 GlovesID: 56000,
             },
             ['Equipement seulement']: {
                 Components: {
                     [Component.Accessories]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Accessories] + 4,
+                        Drawable: 4,
                         Texture: 0,
                         Palette: 0,
+                        Collection: 'soz_bcso',
                     },
                     [Component.Decals]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Decals] + 4,
+                        Drawable: 4,
                         Texture: 0,
                         Palette: 0,
+                        Collection: 'soz_bcso',
                     },
                 },
                 Props: {},
@@ -236,18 +159,10 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             ['Tenue Sportive']: {
                 Components: {
                     [Component.Torso]: { Drawable: 5, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Legs] + 10,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 10, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 2, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Tops] + 12,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 12, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {},
                 type: 'SPORT',
@@ -257,68 +172,30 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             [DUTY_OUTFIT_NAME]: {
                 Components: {
                     [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Legs] + 1,
-                        Texture: 0,
-                        Palette: 0,
-                    },
-                    [Component.Bag]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Bag],
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Undershirt] + 4,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Tops] + 4,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
-                    [Prop.Hat]: {
-                        Drawable: VanillaPropDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Prop.Hat],
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
             },
             [WINTER]: {
                 Components: {
                     [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Legs] + 1,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Undershirt] + 4,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
                     [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Tops] + 8,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 8, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
-                    [Prop.Hat]: {
-                        Drawable: VanillaPropDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Prop.Hat],
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
             },
             /* ["Tenue SWAT"]:  {
@@ -342,85 +219,47 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             ['Tenue de pilote']: {
                 Components: {
                     [Component.Torso]: { Drawable: 17, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Legs] + 5,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 5, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 24, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Undershirt] + 2,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Undershirt]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
                     [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Tops] + 1,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
-                    [Prop.Helmet]: {
-                        Drawable: VanillaPropDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Prop.Hat] + 4,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Prop.Helmet]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
             },
             [MOTO]: {
                 Components: {
                     [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Legs] + 3,
-                        Texture: 0,
-                        Palette: 0,
-                    },
-                    [Component.Bag]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Bag],
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 34, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Undershirt] + 4,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
                     [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Tops] + 2,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
-                    [Prop.Helmet]: {
-                        Drawable: VanillaPropDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Prop.Hat] + 1,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Prop.Helmet]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 GlovesID: 55000,
             },
             ['Equipement seulement']: {
                 Components: {
                     [Component.Accessories]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Accessories] + 4,
+                        Drawable: 4,
                         Texture: 0,
                         Palette: 0,
+                        Collection: 'soz_bcso',
                     },
                     [Component.Decals]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Decals] + 4,
+                        Drawable: 4,
                         Texture: 0,
                         Palette: 0,
+                        Collection: 'soz_bcso',
                     },
                 },
                 Props: {},
@@ -428,18 +267,10 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             ['Tenue Sportive']: {
                 Components: {
                     [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Legs] + 10,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 10, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 10, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Tops] + 12,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 12, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {},
                 type: 'SPORT',
@@ -451,153 +282,76 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             [DUTY_OUTFIT_NAME]: {
                 Components: {
                     [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Legs] + 1,
-                        Texture: 1,
-                        Palette: 0,
-                    },
-                    [Component.Bag]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Bag] + 1,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Undershirt] + 3,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Tops] + 4,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 4, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
-                    [Prop.Hat]: {
-                        Drawable: VanillaPropDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Prop.Hat] + 2,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
             },
             [WINTER]: {
                 Components: {
                     [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Legs] + 1,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Undershirt] + 3,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
                     [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Tops],
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
-                    [Prop.Hat]: {
-                        Drawable: VanillaPropDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Prop.Hat] + 2,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
             },
             ['Tenue de pilote']: {
                 Components: {
                     [Component.Torso]: { Drawable: 16, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Legs] + 5,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 5, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 24, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Undershirt] + 6,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Undershirt]: { Drawable: 6, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
                     [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Tops] + 1,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
-                    [Prop.Helmet]: {
-                        Drawable: VanillaPropDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Prop.Hat] + 4,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Prop.Helmet]: { Drawable: 4, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
             },
             [MOTO]: {
                 Components: {
                     [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Legs] + 3,
-                        Texture: 1,
-                        Palette: 0,
-                    },
-                    [Component.Bag]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Bag] + 1,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 3, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 13, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Undershirt] + 3,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
                     [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Tops] + 2,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 2, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
-                    [Prop.Helmet]: {
-                        Drawable: VanillaPropDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Prop.Hat] + 1,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Prop.Helmet]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 GlovesID: 56000,
             },
             ['Equipement seulement']: {
                 Components: {
                     [Component.Accessories]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Accessories] + 4,
+                        Drawable: 4,
                         Texture: 0,
                         Palette: 0,
+                        Collection: 'soz_bcso',
                     },
-
                     [Component.Decals]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Decals] + 4,
+                        Drawable: 4,
                         Texture: 1,
                         Palette: 0,
+                        Collection: 'soz_bcso',
                     },
                 },
                 Props: {},
@@ -605,18 +359,10 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             ['Tenue Sportive']: {
                 Components: {
                     [Component.Torso]: { Drawable: 5, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Legs] + 10,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 10, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 2, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Tops] + 12,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 12, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {},
                 type: 'SPORT',
@@ -626,152 +372,76 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             [DUTY_OUTFIT_NAME]: {
                 Components: {
                     [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Legs] + 1,
-                        Texture: 1,
-                        Palette: 0,
-                    },
-                    [Component.Bag]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Bag] + 1,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Undershirt] + 3,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Tops] + 4,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 4, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
-                    [Prop.Hat]: {
-                        Drawable: VanillaPropDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Prop.Hat] + 2,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
             },
             [WINTER]: {
                 Components: {
                     [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Legs] + 1,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Undershirt] + 3,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
                     [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Tops],
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
-                    [Prop.Hat]: {
-                        Drawable: VanillaPropDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Prop.Hat] + 2,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
             },
             ['Tenue de pilote']: {
                 Components: {
                     [Component.Torso]: { Drawable: 36, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Legs] + 5,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 5, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 24, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Undershirt] + 6,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Undershirt]: { Drawable: 6, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
                     [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Tops] + 1,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
-                    [Prop.Helmet]: {
-                        Drawable: VanillaPropDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Prop.Hat] + 4,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Prop.Helmet]: { Drawable: 4, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
             },
             [MOTO]: {
                 Components: {
                     [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Legs] + 3,
-                        Texture: 1,
-                        Palette: 0,
-                    },
-                    [Component.Bag]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Bag] + 1,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 3, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 34, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Undershirt] + 3,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
                     [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Tops] + 2,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 2, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
-                    [Prop.Helmet]: {
-                        Drawable: VanillaPropDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Prop.Hat] + 1,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Prop.Helmet]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 GlovesID: 55000,
             },
             ['Equipement seulement']: {
                 Components: {
                     [Component.Accessories]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Accessories] + 4,
+                        Drawable: 4,
                         Texture: 0,
                         Palette: 0,
+                        Collection: 'soz_bcso',
                     },
                     [Component.Decals]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Decals] + 4,
+                        Drawable: 4,
                         Texture: 1,
                         Palette: 0,
+                        Collection: 'soz_bcso',
                     },
                 },
                 Props: {},
@@ -779,18 +449,10 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             ['Tenue Sportive']: {
                 Components: {
                     [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Legs] + 10,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 10, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 10, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Tops] + 12,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 12, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {},
                 type: 'SPORT',
@@ -802,95 +464,43 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             [DUTY_OUTFIT_NAME]: {
                 Components: {
                     [Component.Torso]: { Drawable: 22, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Legs] + 1,
-                        Texture: 2,
-                        Palette: 0,
-                    },
-                    [Component.Bag]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Bag] + 2,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 1, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 2, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
                     [Component.Accessories]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Accessories] + 4,
+                        Drawable: 4,
                         Texture: 0,
                         Palette: 0,
+                        Collection: 'soz_bcso',
                     },
-                    [Component.Undershirt]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Undershirt] + 4,
-                        Texture: 0,
-                        Palette: 0,
-                    },
-                    [Component.BodyArmor]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.BodyArmor] + 8,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.BodyArmor]: { Drawable: 8, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Tops] + 2,
-                        Texture: 2,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 2, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
-                    [Prop.Hat]: {
-                        Drawable: VanillaPropDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Prop.Hat] + 6,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Prop.Hat]: { Drawable: 6, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
             },
             [SASP_DARK]: {
                 Components: {
                     [Component.Torso]: { Drawable: 22, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Legs] + 8,
-                        Texture: 0,
-                        Palette: 0,
-                    },
-                    [Component.Bag]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Bag] + 2,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 8, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 2, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
                     [Component.Accessories]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Accessories] + 4,
+                        Drawable: 4,
                         Texture: 0,
                         Palette: 0,
+                        Collection: 'soz_bcso',
                     },
-                    [Component.Undershirt]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Undershirt] + 4,
-                        Texture: 0,
-                        Palette: 0,
-                    },
-                    [Component.BodyArmor]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.BodyArmor] + 8,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.BodyArmor]: { Drawable: 8, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Tops] + 2,
-                        Texture: 3,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 2, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
-                    [Prop.Hat]: {
-                        Drawable: VanillaPropDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Prop.Hat] + 7,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Prop.Hat]: { Drawable: 7, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
             },
         },
@@ -898,95 +508,43 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             [DUTY_OUTFIT_NAME]: {
                 Components: {
                     [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Legs] + 1,
-                        Texture: 2,
-                        Palette: 0,
-                    },
-                    [Component.Bag]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Bag] + 2,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 1, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 2, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
                     [Component.Accessories]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Accessories] + 4,
+                        Drawable: 4,
                         Texture: 0,
                         Palette: 0,
+                        Collection: 'soz_bcso',
                     },
-                    [Component.Undershirt]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Undershirt] + 4,
-                        Texture: 0,
-                        Palette: 0,
-                    },
-                    [Component.BodyArmor]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.BodyArmor] + 10,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.BodyArmor]: { Drawable: 10, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Tops] + 2,
-                        Texture: 2,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 2, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
-                    [Prop.Hat]: {
-                        Drawable: VanillaPropDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Prop.Hat] + 6,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Prop.Hat]: { Drawable: 6, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
             },
             [SASP_DARK]: {
                 Components: {
                     [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Legs] + 8,
-                        Texture: 0,
-                        Palette: 0,
-                    },
-                    [Component.Bag]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Bag] + 2,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 8, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 2, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
                     [Component.Accessories]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Accessories] + 4,
+                        Drawable: 4,
                         Texture: 0,
                         Palette: 0,
+                        Collection: 'soz_bcso',
                     },
-                    [Component.Undershirt]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Undershirt] + 4,
-                        Texture: 0,
-                        Palette: 0,
-                    },
-                    [Component.BodyArmor]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.BodyArmor] + 10,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.BodyArmor]: { Drawable: 10, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Tops] + 2,
-                        Texture: 3,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 2, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
-                    [Prop.Hat]: {
-                        Drawable: VanillaPropDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Prop.Hat] + 7,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Prop.Hat]: { Drawable: 7, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
             },
         },
@@ -1008,10 +566,10 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     },
                     [Component.Shoes]: { Drawable: 60, Texture: 0, Palette: 0 },
                     [Component.Accessories]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Accessories] + 4,
+                        Drawable: 4,
                         Texture: 0,
                         Palette: 0,
+                        Collection: 'soz_bcso',
                     },
                     [Component.Undershirt]: {
                         Drawable: 58,
@@ -1050,10 +608,10 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     },
                     [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
                     [Component.Accessories]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Accessories] + 4,
+                        Drawable: 4,
                         Texture: 0,
                         Palette: 0,
+                        Collection: 'soz_bcso',
                     },
                     [Component.Undershirt]: {
                         Drawable: 35,
@@ -1170,55 +728,64 @@ export const RankOutfit: Partial<Record<JobType, Record<string, Record<number, [
     },
 };
 
-export const Armors = {
+export const Armors: Record<PlayerPedHash, Record<string, OutfitItem>> = {
     [joaat('mp_m_freemode_01')]: {
         ['unmark']: {
-            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.BodyArmor] + 2,
+            Drawable: 2,
             Texture: 0,
             Palette: 0,
+            Collection: 'soz_bcso',
         },
         ['lspd']: {
-            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.BodyArmor] + 1,
+            Drawable: 1,
             Texture: 0,
             Palette: 0,
+            Collection: 'soz_bcso',
         },
         ['bcso']: {
-            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.BodyArmor] + 2,
+            Drawable: 2,
             Texture: 3,
             Palette: 0,
+            Collection: 'soz_bcso',
         },
         ['lsmc']: { Drawable: 27, Texture: 8, Palette: 0 }, // is unmarked, need reskin
         ['stonk']: {
-            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.BodyArmor],
+            Drawable: 0,
             Texture: 0,
             Palette: 0,
+            Collection: 'soz_bcso',
         },
         ['fbi']: {
-            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.BodyArmor] + 2,
+            Drawable: 2,
             Texture: 2,
             Palette: 0,
+            Collection: 'soz_bcso',
         },
         ['news']: { Drawable: 27, Texture: 2, Palette: 0 }, // is unmarked, need reskin
         ['you-news']: { Drawable: 27, Texture: 4, Palette: 0 }, // is unmarked, need reskin
         ['sasp1']: {
-            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.BodyArmor] + 9,
+            Drawable: 9,
             Texture: 0,
             Palette: 0,
+            Collection: 'soz_bcso',
         },
         ['sasp2']: {
-            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.BodyArmor] + 10,
+            Drawable: 10,
             Texture: 0,
             Palette: 0,
+            Collection: 'soz_bcso',
         },
         ['bulletproof_vest_medium']: {
-            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.BodyArmor] + 7,
+            Drawable: 7,
             Texture: 0,
             Palette: 0,
+            Collection: 'soz_bcso',
         },
         ['bulletproof_vest_low']: {
-            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.BodyArmor] + 6,
+            Drawable: 6,
             Texture: 0,
             Palette: 0,
+            Collection: 'soz_bcso',
         },
         ['armor_tactical']: {
             Drawable: 12,
@@ -1226,14 +793,16 @@ export const Armors = {
             Palette: 0,
         },
         ['armor_tactical_light']: {
-            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.BodyArmor] + 11, //drawable 75
+            Drawable: 11, //drawable 75
             Texture: 0,
             Palette: 0,
+            Collection: 'soz_bcso',
         },
         ['armor_tactical_medium']: {
-            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.BodyArmor] + 12, // drawable 74
+            Drawable: 12, // drawable 74
             Texture: 0,
             Palette: 0,
+            Collection: 'soz_bcso',
         },
         ['armor_tactical_heavy']: {
             Drawable: 15,
@@ -1243,52 +812,61 @@ export const Armors = {
     },
     [joaat('mp_f_freemode_01')]: {
         ['unmark']: {
-            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.BodyArmor] + 2,
+            Drawable: 2,
             Texture: 7,
             Palette: 0,
+            Collection: 'soz_bcso',
         },
         ['lspd']: {
-            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.BodyArmor] + 1,
+            Drawable: 1,
             Texture: 0,
             Palette: 0,
+            Collection: 'soz_bcso',
         },
         ['bcso']: {
-            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.BodyArmor] + 2,
+            Drawable: 2,
             Texture: 4,
             Palette: 0,
+            Collection: 'soz_bcso',
         },
         ['lsmc']: { Drawable: 31, Texture: 8, Palette: 0 }, // is unmarked, need reskin
         ['stonk']: {
-            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.BodyArmor],
+            Drawable: 0,
             Texture: 0,
             Palette: 0,
+            Collection: 'soz_bcso',
         },
         ['fbi']: {
-            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.BodyArmor] + 2,
+            Drawable: 2,
             Texture: 2,
             Palette: 0,
+            Collection: 'soz_bcso',
         },
         ['news']: { Drawable: 31, Texture: 2, Palette: 0 }, // is unmarked, need reskin
         ['you-news']: { Drawable: 31, Texture: 4, Palette: 0 }, // is unmarked, need reskin
         ['sasp1']: {
-            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.BodyArmor] + 9,
+            Drawable: 9,
             Texture: 0,
             Palette: 0,
+            Collection: 'soz_bcso',
         },
         ['sasp2']: {
-            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.BodyArmor] + 11,
+            Drawable: 11,
             Texture: 0,
             Palette: 0,
+            Collection: 'soz_bcso',
         },
         ['bulletproof_vest_medium']: {
-            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.BodyArmor] + 7,
+            Drawable: 7,
             Texture: 0,
             Palette: 0,
+            Collection: 'soz_bcso',
         },
         ['bulletproof_vest_low']: {
-            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.BodyArmor] + 6,
+            Drawable: 6,
             Texture: 0,
             Palette: 0,
+            Collection: 'soz_bcso',
         },
         ['armor_tactical']: {
             Drawable: 7,
@@ -1296,14 +874,16 @@ export const Armors = {
             Palette: 0,
         },
         ['armor_tactical_light']: {
-            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.BodyArmor] + 12,
+            Drawable: 12,
             Texture: 0,
             Palette: 0,
+            Collection: 'soz_bcso',
         },
         ['armor_tactical_medium']: {
-            Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.BodyArmor] + 13,
+            Drawable: 13,
             Texture: 0,
             Palette: 0,
+            Collection: 'soz_bcso',
         },
         ['armor_tactical_heavy']: {
             Drawable: 17,
@@ -1330,32 +910,19 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                 Components: {
                     [Component.Mask]: { Drawable: 185, Texture: 0, Palette: 0 },
                     [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Legs] + 6,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 6, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
                     [Component.Accessories]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Accessories] + 1,
+                        Drawable: 1,
                         Texture: 0,
                         Palette: 0,
+                        Collection: 'soz_bcso',
                     },
                     [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
-                    [Component.BodyArmor]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.BodyArmor] + 3,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.BodyArmor]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Tops] + 10,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 10, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
                     [Prop.Helmet]: { Drawable: 150, Texture: 0, Palette: 0 },
@@ -1367,32 +934,14 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                 Components: {
                     [Component.Mask]: { Drawable: 52, Texture: 0, Palette: 0 },
                     [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Legs] + 7,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 7, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
                     [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Undershirt] + 4,
-                        Texture: 0,
-                        Palette: 0,
-                    },
-                    [Component.BodyArmor]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.BodyArmor] + 5,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.BodyArmor]: { Drawable: 5, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Tops] + 11,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 11, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
                     [Prop.Helmet]: { Drawable: 125, Texture: 0, Palette: 0 },
@@ -1406,32 +955,19 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                 Components: {
                     [Component.Mask]: { Drawable: 185, Texture: 0, Palette: 0 },
                     [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Legs] + 6,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 6, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
                     [Component.Accessories]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Accessories] + 1,
+                        Drawable: 1,
                         Texture: 0,
                         Palette: 0,
+                        Collection: 'soz_bcso',
                     },
                     [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
-                    [Component.BodyArmor]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.BodyArmor] + 3,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.BodyArmor]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Tops] + 10,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 10, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
                     [Prop.Helmet]: { Drawable: 149, Texture: 0, Palette: 0 },
@@ -1443,32 +979,14 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                 Components: {
                     [Component.Mask]: { Drawable: 52, Texture: 0, Palette: 0 },
                     [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Legs] + 7,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 7, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
                     [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Undershirt] + 4,
-                        Texture: 0,
-                        Palette: 0,
-                    },
-                    [Component.BodyArmor]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.BodyArmor] + 5,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.BodyArmor]: { Drawable: 5, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Tops] + 11,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 11, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
                     [Prop.Helmet]: { Drawable: 124, Texture: 0, Palette: 0 },
@@ -1484,32 +1002,19 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                 Components: {
                     [Component.Mask]: { Drawable: 185, Texture: 20, Palette: 0 },
                     [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Legs] + 6,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 6, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
                     [Component.Accessories]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Accessories] + 1,
+                        Drawable: 1,
                         Texture: 0,
                         Palette: 0,
+                        Collection: 'soz_bcso',
                     },
                     [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
-                    [Component.BodyArmor]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.BodyArmor] + 4,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.BodyArmor]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Tops] + 10,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 10, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
                     [Prop.Helmet]: { Drawable: 150, Texture: 1, Palette: 0 },
@@ -1521,32 +1026,14 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                 Components: {
                     [Component.Mask]: { Drawable: 52, Texture: 4, Palette: 0 },
                     [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Legs] + 7,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 7, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
                     [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Undershirt] + 3,
-                        Texture: 0,
-                        Palette: 0,
-                    },
-                    [Component.BodyArmor]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.BodyArmor] + 5,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.BodyArmor]: { Drawable: 5, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Tops] + 11,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 11, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
                     [Prop.Helmet]: { Drawable: 125, Texture: 0, Palette: 0 },
@@ -1560,32 +1047,19 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                 Components: {
                     [Component.Mask]: { Drawable: 185, Texture: 20, Palette: 0 },
                     [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Legs] + 6,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 6, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
                     [Component.Accessories]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Accessories] + 1,
+                        Drawable: 1,
                         Texture: 0,
                         Palette: 0,
+                        Collection: 'soz_bcso',
                     },
                     [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
-                    [Component.BodyArmor]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.BodyArmor] + 4,
-                        Texture: 0,
-                        Palette: 0,
-                    },
+                    [Component.BodyArmor]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Tops] + 10,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 10, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
                     [Prop.Helmet]: { Drawable: 149, Texture: 1, Palette: 0 },
@@ -1597,32 +1071,14 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                 Components: {
                     [Component.Mask]: { Drawable: 52, Texture: 4, Palette: 0 },
                     [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
-                    [Component.Legs]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Legs] + 7,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Component.Legs]: { Drawable: 7, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
                     [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Undershirt] + 3,
-                        Texture: 0,
-                        Palette: 0,
-                    },
-                    [Component.BodyArmor]: {
-                        Drawable:
-                            VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.BodyArmor] + 5,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.BodyArmor]: { Drawable: 5, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: {
-                        Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Tops] + 11,
-                        Texture: 1,
-                        Palette: 0,
-                    },
+                    [Component.Tops]: { Drawable: 11, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
                     [Prop.Helmet]: { Drawable: 124, Texture: 0, Palette: 0 },

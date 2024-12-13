@@ -19,7 +19,6 @@ import { UpwCloakroom } from '@public/shared/job/upw';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
-import { VanillaComponentDrawableIndexMaxValue } from '../../shared/drawable';
 import { ServerEvent } from '../../shared/event';
 import { POLICE_CLOAKROOM, RankOutfit } from '../../shared/job/police';
 import { RpcServerEvent } from '../../shared/rpc';
@@ -136,11 +135,10 @@ export class JobCloakroomProvider {
                     configs[model][outfitName].Components[Component.Decals] = { Drawable: 0, Texture: 0, Palette: 0 };
                     if (RankOutfit[player.job.id][outfitName][player.job.grade]) {
                         configs[model][outfitName].Components[Component.Decals] = {
-                            Drawable:
-                                VanillaComponentDrawableIndexMaxValue[model][Component.Decals] +
-                                RankOutfit[player.job.id][outfitName][player.job.grade][0],
+                            Drawable: RankOutfit[player.job.id][outfitName][player.job.grade][0],
                             Texture: RankOutfit[player.job.id][outfitName][player.job.grade][1],
                             Palette: 0,
+                            Collection: 'soz_bcso',
                         };
                     }
                 }

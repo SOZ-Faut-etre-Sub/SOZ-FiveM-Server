@@ -89,6 +89,7 @@ export type FakeId = {
 export type Skin = {
     Hair: {
         HairType?: number;
+        Collection?: string;
         HairColor?: number;
         HairSecondaryColor?: number;
         BeardType?: number;
@@ -121,10 +122,40 @@ export type Skin = {
         LipstickColor?: number;
     };
     FaceTrait: {
-        EyeColor?: number;
+        EyeColor: number;
+        Blemish: number;
+        Ageing: number;
+        Complexion: number;
+        Moles: number;
+        BodyBlemish: number;
+        AddBodyBlemish: number;
+        EyebrowHigh: number;
+        EyebrowForward: number;
+        EyesOpening: number;
+        CheeksBoneHigh: number;
+        CheeksBoneWidth: number;
+        CheeksWidth: number;
+        ChimpBoneLength: number;
+        ChimpBoneLower: number;
+        ChimpBoneWidth: number;
+        ChimpHole: number;
+        JawBoneBackLength: number;
+        JawBoneWidth: number;
+        LipsThickness: number;
+        NeckThickness: number;
+        NoseBoneHigh: number;
+        NoseBoneTwist: number;
+        NosePeakLength: number;
+        NosePeakLower: number;
+        NosePeakHeight: number;
+        NoseWidth: number;
     };
     Model: {
         Hash: number;
+        Father: number;
+        Mother: number;
+        ShapeMix: number;
+        SkinMix: number;
     };
     Tattoos: {
         Collection: number;

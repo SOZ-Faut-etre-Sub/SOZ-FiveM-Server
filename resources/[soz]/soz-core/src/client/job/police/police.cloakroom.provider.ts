@@ -7,7 +7,6 @@ import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { Component } from '@public/shared/cloth';
-import { VanillaComponentDrawableIndexMaxValue } from '@public/shared/drawable';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { JobType } from '@public/shared/job';
 import { Armors, DUTY_OUTFIT_NAME, ObjectOutFits, PrisonerClothes, RankOutfit } from '@public/shared/job/police';
@@ -97,11 +96,10 @@ export class PoliceCloakRoomProvider {
             itemname == 'outfit'
         ) {
             outfit.Components[Component.Decals] = {
-                Drawable:
-                    VanillaComponentDrawableIndexMaxValue[model][Component.Decals] +
-                    RankOutfit[player.job.id][DUTY_OUTFIT_NAME][player.job.grade][0],
+                Drawable: RankOutfit[player.job.id][DUTY_OUTFIT_NAME][player.job.grade][0],
                 Texture: RankOutfit[player.job.id][DUTY_OUTFIT_NAME][player.job.grade][1],
                 Palette: 0,
+                Collection: 'soz_bcso',
             };
         }
 

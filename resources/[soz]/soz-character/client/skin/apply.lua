@@ -24,7 +24,11 @@ local function ApplyPlayerModelHash(playerId, hash)
 end
 
 local function ApplyPedHair(ped, hair)
-    SetPedComponentVariation(ped, ComponentType.Hair, hair.HairType, 0, 0);
+    if hair.Collection then
+        SetPedCollectionComponentVariation(ped, ComponentType.Hair, hair.Collection, hair.HairType, 0, 0);
+    else
+        SetPedComponentVariation(ped, ComponentType.Hair, hair.HairType, 0, 0);
+    end
     SetPedHairColor(ped, hair.HairColor, hair.HairSecondaryColor or 0);
     SetPedHeadOverlay(ped, HeadOverlayType.Eyebrows, hair.EyebrowType, (hair.EyebrowOpacity or 0) + 0.0 or 1.0);
     SetPedHeadOverlayColor(ped, HeadOverlayType.Eyebrows, 1, hair.EyebrowColor, 0);
@@ -163,7 +167,11 @@ local function ApplyPedClothSet(ped, clothSet)
             drawable = drawable + 1
         end
 
-        SetPedComponentVariation(ped, comp, drawable, component.Texture or 0, component.Palette or 0);
+        if component.Collection then
+            SetPedCollectionComponentVariation(ped, comp, component.Collection, drawable, component.Texture or 0, component.Palette or 0)
+        else
+            SetPedComponentVariation(ped, comp, drawable, component.Texture or 0, component.Palette or 0);
+        end
     end
 
     for _, propId in pairs(PropType) do
@@ -171,6 +179,8 @@ local function ApplyPedClothSet(ped, clothSet)
         if tonumber(propId) ~= nil then
             if prop == nil or prop.Clear == true then
                 ClearPedProp(ped, tonumber(propId))
+            elseif prop.Collection then
+                SetPedCollectionPropIndex(ped, tonumber(propId), prop.Collection, prop.Drawable, prop.Texture or 0, true)
             else
                 SetPedPropIndex(ped, tonumber(propId), prop.Drawable, prop.Texture or 0, prop.Palette or 0)
             end

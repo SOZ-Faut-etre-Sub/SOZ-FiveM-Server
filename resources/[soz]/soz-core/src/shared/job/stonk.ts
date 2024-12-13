@@ -1,5 +1,4 @@
 import { Component, Prop, WardrobeConfig } from '../cloth';
-import { VanillaComponentDrawableIndexMaxValue, VanillaPropDrawableIndexMaxValue } from '../drawable';
 import { NamedZone } from '../polyzone/box.zone';
 
 export type StonkBagType = 'jewelbag' | 'small_moneybag' | 'medium_moneybag' | 'big_moneybag';
@@ -181,34 +180,37 @@ export const StonkCloakroom: WardrobeConfig = {
             Components: {
                 [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                 [Component.Legs]: {
-                    Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Legs] + 2,
+                    Drawable: 2,
                     Texture: 0,
                     Palette: 0,
+                    Collection: 'soz_bcso',
                 },
                 [Component.Shoes]: { Drawable: 54, Texture: 0, Palette: 0 },
                 [Component.Undershirt]: {
-                    Drawable:
-                        VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Undershirt] + 1,
+                    Drawable: 1,
                     Texture: 0,
                     Palette: 0,
+                    Collection: 'soz_bcso',
                 },
                 [Component.Decals]: {
-                    Drawable:
-                        VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Decals] + 3,
+                    Drawable: 3,
                     Texture: 0,
                     Palette: 0,
+                    Collection: 'soz_bcso',
                 },
                 [Component.Tops]: {
-                    Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Tops] + 5,
+                    Drawable: 5,
                     Texture: 0,
                     Palette: 0,
+                    Collection: 'soz_bcso',
                 },
             },
             Props: {
                 [Prop.Hat]: {
-                    Drawable: VanillaPropDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Prop.Hat],
+                    Drawable: 0,
                     Texture: 0,
                     Palette: 0,
+                    Collection: 'soz_bcso',
                 },
             },
         },
@@ -254,34 +256,37 @@ export const StonkCloakroom: WardrobeConfig = {
             Components: {
                 [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                 [Component.Legs]: {
-                    Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Legs] + 2,
+                    Drawable: 2,
                     Texture: 0,
                     Palette: 0,
+                    Collection: 'soz_bcso',
                 },
                 [Component.Shoes]: { Drawable: 54, Texture: 0, Palette: 0 },
                 [Component.Undershirt]: {
-                    Drawable:
-                        VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Undershirt] + 1,
+                    Drawable: 1,
                     Texture: 0,
                     Palette: 0,
+                    Collection: 'soz_bcso',
                 },
                 [Component.Decals]: {
-                    Drawable:
-                        VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Decals] + 3,
+                    Drawable: 3,
                     Texture: 0,
                     Palette: 0,
+                    Collection: 'soz_bcso',
                 },
                 [Component.Tops]: {
-                    Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Tops] + 9,
+                    Drawable: 9,
                     Texture: 0,
                     Palette: 0,
+                    Collection: 'soz_bcso',
                 },
             },
             Props: {
                 [Prop.Hat]: {
-                    Drawable: VanillaPropDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Prop.Hat],
+                    Drawable: 0,
                     Texture: 0,
                     Palette: 0,
+                    Collection: 'soz_bcso',
                 },
             },
         },
@@ -291,34 +296,37 @@ export const StonkCloakroom: WardrobeConfig = {
             Components: {
                 [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
                 [Component.Legs]: {
-                    Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Legs] + 2,
+                    Drawable: 2,
                     Texture: 0,
                     Palette: 0,
+                    Collection: 'soz_bcso',
                 },
                 [Component.Shoes]: { Drawable: 55, Texture: 0, Palette: 0 },
                 [Component.Undershirt]: {
-                    Drawable:
-                        VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Undershirt] + 1,
+                    Drawable: 1,
                     Texture: 0,
                     Palette: 0,
+                    Collection: 'soz_bcso',
                 },
                 [Component.Decals]: {
-                    Drawable:
-                        VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Decals] + 3,
+                    Drawable: 3,
                     Texture: 0,
                     Palette: 0,
+                    Collection: 'soz_bcso',
                 },
                 [Component.Tops]: {
-                    Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Tops] + 5,
+                    Drawable: 5,
                     Texture: 0,
                     Palette: 0,
+                    Collection: 'soz_bcso',
                 },
             },
             Props: {
                 [Prop.Hat]: {
-                    Drawable: VanillaPropDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Prop.Hat],
+                    Drawable: 0,
                     Texture: 0,
                     Palette: 0,
+                    Collection: 'soz_bcso',
                 },
             },
         },
@@ -363,34 +371,37 @@ export const StonkCloakroom: WardrobeConfig = {
             Components: {
                 [Component.Torso]: { Drawable: 5, Texture: 0, Palette: 0 },
                 [Component.Legs]: {
-                    Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Legs] + 2,
+                    Drawable: 2,
                     Texture: 0,
                     Palette: 0,
+                    Collection: 'soz_bcso',
                 },
                 [Component.Shoes]: { Drawable: 55, Texture: 0, Palette: 0 },
                 [Component.Undershirt]: {
-                    Drawable:
-                        VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Undershirt] + 1,
+                    Drawable: 1,
                     Texture: 0,
                     Palette: 0,
+                    Collection: 'soz_bcso',
                 },
                 [Component.Decals]: {
-                    Drawable:
-                        VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Decals] + 3,
+                    Drawable: 3,
                     Texture: 0,
                     Palette: 0,
+                    Collection: 'soz_bcso',
                 },
                 [Component.Tops]: {
-                    Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Tops] + 9,
+                    Drawable: 9,
                     Texture: 0,
                     Palette: 0,
+                    Collection: 'soz_bcso',
                 },
             },
             Props: {
                 [Prop.Hat]: {
-                    Drawable: VanillaPropDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Prop.Hat],
+                    Drawable: 0,
                     Texture: 0,
                     Palette: 0,
+                    Collection: 'soz_bcso',
                 },
             },
         },
