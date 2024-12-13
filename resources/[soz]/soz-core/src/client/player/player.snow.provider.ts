@@ -12,12 +12,14 @@ import { HAZMAT_OUTFIT_NAME, LsmcCloakroom } from '@public/shared/job/lsmc';
 import { ObjectOutFits, POLICE_CLOAKROOM } from '@public/shared/job/police';
 import { StonkCloakroom } from '@public/shared/job/stonk';
 import { PlayerPedHash } from '@public/shared/player';
+import { getRandomItem } from '@public/shared/random';
 import { RpcServerEvent } from '@public/shared/rpc';
 import { Weather } from '@public/shared/weather';
 
 import { ClothingService } from '../clothing/clothing.service';
 import { FeatureProvider } from '../feature/feature.provider';
 import { HudWeatherIconProvider } from '../hud/hud.weathericon.provider';
+import { LSMCDamageProvider } from '../job/lsmc/lsmc.damage.provider';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { Store } from '../store/store';
 import { PlayerService } from './player.service';
@@ -94,11 +96,15 @@ export class PlayerSnowProvider {
     @Inject(FeatureProvider)
     private featureProvider: FeatureProvider;
 
+    @Inject(LSMCDamageProvider)
+    private LSMCDamageProvider: LSMCDamageProvider;
+
     private lastSlipDate = 0;
     private cold = false;
     private coldProtected = false;
     private blizzardProtected = false;
     private frozenDeath = false;
+    private unprotectedBone: number;
 
     @Tick(TickInterval.EVERY_MINUTE)
     public onSlipCheck() {
@@ -150,9 +156,23 @@ export class PlayerSnowProvider {
         }
 
         const clothConfig = player.cloth_config.Config;
+        const unprotectedBones = [];
 
-        if (clothConfig.HidePants || clothConfig.HideShoes || clothConfig.HideTop || clothConfig.Naked) {
+        if (clothConfig.HidePants || clothConfig.Naked) {
+            unprotectedBones.push(36864, 63931);
+        }
+
+        if (clothConfig.HideShoes || clothConfig.Naked) {
+            unprotectedBones.push(52301, 14201);
+        }
+
+        if (clothConfig.HideTop || clothConfig.Naked) {
+            unprotectedBones.push(0, 24817, 24816, 64729, 10706);
+        }
+
+        if (unprotectedBones.length > 0) {
             this.coldProtected = false;
+            this.unprotectedBone = getRandomItem(unprotectedBones);
             return;
         }
 
@@ -188,6 +208,7 @@ export class PlayerSnowProvider {
             coldScore++;
             this.blizzardProtected = true;
         } else {
+            unprotectedBones.push(57005, 18905);
             this.blizzardProtected = false;
         }
 
@@ -204,6 +225,8 @@ export class PlayerSnowProvider {
         const neckProtected = scarfs.includes(outfit.Components[neckJewels.componentId].Drawable);
         if (neckProtected) {
             coldScore += 2;
+        } else {
+            unprotectedBones.push(10706, 64729);
         }
 
         const hatJewels = jewels['Chapeaux'];
@@ -217,6 +240,8 @@ export class PlayerSnowProvider {
             data[Component.Mask] > 1;
         if (headProtected) {
             coldScore += 2;
+        } else {
+            unprotectedBones.push(31086);
         }
 
         //Cagoule - bandana - écharpes
@@ -228,6 +253,7 @@ export class PlayerSnowProvider {
 
         this.coldProtected = coldScore >= 6;
         this.blizzardProtected = this.blizzardProtected && coldScore >= 10;
+        this.unprotectedBone = getRandomItem(unprotectedBones);
     }
 
     private setCold(cold: boolean) {
@@ -292,6 +318,7 @@ export class PlayerSnowProvider {
         const newHealth = GetEntityHealth(playerPed) - 1;
         this.frozenDeath = newHealth <= 100;
         SetEntityHealth(playerPed, newHealth);
+        this.LSMCDamageProvider.overrideLastDamage(911, this.unprotectedBone);
     }
 
     public isFrozenDeath() {

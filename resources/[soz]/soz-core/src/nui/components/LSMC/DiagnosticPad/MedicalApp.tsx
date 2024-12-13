@@ -559,7 +559,7 @@ export const MedicalApp: FunctionComponent = () => {
                                             damageType: damages[0].damageType,
                                             weapon: damages[0].weapon,
                                             isFatal: fatal,
-                                            date: damages[damages.length - 1].date,
+                                            date: damages[0].date,
                                         },
                                         damages.length,
                                         globalDamages,

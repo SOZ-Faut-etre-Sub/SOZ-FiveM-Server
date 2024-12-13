@@ -205,7 +205,7 @@ export const DamagesTypes: Record<number, DamagesType> = {
         icon: 'fall',
     },
     10: {
-        label: 'Électrocution',
+        label: 'Électrisation',
         icon: 'electrocution',
         description:
             "Détection d'un passage d'électricité dans le corps ayant pu bauser des brûlures, des troubles cardiaques, des lésions d'organes ou le décès dans des cas sévères.",
@@ -270,6 +270,11 @@ export const DamagesTypes: Record<number, DamagesType> = {
         description:
             "Détection d'une blessure lourdes par balle. Il s'agit d'un traumatisme physique causé par une balle d'une arme à feu. Les dommages peuvent inclure des saignements, des fractures, des dommages aux organes, une infection de la plaie, ou la perte de la capacité de bouger une partie du corps",
         icon: 'bullet3',
+    },
+    911: {
+        label: 'Froid',
+        description: 'Détection d’hypothermie, de nécrose des tissus, ainsi que de gelures',
+        icon: 'cold',
     },
 };
 
