@@ -67,14 +67,14 @@ export class NuiMenu {
         }
     }
 
-    public closeAll(skipCloseEvent = true) {
+    public closeAll(skipCloseEvent = false) {
         exports['menuv'].SendNUIMessage({ action: 'KEY_CLOSE_ALL' });
         this.dispatcher.dispatch('bank', 'CloseInterface');
         this.closeMenu(skipCloseEvent);
     }
 
     @OnEvent(ClientEvent.CORE_CLOSE_MENU)
-    public closeMenu(skipCloseEvent = true) {
+    public closeMenu(skipCloseEvent = false) {
         if (this.getOpened() === null) {
             return;
         }
