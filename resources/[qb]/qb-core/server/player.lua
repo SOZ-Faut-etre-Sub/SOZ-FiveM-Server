@@ -488,7 +488,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
 
     self.Functions.UpdateArmour = function()
         local jobClothSet = self.PlayerData.cloth_config["JobClothSet"]
-        if jobClothSet and jobClothSet.Components["9"] and jobClothSet.Components["9"].Drawable ~= 0 then
+        if jobClothSet and jobClothSet.Components["9"] and (jobClothSet.Components["9"].Drawable ~= 0 or jobClothSet.Components["9"].Collection) then
             self.Functions.SetArmour(true)
         else
             self.Functions.SetArmour(false)
