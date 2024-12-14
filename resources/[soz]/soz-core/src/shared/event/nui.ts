@@ -59,6 +59,7 @@ export enum NuiEvent {
     AdminMenuPlayerSetHalloweenRole = 'soz-core:client:admin:set-halloween-role',
     AdminMenuPlayerSetSenateParty = 'soz-core:client:admin:set-senate-party',
     AdminMenuClothCollectionFetch = 'soz-core:client:admin:cloth-collection',
+    AdminMenuClothCollectionCurrent = 'soz-core:client:admin:cloth-current',
     AdminMenuClothCollectionPreview = 'soz-core:client:admin:cloth-collection-preview',
     AdminResetHealthData = 'soz-core:client:admin:reset-health-data',
     AdminSetGodMode = 'soz-core:client:admin:set-god-mode',

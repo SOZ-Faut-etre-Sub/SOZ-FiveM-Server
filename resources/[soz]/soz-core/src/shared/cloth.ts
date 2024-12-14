@@ -377,3 +377,10 @@ export type CollectionInfo = {
     dlc: string[];
     data: Record<string, Record<number, Record<number, number>>>;
 };
+
+export type ClothCollectionSubMenuState = {
+    field: number;
+    dlc: number;
+    drawable: number;
+    texture: number;
+};
