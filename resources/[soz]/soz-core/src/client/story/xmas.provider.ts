@@ -51,7 +51,9 @@ export class XmasProvider {
             }),
             'xmas',
             'soz_xmas_gouv_tv',
-            'big_disp2'
+            'big_disp2',
+            2048,
+            1024
         );
     }
 

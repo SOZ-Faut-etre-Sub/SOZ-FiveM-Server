@@ -37,12 +37,10 @@ export const XmasSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner, sta
                                 maxCharacters: 255,
                             });
 
-                            if (newVideoUrl !== null) {
-                                setTemporaryState({
-                                    ...temporaryState,
-                                    video_url: newVideoUrl === '' ? null : newVideoUrl,
-                                });
-                            }
+                            setTemporaryState({
+                                ...temporaryState,
+                                video_url: !newVideoUrl || newVideoUrl === '' ? null : newVideoUrl,
+                            });
                         }}
                     >
                         Url de la vidéo
@@ -114,8 +112,6 @@ export const XmasSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner, sta
                                     title={SPOT_LABELS[spotName]}
                                     value={temporaryState.spots[spotName]?.color ?? null}
                                     onChange={(index, color) => {
-                                        console.log('set color', color, spotName);
-
                                         setTemporaryState({
                                             ...temporaryState,
                                             spots: {
