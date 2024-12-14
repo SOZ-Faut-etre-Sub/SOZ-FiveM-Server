@@ -434,6 +434,7 @@ export enum ClientEvent {
     OILRIG_HEIST_RESET = 'soz-core:client:oilrig-heist:reset',
 
     PARADE_SPAWN = 'soz-core:client:parade:spawn',
+    PARADE_INIT = 'soz-core:client:parade:init',
     PARADE_DELETE = 'soz-core:client:parade:delete',
 
     GIFT_PLAY_JOKER_ANIM = 'soz-core:server:gift:joker',

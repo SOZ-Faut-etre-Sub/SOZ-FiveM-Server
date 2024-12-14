@@ -18,7 +18,11 @@ import { VehicleSeat } from '@public/shared/vehicle/vehicle';
 
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { CameraService } from '../camera';
 import { PedFactory } from '../factory/ped.factory';
+import { HudStateProvider } from '../hud/hud.state.provider';
+import { NuiDispatch } from '../nui/nui.dispatch';
+import { PlayerHealthProvider } from '../player/player.health.provider';
 import { ResourceLoader } from '../repository/resource.loader';
 import { VehicleService } from '../vehicle/vehicle.service';
 import { SpotlightProvider } from '../world/spotlight.provider';
@@ -37,29 +41,51 @@ export class ParadeProvider {
     @Inject(SpotlightProvider)
     private spotlightProvider: SpotlightProvider;
 
+    @Inject(CameraService)
+    private readonly cameraService: CameraService;
+
+    @Inject(NuiDispatch)
+    public nuiDispatch: NuiDispatch;
+
+    @Inject(HudStateProvider)
+    public hudStateProvider: HudStateProvider;
+
+    @Inject(PlayerHealthProvider)
+    public playerHealthProvider: PlayerHealthProvider;
+
     private peds: { index: number; peds: number[]; vehs: number[][] }[] = [];
+    private camera: number;
+
+    @OnEvent(ClientEvent.PARADE_INIT)
+    public async onInit() {
+        Spotlights.forEach((coords, index) => {
+            this.spotlightProvider.createSpotlight(
+                'parade' + index,
+                coords,
+                [coords[0], coords[1], coords[2] - 10],
+                [0, 0, 255],
+                50,
+                200,
+                10,
+                0.5,
+                300_000
+            );
+        });
+
+        this.camera = this.cameraService.createCamera([-533.97, -686.75, 40.31], 60);
+        this.cameraService.setCameraActive(this.camera, true);
+        this.cameraService.setCameraPointAt(this.camera, [-553.84, -641.39, 35.27]);
+        this.cameraService.renderCamera(5000);
+
+        this.playerHealthProvider.setNutritionDisabled(true);
+        this.hudStateProvider.setHudVisible(false);
+    }
 
     @OnEvent(ClientEvent.PARADE_SPAWN)
     public async onSpawn(blockIndex: number) {
         const block = Parade.blocks[blockIndex];
         if (!block) {
             return;
-        }
-
-        if (blockIndex == 0) {
-            Spotlights.forEach((coords, index) => {
-                this.spotlightProvider.createSpotlight(
-                    'parade' + index,
-                    coords,
-                    [coords[0], coords[1], coords[2] - 10],
-                    [0, 0, 255],
-                    50,
-                    200,
-                    10,
-                    0.5,
-                    300_000
-                );
-            });
         }
 
         const delta = sub2Vector3(Parade.end, Parade.start);
@@ -237,5 +263,9 @@ export class ParadeProvider {
         for (let i = 0; i < Spotlights.length; i++) {
             this.spotlightProvider.deleteSpotlight('parade' + i);
         }
+
+        this.cameraService.deleteCamera();
+        this.hudStateProvider.setHudVisible(true);
+        this.playerHealthProvider.setNutritionDisabled(false);
     }
 }

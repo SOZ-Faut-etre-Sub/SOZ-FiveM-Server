@@ -52,6 +52,10 @@ export class ParadeProvider {
         this.running = true;
         this.stopped = false;
 
+        TriggerClientEvent(ClientEvent.PARADE_INIT, -1);
+
+        await wait(5000);
+
         this.soundService.play(-1, musicfile, 0.1);
         for (let i = 0; i < Parade.blocks.length; i++) {
             if (Parade.blocks[i].delay) {
