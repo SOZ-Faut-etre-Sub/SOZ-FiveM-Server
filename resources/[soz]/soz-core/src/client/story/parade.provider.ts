@@ -72,7 +72,7 @@ export class ParadeProvider {
             );
         });
 
-        this.camera = this.cameraService.createCamera([-533.97, -686.75, 40.31], 60);
+        this.camera = this.cameraService.createCamera([-533.97, -686.75, 45.31], 60);
         this.cameraService.setCameraActive(this.camera, true);
         this.cameraService.setCameraPointAt(this.camera, [-553.84, -641.39, 35.27]);
         this.cameraService.renderCamera(5000);
@@ -96,6 +96,7 @@ export class ParadeProvider {
 
         const peds = new Map<number, Vector4>();
         const vehs = new Map<number, number[]>();
+        const boost = new Map<number, number>();
         let hair = 0;
         let offsetY = 0;
         for (const row of block.peds) {
@@ -112,10 +113,19 @@ export class ParadeProvider {
                     network: false,
                     blockevents: true,
                     invincible: true,
-                    hair: {
-                        HairColor: 61,
-                        HairSecondaryColor: 54,
-                        HairType: hair,
+                    skin: {
+                        Model: {
+                            Hash: 0,
+                            Father: 0,
+                            Mother: 0,
+                            ShapeMix: 0,
+                            SkinMix: 0,
+                        },
+                        Hair: {
+                            HairColor: 61,
+                            HairSecondaryColor: 54,
+                            HairType: hair,
+                        },
                     },
                 });
                 SetPedConfigFlag(ped, 35, false);
@@ -123,6 +133,7 @@ export class ParadeProvider {
 
                 const dest = applyOffset([...Parade.end, headingDeg] as Vector4, [elem.offsetX, -offsetY, 0]);
                 peds.set(ped, dest);
+                boost.set(ped, elem.speedBoost ?? 0);
 
                 if (elem.car) {
                     const hash = GetHashKey(elem.car);
@@ -187,7 +198,16 @@ export class ParadeProvider {
                 }
             }
         }
-        await wait(1000);
+        await wait(500);
+
+        for (const [ped, pedVehs] of vehs.entries()) {
+            if (pedVehs.length > 0) {
+                ClearPedTasks(ped);
+                TaskWarpPedIntoVehicle(ped, pedVehs[0], VehicleSeat.Driver);
+            }
+        }
+
+        await wait(500);
 
         for (const [ped, dest] of peds.entries()) {
             const veh = vehs.get(ped);
@@ -198,7 +218,7 @@ export class ParadeProvider {
                     dest[0],
                     dest[1],
                     dest[2],
-                    veh.length == 1 ? 1.8 : 2.3,
+                    1.8 + boost.get(ped),
                     0,
                     0,
                     16777216,

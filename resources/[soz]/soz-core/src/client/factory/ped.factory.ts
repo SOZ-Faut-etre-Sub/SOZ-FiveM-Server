@@ -3,7 +3,7 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { uuidv4 } from '@core/utils';
 import { AnimationProps } from '@public/shared/animation';
-import { Outfit } from '@public/shared/cloth';
+import { Outfit, Prop } from '@public/shared/cloth';
 import { ClientEvent } from '@public/shared/event/client';
 import { getChunkId } from '@public/shared/grid';
 import { InventoryItem } from '@public/shared/inventory';
@@ -298,7 +298,7 @@ export class PedFactory {
 
         if (ped.props) {
             for (const [key, value] of Object.entries(ped.props)) {
-                this.clothingService.applyPedProp(pedId, Number(key), {
+                this.clothingService.applyPedProp(pedId, key as Prop, {
                     Drawable: value[0],
                     Texture: value[1],
                 });
@@ -365,7 +365,18 @@ export class PedFactory {
             }
 
             if (ped.skin.Hair) {
-                SetPedComponentVariation(pedId, 2, ped.skin.Hair.HairType, 0, 0);
+                if (ped.skin.Hair.Collection) {
+                    SetPedCollectionComponentVariation(
+                        pedId,
+                        2,
+                        ped.skin.Hair.Collection,
+                        ped.skin.Hair.HairType,
+                        0,
+                        0
+                    );
+                } else {
+                    SetPedComponentVariation(pedId, 2, ped.skin.Hair.HairType, 0, 0);
+                }
                 SetPedHairColor(pedId, ped.skin.Hair.HairColor, ped.skin.Hair.HairSecondaryColor || 0);
                 SetPedHeadOverlay(pedId, 2, ped.skin.Hair.EyebrowType, ped.skin.Hair.EyebrowOpacity || 1.0);
                 SetPedHeadOverlayColor(pedId, 2, 1, ped.skin.Hair.EyebrowColor, 0);

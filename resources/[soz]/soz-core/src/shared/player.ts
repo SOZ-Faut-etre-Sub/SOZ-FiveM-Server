@@ -106,7 +106,7 @@ export type Skin = {
             Overlay: string;
         };
     };
-    Makeup: {
+    Makeup?: {
         BeardType?: number;
         BeardColor?: number;
         FullMakeupType?: number;
@@ -121,7 +121,7 @@ export type Skin = {
         LipstickOpacity?: number;
         LipstickColor?: number;
     };
-    FaceTrait: {
+    FaceTrait?: {
         EyeColor: number;
         Blemish: number;
         Ageing: number;
@@ -150,14 +150,14 @@ export type Skin = {
         NosePeakHeight: number;
         NoseWidth: number;
     };
-    Model: {
+    Model?: {
         Hash: number;
         Father: number;
         Mother: number;
         ShapeMix: number;
         SkinMix: number;
     };
-    Tattoos: {
+    Tattoos?: {
         Collection: number;
         Overlay: number;
     }[];

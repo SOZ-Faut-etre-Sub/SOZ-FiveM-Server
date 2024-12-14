@@ -110,7 +110,7 @@ export class ClothingService {
         }
 
         for (const [propIndex, prop] of Object.entries(outfit.Props)) {
-            this.applyPedProp(ped, Number(propIndex), prop);
+            this.applyPedProp(ped, propIndex as Prop, prop);
         }
     }
 

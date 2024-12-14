@@ -52,6 +52,7 @@ export const Parade: {
                 boat?: string;
                 boatConfig?: Partial<VehicleConfiguration>;
                 boatOffset?: Vector3;
+                speedBoost?: number;
             }[];
         }[];
     }[];
@@ -198,6 +199,7 @@ export const Parade: {
                             carConfig: {
                                 color: { pearlescent: 0, primary: 134, rim: 0, secondary: 0 },
                             },
+                            speedBoost: 0.05,
                         },
                         {
                             offsetX: 8,
@@ -237,6 +239,7 @@ export const Parade: {
                             boatConfig: {
                                 color: { pearlescent: 0, primary: 134, rim: 0, secondary: 0 },
                             },
+                            speedBoost: 0.5,
                         },
                         {
                             offsetX: 8,
@@ -405,6 +408,7 @@ export const Parade: {
                             carConfig: {
                                 color: { pearlescent: 0, primary: 134, rim: 0, secondary: 0 },
                             },
+                            speedBoost: 0.05,
                         },
                         {
                             offsetX: 8,
@@ -444,6 +448,7 @@ export const Parade: {
                             boatConfig: {
                                 color: { pearlescent: 0, primary: 134, rim: 0, secondary: 0 },
                             },
+                            speedBoost: 0.5,
                         },
                         {
                             offsetX: 8,
@@ -586,7 +591,7 @@ export const Parade: {
         },
 
         {
-            delay: 40_000,
+            delay: 25_000,
             pedConfig: [
                 {
                     model: 'mp_m_freemode_01',
@@ -726,6 +731,7 @@ export const Parade: {
                             carConfig: {
                                 color: { pearlescent: 0, primary: 0, rim: 0, secondary: 134 },
                             },
+                            speedBoost: 0.1,
                         },
                         {
                             offsetX: 0,
@@ -739,6 +745,7 @@ export const Parade: {
                             carConfig: {
                                 color: { pearlescent: 0, primary: 134, rim: 0, secondary: 0 },
                             },
+                            speedBoost: 0.1,
                         },
                     ],
                 },
@@ -755,6 +762,7 @@ export const Parade: {
                             boatConfig: {
                                 color: { pearlescent: 0, primary: 134, rim: 0, secondary: 0 },
                             },
+                            speedBoost: 0.5,
                         },
                         {
                             offsetX: 0,
@@ -781,13 +789,14 @@ export const Parade: {
                             boatConfig: {
                                 color: { pearlescent: 0, primary: 134, rim: 0, secondary: 0 },
                             },
+                            speedBoost: 0.5,
                         },
                     ],
                 },
             ],
         },
         {
-            delay: 60_000,
+            delay: 55_000,
             pedConfig: [
                 {
                     model: 'mp_m_freemode_01',
