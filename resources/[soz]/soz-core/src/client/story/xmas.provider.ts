@@ -9,7 +9,13 @@ import { BLACK_SCREEN_URL } from '../../shared/global';
 import { BoxZone } from '../../shared/polyzone/box.zone';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
-import { SCENE_COLORS, Spot, SPOT_RELATIVE_POSITIONS, XmasSceneState } from '../../shared/story/story';
+import {
+    SCENE_COLOR_TEXTURE_NAMES,
+    SCENE_COLORS,
+    Spot,
+    SPOT_RELATIVE_POSITIONS,
+    XmasSceneState,
+} from '../../shared/story/story';
 import { StreamScreen } from '../stream/stream.screen';
 
 const SCENE_POSITION = [-550, -694, 33] as Vector3;
@@ -22,9 +28,10 @@ type LoadedScene = {
     scene_top: number;
 };
 
-// const SCENE_BOTTOM_MODEL_HASH = GetHashKey('soz_xmas_gouv_scene03');
-// const SCENE_MIDDLE_MODEL_HASH = GetHashKey('soz_xmas_gouv_scene02');
-// const SCENE_TOP_MODEL_HASH = GetHashKey('soz_xmas_gouv_scene01');
+const SCENE_TOP_BASE_TEXTURE_NAME = 'soz_gouv_white';
+const SCENE_MIDDLE_BASE_TEXTURE_NAME = 'soz_gouv_white02';
+const SCENE_BOTTOM_BASE_TEXTURE_NAME = 'soz_gouv_white03';
+const SCENE_TEXTURE_DICTIONARY = 'soz_xmas_gouv_txd';
 const TRIGGER_DISTANCE = 100;
 
 @Provider()
@@ -152,6 +159,29 @@ export class XmasProvider {
                 SetObjectLightColor(spotObject, true, 0, 0, 0);
             }
         }
+
+        RemoveReplaceTexture(SCENE_TEXTURE_DICTIONARY, SCENE_BOTTOM_BASE_TEXTURE_NAME);
+        RemoveReplaceTexture(SCENE_TEXTURE_DICTIONARY, SCENE_MIDDLE_BASE_TEXTURE_NAME);
+        RemoveReplaceTexture(SCENE_TEXTURE_DICTIONARY, SCENE_TOP_BASE_TEXTURE_NAME);
+
+        AddReplaceTexture(
+            SCENE_TEXTURE_DICTIONARY,
+            SCENE_BOTTOM_BASE_TEXTURE_NAME,
+            SCENE_TEXTURE_DICTIONARY,
+            SCENE_COLOR_TEXTURE_NAMES[this.sceneState.scene_bottom_color]
+        );
+        AddReplaceTexture(
+            SCENE_TEXTURE_DICTIONARY,
+            SCENE_MIDDLE_BASE_TEXTURE_NAME,
+            SCENE_TEXTURE_DICTIONARY,
+            SCENE_COLOR_TEXTURE_NAMES[this.sceneState.scene_middle_color]
+        );
+        AddReplaceTexture(
+            SCENE_TEXTURE_DICTIONARY,
+            SCENE_TOP_BASE_TEXTURE_NAME,
+            SCENE_TEXTURE_DICTIONARY,
+            SCENE_COLOR_TEXTURE_NAMES[this.sceneState.scene_top_color]
+        );
     }
 
     @Tick(TickInterval.EVERY_FRAME)

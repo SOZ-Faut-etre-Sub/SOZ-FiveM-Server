@@ -63,6 +63,21 @@ export const SCENE_COLORS: Record<SceneColor, RGBColor> = {
     [SceneColor.Yellow]: [255, 255, 0],
 };
 
+export const SCENE_COLOR_TEXTURE_NAMES: Record<SceneColor, string> = {
+    [SceneColor.Black]: 'soz_gouv_black',
+    [SceneColor.Blue]: 'soz_gouv_blue',
+    [SceneColor.Brown]: 'soz_gouv_brown',
+    [SceneColor.Cyan]: 'soz_gouv_cyan',
+    [SceneColor.Green]: 'soz_gouv_green',
+    [SceneColor.Lime]: 'soz_gouv_lime',
+    [SceneColor.Orange]: 'soz_gouv_orange',
+    [SceneColor.Red]: 'soz_gouv_red',
+    [SceneColor.Rose]: 'soz_gouv_rose',
+    [SceneColor.Violet]: 'soz_gouv_violet',
+    [SceneColor.White]: 'soz_gouv_white',
+    [SceneColor.Yellow]: 'soz_gouv_yellow',
+};
+
 export type SpotState = {
     color: SceneColor;
     enabled: boolean;
