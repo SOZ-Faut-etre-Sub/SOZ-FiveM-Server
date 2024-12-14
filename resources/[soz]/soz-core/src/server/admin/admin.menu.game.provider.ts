@@ -67,6 +67,7 @@ export class AdminMenuGameProvider {
             source,
             skin => {
                 skin.Hair.HairType = outfit.Components[Component.Hair].Drawable;
+                skin.Hair.Collection = outfit.Components[Component.Hair].Collection;
 
                 return skin;
             },

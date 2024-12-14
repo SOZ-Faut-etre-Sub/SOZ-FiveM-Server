@@ -265,12 +265,19 @@ function ClothConfigComputeToClothSet(clothConfig)
         local component = clothSet.Components[tostring(ComponentType.Mask)] or clothSet.Components[ComponentType.Mask]
         local maskDrawable = component.Drawable
         local hair = 0
+        local collection = nil
 
         if exports["soz-core"]:DisplayHairWithMask(maskDrawable) then
             hair = PlayerData.skin.Hair.HairType
+            collection = PlayerData.skin.Hair.Collection
         end
 
-        clothSet.Components[tostring(ComponentType.Hair)] = {Drawable = hair, Texture = 0, Palette = 0}
+        clothSet.Components[tostring(ComponentType.Hair)] = {
+            Drawable = hair,
+            Texture = 0,
+            Palette = 0,
+            Collection = collection,
+        }
 
         if maskDrawable ~= mask then
             mask = maskDrawable

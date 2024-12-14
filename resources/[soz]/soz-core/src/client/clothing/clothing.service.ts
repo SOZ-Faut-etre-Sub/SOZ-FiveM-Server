@@ -146,9 +146,10 @@ export class ClothingService {
         for (const propIndex of Object.values(Prop).filter(key => !isNaN(Number(key)))) {
             const propId = Number(propIndex);
 
-            const collection = forceGlobal ? undefined : GetPedDrawableVariationCollectionName(ped, propId);
+            let collection = undefined;
             let drawableId = GetPedPropIndex(ped, propId);
             if (!forceGlobal) {
+                collection = GetPedCollectionNameFromProp(ped, propId, drawableId);
                 drawableId = GetPedCollectionLocalIndexFromProp(ped, propId, drawableId);
             }
             const textureId = GetPedPropTextureIndex(ped, propId);
