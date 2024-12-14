@@ -118,7 +118,7 @@ export class AdminMenuProvider {
                             this.adminMenuInteractiveProvider.intervalHandlers.displayPlayersOnMap !== null,
                     },
                     skin: {
-                        clothConfig: this.clothingService.getClothSet(),
+                        clothConfig: this.clothingService.getClothSet(PlayerPedId(), true),
                         maxOptions: this.clothingService.getMaxOptions(),
                     },
                     developer: {

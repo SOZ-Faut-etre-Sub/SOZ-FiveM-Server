@@ -29,7 +29,6 @@ export class StonkCloakRoomProvider {
             let match = true;
             for (const [id, component] of Object.entries(StonkCloakroom[GetEntityModel(ped)][vip].Components)) {
                 const numberId = Number(id);
-                const drawable = GetPedDrawableVariation(ped, Number(numberId));
 
                 // We skip the Torso because it's modified when user wear his own gloves and make this function return false
                 // even if he wear the VIP clothes
@@ -37,7 +36,14 @@ export class StonkCloakRoomProvider {
                     continue;
                 }
 
-                if (drawable != component.Drawable) {
+                const drawable = component.Collection
+                    ? GetPedDrawableVariationCollectionLocalIndex(ped, numberId)
+                    : GetPedDrawableVariation(ped, numberId);
+                const collection = component.Collection
+                    ? GetPedDrawableVariationCollectionName(ped, numberId)
+                    : undefined;
+
+                if (drawable != component.Drawable || collection != component.Collection) {
                     match = false;
                     break;
                 }

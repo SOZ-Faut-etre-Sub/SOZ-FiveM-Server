@@ -118,7 +118,7 @@ export class ClothingService {
         this.applyPedOutfit(PlayerPedId(), outfit);
     }
 
-    public getClothSet(ped?: number): Outfit {
+    public getClothSet(ped?: number, forceGlobal?: boolean): Outfit {
         if (ped == null) {
             ped = PlayerPedId();
         }
@@ -128,8 +128,10 @@ export class ClothingService {
         for (const componentIndex of Object.keys(Component).filter(key => !isNaN(Number(key)))) {
             const componentId = Number(componentIndex) as Component;
 
-            const collection = GetPedDrawableVariationCollectionName(ped, componentId);
-            const drawableId = GetPedDrawableVariationCollectionLocalIndex(ped, componentId);
+            const collection = forceGlobal ? undefined : GetPedDrawableVariationCollectionName(ped, componentId);
+            const drawableId = forceGlobal
+                ? GetPedDrawableVariation(ped, componentId)
+                : GetPedDrawableVariationCollectionLocalIndex(ped, componentId);
             const textureId = GetPedTextureVariation(ped, componentId);
 
             components[componentId] = {
@@ -143,10 +145,16 @@ export class ClothingService {
         const props: Outfit['Props'] = {};
         for (const propIndex of Object.values(Prop).filter(key => !isNaN(Number(key)))) {
             const propId = Number(propIndex);
-            const drawableId = GetPedPropIndex(ped, propId);
+
+            const collection = forceGlobal ? undefined : GetPedDrawableVariationCollectionName(ped, propId);
+            let drawableId = GetPedPropIndex(ped, propId);
+            if (!forceGlobal) {
+                drawableId = GetPedCollectionLocalIndexFromProp(ped, propId, drawableId);
+            }
             const textureId = GetPedPropTextureIndex(ped, propId);
 
             props[propIndex] = {
+                Collection: collection,
                 Drawable: drawableId,
                 Texture: textureId,
             };

@@ -18,12 +18,12 @@ export class ClothingProvider {
 
     @Rpc(RpcClientEvent.CHECK_WEARING_GLOVES)
     public async checkWearingGloves(): Promise<boolean> {
-        return await this.clothingService.checkWearingGloves();
+        return this.clothingService.checkWearingGloves();
     }
 
     @Rpc(RpcClientEvent.GET_CLOTHES)
     public async getClothes(): Promise<Outfit> {
-        return await this.clothingService.getClothSet();
+        return this.clothingService.getClothSet(PlayerPedId(), true);
     }
 
     @Rpc(RpcClientEvent.CLOTH_FILTER_GEN9)
