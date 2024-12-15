@@ -11,6 +11,7 @@ import { Vector3 } from '../../../shared/polyzone/vector';
 import { CameraService } from '../../camera';
 import { HudStateProvider } from '../../hud/hud.state.provider';
 import { NuiDispatch } from '../../nui/nui.dispatch';
+import { PlayerHealthProvider } from '../../player/player.health.provider';
 import { VoipService } from '../../voip/voip.service';
 import { FireworkProvider } from '../../world/firework.provider';
 import { SpotlightProvider } from '../../world/spotlight.provider';
@@ -31,6 +32,9 @@ export class Election2024CeremonyProvider {
 
     @Inject(HudStateProvider)
     private readonly hudStateProvider: HudStateProvider;
+
+    @Inject(PlayerHealthProvider)
+    public playerHealthProvider: PlayerHealthProvider;
 
     @Inject(VoipService)
     public voipService: VoipService;
@@ -88,6 +92,7 @@ export class Election2024CeremonyProvider {
         }
 
         this.hudStateProvider.setHudVisible(false);
+        this.playerHealthProvider.setNutritionDisabled(true);
         this.hudStateProvider.setCinematicMode(true, 5_000);
 
         this.cameraService.renderCamera(5_000);
@@ -119,6 +124,7 @@ export class Election2024CeremonyProvider {
 
         this.cameraService.deleteCamera();
         this.hudStateProvider.setHudVisible(true);
+        this.playerHealthProvider.setNutritionDisabled(false);
         this.hudStateProvider.setCinematicMode(false);
 
         await wait(1000);
