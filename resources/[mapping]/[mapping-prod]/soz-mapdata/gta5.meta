@@ -1078,7 +1078,7 @@
 	  <fileType>IPL_FILE</fileType>
 	</Item>
 	<Item>
-	  <filename>commoncrc:/data/levels/gta5/trains.xml</filename>
+	  <filename>resources:/soz-mapdata/trains.xml</filename>
 	  <fileType>TRAINCONFIGS_FILE</fileType>
 	</Item>
 	<Item>
