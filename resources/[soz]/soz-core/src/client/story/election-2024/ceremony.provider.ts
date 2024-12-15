@@ -11,6 +11,7 @@ import { Vector3 } from '../../../shared/polyzone/vector';
 import { CameraService } from '../../camera';
 import { HudStateProvider } from '../../hud/hud.state.provider';
 import { NuiDispatch } from '../../nui/nui.dispatch';
+import { VoipService } from '../../voip/voip.service';
 import { FireworkProvider } from '../../world/firework.provider';
 import { SpotlightProvider } from '../../world/spotlight.provider';
 
@@ -31,13 +32,20 @@ export class Election2024CeremonyProvider {
     @Inject(HudStateProvider)
     private readonly hudStateProvider: HudStateProvider;
 
+    @Inject(VoipService)
+    public voipService: VoipService;
+
     private readonly startCameraPosition: Vector3 = [-557.12, -629.84, 48.63];
     private readonly startCameraTarget: Vector3 = [-545.13, -688.23, 36.52];
     private readonly finalStartCameraPosition: Vector3 = [-562.97, -596.48, 83.45];
 
     private _running = false;
-
     private camera: number;
+    private isMutedBeforeLaunch = false;
+
+    get isRunning() {
+        return this._running;
+    }
 
     @Tick()
     async onTick() {
@@ -52,6 +60,14 @@ export class Election2024CeremonyProvider {
     @OnEvent(ClientEvent.CEREMONY_SET_RUNNING)
     async updateRunning(running: boolean) {
         this._running = running;
+
+        if (running) {
+            this.isMutedBeforeLaunch = this.voipService.isPlayerMuted();
+
+            await this.voipService.mutePlayer(true);
+        } else if (!running && !this.isMutedBeforeLaunch) {
+            await this.voipService.mutePlayer(false);
+        }
     }
 
     @OnEvent(ClientEvent.CEREMONY_CREATE_CAMERA)

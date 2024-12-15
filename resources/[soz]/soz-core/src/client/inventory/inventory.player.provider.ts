@@ -7,6 +7,7 @@ import { NuiDispatch } from '../nui/nui.dispatch';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
 import { ClothingShopProvider } from '../shop/cloth.shop.provider';
+import { Election2024CeremonyProvider } from '../story/election-2024/ceremony.provider';
 import { InventoryManager } from './inventory.manager';
 
 @Provider()
@@ -25,6 +26,9 @@ export class InventoryPlayerProvider {
 
     @Inject(ClothingShopProvider)
     private clothingShopProvider: ClothingShopProvider;
+
+    @Inject(Election2024CeremonyProvider)
+    private ceremonyProvider: Election2024CeremonyProvider;
 
     private isOpen = false;
 
@@ -56,6 +60,10 @@ export class InventoryPlayerProvider {
         }
 
         if (player.metadata.isdead || player.metadata.inlaststand || player.metadata.ishandcuffed) {
+            return;
+        }
+
+        if (this.ceremonyProvider.isRunning) {
             return;
         }
 
