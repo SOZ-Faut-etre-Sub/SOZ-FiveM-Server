@@ -12,7 +12,7 @@ import {
     Vector3,
     Vector4,
 } from '@public/shared/polyzone/vector';
-import { Parade, Spotlights } from '@public/shared/story/parade';
+import { Parade } from '@public/shared/story/parade';
 import { getDefaultVehicleConfiguration } from '@public/shared/vehicle/modification';
 import { VehicleSeat } from '@public/shared/vehicle/vehicle';
 
@@ -96,19 +96,31 @@ export class ParadeProvider {
             );
         });
 
-        Spotlights.forEach((coords, index) => {
-            this.spotlightProvider.createSpotlight(
-                'parade' + index,
-                coords,
-                [coords[0], coords[1], coords[2] - 10],
-                [10, 49, 255],
-                50,
-                200,
-                1,
-                0,
-                10_000
-            );
-        });
+        this.spotlightProvider.createSpotlight(
+            'parade1',
+            [-546.19, -656.34, 219.98],
+            [-546.19, -656.34, 209.98],
+            [0, 0, 128],
+            300,
+            15,
+            3,
+            10,
+            10_000,
+            0
+        );
+
+        this.spotlightProvider.createSpotlight(
+            'parade2',
+            [-546.19, -656.34, 219.98],
+            [-546.19, -656.34, 209.98],
+            [150, 150, 0],
+            300,
+            7,
+            1,
+            0,
+            10_000,
+            1
+        );
 
         this.camera = this.cameraService.createCamera([-533.97, -686.75, 45.31], 60);
         this.cameraService.setCameraActive(this.camera, true);
@@ -323,18 +335,16 @@ export class ParadeProvider {
         }
         this.peds = [];
 
-        Spotlights.forEach((_coords, index) => {
-            this.spotlightProvider.updateSpotlight('parade' + index, 0, 500);
-        });
+        this.spotlightProvider.updateSpotlight('parade1', 0, 500);
+        this.spotlightProvider.updateSpotlight('parade2', 0, 500);
         this.senatPilarSpotlights.forEach(spotlight => {
             this.spotlightProvider.updateSpotlight(spotlight.id, 0, 500);
         });
 
         await wait(500);
 
-        Spotlights.forEach((_coords, index) => {
-            this.spotlightProvider.deleteSpotlight('parade' + index);
-        });
+        this.spotlightProvider.deleteSpotlight('parade1');
+        this.spotlightProvider.deleteSpotlight('parade2');
         this.senatPilarSpotlights.forEach(spotlight => {
             this.spotlightProvider.deleteSpotlight(spotlight.id);
         });

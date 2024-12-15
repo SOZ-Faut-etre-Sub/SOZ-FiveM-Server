@@ -20,7 +20,8 @@ export class SpotlightProvider {
         radius: number,
         brightness: number,
         roundness: number,
-        duration: number
+        duration: number,
+        falloff = 0
     ): Promise<string> {
         const getDirVector = sub2Vector3(target, position);
 
@@ -32,6 +33,7 @@ export class SpotlightProvider {
             distance,
             radius,
             roundness,
+            falloff,
 
             currentBrightness: 0,
             targetBrightness: brightness,
@@ -74,7 +76,7 @@ export class SpotlightProvider {
                 spotlight.currentBrightness,
                 spotlight.roundness,
                 spotlight.radius,
-                0
+                spotlight.falloff
             );
 
             const remainingDuration = spotlight.targetDuration - spotlight.currentDuration;

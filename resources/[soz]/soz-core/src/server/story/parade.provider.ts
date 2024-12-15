@@ -56,7 +56,8 @@ export class ParadeProvider {
 
         await wait(5000);
 
-        this.soundService.play(-1, musicfile, 0.1);
+        setTimeout(() => this.soundService.play(-1, musicfile, 0.05), 4500);
+
         for (let i = 0; i < Parade.blocks.length; i++) {
             if (Parade.blocks[i].delay) {
                 await wait(Parade.blocks[i].delay);

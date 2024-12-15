@@ -8,12 +8,6 @@ import { PlayerPedHash } from '../player';
 import { toVector4Object, Vector3 } from '../polyzone/vector';
 import { VehicleConfiguration } from '../vehicle/modification';
 
-export const Spotlights: Vector3[] = [
-    [-549.32, -660.95, 74.28],
-    [-592.96, -658.42, 66.87],
-    [-486.78, -658.26, 61.51],
-];
-
 function carryFlag(model: string): Partial<Ped> {
     return {
         animDict: 'amb@world_human_drinking@coffee@male@base',
@@ -57,8 +51,8 @@ export const Parade: {
         }[];
     }[];
 } = {
-    start: [-657.14, -658.99, 31.72],
-    end: [-413.73, -658.06, 30.29],
+    start: [-630.46, -659.62, 31.71],
+    end: [-438.12, -657.76, 31.15],
     blocks: [
         {
             delay: 0,
@@ -230,6 +224,7 @@ export const Parade: {
                             carConfig: {
                                 livery: 0,
                             },
+                            speedBoost: 1.0,
                         },
                         {
                             offsetX: 0,
@@ -270,7 +265,7 @@ export const Parade: {
             ],
         },
         {
-            delay: 60_000,
+            delay: 64_000,
             pedConfig: [
                 {
                     model: 'mp_m_freemode_01',
@@ -439,6 +434,7 @@ export const Parade: {
                             carConfig: {
                                 livery: 1,
                             },
+                            speedBoost: 1.0,
                         },
                         {
                             offsetX: 0,
@@ -479,7 +475,7 @@ export const Parade: {
             ],
         },
         {
-            delay: 60_000,
+            delay: 64_000,
             pedConfig: [
                 {
                     model: 'mp_m_freemode_01',
@@ -570,10 +566,28 @@ export const Parade: {
                         {
                             offsetX: 0,
                             config: 1,
-                            car: 'sasp1',
+                            car: 'polgreenwood',
                             carConfig: {
-                                color: { pearlescent: 0, primary: 14, rim: 0, secondary: 0 },
-                                livery: 0,
+                                color: { pearlescent: 1, primary: 0, rim: 0, secondary: 14 },
+                                customWheelFront: true,
+                                extra: {
+                                    '1': true,
+                                    '8': true,
+                                },
+                                livery: 22,
+                                modification: {
+                                    archCover: 2,
+                                    armor: 4,
+                                    brakes: 2,
+                                    engine: 3,
+                                    exhaust: 2,
+                                    suspension: 0,
+                                    transmission: 2,
+                                    trim: 2,
+                                    turbo: true,
+                                    xenonHeadlights: true,
+                                },
+                                wheelType: 4,
                             },
                         },
                         {
@@ -591,7 +605,7 @@ export const Parade: {
         },
 
         {
-            delay: 25_000,
+            delay: 34_000,
             pedConfig: [
                 {
                     model: 'mp_m_freemode_01',
@@ -771,6 +785,7 @@ export const Parade: {
                             carConfig: {
                                 livery: 1,
                             },
+                            speedBoost: 1.0,
                         },
                         {
                             offsetX: 0,
@@ -796,7 +811,7 @@ export const Parade: {
             ],
         },
         {
-            delay: 55_000,
+            delay: 64_000,
             pedConfig: [
                 {
                     model: 'mp_m_freemode_01',
@@ -889,6 +904,7 @@ export const Parade: {
                             carConfig: {
                                 color: { pearlescent: 0, primary: 111, rim: 0, secondary: 125 },
                             },
+                            speedBoost: 0.05,
                         },
                         {
                             offsetX: 8,

@@ -8,6 +8,7 @@ export type Spotlight = {
     distance: number;
     roundness: number;
     radius: number;
+    falloff: number;
     currentBrightness: number;
     targetBrightness: number;
     currentDuration: number;
