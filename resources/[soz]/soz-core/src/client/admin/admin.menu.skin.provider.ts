@@ -1,7 +1,14 @@
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { ClothingFields, CollectionInfo, Component, OutfitItem, Prop } from '../../shared/cloth';
+import {
+    ClothCollectionSubMenuState,
+    ClothingFields,
+    CollectionInfo,
+    Component,
+    OutfitItem,
+    Prop,
+} from '../../shared/cloth';
 import { NuiEvent, ServerEvent } from '../../shared/event';
 import { Err, Ok } from '../../shared/result';
 import { ClipboardService } from '../clipboard.service';
@@ -190,20 +197,66 @@ export class AdminMenuSkinProvider {
         return ret;
     }
 
-    @OnNuiEvent(NuiEvent.AdminMenuClothCollectionPreview)
-    public async collectionPreview(data) {
-        if (data.dlc == null) {
-            return;
+    @OnNuiEvent(NuiEvent.AdminMenuClothCollectionCurrent)
+    public async collectionCurrent(): Promise<ClothCollectionSubMenuState[]> {
+        const clothSet = this.clothingService.getClothSet();
+        const ret: ClothCollectionSubMenuState[] = [];
+        const collections: Record<string, number> = {};
+
+        const ped = PlayerPedId();
+        const nbCollection = GetPedCollectionsCount(ped);
+        for (let i = 0; i < nbCollection; i++) {
+            collections[GetPedCollectionName(ped, i)] = i;
         }
-        if (data.index == null) {
+
+        ClothingFields.forEach((elem, index) => {
+            if (elem.type == 'comp') {
+                const comp = elem.index as Component;
+                ret.push({
+                    field: index,
+                    dlc: collections[clothSet.Components[comp].Collection],
+                    drawable: clothSet.Components[comp].Drawable,
+                    texture: clothSet.Components[comp].Texture,
+                });
+            } else {
+                const prop = elem.index as Prop;
+                ret.push({
+                    field: index,
+                    dlc: collections[clothSet.Props[prop].Collection],
+                    drawable: clothSet.Props[prop].Drawable,
+                    texture: clothSet.Props[prop].Texture,
+                });
+            }
+        });
+
+        return ret;
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuClothCollectionPreview)
+    public async collectionPreview(data: ClothCollectionSubMenuState) {
+        if (!data == null) {
             return;
         }
 
         const ped = PlayerPedId();
-        if (data.type == 'comp') {
-            SetPedCollectionComponentVariation(ped, data.index, data.dlc, Number(data.drawable), data.texture, 0);
+        if (ClothingFields[data.field].type == 'comp') {
+            SetPedCollectionComponentVariation(
+                ped,
+                ClothingFields[data.field].index,
+                GetPedCollectionName(PlayerPedId(), data.dlc),
+                data.drawable,
+                data.texture,
+                0
+            );
         } else {
-            SetPedCollectionPropIndex(ped, data.index, data.dlc, Number(data.drawable), data.texture, true);
+            SetPedCollectionPropIndex(
+                ped,
+                ClothingFields[data.field].index,
+                GetPedCollectionName(PlayerPedId(), data.dlc),
+                data.drawable,
+                data.texture,
+                true
+            );
         }
     }
 }
