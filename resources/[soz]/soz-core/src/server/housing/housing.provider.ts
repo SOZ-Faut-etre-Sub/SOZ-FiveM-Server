@@ -337,10 +337,7 @@ export class HousingProvider {
         });
 
         this.playerService.setPlayerApartment(player.source, apartment, property);
-        const taxedPrice = await this.priceService.getPrice(
-            apartment.price,
-            TaxType.HOUSING
-        )
+        const taxedPrice = await this.priceService.getPrice(apartment.price, TaxType.HOUSING);
         this.notifier.notify(
             player.source,
             `Vous venez ~g~d'acquérir~s~ une maison pour ~b~$${taxedPrice.toLocaleString('FR-fr')}.${isApartmentExcludeFromHousing(apartment) ? `` : `~s~<br><br>Entrez dans votre logement et consultez les plans d'aménagement de vos meubles à l'aide du Menu ~g~H~s~ !`}`,
@@ -715,10 +712,7 @@ export class HousingProvider {
 
         await this.housingRepository.setApartmentHasParking(apartment.id, hasParking);
 
-        const taxedPrice = await this.priceService.getPrice(
-            price,
-            TaxType.HOUSING
-        )
+        const taxedPrice = await this.priceService.getPrice(price, TaxType.HOUSING);
         this.notifier.notify(
             player.source,
             `Vous venez ~g~d'ajouter~s~ une place de parking à votre caravane pour ~b~$${taxedPrice.toLocaleString('FR-fr')}~s~.`,

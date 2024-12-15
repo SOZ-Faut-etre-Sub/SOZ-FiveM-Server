@@ -17,12 +17,13 @@ import {
     XmasSceneState,
 } from '../../shared/story/story';
 import { StreamScreen } from '../stream/stream.screen';
+import { LightObject } from '../world/light.object';
 
 const SCENE_POSITION = [-550, -694, 33] as Vector3;
 const SPOTLIGHT_MODEL_HASH = 1400279820;
 
 type LoadedScene = {
-    spots: Record<Spot, number>;
+    spots: Record<Spot, LightObject>;
     scene_bottom: number;
     scene_middle: number;
     scene_top: number;
@@ -33,6 +34,7 @@ const SCENE_MIDDLE_BASE_TEXTURE_NAME = 'soz_gouv_white02';
 const SCENE_BOTTOM_BASE_TEXTURE_NAME = 'soz_gouv_white03';
 const SCENE_TEXTURE_DICTIONARY = 'soz_xmas_gouv_txd';
 const TRIGGER_DISTANCE = 100;
+// const SCENE_CENTER_POSITION = [-545.42, -698.82, 33.6] as Vector3;
 
 @Provider()
 export class XmasProvider {
@@ -88,9 +90,6 @@ export class XmasProvider {
 
         if (distance <= TRIGGER_DISTANCE && !this.loadedSceneObjects) {
             this.loadSceneObjects();
-        }
-
-        if (this.loadedSceneObjects) {
             this.applySceneState();
         }
     }
@@ -119,7 +118,7 @@ export class XmasProvider {
                 }
 
                 if (closestSpot) {
-                    spots[closestSpot.name] = object;
+                    spots[closestSpot.name] = new LightObject(object);
                 }
             }
         }
@@ -130,7 +129,7 @@ export class XmasProvider {
         }
 
         this.loadedSceneObjects = {
-            spots: spots as Record<Spot, number>,
+            spots: spots as Record<Spot, LightObject>,
             scene_bottom: 0,
             scene_middle: 0,
             scene_top: 0,
@@ -154,9 +153,15 @@ export class XmasProvider {
 
             if (spotState) {
                 const color = SCENE_COLORS[spotState.color] || [0, 0, 0];
-                SetObjectLightColor(spotObject, true, color[0], color[1], color[2]);
+
+                spotObject.applyState({
+                    color,
+                    enabled: spotState.enabled,
+                });
             } else {
-                SetObjectLightColor(spotObject, true, 0, 0, 0);
+                spotObject.applyState({
+                    enabled: false,
+                });
             }
         }
 
@@ -186,16 +191,28 @@ export class XmasProvider {
 
     @Tick(TickInterval.EVERY_FRAME)
     async streamXmasVideo(): Promise<void> {
-        if (!this.sceneStream) {
-            return;
+        if (this.sceneStream) {
+            if (!this.loadedSceneObjects) {
+                const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
+
+                this.sceneStream.update(position, BLACK_SCREEN_URL);
+            }
+
+            this.sceneStream.stream();
         }
 
-        if (!this.loadedSceneObjects) {
-            const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
+        if (this.loadedSceneObjects) {
+            for (const spotName of Object.keys(this.loadedSceneObjects.spots)) {
+                const spot = this.loadedSceneObjects.spots[spotName as Spot];
 
-            this.sceneStream.update(position, BLACK_SCREEN_URL);
+                if (!DoesEntityExist(spot.object)) {
+                    this.loadedSceneObjects = null;
+
+                    return;
+                }
+
+                spot.update();
+            }
         }
-
-        this.sceneStream.stream();
     }
 }

@@ -158,3 +158,37 @@ export const applyOffset = (v: Vector4, offset: Vector3): Vector4 => {
 
     return coords;
 };
+
+// @TODO Fix this
+
+export const getRotation = (a: Vector3, b: Vector3): Vector3 => {
+    const directionVector = sub2Vector3(b, a);
+    const norm = toVectorNorm(directionVector);
+
+    const yaw = Math.atan2(directionVector[0], directionVector[2]);
+    const pitch = Math.asin(directionVector[1] / norm);
+
+    return [deg(pitch), 0, deg(yaw)];
+};
+
+export const calculateYawPitchRoll = (A: Vector3, B: Vector3): Vector3 => {
+    // Calcul du vecteur directionnel
+    const v_x = B[0] - A[0];
+    const v_y = B[1] - A[1];
+    const v_z = B[2] - A[2];
+
+    // Calcul du yaw (rotation autour de l'axe Y) en radians
+    const yaw = Math.atan2(v_z, v_x);
+
+    // Calcul du pitch (rotation autour de l'axe X) en radians
+    const pitch = Math.atan2(v_y, Math.sqrt(v_x ** 2 + v_z ** 2));
+
+    // Roll n'est pas nécessaire, on le définit comme 0
+    const roll = 0;
+
+    // Conversion en degrés
+    const yawDeg = yaw * (180 / Math.PI); // Conversion en degrés
+    const pitchDeg = pitch * (180 / Math.PI); // Conversion en degrés
+
+    return [pitchDeg, roll, yawDeg];
+};

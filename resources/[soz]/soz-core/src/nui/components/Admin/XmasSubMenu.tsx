@@ -110,7 +110,11 @@ export const XmasSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner, sta
                                 <MenuItemSelect
                                     syncValue
                                     title={SPOT_LABELS[spotName]}
-                                    value={temporaryState.spots[spotName]?.color ?? null}
+                                    value={
+                                        temporaryState.spots[spotName]?.enabled
+                                            ? temporaryState.spots[spotName]?.color ?? null
+                                            : null
+                                    }
                                     onChange={(index, color) => {
                                         setTemporaryState({
                                             ...temporaryState,
@@ -136,8 +140,6 @@ export const XmasSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner, sta
                     })}
                     <MenuItemButton
                         onConfirm={() => {
-                            console.log(JSON.stringify(temporaryState));
-
                             fetchNui(NuiEvent.AdminMenuXmasSetState, temporaryState);
                         }}
                     >

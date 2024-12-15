@@ -13,3 +13,21 @@ export type Spotlight = {
     currentDuration: number;
     targetDuration: number;
 };
+
+export type LightStateTransition = {
+    duration: number;
+    next: LightState;
+};
+
+export type LightStateAnimation = {
+    loop: boolean;
+    cycle?: number;
+    transitions: LightStateTransition[];
+};
+
+export type LightState = {
+    position: Vector3;
+    direction: Vector3;
+    color: RGBColor;
+    enabled: boolean;
+};
