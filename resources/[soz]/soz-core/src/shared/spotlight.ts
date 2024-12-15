@@ -16,7 +16,7 @@ export type Spotlight = {
 
 export type LightStateTransition = {
     duration: number;
-    next: LightState;
+    next: Partial<LightState>;
 };
 
 export type LightStateAnimation = {

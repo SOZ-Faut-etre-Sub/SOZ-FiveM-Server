@@ -31,6 +31,7 @@ export class XmasProvider {
         scene_bottom_color: SceneColor.White,
         scene_middle_color: SceneColor.White,
         scene_top_color: SceneColor.White,
+        track_player: false,
     };
 
     @OnEvent(ServerEvent.ADMIN_XMAS_UPDATE_SCENE)

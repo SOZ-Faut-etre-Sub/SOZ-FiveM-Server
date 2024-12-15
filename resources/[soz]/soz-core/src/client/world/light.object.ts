@@ -23,19 +23,27 @@ export class LightObject {
 
     private transition: CurrentTransition = null;
 
+    private rotationOffset: Vector3;
+
     public readonly object: number;
 
-    constructor(object: number) {
+    constructor(object: number, rotationOffset: Vector3 = [0, 0, 0]) {
         const position = GetEntityCoords(object, false) as Vector3;
         const direction = GetEntityRotation(object, 2) as Vector3;
+        const directionWithoutOffset = [
+            direction[0] - rotationOffset[0],
+            direction[1] - rotationOffset[1],
+            direction[2] - rotationOffset[2],
+        ] as Vector3;
 
         const state: LightState = {
             position,
-            direction,
+            direction: directionWithoutOffset,
             color: [0, 0, 0],
             enabled: false,
         };
 
+        this.rotationOffset = rotationOffset;
         this.object = object;
         this.initialState = state;
 
@@ -71,6 +79,52 @@ export class LightObject {
         });
     }
 
+    rotate(duration: number, direction: Vector3, loop?: boolean, cycle?: number) {
+        if (!loop && !cycle) {
+            this.applyTransition({
+                duration,
+                next: {
+                    ...this.currentState,
+                    direction,
+                },
+            });
+
+            return;
+        }
+
+        const transitions = [
+            {
+                duration: duration,
+                next: {
+                    ...this.currentState,
+                    direction,
+                },
+            },
+            {
+                duration: duration,
+                next: {
+                    ...this.currentState,
+                    direction: this.currentState.direction,
+                },
+            },
+        ];
+
+        if (loop) {
+            this.applyAnimation({
+                loop: true,
+                transitions,
+            });
+        }
+
+        if (cycle) {
+            this.applyAnimation({
+                loop: false,
+                cycle,
+                transitions,
+            });
+        }
+    }
+
     applyState(state: Partial<LightState>) {
         this.transition = null;
         this.animation = null;
@@ -102,7 +156,8 @@ export class LightObject {
             const now = GetGameTimer();
 
             const progress = Math.min(1, (now - started_at) / (end_at - started_at));
-            const state = calculateState(initial, transition.next, progress);
+            const nextState = { ...this.currentState, ...transition.next };
+            const state = calculateState(initial, nextState, progress);
 
             this.doApplyState(state);
 
@@ -176,7 +231,12 @@ export class LightObject {
             false,
             false
         );
-        SetEntityRotation(this.object, state.direction[0], state.direction[1], state.direction[2], 2, false);
+
+        const pitch = (state.direction[0] + this.rotationOffset[0]) % 360;
+        const roll = (state.direction[1] + this.rotationOffset[1]) % 360;
+        const yaw = (state.direction[2] + this.rotationOffset[2]) % 360;
+
+        SetEntityRotation(this.object, pitch, roll, yaw, 2, false);
 
         const color = state.enabled ? state.color : [0, 0, 0];
 
@@ -189,15 +249,14 @@ const calculateState = (initial: LightState, target: LightState, progress: numbe
     const positionY = calculateProgress(initial.position[1], target.position[1], progress);
     const positionZ = calculateProgress(initial.position[2], target.position[2], progress);
 
-    const directionX = calculateProgress(initial.direction[0], target.direction[0], progress);
-    const directionY = calculateProgress(initial.direction[1], target.direction[1], progress);
-    const directionZ = calculateProgress(initial.direction[2], target.direction[2], progress);
+    const directionX = calculateProgress(initial.direction[0], target.direction[0], progress, 360);
+    const directionY = calculateProgress(initial.direction[1], target.direction[1], progress, 360);
+    const directionZ = calculateProgress(initial.direction[2], target.direction[2], progress, 360);
 
     // @TODO do better for color
-    const colorR = calculateProgress(initial.color[0], target.color[0], progress);
-    const colorG = calculateProgress(initial.color[1], target.color[1], progress);
-    const colorB = calculateProgress(initial.color[2], target.color[2], progress);
-
+    const colorR = target.color[0];
+    const colorG = target.color[1];
+    const colorB = target.color[2];
     const enabled = target.enabled;
 
     return {
@@ -208,4 +267,19 @@ const calculateState = (initial: LightState, target: LightState, progress: numbe
     };
 };
 
-const calculateProgress = (a: number, b: number, p: number) => a + (b - a) * p;
+const calculateProgress = (a: number, b: number, p: number, remainder?: number) => {
+    if (remainder) {
+        // take the closest path when there is a remainder
+        if (Math.abs(b - a) > remainder / 2) {
+            if (b > a) {
+                a += 360;
+            } else {
+                b += 360;
+            }
+        }
+
+        return (a + (b - a) * p) % remainder;
+    }
+
+    return a + (b - a) * p;
+};

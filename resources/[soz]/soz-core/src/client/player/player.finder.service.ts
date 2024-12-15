@@ -14,8 +14,8 @@ export class PlayerFinderService {
     @Inject(ScreenService)
     private screenService: ScreenService;
 
-    public getClosestPlayer(): FindedPlayer | null {
-        const currentPos = GetEntityCoords(PlayerPedId()) as Vector3;
+    public getClosestPlayer(position?: Vector3, allowSelf?: boolean): FindedPlayer | null {
+        const currentPos = position || (GetEntityCoords(PlayerPedId()) as Vector3);
         const currentPed = PlayerPedId();
         let foundedClosetPlayer: FindedPlayer | null = null;
 
@@ -23,7 +23,7 @@ export class PlayerFinderService {
             const playerId = GetPlayerServerId(localPlayerId);
             const playerPed = GetPlayerPed(localPlayerId);
 
-            if (playerPed === currentPed) {
+            if (!allowSelf && playerPed === currentPed) {
                 continue;
             }
 

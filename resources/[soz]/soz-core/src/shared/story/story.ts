@@ -89,6 +89,7 @@ export type XmasSceneState = {
     scene_middle_color: SceneColor;
     scene_top_color: SceneColor;
     spots: Partial<Record<Spot, SpotState>>;
+    track_player: boolean;
 };
 
 export enum Spot {
