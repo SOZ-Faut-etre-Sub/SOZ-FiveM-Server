@@ -58,6 +58,7 @@ export class ParadeProvider {
     @Inject(VoipService)
     public voipService: VoipService;
 
+    private running = false;
     private peds: { index: number; peds: number[]; vehs: number[][] }[] = [];
     private camera: number;
     private isMutedBeforeLaunch = false;
@@ -66,8 +67,21 @@ export class ParadeProvider {
         spotlight => spotlight.action === 'add' && spotlight.id.startsWith('senat-spotlight-pilar')
     );
 
+    get isRunning() {
+        return this.running;
+    }
+
+    @Tick()
+    async onTick() {
+        if (!this.running) return;
+
+        DisableAllControlActions(0);
+    }
+
     @OnEvent(ClientEvent.PARADE_INIT)
     public async onInit() {
+        this.running = true;
+
         this.senatPilarSpotlights.forEach(spotlight => {
             this.spotlightProvider.createSpotlight(
                 spotlight.id,
@@ -295,6 +309,8 @@ export class ParadeProvider {
 
     @OnEvent(ClientEvent.PARADE_DELETE)
     public async onParadeClear() {
+        this.running = false;
+
         for (const block of this.peds) {
             for (const ped of block.peds) {
                 this.pedFactory.unspawnEntity(ped);

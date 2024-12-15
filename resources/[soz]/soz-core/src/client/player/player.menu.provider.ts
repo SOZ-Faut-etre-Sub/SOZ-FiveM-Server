@@ -18,6 +18,7 @@ import { NuiMenu } from '../nui/nui.menu';
 import { HalloweenSpiderService } from '../object/halloween.spider.service';
 import { ProgressService } from '../progress.service';
 import { Election2024CeremonyProvider } from '../story/election-2024/ceremony.provider';
+import { ParadeProvider } from '../story/parade.provider';
 import { VampireGameStateProvider } from '../story/vampire.game.state.provider';
 import { VoiceProvider } from '../voip/voice/voice.provider';
 import { PlayerAnimationProvider } from './player.animation.provider';
@@ -74,6 +75,9 @@ export class PlayerMenuProvider {
     @Inject(Election2024CeremonyProvider)
     private ceremonyProvider: Election2024CeremonyProvider;
 
+    @Inject(ParadeProvider)
+    private paradeProvider: ParadeProvider;
+
     @Once()
     public async init() {
         await this.halloweenSpiderService.init();
@@ -91,6 +95,10 @@ export class PlayerMenuProvider {
     })
     public async togglePersonalMenu() {
         if (this.ceremonyProvider.isRunning) {
+            return;
+        }
+
+        if (this.paradeProvider.isRunning) {
             return;
         }
 

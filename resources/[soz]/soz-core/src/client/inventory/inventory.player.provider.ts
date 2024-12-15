@@ -8,6 +8,7 @@ import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
 import { ClothingShopProvider } from '../shop/cloth.shop.provider';
 import { Election2024CeremonyProvider } from '../story/election-2024/ceremony.provider';
+import { ParadeProvider } from '../story/parade.provider';
 import { InventoryManager } from './inventory.manager';
 
 @Provider()
@@ -29,6 +30,9 @@ export class InventoryPlayerProvider {
 
     @Inject(Election2024CeremonyProvider)
     private ceremonyProvider: Election2024CeremonyProvider;
+
+    @Inject(ParadeProvider)
+    private paradeProvider: ParadeProvider;
 
     private isOpen = false;
 
@@ -64,6 +68,10 @@ export class InventoryPlayerProvider {
         }
 
         if (this.ceremonyProvider.isRunning) {
+            return;
+        }
+
+        if (this.paradeProvider.isRunning) {
             return;
         }
 
