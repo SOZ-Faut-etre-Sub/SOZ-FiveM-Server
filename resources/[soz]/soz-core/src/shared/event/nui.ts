@@ -143,6 +143,7 @@ export enum NuiEvent {
     AdminMenuPublicCeremonyStart = 'soz-core:nui:admin:ceremony:start:public',
     AdminMenuFinalCeremonyStart = 'soz-core:nui:admin:ceremony:start:final',
     AdminMenuCeremonyParadeStart = 'soz-core:nui:admin:parade:start',
+    AdminMenuCeremonyParadeSound = 'soz-core:nui:admin:parade:sound',
     AdminMenuCeremonyTime = 'soz-core:nui:admin:parade:time',
     AdminMenuClothes = 'soz-core:client:admin:clothes',
     AdminMenuXmasSetState = 'soz-core:nui:admin:xmas:set-state',

@@ -73,4 +73,12 @@ export class ParadeProvider {
         this.running = false;
         this.stopped = false;
     }
+
+    @OnEvent(ServerEvent.ADMIN_PARADE_SOUND)
+    public onParadeSound(source: number, type: string, volume: number) {
+        if (!this.permissionService.isStaff(source)) {
+            return;
+        }
+        this.soundService.play(-1, 'https://cfx-nui-soz-sounds/parade/' + type + '.mp3', volume / 20);
+    }
 }

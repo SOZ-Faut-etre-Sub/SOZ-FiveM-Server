@@ -30,6 +30,11 @@ export class AdminMenuCeremonyProvider {
         this.nuiMenu.closeMenu();
     }
 
+    @OnNuiEvent(NuiEvent.AdminMenuCeremonyParadeSound)
+    public async sound({ type, volume }: { type: string; volume: number }): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_PARADE_SOUND, type, volume);
+    }
+
     @OnNuiEvent(NuiEvent.AdminMenuCeremonyTime)
     public async setForcedTime({ value }: { value: number }): Promise<void> {
         TriggerServerEvent(ServerEvent.ADMIN_CEREMONY_TIME, value);

@@ -1,4 +1,6 @@
-import { FunctionComponent } from 'react';
+import { JobType } from '@public/shared/job';
+import { JobRegistry } from '@public/shared/job/config';
+import { FunctionComponent, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
 import { fetchNui } from '../../fetch';
@@ -20,6 +22,8 @@ export type CeremonySubMenuProps = {
 };
 
 export const CeremonySubMenu: FunctionComponent<CeremonySubMenuProps> = ({ banner, state }) => {
+    const [volume, setVolume] = useState<number>(10);
+
     return (
         <SubMenu id="ceremony">
             <MenuTitle banner={banner}>Cérémonie</MenuTitle>
@@ -66,6 +70,32 @@ export const CeremonySubMenu: FunctionComponent<CeremonySubMenuProps> = ({ banne
                 >
                     Arreter la parade
                 </MenuItemButton>
+                <MenuItemSelect
+                    title={`Annonce`}
+                    onConfirm={async (index, value) => {
+                        await fetchNui(NuiEvent.AdminMenuCeremonyParadeSound, { type: value, volume });
+                    }}
+                >
+                    {[JobType.LSPD, JobType.BCSO, JobType.SASP, JobType.LSMC, JobType.CashTransfer].map(value => (
+                        <MenuItemSelectOption value={value} key={`sound_${value}`}>
+                            {JobRegistry[value].platePrefix}
+                        </MenuItemSelectOption>
+                    ))}
+                </MenuItemSelect>
+                <MenuItemSelect
+                    title={`Volume annonce`}
+                    onChange={async index => {
+                        setVolume(index + 1);
+                    }}
+                >
+                    {Array(10)
+                        .fill(0)
+                        .map((_, index) => (
+                            <MenuItemSelectOption value={index} key={`volume_${index}`}>
+                                {index + 1}
+                            </MenuItemSelectOption>
+                        ))}
+                </MenuItemSelect>
 
                 <MenuTitle>Cérémonie jeux de lumière</MenuTitle>
                 <MenuItemButton

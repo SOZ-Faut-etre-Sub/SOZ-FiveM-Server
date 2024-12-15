@@ -74,6 +74,7 @@ export enum ServerEvent {
     ADMIN_CEREMONY_FINAL_PART_START = 'soz-core:server:admin:ceremony:start:final',
     ADMIN_CEREMONY_TIME = 'soz-core:server:admin:ceremony:time',
     ADMIN_PARADE_START = 'soz-core:server:admin:parade:start',
+    ADMIN_PARADE_SOUND = 'soz-core:server:admin:parade:sound',
 
     ADMIN_XMAS_UPDATE_SCENE = 'soz-core:server:admin:xmas:update-scene',
 
