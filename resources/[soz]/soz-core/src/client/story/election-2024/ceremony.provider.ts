@@ -6,6 +6,7 @@ import { Provider } from '../../../core/decorators/provider';
 import { Tick } from '../../../core/decorators/tick';
 import { wait } from '../../../core/utils';
 import { ClientEvent } from '../../../shared/event/client';
+import { Control } from '../../../shared/input';
 import { Vector3 } from '../../../shared/polyzone/vector';
 import { CameraService } from '../../camera';
 import { HudStateProvider } from '../../hud/hud.state.provider';
@@ -43,6 +44,9 @@ export class Election2024CeremonyProvider {
         if (!this._running) return;
 
         DisableAllControlActions(0);
+
+        EnableControlAction(0, Control.LookLeftRight, true);
+        EnableControlAction(0, Control.LookUpDown, true);
     }
 
     @OnEvent(ClientEvent.CEREMONY_SET_RUNNING)
@@ -114,6 +118,16 @@ export class Election2024CeremonyProvider {
             await this.setCamera(location.camera, location.center);
         }
 
+        if (locationName === 'senat') {
+            this.cameraService.setCameraActive(this.camera, false);
+
+            SetGameplayCamRelativeHeading(180);
+            TaskTurnPedToFaceCoord(PlayerPedId(), location.center[0], location.center[1], location.center[2], 0);
+
+            await wait(1000);
+            SetGameplayCamRelativeHeading(0);
+        }
+
         if (location.music) {
             this.nuiDispatch.dispatch('election', location.music.name, location.music.volume);
         }
@@ -177,6 +191,11 @@ export class Election2024CeremonyProvider {
 
         setTimeout(async () => {
             DoScreenFadeOut(500);
+            await wait(500);
+
+            if (locationName === 'senat') {
+                this.cameraService.setCameraActive(this.camera, true);
+            }
 
             for (const spotlight of location.spotlights) {
                 setTimeout(async () => {

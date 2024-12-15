@@ -31,6 +31,10 @@ export class CameraService {
 
     public setCameraActive(cam: number, active: boolean) {
         SetCamActive(cam, active);
+
+        if (!active) {
+            RenderScriptCams(false, true, 1000, true, true);
+        }
     }
 
     public setCameraFov(cam: number, fov: number) {
