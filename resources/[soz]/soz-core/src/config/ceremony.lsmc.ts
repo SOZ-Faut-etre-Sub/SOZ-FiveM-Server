@@ -26,7 +26,7 @@ const colorYellow = [225, 194, 75] as Vector3;
 export const LSMC_LOCATION: Location = {
     camera: [349.5, -1525.39, 29.27],
     center: [353.35, -1409.16, 64.51],
-    music: { name: 'society1', volume: 20 },
+    music: { name: 'society1', volume: 5 },
     positions: [{ position: [281.64, -1519.81, 44.88], rotation: [0, 0, 0], duration: 20_000, triggerAt: 0 }],
     fireworks: [
         {

@@ -17,7 +17,7 @@ const colorYellow = [225, 194, 75] as Vector3;
 export const STONK_LOCATION: Location = {
     camera: [17.33, -731.89, 43.98],
     center: [-2.05, -691.09, 79.36],
-    music: { name: 'society2', volume: 20 },
+    music: { name: 'society2', volume: 5 },
     positions: [
         { position: [41.92, -764.45, 44.62], rotation: [0, 0, 0], duration: 10_000, triggerAt: 0 },
         { position: [7.12, -844.34, 65.23], rotation: [0, 0, 0], duration: 10_000, triggerAt: 10_000 },

@@ -17,7 +17,7 @@ const colorYellow = [225, 194, 75] as Vector3;
 export const BCSO_LOCATION: Location = {
     camera: [1825.95, 3626.55, 35.17],
     center: [1840.83, 3681.51, 51.57],
-    music: { name: 'society1', volume: 20 },
+    music: { name: 'society1', volume: 5 },
     positions: [{ position: [1870.0, 3642.05, 36.0], rotation: [0, 0, 0], duration: 20_000, triggerAt: 0 }],
     fireworks: [
         {

@@ -401,7 +401,7 @@ const globalSpotlightGroup3TimingOff = [
 export const FINAL_LOCATION: Location = {
     camera: [228.81, 99.45, 141.97],
     center: [-52.51, -778.68, 195.78],
-    music: { name: 'hymne', volume: 20 },
+    music: { name: 'hymne', volume: 5 },
     positions: [
         { position: [-30.07, 46.92, 100.54], rotation: [0, 0, 0], duration: 60_000, triggerAt: 0 },
         { position: [-186.03, 158.5, 101.34], rotation: [0, 0, 0], duration: 60_000, triggerAt: 60_000 },

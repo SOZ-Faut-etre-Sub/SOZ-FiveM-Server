@@ -17,7 +17,7 @@ const colorYellow = [225, 194, 75] as Vector3;
 export const MANDATORY_LOCATION: Location = {
     camera: [-487.57, -275.5, 35.61],
     center: [-551.12, -193.57, 69.77],
-    music: { name: 'society1', volume: 20 },
+    music: { name: 'society1', volume: 5 },
     positions: [{ position: [-507.64, -263.95, 56.09], rotation: [0, 0, 0], duration: 20_000, triggerAt: 0 }],
     fireworks: [
         {

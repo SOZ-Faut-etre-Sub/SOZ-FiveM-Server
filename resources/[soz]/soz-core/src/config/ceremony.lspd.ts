@@ -17,7 +17,7 @@ const colorYellow = [225, 194, 75] as Vector3;
 export const LSPD_LOCATION: Location = {
     camera: [693.05, 23.45, 87.18],
     center: [632.5, -7.26, 95],
-    music: { name: 'society2', volume: 20 },
+    music: { name: 'society2', volume: 5 },
     positions: [{ position: [659.2, -52.25, 82.85], rotation: [0, 0, 0], duration: 20_000, triggerAt: 0 }],
     fireworks: [
         {

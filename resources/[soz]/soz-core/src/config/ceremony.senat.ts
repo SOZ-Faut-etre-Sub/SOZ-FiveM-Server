@@ -17,7 +17,7 @@ const colorYellow = [225, 194, 75] as Vector3;
 export const SENAT_LOCATION: Location = {
     camera: [-547.84, -686.97, 51.28],
     center: [-554.47, -599.45, 40.83],
-    music: { name: 'senat', volume: 20 },
+    music: { name: 'senat', volume: 5 },
     positions: [
         { position: [-500.7, -686.98, 54.47], rotation: [0, 0, 0], duration: 20_000, triggerAt: 0 },
         { position: [-539.29, -700.88, 66.12], rotation: [0, 0, 0], duration: 20_000, triggerAt: 20_000 },
