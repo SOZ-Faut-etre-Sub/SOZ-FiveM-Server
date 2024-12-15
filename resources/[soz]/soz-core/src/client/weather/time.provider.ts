@@ -151,6 +151,7 @@ export class TimeProvider {
         NetworkOverrideClockTime(cur.hour, cur.minute, cur.second);
     }
 
+    @OnEvent(ClientEvent.STATE_FORCE_TIME)
     public setOverride(value: number) {
         this.override = value;
         if (value == null) {

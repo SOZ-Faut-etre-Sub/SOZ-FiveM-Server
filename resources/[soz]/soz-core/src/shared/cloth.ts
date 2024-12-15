@@ -89,7 +89,7 @@ export const WardRobeElements = {
 };
 
 // A list of wardrobe indexed by model hash
-export type WardrobeConfig = Record<number, Wardrobe>;
+export type WardrobeConfig = Record<PlayerPedHash, Wardrobe>;
 
 export const KeepHairWithMask = {
     base: {

@@ -2,7 +2,7 @@ import { BLACK_SCREEN_URL } from '../../shared/global';
 import { BoxZone } from '../../shared/polyzone/box.zone';
 import { Vector3 } from '../../shared/polyzone/vector';
 
-const createNamedRenderTargetForModel = (name, model): number => {
+const createNamedRenderTargetForModel = (name: string, model: number): number => {
     let handle = 0;
 
     if (!IsNamedRendertargetRegistered(name)) {

@@ -40,7 +40,8 @@ export class NpcProvider {
             density[PedDensityType.multiplier] = 0.0;
             density[PedDensityType.peds] = 0.0;
             density[PedDensityType.scenario] = 0.0;
-            density[PedDensityType.scenario] = 0.0;
+            density[PedDensityType.vehicle] = 0.0;
+            density[PedDensityType.parked] = 0.0;
         }
 
         TriggerLatentClientEvent(ClientEvent.NPC_DENSITY_UPDATE, -1, 1024, density);
@@ -53,7 +54,8 @@ export class NpcProvider {
             density[PedDensityType.multiplier] = 0.0;
             density[PedDensityType.peds] = 0.0;
             density[PedDensityType.scenario] = 0.0;
-            density[PedDensityType.scenario] = 0.0;
+            density[PedDensityType.vehicle] = 0.0;
+            density[PedDensityType.parked] = 0.0;
         }
 
         return density;

@@ -37,6 +37,16 @@ AddEventHandler('InteractSound_CL:PlayOnOne', function(soundFile, soundVolume)
     end
 end)
 
+RegisterNetEvent('InteractSound_CL:StopOnOne')
+AddEventHandler('InteractSound_CL:StopOnOne', function(soundFile)
+    if hasPlayerLoaded then
+        SendNUIMessage({
+            transactionType = 'stopSound',
+            transactionFile  = soundFile,
+        })
+    end
+end)
+
 ------
 -- RegisterNetEvent LIFE_CL:Sound:PlayOnAll
 --

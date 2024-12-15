@@ -763,6 +763,20 @@ const MenuSelectControls: FunctionComponent<MenuSelectControlsProps> = ({ onChan
     });
 
     useEffect(() => {
+        for (const index in menuItems) {
+            const menuItem = menuItems[index];
+
+            if (equalityFn(menuItem.value, activeValue)) {
+                const activeIndex = parseInt(index, 10);
+
+                if (activeIndex !== activeOptionIndex) {
+                    setActiveOptionIndex(activeIndex);
+                }
+            }
+        }
+    }, [activeValue]);
+
+    useEffect(() => {
         const menuItem = menuItems[activeOptionIndex];
 
         onChange && onChange(activeOptionIndex, menuItem?.value);
@@ -871,6 +885,7 @@ type MenuItemSelectProps = PropsWithChildren<{
     alignRight?: boolean;
     descriptionValue?: (value: any) => string | ReactNode;
     equalityFn?: (a: any, b: any) => boolean;
+    syncValue?: boolean;
 }>;
 
 export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
@@ -890,6 +905,7 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
     description = null,
     useGrid = false,
     alignRight = false,
+    syncValue = false,
     descriptionValue,
     equalityFn = (a, b) => a === b,
 }) => {
@@ -911,6 +927,12 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
             setDescendants([]);
         }
     }, [descendants.length, previousLength]);
+
+    useEffect(() => {
+        if (syncValue) {
+            setActiveValue(value);
+        }
+    }, [syncValue, value]);
 
     const onItemConfirm = useCallback(() => {
         onConfirm && onConfirm(activeOptionIndex, activeValue);

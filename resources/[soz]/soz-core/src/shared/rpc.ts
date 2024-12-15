@@ -297,6 +297,8 @@ export enum RpcServerEvent {
     ADMIN_HALLOWEEN_GAME_STATE = 'soz-core:server:admin:halloween:vampire-game-state',
 
     STRESS_UPDATE = 'soz-core:server:stress:update',
+
+    XMAS_GET_SCENE_STATE = 'soz-core:server:xmas:get-scene-state',
 }
 
 export enum RpcClientEvent {

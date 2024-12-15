@@ -68,6 +68,7 @@ import { StateApp } from './StateApp';
 import { GlassMorphism } from './Styleguide/GlassMorphism';
 import { TargetOverlay } from './Target/TargetOverlay';
 import { TaxiHorodateurApp } from './Taxi/TaxiHorodateurApp';
+import { Election } from './World/Election';
 import { Meteor } from './World/Meteor';
 
 export const App: FunctionComponent = () => {
@@ -162,6 +163,7 @@ export const App: FunctionComponent = () => {
                     <InputApp />
                 </div>
                 <Meteor />
+                <Election />
                 <BlipApp />
             </Provider>
         </GlassMorphismProvider>

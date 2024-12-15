@@ -10,7 +10,7 @@ export const SASP_DARK = 'Tenue sombre';
 export const MOTO = 'Tenue de moto';
 
 export const PrisonerClothes = {
-    [joaat('mp_m_freemode_01')]: {
+    [PlayerPedHash.Male]: {
         Components: {
             [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
             [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
@@ -33,7 +33,7 @@ export const PrisonerClothes = {
         },
         GlovesID: 0,
     },
-    [joaat('mp_f_freemode_01')]: {
+    [PlayerPedHash.Female]: {
         Components: {
             [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
             [Component.Torso]: { Drawable: 2, Texture: 0, Palette: 0 },
@@ -60,7 +60,7 @@ export const PrisonerClothes = {
 
 export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
     [JobType.LSPD]: {
-        [joaat('mp_m_freemode_01')]: {
+        [PlayerPedHash.Male]: {
             [DUTY_OUTFIT_NAME]: {
                 Components: {
                     [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
@@ -168,7 +168,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 type: 'SPORT',
             },
         },
-        [joaat('mp_f_freemode_01')]: {
+        [PlayerPedHash.Female]: {
             [DUTY_OUTFIT_NAME]: {
                 Components: {
                     [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
@@ -278,7 +278,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
         },
     },
     [JobType.BCSO]: {
-        [joaat('mp_m_freemode_01')]: {
+        [PlayerPedHash.Male]: {
             [DUTY_OUTFIT_NAME]: {
                 Components: {
                     [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
@@ -368,7 +368,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 type: 'SPORT',
             },
         },
-        [joaat('mp_f_freemode_01')]: {
+        [PlayerPedHash.Female]: {
             [DUTY_OUTFIT_NAME]: {
                 Components: {
                     [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
@@ -460,7 +460,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
         },
     },
     [JobType.SASP]: {
-        [joaat('mp_m_freemode_01')]: {
+        [PlayerPedHash.Male]: {
             [DUTY_OUTFIT_NAME]: {
                 Components: {
                     [Component.Torso]: { Drawable: 22, Texture: 0, Palette: 0 },
@@ -504,7 +504,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 },
             },
         },
-        [joaat('mp_f_freemode_01')]: {
+        [PlayerPedHash.Female]: {
             [DUTY_OUTFIT_NAME]: {
                 Components: {
                     [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
@@ -550,7 +550,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
         },
     },
     [JobType.LSCS]: {
-        [joaat('mp_m_freemode_01')]: {
+        [PlayerPedHash.Male]: {
             [DUTY_OUTFIT_NAME]: {
                 Components: {
                     [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
@@ -592,7 +592,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 },
             },
         },
-        [joaat('mp_f_freemode_01')]: {
+        [PlayerPedHash.Female]: {
             [DUTY_OUTFIT_NAME]: {
                 Components: {
                     [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
@@ -729,7 +729,7 @@ export const RankOutfit: Partial<Record<JobType, Record<string, Record<number, [
 };
 
 export const Armors: Record<PlayerPedHash, Record<string, OutfitItem>> = {
-    [joaat('mp_m_freemode_01')]: {
+    [PlayerPedHash.Male]: {
         ['unmark']: {
             Drawable: 2,
             Texture: 0,
@@ -810,7 +810,7 @@ export const Armors: Record<PlayerPedHash, Record<string, OutfitItem>> = {
             Palette: 0,
         },
     },
-    [joaat('mp_f_freemode_01')]: {
+    [PlayerPedHash.Female]: {
         ['unmark']: {
             Drawable: 2,
             Texture: 7,
@@ -904,8 +904,8 @@ export const FemaleLSPDGlovesId = 100_001;
 
 export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
     [JobType.LSPD]: {
-        [joaat('mp_m_freemode_01')]: {
-            ['outfit']: POLICE_CLOAKROOM[JobType.LSPD][joaat('mp_m_freemode_01')][DUTY_OUTFIT_NAME],
+        [PlayerPedHash.Male]: {
+            ['outfit']: POLICE_CLOAKROOM[JobType.LSPD][PlayerPedHash.Male][DUTY_OUTFIT_NAME],
             ['light_intervention_outfit']: {
                 Components: {
                     [Component.Mask]: { Drawable: 185, Texture: 0, Palette: 0 },
@@ -949,8 +949,8 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                 GlovesID: MaleLSPDGlovesId,
             },
         },
-        [joaat('mp_f_freemode_01')]: {
-            ['outfit']: POLICE_CLOAKROOM[JobType.LSPD][joaat('mp_f_freemode_01')][DUTY_OUTFIT_NAME],
+        [PlayerPedHash.Female]: {
+            ['outfit']: POLICE_CLOAKROOM[JobType.LSPD][PlayerPedHash.Female][DUTY_OUTFIT_NAME],
             ['light_intervention_outfit']: {
                 Components: {
                     [Component.Mask]: { Drawable: 185, Texture: 0, Palette: 0 },
@@ -996,8 +996,8 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
         },
     },
     [JobType.BCSO]: {
-        [joaat('mp_m_freemode_01')]: {
-            ['outfit']: POLICE_CLOAKROOM[JobType.BCSO][joaat('mp_m_freemode_01')][DUTY_OUTFIT_NAME],
+        [PlayerPedHash.Male]: {
+            ['outfit']: POLICE_CLOAKROOM[JobType.BCSO][PlayerPedHash.Male][DUTY_OUTFIT_NAME],
             ['light_intervention_outfit']: {
                 Components: {
                     [Component.Mask]: { Drawable: 185, Texture: 20, Palette: 0 },
@@ -1041,8 +1041,8 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                 GlovesID: MaleLSPDGlovesId,
             },
         },
-        [joaat('mp_f_freemode_01')]: {
-            ['outfit']: POLICE_CLOAKROOM[JobType.BCSO][joaat('mp_f_freemode_01')][DUTY_OUTFIT_NAME],
+        [PlayerPedHash.Female]: {
+            ['outfit']: POLICE_CLOAKROOM[JobType.BCSO][PlayerPedHash.Female][DUTY_OUTFIT_NAME],
             ['light_intervention_outfit']: {
                 Components: {
                     [Component.Mask]: { Drawable: 185, Texture: 20, Palette: 0 },

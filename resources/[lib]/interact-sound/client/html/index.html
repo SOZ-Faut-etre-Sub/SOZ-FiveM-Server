@@ -5,17 +5,18 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.1/howler.min.js" type="text/javascript"></script>
         <script>
             let audioLoopPlayer = {};
+            let audioPlayers = {};
             window.addEventListener('message', function(event) {
                 // Check for playSound transaction
                 if (event.data.transactionType === "playSound") {
                     if (event.data.transactionFile.startsWith("http")) {
-                        let audioPlayer = new Howl({src: [event.data.transactionFile]});
-                        audioPlayer.volume(event.data.transactionVolume);
-                        audioPlayer.play();
+                        audioPlayers[event.data.transactionFile] = new Howl({src: [event.data.transactionFile]});
+                        audioPlayers[event.data.transactionFile].volume(event.data.transactionVolume);
+                        audioPlayers[event.data.transactionFile].play();
                     } else {
-                        let audioPlayer = new Howl({src: ["./sounds/" + event.data.transactionFile + ".ogg"]});
-                        audioPlayer.volume(event.data.transactionVolume);
-                        audioPlayer.play();
+                        audioPlayers[event.data.transactionFile] = new Howl({src: ["./sounds/" + event.data.transactionFile + ".ogg"]});
+                        audioPlayers[event.data.transactionFile].volume(event.data.transactionVolume);
+                        audioPlayers[event.data.transactionFile].play();
                     }
                 }
                 else if (event.data.transactionType === "playLoopSound") {
@@ -35,6 +36,12 @@
                     if (audioLoopPlayer[event.data.id]) {
                         audioLoopPlayer[event.data.id].stop();
                         delete audioLoopPlayer[event.data.id];
+                    }
+                }
+                else if (event.data.transactionType === "stopSound") {
+                    if (audioPlayers[event.data.transactionFile]) {
+                        audioPlayers[event.data.transactionFile].stop();
+                        delete audioPlayers[event.data.transactionFile];
                     }
                 }
             });

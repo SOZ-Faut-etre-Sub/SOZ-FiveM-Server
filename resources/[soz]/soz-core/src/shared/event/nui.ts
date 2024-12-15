@@ -141,7 +141,13 @@ export enum NuiEvent {
     AdminMenuHalloweenUpdateObjectivePart2 = 'soz-core:nui:admin:halloween:update-objective-part2',
     AdminMenuHalloweenUpdateObjectivePart3 = 'soz-core:nui:admin:halloween:update-objective-part3',
     AdminMenuEventSetStartSound = 'soz-core:nui:admin:event:set-start-sound',
+    AdminMenuPublicCeremonyStart = 'soz-core:nui:admin:ceremony:start:public',
+    AdminMenuFinalCeremonyStart = 'soz-core:nui:admin:ceremony:start:final',
+    AdminMenuCeremonyParadeStart = 'soz-core:nui:admin:parade:start',
+    AdminMenuCeremonyParadeSound = 'soz-core:nui:admin:parade:sound',
+    AdminMenuCeremonyTime = 'soz-core:nui:admin:parade:time',
     AdminMenuClothes = 'soz-core:client:admin:clothes',
+    AdminMenuXmasSetState = 'soz-core:nui:admin:xmas:set-state',
 
     BlipAction = 'soz-core:client:blip:action',
 

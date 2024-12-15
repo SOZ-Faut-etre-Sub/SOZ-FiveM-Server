@@ -147,3 +147,31 @@ export const clampMagnitudeVector3 = (v: Vector3, max: number) => {
     }
     return v;
 };
+
+export const applyOffset = (v: Vector4, offset: Vector3): Vector4 => {
+    const radAngle = rad(v[3]);
+
+    const coords = [...v] as Vector4;
+    coords[0] += offset[0] * Math.cos(radAngle) - offset[1] * Math.sin(radAngle);
+    coords[1] += offset[0] * Math.sin(radAngle) + offset[1] * Math.cos(radAngle);
+    coords[2] += offset[2];
+
+    return coords;
+};
+
+export const getRotationForATargetingB = (A: Vector3, B: Vector3): Vector3 => {
+    // Calcul du vecteur directionnel
+    const directionVector = sub2Vector3(B, A);
+    const distanceXY = Math.sqrt(directionVector[0] ** 2 + directionVector[1] ** 2);
+
+    // Calcul du yaw (rotation autour de l'axe Y) en radians
+    const yaw = Math.atan2(directionVector[1], directionVector[0]);
+    const pitch = Math.atan2(-directionVector[2], distanceXY);
+    const roll = 0;
+
+    // Conversion en degrés
+    const yawDeg = yaw * (180 / Math.PI); // Conversion en degrés
+    const pitchDeg = pitch * (180 / Math.PI); // Conversion en degrés
+
+    return [pitchDeg, roll, yawDeg];
+};
