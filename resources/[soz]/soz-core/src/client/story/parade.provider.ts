@@ -16,6 +16,7 @@ import { Parade, Spotlights } from '@public/shared/story/parade';
 import { getDefaultVehicleConfiguration } from '@public/shared/vehicle/modification';
 import { VehicleSeat } from '@public/shared/vehicle/vehicle';
 
+import { SENAT_LOCATION } from '../../config/ceremony.senat';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { CameraService } from '../camera';
@@ -56,19 +57,37 @@ export class ParadeProvider {
     private peds: { index: number; peds: number[]; vehs: number[][] }[] = [];
     private camera: number;
 
+    private senatPilarSpotlights = SENAT_LOCATION.spotlights.filter(
+        spotlight => spotlight.action === 'add' && spotlight.id.startsWith('senat-spotlight-pilar')
+    );
+
     @OnEvent(ClientEvent.PARADE_INIT)
     public async onInit() {
+        this.senatPilarSpotlights.forEach(spotlight => {
+            this.spotlightProvider.createSpotlight(
+                spotlight.id,
+                spotlight.position,
+                spotlight.target,
+                spotlight.color,
+                spotlight.distance,
+                spotlight.radius,
+                spotlight.brightness,
+                spotlight.roundness,
+                10_000
+            );
+        });
+
         Spotlights.forEach((coords, index) => {
             this.spotlightProvider.createSpotlight(
                 'parade' + index,
                 coords,
                 [coords[0], coords[1], coords[2] - 10],
-                [0, 0, 255],
+                [10, 49, 255],
                 50,
                 200,
-                10,
-                0.5,
-                300_000
+                1,
+                0,
+                10_000
             );
         });
 
@@ -267,7 +286,7 @@ export class ParadeProvider {
     }
 
     @OnEvent(ClientEvent.PARADE_DELETE)
-    public onParadeClear() {
+    public async onParadeClear() {
         for (const block of this.peds) {
             for (const ped of block.peds) {
                 this.pedFactory.unspawnEntity(ped);
@@ -280,9 +299,21 @@ export class ParadeProvider {
         }
         this.peds = [];
 
-        for (let i = 0; i < Spotlights.length; i++) {
-            this.spotlightProvider.deleteSpotlight('parade' + i);
-        }
+        Spotlights.forEach((_coords, index) => {
+            this.spotlightProvider.updateSpotlight('parade' + index, 0, 500);
+        });
+        this.senatPilarSpotlights.forEach(spotlight => {
+            this.spotlightProvider.updateSpotlight(spotlight.id, 0, 500);
+        });
+
+        await wait(500);
+
+        Spotlights.forEach((_coords, index) => {
+            this.spotlightProvider.deleteSpotlight('parade' + index);
+        });
+        this.senatPilarSpotlights.forEach(spotlight => {
+            this.spotlightProvider.deleteSpotlight(spotlight.id);
+        });
 
         this.cameraService.deleteCamera();
         this.hudStateProvider.setHudVisible(true);

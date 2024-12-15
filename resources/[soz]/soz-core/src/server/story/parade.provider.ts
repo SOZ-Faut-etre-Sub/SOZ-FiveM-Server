@@ -35,7 +35,7 @@ export class ParadeProvider {
             if (this.running) {
                 this.notifier.notify(source, "Parade en cours d'arrêt");
             } else {
-                this.notifier.notify(source, 'Arrët de la parade');
+                this.notifier.notify(source, 'Arrêt de la parade');
             }
             this.stopped = true;
             TriggerClientEvent(ClientEvent.PARADE_DELETE, -1);
@@ -61,7 +61,7 @@ export class ParadeProvider {
             if (Parade.blocks[i].delay) {
                 await wait(Parade.blocks[i].delay);
                 if (this.stopped) {
-                    this.notifier.notify(source, 'Arrët de la parade');
+                    this.notifier.notify(source, 'Arrêt de la parade');
                     this.running = false;
                     this.stopped = false;
                     return;
