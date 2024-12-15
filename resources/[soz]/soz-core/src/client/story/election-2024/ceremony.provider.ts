@@ -114,6 +114,25 @@ export class Election2024CeremonyProvider {
         const location = ALL_LOCATIONS[locationName];
         if (!location) return;
 
+        if (!this._running && !this.camera) {
+            // When player crash and rejoin we need to reset the loadscreen before creating the camera
+            exports['soz-loadscreen'].Shutdown();
+
+            this._running = true;
+
+            this.camera = this.cameraService.createCamera(location.camera, 80);
+            this.cameraService.setCameraActive(this.camera, true);
+            this.cameraService.setCameraPointAt(this.camera, location.center);
+            this.cameraService.renderCamera(500);
+
+            this.hudStateProvider.setHudVisible(false);
+            this.hudStateProvider.setCinematicMode(true, 500);
+
+            if (IsScreenFadedOut()) {
+                DoScreenFadeIn(500);
+            }
+        }
+
         if (locationName !== 'final') {
             await this.setCamera(location.camera, location.center);
         }
