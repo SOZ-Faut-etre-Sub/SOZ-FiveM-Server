@@ -26,6 +26,7 @@ import { NuiDispatch } from '../nui/nui.dispatch';
 import { PlayerHealthProvider } from '../player/player.health.provider';
 import { ResourceLoader } from '../repository/resource.loader';
 import { VehicleService } from '../vehicle/vehicle.service';
+import { VoipService } from '../voip/voip.service';
 import { SpotlightProvider } from '../world/spotlight.provider';
 
 @Provider()
@@ -54,8 +55,12 @@ export class ParadeProvider {
     @Inject(PlayerHealthProvider)
     public playerHealthProvider: PlayerHealthProvider;
 
+    @Inject(VoipService)
+    public voipService: VoipService;
+
     private peds: { index: number; peds: number[]; vehs: number[][] }[] = [];
     private camera: number;
+    private isMutedBeforeLaunch = false;
 
     private senatPilarSpotlights = SENAT_LOCATION.spotlights.filter(
         spotlight => spotlight.action === 'add' && spotlight.id.startsWith('senat-spotlight-pilar')
@@ -96,8 +101,11 @@ export class ParadeProvider {
         this.cameraService.setCameraPointAt(this.camera, [-553.84, -641.39, 35.27]);
         this.cameraService.renderCamera(5000);
 
+        this.isMutedBeforeLaunch = this.voipService.isPlayerMuted();
+
         this.playerHealthProvider.setNutritionDisabled(true);
         this.hudStateProvider.setHudVisible(false);
+        await this.voipService.mutePlayer(true);
     }
 
     @OnEvent(ClientEvent.PARADE_SPAWN)
@@ -318,5 +326,9 @@ export class ParadeProvider {
         this.cameraService.deleteCamera();
         this.hudStateProvider.setHudVisible(true);
         this.playerHealthProvider.setNutritionDisabled(false);
+
+        if (!this.isMutedBeforeLaunch) {
+            await this.voipService.mutePlayer(false);
+        }
     }
 }
