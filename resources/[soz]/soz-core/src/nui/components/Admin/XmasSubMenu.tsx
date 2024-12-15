@@ -4,7 +4,19 @@ import { NuiEvent } from '@public/shared/event/nui';
 import { AskInput } from '@public/shared/nui/input';
 import { Fragment, FunctionComponent, useState } from 'react';
 
-import { SCENE_COLORS, SceneColor, Spot, SPOT_LABELS, XmasSceneState } from '../../../shared/story/story';
+import {
+    SCENE_COLORS,
+    SCENE_COLORS_LABELS,
+    SceneColor,
+    Spot,
+    SPOT_COLORS,
+    SPOT_COLORS_LABELS,
+    SPOT_GROUP_BOTTOM,
+    SPOT_GROUP_FIRST_ROW,
+    SPOT_GROUP_SECOND_ROW,
+    SPOT_LABELS,
+    XmasSceneState,
+} from '../../../shared/story/story';
 import {
     MenuContent,
     MenuItemButton,
@@ -21,56 +33,7 @@ export type MeteorSubMenuProps = {
     state: XmasSceneState;
 };
 
-const SPOT_GROUP_ALL = [
-    Spot.SPOT_SCENE_BOTTOM_FRONT_RIGHT,
-    Spot.SPOT_SCENE_BOTTOM_FRONT_LEFT,
-    Spot.SPOT_SCENE_BOTTOM_BACK_RIGHT,
-    Spot.SPOT_SCENE_BOTTOM_BACK_LEFT,
-    Spot.SPOT_SCENE_UP_FIRST_ROW_1,
-    Spot.SPOT_SCENE_UP_FIRST_ROW_2,
-    Spot.SPOT_SCENE_UP_FIRST_ROW_3,
-    Spot.SPOT_SCENE_UP_FIRST_ROW_4,
-    Spot.SPOT_SCENE_UP_FIRST_ROW_5,
-    Spot.SPOT_SCENE_UP_FIRST_ROW_6,
-    Spot.SPOT_SCENE_UP_SECOND_ROW_1,
-    Spot.SPOT_SCENE_UP_SECOND_ROW_2,
-    Spot.SPOT_SCENE_UP_SECOND_ROW_3,
-    Spot.SPOT_SCENE_UP_SECOND_ROW_4,
-    Spot.SPOT_SCENE_UP_SECOND_ROW_5,
-    Spot.SPOT_SCENE_UP_SECOND_ROW_6,
-];
-
-const SPOT_GROUP_BOTTOM = [
-    Spot.SPOT_SCENE_BOTTOM_FRONT_RIGHT,
-    Spot.SPOT_SCENE_BOTTOM_FRONT_LEFT,
-    Spot.SPOT_SCENE_BOTTOM_BACK_RIGHT,
-    Spot.SPOT_SCENE_BOTTOM_BACK_LEFT,
-];
-
-const SPOT_GROUP_FIRST_ROW = [
-    Spot.SPOT_SCENE_UP_FIRST_ROW_1,
-    Spot.SPOT_SCENE_UP_FIRST_ROW_2,
-    Spot.SPOT_SCENE_UP_FIRST_ROW_3,
-    Spot.SPOT_SCENE_UP_FIRST_ROW_4,
-    Spot.SPOT_SCENE_UP_FIRST_ROW_5,
-    Spot.SPOT_SCENE_UP_FIRST_ROW_6,
-];
-
-const SPOT_GROUP_SECOND_ROW = [
-    Spot.SPOT_SCENE_UP_SECOND_ROW_1,
-    Spot.SPOT_SCENE_UP_SECOND_ROW_2,
-    Spot.SPOT_SCENE_UP_SECOND_ROW_3,
-    Spot.SPOT_SCENE_UP_SECOND_ROW_4,
-    Spot.SPOT_SCENE_UP_SECOND_ROW_5,
-    Spot.SPOT_SCENE_UP_SECOND_ROW_6,
-];
-
-const GROUPS: Record<string, Spot[]> = {
-    Tout: SPOT_GROUP_ALL,
-    Bas: SPOT_GROUP_BOTTOM,
-    'Première rangée': SPOT_GROUP_FIRST_ROW,
-    'Deuxième rangée': SPOT_GROUP_SECOND_ROW,
-};
+const SPOT_GROUP_ALL = [...SPOT_GROUP_BOTTOM, ...SPOT_GROUP_FIRST_ROW, ...SPOT_GROUP_SECOND_ROW];
 
 const copyToClipboard = text => {
     const clipElem = document.createElement('input');
@@ -89,6 +52,7 @@ export const XmasSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner, sta
             <SubMenu id="christmas">
                 <MenuTitle banner={banner}>Vive le vent !</MenuTitle>
                 <MenuContent>
+                    <MenuTitle>Scène</MenuTitle>
                     <MenuItemButton
                         description={temporaryState.video_url || 'Aucune vidéo'}
                         onConfirm={async () => {
@@ -118,7 +82,7 @@ export const XmasSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner, sta
                     >
                         {Object.keys(SCENE_COLORS).map(colorId => (
                             <MenuItemSelectOption value={colorId} key={`color_${colorId}`}>
-                                {colorId}
+                                {SCENE_COLORS_LABELS[colorId]}
                             </MenuItemSelectOption>
                         ))}
                     </MenuItemSelect>
@@ -134,7 +98,7 @@ export const XmasSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner, sta
                     >
                         {Object.keys(SCENE_COLORS).map(colorId => (
                             <MenuItemSelectOption value={colorId} key={`color_${colorId}`}>
-                                {colorId}
+                                {SCENE_COLORS_LABELS[colorId]}
                             </MenuItemSelectOption>
                         ))}
                     </MenuItemSelect>
@@ -150,7 +114,7 @@ export const XmasSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner, sta
                     >
                         {Object.keys(SCENE_COLORS).map(colorId => (
                             <MenuItemSelectOption value={colorId} key={`color_${colorId}`}>
-                                {colorId}
+                                {SCENE_COLORS_LABELS[colorId]}
                             </MenuItemSelectOption>
                         ))}
                     </MenuItemSelect>
@@ -167,77 +131,55 @@ export const XmasSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner, sta
                     >
                         Tracking joueur
                     </MenuItemCheckbox>
-                    {Object.keys(GROUPS).map((groupName, index) => {
-                        return (
-                            <Fragment key={index}>
-                                <MenuItemSelect
-                                    title={groupName}
-                                    onChange={(index, color) => {
-                                        const spotState = {
-                                            enabled: color !== null,
-                                            color: color === null ? SceneColor.Black : color,
-                                        };
+                    <MenuItemSelect
+                        title="Toutes les lumieres"
+                        onChange={(_index, color) => {
+                            const spotState = {
+                                enabled: color !== null,
+                                color: color === null ? SceneColor.Black : color,
+                            };
 
-                                        const spots = {};
+                            const spots = {};
 
-                                        for (const spotName of GROUPS[groupName]) {
-                                            spots[spotName] = spotState;
-                                        }
+                            for (const spotName of SPOT_GROUP_ALL) {
+                                spots[spotName] = spotState;
+                            }
 
-                                        setTemporaryState({
-                                            ...temporaryState,
-                                            spots: {
-                                                ...temporaryState.spots,
-                                                ...spots,
-                                            },
-                                        });
-                                    }}
-                                >
-                                    <MenuItemSelectOption value={null}>Eteint</MenuItemSelectOption>
-                                    {Object.keys(SCENE_COLORS).map((colorId, index) => (
-                                        <MenuItemSelectOption value={colorId} key={index}>
-                                            {colorId}
-                                        </MenuItemSelectOption>
-                                    ))}
-                                </MenuItemSelect>
-                            </Fragment>
-                        );
-                    })}
-
-                    {Object.keys(SPOT_LABELS).map((spotName, index) => {
-                        return (
-                            <Fragment key={index}>
-                                <MenuItemSelect
-                                    syncValue
-                                    title={SPOT_LABELS[spotName]}
-                                    value={
-                                        temporaryState.spots[spotName]?.enabled
-                                            ? temporaryState.spots[spotName]?.color ?? null
-                                            : null
-                                    }
-                                    onChange={(index, color) => {
-                                        setTemporaryState({
-                                            ...temporaryState,
-                                            spots: {
-                                                ...temporaryState.spots,
-                                                [spotName]: {
-                                                    enabled: color !== null,
-                                                    color: color === null ? SceneColor.Black : color,
-                                                },
-                                            },
-                                        });
-                                    }}
-                                >
-                                    <MenuItemSelectOption value={null}>Eteint</MenuItemSelectOption>
-                                    {Object.keys(SCENE_COLORS).map((colorId, index) => (
-                                        <MenuItemSelectOption value={colorId} key={index}>
-                                            {colorId}
-                                        </MenuItemSelectOption>
-                                    ))}
-                                </MenuItemSelect>
-                            </Fragment>
-                        );
-                    })}
+                            setTemporaryState({
+                                ...temporaryState,
+                                spots: {
+                                    ...temporaryState.spots,
+                                    ...spots,
+                                },
+                            });
+                        }}
+                    >
+                        <MenuItemSelectOption value={null}>Eteint</MenuItemSelectOption>
+                        {Object.keys(SPOT_COLORS).map((colorId, index) => (
+                            <MenuItemSelectOption value={colorId} key={index}>
+                                {SPOT_COLORS_LABELS[colorId]}
+                            </MenuItemSelectOption>
+                        ))}
+                    </MenuItemSelect>
+                    <MenuLightGroup
+                        setTemporaryState={setTemporaryState}
+                        temporaryState={temporaryState}
+                        spots={SPOT_GROUP_BOTTOM}
+                        suffix="bas de scène"
+                    />
+                    <MenuLightGroup
+                        setTemporaryState={setTemporaryState}
+                        temporaryState={temporaryState}
+                        spots={SPOT_GROUP_FIRST_ROW}
+                        suffix="première rangée"
+                    />
+                    <MenuLightGroup
+                        setTemporaryState={setTemporaryState}
+                        temporaryState={temporaryState}
+                        spots={SPOT_GROUP_SECOND_ROW}
+                        suffix="deuxième rangée"
+                    />
+                    <MenuTitle>Etat</MenuTitle>
                     <MenuItemButton
                         onConfirm={() => {
                             copyToClipboard(JSON.stringify(temporaryState));
@@ -275,6 +217,90 @@ export const XmasSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner, sta
                     </MenuItemButton>
                 </MenuContent>
             </SubMenu>
+        </>
+    );
+};
+
+type MenuLightGroupProps = {
+    temporaryState: XmasSceneState;
+    setTemporaryState: (state: XmasSceneState) => void;
+    suffix: string;
+    spots: Spot[];
+};
+
+export const MenuLightGroup: FunctionComponent<MenuLightGroupProps> = ({
+    suffix,
+    spots,
+    temporaryState,
+    setTemporaryState,
+}) => {
+    return (
+        <>
+            <MenuTitle>Lumières {suffix}</MenuTitle>
+            <MenuItemSelect
+                title={`Toutes les lumieres ${suffix}`}
+                onChange={(_index, color) => {
+                    const spotState = {
+                        enabled: color !== null,
+                        color: color === null ? SceneColor.Black : color,
+                    };
+
+                    const spotStates = {};
+
+                    for (const spotName of spots) {
+                        spotStates[spotName] = spotState;
+                    }
+
+                    setTemporaryState({
+                        ...temporaryState,
+                        spots: {
+                            ...temporaryState.spots,
+                            ...spotStates,
+                        },
+                    });
+                }}
+            >
+                <MenuItemSelectOption value={null}>Eteint</MenuItemSelectOption>
+                {Object.keys(SPOT_COLORS).map((colorId, index) => (
+                    <MenuItemSelectOption value={colorId} key={index}>
+                        {SPOT_COLORS_LABELS[colorId]}
+                    </MenuItemSelectOption>
+                ))}
+            </MenuItemSelect>
+            {spots.map((spotName, index) => {
+                return (
+                    <Fragment key={index}>
+                        <MenuItemSelect
+                            syncValue
+                            title={SPOT_LABELS[spotName]}
+                            value={
+                                temporaryState.spots[spotName]?.enabled
+                                    ? temporaryState.spots[spotName]?.color ?? null
+                                    : null
+                            }
+                            onChange={(index, color) => {
+                                setTemporaryState({
+                                    ...temporaryState,
+                                    spots: {
+                                        ...temporaryState.spots,
+                                        [spotName]: {
+                                            enabled: color !== null,
+                                            color: color === null ? SceneColor.Black : color,
+                                        },
+                                    },
+                                });
+                            }}
+                        >
+                            <MenuItemSelectOption value={null}>Eteint</MenuItemSelectOption>
+                            {Object.keys(SPOT_COLORS).map((colorId, index) => (
+                                <MenuItemSelectOption value={colorId} key={index}>
+                                    {SPOT_COLORS_LABELS[colorId]}
+                                </MenuItemSelectOption>
+                            ))}
+                        </MenuItemSelect>
+                    </Fragment>
+                );
+            })}
         </>
     );
 };

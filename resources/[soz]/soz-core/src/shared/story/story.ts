@@ -48,6 +48,13 @@ export enum SceneColor {
     Yellow = 'yellow',
 }
 
+export enum SpotColor {
+    Blue = 'blue',
+    Red = 'red',
+    Yellow = 'yellow',
+    White = 'white',
+}
+
 export const SCENE_COLORS: Record<SceneColor, RGBColor> = {
     [SceneColor.Black]: [0, 0, 0],
     [SceneColor.Blue]: [0, 0, 255],
@@ -61,6 +68,35 @@ export const SCENE_COLORS: Record<SceneColor, RGBColor> = {
     [SceneColor.Violet]: [128, 0, 128],
     [SceneColor.White]: [255, 255, 255],
     [SceneColor.Yellow]: [255, 255, 0],
+};
+
+export const SCENE_COLORS_LABELS: Record<SceneColor, string> = {
+    [SceneColor.Black]: 'Noir',
+    [SceneColor.Blue]: 'Bleu',
+    [SceneColor.Brown]: 'Marron',
+    [SceneColor.Cyan]: 'Cyan',
+    [SceneColor.Green]: 'Vert',
+    [SceneColor.Lime]: 'Citron',
+    [SceneColor.Orange]: 'Orange',
+    [SceneColor.Red]: 'Rouge',
+    [SceneColor.Rose]: 'Rose',
+    [SceneColor.Violet]: 'Violet',
+    [SceneColor.White]: 'Blanc',
+    [SceneColor.Yellow]: 'Jaune',
+};
+
+export const SPOT_COLORS: Record<SpotColor, RGBColor> = {
+    [SpotColor.Blue]: [0, 0, 255],
+    [SpotColor.Red]: [255, 0, 0],
+    [SpotColor.Yellow]: [255, 255, 0],
+    [SpotColor.White]: [255, 255, 255],
+};
+
+export const SPOT_COLORS_LABELS: Record<SpotColor, string> = {
+    [SpotColor.Blue]: 'Bleu',
+    [SpotColor.Red]: 'Rouge',
+    [SpotColor.Yellow]: 'Jaune',
+    [SpotColor.White]: 'Blanc',
 };
 
 export const SCENE_COLOR_TEXTURE_NAMES: Record<SceneColor, string> = {
@@ -79,7 +115,7 @@ export const SCENE_COLOR_TEXTURE_NAMES: Record<SceneColor, string> = {
 };
 
 export type SpotState = {
-    color: SceneColor;
+    color: SpotColor;
     enabled: boolean;
 };
 
@@ -148,3 +184,28 @@ export const SPOT_RELATIVE_POSITIONS: Record<Spot, Vector3> = {
     [Spot.SPOT_SCENE_UP_SECOND_ROW_5]: [-550.09, -698.01, 45.14],
     [Spot.SPOT_SCENE_UP_SECOND_ROW_6]: [-555.29, -697.88, 42.37],
 };
+
+export const SPOT_GROUP_BOTTOM = [
+    Spot.SPOT_SCENE_BOTTOM_FRONT_RIGHT,
+    Spot.SPOT_SCENE_BOTTOM_FRONT_LEFT,
+    Spot.SPOT_SCENE_BOTTOM_BACK_RIGHT,
+    Spot.SPOT_SCENE_BOTTOM_BACK_LEFT,
+];
+
+export const SPOT_GROUP_FIRST_ROW = [
+    Spot.SPOT_SCENE_UP_FIRST_ROW_1,
+    Spot.SPOT_SCENE_UP_FIRST_ROW_2,
+    Spot.SPOT_SCENE_UP_FIRST_ROW_3,
+    Spot.SPOT_SCENE_UP_FIRST_ROW_4,
+    Spot.SPOT_SCENE_UP_FIRST_ROW_5,
+    Spot.SPOT_SCENE_UP_FIRST_ROW_6,
+];
+
+export const SPOT_GROUP_SECOND_ROW = [
+    Spot.SPOT_SCENE_UP_SECOND_ROW_1,
+    Spot.SPOT_SCENE_UP_SECOND_ROW_2,
+    Spot.SPOT_SCENE_UP_SECOND_ROW_3,
+    Spot.SPOT_SCENE_UP_SECOND_ROW_4,
+    Spot.SPOT_SCENE_UP_SECOND_ROW_5,
+    Spot.SPOT_SCENE_UP_SECOND_ROW_6,
+];

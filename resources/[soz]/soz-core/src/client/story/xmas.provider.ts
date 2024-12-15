@@ -16,6 +16,8 @@ import {
     SCENE_COLOR_TEXTURE_NAMES,
     SCENE_COLORS,
     Spot,
+    SPOT_COLORS,
+    SPOT_GROUP_SECOND_ROW,
     SPOT_RELATIVE_POSITIONS,
     XmasSceneState,
 } from '../../shared/story/story';
@@ -73,14 +75,18 @@ export class XmasProvider {
             2048,
             1024
         );
+
+        if (this.loadedSceneObjects) {
+            await this.applySceneState();
+        }
     }
 
     @OnEvent(ClientEvent.XMAS_UPDATE_SCENE_STATE)
-    public onXmasSceneStateUpdate(sceneState: XmasSceneState) {
+    public async onXmasSceneStateUpdate(sceneState: XmasSceneState) {
         this.sceneState = sceneState;
 
         if (this.loadedSceneObjects) {
-            this.applySceneState();
+            await this.applySceneState();
         }
     }
 
@@ -180,18 +186,20 @@ export class XmasProvider {
             const newState: Partial<LightState> = { enabled: false };
 
             if (spotState) {
-                const color = SCENE_COLORS[spotState.color] || [0, 0, 0];
+                const color = SPOT_COLORS[spotState.color] || [0, 0, 0];
 
                 newState.enabled = true;
                 newState.color = color;
             }
 
-            if (trackedPosition) {
-                newState.direction = getRotationForATargetingB(spotObject.initialState.position, trackedPosition);
-            }
+            if (SPOT_GROUP_SECOND_ROW.includes(spotName as Spot)) {
+                if (trackedPosition) {
+                    newState.direction = getRotationForATargetingB(spotObject.initialState.position, trackedPosition);
+                }
 
-            if (resetRotation) {
-                newState.direction = spotObject.initialState.direction;
+                if (resetRotation) {
+                    newState.direction = spotObject.initialState.direction;
+                }
             }
 
             spotObject.applyTransition({
@@ -274,6 +282,10 @@ export class XmasProvider {
                 : SCENE_CENTER_POSITION;
 
         for (const spotName of Object.keys(this.loadedSceneObjects.spots)) {
+            if (!SPOT_GROUP_SECOND_ROW.includes(spotName as Spot)) {
+                continue;
+            }
+
             const spotObject = this.loadedSceneObjects.spots[spotName as Spot];
             const newState: Partial<LightState> = {
                 direction: getRotationForATargetingB(spotObject.initialState.position, trackedPosition),
