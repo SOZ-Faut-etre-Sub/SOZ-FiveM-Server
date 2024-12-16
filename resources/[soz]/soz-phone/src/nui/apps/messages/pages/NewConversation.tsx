@@ -6,7 +6,7 @@ import cn from 'classnames';
 import React, { FunctionComponent, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
-import { AutoSizer, CellMeasurer, CellMeasurerCache, List } from 'react-virtualized';
+import { FixedSizeList as List } from 'react-window';
 
 import { ContactItemProps } from '../../../../../typings/app/contact';
 import { useContact } from '../../../hooks/useContact';
@@ -14,6 +14,10 @@ import { useConfig } from '../../../hooks/usePhone';
 import { ContactPicture } from '../../../ui/components/ContactPicture';
 import { SearchField } from '../../../ui/old_components/SearchField';
 import { useMessageAPI } from '../hooks/useMessageAPI';
+
+const LIST_HEIGHT = 693;
+const LIST_WIDTH = 380;
+const LIST_ITEM_HEIGHT = 63;
 
 export const NewConversation = () => {
     const [t] = useTranslation();
@@ -38,11 +42,6 @@ export const NewConversation = () => {
         navigate(-1);
     };
 
-    const cache = new CellMeasurerCache({
-        defaultHeight: 200,
-        fixedWidth: true,
-    });
-
     return (
         <>
             <AppTitle title="Contacts">
@@ -66,77 +65,59 @@ export const NewConversation = () => {
                         'divide-gray-200': config.theme.value === 'light',
                     })}
                 >
-                    <AutoSizer>
-                        {({ height, width }) => (
-                            <List
-                                rowCount={filteredContacts.length}
-                                rowRenderer={({ index, parent, style }) => {
-                                    const contact = filteredContacts[index];
-                                    if (!contact) return null;
-
-                                    return (
-                                        <ContactItem
-                                            key={contact.id}
-                                            index={index}
-                                            parent={parent}
-                                            cache={cache}
-                                            style={style}
-                                            contact={contact}
-                                        />
-                                    );
-                                }}
-                                scrollToIndex={0}
-                                width={width}
-                                height={height}
-                                deferredMeasurementCache={cache}
-                                rowHeight={cache.rowHeight}
-                                containerStyle={{ overflow: 'initial' }}
-                            />
-                        )}
-                    </AutoSizer>
+                    <List
+                        height={LIST_HEIGHT}
+                        width={LIST_WIDTH}
+                        itemSize={LIST_ITEM_HEIGHT}
+                        itemCount={filteredContacts.length}
+                        itemData={filteredContacts}
+                    >
+                        {ContactItem}
+                    </List>
                 </ul>
             </AppContent>
         </>
     );
 };
 
-const ContactItem: FunctionComponent<ContactItemProps> = ({ index, parent, cache, style, contact }) => {
+const ContactItem: FunctionComponent<ContactItemProps> = ({ index, style, data }) => {
     const config = useConfig();
     const { addConversation } = useMessageAPI();
 
+    const contact = data[index];
+    if (!contact) return null;
+
     return (
-        <CellMeasurer key={contact.id} cache={cache} parent={parent} columnCount={1} columnIndex={0} rowIndex={index}>
-            <li
-                style={style}
-                className={cn('w-full cursor-pointer', {
-                    'bg-ios-800': config.theme.value === 'dark',
-                    'bg-ios-50': config.theme.value === 'light',
+        <li
+            style={style}
+            className={cn('w-full cursor-pointer', {
+                'bg-ios-800': config.theme.value === 'dark',
+                'bg-ios-50': config.theme.value === 'light',
+            })}
+            onClick={() => addConversation(contact.number)}
+        >
+            <div
+                className={cn('relative px-6 py-2 flex items-center space-x-3', {
+                    'hover:bg-ios-600': config.theme.value === 'dark',
+                    'hover:bg-gray-200': config.theme.value === 'light',
                 })}
-                onClick={() => addConversation(contact.number)}
             >
-                <div
-                    className={cn('relative px-6 py-2 flex items-center space-x-3', {
-                        'hover:bg-ios-600': config.theme.value === 'dark',
-                        'hover:bg-gray-200': config.theme.value === 'light',
-                    })}
-                >
-                    <div className="flex-shrink-0">
-                        <ContactPicture picture={contact.avatar} />
-                    </div>
-                    <div className="flex-1 min-w-0 cursor-pointer">
-                        <span className="absolute inset-0" aria-hidden="true" />
-                        <p
-                            className={cn('text-left text-sm font-medium', {
-                                'text-gray-100': config.theme.value === 'dark',
-                                'text-gray-600': config.theme.value === 'light',
-                            })}
-                        >
-                            {contact.display}
-                        </p>
-                    </div>
-                    <ChevronRightIcon className="h-5 w-5 text-gray-300" />
+                <div className="flex-shrink-0">
+                    <ContactPicture picture={contact.avatar} />
                 </div>
-            </li>
-        </CellMeasurer>
+                <div className="flex-1 min-w-0 cursor-pointer truncate">
+                    <span className="absolute inset-0" aria-hidden="true" />
+                    <p
+                        className={cn('text-left text-sm font-medium', {
+                            'text-gray-100': config.theme.value === 'dark',
+                            'text-gray-600': config.theme.value === 'light',
+                        })}
+                    >
+                        {contact.display}
+                    </p>
+                </div>
+                <ChevronRightIcon className="h-5 w-5 text-gray-300" />
+            </div>
+        </li>
     );
 };

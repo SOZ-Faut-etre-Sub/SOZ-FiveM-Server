@@ -9,7 +9,7 @@ import cn from 'classnames';
 import React, { FunctionComponent, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { AutoSizer, CellMeasurer, CellMeasurerCache, List } from 'react-virtualized';
+import { FixedSizeList as List } from 'react-window';
 
 import { ContactItemProps } from '../../../../../typings/app/contact';
 import { useContact } from '../../../hooks/useContact';
@@ -17,6 +17,10 @@ import { useConfig } from '../../../hooks/usePhone';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { ContactPicture } from '../../../ui/components/ContactPicture';
 import { SearchField } from '../../../ui/components/SearchField';
+
+const LIST_HEIGHT = 693;
+const LIST_WIDTH = 380;
+const LIST_ITEM_HEIGHT = 63;
 
 export const ContactList: FunctionComponent<{ skipTitle?: boolean; isEmbeded?: boolean }> = ({
     skipTitle = false,
@@ -36,11 +40,6 @@ export const ContactList: FunctionComponent<{ skipTitle?: boolean; isEmbeded?: b
 
     const { pathname } = useLocation();
     const pathTemplate = /contacts\/-?\d/;
-
-    const cache = new CellMeasurerCache({
-        defaultHeight: 200,
-        fixedWidth: true,
-    });
 
     return (
         <>
@@ -72,41 +71,22 @@ export const ContactList: FunctionComponent<{ skipTitle?: boolean; isEmbeded?: b
                         'divide-gray-200': config.theme.value === 'light',
                     })}
                 >
-                    <AutoSizer>
-                        {({ height, width }) => (
-                            <List
-                                rowCount={filteredContacts.length}
-                                rowRenderer={({ index, parent, style }) => {
-                                    const contact = filteredContacts[index];
-                                    if (!contact) return null;
-
-                                    return (
-                                        <ContactItem
-                                            key={contact.id}
-                                            index={index}
-                                            parent={parent}
-                                            cache={cache}
-                                            style={style}
-                                            contact={contact}
-                                        />
-                                    );
-                                }}
-                                scrollToIndex={0}
-                                width={width}
-                                height={height}
-                                deferredMeasurementCache={cache}
-                                rowHeight={cache.rowHeight}
-                                containerStyle={{ overflow: 'initial' }}
-                            />
-                        )}
-                    </AutoSizer>
+                    <List
+                        height={LIST_HEIGHT}
+                        width={LIST_WIDTH}
+                        itemSize={LIST_ITEM_HEIGHT}
+                        itemCount={filteredContacts.length}
+                        itemData={filteredContacts}
+                    >
+                        {ContactItem}
+                    </List>
                 </ul>
             </AppContent>
         </>
     );
 };
 
-const ContactItem: FunctionComponent<ContactItemProps> = ({ index, parent, cache, style, contact }) => {
+const ContactItem: FunctionComponent<ContactItemProps> = ({ index, style, data }) => {
     const config = useConfig();
 
     const navigate = useNavigate();
@@ -124,76 +104,77 @@ const ContactItem: FunctionComponent<ContactItemProps> = ({ index, parent, cache
         navigate(`/messages/new/${phoneNumber}`);
     };
 
+    const contact = data[index];
+    if (!contact) return null;
+
     return (
-        <CellMeasurer key={contact.id} cache={cache} parent={parent} columnCount={1} columnIndex={0} rowIndex={index}>
-            <Menu
-                as="li"
-                style={style}
-                className={cn('cursor-pointer', {
-                    'bg-ios-800': config.theme.value === 'dark',
-                    'bg-ios-50': config.theme.value === 'light',
-                })}
-            >
-                <Menu.Button className="w-full">
-                    <div
-                        className={cn('relative px-6 py-2 flex items-center space-x-3', {
-                            'hover:bg-ios-600': config.theme.value === 'dark',
-                            'hover:bg-gray-200': config.theme.value === 'light',
-                        })}
-                    >
-                        <div className="flex-shrink-0">
-                            <ContactPicture picture={contact.avatar} />
-                        </div>
-                        <div className="flex-1 min-w-0 cursor-pointer">
-                            <span className="absolute inset-0" aria-hidden="true" />
-                            <p
-                                className={cn('text-left text-sm font-medium truncate', {
-                                    'text-gray-100': config.theme.value === 'dark',
-                                    'text-gray-600': config.theme.value === 'light',
-                                })}
-                            >
-                                {contact.display}
-                            </p>
-                        </div>
-                    </div>
-                </Menu.Button>
-                <Transition
-                    enter="transition duration-100 ease-out"
-                    enterFrom="transform scale-95 opacity-0"
-                    enterTo="transform scale-100 opacity-100"
-                    leave="transition duration-75 ease-out"
-                    leaveFrom="transform scale-100 opacity-100"
-                    leaveTo="transform scale-95 opacity-0"
-                    className="absolute z-50 right-0 w-56"
+        <Menu
+            as="li"
+            style={style}
+            className={cn('cursor-pointer', {
+                'bg-ios-800': config.theme.value === 'dark',
+                'bg-ios-50': config.theme.value === 'light',
+            })}
+        >
+            <Menu.Button className="w-full">
+                <div
+                    className={cn('relative px-6 py-2 flex items-center space-x-3', {
+                        'hover:bg-ios-600': config.theme.value === 'dark',
+                        'hover:bg-gray-200': config.theme.value === 'light',
+                    })}
                 >
-                    <Menu.Items className="mt-2 origin-top-right bg-ios-800 bg-opacity-70 divide-y divide-gray-600 divide-opacity-50 rounded-md shadow-lg focus:outline-none">
-                        <Menu.Item>
-                            <Button
-                                className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
-                                onClick={() => startCall(contact.number)}
-                            >
-                                <PhoneIcon className="mx-3 h-5 w-5" /> Appeler
-                            </Button>
-                        </Menu.Item>
-                        <Menu.Item>
-                            <Button
-                                className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
-                                onClick={() => handleMessage(contact.number)}
-                            >
-                                <ChatIcon className="mx-3 h-5 w-5" /> Message
-                            </Button>
-                        </Menu.Item>
-                        <Menu.Item>
-                            <Button
-                                className="flex items-center w-full text-gray-300 px-2 py-2 hover:text-gray-500"
-                                onClick={() => openContactInfo(contact.id)}
-                            >
-                                <PencilAltIcon className="mx-3 h-5 w-5" /> Éditer
-                            </Button>
-                        </Menu.Item>
-                    </Menu.Items>
-                </Transition>
-            </Menu>
-        </CellMeasurer>
+                    <div className="flex-shrink-0">
+                        <ContactPicture picture={contact.avatar} />
+                    </div>
+                    <div className="flex-1 min-w-0 cursor-pointer">
+                        <span className="absolute inset-0" aria-hidden="true" />
+                        <p
+                            className={cn('text-left text-sm font-medium truncate', {
+                                'text-gray-100': config.theme.value === 'dark',
+                                'text-gray-600': config.theme.value === 'light',
+                            })}
+                        >
+                            {contact.display}
+                        </p>
+                    </div>
+                </div>
+            </Menu.Button>
+            <Transition
+                enter="transition duration-100 ease-out"
+                enterFrom="transform scale-95 opacity-0"
+                enterTo="transform scale-100 opacity-100"
+                leave="transition duration-75 ease-out"
+                leaveFrom="transform scale-100 opacity-100"
+                leaveTo="transform scale-95 opacity-0"
+                className="absolute z-50 right-0 w-56"
+            >
+                <Menu.Items className="mt-2 origin-top-right bg-ios-800 bg-opacity-70 divide-y divide-gray-600 divide-opacity-50 rounded-md shadow-lg focus:outline-none">
+                    <Menu.Item>
+                        <Button
+                            className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
+                            onClick={() => startCall(contact.number)}
+                        >
+                            <PhoneIcon className="mx-3 h-5 w-5" /> Appeler
+                        </Button>
+                    </Menu.Item>
+                    <Menu.Item>
+                        <Button
+                            className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
+                            onClick={() => handleMessage(contact.number)}
+                        >
+                            <ChatIcon className="mx-3 h-5 w-5" /> Message
+                        </Button>
+                    </Menu.Item>
+                    <Menu.Item>
+                        <Button
+                            className="flex items-center w-full text-gray-300 px-2 py-2 hover:text-gray-500"
+                            onClick={() => openContactInfo(contact.id)}
+                        >
+                            <PencilAltIcon className="mx-3 h-5 w-5" /> Éditer
+                        </Button>
+                    </Menu.Item>
+                </Menu.Items>
+            </Transition>
+        </Menu>
     );
 };
