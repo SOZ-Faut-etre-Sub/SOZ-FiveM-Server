@@ -10,6 +10,8 @@ import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
 import { JobService } from './job.service';
+import { Election2024CeremonyProvider } from '../story/election-2024/ceremony.provider';
+import { ParadeProvider } from '../story/parade.provider';
 
 @Provider()
 export class JobMenuProvider {
@@ -24,6 +26,12 @@ export class JobMenuProvider {
 
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
+
+    @Inject(Election2024CeremonyProvider)
+    private ceremonyProvider: Election2024CeremonyProvider;
+
+    @Inject(ParadeProvider)
+    private paradeProvider: ParadeProvider;
 
     @OnNuiEvent(NuiEvent.PlayerMenuJobGradeCreate)
     public async onPlayerMenuJobGradeCreate() {
@@ -131,6 +139,14 @@ export class JobMenuProvider {
         const job = this.jobService.getJob(player.job.id);
 
         if (!job) {
+            return;
+        }
+
+        if (this.ceremonyProvider.isRunning) {
+            return;
+        }
+
+        if (this.paradeProvider.isRunning) {
             return;
         }
 
