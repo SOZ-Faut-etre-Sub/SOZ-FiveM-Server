@@ -159,16 +159,6 @@ export class Election2024CeremonyProvider {
             await this.setCamera(location.camera, location.center);
         }
 
-        if (locationName === 'senat') {
-            this.cameraService.setCameraActive(this.camera, false);
-
-            SetGameplayCamRelativeHeading(180);
-            TaskTurnPedToFaceCoord(PlayerPedId(), location.center[0], location.center[1], location.center[2], 0);
-
-            await wait(1000);
-            SetGameplayCamRelativeHeading(0);
-        }
-
         if (location.music) {
             this.nuiDispatch.dispatch('election', location.music.name, location.music.volume);
         }
@@ -233,10 +223,6 @@ export class Election2024CeremonyProvider {
         setTimeout(async () => {
             DoScreenFadeOut(500);
             await wait(500);
-
-            if (locationName === 'senat') {
-                this.cameraService.setCameraActive(this.camera, true);
-            }
 
             for (const spotlight of location.spotlights) {
                 setTimeout(async () => {
