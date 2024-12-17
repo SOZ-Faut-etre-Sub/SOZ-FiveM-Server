@@ -222,7 +222,7 @@ export class AdminMenuSkinProvider {
                 const prop = elem.index as Prop;
                 ret.push({
                     field: index,
-                    dlc: collections[clothSet.Props[prop].Collection],
+                    dlc: collections[clothSet.Props[prop].Collection] ?? 0,
                     drawable: clothSet.Props[prop].Drawable,
                     texture: clothSet.Props[prop].Texture,
                 });
