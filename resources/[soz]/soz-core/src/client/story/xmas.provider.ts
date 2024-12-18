@@ -90,25 +90,6 @@ export class XmasProvider {
         }
     }
 
-    @Tick(TickInterval.EVERY_SECOND)
-    public async tick() {
-        if (!this.sceneState || !this.sceneStream) {
-            return;
-        }
-
-        const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
-        const distance = getDistance(position, SCENE_POSITION);
-
-        if (distance > TRIGGER_DISTANCE && this.loadedSceneObjects) {
-            this.loadedSceneObjects = null;
-        }
-
-        if (distance <= TRIGGER_DISTANCE && !this.loadedSceneObjects) {
-            this.loadSceneObjects();
-            this.applySceneState();
-        }
-    }
-
     private loadSceneObjects() {
         const spots = {};
 
