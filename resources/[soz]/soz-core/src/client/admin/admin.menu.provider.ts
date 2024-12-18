@@ -140,10 +140,10 @@ export class AdminMenuProvider {
                     },
                     meteor: meteorState,
                     halloween: halloweenState,
-                    ceremony: {
-                        disableNpc: meteorState.disableNpc,
-                    },
-                    xmasSceneState: this.xmasProvider.sceneState,
+                    // ceremony: {
+                    //     disableNpc: meteorState.disableNpc,
+                    // },
+                    // xmasSceneState: this.xmasProvider.sceneState,
                 },
             },
             { subMenuId }

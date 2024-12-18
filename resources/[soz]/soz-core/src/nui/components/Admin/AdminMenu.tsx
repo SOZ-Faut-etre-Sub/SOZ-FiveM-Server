@@ -1,7 +1,5 @@
-import { CeremonySubMenu } from '@public/nui/components/Admin/CeremonySubMenu';
 import { EventSubMenu } from '@public/nui/components/Admin/EventSubMenu';
 import { HalloweenSubMenu } from '@public/nui/components/Admin/HalloweenSubMenu';
-import { XmasSubMenu } from '@public/nui/components/Admin/XmasSubMenu';
 import { RootState } from '@public/nui/store';
 import { AdminMenuData } from '@public/shared/admin/admin';
 import { MenuType } from '@public/shared/nui/menu';
@@ -56,9 +54,9 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
                     <MenuItemSubMenuLink disabled={!isStaffOrAdmin} id="meteor">
                         ☄️ Météorite
                     </MenuItemSubMenuLink>
-                    <MenuItemSubMenuLink disabled={!isStaffOrAdmin} id="ceremony">
-                        🎉 Cérémonie
-                    </MenuItemSubMenuLink>
+                    {/*<MenuItemSubMenuLink disabled={!isStaffOrAdmin} id="ceremony">*/}
+                    {/*    🎉 Cérémonie*/}
+                    {/*</MenuItemSubMenuLink>*/}
                     <MenuItemSubMenuLink disabled={!isStaffOrAdminOrGM} id="event">
                         📅 Gestion des evenements HC
                     </MenuItemSubMenuLink>
@@ -67,9 +65,9 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
                             🎃 Halloween
                         </MenuItemSubMenuLink>
                     )}
-                    <MenuItemSubMenuLink disabled={!isStaffOrAdmin} id="christmas">
-                        🎄 Noël
-                    </MenuItemSubMenuLink>
+                    {/*<MenuItemSubMenuLink disabled={!isStaffOrAdmin} id="christmas">*/}
+                    {/*    🎄 Noël*/}
+                    {/*</MenuItemSubMenuLink>*/}
                     <MenuItemSubMenuLink id="developer">🛠 Outils pour développeur</MenuItemSubMenuLink>
                 </MenuContent>
             </MainMenu>
@@ -83,11 +81,11 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
             <EventSubMenu banner={data.banner} event={data.event} />
             <CharacterSubMenu banner={data.banner} characters={data.characters} />
             <MeteorSubMenu banner={data.banner} state={data.state.meteor} />
-            <CeremonySubMenu banner={data.banner} state={data.state.ceremony} />
+            {/*<CeremonySubMenu banner={data.banner} state={data.state.ceremony} />*/}
             {isHalloween && (
                 <HalloweenSubMenu banner={data.banner} permission={data.permission} state={data.state.halloween} />
             )}
-            <XmasSubMenu banner={data.banner} permission={data.permission} state={data.state.xmasSceneState} />
+            {/*<XmasSubMenu banner={data.banner} permission={data.permission} state={data.state.xmasSceneState} />*/}
         </Menu>
     );
 };
