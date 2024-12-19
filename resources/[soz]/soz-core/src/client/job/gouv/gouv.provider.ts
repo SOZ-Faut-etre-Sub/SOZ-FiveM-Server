@@ -151,6 +151,9 @@ export class GouvProvider {
 
     @OnNuiEvent(NuiEvent.GouvSetTax)
     public async setTax({ type }: { type: TaxType }) {
+        const player = this.playerService.getPlayer();
+        const isAdmin = ['admin', 'staff'].includes(player.role);
+
         const value = await this.inputService.askInput(
             {
                 title: 'Pourcentage de taxe',
@@ -160,8 +163,12 @@ export class GouvProvider {
             input => {
                 const inputNumber = Number(input);
 
-                if (isNaN(inputNumber) || inputNumber < 0 || inputNumber > 40) {
-                    return Err('Veuillez entrer un nombre entre 0 et 40');
+                if (isNaN(inputNumber) || inputNumber < 0) {
+                    return Err('Veuillez entrer un nombre entre 16 et 30');
+                }
+
+                if (!isAdmin && (inputNumber < 16 || inputNumber > 30)) {
+                    return Err('Veuillez entrer un nombre entre 16 et 30');
                 }
 
                 return Ok(inputNumber);

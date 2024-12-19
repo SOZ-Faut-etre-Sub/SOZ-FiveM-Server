@@ -1,3 +1,5 @@
+import { PermissionService } from '@public/server/permission.service';
+
 import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
@@ -25,6 +27,9 @@ export class GouvProvider {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(PermissionService)
+    private permissionService: PermissionService;
 
     @Inject(Notifier)
     private notifier: Notifier;
@@ -108,6 +113,11 @@ export class GouvProvider {
         const player = this.playerService.getPlayer(source);
 
         if (!player) {
+            return;
+        }
+
+        if ((value < 16 || 30 < value) && !this.permissionService.isStaff(source)) {
+            this.notifier.error(source, `La valeur de taxe est en ~r~dehors~s~ des normes présidentielles.`);
             return;
         }
 
