@@ -1299,6 +1299,7 @@ MaskResetFace = {
     [78] = true,
     [85] = true,
     [89] = true,
+    [99] = true,
     [102] = true,
     [104] = true,
     [106] = true,
