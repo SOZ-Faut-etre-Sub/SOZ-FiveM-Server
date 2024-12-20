@@ -113,4 +113,12 @@ export const MockTetrisLeaderboard: LeaderboardInterface[] = [
         score: 10000,
         game_played: 10,
     },
+    {
+        citizenid: '42',
+        avatar: 'https://soz.zerator.com/static/game/images/default/cat.webp',
+        player_name:
+            'I really like cats with long names, very long names, like really long names, like really really long names, like really really really long names, like really really really really long names, like really really really really really long names, like really really really really really really long names, like really really really really really really really long names, like really really really really really really really really long names, like really really really really really really really really really long names, like',
+        score: 10000,
+        game_played: 10000,
+    },
 ];
