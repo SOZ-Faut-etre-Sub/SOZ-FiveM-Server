@@ -1,4 +1,5 @@
 import { Transition } from '@headlessui/react';
+import { animated, useSpring } from '@react-spring/web';
 import classNames from 'classnames';
 import cn from 'classnames';
 import { FunctionComponent, useCallback, useEffect, useMemo, useState } from 'react';
@@ -359,30 +360,39 @@ export const Notifications: FunctionComponent = () => {
         [createNotification]
     );
 
+    const styles = useSpring({
+        from: {
+            top: 0,
+            bottom: '-100vh',
+        },
+        to: {
+            top: 0,
+            bottom: `calc(${100 - minimap.top * 100}vh + ${notificationOffset()})`,
+            left: `calc(100vw * ${minimap.left + 0.004})`,
+            width: `calc(100vw * ${minimap.width})`,
+        },
+    });
+
     return (
         <>
-            <div
+            <animated.div
                 className="absolute flex flex-col-reverse gap-4"
                 style={{
-                    top: `calc((100vh * ${minimap.top}) - calc((100vh * ${minimap.height}) * 4) - ${notificationOffset()})`,
-                    left: `calc(100vw * ${minimap.left + 0.004})`,
-                    height: `calc((100vh * ${minimap.height}) * 4)`,
-                    width: `calc(100vw * ${minimap.width})`,
+                    ...styles,
                     zIndex: 20,
                     pointerEvents: `none`,
                 }}
             >
-                {notifications.map(
-                    notification =>
-                        !isPoliceNotification(notification) && (
-                            <Notification
-                                key={notification.id}
-                                notification={notification}
-                                onDelete={() => deleteNotification(notification.id)}
-                            />
-                        )
-                )}
-            </div>
+                {notifications
+                    .filter(notification => !isPoliceNotification(notification))
+                    .map(notification => (
+                        <Notification
+                            key={notification.id}
+                            notification={notification}
+                            onDelete={() => deleteNotification(notification.id)}
+                        />
+                    ))}
+            </animated.div>
             <div
                 className="absolute flex flex-col-reverse gap-4"
                 style={{
