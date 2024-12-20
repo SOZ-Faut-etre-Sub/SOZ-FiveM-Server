@@ -16,6 +16,7 @@ import { Input } from './component/Input';
 import { Money } from './component/Money';
 import { Tabs } from './component/Tabs';
 import { Title } from './component/Title';
+import { autoFillAmount } from './utils/autoFill';
 
 type SafeAppInputs = {
     money: number;
@@ -203,9 +204,11 @@ export const SafeApp: FunctionComponent = () => {
                                         ? () =>
                                               setValue(
                                                   'markedMoney',
-                                                  player.money.marked_money > account?.maxCapacity
-                                                      ? account?.maxCapacity
-                                                      : player.money.marked_money ?? 0
+                                                  autoFillAmount(
+                                                      player.money.marked_money,
+                                                      account?.marked_money ?? 0,
+                                                      account?.maxCapacity ?? 0
+                                                  )
                                               )
                                         : undefined
                                 }
