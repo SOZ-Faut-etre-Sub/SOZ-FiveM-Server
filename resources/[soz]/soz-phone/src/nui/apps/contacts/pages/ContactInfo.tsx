@@ -1,7 +1,7 @@
 import { useQueryParams } from '@common/hooks/useQueryParams';
 import { Transition } from '@headlessui/react';
-import { ChevronLeftIcon, PlusIcon } from '@heroicons/react/outline';
-import { ChatIcon, PencilAltIcon, PhoneIcon, TrashIcon } from '@heroicons/react/solid';
+import { ChevronLeftIcon, PlusIcon, StarIcon as StarIconOutline } from '@heroicons/react/outline';
+import { ChatIcon, PencilAltIcon, PhoneIcon, StarIcon, TrashIcon } from '@heroicons/react/solid';
 import { useApp } from '@os/apps/hooks/useApps';
 import { useCall } from '@os/call/hooks/useCall';
 import LogDebugEvent from '@os/debug/LogDebugEvents';
@@ -44,7 +44,7 @@ const ContactsInfoPage: React.FC = () => {
     });
 
     const { getContact } = useContact();
-    const { updateContact, addNewContact, deleteContact } = useContactsAPI();
+    const { updateContact, addNewContact, deleteContact, addFavoriteContact, removeFavoriteContact } = useContactsAPI();
 
     const contact = getContact(parseInt(id));
 
@@ -109,7 +109,26 @@ const ContactsInfoPage: React.FC = () => {
             leaveTo="translate-x-full"
         >
             <AppWrapper>
-                <AppTitle app={contacts}>
+                <AppTitle
+                    app={contacts}
+                    action={
+                        <div
+                            className="flex items-center h-full cursor-pointer"
+                            onClick={() => {
+                                if (contact?.favorite) {
+                                    return removeFavoriteContact(contact?.id);
+                                }
+                                return addFavoriteContact(contact?.id);
+                            }}
+                        >
+                            {contact?.favorite ? (
+                                <StarIcon className="text-yellow-500 size-5" />
+                            ) : (
+                                <StarIconOutline className="text-yellow-500 size-5" />
+                            )}
+                        </div>
+                    }
+                >
                     <Button className="flex items-center text-base" onClick={() => navigate(-1)}>
                         <ChevronLeftIcon className="h-5 w-5" />
                         Fermer

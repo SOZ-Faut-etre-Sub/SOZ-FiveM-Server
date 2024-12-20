@@ -10,6 +10,7 @@ export interface PreDBContact {
     display: string;
     number: string;
     avatar?: string;
+    favorite?: boolean;
 }
 
 export interface Contact extends PreDBContact {
@@ -18,6 +19,11 @@ export interface Contact extends PreDBContact {
 
 export interface ContactDeleteDTO {
     id: number;
+}
+
+export interface ContactSetFavoriteDTO {
+    id: number;
+    favorite: boolean;
 }
 
 export enum ContactsDatabaseLimits {
@@ -33,6 +39,8 @@ export enum ContactEvents {
     UPDATE_CONTACT_SUCCESS = 'phone:contact:updateSuccess',
     DELETE_CONTACT = 'phone:contact:delete',
     DELETE_CONTACT_SUCCESS = 'phone:contact:deleteSuccess',
+    SET_FAVORITE_CONTACT = 'phone:contact:setFavorite',
+    SET_FAVORITE_CONTACT_SUCCESS = 'phone:contact:setFavoriteSuccess',
 }
 
 export interface AddContactExportData {

@@ -1,4 +1,10 @@
-import { Contact, ContactDeleteDTO, ContactEvents, PreDBContact } from '../../../typings/contact';
+import {
+    Contact,
+    ContactDeleteDTO,
+    ContactEvents,
+    ContactSetFavoriteDTO,
+    PreDBContact,
+} from '../../../typings/contact';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import PlayerService from '../players/player.service';
 import ContactsDB, { _ContactsDB } from './contacts.db';
@@ -31,6 +37,7 @@ class _ContactService {
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
         }
     }
+
     async handleDeleteContact(reqObj: PromiseRequest<ContactDeleteDTO>, resp: PromiseEventResp<void>): Promise<void> {
         const identifier = PlayerService.getIdentifier(reqObj.source);
         try {
@@ -44,6 +51,7 @@ class _ContactService {
             contactsLogger.error(`Error in handleDeleteContact (${identifier}), ${e.toString()}`);
         }
     }
+
     async handleAddContact(reqObj: PromiseRequest<PreDBContact>, resp: PromiseEventResp<Contact>): Promise<void> {
         const identifier = PlayerService.getIdentifier(reqObj.source);
         try {
@@ -67,6 +75,23 @@ class _ContactService {
         } catch (e) {
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
             contactsLogger.error(`Error in handleFetchContact (${identifier}), ${e.toString()}`);
+        }
+    }
+
+    async handleSetFavoriteContact(
+        reqObj: PromiseRequest<ContactSetFavoriteDTO>,
+        resp: PromiseEventResp<void>
+    ): Promise<void> {
+        const identifier = PlayerService.getIdentifier(reqObj.source);
+        try {
+            await this.contactsDB.setFavoriteContact(reqObj.data.id, reqObj.data.favorite, identifier);
+
+            emitNet(ContactEvents.SET_FAVORITE_CONTACT_SUCCESS, reqObj.source, reqObj.data);
+
+            resp({ status: 'ok' });
+        } catch (e) {
+            resp({ status: 'error', errorMsg: 'DB_ERROR' });
+            contactsLogger.error(`Error in handleSetFavoriteContact (${identifier}), ${e.toString()}`);
         }
     }
 }

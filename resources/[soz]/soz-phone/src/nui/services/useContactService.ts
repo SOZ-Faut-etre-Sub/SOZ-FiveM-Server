@@ -12,4 +12,5 @@ export const useContactService = () => {
     useNuiEvent('CONTACTS', ContactEvents.ADD_CONTACT_SUCCESS, store.dispatch.simCard.appendContact);
     useNuiEvent('CONTACTS', ContactEvents.UPDATE_CONTACT_SUCCESS, store.dispatch.simCard.updateContact);
     useNuiEvent('CONTACTS', ContactEvents.DELETE_CONTACT_SUCCESS, store.dispatch.simCard.deleteContact);
+    useNuiEvent('CONTACTS', ContactEvents.SET_FAVORITE_CONTACT_SUCCESS, store.dispatch.simCard.setContactFavorite);
 };

@@ -33,10 +33,21 @@ export const useContact = () => {
 
     const getFilteredContacts = useCallback(
         search => {
-            return contacts.filter(
-                contact =>
-                    contact?.display?.toLowerCase().includes(search.toLowerCase()) || contact.number.includes(search)
-            );
+            return contacts
+                .filter(
+                    contact =>
+                        contact?.display?.toLowerCase().includes(search.toLowerCase()) ||
+                        contact.number.includes(search)
+                )
+                .sort((a, b) => {
+                    if (a.favorite && !b.favorite) {
+                        return -1;
+                    } else if (!a.favorite && b.favorite) {
+                        return 1;
+                    } else {
+                        return a.display.localeCompare(b.display);
+                    }
+                });
         },
         [contacts]
     );

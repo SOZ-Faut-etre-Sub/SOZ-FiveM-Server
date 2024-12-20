@@ -1,6 +1,6 @@
 import { Menu, Transition } from '@headlessui/react';
 import { PlusIcon } from '@heroicons/react/outline';
-import { ChatIcon, PencilAltIcon, PhoneIcon } from '@heroicons/react/solid';
+import { ChatIcon, PencilAltIcon, PhoneIcon, StarIcon } from '@heroicons/react/solid';
 import { useApp } from '@os/apps/hooks/useApps';
 import { useCall } from '@os/call/hooks/useCall';
 import { AppContent } from '@ui/components/AppContent';
@@ -17,6 +17,7 @@ import { useConfig } from '../../../hooks/usePhone';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { ContactPicture } from '../../../ui/components/ContactPicture';
 import { SearchField } from '../../../ui/components/SearchField';
+import { useContactsAPI } from '../hooks/useContactsAPI';
 
 const LIST_HEIGHT = 693;
 const LIST_WIDTH = 380;
@@ -31,9 +32,7 @@ export const ContactList: FunctionComponent<{ skipTitle?: boolean; isEmbeded?: b
 
     const { getFilteredContacts } = useContact();
     const [searchValue, setSearchValue] = useState<string>('');
-    const filteredContacts = useMemo(() => {
-        return getFilteredContacts(searchValue).sort((a, b) => a.display.localeCompare(b.display));
-    }, [getFilteredContacts, searchValue]);
+    const filteredContacts = useMemo(() => getFilteredContacts(searchValue), [getFilteredContacts, searchValue]);
 
     const [t] = useTranslation();
     const navigate = useNavigate();
@@ -92,6 +91,8 @@ const ContactItem: FunctionComponent<ContactItemProps> = ({ index, style, data }
     const navigate = useNavigate();
     const { initializeCall } = useCall();
 
+    const { addFavoriteContact, removeFavoriteContact } = useContactsAPI();
+
     const openContactInfo = (contactId: number) => {
         navigate(`/contacts/${contactId}`);
     };
@@ -123,8 +124,11 @@ const ContactItem: FunctionComponent<ContactItemProps> = ({ index, style, data }
                         'hover:bg-gray-200': config.theme.value === 'light',
                     })}
                 >
-                    <div className="flex-shrink-0">
+                    <div className="relative flex-shrink-0">
                         <ContactPicture picture={contact.avatar} />
+                        {contact.favorite && (
+                            <StarIcon className="absolute right-0 top-0 size-4 text-yellow-500 translate-x-1/4" />
+                        )}
                     </div>
                     <div className="flex-1 min-w-0 cursor-pointer">
                         <span className="absolute inset-0" aria-hidden="true" />
@@ -165,9 +169,28 @@ const ContactItem: FunctionComponent<ContactItemProps> = ({ index, style, data }
                             <ChatIcon className="mx-3 h-5 w-5" /> Message
                         </Button>
                     </Menu.Item>
+                    {contact.favorite ? (
+                        <Menu.Item>
+                            <Button
+                                className="flex items-center w-full text-yellow-300 px-2 py-2 hover:text-yellow-400"
+                                onClick={() => removeFavoriteContact(contact.id)}
+                            >
+                                <StarIcon className="mx-3 h-5 w-5" /> Retirer des favoris
+                            </Button>
+                        </Menu.Item>
+                    ) : (
+                        <Menu.Item>
+                            <Button
+                                className="flex items-center w-full text-yellow-300 px-2 py-2 hover:text-yellow-400"
+                                onClick={() => addFavoriteContact(contact.id)}
+                            >
+                                <StarIcon className="mx-3 h-5 w-5" /> Ajouter au favoris
+                            </Button>
+                        </Menu.Item>
+                    )}
                     <Menu.Item>
                         <Button
-                            className="flex items-center w-full text-gray-300 px-2 py-2 hover:text-gray-500"
+                            className="flex items-center w-full text-gray-300 px-2 py-2 hover:text-gray-400"
                             onClick={() => openContactInfo(contact.id)}
                         >
                             <PencilAltIcon className="mx-3 h-5 w-5" /> Éditer

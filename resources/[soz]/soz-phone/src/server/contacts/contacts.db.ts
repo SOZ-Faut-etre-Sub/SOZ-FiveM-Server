@@ -37,6 +37,14 @@ export class _ContactsDB {
             identifier,
         ]);
     }
+
+    async setFavoriteContact(contactId: number, favorite: boolean, identifier: string): Promise<void> {
+        await exports.oxmysql.update_async('UPDATE phone_contacts SET favorite = ? WHERE id = ? AND identifier = ?', [
+            favorite,
+            contactId,
+            identifier,
+        ]);
+    }
 }
 
 const ContactsDB = new _ContactsDB();

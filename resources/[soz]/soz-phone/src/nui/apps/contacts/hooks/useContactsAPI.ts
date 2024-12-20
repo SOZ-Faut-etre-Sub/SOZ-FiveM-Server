@@ -82,5 +82,43 @@ export const useContactsAPI = () => {
         [addAlert, navigate, t]
     );
 
-    return { addNewContact, updateContact, deleteContact };
+    const addFavoriteContact = useCallback(
+        id => {
+            fetchNui<ServerPromiseResp>(ContactEvents.SET_FAVORITE_CONTACT, { id, favorite: true }).then(resp => {
+                if (resp.status !== 'ok') {
+                    return addAlert({
+                        message: t('CONTACTS.FEEDBACK.ADD_FAVORITE_FAILED'),
+                        type: 'error',
+                    });
+                }
+
+                addAlert({
+                    message: t('CONTACTS.FEEDBACK.ADD_FAVORITE_SUCCESS'),
+                    type: 'success',
+                });
+            });
+        },
+        [addAlert, t]
+    );
+
+    const removeFavoriteContact = useCallback(
+        id => {
+            fetchNui<ServerPromiseResp>(ContactEvents.SET_FAVORITE_CONTACT, { id, favorite: false }).then(resp => {
+                if (resp.status !== 'ok') {
+                    return addAlert({
+                        message: t('CONTACTS.FEEDBACK.DELETE_FAVORITE_FAILED'),
+                        type: 'error',
+                    });
+                }
+
+                addAlert({
+                    message: t('CONTACTS.FEEDBACK.DELETE_FAVORITE_SUCCESS'),
+                    type: 'success',
+                });
+            });
+        },
+        [addAlert, t]
+    );
+
+    return { addNewContact, updateContact, deleteContact, addFavoriteContact, removeFavoriteContact };
 };

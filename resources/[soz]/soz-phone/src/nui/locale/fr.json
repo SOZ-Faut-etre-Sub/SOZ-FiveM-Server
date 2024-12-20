@@ -94,7 +94,11 @@
                 "UPDATE_FAILED": "Erreur lors de la mise à jour du contact!",
                 "UPDATE_SUCCESS": "Contact mis à jour avec succès!",
                 "DELETE_FAILED": "Erreur lors de la suppression du contact!",
-                "DELETE_SUCCESS": "Contact supprimé avec succès!"
+                "DELETE_SUCCESS": "Contact supprimé avec succès!",
+                "ADD_FAVORITE_FAILED": "Impossible d'ajouter le contact aux favoris!",
+                "ADD_FAVORITE_SUCCESS": "Contact ajouté aux favoris!",
+                "DELETE_FAVORITE_FAILED": "Impossible de supprimer le contact des favoris!",
+                "DELETE_FAVORITE_SUCCESS": "Contact supprimé des favoris!"
             },
             "PLACEHOLDER_SEARCH_CONTACTS": "Rechercher un contact...",
             "FORM_NAME": "Nom",
