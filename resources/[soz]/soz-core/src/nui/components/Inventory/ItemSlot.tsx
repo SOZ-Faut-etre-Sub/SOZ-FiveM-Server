@@ -273,7 +273,7 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
                                 )}
                                 {inventoryItem && inventoryItem instanceof Object && (
                                     <div
-                                        className="absolute text-gray-200 text-[0.78rem]"
+                                        className="absolute text-gray-200 text-[0.78rem] drop-shadow-border"
                                         style={{
                                             bottom: 0,
                                             right: 0,
