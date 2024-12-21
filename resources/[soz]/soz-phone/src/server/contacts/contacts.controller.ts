@@ -1,4 +1,10 @@
-import { Contact, ContactDeleteDTO, ContactEvents, PreDBContact } from '../../../typings/contact';
+import {
+    Contact,
+    ContactDeleteDTO,
+    ContactEvents,
+    ContactSetFavoriteDTO,
+    PreDBContact,
+} from '../../../typings/contact';
 import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
 import ContactService from './contacts.service';
 import { contactsLogger } from './contacts.utils';
@@ -27,6 +33,13 @@ onNetPromise<Contact, void>(ContactEvents.UPDATE_CONTACT, (reqObj, resp) => {
 onNetPromise<ContactDeleteDTO, void>(ContactEvents.DELETE_CONTACT, (reqObj, resp) => {
     ContactService.handleDeleteContact(reqObj, resp).catch(e => {
         contactsLogger.error(`Error occured in delete contact event (${reqObj.source}), Error:  ${e.message}`);
+        resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
+    });
+});
+
+onNetPromise<ContactSetFavoriteDTO, void>(ContactEvents.SET_FAVORITE_CONTACT, (reqObj, resp) => {
+    ContactService.handleSetFavoriteContact(reqObj, resp).catch(e => {
+        contactsLogger.error(`Error occured in set contact favorite event (${reqObj.source}), Error:  ${e.message}`);
         resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
     });
 });

@@ -62,6 +62,14 @@ export const simCard = createModel<RootModel>()({
         DELETE_CONTACT(state, payload: number) {
             return { ...state, contacts: state.contacts.filter(contact => contact.id !== payload) };
         },
+        SET_CONTACT_FAVORITE(state, payload: Contact) {
+            return {
+                ...state,
+                contacts: state.contacts.map(contact =>
+                    contact.id === payload.id ? { ...contact, favorite: payload.favorite } : contact
+                ),
+            };
+        },
         SET_CONVERSATIONS(state, payload: MessageConversation[]) {
             return { ...state, conversations: payload };
         },
@@ -148,6 +156,9 @@ export const simCard = createModel<RootModel>()({
         },
         async deleteContact(payload: number) {
             dispatch.simCard.DELETE_CONTACT(payload);
+        },
+        async setContactFavorite(payload: Contact) {
+            dispatch.simCard.SET_CONTACT_FAVORITE(payload);
         },
         async setConversations(payload: MessageConversation[]) {
             dispatch.simCard.SET_CONVERSATIONS(payload);

@@ -68,4 +68,28 @@ export const BrowserContactsState: Contact[] = [
         display: 'Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
         number: '555-2882',
     },
+    {
+        id: 14,
+        display: 'ZZ',
+        number: '555-5555',
+        favorite: true,
+    },
+    {
+        id: 15,
+        display: 'DD',
+        number: '555-6666',
+        favorite: true,
+    },
+    {
+        id: 15,
+        display: 'LL',
+        number: '555-6667',
+        favorite: true,
+    },
+    {
+        id: 15,
+        display: 'AA',
+        number: '555-6669',
+        favorite: true,
+    },
 ];

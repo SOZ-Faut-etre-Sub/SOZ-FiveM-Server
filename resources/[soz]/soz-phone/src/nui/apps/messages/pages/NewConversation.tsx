@@ -1,4 +1,5 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
+import { StarIcon } from '@heroicons/react/solid';
 import { AppContent } from '@ui/components/AppContent';
 import { AppTitle } from '@ui/components/AppTitle';
 import { Button } from '@ui/old_components/Button';
@@ -27,9 +28,7 @@ export const NewConversation = () => {
 
     const { getFilteredContacts } = useContact();
     const [searchValue, setSearchValue] = useState<string>('');
-    const filteredContacts = useMemo(() => {
-        return getFilteredContacts(searchValue).sort((a, b) => a.display.localeCompare(b.display));
-    }, [getFilteredContacts, searchValue]);
+    const filteredContacts = useMemo(() => getFilteredContacts(searchValue), [getFilteredContacts, searchValue]);
     const { addConversation } = useMessageAPI();
 
     useEffect(() => {
@@ -102,8 +101,11 @@ const ContactItem: FunctionComponent<ContactItemProps> = ({ index, style, data }
                     'hover:bg-gray-200': config.theme.value === 'light',
                 })}
             >
-                <div className="flex-shrink-0">
+                <div className="relative flex-shrink-0">
                     <ContactPicture picture={contact.avatar} />
+                    {contact.favorite && (
+                        <StarIcon className="absolute right-0 top-0 size-4 text-yellow-500 translate-x-1/4" />
+                    )}
                 </div>
                 <div className="flex-1 min-w-0 cursor-pointer truncate">
                     <span className="absolute inset-0" aria-hidden="true" />

@@ -288,6 +288,7 @@ model phone_contacts {
     identifier String? @db.VarChar(48)
     number     String? @db.VarChar(8)
     display    String  @default("") @db.VarChar(255)
+    favorite   Boolean @default(false)
 
     @@index([identifier], map: "identifier")
     @@index([number], map: "number")
