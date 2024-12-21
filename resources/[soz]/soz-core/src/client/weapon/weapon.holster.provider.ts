@@ -19,6 +19,7 @@ const excludeWeapon = [
     966099553 /*WEAPON_OBJECT*/,
 ];
 const switchblade = GetHashKey('weapon_switchblade');
+const unarmed = GetHashKey('WEAPON_UNARMED');
 
 const AllowedJob = [JobType.FBI, JobType.BCSO, JobType.LSPD, JobType.SASP, JobType.LSCS];
 
@@ -41,13 +42,7 @@ export class WeaponHolsterProvider {
     private playerService: PlayerService;
 
     private inAnimation = false;
-    private currWeapon = GetHashKey('WEAPON_UNARMED');
-
-    @On('weapons:ResetHolster')
-    public resetHolster() {
-        this.inAnimation = false;
-        this.currWeapon = GetHashKey('WEAPON_UNARMED');
-    }
+    private currWeapon = unarmed;
 
     private isFastAllowed(player: PlayerData, ped: number) {
         if (AllowedJob.includes(player.job.id) && player.cloth_config.JobClothSet) {
@@ -83,30 +78,21 @@ export class WeaponHolsterProvider {
             (GetPedParachuteState(ped) == -1 || GetPedParachuteState(ped) == 0)
         ) {
             const newWeap = GetSelectedPedWeapon(ped);
-            if (
-                this.currWeapon != newWeap &&
-                !excludeWeapon.includes(newWeap) &&
-                !excludeWeapon.includes(this.currWeapon)
-            ) {
+            if (this.currWeapon != newWeap) {
                 this.inAnimation = true;
                 SetCurrentPedWeapon(ped, this.currWeapon, true);
 
-                if (this.currWeapon != GetHashKey('WEAPON_UNARMED')) {
-                    if (this.isWeaponHolsterable(this.currWeapon) && this.isFastAllowed(player, ped)) {
-                        await this.putWeaponInHolster();
-                    } else if (this.currWeapon === switchblade) {
-                        await this.putWeaponSwitchblade();
-                    } else {
-                        await this.putWeaponBehind();
-                    }
-                    SetCurrentPedWeapon(ped, GetHashKey('WEAPON_UNARMED'), true);
-                }
+                await this.storeWeapon(player, ped);
 
-                if (newWeap != GetHashKey('WEAPON_UNARMED')) {
-                    if (this.isWeaponHolsterable(newWeap) && this.isFastAllowed(player, ped)) {
+                if (newWeap != unarmed) {
+                    ClearPedTasks(ped);
+                    if (newWeap === switchblade) {
+                        SetCurrentPedWeapon(ped, switchblade, false);
+                        await wait(800);
+                    } else if (excludeWeapon.includes(newWeap)) {
+                        SetCurrentPedWeapon(ped, newWeap, false);
+                    } else if (this.isWeaponHolsterable(newWeap) && this.isFastAllowed(player, ped)) {
                         await this.drawWeaponFromHolster(ped, newWeap);
-                    } else if (newWeap === switchblade) {
-                        await this.drawWeaponSwitchblade(ped, newWeap);
                     } else {
                         await this.drawWeaponFromBehind(ped, newWeap);
                     }
@@ -118,6 +104,28 @@ export class WeaponHolsterProvider {
             this.currWeapon = newWeap;
         } else {
             await wait(250);
+        }
+    }
+
+    public async storeWeapon(player: PlayerData, ped: number) {
+        const inAnimation = this.inAnimation;
+        this.inAnimation = true;
+
+        if (this.currWeapon != unarmed) {
+            if (this.currWeapon === switchblade) {
+                SetCurrentPedWeapon(ped, unarmed, false);
+                await wait(1300);
+            } else if (this.isWeaponHolsterable(this.currWeapon) && this.isFastAllowed(player, ped)) {
+                await this.putWeaponInHolster();
+            } else if (!excludeWeapon.includes(this.currWeapon)) {
+                await this.putWeaponBehind();
+            }
+            SetCurrentPedWeapon(ped, unarmed, true);
+            this.currWeapon = unarmed;
+        }
+
+        if (!inAnimation) {
+            this.inAnimation = false;
         }
     }
 
@@ -214,41 +222,6 @@ export class WeaponHolsterProvider {
             },
         });
         await wait(1400);
-    }
-
-    private async drawWeaponSwitchblade(ped: number, newWeap: number) {
-        SetCurrentPedWeapon(ped, newWeap, true);
-        this.animationService.playAnimation({
-            base: {
-                dictionary: 'modifiedholster@switchblade',
-                name: 'unholster',
-                blendInSpeed: 8.0,
-                blendOutSpeed: 3.0,
-                options: {
-                    onlyUpperBody: true,
-                    freezeLastFrame: true,
-                    enablePlayerControl: true,
-                },
-            },
-        });
-        await wait(800);
-    }
-
-    private async putWeaponSwitchblade() {
-        this.animationService.playAnimation({
-            base: {
-                dictionary: 'modifiedholster@switchblade',
-                name: 'holster',
-                blendInSpeed: 8.0,
-                blendOutSpeed: 3.0,
-                options: {
-                    onlyUpperBody: true,
-                    freezeLastFrame: true,
-                    enablePlayerControl: true,
-                },
-            },
-        });
-        await wait(1300);
     }
 
     public isInAnimation() {

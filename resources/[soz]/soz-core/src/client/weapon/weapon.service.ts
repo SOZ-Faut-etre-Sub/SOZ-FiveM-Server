@@ -4,6 +4,8 @@ import { InventoryItem } from '@public/shared/inventory';
 import { VehicleSeat } from '@public/shared/vehicle/vehicle';
 
 import { GlobalWeaponConfig, WeaponConfig, WeaponName, Weapons } from '../../shared/weapons/weapon';
+import { PlayerService } from '../player/player.service';
+import { WeaponHolsterProvider } from './weapon.holster.provider';
 
 const MONEY_CASE_HASH = GetHashKey('WEAPON_BRIEFCASE');
 
@@ -46,6 +48,12 @@ export class WeaponService {
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
 
+    @Inject(PlayerService)
+    private playerService: PlayerService;
+
+    @Inject(WeaponHolsterProvider)
+    private weaponHolsterProvider: WeaponHolsterProvider;
+
     getWeaponFromSlot(slot: number): InventoryItem | null {
         return this.inventoryManager.getItemAtSlot(slot);
     }
@@ -86,20 +94,23 @@ export class WeaponService {
     }
 
     async clear() {
-        const player = PlayerPedId();
+        const ped = PlayerPedId();
+
+        await this.weaponHolsterProvider.storeWeapon(this.playerService.getPlayer(), ped);
+
         if (this.currentWeapon) {
             const currhash = GetHashKey(this.currentWeapon.name);
             if (currhash !== GetHashKey(WeaponName.UNARMED)) {
-                RemoveWeaponFromPed(player, currhash);
+                RemoveWeaponFromPed(ped, currhash);
             }
         }
         this.currentWeapon = null;
 
-        const [, hash] = GetCurrentPedWeapon(player, false);
+        const [, hash] = GetCurrentPedWeapon(ped, false);
 
         if (hash !== GetHashKey(WeaponName.UNARMED) && hash !== MONEY_CASE_HASH) {
-            SetCurrentPedWeapon(player, GetHashKey(WeaponName.UNARMED), true);
-            RemoveWeaponFromPed(player, hash);
+            SetCurrentPedWeapon(ped, GetHashKey(WeaponName.UNARMED), true);
+            RemoveWeaponFromPed(ped, hash);
         }
     }
 
