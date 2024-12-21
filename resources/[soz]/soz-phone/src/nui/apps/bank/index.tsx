@@ -2,6 +2,7 @@ import { Transition } from '@headlessui/react';
 import { CreditCardIcon, DocumentTextIcon, SwitchVerticalIcon } from '@heroicons/react/solid';
 import { AppContent } from '@ui/components/AppContent';
 import { AppTitle } from '@ui/components/AppTitle';
+import cn from 'classnames';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Route, Routes, useLocation } from 'react-router-dom';
@@ -34,7 +35,12 @@ export const BankApp = memo(() => {
                 <AppWrapper>
                     {pathname !== '/bank' && <AppTitle title={t('APPS_BANK')} isBigHeader />}
 
-                    <AppContent scrollable={false} className="pb-20">
+                    <AppContent
+                        scrollable={false}
+                        className={cn('pb-20', {
+                            'h-[805px]': pathname === '/bank',
+                        })}
+                    >
                         <Routes>
                             <Route index element={<BankHome />} />
                             <Route path="/history" element={<HistoryList />} />
