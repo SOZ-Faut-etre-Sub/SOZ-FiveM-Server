@@ -56,7 +56,9 @@ export const simCard = createModel<RootModel>()({
         UPDATE_CONTACT(state, payload: Contact) {
             return {
                 ...state,
-                contacts: state.contacts.map(contact => (contact.id === payload.id ? payload : contact)),
+                contacts: state.contacts.map(contact =>
+                    contact.id === payload.id ? { ...contact, ...payload } : contact
+                ),
             };
         },
         DELETE_CONTACT(state, payload: number) {
