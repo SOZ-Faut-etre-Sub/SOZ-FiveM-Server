@@ -20,7 +20,7 @@ export const DarkWebApp = () => {
                 leaveFrom="scale-100 opacity-100"
                 leaveTo="scale-[0.0] opacity-0"
             >
-                <AppWrapper>
+                <AppWrapper className="h-[775px] w-full">
                     <Routes>
                         <Route index element={<DarkWebIntro />} />
                         <Route path="/conversations/" element={<DarkWebList />} />
