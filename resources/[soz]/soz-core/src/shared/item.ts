@@ -149,7 +149,7 @@ export type FishItem = BaseItem & {
     type: 'fish';
     fishing_area: Array<string>;
     fishing_weather: Array<string>;
-    fish_generation: 'classic' | 'halloween' | 'christmas' | 'dlc_fish_1' | 'summer' | 'vampire';
+    fish_generation: 'classic' | 'halloween' | 'christmas' | 'dlc_fish_1' | 'summer' | 'vampire' | 'winter';
     fishing_period: Array<string>;
     min_weight: number;
     max_weight: number;
