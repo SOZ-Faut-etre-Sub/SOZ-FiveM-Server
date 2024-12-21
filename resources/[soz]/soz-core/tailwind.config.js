@@ -142,6 +142,7 @@ module.exports = {
             },
             dropShadow: {
                 bg: '0 0 2px rgba(7, 7, 7, 0.7)',
+                border: '0 0 1px rgba(0, 0, 0, 1)',
             },
             colors: {
                 // Generated from https://uicolors.app
