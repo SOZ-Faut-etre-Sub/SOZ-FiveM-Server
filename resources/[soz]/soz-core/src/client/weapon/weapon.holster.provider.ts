@@ -1,4 +1,3 @@
-import { On } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { wait } from '@core/utils';
@@ -11,12 +10,12 @@ import { AnimationService } from '../animation/animation.service';
 import { PlayerService } from '../player/player.service';
 
 const holsterableWeaponGroups = [GetHashKey('GROUP_PISTOL'), GetHashKey('GROUP_STUNGUN')];
+const objectWeapons = [0, GetHashKey('WEAPON_BRIEFCASE'), 966099553 /*WEAPON_OBJECT*/];
 const excludeWeapon = [
     0,
     GetHashKey('WEAPON_BRIEFCASE'),
     GetHashKey('WEAPON_UVFLASHLIGHT'),
     GetHashKey('WEAPON_GADGETPISTOL'),
-    966099553 /*WEAPON_OBJECT*/,
 ];
 const switchblade = GetHashKey('weapon_switchblade');
 const unarmed = GetHashKey('WEAPON_UNARMED');
@@ -78,7 +77,11 @@ export class WeaponHolsterProvider {
             (GetPedParachuteState(ped) == -1 || GetPedParachuteState(ped) == 0)
         ) {
             const newWeap = GetSelectedPedWeapon(ped);
-            if (this.currWeapon != newWeap) {
+            if (
+                this.currWeapon != newWeap &&
+                !objectWeapons.includes(newWeap) &&
+                !objectWeapons.includes(this.currWeapon)
+            ) {
                 this.inAnimation = true;
                 SetCurrentPedWeapon(ped, this.currWeapon, true);
 
@@ -108,21 +111,23 @@ export class WeaponHolsterProvider {
     }
 
     public async storeWeapon(player: PlayerData, ped: number) {
+        if (this.currWeapon == unarmed || objectWeapons.includes(this.currWeapon)) {
+            return;
+        }
+
         const inAnimation = this.inAnimation;
         this.inAnimation = true;
 
-        if (this.currWeapon != unarmed) {
-            if (this.currWeapon === switchblade) {
-                SetCurrentPedWeapon(ped, unarmed, false);
-                await wait(1300);
-            } else if (this.isWeaponHolsterable(this.currWeapon) && this.isFastAllowed(player, ped)) {
-                await this.putWeaponInHolster();
-            } else if (!excludeWeapon.includes(this.currWeapon)) {
-                await this.putWeaponBehind();
-            }
-            SetCurrentPedWeapon(ped, unarmed, true);
-            this.currWeapon = unarmed;
+        if (this.currWeapon === switchblade) {
+            SetCurrentPedWeapon(ped, unarmed, false);
+            await wait(1300);
+        } else if (this.isWeaponHolsterable(this.currWeapon) && this.isFastAllowed(player, ped)) {
+            await this.putWeaponInHolster();
+        } else if (!excludeWeapon.includes(this.currWeapon)) {
+            await this.putWeaponBehind();
         }
+        SetCurrentPedWeapon(ped, unarmed, true);
+        this.currWeapon = unarmed;
 
         if (!inAnimation) {
             this.inAnimation = false;
