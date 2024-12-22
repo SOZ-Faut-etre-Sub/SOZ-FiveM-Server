@@ -9,7 +9,7 @@ import cn from 'classnames';
 import React, { FunctionComponent, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { FixedSizeList as List } from 'react-window';
+import { VariableSizeList as List } from 'react-window';
 
 import { ContactItemProps } from '../../../../../typings/app/contact';
 import { useContact } from '../../../hooks/useContact';
@@ -19,9 +19,10 @@ import { ContactPicture } from '../../../ui/components/ContactPicture';
 import { SearchField } from '../../../ui/components/SearchField';
 import { useContactsAPI } from '../hooks/useContactsAPI';
 
-const LIST_HEIGHT = 693;
-const LIST_WIDTH = 380;
-const LIST_ITEM_HEIGHT = 63;
+export const LIST_HEIGHT = 693;
+export const LIST_WIDTH = 380;
+export const LIST_ITEM_HEIGHT = 63;
+export const LIST_ITEM_SEPARATOR_HEIGHT = 40;
 
 export const ContactList: FunctionComponent<{ skipTitle?: boolean; isEmbeded?: boolean }> = ({
     skipTitle = false,
@@ -73,7 +74,9 @@ export const ContactList: FunctionComponent<{ skipTitle?: boolean; isEmbeded?: b
                     <List
                         height={LIST_HEIGHT}
                         width={LIST_WIDTH}
-                        itemSize={LIST_ITEM_HEIGHT}
+                        itemSize={(index: number) =>
+                            'separator' in filteredContacts[index] ? LIST_ITEM_SEPARATOR_HEIGHT : LIST_ITEM_HEIGHT
+                        }
                         itemCount={filteredContacts.length}
                         itemData={filteredContacts}
                     >
@@ -107,6 +110,20 @@ const ContactItem: FunctionComponent<ContactItemProps> = ({ index, style, data }
 
     const contact = data[index];
     if (!contact) return null;
+
+    if ('separator' in contact) {
+        return (
+            <div
+                style={style}
+                className={cn('px-6 py-2 text-sm font-medium', {
+                    'bg-ios-800 text-gray-400': config.theme.value === 'dark',
+                    'bg-ios-50 text-gray-600': config.theme.value === 'light',
+                })}
+            >
+                <h3 className="uppercase">{contact.display}</h3>
+            </div>
+        );
+    }
 
     return (
         <Menu

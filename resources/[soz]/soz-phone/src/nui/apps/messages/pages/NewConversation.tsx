@@ -7,18 +7,20 @@ import cn from 'classnames';
 import React, { FunctionComponent, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
-import { FixedSizeList as List } from 'react-window';
+import { VariableSizeList as List } from 'react-window';
 
 import { ContactItemProps } from '../../../../../typings/app/contact';
 import { useContact } from '../../../hooks/useContact';
 import { useConfig } from '../../../hooks/usePhone';
 import { ContactPicture } from '../../../ui/components/ContactPicture';
 import { SearchField } from '../../../ui/old_components/SearchField';
+import {
+    LIST_HEIGHT,
+    LIST_ITEM_HEIGHT,
+    LIST_ITEM_SEPARATOR_HEIGHT,
+    LIST_WIDTH,
+} from '../../contacts/pages/ContactList';
 import { useMessageAPI } from '../hooks/useMessageAPI';
-
-const LIST_HEIGHT = 693;
-const LIST_WIDTH = 380;
-const LIST_ITEM_HEIGHT = 63;
 
 export const NewConversation = () => {
     const [t] = useTranslation();
@@ -67,7 +69,9 @@ export const NewConversation = () => {
                     <List
                         height={LIST_HEIGHT}
                         width={LIST_WIDTH}
-                        itemSize={LIST_ITEM_HEIGHT}
+                        itemSize={(index: number) =>
+                            'separator' in filteredContacts[index] ? LIST_ITEM_SEPARATOR_HEIGHT : LIST_ITEM_HEIGHT
+                        }
                         itemCount={filteredContacts.length}
                         itemData={filteredContacts}
                     >
@@ -85,6 +89,20 @@ const ContactItem: FunctionComponent<ContactItemProps> = ({ index, style, data }
 
     const contact = data[index];
     if (!contact) return null;
+
+    if ('separator' in contact) {
+        return (
+            <div
+                style={style}
+                className={cn('px-6 py-2 text-sm font-medium', {
+                    'bg-ios-800 text-gray-400': config.theme.value === 'dark',
+                    'bg-ios-50 text-gray-600': config.theme.value === 'light',
+                })}
+            >
+                <h3 className="uppercase">{contact.display}</h3>
+            </div>
+        );
+    }
 
     return (
         <li
