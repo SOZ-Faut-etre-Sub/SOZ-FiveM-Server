@@ -6,8 +6,7 @@ import { AppTitle } from '@ui/components/AppTitle';
 import { AppWrapper } from '@ui/components/AppWrapper';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
-import { memo, useEffect, useMemo, useState } from 'react';
-import React from 'react';
+import React, { memo, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useDarkweb } from '../../../hooks/app/useDarkweb';
@@ -113,7 +112,7 @@ export const DarkWebConversation = memo(() => {
                             <ChevronLeftIcon className="h-5 w-5" /> <p>Retour</p>
                         </div>
                     </AppTitle>
-                    <AppContent className="pb-0 px-0">
+                    <AppContent scrollable={false} className="pb-0 px-0">
                         <div style={{ flex: 1, display: 'flex', overflowY: 'auto' }}>
                             <div
                                 style={{
