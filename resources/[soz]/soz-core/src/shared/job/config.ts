@@ -35,9 +35,9 @@ const CompanyPanelPermissions: Partial<Record<JobPermission, JobPermissionData>>
     [JobPermission.ReadDocumentation]: { label: 'Lecture de la documentation sur le panel entreprise' },
     [JobPermission.WriteDocumentation]: { label: 'Edition de la documentation sur le panel entreprise' },
     [JobPermission.ManageDocumentation]: { label: 'Gestion de la documentation sur le panel entreprise' },
-    [JobPermission.AssignCertification]: { label: 'Assigner des formations sur le panel' },
-    [JobPermission.ManageCertification]: { label: 'Gérer les formations sur le panel' },
-    [JobPermission.ManageRoster]: { label: 'Gérer les photos dans les effectifs panel' },
+    [JobPermission.AssignCertification]: { label: 'Assigner des formations sur le panel entreprise' },
+    [JobPermission.ManageCertification]: { label: 'Gérer les formations sur le panel entreprise' },
+    [JobPermission.ManageRoster]: { label: 'Gérer les photos dans les effectifs panel entreprise' },
 };
 
 const PolicePermissions: Partial<Record<JobPermission, JobPermissionData>> = {
