@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 
+import { Contact, ContactSeparator } from '../../../typings/contact';
 import { RootState } from '../store';
 
 export const useContact = () => {
@@ -31,9 +32,12 @@ export const useContact = () => {
         [contacts]
     );
 
-    const getFilteredContacts = useCallback(
+    const getFilteredContacts: (search: string) => (Contact | ContactSeparator)[] = useCallback(
         search => {
-            return contacts
+            let lastLetter = '';
+            const contactList: (Contact | ContactSeparator)[] = [];
+
+            contacts
                 .filter(
                     contact =>
                         contact?.display?.toLowerCase().includes(search.toLowerCase()) ||
@@ -47,7 +51,30 @@ export const useContact = () => {
                     } else {
                         return a.display.localeCompare(b.display);
                     }
+                })
+                .forEach(contact => {
+                    const letter = (contact.display ? contact.display[0] : '#').toUpperCase();
+                    const isFavorite = contact.favorite;
+
+                    if (isFavorite && lastLetter !== '★') {
+                        contactList.push({
+                            separator: true,
+                            display: 'Favoris',
+                        });
+                        lastLetter = '★';
+                    }
+
+                    if (!isFavorite && letter !== lastLetter) {
+                        contactList.push({
+                            separator: true,
+                            display: letter,
+                        });
+                        lastLetter = letter;
+                    }
+                    contactList.push(contact);
                 });
+
+            return contactList;
         },
         [contacts]
     );

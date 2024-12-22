@@ -13,6 +13,12 @@ export interface PreDBContact {
     favorite?: boolean;
 }
 
+export interface ContactSeparator {
+    id?: number;
+    display: string;
+    separator: true;
+}
+
 export interface Contact extends PreDBContact {
     id: number;
 }
