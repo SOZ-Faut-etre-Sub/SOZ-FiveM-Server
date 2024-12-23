@@ -1,12 +1,25 @@
 import { Transition } from '@headlessui/react';
+import { PhoneEvents } from '@typings/phone';
 import { FullPageWithHeader } from '@ui/layout/FullPageWithHeader';
-import React from 'react';
+import { fetchNui } from '@utils/fetchNui';
+import React, { useEffect } from 'react';
 
 import { AppWrapper } from '../../ui/components/AppWrapper';
 import { useBackground } from '../../ui/hooks/useBackground';
 
 export const ZutomApp: React.FC = () => {
     const backgroundClass = useBackground();
+
+    useEffect(() => {
+        fetchNui(PhoneEvents.TOGGLE_KEYS, {
+            keepGameFocus: false,
+        });
+        return () => {
+            fetchNui(PhoneEvents.TOGGLE_KEYS, {
+                keepGameFocus: true,
+            });
+        };
+    });
 
     return (
         <FullPageWithHeader className={backgroundClass}>
