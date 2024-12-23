@@ -140,6 +140,7 @@ export class WeaponProvider {
     async onUseWeapon(weapon: InventoryItem | null) {
         if (weapon.name.toLowerCase() === this.weapon.getCurrentWeapon()?.name.toLowerCase()) {
             await this.weapon.clear();
+            await this.weaponDrawingProvider.onUseWeapon(weapon);
             return;
         }
 
@@ -153,6 +154,7 @@ export class WeaponProvider {
         }
 
         await this.weapon.set(weapon);
+        await this.weaponDrawingProvider.onUseWeapon(weapon);
     }
 
     @OnEvent(ClientEvent.WEAPON_USE_AMMO)

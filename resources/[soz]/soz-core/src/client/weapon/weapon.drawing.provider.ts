@@ -1,7 +1,6 @@
 import { On, Once, OnceStep, OnEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
-import { wait } from '@core/utils';
 import { PlayerInventoryUpdate } from '@public/core/decorators/player';
 import { InventoryItem } from '@public/shared/inventory';
 
@@ -137,13 +136,10 @@ export class WeaponDrawingProvider {
         }
     }
 
-    @OnEvent(ClientEvent.WEAPON_USE_WEAPON)
-    async onUseWeapon(usedWeapon: InventoryItem | null) {
+    public async onUseWeapon(usedWeapon: InventoryItem | null) {
         if (!this.shouldDrawWeapon) {
             return;
         }
-
-        await wait(500);
 
         Object.values(this.weaponAttached).forEach(weapon => {
             SetEntityVisible(weapon, true, false);
