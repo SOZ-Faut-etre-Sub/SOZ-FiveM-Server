@@ -2,13 +2,14 @@ import { Provider } from '@core/decorators/provider';
 import { GangProvider } from '@private/server/gang/gang.provider';
 import { Inject } from '@public/core/decorators/injectable';
 import { Rpc } from '@public/core/decorators/rpc';
-import { CraftCategory, Crafts, CraftsList } from '@public/shared/craft/craft';
+import { CraftCategory, CraftRecipe, Crafts, CraftsList } from '@public/shared/craft/craft';
 import { toVector3Object, Vector3 } from '@public/shared/polyzone/vector';
 import { getRandomKeyWeighted } from '@public/shared/random';
 import { RpcServerEvent } from '@public/shared/rpc';
 
 import { ADD_ERROR_MESSAGE, InventoryItemMetadata } from '../../shared/inventory';
 import { FeatureProvider } from '../feature/feature.provider';
+import { Inventory } from '../inventory/inventory';
 import { InventoryFactory } from '../inventory/inventory.factory';
 import { ItemService } from '../item/item.service';
 import { Monitor } from '../monitor/monitor';
@@ -89,24 +90,7 @@ export class CraftProvider {
         };
     }
 
-    @Rpc(RpcServerEvent.CRAFT_DO_RECIPES)
-    public async doCraft(source: number, itemId: string, type: string, category: string): Promise<CraftsList> {
-        const crafts = await this.getCrafts(source, type);
-        const recipe = crafts[category].recipes[itemId];
-        const item = this.itemService.getItem(itemId);
-        const player = this.playerService.getPlayer(source);
-
-        if (!player) {
-            return;
-        }
-
-        if (!recipe) {
-            this.notifier.error(source, `Aucune recette associée pour créer "${item.label}".`);
-            return await this.getTransformRecipes(source, type, true);
-        }
-
-        const inventory = await this.inventoryFactory.getPlayerInventory(source);
-
+    private async checkCraft(source: number, inventory: Inventory, itemId: string, recipe: CraftRecipe) {
         if (
             !inventory.canSwapItems(
                 Object.entries(recipe.inputs).map(([name, input]) => {
@@ -126,7 +110,7 @@ export class CraftProvider {
             )
         ) {
             this.notifier.notify(source, ADD_ERROR_MESSAGE['not_enough_space'], 'error');
-            return await this.getTransformRecipes(source, type, true);
+            return false;
         }
 
         for (const requiredItemId of Object.keys(recipe.inputs)) {
@@ -134,14 +118,40 @@ export class CraftProvider {
 
             if (!inventory.hasEnoughItem(requiredItemId, input.count, true, input.metadata)) {
                 const requiredItem = this.itemService.getItem(requiredItemId);
+                const item = this.itemService.getItem(itemId);
 
                 this.notifier.error(
                     source,
                     `Vous n'avez pas assez de ${requiredItem.label} pour créer "${item.label}".`
                 );
 
-                return await this.getTransformRecipes(source, type, true);
+                return false;
             }
+        }
+
+        return true;
+    }
+
+    @Rpc(RpcServerEvent.CRAFT_DO_RECIPES)
+    public async doCraft(source: number, itemId: string, type: string, category: string): Promise<CraftsList> {
+        const crafts = await this.getCrafts(source, type);
+        const recipe = crafts[category].recipes[itemId];
+        const item = this.itemService.getItem(itemId);
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        if (!recipe) {
+            this.notifier.error(source, `Aucune recette associée pour créer "${item.label}".`);
+            return await this.getTransformRecipes(source, type, true);
+        }
+
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (!(await this.checkCraft(source, inventory, itemId, recipe))) {
+            return await this.getTransformRecipes(source, type, true);
         }
 
         const { completed } = await this.progressService.progress(
@@ -160,6 +170,10 @@ export class CraftProvider {
         );
 
         if (!completed) {
+            return await this.getTransformRecipes(source, type, true);
+        }
+
+        if (!(await this.checkCraft(source, inventory, itemId, recipe))) {
             return await this.getTransformRecipes(source, type, true);
         }
 
