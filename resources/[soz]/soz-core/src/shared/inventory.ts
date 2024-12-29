@@ -852,7 +852,11 @@ export const VEHICLE_CONFIGURATION_BY_VEHICLE_MODEL: Record<number, Partial<Inve
     [joaat('speeder2')]: { maxWeight: 80000 },
 
     // FDF
-    [joaat('benson')]: { maxWeight: 400000, notAllowedItemTypes: ['weapon', 'weapon_ammo'] },
+    [joaat('benson')]: {
+        maxWeight: 400000,
+        allowedItems: ['potato_seed', 'tomato_seed', 'corn_seed', 'cabage_seed', 'pumpkin_seed', 'lunchbox'],
+        allowedItemTypes: ['food', 'drink'],
+    },
     [joaat('tractor2')]: { maxWeight: 20000 },
     [joaat('graintrailer')]: { maxWeight: 100000 },
 
