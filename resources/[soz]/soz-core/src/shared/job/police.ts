@@ -1,5 +1,4 @@
 import { Component, OutfitItem, Prop, WardrobeConfig } from '../cloth';
-import { joaat } from '../joaat';
 import { JobType } from '../job';
 import { PlayerLicenceType, PlayerPedHash } from '../player';
 import { Vector4 } from '../polyzone/vector';
@@ -463,7 +462,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
         [PlayerPedHash.Male]: {
             [DUTY_OUTFIT_NAME]: {
                 Components: {
-                    [Component.Torso]: { Drawable: 22, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 1, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 2, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -481,10 +480,11 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 Props: {
                     [Prop.Hat]: { Drawable: 6, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
+                GlovesID: 56000,
             },
             [SASP_DARK]: {
                 Components: {
-                    [Component.Torso]: { Drawable: 22, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 8, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 2, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -502,12 +502,13 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 Props: {
                     [Prop.Hat]: { Drawable: 7, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
+                GlovesID: 56000,
             },
         },
         [PlayerPedHash.Female]: {
             [DUTY_OUTFIT_NAME]: {
                 Components: {
-                    [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 1, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 2, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
@@ -525,10 +526,11 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 Props: {
                     [Prop.Hat]: { Drawable: 6, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
+                GlovesID: 55000,
             },
             [SASP_DARK]: {
                 Components: {
-                    [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 8, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 2, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
@@ -546,6 +548,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 Props: {
                     [Prop.Hat]: { Drawable: 7, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
+                GlovesID: 55000,
             },
         },
     },
