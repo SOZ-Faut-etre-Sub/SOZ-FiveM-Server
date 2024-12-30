@@ -72,6 +72,11 @@ export class WeaponService {
         }
 
         const player = PlayerPedId();
+
+        if (this.currentWeapon != null) {
+            await this.clear();
+        }
+
         const weaponHash = GetHashKey(weapon.name);
         const ammo = weapon.metadata.ammo >= 0 ? weapon.metadata.ammo : 0;
 
