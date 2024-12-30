@@ -1,13 +1,13 @@
 import { useNuiEvent } from '@libs/nui/hooks/useNuiEvent';
 import { useSoundProvider } from '@os/sound/hooks/useSoundProvider';
 import { getSoundSettings } from '@os/sound/utils/getSoundSettings';
-import { fetchNui } from '@utils/fetchNui';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
 import { SocietyEvents, SocietyMessage } from '../../../../typings/society';
 import { useMessageNotifications } from '../../apps/society-messages/hooks/useMessageNotifications';
+import { fetchNui } from '../../common/utils/fetchNui';
 import { useConfig, useVisibility } from '../../hooks/usePhone';
 import { usePhoneSocietyNumber } from '../../hooks/useSimCard';
 import { RootState, store } from '../../store';

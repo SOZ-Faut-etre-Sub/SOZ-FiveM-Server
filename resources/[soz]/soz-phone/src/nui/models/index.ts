@@ -4,6 +4,7 @@ import { api } from './api';
 import { appBank } from './app/bank';
 import { appBankContacts } from './app/bank_contacts';
 import { appBankStatements } from './app/bank_statements';
+import { appCommon } from './app/common';
 import { appDarkweb } from './app/darkweb';
 import { appInvoices } from './app/invoices';
 import { appNotes } from './app/notes';
@@ -34,6 +35,7 @@ export interface RootModel extends Models<RootModel> {
     photo: typeof photo;
     emergency: typeof emergency;
 
+    appCommon: typeof appCommon;
     // Apps models
     appBank: typeof appBank;
     appBankStatements: typeof appBankStatements;
@@ -57,6 +59,7 @@ export const models: RootModel = {
     simCard,
     avatar,
     photo,
+    appCommon,
     appBank,
     appBankStatements,
     appBankContacts,

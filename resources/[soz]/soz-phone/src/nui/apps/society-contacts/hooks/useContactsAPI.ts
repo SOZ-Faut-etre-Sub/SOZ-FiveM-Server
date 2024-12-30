@@ -1,9 +1,10 @@
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { ServerPromiseResp } from '@typings/common';
 import { PreDBSociety, Society, SocietyEvents } from '@typings/society';
-import { fetchNui } from '@utils/fetchNui';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+
+import { fetchNui } from '../../../common/utils/fetchNui';
 
 export const useContactsAPI = () => {
     const { addAlert } = useSnackbar();

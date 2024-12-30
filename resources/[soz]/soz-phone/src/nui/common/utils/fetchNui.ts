@@ -5,7 +5,7 @@
  *
  * @return returnData - A promise for the data sent back by the NuiCallbacks CB argument
  */
-import LogDebugEvent from '../os/debug/LogDebugEvents';
+import LogDebugEvent from '../../os/debug/LogDebugEvents';
 import { isEnvBrowser } from './misc';
 
 export async function fetchNui<T = any>(eventName: string, data?: any, mockResp?: T): Promise<T> {

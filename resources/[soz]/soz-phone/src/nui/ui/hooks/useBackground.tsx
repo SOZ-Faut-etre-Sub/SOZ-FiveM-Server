@@ -1,16 +1,17 @@
 import { useLocation } from 'react-router-dom';
 
-import { useConfig } from '../../hooks/usePhone';
+import { useDarkModeEnabled } from '../../hooks/usePhone';
 
 export const useBackground = (): string => {
-    const config = useConfig();
+    const darkModeEnabled = useDarkModeEnabled();
     const { pathname } = useLocation();
 
     if (pathname.includes('/camera')) {
         return 'bg-black';
     }
-    if (pathname !== '/') {
-        return config.theme.value === 'dark' ? 'bg-ios-800' : 'bg-ios-50';
+
+    if (pathname === '/') {
+        return '';
     }
-    return '';
+    return darkModeEnabled ? 'bg-ios-800' : 'bg-ios-50';
 };

@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { debounce } from '../utils/debounce';
+import { debounce } from '../common/utils/debounce';
 
 export const useKeyboardService = () => {
     const navigate = useNavigate();

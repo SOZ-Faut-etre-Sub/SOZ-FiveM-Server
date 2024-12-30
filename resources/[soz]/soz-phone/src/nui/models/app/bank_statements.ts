@@ -3,8 +3,8 @@ import { createModel } from '@rematch/core';
 import { BankStatementItem, BankStatementsEvents } from '../../../../typings/app/bank_statements';
 import { ServerPromiseResp } from '../../../../typings/common';
 import { BrowserHistoryData } from '../../apps/bank/utils/constants';
-import { fetchNui } from '../../utils/fetchNui';
-import { buildRespObj } from '../../utils/misc';
+import { fetchNui } from '../../common/utils/fetchNui';
+import { buildRespObj } from '../../common/utils/misc';
 import { RootModel } from '..';
 
 export const appBankStatements = createModel<RootModel>()({

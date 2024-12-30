@@ -7,15 +7,12 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import { useNotes } from '../../hooks/app/useNotes';
 import { useConfig } from '../../hooks/usePhone';
+import { AppContainer } from '../../ui/components/AppContainer';
 import { AppContent } from '../../ui/components/AppContent';
-import { useBackground } from '../../ui/hooks/useBackground';
-import { FullPage } from '../../ui/layout/FullPage';
 import { NoteForm } from './pages/NoteForm';
 import NoteList from './pages/NoteList';
 
 export const NotesApp: React.FC = () => {
-    const backgroundClass = useBackground();
-
     const { getNotes } = useNotes();
     const notes = getNotes();
 
@@ -28,24 +25,13 @@ export const NotesApp: React.FC = () => {
     };
 
     return (
-        <FullPage className={backgroundClass}>
-            <Transition
-                appear={true}
-                show={true}
-                enter="transition-all origin-[35%_10%] duration-300"
-                enterFrom="scale-[0.0] opacity-0"
-                enterTo="scale-100 opacity-100"
-                leave="transition-all origin-[35%_10%] duration-300"
-                leaveFrom="scale-100 opacity-100"
-                leaveTo="scale-[0.0] opacity-0"
-            >
-                <AppWrapper>
-                    <Routes>
-                        <Route index element={<NoteList />} />
-                        <Route path=":id" element={<NoteForm />} />
-                    </Routes>
-                </AppWrapper>
-            </Transition>
+        <AppContainer>
+            <AppWrapper>
+                <Routes>
+                    <Route index element={<NoteList />} />
+                    <Route path=":id" element={<NoteForm />} />
+                </Routes>
+            </AppWrapper>
             <AppContent className="flex flex-col justify-between" scrollable={false}>
                 <Transition
                     appear={true}
@@ -73,6 +59,6 @@ export const NotesApp: React.FC = () => {
                     </div>
                 </Transition>
             </AppContent>
-        </FullPage>
+        </AppContainer>
     );
 };

@@ -3,8 +3,8 @@ import { createModel } from '@rematch/core';
 import { SnakeEvents } from '../../../../typings/app/snake';
 import { LeaderboardInterface, ServerPromiseResp } from '../../../../typings/common';
 import { MockTetrisLeaderboard } from '../../apps/game-tetris/utils/constants';
-import { fetchNui } from '../../utils/fetchNui';
-import { buildRespObj } from '../../utils/misc';
+import { fetchNui } from '../../common/utils/fetchNui';
+import { buildRespObj } from '../../common/utils/misc';
 import { RootModel } from '..';
 
 export const appSnakeLeaderboard = createModel<RootModel>()({

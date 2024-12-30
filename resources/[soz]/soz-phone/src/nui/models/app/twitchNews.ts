@@ -3,8 +3,8 @@ import { createModel } from '@rematch/core';
 import { ServerPromiseResp } from '../../../../typings/common';
 import { TwitchNewsEvents, TwitchNewsMessage } from '../../../../typings/twitch-news';
 import { MockTwitchNewsMessages } from '../../apps/twitch-news/utils/constants';
-import { fetchNui } from '../../utils/fetchNui';
-import { buildRespObj } from '../../utils/misc';
+import { fetchNui } from '../../common/utils/fetchNui';
+import { buildRespObj } from '../../common/utils/misc';
 import { RootModel } from '..';
 
 export const appTwitchNews = createModel<RootModel>()({

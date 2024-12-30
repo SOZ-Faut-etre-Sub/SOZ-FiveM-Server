@@ -1,13 +1,13 @@
-import cn from 'classnames';
+import clsx from 'clsx';
 import React, { FunctionComponent } from 'react';
 
 export const AppContent: FunctionComponent<any> = ({ children, className, scrollable = true }) => {
     return (
         <div
-            className={cn(
-                'h-[755px] w-full px-2',
+            className={clsx(
+                'flex flex-col grow w-full px-4',
                 {
-                    'overflow-y-auto pb-16': scrollable,
+                    'overflow-y-auto': scrollable,
                 },
                 className
             )}

@@ -3,8 +3,8 @@ import { BankEvents, IBankCredentials } from '@typings/app/bank';
 
 import { ServerPromiseResp } from '../../../../typings/common';
 import { MockBankAccountData } from '../../apps/bank/utils/constants';
-import { fetchNui } from '../../utils/fetchNui';
-import { buildRespObj } from '../../utils/misc';
+import { fetchNui } from '../../common/utils/fetchNui';
+import { buildRespObj } from '../../common/utils/misc';
 import { RootModel } from '..';
 
 export const appBank = createModel<RootModel>()({

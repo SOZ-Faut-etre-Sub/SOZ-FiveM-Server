@@ -2,12 +2,12 @@ import { SnakeEvents } from '@typings/app/snake';
 import { AppContent } from '@ui/components/AppContent';
 import { LeaderBoardIcon } from '@ui/components/games/LeaderBoardIcon';
 import { ActionButton } from '@ui/old_components/ActionButton';
-import { fetchNui } from '@utils/fetchNui';
 import cn from 'classnames';
 import { FunctionComponent, memo, useEffect, useMemo, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import { fetchNui } from '../../../common/utils/fetchNui';
 import { useCitizenID, useVisibility } from '../../../hooks/usePhone';
 import { RootState } from '../../../store';
 import { store } from '../../../store';

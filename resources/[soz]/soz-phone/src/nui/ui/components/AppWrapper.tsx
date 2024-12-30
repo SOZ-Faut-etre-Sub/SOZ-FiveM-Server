@@ -1,5 +1,19 @@
-import React, { FunctionComponent } from 'react';
+import clsx from 'clsx';
+import React, { FunctionComponent, PropsWithChildren } from 'react';
 
-export const AppWrapper: FunctionComponent<any> = ({ children, className }) => {
-    return <div className={className}>{children}</div>;
+interface AppWrapperProps extends PropsWithChildren {
+    className?: string;
+}
+
+export const AppWrapper: FunctionComponent<AppWrapperProps> = ({ children, className }) => {
+    return (
+        <div
+            className={clsx(
+                'grow overflow-y-auto scrollbar scrollbar-w-[5px] scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full',
+                className
+            )}
+        >
+            {children}
+        </div>
+    );
 };

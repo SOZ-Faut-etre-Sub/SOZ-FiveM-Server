@@ -4,11 +4,11 @@ import { LocationMarkerIcon } from '@heroicons/react/solid';
 import { ServerPromiseResp } from '@typings/common';
 import { Message, MessageEvents } from '@typings/messages';
 import { PictureReveal } from '@ui/old_components/PictureReveal';
-import { fetchNui } from '@utils/fetchNui';
 import cn from 'classnames';
 import { format } from 'date-fns';
 import React from 'react';
 
+import { fetchNui } from '../../../../common/utils/fetchNui';
 import { useConfig } from '../../../../hooks/usePhone';
 import { usePhoneNumber } from '../../../../hooks/useSimCard';
 import { setClipboard } from '../../../../os/phone/hooks/useClipboard';

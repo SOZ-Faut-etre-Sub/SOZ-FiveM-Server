@@ -3,8 +3,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 
 export const useEmergency = () => {
-    const state = useSelector((state: RootState) => state.emergency);
-    return state.emergency;
+    return useSelector((state: RootState) => state.emergency.emergency);
 };
 
 export const useEmergencyStart = () => {

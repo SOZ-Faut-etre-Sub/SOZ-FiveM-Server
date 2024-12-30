@@ -9,8 +9,8 @@ import { Link } from 'react-router-dom';
 import { useConfig, useDarkweb } from '../../hooks/usePhone';
 import { usePhoneSocietyNumber } from '../../hooks/useSimCard';
 import { useNotifications } from '../../os/notifications/hooks/useNotifications';
+import { AppContainer } from '../../ui/components/AppContainer';
 import { Grid } from '../../ui/components/Grid';
-import { FullPageWithHeader } from '../../ui/layout/FullPageWithHeader';
 import { AppIcon } from './components/AppIcon';
 
 export const HomeApp: FunctionComponent = () => {
@@ -30,16 +30,17 @@ export const HomeApp: FunctionComponent = () => {
     const homeApps = apps.filter(app => app.home === true);
 
     return (
-        <FullPageWithHeader>
+        <AppContainer>
             <Transition
                 appear={true}
                 show={true}
                 enter="transition-transform duration-500"
                 enterFrom="scale-[3.0]"
                 enterTo="scale-100"
+                className="flex grow"
             >
                 <AppContent scrollable={false}>
-                    <Grid styleRules={{ margin: '1rem 0 3rem 0' }}>
+                    <Grid className="grow">
                         {filteredApps.map(app => (
                             <Link key={app.id} to={app.path}>
                                 <AppIcon
@@ -50,25 +51,23 @@ export const HomeApp: FunctionComponent = () => {
                             </Link>
                         ))}
                     </Grid>
+
+                    {/* Dock */}
                     <Grid
                         rows={1}
-                        className={cn('bg-opacity-25 rounded-[20px] p-1.5', {
+                        className={cn('bg-opacity-35 rounded-[42px] h-[98px] mb-4 items-center', {
                             'bg-ios-800': config.theme.value === 'dark',
                             'bg-ios-50': config.theme.value === 'light',
                         })}
                     >
                         {homeApps.map(app => (
                             <Link key={app.id} to={app.path}>
-                                <AppIcon
-                                    title={t(app.nameLocale)}
-                                    icon={app.icon}
-                                    badge={countAppNotification(app.id)}
-                                />
+                                <AppIcon icon={app.icon} badge={countAppNotification(app.id)} />
                             </Link>
                         ))}
                     </Grid>
                 </AppContent>
             </Transition>
-        </FullPageWithHeader>
+        </AppContainer>
     );
 };

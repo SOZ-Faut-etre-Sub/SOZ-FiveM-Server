@@ -3,8 +3,8 @@ import { createModel } from '@rematch/core';
 import { ServerPromiseResp } from '../../../typings/common';
 import { GalleryPhoto, PhotoEvents } from '../../../typings/photo';
 import { MockPhotoData } from '../apps/photo/utils/constants';
-import { fetchNui } from '../utils/fetchNui';
-import { buildRespObj } from '../utils/misc';
+import { fetchNui } from '../common/utils/fetchNui';
+import { buildRespObj } from '../common/utils/misc';
 import { RootModel } from '.';
 
 export const photo = createModel<RootModel>()({

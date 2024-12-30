@@ -1,7 +1,7 @@
 import { createModel } from '@rematch/core';
 
 import { ApiConfig, ApiEvents } from '../../../typings/api';
-import { fetchNui } from '../utils/fetchNui';
+import { fetchNui } from '../common/utils/fetchNui';
 import { RootModel } from '.';
 
 export const api = createModel<RootModel>()({

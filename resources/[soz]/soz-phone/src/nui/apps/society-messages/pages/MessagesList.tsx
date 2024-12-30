@@ -8,13 +8,13 @@ import { ServerPromiseResp } from '@typings/common';
 import { MessageEvents } from '@typings/messages';
 import { SocietyEvents, SocietyMessage } from '@typings/society';
 import { Button } from '@ui/old_components/Button';
-import { fetchNui } from '@utils/fetchNui';
 import cn from 'classnames';
 import React, { CSSProperties, FunctionComponent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AutoSizer, CellMeasurer, CellMeasurerCache, List } from 'react-virtualized';
 import { MeasuredCellParent } from 'react-virtualized/dist/es/CellMeasurer';
 
+import { fetchNui } from '../../../common/utils/fetchNui';
 import { useSociety } from '../../../hooks/app/useSociety';
 import { useConfig } from '../../../hooks/usePhone';
 import { usePhoneSocietyNumber } from '../../../hooks/useSimCard';

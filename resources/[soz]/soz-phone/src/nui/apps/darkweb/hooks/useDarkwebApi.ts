@@ -10,12 +10,12 @@ import {
     PreDBDarkwebMessage,
 } from '@typings/app/darkweb';
 import { ServerPromiseResp } from '@typings/common';
-import { fetchNui } from '@utils/fetchNui';
-import { buildRespObj } from '@utils/misc';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
+import { fetchNui } from '../../../common/utils/fetchNui';
+import { buildRespObj } from '../../../common/utils/misc';
 import { store } from '../../../store';
 import { MockDarkwebConversations, MockDarkwebMessages } from '../utils/constants';
 

@@ -1,15 +1,18 @@
 import { ServerPromiseResp } from '@typings/common';
 import { PhotoEvents } from '@typings/photo';
-import { fetchNui } from '@utils/fetchNui';
 import cn from 'classnames';
 import React, { memo, PropsWithChildren, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
 import { isDefaultWallpaper } from './apps/settings/utils/isDefaultWallpaper';
+import { fetchNui } from './common/utils/fetchNui';
 import { useConfig, useVisibility } from './hooks/usePhone';
 import { useCall } from './os/call/hooks/useCall';
 import { RootState } from './store';
+
+const PHONE_WIDTH = 490;
+const PHONE_HEIGHT = 1000;
 
 const PhoneWrapper: React.FC<PropsWithChildren> = memo(({ children }) => {
     const available = useSelector((state: RootState) => state.phone.available);
@@ -55,10 +58,13 @@ const PhoneWrapper: React.FC<PropsWithChildren> = memo(({ children }) => {
         >
             <div
                 className={cn(
-                    `fixed ${rightOffset()} bottom-0 w-[500px] h-[1000px] bg-cover origin-bottom-right transition-any ease-in-out duration-300`,
-                    wrapperClass
+                    `fixed bottom-[100px] right-[50px] bg-cover origin-bottom-right transition-any ease-in-out duration-300`,
+                    wrapperClass,
+                    rightOffset()
                 )}
                 style={{
+                    width: PHONE_WIDTH,
+                    height: PHONE_HEIGHT,
                     zoom: `${settings.zoom.value}%`,
                 }}
             >
@@ -70,11 +76,15 @@ const PhoneWrapper: React.FC<PropsWithChildren> = memo(({ children }) => {
 });
 
 export const PhoneFrame = memo(() => {
+    const settings = useConfig();
+
     return (
         <div
-            className="absolute z-50 w-[500px] h-[1000px] pointer-events-none"
+            className="absolute z-50 pointer-events-none"
             style={{
-                backgroundImage: `url(media/frames/default.png)`,
+                width: PHONE_WIDTH,
+                height: PHONE_HEIGHT,
+                backgroundImage: `url(media/frames/${settings.frame.value})`,
             }}
         />
     );
@@ -85,7 +95,7 @@ export const PhoneScreen = memo(({ children }: { children: React.ReactNode }) =>
 
     return (
         <div
-            className="overflow-hidden absolute bottom-[100px] left-[50px] right-[50px] top-[35px] flex flex-col rounded-[40px] bg-cover bg-center"
+            className="overflow-hidden absolute inset-[24px] flex flex-col rounded-[40px] bg-cover bg-center"
             style={{
                 backgroundColor: '#545454',
                 backgroundImage: !isDefaultWallpaper(settings.wallpaper.value)

@@ -7,7 +7,6 @@ import { AppContent } from '@ui/components/AppContent';
 import { AppTitle } from '@ui/components/AppTitle';
 import { AppWrapper } from '@ui/components/AppWrapper';
 import { FullPageWithHeader } from '@ui/layout/FullPageWithHeader';
-import { fetchNui } from '@utils/fetchNui';
 import cn from 'classnames';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
@@ -15,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useSociety } from '../../../nui/hooks/app/useSociety';
 import { useConfig } from '../../../nui/hooks/usePhone';
+import { fetchNui } from '../../common/utils/fetchNui';
 import { usePhoneSocietyNumber } from '../../hooks/useSimCard';
 import { useBackground } from '../../ui/hooks/useBackground';
 import MessagesList from './pages/MessagesList';

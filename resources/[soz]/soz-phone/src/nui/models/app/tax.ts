@@ -1,10 +1,10 @@
 import { createModel } from '@rematch/core';
 import { Taxes, TaxEvents } from '@typings/app/tax';
-import { buildRespObj } from '@utils/misc';
 
 import { ServerPromiseResp } from '../../../../typings/common';
 import { MockTax } from '../../apps/tax/utils/constants';
-import { fetchNui } from '../../utils/fetchNui';
+import { fetchNui } from '../../common/utils/fetchNui';
+import { buildRespObj } from '../../common/utils/misc';
 import { RootModel } from '..';
 
 export const appTax = createModel<RootModel>()({

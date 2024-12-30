@@ -28,6 +28,7 @@ import { useSnackbar } from '../../../os/snackbar/hooks/useSnackbar';
 import { store } from '../../../store';
 import { AppContent } from '../../../ui/components/AppContent';
 import { AppTitle } from '../../../ui/components/AppTitle';
+import { AppWrapper } from '../../../ui/components/AppWrapper';
 import { ContactPicture } from '../../../ui/components/ContactPicture';
 import { MapAudioSettingItem, MapSettingItem, SettingOption, useContextMenu } from '../../../ui/hooks/useContextMenu';
 import { Button } from '../../../ui/old_components/Button';
@@ -80,6 +81,9 @@ export const SettingsHome = () => {
         MapSettingItem(config.dynamicAlertDuration, (val: SettingOption) =>
             handleSettingChange('dynamicAlertDuration', val)
         )
+    );
+    const frameOptions = phoneConfig.frames.map(
+        MapSettingItem(config.frame, (val: SettingOption) => handleSettingChange('frame', val))
     );
     const zoomOptions = phoneConfig.zoomOptions.map(
         MapSettingItem(config.zoom, (val: SettingOption) => handleSettingChange('zoom', val))
@@ -138,7 +142,7 @@ export const SettingsHome = () => {
     }, [query.image, updateProfilePicture, myNumber, history, pathname, search]);
 
     return (
-        <>
+        <AppWrapper>
             <AppTitle app={settingsApp} />
             <ContextMenu />
             <AppContent backdrop={isMenuOpen} onClickBackdrop={closeMenu}>
@@ -269,6 +273,15 @@ export const SettingsHome = () => {
                     />
 
                     <SettingItem
+                        label={t('SETTINGS.OPTIONS.FRAME')}
+                        value={config.frame.label}
+                        options={frameOptions}
+                        onClick={openMenu}
+                        icon={<PhotographIcon />}
+                        color="bg-[#8E8E92]"
+                    />
+
+                    <SettingItem
                         label={t('SETTINGS.OPTIONS.WALLPAPER')}
                         value={config.wallpaper.label}
                         onClick={() => navigate('/settings/wallpaper')}
@@ -311,6 +324,6 @@ export const SettingsHome = () => {
                     />
                 </List>
             </AppContent>
-        </>
+        </AppWrapper>
     );
 };

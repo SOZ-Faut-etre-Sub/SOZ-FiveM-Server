@@ -7,12 +7,12 @@ import { GalleryPhoto, PhotoEvents } from '@typings/photo';
 import { AppContent } from '@ui/components/AppContent';
 import { AppWrapper } from '@ui/components/AppWrapper';
 import { FullPageWithHeader } from '@ui/layout/FullPageWithHeader';
-import { fetchNui } from '@utils/fetchNui';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { ApiEvents } from '../../../../../typings/api';
+import { fetchNui } from '../../../common/utils/fetchNui';
 import { useApiConfig } from '../../../hooks/useApi';
 import { useVisibility } from '../../../hooks/usePhone';
 import { usePhoto } from '../../../hooks/usePhoto';

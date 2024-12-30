@@ -1,7 +1,7 @@
 import { EmergencyEvents } from '@typings/emergency';
 import { useCallback } from 'react';
 
-import { fetchNui } from '../../../utils/fetchNui';
+import { fetchNui } from '../../../common/utils/fetchNui';
 
 interface EmergencyHook {
     lsmcCall(): void;

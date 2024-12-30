@@ -1,6 +1,6 @@
 import { useSoundProvider } from '@os/sound/hooks/useSoundProvider';
 import { getSoundSettings } from '@os/sound/utils/getSoundSettings';
-import React, { createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { createContext, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { RootState } from '../../../store';
@@ -10,8 +10,8 @@ export interface INotification {
     app: string;
     id?: string;
     title: string;
-    content?: React.ReactNode;
-    icon?: JSX.Element;
+    content?: ReactNode;
+    icon?: ReactNode;
     notificationIcon?: React.FC<any>;
     sound?: boolean;
     cantClose?: boolean;

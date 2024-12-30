@@ -1,45 +1,31 @@
-import { ChevronRightIcon } from '@heroicons/react/outline';
-import { Button } from '@ui/old_components/Button';
 import React from 'react';
 
+import { isImage } from '../../../common/utils/image';
 import { INotification } from '../providers/NotificationsProvider';
 
 export const NotificationItem = ({
-    onClose,
     onClickClose,
     ...notification
 }: INotification & {
-    onClose: (e: any) => void;
-    onClickClose: (e: any) => void;
+    onClickClose?: (e: any) => void;
 }) => {
-    const { title, notificationIcon: NotificationIcon, content, cantClose, onClick } = notification;
-
-    const isImage = url => {
-        return /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png|jpeg|gif|webp)/g.test(url);
-    };
+    const { title, notificationIcon: NotificationIcon, content, onClick } = notification;
 
     return (
         <li
-            className={`cursor-pointer py-2 px-4 flex justify-between items-center hover:bg-ios-800 hover:bg-opacity-25 text-white text-sm`}
+            className={`cursor-pointer py-2 px-4 flex items-center bg-ios-800 hover:bg-opacity-80 text-white rounded-[20px] text-sm`}
             onClick={e => {
                 if (onClick) {
                     onClick(notification);
-                    onClickClose(e);
+                    onClickClose?.(e);
                 }
             }}
         >
-            {NotificationIcon && <NotificationIcon className={`text-white h-12 w-12 p-1 rounded-xl shrink-0`} />}
-            <div className="flex flex-col">
-                <p className="flex-grow ml-4 font-light normal-case">{title}</p>
-                <p className="flex-grow ml-4 font-light normal-case">
-                    {isImage(content) ? 'Vous avez reçu une image' : content}
-                </p>
+            {NotificationIcon && <NotificationIcon className="text-white size-12 p-1 rounded-xl shrink-0" />}
+            <div className="flex flex-col grow">
+                <p className="ml-4 font-light normal-case">{title}</p>
+                <p className="ml-4 font-light normal-case">{isImage(content) ? 'Vous avez reçu une image' : content}</p>
             </div>
-            {!cantClose && (
-                <Button className="mx-2" onClick={onClose}>
-                    <ChevronRightIcon className="h-4 w-4 text-gray-400" />
-                </Button>
-            )}
         </li>
     );
 };

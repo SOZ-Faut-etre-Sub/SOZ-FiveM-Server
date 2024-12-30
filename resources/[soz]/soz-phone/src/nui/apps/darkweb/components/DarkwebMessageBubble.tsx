@@ -8,11 +8,11 @@ import { MessageEvents } from '@typings/messages';
 import Emoji from '@ui/components/Emoji';
 import { Button } from '@ui/old_components/Button';
 import { PictureReveal } from '@ui/old_components/PictureReveal';
-import { fetchNui } from '@utils/fetchNui';
 import cn from 'classnames';
 import { format } from 'date-fns';
 import React from 'react';
 
+import { fetchNui } from '../../../common/utils/fetchNui';
 import { useConfig } from '../../../hooks/usePhone';
 import { usePhoneNumber } from '../../../hooks/useSimCard';
 

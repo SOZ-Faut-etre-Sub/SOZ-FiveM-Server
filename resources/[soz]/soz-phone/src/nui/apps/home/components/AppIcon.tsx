@@ -1,6 +1,6 @@
 import React, { FunctionComponent, memo } from 'react';
 
-export const AppIcon: FunctionComponent<{ title: string; icon: React.FC<any>; badge?: any }> = memo(
+export const AppIcon: FunctionComponent<{ title?: string; icon: React.FC<any>; badge?: any }> = memo(
     ({ title, icon: Icon, badge }) => {
         return (
             <div className="flex flex-col items-center w-full h-full text-white overflow-hidden">
@@ -13,12 +13,14 @@ export const AppIcon: FunctionComponent<{ title: string; icon: React.FC<any>; ba
                         </span>
                     )}
                 </div>
-                <span
-                    className="overflow-hidden text-ellipsis text-sm w-full whitespace-nowrap text-center"
-                    title={title}
-                >
-                    {title}
-                </span>
+                {title && (
+                    <span
+                        className="overflow-hidden text-ellipsis text-sm w-full whitespace-nowrap text-center"
+                        title={title}
+                    >
+                        {title}
+                    </span>
+                )}
             </div>
         );
     }

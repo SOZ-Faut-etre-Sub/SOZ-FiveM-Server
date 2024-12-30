@@ -4,7 +4,7 @@ import { ServerPromiseResp } from '@typings/common';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { fetchNui } from '../../../utils/fetchNui';
+import { fetchNui } from '../../../common/utils/fetchNui';
 
 interface NotesAPIValue {
     addNewNote: (data: BeforeDBNote) => Promise<void>;

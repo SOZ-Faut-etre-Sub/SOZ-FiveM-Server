@@ -3,9 +3,9 @@ import { createModel } from '@rematch/core';
 import { ServerPromiseResp } from '../../../typings/common';
 import { PhoneEvents } from '../../../typings/phone';
 import { IPhoneSettings } from '../apps/settings/hooks/useSettings';
+import { fetchNui } from '../common/utils/fetchNui';
+import { buildRespObj } from '../common/utils/misc';
 import config from '../config/default.json';
-import { fetchNui } from '../utils/fetchNui';
-import { buildRespObj } from '../utils/misc';
 import { RootModel } from '.';
 
 export const phone = createModel<RootModel>()({
@@ -52,10 +52,23 @@ export const phone = createModel<RootModel>()({
         },
         // loader
         async loadConfig() {
-            let phoneConfig = config.defaultSettings;
+            const phoneConfig = config.defaultSettings;
+
             const saved = localStorage.getItem('soz_settings');
             if (saved) {
-                phoneConfig = { ...phoneConfig, ...JSON.parse(saved) };
+                const parsedConfig = JSON.parse(saved);
+
+                for (const key in parsedConfig) {
+                    const configValues = config[`${key}s`];
+                    if (Array.isArray(configValues)) {
+                        const valueExists = configValues.find(v => v.value === parsedConfig[key].value);
+                        if (valueExists) {
+                            phoneConfig[key] = valueExists;
+                        }
+                    } else {
+                        phoneConfig[key] = parsedConfig[key];
+                    }
+                }
             }
 
             dispatch.phone.SET_CONFIG(phoneConfig);

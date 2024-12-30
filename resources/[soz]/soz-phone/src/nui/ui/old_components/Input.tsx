@@ -1,10 +1,10 @@
 import { PhoneEvents } from '@typings/phone';
-import { fetchNui } from '@utils/fetchNui';
-import { isEnvBrowser } from '@utils/misc';
 import cn from 'classnames';
 import React, { forwardRef } from 'react';
 import NumberFormat from 'react-number-format';
 
+import { fetchNui } from '../../common/utils/fetchNui';
+import { isEnvBrowser } from '../../common/utils/misc';
 import { useConfig } from '../../hooks/usePhone';
 
 export const toggleKeys = (keepGameFocus: boolean) =>

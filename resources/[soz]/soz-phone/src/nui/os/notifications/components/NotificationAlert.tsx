@@ -1,10 +1,10 @@
 import { Transition } from '@headlessui/react';
 import { MessageEvents } from '@typings/messages';
 import Alert from '@ui/old_components/Alert';
-import { fetchNui } from '@utils/fetchNui';
 import React from 'react';
 
 import { useEmergency } from '../../../../nui/hooks/useEmergency';
+import { fetchNui } from '../../../common/utils/fetchNui';
 import { useNotifications } from '../hooks/useNotifications';
 
 const getAddress = async (input: string) => {

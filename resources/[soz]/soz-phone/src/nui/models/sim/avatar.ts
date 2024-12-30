@@ -2,7 +2,7 @@ import { createModel } from '@rematch/core';
 
 import { ServerPromiseResp } from '../../../../typings/common';
 import { SettingsEvents } from '../../../../typings/settings';
-import { fetchNui } from '../../utils/fetchNui';
+import { fetchNui } from '../../common/utils/fetchNui';
 import { RootModel } from '../index';
 
 export const avatar = createModel<RootModel>()({

@@ -7,9 +7,9 @@ import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { SOZ_PHONE_IS_PRODUCTION } from '../../../../globals';
+import { fetchNui } from '../../../common/utils/fetchNui';
 import { usePhoneNumber } from '../../../hooks/useSimCard';
 import { useCall as useCallHook } from '../../../hooks/useSimCard';
-import { fetchNui } from '../../../utils/fetchNui';
 
 interface CallHook {
     call: ActiveCall;

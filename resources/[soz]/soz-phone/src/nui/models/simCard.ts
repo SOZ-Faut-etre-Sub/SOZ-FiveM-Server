@@ -7,8 +7,8 @@ import { Message, MessageConversation, MessageEvents } from '../../../typings/me
 import { BrowserContactsState } from '../apps/contacts/utils/constants';
 import { MockHistoryData } from '../apps/dialer/utils/constants';
 import { MockConversationMessages, MockMessageConversations } from '../apps/messages/utils/constants';
-import { fetchNui } from '../utils/fetchNui';
-import { buildRespObj } from '../utils/misc';
+import { fetchNui } from '../common/utils/fetchNui';
+import { buildRespObj } from '../common/utils/misc';
 import { RootModel } from '.';
 
 export const simCard = createModel<RootModel>()({

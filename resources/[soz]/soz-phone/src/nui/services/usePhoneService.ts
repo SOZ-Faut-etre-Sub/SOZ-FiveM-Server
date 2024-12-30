@@ -1,10 +1,10 @@
 import { useNuiEvent } from '@common/hooks/useNuiEvent';
 import { useApps } from '@os/apps/hooks/useApps';
 import { PhoneEvents } from '@typings/phone';
-import { fetchNui } from '@utils/fetchNui';
 import { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { fetchNui } from '../common/utils/fetchNui';
 import { store } from '../store';
 
 export const usePhoneService = () => {

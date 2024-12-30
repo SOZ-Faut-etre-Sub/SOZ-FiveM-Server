@@ -57,7 +57,7 @@ export const SettingsWallpaper = () => {
     };
 
     return (
-        <>
+        <AppWrapper>
             <Transition
                 appear={true}
                 show={true}
@@ -69,35 +69,33 @@ export const SettingsWallpaper = () => {
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
             >
-                <AppWrapper className={cn('h-full', backgroundClass)}>
-                    <AppTitle title="Fond d'écran" isBigHeader={false}>
-                        <Button className="flex items-center text-base" onClick={() => navigate(-1)}>
-                            <ChevronLeftIcon className="h-5 w-5" />
-                            Fermer
-                        </Button>
-                    </AppTitle>
-                    <AppContent>
-                        <List>
-                            <SettingItem
-                                label={t('SETTINGS.OPTIONS.CUSTOM_WALLPAPER.DIALOG_TITLE')}
-                                onClick={() => setWallpaperModal(true)}
-                                icon={<PhotographIcon />}
-                                color="bg-[#8E8E92]"
-                            />
-                        </List>
-                        <div className="grid gap-2 grid-cols-2 mx-2">
-                            {phoneConfig.wallpapers &&
-                                phoneConfig.wallpapers.map(wallpaper => (
-                                    <div
-                                        key={wallpaper.value}
-                                        className="bg-cover bg-center w-5/6 aspect-[9/19] justify-self-center rounded-lg cursor-pointer"
-                                        style={{ backgroundImage: `url(${getBackgroundPath(wallpaper.value)})` }}
-                                        onClick={() => handleNewWallpaper(wallpaper)}
-                                    />
-                                ))}
-                        </div>
-                    </AppContent>
-                </AppWrapper>
+                <AppTitle title="Fond d'écran" isBigHeader={false}>
+                    <Button className="flex items-center text-base" onClick={() => navigate(-1)}>
+                        <ChevronLeftIcon className="h-5 w-5" />
+                        Fermer
+                    </Button>
+                </AppTitle>
+                <AppContent>
+                    <List>
+                        <SettingItem
+                            label={t('SETTINGS.OPTIONS.CUSTOM_WALLPAPER.DIALOG_TITLE')}
+                            onClick={() => setWallpaperModal(true)}
+                            icon={<PhotographIcon />}
+                            color="bg-[#8E8E92]"
+                        />
+                    </List>
+                    <div className="grid gap-2 grid-cols-2 mx-2">
+                        {phoneConfig.wallpapers &&
+                            phoneConfig.wallpapers.map(wallpaper => (
+                                <div
+                                    key={wallpaper.value}
+                                    className="bg-cover bg-center w-5/6 aspect-[9/19] justify-self-center rounded-lg cursor-pointer"
+                                    style={{ backgroundImage: `url(${getBackgroundPath(wallpaper.value)})` }}
+                                    onClick={() => handleNewWallpaper(wallpaper)}
+                                />
+                            ))}
+                    </div>
+                </AppContent>
             </Transition>
             <Transition
                 appear={true}
@@ -123,6 +121,6 @@ export const SettingsWallpaper = () => {
                     />
                 </DialogForm>
             </Transition>
-        </>
+        </AppWrapper>
     );
 };

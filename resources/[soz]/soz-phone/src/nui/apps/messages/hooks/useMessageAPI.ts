@@ -1,12 +1,12 @@
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { ServerPromiseResp } from '@typings/common';
 import { Message, MessageConversationResponse, MessageEvents, PreDBMessage } from '@typings/messages';
-import { fetchNui } from '@utils/fetchNui';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import { fetchNui } from '../../../common/utils/fetchNui';
 import { RootState } from '../../../store';
 
 type UseMessageAPIProps = {

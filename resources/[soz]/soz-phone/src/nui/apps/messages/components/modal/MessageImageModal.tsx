@@ -6,12 +6,12 @@ import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { ServerPromiseResp } from '@typings/common';
 import { MessageEvents } from '@typings/messages';
 import { Button } from '@ui/old_components/Button';
-import { fetchNui } from '@utils/fetchNui';
 import qs from 'qs';
 import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import { fetchNui } from '../../../../common/utils/fetchNui';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
 
 interface IProps {

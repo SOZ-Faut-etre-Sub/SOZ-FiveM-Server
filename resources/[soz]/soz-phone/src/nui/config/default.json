@@ -36,8 +36,20 @@
     ],
     "frames": [
         {
-            "label": "Default",
-            "value": "default.png"
+            "label": "Black Titanium",
+            "value": "black.webp"
+        },
+        {
+            "label": "Gold Titanium",
+            "value": "gold.webp"
+        },
+        {
+            "label": "Natural Titanium",
+            "value": "natural.webp"
+        },
+        {
+            "label": "White Titanium",
+            "value": "white.webp"
         }
     ],
     "dynamicAlertDurationOptions": [
@@ -183,8 +195,8 @@
         },
         "customWallpaper": "",
         "frame": {
-            "label": "Default",
-            "value": "default.png"
+            "label": "Black Titanium",
+            "value": "black.webp"
         },
         "theme": {
             "label": "Mode clair",

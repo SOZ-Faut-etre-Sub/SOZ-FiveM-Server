@@ -2,8 +2,8 @@ import { TetrisEvents } from '@typings/app/tetris';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { fetchNui } from '../../../common/utils/fetchNui';
 import { useVisibility } from '../../../hooks/usePhone';
-import { fetchNui } from '../../../utils/fetchNui';
 import * as Game from '../game/Game';
 import { KeyboardMap, useKeyboardControls } from '../hooks/keyboard_detection';
 import { Context } from '../utils/context';

@@ -1,20 +1,13 @@
 import cn from 'classnames';
-import { CSSProperties, FunctionComponent, PropsWithChildren } from 'react';
+import { FunctionComponent, PropsWithChildren } from 'react';
 
-type Props = { rows?: number; columns?: number; styleRules?: CSSProperties; className?: string };
+type Props = { rows?: number; columns?: number; className?: string };
 
-export const Grid: FunctionComponent<PropsWithChildren<Props>> = ({
-    rows = 6,
-    columns = 4,
-    styleRules,
-    className,
-    children,
-}) => {
+export const Grid: FunctionComponent<PropsWithChildren<Props>> = ({ rows = 6, columns = 4, className, children }) => {
     return (
         <div
-            className={cn('grid w-full h-fit gap-1.5 overflow-hidden', className)}
+            className={cn('grid w-full overflow-hidden', className)}
             style={{
-                ...styleRules,
                 gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
                 gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))`,
             }}

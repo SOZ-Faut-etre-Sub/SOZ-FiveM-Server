@@ -3,8 +3,8 @@ import { createModel } from '@rematch/core';
 import { WeatherEvents, WeatherForecast } from '../../../../typings/app/weather';
 import { ServerPromiseResp } from '../../../../typings/common';
 import { MockAlertData, MockWeatherForecastsData } from '../../apps/weather/utils/constants';
-import { fetchNui } from '../../utils/fetchNui';
-import { buildRespObj } from '../../utils/misc';
+import { fetchNui } from '../../common/utils/fetchNui';
+import { buildRespObj } from '../../common/utils/misc';
 import { RootModel } from '../index';
 
 export const appWeather = createModel<RootModel>()({

@@ -1,10 +1,13 @@
 import { IApp } from '@os/apps/config/apps';
 import cn from 'classnames';
-import React, { HTMLAttributes } from 'react';
+import React, { HTMLAttributes, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
+import { useIsInViewport } from '../../common/hooks/viewport';
 import { useConfig } from '../../hooks/usePhone';
+import { Dispatch } from '../../store';
 
 interface AppTitleProps extends HTMLAttributes<HTMLDivElement> {
     app?: IApp;
@@ -18,9 +21,29 @@ export const AppTitle: React.FC<AppTitleProps> = ({ app, title, subtitle, isBigH
     const [t] = useTranslation();
     const config = useConfig();
     const { pathname } = useLocation();
+    const ref = useRef();
+
+    const dispatch = useDispatch<Dispatch>();
+    const inViewport = useIsInViewport(ref);
+
+    title = title ? title : t(app.nameLocale);
+
+    useEffect(() => {
+        dispatch.appCommon.setTitle(title);
+
+        return () => {
+            dispatch.appCommon.displayTitle(false);
+            dispatch.appCommon.setTitle(null);
+        };
+    }, []);
+
+    useEffect(() => {
+        dispatch.appCommon.displayTitle(!inViewport);
+    }, [inViewport]);
 
     return (
         <div
+            ref={ref}
             className={cn('px-5 transition-all duration-300 ease-in-out pb-2', {
                 'bg-ios-800': config.theme.value === 'dark' || pathname.includes('/camera'),
                 'bg-ios-50': config.theme.value === 'light' && !pathname.includes('/camera'),
@@ -33,7 +56,7 @@ export const AppTitle: React.FC<AppTitleProps> = ({ app, title, subtitle, isBigH
                     'text-black': config.theme.value === 'light',
                     'text-teal-400': pathname.includes('/darkweb'),
                     'pt-8 text-3xl': isBigHeader,
-                    'pt-3 text-2xl': !isBigHeader,
+                    'text-2xl': !isBigHeader,
                     'text-xl': children,
                     'grid-rows-2': subtitle != null,
                     'grid-rows-1': subtitle == null,
@@ -46,7 +69,7 @@ export const AppTitle: React.FC<AppTitleProps> = ({ app, title, subtitle, isBigH
                         'col-span-2 text-center': children,
                     })}
                 >
-                    {title ? title : t(app.nameLocale)}
+                    {title}
                 </div>
                 {action && <div className="justify-self-end text-[#347DD9] font-normal text-base">{action}</div>}
                 {subtitle != null && <div className={cn('truncate text-center text-sm col-span-4')}>{subtitle}</div>}

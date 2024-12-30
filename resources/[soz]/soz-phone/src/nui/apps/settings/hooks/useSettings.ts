@@ -2,10 +2,10 @@ import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { ServerPromiseResp } from '@typings/common';
 import { PreDBSettings, SettingsEvents } from '@typings/settings';
 import { SettingOption } from '@ui/hooks/useContextMenu';
-import { fetchNui } from '@utils/fetchNui';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { fetchNui } from '../../../common/utils/fetchNui';
 import { store } from '../../../store';
 
 export interface IPhoneSettings {

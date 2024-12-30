@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 
 import { InvoicesEvents } from '../../../../../typings/app/invoices';
 import { ServerPromiseResp } from '../../../../../typings/common';
-import { fetchNui } from '../../../utils/fetchNui';
+import { fetchNui } from '../../../common/utils/fetchNui';
 
 interface InvoicesAPIValue {
     payInvoice: (id: number) => Promise<void>;

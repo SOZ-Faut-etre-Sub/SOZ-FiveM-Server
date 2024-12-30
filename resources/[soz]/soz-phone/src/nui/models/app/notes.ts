@@ -3,8 +3,8 @@ import { INotes, NoteItem, NotesEvents } from '@typings/app/notes';
 
 import { ServerPromiseResp } from '../../../../typings/common';
 import { BrowserNotesData } from '../../apps/notes/utils/constants';
-import { fetchNui } from '../../utils/fetchNui';
-import { buildRespObj } from '../../utils/misc';
+import { fetchNui } from '../../common/utils/fetchNui';
+import { buildRespObj } from '../../common/utils/misc';
 import { RootModel } from '..';
 
 export const appNotes = createModel<RootModel>()({

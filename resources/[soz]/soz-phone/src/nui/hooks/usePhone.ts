@@ -6,9 +6,12 @@ import { DEFAULT_ALERT_HIDE_TIME } from '../os/notifications/notifications.const
 import { RootState } from '../store';
 
 export const useConfig = () => {
-    const state = useSelector((state: RootState) => state.phone);
+    return useSelector((state: RootState) => state.phone.config);
+};
 
-    return state.config;
+export const useDarkModeEnabled = () => {
+    const theme = useSelector((state: RootState) => state.phone.config.theme.value);
+    return theme === 'dark';
 };
 
 export const useVisibility = () => {
