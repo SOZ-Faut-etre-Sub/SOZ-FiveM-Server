@@ -33,6 +33,8 @@ import { TwitchNewsApp } from '../../../apps/twitch-news';
 import TwitchNewsIcon from '../../../apps/twitch-news/icon';
 import { WeatherApp } from '../../../apps/weather';
 import WeatherIcon from '../../../apps/weather/icon';
+import ZutomIcon from '../../../apps/zutom/icon';
+import { ZutomApp } from '../../../apps/zutom/ZutomApp';
 
 export interface IAppConfig {
     id: string;
@@ -121,9 +123,6 @@ export const APPS: IAppConfig[] = [
         component: <TwitchNewsApp />,
         icon: TwitchNewsIcon,
     },
-    /*
-    Disabled as sutom web site no longer allow external inclusion
-    Need a local instance to fix
     {
         id: 'zutom',
         nameLocale: 'APPS_ZUTOM',
@@ -131,7 +130,6 @@ export const APPS: IAppConfig[] = [
         component: <ZutomApp />,
         icon: ZutomIcon,
     },
-    */
     {
         id: 'camera',
         nameLocale: 'APPS_CAMERA',
