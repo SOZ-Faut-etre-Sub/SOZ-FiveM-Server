@@ -73,7 +73,7 @@ export class WeaponService {
 
         const player = PlayerPedId();
 
-        if (this.currentWeapon != null) {
+        if (this.currentWeapon != null && this.currentWeapon.metadata.serial !== weapon.metadata.serial) {
             await this.clear();
         }
 

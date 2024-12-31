@@ -115,7 +115,7 @@ export class WeaponGunsmithProvider {
 
         const previewWeapon = this.weaponService.getCurrentWeapon();
         if (previewWeapon?.name !== weapon.name) {
-            this.weaponService.clear();
+            await this.weaponService.clear();
             this.weaponDrawingProvider.onUseWeapon(weapon);
             await this.weaponService.set(weapon);
         }
