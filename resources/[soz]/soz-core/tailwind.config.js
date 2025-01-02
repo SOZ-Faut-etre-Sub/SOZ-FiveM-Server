@@ -70,6 +70,7 @@ module.exports = {
             kreditback: ['"Kredit Back"', 'sans-serif'],
             'delight-sunset': ['Delight-Sunset', 'sans-serif'],
             digital7: ['Digital-7', 'sans-serif'],
+            sfpro: ['SF-Pro', 'sans-serif'],
         },
         extend: {
             colors: {
@@ -145,6 +146,25 @@ module.exports = {
                 border: '0 0 1px rgba(0, 0, 0, 1)',
             },
             colors: {
+                phone: {
+                    100: '#f4f4f4',
+                    200: '#f5f5f5',
+                    300: '#ececec',
+                    400: '#e8e8e8',
+                    500: '#9d9d9d',
+                    600: '#797979',
+                    700: '#515151',
+                    800: '#383838',
+                    900: '#313131',
+                },
+                ios: {
+                    50: '#F2F2F6',
+                    100: '#ECECED',
+                    200: '#d2d2d2',
+                    600: '#4f545c',
+                    700: '#36393f',
+                    800: '#2f3136',
+                },
                 // Generated from https://uicolors.app
                 'spring-green': {
                     50: '#eefff5',

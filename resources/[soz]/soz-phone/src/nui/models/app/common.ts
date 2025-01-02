@@ -7,6 +7,14 @@ export const appCommon = createModel<RootModel>()({
     state: {
         displayTitle: false,
         title: null,
+
+        getBack: {
+            display: false,
+            label: 'Retour',
+            onClick: () => {},
+        },
+
+        actions: [],
     } as AppCommonState,
     reducers: {
         set: (state, payload) => {
@@ -19,6 +27,12 @@ export const appCommon = createModel<RootModel>()({
         },
         async setTitle(title: string | null) {
             dispatch.appCommon.set({ title });
+        },
+        async setGetBack(getBack: AppCommonState['getBack']) {
+            dispatch.appCommon.set({ getBack });
+        },
+        async setActions(actions: AppCommonState['actions']) {
+            dispatch.appCommon.set({ actions });
         },
     }),
 });

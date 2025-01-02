@@ -11,6 +11,7 @@ import { NuiHudMethodMap } from '@public/shared/nui/hud';
 import { NuiInventoryMethodMap } from '@public/shared/nui/inventory';
 import { NuiItemMethodMap } from '@public/shared/nui/item';
 import { NuiMissiveMethodMap } from '@public/shared/nui/missive';
+import { NuiPhoneMap } from '@public/shared/nui/phone';
 import { NuiRadioMethodMap, NuiRadioVehicleMethodMap } from '@public/shared/nui/radio';
 import { NuiRepositoryMethodMap } from '@public/shared/nui/repository';
 import { NuiSceneSearchMethodMap } from '@public/shared/nui/scene';
@@ -101,6 +102,7 @@ export interface NuiMethodMap {
     blip: NuiBlipMethodMap;
     picker: NuiPickerMethodMap;
     election: NuiElectionMap;
+    phone: NuiPhoneMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(

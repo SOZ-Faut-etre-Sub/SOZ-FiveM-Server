@@ -1,4 +1,4 @@
-import { Injectable } from '../../core/decorators/injectable';
+import { Injectable } from '@core/decorators/injectable';
 
 @Injectable()
 export class PhoneService {

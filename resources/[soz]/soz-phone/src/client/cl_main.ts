@@ -1,13 +1,13 @@
-import { PlayerData } from 'qbcore.js';
+import {PlayerData} from 'qbcore.js';
 
 import config from '../../config.json';
-import { EmergencyEvents } from '../../typings/emergency';
-import { PhoneEvents } from '../../typings/phone';
-import { sendMessage } from '../utils/messages';
-import { animationService } from './animations/animation.controller';
-import { callService, endCallHandler } from './calls/cl_calls.controller';
-import { RegisterNuiCB } from './cl_utils';
-import { removePhoneProp } from './functions';
+import {EmergencyEvents} from '../../typings/emergency';
+import {PhoneEvents} from '../../typings/phone';
+import {sendMessage} from '../utils/messages';
+import {animationService} from './animations/animation.controller';
+import {callService, endCallHandler} from './calls/cl_calls.controller';
+import {RegisterNuiCB} from './cl_utils';
+import {removePhoneProp} from './functions';
 
 // All main globals that are set and used across files
 global.isPhoneOpen = false;
@@ -20,12 +20,6 @@ global.isBlackout = false;
 
 const exps = global.exports;
 
-/* Functions */
-function cityIsInBlackOut(): boolean {
-    const globalState = exps['soz-core'].GetGlobalState();
-
-    return globalState.blackout || globalState.blackoutLevel >= 3;
-}
 
 /* * * * * * * * * * * * *
  *
@@ -44,18 +38,6 @@ onNet(PhoneEvents.SET_PLAYER_LOADED, (state: boolean) => {
 
 RegisterKeyMapping(config.general.toggleCommand, 'Afficher le téléphone', 'keyboard', config.general.toggleKey);
 RegisterCommand(config.general.toggleCommand, togglePhone, false);
-emit('chat:addSuggestion', `${config.general.toggleCommand}`, 'Toggle displaying your cellphone');
-
-const getCurrentGameTime = () => {
-    let hour: string | number = GetClockHours();
-    let minute: string | number = GetClockMinutes();
-
-    // Format time if need be
-    if (hour < 10) hour = `0${hour}`;
-    if (minute < 10) minute = `0${minute}`;
-
-    return `${hour}:${minute}`;
-};
 
 /* * * * * * * * * * * * *
  *
@@ -145,34 +127,6 @@ const checkExportCanOpen = async (): Promise<boolean> => {
 
     return !!exportResp;
 };
-
-async function togglePhone(): Promise<void> {
-    const isEditorModeActive =
-        exports['soz-core'].IsEditorModeActive() || exports['soz-core'].isHousingEditorModeActive();
-    if (isEditorModeActive) {
-        return;
-    }
-
-    if (global.isPhoneOpen) {
-        return await hidePhone();
-    }
-
-    const state = exports['soz-core'].GetPlayerState();
-
-    if (!state.isDead) {
-        if (global.isPhoneDrowned) return;
-        if (global.isPhoneDisabled) return;
-        if (cityIsInBlackOut()) return;
-
-        if (config.PhoneAsItem.enabled) {
-            const canAccess = await checkExportCanOpen();
-            if (!canAccess) {
-                return;
-            }
-        }
-    }
-    await showPhone();
-}
 
 onNet(PhoneEvents.SEND_CREDENTIALS, (number: string, societyNumber: string | null) => {
     sendMessage('SIMCARD', PhoneEvents.SET_NUMBER, number);
@@ -284,8 +238,3 @@ setInterval(async () => {
         }
     }
 }, 1000);
-
-setInterval(() => {
-    const time = getCurrentGameTime();
-    sendMessage('PHONE', PhoneEvents.SET_TIME, time);
-}, 2000);

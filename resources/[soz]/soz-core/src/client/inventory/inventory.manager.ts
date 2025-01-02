@@ -310,37 +310,6 @@ export class InventoryManager {
         TriggerServerEvent(ServerEvent.INVENTORY_OPEN_TRUNK, vehicleNetworkId, vehicleClass, { min, max });
     }
 
-    @Exportable('hasPlayerPhone')
-    public hasPlayerPhone() {
-        if (IsPauseMenuActive()) {
-            return false;
-        }
-
-        const hasPhone = this.hasEnoughItem('phone', 1);
-
-        if (!hasPhone) {
-            this.notifier.error("Vous n'avez pas de téléphone");
-
-            return false;
-        }
-
-        const playerState = this.playerService.getState();
-
-        if (playerState.isInventoryBusy) {
-            this.notifier.error('Action en cours');
-            return false;
-        }
-
-        const player = this.playerService.getPlayer();
-
-        if (player.metadata.inlaststand || player.metadata.ishandcuffed) {
-            this.notifier.error('Vous ne pouvez pas accéder à votre téléphone');
-            return false;
-        }
-
-        return true;
-    }
-
     @Exportable('openInventory')
     public openInventoryExport(inventoryType: InventoryType, inventoryId: string) {
         const player = this.playerService.getPlayer();

@@ -68,12 +68,6 @@ const createConfig = (entry, isProduction, variables = {}, port = undefined, tar
                                     },
                                     optimizer: {
                                         simplify: true,
-                                        globals: {
-                                            vars: {
-                                                ...variables,
-                                                SOZ_CORE_IS_PRODUCTION: JSON.stringify(isProduction),
-                                            },
-                                        },
                                     },
                                 },
                                 keepClassNames: true,

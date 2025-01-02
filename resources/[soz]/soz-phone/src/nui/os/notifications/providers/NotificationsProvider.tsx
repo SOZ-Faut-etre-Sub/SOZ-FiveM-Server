@@ -33,8 +33,6 @@ export interface INotificationIcon {
 }
 
 export const NotificationsContext = createContext<{
-    barUncollapsed: boolean;
-    setBarUncollapsed: (v: boolean | ((c: boolean) => boolean)) => void;
     notifications: INotification[];
     currentAlert: INotificationAlert;
     icons: INotificationIcon[];
@@ -54,7 +52,6 @@ export function NotificationsProvider({ children }) {
     const emergency = useSelector((state: RootState) => state.emergency);
 
     const settings = useSelector((state: RootState) => state.phone.config);
-    const [barUncollapsed, setBarUncollapsed] = useState<boolean>(false);
     const [notifications, setNotifications] = useState<INotification[]>([]);
 
     const { mount, play } = useSoundProvider();
@@ -207,8 +204,6 @@ export function NotificationsProvider({ children }) {
     return (
         <NotificationsContext.Provider
             value={{
-                setBarUncollapsed,
-                barUncollapsed,
                 currentAlert,
                 notifications,
                 removeAlerts,

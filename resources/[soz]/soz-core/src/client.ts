@@ -43,6 +43,7 @@ import { UpwModule } from './client/job/upw/upw.module';
 import { MonitorModule } from './client/monitor/monitor.module';
 import { NuiModule } from './client/nui/nui.module';
 import { ObjectModule } from './client/object/object.module';
+import { PhoneModule } from './client/phone/phone.module';
 import { PickerModule } from './client/picker/picker.module';
 import { PlayerModule } from './client/player/player.module';
 import { QuickInteractionModule } from './client/quick-interaction/interaction.module';
@@ -139,6 +140,7 @@ async function bootstrap() {
         QuickInteractionModule,
         FeatureModule,
         PickerModule,
+        PhoneModule,
         ...PrivateModules
     );
 

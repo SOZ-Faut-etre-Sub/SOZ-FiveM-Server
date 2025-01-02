@@ -6,6 +6,7 @@ import { HomeApp } from './apps/home';
 import { useEmergency } from './hooks/useEmergency';
 import { useCallModal, useConfig } from './hooks/usePhone';
 import { EmergencyModal } from './os/emergency/components/EmergencyModal';
+import { PhoneModal } from './os/modal/components/PhoneModal';
 import { NotificationAlert } from './os/notifications/components/NotificationAlert';
 import { PhoneSnackbar } from './os/snackbar/components/PhoneSnackbar';
 import PhoneWrapper from './PhoneWrapper';
@@ -71,8 +72,12 @@ function Phone() {
 
     return (
         <PhoneWrapper>
+            <PhoneModal />
+
+            {/* Old components need to be rewritten */}
             <NotificationAlert />
             <PhoneSnackbar />
+
             <Routes>
                 <Route path="/" element={<HomeApp />} />
                 {callModal && <Route path="/call" element={<CallModal />} />}
