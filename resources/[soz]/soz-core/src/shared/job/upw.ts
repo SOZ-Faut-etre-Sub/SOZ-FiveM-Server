@@ -91,7 +91,6 @@ export const UpwCloakroom: WardrobeConfig = {
                 [Component.Torso]: { Texture: 0, Palette: 0, Drawable: 46 },
                 [Component.Legs]: { Texture: 19, Palette: 0, Drawable: 101 },
                 [Component.Shoes]: { Texture: 2, Palette: 0, Drawable: 60 },
-                [Component.Accessories]: { Texture: 0, Palette: 0, Drawable: 0 },
                 [Component.Undershirt]: { Texture: 5, Palette: 0, Drawable: 213 },
                 [Component.Tops]: { Texture: 4, Palette: 0, Drawable: 252 },
             },
