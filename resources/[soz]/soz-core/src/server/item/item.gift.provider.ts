@@ -89,8 +89,8 @@ export class ItemGiftProvider {
     }
 
     private async useZRTBlizzard(source: number) {
-        if (!this.featureProvider.isFeatureEnabled(Feature.Winter)) {
-            this.notifier.error(source, "L'hiver est fini !");
+        if (!this.featureProvider.isFeatureEnabled(Feature.Christmas)) {
+            this.notifier.error(source, 'Noël est fini !');
             return;
         }
 
@@ -117,7 +117,7 @@ export class ItemGiftProvider {
 
     @OnEvent(ServerEvent.GIFT_GIVE_ZRT_BLIZZARD)
     public async onGiveZRTBlizzard(source: number) {
-        if (!this.featureProvider.isFeatureEnabled(Feature.Winter)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Christmas)) {
             this.notifier.error(source, "L'hiver est fini !");
             return;
         }

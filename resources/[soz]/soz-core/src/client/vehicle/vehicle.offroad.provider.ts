@@ -1,5 +1,4 @@
 import { wait } from '@public/core/utils';
-import { Feature } from '@public/shared/features';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 
 import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
@@ -38,11 +37,15 @@ import {
 import { VehicleSeat } from '../../shared/vehicle/vehicle';
 import { DrawService } from '../draw.service';
 import { FeatureProvider } from '../feature/feature.provider';
+import { Store } from '../store/store';
 import { NoClipProvider } from '../utils/noclip.provider';
 import { VehicleStateService } from './vehicle.state.service';
 
 @Provider()
 export class VehicleOffroadProvider {
+    @Inject('Store')
+    public store: Store;
+
     public displayDebugSurface = false;
     private controlLossTimeDebug = 0;
 
@@ -380,7 +383,7 @@ export class VehicleOffroadProvider {
             /**
              * Adjust traction if winter on offroad wheels and others
              */
-            if (this.featureProvider.isFeatureEnabled(Feature.Winter)) {
+            if (this.store.getState().global.snow) {
                 if (GetVehicleWheelType(playerVeh) !== 4) {
                     vehTraction -= 50;
                 } else {
@@ -412,9 +415,7 @@ export class VehicleOffroadProvider {
         const wheelType = GetVehicleWheelType(playerVeh);
         if (
             (this.averageSoftness > 0 ||
-                (this.featureProvider.isFeatureEnabled(Feature.Winter) &&
-                    this.averageSoftness === 0 &&
-                    wheelType !== 4)) &&
+                (this.store.getState().global.snow && this.averageSoftness === 0 && wheelType !== 4)) &&
             this.isVehDrifting(playerVeh)
         ) {
             const softnessMulitplier = this.averageSoftness / 25;
@@ -774,9 +775,9 @@ export class VehicleOffroadProvider {
             sinkageSpeed *= GeneralSinkageSpeed;
 
             /**
-             * Double Sinkage speed without offroad wheels and Winter feature
+             * Double Sinkage speed without offroad wheels and snow
              */
-            if (this.featureProvider.isFeatureEnabled(Feature.Winter) && wheelType !== 4) {
+            if (this.store.getState().global.snow && wheelType !== 4) {
                 sinkageSpeed *= 2;
             }
         }

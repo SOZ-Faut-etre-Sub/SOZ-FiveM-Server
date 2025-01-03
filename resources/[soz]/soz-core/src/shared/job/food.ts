@@ -400,7 +400,7 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
         },
     },
     Noël: {
-        feature: Feature.Winter,
+        feature: Feature.Christmas,
         duration: 5000,
         icon: '🎅',
         event: 'job_cm_food_craft',

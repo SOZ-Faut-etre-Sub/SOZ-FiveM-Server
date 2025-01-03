@@ -68,7 +68,7 @@ export const NoZonesShopConfig: NoZoneShopConfig[] = [
         distance: 3,
         blipSprite: 781,
         blipColor: 1,
-        feature: Feature.Winter,
+        feature: Feature.Christmas,
         targetLabel: 'Mère Noël',
         shopLabel: 'Mère Noël',
         targetIcon: 'shop/christmas_ball',
