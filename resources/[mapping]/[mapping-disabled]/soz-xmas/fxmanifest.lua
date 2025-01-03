@@ -1,0 +1,7 @@
+fx_version 'cerulean'
+game 'gta5'
+this_is_a_map 'yes'
+
+data_file 'DLC_ITYP_REQUEST' 'stream/soz_xmas_street.ytyp'
+data_file 'DLC_ITYP_REQUEST' 'stream/mrk_prologueint.ytyp'
+data_file 'DLC_ITYP_REQUEST' 'stream/mrk_soz_xmas_props.ytyp'
