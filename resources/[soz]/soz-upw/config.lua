@@ -88,10 +88,10 @@ Config.Upw.Accounts = {FarmAccount = "farm_upw", SafeAccount = "safe_upw"}
 Config.Upw.Resale = {
     Duration = 5000,
     EnergyCellPrice = {
-        ["energy_cell_fossil"] = 40,
-        ["energy_cell_hydro"] = 90,
-        ["energy_cell_wind"] = 200,
-        ["energy_cell_solar"] = 200,
+        ["energy_cell_fossil"] = 48,
+        ["energy_cell_hydro"] = 108,
+        ["energy_cell_wind"] = 240,
+        ["energy_cell_solar"] = 240,
     },
     EnergyCellPriceGlobal = {
         ["energy_cell_fossil"] = 90,
