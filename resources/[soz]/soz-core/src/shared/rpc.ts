@@ -243,6 +243,8 @@ export enum RpcServerEvent {
 
     BANK_GET_INVOICES = 'soz-core:server:bank:get-invoices',
     BANK_CREATE_INVOICE = 'soz-core:server:bank:create-invoice',
+    BANK_PAY_INVOICE = 'soz-core:server:bank:pay-invoice',
+    BANK_REJECT_INVOICE = 'soz-core:server:bank:reject-invoice',
 
     GANG_VEHBIZ_LIST = 'soz-core:server:gang:vehbiz:list',
     GANG_VEHBIZ_REFRESH_LIST = 'soz-core:server:gang:vehbiz:refresh-list',
@@ -301,6 +303,16 @@ export enum RpcServerEvent {
     STRESS_UPDATE = 'soz-core:server:stress:update',
 
     XMAS_GET_SCENE_STATE = 'soz-core:server:xmas:get-scene-state',
+
+    PHONE_SIMCARD_GET_AVATAR = 'soz-core:server:phone:simcard:get-avatar',
+    PHONE_SIMCARD_UPDATE_AVATAR = 'soz-core:server:phone:simcard:update-avatar',
+    PHONE_APP_PHOTOS_GET = 'soz-core:server:phone:app:photos:get',
+    PHONE_APP_PHOTOS_DELETE = 'soz-core:server:phone:app:photos:delete',
+    PHONE_APP_NOTES_GET = 'soz-core:server:phone:app:notes:get',
+    PHONE_APP_NOTES_ADD = 'soz-core:server:phone:app:notes:add',
+    PHONE_APP_NOTES_UPDATE = 'soz-core:server:phone:app:notes:update',
+    PHONE_APP_NOTES_DELETE = 'soz-core:server:phone:app:notes:delete',
+    PHONE_APP_TAX_GET = 'soz-core:server:phone:app:tax:get',
 }
 
 export enum RpcClientEvent {

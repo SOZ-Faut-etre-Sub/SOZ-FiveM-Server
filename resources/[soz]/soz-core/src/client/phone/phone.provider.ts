@@ -2,28 +2,12 @@ import { Once, OnceStep } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
-import { HousingFournitureProvider } from '../housing/housing.fourniture.provider';
-import { InventoryManager } from '../inventory/inventory.manager';
 import { NuiDispatch } from '../nui/nui.dispatch';
-import { PropPlacementProvider } from '../object/prop.placement.provider';
 
 @Provider()
 export class PhoneProvider {
     @Inject(NuiDispatch)
     private readonly nuiDispatch: NuiDispatch;
-
-    @Inject(InventoryManager)
-    private readonly inventoryManager: InventoryManager;
-
-    @Inject(PropPlacementProvider)
-    private readonly propPlacementProvider: PropPlacementProvider;
-
-    @Inject(HousingFournitureProvider)
-    private readonly housingFournitureProvider: HousingFournitureProvider;
-
-    private phoneDisabled = false;
-    private phoneOpen = false;
-    private phoneDrowned = false;
 
     @Once(OnceStep.NuiLoaded)
     async onNuiLoaded() {

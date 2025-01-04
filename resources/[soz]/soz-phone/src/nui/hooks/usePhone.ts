@@ -52,8 +52,7 @@ export const useVisibility = () => {
 };
 
 export const useAvailability = () => {
-    const state = useSelector((state: RootState) => state.phone);
-    return state.available;
+    return useSelector((state: RootState) => state.phone.available);
 };
 
 export const useTime = () => {
@@ -61,16 +60,13 @@ export const useTime = () => {
 };
 
 export const useCallModal = () => {
-    const state = useSelector((state: RootState) => state.phone);
-    return state.callModal;
+    return useSelector((state: RootState) => state.phone.callModal);
 };
 
 export const useCitizenID = () => {
-    const state = useSelector((state: RootState) => state.phone);
-    return state.citizenID;
+    return useSelector((state: RootState) => state.phone.citizenID);
 };
 
 export const useDarkweb = () => {
-    const state = useSelector((state: RootState) => state.phone);
-    return state.darkweb;
+    return useSelector((state: RootState) => state.phone.darkweb);
 };

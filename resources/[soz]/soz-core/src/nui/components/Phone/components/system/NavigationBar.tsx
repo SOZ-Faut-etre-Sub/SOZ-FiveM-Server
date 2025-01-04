@@ -40,7 +40,7 @@ export const NavigationBar: FunctionComponent = memo(() => {
     }
 
     return (
-        <div className="flex flex-none w-full justify-center items-center h-7 z-40">
+        <div className="absolute bottom-0 inset-x-0 flex flex-none w-full justify-center items-center h-7 z-40">
             <div
                 className={clsx('bg-opacity-70 rounded w-2/4 h-[0.52rem]', color, {
                     'cursor-pointer': !emergency,

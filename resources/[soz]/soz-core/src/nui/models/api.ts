@@ -8,7 +8,7 @@ import { RootModel } from '.';
 export const api = createModel<RootModel>()({
     state: {
         apiEndpoint: 'https://api.soz.zerator.com/graphql',
-        publicEndpoint: 'http://localhost:8080',
+        publicEndpoint: 'https://soz.zerator.com',
     } as ApiConfig,
     reducers: {
         set: (state, config: Partial<ApiConfig>) => {

@@ -24,7 +24,7 @@ export const HomeApp: FunctionComponent = () => {
             <AppContent scrollable={false}>
                 <Grid className="grow">
                     {filteredApps.map(app => (
-                        <Link key={app.id} to={app.path}>
+                        <Link key={app.id} to={app.path} style={{ order: app.position && app.position }}>
                             <AppIcon
                                 title={t(app.nameLocale)}
                                 icon={app.icon} /*badge={countAppNotification(app.id)}*/
@@ -42,7 +42,7 @@ export const HomeApp: FunctionComponent = () => {
                     })}
                 >
                     {homeApps.map(app => (
-                        <Link key={app.id} to={app.path}>
+                        <Link key={app.id} to={app.path} style={{ order: app.position && app.position }}>
                             <AppIcon icon={app.icon} /*badge={countAppNotification(app.id)}*/ />
                         </Link>
                     ))}

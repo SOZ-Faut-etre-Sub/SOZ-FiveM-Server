@@ -13,6 +13,7 @@ import { SatelliteIcon } from '../../assets/satellite';
 import { useAppActions, useAppGetBack, useAppTitle } from '../../system/apps/apps.atom';
 import { useApp } from '../../system/apps/hooks/useApp';
 import { usePlaneMode, useThemeConfig } from '../../system/config/config.atom';
+import { DynamicIsland } from '../../system/dynamic-island/components/DynamicIsland';
 import { useEmergency } from '../../system/emergency/emergency.atom';
 import { NotificationItem } from '../../system/notifications/components/NotificationItem';
 import { useNotificationDrawer } from '../../system/notifications/hooks/useNotificationDrawer';
@@ -85,6 +86,8 @@ export const StatusBar: FunctionComponent = memo(() => {
                     {/*        <Icon key={id} className={`text-white h-4 w-4 rounded-sm`} />*/}
                     {/*    ))}*/}
                 </div>
+
+                <DynamicIsland />
 
                 <div className="flex justify-end items-center gap-1 font-semibold text-xs pr-4 w-2/6">
                     {planeMode ? <SatelliteIcon className="size-4" /> : <span>ZT&T</span>}

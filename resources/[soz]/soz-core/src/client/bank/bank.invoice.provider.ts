@@ -1,8 +1,9 @@
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { emitRpc } from '../../core/rpc';
 import { ClientEvent } from '../../shared/event/client';
-import { ServerEvent } from '../../shared/event/server';
+import { RpcServerEvent } from '../../shared/rpc';
 import { Notifier } from '../notifier';
 
 @Provider()
@@ -21,10 +22,10 @@ export class BankInvoiceProvider {
         }
 
         if (!confirmed) {
-            TriggerServerEvent(ServerEvent.BANK_INVOICE_REJECT, invoiceId);
+            await emitRpc(RpcServerEvent.BANK_REJECT_INVOICE);
             return;
         }
 
-        TriggerServerEvent(ServerEvent.BANK_INVOICE_PAY, invoiceId);
+        await emitRpc(RpcServerEvent.BANK_PAY_INVOICE, invoiceId);
     }
 }

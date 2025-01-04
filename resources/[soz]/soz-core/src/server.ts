@@ -42,6 +42,7 @@ import { TaxiModule } from './server/job/taxi/taxi.module';
 import { UpwModule } from './server/job/upw/upw.module';
 import { MonitorModule } from './server/monitor/monitor.module';
 import { ObjectModule } from './server/object/object.module';
+import { PhoneModule } from './server/phone/phone.module';
 import { PlayerModule } from './server/player/player.module';
 import { PropsModule } from './server/props/props.module';
 import { RaceModule } from './server/race/race.module';
@@ -128,6 +129,7 @@ async function bootstrap() {
         SceneModule,
         WorldModule,
         FeatureModule,
+        PhoneModule,
         ...PrivateModules
     );
 

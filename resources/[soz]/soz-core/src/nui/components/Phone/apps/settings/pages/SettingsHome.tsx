@@ -63,7 +63,6 @@ export const SettingsHome = () => {
     const config = useConfig();
 
     const { avatar, updateAvatar } = useAvatar();
-    // const { updateProfilePicture } = useSettingsAPI();
 
     const { openActionSheet } = useActionSheet();
     const { handleSettingChange, resetSettings } = useSettingsChange();
@@ -114,7 +113,7 @@ export const SettingsHome = () => {
 
     const handleChooseImage = useCallback(() => {
         navigate(
-            `/photo?${qs.stringify({
+            `/photos?${qs.stringify({
                 referral: encodeURIComponent(pathname + search),
             })}`
         );

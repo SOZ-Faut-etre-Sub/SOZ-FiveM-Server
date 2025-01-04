@@ -1,12 +1,14 @@
-import { SaveIcon, TrashIcon } from '@heroicons/react/outline';
+import { TrashIcon } from '@heroicons/react/outline';
 import React, { FunctionComponent, useLayoutEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import SaveIcon from '../../../assets/save.svg';
 import { TextareaField, TextField } from '../../../components/Input';
 import { AppContent } from '../../../components/system/AppContent';
 import { AppWrapper } from '../../../components/system/AppWrapper';
+import { useAlert } from '../../../system/alerts/hooks/useAlert';
 import { useAppTitleActionsUpdater } from '../../../system/apps/hooks/useAppTitleActionsUpdater';
 import { useAppTitleGetBackUpdater } from '../../../system/apps/hooks/useAppTitleGetBackUpdater';
 import { useThemeConfig } from '../../../system/config/config.atom';
@@ -23,8 +25,8 @@ export const NoteForm: FunctionComponent = () => {
     const { id } = useParams<{ id: string }>();
 
     const { t } = useTranslation();
-
     const theme = useThemeConfig();
+    const { sendAlert } = useAlert();
 
     const notes = useNotes();
     const note = notes.find(n => n.id === parseInt(id));
@@ -52,11 +54,13 @@ export const NoteForm: FunctionComponent = () => {
     };
 
     const handleDeleteNote = () => {
-        deleteNote(note.id)
-            .then(() => {
-                navigate(-1);
-            })
-            .catch(console.error);
+        sendAlert('Supprimer la note ?', 'Cette action est irréversible.', () => {
+            deleteNote(note.id)
+                .then(() => {
+                    navigate(-1);
+                })
+                .catch(console.error);
+        });
     };
 
     useAppTitleGetBackUpdater(() => navigate('/notes'), 'Notes');
@@ -87,7 +91,7 @@ export const NoteForm: FunctionComponent = () => {
 
     return (
         <AppWrapper className="flex flex-col">
-            <AppContent scrollable={false}>
+            <AppContent>
                 <form className="flex flex-col gap-2 h-full" onSubmit={onSubmit}>
                     <TextField
                         {...register('title', { required: true, maxLength: 128 })}

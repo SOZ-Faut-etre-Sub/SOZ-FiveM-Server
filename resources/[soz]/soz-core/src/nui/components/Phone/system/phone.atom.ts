@@ -21,17 +21,10 @@ export const usePhoneStateHandlers = () => {
     const setPhoneTime = useSetAtom(phoneTimeAtom);
     const setPhoneVisibility = useSetAtom(phoneVisibilityAtom);
 
-    useNuiEvent('phone', 'SetAvailability', data => {
-        setPhoneAvailable(data);
-    });
+    useNuiEvent('phone', 'SetAvailability', setPhoneAvailable);
+    useNuiEvent('phone', 'SetTime', setPhoneTime);
 
-    useNuiEvent('phone', 'SetTime', data => {
-        setPhoneTime(data);
-    });
-
-    useNuiEvent('phone', 'SetVisibility', data => {
-        setPhoneVisibility(data);
-    });
+    useNuiEvent('phone', 'SetVisibility', setPhoneVisibility);
 
     useInjectDebugData(() => {
         setPhoneAvailable(true);

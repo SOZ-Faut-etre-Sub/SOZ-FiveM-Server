@@ -1,9 +1,18 @@
-import { SOZ_CORE_IS_PRODUCTION } from '../../../../../../globals';
+import { useDispatch } from 'react-redux';
+
+import { Dispatch } from '../../../../../store';
+import { isEnvBrowser } from '../utils/browser';
 
 export const useInjectDebugData = (callback: () => void) => {
-    if (SOZ_CORE_IS_PRODUCTION) {
+    const dispatch = useDispatch<Dispatch>();
+
+    if (!isEnvBrowser()) {
         return;
     }
+
+    dispatch.api.set({
+        publicEndpoint: 'http://localhost',
+    });
 
     callback();
 };

@@ -3,24 +3,40 @@ import './system/locale/i18n';
 import { FunctionComponent } from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 
+import { useNuiFocus } from '../../hook/nui';
+import { useAppBankStateHandlers } from './apps/bank/bank.atom';
+import { useAppDarkWebStateHandlers } from './apps/darkweb/darkweb.atom';
 import { HomeApp } from './apps/home/HomeApp';
 import { useAppNotesStateHandlers } from './apps/notes/notes.atom';
+import { useAppPhotosStateHandlers } from './apps/photos/photos.atom';
 import { ActionSheet } from './system/action-sheet/components/ActionSheet';
+import { Alerts } from './system/alerts/components/Alerts';
 import { useApps } from './system/apps/hooks/useApps';
-import { usePhoneStateHandlers } from './system/phone.atom';
+import { usePhoneStateHandlers, usePhoneVisibility } from './system/phone.atom';
 import { PhoneWrapper } from './system/PhoneWrapper';
+import { useSimCardStateHandlers } from './system/sim-card/sim.card.atom';
 
 export const PhoneApp: FunctionComponent = () => {
     const apps = useApps();
+    const visible = usePhoneVisibility();
 
     usePhoneStateHandlers();
+    useSimCardStateHandlers();
+
+    // System Apps
+    useAppPhotosStateHandlers();
 
     // Apps
+    useAppBankStateHandlers();
     useAppNotesStateHandlers();
+    useAppDarkWebStateHandlers();
+
+    useNuiFocus(visible, visible, visible, null, visible);
 
     return (
         <MemoryRouter>
             <PhoneWrapper>
+                <Alerts />
                 <ActionSheet />
 
                 <Routes>

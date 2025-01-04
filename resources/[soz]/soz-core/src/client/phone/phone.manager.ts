@@ -1,17 +1,21 @@
-import { Command } from '../../core/decorators/command';
-import { Once, OnceStep } from '../../core/decorators/event';
-import { Inject } from '../../core/decorators/injectable';
-import { Provider } from '../../core/decorators/provider';
+import { Command } from '@core/decorators/command';
+import { Once, OnceStep } from '@core/decorators/event';
+import { Inject } from '@core/decorators/injectable';
+import { Provider } from '@core/decorators/provider';
+import { PhoneState } from '@public/client/phone/phone.state';
+
 import { HousingFournitureProvider } from '../housing/housing.fourniture.provider';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { Notifier } from '../notifier';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { PropPlacementProvider } from '../object/prop.placement.provider';
 import { PlayerService } from '../player/player.service';
-import { StateSelector } from '../store/store';
 
 @Provider()
 export class PhoneManager {
+    @Inject(PhoneState)
+    private phoneState: PhoneState;
+
     @Inject(NuiDispatch)
     private readonly nuiDispatch: NuiDispatch;
 
@@ -30,23 +34,14 @@ export class PhoneManager {
     @Inject(Notifier)
     private readonly notifier: Notifier;
 
-    private phoneDisabled = false;
-    private phoneOpen = false;
-    private phoneDrowned = false;
-    private cityIsInBlackOut = false;
-
     @Once(OnceStep.NuiLoaded)
     async onNuiLoaded() {
         this.nuiDispatch.dispatch('phone', 'SetAvailability', true);
     }
 
-    @StateSelector(state => state.global.blackout, state => state.global.blackoutLevel)
-    async onBlackout(blackout: boolean, blackoutLevel: number) {
-        this.cityIsInBlackOut = blackout || blackoutLevel >= 3;
-    }
-
     @Command('phone', {
         description: 'Afficher le téléphone',
+        passthroughNuiFocus: true,
         keys: [
             {
                 mapper: 'keyboard',
@@ -62,15 +57,14 @@ export class PhoneManager {
             return;
         }
 
-        if (this.phoneOpen) {
+        if (this.phoneState.isPhoneOpen()) {
             return this.hidePhone();
         }
 
         const playerState = this.playerService.getState();
         if (!playerState.isDead) {
-            if (this.phoneDrowned) return;
-            if (this.phoneDisabled) return;
-            if (this.cityIsInBlackOut) return;
+            if (this.phoneState.isPhoneDrowned()) return;
+            if (this.phoneState.isPhoneDisabled()) return;
 
             if (!this.hasPlayerPhone()) return;
         }
@@ -79,13 +73,11 @@ export class PhoneManager {
     }
 
     private async showPhone() {
-        this.phoneOpen = true;
-        this.nuiDispatch.dispatch('phone', 'SetVisibility', this.phoneOpen);
+        this.phoneState.setPhoneOpen(true);
     }
 
     private async hidePhone() {
-        this.phoneOpen = false;
-        this.nuiDispatch.dispatch('phone', 'SetVisibility', this.phoneOpen);
+        this.phoneState.setPhoneOpen(false);
     }
 
     private hasPlayerPhone() {

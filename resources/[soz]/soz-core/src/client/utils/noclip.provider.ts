@@ -1,4 +1,5 @@
 import { AdminSpectateProvider } from '@public/client/admin/admin.spectate.provider';
+import { CHANGE_SPEED_KEY } from '@public/config/admin';
 import { Command } from '@public/core/decorators/command';
 import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
@@ -17,9 +18,7 @@ import { WeaponDrawingProvider } from '../weapon/weapon.drawing.provider';
 
 const MOVE_UP_KEY = 20;
 const MOVE_DOWN_KEY = 44;
-export const CHANGE_SPEED_KEY = 21;
 const NO_CLIP_NORMAL_SPEED = 0.5;
-export const NO_CLIP_FAST_SPEED = 2.5;
 const eps = 0.01;
 const breakSpeed = 10.0;
 

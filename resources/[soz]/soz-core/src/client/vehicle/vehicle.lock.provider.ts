@@ -1,13 +1,14 @@
 import { Feature } from '@public/shared/features';
+import { Command } from '@core/decorators/command';
+import { Once, OnceStep, OnEvent } from '@core/decorators/event';
+import { Inject } from '@core/decorators/injectable';
+import { Provider } from '@core/decorators/provider';
+import { Tick, TickInterval } from '@core/decorators/tick';
+import { emitRpc } from '@core/rpc';
+import { uuidv4, wait, waitUntil } from '@core/utils';
+import { PhoneService } from '@public/client/phone/phone.service';
 import { getRandomItem } from '@public/shared/random';
 
-import { Command } from '../../core/decorators/command';
-import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
-import { Inject } from '../../core/decorators/injectable';
-import { Provider } from '../../core/decorators/provider';
-import { Tick, TickInterval } from '../../core/decorators/tick';
-import { emitRpc } from '../../core/rpc';
-import { uuidv4, wait, waitUntil } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { DEFAULT_MAX_INVENTORY_DISTANCE, getPositionZone } from '../../shared/inventory';
 import { PlayerData } from '../../shared/player';
@@ -81,6 +82,9 @@ export class VehicleLockProvider {
 
     @Inject(FeatureProvider)
     public featureProvider: FeatureProvider;
+
+    @Inject(PhoneService)
+    private phoneService: PhoneService;
 
     private vehicleOpened: Set<number> = new Set();
 
@@ -415,7 +419,7 @@ export class VehicleLockProvider {
             return;
         }
 
-        if (exports['soz-phone'].isPhoneVisible()) {
+        if (this.phoneService.isPhoneVisible()) {
             return;
         }
 

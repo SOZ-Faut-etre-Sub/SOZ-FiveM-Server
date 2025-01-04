@@ -8,8 +8,19 @@ export interface IAppConfig {
     path: string;
     icon: FunctionComponent<IconComponentProps>;
     component: ReactNode;
-    requiredItems?: string[];
+    condition?: () => boolean;
 
     // should be removed and be customizable
+    position?: number;
     home?: boolean;
+}
+
+export interface NavBarOption {
+    path: string;
+    icon: FunctionComponent<IconComponentProps>;
+    label: string;
+}
+
+export interface DynamicIslandData {
+    type: 'success' | 'error';
 }

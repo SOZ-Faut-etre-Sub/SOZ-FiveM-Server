@@ -1,4 +1,4 @@
-import { CHANGE_SPEED_KEY, NO_CLIP_FAST_SPEED } from '@public/client/utils/noclip.provider';
+import { CHANGE_SPEED_KEY, NO_CLIP_FAST_SPEED } from '@public/config/admin';
 import { Provider } from '@public/core/decorators/provider';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { Control } from '@public/shared/input';

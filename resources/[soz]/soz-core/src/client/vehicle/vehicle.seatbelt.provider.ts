@@ -1,11 +1,12 @@
+import { Command } from '@core/decorators/command';
+import { OnEvent } from '@core/decorators/event';
+import { Inject } from '@core/decorators/injectable';
+import { Provider } from '@core/decorators/provider';
+import { Tick } from '@core/decorators/tick';
+import { wait } from '@core/utils';
+import { PhoneService } from '@public/client/phone/phone.service';
 import { Control } from '@public/shared/input';
 
-import { Command } from '../../core/decorators/command';
-import { OnEvent } from '../../core/decorators/event';
-import { Inject } from '../../core/decorators/injectable';
-import { Provider } from '../../core/decorators/provider';
-import { Tick } from '../../core/decorators/tick';
-import { wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { toVectorNorm, Vector3 } from '../../shared/polyzone/vector';
 import { VehicleClass, VehicleSeat } from '../../shared/vehicle/vehicle';
@@ -25,6 +26,9 @@ export class VehicleSeatbeltProvider {
 
     @Inject(VehicleService)
     private vehicleService: VehicleService;
+
+    @Inject(PhoneService)
+    private phoneService: PhoneService;
 
     @Inject(Notifier)
     private notifier: Notifier;
@@ -90,7 +94,7 @@ export class VehicleSeatbeltProvider {
             return;
         }
 
-        if (exports['soz-phone'].isPhoneVisible()) {
+        if (this.phoneService.isPhoneVisible()) {
             return;
         }
 

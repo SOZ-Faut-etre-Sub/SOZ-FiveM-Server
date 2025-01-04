@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
+import { PhoneService } from '@public/client/phone/phone.service';
 import { VampireGameStateProvider } from '@public/client/story/vampire.game.state.provider';
 import { Interaction } from '@public/shared/interaction';
 
@@ -22,6 +23,9 @@ export class TargetService {
 
     @Inject(ItemService)
     private readonly itemService: ItemService;
+
+    @Inject(PhoneService)
+    private readonly phoneService: PhoneService;
 
     @Inject(StateGlobalProvider)
     private readonly stateGlobalProvider: StateGlobalProvider;
@@ -66,7 +70,7 @@ export class TargetService {
 
         if (player.metadata.isdead || player.metadata.inlaststand || player.metadata.ishandcuffed) return false;
         if (this.playerProneProvider.isPlayerProne()) return false;
-        if (exports['soz-phone'].isPhoneVisible()) return false;
+        if (this.phoneService.isPhoneVisible()) return false;
         if (IsEntityAttached(PlayerPedId())) return false;
 
         return true;

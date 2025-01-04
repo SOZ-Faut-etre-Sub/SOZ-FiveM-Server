@@ -1,6 +1,4 @@
-import { ChevronRightIcon } from '@heroicons/react/outline';
 import { PencilAltIcon } from '@heroicons/react/solid';
-import cn from 'classnames';
 import clsx from 'clsx';
 import { useAtom } from 'jotai';
 import React, { FunctionComponent, useEffect } from 'react';
@@ -9,8 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { FixedSizeList } from 'react-window';
 
 import { NoteItem } from '../../../../../../shared/phone/apps/notes';
-import { VirtualizedProps } from '../../../../../../shared/virtualized';
-import { Button } from '../../../components/Button';
+import { VirtualizedListProps } from '../../../../../../shared/virtualized';
 import { ListItem } from '../../../components/List';
 import { SearchField } from '../../../components/SearchField';
 import { AppContent } from '../../../components/system/AppContent';
@@ -58,7 +55,7 @@ export const NoteList = () => {
                     <FixedSizeList
                         height={720}
                         width={410}
-                        itemSize={45}
+                        itemSize={60}
                         itemCount={notes.length}
                         itemData={notes}
                         className="rounded-xl"
@@ -67,7 +64,7 @@ export const NoteList = () => {
                     </FixedSizeList>
                 ) : (
                     <div
-                        className={cn('flex flex-col justify-center items-center', {
+                        className={clsx('flex flex-col justify-center items-center', {
                             'text-white': theme === 'dark',
                             'text-dark': theme === 'light',
                         })}
@@ -80,29 +77,22 @@ export const NoteList = () => {
     );
 };
 
-const NoteItem: FunctionComponent<VirtualizedProps<NoteItem>> = ({ index, style, data }) => {
+const NoteItem: FunctionComponent<VirtualizedListProps<NoteItem>> = ({ index, style, data }) => {
     const navigate = useNavigate();
-    const theme = useThemeConfig();
 
     const note = data[index];
+    if (!note) return null;
 
-    const handleNoteModal = (note: NoteItem) => {
+    const handleNoteModal = () => {
         navigate(`/notes/${note.id}`);
     };
 
-    if (!note) return null;
-
     return (
-        <ListItem key={note.id} style={style} onClick={() => handleNoteModal(note)}>
-            <p className="flex-grow ml-4 py-2">{note.title}</p>
-            <Button className="flex items-center">
-                <ChevronRightIcon
-                    className={clsx('text-opacity-25 w-5 h-5', {
-                        'text-white': theme === 'dark',
-                        'text-dark': theme === 'light',
-                    })}
-                />
-            </Button>
+        <ListItem key={note.id} style={style} onClick={handleNoteModal}>
+            <div className="flex flex-col ml-2 py-2 truncate">
+                <p className="flex-grow">{note.title}</p>
+                <p className="flex-grow text-gray-500 truncate">{note.content.slice(0, 60)}</p>
+            </div>
         </ListItem>
     );
 };

@@ -2,6 +2,7 @@ import { atom, useAtomValue } from 'jotai';
 import { useSetAtom } from 'jotai/index';
 
 import { NoteItem } from '../../../../../shared/phone/apps/notes';
+import { useNuiEvent } from '../../../../hook/nui';
 import { useInjectDebugData } from '../../system/debug/hooks/useInjectDebugData';
 
 const notesAtom = atom<Array<NoteItem>>([]);
@@ -16,7 +17,9 @@ const filteredNotesAtom = atom<Array<NoteItem>>(get => {
 export const useNotes = () => useAtomValue(filteredNotesAtom);
 
 export const useAppNotesStateHandlers = () => {
-    const setNodes = useSetAtom(notesAtom);
+    const setNotes = useSetAtom(notesAtom);
+
+    useNuiEvent('phone', 'AppNotesSetData', setNotes);
 
     useInjectDebugData(() => {
         const notes: NoteItem[] = [];
@@ -29,6 +32,6 @@ export const useAppNotesStateHandlers = () => {
             });
         }
 
-        setNodes(notes);
+        setNotes(notes);
     });
 };

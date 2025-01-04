@@ -667,4 +667,12 @@ export enum NuiEvent {
     InventoryActionForceConsume = 'soz-core:nui:inventory:action-force-consume',
     InventoryShopValidate = 'soz-core:nui:inventory:shop-validate',
     InventoryGoBackPlayerInventory = 'soz-core:nui:inventory:go-back-player-inventory',
+
+    PhoneSimCardUpdateAvatar = 'soz-core:nui:phone:sim-card-update-avatar',
+    PhoneAppPhotosDelete = 'soz-core:nui:phone:app-photos-delete',
+    PhoneAppNotesAdd = 'soz-core:nui:phone:app-notes-add',
+    PhoneAppNotesUpdate = 'soz-core:nui:phone:app-notes-update',
+    PhoneAppNotesDelete = 'soz-core:nui:phone:app-notes-delete',
+    PhoneAppBankPayInvoice = 'soz-core:nui:phone:app-bank-pay-invoice',
+    PhoneAppBankRejectInvoice = 'soz-core:nui:phone:app-bank-reject-invoice',
 }

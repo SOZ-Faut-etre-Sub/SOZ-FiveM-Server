@@ -32,7 +32,7 @@ export const PhoneWrapper: FunctionComponent<PropsWithChildren> = memo(({ childr
 
     const bottomCalc = () => {
         if (!available) {
-            return '-150vh';
+            return '-100vh';
         }
 
         if (handsFree && !planeMode && !visibility && !!currentCall) {
@@ -43,12 +43,12 @@ export const PhoneWrapper: FunctionComponent<PropsWithChildren> = memo(({ childr
             return `${80 - minimap.bottom * 100}vh`;
         }
 
-        return visibility ? `${100 - minimap.bottom * 100}vh` : '-150vh';
+        return visibility ? `${100 - minimap.bottom * 100}vh` : '-100vh';
     };
 
     const styles = useSpring({
         from: {
-            bottom: '-150vh',
+            bottom: '-100vh',
         },
         to: {
             bottom: bottomCalc(),
@@ -68,7 +68,7 @@ export const PhoneWrapper: FunctionComponent<PropsWithChildren> = memo(({ childr
             // }}
         >
             <animated.div
-                className="absolute bg-cover origin-bottom-right transition-any ease-in-out duration-300"
+                className="absolute bg-cover origin-bottom-right"
                 style={{
                     ...styles,
                     width: PHONE_WIDTH,

@@ -298,7 +298,7 @@ export const fr = {
         APPS_PHOTO: 'Galerie',
         APPS_SOCIETY_CONTACTS: 'Annuaire Entreprise',
         APPS_SOCIETY_MESSAGES: 'Répondeur Entreprise',
-        APPS_TWITCH_NEWS: 'San Andreas News',
+        APPS_NEWS: 'San Andreas News',
         APPS_ZUTOM: 'Zutom',
         APPS_WEATHER: 'Météo',
         APPS_DARKWEB: '????',

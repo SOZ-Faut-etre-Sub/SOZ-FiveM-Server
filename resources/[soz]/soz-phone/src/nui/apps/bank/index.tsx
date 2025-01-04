@@ -11,9 +11,9 @@ import { AppWrapper } from '../../ui/components/AppWrapper';
 import { NavBarButton, NavBarContainer } from '../../ui/components/NavBar';
 import { useBackground } from '../../ui/hooks/useBackground';
 import { FullPageWithHeader } from '../../ui/layout/FullPageWithHeader';
-import { BankHome } from './pages/BankHome';
-import HistoryList from './pages/HistoryList';
-import InvoiceList from './pages/InvoiceList';
+import { BankHome } from '../../../../../soz-core/src/nui/components/Phone/apps/bank/pages/BankHome';
+import HistoryList from '../../../../../soz-core/src/nui/components/Phone/apps/bank/pages/HistoryList';
+import InvoiceList from '../../../../../soz-core/src/nui/components/Phone/apps/bank/pages/InvoiceList';
 
 export const BankApp = memo(() => {
     const [t] = useTranslation();

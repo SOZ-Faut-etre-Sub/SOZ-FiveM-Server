@@ -204,23 +204,6 @@ export class BankProvider {
         return this.bankService.transferFarmMoney(source, farm, safe, amount, moneyType);
     }
 
-    @Exportable('GetPlayerAccount')
-    public async getPlayerAccount(source: number) {
-        const player = this.playerService.getPlayer(source);
-        if (!player) {
-            return;
-        }
-
-        const account = await this.bankAccountRepository.find(player.charinfo.account);
-        if (!account) return;
-
-        return {
-            name: `${player.charinfo.firstname} ${player.charinfo.lastname}`,
-            account: account.id,
-            balance: account.money,
-        };
-    }
-
     @Exportable('GetPlayerBankContacts')
     public async getPlayerBankContacts(source: number) {
         const player = this.playerService.getPlayer(source);

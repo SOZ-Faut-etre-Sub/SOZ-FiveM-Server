@@ -5,8 +5,8 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { useBackground } from '../../ui/hooks/useBackground';
-import { GalleryGrid } from './pages/GalleryGrid';
-import { GalleryModal } from './pages/GalleryModal';
+import { GalleryGrid } from '../../../../../soz-core/src/nui/components/Phone/apps/photos/pages/GalleryGrid';
+import { GalleryModal } from '../../../../../soz-core/src/nui/components/Phone/apps/photos/pages/GalleryModal';
 
 const PhotoApp: React.FC = () => {
     const backgroundClass = useBackground();

@@ -73,10 +73,9 @@ All contributors to the project will be notified on a list.
  * Clone the repository: `git clone https://github.com/SOZ-Faut-etre-Sub/SOZ-FiveM-Server.git`
  * Copy the `env.cfg-dist` file to `env.cfg` and fill / replace any necessary values (like your database credentials)
  * Copy the `resources/[soz]/soz-core/.env-dist` file to `resources/[soz]/soz-core/.env` and fill / replace any necessary values (like your database credentials)
- * Compile the resources core and phone:
+ * Compile the resources core:
    ```
    cd resources/[soz]/soz-core && yarn install && yarn build
-   cd resources/[soz]/soz-phone && yarn install && yarn build
    ```
  * Migrate the database:
    ```
