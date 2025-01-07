@@ -2412,6 +2412,27 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
             }),
         ],
     },
+    sasp_air: {
+        name: 'San Andreas State Police Air Parking',
+        type: GarageType.Job,
+        job: JobType.SASP,
+        category: GarageCategory.Air,
+        zone: new BoxZone([-505.66, -605.94, 33.68], 1.0, 1.0, {
+            heading: 0.0,
+            minZ: 32.68,
+            maxZ: 34.68,
+        }),
+        parkingPlaces: [
+            new BoxZone([-493.95, -611.88, 36.56], 6.8, 4.0, {
+                heading: 90.0,
+                minZ: 37.56,
+                maxZ: 38.56,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
     fdf: {
         name: 'Ferme de Fou Parking',
         type: GarageType.Job,
@@ -2501,6 +2522,27 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
                 heading: 0.0,
                 minZ: 31.17,
                 maxZ: 33.17,
+            }),
+        ],
+    },
+    gouv_air: {
+        name: 'Gouvernement Air Parking',
+        type: GarageType.Job,
+        job: JobType.Gouv,
+        category: GarageCategory.Air,
+        zone: new BoxZone([-505.66, -617.91, 33.68], 1.0, 1.0, {
+            heading: 180.0,
+            minZ: 32.68,
+            maxZ: 35.68,
+        }),
+        parkingPlaces: [
+            new BoxZone([-493.95, -611.88, 36.56], 6.8, 4.0, {
+                heading: 90.0,
+                minZ: 37.56,
+                maxZ: 38.56,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
             }),
         ],
     },
