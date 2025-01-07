@@ -5,7 +5,7 @@ import { PhotoItem } from '@public/shared/phone/apps/photos';
 export interface NuiPhoneMap {
     SetAvailability: boolean;
     SetVisibility: boolean;
-    SetTime: string;
+    SetTime: { hour: number; minute: number };
 
     SetSimCard: string;
     SetSimCardAvatar: string;

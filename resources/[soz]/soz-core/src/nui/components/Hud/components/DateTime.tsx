@@ -17,9 +17,7 @@ export const DateTime: FunctionComponent = () => {
         <div className="flex flex-col drop-shadow-bg" style={{ zoom: settings.zoom }}>
             <span className="text-2xl leading-4 font-light capitalize">{weekToString(dayOfWeek)}</span>
             <span className="text-2.5xl">
-                {hour <= 9 && '0'}
-                {hour}:{minute <= 9 && '0'}
-                {minute}
+                {String(hour).padStart(2, '0')}:{String(minute).padStart(2, '0')}
             </span>
         </div>
     );

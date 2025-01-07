@@ -44,10 +44,6 @@ export class PhoneProvider {
         const hour: number = GetClockHours();
         const minute: number = GetClockMinutes();
 
-        this.nuiDispatch.dispatch(
-            'phone',
-            'SetTime',
-            `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`
-        );
+        this.nuiDispatch.dispatch('phone', 'SetTime', { hour, minute });
     }
 }

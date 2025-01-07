@@ -17,6 +17,7 @@ import { PhotosApp } from '../../../apps/photos/PhotosApp';
 import SettingsIcon from '../../../apps/settings/icon';
 import { SettingsApp } from '../../../apps/settings/SettingsApp';
 import WeatherIcon from '../../../apps/weather/icon';
+import { WeatherApp } from '../../../apps/weather/WeatherApp';
 import { useSocietySimCard } from '../../sim-card/hooks/useSocietySimCard';
 
 export const useApps = () => {
@@ -138,7 +139,7 @@ export const useApps = () => {
             nameLocale: 'APPS_WEATHER',
             path: '/weather',
             icon: WeatherIcon,
-            // component: <WeatherApp />,
+            component: <WeatherApp />,
             position: 4,
         },
         {

@@ -9,6 +9,7 @@ import { useAppDarkWebStateHandlers } from './apps/darkweb/darkweb.atom';
 import { HomeApp } from './apps/home/HomeApp';
 import { useAppNotesStateHandlers } from './apps/notes/notes.atom';
 import { useAppPhotosStateHandlers } from './apps/photos/photos.atom';
+import { useApWeatherStateHandlers } from './apps/weather/weather.atom';
 import { ActionSheet } from './system/action-sheet/components/ActionSheet';
 import { Alerts } from './system/alerts/components/Alerts';
 import { useApps } from './system/apps/hooks/useApps';
@@ -28,6 +29,7 @@ export const PhoneApp: FunctionComponent = () => {
 
     // Apps
     useAppBankStateHandlers();
+    useApWeatherStateHandlers();
     useAppNotesStateHandlers();
     useAppDarkWebStateHandlers();
 

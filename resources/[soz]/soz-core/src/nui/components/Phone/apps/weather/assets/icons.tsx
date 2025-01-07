@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 
-interface IconProps {
+export interface IconProps {
     className?: string;
     width: string;
     height: string;
 }
 
-export const SunnyDayIcon: React.FC<IconProps> = props => {
+export const SunnyDayIcon: FunctionComponent<IconProps> = props => {
     return (
         <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0,0,256,256" fillRule="nonzero" className="m-auto">
             <g
@@ -32,7 +32,7 @@ export const SunnyDayIcon: React.FC<IconProps> = props => {
     );
 };
 
-export const SunnyNightIcon: React.FC<IconProps> = props => {
+export const SunnyNightIcon: FunctionComponent<IconProps> = props => {
     return (
         <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0,0,256,256" fillRule="nonzero" className="m-auto">
             <g
@@ -58,7 +58,7 @@ export const SunnyNightIcon: React.FC<IconProps> = props => {
     );
 };
 
-export const CloudsIcon: React.FC<IconProps> = props => {
+export const CloudsIcon: FunctionComponent<IconProps> = props => {
     return (
         <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0,0,256,256">
             <g
@@ -84,7 +84,7 @@ export const CloudsIcon: React.FC<IconProps> = props => {
     );
 };
 
-export const SmogDayIcon: React.FC<IconProps> = props => {
+export const SmogDayIcon: FunctionComponent<IconProps> = props => {
     return (
         <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0,0,256,256">
             <g
@@ -110,7 +110,7 @@ export const SmogDayIcon: React.FC<IconProps> = props => {
     );
 };
 
-export const SmogNightIcon: React.FC<IconProps> = props => {
+export const SmogNightIcon: FunctionComponent<IconProps> = props => {
     return (
         <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0,0,256,256">
             <g
@@ -136,7 +136,7 @@ export const SmogNightIcon: React.FC<IconProps> = props => {
     );
 };
 
-export const RainIcon: React.FC<IconProps> = props => {
+export const RainIcon: FunctionComponent<IconProps> = props => {
     return (
         <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0,0,256,256">
             <g
@@ -162,7 +162,7 @@ export const RainIcon: React.FC<IconProps> = props => {
     );
 };
 
-export const ThunderIcon: React.FC<IconProps> = props => {
+export const ThunderIcon: FunctionComponent<IconProps> = props => {
     return (
         <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0,0,256,256">
             <g
@@ -188,7 +188,7 @@ export const ThunderIcon: React.FC<IconProps> = props => {
     );
 };
 
-export const ClearingIcon: React.FC<IconProps> = props => {
+export const ClearingIcon: FunctionComponent<IconProps> = props => {
     return (
         <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0,0,256,256">
             <g
@@ -214,7 +214,7 @@ export const ClearingIcon: React.FC<IconProps> = props => {
     );
 };
 
-export const ClearingNightIcon: React.FC<IconProps> = props => {
+export const ClearingNightIcon: FunctionComponent<IconProps> = props => {
     return (
         <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0,0,256,256">
             <g
@@ -261,7 +261,7 @@ export const ClearingNightIcon: React.FC<IconProps> = props => {
     );
 };
 
-export const NeutralIcon: React.FC<IconProps> = props => {
+export const NeutralIcon: FunctionComponent<IconProps> = props => {
     return (
         <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0,0,256,256">
             <g
@@ -287,7 +287,7 @@ export const NeutralIcon: React.FC<IconProps> = props => {
     );
 };
 
-export const NeutralNightIcon: React.FC<IconProps> = props => {
+export const NeutralNightIcon: FunctionComponent<IconProps> = props => {
     return (
         <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0,0,256,256">
             <g
@@ -313,7 +313,7 @@ export const NeutralNightIcon: React.FC<IconProps> = props => {
     );
 };
 
-export const SnowIcon: React.FC<IconProps> = props => {
+export const SnowIcon: FunctionComponent<IconProps> = props => {
     return (
         <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0,0,256,256">
             <g
@@ -339,7 +339,7 @@ export const SnowIcon: React.FC<IconProps> = props => {
     );
 };
 
-export const BlizzardIcon: React.FC<IconProps> = props => {
+export const BlizzardIcon: FunctionComponent<IconProps> = props => {
     return (
         <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0,0,256,256">
             <g
@@ -365,7 +365,7 @@ export const BlizzardIcon: React.FC<IconProps> = props => {
     );
 };
 
-export const SnowLightIcon: React.FC<IconProps> = props => {
+export const SnowLightIcon: FunctionComponent<IconProps> = props => {
     return (
         <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0,0,256,256">
             <g
@@ -391,7 +391,7 @@ export const SnowLightIcon: React.FC<IconProps> = props => {
     );
 };
 
-export const XmasIcon: React.FC<IconProps> = props => {
+export const XmasIcon: FunctionComponent<IconProps> = props => {
     return (
         <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0,0,256,256">
             <g
@@ -417,7 +417,7 @@ export const XmasIcon: React.FC<IconProps> = props => {
     );
 };
 
-export const HalloweenIcon: React.FC<IconProps> = props => {
+export const HalloweenIcon: FunctionComponent<IconProps> = props => {
     return (
         <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0,0,256,256">
             <g
@@ -443,7 +443,7 @@ export const HalloweenIcon: React.FC<IconProps> = props => {
     );
 };
 
-export const SandStormIcon: React.FC<IconProps> = props => {
+export const SandStormIcon: FunctionComponent<IconProps> = props => {
     return (
         <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0,0,256,256">
             <g
