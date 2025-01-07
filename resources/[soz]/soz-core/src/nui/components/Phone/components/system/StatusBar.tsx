@@ -2,7 +2,7 @@ import { Transition } from '@headlessui/react';
 import { ChevronLeftIcon } from '@heroicons/react/outline';
 import { animated, useSpring } from '@react-spring/web';
 import clsx from 'clsx';
-import React, { FunctionComponent, memo, useEffect } from 'react';
+import React, { FunctionComponent, memo, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -23,7 +23,11 @@ import { useCall } from '../../system/sim-card/hooks/useCall';
 import { useCallModalOpen } from '../../system/sim-card/sim.card.atom';
 import { Button } from '../Button';
 
-export const StatusBar: FunctionComponent = memo(() => {
+interface StatusBarProps {
+    forceControlColor?: 'light' | 'dark';
+}
+
+export const StatusBar: FunctionComponent<StatusBarProps> = memo(({ forceControlColor }) => {
     const navigate = useNavigate();
     const { pathname } = useLocation();
 
@@ -49,19 +53,26 @@ export const StatusBar: FunctionComponent = memo(() => {
         }
     }, [notifications, setDrawerOpen]);
 
-    const color = () => {
+    const color = useMemo(() => {
+        const lightMode = 'text-white';
+        const darkMode = 'text-black';
+
+        if (forceControlColor) {
+            return forceControlColor === 'light' ? lightMode : darkMode;
+        }
+
         if (['/', '/emergency', '/weather', '/game-tetris', '/snake', '/bank'].includes(pathname)) {
-            return 'text-white';
+            return lightMode;
         } else if (pathname === '/call' || (currentCall && pathname.includes('/phone'))) {
-            return 'text-white';
+            return lightMode;
         } else if (pathname.includes('/camera')) {
             return 'bg-black text-white';
         } else if (['/darkweb'].includes(pathname)) {
             return 'text-teal-500';
         } else {
-            return themeConfig === 'dark' ? 'text-white' : 'text-black';
+            return themeConfig === 'dark' ? lightMode : darkMode;
         }
-    };
+    }, [currentCall, pathname, themeConfig, forceControlColor]);
 
     const styles = useSpring({
         opacity: appTitle.display ? 1 : 0,
@@ -70,7 +81,7 @@ export const StatusBar: FunctionComponent = memo(() => {
     return (
         <>
             <div
-                className={clsx(`flex-none h-[70px] flex justify-between items-center px-5 w-full`, color(), {
+                className={clsx(`flex-none h-[70px] flex justify-between items-center px-5 w-full`, color, {
                     'cursor-pointer': !emergency,
                 })}
                 onClick={() => {

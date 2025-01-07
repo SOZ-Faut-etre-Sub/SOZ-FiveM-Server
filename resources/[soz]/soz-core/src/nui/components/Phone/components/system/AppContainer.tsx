@@ -11,14 +11,21 @@ import { TabBar } from './TabBar';
 
 interface AppContainerProps extends PropsWithChildren {
     tabBarOptions?: NavBarOption[];
-
+    forceControlColor?: 'light' | 'dark';
     withHeader?: boolean;
     withNavBar?: boolean;
     disableBackground?: boolean;
 }
 
 export const AppContainer: FunctionComponent<AppContainerProps> = memo(
-    ({ children, tabBarOptions, disableBackground = false, withHeader = true, withNavBar = true }) => {
+    ({
+        children,
+        tabBarOptions,
+        forceControlColor,
+        disableBackground = false,
+        withHeader = true,
+        withNavBar = true,
+    }) => {
         const { pathname } = useLocation();
         const backgroundClass = useBackgroundClasses();
 
@@ -41,10 +48,10 @@ export const AppContainer: FunctionComponent<AppContainerProps> = memo(
                     'pb-7': pathname !== '/',
                 })}
             >
-                {withHeader && <StatusBar />}
+                {withHeader && <StatusBar forceControlColor={forceControlColor} />}
                 {children}
                 {tabBarOptions && <TabBar options={tabBarOptions} />}
-                {withNavBar && <NavigationBar />}
+                {withNavBar && <NavigationBar forceControlColor={forceControlColor} />}
             </animated.div>
         );
     }

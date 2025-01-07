@@ -18,6 +18,8 @@ import SettingsIcon from '../../../apps/settings/icon';
 import { SettingsApp } from '../../../apps/settings/SettingsApp';
 import WeatherIcon from '../../../apps/weather/icon';
 import { WeatherApp } from '../../../apps/weather/WeatherApp';
+import ZutomIcon from '../../../apps/zutom/icon';
+import { ZutomApp } from '../../../apps/zutom/ZutomApp';
 import { useSocietySimCard } from '../../sim-card/hooks/useSocietySimCard';
 
 export const useApps = () => {
@@ -172,8 +174,8 @@ export const useApps = () => {
             id: 'zutom',
             nameLocale: 'APPS_ZUTOM',
             path: '/zutom',
-            // icon: ZutomIcon,
-            // component: <ZutomApp />,
+            icon: ZutomIcon,
+            component: <ZutomApp />,
             position: 9,
         },
     ];

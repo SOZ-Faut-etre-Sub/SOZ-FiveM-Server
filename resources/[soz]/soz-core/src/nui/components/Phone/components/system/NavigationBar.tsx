@@ -7,7 +7,11 @@ import { useThemeConfig } from '../../system/config/config.atom';
 import { useEmergency } from '../../system/emergency/emergency.atom';
 import { useNotificationDrawer } from '../../system/notifications/hooks/useNotificationDrawer';
 
-export const NavigationBar: FunctionComponent = memo(() => {
+interface NavigationBarProps {
+    forceControlColor?: 'light' | 'dark';
+}
+
+export const NavigationBar: FunctionComponent<NavigationBarProps> = memo(({ forceControlColor }) => {
     const navigate = useNavigate();
     const { pathname } = useLocation();
 
@@ -18,10 +22,17 @@ export const NavigationBar: FunctionComponent = memo(() => {
     const { closeActionSheet } = useActionSheet();
 
     const color = useMemo(() => {
+        const lightMode = 'bg-gray-200';
+        const darkMode = 'bg-ios-800';
+
+        if (forceControlColor) {
+            return forceControlColor === 'light' ? lightMode : darkMode;
+        }
+
         if (pathname.includes('/camera') || ['/call', '/game-tetris'].includes(pathname)) {
-            return 'bg-gray-200';
+            return lightMode;
         } else {
-            return theme === 'dark' ? 'bg-gray-200' : 'bg-ios-800';
+            return theme === 'dark' ? lightMode : darkMode;
         }
     }, [theme, pathname]);
 
