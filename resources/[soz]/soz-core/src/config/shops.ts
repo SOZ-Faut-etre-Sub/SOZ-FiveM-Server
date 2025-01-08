@@ -947,6 +947,7 @@ export const UndershirtCategoryNeedingReplacementTorso: Record<
         },
         [UType.fch3]: {
             [4]: 9,
+            [11]: 9,
         },
     },
     [PlayerPedHash.Male]: {
