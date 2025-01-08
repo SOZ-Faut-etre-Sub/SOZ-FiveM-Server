@@ -1,4 +1,3 @@
-import { format } from 'date-fns';
 import { atom, useAtomValue, useSetAtom } from 'jotai';
 
 import { useNuiEvent } from '../../../hook/nui';

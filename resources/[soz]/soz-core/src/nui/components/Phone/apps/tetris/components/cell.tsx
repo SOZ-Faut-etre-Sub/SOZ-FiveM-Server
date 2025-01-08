@@ -1,13 +1,13 @@
-import cn from 'classnames';
-import React from 'react';
+import clsx from 'clsx';
+import React, { FunctionComponent } from 'react';
 
 import { Piece } from '../game/Piece';
 
-type CellProps = {
+interface CellProps {
     block: Piece | 'ghost';
-};
+}
 
-export const Cell: React.FC<CellProps> = ({ block }) => {
+export const Cell: FunctionComponent<CellProps> = ({ block }) => {
     switch (block) {
         case 'I':
             return (
@@ -69,7 +69,7 @@ export const Cell: React.FC<CellProps> = ({ block }) => {
 
     return (
         <div
-            className={cn('aspect-square', {
+            className={clsx('aspect-square', {
                 'bg-[#ffffff20]': block === 'ghost',
             })}
         />

@@ -462,4 +462,6 @@ export enum ClientEvent {
     CEREMONY_MOVE_CAMERA = 'soz-core:client:ceremony:move-camera',
 
     XMAS_UPDATE_SCENE_STATE = 'soz-core:client:xmas:update-scene-state',
+
+    PHONE_APP_TETRIS_UPDATE_LEADERBOARD = 'phone:app:tetris:updateLeaderboard',
 }

@@ -1,4 +1,5 @@
 import { BankData } from '@public/shared/phone/apps/bank';
+import { LeaderboardInterface } from '@public/shared/phone/apps/game';
 import { NoteItem } from '@public/shared/phone/apps/notes';
 import { PhotoItem } from '@public/shared/phone/apps/photos';
 
@@ -16,4 +17,5 @@ export interface NuiPhoneMap {
     AppNotesSetData: NoteItem[];
     AppPhotosSetData: PhotoItem[];
     AppBankSetData: BankData;
+    AppTetrisSetLeaderboard: LeaderboardInterface[];
 }

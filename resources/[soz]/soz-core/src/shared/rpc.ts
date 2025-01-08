@@ -313,6 +313,8 @@ export enum RpcServerEvent {
     PHONE_APP_NOTES_UPDATE = 'soz-core:server:phone:app:notes:update',
     PHONE_APP_NOTES_DELETE = 'soz-core:server:phone:app:notes:delete',
     PHONE_APP_TAX_GET = 'soz-core:server:phone:app:tax:get',
+    PHONE_APP_TETRIS_GET_LEADERBOARD = 'soz-core:server:phone:app:tetris:get-leaderboard',
+    PHONE_APP_TETRIS_ADD_SCORE = 'soz-core:server:phone:app:tetris:add-score',
 }
 
 export enum RpcClientEvent {

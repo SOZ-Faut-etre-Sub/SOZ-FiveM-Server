@@ -13,3 +13,9 @@ export const AppIcon: FunctionComponent<AppIconProps> = ({ name, ...props }) => 
 
     return <img {...props} alt={name} src={getPath(`images/phone/apps/${name}/logo-${theme}.webp`)} />;
 };
+
+export const AppSimpleIcon: FunctionComponent<AppIconProps> = ({ name, ...props }) => {
+    const { getPath } = useAssetPath();
+
+    return <img {...props} alt={name} src={getPath(`images/phone/apps/${name}/logo.webp`)} />;
+};

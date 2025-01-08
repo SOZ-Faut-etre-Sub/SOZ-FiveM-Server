@@ -1,7 +1,7 @@
 import Constants from '../utils/game_config';
 
 export const pieces = <const>['I', 'J', 'L', 'O', 'S', 'T', 'Z'];
-export type Piece = typeof pieces[number];
+export type Piece = (typeof pieces)[number];
 export type Rotation = 0 | 1 | 2 | 3;
 
 export const isRotation = (num: number): num is Rotation => num >= 0 && num < Constants.ROTATION_COUNT;

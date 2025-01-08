@@ -74,6 +74,7 @@
         "inter-ui": "^4.0.2",
         "inversify": "^6.0.2",
         "jotai": "^2.10.2",
+        "keymaster": "^1.6.2",
         "p-cancelable": "^4.0.1",
         "parse-url": "^9.2.0",
         "postcss": "^8.4.38",

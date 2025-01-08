@@ -2,7 +2,7 @@ import { createModel } from '@rematch/core';
 
 import { TetrisEvents } from '../../../../typings/app/tetris';
 import { LeaderboardInterface, ServerPromiseResp } from '../../../../typings/common';
-import { MockTetrisLeaderboard } from '../../apps/game-tetris/utils/constants';
+import { MockTetrisLeaderboard } from '../../../../../soz-core/src/nui/components/Phone/apps/tetris/utils/constants';
 import { fetchNui } from '../../common/utils/fetchNui';
 import { buildRespObj } from '../../common/utils/misc';
 import { RootModel } from '..';

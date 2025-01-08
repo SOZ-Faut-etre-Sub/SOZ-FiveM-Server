@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { FunctionComponent, useContext } from 'react';
 
 import { Context } from '../utils/context';
-import PieceView from './PieceView';
+import { PieceView } from './PieceView';
 
-export default function PieceQueue(): JSX.Element {
-    const { queue } = React.useContext(Context);
+export const PieceQueue: FunctionComponent = () => {
+    const { queue } = useContext(Context);
+
     return (
         <div className="flex flex-col space-y-4 p-1 bg-[#0d1a48]/60">
             {queue.queue.map((piece, i) => (
@@ -12,4 +13,4 @@ export default function PieceQueue(): JSX.Element {
             ))}
         </div>
     );
-}
+};

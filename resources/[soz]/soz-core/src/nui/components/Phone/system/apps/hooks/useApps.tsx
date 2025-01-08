@@ -16,6 +16,8 @@ import PhotosIcon from '../../../apps/photos/icon';
 import { PhotosApp } from '../../../apps/photos/PhotosApp';
 import SettingsIcon from '../../../apps/settings/icon';
 import { SettingsApp } from '../../../apps/settings/SettingsApp';
+import TetrisIcon from '../../../apps/tetris/icon';
+import { TetrisApp } from '../../../apps/tetris/TetrisApp';
 import WeatherIcon from '../../../apps/weather/icon';
 import { WeatherApp } from '../../../apps/weather/WeatherApp';
 import ZutomIcon from '../../../apps/zutom/icon';
@@ -155,11 +157,11 @@ export const useApps = () => {
 
         /* Games apps */
         {
-            id: 'game-tetris',
+            id: 'tetris',
             nameLocale: 'APPS_TETRIS',
-            path: '/game-tetris',
-            // icon: GameTetrisIcon,
-            // component: <GameTetris />,
+            path: '/tetris',
+            icon: TetrisIcon,
+            component: <TetrisApp />,
             position: 10,
         },
         {

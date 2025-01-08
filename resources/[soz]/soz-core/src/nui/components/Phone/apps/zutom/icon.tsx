@@ -1,11 +1,9 @@
 import React from 'react';
 
-import { useAssetPath } from '../../../../hook/assets';
+import { AppSimpleIcon } from '../../components/system/AppIcon';
 
 const ZutomIcon: React.FC = props => {
-    const { getPath } = useAssetPath();
-
-    return <img {...props} alt="Zutom" src={getPath(`images/phone/apps/zutom/logo.webp`)} />;
+    return <AppSimpleIcon {...props} name="zutom" />;
 };
 
 export default ZutomIcon;

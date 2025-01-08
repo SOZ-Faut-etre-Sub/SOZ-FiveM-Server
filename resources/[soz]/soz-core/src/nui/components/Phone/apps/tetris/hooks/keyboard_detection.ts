@@ -1,12 +1,12 @@
 import key from 'keymaster';
-import React from 'react';
+import { Dispatch, useEffect } from 'react';
 
 import { Action } from '../game/Game';
 
 export type KeyboardMap = Record<string, Action>;
 
-export const useKeyboardControls = (keyboardMap: KeyboardMap, dispatch: React.Dispatch<Action>): void => {
-    React.useEffect(() => {
+export const useKeyboardControls = (keyboardMap: KeyboardMap, dispatch: Dispatch<Action>): void => {
+    useEffect(() => {
         const keyboardDispatch = Object.entries(keyboardMap).reduce<KeyboardDispatch>((output, [key, action]) => {
             output[key] = () => dispatch(action);
             return output;

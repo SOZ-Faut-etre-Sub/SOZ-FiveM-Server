@@ -29,7 +29,7 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = memo(({ forc
             return forceControlColor === 'light' ? lightMode : darkMode;
         }
 
-        if (pathname.includes('/camera') || ['/call', '/game-tetris'].includes(pathname)) {
+        if (pathname.includes('/camera') || ['/call'].includes(pathname)) {
             return lightMode;
         } else {
             return theme === 'dark' ? lightMode : darkMode;

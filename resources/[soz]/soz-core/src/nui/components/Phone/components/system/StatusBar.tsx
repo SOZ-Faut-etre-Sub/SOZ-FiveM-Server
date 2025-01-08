@@ -61,7 +61,7 @@ export const StatusBar: FunctionComponent<StatusBarProps> = memo(({ forceControl
             return forceControlColor === 'light' ? lightMode : darkMode;
         }
 
-        if (['/', '/emergency', '/weather', '/game-tetris', '/snake', '/bank'].includes(pathname)) {
+        if (['/', '/emergency', '/weather', '/snake', '/bank'].includes(pathname)) {
             return lightMode;
         } else if (pathname === '/call' || (currentCall && pathname.includes('/phone'))) {
             return lightMode;

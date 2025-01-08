@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent, ReactNode } from 'react';
 
 import I from '../assets/piece_I.svg';
 import J from '../assets/piece_J.svg';
@@ -13,7 +13,7 @@ type Props = {
     piece?: Piece;
 };
 
-const PieceView: React.FC<Props> = ({ piece }): JSX.Element => {
+export const PieceView: FunctionComponent<Props> = ({ piece }): ReactNode => {
     switch (piece) {
         case 'I':
             return <I />;
@@ -31,5 +31,3 @@ const PieceView: React.FC<Props> = ({ piece }): JSX.Element => {
             return <Z />;
     }
 };
-
-export default PieceView;

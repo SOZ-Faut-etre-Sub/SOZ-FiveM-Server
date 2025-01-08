@@ -675,4 +675,5 @@ export enum NuiEvent {
     PhoneAppNotesDelete = 'soz-core:nui:phone:app-notes-delete',
     PhoneAppBankPayInvoice = 'soz-core:nui:phone:app-bank-pay-invoice',
     PhoneAppBankRejectInvoice = 'soz-core:nui:phone:app-bank-reject-invoice',
+    PhoneAppTetrisAddScore = 'soz-core:nui:phone:app-tetris-add-score',
 }
