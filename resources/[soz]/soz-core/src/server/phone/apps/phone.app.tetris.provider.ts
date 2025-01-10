@@ -18,7 +18,6 @@ export class PhoneAppTetrisProvider {
     @Inject(PlayerService)
     private readonly playerService: PlayerService;
 
-    @Once()
     @Rpc(RpcServerEvent.PHONE_APP_TETRIS_GET_LEADERBOARD)
     async getLeaderboard() {
         const leaderborad = (await this.prismaService.$queryRaw(

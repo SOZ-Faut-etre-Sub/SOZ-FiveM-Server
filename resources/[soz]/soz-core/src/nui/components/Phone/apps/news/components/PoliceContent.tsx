@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react';
 
-import { TwitchNewsMessage } from '../../../../../typings/twitch-news';
+import { NewsMessage } from '../../../../../../shared/phone/apps/news';
 import { isActivePoliceMessage } from '../utils/isPolice';
 
-export const PoliceContent: FunctionComponent<TwitchNewsMessage> = ({ type, message }: TwitchNewsMessage) => {
+export const PoliceContent: FunctionComponent<NewsMessage> = ({ type, message }) => {
     if (!isActivePoliceMessage(type)) {
         return (
             <>
@@ -17,7 +17,7 @@ export const PoliceContent: FunctionComponent<TwitchNewsMessage> = ({ type, mess
             Les forces de l'ordre sont à la recherche de <strong>{message}</strong>.
             <br />
             Si vous avez des informations sur cette personne, veuillez les communiquer au{' '}
-            <strong style={{ textTransform: 'uppercase' }}>555-{type}</strong>.
+            <strong className="uppercase">555-{type}</strong>.
         </>
     );
 };

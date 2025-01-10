@@ -1,5 +1,6 @@
 import { Module } from '../../core/decorators/module';
 import { PhoneAppBankProvider } from './apps/phone.app.bank.provider';
+import { PhoneAppNewsProvider } from './apps/phone.app.news.provider';
 import { PhoneAppNotesProvider } from './apps/phone.app.notes.provider';
 import { PhoneAppPhotosProvider } from './apps/phone.app.photos.provider';
 import { PhoneAppTetrisProvider } from './apps/phone.app.tetris.provider';
@@ -16,6 +17,7 @@ import { PhoneState } from './phone.state';
         PhoneSimCard,
         // Apps
         PhoneAppBankProvider,
+        PhoneAppNewsProvider,
         PhoneAppNotesProvider,
         PhoneAppPhotosProvider,
         PhoneAppTetrisProvider,

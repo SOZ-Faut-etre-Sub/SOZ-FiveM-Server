@@ -464,4 +464,5 @@ export enum ClientEvent {
     XMAS_UPDATE_SCENE_STATE = 'soz-core:client:xmas:update-scene-state',
 
     PHONE_APP_TETRIS_UPDATE_LEADERBOARD = 'phone:app:tetris:updateLeaderboard',
+    PHONE_APP_NEWS_BROADCAST = 'soz-core:server:phone:app:news:broadcast',
 }

@@ -3,6 +3,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Logger } from '../../core/logger';
 import { ServerEvent } from '../../shared/event';
+import { NewsMessage } from '../../shared/phone/apps/news';
 import { ApiClient } from './api.client';
 
 @Provider()
@@ -13,8 +14,7 @@ export class ApiNewsProvider {
     @Inject(ApiClient)
     private apiClient: ApiClient;
 
-    @OnEvent(ServerEvent.NEWS_ADD_FLASH, false)
-    public async sendFlashNews(news: any) {
+    public async sendFlashNews(news: NewsMessage) {
         const response = await this.apiClient.post('/news/add-flash', news);
 
         if (response.status !== 201) {

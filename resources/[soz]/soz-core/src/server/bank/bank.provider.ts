@@ -204,16 +204,6 @@ export class BankProvider {
         return this.bankService.transferFarmMoney(source, farm, safe, amount, moneyType);
     }
 
-    @Exportable('GetPlayerBankContacts')
-    public async getPlayerBankContacts(source: number) {
-        const player = this.playerService.getPlayer(source);
-        if (!player) {
-            return;
-        }
-
-        return this.getBankContacts(player.citizenid);
-    }
-
     protected async getBankContacts(citizenId: string) {
         return this.prismaService.$queryRaw<BankContact[]>(
             Prisma.sql`SELECT c.id, c.citizenid, c.label, c.accountid, pp.avatar

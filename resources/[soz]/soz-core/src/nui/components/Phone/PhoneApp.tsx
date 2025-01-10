@@ -7,6 +7,7 @@ import { useNuiFocus } from '../../hook/nui';
 import { useAppBankStateHandlers } from './apps/bank/bank.atom';
 import { useAppDarkWebStateHandlers } from './apps/darkweb/darkweb.atom';
 import { HomeApp } from './apps/home/HomeApp';
+import { useAppNewsStateHandlers } from './apps/news/news.atom';
 import { useAppNotesStateHandlers } from './apps/notes/notes.atom';
 import { useAppPhotosStateHandlers } from './apps/photos/photos.atom';
 import { useAppTetrisStateHandlers } from './apps/tetris/tetris.atom';
@@ -30,10 +31,11 @@ export const PhoneApp: FunctionComponent = () => {
 
     // Apps
     useAppBankStateHandlers();
-    useAppWeatherStateHandlers();
-    useAppNotesStateHandlers();
     useAppDarkWebStateHandlers();
+    useAppNewsStateHandlers();
+    useAppNotesStateHandlers();
     useAppTetrisStateHandlers();
+    useAppWeatherStateHandlers();
 
     useNuiFocus(visible, visible, visible, null, visible);
 

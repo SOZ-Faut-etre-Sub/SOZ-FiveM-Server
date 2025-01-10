@@ -1,11 +1,13 @@
 import { OnEvent, OnNuiEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
+import { emitRpc } from '../../../core/rpc';
 import { uuidv4 } from '../../../core/utils';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../../shared/event';
 import { JobType } from '../../../shared/job';
 import { MenuType } from '../../../shared/nui/menu';
 import { toVector3Object, Vector3 } from '../../../shared/polyzone/vector';
+import { RpcServerEvent } from '../../../shared/rpc';
 import { Monitor } from '../../monitor/monitor';
 import { InputService } from '../../nui/input.service';
 import { NuiMenu } from '../../nui/nui.menu';
@@ -62,17 +64,13 @@ export class NewsMenuProvider {
             return;
         }
 
-        TriggerServerEvent(
-            ServerEvent.PHONE_APP_NEWS_CREATE_BROADCAST,
-            'phone:app:news:createNewsBroadcast:' + uuidv4(),
-            {
-                type,
-                message,
-                reporter: player.charinfo.firstname + ' ' + player.charinfo.lastname,
-                reporterId: player.citizenid,
-                job: player.job.id,
-            }
-        );
+        await emitRpc(RpcServerEvent.PHONE_APP_NEWS_CREATE, {
+            type,
+            message,
+            reporter: player.charinfo.firstname + ' ' + player.charinfo.lastname,
+            reporterId: player.citizenid,
+            job: player.job.id,
+        });
 
         this.monitor.traceEvent('job_news_create_flash', {
             flash_type: type,

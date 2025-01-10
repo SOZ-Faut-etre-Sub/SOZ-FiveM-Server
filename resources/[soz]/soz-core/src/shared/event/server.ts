@@ -1,6 +1,4 @@
 export enum ServerEvent {
-    PHONE_APP_NEWS_CREATE_BROADCAST = 'phone:app:news:createNewsBroadcast',
-
     ADMIN_RESET_HALLOWEEN = 'soz-core:server:admin:reset-halloween',
     ADMIN_ADD_MONEY = 'soz-core:server:admin:add-money',
     ADMIN_ADD_LICENSE = 'soz-core:server:admin:add-license',
@@ -206,7 +204,6 @@ export enum ServerEvent {
     MONITOR_TRACE_EVENT = 'soz-core:server:monitor:trace-event',
     MONITOR_LOG = 'soz-core:server:monitor:log',
 
-    NEWS_ADD_FLASH = 'soz-core:server:news:add-flash',
     NEWS_NEWSPAPER_SOLD = 'soz-core:server:job:news:newspaper-sold',
     NEWS_NEWSPAPER_FARM = 'soz-core:server:job:news:newspaper-farm',
 

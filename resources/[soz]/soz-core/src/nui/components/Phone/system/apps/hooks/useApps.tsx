@@ -10,6 +10,7 @@ import DarkWebIcon from '../../../apps/darkweb/icon';
 import DialerIcon from '../../../apps/dialer/icon';
 import MessagesIcon from '../../../apps/messages/icon';
 import NewsIcon from '../../../apps/news/icon';
+import { NewsApp } from '../../../apps/news/NewsApp';
 import NotesIcon from '../../../apps/notes/icon';
 import { NotesApp } from '../../../apps/notes/NotesApp';
 import PhotosIcon from '../../../apps/photos/icon';
@@ -106,7 +107,7 @@ export const useApps = () => {
             nameLocale: 'APPS_NEWS',
             path: '/news',
             icon: NewsIcon,
-            // component: <TwitchNewsApp />,
+            component: <NewsApp />,
             position: 7,
         },
 

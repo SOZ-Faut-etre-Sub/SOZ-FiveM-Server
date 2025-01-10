@@ -20,14 +20,6 @@ export class BankStatementsService {
     @Inject(BankAccountRepository)
     private bankAccountRepository: BankAccountRepository;
 
-    @Exportable('GetStatementsForPlayer')
-    public async getStatementsForPlayer(source: number) {
-        const player = this.playerService.getPlayer(source);
-        if (!player) return;
-
-        return this.getStatementsForAccount(player.charinfo.account);
-    }
-
     public async getStatementsForAccount(accountId: string, filter: BankHistoryFilter = 'all', limit: number = 50) {
         const history = [];
         let queryFilter = {};

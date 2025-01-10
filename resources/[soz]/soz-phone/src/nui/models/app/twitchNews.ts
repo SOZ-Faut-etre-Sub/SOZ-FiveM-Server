@@ -1,11 +1,11 @@
-import { createModel } from '@rematch/core';
+import { createModel } from "@rematch/core";
 
-import { ServerPromiseResp } from '../../../../typings/common';
-import { TwitchNewsEvents, TwitchNewsMessage } from '../../../../typings/twitch-news';
-import { MockTwitchNewsMessages } from '../../apps/twitch-news/utils/constants';
-import { fetchNui } from '../../common/utils/fetchNui';
-import { buildRespObj } from '../../common/utils/misc';
-import { RootModel } from '..';
+import { ServerPromiseResp } from "../../../../typings/common";
+import { TwitchNewsEvents, TwitchNewsMessage } from "../../../../typings/twitch-news";
+import { MockTwitchNewsMessages } from "../../../../../soz-core/src/nui/components/Phone/apps/news/utils/constants";
+import { fetchNui } from "../../common/utils/fetchNui";
+import { buildRespObj } from "../../common/utils/misc";
+import { RootModel } from "..";
 
 export const appTwitchNews = createModel<RootModel>()({
     state: [] as TwitchNewsMessage[],
@@ -17,7 +17,7 @@ export const appTwitchNews = createModel<RootModel>()({
             return [payload, ...state];
         },
     },
-    effects: dispatch => ({
+    effects: (dispatch) => ({
         async setNews(payload: TwitchNewsMessage[]) {
             dispatch.appTwitchNews.set(payload);
         },
@@ -26,15 +26,11 @@ export const appTwitchNews = createModel<RootModel>()({
         },
         // loader
         async loadNews() {
-            fetchNui<ServerPromiseResp<TwitchNewsMessage[]>>(
-                TwitchNewsEvents.FETCH_NEWS,
-                undefined,
-                buildRespObj(MockTwitchNewsMessages)
-            )
-                .then(news => {
+            fetchNui<ServerPromiseResp<TwitchNewsMessage[]>>(TwitchNewsEvents.FETCH_NEWS, undefined, buildRespObj(MockTwitchNewsMessages))
+                .then((news) => {
                     dispatch.appTwitchNews.set(news.data.reverse() || []);
                 })
-                .catch(() => console.error('Failed to load news'));
+                .catch(() => console.error("Failed to load news"));
         },
     }),
 });

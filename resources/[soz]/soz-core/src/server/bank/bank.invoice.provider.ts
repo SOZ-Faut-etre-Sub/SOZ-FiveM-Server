@@ -35,7 +35,6 @@ export class BankInvoiceProvider {
     @Inject(BankInvoiceRepository)
     private bankInvoiceRepository: BankInvoiceRepository;
 
-    @Exportable('GetAllInvoicesForPlayer')
     @Rpc(RpcServerEvent.BANK_GET_INVOICES)
     public async getInvoices(source: number): Promise<Invoice[]> {
         return this.bankInvoiceService.getInvoicesForPlayer(source);
