@@ -110,7 +110,7 @@ export const ShopCartApp: FunctionComponent = () => {
 
             targetAmount = parseInt(amountStr);
 
-            if (isNaN(targetAmount)) {
+            if (isNaN(targetAmount) || targetAmount === 0) {
                 return;
             }
         }

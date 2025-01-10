@@ -176,6 +176,10 @@ export class Inventory {
             return Err('item_not_found');
         }
 
+        if (amount == 0) {
+            return Err('invalid_amount');
+        }
+
         amount = Math.round(amount);
         metadata = metadata || {};
 
