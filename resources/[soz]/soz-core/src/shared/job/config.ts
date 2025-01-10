@@ -546,6 +546,7 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
             [JobPermission.VehicleRegistrar]: { label: 'Accès au registre des véhicules sur le panel' },
             [JobPermission.VehicleTransfert]: { label: 'Accès aux transferts de véhicules sur le panel' },
             [JobPermission.MdrViewCitizenData]: { label: 'Accès aux casiers judiciaires' },
+            [JobPermission.Craft]: { label: 'Permet de signer des papiers officiels' },
         },
         bossZones: [
             {

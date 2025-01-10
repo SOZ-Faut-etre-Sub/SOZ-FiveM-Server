@@ -1,6 +1,7 @@
 import { FOURNITURE_PER_TIER, HousingTiers } from '@public/shared/housing/upgrades';
 import { isGameMaster, PlayerData } from '@public/shared/player';
 
+import { FDO, JobType } from '../job';
 import { Zone } from '../polyzone/box.zone';
 import { Vector4 } from '../polyzone/vector';
 
@@ -30,6 +31,7 @@ export type Apartment = {
     shell: boolean;
     hasParkingPlace: boolean;
     senatePartyId: string | null;
+    search_warrant_access: number;
 } & ApartementTiers;
 
 export type ApartmentMenuData = {
@@ -69,8 +71,39 @@ export const hasAccess = (property: Property, player: PlayerData, temporaryAcces
         (isAdminHouse(property) && isGameMaster(player)) ||
         hasTemporaryAccess(property, temporaryAccess) ||
         hasPartyAccess(property, player.partyMember?.partyId) ||
-        hasPlayerRentedApartment(property, player.citizenid)
+        hasPlayerRentedApartment(property, player.citizenid) ||
+        hasSearchWarrantAccessInProperty(property, player)
     );
+};
+
+export const hasSearchWarrantAccessInProperty = (property: Property, player: PlayerData) => {
+    const now = new Date();
+    const apartement = property.apartments.some(apartment => {
+        return (
+            (apartment.owner || apartment.senatePartyId) &&
+            apartment.search_warrant_access &&
+            new Date(apartment.search_warrant_access) > now
+        );
+    });
+
+    if (!apartement) {
+        return false;
+    }
+
+    return (FDO.includes(player.job.id) || player.job.id === JobType.MDR) && player.job.onduty;
+};
+
+export const hasSearchWarrantAccessInApartment = (apartment: Apartment, player: PlayerData) => {
+    const now = new Date();
+    if (
+        (!apartment.owner && !apartment.senatePartyId) ||
+        !apartment.search_warrant_access ||
+        new Date(apartment.search_warrant_access) <= now
+    ) {
+        return false;
+    }
+
+    return (FDO.includes(player.job.id) || player.job.id === JobType.MDR) && player.job.onduty;
 };
 
 export const hasApartmentAccess = (apartment: Apartment, player: PlayerData, temporaryAccess: Set<number>) => {

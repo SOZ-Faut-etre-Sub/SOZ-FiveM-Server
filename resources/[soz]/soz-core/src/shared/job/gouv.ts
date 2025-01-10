@@ -4,3 +4,5 @@ export const GouvCloakroom: WardrobeConfig = {
     [GetHashKey('mp_m_freemode_01')]: {},
     [GetHashKey('mp_f_freemode_01')]: {},
 };
+
+export const SEARCH_WARRANT_PRICE = 500_000;

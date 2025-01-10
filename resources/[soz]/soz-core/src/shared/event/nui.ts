@@ -322,6 +322,7 @@ export enum NuiEvent {
     HousingUpgradeApartment = 'soz-core:client:housing:upgrade-apartment',
     HousingAddRoommate = 'soz-core:nui:housing:add-roommate',
     HousingBell = 'soz-core:nui:housing:bell',
+    HousingSearchWarrantUse = 'soz-core:nui:housing:search-warrant-use',
     HousingBuy = 'soz-core:nui:housing:buy',
     HousingEnter = 'soz-core:nui:housing:enter',
     HousingRemoveRoommate = 'soz-core:nui:housing:remove-roommate',

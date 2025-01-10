@@ -17,6 +17,7 @@ import {
     getApartmentGarageName,
     getPropertyGarageName,
     getResellPrice,
+    hasSearchWarrantAccessInApartment,
     isApartmentExcludeFromHousing,
     isTrailer,
     Property,
@@ -741,6 +742,10 @@ export class HousingProvider {
 
         if (this.playerTemporaryAccess.has(player.citizenid)) {
             return this.playerTemporaryAccess.get(player.citizenid).has(apartment.id);
+        }
+
+        if (hasSearchWarrantAccessInApartment(apartment, player)) {
+            return true;
         }
 
         return false;

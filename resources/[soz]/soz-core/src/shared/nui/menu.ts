@@ -126,6 +126,7 @@ export enum MenuType {
     HousingAddRoommateMenu = 'housing_add_roommate_menu',
     HousingRemoveRoommateMenu = 'housing_remove_roommate_menu',
     HousingCloakroomMenu = 'housing_cloakroom_menu',
+    HousingSearchWarrantMenu = 'housing_search_warrant_menu',
     ZkeaFournitureMenu = 'zkea_fourniture_menu',
     LsmcPlaster = 'lsmc_plaster',
     GangAdmin = 'gang_admin',
@@ -196,6 +197,7 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.Promote]: PromoteMenuData;
     [MenuType.HousingAddRoommateMenu]: ApartmentMenuData;
     [MenuType.HousingBellMenu]: ApartmentMenuData;
+    [MenuType.HousingSearchWarrantMenu]: ApartmentMenuData;
     [MenuType.HousingBuyMenu]: ApartmentMenuData;
     [MenuType.HousingEnterMenu]: ApartmentMenuData;
     [MenuType.HousingRemoveRoommateMenu]: ApartmentMenuData;

@@ -98,6 +98,21 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
             apartment.roommate;
     }
 
+    public async setApartmentWarrantAccess(apartmentId: number, minutes: number = 120): Promise<void> {
+        const apartment = await this.prismaService.housing_apartment.update({
+            where: {
+                id: apartmentId,
+            },
+            data: {
+                search_warrant_access: new Date(Date.now() + minutes * 60_000),
+            },
+        });
+
+        this.data[apartment.property_id].apartments.find(
+            apartment => apartment.id === apartmentId
+        ).search_warrant_access = apartment.search_warrant_access.getTime();
+    }
+
     public async getApartmentByIdentifier(identifier: string): Promise<Apartment | null> {
         for (const property of await this.get()) {
             const apartment = property.apartments.find(apartment => apartment.identifier === identifier);
@@ -434,6 +449,7 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
             shell: apartment.shell,
             hasParkingPlace: apartment.has_parking_place === 1,
             senatePartyId: apartment.senate_party_id || null,
+            search_warrant_access: apartment.search_warrant_access?.getTime() ?? 0,
         };
     }
 }
