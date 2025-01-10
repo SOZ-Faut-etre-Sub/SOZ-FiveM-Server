@@ -179,6 +179,7 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
             [JobPermission.ReadDocumentation]: { label: 'Lecture de la documentation sur le panel médical' },
             [JobPermission.WriteDocumentation]: { label: 'Edition de la documentation sur le panel médical' },
             [JobPermission.ManageDocumentation]: { label: 'Gestion de la documentation sur le panel médical' },
+            [JobPermission.MedicalPsyConsultAccess]: { label: 'Vision sur les consultations psy sur le panel médical' },
         },
         bossZones: [
             new BoxZone([383.87, -1411.63, 37.99], 21.0, 25.6, {

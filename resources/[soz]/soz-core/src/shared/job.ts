@@ -94,6 +94,7 @@ export enum JobPermission {
     MedicalPatientHistoryEdit = 'medical-patient-history-edit',
     MedicalPatientHistoryDelete = 'medical-patient-history-delete',
     MedicalPatientHistoryAccess = 'medical-patient-history-access',
+    MedicalPsyConsultAccess = 'medical-patient-psy-access',
     Harvest = 'harvest',
     Restock = 'restock',
     Craft = 'craft',
