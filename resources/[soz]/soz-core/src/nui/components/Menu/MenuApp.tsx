@@ -36,6 +36,7 @@ import { HousingBuyMenu } from '../Housing/HousingBuyMenu';
 import { HousingCloakroomMenu } from '../Housing/HousingCloakroomMenu';
 import { HousingEnterMenu } from '../Housing/HousingEnterMenu';
 import { HousingRemoveRoommateMenu } from '../Housing/HousingRemoveRoommateMenu';
+import { HousingSearchWarrantMenu } from '../Housing/HousingSearchWarrantMenu';
 import { HousingSellMenu } from '../Housing/HousingSellMenu';
 import { HousingUpgradesMenu } from '../Housing/HousingUpgradesMenu';
 import { HousingVisitMenu } from '../Housing/HousingVisitMenu';
@@ -282,6 +283,10 @@ const MenuRouter: FunctionComponent = () => {
                 element={<HousingAddRoommateMenu data={menuData} />}
             />
             <Route path={`/${MenuType.HousingBellMenu}/*`} element={<HousingBellMenu data={menuData} />} />
+            <Route
+                path={`/${MenuType.HousingSearchWarrantMenu}/*`}
+                element={<HousingSearchWarrantMenu data={menuData} />}
+            />
             <Route path={`/${MenuType.HousingBuyMenu}/*`} element={<HousingBuyMenu data={menuData} />} />
             <Route path={`/${MenuType.HousingCloakroomMenu}/*`} element={<HousingCloakroomMenu data={menuData} />} />
             <Route path={`/${MenuType.ZkeaFournitureMenu}/*`} element={<ZkeaFournitureMenu />} />

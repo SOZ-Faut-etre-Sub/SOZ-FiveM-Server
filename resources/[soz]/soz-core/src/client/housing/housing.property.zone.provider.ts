@@ -1,4 +1,5 @@
 import { PlayerInventoryUpdate } from '@public/core/decorators/player';
+import { FDO, JobType } from '@public/shared/job';
 
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Exportable } from '../../core/decorators/exports';
@@ -21,6 +22,7 @@ import {
     hasPlayerRoommateApartment,
     hasPropertyGarage,
     hasRentedApartment,
+    hasSearchWarrantAccessInApartment,
     isAdminHouse,
     isPlayerInsideApartment,
     Property,
@@ -364,6 +366,33 @@ export class HousingPropertyZoneProvider {
                 },
             },
             {
+                label: 'Utiliser un mandat de perquisition',
+                icon: 'pawl/craft-paper',
+                job: FDO.reduce((prev, cur) => ({ ...prev, [cur]: 0 }), {} as Record<JobType, number>),
+                category: 'society',
+                item: 'search_warrant',
+                canInteract: () => {
+                    const player = this.playerService.getPlayer();
+
+                    if (!player) {
+                        return false;
+                    }
+
+                    if (isPlayerInsideApartment(player)) {
+                        return false;
+                    }
+
+                    return property.apartments.some(
+                        apartment =>
+                            (apartment.owner || apartment.senatePartyId) &&
+                            apartment.search_warrant_access <= Date.now()
+                    );
+                },
+                action: () => {
+                    this.useSearchWarrant(property);
+                },
+            },
+            {
                 label: 'Entrer',
                 icon: 'housing/enter',
                 category: 'citizen',
@@ -543,8 +572,10 @@ export class HousingPropertyZoneProvider {
             return [];
         }
 
-        const apartments = property.apartments.filter(apartment =>
-            hasApartmentAccess(apartment, player, this.temporaryAccess)
+        const apartments = property.apartments.filter(
+            apartment =>
+                hasApartmentAccess(apartment, player, this.temporaryAccess) ||
+                hasSearchWarrantAccessInApartment(apartment, player)
         );
 
         if (apartments.length === 0) {
@@ -605,6 +636,26 @@ export class HousingPropertyZoneProvider {
         }
 
         await this.housingMenuProvider.bell({ apartmentId: apartment.id, propertyId: property.id });
+    }
+
+    public async useSearchWarrant(property: Property) {
+        this.nuiMenu.openMenu(
+            MenuType.HousingSearchWarrantMenu,
+            {
+                property,
+                apartments: property.apartments.filter(apartment => {
+                    return (
+                        (apartment.owner || apartment.senatePartyId) && apartment.search_warrant_access <= Date.now()
+                    );
+                }),
+            },
+            {
+                position: {
+                    distance: 3,
+                    position: property.entryZone.center,
+                },
+            }
+        );
     }
 
     public async addRoommate(property: Property) {
@@ -705,8 +756,10 @@ export class HousingPropertyZoneProvider {
             return;
         }
 
-        const apartments = property.apartments.filter(apartment =>
-            hasApartmentAccess(apartment, player, this.temporaryAccess)
+        const apartments = property.apartments.filter(
+            apartment =>
+                hasApartmentAccess(apartment, player, this.temporaryAccess) ||
+                hasSearchWarrantAccessInApartment(apartment, player)
         );
 
         await this.vehicleGarageProvider.openHouseGarageMenu(property.identifier, apartments);
