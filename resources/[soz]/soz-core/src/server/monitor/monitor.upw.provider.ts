@@ -40,7 +40,7 @@ export class MonitorUpwProvider {
     public async onTick() {
         const metrics = this.upwFacilityProvider.getMetrics();
 
-        if (!metrics.pollution_level) {
+        if (metrics?.pollution_level == null) {
             return;
         }
 

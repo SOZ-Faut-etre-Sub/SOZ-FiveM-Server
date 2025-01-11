@@ -305,7 +305,7 @@ export const UpwConfig: {
     },
     Pollution: {
         MaxUnitsPerHour: 900,
-        Persistence: 24 * 7 * 3_600_000, // previous pollution units kept, one week
+        Persistence: 24 * 7, // previous pollution units kept, one week
         Tick: 60000, // in ms
         Threshold: {
             [UpwPollution.Low]: { min: 0, max: 11 },
