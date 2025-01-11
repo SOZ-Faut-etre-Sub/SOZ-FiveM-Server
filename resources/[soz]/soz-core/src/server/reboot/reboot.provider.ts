@@ -11,6 +11,7 @@ import { Feature } from '../../shared/features';
 import { ApiClient } from '../api/api.client';
 import { PrismaService } from '../database/prisma.service';
 import { FeatureProvider } from '../feature/feature.provider';
+import { UpwFacilityProvider } from '../job/upw/upw.facility.provider';
 import { PlayerCleanService } from '../player/player.clean.service';
 import { QBCore } from '../qbcore';
 import { Store } from '../store/store';
@@ -47,6 +48,9 @@ export class RebootProvider {
 
     @Inject(FeatureProvider)
     private featureProvider: FeatureProvider;
+
+    @Inject(UpwFacilityProvider)
+    private upwFacilityProvider: UpwFacilityProvider;
 
     @OnEvent(ServerEvent.FIVEM_PLAYER_CONNECTING)
     public onPlayerConnecting(source, name, setKickReason, deferrals) {
@@ -130,7 +134,7 @@ export class RebootProvider {
             },
         });
 
-        exports['soz-upw'].saveUpw();
+        this.upwFacilityProvider.saveLoop();
 
         const ids = await this.playerCleanService.getPlayerToCleans();
         const [houseOwnerCount, houseRoommateCount] = await this.playerCleanService.cleanPlayerHouses(ids);

@@ -1,3 +1,4 @@
+import { UpwConfig } from '@public/shared/job/upw';
 import { getDistance, toVector4Object, Vector3 } from '@public/shared/polyzone/vector';
 
 import { Inject, Injectable } from '../../core/decorators/injectable';
@@ -51,9 +52,7 @@ export class UpwChargerRepository {
                 if (!this.blipFactory.exist('job_upw_charger_' + charger.id)) {
                     this.blipFactory.create('job_upw_charger_' + charger.id, {
                         coords: toVector4Object(charger.position),
-                        name: 'Emplacement de chargeur UPW',
-                        sprite: 620,
-                        color: 3,
+                        ...UpwConfig.FacilitiesBlip['charger'],
                     });
                 }
                 this.blipFactory.hide('job_upw_charger_' + charger.id, !this.displayLocation);

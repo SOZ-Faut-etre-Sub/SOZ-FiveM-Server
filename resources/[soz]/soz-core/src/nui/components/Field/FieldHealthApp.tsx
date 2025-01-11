@@ -3,11 +3,13 @@ import { FunctionComponent, useState } from 'react';
 
 import { useNuiEvent } from '../../hook/nui';
 import UraniumIcon from '../../icons/field/uranium.svg';
+import WasteIcon from '../../icons/field/waste.svg';
 import ZeedIcon from '../../icons/field/zeed.svg';
 
 const Mapping = {
     zeed: ZeedIcon,
     uranium: UraniumIcon,
+    waste: WasteIcon,
 };
 
 export const FieldHealthApp: FunctionComponent = () => {

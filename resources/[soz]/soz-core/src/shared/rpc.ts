@@ -125,6 +125,7 @@ export enum RpcServerEvent {
     INVENTORY_GET_ITEM_BY_SHORTCUT = 'soz-core:inventory:get-item-by-shortcut',
 
     UPW_GET_FACILITIES = 'soz-core:job:upw:get-facilities',
+    UPW_GET_STORAGE_CAPACITY = 'soz-core:job:upw:get-capacity',
     UPW_GET_STATION = 'soz-core:server:job:upw:get-station',
 
     WEAPON_USE_AMMO = 'soz-core:server:weapon:useAmmo',

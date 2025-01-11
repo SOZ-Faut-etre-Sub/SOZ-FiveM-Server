@@ -1,24 +1,15 @@
+import { Inject } from '@public/core/decorators/injectable';
 import { Gauge } from 'prom-client';
 
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
-
-type UpwMetrics = {
-    pollution_level: number;
-    pollution_percent: number;
-    blackout_level: number;
-    blackout_percent: number;
-    facilities: {
-        type: string;
-        identifier: string;
-        value: number;
-        job?: string;
-        scope: string;
-    }[];
-};
+import { UpwFacilityProvider } from '../job/upw/upw.facility.provider';
 
 @Provider()
 export class MonitorUpwProvider {
+    @Inject(UpwFacilityProvider)
+    private upwFacilityProvider: UpwFacilityProvider;
+
     private blackoutPercent: Gauge<string> = new Gauge({
         name: 'soz_upw_blackout_percent',
         help: 'Pollution level percent',
@@ -47,7 +38,7 @@ export class MonitorUpwProvider {
 
     @Tick(5000, 'monitor:upw:metrics')
     public async onTick() {
-        const metrics = exports['soz-upw'].GetMetrics() as UpwMetrics;
+        const metrics = this.upwFacilityProvider.getMetrics();
 
         if (!metrics.pollution_level) {
             return;

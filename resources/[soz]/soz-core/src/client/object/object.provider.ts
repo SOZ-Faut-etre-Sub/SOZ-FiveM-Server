@@ -106,6 +106,18 @@ export class ObjectProvider {
         return objects;
     }
 
+    public getLoadedObjects(filter?: (object: WorldObject) => boolean): WorldObject[] {
+        const objects: WorldObject[] = [];
+
+        for (const object of Object.values(this.loadedObjects)) {
+            if (!filter || filter(object.object)) {
+                objects.push(object.object);
+            }
+        }
+
+        return objects;
+    }
+
     public collectObject(entity: number): void {
         const id = this.getIdFromEntity(entity);
 

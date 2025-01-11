@@ -13,6 +13,7 @@ import { DmcConverterConfig, DmcConverterState, DmcIncineratorConfig } from '@pu
 import { RpcServerEvent } from '@public/shared/rpc';
 
 import { InventoryType } from '../../../shared/inventory';
+import { UpwFacilityProvider } from '../upw/upw.facility.provider';
 
 @Provider()
 export class DmcForgeProvider {
@@ -27,6 +28,9 @@ export class DmcForgeProvider {
 
     @Inject(InventoryOpenProvider)
     private inventoryOpenProvider: InventoryOpenProvider;
+
+    @Inject(UpwFacilityProvider)
+    private upwFacilityProvider: UpwFacilityProvider;
 
     private converterState: DmcConverterState = {
         enabled: false,
@@ -113,7 +117,7 @@ export class DmcForgeProvider {
             return;
         }
 
-        exports['soz-upw'].ConsumeJobTerminal(JobType.DMC, DmcConverterConfig.energyPerTick);
+        this.upwFacilityProvider.consumeJobTerminal(JobType.DMC, DmcConverterConfig.energyPerTick);
 
         for (const output_item of Object.keys(DmcConverterConfig.recipes)) {
             const recipe = DmcConverterConfig.recipes[output_item];
