@@ -176,7 +176,7 @@ export const DarkWebConversationSettingsModal = memo(
                 leaveFrom=" opacity-100"
                 leaveTo="translate-y-[20vh] opacity-100"
                 className={cn(
-                    'absolute h-[35%] bottom-0 w-full flex bg-gradient-to-t from-zinc-900 from-30% via-zinc-900 via-40% to-teal-900/90 to-30% rounded-t-3xl'
+                    'absolute h-[20%] bottom-0 w-full flex bg-gradient-to-t from-zinc-900 from-10% via-zinc-900 via-20% to-teal-900/90 to-70% rounded-t-3xl'
                 )}
             >
                 {!isEditConversationOpen &&
