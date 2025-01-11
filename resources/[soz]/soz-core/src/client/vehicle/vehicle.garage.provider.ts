@@ -299,7 +299,7 @@ export class VehicleGarageProvider {
 
                         const model = GetEntityModel(entity);
                         const vehConfig = this.vehicleRepository.getByModelHash(model);
-                        const maxPrice = Math.round(vehConfig?.price ?? 0 * 0.15);
+                        const maxPrice = Math.round((vehConfig?.price ?? 0) * 0.15);
 
                         const cost = await this.inputService.askInput<number>(
                             {
