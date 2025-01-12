@@ -47,18 +47,6 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             },
         },
         {
-            center: [-1383.92, -608.42, 30.32],
-            length: 2.0,
-            width: 6.4,
-            minZ: 29.92,
-            maxZ: 31.92,
-            heading: 303,
-            data: {
-                storage: 'baun_bahama_cloakroom_2',
-                type: InventoryType.Cloakroom,
-            },
-        },
-        {
             center: [1983.94, 3050.51, 47.22],
             length: 0.4,
             width: 3.2,
