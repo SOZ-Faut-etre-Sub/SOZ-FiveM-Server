@@ -12,7 +12,8 @@ import { ResourceLoader } from '../repository/resource.loader';
 import { TargetFactory } from '../target/target.factory';
 
 const models = [
-    'freight',
+    'class1_2',
+	'freight',
     'freight2',
     'freightcar',
     'freightcar2',
@@ -20,6 +21,7 @@ const models = [
     'freightcont2',
     'freightgrain',
     'metrotrain',
+	'soz_freightcar',
     'tankercar',
 ];
 
@@ -80,7 +82,7 @@ export class VehicleTrainProvider {
     public init() {
         SetTrainsForceDoorsOpen(false);
         this.targetFactory.createForModel(
-            ['freight', 'freight2', 'metrotrain'],
+            ['class1_2', 'freight', 'freight2', 'metrotrain'],
             [
                 {
                     category: 'citizen',

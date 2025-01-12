@@ -1352,7 +1352,7 @@ metrotrain - carriage_vert_offset = "1.12"
 		carriage_gap = "0.1">
 		
 		<carriage
-				model_name = "freight"
+				model_name = "class1_2"
 				max_peds_per_carriage = "0"
 				flip_model_dir = "false"
 				do_interior_lights = "true"
@@ -1360,12 +1360,12 @@ metrotrain - carriage_vert_offset = "1.12"
 		repeat_count = "1" />
 		
 		<carriage
-			model_name = "freightcar"
+			model_name = "soz_freightcar"
 			max_peds_per_carriage = "0"
 			flip_model_dir = "false"
 			do_interior_lights = "true"
 			carriage_vert_offset = "0.70"
-		repeat_count = "4" />					
+		repeat_count = "0" />					
 	</train_config>
 	
 		<train_config
@@ -1380,7 +1380,7 @@ metrotrain - carriage_vert_offset = "1.12"
 		carriage_gap = "0.1">
 		
 		<carriage
-				model_name = "freight"
+				model_name = "class1_2"
 				max_peds_per_carriage = "0"
 				flip_model_dir = "false"
 				do_interior_lights = "true"
@@ -1388,15 +1388,15 @@ metrotrain - carriage_vert_offset = "1.12"
 		repeat_count = "1" />
 		
 		<carriage
-			model_name = "freightcar"
+			model_name = "soz_freightcar"
 			max_peds_per_carriage = "0"
 			flip_model_dir = "false"
 			do_interior_lights = "true"
 			carriage_vert_offset = "0.70"
-		repeat_count = "5" />					
+		repeat_count = "1" />					
 	</train_config>
 	
-		<train_config
+	<train_config
 		name = "freight_config31"
 		populate_train_dist = "40.0"
 		announce_stations = "false"
@@ -1408,7 +1408,7 @@ metrotrain - carriage_vert_offset = "1.12"
 		carriage_gap = "0.1">
 		
 		<carriage
-				model_name = "freight"
+				model_name = "class1_2"
 				max_peds_per_carriage = "0"
 				flip_model_dir = "false"
 				do_interior_lights = "true"
@@ -1416,7 +1416,119 @@ metrotrain - carriage_vert_offset = "1.12"
 		repeat_count = "1" />
 		
 		<carriage
-			model_name = "freightcar"
+			model_name = "soz_freightcar"
+			max_peds_per_carriage = "0"
+			flip_model_dir = "false"
+			do_interior_lights = "true"
+			carriage_vert_offset = "0.70"
+		repeat_count = "2" />					
+	</train_config>
+	
+	<train_config
+		name = "freight_config32"
+		populate_train_dist = "40.0"
+		announce_stations = "false"
+		doors_beep = "false"
+		carriages_hang = "false"
+		carriages_swing = "false"
+		link_tracks_with_adjacent_stations = "true"
+		no_random_spawn = "true"
+		carriage_gap = "0.1">
+		
+		<carriage
+				model_name = "class1_2"
+				max_peds_per_carriage = "0"
+				flip_model_dir = "false"
+				do_interior_lights = "true"
+				carriage_vert_offset = "1.65"
+		repeat_count = "1" />
+		
+		<carriage
+			model_name = "soz_freightcar"
+			max_peds_per_carriage = "0"
+			flip_model_dir = "false"
+			do_interior_lights = "true"
+			carriage_vert_offset = "0.70"
+		repeat_count = "3" />					
+	</train_config>
+	
+	<train_config
+		name = "freight_config33"
+		populate_train_dist = "40.0"
+		announce_stations = "false"
+		doors_beep = "false"
+		carriages_hang = "false"
+		carriages_swing = "false"
+		link_tracks_with_adjacent_stations = "true"
+		no_random_spawn = "true"
+		carriage_gap = "0.1">
+		
+		<carriage
+				model_name = "class1_2"
+				max_peds_per_carriage = "0"
+				flip_model_dir = "false"
+				do_interior_lights = "true"
+				carriage_vert_offset = "1.65"
+		repeat_count = "1" />
+		
+		<carriage
+			model_name = "soz_freightcar"
+			max_peds_per_carriage = "0"
+			flip_model_dir = "false"
+			do_interior_lights = "true"
+			carriage_vert_offset = "0.70"
+		repeat_count = "4" />					
+	</train_config>
+	
+	<train_config
+		name = "freight_config34"
+		populate_train_dist = "40.0"
+		announce_stations = "false"
+		doors_beep = "false"
+		carriages_hang = "false"
+		carriages_swing = "false"
+		link_tracks_with_adjacent_stations = "true"
+		no_random_spawn = "true"
+		carriage_gap = "0.1">
+		
+		<carriage
+				model_name = "class1_2"
+				max_peds_per_carriage = "0"
+				flip_model_dir = "false"
+				do_interior_lights = "true"
+				carriage_vert_offset = "1.65"
+		repeat_count = "1" />
+		
+		<carriage
+			model_name = "soz_freightcar"
+			max_peds_per_carriage = "0"
+			flip_model_dir = "false"
+			do_interior_lights = "true"
+			carriage_vert_offset = "0.70"
+		repeat_count = "5" />					
+	</train_config>
+	
+	<train_config
+		name = "freight_config35"
+		populate_train_dist = "40.0"
+		announce_stations = "false"
+		doors_beep = "false"
+		carriages_hang = "false"
+		carriages_swing = "false"
+		link_tracks_with_adjacent_stations = "true"
+		no_random_spawn = "true"
+		carriage_gap = "0.1">
+		
+		<carriage
+				model_name = "class1_2"
+				max_peds_per_carriage = "0"
+				flip_model_dir = "false"
+				do_interior_lights = "true"
+				carriage_vert_offset = "1.65"
+		repeat_count = "1" />
+		
+		<carriage
+			model_name = "soz_freightcar"
 			max_peds_per_carriage = "0"
 			flip_model_dir = "false"
 			do_interior_lights = "true"
@@ -1424,67 +1536,62 @@ metrotrain - carriage_vert_offset = "1.12"
 		repeat_count = "6" />					
 	</train_config>
 	
-		<train_config
-			name = "metro_config32"
-			populate_train_dist = "40.0"
-			announce_stations = "false"
-			doors_beep = "false"
-			carriages_hang = "false"
-			carriages_swing = "false"
-			link_tracks_with_adjacent_stations = "true"
-			carriage_gap = "-0.5">
-			
-			<carriage
-				model_name = "freight"
+	<train_config
+		name = "freight_config36"
+		populate_train_dist = "40.0"
+		announce_stations = "false"
+		doors_beep = "false"
+		carriages_hang = "false"
+		carriages_swing = "false"
+		link_tracks_with_adjacent_stations = "true"
+		no_random_spawn = "true"
+		carriage_gap = "0.1">
+		
+		<carriage
+				model_name = "class1_2"
 				max_peds_per_carriage = "0"
 				flip_model_dir = "false"
 				do_interior_lights = "true"
 				carriage_vert_offset = "1.65"
 		repeat_count = "1" />
-			
-			<carriage
-					model_name = "metrotrain"
-					max_peds_per_carriage = "4"
-					flip_model_dir = "false"
-					do_interior_lights = "true"
-					carriage_vert_offset = "0.5"
-			repeat_count = "1" />
-			<carriage
-					model_name = "metrotrain"
-					max_peds_per_carriage = "4"
-					flip_model_dir = "true"
-					do_interior_lights = "true"
-					carriage_vert_offset = "0.5"
-			repeat_count = "1" />	
-<carriage
-					model_name = "metrotrain"
-					max_peds_per_carriage = "4"
-					flip_model_dir = "false"
-					do_interior_lights = "true"
-					carriage_vert_offset = "0.5"
-			repeat_count = "1" />
-			<carriage
-					model_name = "metrotrain"
-					max_peds_per_carriage = "4"
-					flip_model_dir = "true"
-					do_interior_lights = "true"
-					carriage_vert_offset = "0.5"
-			repeat_count = "1" />	
-<carriage
-					model_name = "metrotrain"
-					max_peds_per_carriage = "4"
-					flip_model_dir = "false"
-					do_interior_lights = "true"
-					carriage_vert_offset = "0.5"
-			repeat_count = "1" />
-			<carriage
-					model_name = "metrotrain"
-					max_peds_per_carriage = "4"
-					flip_model_dir = "true"
-					do_interior_lights = "true"
-					carriage_vert_offset = "0.5"
-			repeat_count = "1" />				
-	</train_config>	
+		
+		<carriage
+			model_name = "soz_freightcar"
+			max_peds_per_carriage = "0"
+			flip_model_dir = "false"
+			do_interior_lights = "true"
+			carriage_vert_offset = "0.70"
+		repeat_count = "7" />					
+	</train_config>
+	
+	<train_config
+		name = "freight_config37"
+		populate_train_dist = "40.0"
+		announce_stations = "false"
+		doors_beep = "false"
+		carriages_hang = "false"
+		carriages_swing = "false"
+		link_tracks_with_adjacent_stations = "true"
+		no_random_spawn = "true"
+		carriage_gap = "0.1">
+		
+		<carriage
+				model_name = "class1_2"
+				max_peds_per_carriage = "0"
+				flip_model_dir = "false"
+				do_interior_lights = "true"
+				carriage_vert_offset = "1.65"
+		repeat_count = "1" />
+		
+		<carriage
+			model_name = "soz_freightcar"
+			max_peds_per_carriage = "0"
+			flip_model_dir = "false"
+			do_interior_lights = "true"
+			carriage_vert_offset = "0.70"
+		repeat_count = "8" />					
+	</train_config>
+		
 	
 	
 	<train_config_group name = "freight_group">
@@ -1521,6 +1628,11 @@ metrotrain - carriage_vert_offset = "1.12"
 		<train_config_ref name = "freight_config30" />
 		<train_config_ref name = "freight_config31" />
 		<train_config_ref name = "freight_config32" />
+		<train_config_ref name = "freight_config33" />
+		<train_config_ref name = "freight_config34" />
+		<train_config_ref name = "freight_config35" />
+		<train_config_ref name = "freight_config36" />
+		<train_config_ref name = "freight_config37" />
 		</train_config_group>
 	
 	<train_config_group name = "metro_group">
