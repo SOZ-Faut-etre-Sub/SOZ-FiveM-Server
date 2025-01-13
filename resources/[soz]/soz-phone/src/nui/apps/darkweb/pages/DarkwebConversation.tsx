@@ -168,6 +168,7 @@ export const DarkWebConversation = memo(() => {
                             darkwebConversationId={conversation.id}
                             onAddImageClick={() => setImageModalOpen(true)}
                             blockTime={blockTime}
+                            autoFocus
                         />
                     </AppContent>
                     <DarkWebConversationSettingsModal
