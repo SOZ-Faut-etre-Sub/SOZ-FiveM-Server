@@ -52,7 +52,7 @@ export class UpwPollutionProvider {
         this.pollutionThisTick = 0;
 
         // Trim buffer to max number of units
-        const maxNumberOfUnits = Math.ceil(UpwConfig.Pollution.Persistence / UpwConfig.Pollution.Tick);
+        const maxNumberOfUnits = Math.ceil((UpwConfig.Pollution.Persistence * 3_600_000) / UpwConfig.Pollution.Tick);
 
         if (this.units.length > maxNumberOfUnits) {
             this.units.splice(0, this.units.length - maxNumberOfUnits);

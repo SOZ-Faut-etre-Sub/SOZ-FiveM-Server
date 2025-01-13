@@ -469,7 +469,7 @@ export class UpwFacilityProvider {
 
         for (const conf of UPWWasteMultiplier) {
             if (conf.min <= wasteCoef && wasteCoef < conf.max) {
-                return conf.max;
+                return conf.value;
             }
         }
 
