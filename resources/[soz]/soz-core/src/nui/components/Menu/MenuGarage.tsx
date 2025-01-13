@@ -1,3 +1,4 @@
+import { PlayerVehicleState } from '@public/shared/vehicle/player.vehicle';
 import { FunctionComponent, useState } from 'react';
 
 import { TaxType } from '../../../shared/bank';
@@ -244,25 +245,29 @@ export const VehicleList: FunctionComponent<VehicleListProps> = ({ data, setCurr
                                 title={garageVehicle.vehicle_name}
                                 titleWidth={60}
                                 description={
-                                    <p>
-                                        Kilométrage:
-                                        {((garageVehicle.vehicle.condition.mileage || 0) / 1000).toFixed(2)} km
-                                        <br />
-                                        {garageVehicle.price > 0 && (
+                                    <div>
+                                        <div className="pr-2 flex items-center justify-between">
+                                            <span>Kilométrage</span>
                                             <span>
-                                                Prix de sortie: ${getPrice(garageVehicle.price, TaxType.VEHICLE)}
-                                                <br />
+                                                {((garageVehicle.vehicle.condition.mileage || 0) / 1000).toFixed(2)} km
                                             </span>
+                                        </div>
+                                        {garageVehicle.price > 0 && (
+                                            <div className="pr-2 flex items-center justify-between">
+                                                <span>Prix de sortie</span>
+                                                <span>
+                                                    $
+                                                    {garageVehicle.vehicle.state === PlayerVehicleState.InFedPound
+                                                        ? garageVehicle.price
+                                                        : getPrice(garageVehicle.price, TaxType.VEHICLE)}
+                                                    <br />
+                                                </span>
+                                            </div>
                                         )}
-                                    </p>
+                                    </div>
                                 }
                             >
-                                <MenuItemSelectOption value="take_out">
-                                    Sortir{' '}
-                                    {garageVehicle.price > 0 && (
-                                        <span>(${getPrice(garageVehicle.price, TaxType.VEHICLE)})</span>
-                                    )}
-                                </MenuItemSelectOption>
+                                <MenuItemSelectOption value="take_out">Sortir</MenuItemSelectOption>
                                 {garageVehicle.price > 0 &&
                                     data.has_fake_ticket &&
                                     data.garage.type === GarageType.Private && (

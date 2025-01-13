@@ -1021,7 +1021,11 @@ export class VehicleGarageProvider {
                 if (
                     !use_ticket &&
                     price !== 0 &&
-                    !(await this.playerMoneyService.buy(source, price, TaxType.VEHICLE))
+                    !(await this.playerMoneyService.buy(
+                        source,
+                        price,
+                        playerVehicle.state === PlayerVehicleState.InFedPound ? null : TaxType.VEHICLE
+                    ))
                 ) {
                     this.notifier.notify(source, "Vous n'avez pas assez d'argent.", 'error');
 

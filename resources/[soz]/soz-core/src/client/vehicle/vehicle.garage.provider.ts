@@ -6,6 +6,7 @@ import { wait } from '@core/utils';
 import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { InteractionProvider } from '@public/client/quick-interaction/interaction.provider';
 import { Apartment } from '@public/shared/housing/housing';
+import { PositiveNumberValidator } from '@public/shared/nui/input';
 
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { Feature } from '../../shared/features';
@@ -297,25 +298,12 @@ export class VehicleGarageProvider {
 
                         await wait(50);
 
-                        const model = GetEntityModel(entity);
-                        const vehConfig = this.vehicleRepository.getByModelHash(model);
-                        const maxPrice = Math.round((vehConfig?.price ?? 0) * 0.15);
-
                         const cost = await this.inputService.askInput<number>(
                             {
-                                title: `Coût de sortie (0-${maxPrice})`,
+                                title: `Coût de sortie`,
                                 maxCharacters: 30,
                             },
-                            value => {
-                                if (!value) {
-                                    return Ok(null);
-                                }
-                                const int = parseInt(value);
-                                if (isNaN(int) || int < 0 || int > maxPrice) {
-                                    return Err('Valeur incorrecte');
-                                }
-                                return Ok(int);
-                            }
+                            PositiveNumberValidator
                         );
 
                         if (cost === null) {
