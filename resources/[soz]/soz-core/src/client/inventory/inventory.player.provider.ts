@@ -63,30 +63,32 @@ export class InventoryPlayerProvider {
             return;
         }
 
-        if (player.metadata.isdead || player.metadata.inlaststand || player.metadata.ishandcuffed) {
-            return;
-        }
+        if (!this.isOpen) {
+            if (player.metadata.isdead || player.metadata.inlaststand || player.metadata.ishandcuffed) {
+                return;
+            }
 
-        if (this.ceremonyProvider.isRunning) {
-            return;
-        }
+            if (this.ceremonyProvider.isRunning) {
+                return;
+            }
 
-        if (this.paradeProvider.isRunning) {
-            return;
-        }
+            if (this.paradeProvider.isRunning) {
+                return;
+            }
 
-        if (this.clothingShopProvider.isInShop()) {
-            return;
-        }
+            if (this.clothingShopProvider.isInShop()) {
+                return;
+            }
 
-        const playerPed = PlayerPedId();
+            const playerPed = PlayerPedId();
 
-        // Can't open inventory while playing some animations
-        if (
-            IsEntityPlayingAnim(playerPed, 'missminuteman_1ig_2', 'handsup_base', 3) ||
-            IsEntityPlayingAnim(playerPed, 'mp_arresting', 'idle', 3)
-        ) {
-            return;
+            // Can't open inventory while playing some animations
+            if (
+                IsEntityPlayingAnim(playerPed, 'missminuteman_1ig_2', 'handsup_base', 3) ||
+                IsEntityPlayingAnim(playerPed, 'mp_arresting', 'idle', 3)
+            ) {
+                return;
+            }
         }
 
         this.nuiMenu.closeAll();
