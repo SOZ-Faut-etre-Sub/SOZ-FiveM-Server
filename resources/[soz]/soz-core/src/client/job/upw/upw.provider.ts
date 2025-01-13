@@ -178,7 +178,7 @@ export class UpwProvider {
                         job: JobType.Upw,
                         action: () =>
                             this.notifier.notify(
-                                `Niveau de pollution : ${this.upwPollutionProvider.getPollutionPercent()}%`,
+                                `Niveau de pollution : ${this.upwPollutionProvider.getPollutionPercent().toFixed(2)}%`,
                                 'info'
                             ),
                     },

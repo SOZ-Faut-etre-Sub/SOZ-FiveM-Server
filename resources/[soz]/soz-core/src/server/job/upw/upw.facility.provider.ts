@@ -453,8 +453,8 @@ export class UpwFacilityProvider {
             facility.capacity = Math.min(facility.maxCapacity, facility.capacity + prod);
 
             // Add pollution
-            if (facility.capacity - prev > 0) {
-                this.upwPollutionProvider.addPollution(prod * (facility.capacity - prev));
+            if (facility.pollutionPerUnit && facility.capacity - prev > 0) {
+                this.upwPollutionProvider.addPollution((facility.capacity - prev) * facility.pollutionPerUnit);
             }
 
             // Produce waste

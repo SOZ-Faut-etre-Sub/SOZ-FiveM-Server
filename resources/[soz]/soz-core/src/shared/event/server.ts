@@ -300,6 +300,7 @@ export enum ServerEvent {
     UPW_HARVEST_ENERGY = 'soz-core:server:job:upw:harvest-energy',
     UPW_REFILL_ENERGY = 'soz-core:server:job:upw:refill-energy',
     UPW_DISPLAY_WASTE = 'soz-core:server:job:upw:display-waste',
+    UPW_POLLUTION_INIT = 'soz-core:server:job:upw:pollution-init',
 
     PAWL_DECREASE_CHAINSAW_FUEL = 'soz-core:server:job:pawl:decrease-chainsaw-fuel',
     PAWL_PROCESSING_STATUS = 'soz-core:server:job:pawl:processing-status',
