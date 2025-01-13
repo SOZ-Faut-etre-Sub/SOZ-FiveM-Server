@@ -809,8 +809,8 @@
             </firstPersonDrivebyData>
         </Item>
         <Item>
-            <modelName>bcsot</modelName>
-            <txdName>bcsot</txdName>
+            <modelName>bcso60</modelName>
+            <txdName>bcso60</txdName>
             <handlingId>POLICET</handlingId>
             <gameName>POLICET</gameName>
             <vehicleMakeName />
@@ -953,7 +953,7 @@
         </Item>
         <Item>
             <parent>vehicles_van_interior</parent>
-            <child>bcsot</child>
+            <child>bcso60</child>
         </Item>
     </txdRelationships>
 </CVehicleModelInfo__InitDataList>

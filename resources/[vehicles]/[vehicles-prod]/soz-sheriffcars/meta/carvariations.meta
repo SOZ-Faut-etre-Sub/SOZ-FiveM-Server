@@ -276,7 +276,7 @@
             <sirenSettings value="5012" />
         </Item>
         <Item>
-            <modelName>bcsot</modelName>
+            <modelName>bcso60</modelName>
             <colors itemType="CVehicleModelColorIndices">
                 <Item>
                     <indices content="char_array">
