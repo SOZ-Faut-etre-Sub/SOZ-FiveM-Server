@@ -1,8 +1,8 @@
-import { Once, OnceStep } from '@public/core/decorators/event';
+import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Tick } from '@public/core/decorators/tick';
 import { PrismaService } from '@public/server/database/prisma.service';
-import { ClientEvent } from '@public/shared/event';
+import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { UpwConfig, UpwPollution } from '@public/shared/job/upw';
 
 import { Provider } from '../../../core/decorators/provider';
@@ -71,7 +71,7 @@ export class UpwPollutionProvider {
                 -1,
                 1024,
                 newPollutionLevel,
-                this.currentPollution
+                this.getPollutionPercent()
             );
         }
     }
@@ -116,5 +116,15 @@ export class UpwPollutionProvider {
             }
         }
         return UpwPollution.High;
+    }
+
+    @OnEvent(ServerEvent.UPW_POLLUTION_INIT)
+    private init(source: number) {
+        TriggerClientEvent(
+            ClientEvent.UPW_POLLUTION_UPDATE,
+            source,
+            this.getPollutionLevel(),
+            this.getPollutionPercent()
+        );
     }
 }

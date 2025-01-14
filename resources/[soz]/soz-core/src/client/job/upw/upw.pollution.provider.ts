@@ -1,5 +1,5 @@
-import { OnEvent } from '@public/core/decorators/event';
-import { ClientEvent } from '@public/shared/event';
+import { Once, OnEvent } from '@public/core/decorators/event';
+import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { UpwConfig, UpwPollution } from '@public/shared/job/upw';
 
 import { Provider } from '../../../core/decorators/provider';
@@ -8,6 +8,11 @@ import { Provider } from '../../../core/decorators/provider';
 export class UpwPollutionProvider {
     private pollutionLevel = UpwPollution.Neutral;
     private pollutionPercent = 0;
+
+    @Once()
+    public init() {
+        TriggerServerEvent(ServerEvent.UPW_POLLUTION_INIT);
+    }
 
     @OnEvent(ClientEvent.UPW_POLLUTION_UPDATE)
     public onPollutionChanged(value: UpwPollution, percent: number) {
