@@ -6,6 +6,7 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { useNuiFocus } from '../../hook/nui';
 import { useAppBankStateHandlers } from './apps/bank/bank.atom';
 import { useAppDarkWebStateHandlers } from './apps/darkweb/darkweb.atom';
+import { CallModalApp } from './apps/dialer/CallModalApp';
 import { HomeApp } from './apps/home/HomeApp';
 import { useAppNewsStateHandlers } from './apps/news/news.atom';
 import { useAppNotesStateHandlers } from './apps/notes/notes.atom';
@@ -15,6 +16,7 @@ import { useAppWeatherStateHandlers } from './apps/weather/weather.atom';
 import { ActionSheet } from './system/action-sheet/components/ActionSheet';
 import { Alerts } from './system/alerts/components/Alerts';
 import { useApps } from './system/apps/hooks/useApps';
+import { CallDynamicIsland } from './system/dynamic-island/components/CallDynamicIsland';
 import { usePhoneStateHandlers, usePhoneVisibility } from './system/phone.atom';
 import { PhoneWrapper } from './system/PhoneWrapper';
 import { useSimCardStateHandlers } from './system/sim-card/sim.card.atom';
@@ -44,10 +46,12 @@ export const PhoneApp: FunctionComponent = () => {
             <PhoneWrapper>
                 <Alerts />
                 <ActionSheet />
+                <CallDynamicIsland />
 
                 <Routes>
+                    <Route path="/call" element={<CallModalApp />} />
+
                     <Route index element={<HomeApp />} />
-                    {/*<Route path="/call" element={<CallModal />} />*/}
                     {/*<Route path="/emergency" element={<EmergencyModal />} />*/}
 
                     {apps.map(app => (

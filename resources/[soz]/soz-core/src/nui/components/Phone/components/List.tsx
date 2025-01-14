@@ -1,7 +1,6 @@
-import { CheckIcon } from '@heroicons/react/outline';
 import { animated, useSpring } from '@react-spring/web';
 import clsx from 'clsx';
-import React, { CSSProperties, FunctionComponent, PropsWithChildren, ReactNode, useState } from 'react';
+import React, { CSSProperties, FunctionComponent, PropsWithChildren, useState } from 'react';
 
 import { useThemeConfig } from '../system/config/config.atom';
 import { IconComponentProps } from '../system/phone.types';
@@ -55,6 +54,7 @@ interface ListButtonProps extends PropsWithChildren {
         color: string;
         icon: FunctionComponent<IconComponentProps>;
         onClick: () => void;
+        condition?: boolean;
     }[];
 }
 
@@ -62,12 +62,21 @@ export const ListButton: FunctionComponent<ListButtonProps> = ({ children, style
     const theme = useThemeConfig();
     const [open, setOpen] = useState(false);
 
+    const actionFilter = (action: ListButtonProps['actions'][0]) => {
+        if (action.condition === undefined) {
+            return true;
+        }
+        return action.condition;
+    };
+
     const styles = useSpring({
         from: {
-            transform: `translateX(0%)`,
+            transform: `translateX(0px)`,
         },
         to: {
-            transform: open ? `translateX(-50%)` : `translateX(0%)`,
+            transform: open
+                ? `translateX(-${Number(style.height) * actions.filter(actionFilter).length + 10}px)`
+                : `translateX(0px)`,
         },
     });
 
@@ -86,10 +95,10 @@ export const ListButton: FunctionComponent<ListButtonProps> = ({ children, style
             >
                 {children}
             </animated.div>
-            <div className="absolute h-full w-full right-0 top-0 flex justify-end items-center px-2 text-sm">
-                {actions.map(({ color, label, icon: Icon, onClick }) => (
+            <div className="absolute h-full w-full right-0 top-0 flex justify-end items-center px-2 text-xs">
+                {actions.filter(actionFilter).map(({ color, label, icon: Icon, onClick }) => (
                     <button
-                        className={clsx('flex flex-col justify-center items-center h-full aspect-square', color)}
+                        className={clsx('flex flex-col justify-center items-center h-full aspect-square p-1', color)}
                         onClick={onClick}
                     >
                         <Icon className="size-8" />

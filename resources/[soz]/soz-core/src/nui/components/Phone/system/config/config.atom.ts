@@ -11,6 +11,8 @@ const wallpaperConfigAtom = atom(get => get(configAtom).wallpaper.value);
 const planeModeAtom = atom(get => get(configAtom).planeMode);
 const zoomAtom = atom(get => get(configAtom).zoom.value);
 const handsFreeAtom = atom(get => get(configAtom).handsFree);
+const hidePicturesAtom = atom(get => get(configAtom).hidePictures);
+const textZoomAtom = atom(get => get(configAtom).textZoom.value);
 
 export const useConfig = () => useAtomValue(configAtom);
 export const useSetConfig = () => useSetAtom(configAtom);
@@ -21,3 +23,5 @@ export const useWallpaperConfig = () => useAtomValue(wallpaperConfigAtom);
 export const useZoomConfig = () => useAtomValue(zoomAtom);
 export const usePlaneMode = () => useAtomValue(planeModeAtom);
 export const useHandsFreeConfig = () => useAtomValue(handsFreeAtom);
+export const useHidePicturesConfig = () => useAtomValue(hidePicturesAtom);
+export const useTextZoomConfig = () => useAtomValue(textZoomAtom);

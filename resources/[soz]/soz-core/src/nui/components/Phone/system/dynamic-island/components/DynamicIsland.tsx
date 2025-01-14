@@ -26,7 +26,7 @@ export const DynamicIsland = () => {
     }, [reset]);
 
     return (
-        <div className="absolute top-4 left-1/3 w-1/3 aspect-square z-50 pointer-events-none overflow-hidden">
+        <div className="absolute top-4 left-1/3 w-1/3 aspect-square z-50 pointer-events-none">
             <animated.div style={styles} className="flex justify-center items-center bg-black rounded-3xl">
                 {data && data.type === 'success' && <CheckCircleIcon className="size-20 text-green-500" />}
                 {data && data.type === 'error' && <XCircleIcon className="size-20 text-red-500" />}

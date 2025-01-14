@@ -7,6 +7,8 @@ import { PhoneAppTetrisProvider } from './apps/phone.app.tetris.provider';
 import { PhoneManager } from './phone.manager';
 import { PhoneProvider } from './phone.provider';
 import { PhoneSimCard } from './phone.simcard';
+import { PhoneSimCardContacts } from './phone.simcard.contacts';
+import { PhoneSimCardMessages } from './phone.simcard.messages';
 import { PhoneState } from './phone.state';
 
 @Module({
@@ -15,6 +17,8 @@ import { PhoneState } from './phone.state';
         PhoneManager,
         PhoneProvider,
         PhoneSimCard,
+        PhoneSimCardContacts,
+        PhoneSimCardMessages,
         // Apps
         PhoneAppBankProvider,
         PhoneAppNewsProvider,

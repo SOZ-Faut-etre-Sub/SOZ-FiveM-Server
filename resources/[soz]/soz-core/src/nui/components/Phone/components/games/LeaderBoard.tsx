@@ -51,7 +51,20 @@ export const Leaderboard = ({ leaderboard }: { leaderboard: LeaderboardInterface
                     ))}
                 </div>
 
-                <List height={500} width={410} itemSize={85} itemCount={rest.length} itemData={rest}>
+                <List
+                    height={500}
+                    width={410}
+                    itemSize={85}
+                    itemCount={rest.length}
+                    itemData={rest}
+                    className={clsx(
+                        'scrollbar scrollbar-w-[5px] scrollbar-thumb-rounded-full scrollbar-track-rounded-full',
+                        {
+                            'scrollbar-thumb-white/80': theme === 'dark',
+                            'scrollbar-thumb-black/20': theme === 'light',
+                        }
+                    )}
+                >
                     {RowRenderer}
                 </List>
             </AppContent>

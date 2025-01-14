@@ -39,7 +39,7 @@ export const fr = {
                 TEXT_ZOOM: 'Taille des SMS',
                 WALLPAPER: "Fond d'écran",
                 RESET_SETTINGS: 'Réinitialiser toutes vos données',
-                STREAMER_MODE: {
+                HIDE_PICTURES: {
                     TITLE: 'Mode NSFW',
                     DESCRIPTION: 'Masquer les images par défaut',
                 },
@@ -91,6 +91,7 @@ export const fr = {
         },
         CONTACTS: {
             FEEDBACK: {
+                NO_CONTACTS: "Vous n'avez pas de contacts",
                 ADD_FAILED: 'Erreur de création du contact!',
                 ADD_SUCCESS: 'Contact créé avec succès!',
                 UPDATE_FAILED: 'Erreur lors de la mise à jour du contact!',
@@ -179,6 +180,8 @@ export const fr = {
                 MESSAGE_GROUP_CREATE_MINE: 'Vous ne pouvez pas vous ajouter vous-même !',
                 FETCHED_MESSAGES_FAILED: 'Impossible de retrouver les messages',
                 DELETE_CONVERSATION_FAILED: 'Impossible de supprimer la conversation',
+                ARCHIVE_CONVERSATION_FAILED: "Impossible d'archiver la conversation",
+                NO_CONVERSATION: 'Aucune conversation trouvée',
             },
             SEARCH_PLACEHOLDER: 'Rechercher...',
             DELETE_CONVERSATION: 'Supprimer la conversation',
@@ -282,6 +285,7 @@ export const fr = {
             CONTENT: 'Contenu',
             WRITE_TO_CLIPBOARD_TOOLTIP: 'Copier {{ content }}',
             WRITE_TO_CLIPBOARD_MESSAGE: '{{content}} copié dans le presse-papier!',
+            DELETE_CONFIRM_CONTENT: 'Cette action est irréversible.',
         },
         COMING_SOON: 'Coming soon...',
         INITIALIZING: 'Initialisation',

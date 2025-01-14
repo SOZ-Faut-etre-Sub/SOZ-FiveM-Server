@@ -79,7 +79,7 @@ const InvoiceItem: FunctionComponent<VirtualizedListProps<Invoice>> = ({ index, 
                 },
             ]}
         >
-            <div className="px-6 py-2  flex-1 min-w-0 cursor-pointer">
+            <div className="px-6 py-2 flex-1 min-w-0 cursor-pointer">
                 <span className="absolute inset-0" aria-hidden="true" />
                 <div
                     className={clsx('text-left text-sm font-medium', {

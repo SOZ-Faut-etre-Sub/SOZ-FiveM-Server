@@ -16,7 +16,7 @@ interface ISettingItem {
 
 export const SettingItem: FunctionComponent<ISettingItem> = ({ options, color, label, value, onClick, icon }) => {
     return (
-        <ListItem onClick={() => onClick?.(options)}>
+        <ListItem onClick={() => onClick?.('Configuration', options)}>
             <ItemIcon color={color} icon={icon} />
             <p className="flex-grow ml-4 font-light normal-case">{label}</p>
             <Button className="flex items-center">

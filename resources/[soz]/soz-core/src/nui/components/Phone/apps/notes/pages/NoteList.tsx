@@ -83,12 +83,8 @@ const NoteItem: FunctionComponent<VirtualizedListProps<NoteItem>> = ({ index, st
     const note = data[index];
     if (!note) return null;
 
-    const handleNoteModal = () => {
-        navigate(`/notes/${note.id}`);
-    };
-
     return (
-        <ListItem key={note.id} style={style} onClick={handleNoteModal}>
+        <ListItem key={note.id} style={style} onClick={() => navigate(`/notes/${note.id}`)}>
             <div className="flex flex-col ml-2 py-2 truncate">
                 <p className="flex-grow">{note.title}</p>
                 <p className="flex-grow text-gray-500 truncate">{note.content.slice(0, 60)}</p>

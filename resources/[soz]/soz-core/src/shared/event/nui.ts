@@ -668,7 +668,14 @@ export enum NuiEvent {
     InventoryShopValidate = 'soz-core:nui:inventory:shop-validate',
     InventoryGoBackPlayerInventory = 'soz-core:nui:inventory:go-back-player-inventory',
 
+    PhoneSimCardAddConversation = 'soz-core:nui:phone:sim-card-add-conversation',
+    PhoneSimCardSetConversationAsRead = 'soz-core:nui:phone:sim-card-set-conversation-as-read',
+    PhoneSimCardArchiveConversation = 'soz-core:nui:phone:sim-card-archive-conversation',
+    PhoneSimCardSendMessage = 'soz-core:nui:phone:sim-card-send-message',
     PhoneSimCardUpdateAvatar = 'soz-core:nui:phone:sim-card-update-avatar',
+    PhoneSimCardAddContact = 'soz-core:nui:phone:sim-card-add-contact',
+    PhoneSimCardUpdateContact = 'soz-core:nui:phone:sim-card-update-contact',
+    PhoneSimCardDeleteContact = 'soz-core:nui:phone:sim-card-delete-contact',
     PhoneAppPhotosDelete = 'soz-core:nui:phone:app-photos-delete',
     PhoneAppNotesAdd = 'soz-core:nui:phone:app-notes-add',
     PhoneAppNotesUpdate = 'soz-core:nui:phone:app-notes-update',
@@ -676,4 +683,9 @@ export enum NuiEvent {
     PhoneAppBankPayInvoice = 'soz-core:nui:phone:app-bank-pay-invoice',
     PhoneAppBankRejectInvoice = 'soz-core:nui:phone:app-bank-reject-invoice',
     PhoneAppTetrisAddScore = 'soz-core:nui:phone:app-tetris-add-score',
+
+    GetPlayerPosition = 'soz-core:nui:get-player-position',
+    GetStreetName = 'soz-core:nui:get-street-name',
+    GetWaypoint = 'soz-core:nui:get-waypoint',
+    SetWaypoint = 'soz-core:nui:set-waypoint',
 }

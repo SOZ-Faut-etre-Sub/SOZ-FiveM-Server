@@ -5,6 +5,7 @@ import { ReactNode } from 'react';
 interface AppTitleState {
     display: boolean;
     title: string;
+    subtitle?: string;
 }
 
 interface AppGetBackState {
@@ -23,6 +24,7 @@ export interface AppActionState {
 const appTitleAtom = atom<AppTitleState>({
     display: false,
     title: '',
+    subtitle: undefined,
 });
 const appGetBackAtom = atom<AppGetBackState>({
     display: false,

@@ -7,7 +7,8 @@ export const AppContent: FunctionComponent<any> = ({ children, className, scroll
             className={clsx(
                 'flex flex-col grow w-full px-4',
                 {
-                    'overflow-y-auto': scrollable,
+                    'overflow-y-auto scrollbar scrollbar-w-[5px] scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full':
+                        scrollable,
                     'overflow-y-hidden': !scrollable,
                 },
                 className

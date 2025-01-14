@@ -89,7 +89,7 @@ const PhoneFrame = memo(() => {
 
     return (
         <div
-            className="absolute z-50 pointer-events-none"
+            className="absolute z-[100] pointer-events-none"
             style={{
                 width: PHONE_WIDTH,
                 height: PHONE_HEIGHT,

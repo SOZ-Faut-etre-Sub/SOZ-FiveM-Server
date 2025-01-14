@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client';
 import { Provider } from '@public/core/decorators/provider';
 
 import { Inject } from '../../core/decorators/injectable';
@@ -52,5 +53,32 @@ export class PhoneSimCard {
                 avatar,
             },
         });
+    }
+
+    @Rpc(RpcServerEvent.PHONE_SIMCARD_CALLS_HISTORY_GET)
+    async getCallHistory(source: number) {
+        const player = this.playerService.getPlayer(source);
+        if (!player) {
+            return;
+        }
+
+        const history = await this.prismaService.phone_calls.findMany({
+            where: {
+                OR: [
+                    {
+                        receiver: player.charinfo.phone,
+                    },
+                    {
+                        transmitter: player.charinfo.phone,
+                    },
+                ],
+            },
+            orderBy: {
+                end: 'desc',
+            },
+            take: 50,
+        });
+
+        return history.map(call => ({ ...call, start: Number(call.start), end: Number(call.end) }));
     }
 }

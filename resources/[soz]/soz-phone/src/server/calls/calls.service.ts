@@ -1,21 +1,13 @@
-import Collection from '@discordjs/collection';
-import { v4 as uuidv4 } from 'uuid';
+import Collection from "@discordjs/collection";
+import { v4 as uuidv4 } from "uuid";
 
-import {
-    ActiveCall,
-    ActiveCallRaw,
-    CallEvents,
-    CallHistoryItem,
-    EndCallDTO,
-    InitializeCallDTO,
-    MuteCallDTO,
-} from '../../../typings/call';
-import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
-import PlayerService from '../players/player.service';
-import { mainLogger } from '../sv_logger';
-import { emitNetTyped } from '../utils/miscUtils';
-import CallsDB, { CallsRepo } from './calls.db';
-import { callLogger } from './calls.utils';
+import { ActiveCall, ActiveCallRaw, CallEvents, CallHistoryItem, EndCallDTO, InitializeCallDTO, MuteCallDTO } from "../../../typings/call";
+import { PromiseEventResp, PromiseRequest } from "../lib/PromiseNetEvents/promise.types";
+import PlayerService from "../players/player.service";
+import { mainLogger } from "../sv_logger";
+import { emitNetTyped } from "../utils/miscUtils";
+import CallsDB, { CallsRepo } from "./calls.db";
+import { callLogger } from "./calls.utils";
 
 class CallsService {
     private callMap: Collection<string, ActiveCallRaw>;
@@ -24,7 +16,7 @@ class CallsService {
     constructor() {
         this.callMap = new Collection();
         this.callsDB = CallsDB;
-        callLogger.debug('Call service started');
+        callLogger.debug("Call service started");
     }
 
     private setCallInMap(transmitterNumber: string, callObj: ActiveCallRaw): void {
@@ -33,10 +25,7 @@ class CallsService {
         callLogger.debug(callObj);
     }
 
-    async handleInitializeCall(
-        reqObj: PromiseRequest<InitializeCallDTO>,
-        resp: PromiseEventResp<ActiveCall>
-    ): Promise<void> {
+    async handleInitializeCall(reqObj: PromiseRequest<InitializeCallDTO>, resp: PromiseEventResp<ActiveCall>): Promise<void> {
         // Create initial call data
         const transmittingPlayer = PlayerService.getPlayer(reqObj.source);
         const transmitterNumber = transmittingPlayer.getPhoneNumber();
@@ -46,7 +35,7 @@ class CallsService {
         // number
         if (!receiverIdentifier) {
             return resp({
-                status: 'error',
+                status: "error",
                 data: {
                     transmitter: transmitterNumber,
                     isTransmitter: true,
@@ -79,10 +68,8 @@ class CallsService {
         try {
             await this.callsDB.saveCall(callObj);
         } catch (e) {
-            callLogger.error(
-                `Unable to save call object for transmitter number ${transmitterNumber}. Error: ${e.toString()}`
-            );
-            resp({ status: 'error', errorMsg: 'DATABASE_ERROR' });
+            callLogger.error(`Unable to save call object for transmitter number ${transmitterNumber}. Error: ${e.toString()}`);
+            resp({ status: "error", errorMsg: "DATABASE_ERROR" });
         }
 
         // Now if the player is offline, we send the same resp
@@ -96,7 +83,7 @@ class CallsService {
             });
 
             return resp({
-                status: 'ok',
+                status: "ok",
                 data: {
                     is_accepted: false,
                     transmitter: transmitterNumber,
@@ -110,7 +97,7 @@ class CallsService {
         // At this point we return back to the client that the player contacted
         // is technically available and therefore intialization process ic omplete
         resp({
-            status: 'ok',
+            status: "ok",
             data: {
                 is_accepted: false,
                 transmitter: transmitterNumber,
@@ -210,33 +197,14 @@ class CallsService {
     async handleMuteCall(src: number, data: MuteCallDTO): Promise<void> {
         const targetCallItem = this.callMap.get(data.transmitterNumber);
 
-        emitNet(
-            'soz-core:client:voip:voice:mute-call',
-            data.isTransmitter ? targetCallItem.receiverSource : targetCallItem.transmitterSource,
-            data.muted
-        );
-    }
-
-    async handleFetchCalls(reqObj: PromiseRequest<void>, resp: PromiseEventResp<CallHistoryItem[]>): Promise<void> {
-        const player = PlayerService.getPlayer(reqObj.source);
-        const srcPlayerNumber = player.getPhoneNumber();
-
-        try {
-            const calls = await this.callsDB.fetchCalls(srcPlayerNumber);
-            resp({ status: 'ok', data: calls });
-        } catch (e) {
-            resp({ status: 'error', errorMsg: 'DATABASE_ERROR' });
-            callLogger.error(`Error while fetching calls, ${e.toString()}`);
-        }
+        emitNet("soz-core:client:voip:voice:mute-call", data.isTransmitter ? targetCallItem.receiverSource : targetCallItem.transmitterSource, data.muted);
     }
 
     async handleRejectCall(src: number, transmitterNumber: string): Promise<void> {
         const currentCall = this.callMap.get(transmitterNumber);
 
         if (!currentCall) {
-            callLogger.error(
-                `Call with transmitter number ${transmitterNumber} does not exist in current calls map! (reject call)`
-            );
+            callLogger.error(`Call with transmitter number ${transmitterNumber} does not exist in current calls map! (reject call)`);
             return;
         }
 
@@ -252,10 +220,7 @@ class CallsService {
     }
 
     isPlayerAlreadyInCall(phone: string): boolean {
-        return (
-            this.callMap.find(call => (call.transmitter === phone || call.receiver === phone) && call.is_accepted) !==
-            undefined
-        );
+        return this.callMap.find((call) => (call.transmitter === phone || call.receiver === phone) && call.is_accepted) !== undefined;
     }
 
     async handleEndCall(reqObj: PromiseRequest<EndCallDTO>, resp: PromiseEventResp<void>) {
@@ -264,10 +229,8 @@ class CallsService {
         const transmitterCall = this.callMap.get(currentCall?.transmitter);
 
         if (!currentCall) {
-            callLogger.error(
-                `Call with transmitter number ${transmitterNumber} does not exist in current calls map! (end call)`
-            );
-            return resp({ status: 'error', errorMsg: 'DOES_NOT_EXIST' });
+            callLogger.error(`Call with transmitter number ${transmitterNumber} does not exist in current calls map! (end call)`);
+            return resp({ status: "error", errorMsg: "DOES_NOT_EXIST" });
         }
 
         // Just in case currentCall for some reason at this point is falsy
@@ -287,7 +250,7 @@ class CallsService {
             }
         }
         // player who is calling (transmitter)
-        resp({ status: 'ok' });
+        resp({ status: "ok" });
 
         await this.callsDB.updateCall(currentCall, currentCall?.is_accepted);
         // Clear from memory

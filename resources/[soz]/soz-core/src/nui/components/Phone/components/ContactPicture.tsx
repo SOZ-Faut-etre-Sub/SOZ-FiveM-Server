@@ -6,7 +6,7 @@ import { useThemeConfig } from '../system/config/config.atom';
 type Props = {
     picture?: string;
     useOffset?: boolean;
-    size?: 'small' | 'medium' | 'large';
+    size?: 'small' | 'medium' | 'large' | 'xlarge';
 };
 
 export const ContactPicture: FunctionComponent<Props> = ({ picture, useOffset = true, size = 'small' }) => {
@@ -17,9 +17,10 @@ export const ContactPicture: FunctionComponent<Props> = ({ picture, useOffset = 
             className={clsx('bg-cover bg-center my-1 rounded-full', {
                 'bg-ios-700': theme === 'dark',
                 'bg-gray-300': theme === 'light',
-                'h-10 w-10': size === 'small',
-                'h-14 w-14': size === 'medium',
-                'h-20 w-20': size === 'large',
+                'size-10': size === 'small',
+                'size-14': size === 'medium',
+                'size-20': size === 'large',
+                'size-28': size === 'xlarge',
             })}
             style={{ backgroundImage: `url(${picture})`, backgroundPosition: useOffset ? '-300px 0' : undefined }}
         />

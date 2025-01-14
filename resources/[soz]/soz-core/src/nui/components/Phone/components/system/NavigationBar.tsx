@@ -34,7 +34,7 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = memo(({ forc
         } else {
             return theme === 'dark' ? lightMode : darkMode;
         }
-    }, [theme, pathname]);
+    }, [theme, pathname, forceControlColor]);
 
     const onclickHandler = useCallback(() => {
         if (emergency) {

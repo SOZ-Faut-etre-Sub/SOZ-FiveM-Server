@@ -10,6 +10,7 @@ import { StatusBar } from './StatusBar';
 import { TabBar } from './TabBar';
 
 interface AppContainerProps extends PropsWithChildren {
+    className?: string;
     tabBarOptions?: NavBarOption[];
     forceControlColor?: 'light' | 'dark';
     withHeader?: boolean;
@@ -20,6 +21,7 @@ interface AppContainerProps extends PropsWithChildren {
 export const AppContainer: FunctionComponent<AppContainerProps> = memo(
     ({
         children,
+        className,
         tabBarOptions,
         forceControlColor,
         disableBackground = false,
@@ -43,7 +45,7 @@ export const AppContainer: FunctionComponent<AppContainerProps> = memo(
         return (
             <animated.div
                 style={styles}
-                className={clsx('flex flex-col h-full w-full', {
+                className={clsx('flex flex-col h-full w-full', className, {
                     [backgroundClass]: !disableBackground,
                     'pb-7': pathname !== '/',
                 })}

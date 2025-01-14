@@ -3,12 +3,17 @@ import { useMemo } from 'react';
 import { IAppConfig } from '../../../../../../shared/phone/app';
 import { BankApp } from '../../../apps/bank/BankApp';
 import BankIcon from '../../../apps/bank/icon';
+import { CameraApp } from '../../../apps/camera/CameraApp';
 import CameraIcon from '../../../apps/camera/icon';
+import { ContactsApp } from '../../../apps/contacts/ContactsApp';
 import ContactsIcon from '../../../apps/contacts/icon';
 import { useDarkWebEnabled } from '../../../apps/darkweb/darkweb.atom';
+import { DarkWebApp } from '../../../apps/darkweb/DarkWebApp';
 import DarkWebIcon from '../../../apps/darkweb/icon';
+import { DialerApp } from '../../../apps/dialer/DialerApp';
 import DialerIcon from '../../../apps/dialer/icon';
 import MessagesIcon from '../../../apps/messages/icon';
+import { MessagesApp } from '../../../apps/messages/MessagesApp';
 import NewsIcon from '../../../apps/news/icon';
 import { NewsApp } from '../../../apps/news/NewsApp';
 import NotesIcon from '../../../apps/notes/icon';
@@ -17,6 +22,10 @@ import PhotosIcon from '../../../apps/photos/icon';
 import { PhotosApp } from '../../../apps/photos/PhotosApp';
 import SettingsIcon from '../../../apps/settings/icon';
 import { SettingsApp } from '../../../apps/settings/SettingsApp';
+import { SnakeApp } from '../../../apps/snake/SnakeApp';
+import { SocietyContactsApp } from '../../../apps/society-contacts/SocietyContactsApp';
+import { SocietyMessagesApp } from '../../../apps/society-messages/SocietyMessagesApp';
+import { TaxApp } from '../../../apps/tax/TaxApp';
 import TetrisIcon from '../../../apps/tetris/icon';
 import { TetrisApp } from '../../../apps/tetris/TetrisApp';
 import WeatherIcon from '../../../apps/weather/icon';
@@ -36,7 +45,7 @@ export const useApps = () => {
             nameLocale: 'APPS_DIALER',
             path: '/phone',
             icon: DialerIcon,
-            // component: <DialerApp />,
+            component: <DialerApp />,
             position: 1,
             home: true,
         },
@@ -45,7 +54,7 @@ export const useApps = () => {
             nameLocale: 'APPS_MESSAGES',
             path: '/messages',
             icon: MessagesIcon,
-            // component: <MessagesApp />,
+            component: <MessagesApp />,
             position: 2,
             home: true,
         },
@@ -54,7 +63,7 @@ export const useApps = () => {
             nameLocale: 'APPS_CONTACTS',
             path: '/contacts',
             icon: ContactsIcon,
-            // component: <ContactsApp />,
+            component: <ContactsApp />,
             position: 3,
             home: true,
         },
@@ -79,7 +88,7 @@ export const useApps = () => {
             nameLocale: 'APPS_CAMERA',
             path: '/camera',
             icon: CameraIcon,
-            // component: <CameraApp />,
+            component: <CameraApp />,
             position: 4,
             home: true,
         },
@@ -90,7 +99,7 @@ export const useApps = () => {
             nameLocale: 'APPS_SOCIETY_CONTACTS',
             path: '/society-contacts',
             // icon: SocietyContactIcon,
-            // component: <SocietyContactsApp />,
+            component: <SocietyContactsApp />,
             position: 5,
         },
         {
@@ -98,7 +107,7 @@ export const useApps = () => {
             nameLocale: 'APPS_SOCIETY_MESSAGES',
             path: '/society-messages',
             // icon: SocietyMessagesIcon,
-            // component: <SocietyMessagesApp />,
+            component: <SocietyMessagesApp />,
             condition: () => Boolean(societyNumber),
             position: 6,
         },
@@ -117,7 +126,7 @@ export const useApps = () => {
             nameLocale: 'APPS_DARKWEB',
             path: '/darkweb',
             icon: DarkWebIcon,
-            // component: <DarkWebApp />,
+            component: <DarkWebApp />,
             condition: () => darkWebAppEnabled,
             position: 12,
         },
@@ -152,7 +161,7 @@ export const useApps = () => {
             nameLocale: 'APPS_TAX',
             path: '/tax',
             // icon: TaxIcon,
-            // component: <TaxApp />,
+            component: <TaxApp />,
             position: 8,
         },
 
@@ -170,7 +179,7 @@ export const useApps = () => {
             nameLocale: 'APPS_SNAKE',
             path: '/snake',
             // icon: SnakeIcon,
-            // component: <SnakeApp />,
+            component: <SnakeApp />,
             position: 11,
         },
         {

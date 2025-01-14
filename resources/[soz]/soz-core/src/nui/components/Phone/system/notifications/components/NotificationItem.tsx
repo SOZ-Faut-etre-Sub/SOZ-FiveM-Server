@@ -1,30 +1,22 @@
 import { urlIsImage } from '../../../../../utils/image';
 import { INotification } from '../notification.types';
 
-export const NotificationItem = ({
-    onClickClose,
-    ...notification
-}: INotification & {
-    onClickClose?: (e: any) => void;
-}) => {
-    const { title, notificationIcon: NotificationIcon, content, onClick } = notification;
+export const NotificationItem = (notification: INotification) => {
+    const { title, icon: Icon, content, onClick } = notification;
 
     return (
         <li
-            className={`cursor-pointer py-2 px-4 flex items-center bg-ios-800 hover:bg-opacity-80 text-white rounded-[20px] text-sm`}
+            className={`cursor-pointer py-2 px-4 flex items-center gap-4 bg-ios-800 hover:bg-opacity-80 text-white rounded-[20px] text-sm`}
             onClick={e => {
                 if (onClick) {
                     onClick(notification);
-                    onClickClose?.(e);
                 }
             }}
         >
-            {NotificationIcon && <NotificationIcon className="text-white size-12 p-1 rounded-xl shrink-0" />}
-            <div className="flex flex-col grow">
-                <p className="ml-4 font-light normal-case">{title}</p>
-                <p className="ml-4 font-light normal-case">
-                    {urlIsImage(content) ? 'Vous avez reçu une image' : content}
-                </p>
+            {Icon && <Icon className="text-white size-12 p-1 rounded-xl shrink-0" />}
+            <div className="flex flex-col justify-around grow h-full">
+                <p className="font-semibold normal-case">{title}</p>
+                <p className="font-light normal-case">{urlIsImage(content) ? 'Vous avez reçu une image' : content}</p>
             </div>
         </li>
     );

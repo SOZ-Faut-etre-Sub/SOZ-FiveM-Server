@@ -293,11 +293,11 @@ export const SettingsHome = () => {
                 </List>
                 <List>
                     <SettingSwitch
-                        label={t('SETTINGS.OPTIONS.STREAMER_MODE.DESCRIPTION')}
+                        label={t('SETTINGS.OPTIONS.HIDE_PICTURES.DESCRIPTION')}
                         icon={<EyeOffIcon />}
                         color="bg-[#c41515]"
-                        value={config.streamerMode}
-                        onClick={curr => handleSettingChange('streamerMode', !curr)}
+                        value={config.hidePictures}
+                        onClick={curr => handleSettingChange('hidePictures', !curr)}
                     />
                     <SettingItem
                         label={t('SETTINGS.OPTIONS.RESET_SETTINGS')}

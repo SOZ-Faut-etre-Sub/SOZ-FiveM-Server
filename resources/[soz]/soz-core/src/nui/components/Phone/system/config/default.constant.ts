@@ -24,7 +24,7 @@ export const defaultConfig = {
         label: '100%',
         value: 1.0,
     },
-    streamerMode: false,
+    hidePictures: false,
     ringtone: {
         label: 'Pixel',
         value: 'pixel',

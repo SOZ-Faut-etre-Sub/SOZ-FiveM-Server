@@ -20,7 +20,6 @@ import { useNotificationDrawer } from '../../system/notifications/hooks/useNotif
 import { useNotifications } from '../../system/notifications/hooks/useNotifications';
 import { usePhoneTime } from '../../system/phone.atom';
 import { useCall } from '../../system/sim-card/hooks/useCall';
-import { useCallModalOpen } from '../../system/sim-card/sim.card.atom';
 import { Button } from '../Button';
 
 interface StatusBarProps {
@@ -32,7 +31,6 @@ export const StatusBar: FunctionComponent<StatusBarProps> = memo(({ forceControl
     const { pathname } = useLocation();
 
     const { t } = useTranslation();
-    const { icon: DialerIcon } = useApp('dialer');
 
     const { notifications, removeNotification } = useNotifications();
     const { drawerOpen, setDrawerOpen } = useNotificationDrawer();
@@ -41,7 +39,6 @@ export const StatusBar: FunctionComponent<StatusBarProps> = memo(({ forceControl
     const themeConfig = useThemeConfig();
     const planeMode = usePlaneMode();
     const time = usePhoneTime();
-    const callModal = useCallModalOpen();
     const emergency = useEmergency();
     const appTitle = useAppTitle();
     const appGetBack = useAppGetBack();
@@ -62,8 +59,6 @@ export const StatusBar: FunctionComponent<StatusBarProps> = memo(({ forceControl
         }
 
         if (['/', '/emergency', '/weather', '/snake', '/bank'].includes(pathname)) {
-            return lightMode;
-        } else if (pathname === '/call' || (currentCall && pathname.includes('/phone'))) {
             return lightMode;
         } else if (pathname.includes('/camera')) {
             return 'bg-black text-white';
@@ -91,11 +86,10 @@ export const StatusBar: FunctionComponent<StatusBarProps> = memo(({ forceControl
             >
                 <div className="flex justify-start items-center gap-1 font-semibold truncate pl-4 w-2/6">
                     <p className="mr-2">{time}</p>
-                    {!emergency && callModal && <DialerIcon className={`text-white h-4 w-4 rounded-sm`} />}
-                    {/*{!emergency &&*/}
-                    {/*    notifications.map(({ id, icon: Icon }) => (*/}
-                    {/*        <Icon key={id} className={`text-white h-4 w-4 rounded-sm`} />*/}
-                    {/*    ))}*/}
+                    {!emergency &&
+                        notifications.map(({ id, icon: Icon, ...other }) => (
+                            <Icon key={id} className="text-white size-4 rounded-sm" />
+                        ))}
                 </div>
 
                 <DynamicIsland />
@@ -123,8 +117,9 @@ export const StatusBar: FunctionComponent<StatusBarProps> = memo(({ forceControl
                         </>
                     )}
                 </Button>
-                <animated.span style={styles} className="grow text-center">
-                    {appTitle.title}
+                <animated.span style={styles} className="grow text-center truncate">
+                    <p className="truncate">{appTitle.title}</p>
+                    {appTitle.subtitle && <p className="truncate text-gray-500 text-xs">{appTitle.subtitle}</p>}
                 </animated.span>
                 <div className="flex-none flex justify-end items-center gap-1.5 w-1/4">
                     {appActions
@@ -158,12 +153,12 @@ export const StatusBar: FunctionComponent<StatusBarProps> = memo(({ forceControl
                 >
                     <div className="mt-24 mb-12 font-semibold text-8xl">{time}</div>
 
-                    <ul className="flex flex-col-reverse gap-2 h-full w-full p-4 mb-6 overflow-y-scroll">
+                    <ul className="flex flex-col-reverse gap-2 h-full w-full p-4 mb-6 overflow-y-scroll scrollbar scrollbar-w-[5px] scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
                         {notifications.map((notification, idx) => (
                             <NotificationItem
                                 key={idx}
                                 {...notification}
-                                onClickClose={() => {
+                                onClick={() => {
                                     setDrawerOpen(false);
                                     if (!notification.cantClose) {
                                         notification.onClose?.(notification);
@@ -172,26 +167,6 @@ export const StatusBar: FunctionComponent<StatusBarProps> = memo(({ forceControl
                                 }}
                             />
                         ))}
-
-                        {callModal && (
-                            <NotificationItem
-                                app="dialer"
-                                notificationIcon={DialerIcon}
-                                title={t('DIALER.MESSAGES.CURRENT_CALL_TITLE')}
-                                content={
-                                    currentCall &&
-                                    t('DIALER.MESSAGES.CURRENT_CALL_WITH', {
-                                        transmitter: currentCall.isTransmitter
-                                            ? currentCall.receiver
-                                            : currentCall.transmitter,
-                                    })
-                                }
-                                onClick={() => {
-                                    setDrawerOpen(false);
-                                    navigate('/call');
-                                }}
-                            />
-                        )}
 
                         {planeMode && (
                             <NotificationItem
