@@ -130,6 +130,22 @@ export class GouvRadarProvider {
                 },
                 action: this.removeRadar.bind(this),
             },
+            {
+                label: 'Statistiques',
+                icon: 'gouv/graph',
+                job: JobType.Gouv,
+                blackoutJob: JobType.Gouv,
+                blackoutGlobal: true,
+                category: 'society',
+                canInteract: entity => {
+                    if (!this.jobService.hasPermission(JobType.Gouv, JobPermission.GouvManageRadar)) {
+                        return false;
+                    }
+
+                    return this.getRadarId(entity) !== null;
+                },
+                action: this.statsRadar.bind(this),
+            },
         ]);
     }
 
@@ -196,6 +212,16 @@ export class GouvRadarProvider {
         }
 
         TriggerServerEvent(ServerEvent.GOUV_RADAR_SET_DISABLED, radarId, disabled);
+    }
+
+    private statsRadar(entity: number) {
+        const radarId = this.getRadarId(entity);
+
+        if (radarId === null) {
+            return;
+        }
+
+        TriggerServerEvent(ServerEvent.GOUV_RADAR_STATS, radarId);
     }
 
     private getRadarId(entity: number) {

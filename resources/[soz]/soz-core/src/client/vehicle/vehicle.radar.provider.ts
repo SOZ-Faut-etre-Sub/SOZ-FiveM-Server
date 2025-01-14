@@ -5,7 +5,7 @@ import { RepositoryDelete, RepositoryInsert, RepositoryUpdate } from '@core/deco
 import { RepositoryType } from '@public/shared/repository';
 import { createRadarZone, Radar, RADAR_ID_PREFIX } from '@public/shared/vehicle/radar';
 
-import { ClientEvent, NuiEvent } from '../../shared/event';
+import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { VehicleSeat } from '../../shared/vehicle/vehicle';
 import { BlipFactory } from '../blip';
 import { ObjectProvider } from '../object/object.provider';
@@ -124,7 +124,7 @@ export class VehicleRadarProvider {
                             const streetA = GetStreetNameAtCoord(coords[0], coords[1], coords[2])[0];
 
                             TriggerServerEvent(
-                                ClientEvent.VEHICLE_RADAR_TRIGGER,
+                                ServerEvent.VEHICLE_RADAR_TRIGGER,
                                 Number(radar.id),
                                 VehToNet(vehicle),
                                 GetVehicleClass(vehicle),

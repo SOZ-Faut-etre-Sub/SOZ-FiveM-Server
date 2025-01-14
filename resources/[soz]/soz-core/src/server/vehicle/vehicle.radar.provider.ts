@@ -2,12 +2,13 @@ import { RadarAllowedVehicle, RadarInformedVehicle } from '../../config/radar';
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { ClientEvent } from '../../shared/event';
+import { ClientEvent, ServerEvent } from '../../shared/event';
 import { FDO, JobType } from '../../shared/job';
 import { PlayerLicenceType } from '../../shared/player';
 import { VehicleSeat } from '../../shared/vehicle/vehicle';
 import { BankService } from '../bank/bank.service';
 import { PrismaService } from '../database/prisma.service';
+import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { RadarRepository } from '../repository/radar.repository';
@@ -41,11 +42,14 @@ export class VehicleRadarProvider {
     private radarRepository: RadarRepository;
 
     @Inject(VehicleStateService)
-    vehicleStateService: VehicleStateService;
+    private vehicleStateService: VehicleStateService;
+
+    @Inject(Monitor)
+    private monitor: Monitor;
 
     private disabledEndTimes: Record<number, number> = {};
 
-    @OnEvent(ClientEvent.VEHICLE_RADAR_TRIGGER)
+    @OnEvent(ServerEvent.VEHICLE_RADAR_TRIGGER)
     public async radarTrigger(
         source: number,
         radarID: number,
@@ -62,7 +66,6 @@ export class VehicleRadarProvider {
         const vehicleModel = GetEntityModel(vehicle);
         const fine = Math.round((vehicleSpeed - radar.speed) * 6);
         const vehicleType = GetVehicleType(vehicle);
-        const vehiclePosition = GetEntityCoords(vehicle);
 
         if (!player || !radar) {
             return;
@@ -165,23 +168,14 @@ export class VehicleRadarProvider {
                 this.playerService.setPlayerMetadata(source, 'licences', licences);
             }
 
-            TriggerEvent(
-                'monitor:server:event',
-                'radar_flash',
-                {
-                    player_source: source,
-                    radar_id: radarID,
-                    vehicle_plate: vehiclePlate,
-                },
-                {
-                    licence_action: licenceAction,
-                    amount: fine,
-                    vehicle_speed: vehicleSpeed,
-                    vehicle_model: vehicleModel,
-                    vehicle_type: vehicleType,
-                    position: vehiclePosition,
-                }
-            );
+            this.monitor.traceEvent('radar_flash', {
+                player_source: source,
+                id: radarID.toString(),
+                vehicle_plate: vehiclePlate,
+                type: licenceAction,
+                money: fine,
+                amount: vehicleSpeed,
+            });
 
             await this.bankService.transferBankMoney(player.charinfo.account, JobType.Gouv, 'money', fine, true);
 
