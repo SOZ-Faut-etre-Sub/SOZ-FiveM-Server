@@ -275,5 +275,37 @@
             <lightSettings value="126" />
             <sirenSettings value="5012" />
         </Item>
+        <Item>
+            <modelName>bcso60</modelName>
+            <colors itemType="CVehicleModelColorIndices">
+                <Item>
+                    <indices content="char_array">
+                        134
+                        0
+                        134
+                        23
+                    </indices>
+                    <liveries>
+                        0 0 0 0 0 0 0 0 0 0
+                        0 0 0 0 0 0 0 0 0 0
+                        0 0 0 0 0
+                    </liveries>
+                </Item>
+            </colors>
+            <kits>
+                <Item>hash_0D21AC6D</Item>
+            </kits>
+            <windowsWithExposedEdges />
+            <plateProbabilities>
+                <Probabilities itemType="LicensePlateProbabilityNamed">
+                    <Item>
+                        <Name>hash_69E137FC</Name>
+                        <Value value="100" />
+                    </Item>
+                </Probabilities>
+            </plateProbabilities>
+            <lightSettings value="0" />
+            <sirenSettings value="5" />
+        </Item>
     </variationData>
 </CVehicleModelInfoVariation>
