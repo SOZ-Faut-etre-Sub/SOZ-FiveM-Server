@@ -1,3 +1,4 @@
+import { ClickhouseService } from '@public/server/clickhouse/clickhouse.service';
 import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 
 import { OnEvent } from '../../../core/decorators/event';
@@ -31,6 +32,9 @@ export class GouvRadarProvider {
 
     @Inject(ProgressService)
     private progressService: ProgressService;
+
+    @Inject(ClickhouseService)
+    private clickhouseService: ClickhouseService;
 
     @OnEvent(ServerEvent.GOUV_RADAR_ADD)
     public async addRadar(source: number, position: Vector4) {
@@ -121,5 +125,46 @@ export class GouvRadarProvider {
         await this.radarRepository.remove(id);
 
         this.notifier.notify(source, `Le radar a été ~r~détruit~s~ avec succès.`);
+    }
+
+    @OnEvent(ServerEvent.GOUV_RADAR_STATS)
+    public async stats(source: number, radarId: number) {
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+
+        const week = new Date();
+        week.setDate(week.getDate() - 7);
+
+        const month = new Date();
+        month.setMonth(month.getMonth() - 1);
+        month.setDate(month.getDate() - 1);
+        console.log(month);
+
+        const info = {
+            'Dernières 24h': yesterday,
+            'Dernière semaine': week,
+            'Dernier mois': month,
+        };
+
+        let msg = '';
+        for (const [label, data] of Object.entries(info)) {
+            const clickhouseData = await this.clickhouseService.query({
+                query: 'SELECT sum(money), count() FROM trace_events WHERE event = {event: String} AND id = {id: String} AND timestamp > {timestamp: timestamp}',
+                query_params: {
+                    event: 'radar_flash',
+                    id: radarId.toString(),
+                    timestamp: Math.round(data.getTime() / 1000),
+                },
+            });
+
+            console.log(clickhouseData);
+
+            const result = (await clickhouseData.json()).data[0];
+            const count = result['count()'];
+            const sum = result['sum(money)'] ?? 0;
+            msg += `<span style="text-decoration: underline;">${label} :</span>~n~~b~${count}~s~ flashs pour ~g~${sum}$~s~.~n~`;
+        }
+
+        this.notifier.notify(source, msg);
     }
 }

@@ -378,6 +378,7 @@ export enum ServerEvent {
     VEHICLE_HANDLING_BASE_SAVE = 'soz-core:server:vehicle:handling-base-save',
     VEHICLE_RESET_SURFACE_STATE_TO_OWNER = 'soz-core:server:vehicle:reset-surface-effect-to-owner',
     VEHICLE_SYNC_DOOR_TRAIN = 'soz-core:server:vehicle:train-door-sync',
+    VEHICLE_RADAR_TRIGGER = 'soz-core:server:radar:trigger',
 
     VEHICLE_UPDATE_PUSHING_OWNER = 'soz-core:server:vehicle:update-pushing-owner',
     VEHICLE_START_PUSHING = 'soz-core:server:vehicle:start-pushing',
@@ -573,6 +574,8 @@ export enum ServerEvent {
     GOUV_RADAR_SET_SPEED = 'soz-core:server:gouv:radar-set-speed',
     GOUV_RADAR_SET_DISABLED = 'soz-core:server:gouv:radar-set-disabled',
     GOUV_RADAR_REMOVE = 'soz-core:server:gouv:radar-remove',
+    GOUV_RADAR_STATS = 'soz-core:server:gouv:radar-stats',
+
     GOUV_VALIDATE_IDENTITY = 'soz-core:server:gouv:validate-identity',
     GOUV_CRAFT_SEARCH_WARRANT = 'soz-core:server:gouv:craft-search-warrant',
 

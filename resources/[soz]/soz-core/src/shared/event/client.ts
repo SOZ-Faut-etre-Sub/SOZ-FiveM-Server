@@ -219,7 +219,6 @@ export enum ClientEvent {
     VEHICLE_ROUTE_EJECTION = 'soz-core:client:vehicle:route-ejection',
     VEHICLE_SET_TRUNK_STATE = 'soz-core:client:vehicle:set-trunk-state',
     VEHICLE_RADAR_FLASHED = 'soz-core:client:vehicle:radar:flashed',
-    VEHICLE_RADAR_TRIGGER = 'soz-core:client:radar:trigger',
     VEHICLE_UPDATE_STATE = 'soz-core:client:vehicle:update-state',
     VEHICLE_DELETE_STATE = 'soz-core:client:vehicle:delete-state',
     VEHICLE_LOCKPICK = 'soz-core:client:vehicle:lockpick',
