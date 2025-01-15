@@ -1,7 +1,9 @@
+import { Command } from '@public/core/decorators/command';
 import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Tick } from '@public/core/decorators/tick';
 import { PrismaService } from '@public/server/database/prisma.service';
+import { Notifier } from '@public/server/notifier';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { UpwConfig, UpwPollution } from '@public/shared/job/upw';
 
@@ -13,6 +15,9 @@ const PM = 'pm1';
 export class UpwPollutionProvider {
     @Inject(PrismaService)
     private prismaService: PrismaService;
+
+    @Inject(Notifier)
+    private notifier: Notifier;
 
     private pollutionThisTick = 0;
     private units: number[];
@@ -45,7 +50,6 @@ export class UpwPollutionProvider {
         if (!this.units) {
             return;
         }
-        const previousPollutionLevel = this.getPollutionLevel();
 
         //Handle pollution buffer
         this.units.push(Math.round(this.pollutionThisTick));
@@ -65,15 +69,13 @@ export class UpwPollutionProvider {
         this.currentPollution = pastUnits / totalMaxUnits;
 
         const newPollutionLevel = this.getPollutionLevel();
-        if (newPollutionLevel != previousPollutionLevel) {
-            TriggerLatentClientEvent(
-                ClientEvent.UPW_POLLUTION_UPDATE,
-                -1,
-                1024,
-                newPollutionLevel,
-                this.getPollutionPercent()
-            );
-        }
+        TriggerLatentClientEvent(
+            ClientEvent.UPW_POLLUTION_UPDATE,
+            -1,
+            1024,
+            newPollutionLevel,
+            this.getPollutionPercent()
+        );
     }
 
     @Tick(UpwConfig.Pollution.Tick * 5)
@@ -126,5 +128,13 @@ export class UpwPollutionProvider {
             this.getPollutionLevel(),
             this.getPollutionPercent()
         );
+    }
+
+    @Command('resetpollution', {
+        role: ['admin'],
+    })
+    public resetPollution(source: number) {
+        this.units = [];
+        this.notifier.notify(source, 'Pollution reset');
     }
 }
