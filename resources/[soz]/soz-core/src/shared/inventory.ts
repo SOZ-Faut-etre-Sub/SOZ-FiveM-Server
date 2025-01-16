@@ -557,6 +557,9 @@ export const INVENTORY_CONFIGURATIONS: Partial<Record<InventoryType, Partial<Inv
             'smuggling_electronic',
         ],
     },
+    [InventoryType.SmugglingBlackMarket]: {
+        maxWeight: 200_000,
+    },
 };
 
 export type InventoryItem = {

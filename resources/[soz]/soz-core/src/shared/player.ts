@@ -403,6 +403,7 @@ export type PlayerMetadata = PlayerHealthBook & {
     plaster: PlasterLocation[];
     plate?: boolean;
     special_plate?: boolean;
+    reputation_token_date?: number;
 };
 
 export const isAdmin = (player: PlayerData) => {

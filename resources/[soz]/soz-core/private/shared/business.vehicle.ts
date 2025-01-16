@@ -7,3 +7,5 @@ export const VehicleBusinessImportConf = {
 
 export const VehicleBusinessExportCoveredProp = 0;
 export const VehicleBusinessExportContainerProp = 0;
+
+export const VehicleBusinessUpgradeCoefs = [];
