@@ -84,12 +84,6 @@ export class ItemFuelProvider {
 
         const vehicleState = this.vehicleStateService.getVehicleState(closestVehicle.vehicleNetworkId);
 
-        if (vehicleState.condition.fuelLevel + 30 > maxFuel) {
-            this.notifier.notify(source, "Vous avez ~r~trop d'essence~s~ pour utiliser un jerrycan.", 'error');
-
-            return;
-        }
-
         if (!inventory.removeAtSlot(inventoryItem.slot, 1)) {
             return;
         }
@@ -118,7 +112,7 @@ export class ItemFuelProvider {
         const filledFuel = Math.round(progress * amount);
 
         this.vehicleStateService.updateVehicleCondition(closestVehicle.vehicleNetworkId, {
-            fuelLevel: vehicleState.condition.fuelLevel + filledFuel,
+            fuelLevel: Math.min(maxFuel, vehicleState.condition.fuelLevel + filledFuel),
         });
 
         this.notifier.notify(source, "Vous avez ~g~utilisé~s~ un jerrycan d'essence.", 'success');
@@ -152,13 +146,11 @@ export class ItemFuelProvider {
             return;
         }
 
+        const vehModel = await this.vehicleRepository.findByHash(GetEntityModel(closestVehicle.vehicleEntityId));
+        const storageMultiplier = VehicleClassFuelStorageMultiplier[vehModel?.requiredLicence] || 1.0;
+        const maxFuel = Math.floor(getDefaultVehicleCondition().fuelLevel * storageMultiplier);
+
         const vehicleState = this.vehicleStateService.getVehicleState(closestVehicle.vehicleNetworkId);
-
-        if (vehicleState.condition.fuelLevel >= 70) {
-            this.notifier.notify(source, 'Vous avez ~r~trop de kérosène~s~ pour utiliser un jerrycan.', 'error');
-
-            return;
-        }
 
         if (!inventory.removeAtSlot(inventoryItem.slot, 1)) {
             return;
@@ -188,7 +180,7 @@ export class ItemFuelProvider {
         const filledFuel = Math.round(progress * amount);
 
         this.vehicleStateService.updateVehicleCondition(closestVehicle.vehicleNetworkId, {
-            fuelLevel: vehicleState.condition.fuelLevel + filledFuel,
+            fuelLevel: Math.min(maxFuel, vehicleState.condition.fuelLevel + filledFuel),
         });
 
         this.notifier.notify(source, 'Vous avez ~g~utilisé~s~ un jerrycan de kérosène.', 'success');
@@ -266,17 +258,11 @@ export class ItemFuelProvider {
             return;
         }
 
+        const vehModel = await this.vehicleRepository.findByHash(GetEntityModel(closestVehicle.vehicleEntityId));
+        const storageMultiplier = VehicleClassFuelStorageMultiplier[vehModel?.requiredLicence] || 1.0;
+        const maxFuel = Math.floor(getDefaultVehicleCondition().fuelLevel * storageMultiplier);
+
         const vehicleState = this.vehicleStateService.getVehicleState(closestVehicle.vehicleNetworkId);
-
-        if (vehicleState.condition.fuelLevel >= 67) {
-            this.notifier.notify(
-                source,
-                'La batterie est ~r~trop chargée~s~ pour utiliser une batterie portable.',
-                'error'
-            );
-
-            return;
-        }
 
         if (!inventory.removeAtSlot(inventoryItem.slot, 1)) {
             return;
@@ -302,7 +288,7 @@ export class ItemFuelProvider {
         const filledFuel = Math.round(progress * BATTERY_FUEL_AMOUNT);
 
         this.vehicleStateService.updateVehicleCondition(closestVehicle.vehicleNetworkId, {
-            fuelLevel: vehicleState.condition.fuelLevel + filledFuel,
+            fuelLevel: Math.min(maxFuel, vehicleState.condition.fuelLevel + filledFuel),
         });
 
         this.notifier.notify(source, 'Vous avez ~g~rechargé~s~ la batterie du véhicule.', 'success');
