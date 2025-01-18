@@ -386,6 +386,8 @@ export enum ServerEvent {
     VEHICLE_STOP_PUSHING = 'soz-core:server:vehicle:stop-pushing',
     VEHICLE_CHANGE_DIRECTION = 'soz-core:server:vehicle:change-direction',
 
+    VEHICLE_BURST_TYRE_TO_OWNER = 'soz-core:server:vehicle:burst-tire-to-owner',
+
     VOIP_SET_MEGAPHONE = 'soz-core:server:voip:set-megaphone',
     VOIP_RADIO_VEHICLE_ENABLE = 'soz-core:server:voip:radio-vehicle-enable',
     VOIP_RADIO_VEHICLE_UPDATE = 'soz-core:server:voip:radio-vehicle-update',

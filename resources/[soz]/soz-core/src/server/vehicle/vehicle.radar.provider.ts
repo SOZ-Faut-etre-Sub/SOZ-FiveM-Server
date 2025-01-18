@@ -64,7 +64,10 @@ export class VehicleRadarProvider {
         const state = this.vehicleStateService.getVehicleState(vehicleID);
         const vehiclePlate = state.volatile.plate || GetVehicleNumberPlateText(vehicle);
         const vehicleModel = GetEntityModel(vehicle);
-        const fine = Math.round((vehicleSpeed - radar.speed) * 6);
+        let fine: number = 0;
+        if (state.volatile.isPlayerVehicle) {
+            fine = Math.round((vehicleSpeed - radar.speed) * 6);
+        }
         const vehicleType = GetVehicleType(vehicle);
 
         if (!player || !radar) {
@@ -127,45 +130,47 @@ export class VehicleRadarProvider {
                     }km/h~s~~n~`;
             }
 
-            radarMessage = radarMessage + `Amende: ~r~${fine}$~s~~n~`;
             let licenceAction = 'no_action';
+            if (fine > 0) {
+                radarMessage = radarMessage + `Amende: ~r~${fine}$~s~~n~`;
 
-            if (vehicleSpeed - radar.speed >= 20) {
-                const licences = player.metadata['licences'];
-                const vehicleDB = await this.vehicleRepository.findByHash(vehicleModel);
+                if (vehicleSpeed - radar.speed >= 20) {
+                    const licences = player.metadata['licences'];
+                    const vehicleDB = await this.vehicleRepository.findByHash(vehicleModel);
 
-                let licenceType = PlayerLicenceType.Car;
-                if (vehicleDB) {
-                    licenceType = vehicleDB.requiredLicence as PlayerLicenceType;
-                } else if (vehicleType == 'bike' || vehicleClass == 8) {
-                    licenceType = PlayerLicenceType.Moto;
-                } else if (
-                    vehicleType == 'automobile' &&
-                    (vehicleClass == 10 || vehicleClass == 17 || vehicleClass == 20)
-                ) {
-                    licenceType = PlayerLicenceType.Truck;
-                } else if (vehicleType == 'heli') {
-                    licenceType = PlayerLicenceType.Heli;
-                } else if (vehicleType == 'boat') {
-                    licenceType = PlayerLicenceType.Boat;
-                }
-
-                if (licences[licenceType] >= 1) {
-                    licences[licenceType] = licences[licenceType] - 1;
+                    let licenceType = PlayerLicenceType.Car;
+                    if (vehicleDB) {
+                        licenceType = vehicleDB.requiredLicence as PlayerLicenceType;
+                    } else if (vehicleType == 'bike' || vehicleClass == 8) {
+                        licenceType = PlayerLicenceType.Moto;
+                    } else if (
+                        vehicleType == 'automobile' &&
+                        (vehicleClass == 10 || vehicleClass == 17 || vehicleClass == 20)
+                    ) {
+                        licenceType = PlayerLicenceType.Truck;
+                    } else if (vehicleType == 'heli') {
+                        licenceType = PlayerLicenceType.Heli;
+                    } else if (vehicleType == 'boat') {
+                        licenceType = PlayerLicenceType.Boat;
+                    }
 
                     if (licences[licenceType] >= 1) {
-                        licenceAction = 'remove_point';
-                        radarMessage = radarMessage + 'Point: ~r~-1 Point(s)~s~~n~';
-                    } else {
-                        licenceAction = 'remove_licence';
-                        radarMessage = radarMessage + '~r~Retrait du permis~s~~n~';
-                    }
-                } else {
-                    licenceAction = 'no_licence';
-                    radarMessage = radarMessage + '~r~Aucun permis~s~~n~';
-                }
+                        licences[licenceType] = licences[licenceType] - 1;
 
-                this.playerService.setPlayerMetadata(source, 'licences', licences);
+                        if (licences[licenceType] >= 1) {
+                            licenceAction = 'remove_point';
+                            radarMessage = radarMessage + 'Point: ~r~-1 Point(s)~s~~n~';
+                        } else {
+                            licenceAction = 'remove_licence';
+                            radarMessage = radarMessage + '~r~Retrait du permis~s~~n~';
+                        }
+                    } else {
+                        licenceAction = 'no_licence';
+                        radarMessage = radarMessage + '~r~Aucun permis~s~~n~';
+                    }
+
+                    this.playerService.setPlayerMetadata(source, 'licences', licences);
+                }
             }
 
             this.monitor.traceEvent('radar_flash', {
@@ -177,7 +182,9 @@ export class VehicleRadarProvider {
                 amount: vehicleSpeed,
             });
 
-            await this.bankService.transferBankMoney(player.charinfo.account, JobType.Gouv, 'money', fine, true);
+            if (fine > 0) {
+                await this.bankService.transferBankMoney(player.charinfo.account, JobType.Gouv, 'money', fine, true);
+            }
 
             this.notifier.advancedNotify(
                 source,
