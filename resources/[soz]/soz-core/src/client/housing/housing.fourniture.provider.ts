@@ -1089,7 +1089,6 @@ export class HousingFournitureProvider {
             this.objectService.applyEntityMatrix(entity, prop.matrix);
         }
 
-        // SetEntityAlpha(entity, 200, false);
         SetEntityCollision(entity, false, false);
         SetEntityInvincible(entity, true);
         FreezeEntityPosition(entity, true);
