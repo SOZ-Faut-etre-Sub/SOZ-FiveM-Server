@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CWeaponInfoBlob>
+  <SlotNavigateOrder>
+    <Item>
+      <WeaponSlots>
+        <Item>
+          <OrderNumber value="441" />
+          <Entry>SLOT_SNOWBALL</Entry>
+        </Item>
+      </WeaponSlots>
+    </Item>
+    <Item>
+      <WeaponSlots>
+        <Item>
+          <OrderNumber value="441" />
+          <Entry>SLOT_SNOWBALL</Entry>
+        </Item>
+      </WeaponSlots>
+    </Item>
+  </SlotNavigateOrder>
+  <SlotBestOrder>
+    <WeaponSlots>
+      <Item>
+        <OrderNumber value="381" />
+        <Entry>SLOT_SNOWBALL</Entry>
+      </Item>
+    </WeaponSlots>
+  </SlotBestOrder>
+  <TintSpecValues />
+  <FiringPatternAliases />
+  <UpperBodyFixupExpressionData />
+  <AimingInfos />
+  <Infos>
+    <Item>
+      <Infos>
+        <Item type="CAmmoThrownInfo">
+          <Name>AMMO_SNOWBALL</Name>
+          <Model>w_ex_snowball</Model>
+          <Audio />
+          <Slot />
+          <AmmoMax value="10" />
+          <AmmoMax50 value="10" />
+          <AmmoMax100 value="10" />
+          <AmmoMaxMP value="10" />
+          <AmmoMax50MP value="10" />
+          <AmmoMax100MP value="10" />
+          <AmmoFlags>FixedAfterExplosion</AmmoFlags>
+          <Damage value="0.001000" />
+          <LifeTime value="10.000000" />
+          <FromVehicleLifeTime value="2.500000" />
+          <LifeTimeAfterImpact value="0.001000" />
+          <LifeTimeAfterExplosion value="0.000000" />
+          <ExplosionTime value="0.250000" />
+          <LaunchSpeed value="25.000000" />
+          <SeparationTime value="0.000000" />
+          <TimeToReachTarget value="0.000000" />
+          <Damping value="0.050000" />
+          <GravityFactor value="1.000000" />
+          <RicochetTolerance value="0.000000" />
+          <PedRicochetTolerance value="0.000000" />
+          <VehicleRicochetTolerance value="0.000000" />
+          <Explosion>
+            <Default>EXP_TAG_SNOWBALL</Default>
+            <HitCar>DONTCARE</HitCar>
+            <HitTruck>DONTCARE</HitTruck>
+            <HitBike>DONTCARE</HitBike>
+            <HitBoat>DONTCARE</HitBoat>
+            <HitPlane>DONTCARE</HitPlane>
+          </Explosion>
+          <FuseFx>proj_snowball_fuse</FuseFx>
+		      <FuseFxFP />
+          <TrailFx>proj_snowball_trail</TrailFx>
+          <TrailFxUnderWater />
+          <TrailFxFadeInTime value="0.000000" />
+          <TrailFxFadeOutTime value="0.000000" />
+          <PrimedFx />
+          <DisturbFxDefault />
+          <DisturbFxSand />
+          <DisturbFxWater />
+          <DisturbFxDirt />
+          <DisturbFxFoliage />
+          <DisturbFxProbeDist value="0.000000" />
+          <DisturbFxScale value="0.000000" />
+          <LightOnlyActiveWhenStuck value="false" />
+          <LightFlickers value="false" />
+          <LightBone />
+          <LightColour x="0.000000" y="0.000000" z="0.000000" />
+          <LightIntensity value="0.000000" />
+          <LightRange value="0.000000" />
+          <LightFalloffExp value="0.000000" />
+          <LightFrequency value="0.000000" />
+          <LightPower value="0.000000" />
+          <CoronaSize value="0.000000" />
+          <CoronaIntensity value="0.000000" />
+          <CoronaZBias value="0.000000" />
+          <ProjectileFlags>DestroyOnImpact ProcessImpacts NoPullPin DoubleDamping ApplyDamageOnImpact DontFireAnyEvents</ProjectileFlags>
+          <ThrownForce value="0.000000" />
+          <ThrownForceFromVehicle value="5.000000" />
+        </Item>
+      </Infos>
+    </Item>
+    <Item>
+      <Infos>
+        <Item type="CWeaponInfo">
+          <Name>WEAPON_SNOWBALL</Name>
+          <Model>w_ex_snowball</Model>
+          <Audio>AUDIO_ITEM_SNOWBALL</Audio>
+          <Slot>SLOT_SNOWBALL</Slot>
+          <DamageType>NONE</DamageType>
+          <Explosion>
+            <Default>DONTCARE</Default>
+            <HitCar>DONTCARE</HitCar>
+            <HitTruck>DONTCARE</HitTruck>
+            <HitBike>DONTCARE</HitBike>
+            <HitBoat>DONTCARE</HitBoat>
+            <HitPlane>DONTCARE</HitPlane>
+          </Explosion>
+          <FireType>PROJECTILE</FireType>
+          <WheelSlot>WHEEL_THROWABLE_SPECIAL</WheelSlot>
+          <Group>GROUP_THROWN</Group>
+          <AmmoInfo ref="AMMO_SNOWBALL" />
+          <AimingInfo ref="PISTOL_2H_BASE_STRAFE" />
+          <ClipSize value="1" />
+          <AccuracySpread value="1.000000" />
+          <AccurateModeAccuracyModifier value="0.500000" />
+          <RunAndGunAccuracyModifier value="2.000000" />
+          <RunAndGunAccuracyMaxModifier value="1.000000" />
+          <RecoilAccuracyMax value="1.000000" />
+          <RecoilErrorTime value="0.000000" />
+          <RecoilRecoveryRate value="1.000000" />
+          <RecoilAccuracyToAllowHeadShotAI value="1000.000000" />
+          <MinHeadShotDistanceAI value="1000.000000" />
+          <MaxHeadShotDistanceAI value="1000.000000" />
+          <HeadShotDamageModifierAI value="1.000000" />
+          <RecoilAccuracyToAllowHeadShotPlayer value="0.175000" />
+          <MinHeadShotDistancePlayer value="5.000000" />
+          <MaxHeadShotDistancePlayer value="40.000000" />
+          <HeadShotDamageModifierPlayer value="1.000000" />
+          <Damage value="0.000000" />
+          <DamageTime value="0.000000" />
+          <DamageTimeInVehicle value="0.000000" />
+          <DamageTimeInVehicleHeadShot value="0.000000" />
+          <HitLimbsDamageModifier value="1.000000" />
+          <NetworkHitLimbsDamageModifier value="1.000000" />
+          <LightlyArmouredDamageModifier value="1.000000" />
+          <VehicleDamageModifier value="0.001000" />
+          <Force value="0.000000" />
+          <ForceHitPed value="65.000000" />
+          <ForceHitVehicle value="0.000000" />
+          <ForceHitFlyingHeli value="0.000000" />
+          <OverrideForces>
+            <Item>
+              <BoneTag>BONETAG_HEAD</BoneTag>
+              <ForceFront value="80.000000" />
+              <ForceBack value="80.000000" />
+            </Item>
+            <Item>
+              <BoneTag>BONETAG_NECK</BoneTag>
+              <ForceFront value="80.000000" />
+              <ForceBack value="80.000000" />
+            </Item>
+          </OverrideForces>
+          <ForceMaxStrengthMult value="1.000000" />
+          <ForceFalloffRangeStart value="0.000000" />
+          <ForceFalloffRangeEnd value="50.000000" />
+          <ForceFalloffMin value="1.000000" />
+          <ProjectileForce value="10.000000" />
+          <FragImpulse value="1000.000000" />
+          <Penetration value="0.000000" />
+          <VerticalLaunchAdjustment value="0.300000" />
+          <DropForwardVelocity value="4.000000" />
+          <Speed value="2000.000000" />
+          <BulletsInBatch value="1" />
+          <BatchSpread value="0.000000" />
+          <ReloadTimeMP value="-1.000000" />
+          <ReloadTimeSP value="-1.000000" />
+          <VehicleReloadTime value="0.500000" />
+          <AnimReloadRate value="1.000000" />
+          <BulletsPerAnimLoop value="1" />
+          <TimeBetweenShots value="0.000000" />
+          <TimeLeftBetweenShotsWhereShouldFireIsCached value="-1.000000" />
+          <SpinUpTime value="0.000000" />
+          <SpinTime value="0.000000" />
+          <SpinDownTime value="0.000000" />
+          <AlternateWaitTime value="-1.000000" />
+          <BulletBendingNearRadius value="0.000000" />
+          <BulletBendingFarRadius value="0.000000" />
+          <BulletBendingZoomedRadius value="0.000000" />
+          <Fx>
+            <EffectGroup>WEAPON_EFFECT_GROUP_PUNCH_KICK</EffectGroup>
+            <FlashFx />
+            <FlashFxAlt />
+            <MuzzleSmokeFx />
+            <MuzzleSmokeFxMinLevel value="0.000000" />
+            <MuzzleSmokeFxIncPerShot value="0.000000" />
+            <MuzzleSmokeFxDecPerSec value="0.000000" />
+            <ShellFx />
+            <TracerFx />
+            <PedDamageHash />
+            <TracerFxChanceSP value="0.000000" />
+            <TracerFxChanceMP value="0.000000" />
+            <FlashFxChanceSP value="0.000000" />
+            <FlashFxChanceMP value="0.000000" />
+            <FlashFxAltChance value="0.000000" />
+            <FlashFxScale value="1.000000" />
+            <FlashFxLightEnabled value="false" />
+            <FlashFxLightCastsShadows value="true" />
+            <FlashFxLightOffsetDist value="0.000000" />
+            <FlashFxLightRGBAMin x="0.000000" y="0.000000" z="0.000000" />
+            <FlashFxLightRGBAMax x="0.000000" y="0.000000" z="0.000000" />
+            <FlashFxLightIntensityMinMax x="0.000000" y="0.000000" />
+            <FlashFxLightRangeMinMax x="0.000000" y="0.000000" />
+            <FlashFxLightFalloffMinMax x="0.000000" y="0.000000" />
+            <GroundDisturbFxEnabled value="false" />
+            <GroundDisturbFxDist value="5.000000" />
+            <GroundDisturbFxNameDefault />
+            <GroundDisturbFxNameSand />
+            <GroundDisturbFxNameDirt />
+            <GroundDisturbFxNameWater />
+            <GroundDisturbFxNameFoliage />
+          </Fx>
+          <InitialRumbleDuration value="0" />
+          <InitialRumbleIntensity value="0.000000" />
+          <InitialRumbleIntensityTrigger value="0.000000" />
+          <RumbleDuration value="0" />
+          <RumbleIntensity value="0.000000" />
+          <RumbleIntensityTrigger value="0.000000" />
+          <RumbleDamageIntensity value="1.000000" />
+          <NetworkPlayerDamageModifier value="1.000000" />
+          <NetworkPedDamageModifier value="1.000000" />
+          <NetworkHeadShotPlayerDamageModifier value="1.000000" />
+          <LockOnRange value="35.000000" />
+          <WeaponRange value="40.000000" />
+          <BulletDirectionOffsetInDegrees value="0.000000" />
+          <AiSoundRange value="-1.000000" />
+          <AiPotentialBlastEventRange value="-1.000000" />
+          <DamageFallOffRangeMin value="0.000000" />
+          <DamageFallOffRangeMax value="0.000000" />
+          <DamageFallOffModifier value="1.000000" />
+          <VehicleWeaponHash />
+          <DefaultCameraHash>THROWN_AIM_CAMERA</DefaultCameraHash>
+          <CoverCameraHash>THROWN_AIM_IN_COVER_CAMERA</CoverCameraHash>
+          <CoverReadyToFireCameraHash />
+          <RunAndGunCameraHash>THROWN_RUN_AND_GUN_CAMERA</RunAndGunCameraHash>
+          <CinematicShootingCameraHash />
+          <AlternativeOrScopedCameraHash />
+          <RunAndGunAlternativeOrScopedCameraHash />
+          <CinematicShootingAlternativeOrScopedCameraHash />
+          <CameraFov value="50.000000" />
+          <ZoomFactorForAccurateMode value="1.000000" />
+          <RecoilShakeHash />
+          <RecoilShakeHashFirstPerson />
+          <AccuracyOffsetShakeHash />
+          <MinTimeBetweenRecoilShakes value="150" />
+          <RecoilShakeAmplitude value="1.000000" />
+          <ExplosionShakeAmplitude value="-1.000000" />
+          <ReticuleHudPosition x="0.000000" y="0.000000" />
+          <AimOffsetMin x="0.000000" y="0.000000" z="0.000000" />
+          <AimProbeLengthMin value="0.000000" />
+          <AimOffsetMax x="0.000000" y="0.000000" z="0.000000" />
+          <AimProbeLengthMax value="0.000000" />
+          <AimOffsetMinFPSIdle x="0.178000" y="0.392000" z="0.135000" />
+          <AimOffsetMedFPSIdle x="0.169000" y="0.312000" z="0.420000" />
+          <AimOffsetMaxFPSIdle x="0.187000" y="0.064000" z="0.649000" />
+          <AimOffsetMinFPSLT x="0.009000" y="0.334000" z="0.555000" />
+          <AimOffsetMaxFPSLT x="0.062000" y="-0.164000" z="0.588000" />
+          <AimOffsetMinFPSRNG x="0.114000" y="0.390000" z="0.485000" />
+          <AimOffsetMaxFPSRNG x="0.113000" y="-0.263000" z="0.586000" />
+          <AimOffsetMinFPSScope x="0.009000" y="0.421000" z="0.462000" />
+          <AimOffsetMaxFPSScope x="0.037000" y="-0.224000" z="0.639000" />
+          <AimOffsetEndPosMinFPSIdle x="0.208000" y="0.700000" z="0.003000" />
+          <AimOffsetEndPosMedFPSIdle x="0.203000" y="0.604000" z="0.553000" />
+          <AimOffsetEndPosMaxFPSIdle x="0.207000" y="-0.040000" z="0.942000" />
+          <AimOffsetEndPosMinFPSLT x="0.144000" y="0.157000" z="0.130000" />
+          <AimOffsetEndPosMedFPSLT x="0.043000" y="0.567000" z="0.488000" />
+          <AimOffsetEndPosMaxFPSLT x="0.158000" y="-0.112000" z="0.879000" />
+          <AimProbeRadiusOverrideFPSIdle value="0.000000" />
+          <AimProbeRadiusOverrideFPSIdleStealth value="0.000000" />
+          <AimProbeRadiusOverrideFPSLT value="0.280000" />
+          <AimProbeRadiusOverrideFPSRNG value="0.000000" />
+          <AimProbeRadiusOverrideFPSScope value="0.000000" />
+          <TorsoAimOffset x="0.000000" y="0.000000" />
+          <TorsoCrouchedAimOffset x="0.000000" y="0.000000" />
+          <LeftHandIkOffset x="0.000000" y="0.000000" z="0.000000" />
+          <ReticuleMinSizeStanding value="1.000000" />
+          <ReticuleMinSizeCrouched value="1.000000" />
+          <ReticuleScale value="1.000000" />
+          <ReticuleStyleHash />
+          <FirstPersonReticuleStyleHash />
+          <PickupHash />
+          <MPPickupHash />
+          <HumanNameHash>WT_SNWBALL</HumanNameHash>
+          <MovementModeConditionalIdle />
+          <StatName />
+          <KnockdownCount value="-1" />
+          <KillshotImpulseScale value="1.000000" />
+          <NmShotTuningSet>Normal</NmShotTuningSet>
+          <AttachPoints />
+          <GunFeedBone />
+          <TargetSequenceGroup />
+          <WeaponFlags>CarriedInHand Silenced CanLockonOnFoot CanFreeAim AnimReload AnimCrouchFire Thrown UsableOnFoot UsableInCover NonViolent SuppressGunshotEvent ThrowOnly NoWheelStats DisableLeftHandIkWhenOnFoot SwapToUnarmedWhenOutOfThrownAmmo UseFPSAimIK UseFPSSecondaryMotion AttachFPSLeftHandIKToRight DisableFPSScope DamageCausesDisputes</WeaponFlags>
+          <TintSpecValues ref="TINT_DEFAULT" />
+          <FiringPatternAliases ref="NULL" />
+          <ReloadUpperBodyFixupExpressionData ref="DEFAULT" />
+          <AmmoDiminishingRate value="3" />
+          <AimingBreathingAdditiveWeight value="1.000000" />
+          <FiringBreathingAdditiveWeight value="1.000000" />
+          <StealthAimingBreathingAdditiveWeight value="0.000000" />
+          <StealthFiringBreathingAdditiveWeight value="0.000000" />
+          <AimingLeanAdditiveWeight value="1.000000" />
+          <FiringLeanAdditiveWeight value="1.000000" />
+          <StealthAimingLeanAdditiveWeight value="0.000000" />
+          <StealthFiringLeanAdditiveWeight value="0.000000" />
+          <ExpandPedCapsuleRadius value="0.000000" />
+          <AudioCollisionHash />
+          <HudDamage value="0" />
+          <HudSpeed value="100" />
+          <HudCapacity value="1" />
+          <HudAccuracy value="10" />
+          <HudRange value="0" />
+        </Item>
+      </Infos>
+    </Item>
+    <Item>
+      <Infos />
+    </Item>
+    <Item>
+      <Infos />
+    </Item>
+  </Infos>
+  <VehicleWeaponInfos />
+  <Name>DLC - Snowball</Name>
+</CWeaponInfoBlob>
