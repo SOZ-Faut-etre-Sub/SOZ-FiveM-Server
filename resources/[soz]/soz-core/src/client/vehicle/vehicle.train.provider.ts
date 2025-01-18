@@ -12,8 +12,7 @@ import { ResourceLoader } from '../repository/resource.loader';
 import { TargetFactory } from '../target/target.factory';
 
 const models = [
-    'class1_2',
-	'freight',
+    'freight',
     'freight2',
     'freightcar',
     'freightcar2',
@@ -21,6 +20,8 @@ const models = [
     'freightcont2',
     'freightgrain',
     'metrotrain',
+	'class1_2',
+	'class1t',
 	'soz_freightcar',
     'tankercar',
 ];

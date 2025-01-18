@@ -1358,14 +1358,14 @@ metrotrain - carriage_vert_offset = "1.12"
 				do_interior_lights = "true"
 				carriage_vert_offset = "1.65"
 		repeat_count = "1" />
-		
+
 		<carriage
-			model_name = "soz_freightcar"
+			model_name = "class1t"
 			max_peds_per_carriage = "0"
 			flip_model_dir = "false"
 			do_interior_lights = "true"
-			carriage_vert_offset = "0.70"
-		repeat_count = "0" />					
+			carriage_vert_offset = "1.65"
+		repeat_count = "1" />		
 	</train_config>
 	
 		<train_config
@@ -1387,13 +1387,21 @@ metrotrain - carriage_vert_offset = "1.12"
 				carriage_vert_offset = "1.65"
 		repeat_count = "1" />
 		
+				<carriage
+			model_name = "class1t"
+			max_peds_per_carriage = "0"
+			flip_model_dir = "false"
+			do_interior_lights = "true"
+			carriage_vert_offset = "1.65"
+		repeat_count = "1" />		
+		
 		<carriage
 			model_name = "soz_freightcar"
 			max_peds_per_carriage = "0"
 			flip_model_dir = "false"
 			do_interior_lights = "true"
 			carriage_vert_offset = "0.70"
-		repeat_count = "1" />					
+		repeat_count = "1" />	
 	</train_config>
 	
 	<train_config
@@ -1414,6 +1422,14 @@ metrotrain - carriage_vert_offset = "1.12"
 				do_interior_lights = "true"
 				carriage_vert_offset = "1.65"
 		repeat_count = "1" />
+		
+		<carriage
+			model_name = "class1t"
+			max_peds_per_carriage = "0"
+			flip_model_dir = "false"
+			do_interior_lights = "true"
+			carriage_vert_offset = "1.65"
+		repeat_count = "1" />	
 		
 		<carriage
 			model_name = "soz_freightcar"
@@ -1444,6 +1460,14 @@ metrotrain - carriage_vert_offset = "1.12"
 		repeat_count = "1" />
 		
 		<carriage
+			model_name = "class1t"
+			max_peds_per_carriage = "0"
+			flip_model_dir = "false"
+			do_interior_lights = "true"
+			carriage_vert_offset = "1.65"
+		repeat_count = "1" />	
+		
+		<carriage
 			model_name = "soz_freightcar"
 			max_peds_per_carriage = "0"
 			flip_model_dir = "false"
@@ -1470,6 +1494,14 @@ metrotrain - carriage_vert_offset = "1.12"
 				do_interior_lights = "true"
 				carriage_vert_offset = "1.65"
 		repeat_count = "1" />
+		
+		<carriage
+			model_name = "class1t"
+			max_peds_per_carriage = "0"
+			flip_model_dir = "false"
+			do_interior_lights = "true"
+			carriage_vert_offset = "1.65"
+		repeat_count = "1" />	
 		
 		<carriage
 			model_name = "soz_freightcar"
@@ -1500,6 +1532,14 @@ metrotrain - carriage_vert_offset = "1.12"
 		repeat_count = "1" />
 		
 		<carriage
+			model_name = "class1t"
+			max_peds_per_carriage = "0"
+			flip_model_dir = "false"
+			do_interior_lights = "true"
+			carriage_vert_offset = "1.65"
+		repeat_count = "1" />	
+		
+		<carriage
 			model_name = "soz_freightcar"
 			max_peds_per_carriage = "0"
 			flip_model_dir = "false"
@@ -1526,6 +1566,14 @@ metrotrain - carriage_vert_offset = "1.12"
 				do_interior_lights = "true"
 				carriage_vert_offset = "1.65"
 		repeat_count = "1" />
+		
+		<carriage
+			model_name = "class1t"
+			max_peds_per_carriage = "0"
+			flip_model_dir = "false"
+			do_interior_lights = "true"
+			carriage_vert_offset = "1.65"
+		repeat_count = "1" />	
 		
 		<carriage
 			model_name = "soz_freightcar"
@@ -1555,6 +1603,14 @@ metrotrain - carriage_vert_offset = "1.12"
 				carriage_vert_offset = "1.65"
 		repeat_count = "1" />
 		
+				<carriage
+			model_name = "class1t"
+			max_peds_per_carriage = "0"
+			flip_model_dir = "false"
+			do_interior_lights = "true"
+			carriage_vert_offset = "1.65"
+		repeat_count = "1" />	
+		
 		<carriage
 			model_name = "soz_freightcar"
 			max_peds_per_carriage = "0"
@@ -1582,6 +1638,14 @@ metrotrain - carriage_vert_offset = "1.12"
 				do_interior_lights = "true"
 				carriage_vert_offset = "1.65"
 		repeat_count = "1" />
+		
+				<carriage
+			model_name = "class1t"
+			max_peds_per_carriage = "0"
+			flip_model_dir = "false"
+			do_interior_lights = "true"
+			carriage_vert_offset = "1.65"
+		repeat_count = "1" />	
 		
 		<carriage
 			model_name = "soz_freightcar"
