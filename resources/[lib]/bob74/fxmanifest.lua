@@ -3,7 +3,7 @@ game 'gta5'
 
 author 'Bob_74'
 description 'Load and customize your map'
-version '2.4.0'
+version '2.3.0'
 
 lua54 "yes"
 
@@ -11,7 +11,6 @@ client_scripts {
     "lib/common.lua"
     , "lib/observers/interiorIdObserver.lua"
     , "lib/observers/officeSafeDoorHandler.lua"
-    , "lib/observers/officeCullHandler.lua"
     , "client.lua"
 
     -- GTA V
@@ -106,11 +105,6 @@ client_scripts {
     , "dlc_casino/casino.lua"
     , "dlc_casino/penthouse.lua"
 
-    -- DLC Cayo Perico Heist (Requires forced build 2189 or higher)
-    , "dlc_cayoperico/base.lua"
-    , "dlc_cayoperico/nightclub.lua"
-    , "dlc_cayoperico/submarine.lua"
-
     -- DLC Tuners (Requires forced build 2372 or higher)
     , "dlc_tuner/garage.lua"
     , "dlc_tuner/meetup.lua"
@@ -154,11 +148,4 @@ client_scripts {
     , "dlc_summer/base.lua"
     , "dlc_summer/carrier.lua"
     , "dlc_summer/office.lua"
-
-    -- DLC Agents of Sabotage (Requires forced build 3407 or higher)
-    , "dlc_agents/base.lua"
-    , "dlc_agents/factory.lua"
-    , "dlc_agents/office.lua"
-    , "dlc_agents/airstrip.lua"
-    , "dlc_agents/hangar_door.lua"
 }
