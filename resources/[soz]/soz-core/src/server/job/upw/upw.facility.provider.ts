@@ -710,6 +710,7 @@ export class UpwFacilityProvider {
                 player_source: source,
                 item_id: item.name,
                 amount: 1,
+                money: UpwConfig.Resale.EnergyCellPriceGlobal[item.name] ?? 0,
                 facility_id: facility.identifier,
                 facility_type: facility.type,
                 facility_job: facility.job,
