@@ -91,8 +91,7 @@ DrugWarsGarage = {
         red = 8,
         green = 9,
         lightBlue = 10,
-        lightRed = 11,
-        lightGreen = 12,
+        lightGreen = 11,
 
         SetColor = function(color, refresh)
             SetIplPropState(DrugWarsGarage.interiorId, "entity_set_tint_01", true, refresh)
