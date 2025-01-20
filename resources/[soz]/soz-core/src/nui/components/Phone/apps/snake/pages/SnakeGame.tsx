@@ -1,32 +1,17 @@
-import { SnakeEvents } from '@typings/app/snake';
-import { AppContent } from '@ui/components/AppContent';
-import { LeaderBoardIcon } from '@ui/components/games/LeaderBoardIcon';
-import { ActionButton } from '@ui/old_components/ActionButton';
-import cn from 'classnames';
-import { FunctionComponent, memo, useEffect, useMemo, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { fetchNui } from '@public/nui/fetch';
+import { NuiEvent } from '@public/shared/event/nui';
+import clsx from 'clsx';
+import React, { FunctionComponent, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { fetchNui } from '../../../common/utils/fetchNui';
-import { useCitizenID, useVisibility } from '../../../hooks/usePhone';
-import { RootState } from '../../../store';
-import { store } from '../../../store';
-import DownLeft from '../ui/downleft.png';
-import DownRight from '../ui/downright.png';
-import Food from '../ui/fruit.png';
-import HeadDown from '../ui/headdown.png';
-import HeadLeft from '../ui/headleft.png';
-import HeadRight from '../ui/headright.png';
-import HeadUp from '../ui/headup.png';
-import LeftRight from '../ui/leftright.png';
-import TailDown from '../ui/taildown.png';
-import TailLeft from '../ui/tailleft.png';
-import TailRight from '../ui/tailright.png';
-import TailUp from '../ui/tailup.png';
-import UpDown from '../ui/updown.png';
-import UpLeft from '../ui/upleft.png';
-import UpRight from '../ui/upright.png';
-import Wall from '../ui/wall.png';
+import { useAssetPath } from '../../../../../hook/assets';
+import { usePlayer } from '../../../../../hook/data';
+import LeaderBoardIcon from '../../../assets/leaderboard.svg';
+import { ActionButton } from '../../../components/ActionButton';
+import { AppContent } from '../../../components/system/AppContent';
+import { AppWrapper } from '../../../components/system/AppWrapper';
+import { RowRenderer } from '../components/RowRenderer';
+import { useGameSnakeLeaderboard } from '../snake.atom';
 
 type Position = {
     x: number;
@@ -77,16 +62,18 @@ const DataContainer: FunctionComponent<DataContainerProps> = ({ title, value }) 
     return (
         <div id="arcade" className="h-fit w-3/12 ml-2 rounded">
             <div className="text-center">{title}</div>
-            <p className={cn('p-1 text-center text-2xl')}>{value}</p>
+            <p className="p-1 text-center text-2xl">{value}</p>
         </div>
     );
 };
 
-export const SnakeHome = memo(() => {
-    const visibility = useVisibility();
+export const SnakeGame: FunctionComponent = () => {
     const navigate = useNavigate();
-    const playerCitizenID = useCitizenID();
-    const snakeLeaderboard = useSelector((state: RootState) => state.appSnakeLeaderboard);
+
+    const player = usePlayer();
+    const leaderboard = useGameSnakeLeaderboard();
+
+    const { getPath } = useAssetPath();
 
     const snakePositionRef = useRef<Position[]>(initialSnakePositions);
     const animationRequestRef = useRef<number>();
@@ -125,19 +112,13 @@ export const SnakeHome = memo(() => {
 
     const foodPositionRef = useRef<Position>(getRandomFoodPosition());
 
-    const onClickLeaderboard = () => {
-        store.dispatch.appSnakeLeaderboard.loadLeaderboard();
-        navigate('/snake/leaderboard');
-    };
+    const onClickLeaderboard = () => navigate('/snake/leaderboard');
 
-    const highScore = useMemo(() => {
-        if (!snakeLeaderboard) return 0;
-
-        const player = snakeLeaderboard.sort((a, b) => b.score - a.score).find(p => p.citizenid === playerCitizenID);
-        if (!player) return 0;
-
-        return player.score;
-    }, [playerCitizenID, snakeLeaderboard]);
+    const bestPlayerScore = useMemo(() => {
+        return leaderboard
+            .filter(v => v.citizenid === player?.citizenid)
+            .reduce((acc, val) => Math.max(acc, val.score), 0);
+    }, [player?.citizenid, leaderboard]);
 
     const resetGameState = () => {
         isGameOngoingRef.current = true;
@@ -150,7 +131,7 @@ export const SnakeHome = memo(() => {
     const handleDefeat = (score: number, reason: string) => {
         isGameOngoingRef.current = false;
         setLostReason(reason);
-        fetchNui(SnakeEvents.SEND_SCORE, { score });
+        fetchNui(NuiEvent.PhoneAppSnakeAddScore, score);
     };
 
     const changeDirectionWithKeys = (e: KeyboardEvent) => {
@@ -184,7 +165,7 @@ export const SnakeHome = memo(() => {
         document.addEventListener('keydown', changeDirectionWithKeys, false);
 
         return () => document.removeEventListener('keydown', changeDirectionWithKeys);
-    }, [visibility.visibility, isGameOngoingRef.current]);
+    }, []);
 
     const moveSnake = () => {
         const newSnake: Position[] = [];
@@ -346,14 +327,21 @@ export const SnakeHome = memo(() => {
     }, []);
 
     return (
-        <AppContent scrollable={false}>
-            <>
+        <AppWrapper>
+            <AppContent>
                 <div
-                    className={cn({
+                    className="absolute inset-0 bg-cover bg-center -z-10"
+                    style={{
+                        backgroundImage: `url(${getPath('images/phone/apps/snake/background.webp')})`,
+                    }}
+                />
+
+                <div
+                    className={clsx({
                         'opacity-80': !isGameOngoingRef.current,
                     })}
                 >
-                    {(snakePositionRef.current.length - 3) * 100 > highScore && (
+                    {(snakePositionRef.current.length - 3) * 100 > bestPlayerScore && (
                         <div className="absolute -rotate-12 -top-6 left-1/3 bg-yellow-500 text-sm text-white font-bold px-2 py-1 rounded">
                             Nouveau record !
                         </div>
@@ -363,121 +351,11 @@ export const SnakeHome = memo(() => {
                         <DataContainer title="Score" value={(snakePositionRef.current.length - 3) * 100} />
                     </header>
                     <div className="grid grid-cols-[repeat(20,_minmax(0,_1fr))] pt-6 p-2">
-                        {displayedRows &&
-                            displayedRows.map(row => (
-                                <>
-                                    {row.map(e => {
-                                        switch (e) {
-                                            case 'blank':
-                                                return (
-                                                    <div
-                                                        className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}
-                                                    ></div>
-                                                );
-                                            case 'snakeleftright':
-                                                return (
-                                                    <div className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}>
-                                                        <img src={LeftRight}></img>
-                                                    </div>
-                                                );
-                                            case 'snakeupdown':
-                                                return (
-                                                    <div className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}>
-                                                        <img src={UpDown}></img>
-                                                    </div>
-                                                );
-                                            case 'snakeheadup':
-                                                return (
-                                                    <div className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}>
-                                                        <img src={HeadUp}></img>
-                                                    </div>
-                                                );
-                                            case 'snakedownleft':
-                                                return (
-                                                    <div className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}>
-                                                        <img src={DownLeft}></img>
-                                                    </div>
-                                                );
-                                            case 'snakedownright':
-                                                return (
-                                                    <div className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}>
-                                                        <img src={DownRight}></img>
-                                                    </div>
-                                                );
-                                            case 'snakeupleft':
-                                                return (
-                                                    <div className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}>
-                                                        <img src={UpLeft}></img>
-                                                    </div>
-                                                );
-                                            case 'snakeupright':
-                                                return (
-                                                    <div className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}>
-                                                        <img src={UpRight}></img>
-                                                    </div>
-                                                );
-                                            case 'snakeheaddown':
-                                                return (
-                                                    <div className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}>
-                                                        <img src={HeadDown}></img>
-                                                    </div>
-                                                );
-                                            case 'snakeheadleft':
-                                                return (
-                                                    <div className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}>
-                                                        <img src={HeadLeft}></img>
-                                                    </div>
-                                                );
-                                            case 'snakeheadright':
-                                                return (
-                                                    <div className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}>
-                                                        <img src={HeadRight}></img>
-                                                    </div>
-                                                );
-                                            case 'snaketailup':
-                                                return (
-                                                    <div className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}>
-                                                        <img src={TailUp}></img>
-                                                    </div>
-                                                );
-                                            case 'snaketaildown':
-                                                return (
-                                                    <div className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}>
-                                                        <img src={TailDown}></img>
-                                                    </div>
-                                                );
-                                            case 'snaketailleft':
-                                                return (
-                                                    <div className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}>
-                                                        <img src={TailLeft}></img>
-                                                    </div>
-                                                );
-                                            case 'snaketailright':
-                                                return (
-                                                    <div className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}>
-                                                        <img src={TailRight}></img>
-                                                    </div>
-                                                );
-                                            case 'food':
-                                                return (
-                                                    <div className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}>
-                                                        <img src={Food}></img>
-                                                    </div>
-                                                );
-                                            case 'wall':
-                                                return (
-                                                    <div className="w-1/10">
-                                                        <img src={Wall}></img>
-                                                    </div>
-                                                );
-                                        }
-                                    })}
-                                </>
-                            ))}
+                        <RowRenderer data={displayedRows} />
                     </div>
 
                     <ActionButton className="mt-6 bg-opacity-80" onClick={onClickLeaderboard}>
-                        <LeaderBoardIcon /> Voir le classement
+                        <LeaderBoardIcon className="size-5" /> Voir le classement
                     </ActionButton>
 
                     {!isGameOngoingRef.current && (
@@ -492,9 +370,9 @@ export const SnakeHome = memo(() => {
                                 <p className="text-white pb-8">
                                     Votre meilleur score est de{' '}
                                     <strong>
-                                        {(snakePositionRef.current.length - 3) * 100 > highScore
+                                        {(snakePositionRef.current.length - 3) * 100 > bestPlayerScore
                                             ? ((snakePositionRef.current.length - 3) * 100).toLocaleString('fr-FR')
-                                            : highScore.toLocaleString('fr-FR')}
+                                            : bestPlayerScore.toLocaleString('fr-FR')}
                                     </strong>
                                 </p>
                                 <ActionButton onClick={resetGameState}>Recommencer</ActionButton>
@@ -502,7 +380,7 @@ export const SnakeHome = memo(() => {
                         </div>
                     )}
                 </div>
-            </>
-        </AppContent>
+            </AppContent>
+        </AppWrapper>
     );
-});
+};

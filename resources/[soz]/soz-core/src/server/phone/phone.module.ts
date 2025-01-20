@@ -2,6 +2,7 @@ import { Module } from '../../core/decorators/module';
 import { PhoneAppNewsProvider } from './apps/phone.app.news.provider';
 import { PhoneAppNotesProvider } from './apps/phone.app.notes.provider';
 import { PhoneAppPhotosProvider } from './apps/phone.app.photos.provider';
+import { PhoneAppSnakeProvider } from './apps/phone.app.snake.provider';
 import { PhoneAppTaxProvider } from './apps/phone.app.tax.provider';
 import { PhoneAppTetrisProvider } from './apps/phone.app.tetris.provider';
 import { PhoneProvider } from './phone.provider';
@@ -21,6 +22,7 @@ import { PhoneSimCardMessages } from './phone.simcard.messages';
         PhoneAppPhotosProvider,
         PhoneAppTaxProvider,
         PhoneAppTetrisProvider,
+        PhoneAppSnakeProvider,
     ],
 })
 export class PhoneModule {}

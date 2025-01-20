@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SnakeIcon: React.FC = () => {
+const SnakeIcon: React.FC = props => {
     return (
         <svg
             version="1.1"
@@ -12,6 +12,7 @@ const SnakeIcon: React.FC = () => {
             viewBox="0 0 300 300"
             enableBackground="new 0 0 300 300"
             xmlSpace="preserve"
+            {...props}
         >
             <path
                 fill="#000000"

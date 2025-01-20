@@ -10,26 +10,26 @@ import { PrismaService } from '../../database/prisma.service';
 import { PlayerService } from '../../player/player.service';
 
 @Provider()
-export class PhoneAppTetrisProvider {
+export class PhoneAppSnakeProvider {
     @Inject(PrismaService)
     private readonly prismaService: PrismaService;
 
     @Inject(PlayerService)
     private readonly playerService: PlayerService;
 
-    @Rpc(RpcServerEvent.PHONE_APP_TETRIS_GET_LEADERBOARD)
+    @Rpc(RpcServerEvent.PHONE_APP_SNAKE_GET_LEADERBOARD)
     async getLeaderboard() {
         const leaderborad = (await this.prismaService.$queryRaw(
             Prisma.sql`
                 SELECT player.citizenid,
                        phone_profile.avatar,
                        concat(JSON_VALUE(player.charinfo, '$.firstname'), ' ', JSON_VALUE(player.charinfo, '$.lastname')) as player_name,
-                       MAX(tetris_score.score)                                                                            as score,
+                       MAX(snake_score.score)                                                                             AS score,
                        try_count.game_played
-                FROM tetris_score
-                         LEFT JOIN player ON player.citizenid = tetris_score.identifier
+                FROM snake_score
+                         LEFT JOIN player ON player.citizenid = snake_score.identifier
                          LEFT JOIN phone_profile ON JSON_VALUE(player.charinfo, '$.phone') = phone_profile.number
-                         LEFT JOIN (SELECT COUNT(*) as game_played, tetris_score.identifier FROM tetris_score GROUP BY tetris_score.identifier) AS try_count
+                         LEFT JOIN (SELECT COUNT(*) as game_played, snake_score.identifier FROM snake_score GROUP BY snake_score.identifier) AS try_count
                                    ON player.citizenid = try_count.identifier
                 GROUP BY player.citizenid, try_count.game_played
                 ORDER BY score DESC
@@ -39,20 +39,20 @@ export class PhoneAppTetrisProvider {
         return leaderborad.map(v => ({ ...v, score: Number(v.score), game_played: Number(v.game_played) }));
     }
 
-    @Rpc(RpcServerEvent.PHONE_APP_TETRIS_ADD_SCORE)
+    @Rpc(RpcServerEvent.PHONE_APP_SNAKE_ADD_SCORE)
     async addScore(source: number, score: number) {
         const player = this.playerService.getPlayer(source);
         if (!player) {
             return;
         }
 
-        const maxScore = await this.prismaService.tetris_score.aggregate({
+        const maxScore = await this.prismaService.snake_score.aggregate({
             _max: {
                 score: true,
             },
         });
 
-        await this.prismaService.tetris_score.create({
+        await this.prismaService.snake_score.create({
             data: {
                 identifier: player.citizenid,
                 score,
@@ -62,6 +62,6 @@ export class PhoneAppTetrisProvider {
         if (maxScore._max.score >= score) return;
 
         const leaderboard = await this.getLeaderboard();
-        TriggerClientEvent(ClientEvent.PHONE_APP_TETRIS_UPDATE_LEADERBOARD, -1, leaderboard);
+        TriggerClientEvent(ClientEvent.PHONE_APP_SNAKE_UPDATE_LEADERBOARD, -1, leaderboard);
     }
 }

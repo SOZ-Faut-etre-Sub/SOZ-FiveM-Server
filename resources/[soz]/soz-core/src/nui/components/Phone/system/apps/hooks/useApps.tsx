@@ -22,6 +22,7 @@ import PhotosIcon from '../../../apps/photos/icon';
 import { PhotosApp } from '../../../apps/photos/PhotosApp';
 import SettingsIcon from '../../../apps/settings/icon';
 import { SettingsApp } from '../../../apps/settings/SettingsApp';
+import SnakeIcon from '../../../apps/snake/icon';
 import { SnakeApp } from '../../../apps/snake/SnakeApp';
 import { SocietyContactsApp } from '../../../apps/society-contacts/SocietyContactsApp';
 import { SocietyMessagesApp } from '../../../apps/society-messages/SocietyMessagesApp';
@@ -178,7 +179,7 @@ export const useApps = () => {
             id: 'snake',
             nameLocale: 'APPS_SNAKE',
             path: '/snake',
-            // icon: SnakeIcon,
+            icon: SnakeIcon,
             component: <SnakeApp />,
             position: 11,
         },

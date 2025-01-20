@@ -11,6 +11,7 @@ import { HomeApp } from './apps/home/HomeApp';
 import { useAppNewsStateHandlers } from './apps/news/news.atom';
 import { useAppNotesStateHandlers } from './apps/notes/notes.atom';
 import { useAppPhotosStateHandlers } from './apps/photos/photos.atom';
+import { useAppSnakeStateHandlers } from './apps/snake/snake.atom';
 import { useAppTetrisStateHandlers } from './apps/tetris/tetris.atom';
 import { useAppWeatherStateHandlers } from './apps/weather/weather.atom';
 import { ActionSheet } from './system/action-sheet/components/ActionSheet';
@@ -37,6 +38,7 @@ export const PhoneApp: FunctionComponent = () => {
     useAppNewsStateHandlers();
     useAppNotesStateHandlers();
     useAppTetrisStateHandlers();
+    useAppSnakeStateHandlers();
     useAppWeatherStateHandlers();
 
     useNuiFocus(visible, visible, visible, null, visible);

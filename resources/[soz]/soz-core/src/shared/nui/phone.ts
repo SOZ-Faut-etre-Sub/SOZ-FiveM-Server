@@ -35,4 +35,5 @@ export interface NuiPhoneMap {
     AppNotesSetData: NoteItem[];
     AppPhotosSetData: PhotoItem[];
     AppTetrisSetLeaderboard: LeaderboardInterface[];
+    AppSnakeSetLeaderboard: LeaderboardInterface[];
 }
