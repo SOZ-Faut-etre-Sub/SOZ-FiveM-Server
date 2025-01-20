@@ -8,9 +8,10 @@ export class PhoneState {
     @Inject(NuiDispatch)
     private readonly nuiDispatch: NuiDispatch;
 
-    private phoneDisabled = false;
     private phoneOpen = false;
+    private phoneDisabled = false;
     private phoneDrowned = false;
+    private phoneFrontCameraEnabled = false;
     private cityIsInBlackOut = false;
 
     public isPhoneDisabled() {
@@ -33,5 +34,16 @@ export class PhoneState {
     @StateSelector(state => state.global.blackout, state => state.global.blackoutLevel)
     async onBlackout(blackout: boolean, blackoutLevel: number) {
         this.cityIsInBlackOut = blackout || blackoutLevel >= 3;
+    }
+
+    public isPhoneFrontCameraEnabled() {
+        return this.phoneFrontCameraEnabled;
+    }
+
+    public setPhoneFrontCameraEnabled(value: boolean) {
+        if (this.phoneFrontCameraEnabled === value) return;
+
+        this.phoneFrontCameraEnabled = value;
+        Citizen.invokeNative('0x2491A93618B7D838', value);
     }
 }

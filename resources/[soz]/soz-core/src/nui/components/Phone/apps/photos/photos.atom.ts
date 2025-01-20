@@ -6,13 +6,16 @@ import { useNuiEvent } from '../../../../hook/nui';
 import { useInjectDebugData } from '../../system/debug/hooks/useInjectDebugData';
 
 const photosAtom = atom<PhotoItem[]>([]);
+const latestPhotoAtom = atom<PhotoItem | null>(get => get(photosAtom)[0] || null);
 
 export const usePhotos = () => useAtomValue(photosAtom);
+export const useLatestPhotos = () => useAtomValue(latestPhotoAtom);
 
 export const useAppPhotosStateHandlers = () => {
     const setPhotos = useSetAtom(photosAtom);
 
     useNuiEvent('phone', 'AppPhotosSetData', setPhotos);
+    useNuiEvent('phone', 'AppPhotosAddData', (photo: PhotoItem) => setPhotos(photos => [photo, ...photos]));
 
     useInjectDebugData(() => {
         const photos: PhotoItem[] = [];

@@ -32,6 +32,21 @@ export class PhoneAppPhotosProvider {
         });
     }
 
+    @Rpc(RpcServerEvent.PHONE_APP_PHOTOS_UPLOAD)
+    async takePhoto(source: number, image: string) {
+        const player = this.playerService.getPlayer(source);
+        if (!player) {
+            return;
+        }
+
+        return this.prismaService.phone_gallery.create({
+            data: {
+                identifier: player.citizenid,
+                image,
+            },
+        });
+    }
+
     @Rpc(RpcServerEvent.PHONE_APP_PHOTOS_DELETE)
     async deletePhoto(source: number, id: number) {
         const player = this.playerService.getPlayer(source);

@@ -7,11 +7,15 @@ import { NuiEvent } from '../../../shared/event/nui';
 import { PhotoItem } from '../../../shared/phone/apps/photos';
 import { RpcServerEvent } from '../../../shared/rpc';
 import { NuiDispatch } from '../../nui/nui.dispatch';
+import { PhoneState } from '../phone.state';
 
 @Provider()
 export class PhoneAppPhotosProvider {
     @Inject(NuiDispatch)
     private readonly nuiDispatch: NuiDispatch;
+
+    @Inject(PhoneState)
+    private readonly phoneState: PhoneState;
 
     @Once(OnceStep.NuiLoaded)
     async onNuiLoaded() {
@@ -19,8 +23,32 @@ export class PhoneAppPhotosProvider {
         this.nuiDispatch.dispatch('phone', 'AppPhotosSetData', photos);
     }
 
+    @OnNuiEvent(NuiEvent.PhoneAppPhotosUpload)
+    async onTakePhoto(url: string) {
+        const photo = await emitRpc<PhotoItem>(RpcServerEvent.PHONE_APP_PHOTOS_UPLOAD, url);
+        this.nuiDispatch.dispatch('phone', 'AppPhotosAddData', photo);
+    }
+
     @OnNuiEvent(NuiEvent.PhoneAppPhotosDelete)
     async onDeletePhoto(id: string) {
         await emitRpc(RpcServerEvent.PHONE_APP_PHOTOS_DELETE, id);
+    }
+
+    @OnNuiEvent(NuiEvent.PhoneAppPhotosToggleCamera)
+    async onToggleCamera() {
+        this.phoneState.setPhoneFrontCameraEnabled(!this.phoneState.isPhoneFrontCameraEnabled());
+    }
+
+    @OnNuiEvent(NuiEvent.PhoneAppPhotosEnterCamera)
+    async onEnterCamera() {
+        CreateMobilePhone(1);
+        CellCamActivate(true, true);
+    }
+
+    @OnNuiEvent(NuiEvent.PhoneAppPhotosExitCamera)
+    async onExitCamera() {
+        CellCamActivate(false, false);
+        DestroyMobilePhone();
+        this.nuiDispatch.dispatch('phone', 'SetPhoneFreeCamera', false);
     }
 }

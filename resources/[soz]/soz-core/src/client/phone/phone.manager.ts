@@ -4,6 +4,8 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { PhoneState } from '@public/client/phone/phone.state';
 
+import { Tick } from '../../core/decorators/tick';
+import { Control } from '../../shared/input';
 import { HousingFournitureProvider } from '../housing/housing.fourniture.provider';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { Notifier } from '../notifier';
@@ -37,6 +39,13 @@ export class PhoneManager {
     @Once(OnceStep.NuiLoaded)
     async onNuiLoaded() {
         this.nuiDispatch.dispatch('phone', 'SetAvailability', true);
+    }
+
+    @Tick()
+    async onTick() {
+        if (!IsControlJustPressed(0, Control.PhoneSelect)) return;
+
+        this.nuiDispatch.dispatch('phone', 'SetPhoneFreeCamera', false);
     }
 
     @Command('phone', {
@@ -77,6 +86,7 @@ export class PhoneManager {
     }
 
     private async hidePhone() {
+        this.phoneState.setPhoneFrontCameraEnabled(false);
         this.phoneState.setPhoneOpen(false);
     }
 

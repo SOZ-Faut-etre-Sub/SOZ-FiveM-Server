@@ -4,6 +4,14 @@ import { useNuiEvent } from '../../../hook/nui';
 import { useInjectDebugData } from './debug/hooks/useInjectDebugData';
 
 const phoneAvailableAtom = atom<boolean>(true);
+const phoneFreeCameraAtom = atom<boolean>(false);
+
+const phoneFocusAtom = atom<boolean>(get => {
+    const freeCamera = get(phoneFreeCameraAtom);
+    if (freeCamera) return false;
+
+    return get(phoneVisibilityAtom);
+});
 
 const phoneTimeHoursAtom = atom<number>(0);
 const phoneTimeMinutesAtom = atom<number>(0);
@@ -19,17 +27,22 @@ export const usePhoneAvailable = () => useAtomValue(phoneAvailableAtom);
 export const usePhoneTime = () => useAtomValue(phoneTimeAtom);
 export const usePhoneTimeIsDay = () => useAtomValue(phoneTimeIsDayAtom);
 
+export const usePhoneFocus = () => useAtomValue(phoneFocusAtom);
+export const useSetPhoneFreeCamera = () => useSetAtom(phoneFreeCameraAtom);
+
 export const usePhoneVisibility = () => useAtomValue(phoneVisibilityAtom);
 export const usePhoneNotificationVisibility = () => useAtomValue(phoneNotificationVisibilityAtom);
 
 export const usePhoneStateHandlers = () => {
     const setPhoneAvailable = useSetAtom(phoneAvailableAtom);
     const setPhoneVisibility = useSetAtom(phoneVisibilityAtom);
+    const setPhoneFreeCamera = useSetAtom(phoneFreeCameraAtom);
 
     const setPhoneTimeHours = useSetAtom(phoneTimeHoursAtom);
     const setPhoneTimeMinutes = useSetAtom(phoneTimeMinutesAtom);
 
     useNuiEvent('phone', 'SetAvailability', setPhoneAvailable);
+    useNuiEvent('phone', 'SetPhoneFreeCamera', setPhoneFreeCamera);
     useNuiEvent('phone', 'SetTime', data => {
         setPhoneTimeHours(data.hour);
         setPhoneTimeMinutes(data.minute);

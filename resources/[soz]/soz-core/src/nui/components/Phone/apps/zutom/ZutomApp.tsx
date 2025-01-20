@@ -6,7 +6,7 @@ export const ZutomApp = () => {
         <AppContainer disableBackground forceControlColor="light">
             <div className="absolute inset-0 bg-[#2b2b2b] -z-10" />
             <AppWrapper>
-                <iframe className="h-full w-full" src="https://sutom.nocle.fr" />
+                <iframe id="zutom" className="h-full w-full" src="https://sutom.nocle.fr" />
             </AppWrapper>
         </AppContainer>
     );

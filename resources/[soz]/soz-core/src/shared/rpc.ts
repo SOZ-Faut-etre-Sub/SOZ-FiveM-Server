@@ -318,6 +318,7 @@ export enum RpcServerEvent {
     PHONE_SIMCARD_CONTACTS_UPDATE = 'soz-core:server:phone:simcard:contacts:update',
     PHONE_SIMCARD_CONTACTS_REMOVE = 'soz-core:server:phone:simcard:contacts:remove',
     PHONE_APP_PHOTOS_GET = 'soz-core:server:phone:app:photos:get',
+    PHONE_APP_PHOTOS_UPLOAD = 'soz-core:server:phone:app:photos:upload',
     PHONE_APP_PHOTOS_DELETE = 'soz-core:server:phone:app:photos:delete',
     PHONE_APP_NOTES_GET = 'soz-core:server:phone:app:notes:get',
     PHONE_APP_NOTES_ADD = 'soz-core:server:phone:app:notes:add',

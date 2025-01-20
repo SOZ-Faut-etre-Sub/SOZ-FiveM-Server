@@ -1,8 +1,11 @@
 import '../Phone.scss';
 
+import { fetchNui } from '@public/nui/fetch';
 import { animated, useSpring } from '@react-spring/web';
 import React, { FunctionComponent, memo, PropsWithChildren, ReactNode } from 'react';
+import { useLocation } from 'react-router-dom';
 
+import { NuiEvent } from '../../../../shared/event/nui';
 import { useAssetPath } from '../../../hook/assets';
 import { useMinimap } from '../../../hook/data';
 import {
@@ -13,16 +16,23 @@ import {
     useZoomConfig,
 } from './config/config.atom';
 import { isDefaultWallpaper } from './config/utils/wallpaper';
-import { usePhoneAvailable, usePhoneNotificationVisibility, usePhoneVisibility } from './phone.atom';
+import {
+    usePhoneAvailable,
+    usePhoneNotificationVisibility,
+    usePhoneVisibility,
+    useSetPhoneFreeCamera,
+} from './phone.atom';
 import { PHONE_HEIGHT, PHONE_WIDTH } from './phone.constant';
 import { useCall } from './sim-card/hooks/useCall';
 
 export const PhoneWrapper: FunctionComponent<PropsWithChildren> = memo(({ children }) => {
+    const { pathname } = useLocation();
     const minimap = useMinimap();
 
     const available = usePhoneAvailable();
     const visibility = usePhoneVisibility();
     const notifVisibility = usePhoneNotificationVisibility();
+    const setFreeCamera = useSetPhoneFreeCamera();
 
     const { currentCall } = useCall();
 
@@ -46,6 +56,12 @@ export const PhoneWrapper: FunctionComponent<PropsWithChildren> = memo(({ childr
         return visibility ? `${100 - minimap.bottom * 100}vh` : '-100vh';
     };
 
+    const handlePhoneClick = () => {
+        if (!pathname.includes('/camera')) return;
+
+        setFreeCamera(v => !v);
+    };
+
     const styles = useSpring({
         from: {
             bottom: '-100vh',
@@ -56,17 +72,8 @@ export const PhoneWrapper: FunctionComponent<PropsWithChildren> = memo(({ childr
         },
     });
 
-    // const { pathname } = useLocation();
-
     return (
-        <animated.div
-            className="font-sfpro relative h-screen w-screen"
-            // onClick={() => {
-            //     if (pathname.includes('/camera')) {
-            //         fetchNui<ServerPromiseResp<void>>(PhotoEvents.TOGGLE_CONTROL_CAMERA, {});
-            //     }
-            // }}
-        >
+        <animated.div onClick={handlePhoneClick} className="font-sfpro relative h-screen w-screen">
             <animated.div
                 className="absolute bg-cover origin-bottom-right"
                 style={{

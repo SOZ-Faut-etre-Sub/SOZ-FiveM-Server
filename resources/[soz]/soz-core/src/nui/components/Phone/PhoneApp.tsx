@@ -1,7 +1,7 @@
 import './system/locale/i18n';
 
 import { FunctionComponent } from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { MemoryRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { useNuiFocus } from '../../hook/nui';
 import { useAppBankStateHandlers } from './apps/bank/bank.atom';
@@ -18,13 +18,13 @@ import { ActionSheet } from './system/action-sheet/components/ActionSheet';
 import { Alerts } from './system/alerts/components/Alerts';
 import { useApps } from './system/apps/hooks/useApps';
 import { CallDynamicIsland } from './system/dynamic-island/components/CallDynamicIsland';
-import { usePhoneStateHandlers, usePhoneVisibility } from './system/phone.atom';
+import { usePhoneFocus, usePhoneStateHandlers } from './system/phone.atom';
 import { PhoneWrapper } from './system/PhoneWrapper';
 import { useSimCardStateHandlers } from './system/sim-card/sim.card.atom';
 
 export const PhoneApp: FunctionComponent = () => {
     const apps = useApps();
-    const visible = usePhoneVisibility();
+    const focus = usePhoneFocus();
 
     usePhoneStateHandlers();
     useSimCardStateHandlers();
@@ -41,7 +41,7 @@ export const PhoneApp: FunctionComponent = () => {
     useAppSnakeStateHandlers();
     useAppWeatherStateHandlers();
 
-    useNuiFocus(visible, visible, visible, null, visible);
+    useNuiFocus(focus, focus, focus, null, focus);
 
     return (
         <MemoryRouter>
@@ -59,6 +59,8 @@ export const PhoneApp: FunctionComponent = () => {
                     {apps.map(app => (
                         <Route key={app.id} path={app.path + '/*'} element={app.component} />
                     ))}
+
+                    <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
             </PhoneWrapper>
         </MemoryRouter>

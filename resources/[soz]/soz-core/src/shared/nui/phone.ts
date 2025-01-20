@@ -8,6 +8,7 @@ import { CallHistory, Contact, Message, MessageConversation } from '@public/shar
 export interface NuiPhoneMap {
     SetAvailability: boolean;
     SetVisibility: boolean;
+    SetPhoneFreeCamera: boolean;
     SetTime: { hour: number; minute: number };
 
     SetSimCard: string;
@@ -34,6 +35,7 @@ export interface NuiPhoneMap {
     AppNewsAddData: NewsMessage;
     AppNotesSetData: NoteItem[];
     AppPhotosSetData: PhotoItem[];
+    AppPhotosAddData: PhotoItem;
     AppTetrisSetLeaderboard: LeaderboardInterface[];
     AppSnakeSetLeaderboard: LeaderboardInterface[];
 }
