@@ -65,7 +65,7 @@ export class VehicleTyreProvider {
                 [
                     {
                         label: 'Crever un pneu',
-                        icon: 'crimi/destroy',
+                        icon: 'crimi/unzip',
                         category: 'criminal',
                         canInteract: entity => {
                             const model = GetEntityModel(entity);
