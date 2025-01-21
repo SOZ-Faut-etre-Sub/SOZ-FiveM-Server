@@ -3907,8 +3907,8 @@ QBShared.Items = {
         ["useable"] = false,
         ["shouldClose"] = true,
         ["combinable"] = nil,
-        ["description"] = "Pour tracter n'importe quel véhicule",
-        ["illustrator"] = ".Poulpito",
+        ["description"] = "Cable rouillé pouvant lier deux véhicules",
+        ["illustrator"] = ".DBlade",
     },
     ["artisanal_repair_kit"] = {
         ["name"] = "artisanal_repair_kit",
@@ -3919,8 +3919,8 @@ QBShared.Items = {
         ["useable"] = false,
         ["shouldClose"] = true,
         ["combinable"] = nil,
-        ["description"] = "Pour tracter n'importe quel véhicule",
-        ["illustrator"] = ".Poulpito",
+        ["description"] = "Tout le necéssaire pour retaper un véhicule dans un coin sombre",
+        ["illustrator"] = ".DBlade",
     },
     -- Medication
     ["firstaid"] = {
@@ -12453,15 +12453,15 @@ QBShared.Items = {
     },
     ["reputation_token"] = {
         ["name"] = "reputation_token",
-        ["label"] = "Jeton de réputation",
+        ["label"] = "Pièce marquée",
         ["weight"] = 200,
         ["type"] = "item_illegal",
         ["unique"] = false,
         ["useable"] = true,
         ["shouldClose"] = true,
         ["combinable"] = nil,
-        ["description"] = "",
-        ["illustrator"] = ".",
+        ["description"] = "Offert par ceux qui sont au sommet du monde criminalité, peut être utilisé comme preuve de réputation",
+        ["illustrator"] = ".DBlade",
     },
 
     --- Fishing Items
