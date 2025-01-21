@@ -24,6 +24,7 @@ import SettingsIcon from '../../../apps/settings/icon';
 import { SettingsApp } from '../../../apps/settings/SettingsApp';
 import SnakeIcon from '../../../apps/snake/icon';
 import { SnakeApp } from '../../../apps/snake/SnakeApp';
+import SocietyContactsIcon from '../../../apps/society-contacts/icon';
 import { SocietyContactsApp } from '../../../apps/society-contacts/SocietyContactsApp';
 import { SocietyMessagesApp } from '../../../apps/society-messages/SocietyMessagesApp';
 import { TaxApp } from '../../../apps/tax/TaxApp';
@@ -99,7 +100,7 @@ export const useApps = () => {
             id: 'society-contacts',
             nameLocale: 'APPS_SOCIETY_CONTACTS',
             path: '/society-contacts',
-            // icon: SocietyContactIcon,
+            icon: SocietyContactsIcon,
             component: <SocietyContactsApp />,
             position: 5,
         },
