@@ -43,4 +43,5 @@ export interface NuiHudMethodMap {
     SetShowStress: boolean;
     SetShowStamina: boolean;
     SetShowInstructionalOverlay: boolean;
+    SetSwitchPlayerStatsPosition: boolean;
 }

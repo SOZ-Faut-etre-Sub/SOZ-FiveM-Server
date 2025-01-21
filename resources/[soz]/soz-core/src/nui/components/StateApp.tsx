@@ -73,6 +73,10 @@ export const StateApp: FunctionComponent = () => {
         dispatch.hud.updateSettings({ showInstructionalOverlay });
     });
 
+    useNuiEvent('hud', 'SetSwitchPlayerStatsPosition', switchPlayerStatsPosition => {
+        dispatch.hud.updateSettings({ switchPlayerStatsPosition });
+    });
+
     useNuiEvent('hud', 'UpdateSettings', settings => {
         dispatch.hud.update({ settings });
     });

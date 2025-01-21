@@ -95,6 +95,7 @@ export type HudSettings = {
     showStress: boolean;
     showStamina: boolean;
     showInstructionalOverlay: boolean;
+    switchPlayerStatsPosition: boolean;
 };
 
 export type HudState = {
