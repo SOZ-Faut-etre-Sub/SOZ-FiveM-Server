@@ -23,6 +23,7 @@ import { VehicleStateProvider } from './vehicle.state.provider';
 import { VehicleTopSpeedProvider } from './vehicle.topspeed.provider';
 import { VehicleTowProvider } from './vehicle.tow.provider';
 import { VehicleTrainProvider } from './vehicle.train.provider';
+import { VehicleTyreProvider } from './vehicle.tyre.provider';
 
 @Module({
     providers: [
@@ -50,6 +51,7 @@ import { VehicleTrainProvider } from './vehicle.train.provider';
         VehicleOrderProvider,
         VehiclePushProvider,
         VehicleTrainProvider,
+        VehicleTyreProvider,
     ],
 })
 export class VehicleModule {}
