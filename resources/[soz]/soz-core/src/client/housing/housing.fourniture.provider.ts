@@ -417,7 +417,7 @@ export class HousingFournitureProvider {
     }
 
     private removeTargetZone(placementProp: HousingPlacementProp) {
-        if (placementProp.targetLabel.length) {
+        if (placementProp.targetLabel?.length) {
             this.targetFactory.removeForEntity([placementProp.entity]);
         }
         placementProp.targetLabel = null;

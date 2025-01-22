@@ -57,13 +57,7 @@ export class HousingFournitureProvider {
     public async loadFournituresOnStart() {
         const fournitures = await this.prismaService.apartment_fourniture.findMany();
 
-        for (const fourniture of fournitures) {
-            this.fournitures[fourniture.apartment_id] ??= {};
-            const modelName = this.translateModel(fourniture.model);
-            if (isHousingPropvalid(modelName)) {
-                this.fournitures[fourniture.apartment_id][fourniture.id] = this.formatFourniture(fourniture);
-            }
-        }
+        this.buildFournitureForApartment(fournitures);
     }
 
     @OnEvent(ServerEvent.HOUSING_STORE_FOURNITURE)
@@ -130,22 +124,39 @@ export class HousingFournitureProvider {
             skipDuplicates: false,
         });
 
-        const fournitures = await this.prismaService.apartment_fourniture.findMany({
-            where: { apartment_id: apartmentId },
-        });
+        const fournitures = await this.getFournitureForApartment(apartmentId);
 
         for (const fourniture of fournitures) {
             this.logFourniture(source, 'create', fourniture.apartment_id, fourniture.id, fourniture.model);
         }
 
-        this.fournitures[apartmentId] ??= {};
+        this.buildFournitureForApartment(fournitures);
+        TriggerClientEvent(ClientEvent.HOUSING_SYNC_FOURNITURE, -1, apartmentId);
+    }
+
+    private async getFournitureForApartment(apartmentId: number) {
+        return await this.prismaService.apartment_fourniture.findMany({
+            where: { apartment_id: apartmentId },
+        });
+    }
+
+    private buildFournitureForApartment(
+        fournitures: {
+            id: number;
+            apartment_id: number;
+            model: string;
+            position: string | null;
+            matrix: string | null;
+            storage_type: string | null;
+        }[]
+    ) {
         for (const fourniture of fournitures) {
+            this.fournitures[fourniture.apartment_id] ??= {};
             const modelName = this.translateModel(fourniture.model);
             if (isHousingPropvalid(modelName)) {
-                this.fournitures[apartmentId][fourniture.id] = this.formatFourniture(fourniture);
+                this.fournitures[fourniture.apartment_id][fourniture.id] = this.formatFourniture(fourniture);
             }
         }
-        TriggerClientEvent(ClientEvent.HOUSING_SYNC_FOURNITURE, -1, apartmentId);
     }
 
     @Rpc(RpcServerEvent.HOUSING_GET_FOURNITURE)
@@ -181,6 +192,12 @@ export class HousingFournitureProvider {
 
     private async createBaseFourntiureIfNeeded(source: number, apartmentId: number, propertyId: number) {
         if (!this.fournitures[apartmentId] || Object.values(this.fournitures[apartmentId]).length === 0) {
+            const fournitures = await this.getFournitureForApartment(apartmentId);
+            if (fournitures.length !== 0) {
+                this.buildFournitureForApartment(fournitures);
+                return false;
+            }
+
             const [, apartement] = await this.housingRepository.getApartment(propertyId, apartmentId);
 
             if (!apartement.owner) {
