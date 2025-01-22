@@ -24,6 +24,7 @@ import { RepositoryType } from '@public/shared/repository';
 import { InventoryType } from '../../shared/inventory';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { HousingMenuProvider } from './housing.menu.provider';
+import { HousingPropertyZoneProvider } from './housing.property.zone.provider';
 
 type PlayerCloakroom = Record<number, PlayerCloakroomItem>;
 
@@ -49,6 +50,9 @@ export class HousingApartmentZoneProvider {
 
     @Inject(HousingMenuProvider)
     private housingMenuProvider: HousingMenuProvider;
+
+    @Inject(HousingPropertyZoneProvider)
+    private housingPropertyZoneProvider: HousingPropertyZoneProvider;
 
     @Once(OnceStep.RepositoriesLoaded)
     public onApartmentZoneLoaded() {
@@ -122,7 +126,11 @@ export class HousingApartmentZoneProvider {
 
                         return (
                             (apartment.senatePartyId !== null || apartment.owner !== null) &&
-                            canUseHousingInAppartment(player, apartment) &&
+                            canUseHousingInAppartment(
+                                player,
+                                apartment,
+                                this.housingPropertyZoneProvider.temporaryAccess
+                            ) &&
                             this.inventoryManager.hasEnoughItem('zkea_crate')
                         );
                     },
