@@ -69,7 +69,8 @@ export const WatchInterface: FunctionComponent = () => {
         },
         to: {
             top: `${(minimap.bottom + 0.005) * 100}vh`,
-            left: `${(minimap.left + 0.005) * 100}vw`,
+            left: !settings.switchPlayerStatsPosition ? `${(minimap.left + 0.005) * 100}vw` : '0vw',
+            right: settings.switchPlayerStatsPosition ? `${(minimap.left + 0.005) * 100}vw` : '0vw',
         },
     });
 
@@ -79,10 +80,11 @@ export const WatchInterface: FunctionComponent = () => {
         },
         to: {
             bottom: `${100 - minimap.bottom * 100}vh`,
-            left:
-                !hasStreetNamesEnabled && !settings.showWeather && !settings.showDateTime && minimap.isHidden
-                    ? `${(minimap.left + 0.005) * 100}vw`
-                    : `${(minimap.right + 0.005) * 100}vw`,
+            left: settings.switchPlayerStatsPosition
+                ? `${100 - (minimap.right + 0.04) * 100}vw`
+                : !hasStreetNamesEnabled && !settings.showWeather && !settings.showDateTime && minimap.isHidden
+                  ? `${(minimap.left + 0.005) * 100}vw`
+                  : `${(minimap.right + 0.005) * 100}vw`,
         },
     });
 
@@ -122,6 +124,7 @@ export const WatchInterface: FunctionComponent = () => {
             <animated.div
                 className={cn('absolute flex gap-3 text-white h-fit', {
                     '-mt-14': !hasStreetNamesEnabled,
+                    'flex-row-reverse': settings.switchPlayerStatsPosition,
                 })}
                 style={footerStyles}
             >

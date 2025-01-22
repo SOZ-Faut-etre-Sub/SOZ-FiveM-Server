@@ -42,6 +42,7 @@ export class HudWatchProvider {
     private _hideStress = GetResourceKvpInt('soz_hud_stress_hide') === 1;
     private _hideStamina = GetResourceKvpInt('soz_hud_stamina_hide') === 1;
     private _hideInstructionalOverlay = GetResourceKvpInt('soz_hud_instructional_overlay_hide') === 1;
+    private _switchPlayerStatsPosition = GetResourceKvpInt('soz_hud_switch_player_stats_position') === 1;
 
     private _availableTheme: AvailableTheme = {
         [HudTheme.Auto]: true,
@@ -175,6 +176,7 @@ export class HudWatchProvider {
             showStress: true,
             showStamina: true,
             showInstructionalOverlay: true,
+            switchPlayerStatsPosition: this._switchPlayerStatsPosition,
         });
         this.audioService.playAudio('audio/uwu.mp3', 0.1);
 
@@ -236,6 +238,11 @@ export class HudWatchProvider {
         this.instructionalOverlay = value;
     }
 
+    @OnNuiEvent(NuiEvent.WatchMenuSetSwitchPlayerStatsPosition)
+    public async setSwitchPlayerStatsPosition(value: boolean) {
+        this.switchPlayerStatsPosition = value;
+    }
+
     public getSettings(): HudSettings {
         return {
             theme: this._theme,
@@ -249,6 +256,7 @@ export class HudWatchProvider {
             showStress: !this._hideStress,
             showStamina: !this._hideStamina,
             showInstructionalOverlay: !this._hideInstructionalOverlay,
+            switchPlayerStatsPosition: this._switchPlayerStatsPosition,
         };
     }
 
@@ -311,6 +319,12 @@ export class HudWatchProvider {
         this._hideInstructionalOverlay = !value;
         SetResourceKvpInt('soz_hud_instructional_overlay_hide', this._hideInstructionalOverlay ? 1 : 0);
         this.nuiDispatch.dispatch('hud', 'SetShowInstructionalOverlay', value);
+    }
+
+    public set switchPlayerStatsPosition(value: boolean) {
+        this._switchPlayerStatsPosition = value;
+        SetResourceKvpInt('soz_hud_switch_player_stats_position', this._switchPlayerStatsPosition ? 1 : 0);
+        this.nuiDispatch.dispatch('hud', 'SetSwitchPlayerStatsPosition', value);
     }
 
     public get zoom(): number {

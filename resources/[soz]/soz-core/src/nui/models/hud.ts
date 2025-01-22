@@ -18,6 +18,7 @@ export const hud = createModel<RootModel>()({
             showCompass: false,
             showStress: false,
             showStamina: false,
+            switchPlayerStatsPosition: false,
         },
         voiceMode: 0,
         streetName: [],

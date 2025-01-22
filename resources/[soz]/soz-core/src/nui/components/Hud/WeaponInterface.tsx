@@ -1,12 +1,15 @@
 import { animated, useSpring } from '@react-spring/web';
 import cn from 'classnames';
 import { FunctionComponent } from 'react';
+import { useSelector } from 'react-redux';
 
 import { useAmmo, useHudHasStreetNames, useMinimap } from '../../hook/data';
+import { RootState } from '../../store';
 
 export const WeaponInterface: FunctionComponent = () => {
     const minimap = useMinimap();
     const hasStreetNamesEnabled = useHudHasStreetNames();
+    const switchPlayerStatsPosition = useSelector((state: RootState) => state.hud.settings.switchPlayerStatsPosition);
     const ammo = useAmmo();
 
     const [ammoStyles] = useSpring(
@@ -25,7 +28,8 @@ export const WeaponInterface: FunctionComponent = () => {
     return (
         <animated.div
             className={cn('absolute flex gap-1 items-center justify-center text-white w-fit drop-shadow-bg', {
-                '-mt-14': !hasStreetNamesEnabled,
+                '-mt-14': switchPlayerStatsPosition && hasStreetNamesEnabled,
+                '-mt-28': switchPlayerStatsPosition && !hasStreetNamesEnabled,
             })}
             style={ammoStyles}
         >

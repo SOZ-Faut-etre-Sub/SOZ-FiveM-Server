@@ -120,6 +120,16 @@ export const MenuWatch: FunctionComponent<MenuWatchProps> = ({ data }) => {
                     >
                         Stamina
                     </MenuItemCheckbox>
+
+                    <MenuTitle>Accessibilité</MenuTitle>
+                    <MenuItemCheckbox
+                        checked={data.switchPlayerStatsPosition}
+                        description="Change la position des stats du joueur"
+                        onChange={value => fetchNui(NuiEvent.WatchMenuSetSwitchPlayerStatsPosition, value)}
+                    >
+                        Afficher les stats du joueur à droite
+                    </MenuItemCheckbox>
+
                     <MenuTitle>Intéraction</MenuTitle>
                     <MenuItemCheckbox
                         checked={data.showInstructionalOverlay}
