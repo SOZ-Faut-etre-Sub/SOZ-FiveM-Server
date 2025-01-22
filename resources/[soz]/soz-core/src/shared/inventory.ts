@@ -855,7 +855,7 @@ export const VEHICLE_CONFIGURATION_BY_VEHICLE_MODEL: Record<number, Partial<Inve
     [joaat('benson')]: {
         maxWeight: 400000,
         allowedItems: ['potato_seed', 'tomato_seed', 'corn_seed', 'cabage_seed', 'pumpkin_seed', 'lunchbox'],
-        allowedItemTypes: ['food', 'drink'],
+        allowedItemTypes: ['food', 'drink', 'liquor'],
     },
     [joaat('tractor2')]: { maxWeight: 20000 },
     [joaat('graintrailer')]: { maxWeight: 100000 },
