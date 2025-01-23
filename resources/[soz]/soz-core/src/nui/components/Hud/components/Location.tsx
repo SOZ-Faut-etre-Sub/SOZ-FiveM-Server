@@ -26,7 +26,8 @@ export const Location: FunctionComponent = () => {
             height,
             opacity: hasStreetNamesEnabled ? 1 : 0,
             width:
-                !hasStreetNamesEnabled && !settings.showWeather && !settings.showDateTime && minimap.isHidden
+                (settings.switchPlayerStatsPosition && !hasStreetNamesEnabled) ||
+                (!hasStreetNamesEnabled && !settings.showWeather && !settings.showDateTime && minimap.isHidden)
                     ? `0vw`
                     : `${minimap.width * 100}vw`,
         },
