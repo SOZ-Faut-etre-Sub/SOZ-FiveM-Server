@@ -26,6 +26,7 @@ import SnakeIcon from '../../../apps/snake/icon';
 import { SnakeApp } from '../../../apps/snake/SnakeApp';
 import SocietyContactsIcon from '../../../apps/society-contacts/icon';
 import { SocietyContactsApp } from '../../../apps/society-contacts/SocietyContactsApp';
+import SocietyMessagesIcon from '../../../apps/society-messages/icon';
 import { SocietyMessagesApp } from '../../../apps/society-messages/SocietyMessagesApp';
 import { TaxApp } from '../../../apps/tax/TaxApp';
 import TetrisIcon from '../../../apps/tetris/icon';
@@ -108,7 +109,7 @@ export const useApps = () => {
             id: 'society-messages',
             nameLocale: 'APPS_SOCIETY_MESSAGES',
             path: '/society-messages',
-            // icon: SocietyMessagesIcon,
+            icon: SocietyMessagesIcon,
             component: <SocietyMessagesApp />,
             condition: () => Boolean(societyNumber),
             position: 6,
@@ -199,5 +200,5 @@ export const useApps = () => {
             if (app.condition) return app.condition();
             return true;
         });
-    }, []);
+    }, [societyNumber, darkWebAppEnabled]);
 };

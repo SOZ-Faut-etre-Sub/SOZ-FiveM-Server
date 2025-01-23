@@ -18,8 +18,8 @@ export const TabBar: FunctionComponent<TabBarProps> = memo(({ options = [] }) =>
 
     return (
         <TabBarContainer>
-            {options.map(({ label, path, icon: Icon }) => (
-                <TabBarButton active={pathname === path} path={path}>
+            {options.map(({ label, path, icon: Icon }, index) => (
+                <TabBarButton key={index} active={pathname === path} path={path}>
                     <Icon className="size-5" /> {label}
                 </TabBarButton>
             ))}

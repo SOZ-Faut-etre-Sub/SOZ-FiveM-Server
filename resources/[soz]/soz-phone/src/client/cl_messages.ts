@@ -4,11 +4,6 @@ import { Delay } from "../utils/fivem";
 import { sendMessageEvent } from "../utils/messages";
 import { RegisterNuiCB, RegisterNuiProxy } from "./cl_utils";
 
-RegisterNuiCB<void>(MessageEvents.DELETE_WAYPOINT, async (any, cb) => {
-    DeleteWaypoint();
-    cb({});
-});
-
 RegisterNuiCB<void>(SocietyEvents.SEND_CLIENT_POLICE_NOTIFICATION, async (message: any, cb) => {
     cb(exports["soz-core"].SendPoliceNotification(message));
 });

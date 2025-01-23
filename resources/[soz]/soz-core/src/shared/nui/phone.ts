@@ -3,6 +3,7 @@ import { LeaderboardInterface } from '@public/shared/phone/apps/game';
 import { NewsMessage } from '@public/shared/phone/apps/news';
 import { NoteItem } from '@public/shared/phone/apps/notes';
 import { PhotoItem } from '@public/shared/phone/apps/photos';
+import { SocietyMessage } from '@public/shared/phone/apps/society';
 import { CallHistory, Contact, Message, MessageConversation } from '@public/shared/phone/simcard';
 
 export interface NuiPhoneMap {
@@ -38,4 +39,6 @@ export interface NuiPhoneMap {
     AppPhotosAddData: PhotoItem;
     AppTetrisSetLeaderboard: LeaderboardInterface[];
     AppSnakeSetLeaderboard: LeaderboardInterface[];
+    AppSocietySetData: SocietyMessage[];
+    AppSocietyPatchData: SocietyMessage;
 }

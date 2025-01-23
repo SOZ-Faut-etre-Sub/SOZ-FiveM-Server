@@ -1,8 +1,6 @@
-import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Logger } from '../../core/logger';
-import { ServerEvent } from '../../shared/event';
 import { NewsMessage } from '../../shared/phone/apps/news';
 import { ApiClient } from './api.client';
 

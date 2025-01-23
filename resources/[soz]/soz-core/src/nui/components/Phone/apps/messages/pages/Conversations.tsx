@@ -93,7 +93,7 @@ const ConversationItem: FunctionComponent<VirtualizedListProps<MessageConversati
 
     return (
         <ListItem style={style} onClick={() => navigate(`/messages/${conversation.conversation_id}`)}>
-            <div className="grow flex items-center gap-2 min-w-0">
+            <div className="grow flex items-center gap-2 p-2 min-w-0">
                 <div className="relative flex-shrink-0">
                     <ContactPicture picture={contact?.avatar} />
                     {conversation.unread > 0 && (

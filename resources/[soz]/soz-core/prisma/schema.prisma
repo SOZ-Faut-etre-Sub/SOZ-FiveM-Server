@@ -377,6 +377,8 @@ model phone_society_messages {
 
     @@index([conversation_id], map: "conversation_id")
     @@index([source_phone], map: "source_phone")
+    @@index([createdAt], map: "createdAt")
+    @@index([updatedAt], map: "updatedAt")
 }
 
 model phone_twitch_news {

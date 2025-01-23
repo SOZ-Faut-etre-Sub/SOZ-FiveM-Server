@@ -141,7 +141,7 @@ export const useSimCardStateHandlers = () => {
 
     useInjectDebugData(() => {
         setNumber('555-5555');
-        setSocietyNumber('555-FBI');
+        setSocietyNumber('555-LSPD');
 
         setCallModalOpen(true);
         setCurrentCall({

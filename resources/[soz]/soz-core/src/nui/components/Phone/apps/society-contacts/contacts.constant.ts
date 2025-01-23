@@ -14,6 +14,7 @@ export const societyContacts: SocietyContact[] = [
         avatar: 'lspd.webp',
         type: 'public',
         order: 1,
+        anonymousCallAllowed: true,
     },
     {
         display: 'LSMC',
@@ -21,6 +22,7 @@ export const societyContacts: SocietyContact[] = [
         avatar: 'lsmc.webp',
         type: 'public',
         order: 0,
+        anonymousCallAllowed: true,
     },
     {
         display: 'BCSO',
@@ -28,6 +30,7 @@ export const societyContacts: SocietyContact[] = [
         avatar: 'bcso.webp',
         type: 'public',
         order: 2,
+        anonymousCallAllowed: true,
     },
     {
         display: 'Twitch News',
@@ -108,6 +111,7 @@ export const societyContacts: SocietyContact[] = [
         number: '555-POLICE',
         avatar: 'fdo.webp',
         type: 'urgence',
+        anonymousCallAllowed: true,
     },
     {
         display: 'SASP',
@@ -115,6 +119,7 @@ export const societyContacts: SocietyContact[] = [
         avatar: 'sasp.webp',
         type: 'public',
         order: 3,
+        anonymousCallAllowed: true,
     },
     {
         display: 'Gouvernement',

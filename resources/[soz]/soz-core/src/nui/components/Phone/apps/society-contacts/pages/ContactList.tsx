@@ -1,4 +1,3 @@
-import { PlusIcon } from '@heroicons/react/outline';
 import clsx from 'clsx';
 import React, { FunctionComponent } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +15,6 @@ import { AppContent } from '../../../components/system/AppContent';
 import { AppTitle } from '../../../components/system/AppTitle';
 import { AppWrapper } from '../../../components/system/AppWrapper';
 import { useApp } from '../../../system/apps/hooks/useApp';
-import { useAppTitleActionsUpdater } from '../../../system/apps/hooks/useAppTitleActionsUpdater';
 import { useThemeConfig } from '../../../system/config/config.atom';
 import { useSocietyContacts } from '../hooks/useContact';
 

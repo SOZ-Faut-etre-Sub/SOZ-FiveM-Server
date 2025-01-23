@@ -676,6 +676,8 @@ export enum NuiEvent {
     PhoneSimCardAddContact = 'soz-core:nui:phone:sim-card-add-contact',
     PhoneSimCardUpdateContact = 'soz-core:nui:phone:sim-card-update-contact',
     PhoneSimCardDeleteContact = 'soz-core:nui:phone:sim-card-delete-contact',
+    PhoneAppSocietySendMessage = 'soz-core:nui:phone:app-society-send-message',
+    PhoneAppSocietyUpdateMessage = 'soz-core:nui:phone:app-society-update-message',
     PhoneAppPhotosUpload = 'soz-core:nui:phone:app-photos-upload',
     PhoneAppPhotosDelete = 'soz-core:nui:phone:app-photos-delete',
     PhoneAppPhotosToggleCamera = 'soz-core:nui:phone:app-photos-toggle-camera',
@@ -693,4 +695,5 @@ export enum NuiEvent {
     GetStreetName = 'soz-core:nui:get-street-name',
     GetWaypoint = 'soz-core:nui:get-waypoint',
     SetWaypoint = 'soz-core:nui:set-waypoint',
+    DeleteWaypoint = 'soz-core:nui:delete-waypoint',
 }

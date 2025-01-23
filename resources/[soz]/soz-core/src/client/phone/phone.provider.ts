@@ -27,6 +27,11 @@ export class PhoneProvider {
         SetNewWaypoint(x, y);
     }
 
+    @OnNuiEvent(NuiEvent.DeleteWaypoint)
+    async deleteWaypoint() {
+        DeleteWaypoint();
+    }
+
     @OnNuiEvent(NuiEvent.GetPlayerPosition)
     async getPlayerPosition() {
         return GetEntityCoords(PlayerPedId(), true);

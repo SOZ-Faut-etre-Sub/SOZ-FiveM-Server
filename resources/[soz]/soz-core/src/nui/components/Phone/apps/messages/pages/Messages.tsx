@@ -20,7 +20,6 @@ import { useNotifications } from '../../../system/notifications/hooks/useNotific
 import { useContact } from '../../../system/sim-card/hooks/useContact';
 import { useConversation } from '../../../system/sim-card/hooks/useConversation';
 import { useMessages } from '../../../system/sim-card/hooks/useMessage';
-import { deleteQueryFromLocation } from '../../../utils/deleteQueryFromLocation';
 import { MessageBubble } from '../components/MessageBubble';
 import { MessageInput } from '../components/MessageInput';
 import { useConversationAPI } from '../hooks/useConversationAPI';
@@ -97,11 +96,14 @@ export const Messages = () => {
     ]);
 
     return (
-        <AppWrapper className="flex flex-col">
-            <AppContent className="flex flex-col grow">
+        <AppWrapper>
+            <AppContent>
                 <Virtuoso
+                    style={{
+                        height: 740,
+                    }}
                     className={clsx(
-                        'grow scrollbar scrollbar-w-[5px] scrollbar-thumb-rounded-full scrollbar-track-rounded-full',
+                        'scrollbar scrollbar-w-[5px] scrollbar-thumb-rounded-full scrollbar-track-rounded-full',
                         {
                             'scrollbar-thumb-white/80': theme === 'dark',
                             'scrollbar-thumb-black/20': theme === 'light',
@@ -111,6 +113,7 @@ export const Messages = () => {
                     data={messages}
                     itemContent={(index, data) => <MessageItem key={index} message={data} />}
                     initialTopMostItemIndex={messages.length - 1}
+                    increaseViewportBy={740}
                 />
 
                 <MessageInput messageConversationId={conversation?.conversation_id} />

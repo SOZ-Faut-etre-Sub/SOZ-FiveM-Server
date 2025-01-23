@@ -45,7 +45,9 @@ export const ListItem = ({ children, ...props }) => {
 };
 
 interface ListButtonProps extends PropsWithChildren {
+    className?: string;
     style?: CSSProperties;
+    actionWidth?: number;
     actions: {
         label: string;
         color: string;
@@ -55,7 +57,13 @@ interface ListButtonProps extends PropsWithChildren {
     }[];
 }
 
-export const ListButton: FunctionComponent<ListButtonProps> = ({ children, style, actions }) => {
+export const ListButton: FunctionComponent<ListButtonProps> = ({
+    children,
+    className,
+    actionWidth,
+    style,
+    actions,
+}) => {
     const theme = useThemeConfig();
     const [open, setOpen] = useState(false);
 
@@ -72,7 +80,7 @@ export const ListButton: FunctionComponent<ListButtonProps> = ({ children, style
         },
         to: {
             transform: open
-                ? `translateX(-${Number(style.height) * actions.filter(actionFilter).length + 10}px)`
+                ? `translateX(-${Number(actionWidth ?? style.height) * actions.filter(actionFilter).length + 10}px)`
                 : `translateX(0px)`,
         },
     });
@@ -85,7 +93,7 @@ export const ListButton: FunctionComponent<ListButtonProps> = ({ children, style
         >
             <animated.div
                 style={styles}
-                className={clsx('absolute h-full w-full flex justify-between items-center text-sm z-10', {
+                className={clsx('absolute h-full w-full flex justify-between items-center text-sm z-10', className, {
                     'bg-phone-900 hover:bg-[#27272A] text-white': theme === 'dark',
                     'bg-white hover:bg-gray-50 text-black': theme === 'light',
                 })}
@@ -96,6 +104,7 @@ export const ListButton: FunctionComponent<ListButtonProps> = ({ children, style
                 {actions.filter(actionFilter).map(({ color, label, icon: Icon, onClick }) => (
                     <button
                         className={clsx('flex flex-col justify-center items-center h-full aspect-square p-1', color)}
+                        style={{ width: actionWidth ?? style.height }}
                         onClick={onClick}
                     >
                         <Icon className="size-8" />

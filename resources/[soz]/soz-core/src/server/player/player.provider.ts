@@ -211,15 +211,6 @@ export class PlayerProvider {
         return this.playerMoneyService.remove(source, money, type);
     }
 
-    @Exportable('IsOnDuty')
-    public isOnDuty(source: number): boolean {
-        const player = this.playerService.getPlayer(source);
-        if (!player) {
-            return false;
-        }
-        return player.job.onduty;
-    }
-
     private sendSuggestions(player: PlayerData) {
         const commands = this.commandLoader.getCommands();
         const suggestions = commands

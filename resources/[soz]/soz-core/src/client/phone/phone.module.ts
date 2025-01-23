@@ -4,6 +4,7 @@ import { PhoneAppNewsProvider } from './apps/phone.app.news.provider';
 import { PhoneAppNotesProvider } from './apps/phone.app.notes.provider';
 import { PhoneAppPhotosProvider } from './apps/phone.app.photos.provider';
 import { PhoneAppSnakeProvider } from './apps/phone.app.snake.provider';
+import { PhoneAppSocietyProvider } from './apps/phone.app.society.provider';
 import { PhoneAppTetrisProvider } from './apps/phone.app.tetris.provider';
 import { PhoneManager } from './phone.manager';
 import { PhoneProvider } from './phone.provider';
@@ -21,6 +22,7 @@ import { PhoneState } from './phone.state';
         PhoneSimCardContacts,
         PhoneSimCardMessages,
         // Apps
+        PhoneAppSocietyProvider,
         PhoneAppBankProvider,
         PhoneAppNewsProvider,
         PhoneAppNotesProvider,

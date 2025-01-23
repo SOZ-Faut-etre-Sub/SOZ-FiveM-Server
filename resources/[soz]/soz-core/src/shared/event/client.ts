@@ -465,6 +465,7 @@ export enum ClientEvent {
 
     PHONE_SIMCARD_MESSAGES_MESSAGE_NEW = 'phone:app:simcard:messages:message:new',
     PHONE_SIMCARD_MESSAGES_CONVERSATION_RELOAD = 'phone:app:simcard:messages:conversation:reload',
+    PHONE_APP_SOCIETY_RECEIVE_MESSAGE = 'phone:app:society:receive-message',
     PHONE_APP_TETRIS_UPDATE_LEADERBOARD = 'phone:app:tetris:updateLeaderboard',
     PHONE_APP_SNAKE_UPDATE_LEADERBOARD = 'phone:app:snake:updateLeaderboard',
     PHONE_APP_NEWS_BROADCAST = 'soz-core:server:phone:app:news:broadcast',
