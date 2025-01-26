@@ -12463,6 +12463,19 @@ QBShared.Items = {
         ["description"] = "Offert par ceux qui sont au sommet du monde criminalité, peut être utilisé comme preuve de réputation",
         ["illustrator"] = ".DBlade",
     },
+    ["blackmarket_lock"] = {
+        ["name"] = "blackmarket_lock",
+        ["label"] = "Kit de pose de scellé",
+        ["weight"] = 30000,
+        ["type"] = "item",
+        ["unique"] = false,
+        ["useable"] = false,
+        ["shouldClose"] = true,
+        ["combinable"] = nil,
+        ["carrybox"] = "v_ind_cs_toolbox2",
+        ["description"] = "Permet le vérouillage d'une caisse de marché noir, afin que seuls les membres de forces de l'ordre puissent intervernir dessus",
+        ["illustrator"] = ".Nariiel",
+    },
 
     --- Fishing Items
     ["basic_rod"] = {

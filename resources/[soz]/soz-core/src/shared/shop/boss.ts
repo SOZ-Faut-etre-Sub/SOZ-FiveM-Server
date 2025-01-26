@@ -490,6 +490,7 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
         products: [
             { id: 'radar', type: 'item', price: 25_000 },
             { id: 'crypto_destroyer', type: 'item', price: 100_000 },
+            { id: 'blackmarket_lock', type: 'item', price: 30_000 },
         ],
     },
     {
