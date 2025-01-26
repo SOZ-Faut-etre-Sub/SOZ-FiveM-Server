@@ -17,6 +17,7 @@ import {
 type HousingCloakroomMenuProps = {
     data?: {
         items: PlayerCloakroomItem[];
+        gang: boolean;
     };
 };
 
@@ -25,10 +26,14 @@ export const HousingCloakroomMenu: FunctionComponent<HousingCloakroomMenuProps> 
         return null;
     }
 
+    const banner = data.gang
+        ? 'https://soz.zerator.com/static/game/images/banner/menu_gang_management.webp'
+        : 'https://nui-img/soz/menu_habitation';
+
     return (
         <Menu type={MenuType.HousingCloakroomMenu}>
             <MainMenu>
-                <MenuTitle banner="https://nui-img/soz/menu_habitation"></MenuTitle>
+                <MenuTitle banner={banner}></MenuTitle>
                 <MenuContent>
                     <MenuItemButton
                         onConfirm={() => {
