@@ -228,30 +228,45 @@ export const isApartmentExcludeFromHousing = (apartment: Apartment) => {
     return !includeHousingApartment.some(k => apartment.identifier.includes(k));
 };
 
-export const canUseHousingInAppartment = (player: PlayerData, apartment: Apartment): boolean => {
+export const canUseHousingInAppartment = (
+    player: PlayerData,
+    apartment: Apartment,
+    temporaryAccess: Set<number>
+): boolean => {
     return (
         player &&
         apartment.owner &&
         (apartment.owner === player.citizenid ||
             apartment.roommate === player.citizenid ||
-            ['staff', 'admin'].includes(player.role)) &&
+            ['staff', 'admin'].includes(player.role) ||
+            temporaryAccess.has(apartment.id)) &&
         !isApartmentExcludeFromHousing(apartment)
     );
 };
 
-export const canUseHousingInAppartmentNoStaff = (player: PlayerData, apartment: Apartment): boolean => {
+export const canUseHousingInAppartmentNoStaff = (
+    player: PlayerData,
+    apartment: Apartment,
+    temporaryAccess: Set<number>
+): boolean => {
     return (
         player &&
         apartment.owner &&
-        (apartment.owner === player.citizenid || apartment.roommate === player.citizenid) &&
+        (apartment.owner === player.citizenid ||
+            apartment.roommate === player.citizenid ||
+            temporaryAccess.has(apartment.id)) &&
         !isApartmentExcludeFromHousing(apartment)
     );
 };
 
-export const canUseHousingInProperty = (player: PlayerData, property: Property): boolean => {
+export const canUseHousingInProperty = (
+    player: PlayerData,
+    property: Property,
+    temporaryAccess: Set<number>
+): boolean => {
     return property.apartments.some(
         apartment =>
             (apartment.senatePartyId !== null || apartment.owner !== null) &&
-            canUseHousingInAppartmentNoStaff(player, apartment)
+            canUseHousingInAppartmentNoStaff(player, apartment, temporaryAccess)
     );
 };

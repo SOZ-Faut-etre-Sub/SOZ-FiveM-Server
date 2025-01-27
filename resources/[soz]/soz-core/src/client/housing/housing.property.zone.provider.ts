@@ -81,7 +81,7 @@ export class HousingPropertyZoneProvider {
     @Inject(InputService)
     private inputService: InputService;
 
-    private temporaryAccess = new Set<number>();
+    public temporaryAccess = new Set<number>();
 
     @Exportable('GetPlayerApartmentAccess')
     public getPlayerAccess(): Record<number, Record<number, Apartment>> {
@@ -508,7 +508,8 @@ export class HousingPropertyZoneProvider {
                     }
 
                     return (
-                        canUseHousingInProperty(player, property) && this.inventoryManager.hasEnoughItem('zkea_crate')
+                        canUseHousingInProperty(player, property, this.temporaryAccess) &&
+                        this.inventoryManager.hasEnoughItem('zkea_crate')
                     );
                 },
                 action: async () => {
@@ -553,7 +554,9 @@ export class HousingPropertyZoneProvider {
             return [];
         }
 
-        const apartment = property.apartments.find(apartment => canUseHousingInAppartmentNoStaff(player, apartment));
+        const apartment = property.apartments.find(apartment =>
+            canUseHousingInAppartmentNoStaff(player, apartment, this.temporaryAccess)
+        );
 
         if (!apartment) {
             return;

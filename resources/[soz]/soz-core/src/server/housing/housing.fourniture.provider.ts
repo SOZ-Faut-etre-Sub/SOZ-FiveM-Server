@@ -126,8 +126,11 @@ export class HousingFournitureProvider {
 
         const fournitures = await this.getFournitureForApartment(apartmentId);
 
+        this.fournitures[apartmentId] ??= {};
         for (const fourniture of fournitures) {
-            this.logFourniture(source, 'create', fourniture.apartment_id, fourniture.id, fourniture.model);
+            if (!this.fournitures[apartmentId][fourniture.id]) {
+                this.logFourniture(source, 'create', fourniture.apartment_id, fourniture.id, fourniture.model);
+            }
         }
 
         this.buildFournitureForApartment(fournitures);

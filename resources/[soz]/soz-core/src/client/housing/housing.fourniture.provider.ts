@@ -43,6 +43,7 @@ import { RpcServerEvent } from '@public/shared/rpc';
 
 import { InventoryType } from '../../shared/inventory';
 import { ScreenService } from '../screen.service';
+import { HousingPropertyZoneProvider } from './housing.property.zone.provider';
 
 @Provider()
 export class HousingFournitureProvider {
@@ -96,6 +97,9 @@ export class HousingFournitureProvider {
 
     @Inject(AnimationService)
     private animationService: AnimationService;
+
+    @Inject(HousingPropertyZoneProvider)
+    private housingPropertyZoneProvider: HousingPropertyZoneProvider;
 
     private camera: number;
 
@@ -1148,7 +1152,7 @@ export class HousingFournitureProvider {
         }
 
         if (
-            !canUseHousingInAppartment(player, this.lastApartment) ||
+            !canUseHousingInAppartment(player, this.lastApartment, this.housingPropertyZoneProvider.temporaryAccess) ||
             this.lastInterior !== GetInteriorFromEntity(PlayerPedId())
         ) {
             return;
@@ -1181,10 +1185,14 @@ export class HousingFournitureProvider {
                 return;
             }
 
-            if (!canUseHousingInAppartment(player, apartement)) {
+            if (!canUseHousingInAppartment(player, apartement, this.housingPropertyZoneProvider.temporaryAccess)) {
                 return;
             }
-        } else if (!isStaff(player) || !this.lastApartment || !canUseHousingInAppartment(player, this.lastApartment)) {
+        } else if (
+            !isStaff(player) ||
+            !this.lastApartment ||
+            !canUseHousingInAppartment(player, this.lastApartment, this.housingPropertyZoneProvider.temporaryAccess)
+        ) {
             return;
         }
 
