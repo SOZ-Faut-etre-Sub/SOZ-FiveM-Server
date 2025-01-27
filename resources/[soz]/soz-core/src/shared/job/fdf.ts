@@ -1081,8 +1081,6 @@ export const FDFCloakroom: WardrobeConfig = {
                 [11]: { Drawable: 24, Texture: 11, Palette: 0 },
             },
             Props: {},
-
-            GlovesID: 56039,
         },
     },
 };
