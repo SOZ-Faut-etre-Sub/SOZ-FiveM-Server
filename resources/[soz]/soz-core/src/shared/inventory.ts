@@ -811,7 +811,7 @@ export const VEHICLE_CONFIGURATION_BY_VEHICLE_MODEL: Record<number, Partial<Inve
     // Pawl
     [joaat('hauler1')]: { maxWeight: 40000 },
     [joaat('sadler1')]: { maxWeight: 200000 },
-    [joaat('trailerlogs')]: { maxWeight: 200000, allowedItemTypes: TRAILER_LOGS_ITEM_TYPES },
+    [joaat('trailerlogs')]: { maxWeight: 400000, allowedItemTypes: TRAILER_LOGS_ITEM_TYPES },
 
     // UPW
     [joaat('boxville')]: { maxWeight: 50000 },
