@@ -1,8 +1,10 @@
-import { usePreviousState } from '@common/utils/usePreviousState';
 import { useEffect, useState } from 'react';
 
-import { useAvailability } from '../../../hooks/usePhone';
-import { useSoundProvider } from './useSoundProvider';
+import { useAssetPath } from '../../../../../hook/assets';
+import { useConfig } from '../../config/config.atom';
+import { usePhoneAvailable } from '../../phone.atom';
+import { useSoundProvider } from '../providers/SoundProvider';
+import { usePreviousState } from './usePreviousState';
 
 interface ISoundOptions {
     volume?: number;
@@ -12,14 +14,9 @@ interface ISoundOptions {
 
 const DEFAULT_OPTIONS = { volume: 1, interrupt: false, loop: false };
 
-/**
- * A hook allowing to play sound
- * @param url The url of the sound you would like to play
- *
- * @param { volume, interrupt, loop} Additional options
- **/
-const useSound = (url: string, options: ISoundOptions = DEFAULT_OPTIONS) => {
-    const isPhoneAvailable = useAvailability();
+export const useSound = (url: string, options: ISoundOptions = DEFAULT_OPTIONS) => {
+    const isPhoneAvailable = usePhoneAvailable();
+
     const { volume: vol, loop: isLoop, interrupt } = options;
 
     const [isPlaying, setPlaying] = useState<boolean>(false);
@@ -72,4 +69,14 @@ const useSound = (url: string, options: ISoundOptions = DEFAULT_OPTIONS) => {
     };
 };
 
-export default useSound;
+export const useSoundSettings = (type: 'ringtone' | 'notiSound' | 'societyNotification') => {
+    const { getPath } = useAssetPath();
+    const settings = useConfig();
+
+    const audioFolder = type === 'ringtone' ? 'ringtones' : 'notifications';
+
+    return {
+        sound: getPath(`audio/phone/${audioFolder}/${settings[type].value}`),
+        volume: settings.planeMode ? 0 : settings[`${type}Vol`] / 100,
+    };
+};

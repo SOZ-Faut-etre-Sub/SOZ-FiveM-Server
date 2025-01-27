@@ -1,15 +1,16 @@
 import { PlusIcon } from '@heroicons/react/outline';
-import { ChatIcon, PencilAltIcon, PhoneIcon, StarIcon, UserAddIcon } from '@heroicons/react/solid';
+import { ChatIcon, PencilAltIcon, PhoneIcon, StarIcon } from '@heroicons/react/solid';
 import clsx from 'clsx';
 import React, { FunctionComponent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { VariableSizeList } from 'react-window';
 
 import { Contact, Separator } from '../../../../../../shared/phone/simcard';
 import { VirtualizedListProps } from '../../../../../../shared/virtualized';
+import { useCallAPI } from '../../../api/useCallAPI';
 import { ContactPicture } from '../../../components/ContactPicture';
-import { ListButton, ListItem } from '../../../components/List';
+import { ListButton } from '../../../components/List';
 import { SearchField } from '../../../components/SearchField';
 import { AppContent } from '../../../components/system/AppContent';
 import { AppTitle } from '../../../components/system/AppTitle';
@@ -18,6 +19,7 @@ import { useApp } from '../../../system/apps/hooks/useApp';
 import { useAppTitleActionsUpdater } from '../../../system/apps/hooks/useAppTitleActionsUpdater';
 import { useThemeConfig } from '../../../system/config/config.atom';
 import { useContacts } from '../../../system/sim-card/hooks/useContact';
+import { useContactsAPI } from '../hooks/useContactsAPI';
 
 export const LIST_HEIGHT = 693;
 export const LIST_WIDTH = 380;
@@ -88,13 +90,12 @@ const ContactItem: FunctionComponent<VirtualizedListProps<Contact | Separator>> 
     const navigate = useNavigate();
     const { t } = useTranslation();
 
-    // const { initializeCall } = useCall();
     const theme = useThemeConfig();
-
-    // const { addFavoriteContact, removeFavoriteContact } = useContactsAPI();
+    const { initializeCall } = useCallAPI();
+    const { addFavoriteContact, removeFavoriteContact } = useContactsAPI();
 
     const openContactInfo = (contactId: number) => navigate(`/contacts/${contactId}`);
-    const startCall = (number: string) => {}; // initializeCall(number);
+    const startCall = (number: string) => initializeCall(number);
     const handleMessage = (phoneNumber: string) => navigate(`/messages/new/${phoneNumber}`);
 
     const contact = data[index];
@@ -123,14 +124,14 @@ const ContactItem: FunctionComponent<VirtualizedListProps<Contact | Separator>> 
                     label: 'Retirer',
                     color: 'bg-gray-500 text-yellow-300',
                     icon: StarIcon,
-                    onClick: () => {}, //removeFavoriteContact(contact.id),
+                    onClick: () => removeFavoriteContact(contact.id),
                     condition: Boolean(contact.favorite),
                 },
                 {
                     label: 'Ajouter',
                     color: 'bg-gray-500 text-yellow-300',
                     icon: StarIcon,
-                    onClick: () => {}, //addFavoriteContact(contact.id),
+                    onClick: () => addFavoriteContact(contact.id),
                     condition: !contact.favorite,
                 },
                 {

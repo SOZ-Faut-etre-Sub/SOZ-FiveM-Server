@@ -1,4 +1,4 @@
-import { phone_society_messages, phone_society_messagesUpdateInput } from '@prisma/client';
+import { phone_society_messages } from '@prisma/client';
 import { Provider } from '@public/core/decorators/provider';
 import { Notifier } from '@public/server/notifier';
 import { JobType } from '@public/shared/job';
@@ -158,16 +158,16 @@ export class PhoneAppSocietyProvider {
             return;
         }
 
-        const data: phone_society_messagesUpdateInput = {};
+        const data: Partial<phone_society_messages> = {};
 
         if (message.isDone !== undefined) {
-            data.isDone = message.isDone;
+            data.isDone = 1;
         }
 
         if (message.isTaken !== undefined) {
             data.takenBy = player.citizenid;
             data.takenByUsername = player.name;
-            data.isTaken = message.isTaken;
+            data.isTaken = 1;
         }
 
         const societyMessage = await this.prismaService.phone_society_messages.update({

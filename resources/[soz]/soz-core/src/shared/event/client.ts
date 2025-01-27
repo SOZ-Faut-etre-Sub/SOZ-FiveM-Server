@@ -463,6 +463,7 @@ export enum ClientEvent {
 
     XMAS_UPDATE_SCENE_STATE = 'soz-core:client:xmas:update-scene-state',
 
+    PHONE_SIMCARD_CALLS_UPDATE = 'phone:app:simcard:calls:update',
     PHONE_SIMCARD_MESSAGES_MESSAGE_NEW = 'phone:app:simcard:messages:message:new',
     PHONE_SIMCARD_MESSAGES_CONVERSATION_RELOAD = 'phone:app:simcard:messages:conversation:reload',
     PHONE_APP_SOCIETY_RECEIVE_MESSAGE = 'phone:app:society:receive-message',

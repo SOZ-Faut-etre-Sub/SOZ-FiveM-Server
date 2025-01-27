@@ -1,9 +1,9 @@
-import { animated, useSpring } from '@react-spring/web';
-import { ItemIcon } from '@ui/old_components/ItemIcon';
-import React from 'react';
+import { animated, useSpring } from "@react-spring/web";
+import { ItemIcon } from "@ui/old_components/ItemIcon";
+import React from "react";
 
-import { useSoundProvider } from '../../os/sound/hooks/useSoundProvider';
-import { ActionSheetContainer, ActionSheetItem, ActionSheetTitle } from '../components/ActionSheet';
+import { useSoundProvider } from "../../../../../soz-core/src/nui/components/Phone/system/sound/hooks/useSoundProvider";
+import { ActionSheetContainer, ActionSheetItem, ActionSheetTitle } from "../components/ActionSheet";
 
 export interface IContextMenuOption {
     onClick(e, option): void;
@@ -28,11 +28,11 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({ open, onClose, options
     const styles = useSpring({
         from: {
             opacity: 0,
-            transform: 'translateY(100%)',
+            transform: "translateY(100%)",
         },
         to: {
             opacity: open ? 1 : 0,
-            transform: open ? 'translateY(0%)' : 'translateY(100%)',
+            transform: open ? "translateY(0%)" : "translateY(100%)",
         },
     });
 
@@ -45,11 +45,11 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({ open, onClose, options
             <ActionSheetContainer>
                 <ActionSheetTitle>Configuration</ActionSheetTitle>
 
-                {options.map(option => (
+                {options.map((option) => (
                     <ActionSheetItem
                         key={option.key || option.label}
                         selected={option.selected}
-                        onClick={e => {
+                        onClick={(e) => {
                             if (option.soundPreview) {
                                 sound.stop(`media/${option.soundPreview}/${option.key}.mp3`);
                             }

@@ -1,12 +1,12 @@
-import { useNuiEvent } from '@libs/nui/hooks/useNuiEvent';
-import { ActiveCall, CallEvents } from '@typings/call';
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNuiEvent } from "@libs/nui/hooks/useNuiEvent";
+import { ActiveCall, CallEvents } from "@typings/call";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 
-import { useConfig } from '../hooks/usePhone';
-import { useEndDialSound } from '../os/call/hooks/useEndDialSound';
-import { RootState, store } from '../store';
+import { useConfig } from "../hooks/usePhone";
+import { useEndDialSound } from "../../../../soz-core/src/nui/components/Phone/system/sound/hooks/useEndDialSound";
+import { RootState, store } from "../store";
 
 export const useCallService = () => {
     const modal = useSelector((state: RootState) => state.phone.callModal);
@@ -22,19 +22,19 @@ export const useCallService = () => {
     }, [modal]);
 
     useEffect(() => {
-        if (!modal && pathname === '/call') {
-            navigate('/', { replace: true });
+        if (!modal && pathname === "/call") {
+            navigate("/", { replace: true });
         }
-        if (modal && !config.planeMode && !modalHasBeenOpenedThisCall && pathname !== '/call') {
-            navigate('/call');
+        if (modal && !config.planeMode && !modalHasBeenOpenedThisCall && pathname !== "/call") {
+            navigate("/call");
         }
     }, [navigate, modal, pathname, modalHasBeenOpenedThisCall]);
 
-    useNuiEvent<ActiveCall | null>('CALL', CallEvents.SET_CALLER, callData => {
+    useNuiEvent<ActiveCall | null>("CALL", CallEvents.SET_CALLER, (callData) => {
         if (store.getState().simCard.call !== callData && callData === null && !config.planeMode && available) {
             startTone();
         }
         store.dispatch.simCard.setCall(callData);
     });
-    useNuiEvent('CALL', CallEvents.SET_CALL_MODAL, store.dispatch.phone.setCallModal);
+    useNuiEvent("CALL", CallEvents.SET_CALL_MODAL, store.dispatch.phone.setCallModal);
 };

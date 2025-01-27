@@ -9,6 +9,7 @@ import { PhoneAppTetrisProvider } from './apps/phone.app.tetris.provider';
 import { PhoneManager } from './phone.manager';
 import { PhoneProvider } from './phone.provider';
 import { PhoneSimCard } from './phone.simcard';
+import { PhoneSimCardCalls } from './phone.simcard.calls';
 import { PhoneSimCardContacts } from './phone.simcard.contacts';
 import { PhoneSimCardMessages } from './phone.simcard.messages';
 import { PhoneState } from './phone.state';
@@ -19,6 +20,7 @@ import { PhoneState } from './phone.state';
         PhoneManager,
         PhoneProvider,
         PhoneSimCard,
+        PhoneSimCardCalls,
         PhoneSimCardContacts,
         PhoneSimCardMessages,
         // Apps

@@ -1,5 +1,5 @@
 import { Howl } from 'howler';
-import React, { createContext, PropsWithChildren, useCallback, useEffect, useRef } from 'react';
+import React, { createContext, PropsWithChildren, useCallback, useContext, useEffect, useRef } from 'react';
 
 interface IMountResponse {
     howl: Howl;
@@ -8,15 +8,27 @@ interface IMountResponse {
 
 interface ISoundContext {
     mount(url: string, volume?: number, loop?: boolean, autoplay?: boolean): Promise<IMountResponse>;
+
     play(url?: string, volume?: number, loop?: boolean): void;
+
     stop(url: string): void;
+
     remove(url: string): boolean;
+
     volume(url: string, volume?: number): number;
+
     loop(url: string, loop?: boolean): boolean;
+
     playing(url: string): boolean;
+
     isMounted(url: string): boolean;
 }
-export const soundContext = createContext<ISoundContext>(null);
+
+const soundContext = createContext<ISoundContext>(null);
+
+export const useSoundProvider = () => {
+    return useContext(soundContext);
+};
 
 export const SoundProvider: React.FC<PropsWithChildren> = ({ children }) => {
     const soundRefs = useRef<Map<string, { howl: Howl; volume: number }>>();

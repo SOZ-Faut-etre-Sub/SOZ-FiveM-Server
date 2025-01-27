@@ -18,7 +18,7 @@ export const SettingSwitch = ({ label, color, value, onClick, icon }: ISettingSw
     const theme = useThemeConfig();
 
     return (
-        <ListItem>
+        <ListItem className="px-2">
             <ItemIcon color={color} icon={icon} />
             <p className="flex-grow ml-4 font-light normal-case">{label}</p>
             <Switch

@@ -4,24 +4,31 @@ import { useSetAtom } from 'jotai/index';
 
 import { useNuiEvent } from '../../../../hook/nui';
 import { useInjectDebugData } from '../../system/debug/hooks/useInjectDebugData';
+import { useRingtoneSound } from '../../system/sound/hooks/useRingtoneSound';
 
 const messagesAtom = atom<Array<SocietyMessage>>([]);
 
 export const useSocietyMessages = () => useAtomValue(messagesAtom);
 
 export const useSocietyMessagesStateHandlers = () => {
+    const notificationSound = useRingtoneSound('societyNotification', false);
+
     const setMessages = useSetAtom(messagesAtom);
 
     useNuiEvent('phone', 'AppSocietySetData', setMessages);
-    useNuiEvent('phone', 'AppSocietyPatchData', (data: SocietyMessage) =>
+    useNuiEvent('phone', 'AppSocietyPatchData', (data: SocietyMessage) => {
         setMessages(prev => {
             const index = prev.findIndex(m => m.id === data.id);
-            if (index === -1) return prev;
-            const newMessages = [...prev];
-            newMessages[index] = data;
-            return newMessages;
-        })
-    );
+            if (index === -1) {
+                notificationSound.play();
+                return [data, ...prev];
+            }
+
+            const updated = [...prev];
+            updated[index] = data;
+            return updated;
+        });
+    });
 
     useInjectDebugData(() => {
         const messages = [

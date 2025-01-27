@@ -1,15 +1,17 @@
 import { useCallback, useEffect } from 'react';
 
-import { useSoundProvider } from '../../sound/hooks/useSoundProvider';
+import { useAssetPath } from '../../../../../hook/assets';
+import { useSoundProvider } from '../providers/SoundProvider';
 
 interface useEndDialSoundValue {
     startTone: () => void;
 }
 
-const END_DIAL_URL = 'media/misc/End-Dial.mp3';
-
 export const useEndDialSound = (): useEndDialSoundValue => {
     const sound = useSoundProvider();
+    const { getPath } = useAssetPath();
+
+    const END_DIAL_URL = getPath(`audio/phone/misc/End-Dial.mp3`);
 
     useEffect(() => {
         if (!sound.isMounted(END_DIAL_URL)) {

@@ -1,8 +1,8 @@
-import { FunctionComponent, memo } from 'react';
+import { FunctionComponent, memo } from "react";
 
-const BankIcon: FunctionComponent = memo(props => {
+const BankIcon: FunctionComponent = memo((props) => {
     return (
-        <svg {...props} viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
             <image
                 y="0"
                 width="500"

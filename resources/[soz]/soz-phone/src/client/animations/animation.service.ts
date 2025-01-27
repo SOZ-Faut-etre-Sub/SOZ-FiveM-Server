@@ -1,5 +1,5 @@
-import { Delay } from '../../utils/fivem';
-import { newPhoneProp, removePhoneProp } from '../functions';
+import { Delay } from "../../utils/fivem";
+import { newPhoneProp, removePhoneProp } from "../functions";
 
 export enum AnimationState {
     ON_CALL,
@@ -55,14 +55,14 @@ export class AnimationService {
         }
     }
 
-    private handleOpenAnimation(playerPed: number) {
-        if (IsPedInAnyVehicle(playerPed, true)) {
-            this.handleOpenVehicleAnim(playerPed);
-        } else {
-            this.handleOpenNormalAnim(playerPed);
-        }
-        SetPedConfigFlag(PlayerPedId(), 104, false);
-    }
+    // private handleOpenAnimation(playerPed: number) {
+    //     if (IsPedInAnyVehicle(playerPed, true)) {
+    //         this.handleOpenVehicleAnim(playerPed);
+    //     } else {
+    //         this.handleOpenNormalAnim(playerPed);
+    //     }
+    //     SetPedConfigFlag(PlayerPedId(), 104, false);
+    // }
 
     private handleCallEndAnimation(playerPed: number) {
         if (!global.isPhoneOpen) {
@@ -79,14 +79,14 @@ export class AnimationService {
         }
     }
 
-    private async handleCloseAnimation(playerPed: number) {
-        SetPedConfigFlag(PlayerPedId(), 104, true);
-        if (IsPedInAnyVehicle(playerPed, true)) {
-            await this.handleCloseVehicleAnim(playerPed);
-        } else {
-            await this.handleCloseNormalAnim(playerPed);
-        }
-    }
+    // private async handleCloseAnimation(playerPed: number) {
+    //     SetPedConfigFlag(PlayerPedId(), 104, true);
+    //     if (IsPedInAnyVehicle(playerPed, true)) {
+    //         await this.handleCloseVehicleAnim(playerPed);
+    //     } else {
+    //         await this.handleCloseNormalAnim(playerPed);
+    //     }
+    // }
 
     async openPhone(): Promise<void> {
         if (!this.onCall) {
@@ -122,89 +122,89 @@ export class AnimationService {
         this.setPhoneState(AnimationState.ON_CAMERA, false);
     }
 
-    private async loadAnimDict(dict: any) {
-        //-- Loads the animation dict. Used in the anim functions.
-        RequestAnimDict(dict);
-        while (!HasAnimDictLoaded(dict)) {
-            await Delay(100);
-        }
-    }
+    // private async loadAnimDict(dict: any) {
+    //     //-- Loads the animation dict. Used in the anim functions.
+    //     RequestAnimDict(dict);
+    //     while (!HasAnimDictLoaded(dict)) {
+    //         await Delay(100);
+    //     }
+    // }
 
-    private async handleOpenVehicleAnim(playerPed: number): Promise<void> {
-        const dict = 'anim@cellphone@in_car@ps';
-        const anim = 'cellphone_text_in';
-        await this.loadAnimDict(dict);
+    // private async handleOpenVehicleAnim(playerPed: number): Promise<void> {
+    //     const dict = 'anim@cellphone@in_car@ps';
+    //     const anim = 'cellphone_text_in';
+    //     await this.loadAnimDict(dict);
+    //
+    //     if (!IsEntityPlayingAnim(playerPed, dict, anim, 3)) {
+    //         TaskPlayAnim(playerPed, dict, anim, 7.0, -1, -1, 50, 0, false, false, false);
+    //     }
+    // }
 
-        if (!IsEntityPlayingAnim(playerPed, dict, anim, 3)) {
-            TaskPlayAnim(playerPed, dict, anim, 7.0, -1, -1, 50, 0, false, false, false);
-        }
-    }
+    // private async handleOpenNormalAnim(playerPed: number): Promise<void> {
+    //     //While not in a vehicle it will use this dict.
+    //     const dict = 'cellphone@';
+    //     const anim = 'cellphone_text_in';
+    //     await this.loadAnimDict(dict);
+    //
+    //     if (!IsEntityPlayingAnim(playerPed, dict, anim, 3)) {
+    //         TaskPlayAnim(playerPed, dict, anim, 8.0, -1, -1, 50, 0, false, false, false);
+    //     }
+    // }
 
-    private async handleOpenNormalAnim(playerPed: number): Promise<void> {
-        //While not in a vehicle it will use this dict.
-        const dict = 'cellphone@';
-        const anim = 'cellphone_text_in';
-        await this.loadAnimDict(dict);
+    // private async handleCloseVehicleAnim(playerPed: number): Promise<void> {
+    //     const DICT = "anim@cellphone@in_car@ps";
+    //     StopAnimTask(playerPed, DICT, "cellphone_text_in", 1.0); // Do both incase they were on the phone.
+    //     StopAnimTask(playerPed, DICT, "cellphone_call_to_text", 1.0);
+    //     StopAnimTask(playerPed, DICT, "cellphone_call_listen_base", 1.0);
+    //     removePhoneProp();
+    // }
 
-        if (!IsEntityPlayingAnim(playerPed, dict, anim, 3)) {
-            TaskPlayAnim(playerPed, dict, anim, 8.0, -1, -1, 50, 0, false, false, false);
-        }
-    }
+    // private async handleCloseNormalAnim(playerPed: number): Promise<void> {
+    //     const DICT = "cellphone@";
+    //     const ANIM = "cellphone_text_out";
+    //     StopAnimTask(playerPed, DICT, "cellphone_text_in", 1.0);
+    //     await Delay(100);
+    //     await this.loadAnimDict(DICT);
+    //     TaskPlayAnim(playerPed, DICT, ANIM, 7.0, -1, -1, 50, 0, false, false, false);
+    //     await Delay(200);
+    //     StopAnimTask(playerPed, DICT, ANIM, 1.0);
+    //     removePhoneProp();
+    // }
 
-    private async handleCloseVehicleAnim(playerPed: number): Promise<void> {
-        const DICT = 'anim@cellphone@in_car@ps';
-        StopAnimTask(playerPed, DICT, 'cellphone_text_in', 1.0); // Do both incase they were on the phone.
-        StopAnimTask(playerPed, DICT, 'cellphone_call_to_text', 1.0);
-        StopAnimTask(playerPed, DICT, 'cellphone_call_listen_base', 1.0);
-        removePhoneProp();
-    }
+    // private async handleOnCallInVehicle(playerPed: number): Promise<void> {
+    //     const DICT = "anim@cellphone@in_car@ps";
+    //     const ANIM = "cellphone_call_listen_base";
+    //
+    //     if (!IsEntityPlayingAnim(playerPed, DICT, ANIM, 3)) {
+    //         await this.loadAnimDict(DICT);
+    //         TaskPlayAnim(playerPed, DICT, ANIM, 3.0, 3.0, -1, 49, 0, false, false, false);
+    //     }
+    // }
 
-    private async handleCloseNormalAnim(playerPed: number): Promise<void> {
-        const DICT = 'cellphone@';
-        const ANIM = 'cellphone_text_out';
-        StopAnimTask(playerPed, DICT, 'cellphone_text_in', 1.0);
-        await Delay(100);
-        await this.loadAnimDict(DICT);
-        TaskPlayAnim(playerPed, DICT, ANIM, 7.0, -1, -1, 50, 0, false, false, false);
-        await Delay(200);
-        StopAnimTask(playerPed, DICT, ANIM, 1.0);
-        removePhoneProp();
-    }
+    // private async handleOnCallNormal(playerPed: number): Promise<void> {
+    //     const DICT = "cellphone@";
+    //     const ANIM = "cellphone_call_listen_base";
+    //     if (!IsEntityPlayingAnim(playerPed, DICT, ANIM, 3)) {
+    //         await this.loadAnimDict(DICT);
+    //         TaskPlayAnim(playerPed, DICT, ANIM, 3.0, 3.0, -1, 49, 0, false, false, false);
+    //     }
+    // }
 
-    private async handleOnCallInVehicle(playerPed: number): Promise<void> {
-        const DICT = 'anim@cellphone@in_car@ps';
-        const ANIM = 'cellphone_call_listen_base';
+    // private async handleCallEndVehicleAnim(playerPed: number): Promise<void> {
+    //     const DICT = "anim@cellphone@in_car@ps";
+    //     const ANIM = "cellphone_call_to_text";
+    //     StopAnimTask(playerPed, DICT, "cellphone_call_listen_base", 1.0);
+    //     await this.loadAnimDict(DICT);
+    //     TaskPlayAnim(playerPed, DICT, ANIM, 1.3, 5.0, -1, 50, 0, false, false, false);
+    // }
 
-        if (!IsEntityPlayingAnim(playerPed, DICT, ANIM, 3)) {
-            await this.loadAnimDict(DICT);
-            TaskPlayAnim(playerPed, DICT, ANIM, 3.0, 3.0, -1, 49, 0, false, false, false);
-        }
-    }
-
-    private async handleOnCallNormal(playerPed: number): Promise<void> {
-        const DICT = 'cellphone@';
-        const ANIM = 'cellphone_call_listen_base';
-        if (!IsEntityPlayingAnim(playerPed, DICT, ANIM, 3)) {
-            await this.loadAnimDict(DICT);
-            TaskPlayAnim(playerPed, DICT, ANIM, 3.0, 3.0, -1, 49, 0, false, false, false);
-        }
-    }
-
-    private async handleCallEndVehicleAnim(playerPed: number): Promise<void> {
-        const DICT = 'anim@cellphone@in_car@ps';
-        const ANIM = 'cellphone_call_to_text';
-        StopAnimTask(playerPed, DICT, 'cellphone_call_listen_base', 1.0);
-        await this.loadAnimDict(DICT);
-        TaskPlayAnim(playerPed, DICT, ANIM, 1.3, 5.0, -1, 50, 0, false, false, false);
-    }
-
-    private async handleCallEndNormalAnim(playerPed: number): Promise<void> {
-        const DICT = 'cellphone@';
-        const ANIM = 'cellphone_call_to_text';
-
-        if (IsEntityPlayingAnim(playerPed, 'cellphone@', 'cellphone_call_listen_base', 49)) {
-            await this.loadAnimDict(DICT);
-            TaskPlayAnim(playerPed, DICT, ANIM, 2.5, 8.0, -1, 50, 0, false, false, false);
-        }
-    }
+    // private async handleCallEndNormalAnim(playerPed: number): Promise<void> {
+    //     const DICT = "cellphone@";
+    //     const ANIM = "cellphone_call_to_text";
+    //
+    //     if (IsEntityPlayingAnim(playerPed, "cellphone@", "cellphone_call_listen_base", 49)) {
+    //         await this.loadAnimDict(DICT);
+    //         TaskPlayAnim(playerPed, DICT, ANIM, 2.5, 8.0, -1, 50, 0, false, false, false);
+    //     }
+    // }
 }

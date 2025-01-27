@@ -6,7 +6,7 @@ export const SocietyNumberList: Record<JobType, string> = {
     [JobType.LSMC]: '555-LSMC',
     [JobType.BCSO]: '555-BCSO',
     [JobType.News]: '555-NEWS',
-    [JobType.YouNews: '555-YOUN',
+    [JobType.YouNews]: '555-YOUN',
     [JobType.Garbage]: '555-BLUEBIRD',
     [JobType.Taxi]: '555-CARLJR',
     [JobType.Food]: '555-MARIUS',

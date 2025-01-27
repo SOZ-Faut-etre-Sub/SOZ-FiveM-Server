@@ -4,6 +4,7 @@ import React, { FunctionComponent, useLayoutEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
+import { useCallAPI } from '../../../api/useCallAPI';
 import { InputBase } from '../../../components/Input';
 import { AppContent } from '../../../components/system/AppContent';
 import { AppWrapper } from '../../../components/system/AppWrapper';
@@ -21,7 +22,7 @@ export const DialerKeyboard: FunctionComponent = () => {
     const theme = useThemeConfig();
 
     const query = useQueryParams();
-    // const { initializeCall } = useCall();
+    const { initializeCall } = useCallAPI();
 
     const { register, setValue, watch, handleSubmit } = useForm<IFormInputs>();
     const onSubmit = handleSubmit(() => {});
@@ -56,7 +57,7 @@ export const DialerKeyboard: FunctionComponent = () => {
         if (number.length !== 8) {
             return;
         }
-        // initializeCall(number);
+        initializeCall(number);
     };
 
     useLayoutEffect(() => {

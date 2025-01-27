@@ -16,7 +16,7 @@ export const SettingItemSlider = ({ iconStart, iconEnd, value, onCommit }: ISett
     const theme = useThemeConfig();
 
     return (
-        <ListItem>
+        <ListItem className="px-2">
             <div className="text-gray-300 w-6 h-6">{iconStart}</div>
             <input
                 type="range"

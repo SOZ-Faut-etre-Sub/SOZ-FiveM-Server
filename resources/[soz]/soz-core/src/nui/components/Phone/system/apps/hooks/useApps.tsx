@@ -1,3 +1,4 @@
+import { usePlayer } from '@public/nui/hook/data';
 import { useMemo } from 'react';
 
 import { IAppConfig } from '../../../../../../shared/phone/app';
@@ -28,6 +29,7 @@ import SocietyContactsIcon from '../../../apps/society-contacts/icon';
 import { SocietyContactsApp } from '../../../apps/society-contacts/SocietyContactsApp';
 import SocietyMessagesIcon from '../../../apps/society-messages/icon';
 import { SocietyMessagesApp } from '../../../apps/society-messages/SocietyMessagesApp';
+import TaxIcon from '../../../apps/tax/icon';
 import { TaxApp } from '../../../apps/tax/TaxApp';
 import TetrisIcon from '../../../apps/tetris/icon';
 import { TetrisApp } from '../../../apps/tetris/TetrisApp';
@@ -40,6 +42,7 @@ import { useSocietySimCard } from '../../sim-card/hooks/useSocietySimCard';
 export const useApps = () => {
     const { societyNumber } = useSocietySimCard();
     const darkWebAppEnabled = useDarkWebEnabled();
+    const player = usePlayer();
 
     const APPS: Array<IAppConfig> = [
         /* System apps */
@@ -51,6 +54,7 @@ export const useApps = () => {
             component: <DialerApp />,
             position: 1,
             home: true,
+            condition: () => !player?.metadata?.isdead,
         },
         {
             id: 'messages',
@@ -60,6 +64,7 @@ export const useApps = () => {
             component: <MessagesApp />,
             position: 2,
             home: true,
+            condition: () => !player?.metadata?.isdead,
         },
         {
             id: 'contacts',
@@ -69,6 +74,7 @@ export const useApps = () => {
             component: <ContactsApp />,
             position: 3,
             home: true,
+            condition: () => !player?.metadata?.isdead,
         },
         {
             id: 'settings',
@@ -77,6 +83,7 @@ export const useApps = () => {
             icon: SettingsIcon,
             component: <SettingsApp />,
             position: 13,
+            condition: () => !player?.metadata?.isdead,
         },
         {
             id: 'photos',
@@ -85,6 +92,7 @@ export const useApps = () => {
             icon: PhotosIcon,
             component: <PhotosApp />,
             position: 3,
+            condition: () => !player?.metadata?.isdead,
         },
         {
             id: 'camera',
@@ -94,6 +102,7 @@ export const useApps = () => {
             component: <CameraApp />,
             position: 4,
             home: true,
+            condition: () => !player?.metadata?.isdead,
         },
 
         /* Society apps */
@@ -104,6 +113,7 @@ export const useApps = () => {
             icon: SocietyContactsIcon,
             component: <SocietyContactsApp />,
             position: 5,
+            condition: () => !player?.metadata?.isdead,
         },
         {
             id: 'society-messages',
@@ -111,8 +121,8 @@ export const useApps = () => {
             path: '/society-messages',
             icon: SocietyMessagesIcon,
             component: <SocietyMessagesApp />,
-            condition: () => Boolean(societyNumber),
             position: 6,
+            condition: () => !player?.metadata?.isdead && Boolean(societyNumber),
         },
         {
             id: 'news',
@@ -121,6 +131,7 @@ export const useApps = () => {
             icon: NewsIcon,
             component: <NewsApp />,
             position: 7,
+            condition: () => !player?.metadata?.isdead,
         },
 
         /* Gang apps */
@@ -130,8 +141,8 @@ export const useApps = () => {
             path: '/darkweb',
             icon: DarkWebIcon,
             component: <DarkWebApp />,
-            condition: () => darkWebAppEnabled,
             position: 12,
+            condition: () => !player?.metadata?.isdead && darkWebAppEnabled,
         },
 
         /* Other apps */
@@ -142,6 +153,7 @@ export const useApps = () => {
             icon: BankIcon,
             component: <BankApp />,
             position: 1,
+            condition: () => !player?.metadata?.isdead,
         },
         {
             id: 'notes',
@@ -163,7 +175,7 @@ export const useApps = () => {
             id: 'tax',
             nameLocale: 'APPS_TAX',
             path: '/tax',
-            // icon: TaxIcon,
+            icon: TaxIcon,
             component: <TaxApp />,
             position: 8,
         },

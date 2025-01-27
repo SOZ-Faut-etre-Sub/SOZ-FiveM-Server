@@ -1,15 +1,15 @@
-import { AppContent } from '@ui/components/AppContent';
-import { AppWrapper } from '@ui/components/AppWrapper';
-import { FullPageWithHeader } from '@ui/layout/FullPageWithHeader';
-import React, { memo, useEffect } from 'react';
+import { AppContent } from "@ui/components/AppContent";
+import { AppWrapper } from "@ui/components/AppWrapper";
+import { FullPageWithHeader } from "@ui/layout/FullPageWithHeader";
+import React, { memo, useEffect } from "react";
 
-import { useRingtoneSound } from '../../sound/hooks/useRingtoneSound';
-import { useCall } from '../hooks/useCall';
-import { useDialingSound } from '../hooks/useDialingSound';
-import CallContactContainer from './CallContactContainer';
-import { CallControls } from './CallControls';
-import { CallTimer } from './CallTimer';
-import RingingText from './RingingText';
+import { useRingtoneSound } from "../../../../../../soz-core/src/nui/components/Phone/system/sound/hooks/useRingtoneSound";
+import { useCall } from "../hooks/useCall";
+import { useDialingSound } from "../../../../../../soz-core/src/nui/components/Phone/system/sound/hooks/useDialingSound";
+import CallContactContainer from "./CallContactContainer";
+import { CallControls } from "./CallControls";
+import { CallTimer } from "./CallTimer";
+import RingingText from "./RingingText";
 
 export const CallModal = memo(() => {
     const { call } = useCall();

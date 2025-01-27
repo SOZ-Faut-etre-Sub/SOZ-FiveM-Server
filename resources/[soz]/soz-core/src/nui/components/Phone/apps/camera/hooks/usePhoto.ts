@@ -47,7 +47,7 @@ export const usePhoto = () => {
                 return sendIsland('error');
             }
 
-            await fetchNui(NuiEvent.PhoneAppCameraTakePhoto, `${publicEndpoint}${url}`);
+            await fetchNui(NuiEvent.PhoneAppPhotosUpload, `${publicEndpoint}${url}`);
         } catch (e) {
             console.error(e);
             return sendIsland('error');

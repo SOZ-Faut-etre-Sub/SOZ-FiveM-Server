@@ -8,6 +8,7 @@ import { Virtuoso } from 'react-virtuoso';
 
 import { Message, Separator } from '../../../../../../shared/phone/simcard';
 import { fetchNui } from '../../../../../fetch';
+import { useCallAPI } from '../../../api/useCallAPI';
 import { AppContent } from '../../../components/system/AppContent';
 import { AppWrapper } from '../../../components/system/AppWrapper';
 import { useBackgroundClasses } from '../../../hooks/useBackgroundClasses';
@@ -43,7 +44,7 @@ export const Messages = () => {
     const messages = useMessages(conversationId);
     const contact = useContact(conversation?.phoneNumber);
 
-    // const { initializeCall } = useCall();
+    const { initializeCall } = useCallAPI();
 
     const { sendMessage } = useMessageAPI();
     const { archiveConversation } = useConversationAPI();
@@ -91,7 +92,7 @@ export const Messages = () => {
         {
             display: true,
             icon: <PhoneIcon className="cursor-pointer size-5" />,
-            onClick: () => {}, //initializeCall(conversation.phoneNumber),
+            onClick: () => initializeCall(conversation?.phoneNumber),
         },
     ]);
 

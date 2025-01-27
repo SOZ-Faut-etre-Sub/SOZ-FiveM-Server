@@ -1,7 +1,7 @@
 import './system/locale/i18n';
 
 import { FunctionComponent } from 'react';
-import { MemoryRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 
 import { useNuiFocus } from '../../hook/nui';
 import { useAppBankStateHandlers } from './apps/bank/bank.atom';
@@ -22,11 +22,41 @@ import { CallDynamicIsland } from './system/dynamic-island/components/CallDynami
 import { usePhoneFocus, usePhoneStateHandlers } from './system/phone.atom';
 import { PhoneWrapper } from './system/PhoneWrapper';
 import { useSimCardStateHandlers } from './system/sim-card/sim.card.atom';
+import { SoundProvider } from './system/sound/providers/SoundProvider';
 
 export const PhoneApp: FunctionComponent = () => {
     const apps = useApps();
     const focus = usePhoneFocus();
 
+    useNuiFocus(focus, focus, focus, null, focus);
+
+    return (
+        <SoundProvider>
+            <PhoneAppHooks />
+
+            <MemoryRouter>
+                <PhoneWrapper>
+                    <Alerts />
+                    <ActionSheet />
+                    <CallDynamicIsland />
+
+                    <Routes>
+                        <Route path="/call" element={<CallModalApp />} />
+
+                        <Route index element={<HomeApp />} />
+                        {/*<Route path="/emergency" element={<EmergencyModal />} />*/}
+
+                        {apps.map(app => (
+                            <Route key={app.id} path={app.path + '/*'} element={app.component} />
+                        ))}
+                    </Routes>
+                </PhoneWrapper>
+            </MemoryRouter>
+        </SoundProvider>
+    );
+};
+
+const PhoneAppHooks: FunctionComponent = () => {
     usePhoneStateHandlers();
     useSimCardStateHandlers();
 
@@ -43,26 +73,5 @@ export const PhoneApp: FunctionComponent = () => {
     useAppWeatherStateHandlers();
     useSocietyMessagesStateHandlers();
 
-    useNuiFocus(focus, focus, focus, null, focus);
-
-    return (
-        <MemoryRouter>
-            <PhoneWrapper>
-                <Alerts />
-                <ActionSheet />
-                <CallDynamicIsland />
-
-                <Routes>
-                    <Route path="/call" element={<CallModalApp />} />
-
-                    <Route index element={<HomeApp />} />
-                    {/*<Route path="/emergency" element={<EmergencyModal />} />*/}
-
-                    {apps.map(app => (
-                        <Route key={app.id} path={app.path + '/*'} element={app.component} />
-                    ))}
-                </Routes>
-            </PhoneWrapper>
-        </MemoryRouter>
-    );
+    return null;
 };

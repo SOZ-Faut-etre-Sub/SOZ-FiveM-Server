@@ -131,7 +131,7 @@ export const SettingsHome = () => {
             <AppTitle app={settingsApp} />
             <AppContent>
                 <List>
-                    <ListItem>
+                    <ListItem className="px-2">
                         <ContactPicture picture={avatar} size={'large'} />
                         <Button
                             className={clsx('flex items-center text-sm', {

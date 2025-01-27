@@ -16,6 +16,10 @@ export class VoicePhoneProvider {
 
     private currentCallerId: number | null = null;
 
+    public hasActiveCall(): boolean {
+        return this.currentCallerId !== null;
+    }
+
     @OnEvent(ClientEvent.VOIP_VOICE_START_CALL)
     public onStartCall(callerId: number) {
         if (this.currentCallerId !== null) {

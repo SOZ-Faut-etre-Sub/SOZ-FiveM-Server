@@ -1,15 +1,18 @@
-import { useSoundProvider } from '@os/sound/hooks/useSoundProvider';
 import { useCallback, useEffect } from 'react';
+
+import { useAssetPath } from '../../../../../hook/assets';
+import { useSoundProvider } from '../providers/SoundProvider';
 
 interface useDialingSoundValue {
     startDialTone: () => void;
     endDialTone: () => void;
 }
 
-const DIAL_TONE_URL = 'media/misc/Outgoing-Dial-Effect.mp3';
-
 export const useDialingSound = (): useDialingSoundValue => {
     const sound = useSoundProvider();
+    const { getPath } = useAssetPath();
+
+    const DIAL_TONE_URL = getPath(`audio/phone/misc/Outgoing-Dial-Effect.mp3`);
 
     useEffect(() => {
         if (!sound.isMounted(DIAL_TONE_URL)) {

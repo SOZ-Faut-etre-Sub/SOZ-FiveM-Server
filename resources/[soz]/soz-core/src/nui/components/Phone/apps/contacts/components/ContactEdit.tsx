@@ -5,6 +5,7 @@ import React, { FunctionComponent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { useCallAPI } from '../../../api/useCallAPI';
 import SaveIcon from '../../../assets/save.svg';
 import { ActionButton } from '../../../components/ActionButton';
 import { ContactPicture } from '../../../components/ContactPicture';
@@ -53,7 +54,7 @@ export const ContactEdit: FunctionComponent = () => {
     const [number, setNumber] = useState(() => contact?.number || '555-');
     const [avatar, setAvatar] = useState(() => contact?.avatar || '');
 
-    // const { initializeCall } = { initializeCall: {} }; //useCall();
+    const { initializeCall } = useCallAPI();
 
     const handleNumberChange: React.ChangeEventHandler<HTMLInputElement> = e => {
         const inputVal = e.currentTarget.value;
@@ -67,15 +68,11 @@ export const ContactEdit: FunctionComponent = () => {
         setName(e.target.value);
     };
 
-    const handleContactCall = () => {
-        // initializeCall(contact.number);
-    };
-    const handleContactMessage = () => {
-        navigate(`/messages/new/${contact.number}`);
-    };
-    const handleContactAdd = () => {
-        addNewContact({ display: name, number }, referral);
-    };
+    const handleContactCall = () => initializeCall(contact.number);
+
+    const handleContactMessage = () => navigate(`/messages/new/${contact.number}`);
+
+    const handleContactAdd = () => addNewContact({ display: name, number }, referral);
 
     const handleContactDelete = () => {
         sendAlert('Supprimer le contact ?', t('GENERIC.DELETE_CONFIRM_CONTENT'), () => {

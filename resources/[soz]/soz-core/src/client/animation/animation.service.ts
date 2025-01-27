@@ -70,6 +70,7 @@ export class AnimationService {
             this.runningAnimations.get(id).runner.cancel(AnimationStopReason.Canceled);
         }
     }
+
     public async walkToCoordsAvoidObstacles(coords: Vector3 | Vector4, maxDuration = 5000) {
         const ped = PlayerPedId();
         await this.goToCoordsAvoidObstaclesForPed(ped, coords, maxDuration);

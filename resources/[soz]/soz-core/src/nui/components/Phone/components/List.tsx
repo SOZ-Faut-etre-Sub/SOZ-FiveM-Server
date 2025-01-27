@@ -1,6 +1,6 @@
 import { animated, useSpring } from '@react-spring/web';
 import clsx from 'clsx';
-import React, { CSSProperties, FunctionComponent, PropsWithChildren, useState } from 'react';
+import React, { CSSProperties, FunctionComponent, LiHTMLAttributes, PropsWithChildren, useState } from 'react';
 
 import { useThemeConfig } from '../system/config/config.atom';
 import { IconComponentProps } from '../system/phone.types';
@@ -27,16 +27,20 @@ export const List = ({ children }) => {
     );
 };
 
-export const ListItem = ({ children, ...props }) => {
+export const ListItem: FunctionComponent<LiHTMLAttributes<any>> = ({ children, className, ...props }) => {
     const theme = useThemeConfig();
 
     return (
         <li
-            className={clsx('py-2 flex justify-between items-center text-sm first:rounded-t-xl last:rounded-b-xl', {
-                'bg-phone-900 hover:bg-[#27272A] text-white': theme === 'dark',
-                'bg-white hover:bg-gray-50 text-black': theme === 'light',
-                'cursor-pointer': props.onClick,
-            })}
+            className={clsx(
+                'py-2 flex justify-between items-center text-sm first:rounded-t-xl last:rounded-b-xl',
+                className,
+                {
+                    'bg-phone-900 hover:bg-[#27272A] text-white': theme === 'dark',
+                    'bg-white hover:bg-gray-50 text-black': theme === 'light',
+                    'cursor-pointer': props.onClick,
+                }
+            )}
             {...props}
         >
             {children}

@@ -2,6 +2,7 @@ import { Message, MessageConversation } from '../../../../../shared/phone/simcar
 
 export const mockConversations: Array<MessageConversation> = [
     {
+        id: 1,
         conversation_id: '555-1111+555-2222',
         avatar: 'https://i.imgur.com/GCBVgXD.jpeg',
         phoneNumber: '555-2222',
@@ -11,6 +12,7 @@ export const mockConversations: Array<MessageConversation> = [
         updatedAt: 1598420000000,
     },
     {
+        id: 2,
         conversation_id: '555-1111+555-3333',
         avatar: '',
         phoneNumber: '555-3333',
@@ -20,6 +22,7 @@ export const mockConversations: Array<MessageConversation> = [
         updatedAt: 1598400000000,
     },
     {
+        id: 3,
         conversation_id: '555-1111+555-4444',
         avatar: '',
         phoneNumber: '555-4444',

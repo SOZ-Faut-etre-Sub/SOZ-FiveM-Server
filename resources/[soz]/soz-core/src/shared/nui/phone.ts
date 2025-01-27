@@ -4,7 +4,7 @@ import { NewsMessage } from '@public/shared/phone/apps/news';
 import { NoteItem } from '@public/shared/phone/apps/notes';
 import { PhotoItem } from '@public/shared/phone/apps/photos';
 import { SocietyMessage } from '@public/shared/phone/apps/society';
-import { CallHistory, Contact, Message, MessageConversation } from '@public/shared/phone/simcard';
+import { ActiveCall, CallHistory, Contact, Message, MessageConversation } from '@public/shared/phone/simcard';
 
 export interface NuiPhoneMap {
     SetAvailability: boolean;
@@ -17,6 +17,7 @@ export interface NuiPhoneMap {
 
     SetSocietySimCard: string;
 
+    SetCurrentCall: ActiveCall;
     SetCallsHistory: CallHistory[];
 
     SetConversations: MessageConversation[];

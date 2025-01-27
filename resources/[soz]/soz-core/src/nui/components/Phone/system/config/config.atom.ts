@@ -1,9 +1,10 @@
 import { atom, useAtomValue, useSetAtom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 
+import { PhoneConfig } from '../../../../../shared/phone/config';
 import { defaultConfig } from './default.constant';
 
-const configAtom = atomWithStorage('soz_settings', defaultConfig);
+const configAtom = atomWithStorage<PhoneConfig>('soz_phone_settings', defaultConfig);
 
 const themeConfigAtom = atom(get => get(configAtom).theme.value);
 const frameConfigAtom = atom(get => get(configAtom).frame.value);

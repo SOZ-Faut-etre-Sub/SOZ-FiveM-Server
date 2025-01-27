@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { FixedSizeList } from 'react-window';
 
 import { VirtualizedListProps } from '../../../../../../shared/virtualized';
+import { useCallAPI } from '../../../api/useCallAPI';
 import { ContactPicture } from '../../../components/ContactPicture';
 import { DayAgo } from '../../../components/DayAgo';
 import { ListButton } from '../../../components/List';
@@ -91,6 +92,7 @@ const HistoryItem: FunctionComponent<VirtualizedListProps<CallHistory>> = ({ ind
 
     const theme = useThemeConfig();
     const { number } = useSimCard();
+    const { initializeCall } = useCallAPI();
 
     const call = data[index];
 
@@ -98,7 +100,7 @@ const HistoryItem: FunctionComponent<VirtualizedListProps<CallHistory>> = ({ ind
 
     const contact = useContact(contactNumber);
 
-    const handleCall = phoneNumber => {}; //initializeCall(phoneNumber);
+    const handleCall = (phoneNumber: string) => initializeCall(phoneNumber);
 
     const getIcon = (call: CallHistory) => {
         if (!call.is_accepted) {

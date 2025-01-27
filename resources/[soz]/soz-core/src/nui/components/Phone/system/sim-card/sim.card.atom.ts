@@ -1,13 +1,20 @@
 import { useAtomValue, useSetAtom } from 'jotai';
 import { atom } from 'jotai/index';
 
-import { CallHistory, Contact, Message, MessageConversation, Separator } from '../../../../../shared/phone/simcard';
+import {
+    ActiveCall,
+    CallHistory,
+    Contact,
+    Message,
+    MessageConversation,
+    Separator,
+} from '../../../../../shared/phone/simcard';
 import { useNuiEvent } from '../../../../hook/nui';
 import { useInjectDebugData } from '../debug/hooks/useInjectDebugData';
+import { useRingtoneSound } from '../sound/hooks/useRingtoneSound';
 import { mockCallHistory } from './call-history.constant';
 import { mockContacts } from './contacts.constant';
 import { mockConversations, mockMessages } from './messages.constant';
-import { ActiveCall } from './sim.types';
 
 export const numberAtom = atom<string>('');
 export const societyNumberAtom = atom<string>();
@@ -100,6 +107,8 @@ export const useCallModalOpen = () => useAtomValue(callModalOpenAtom);
 export const useSetCallModalOpen = () => useSetAtom(callModalOpenAtom);
 
 export const useSimCardStateHandlers = () => {
+    const notificationSound = useRingtoneSound('notiSound', false);
+
     const setNumber = useSetAtom(numberAtom);
     const setAvatar = useSetAtom(avatarAtom);
 
@@ -118,6 +127,7 @@ export const useSimCardStateHandlers = () => {
 
     useNuiEvent('phone', 'SetSocietySimCard', setSocietyNumber);
 
+    useNuiEvent('phone', 'SetCurrentCall', setCurrentCall);
     useNuiEvent('phone', 'SetCallsHistory', setCallHistory);
 
     useNuiEvent('phone', 'SetConversations', setConversations);
@@ -128,7 +138,10 @@ export const useSimCardStateHandlers = () => {
     );
 
     useNuiEvent('phone', 'SetMessages', setMessages);
-    useNuiEvent('phone', 'AddMessage', (message: Message) => setMessages(messages => [...messages, message]));
+    useNuiEvent('phone', 'AddMessage', (message: Message) => {
+        notificationSound.play();
+        setMessages(messages => [...messages, message]);
+    });
 
     useNuiEvent('phone', 'SetContacts', setContacts);
     useNuiEvent('phone', 'AddContact', (contact: Contact) => setContacts(contacts => [...contacts, contact]));
@@ -142,16 +155,6 @@ export const useSimCardStateHandlers = () => {
     useInjectDebugData(() => {
         setNumber('555-5555');
         setSocietyNumber('555-LSPD');
-
-        setCallModalOpen(true);
-        setCurrentCall({
-            channelId: 1,
-            receiver: '555-5556',
-            transmitter: '555-5555',
-            is_accepted: true,
-            isTransmitter: true,
-            startedAt: Date.now(),
-        });
 
         setCallHistory(mockCallHistory);
         setContacts(mockContacts);

@@ -13,7 +13,7 @@ export const CallTimer = () => {
     }, 1000);
 
     const interval = intervalToDuration({
-        start: currentCall.startedAt,
+        start: currentCall.start,
         end: currentDate,
     });
 
