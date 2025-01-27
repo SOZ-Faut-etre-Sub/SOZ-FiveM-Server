@@ -1,3 +1,5 @@
+import { VehicleBusinessUpgradeCoefs } from '@private/shared/business.vehicle';
+
 import { RGBColor } from '../color';
 import { LSCustomMode } from './vehicle';
 
@@ -2213,6 +2215,17 @@ export const getVehicleCrimiCustomPrice = (
                 ret[item] = 1;
             }
         }
+    }
+
+    let coef = 1;
+    for (const upgradeCoef of VehicleBusinessUpgradeCoefs) {
+        if (vehiclePrice > upgradeCoef.min && upgradeCoef.coef > coef) {
+            coef = upgradeCoef.coef;
+        }
+    }
+
+    for (const [item, value] of Object.entries(ret)) {
+        ret[item] = value * coef;
     }
 
     return ret;

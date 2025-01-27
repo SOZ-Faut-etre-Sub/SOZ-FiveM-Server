@@ -13,6 +13,7 @@ export interface NuiGangMethodMap {
     ShowGangBusinessVehicleOrder: never;
     ShowGangBusinessArchetypeApp: never;
     ShowGangBusinessCyberApp: BusinessCyberUiInput;
+    CloseGangBusinessCyberApp: never;
     ShowGangBusinessSmugglingPrintApp: BusinessSmugglingPrintUiInput;
     GangBusinessVehicleMapping: BusinessVehicleMappingUiInput;
     ShowReport: DBSearch;

@@ -30,6 +30,42 @@ export class VehicleTowProvider {
     private from = 0;
     private fromOffset = 0;
 
+    private async useTowCable(entity: number, item: string) {
+        if (!this.from) {
+            if (GetVehicleClass(entity) == VehicleClass.Helicopters) {
+                this.fromOffset = 0.0;
+            } else {
+                this.fromOffset = this.getOffset(entity);
+            }
+
+            const ropePosition = GetOffsetFromEntityInWorldCoords(entity, 0.0, this.fromOffset, 0.0) as Vector3;
+            const hook = await this.ropeService.createNewRope(
+                ropePosition,
+                entity,
+                6,
+                MAX_LENGTH_ROPE,
+                'prop_v_hook_s',
+                'ropeFamily3'
+            );
+            if (!hook) {
+                return;
+            }
+            this.from = entity;
+        } else {
+            const towRope: TowRope = {
+                id: uuidv4(),
+                netId1: NetworkGetNetworkIdFromEntity(this.from),
+                offset1: this.fromOffset,
+                netId2: NetworkGetNetworkIdFromEntity(entity),
+                offset2: this.getOffset(entity),
+            };
+
+            TriggerServerEvent(ServerEvent.VEHICLE_TOW_ROPE_ADD, towRope, item);
+            this.ropeService.deleteRope();
+            this.from = 0;
+        }
+    }
+
     @Once()
     public onStart() {
         this.targetFactort.createForAllVehicle([
@@ -37,48 +73,17 @@ export class VehicleTowProvider {
                 label: 'Attacher cable de remorquage',
                 icon: 'mechanic/Attacher',
                 category: 'citizen',
-                canInteract: entity => entity != this.from,
-                action: async entity => {
-                    if (!this.from) {
-                        if (GetVehicleClass(entity) == VehicleClass.Helicopters) {
-                            this.fromOffset = 0.0;
-                        } else {
-                            this.fromOffset = this.getOffset(entity);
-                        }
-
-                        const ropePosition = GetOffsetFromEntityInWorldCoords(
-                            entity,
-                            0.0,
-                            this.fromOffset,
-                            0.0
-                        ) as Vector3;
-                        const hook = await this.ropeService.createNewRope(
-                            ropePosition,
-                            entity,
-                            6,
-                            MAX_LENGTH_ROPE,
-                            'prop_v_hook_s',
-                            'ropeFamily3'
-                        );
-                        if (!hook) {
-                            return;
-                        }
-                        this.from = entity;
-                    } else {
-                        const towRope: TowRope = {
-                            id: uuidv4(),
-                            netId1: NetworkGetNetworkIdFromEntity(this.from),
-                            offset1: this.fromOffset,
-                            netId2: NetworkGetNetworkIdFromEntity(entity),
-                            offset2: this.getOffset(entity),
-                        };
-
-                        TriggerServerEvent(ServerEvent.VEHICLE_TOW_ROPE_ADD, towRope);
-                        this.ropeService.deleteRope();
-                        this.from = 0;
-                    }
-                },
                 item: 'tow_cable',
+                canInteract: entity => entity != this.from,
+                action: async entity => await this.useTowCable(entity, 'tow_cable'),
+            },
+            {
+                label: 'Attacher cable de remorquage',
+                icon: 'mechanic/Attacher',
+                category: 'criminal',
+                item: 'artisanal_tow_cable',
+                canInteract: entity => entity != this.from,
+                action: async entity => this.useTowCable(entity, 'artisanal_tow_cable'),
             },
             {
                 label: 'Annuler le Remorquage',

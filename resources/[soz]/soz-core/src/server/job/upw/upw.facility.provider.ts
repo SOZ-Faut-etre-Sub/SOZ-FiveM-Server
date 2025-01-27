@@ -541,7 +541,7 @@ export class UpwFacilityProvider {
 
             this.monitor.traceEvent('job_upw_energy_collect', {
                 player_source: source,
-                item_id: facility.item,
+                item_id: facility.wasteItem,
                 amount: count,
                 facility_id: facility.identifier,
                 facility_type: facility.type,

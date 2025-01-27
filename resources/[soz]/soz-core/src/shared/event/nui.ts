@@ -522,6 +522,7 @@ export enum NuiEvent {
     GangPlane = 'soz-core:client:gang:plane',
     GangStash = 'soz-core:client:gang:stash',
     GangUpgrade = 'soz-core:client:gang:upgrade',
+    GangCloakroom = 'soz-core:client:gang:cloakroom',
 
     BusinessVehicleOrder = 'soz-core:client:business:vehicle:order',
     BusinessVehicleResetList = 'soz-core:client:business:vehicle:list-reset',
@@ -534,6 +535,7 @@ export enum NuiEvent {
     BusinessVehicleContract = 'soz-core:client:business:vehicle:contract',
     BusinessVehicleResell = 'soz-core:client:business:vehicle:resell',
     BusinessVehicleGarageUpgrade = 'soz-core:client:business:vehicle:garage-upgrade',
+    BusinessVehicleGarageDeposit = 'soz-core:client:business:vehicle:garage-deposit',
     BusinessVehicleImport = 'soz-core:client:business:vehicle:import',
 
     BusinessSmugglingPriceUpdate = 'soz-core:client:business:smuggling:price-update',
@@ -584,6 +586,7 @@ export enum NuiEvent {
     BusinessCyberFarmRetrieve = 'soz-core:client:;business:cyber:retrieve-farm',
     BusinessCyberAppExit = 'soz-core:client:;business:cyber:exit-farm',
     BusinessCyberShowStations = 'soz-core:client:;business:cyber:show-stations',
+    BusinessCyberShowWebcams = 'soz-core:client:;business:cyber:show-webcams',
     BusinessCyberHeistLocation = 'soz-core:client:;business:cyber:heist-location',
     BusinessCyberHeistStart = 'soz-core:client:;business:cyber:heist-start',
 

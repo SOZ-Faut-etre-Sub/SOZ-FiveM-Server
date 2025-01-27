@@ -261,7 +261,7 @@ export class HousingApartmentZoneProvider {
         }
     }
 
-    public async openApartmentCloakroom() {
+    public async openApartmentCloakroom(gang = false) {
         const player = this.playerService.getPlayer();
 
         if (!player) {
@@ -278,6 +278,7 @@ export class HousingApartmentZoneProvider {
 
         this.nuiMenu.openMenu(MenuType.HousingCloakroomMenu, {
             items: cloakroomItems,
+            gang,
         });
     }
 }

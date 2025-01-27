@@ -24,10 +24,10 @@ export class VehicleTowProvider {
     public monitor: Monitor;
 
     @OnEvent(ServerEvent.VEHICLE_TOW_ROPE_ADD)
-    public async addTowRope(source: number, towRope: TowRope) {
+    public async addTowRope(source: number, towRope: TowRope, item: string) {
         const inventory = await this.inventoryFactory.getPlayerInventory(source);
 
-        if (!inventory.remove('tow_cable', 1, false)) {
+        if (!inventory.remove(item, 1, false)) {
             return;
         }
 

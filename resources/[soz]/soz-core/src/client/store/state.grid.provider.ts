@@ -21,7 +21,7 @@ export class StateGridProvider {
     @Tick(1000)
     public async checkGridChunks() {
         const currentChunks = this.store.getState().grid;
-        const position = GetEntityCoords(PlayerPedId(), false) as Vector3;
+        const position = GetFinalRenderedCamCoord() as Vector3;
         const newChunks = getGridChunks(position);
 
         const diffAdded = newChunks.filter(chunk => !currentChunks.includes(chunk));

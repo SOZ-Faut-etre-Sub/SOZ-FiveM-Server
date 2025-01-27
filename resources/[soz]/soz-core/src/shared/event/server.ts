@@ -623,8 +623,10 @@ export enum ServerEvent {
     GANG_VEHBIZ_COMMAND = 'soz-core:server:gang:veh:command',
     GANG_VEHBIZ_MAPPING_APPLY = 'soz-core:server:gang:veh:mapping-apply',
     GANG_VEHBIZ_GARAGE_UPGRADE = 'soz-core:server:gang:veh:garage-upgrade',
+    GANG_VEHBIZ_GARAGE_DEPOSIT = 'soz-core:server:gang:veh:garage-deposit',
     GANG_VEHBIZ_REPAIR_ENGINE = 'soz-core:server:gang:veh:repair-engine',
     GANG_VEHBIZ_REPAIR_BODY = 'soz-core:server:gang:veh:repair-body',
+    GANG_VEHBIZ_REPAIRKIT = 'soz-core:server:gang:veh:repair-kit',
 
     GANG_SMUGGLING_BLACK_MARKET_BOX_USE = 'soz-core:server:gang:smuggling:black-market-box-use',
     GANG_SMUGGLING_BLACK_MARKET_PRICE_UPDATE = 'soz-core:server:gang:smuggling:black-market-price',
@@ -687,6 +689,9 @@ export enum ServerEvent {
     GANG_CYBER_ZCOIN_HEIST = 'soz-core:server:gang:cyber:heist-computer-zcoin',
     GANG_CYBER_LEVER_HEIST = 'soz-core:server:gang:cyber:heist-lever',
     GANG_CYBER_STORAGE_HEIST = 'soz-core:server:gang:cyber:heist-storage',
+    GANG_CYBER_COMPUTER_DETECTOR = 'soz-core:server:gang:cyber:detector',
+    GANG_CYBER_COMPUTER_DETECTOR_TRIGGER = 'soz-core:server:gang:cyber:detector-trigger',
+    GANG_CYBER_COMPUTER_WEBCAM = 'soz-core:server:gang:cyber:webcam',
 
     DOOR_ADD_UPDATE = 'soz-core:server:door:add-update',
     DOOR_DELETE = 'soz-core:server:door:delete',
