@@ -1,9 +1,9 @@
 import { fetchNui } from '@public/nui/fetch';
 import { useGetPrice } from '@public/nui/hook/price';
-import { TaxType } from '@public/shared/bank';
 import { NuiEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
 import { FormatedFournitureItemList, isHousingPropvalid, ZkeaFourniture } from '@public/shared/shop/zkea_fourniture';
+import { TaxType } from '@public/shared/tax';
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import {

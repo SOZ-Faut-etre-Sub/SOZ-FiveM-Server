@@ -1,7 +1,7 @@
 import { MenuType } from '@public/shared/nui/menu';
+import { TaxType } from '@public/shared/tax';
 import { FunctionComponent } from 'react';
 
-import { TaxType } from '../../../shared/bank';
 import { NuiEvent } from '../../../shared/event/nui';
 import { ApartmentMenuData } from '../../../shared/housing/housing';
 import { fetchNui } from '../../fetch';

@@ -8,7 +8,7 @@ import { PlayerInventoryLoader } from '@core/loader/player.inventory.loader';
 import { emitRpc } from '@core/rpc';
 import { Notifier } from '@public/client/notifier';
 import { NuiDispatch } from '@public/client/nui/nui.dispatch';
-import { BankMoneyType, TaxType } from '@public/shared/bank';
+import { BankMoneyType } from '@public/shared/bank';
 import { ClientEvent } from '@public/shared/event/client';
 import { ServerEvent } from '@public/shared/event/server';
 import {
@@ -25,6 +25,7 @@ import { PlayerData } from '@public/shared/player';
 import { getDistance, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
 import { ShopItem } from '@public/shared/shop/superette';
+import { TaxType } from '@public/shared/tax';
 import { applyPatch, Operation } from 'fast-json-patch';
 
 import { PlayerService } from '../player/player.service';

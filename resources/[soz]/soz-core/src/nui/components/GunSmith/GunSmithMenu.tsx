@@ -1,7 +1,7 @@
+import { TaxType } from '@public/shared/tax';
 import React, { FunctionComponent, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { TaxType } from '../../../shared/bank';
 import { NuiEvent } from '../../../shared/event';
 import { InventoryItem } from '../../../shared/inventory';
 import { MenuType } from '../../../shared/nui/menu';

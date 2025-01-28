@@ -4,9 +4,9 @@ import { InventoryItem } from '@public/shared/inventory';
 import { Item } from '@public/shared/item';
 import { MenuType } from '@public/shared/nui/menu';
 import { ENGRAVE_PRICE } from '@public/shared/shop';
+import { TaxType } from '@public/shared/tax';
 import { FunctionComponent } from 'react';
 
-import { TaxType } from '../../../shared/bank';
 import { useGetPrice } from '../../hook/price';
 import { MainMenu, Menu, MenuContent, MenuItemButton, MenuItemText, MenuTitle } from '../Styleguide/Menu';
 

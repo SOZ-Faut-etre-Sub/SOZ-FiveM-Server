@@ -4,11 +4,11 @@ import { PlayerService } from '@public/client/player/player.service';
 import { Feature } from '@public/shared/features';
 import { PHARMACY_PRICES } from '@public/shared/job/lsmc';
 import { toVector4Object } from '@public/shared/polyzone/vector';
+import { TaxType } from '@public/shared/tax';
 
 import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
-import { TaxType } from '../../../shared/bank';
 import { ServerEvent } from '../../../shared/event';
 import { FeatureProvider } from '../../feature/feature.provider';
 import { TargetFactory } from '../../target/target.factory';

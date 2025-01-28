@@ -3,9 +3,9 @@ import { useNuiEvent } from '@public/nui/hook/nui';
 import { NuiEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
 import { JewelryShopItem, ShopJewelryContent } from '@public/shared/shop';
+import { TaxType } from '@public/shared/tax';
 import { FunctionComponent } from 'react';
 
-import { TaxType } from '../../../shared/bank';
 import { useGetPrice } from '../../hook/price';
 import {
     MainMenu,

@@ -1,13 +1,13 @@
-import { Transition } from '@headlessui/react';
-import { memo } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import {Transition} from '@headlessui/react';
+import {memo} from 'react';
+import {Route, Routes} from 'react-router-dom';
 
-import { AppWrapper } from '../../ui/components/AppWrapper';
-import { useBackground } from '../../ui/hooks/useBackground';
-import { FullPageWithHeader } from '../../ui/layout/FullPageWithHeader';
-import { TaxHome } from './pages/TaxHome';
-import TaxPage from './pages/TaxPage';
-import WhatIsTax from './pages/WhatIsTax';
+import {AppWrapper} from '../../ui/components/AppWrapper';
+import {useBackground} from '../../ui/hooks/useBackground';
+import {FullPageWithHeader} from '../../ui/layout/FullPageWithHeader';
+import {TaxHome} from './pages/TaxHome';
+import TaxPage from '../../../../../soz-core/src/nui/components/Phone/apps/tax/pages/TaxPage';
+import WhatIsTax from '../../../../../soz-core/src/nui/components/Phone/apps/tax/pages/AboutTax';
 
 export const TaxApp = memo(() => {
     const backgroundClass = useBackground();
@@ -26,11 +26,11 @@ export const TaxApp = memo(() => {
             >
                 <AppWrapper className="p-2">
                     <Routes>
-                        <Route index element={<TaxHome />} />
+                        <Route index element={<TaxHome/>}/>
                         <Route path="tax">
-                            <Route path=":id" element={<TaxPage />} />
+                            <Route path=":id" element={<TaxPage/>}/>
                         </Route>
-                        <Route path="whatIs" element={<WhatIsTax />} />
+                        <Route path="whatIs" element={<WhatIsTax/>}/>
                     </Routes>
                 </AppWrapper>
             </Transition>

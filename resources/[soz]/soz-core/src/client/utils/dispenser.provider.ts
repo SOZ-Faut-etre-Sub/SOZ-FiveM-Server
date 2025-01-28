@@ -1,9 +1,9 @@
 import { Once, OnceStep } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { ServerEvent } from '@public/shared/event';
+import { TaxType } from '@public/shared/tax';
 
 import { Provider } from '../../core/decorators/provider';
-import { TaxType } from '../../shared/bank';
 import { PositiveNumberValidator } from '../../shared/nui/input';
 import { InputService } from '../nui/input.service';
 import { PlayerService } from '../player/player.service';

@@ -2,6 +2,7 @@ import { On, OnEvent } from '@public/core/decorators/event';
 import { Logger } from '@public/core/logger';
 import { ServerEvent } from '@public/shared/event';
 import { PlayerData } from '@public/shared/player';
+import { TaxType } from '@public/shared/tax';
 import { formatDuration } from '@public/shared/utils/timeformat';
 import { add, addSeconds } from 'date-fns';
 
@@ -10,7 +11,6 @@ import { GarageList } from '../../config/garage';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
-import { TaxType } from '../../shared/bank';
 import { JobType } from '../../shared/job';
 import { Zone } from '../../shared/polyzone/box.zone';
 import { Vector4 } from '../../shared/polyzone/vector';

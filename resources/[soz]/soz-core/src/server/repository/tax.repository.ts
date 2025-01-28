@@ -1,5 +1,6 @@
-import { Inject, Injectable } from '../../core/decorators/injectable';
-import { DEFAULT_TAX_PERCENTAGE, Tax, TaxType } from '../../shared/bank';
+import { Inject, Injectable } from '@core/decorators/injectable';
+import { DEFAULT_TAX_PERCENTAGE, Tax, TaxType } from '@public/shared/tax';
+
 import { RepositoryType } from '../../shared/repository';
 import { PrismaService } from '../database/prisma.service';
 import { Repository } from './repository';

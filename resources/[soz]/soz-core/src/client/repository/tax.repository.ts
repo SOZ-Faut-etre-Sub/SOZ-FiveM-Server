@@ -1,5 +1,6 @@
+import { DEFAULT_TAX_PERCENTAGE, TaxType } from '@public/shared/tax';
+
 import { Injectable } from '../../core/decorators/injectable';
-import { DEFAULT_TAX_PERCENTAGE, TaxType } from '../../shared/bank';
 import { RepositoryType } from '../../shared/repository';
 import { Repository } from './repository';
 

@@ -3,10 +3,10 @@ import { fetchNui } from '@public/nui/fetch';
 import { NuiEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
 import { TattooShopCategory, TattooShopItem } from '@public/shared/shop';
+import { TaxType } from '@public/shared/tax';
 import { FunctionComponent } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { TaxType } from '../../../shared/bank';
 import { useGetPrice } from '../../hook/price';
 import { MainMenu, Menu, MenuContent, MenuItemButton, MenuTitle, SubMenu } from '../Styleguide/Menu';
 

@@ -1,8 +1,10 @@
+import { TaxType } from '@public/shared/tax';
+
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
-import { BankMoneyType, TaxType } from '../../shared/bank';
+import { BankMoneyType } from '../../shared/bank';
 import { EntityType } from '../../shared/entity';
 import { NuiEvent } from '../../shared/event/nui';
 import { ServerEvent } from '../../shared/event/server';

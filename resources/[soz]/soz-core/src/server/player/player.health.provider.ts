@@ -5,10 +5,10 @@ import { PriceService } from '@public/server/bank/price.service';
 import { FeatureProvider } from '@public/server/feature/feature.provider';
 import { PlayerZombieProvider } from '@public/server/player/player.zombie.provider';
 import { VampireGameStateProvider } from '@public/server/story/vampire.game.state.provider';
-import { TaxType } from '@public/shared/bank';
 import { UpwPollution } from '@public/shared/job/upw';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { Vector3 } from '@public/shared/polyzone/vector';
+import { TaxType } from '@public/shared/tax';
 
 import { ServerEvent } from '../../shared/event';
 import { Feature } from '../../shared/features';

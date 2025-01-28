@@ -8,12 +8,12 @@ import { TargetFactory } from '@public/client/target/target.factory';
 import { Once, OnceStep } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
-import { TaxType } from '@public/shared/bank';
 import { ServerEvent } from '@public/shared/event';
 import { Feature } from '@public/shared/features';
 import { PlayerData } from '@public/shared/player';
 import { toVector4Object } from '@public/shared/polyzone/vector';
 import { Halloween2023Scenario2, WinePrice } from '@public/shared/story/halloween-2023/scenario2';
+import { TaxType } from '@public/shared/tax';
 
 import { FeatureProvider } from '../../feature/feature.provider';
 import { StoryProvider } from '../story.provider';

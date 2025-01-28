@@ -6,9 +6,9 @@ import { Rpc } from '@public/core/decorators/rpc';
 import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { ServerEvent } from '@public/shared/event/server';
 import { RpcServerEvent } from '@public/shared/rpc';
+import { TaxType } from '@public/shared/tax';
 import axios from 'axios';
 
-import { TaxType } from '../../shared/bank';
 import { ADD_ERROR_MESSAGE } from '../../shared/inventory';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { ItemService } from '../item/item.service';

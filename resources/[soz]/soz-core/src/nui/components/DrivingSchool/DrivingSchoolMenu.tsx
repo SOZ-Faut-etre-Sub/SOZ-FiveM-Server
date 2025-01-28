@@ -2,9 +2,9 @@ import { fetchNui } from '@public/nui/fetch';
 import { DrivingSchoolConfig, DrivingSchoolMenuData } from '@public/shared/driving-school';
 import { NuiEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
+import { TaxType } from '@public/shared/tax';
 import { FunctionComponent, useEffect, useState } from 'react';
 
-import { TaxType } from '../../../shared/bank';
 import { useGetPrice } from '../../hook/price';
 import {
     MainMenu,

@@ -1,11 +1,12 @@
 import { Gang } from '@private/shared/gang';
-import { BankAccount, Invoice, Tax, TaxType } from '@public/shared/bank';
+import { BankAccount, Invoice } from '@public/shared/bank';
 import { Configuration } from '@public/shared/configuration';
 import { Field } from '@public/shared/field';
 import { Fine } from '@public/shared/job/police';
 import { ZoneTyped } from '@public/shared/polyzone/box.zone';
 import { Scene, WorldEvent } from '@public/shared/scene';
 import { SenateParty } from '@public/shared/senate';
+import { Tax, TaxType } from '@public/shared/tax';
 
 import { Billboard } from './billboard';
 import { GlovesItem } from './cloth';

@@ -9,11 +9,12 @@ import {
     useSensor,
     useSensors,
 } from '@dnd-kit/core';
+import { BankMoneyType } from '@public/shared/bank';
+import { TaxType } from '@public/shared/tax';
 import classNames from 'classnames';
 import { Fragment, FunctionComponent, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import { BankMoneyType, TaxType } from '../../../shared/bank';
 import { NuiEvent } from '../../../shared/event/nui';
 import { InventoryItem, isSameInventoryItem } from '../../../shared/inventory';
 import { AskInput } from '../../../shared/nui/input';

@@ -6,9 +6,9 @@ import { uuidv4 } from '@public/core/utils';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import { PositiveNumberValidator } from '@public/shared/nui/input';
 import { MenuType } from '@public/shared/nui/menu';
+import { TaxType } from '@public/shared/tax';
 
 import { emitRpc } from '../../../core/rpc';
-import { TaxType } from '../../../shared/bank';
 import { JobTaxTier } from '../../../shared/configuration';
 import { JobPermission, JobType } from '../../../shared/job';
 import { Err, Ok } from '../../../shared/result';

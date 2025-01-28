@@ -1,8 +1,9 @@
+import { Inject, Injectable } from '@core/decorators/injectable';
 import { BankService } from '@public/server/bank/bank.service';
 import { TaxRepository } from '@public/server/repository/tax.repository';
-import { BankMoneyType, TaxType } from '@public/shared/bank';
+import { BankMoneyType } from '@public/shared/bank';
+import { TaxType } from '@public/shared/tax';
 
-import { Inject, Injectable } from '../../core/decorators/injectable';
 import { QBCore } from '../qbcore';
 
 @Injectable()

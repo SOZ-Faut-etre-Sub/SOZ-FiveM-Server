@@ -4,9 +4,9 @@ import { ApartementTiers } from '@public/shared/housing/housing';
 import { HousingUpgradesMenuData } from '@public/shared/housing/menu';
 import { HousingTiers, MAX_TIER, MAX_TRAILER_TIER, TYPE_DESCRPTION, TYPE_LABEL } from '@public/shared/housing/upgrades';
 import { MenuType } from '@public/shared/nui/menu';
+import { TaxType } from '@public/shared/tax';
 import { FunctionComponent, useEffect, useState } from 'react';
 
-import { TaxType } from '../../../shared/bank';
 import { useGetPrice } from '../../hook/price';
 import {
     MainMenu,

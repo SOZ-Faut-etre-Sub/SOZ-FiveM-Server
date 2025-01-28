@@ -5,12 +5,12 @@ import { wait } from '@public/core/utils';
 import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { Feature } from '@public/shared/features';
 import { hasPlayerTenantOrRoommateApartment } from '@public/shared/housing/housing';
+import { TaxType } from '@public/shared/tax';
 
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
-import { TaxType } from '../../shared/bank';
 import { ServerEvent } from '../../shared/event';
 import { joaat } from '../../shared/joaat';
 import { FDO, JobPermission, JobType } from '../../shared/job';

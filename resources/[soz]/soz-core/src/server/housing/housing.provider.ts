@@ -19,7 +19,6 @@ import { PlayerService } from '@public/server/player/player.service';
 import { ProgressService } from '@public/server/player/progress.service';
 import { HousingRepository } from '@public/server/repository/housing.repository';
 import { VehicleService } from '@public/server/vehicle/vehicle.service';
-import { TaxType } from '@public/shared/bank';
 import { ClientEvent } from '@public/shared/event/client';
 import { ServerEvent } from '@public/shared/event/server';
 import {
@@ -38,6 +37,7 @@ import { HOUSE_FRIDGE_TIER_WEIGHTS, HOUSE_STORAGE_TIER_WEIGHTS } from '@public/s
 import { PlayerData } from '@public/shared/player';
 import { getDistance, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
+import { TaxType } from '@public/shared/tax';
 import { differenceInCalendarDays, differenceInHours } from 'date-fns';
 
 const WEEK_IN_MILLISECONDS = 604_800_000;

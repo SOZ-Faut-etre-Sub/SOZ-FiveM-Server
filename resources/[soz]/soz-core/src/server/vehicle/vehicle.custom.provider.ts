@@ -1,11 +1,11 @@
 import { VehicleBusinessCustomPrice } from '@private/shared/business.vehicle';
 import { InventoryFactory } from '@public/server/inventory/inventory.factory';
+import { TaxType } from '@public/shared/tax';
 import { LSCustomMode } from '@public/shared/vehicle/vehicle';
 
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
-import { TaxType } from '../../shared/bank';
 import { RpcServerEvent } from '../../shared/rpc';
 import {
     getDefaultVehicleConfiguration,

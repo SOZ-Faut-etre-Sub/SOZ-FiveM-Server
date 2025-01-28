@@ -4,7 +4,6 @@ import { PhoneAppNotesProvider } from './apps/phone.app.notes.provider';
 import { PhoneAppPhotosProvider } from './apps/phone.app.photos.provider';
 import { PhoneAppSnakeProvider } from './apps/phone.app.snake.provider';
 import { PhoneAppSocietyProvider } from './apps/phone.app.society.provider';
-import { PhoneAppTaxProvider } from './apps/phone.app.tax.provider';
 import { PhoneAppTetrisProvider } from './apps/phone.app.tetris.provider';
 import { PhoneProvider } from './phone.provider';
 import { PhoneSimCard } from './phone.simcard';
@@ -24,7 +23,6 @@ import { PhoneSimCardMessages } from './phone.simcard.messages';
         PhoneAppNewsProvider,
         PhoneAppNotesProvider,
         PhoneAppPhotosProvider,
-        PhoneAppTaxProvider,
         PhoneAppTetrisProvider,
         PhoneAppSnakeProvider,
     ],

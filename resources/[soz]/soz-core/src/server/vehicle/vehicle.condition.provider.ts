@@ -1,10 +1,10 @@
 import { VehicleBusinessProvider } from '@private/server/gang/business.vehicle.provider';
 import { InventoryFactory } from '@public/server/inventory/inventory.factory';
+import { TaxType } from '@public/shared/tax';
 
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { TaxType } from '../../shared/bank';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { toVector3Object, Vector3 } from '../../shared/polyzone/vector';
 import { ProgressAnimation, ProgressOptions } from '../../shared/progress';

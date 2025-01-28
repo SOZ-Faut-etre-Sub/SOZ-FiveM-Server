@@ -28,6 +28,7 @@ import {
     ZkeaShopZoneExit,
     ZkeaShopZoneExitPosition,
 } from '@public/shared/shop/zkea_fourniture';
+import { TaxType } from '@public/shared/tax';
 import _ from 'lodash';
 
 import { Once, OnEvent } from '../../core/decorators/event';
@@ -35,7 +36,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { Logger } from '../../core/logger';
-import { BankMoneyType, TaxType } from '../../shared/bank';
+import { BankMoneyType } from '../../shared/bank';
 import { CAYO } from '../../shared/cayo';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { ADD_ERROR_MESSAGE, InventoryItemMetadata } from '../../shared/inventory';

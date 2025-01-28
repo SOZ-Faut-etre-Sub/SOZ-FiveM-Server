@@ -172,9 +172,9 @@ export const useApps = () => {
             position: 4,
         },
         {
-            id: 'tax',
+            id: 'taxes',
             nameLocale: 'APPS_TAX',
-            path: '/tax',
+            path: '/taxes',
             icon: TaxIcon,
             component: <TaxApp />,
             position: 8,
