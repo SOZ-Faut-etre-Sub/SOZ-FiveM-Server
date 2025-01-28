@@ -110,14 +110,14 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                     >
                         Scaling NUI
                     </MenuItemCheckbox>
-                    {/* Disabled for now */}
-                    {/*<MenuItemCheckbox*/}
-                    {/*    checked={data.isGlassmorphismActive}*/}
-                    {/*    description="Active/Désactive le glassmorphisme"*/}
-                    {/*    onChange={value => fetchNui(NuiEvent.PlayerMenuHudSetGlassmorphism, { value })}*/}
-                    {/*>*/}
-                    {/*    Glassmorphisme*/}
-                    {/*</MenuItemCheckbox>*/}
+
+                    <MenuItemCheckbox
+                        checked={data.isGlassmorphismActive}
+                        description="Active/Désactive le glassmorphisme du HUD (fond d'arrière-plan flou)"
+                        onChange={value => fetchNui(NuiEvent.PlayerMenuHudSetGlassmorphism, { value })}
+                    >
+                        Glassmorphisme
+                    </MenuItemCheckbox>
                 </MenuContent>
             </SubMenu>
             <MenuJob data={data.job} />
