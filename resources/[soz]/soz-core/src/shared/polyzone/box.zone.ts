@@ -56,6 +56,20 @@ export const ZoneTypeLabel: Record<ZoneType, string> = {
     CyberHeistEntry: 'Entrée de braquage cyber',
 };
 
+export const ZoneTypeBlipColor: Record<ZoneType, number> = {
+    NoStress: 0,
+    VehBizSpawn: 1,
+    VehBizDelivery: 2,
+    VehBizResell: 3,
+    VehBizGarage: 5,
+    SmugglingBizStorage: 6,
+    SmugglingBizContainer: 7,
+    SmugglingBizExport: 8,
+    SmugglingBizConvoy: 9,
+    NoHackCam: 10,
+    CyberHeistEntry: 11,
+};
+
 export type ZoneExtra = {
     date?: number;
 };

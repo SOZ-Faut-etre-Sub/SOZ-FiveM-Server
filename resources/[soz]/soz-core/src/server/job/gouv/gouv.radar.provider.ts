@@ -138,7 +138,6 @@ export class GouvRadarProvider {
         const month = new Date();
         month.setMonth(month.getMonth() - 1);
         month.setDate(month.getDate() - 1);
-        console.log(month);
 
         const info = {
             'Dernières 24h': yesterday,
@@ -156,8 +155,6 @@ export class GouvRadarProvider {
                     timestamp: Math.round(data.getTime() / 1000),
                 },
             });
-
-            console.log(clickhouseData);
 
             const result = (await clickhouseData.json()).data[0];
             const count = result['count()'];

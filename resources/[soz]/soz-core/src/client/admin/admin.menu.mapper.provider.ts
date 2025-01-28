@@ -4,6 +4,8 @@ import {
     SmugglingBusinessNetworkBox,
 } from '@private/shared/business.smuggling';
 import { VehicleBusinessExportContainerProp, VehicleBusinessExportCoveredProp } from '@private/shared/business.vehicle';
+import { RepositoryDelete, RepositoryUpdate } from '@public/core/decorators/repository';
+import { RepositoryType } from '@public/shared/repository';
 
 import { Command } from '../../core/decorators/command';
 import { OnNuiEvent } from '../../core/decorators/event';
@@ -20,9 +22,10 @@ import { Font } from '../../shared/hud';
 import { JobType } from '../../shared/job';
 import { NotEmptyStringValidator, PositiveNumberValidator } from '../../shared/nui/input';
 import { MenuType } from '../../shared/nui/menu';
-import { BoxZone, Zone, ZoneType } from '../../shared/polyzone/box.zone';
+import { BoxZone, Zone, ZoneType, ZoneTypeBlipColor, ZoneTyped, ZoneTypeLabel } from '../../shared/polyzone/box.zone';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
+import { BlipFactory } from '../blip';
 import { DrawService } from '../draw.service';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
@@ -83,6 +86,9 @@ export class AdminMenuMapperProvider {
 
     @Inject(AdminZoneProvider)
     private adminZoneProvider: AdminZoneProvider;
+
+    @Inject(BlipFactory)
+    private blipFactory: BlipFactory;
 
     private showInteriorData = false;
 
@@ -577,6 +583,34 @@ export class AdminMenuMapperProvider {
         }
     }
 
+    @OnNuiEvent(NuiEvent.AdminMenuMapperBlipZone)
+    public async blipZone({ type, value }: { type: ZoneType; value: boolean }) {
+        const zones = this.zoneRepository.get(elem => elem.data.type === type);
+
+        for (const zone of zones) {
+            const blipId = 'admin_zone' + zone.data.id.toString();
+            if (this.blipFactory.exist(blipId) === value) {
+                continue;
+            }
+
+            if (value) {
+                this.blipFactory.create(blipId, {
+                    name: ZoneTypeLabel[zone.data.type],
+                    position: zone.center,
+                    color: ZoneTypeBlipColor[zone.data.type],
+                });
+            } else {
+                this.blipFactory.remove(blipId);
+            }
+        }
+
+        if (value) {
+            this.notifier.notify('Blips affichés');
+        } else {
+            this.notifier.notify('Blips cachés');
+        }
+    }
+
     @OnNuiEvent(NuiEvent.AdminMenuMapperRenameZone)
     public async renameZone({ id }: { id: number }) {
         const existing = this.zoneRepository.find(id);
@@ -767,5 +801,26 @@ export class AdminMenuMapperProvider {
         return await emitRpc<Property[]>(RpcServerEvent.ADMIN_MAPPER_SET_APARTMENT_TIER, propertyId, apartmentId, {
             [type]: tier,
         });
+    }
+
+    @RepositoryUpdate(RepositoryType.Zone)
+    public async gangRepoUpdate(zone: ZoneTyped) {
+        const blipId = 'admin_zone' + zone.data.id.toString();
+        if (this.blipFactory.exist(blipId)) {
+            return;
+        }
+
+        this.blipFactory.remove(blipId);
+        this.blipFactory.create(blipId, {
+            name: ZoneTypeLabel[zone.data.type],
+            position: zone.center,
+            color: ZoneTypeBlipColor[zone.data.type],
+        });
+    }
+
+    @RepositoryDelete(RepositoryType.Zone)
+    public async gangRepoDel(zone: ZoneTyped) {
+        const blipId = 'admin_zone' + zone.data.id.toString();
+        this.blipFactory.remove(blipId);
     }
 }

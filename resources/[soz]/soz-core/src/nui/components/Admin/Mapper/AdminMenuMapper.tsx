@@ -501,6 +501,27 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                 <SubMenu id={'zones_' + type} key={'zones_' + type}>
                     <MenuTitle banner="https://nui-img/soz/menu_mapper">Zones {ZoneTypeLabel[type]}</MenuTitle>
                     <MenuContent>
+                        <MenuItemSelect
+                            title="Blips"
+                            onConfirm={async (index, action) => {
+                                if (action === 'show') {
+                                    fetchNui(NuiEvent.AdminMenuMapperBlipZone, {
+                                        type: type,
+                                        value: true,
+                                    });
+                                }
+
+                                if (action === 'hide') {
+                                    fetchNui(NuiEvent.AdminMenuMapperBlipZone, {
+                                        type: type,
+                                        value: false,
+                                    });
+                                }
+                            }}
+                        >
+                            <MenuItemSelectOption value="show">Afficher</MenuItemSelectOption>
+                            <MenuItemSelectOption value="hide">Cacher</MenuItemSelectOption>
+                        </MenuItemSelect>
                         <MenuItemButton
                             onConfirm={() =>
                                 fetchNui(NuiEvent.AdminMenuMapperAddZone, {
@@ -508,7 +529,7 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                                 })
                             }
                         >
-                            Ajouter une zone
+                            ➕ Ajouter une zone
                         </MenuItemButton>
                         {Object.values(zones)
                             .filter(zone => zone.data.type == type)
