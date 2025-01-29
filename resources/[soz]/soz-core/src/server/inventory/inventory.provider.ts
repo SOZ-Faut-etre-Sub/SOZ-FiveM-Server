@@ -355,6 +355,10 @@ export class InventoryProvider {
             return;
         }
 
+        if (sourceInventory.id != targetInventory.id || sourceInventory.id != playerInventoryId) {
+            TriggerClientEvent(ClientEvent.ANIMATION_GIVE, source);
+        }
+
         if (!amount) {
             amount = sourceItem.amount;
         }
