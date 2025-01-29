@@ -806,7 +806,7 @@ export class AdminMenuMapperProvider {
     @RepositoryUpdate(RepositoryType.Zone)
     public async gangRepoUpdate(zone: ZoneTyped) {
         const blipId = 'admin_zone' + zone.data.id.toString();
-        if (this.blipFactory.exist(blipId)) {
+        if (!this.blipFactory.exist(blipId)) {
             return;
         }
 
