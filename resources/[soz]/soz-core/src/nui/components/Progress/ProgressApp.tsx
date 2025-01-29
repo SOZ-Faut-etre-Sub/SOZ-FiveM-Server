@@ -1,12 +1,14 @@
 import { animated, useSpring } from '@react-spring/web';
 import cn from 'classnames';
 import { FunctionComponent, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { NuiEvent } from '../../../shared/event/nui';
 import { Progress } from '../../../shared/nui/progress';
 import { fetchNui } from '../../fetch';
 import { useHudHasStreetNames, useMinimap, useVehicle } from '../../hook/data';
 import { useNuiEvent } from '../../hook/nui';
+import { RootState } from '../../store';
 import { useHudColor } from '../Hud/hooks/useHudColor';
 import { GameCanvasBox } from '../Styleguide/GameCanvasBox';
 import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
@@ -144,6 +146,7 @@ export const ProgressSegment: FunctionComponent<ProgressSegmentProps> = ({
     currentProgress,
 }) => {
     const { glassmorphismColors } = useHudColor();
+    const glassmorphism = useSelector((state: RootState) => state.hud.useGlassmorphism);
 
     const sectionMax = progress?.duration / maxSegment;
     const progressForSection = currentProgress * progress?.duration - sectionMax * currentSegment;
@@ -151,7 +154,11 @@ export const ProgressSegment: FunctionComponent<ProgressSegmentProps> = ({
 
     return (
         <div className="w-10 rounded-md overflow-hidden">
-            <div className="relative backdrop-blur-[5px]">
+            <div
+                className={cn('relative', {
+                    'backdrop-blur-[5px]': glassmorphism,
+                })}
+            >
                 <div
                     className="absolute inset-0"
                     style={{
