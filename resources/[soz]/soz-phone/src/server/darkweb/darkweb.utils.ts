@@ -9,27 +9,12 @@ import {
     DarkwebParticipantUpdateResult,
 } from '../../../typings/app/darkweb';
 import PlayerService from '../players/player.service';
-import { mainLogger } from '../sv_logger';
+import {mainLogger} from '../sv_logger';
 import DarkwebDB from './darkweb.db';
 
-export const darkwebLogger = mainLogger.child({ module: 'darkweb' });
+export const darkwebLogger = mainLogger.child({module: 'darkweb'});
 
 // Functions
-
-export async function getFormattedDarkwebConversations(): Promise<DarkwebConversation[]> {
-    const darkwebConversations = await DarkwebDB.getDarkwebConversations();
-    return darkwebConversations;
-}
-
-export async function getFormattedDarkwebParticipants(): Promise<DarkwebParticipant[]> {
-    const darkwebParticipants = await DarkwebDB.getDarkwebParticipants();
-    return darkwebParticipants;
-}
-
-export async function getFormattedDarkwebMessages(conversationId: number): Promise<DarkwebMessage[]> {
-    const darkwebMessages = await DarkwebDB.getDarkwebMessages(conversationId);
-    return darkwebMessages;
-}
 
 export async function createDarkwebConversation(
     label: string,
@@ -42,14 +27,6 @@ export async function createDarkwebConversation(
 
     if (!userIdentifier || !password || !label) {
         throw new Error('userIdentifier was null');
-    }
-
-    const conversationId = await DarkwebDB.createDarkwebConversation(userIdentifier, password, label);
-
-    if (!conversationId) {
-        return {
-            error: true,
-        };
     }
 
     await DarkwebDB.addParticipant(conversationId, userIdentifier, 'ADMIN', phoneNumber);
@@ -69,19 +46,6 @@ export async function getDarkwebConversationParticipants(conversationId: number)
         conversationId
     );
     return conversationParicipants;
-}
-
-export async function getDarkwebConversation(conversationId: number) {
-    const conversation: DarkwebConversation = await DarkwebDB.getDarkwebConversation(conversationId);
-    return conversation;
-}
-
-export async function handleDarkwebUpdateParticipantUnreadStatus(
-    conversationId: number,
-    phoneNumber: string,
-    status: boolean
-) {
-    return await DarkwebDB.setMessageUnread(conversationId, phoneNumber, status);
 }
 
 export async function sendDarkwebMessage(
@@ -149,47 +113,3 @@ export async function updateDarkwebConversationParticipantRole(
     };
 }
 
-export async function archiveConversation(conversationId: number): Promise<Partial<DarkwebConversationArchiveResult>> {
-    if (!conversationId) {
-        throw new Error('conversationId was null');
-    }
-
-    const archiveREsult = await DarkwebDB.archiveConversation(conversationId);
-
-    if (!archiveREsult) {
-        return {
-            error: true,
-        };
-    }
-
-    const conversation = await DarkwebDB.getDarkwebConversation(conversationId);
-
-    return {
-        error: false,
-        conversation: conversation,
-    };
-}
-export async function updateConversation(
-    conversationId: number,
-    label: string,
-    password: string
-): Promise<Partial<DarkwebConversationUpdateResult>> {
-    if (!conversationId || !label || !password) {
-        throw new Error('At least one params was null');
-    }
-
-    const updateResult = await DarkwebDB.updateConversation(conversationId, label, password);
-
-    if (!updateResult) {
-        return {
-            error: true,
-        };
-    }
-
-    const conversation = await DarkwebDB.getDarkwebConversation(conversationId);
-
-    return {
-        error: false,
-        conversation: conversation,
-    };
-}

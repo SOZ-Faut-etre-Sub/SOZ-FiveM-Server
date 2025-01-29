@@ -1,28 +1,4 @@
-import { DarkwebConversation, DarkwebMessage, DarkwebParticipant } from '@typings/app/darkweb';
-
-export const MockDarkwebConversations: DarkwebConversation[] = [
-    {
-        id: 3,
-        label: 'Conversation secrète 1',
-        user_identifier: '555-2222',
-        phoneNumber: '555-2222',
-        masked: false,
-        updatedAt: 1598420000000,
-        createdAt: 1598410000000,
-        password: 'aaaa',
-    },
-];
-export const MockDarkwebParticipants: DarkwebParticipant[] = [
-    {
-        conversation_id: 3,
-        user_identifier: '555-2222',
-        phoneNumber: '555-2222',
-        joinedAt: 1598410000000,
-        role: 'ADMIN',
-        notification: false,
-        unread: false,
-    },
-];
+import {DarkwebConversation, DarkwebMessage, DarkwebParticipant} from '@typings/app/darkweb';
 
 export const MockDarkwebMessages: DarkwebMessage[] = [
     {

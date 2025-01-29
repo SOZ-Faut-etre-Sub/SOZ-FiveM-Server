@@ -15,11 +15,11 @@ import { PictureReveal } from '../../../components/PictureReveal';
 import { useTextZoomConfig, useThemeConfig } from '../../../system/config/config.atom';
 import { useSimCard } from '../../../system/sim-card/hooks/useSimCard';
 
-const isImage = url => {
+export const isImage = url => {
     return /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png|jpeg|gif|webp)/g.test(url);
 };
 
-const isOldPosition = url => {
+export const isOldPosition = url => {
     return /vec2\((-?[0-9.]+),(-?[0-9.]+)\)/g.test(url);
 };
 

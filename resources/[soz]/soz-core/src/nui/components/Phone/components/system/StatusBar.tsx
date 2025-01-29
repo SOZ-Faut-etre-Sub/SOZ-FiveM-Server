@@ -102,7 +102,7 @@ export const StatusBar: FunctionComponent<StatusBarProps> = memo(({ forceControl
             </div>
 
             <span
-                className={clsx('flex justify-between gap-2 font-semibold px-5 pb-2', {
+                className={clsx('flex justify-between gap-2 font-semibold px-5 pb-2', color, {
                     'text-gray-200': themeConfig === 'dark',
                     'text-black': themeConfig === 'light',
                 })}

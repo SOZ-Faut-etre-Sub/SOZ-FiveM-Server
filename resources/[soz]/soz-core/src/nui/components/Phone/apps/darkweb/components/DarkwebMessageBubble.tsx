@@ -1,28 +1,20 @@
 import { Menu, Transition } from '@headlessui/react';
 import { DuplicateIcon } from '@heroicons/react/outline';
 import { LocationMarkerIcon } from '@heroicons/react/solid';
-import { setClipboard } from '@os/phone/hooks/useClipboard';
-import { DarkwebMessage } from '@typings/app/darkweb';
-import { ServerPromiseResp } from '@typings/common';
-import { MessageEvents } from '@typings/messages';
-import Emoji from '@ui/components/Emoji';
-import { Button } from '@ui/old_components/Button';
-import { PictureReveal } from '@ui/old_components/PictureReveal';
+import { fetchNui } from '@public/nui/fetch';
+import { DarkwebMessage } from '@public/shared/phone/apps/darkweb';
 import cn from 'classnames';
 import { format } from 'date-fns';
 import React from 'react';
 
-import { fetchNui } from '../../../common/utils/fetchNui';
-import { useConfig } from '../../../hooks/usePhone';
-import { usePhoneNumber } from '../../../hooks/useSimCard';
-
-const isImage = url => {
-    return /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png|jpeg|gif)/g.test(url);
-};
-
-const isPosition = url => {
-    return /vec2\((-?[0-9.]+),(-?[0-9.]+)\)/g.test(url);
-};
+import { NuiEvent } from '../../../../../../shared/event/nui';
+import { useClipboard } from '../../../../../hook/clipboard';
+import { Button } from '../../../components/Button';
+import { Emoji } from '../../../components/Emoji';
+import { PictureReveal } from '../../../components/PictureReveal';
+import { useTextZoomConfig, useThemeConfig } from '../../../system/config/config.atom';
+import { useSimCard } from '../../../system/sim-card/hooks/useSimCard';
+import { isImage, isOldPosition } from '../../messages/components/MessageBubble';
 
 interface DarkWebMessageBubbleProps {
     message: DarkwebMessage;
@@ -30,19 +22,22 @@ interface DarkWebMessageBubbleProps {
 }
 
 export const DarkWebMessageBubble: React.FC<DarkWebMessageBubbleProps> = ({ message, participantRole }) => {
-    const config = useConfig();
-    const myNumber = usePhoneNumber();
+    const theme = useThemeConfig();
+    const zoom = useTextZoomConfig();
+
+    const { number } = useSimCard();
+    const copyToClipboard = useClipboard();
 
     const setWaypoint = () => {
         const position = /vec2\((-?[0-9.]+),(-?[0-9.]+)\)/g.exec(message.message);
 
-        fetchNui<ServerPromiseResp<void>>(MessageEvents.SET_WAYPOINT, {
-            x: position[1],
-            y: position[2],
+        fetchNui(NuiEvent.SetWaypoint, {
+            x: Number(position[1]),
+            y: Number(position[2]),
         });
     };
 
-    const isMine = message.phoneNumber === myNumber;
+    const isMine = message.phoneNumber === number;
 
     return (
         <div
@@ -70,19 +65,19 @@ export const DarkWebMessageBubble: React.FC<DarkWebMessageBubbleProps> = ({ mess
                         <img src={message.message} className="rounded-lg" alt="message multimedia" />
                     </PictureReveal>
                 )}
-                {isPosition(message.message) && (
+                {isOldPosition(message.message) && (
                     <span className="flex items-center cursor-pointer" onClick={setWaypoint}>
                         <LocationMarkerIcon className="h-5 w-5 mr-2" /> Destination
                     </span>
                 )}
-                {!isImage(message.message) && !isPosition(message.message) && (
+                {!isImage(message.message) && !isOldPosition(message.message) && (
                     <Menu.Button className="left-0 h-full w-full text-left">
                         <p
                             className={cn('break-words text-ellipsis w-full select-text whitespace-pre-wrap', {
-                                'text-base': config.textZoom.value === 1.0,
-                                'text-lg': config.textZoom.value === 1.2,
-                                'text-xl': config.textZoom.value === 1.4,
-                                'text-2xl': config.textZoom.value === 1.6,
+                                'text-base': zoom === 1.0,
+                                'text-lg': zoom === 1.2,
+                                'text-xl': zoom === 1.4,
+                                'text-2xl': zoom === 1.6,
                             })}
                         >
                             {message?.message?.split(/(:[a-zA-Z0-9-_+]+:)/g).map((text, i) => {
@@ -108,7 +103,7 @@ export const DarkWebMessageBubble: React.FC<DarkWebMessageBubbleProps> = ({ mess
                         <Menu.Item>
                             <Button
                                 className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
-                                onClick={() => setClipboard(message.message)}
+                                onClick={() => copyToClipboard(message.message)}
                             >
                                 <DuplicateIcon className="mx-3 h-5 w-5" /> Copier le texte
                             </Button>
@@ -119,8 +114,8 @@ export const DarkWebMessageBubble: React.FC<DarkWebMessageBubbleProps> = ({ mess
             <div className="relative flex self-center">
                 <div
                     className={cn('text-xs', {
-                        'text-gray-400': config.theme.value === 'dark',
-                        'text-gray-500': config.theme.value === 'light',
+                        'text-gray-400': theme === 'dark',
+                        'text-gray-500': theme === 'light',
                     })}
                 >
                     {format(new Date(message.createdAt), 'HH:mm')}

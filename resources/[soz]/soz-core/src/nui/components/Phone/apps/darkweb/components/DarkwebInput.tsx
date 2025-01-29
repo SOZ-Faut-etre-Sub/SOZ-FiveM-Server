@@ -1,36 +1,43 @@
 import data from '@emoji-mart/data/sets/14/apple.json';
 import Picker from '@emoji-mart/react';
 import { EmojiHappyIcon, PaperClipIcon } from '@heroicons/react/outline';
-import { SendIcon } from '@ui/assets/send';
-import { TextareaField } from '@ui/old_components/Input';
+import clsx from 'clsx';
+import qs from 'qs';
 import React, { FunctionComponent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import useInterval from '../../../hooks/useInterval';
-import { UseDarkwebAPI } from '../hooks/useDarkwebApi';
+import { NuiEvent } from '../../../../../../shared/event/nui';
+import { fetchNui } from '../../../../../fetch';
+import { useInterval } from '../../../../../hook/useInterval';
+import SendIcon from '../../../assets/send.svg';
+import { TextareaField } from '../../../components/Input';
+import { useActionSheet } from '../../../system/action-sheet/hooks/useActionSheet';
+import { useDarkWebAPI } from '../hooks/useDarkwebApi';
 
 interface IProps {
-    onAddImageClick(): void;
     blockTime: number;
     darkwebConversationId: number | undefined;
     autoFocus?: boolean;
 }
 
-const DarkWebInput: FunctionComponent<IProps> = ({ darkwebConversationId, onAddImageClick, autoFocus, blockTime }) => {
-    const [t] = useTranslation();
+const DarkWebInput: FunctionComponent<IProps> = ({ darkwebConversationId, autoFocus, blockTime }) => {
+    const navigate = useNavigate();
+    const { t } = useTranslation();
+    const { pathname, search } = useLocation();
+
+    const { openActionSheet } = useActionSheet();
+
     const [message, setMessage] = useState('');
     const [emojiKeyboard, setEmojiKeyboard] = useState(false);
-    const { sendMessage } = UseDarkwebAPI();
     const [blocked, setBlocked] = useState(false);
     const [localBlockTime, setLocalBlockTime] = useState(0);
 
-    useInterval(
-        () => {
-            setBlocked(Date.now() < blockTime || Date.now() < localBlockTime);
-        },
-        500,
-        [blockTime, localBlockTime]
-    );
+    const { sendMessage } = useDarkWebAPI();
+
+    useInterval(() => {
+        setBlocked(Date.now() < blockTime || Date.now() < localBlockTime);
+    }, 500);
 
     const handleSubmit = async () => {
         if (message.trim()) {
@@ -53,12 +60,52 @@ const DarkWebInput: FunctionComponent<IProps> = ({ darkwebConversationId, onAddI
         setMessage(prev => prev + emojiData.shortcodes + ' ');
     };
 
+    const handleSendOptions = () => {
+        openActionSheet('Envoyer', [
+            {
+                key: 'position',
+                label: t('MESSAGES.POSITION_OPTION'),
+                onClick: async () => {
+                    const position = await fetchNui<null, string[]>(NuiEvent.GetPlayerPosition);
+
+                    sendMessage({
+                        conversationId: darkwebConversationId,
+                        message: `vec3(${position.join(',')})`,
+                    });
+                },
+            },
+            {
+                key: 'destination',
+                label: t('MESSAGES.DESTINATION_OPTION'),
+                onClick: async () => {
+                    const position = await fetchNui<null, string[]>(NuiEvent.GetWaypoint);
+
+                    sendMessage({
+                        conversationId: darkwebConversationId,
+                        message: `vec3(${position.join(',')})`,
+                    });
+                },
+            },
+            {
+                key: 'photo',
+                label: t('MESSAGES.MEDIA_OPTION'),
+                onClick: () => {
+                    navigate(
+                        `/photos?${qs.stringify({
+                            referral: encodeURIComponent(pathname + search),
+                        })}`
+                    );
+                },
+            },
+        ]);
+    };
+
     if (!darkwebConversationId) return null;
 
     return (
         <div className="flex h-14 mt-1 items-center">
             {emojiKeyboard && (
-                <div className="absolute w-full z-10 bottom-[150px] left-[25px] right-0 opacity-90">
+                <div className="absolute z-10 bottom-[100px] inset-x-[25px] opacity-90">
                     <Picker
                         data={data}
                         set="apple"
@@ -70,11 +117,12 @@ const DarkWebInput: FunctionComponent<IProps> = ({ darkwebConversationId, onAddI
                     />
                 </div>
             )}
-            <button onClick={onAddImageClick} disabled={blocked}>
+            <button onClick={handleSendOptions} disabled={blocked}>
                 <PaperClipIcon
-                    className={`h-5 w-5 mx-2 ${
-                        !blocked ? 'text-teal-500 hover:text-teal-400' : 'text-teal-900 hover:text-teal-900'
-                    }`}
+                    className={clsx('h-5 w-5 mx-2', {
+                        'text-teal-500 hover:text-teal-400': !blocked,
+                        'text-teal-900 hover:text-teal-900': blocked,
+                    })}
                 />
             </button>
             <button onClick={() => setEmojiKeyboard(s => !s)}>

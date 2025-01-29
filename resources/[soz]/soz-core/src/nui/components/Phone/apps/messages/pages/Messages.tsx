@@ -1,8 +1,7 @@
 import { ArchiveIcon, PencilAltIcon, PhoneIcon, UserAddIcon } from '@heroicons/react/solid';
 import { NuiEvent } from '@public/shared/event/nui';
 import clsx from 'clsx';
-import React, { FunctionComponent, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { FunctionComponent, useEffect } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Virtuoso } from 'react-virtuoso';
 

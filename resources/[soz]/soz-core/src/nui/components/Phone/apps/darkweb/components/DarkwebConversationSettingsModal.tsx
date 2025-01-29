@@ -1,24 +1,24 @@
 import { Transition } from '@headlessui/react';
 import { BanIcon, ChevronLeftIcon, ExclamationIcon, LockClosedIcon, PencilIcon, XIcon } from '@heroicons/react/solid';
-import { DarkwebConversation, DarkwebParticipant } from '@typings/app/darkweb';
+import { DarkwebConversation, DarkwebParticipant } from '@public/shared/phone/apps/darkweb';
 import cn from 'classnames';
 import { ChangeEvent, FunctionComponent, memo, useEffect, useState } from 'react';
 
-import { useDarkweb } from '../../../hooks/app/useDarkweb';
-import { usePhoneNumber } from '../../../hooks/useSimCard';
-import { UseDarkwebAPI } from '../hooks/useDarkwebApi';
+import { useSimCard } from '../../../system/sim-card/hooks/useSimCard';
+import { useDarkWebAPI } from '../hooks/useDarkwebApi';
+import { useParticipants } from '../hooks/useParticipants';
 
 interface DarkWebConversationSettingsModalProps {
     isOpen: boolean;
+
     onClose(): void;
+
     conversation: DarkwebConversation;
 }
 
 export const DarkWebConversationSettingsModal = memo(
     ({ isOpen, onClose, conversation }: DarkWebConversationSettingsModalProps) => {
-        //const [t] = useTranslation();
-        const { getDarkwebConversationParticipants } = useDarkweb();
-        const { updateParticipantRole, archiveConversation, updateConversation } = UseDarkwebAPI();
+        const { updateParticipantRole, updateConversation } = useDarkWebAPI();
         const [passwordInputValue, setPasswordInputValue] = useState<string>('');
         const [newAdminInputValue, setNewAdminInputValue] = useState<string>('');
         const [subjectInputValue, setSubjectInputValue] = useState<string>(conversation.label);
@@ -31,7 +31,7 @@ export const DarkWebConversationSettingsModal = memo(
         const [isEditConversationOpen, setIsEditConversationOpen] = useState<boolean>(false);
         const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] = useState<boolean>(false);
 
-        const participants = getDarkwebConversationParticipants(conversation.id);
+        const participants = useParticipants(conversation.id.toString());
         const admins = participants.filter(participant => participant.role === 'ADMIN');
 
         const onPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -59,7 +59,7 @@ export const DarkWebConversationSettingsModal = memo(
             }
         };
 
-        const myNumber = usePhoneNumber();
+        const { number } = useSimCard();
 
         const removeAdmin = (admin: DarkwebParticipant) => {
             updateParticipantRole(conversation.id, admin.phoneNumber, 'USER');
@@ -91,11 +91,11 @@ export const DarkWebConversationSettingsModal = memo(
                 return;
             }
 
-            updateConversation(conversation.id, subjectInputValue, passwordInputValue);
+            updateConversation(conversation.id, { label: subjectInputValue, password: passwordInputValue });
         };
 
         const handleDelete = () => {
-            archiveConversation(conversation.id);
+            updateConversation(conversation.id, { masked: true });
         };
 
         const handleNewAdminConfirm = () => {
@@ -151,7 +151,6 @@ export const DarkWebConversationSettingsModal = memo(
             return (
                 <div
                     onClick={onClick}
-                    //className=" border-teal-500 text-teal-500 hover:text-teal-400 "
                     className={cn(
                         'flex flex-col border-2 rounded-3xl bg-black/20  w-[80px] h-[80px] justify-center items-center cursor-pointer',
                         {
@@ -176,7 +175,7 @@ export const DarkWebConversationSettingsModal = memo(
                 leaveFrom=" opacity-100"
                 leaveTo="translate-y-[20vh] opacity-100"
                 className={cn(
-                    'absolute h-[20%] bottom-0 w-full flex bg-gradient-to-t from-zinc-900 from-10% via-zinc-900 via-20% to-teal-900/90 to-70% rounded-t-3xl'
+                    'absolute h-[20%] bottom-0 left-0 w-full flex bg-gradient-to-t from-zinc-900 from-10% via-zinc-900 via-20% to-teal-900/90 to-70% rounded-t-3xl'
                 )}
             >
                 {!isEditConversationOpen &&
@@ -322,12 +321,11 @@ export const DarkWebConversationSettingsModal = memo(
                                                     </div>
                                                     <div
                                                         className={cn({
-                                                            'text-red-500 cursor-pointer':
-                                                                admin.phoneNumber !== myNumber,
-                                                            'text-zync-400': admin.phoneNumber == myNumber,
+                                                            'text-red-500 cursor-pointer': admin.phoneNumber !== number,
+                                                            'text-zync-400': admin.phoneNumber == number,
                                                         })}
                                                         onClick={() => {
-                                                            admin.phoneNumber !== myNumber ? removeAdmin(admin) : '';
+                                                            admin.phoneNumber !== number ? removeAdmin(admin) : '';
                                                         }}
                                                     >
                                                         <BanIcon width={'40px'} height={'40px'} />

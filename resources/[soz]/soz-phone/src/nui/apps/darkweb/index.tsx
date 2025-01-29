@@ -1,11 +1,11 @@
-import { Transition } from '@headlessui/react';
-import { FullPageWithHeader } from '@ui/layout/FullPageWithHeader';
-import { Route, Routes } from 'react-router-dom';
+import {Transition} from '@headlessui/react';
+import {FullPageWithHeader} from '@ui/layout/FullPageWithHeader';
+import {Route, Routes} from 'react-router-dom';
 
-import { AppWrapper } from '../../ui/components/AppWrapper';
-import { DarkWebConversation } from './pages/DarkwebConversation';
-import { DarkWebIntro } from './pages/DarkwebIntro';
-import { DarkWebList } from './pages/DarkwebList';
+import {AppWrapper} from '../../ui/components/AppWrapper';
+import {DarkChatMessages} from '../../../../../soz-core/src/nui/components/Phone/apps/darkweb/pages/DarkChatMessages';
+import {DarkWebIntro} from './pages/DarkwebIntro';
+import {DarkChatConversations} from '../../../../../soz-core/src/nui/components/Phone/apps/darkweb/pages/DarkChatConversations';
 
 export const DarkWebApp = () => {
     return (
@@ -22,9 +22,9 @@ export const DarkWebApp = () => {
             >
                 <AppWrapper className="h-[775px] w-full">
                     <Routes>
-                        <Route index element={<DarkWebIntro />} />
-                        <Route path="/conversations/" element={<DarkWebList />} />
-                        <Route path="/conversations/:conversationId" element={<DarkWebConversation />} />
+                        <Route index element={<DarkWebIntro/>}/>
+                        <Route path="/conversations/" element={<DarkChatConversations/>}/>
+                        <Route path="/conversations/:conversationId" element={<DarkChatMessages/>}/>
                     </Routes>
                 </AppWrapper>
             </Transition>

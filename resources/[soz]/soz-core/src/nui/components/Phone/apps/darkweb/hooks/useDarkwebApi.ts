@@ -1,0 +1,164 @@
+import { fetchNui } from '@public/nui/fetch';
+import { DarkwebConversation, DarkwebMessage, PreDBDarkwebMessage } from '@public/shared/phone/apps/darkweb';
+import { useSetAtom } from 'jotai';
+import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+
+import { NuiEvent } from '../../../../../../shared/event/nui';
+import { useNotifications } from '../../../system/notifications/hooks/useNotifications';
+import { conversationsAtom, messagesAtom } from '../darkweb.atom';
+
+type UseDarkwebAPIProps = {
+    fetchConversations: () => Promise<void>;
+    createConversation: (label: string, password: string) => Promise<void>;
+    updateConversation: (conversationId: number, conversation: Partial<DarkwebConversation>) => Promise<void>;
+    setConversationAsRead: (conversationId: number) => void;
+
+    fetchMessages: (conversationId: number) => Promise<void>;
+    sendMessage: ({ conversationId, message }: PreDBDarkwebMessage) => void;
+    updateParticipantRole: (conversationId: number, userIdentifier: string, role: string) => void;
+};
+
+export const useDarkWebAPI = (): UseDarkwebAPIProps => {
+    const { t } = useTranslation();
+    const navigate = useNavigate();
+
+    const setConversations = useSetAtom(conversationsAtom);
+    const setMessages = useSetAtom(messagesAtom);
+
+    const { addNotification } = useNotifications();
+
+    const fetchConversations = useCallback(async () => {
+        try {
+            const conversations = await fetchNui<void, DarkwebConversation[]>(
+                NuiEvent.PhoneAppDarkWebFetchConversations
+            );
+            setConversations(conversations);
+        } catch (e) {
+            addNotification({
+                app: 'darkweb',
+                title: t('DARKWEB.FEEDBACK.FETCH_CONVERSATION_FAILED'),
+            });
+        }
+    }, []);
+
+    const createConversation = useCallback(async (label: string, password: string) => {
+        try {
+            await fetchNui(NuiEvent.PhoneAppDarkWebAddConversation, {
+                label,
+                password,
+            });
+        } catch (e) {
+            addNotification({
+                app: 'darkweb',
+                title: t('DARKWEB.FEEDBACK.CONVERSATION_CREATE_ONE_NUMBER_FAILED', {
+                    label: '',
+                }),
+            });
+        }
+
+        //     if (resp.data.conversation && resp.data.conversationParticipants) {
+        //         store.dispatch.appDarkweb.addConversationSuccess(resp.data.conversation);
+        //         store.dispatch.appDarkweb.addConversationParticipants(resp.data.conversationParticipants);
+        //     }
+    }, []);
+
+    const updateConversation = useCallback(
+        async (conversationId: number, conversation: Partial<DarkwebConversation>) => {
+            try {
+                await fetchNui(NuiEvent.PhoneAppDarkWebUpdateConversation, {
+                    id: conversationId,
+                    ...conversation,
+                });
+            } catch (e) {
+                addNotification({
+                    app: 'darkweb',
+                    title: t('DARKWEB.FEEDBACK.UPDATE ERROR'),
+                });
+            }
+
+            navigate(-1);
+
+            //     if (resp.data.conversation) {
+            //         store.dispatch.appDarkweb.updateConversationInfos(resp.data.conversation[0]);
+            //     }
+        },
+        []
+    );
+
+    const setConversationAsRead = useCallback(async (conversationId: number) => {
+        try {
+            await fetchNui(NuiEvent.PhoneAppDarkWebSetConversationAsRead, conversationId);
+        } catch (e) {
+            addNotification({
+                app: 'darkweb',
+                title: t('DARKWEB.FEEDBACK.UPDATE ERROR'),
+            });
+        }
+    }, []);
+
+    const fetchMessages = useCallback(async (conversationId: number) => {
+        try {
+            const messages = await fetchNui<number, DarkwebMessage[]>(
+                NuiEvent.PhoneAppDarkWebFetchMessages,
+                conversationId
+            );
+
+            setMessages(messages);
+        } catch (e) {
+            addNotification({
+                app: 'darkweb',
+                title: t('DARKWEB.FEEDBACK.FETCH_MESSAGES_FAILED'),
+            });
+        }
+    }, []);
+
+    const sendMessage = useCallback(async ({ conversationId, message }: PreDBDarkwebMessage) => {
+        try {
+            await fetchNui(NuiEvent.PhoneAppDarkWebSendMessage, {
+                conversationId,
+                message,
+            });
+
+            await fetchMessages(conversationId);
+        } catch (e) {
+            addNotification({
+                app: 'darkweb',
+                title: t('DARKWEB.FEEDBACK.NEW_MESSAGE_FAILED'),
+            });
+        }
+    }, []);
+
+    const updateParticipantRole = useCallback(async (conversationId: number, phoneNumber: string, role: string) => {
+        try {
+            await fetchNui(NuiEvent.PhoneAppDarkWebUpdateParticipantRole, {
+                conversationId,
+                phoneNumber,
+                role,
+            });
+        } catch (e) {
+            addNotification({
+                app: 'darkweb',
+                title: t('DARKWEB.FEEDBACK.EDIT_PARTITIPANT_ROLE', {
+                    label: '',
+                }),
+            });
+        }
+
+        //     if (resp.data.participant) {
+        //         store.dispatch.appDarkweb.updateDarkwebParticipantRole(resp.data.participant);
+        //     }
+    }, []);
+
+    return {
+        fetchConversations,
+        createConversation,
+        updateConversation,
+        setConversationAsRead,
+
+        fetchMessages,
+        sendMessage,
+        updateParticipantRole,
+    };
+};

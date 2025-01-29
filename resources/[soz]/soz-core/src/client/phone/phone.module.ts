@@ -1,5 +1,6 @@
 import { Module } from '../../core/decorators/module';
 import { PhoneAppBankProvider } from './apps/phone.app.bank.provider';
+import { PhoneAppDarkWebProvider } from './apps/phone.app.darkweb.provider';
 import { PhoneAppNewsProvider } from './apps/phone.app.news.provider';
 import { PhoneAppNotesProvider } from './apps/phone.app.notes.provider';
 import { PhoneAppPhotosProvider } from './apps/phone.app.photos.provider';
@@ -24,6 +25,7 @@ import { PhoneState } from './phone.state';
         PhoneSimCardContacts,
         PhoneSimCardMessages,
         // Apps
+        PhoneAppDarkWebProvider,
         PhoneAppSocietyProvider,
         PhoneAppBankProvider,
         PhoneAppNewsProvider,

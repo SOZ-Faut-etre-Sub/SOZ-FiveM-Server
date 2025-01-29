@@ -322,12 +322,4 @@ export class InventoryManager {
         const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
         this.openInventory(inventoryType, inventoryId, position);
     }
-
-    @PlayerInventoryUpdate()
-    public updatePlayerInventory() {
-        const hasPhone = this.hasEnoughItem('phone', 1);
-        const hasDongle = this.hasEnoughItem('cyber_darkweb_module', 1);
-
-        TriggerEvent('soz-phone:client:phone:setHasItems', hasPhone, hasDongle);
-    }
 }

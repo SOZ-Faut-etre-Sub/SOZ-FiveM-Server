@@ -1,44 +1,41 @@
 import { Transition } from '@headlessui/react';
-import { DarkwebConversation, ThreadPrice } from '@typings/app/darkweb';
-import { AppContent } from '@ui/components/AppContent';
-import { InputBase } from '@ui/old_components/Input';
-import cn from 'classnames';
-import { ChangeEvent, memo, useEffect, useMemo, useState } from 'react';
+import { DarkwebConversation, THREAD_PRICE } from '@public/shared/phone/apps/darkweb';
+import clsx from 'clsx';
+import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { RootState, store } from '../../../../nui/store';
-import { useConfig } from '../../../hooks/usePhone';
+import { InputBase } from '../../../components/Input';
+import { AppContent } from '../../../components/system/AppContent';
+import { AppWrapper } from '../../../components/system/AppWrapper';
+import { useThemeConfig } from '../../../system/config/config.atom';
+import { useSimCard } from '../../../system/sim-card/hooks/useSimCard';
 import { DarkWebConversationCreateModal } from '../components/DarkwebConversationCreateModal';
 import { DarkWebConversationPasswordModal } from '../components/DarkwebConversationPasswordModal';
 import { DarkWebSubjectListItem } from '../components/DarkwebSubjectListItem';
-import { UseDarkwebAPI } from '../hooks/useDarkwebApi';
+import { useDarkWebConversations, useDarkWebParticipants } from '../darkweb.atom';
+import { useConversations } from '../hooks/useConversations';
+import { useDarkWebAPI } from '../hooks/useDarkwebApi';
 
-export const DarkWebList = memo(() => {
-    const [t] = useTranslation();
-    const config = useConfig();
+export const DarkChatConversations = () => {
     const navigate = useNavigate();
-    const { addConversation, getConversations } = UseDarkwebAPI();
+    const { t } = useTranslation();
+
+    const theme = useThemeConfig();
+
+    const { conversations, searchValue, setSearchValue } = useConversations();
 
     const [isCreationModalOpen, setIsCreationModalOpen] = useState<boolean>(false);
     const [isPasswordModalOpen, setIsPasswordModalOpen] = useState<boolean>(false);
     const [selectedDarkwebConversation, setSelectedDarkwebConversation] = useState<DarkwebConversation>(null);
-    const [searchValueInput, setSearchValueInput] = useState<string>('');
-    const darkwebConversations = useSelector((state: RootState) => state.appDarkweb.conversations);
-    const darkwebParticipants = useSelector((state: RootState) => state.appDarkweb.participants);
-    const number = useSelector((state: RootState) => state.simCard.number);
 
-    const filteredConversations = useMemo(() => {
-        if (!darkwebConversations) {
-            return [];
-        }
-        const regExp = new RegExp(searchValueInput.replace(/[^a-zA-Z\d]/g, ''), 'gi');
-        return darkwebConversations.filter(c => c.masked === false).filter(c => c?.label?.match(regExp) || '');
-    }, [darkwebConversations, searchValueInput]);
+    const { fetchConversations, createConversation } = useDarkWebAPI();
+
+    const darkwebParticipants = useDarkWebParticipants();
+    const { number } = useSimCard();
 
     const getReadStatusByConversation = conversationId => {
-        if (!darkwebConversations || !darkwebParticipants) {
+        if (!darkwebParticipants) {
             return false;
         }
 
@@ -48,15 +45,9 @@ export const DarkWebList = memo(() => {
         )?.unread;
     };
 
-    useEffect(() => {
-        getConversations();
-        store.dispatch.appDarkweb.loadDarkwebParticipants();
-    }, []);
-
-    const onCreationConfirm = ({ subject, password }) => {
-        addConversation(subject, password);
-        getConversations();
-        store.dispatch.appDarkweb.loadDarkwebParticipants();
+    const onCreationConfirm = async ({ subject, password }) => {
+        await createConversation(subject, password);
+        await fetchConversations();
     };
 
     const onPasswordConfirm = isPasswordCorrect => {
@@ -94,19 +85,13 @@ export const DarkWebList = memo(() => {
         }
     };
 
+    useEffect(() => {
+        fetchConversations();
+    }, []);
+
     return (
-        <Transition
-            appear={true}
-            show={true}
-            className="pb-0 px-0"
-            enter="transition ease-in-out duration-300 transform"
-            enterFrom="translate-x-full"
-            enterTo="translate-x-0"
-            leave="transition ease-in-out duration-300 transform"
-            leaveFrom="translate-x-0"
-            leaveTo="translate-x-full"
-        >
-            <AppContent className="pb-0 px-0">
+        <AppWrapper>
+            <AppContent>
                 <div>
                     <h1 className="text-teal-500 text-3xl font-bold text-center mt-5 min-h-[3vh]">THREADS</h1>
                 </div>
@@ -117,24 +102,23 @@ export const DarkWebList = memo(() => {
                         }
                         placeholder="Recherche"
                         onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                            setSearchValueInput(event.target.value);
+                            setSearchValue(event.target.value);
                         }}
-                        value={searchValueInput}
+                        value={searchValue}
                     />
                 </div>
-                <div className="h-[560px] mb-2 overflow-y-auto">
-                    {!filteredConversations && (
+                <div className="h-[650px] mb-2 overflow-y-auto">
+                    {!conversations ? (
                         <h2
-                            className={cn('flex justify-center items-center', {
-                                'text-white': config.theme.value === 'dark',
-                                'text-dark': config.theme.value === 'light',
+                            className={clsx('flex justify-center items-center', {
+                                'text-white': theme === 'dark',
+                                'text-dark': theme === 'light',
                             })}
                         >
                             {t('DARKWEB.LOADING')}
                         </h2>
-                    )}
-                    {filteredConversations &&
-                        filteredConversations.map(darkwebConversation => {
+                    ) : (
+                        conversations.map(darkwebConversation => {
                             return (
                                 <DarkWebSubjectListItem
                                     key={darkwebConversation.id}
@@ -143,14 +127,15 @@ export const DarkWebList = memo(() => {
                                     readStatus={getReadStatusByConversation(darkwebConversation.id)}
                                 />
                             );
-                        })}
+                        })
+                    )}
                 </div>
                 <div className="flex justify-center items-center">
                     <button
                         className="border-[0.2vh] py-2 px-4 text-teal-500 border-teal-500 rounded-lg my-2 hover:bg-teal-900 cursor-pointer"
                         onClick={() => handleOpenCreationModal()}
                     >
-                        NOUVEAU THREAD ({ThreadPrice.toLocaleString()}$)
+                        NOUVEAU THREAD ({THREAD_PRICE.toLocaleString()}$)
                     </button>
                 </div>
 
@@ -167,6 +152,6 @@ export const DarkWebList = memo(() => {
                     password={selectedDarkwebConversation?.password ?? null}
                 />
             </AppContent>
-        </Transition>
+        </AppWrapper>
     );
-});
+};

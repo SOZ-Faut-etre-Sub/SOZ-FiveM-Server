@@ -10,6 +10,10 @@ export const useBackgroundClasses = (): string => {
         return 'bg-black';
     }
 
+    if (pathname.startsWith('/darkweb')) {
+        return 'bg-phone-800';
+    }
+
     if (pathname === '/') {
         return '';
     }

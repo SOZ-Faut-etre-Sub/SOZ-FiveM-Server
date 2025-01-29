@@ -1,9 +1,10 @@
 import { LockClosedIcon } from '@heroicons/react/outline';
-import { DarkwebConversation } from '@typings/app/darkweb';
+import { DarkwebConversation } from '@public/shared/phone/apps/darkweb';
 import { memo } from 'react';
 
 interface DarkWebSubjectListItemProps {
     onClick(): void;
+
     data: Partial<DarkwebConversation>;
     readStatus: boolean;
 }

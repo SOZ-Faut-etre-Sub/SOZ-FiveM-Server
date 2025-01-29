@@ -32,6 +32,7 @@ export interface NuiPhoneMap {
     RemoveContact: number;
 
     // Apps
+    AppDarkWebHasDongle: boolean;
     AppBankSetData: BankData;
     AppNewsSetData: NewsMessage[];
     AppNewsAddData: NewsMessage;
