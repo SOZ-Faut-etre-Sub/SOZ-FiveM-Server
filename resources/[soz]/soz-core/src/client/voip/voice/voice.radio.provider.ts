@@ -182,7 +182,7 @@ export class VoiceRadioProvider {
             return;
         }
 
-        if (player.isDead || player.isInHub || player.carryBox) {
+        if (player.isDead || player.isInHub || player.carryBox || player.isHandcuffed) {
             return;
         }
 
