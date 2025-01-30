@@ -42,6 +42,7 @@ export type PlayerPersonalMenuData = {
     isHudVisible: boolean;
     scaledNui: boolean;
     isGlassmorphismActive: boolean;
+    glassmorphismFpsLimit: number;
     shortcuts: Record<string, Shortcut>;
     combatMode: boolean;
     job: JobMenuData;

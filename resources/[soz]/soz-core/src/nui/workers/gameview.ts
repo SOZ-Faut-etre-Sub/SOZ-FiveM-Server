@@ -127,6 +127,7 @@ export class GameViewRenderer {
     private globalHide = false;
     private targetCanvas: Record<string, GameCanvas> = {};
 
+    private fpsLimit = 30;
     private animationFrame: number;
     private lastFrameTimeStamp: DOMHighResTimeStamp = performance.now();
 
@@ -176,6 +177,10 @@ export class GameViewRenderer {
         this.gl.viewport(0, 0, width, height);
         this.gl.canvas.width = width;
         this.gl.canvas.height = height;
+    }
+
+    setFpsLimit(fps: number) {
+        this.fpsLimit = fps;
     }
 
     enable() {
@@ -233,7 +238,7 @@ export class GameViewRenderer {
         const now = performance.now();
         const delta = now - this.lastFrameTimeStamp;
 
-        if (delta < 1000 / 30) {
+        if (delta < 1000 / this.fpsLimit) {
             this.animationFrame = requestAnimationFrame(this.render);
             return;
         }

@@ -1,3 +1,4 @@
+import { useNuiEvent } from '@public/nui/hook/nui';
 import { createContext, FunctionComponent, PropsWithChildren, useEffect, useMemo } from 'react';
 
 export const GlassMorphismContext = createContext(null);
@@ -21,6 +22,13 @@ export const GlassMorphismProvider: FunctionComponent<PropsWithChildren> = ({ ch
             height: window.innerHeight,
         });
     };
+
+    useNuiEvent('hud', 'SetGlassmorphismFps', fps => {
+        sharedWorker.postMessage({
+            type: 'fps',
+            fps,
+        });
+    });
 
     useEffect(() => {
         initGlassmorphism();

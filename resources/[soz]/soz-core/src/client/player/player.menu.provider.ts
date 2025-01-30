@@ -117,6 +117,7 @@ export class PlayerMenuProvider {
             naked: this.playerService.getPlayer().cloth_config.Config.Naked,
             arachnophobe: this.halloweenSpiderService.isArachnophobeMode(),
             isGlassmorphismActive: this.hudGlassmorphismProvider.glassmorphism,
+            glassmorphismFpsLimit: this.hudGlassmorphismProvider.glassmorphismFpsLimit,
         });
     }
 
@@ -173,6 +174,11 @@ export class PlayerMenuProvider {
     @OnNuiEvent(NuiEvent.PlayerMenuHudSetGlassmorphism)
     public async hudComponentSetGlassmorphism({ value }: { value: boolean }) {
         this.hudGlassmorphismProvider.glassmorphism = value;
+    }
+
+    @OnNuiEvent(NuiEvent.PlayerMenuHudSetGlassmorphismFpsLimit)
+    public async hudComponentSetGlassmorphismFpsLimit({ value }: { value: number }) {
+        this.hudGlassmorphismProvider.glassmorphismFpsLimit = value;
     }
 
     @OnNuiEvent(NuiEvent.PlayerMenuVoipReset)
