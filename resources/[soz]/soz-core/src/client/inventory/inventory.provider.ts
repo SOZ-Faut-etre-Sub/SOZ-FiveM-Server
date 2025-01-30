@@ -15,6 +15,7 @@ import { Err, Ok } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
 import { CartElement } from '../../shared/shop/superette';
 import { PedFactory } from '../factory/ped.factory';
+import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
@@ -54,6 +55,9 @@ export class InventoryProvider {
 
     @Inject(NuiDispatch)
     public nuiDispatch: NuiDispatch;
+
+    @Inject(ItemService)
+    private readonly itemService: ItemService;
 
     @Inject(InventoryDragAndDropProvider)
     public inventoryDragAndDropProvider: InventoryDragAndDropProvider;
@@ -150,6 +154,11 @@ export class InventoryProvider {
         inventoryItem: InventoryItem;
         inventoryId: string;
     }) {
+        if (this.itemService.isExpired(inventoryItem)) {
+            this.notifier.error("Cet objet est périmée, il n'est plus utilisable.");
+            return;
+        }
+
         const [entity, distance] = this.playerService.getClosestPlayer();
         const playerId = GetPlayerServerId(entity);
 
