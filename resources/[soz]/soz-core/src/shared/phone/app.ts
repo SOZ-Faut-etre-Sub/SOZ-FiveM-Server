@@ -11,6 +11,7 @@ export interface IAppConfig {
     condition?: () => boolean;
 
     // should be removed and be customizable
+    badge?: number;
     position?: number;
     home?: boolean;
 }

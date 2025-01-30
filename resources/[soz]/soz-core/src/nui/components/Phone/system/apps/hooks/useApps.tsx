@@ -28,6 +28,7 @@ import { SnakeApp } from '../../../apps/snake/SnakeApp';
 import SocietyContactsIcon from '../../../apps/society-contacts/icon';
 import { SocietyContactsApp } from '../../../apps/society-contacts/SocietyContactsApp';
 import SocietyMessagesIcon from '../../../apps/society-messages/icon';
+import { useUnTakenMessagesCount } from '../../../apps/society-messages/messages.atom';
 import { SocietyMessagesApp } from '../../../apps/society-messages/SocietyMessagesApp';
 import TaxIcon from '../../../apps/tax/icon';
 import { TaxApp } from '../../../apps/tax/TaxApp';
@@ -40,9 +41,13 @@ import { ZutomApp } from '../../../apps/zutom/ZutomApp';
 import { useSocietySimCard } from '../../sim-card/hooks/useSocietySimCard';
 
 export const useApps = () => {
+    const player = usePlayer();
+
     const { societyNumber } = useSocietySimCard();
     const darkWebAppEnabled = useDarkWebEnabled();
-    const player = usePlayer();
+
+    // badges
+    const societyMessagesBadge = useUnTakenMessagesCount();
 
     const APPS: Array<IAppConfig> = [
         /* System apps */
@@ -122,6 +127,7 @@ export const useApps = () => {
             icon: SocietyMessagesIcon,
             component: <SocietyMessagesApp />,
             position: 6,
+            badge: societyMessagesBadge,
             condition: () => !player?.metadata?.isdead && Boolean(societyNumber),
         },
         {
@@ -212,5 +218,5 @@ export const useApps = () => {
             if (app.condition) return app.condition();
             return true;
         });
-    }, [societyNumber, darkWebAppEnabled]);
+    }, [player, societyNumber, darkWebAppEnabled, societyMessagesBadge]);
 };

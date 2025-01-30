@@ -668,6 +668,7 @@ export enum NuiEvent {
     InventoryShopValidate = 'soz-core:nui:inventory:shop-validate',
     InventoryGoBackPlayerInventory = 'soz-core:nui:inventory:go-back-player-inventory',
 
+    PhoneInsideInput = 'soz-core:nui:phone:inside-input',
     PhoneSimCardCallsInit = 'soz-core:nui:phone:sim-card-calls-init',
     PhoneSimCardCallsAccept = 'soz-core:nui:phone:sim-card-calls-accept',
     PhoneSimCardCallsDecline = 'soz-core:nui:phone:sim-card-calls-decline',

@@ -2,6 +2,8 @@ import { Command } from '@core/decorators/command';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { PhoneState } from '@public/client/phone/phone.state';
+import { OnNuiEvent } from '@public/core/decorators/event';
+import { NuiEvent } from '@public/shared/event/nui';
 
 import { PlayerInventoryUpdate } from '../../core/decorators/player';
 import { Tick } from '../../core/decorators/tick';
@@ -40,6 +42,8 @@ export class PhoneManager {
     @Inject(Notifier)
     private readonly notifier: Notifier;
 
+    private isInsideInput = false;
+
     @Tick()
     async onTick() {
         if (!IsControlJustPressed(0, Control.PhoneSelect)) return;
@@ -55,6 +59,11 @@ export class PhoneManager {
         this.phoneService.setPhoneDisabled('item_phone', !hasPhone);
         this.nuiDispatch.dispatch('phone', 'SetAvailability', hasPhone);
         this.nuiDispatch.dispatch('phone', 'AppDarkWebHasDongle', hasDongle);
+    }
+
+    @OnNuiEvent(NuiEvent.PhoneInsideInput)
+    async onPhoneInsideInput({ insideInput }: { insideInput: boolean }) {
+        this.isInsideInput = insideInput;
     }
 
     @Command('phone', {
@@ -75,7 +84,7 @@ export class PhoneManager {
             return;
         }
 
-        if (this.phoneState.isPhoneOpen()) {
+        if (this.phoneState.isPhoneOpen() && !this.isInsideInput) {
             return this.hidePhone();
         }
 
@@ -97,6 +106,7 @@ export class PhoneManager {
     private async hidePhone() {
         this.phoneState.setPhoneFrontCameraEnabled(false);
         this.phoneState.setPhoneOpen(false);
+        this.isInsideInput = false;
     }
 
     private hasPlayerPhone() {

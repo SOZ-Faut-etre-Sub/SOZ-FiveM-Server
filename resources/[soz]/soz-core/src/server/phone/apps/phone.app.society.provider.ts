@@ -65,7 +65,7 @@ export class PhoneAppSocietyProvider {
             return;
         }
 
-        const username = message.overrideIdentifier ?? player.name;
+        const username = message.overrideIdentifier ?? `${player.charinfo.firstname} ${player.charinfo.lastname}`;
         const identifier = (message.anonymous ? '#' : '') + (message.overrideIdentifier ?? player.charinfo.phone);
         const pedPosition = message.position
             ? JSON.stringify(toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3))
@@ -166,7 +166,7 @@ export class PhoneAppSocietyProvider {
 
         if (message.isTaken !== undefined) {
             data.takenBy = player.citizenid;
-            data.takenByUsername = player.name;
+            data.takenByUsername = `${player.charinfo.firstname} ${player.charinfo.lastname}`;
             data.isTaken = 1;
         }
 

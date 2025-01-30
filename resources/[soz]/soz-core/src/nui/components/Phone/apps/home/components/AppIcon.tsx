@@ -14,8 +14,8 @@ export const AppIcon: FunctionComponent<AppIconProps> = memo(({ title, icon: Ico
             <div className="relative flex justify-center items-center text-ellipsis w-4/5 aspect-square mt-1">
                 {Icon && <Icon className="size-16 rounded-[1rem]" />}
 
-                {badge > 0 && (
-                    <span className="absolute flex justify-center items-center -top-1 -right-1 py-1 px-2 text-xs font-light transform rounded-full bg-red-500">
+                {Number(badge) > 0 && (
+                    <span className="absolute flex justify-center items-center top-0 right-0 py-1 px-2 text-xs font-light transform rounded-full bg-red-500 ">
                         {badge}
                     </span>
                 )}

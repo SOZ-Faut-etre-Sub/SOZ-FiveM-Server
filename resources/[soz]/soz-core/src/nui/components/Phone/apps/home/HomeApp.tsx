@@ -25,10 +25,7 @@ export const HomeApp: FunctionComponent = () => {
                 <Grid className="grow">
                     {filteredApps.map(app => (
                         <Link key={app.id} to={app.path} style={{ order: app.position && app.position }}>
-                            <AppIcon
-                                title={t(app.nameLocale)}
-                                icon={app.icon} /*badge={countAppNotification(app.id)}*/
-                            />
+                            <AppIcon title={t(app.nameLocale)} icon={app.icon} badge={app.badge} />
                         </Link>
                     ))}
                 </Grid>

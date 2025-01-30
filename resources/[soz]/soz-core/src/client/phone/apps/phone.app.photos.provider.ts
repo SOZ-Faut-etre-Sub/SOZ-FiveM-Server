@@ -41,12 +41,14 @@ export class PhoneAppPhotosProvider {
 
     @OnNuiEvent(NuiEvent.PhoneAppPhotosEnterCamera)
     async onEnterCamera() {
+        this.phoneState.setPhoneOnCamera(true);
         CreateMobilePhone(1);
         CellCamActivate(true, true);
     }
 
     @OnNuiEvent(NuiEvent.PhoneAppPhotosExitCamera)
     async onExitCamera() {
+        this.phoneState.setPhoneOnCamera(false);
         CellCamActivate(false, false);
         DestroyMobilePhone();
         this.nuiDispatch.dispatch('phone', 'SetPhoneFreeCamera', false);

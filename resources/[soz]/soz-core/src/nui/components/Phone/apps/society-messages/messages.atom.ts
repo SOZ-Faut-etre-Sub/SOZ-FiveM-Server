@@ -7,8 +7,10 @@ import { useInjectDebugData } from '../../system/debug/hooks/useInjectDebugData'
 import { useRingtoneSound } from '../../system/sound/hooks/useRingtoneSound';
 
 const messagesAtom = atom<Array<SocietyMessage>>([]);
+const unTakenMessagesCountAtom = atom(get => get(messagesAtom).filter(m => !m.isTaken).length);
 
 export const useSocietyMessages = () => useAtomValue(messagesAtom);
+export const useUnTakenMessagesCount = () => useAtomValue(unTakenMessagesCountAtom);
 
 export const useSocietyMessagesStateHandlers = () => {
     const notificationSound = useRingtoneSound('societyNotification', false);

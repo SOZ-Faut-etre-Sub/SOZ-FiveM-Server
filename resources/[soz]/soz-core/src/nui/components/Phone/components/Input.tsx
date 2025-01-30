@@ -1,15 +1,12 @@
+import { fetchNui } from '@public/nui/fetch';
 import clsx from 'clsx';
 import React, { forwardRef } from 'react';
 import { PatternFormat } from 'react-number-format';
 
+import { NuiEvent } from '../../../../shared/event/nui';
 import { useThemeConfig } from '../system/config/config.atom';
 
-export const toggleKeys = (keepGameFocus: boolean) => {
-    // fetchNui(PhoneEvents.TOGGLE_KEYS, {
-    //     keepGameFocus,
-    // }).catch(e => (isEnvBrowser() ? () => {
-    // } : console.error(e)));
-};
+export const toggleKeys = (insideInput: boolean) => fetchNui(NuiEvent.PhoneInsideInput, { insideInput });
 
 export const TextField = forwardRef<HTMLInputElement, any>((props, ref) => {
     const theme = useThemeConfig();
@@ -23,13 +20,13 @@ export const TextField = forwardRef<HTMLInputElement, any>((props, ref) => {
                 'bg-gray-300 text-black': theme === 'light',
             })}
             onMouseUp={e => {
-                toggleKeys(false);
+                toggleKeys(true);
                 if (props.onFocus) {
                     props.onFocus(e);
                 }
             }}
             onBlur={e => {
-                toggleKeys(true);
+                toggleKeys(false);
                 if (props.onBlur) {
                     props.onBlur(e);
                 }
@@ -50,13 +47,13 @@ export const NumberField = forwardRef<HTMLInputElement, any>((props, ref) => {
                 'bg-gray-300 text-black': theme === 'light',
             })}
             onMouseUp={e => {
-                toggleKeys(false);
+                toggleKeys(true);
                 if (props.onFocus) {
                     props.onFocus(e);
                 }
             }}
             onBlur={e => {
-                toggleKeys(true);
+                toggleKeys(false);
                 if (props.onBlur) {
                     props.onBlur(e);
                 }
@@ -81,13 +78,13 @@ export const TextareaField = forwardRef<HTMLInputElement, any>((props, ref) => {
                 }
             )}
             onMouseUp={e => {
-                toggleKeys(false);
+                toggleKeys(true);
                 if (props.onFocus) {
                     props.onFocus(e);
                 }
             }}
             onBlur={e => {
-                toggleKeys(true);
+                toggleKeys(false);
                 if (props.onBlur) {
                     props.onBlur(e);
                 }
@@ -101,13 +98,13 @@ export const InputBase = forwardRef<HTMLInputElement, any>((props, ref) => (
         ref={ref}
         {...props}
         onMouseUp={e => {
-            toggleKeys(false);
+            toggleKeys(true);
             if (props.onFocus) {
                 props.onFocus(e);
             }
         }}
         onBlur={e => {
-            toggleKeys(true);
+            toggleKeys(false);
             if (props.onBlur) {
                 props.onBlur(e);
             }

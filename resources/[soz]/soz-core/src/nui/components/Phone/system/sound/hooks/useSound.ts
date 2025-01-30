@@ -76,7 +76,7 @@ export const useSoundSettings = (type: 'ringtone' | 'notiSound' | 'societyNotifi
     const audioFolder = type === 'ringtone' ? 'ringtones' : 'notifications';
 
     return {
-        sound: getPath(`audio/phone/${audioFolder}/${settings[type].value}`),
+        sound: getPath(`audio/phone/${audioFolder}/${settings[type].value}.mp3`),
         volume: settings.planeMode ? 0 : settings[`${type}Vol`] / 100,
     };
 };

@@ -60,8 +60,16 @@ export class PhoneState {
         this.phoneDisabled = value;
     }
 
+    public isPhoneOnCamera() {
+        return this.phoneOnCamera;
+    }
+
     public isPhoneFrontCameraEnabled() {
         return this.phoneFrontCameraEnabled;
+    }
+
+    public setPhoneOnCamera(value: boolean) {
+        this.phoneOnCamera = value;
     }
 
     public setPhoneFrontCameraEnabled(value: boolean) {
