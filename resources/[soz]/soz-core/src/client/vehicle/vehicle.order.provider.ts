@@ -33,7 +33,7 @@ export class VehicleOrderProvider {
     @OnNuiEvent(NuiEvent.VehicleOrder)
     public async onOrder({ model, mode }: { model: string; mode: VehicleOrderMode }) {
         let phone = null;
-        if (mode == VehicleOrderMode.Crimi) {
+        if ([VehicleOrderMode.Crimi, VehicleOrderMode.Cartel].includes(mode)) {
             phone = await this.inputService.askInput(
                 {
                     title: 'Numéro de téléphone du futur propriétaire',

@@ -642,6 +642,7 @@ export type VehicleOrder = {
     gang: number;
     citizenId: string;
     license: string;
+    garage: string;
 };
 
 export enum VehicleOrderMode {

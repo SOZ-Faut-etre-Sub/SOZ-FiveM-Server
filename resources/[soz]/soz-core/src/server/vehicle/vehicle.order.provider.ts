@@ -1,5 +1,4 @@
 import { VehicleBusinessImportConf } from '@private/shared/business.vehicle';
-import { CartelWaitingPlanerOrderTime } from '@private/shared/gang';
 import { Once, OnceStep } from '@public/core/decorators/event';
 import { JobType } from '@public/shared/job';
 import { UpwConfig } from '@public/shared/job/upw';
@@ -81,6 +80,7 @@ export class VehicleOrderProvider {
                 job: data.job,
                 citizenId: data.citizenId,
                 license: data.license,
+                garage: data.garage,
             });
         }
     }
@@ -154,6 +154,7 @@ export class VehicleOrderProvider {
         let playerDst: PlayerData = null;
         let waitTime = 0;
         const vehiclePrice = Math.ceil(vehicle.price * VehicleOrderCostMuliplier[mode]);
+        let garage = null;
         if (mode == VehicleOrderMode.Job) {
             const config = Configs[player.job.id];
             const transferred = await this.bankService.transferFarmMoney(
@@ -175,7 +176,8 @@ export class VehicleOrderProvider {
                 this.notifier.notify(source, `Virement de ~g~${vehiclePrice.toLocaleString()}$~s~ effectué.`);
             }
             waitTime = config.waitingTime;
-        } else if (mode == VehicleOrderMode.Crimi) {
+            garage = Configs[player.job.id].garage;
+        } else if ([VehicleOrderMode.Crimi, VehicleOrderMode.Cartel].includes(mode)) {
             playerDst = this.playerService.getPlayerByPhone(phone);
             if (!playerDst) {
                 this.notifier.notify(source, `Le numéro n'est pas actif.`, 'error');
@@ -192,17 +194,12 @@ export class VehicleOrderProvider {
             }
 
             waitTime = VehicleBusinessImportConf.VehicleBusinessImportDuration;
-        } else if (mode == VehicleOrderMode.Cartel) {
-            if (!this.playerMoneyService.remove(source, vehiclePrice, 'marked_money')) {
-                this.notifier.notify(
-                    source,
-                    `Vous n'avez ~r~pas assez d'argent sale~s~ sur vous pour acheter ce véhicule.`,
-                    'error'
-                );
-                return this.getOrders(source, mode);
+
+            if (VehicleOrderMode.Crimi == mode) {
+                garage = 'garage_gang_' + player.gang.id;
+            } else if (VehicleOrderMode.Cartel == mode) {
+                garage = 'sandy_shores_air';
             }
-            playerDst = this.playerService.getPlayer(source);
-            waitTime = CartelWaitingPlanerOrderTime;
         }
 
         const uuid = uuidv4();
@@ -214,6 +211,7 @@ export class VehicleOrderProvider {
             gang: [VehicleOrderMode.Crimi, VehicleOrderMode.Cartel].includes(mode) ? player.gang.id : null,
             citizenId: playerDst ? playerDst.citizenid : null,
             license: playerDst ? playerDst.license : null,
+            garage,
         };
         this.ordersInProgress.set(uuid, order);
 
@@ -269,7 +267,6 @@ export class VehicleOrderProvider {
             fuelLevel: fuel,
         };
 
-        const garage = order.job != null ? Configs[order.job].garage : 'garage_gang_' + order.gang;
         const plate = order.job != null ? 'ESSAI N' + this.orderedVehicle++ : await this.vehicleService.generatePlate();
         const mods: VehicleConfiguration =
             order.job != null ? BennysConfig.UpgradeConfiguration : getDefaultVehicleConfiguration();
@@ -287,7 +284,7 @@ export class VehicleOrderProvider {
                 mods: JSON.stringify(mods),
                 condition: JSON.stringify(condition),
                 plate: plate,
-                garage: garage,
+                garage: order.garage,
                 job: order.job,
                 category: category,
                 fuel: 100,
@@ -302,7 +299,7 @@ export class VehicleOrderProvider {
         });
 
         this.monitor.traceEvent('vehicle_order_deliver', {
-            garage_id: garage,
+            garage_id: order.garage,
             target_job: order.job,
             vehicle_model: order.model,
             id: order.uuid,
