@@ -24,6 +24,7 @@ files {
     'sandstorm_render_drop.xml',
     'snowheavy_emitter_ground.xml',
     'snowheavy_render_ground.xml',
+	'trains.xml',
 
     'soz_game.dat151.rel',
     'soz_mix.dat15.rel'

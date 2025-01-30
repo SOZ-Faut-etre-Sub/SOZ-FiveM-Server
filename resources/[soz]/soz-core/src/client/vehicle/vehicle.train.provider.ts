@@ -20,6 +20,9 @@ const models = [
     'freightcont2',
     'freightgrain',
     'metrotrain',
+	'class1_2',
+	'class1t',
+	'soz_freightcar',
     'tankercar',
 ];
 
@@ -80,7 +83,7 @@ export class VehicleTrainProvider {
     public init() {
         SetTrainsForceDoorsOpen(false);
         this.targetFactory.createForModel(
-            ['freight', 'freight2', 'metrotrain'],
+            ['class1_2', 'freight', 'freight2', 'metrotrain'],
             [
                 {
                     category: 'citizen',
