@@ -1,4 +1,4 @@
-import { useAtomValue, useSetAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { atom } from 'jotai/index';
 
 import {
@@ -11,6 +11,7 @@ import {
 } from '../../../../../shared/phone/simcard';
 import { useNuiEvent } from '../../../../hook/nui';
 import { useInjectDebugData } from '../debug/hooks/useInjectDebugData';
+import { useDialingSound } from '../sound/hooks/useDialingSound';
 import { useRingtoneSound } from '../sound/hooks/useRingtoneSound';
 import { mockCallHistory } from './call-history.constant';
 import { mockContacts } from './contacts.constant';
@@ -21,7 +22,6 @@ export const societyNumberAtom = atom<string>();
 
 export const avatarAtom = atom<string>();
 
-export const callModalOpenAtom = atom<boolean>(false);
 export const currentCallAtom = atom<ActiveCall>();
 
 export const callHistoryAtom = atom<Array<CallHistory>>([]);
@@ -103,18 +103,16 @@ export const filteredConversationsAtom = atom<Array<MessageConversation & { last
 
 export const messagesAtom = atom<Array<Message>>([]);
 
-export const useCallModalOpen = () => useAtomValue(callModalOpenAtom);
-export const useSetCallModalOpen = () => useSetAtom(callModalOpenAtom);
-
 export const useSimCardStateHandlers = () => {
+    const dialSound = useDialingSound();
+    const callSound = useRingtoneSound('ringtone', true);
     const notificationSound = useRingtoneSound('notiSound', false);
 
-    const setNumber = useSetAtom(numberAtom);
+    const [number, setNumber] = useAtom(numberAtom);
     const setAvatar = useSetAtom(avatarAtom);
 
     const setSocietyNumber = useSetAtom(societyNumberAtom);
 
-    const setCallModalOpen = useSetAtom(callModalOpenAtom);
     const setCurrentCall = useSetAtom(currentCallAtom);
 
     const setCallHistory = useSetAtom(callHistoryAtom);
@@ -126,6 +124,9 @@ export const useSimCardStateHandlers = () => {
     useNuiEvent('phone', 'SetSimCardAvatar', setAvatar);
 
     useNuiEvent('phone', 'SetSocietySimCard', setSocietyNumber);
+
+    useNuiEvent('phone', 'SetCallSound', (play: boolean) => (play ? callSound.play() : callSound.stop()));
+    useNuiEvent('phone', 'SetDialSound', (play: boolean) => (play ? dialSound.play() : dialSound.stop()));
 
     useNuiEvent('phone', 'SetCurrentCall', setCurrentCall);
     useNuiEvent('phone', 'SetCallsHistory', setCallHistory);
@@ -139,7 +140,9 @@ export const useSimCardStateHandlers = () => {
 
     useNuiEvent('phone', 'SetMessages', setMessages);
     useNuiEvent('phone', 'AddMessage', (message: Message) => {
-        notificationSound.play();
+        if (number !== message.author) {
+            notificationSound.play();
+        }
         setMessages(messages => [...messages, message]);
     });
 

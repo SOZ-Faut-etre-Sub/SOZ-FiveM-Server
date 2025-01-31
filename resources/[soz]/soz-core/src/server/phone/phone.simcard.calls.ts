@@ -10,9 +10,13 @@ import { ActiveCall } from '../../shared/phone/simcard';
 import { Err } from '../../shared/result';
 import { PrismaService } from '../database/prisma.service';
 import { PlayerService } from '../player/player.service';
+import { Store } from '../store/store';
 
 @Provider()
 export class PhoneSimCardCalls {
+    @Inject('Store')
+    private store: Store;
+
     @Inject(PrismaService)
     private readonly prismaService: PrismaService;
 
@@ -87,6 +91,9 @@ export class PhoneSimCardCalls {
         // });
 
         this.sendCallDataToClients(currentCall);
+
+        TriggerClientEvent(ClientEvent.PHONE_SIMCARD_CALLS_INIT, currentCall.transmitterSource);
+        TriggerClientEvent(ClientEvent.PHONE_SIMCARD_CALLS_RECEIVE, currentCall.receiverSource);
     }
 
     @Rpc(RpcServerEvent.PHONE_SIMCARD_CALLS_ACCEPT)
@@ -97,6 +104,13 @@ export class PhoneSimCardCalls {
             return Err('Call not found');
         }
 
+        const blackout = this.store.getState().global.blackout;
+        const blackoutLevel = this.store.getState().global.blackoutLevel;
+
+        if (blackout || blackoutLevel > 2) {
+            return;
+        }
+
         currentCall.is_accepted = true;
 
         await this.prismaService.phone_calls.updateMany({
@@ -104,7 +118,7 @@ export class PhoneSimCardCalls {
             data: { is_accepted: 1 },
         });
 
-        TriggerEvent(ServerEvent.VOIP_PHONE_CALL_START, source, currentCall.transmitter, currentCall.receiver);
+        TriggerEvent(ServerEvent.VOIP_PHONE_CALL_START, currentCall.transmitter, currentCall.receiver);
 
         this.sendCallDataToClients(currentCall);
     }

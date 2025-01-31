@@ -29,7 +29,7 @@ export const useCallAPI = () => {
                     //       return addNotification({ title: t('CALLS.FEEDBACK.UNAVAILABLE'), app: 'dialer' });
                     //     }
                     // }
-                    return addNotification({ title: t('CALLS.FEEDBACK.UNAVAILABLE'), app: 'dialer' });
+                    // return addNotification({ title: t('CALLS.FEEDBACK.UNAVAILABLE'), app: 'dialer' });
                 })
                 .catch(err => {
                     addNotification({ title: t('CALLS.FEEDBACK.ERROR'), app: 'dialer' });
@@ -40,16 +40,16 @@ export const useCallAPI = () => {
     );
 
     const acceptCall = useCallback(
-        () => fetchNui(NuiEvent.PhoneSimCardCallsAccept, currentCall.transmitter),
+        () => fetchNui(NuiEvent.PhoneSimCardCallsAccept, currentCall?.transmitter),
         [currentCall]
     );
 
     const rejectCall = useCallback(
-        () => fetchNui(NuiEvent.PhoneSimCardCallsDecline, currentCall.transmitter),
+        () => fetchNui(NuiEvent.PhoneSimCardCallsDecline, currentCall?.transmitter),
         [currentCall]
     );
 
-    const endCall = useCallback(() => fetchNui(NuiEvent.PhoneSimCardCallsEnd, currentCall.transmitter), [currentCall]);
+    const endCall = useCallback(() => fetchNui(NuiEvent.PhoneSimCardCallsEnd, currentCall?.transmitter), [currentCall]);
 
     const muteCall = useCallback(() => fetchNui(NuiEvent.PhoneSimCardCallsMute), []);
 

@@ -17,6 +17,9 @@ export interface NuiPhoneMap {
 
     SetSocietySimCard: string;
 
+    OpenCallModal: void;
+    SetCallSound: boolean;
+    SetDialSound: boolean;
     SetCurrentCall: ActiveCall;
     SetCallsHistory: CallHistory[];
 

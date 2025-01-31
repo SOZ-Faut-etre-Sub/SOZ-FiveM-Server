@@ -88,7 +88,7 @@ export class PhoneState {
     }
 
     public isInCall() {
-        return this.currentCall !== null;
+        return this.currentCall !== null && this.currentCall.is_accepted;
     }
 
     @StateSelector(state => state.global.blackout, state => state.global.blackoutLevel)
@@ -102,19 +102,17 @@ export class PhoneState {
 
         if (this.phoneOnCamera) return;
 
-        if (this.phoneOpen) {
-            if (this.isInCall()) {
-                if (IsPedInAnyVehicle(playerPed, true)) {
-                    this.triggerAnimation(playerPed, 'anim@cellphone@in_car@ps', 'cellphone_call_listen_base');
-                } else {
-                    this.triggerAnimation(playerPed, 'cellphone@', 'cellphone_call_listen_base');
-                }
+        if (this.isInCall()) {
+            if (IsPedInAnyVehicle(playerPed, true)) {
+                this.triggerAnimation(playerPed, 'anim@cellphone@in_car@ps', 'cellphone_call_listen_base');
             } else {
-                if (IsPedInAnyVehicle(playerPed, true)) {
-                    this.triggerAnimation(playerPed, 'anim@cellphone@in_car@ps', 'cellphone_text_in');
-                } else {
-                    this.triggerAnimation(playerPed, 'cellphone@', 'cellphone_text_in');
-                }
+                this.triggerAnimation(playerPed, 'cellphone@', 'cellphone_call_listen_base');
+            }
+        } else if (this.phoneOpen) {
+            if (IsPedInAnyVehicle(playerPed, true)) {
+                this.triggerAnimation(playerPed, 'anim@cellphone@in_car@ps', 'cellphone_text_in');
+            } else {
+                this.triggerAnimation(playerPed, 'cellphone@', 'cellphone_text_in');
             }
         } else if (!this.phoneOpen && this.phoneProp !== null) {
             if (IsPedInAnyVehicle(playerPed, true)) {

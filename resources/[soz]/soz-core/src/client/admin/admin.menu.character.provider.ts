@@ -1,6 +1,7 @@
-import { OnNuiEvent } from '../../core/decorators/event';
+import { OnceStep, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { OnceLoader } from '../../core/loader/once.loader';
 import { NuiEvent, ServerEvent } from '../../shared/event';
 import { NotEmptyStringValidator } from '../../shared/nui/input';
 import { InputService } from '../nui/input.service';
@@ -10,6 +11,9 @@ import { NuiMenu } from '../nui/nui.menu';
 export class AdminMenuCharacterProvider {
     @Inject(InputService)
     private inputService: InputService;
+
+    @Inject(OnceLoader)
+    private onceLoader: OnceLoader;
 
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
@@ -48,5 +52,9 @@ export class AdminMenuCharacterProvider {
     public async switchCharacter(citizenId: string): Promise<void> {
         this.nuiMenu.closeAll();
         TriggerServerEvent(ServerEvent.ADMIN_SWITCH_CHARACTER, citizenId);
+
+        setTimeout(() => {
+            this.onceLoader.trigger(OnceStep.NuiLoaded);
+        }, 5000);
     }
 }

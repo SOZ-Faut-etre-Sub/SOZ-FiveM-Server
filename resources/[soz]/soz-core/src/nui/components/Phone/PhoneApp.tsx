@@ -1,9 +1,9 @@
 import './system/locale/i18n';
 
 import { FunctionComponent } from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom';
 
-import { useNuiFocus } from '../../hook/nui';
+import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 import { useAppBankStateHandlers } from './apps/bank/bank.atom';
 import { useAppDarkWebStateHandlers } from './apps/darkweb/darkweb.atom';
 import { CallModalApp } from './apps/dialer/CallModalApp';
@@ -32,9 +32,9 @@ export const PhoneApp: FunctionComponent = () => {
 
     return (
         <SoundProvider>
-            <PhoneAppHooks />
-
             <MemoryRouter>
+                <PhoneAppHooks />
+
                 <PhoneWrapper>
                     <Alerts />
                     <ActionSheet />
@@ -57,6 +57,8 @@ export const PhoneApp: FunctionComponent = () => {
 };
 
 const PhoneAppHooks: FunctionComponent = () => {
+    const navigate = useNavigate();
+
     usePhoneStateHandlers();
     useSimCardStateHandlers();
 
@@ -72,6 +74,10 @@ const PhoneAppHooks: FunctionComponent = () => {
     useAppSnakeStateHandlers();
     useAppWeatherStateHandlers();
     useSocietyMessagesStateHandlers();
+
+    useNuiEvent('phone', 'OpenCallModal', () => {
+        navigate('/call');
+    });
 
     return null;
 };

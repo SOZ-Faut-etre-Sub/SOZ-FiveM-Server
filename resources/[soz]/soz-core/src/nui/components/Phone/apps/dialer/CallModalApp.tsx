@@ -1,5 +1,6 @@
 import { PhoneIcon } from '@heroicons/react/solid';
 import clsx from 'clsx';
+import { useEffect } from 'react';
 import { BsFillMicMuteFill, BsPersonFillAdd, BsVolumeUpFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,23 +15,31 @@ import { CallTimer } from './components/CallTimer';
 import { RingingText } from './components/RingingText';
 
 export const CallModalApp = () => {
-    const { currentCall, isTransmitter } = useCall();
+    const { currentCall } = useCall();
     const navigate = useNavigate();
 
     const { acceptCall, rejectCall, endCall, muteCall } = useCallAPI();
 
-    const receiverContact = useContact(currentCall.receiver);
-    const transmitterContact = useContact(currentCall.transmitter);
+    const receiverContact = useContact(currentCall?.receiver);
+    const transmitterContact = useContact(currentCall?.transmitter);
 
-    const targetNumber = isTransmitter ? currentCall.receiver : currentCall.transmitter;
-    const targetContact = isTransmitter ? receiverContact : transmitterContact;
+    const targetNumber = currentCall?.isTransmitter ? currentCall?.receiver : currentCall?.transmitter;
+    const targetContact = currentCall?.isTransmitter ? receiverContact : transmitterContact;
 
-    const callInProgress = currentCall?.is_accepted || isTransmitter;
+    const callInProgress = currentCall?.is_accepted;
+
+    useEffect(() => {
+        if (currentCall) return;
+
+        navigate('/');
+    }, [currentCall]);
+
+    console.log('CallModalApp', { currentCall, targetContact });
 
     return (
-        <AppContainer className="bg-black/30 text-white backdrop-blur" disableBackground forceControlColor="light">
+        <AppContainer className="bg-black/30 text-white" disableBackground forceControlColor="light">
             <div className="flex flex-col justify-center items-center font-semibold py-10">
-                {currentCall?.is_accepted ? <CallTimer /> : isTransmitter && <RingingText />}
+                {currentCall?.is_accepted ? <CallTimer /> : currentCall?.isTransmitter && <RingingText />}
                 <div className="text-3xl text-center w-full px-10 truncate">
                     {targetContact?.display ?? targetNumber}
                 </div>
@@ -66,7 +75,7 @@ export const CallModalApp = () => {
                     </>
                 )}
 
-                {callInProgress ? (
+                {callInProgress || currentCall?.isTransmitter ? (
                     <CallButton
                         label="End"
                         icon={EndCallIcon}
