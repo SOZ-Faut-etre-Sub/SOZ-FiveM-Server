@@ -14,6 +14,7 @@ import { VehicleType, VehicleTypeFromClass, VehicleVolatileState } from '@public
 const PlateTypeOverride: Record<number, number> = {
     [GetHashKey('rebel')]: 1,
     [GetHashKey('streiter')]: 2,
+    [GetHashKey('streiter2')]: 2,
 };
 
 const jobsAllowed = {
