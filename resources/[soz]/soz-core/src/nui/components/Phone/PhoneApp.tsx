@@ -19,7 +19,9 @@ import { useAppWeatherStateHandlers } from './apps/weather/weather.atom';
 import { ActionSheet } from './system/action-sheet/components/ActionSheet';
 import { Alerts } from './system/alerts/components/Alerts';
 import { useApps } from './system/apps/hooks/useApps';
+import { CallButtonDynamicIsland } from './system/dynamic-island/components/CallButtonDynamicIsland';
 import { CallDynamicIsland } from './system/dynamic-island/components/CallDynamicIsland';
+import { NotificationAlert } from './system/notifications/components/NotificationAlert';
 import { usePhoneFocus, usePhoneInsideInput, usePhoneStateHandlers } from './system/phone.atom';
 import { PhoneWrapper } from './system/PhoneWrapper';
 import { useSimCardStateHandlers } from './system/sim-card/sim.card.atom';
@@ -41,6 +43,8 @@ export const PhoneApp: FunctionComponent = () => {
                     <Alerts />
                     <ActionSheet />
                     <CallDynamicIsland />
+                    <CallButtonDynamicIsland />
+                    <NotificationAlert />
 
                     <Routes>
                         <Route path="/call" element={<CallModalApp />} />
@@ -59,8 +63,6 @@ export const PhoneApp: FunctionComponent = () => {
 };
 
 const PhoneAppHooks: FunctionComponent = () => {
-    const navigate = useNavigate();
-
     usePhoneStateHandlers();
     useSimCardStateHandlers();
 
@@ -76,10 +78,6 @@ const PhoneAppHooks: FunctionComponent = () => {
     useAppSnakeStateHandlers();
     useAppWeatherStateHandlers();
     useSocietyMessagesStateHandlers();
-
-    useNuiEvent('phone', 'OpenCallModal', () => {
-        navigate('/call');
-    });
 
     return null;
 };

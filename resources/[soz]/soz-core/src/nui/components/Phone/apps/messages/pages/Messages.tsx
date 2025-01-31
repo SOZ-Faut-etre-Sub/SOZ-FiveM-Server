@@ -114,6 +114,7 @@ export const Messages = () => {
                     itemContent={(index, data) => <MessageItem key={index} message={data} />}
                     initialTopMostItemIndex={messages.length - 1}
                     increaseViewportBy={740}
+                    followOutput
                 />
 
                 <MessageInput messageConversationId={conversation?.conversation_id} />

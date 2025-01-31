@@ -1,11 +1,9 @@
 import '../Phone.scss';
 
-import { fetchNui } from '@public/nui/fetch';
 import { animated, useSpring } from '@react-spring/web';
 import React, { FunctionComponent, memo, PropsWithChildren, ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { NuiEvent } from '../../../../shared/event/nui';
 import { useAssetPath } from '../../../hook/assets';
 import { useMinimap } from '../../../hook/data';
 import {
@@ -16,12 +14,8 @@ import {
     useZoomConfig,
 } from './config/config.atom';
 import { isDefaultWallpaper } from './config/utils/wallpaper';
-import {
-    usePhoneAvailable,
-    usePhoneNotificationVisibility,
-    usePhoneVisibility,
-    useSetPhoneFreeCamera,
-} from './phone.atom';
+import { useNotificationVisibility } from './notifications/hooks/useNotificationVisibility';
+import { usePhoneAvailable, usePhoneVisibility, useSetPhoneFreeCamera } from './phone.atom';
 import { PHONE_HEIGHT, PHONE_WIDTH } from './phone.constant';
 import { useCall } from './sim-card/hooks/useCall';
 
@@ -31,7 +25,7 @@ export const PhoneWrapper: FunctionComponent<PropsWithChildren> = memo(({ childr
 
     const available = usePhoneAvailable();
     const visibility = usePhoneVisibility();
-    const notifVisibility = usePhoneNotificationVisibility();
+    const notifVisibility = useNotificationVisibility();
     const setFreeCamera = useSetPhoneFreeCamera();
 
     const { currentCall } = useCall();
@@ -45,12 +39,8 @@ export const PhoneWrapper: FunctionComponent<PropsWithChildren> = memo(({ childr
             return '-100vh';
         }
 
-        if (handsFree && !planeMode && !visibility && !!currentCall) {
-            return `${60 - minimap.bottom * 100}vh`;
-        }
-
-        if (handsFree && !planeMode && !visibility && notifVisibility) {
-            return `${80 - minimap.bottom * 100}vh`;
+        if (handsFree && !planeMode && !visibility && (notifVisibility || !!currentCall)) {
+            return `${20 - minimap.bottom * 100}vh`;
         }
 
         return visibility ? `${100 - minimap.bottom * 100}vh` : '-100vh';

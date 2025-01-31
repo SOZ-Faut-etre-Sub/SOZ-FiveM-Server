@@ -68,13 +68,11 @@ export class PhoneSimCardCalls {
 
     @OnEvent(ClientEvent.PHONE_SIMCARD_CALLS_INIT)
     async onCallInit() {
-        this.nuiDispatch.dispatch('phone', 'OpenCallModal');
         this.nuiDispatch.dispatch('phone', 'SetDialSound', true);
     }
 
     @OnEvent(ClientEvent.PHONE_SIMCARD_CALLS_RECEIVE)
     async onCallReceive() {
-        this.nuiDispatch.dispatch('phone', 'OpenCallModal');
         this.nuiDispatch.dispatch('phone', 'SetCallSound', true);
     }
 

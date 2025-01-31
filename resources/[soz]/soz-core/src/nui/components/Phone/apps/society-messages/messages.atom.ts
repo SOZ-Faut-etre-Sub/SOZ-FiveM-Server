@@ -4,6 +4,7 @@ import { useSetAtom } from 'jotai/index';
 
 import { useNuiEvent } from '../../../../hook/nui';
 import { useInjectDebugData } from '../../system/debug/hooks/useInjectDebugData';
+import { useNotifications } from '../../system/notifications/hooks/useNotifications';
 import { useRingtoneSound } from '../../system/sound/hooks/useRingtoneSound';
 
 const messagesAtom = atom<Array<SocietyMessage>>([]);
@@ -14,6 +15,7 @@ export const useUnTakenMessagesCount = () => useAtomValue(unTakenMessagesCountAt
 
 export const useSocietyMessagesStateHandlers = () => {
     const notificationSound = useRingtoneSound('societyNotification', false);
+    const { addNotification } = useNotifications();
 
     const setMessages = useSetAtom(messagesAtom);
 
@@ -23,6 +25,11 @@ export const useSocietyMessagesStateHandlers = () => {
             const index = prev.findIndex(m => m.id === data.id);
             if (index === -1) {
                 notificationSound.play();
+                addNotification({
+                    app: 'society-messages',
+                    title: data.message,
+                });
+
                 return [data, ...prev];
             }
 

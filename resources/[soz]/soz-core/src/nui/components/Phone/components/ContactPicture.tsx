@@ -14,7 +14,7 @@ export const ContactPicture: FunctionComponent<Props> = ({ picture, useOffset = 
 
     return (
         <div
-            className={clsx('bg-cover bg-center my-1 rounded-full', {
+            className={clsx('bg-cover bg-center my-1 rounded-full shrink-0', {
                 'bg-ios-700': theme === 'dark',
                 'bg-gray-300': theme === 'light',
                 'size-10': size === 'small',

@@ -1,20 +1,19 @@
 import { ChatIcon, CheckIcon, MapIcon, XIcon } from '@heroicons/react/outline';
 import { fetchNui } from '@public/nui/fetch';
 import clsx from 'clsx';
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { AutoSizer, CellMeasurer, CellMeasurerCache, List } from 'react-virtualized';
 import { Virtuoso } from 'react-virtuoso';
 
 import { NuiEvent } from '../../../../../../shared/event/nui';
-import { ListButton } from '../../../components/List';
 import { AppContent } from '../../../components/system/AppContent';
 import { AppWrapper } from '../../../components/system/AppWrapper';
 import { useApp } from '../../../system/apps/hooks/useApp';
 import { useAppTitleActionsUpdater } from '../../../system/apps/hooks/useAppTitleActionsUpdater';
 import { useAppTitleUpdater } from '../../../system/apps/hooks/useAppTitleUpdater';
 import { useThemeConfig } from '../../../system/config/config.atom';
+import { useNotifications } from '../../../system/notifications/hooks/useNotifications';
 import { useSocietySimCard } from '../../../system/sim-card/hooks/useSocietySimCard';
 import { MessageItem } from '../components/MessageItem';
 import { useSocietyMessages } from '../messages.atom';
@@ -28,6 +27,7 @@ export const MessagesList: FunctionComponent<{ filter?: string[]; exclude?: stri
 
     const { societyNumber } = useSocietySimCard();
     const messages = useSocietyMessages();
+    const { removeAppNotifications } = useNotifications();
 
     const deleteWaypoint = async () => fetchNui(NuiEvent.DeleteWaypoint);
     const openContactInfo = async () => navigate(`/society-contacts/${societyNumber}`);
@@ -51,6 +51,10 @@ export const MessagesList: FunctionComponent<{ filter?: string[]; exclude?: stri
         if (exclude) return !exclude.includes(message.info?.type);
         return true;
     });
+
+    useEffect(() => {
+        removeAppNotifications(app.id);
+    }, []);
 
     return (
         <AppWrapper>

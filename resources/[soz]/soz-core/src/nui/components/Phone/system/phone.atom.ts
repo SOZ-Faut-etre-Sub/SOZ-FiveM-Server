@@ -22,7 +22,6 @@ const phoneTimeAtom = atom<string>(
 const phoneTimeIsDayAtom = atom<boolean>(get => get(phoneTimeHoursAtom) >= 6 && get(phoneTimeHoursAtom) < 21);
 
 const phoneVisibilityAtom = atom<boolean>(false);
-const phoneNotificationVisibilityAtom = atom<boolean>(false);
 
 export const usePhoneAvailable = () => useAtomValue(phoneAvailableAtom);
 export const usePhoneTime = () => useAtomValue(phoneTimeAtom);
@@ -35,7 +34,6 @@ export const usePhoneInsideInput = () => useAtomValue(phoneInsideInputAtom);
 export const useSetPhoneInsideInput = () => useSetAtom(phoneInsideInputAtom);
 
 export const usePhoneVisibility = () => useAtomValue(phoneVisibilityAtom);
-export const usePhoneNotificationVisibility = () => useAtomValue(phoneNotificationVisibilityAtom);
 
 export const usePhoneStateHandlers = () => {
     const setPhoneAvailable = useSetAtom(phoneAvailableAtom);

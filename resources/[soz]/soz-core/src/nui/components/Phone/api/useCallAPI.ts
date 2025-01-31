@@ -1,6 +1,7 @@
 import { SOZ_CORE_IS_PRODUCTION } from '@public/globals';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import { NuiEvent } from '../../../../shared/event/nui';
 import { fetchNui } from '../../../fetch';
@@ -10,6 +11,7 @@ import { useSimCard } from '../system/sim-card/hooks/useSimCard';
 
 export const useCallAPI = () => {
     const { t } = useTranslation();
+    const navigate = useNavigate();
 
     const { number: myPhoneNumber } = useSimCard();
     const { currentCall } = useCall();
@@ -23,13 +25,8 @@ export const useCallAPI = () => {
             }
 
             fetchNui(NuiEvent.PhoneSimCardCallsInit, number)
-                .then(resp => {
-                    // if (resp.status === 'error') {
-                    //     if (resp.data?.isUnavailable) {
-                    //       return addNotification({ title: t('CALLS.FEEDBACK.UNAVAILABLE'), app: 'dialer' });
-                    //     }
-                    // }
-                    // return addNotification({ title: t('CALLS.FEEDBACK.UNAVAILABLE'), app: 'dialer' });
+                .then(() => {
+                    navigate('/call');
                 })
                 .catch(err => {
                     addNotification({ title: t('CALLS.FEEDBACK.ERROR'), app: 'dialer' });

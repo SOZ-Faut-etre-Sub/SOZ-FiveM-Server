@@ -34,8 +34,6 @@ export const CallModalApp = () => {
         navigate('/');
     }, [currentCall]);
 
-    console.log('CallModalApp', { currentCall, targetContact });
-
     return (
         <AppContainer className="bg-black/30 text-white" disableBackground forceControlColor="light">
             <div className="flex flex-col justify-center items-center font-semibold py-10">
