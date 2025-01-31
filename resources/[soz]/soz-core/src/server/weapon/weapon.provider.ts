@@ -2,6 +2,7 @@ import { PoliceClueDBProvider } from '@private/server/police/police.cluedb.provi
 import { PoliceScientistProvider } from '@private/server/police/police.scientist.provider';
 import { uuidv4 } from '@public/core/utils';
 import { InventoryFactory } from '@public/server/inventory/inventory.factory';
+import { Feature } from '@public/shared/features';
 import { joaat } from '@public/shared/joaat';
 import { getDistance, toVector3Object, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 
@@ -13,6 +14,7 @@ import { ClientEvent, ServerEvent } from '../../shared/event';
 import { InventoryItem, isInventoryItemExpired } from '../../shared/inventory';
 import { RpcServerEvent } from '../../shared/rpc';
 import { excludeExplosionAlert, GlobalWeaponConfig, WeaponConfig, Weapons } from '../../shared/weapons/weapon';
+import { FeatureProvider } from '../feature/feature.provider';
 import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
@@ -41,6 +43,9 @@ export class WeaponProvider {
 
     @Inject(PoliceScientistProvider)
     private policeScientistProvider: PoliceScientistProvider;
+
+    @Inject(FeatureProvider)
+    public featureProvider: FeatureProvider;
 
     @Inject('Store')
     private store: Store;
@@ -261,6 +266,10 @@ export class WeaponProvider {
 
     @OnEvent(ServerEvent.WEAPON_SHOOTING_ALERT)
     async onWeaponShootingAlert(source: number, alertMessage: string, htmlMessage: string, zoneID: string) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.PoliceAlert)) {
+            return;
+        }
+
         //No longer used
         if (this.lastAlertByZone[zoneID] && this.lastAlertByZone[zoneID] + 60000 > Date.now()) {
             return;

@@ -1,3 +1,4 @@
+import { Feature } from '@public/shared/features';
 import { getRandomItem } from '@public/shared/random';
 
 import { Command } from '../../core/decorators/command';
@@ -22,6 +23,7 @@ import {
     VehicleVolatileState,
 } from '../../shared/vehicle/vehicle';
 import { AnimationService } from '../animation/animation.service';
+import { FeatureProvider } from '../feature/feature.provider';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { Notifier } from '../notifier';
 import { NuiDispatch } from '../nui/nui.dispatch';
@@ -76,6 +78,9 @@ export class VehicleLockProvider {
 
     @Inject(NuiDispatch)
     public nuiDispatch: NuiDispatch;
+
+    @Inject(FeatureProvider)
+    public featureProvider: FeatureProvider;
 
     private vehicleOpened: Set<number> = new Set();
 
@@ -498,6 +503,10 @@ export class VehicleLockProvider {
 
     @OnEvent(ClientEvent.VEHICLE_LOCKPICK)
     public onLockpick(type: string, model: number) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.PoliceAlert)) {
+            return;
+        }
+
         const coords = GetEntityCoords(PlayerPedId());
         const zoneID = GetNameOfZone(coords[0], coords[1], coords[2]);
         if (zoneID == 'ISHEIST') {

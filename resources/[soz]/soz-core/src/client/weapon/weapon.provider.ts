@@ -4,6 +4,7 @@ import { Provider } from '@core/decorators/provider';
 import { Tick, TickInterval } from '@core/decorators/tick';
 import { emitRpc } from '@core/rpc';
 import { uuidv4, wait } from '@public/core/utils';
+import { Feature } from '@public/shared/features';
 import { FuelStationType } from '@public/shared/fuel';
 import { Control } from '@public/shared/input';
 import { PlasterConfigs } from '@public/shared/job/lsmc';
@@ -23,6 +24,7 @@ import {
     WeaponName,
 } from '../../shared/weapons/weapon';
 import { ClothingService } from '../clothing/clothing.service';
+import { FeatureProvider } from '../feature/feature.provider';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { PhoneService } from '../phone/phone.service';
 import { PlayerService } from '../player/player.service';
@@ -92,6 +94,9 @@ export class WeaponProvider {
 
     @Inject(ZoneRepository)
     private zoneRepository: ZoneRepository;
+
+    @Inject(FeatureProvider)
+    public featureProvider: FeatureProvider;
 
     private lastPoliceCall = 0;
 
@@ -308,6 +313,10 @@ export class WeaponProvider {
     }
 
     public sendShootingAlert() {
+        if (!this.featureProvider.isFeatureEnabled(Feature.PoliceAlert)) {
+            return;
+        }
+
         const player = PlayerPedId();
         const coords = GetEntityCoords(player);
 
@@ -366,6 +375,10 @@ export class WeaponProvider {
     }
 
     public sendExplosionAlert(x: number, y: number, z: number) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.PoliceAlert)) {
+            return;
+        }
+
         const zoneID = GetNameOfZone(x, y, z);
         if (zoneID == 'ISHEIST') {
             return;
