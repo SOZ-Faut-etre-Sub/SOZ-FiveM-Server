@@ -6,7 +6,7 @@ import { OnNuiEvent } from '@public/core/decorators/event';
 import { NuiEvent } from '@public/shared/event/nui';
 
 import { PlayerInventoryUpdate } from '../../core/decorators/player';
-import { Tick } from '../../core/decorators/tick';
+import { Tick, TickInterval } from '../../core/decorators/tick';
 import { Control } from '../../shared/input';
 import { HousingFournitureProvider } from '../housing/housing.fourniture.provider';
 import { InventoryManager } from '../inventory/inventory.manager';
@@ -14,7 +14,9 @@ import { Notifier } from '../notifier';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { PropPlacementProvider } from '../object/prop.placement.provider';
 import { PlayerService } from '../player/player.service';
+import { StateSelector } from '../store/store';
 import { PhoneService } from './phone.service';
+import { PhoneSimCardCalls } from './phone.simcard.calls';
 
 @Provider()
 export class PhoneManager {
@@ -42,13 +44,50 @@ export class PhoneManager {
     @Inject(Notifier)
     private readonly notifier: Notifier;
 
+    @Inject(PhoneSimCardCalls)
+    private readonly phoneSimCardCalls: PhoneSimCardCalls;
+
     private isInsideInput = false;
+
+    @StateSelector(state => state.global.blackout, state => state.global.blackoutLevel)
+    async onBlackout(blackout: boolean, blackoutLevel: number) {
+        if (blackout || blackoutLevel >= 3) {
+            if (this.phoneState.isPhoneOpen()) {
+                await this.hidePhone();
+            }
+            if (this.phoneState.isInCall()) {
+                await this.phoneSimCardCalls.onCallDecline(this.phoneState.getCurrentCall().transmitter);
+            }
+        }
+    }
 
     @Tick()
     async onTick() {
         if (!IsControlJustPressed(0, Control.PhoneSelect)) return;
 
         this.nuiDispatch.dispatch('phone', 'SetPhoneFreeCamera', false);
+    }
+
+    @Tick(TickInterval.EVERY_SECOND)
+    async ensureAvailability() {
+        const ped = PlayerPedId();
+        const isSwimming = IsPedSwimming(ped);
+
+        if (isSwimming && !this.phoneState.isPhoneDrowned()) {
+            this.phoneState.setPhoneDrowned(true);
+            if (this.phoneState.isInCall()) {
+                await this.phoneSimCardCalls.onCallDecline(this.phoneState.getCurrentCall().transmitter);
+            }
+        } else if (!isSwimming && this.phoneState.isPhoneDrowned()) {
+            this.phoneState.setPhoneDrowned(false);
+        }
+
+        const playerState = this.playerService.getState();
+        if (playerState.isInventoryBusy) {
+            if (this.phoneState.isPhoneOpen()) {
+                await this.hidePhone();
+            }
+        }
     }
 
     @PlayerInventoryUpdate()

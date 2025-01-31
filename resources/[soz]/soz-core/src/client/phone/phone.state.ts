@@ -30,11 +30,18 @@ export class PhoneState {
     private currentCall: ActiveCall | null = null;
 
     public isPhoneDisabled() {
-        return this.cityIsInBlackOut || this.phoneDisabled;
+        return this.cityIsInBlackOut || this.phoneDrowned || this.phoneDisabled;
     }
 
     public isPhoneDrowned() {
         return this.phoneDrowned;
+    }
+
+    public setPhoneDrowned(value: boolean) {
+        this.phoneDrowned = value;
+        if (value) {
+            this.setPhoneOpen(false);
+        }
     }
 
     public isPhoneOpen() {

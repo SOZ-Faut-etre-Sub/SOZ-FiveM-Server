@@ -28,7 +28,7 @@ export const PhoneApp: FunctionComponent = () => {
     const apps = useApps();
     const focus = usePhoneFocus();
 
-    useNuiFocus(focus, focus, focus, null, focus);
+    useNuiFocus(focus, focus, focus);
 
     return (
         <SoundProvider>

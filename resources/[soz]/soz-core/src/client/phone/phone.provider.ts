@@ -60,31 +60,6 @@ export class PhoneProvider {
         return streets;
     }
 
-    @Tick(TickInterval.EVERY_SECOND)
-    async onTick() {
-        const ped = PlayerPedId();
-        const isSwimming = IsPedSwimming(ped);
-
-        // if (isSwimming && !global.isPhoneDrowned) {
-        //     global.isPhoneDrowned = true;
-        //     updateAvailability();
-        // } else if (!isSwimming && global.isPhoneDrowned) {
-        //     global.isPhoneDrowned = false;
-        //     updateAvailability();
-        // }
-        //
-        // if (global.isBlackout != cityIsInBlackOut()) {
-        //     global.isBlackout = cityIsInBlackOut();
-        //     updateAvailability();
-        // }
-        //
-        // if (exports['soz-core'].IsDoingAction()) {
-        //     if (global.isPhoneOpen) {
-        //         await hidePhone();
-        //     }
-        // }
-    }
-
     @Tick(TickInterval.EVERY_SECOND * 2)
     async updateTime() {
         const hour: number = GetClockHours();
