@@ -871,10 +871,14 @@ export const VEHICLE_CONFIGURATION_BY_VEHICLE_MODEL: Record<number, Partial<Inve
     // Other
     [joaat('vagrant')]: { maxWeight: 10000 },
 
-    // Planes
+    // Cartel
     [joaat('streamer216')]: { maxWeight: 500000 },
     [joaat('dodo')]: { maxWeight: 200000 },
     [joaat('microlight')]: { maxWeight: 50000 },
+    [joaat('pony')]: { maxWeight: 250000 },
+    [joaat('pony2')]: { maxWeight: 250000 },
+    [joaat('brutus')]: { maxWeight: 300000 },
+    [joaat('rumpo3')]: { maxWeight: 350000 },
 
     // Trains
     [joaat('freightcar')]: { maxWeight: 200000 },
