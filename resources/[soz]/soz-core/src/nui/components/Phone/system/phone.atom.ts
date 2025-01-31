@@ -5,6 +5,7 @@ import { useInjectDebugData } from './debug/hooks/useInjectDebugData';
 
 const phoneAvailableAtom = atom<boolean>(true);
 const phoneFreeCameraAtom = atom<boolean>(false);
+const phoneInsideInputAtom = atom<boolean>(false);
 
 const phoneFocusAtom = atom<boolean>(get => {
     const freeCamera = get(phoneFreeCameraAtom);
@@ -29,6 +30,9 @@ export const usePhoneTimeIsDay = () => useAtomValue(phoneTimeIsDayAtom);
 
 export const usePhoneFocus = () => useAtomValue(phoneFocusAtom);
 export const useSetPhoneFreeCamera = () => useSetAtom(phoneFreeCameraAtom);
+
+export const usePhoneInsideInput = () => useAtomValue(phoneInsideInputAtom);
+export const useSetPhoneInsideInput = () => useSetAtom(phoneInsideInputAtom);
 
 export const usePhoneVisibility = () => useAtomValue(phoneVisibilityAtom);
 export const usePhoneNotificationVisibility = () => useAtomValue(phoneNotificationVisibilityAtom);

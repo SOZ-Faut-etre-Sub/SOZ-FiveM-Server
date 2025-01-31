@@ -5,11 +5,20 @@ import { PatternFormat } from 'react-number-format';
 
 import { NuiEvent } from '../../../../shared/event/nui';
 import { useThemeConfig } from '../system/config/config.atom';
+import { useSetPhoneInsideInput } from '../system/phone.atom';
 
-export const toggleKeys = (insideInput: boolean) => fetchNui(NuiEvent.PhoneInsideInput, { insideInput });
+export const useToggleKeys = () => {
+    const setInsideInput = useSetPhoneInsideInput();
+
+    return (insideInput: boolean) => {
+        setInsideInput(insideInput);
+        fetchNui(NuiEvent.PhoneInsideInput, { insideInput });
+    };
+};
 
 export const TextField = forwardRef<HTMLInputElement, any>((props, ref) => {
     const theme = useThemeConfig();
+    const toggleKeys = useToggleKeys();
 
     return (
         <input
@@ -37,6 +46,7 @@ export const TextField = forwardRef<HTMLInputElement, any>((props, ref) => {
 
 export const NumberField = forwardRef<HTMLInputElement, any>((props, ref) => {
     const theme = useThemeConfig();
+    const toggleKeys = useToggleKeys();
 
     return (
         <PatternFormat
@@ -64,6 +74,7 @@ export const NumberField = forwardRef<HTMLInputElement, any>((props, ref) => {
 
 export const TextareaField = forwardRef<HTMLInputElement, any>((props, ref) => {
     const theme = useThemeConfig();
+    const toggleKeys = useToggleKeys();
 
     return (
         <textarea
@@ -93,21 +104,25 @@ export const TextareaField = forwardRef<HTMLInputElement, any>((props, ref) => {
     );
 });
 
-export const InputBase = forwardRef<HTMLInputElement, any>((props, ref) => (
-    <input
-        ref={ref}
-        {...props}
-        onMouseUp={e => {
-            toggleKeys(true);
-            if (props.onFocus) {
-                props.onFocus(e);
-            }
-        }}
-        onBlur={e => {
-            toggleKeys(false);
-            if (props.onBlur) {
-                props.onBlur(e);
-            }
-        }}
-    />
-));
+export const InputBase = forwardRef<HTMLInputElement, any>((props, ref) => {
+    const toggleKeys = useToggleKeys();
+
+    return (
+        <input
+            ref={ref}
+            {...props}
+            onMouseUp={e => {
+                toggleKeys(true);
+                if (props.onFocus) {
+                    props.onFocus(e);
+                }
+            }}
+            onBlur={e => {
+                toggleKeys(false);
+                if (props.onBlur) {
+                    props.onBlur(e);
+                }
+            }}
+        />
+    );
+});

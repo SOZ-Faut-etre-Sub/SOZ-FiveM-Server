@@ -40,7 +40,7 @@ export const HomeApp: FunctionComponent = () => {
                 >
                     {homeApps.map(app => (
                         <Link key={app.id} to={app.path} style={{ order: app.position && app.position }}>
-                            <AppIcon icon={app.icon} /*badge={countAppNotification(app.id)}*/ />
+                            <AppIcon icon={app.icon} badge={app.badge} />
                         </Link>
                     ))}
                 </Grid>

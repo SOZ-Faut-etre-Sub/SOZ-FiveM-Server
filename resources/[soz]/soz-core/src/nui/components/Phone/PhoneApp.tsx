@@ -3,6 +3,7 @@ import './system/locale/i18n';
 import { FunctionComponent } from 'react';
 import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom';
 
+import { Control } from '../../../shared/input';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 import { useAppBankStateHandlers } from './apps/bank/bank.atom';
 import { useAppDarkWebStateHandlers } from './apps/darkweb/darkweb.atom';
@@ -19,7 +20,7 @@ import { ActionSheet } from './system/action-sheet/components/ActionSheet';
 import { Alerts } from './system/alerts/components/Alerts';
 import { useApps } from './system/apps/hooks/useApps';
 import { CallDynamicIsland } from './system/dynamic-island/components/CallDynamicIsland';
-import { usePhoneFocus, usePhoneStateHandlers } from './system/phone.atom';
+import { usePhoneFocus, usePhoneInsideInput, usePhoneStateHandlers } from './system/phone.atom';
 import { PhoneWrapper } from './system/PhoneWrapper';
 import { useSimCardStateHandlers } from './system/sim-card/sim.card.atom';
 import { SoundProvider } from './system/sound/providers/SoundProvider';
@@ -27,8 +28,9 @@ import { SoundProvider } from './system/sound/providers/SoundProvider';
 export const PhoneApp: FunctionComponent = () => {
     const apps = useApps();
     const focus = usePhoneFocus();
+    const insideInput = usePhoneInsideInput();
 
-    useNuiFocus(focus, focus, focus);
+    useNuiFocus(focus, focus, insideInput ? false : focus, [Control.Attack, Control.Attack2, Control.Aim]);
 
     return (
         <SoundProvider>
