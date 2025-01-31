@@ -5,4 +5,8 @@ export class PlayerTalentService {
     public getMaxInjuries(): number {
         return 42;
     }
+
+    public isCriminal(): boolean {
+        return false;
+    }
 }

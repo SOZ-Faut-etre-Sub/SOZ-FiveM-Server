@@ -382,7 +382,7 @@ export class LSMCDeathProvider {
             const injuries = playerMetadata.injuries_count;
             const status =
                 (playerMetadata.rp_death && !killData.hungerThristDeath && !killData.frozenDeath) ||
-                injuries >= this.playerTalentService.getMaxInjuries()
+                (this.playerTalentService.isCriminal() && injuries >= this.playerTalentService.getMaxInjuries())
                     ? 'de ton décès'
                     : 'du coma';
 
