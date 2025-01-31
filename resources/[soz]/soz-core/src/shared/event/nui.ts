@@ -223,6 +223,7 @@ export enum NuiEvent {
     PlayerMenuHudSetCinematicCameraActive = 'soz-core:nui:player:menu:hud-set-cinematic-camera-active',
     PlayerMenuHudSetScaledNui = 'soz-core:nui:player:menu:hud-set-scaled-nui',
     PlayerMenuHudSetGlassmorphism = 'soz-core:nui:player:menu:hud-set-glassmorphism',
+    PlayerMenuHudSetGlassmorphismFpsLimit = 'soz-core:nui:player:menu:hud-set-glassmorphism-fps-limit',
     WatchMenuSetTheme = 'soz-core:nui:player:menu:hud-set-theme',
     WatchMenuSetZoom = 'soz-core:nui:player:menu:hud-set-zoom',
     WatchMenuSetInventorySize = 'soz-core:nui:player:menu:hud-set-inventory-size',

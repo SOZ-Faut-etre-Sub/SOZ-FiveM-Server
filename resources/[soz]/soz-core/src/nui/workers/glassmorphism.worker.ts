@@ -8,6 +8,10 @@ onmessage = function (event) {
             gameViewRenderer.resize(event.data.width, event.data.height);
             break;
 
+        case 'fps':
+            gameViewRenderer.setFpsLimit(event.data.fps);
+            break;
+
         case 'enable':
             gameViewRenderer.enable();
             break;

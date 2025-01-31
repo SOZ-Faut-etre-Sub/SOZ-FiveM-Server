@@ -118,6 +118,21 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                     >
                         Glassmorphisme
                     </MenuItemCheckbox>
+
+                    <MenuItemSelect
+                        title="Glassmorphisme FPS Limit"
+                        value={data.glassmorphismFpsLimit}
+                        description="Limite de FPS pour le glassmorphisme du HUD"
+                        onConfirm={async (_, value) => {
+                            await fetchNui(NuiEvent.PlayerMenuHudSetGlassmorphismFpsLimit, { value });
+                        }}
+                    >
+                        {[30, 60, 90, 120, 144, 165, 240, 300].map(fps => (
+                            <MenuItemSelectOption key={fps} value={fps}>
+                                {fps} FPS
+                            </MenuItemSelectOption>
+                        ))}
+                    </MenuItemSelect>
                 </MenuContent>
             </SubMenu>
             <MenuJob data={data.job} />

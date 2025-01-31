@@ -31,6 +31,7 @@ export interface NuiHudMethodMap {
     AddNews: Omit<News, 'id'>;
     VoipDebug: VoiceDebugInfo | null;
     SetGlassmorphism: boolean;
+    SetGlassmorphismFps: number;
     // Watch Settings
     SetTheme: HudTheme;
     SetAvailableTheme: HudTheme[];

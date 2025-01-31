@@ -8,6 +8,7 @@ export class HudGlassmorphismProvider {
     @Inject(NuiDispatch)
     private readonly nuiDispatch: NuiDispatch;
 
+    private _fpsLimit = GetResourceKvpInt('soz_hud_fps_limit') || 30;
     private _disableGlassmorphism = GetResourceKvpInt('soz_hud_glassmorphism_disabled') === 1;
 
     public get glassmorphism(): boolean {
@@ -20,8 +21,19 @@ export class HudGlassmorphismProvider {
         this.nuiDispatch.dispatch('hud', 'SetGlassmorphism', this.glassmorphism);
     }
 
+    public get glassmorphismFpsLimit(): number {
+        return this._fpsLimit;
+    }
+
+    public set glassmorphismFpsLimit(limit: number) {
+        this._fpsLimit = limit;
+        SetResourceKvpInt('soz_hud_fps_limit', limit);
+        this.nuiDispatch.dispatch('hud', 'SetGlassmorphismFps', this.glassmorphismFpsLimit);
+    }
+
     @Once(OnceStep.NuiLoaded)
     public async onNuiLoaded(): Promise<void> {
         this.nuiDispatch.dispatch('hud', 'SetGlassmorphism', this.glassmorphism);
+        this.nuiDispatch.dispatch('hud', 'SetGlassmorphismFps', this.glassmorphismFpsLimit);
     }
 }
