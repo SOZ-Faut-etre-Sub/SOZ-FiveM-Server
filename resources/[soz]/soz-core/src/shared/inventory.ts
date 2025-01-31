@@ -747,6 +747,7 @@ export const VEHICLE_CONFIGURATION_BY_VEHICLE_MODEL: Record<number, Partial<Inve
     [joaat('lspd41')]: { maxWeight: 40000 },
     [joaat('lspd50')]: { maxWeight: 80000 },
     [joaat('lspd51')]: { maxWeight: 80000 },
+    [joaat('lspd60')]: { maxWeight: 500000 },
     [joaat('polmav')]: { maxWeight: 200000 },
     [joaat('policet')]: { maxWeight: 500000 },
     [joaat('riot')]: { maxWeight: 500000 },
@@ -765,6 +766,7 @@ export const VEHICLE_CONFIGURATION_BY_VEHICLE_MODEL: Record<number, Partial<Inve
     [joaat('bcso41')]: { maxWeight: 40000 },
     [joaat('bcso50')]: { maxWeight: 80000 },
     [joaat('bcso51')]: { maxWeight: 80000 },
+    [joaat('bcso60')]: { maxWeight: 500000 },
     [joaat('maverick2')]: { maxWeight: 200000 },
 
     // LSMC
@@ -869,10 +871,14 @@ export const VEHICLE_CONFIGURATION_BY_VEHICLE_MODEL: Record<number, Partial<Inve
     // Other
     [joaat('vagrant')]: { maxWeight: 10000 },
 
-    // Planes
+    // Cartel
     [joaat('streamer216')]: { maxWeight: 500000 },
     [joaat('dodo')]: { maxWeight: 200000 },
     [joaat('microlight')]: { maxWeight: 50000 },
+    [joaat('pony')]: { maxWeight: 250000 },
+    [joaat('pony2')]: { maxWeight: 250000 },
+    [joaat('brutus')]: { maxWeight: 300000 },
+    [joaat('rumpo3')]: { maxWeight: 350000 },
 
     // Trains
     [joaat('freightcar')]: { maxWeight: 200000 },
