@@ -1,12 +1,12 @@
+import { On, Once, OnceStep, OnNuiEvent } from '@core/decorators/event';
+import { Inject } from '@core/decorators/injectable';
+import { emitRpc } from '@core/rpc';
 import { Provider } from '@public/core/decorators/provider';
+import { ClientEvent } from '@public/shared/event/client';
+import { NuiEvent } from '@public/shared/event/nui';
+import { NewSocietyMessage, SocietyMessage, UpdateSocietyMessage } from '@public/shared/phone/apps/society';
 import { RpcServerEvent } from '@public/shared/rpc';
 
-import { On, Once, OnceStep, OnNuiEvent } from '../../../core/decorators/event';
-import { Inject } from '../../../core/decorators/injectable';
-import { emitRpc } from '../../../core/rpc';
-import { ClientEvent } from '../../../shared/event/client';
-import { NuiEvent } from '../../../shared/event/nui';
-import { NewSocietyMessage, SocietyMessage, UpdateSocietyMessage } from '../../../shared/phone/apps/society';
 import { NuiDispatch } from '../../nui/nui.dispatch';
 
 @Provider()
@@ -30,7 +30,7 @@ export class PhoneAppSocietyProvider {
     }
 
     @OnNuiEvent(NuiEvent.PhoneAppSocietySendMessage)
-    async onSendMessage(message: NewSocietyMessage) {
+    async sendMessage(message: NewSocietyMessage) {
         return emitRpc(RpcServerEvent.PHONE_APP_SOCIETY_SEND_MESSAGE, message);
     }
 

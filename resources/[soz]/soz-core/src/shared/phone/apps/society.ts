@@ -1,3 +1,5 @@
+import { Vector3 } from '@public/shared/polyzone/vector';
+
 export type SocietyContact = {
     display: string;
     number: string;
@@ -13,8 +15,10 @@ export type NewSocietyMessage = {
     anonymous: boolean;
     position: boolean;
 
+    htmlMessage?: string;
     type?: string;
     overrideIdentifier?: string;
+    pedPosition?: Vector3;
 };
 
 export type UpdateSocietyMessage = Pick<SocietyMessage, 'id' | 'isTaken' | 'isDone'>;

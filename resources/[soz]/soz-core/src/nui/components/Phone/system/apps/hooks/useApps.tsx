@@ -41,8 +41,6 @@ import { ZutomApp } from '../../../apps/zutom/ZutomApp';
 import { useSocietySimCard } from '../../sim-card/hooks/useSocietySimCard';
 
 export const useApps = () => {
-    const player = usePlayer();
-
     const { societyNumber } = useSocietySimCard();
     const darkWebAppEnabled = useDarkWebEnabled();
 
@@ -59,7 +57,6 @@ export const useApps = () => {
             component: <DialerApp />,
             position: 1,
             home: true,
-            condition: () => !player?.metadata?.isdead,
         },
         {
             id: 'messages',
@@ -69,7 +66,6 @@ export const useApps = () => {
             component: <MessagesApp />,
             position: 2,
             home: true,
-            condition: () => !player?.metadata?.isdead,
         },
         {
             id: 'contacts',
@@ -79,7 +75,6 @@ export const useApps = () => {
             component: <ContactsApp />,
             position: 3,
             home: true,
-            condition: () => !player?.metadata?.isdead,
         },
         {
             id: 'settings',
@@ -88,7 +83,6 @@ export const useApps = () => {
             icon: SettingsIcon,
             component: <SettingsApp />,
             position: 13,
-            condition: () => !player?.metadata?.isdead,
         },
         {
             id: 'photos',
@@ -97,7 +91,6 @@ export const useApps = () => {
             icon: PhotosIcon,
             component: <PhotosApp />,
             position: 3,
-            condition: () => !player?.metadata?.isdead,
         },
         {
             id: 'camera',
@@ -107,7 +100,6 @@ export const useApps = () => {
             component: <CameraApp />,
             position: 4,
             home: true,
-            condition: () => !player?.metadata?.isdead,
         },
 
         /* Society apps */
@@ -118,7 +110,6 @@ export const useApps = () => {
             icon: SocietyContactsIcon,
             component: <SocietyContactsApp />,
             position: 5,
-            condition: () => !player?.metadata?.isdead,
         },
         {
             id: 'society-messages',
@@ -128,7 +119,7 @@ export const useApps = () => {
             component: <SocietyMessagesApp />,
             position: 6,
             badge: societyMessagesBadge,
-            condition: () => !player?.metadata?.isdead && Boolean(societyNumber),
+            condition: () => Boolean(societyNumber),
         },
         {
             id: 'news',
@@ -137,7 +128,6 @@ export const useApps = () => {
             icon: NewsIcon,
             component: <NewsApp />,
             position: 7,
-            condition: () => !player?.metadata?.isdead,
         },
 
         /* Gang apps */
@@ -148,7 +138,7 @@ export const useApps = () => {
             icon: DarkWebIcon,
             component: <DarkWebApp />,
             position: 12,
-            condition: () => !player?.metadata?.isdead && darkWebAppEnabled,
+            condition: () => darkWebAppEnabled,
         },
 
         /* Other apps */
@@ -159,7 +149,6 @@ export const useApps = () => {
             icon: BankIcon,
             component: <BankApp />,
             position: 1,
-            condition: () => !player?.metadata?.isdead,
         },
         {
             id: 'notes',
@@ -218,5 +207,5 @@ export const useApps = () => {
             if (app.condition) return app.condition();
             return true;
         });
-    }, [player, societyNumber, darkWebAppEnabled, societyMessagesBadge]);
+    }, [societyNumber, darkWebAppEnabled, societyMessagesBadge]);
 };

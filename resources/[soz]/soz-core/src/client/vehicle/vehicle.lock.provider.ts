@@ -5,7 +5,8 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { Tick, TickInterval } from '@core/decorators/tick';
 import { emitRpc } from '@core/rpc';
-import { uuidv4, wait, waitUntil } from '@core/utils';
+import { wait, waitUntil } from '@core/utils';
+import { PhoneAppSocietyProvider } from '@public/client/phone/apps/phone.app.society.provider';
 import { PhoneService } from '@public/client/phone/phone.service';
 import { getRandomItem } from '@public/shared/random';
 
@@ -85,6 +86,9 @@ export class VehicleLockProvider {
 
     @Inject(PhoneService)
     private phoneService: PhoneService;
+
+    @Inject(PhoneAppSocietyProvider)
+    private readonly phoneSocialProvider: PhoneAppSocietyProvider;
 
     private vehicleOpened: Set<number> = new Set();
 
@@ -524,7 +528,7 @@ export class VehicleLockProvider {
         const message = getRandomItem(messages);
         const modelName = modelInfo ? modelInfo.name : GetDisplayNameFromVehicleModel(model);
 
-        TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
+        this.phoneSocialProvider.sendMessage({
             anonymous: true,
             number: '555-POLICE',
             message: message.replace('${0}', zone).replace('${1}', modelName),
@@ -532,7 +536,7 @@ export class VehicleLockProvider {
                 .replace('${0}', `<span {class}>${zone}</span>`)
                 .replace('${1}', `<span {class}>${modelName}</span>`),
             position: true,
-            info: { type: 'auto-theft' },
+            type: 'auto-theft',
             overrideIdentifier: 'System',
         });
     }

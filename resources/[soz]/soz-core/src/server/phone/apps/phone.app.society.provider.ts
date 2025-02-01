@@ -69,7 +69,9 @@ export class PhoneAppSocietyProvider {
         const identifier = (message.anonymous ? '#' : '') + (message.overrideIdentifier ?? player.charinfo.phone);
         const pedPosition = message.position
             ? JSON.stringify(toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3))
-            : null;
+            : message.pedPosition
+              ? JSON.stringify(toVector3Object(message.pedPosition))
+              : null;
 
         if (message.number === SocietyNumberList.fbi && username) {
             await this.apiPhoneProvider.sendFbiMessage(player, message.message);

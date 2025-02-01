@@ -3,8 +3,9 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { Tick, TickInterval } from '@core/decorators/tick';
 import { emitRpc } from '@core/rpc';
-import { uuidv4, wait } from '@public/core/utils';
 import { Feature } from '@public/shared/features';
+import { PhoneAppSocietyProvider } from '@public/client/phone/apps/phone.app.society.provider';
+import { wait } from '@public/core/utils';
 import { FuelStationType } from '@public/shared/fuel';
 import { Control } from '@public/shared/input';
 import { PlasterConfigs } from '@public/shared/job/lsmc';
@@ -90,6 +91,9 @@ export class WeaponProvider {
 
     @Inject(ZoneRepository)
     private zoneRepository: ZoneRepository;
+
+    @Inject(PhoneAppSocietyProvider)
+    private readonly phoneSocialProvider: PhoneAppSocietyProvider;
 
     @Inject(FeatureProvider)
     public featureProvider: FeatureProvider;
@@ -330,7 +334,7 @@ export class WeaponProvider {
             const angle = getRandomInt(1, 360);
             const dist = getRandomInt(0, 165);
 
-            TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
+            this.phoneSocialProvider.sendMessage({
                 anonymous: true,
                 number: '555-POLICE',
                 message: `${zone}: ${message.replace('${0}', name)}`,
@@ -390,15 +394,15 @@ export class WeaponProvider {
 
         const message = getRandomItem(ExplosionMessage);
 
-        TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
+        this.phoneSocialProvider.sendMessage({
             anonymous: true,
             number: '555-POLICE',
             message: message.replace('${0}', zone),
             htmlMessage: message.replace('${0}', `<span {class}>${zone}</span>`),
             position: false,
-            info: { type: 'explosion' },
+            type: 'explosion',
             overrideIdentifier: 'System',
-            pedPosition: JSON.stringify({ x: x, y: y, z: z }),
+            pedPosition: [x, y, z] as Vector3,
         });
     }
 
