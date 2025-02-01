@@ -1,9 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { debounce } from '../common/utils/debounce';
-
-export const useKeyboardService = () => {
+export const useKeyboard = () => {
     const navigate = useNavigate();
     const { pathname } = useLocation();
 
@@ -35,3 +33,14 @@ export const useKeyboardService = () => {
         return () => window.removeEventListener('keyup', onKeyUp);
     }, []);
 };
+
+function debounce(func, timeout = 300) {
+    let timer;
+
+    return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            func.apply(this, args);
+        }, timeout);
+    };
+}

@@ -16,6 +16,7 @@ import { useAppSnakeStateHandlers } from './apps/snake/snake.atom';
 import { useSocietyMessagesStateHandlers } from './apps/society-messages/messages.atom';
 import { useAppTetrisStateHandlers } from './apps/tetris/tetris.atom';
 import { useAppWeatherStateHandlers } from './apps/weather/weather.atom';
+import { useKeyboard } from './hooks/useKeyboard';
 import { ActionSheet } from './system/action-sheet/components/ActionSheet';
 import { Alerts } from './system/alerts/components/Alerts';
 import { useApps } from './system/apps/hooks/useApps';
@@ -69,6 +70,8 @@ export const PhoneApp: FunctionComponent = () => {
 };
 
 const PhoneAppHooks: FunctionComponent = () => {
+    useKeyboard();
+
     usePhoneStateHandlers();
     useSimCardStateHandlers();
 
