@@ -29,6 +29,12 @@ export const useNotifications = () => {
         [setNotifications]
     );
 
+    const removeNotificationByIdAndApp = useCallback(
+        (app: INotification['app'], id: INotification['id']) =>
+            setNotifications(prev => prev.filter(notification => notification.id !== id && notification.app !== app)),
+        [setNotifications]
+    );
+
     const removeAppNotifications = useCallback(
         (app: string) => setNotifications(prev => prev.filter(notification => notification.app !== app)),
         [setNotifications]
@@ -39,5 +45,6 @@ export const useNotifications = () => {
         addNotification,
         removeNotification,
         removeAppNotifications,
+        removeNotificationByIdAndApp,
     };
 };

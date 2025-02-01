@@ -1,5 +1,5 @@
-import { ChevronLeftIcon, PlusIcon, StarIcon as StarIconOutline } from '@heroicons/react/outline';
-import { ChatIcon, PencilAltIcon, PhoneIcon, StarIcon, TrashIcon } from '@heroicons/react/solid';
+import { StarIcon as StarIconOutline } from '@heroicons/react/outline';
+import { ChatIcon, PhoneIcon, StarIcon, TrashIcon } from '@heroicons/react/solid';
 import clsx from 'clsx';
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';

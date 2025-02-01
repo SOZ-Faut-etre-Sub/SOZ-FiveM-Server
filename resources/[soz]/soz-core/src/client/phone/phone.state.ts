@@ -67,6 +67,10 @@ export class PhoneState {
         }
     }
 
+    public setPhoneFocus(value: boolean) {
+        this.nuiDispatch.dispatch('phone', 'SetPhoneDisableFocus', !value);
+    }
+
     public setPhoneDisabled(value: boolean) {
         this.phoneDisabled = value;
     }

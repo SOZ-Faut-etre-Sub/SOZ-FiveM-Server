@@ -11,6 +11,7 @@ import {
 } from '../../../../../shared/phone/simcard';
 import { useNuiEvent } from '../../../../hook/nui';
 import { useInjectDebugData } from '../debug/hooks/useInjectDebugData';
+import { useNotifications } from '../notifications/hooks/useNotifications';
 import { useDialingSound } from '../sound/hooks/useDialingSound';
 import { useRingtoneSound } from '../sound/hooks/useRingtoneSound';
 import { mockCallHistory } from './call-history.constant';
@@ -108,6 +109,8 @@ export const useSimCardStateHandlers = () => {
     const callSound = useRingtoneSound('ringtone', true);
     const notificationSound = useRingtoneSound('notiSound', false);
 
+    const { addNotification } = useNotifications();
+
     const [number, setNumber] = useAtom(numberAtom);
     const setAvatar = useSetAtom(avatarAtom);
 
@@ -142,6 +145,12 @@ export const useSimCardStateHandlers = () => {
     useNuiEvent('phone', 'AddMessage', (message: Message) => {
         if (number !== message.author) {
             notificationSound.play();
+            addNotification({
+                id: message.conversation_id,
+                app: 'messages',
+                title: message.author,
+                content: message.message,
+            });
         }
         setMessages(messages => [...messages, message]);
     });

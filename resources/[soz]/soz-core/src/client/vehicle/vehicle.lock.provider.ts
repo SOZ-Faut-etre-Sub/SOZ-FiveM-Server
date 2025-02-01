@@ -1,4 +1,3 @@
-import { Feature } from '@public/shared/features';
 import { Command } from '@core/decorators/command';
 import { Once, OnceStep, OnEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
@@ -8,6 +7,7 @@ import { emitRpc } from '@core/rpc';
 import { wait, waitUntil } from '@core/utils';
 import { PhoneAppSocietyProvider } from '@public/client/phone/apps/phone.app.society.provider';
 import { PhoneService } from '@public/client/phone/phone.service';
+import { Feature } from '@public/shared/features';
 import { getRandomItem } from '@public/shared/random';
 
 import { ClientEvent, ServerEvent } from '../../shared/event';

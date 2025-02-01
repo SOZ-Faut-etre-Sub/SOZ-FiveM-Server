@@ -1,4 +1,4 @@
-import { ChatIcon, CheckIcon, MapIcon, XIcon } from '@heroicons/react/outline';
+import { ChatIcon, MapIcon } from '@heroicons/react/outline';
 import { fetchNui } from '@public/nui/fetch';
 import clsx from 'clsx';
 import React, { FunctionComponent, useEffect } from 'react';

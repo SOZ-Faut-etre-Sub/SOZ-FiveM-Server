@@ -1,10 +1,10 @@
 import './system/locale/i18n';
 
 import { FunctionComponent } from 'react';
-import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 
 import { Control } from '../../../shared/input';
-import { useNuiEvent, useNuiFocus } from '../../hook/nui';
+import { useNuiFocus } from '../../hook/nui';
 import { useAppBankStateHandlers } from './apps/bank/bank.atom';
 import { useAppDarkWebStateHandlers } from './apps/darkweb/darkweb.atom';
 import { CallModalApp } from './apps/dialer/CallModalApp';

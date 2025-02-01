@@ -1,7 +1,6 @@
 import { Once, OnceStep, OnEvent } from '@core/decorators/event';
 import { Exportable } from '@core/decorators/exports';
 import { Inject } from '@core/decorators/injectable';
-import { PlayerInventoryUpdate } from '@core/decorators/player';
 import { Provider } from '@core/decorators/provider';
 import { Tick, TickInterval } from '@core/decorators/tick';
 import { PlayerInventoryLoader } from '@core/loader/player.inventory.loader';

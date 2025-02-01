@@ -2,7 +2,6 @@ import { Once, OnceStep, OnEvent, OnNuiEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { InputService } from '@public/client/nui/input.service';
-import { uuidv4 } from '@public/core/utils';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import { PositiveNumberValidator } from '@public/shared/nui/input';
 import { MenuType } from '@public/shared/nui/menu';

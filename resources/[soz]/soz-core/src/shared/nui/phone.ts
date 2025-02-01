@@ -11,6 +11,7 @@ export interface NuiPhoneMap {
     SetAvailability: boolean;
     SetVisibility: boolean;
     SetPhoneFreeCamera: boolean;
+    SetPhoneDisableFocus: boolean;
     SetTime: { hour: number; minute: number };
 
     SetEmergency: boolean;

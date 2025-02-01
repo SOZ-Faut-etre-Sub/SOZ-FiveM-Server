@@ -4,17 +4,20 @@ import clsx from 'clsx';
 import React, { FunctionComponent, PropsWithChildren, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { useClipboard } from '../../../hook/clipboard';
 import { useHidePicturesConfig } from '../system/config/config.atom';
 import { Button } from './Button';
+import { PictureModal } from './PictureModal';
 
 export const PictureReveal: FunctionComponent<PropsWithChildren<{ image: string }>> = ({ image, children }) => {
-    const [t] = useTranslation();
+    const { t } = useTranslation();
+
+    const copyToClipboard = useClipboard();
 
     const hidePictures = useHidePicturesConfig();
     const [covered, setCovered] = useState<boolean>(false);
     const [bigImage, setBigImage] = useState<boolean>(false);
     const [, setReady] = useState<boolean>(false);
-    // const { addAlert } = useSnackbar();
 
     useEffect(() => {
         if (hidePictures === true) {
@@ -24,18 +27,11 @@ export const PictureReveal: FunctionComponent<PropsWithChildren<{ image: string 
     }, [hidePictures]);
 
     const onClickCover = () => setCovered(false);
-
-    const handleCopyImage = () => {
-        // setClipboard(image);
-        // addAlert({
-        //     type: 'success',
-        //     message: "Adresse de l'image copiée dans le presse-papier",
-        // });
-    };
+    const handleCopyImage = () => copyToClipboard(image);
 
     return (
         <div className="relative" onClick={onClickCover}>
-            {/*<PictureModal open={bigImage} setOpen={setBigImage} children={children} />*/}
+            <PictureModal open={bigImage} setOpen={setBigImage} children={children} />
             {covered && (
                 <div className="relative h-full flex justify-center items-center">{t('GENERIC_CLICK_TO_REVEAL')}</div>
             )}

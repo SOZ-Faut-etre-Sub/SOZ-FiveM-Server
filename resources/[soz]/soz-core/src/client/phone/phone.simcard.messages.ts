@@ -1,12 +1,6 @@
 import { Provider } from '@core/decorators/provider';
 import { Inject } from '@public/core/decorators/injectable';
-import {
-    Message,
-    MessageConversation,
-    NewMessage,
-    NewMessageConversation,
-    UpdateMessageConversation,
-} from '@public/shared/phone/simcard';
+import { Message, MessageConversation, NewMessage, NewMessageConversation } from '@public/shared/phone/simcard';
 
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { emitRpc } from '../../core/rpc';

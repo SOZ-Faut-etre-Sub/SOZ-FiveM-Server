@@ -11,7 +11,6 @@ import { CellIcon } from '../../assets/cell';
 import { FlyIcon } from '../../assets/fly';
 import { SatelliteIcon } from '../../assets/satellite';
 import { useAppActions, useAppGetBack, useAppTitle } from '../../system/apps/apps.atom';
-import { useApp } from '../../system/apps/hooks/useApp';
 import { usePlaneMode, useThemeConfig } from '../../system/config/config.atom';
 import { DynamicIsland } from '../../system/dynamic-island/components/DynamicIsland';
 import { useEmergency } from '../../system/emergency/emergency.atom';
@@ -87,7 +86,7 @@ export const StatusBar: FunctionComponent<StatusBarProps> = memo(({ forceControl
                 <div className="flex justify-start items-center gap-1 font-semibold truncate pl-4 w-2/6">
                     <p className="mr-2">{time}</p>
                     {!emergency &&
-                        notifications.map(({ id, icon: Icon, ...other }) => (
+                        notifications.map(({ id, icon: Icon }) => (
                             <Icon key={id} className="text-white size-4 rounded-sm" />
                         ))}
                 </div>

@@ -6,8 +6,12 @@ import { useInjectDebugData } from './debug/hooks/useInjectDebugData';
 const phoneAvailableAtom = atom<boolean>(true);
 const phoneFreeCameraAtom = atom<boolean>(false);
 const phoneInsideInputAtom = atom<boolean>(false);
+const phoneForceDisableFocusAtom = atom<boolean>(false);
 
 const phoneFocusAtom = atom<boolean>(get => {
+    const phoneForceDisableFocus = get(phoneForceDisableFocusAtom);
+    if (phoneForceDisableFocus) return false;
+
     const freeCamera = get(phoneFreeCameraAtom);
     if (freeCamera) return false;
 
@@ -39,12 +43,14 @@ export const usePhoneStateHandlers = () => {
     const setPhoneAvailable = useSetAtom(phoneAvailableAtom);
     const setPhoneVisibility = useSetAtom(phoneVisibilityAtom);
     const setPhoneFreeCamera = useSetAtom(phoneFreeCameraAtom);
+    const setForceDisableFocus = useSetAtom(phoneForceDisableFocusAtom);
 
     const setPhoneTimeHours = useSetAtom(phoneTimeHoursAtom);
     const setPhoneTimeMinutes = useSetAtom(phoneTimeMinutesAtom);
 
     useNuiEvent('phone', 'SetAvailability', setPhoneAvailable);
     useNuiEvent('phone', 'SetPhoneFreeCamera', setPhoneFreeCamera);
+    useNuiEvent('phone', 'SetPhoneDisableFocus', setForceDisableFocus);
     useNuiEvent('phone', 'SetTime', data => {
         setPhoneTimeHours(data.hour);
         setPhoneTimeMinutes(data.minute);

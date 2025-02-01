@@ -1,4 +1,3 @@
-import { usePlayer } from '@public/nui/hook/data';
 import { useMemo } from 'react';
 
 import { IAppConfig } from '../../../../../../shared/phone/app';

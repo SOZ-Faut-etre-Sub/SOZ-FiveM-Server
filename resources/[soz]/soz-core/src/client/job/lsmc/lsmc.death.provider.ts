@@ -1,6 +1,6 @@
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
-import { uuidv4, wait } from '@core/utils';
+import { wait } from '@core/utils';
 import { PlayerTalentService } from '@private/client/player/player.talent.service';
 import { AnimationService } from '@public/client/animation/animation.service';
 import { BlipFactory } from '@public/client/blip';

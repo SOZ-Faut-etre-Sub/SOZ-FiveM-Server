@@ -2,11 +2,9 @@ import { Provider } from '@public/core/decorators/provider';
 import { RpcServerEvent } from '@public/shared/rpc';
 
 import { OnNuiEvent } from '../../../core/decorators/event';
-import { Inject } from '../../../core/decorators/injectable';
 import { emitRpc } from '../../../core/rpc';
 import { NuiEvent } from '../../../shared/event/nui';
 import { DarkwebConversation, PreDBDarkwebMessage } from '../../../shared/phone/apps/darkweb';
-import { NuiDispatch } from '../../nui/nui.dispatch';
 
 @Provider()
 export class PhoneAppDarkWebProvider {

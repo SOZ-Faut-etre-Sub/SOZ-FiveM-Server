@@ -1,10 +1,8 @@
 import { FingerPrintIcon } from '@heroicons/react/solid';
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { AppWrapper } from '../../../components/system/AppWrapper';
 import { MatrixRainingEffect } from '../components/MatrixRainingEffect';
-import { useDarkWebAPI } from '../hooks/useDarkwebApi';
 
 export const DarkWebIntro = () => {
     const navigate = useNavigate();

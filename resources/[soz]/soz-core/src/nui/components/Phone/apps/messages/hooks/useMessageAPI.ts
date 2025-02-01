@@ -2,7 +2,6 @@ import { fetchNui } from '@public/nui/fetch';
 import { NuiEvent } from '@public/shared/event/nui';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
 
 import { NewMessage } from '../../../../../../shared/phone/simcard';
 import { useNotifications } from '../../../system/notifications/hooks/useNotifications';

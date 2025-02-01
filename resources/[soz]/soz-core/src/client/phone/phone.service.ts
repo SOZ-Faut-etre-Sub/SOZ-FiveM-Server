@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
+import { PhoneSimCardCalls } from '@public/client/phone/phone.simcard.calls';
 import { PhoneState } from '@public/client/phone/phone.state';
 import { VoicePhoneProvider } from '@public/client/voip/voice/voice.phone.provider';
 
@@ -9,6 +10,9 @@ export class PhoneService {
 
     @Inject(PhoneState)
     private readonly voicePhoneProvider: VoicePhoneProvider;
+
+    @Inject(PhoneSimCardCalls)
+    private readonly phoneSimCardCalls: PhoneSimCardCalls;
 
     private disabledReasons = new Set<string>();
 
@@ -21,17 +25,19 @@ export class PhoneService {
     }
 
     setPhoneFocus(status: boolean): void {
-        // exports['soz-phone'].setPhoneFocus(status);
+        this.phoneState.setPhoneFocus(status);
     }
 
     stopPhoneCall(): void {
-        // exports['soz-phone'].stopPhoneCall();
+        if (!this.phoneState.isInCall()) return;
+
+        this.phoneSimCardCalls.onCallDecline(this.phoneState.getCurrentCall().transmitter);
     }
 
     setPhoneDisabled(reason: string, value: boolean): void {
         if (value) {
             this.disabledReasons.add(reason);
-            // exports['soz-phone'].stopPhoneCall();
+            this.phoneSimCardCalls.onCallDecline(this.phoneState.getCurrentCall().transmitter);
             this.phoneState.setPhoneDisabled(value);
         } else {
             this.disabledReasons.delete(reason);

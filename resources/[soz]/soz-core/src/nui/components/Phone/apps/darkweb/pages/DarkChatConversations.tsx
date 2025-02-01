@@ -1,7 +1,6 @@
-import { Transition } from '@headlessui/react';
 import { DarkwebConversation, THREAD_PRICE } from '@public/shared/phone/apps/darkweb';
 import clsx from 'clsx';
-import { ChangeEvent, useEffect, useMemo, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,7 +12,7 @@ import { useSimCard } from '../../../system/sim-card/hooks/useSimCard';
 import { DarkWebConversationCreateModal } from '../components/DarkwebConversationCreateModal';
 import { DarkWebConversationPasswordModal } from '../components/DarkwebConversationPasswordModal';
 import { DarkWebSubjectListItem } from '../components/DarkwebSubjectListItem';
-import { useDarkWebConversations, useDarkWebParticipants } from '../darkweb.atom';
+import { useDarkWebParticipants } from '../darkweb.atom';
 import { useConversations } from '../hooks/useConversations';
 import { useDarkWebAPI } from '../hooks/useDarkwebApi';
 

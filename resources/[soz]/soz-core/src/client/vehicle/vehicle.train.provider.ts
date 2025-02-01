@@ -20,9 +20,9 @@ const models = [
     'freightcont2',
     'freightgrain',
     'metrotrain',
-	'class1_2',
-	'class1t',
-	'soz_freightcar',
+    'class1_2',
+    'class1t',
+    'soz_freightcar',
     'tankercar',
 ];
 

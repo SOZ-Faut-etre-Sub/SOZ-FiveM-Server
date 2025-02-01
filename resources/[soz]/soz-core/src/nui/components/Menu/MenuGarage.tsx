@@ -1,5 +1,5 @@
-import { PlayerVehicleState } from '@public/shared/vehicle/player.vehicle';
 import { TaxType } from '@public/shared/tax';
+import { PlayerVehicleState } from '@public/shared/vehicle/player.vehicle';
 import { FunctionComponent, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';

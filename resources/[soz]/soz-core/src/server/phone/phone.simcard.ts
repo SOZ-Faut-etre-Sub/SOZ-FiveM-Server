@@ -1,4 +1,3 @@
-import { Prisma } from '@prisma/client';
 import { Provider } from '@public/core/decorators/provider';
 
 import { Inject } from '../../core/decorators/injectable';
