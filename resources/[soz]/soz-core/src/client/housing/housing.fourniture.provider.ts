@@ -1151,9 +1151,11 @@ export class HousingFournitureProvider {
             return;
         }
 
+        const interiorFromEntity = GetInteriorFromEntity(PlayerPedId());
         if (
             !canUseHousingInAppartment(player, this.lastApartment, this.housingPropertyZoneProvider.temporaryAccess) ||
-            this.lastInterior !== GetInteriorFromEntity(PlayerPedId())
+            interiorFromEntity === 0 ||
+            this.lastInterior !== interiorFromEntity
         ) {
             return;
         }
@@ -1196,7 +1198,8 @@ export class HousingFournitureProvider {
             return;
         }
 
-        if (this.lastInterior !== GetInteriorFromEntity(PlayerPedId()) || this.lastApartment.shell) {
+        const interiorFromEntity = GetInteriorFromEntity(PlayerPedId());
+        if (interiorFromEntity === 0 || this.lastInterior !== interiorFromEntity || this.lastApartment.shell) {
             return;
         }
 
