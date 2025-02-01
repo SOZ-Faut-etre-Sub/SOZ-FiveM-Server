@@ -8,7 +8,7 @@ interface ActionSheetItemProps extends HTMLAttributes<HTMLLIElement> {
 
 export const ActionSheetTitle: FunctionComponent<ActionSheetItemProps> = ({ children }) => {
     return (
-        <li className={clsx('flex justify-center items-center font-semibold text-sm h-[56px] text-gray-300')}>
+        <li className={clsx('flex justify-center items-center font-semibold text-sm min-h-[56px] py-6 text-phone-500')}>
             {children}
         </li>
     );
@@ -18,11 +18,11 @@ export const ActionSheetItem: FunctionComponent<ActionSheetItemProps> = ({ child
     return (
         <li
             className={clsx(
-                'flex justify-center items-center text-[#007AFF] text-sm h-[56px] hover:bg-ios-700 hover:bg-opacity-50 first:rounded-t-2xl last:rounded-b-2xl',
+                'flex justify-center items-center text-[#007AFF] h-[56px] hover:bg-phone-600/30 first:rounded-t-2xl last:rounded-b-2xl',
                 {
                     'cursor-pointer': props.onClick,
                     'font-semibold': bold,
-                    'text-red-500': selected,
+                    'font-semibold bg-phone-600/30': selected,
                 }
             )}
             {...props}

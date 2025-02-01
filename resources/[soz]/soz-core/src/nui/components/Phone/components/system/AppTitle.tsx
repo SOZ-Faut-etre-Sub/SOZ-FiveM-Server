@@ -28,14 +28,7 @@ export const AppTitle: React.FC<AppTitleProps> = ({ app, title, subtitle, isBigH
     useAppTitleUpdater(!inViewport, title);
 
     return (
-        <div
-            ref={ref}
-            className={clsx('px-5 transition-all duration-300 ease-in-out pb-2', {
-                'bg-ios-800': theme === 'dark' || pathname.includes('/camera'),
-                'bg-ios-50': theme === 'light' && !pathname.includes('/camera'),
-                'bg-transparent': pathname.includes('/darkweb'),
-            })}
-        >
+        <div ref={ref} className="px-5 transition-all duration-300 ease-in-out pb-2">
             <h2
                 className={clsx('font-semibold tracking-wide transition-all duration-300 ease-in-out', {
                     'text-gray-200': theme === 'dark',
