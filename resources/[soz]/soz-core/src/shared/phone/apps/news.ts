@@ -20,5 +20,5 @@ export type NewsMessage = {
     image?: string;
     message: string;
     createdAt?: number;
-    job: string;
+    job?: string;
 };

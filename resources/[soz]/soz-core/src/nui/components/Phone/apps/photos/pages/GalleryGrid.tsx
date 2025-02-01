@@ -45,6 +45,13 @@ export const GalleryGrid = () => {
                     rowCount={Math.ceil(photos.length / GRID_COLUMN_COUNT)}
                     columnCount={GRID_COLUMN_COUNT}
                     itemData={photos}
+                    className={clsx(
+                        'scrollbar scrollbar-w-[5px] scrollbar-thumb-rounded-full scrollbar-track-rounded-full',
+                        {
+                            'scrollbar-thumb-white/80': theme === 'dark',
+                            'scrollbar-thumb-black/20': theme === 'light',
+                        }
+                    )}
                     style={{
                         overflowY: 'auto',
                         overflowX: 'hidden',

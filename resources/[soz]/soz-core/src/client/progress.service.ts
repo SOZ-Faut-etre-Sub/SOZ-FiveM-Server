@@ -4,6 +4,7 @@ import { AnimationRunner } from '@public/client/animation/animation.factory';
 import { InstructionalService } from '@public/client/instructional.service';
 import { AudioService } from '@public/client/nui/audio.service';
 import { NuiDispatch } from '@public/client/nui/nui.dispatch';
+import { PhoneManager } from '@public/client/phone/phone.manager';
 import { PlayerService } from '@public/client/player/player.service';
 import { animationFlagsToOptions, AnimationProps, AnimationStopReason } from '@public/shared/animation';
 import { Control } from '@public/shared/input';
@@ -37,6 +38,9 @@ export class ProgressService {
 
     @Inject(UpwPollutionProvider)
     private readonly upwPollutionProvider: UpwPollutionProvider;
+
+    @Inject(PhoneManager)
+    private readonly phoneManager: PhoneManager;
 
     private currentAction: Partial<ProgressOptions> | null = null;
     private currentPromise: PCancelable<ProgressResult> | null = null;
@@ -80,7 +84,7 @@ export class ProgressService {
             this.playerService.updateState({
                 isInventoryBusy: true,
             });
-            exports['soz-phone'].setPhoneVisible(false);
+            await this.phoneManager.hidePhone();
         }
 
         if (options.headingEntity) {

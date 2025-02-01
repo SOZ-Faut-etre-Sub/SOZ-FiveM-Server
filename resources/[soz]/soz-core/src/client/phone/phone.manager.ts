@@ -113,7 +113,7 @@ export class PhoneManager {
         }
 
         if (this.phoneState.isInCall()) {
-            await this.phoneSimCardCalls.onCallDecline(this.phoneState.getCurrentCall().transmitter);
+            await this.stopPhoneCall();
         }
 
         this.nuiDispatch.dispatch('phone', 'SetEmergency', true);
@@ -171,6 +171,10 @@ export class PhoneManager {
         this.phoneState.setPhoneFrontCameraEnabled(false);
         this.phoneState.setPhoneOpen(false);
         this.isInsideInput = false;
+    }
+
+    public async stopPhoneCall() {
+        return this.phoneSimCardCalls.onCallDecline(this.phoneState.getCurrentCall().transmitter);
     }
 
     private hasPlayerPhone() {

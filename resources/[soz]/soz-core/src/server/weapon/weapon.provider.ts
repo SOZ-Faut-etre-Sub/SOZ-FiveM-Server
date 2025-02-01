@@ -1,15 +1,16 @@
+import { On, Once, OnceStep, OnEvent } from '@core/decorators/event';
+import { Inject } from '@core/decorators/injectable';
+import { Provider } from '@core/decorators/provider';
+import { Rpc } from '@core/decorators/rpc';
 import { PoliceClueDBProvider } from '@private/server/police/police.cluedb.provider';
 import { PoliceScientistProvider } from '@private/server/police/police.scientist.provider';
 import { uuidv4 } from '@public/core/utils';
 import { InventoryFactory } from '@public/server/inventory/inventory.factory';
+import { PhoneAppSocietyProvider } from '@public/server/phone/apps/phone.app.society.provider';
 import { Feature } from '@public/shared/features';
 import { joaat } from '@public/shared/joaat';
-import { getDistance, toVector3Object, Vector3, Vector4 } from '@public/shared/polyzone/vector';
+import { getDistance, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 
-import { On, Once, OnceStep, OnEvent } from '../../core/decorators/event';
-import { Inject } from '../../core/decorators/injectable';
-import { Provider } from '../../core/decorators/provider';
-import { Rpc } from '../../core/decorators/rpc';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { InventoryItem, isInventoryItemExpired } from '../../shared/inventory';
 import { RpcServerEvent } from '../../shared/rpc';
@@ -46,6 +47,9 @@ export class WeaponProvider {
 
     @Inject(FeatureProvider)
     public featureProvider: FeatureProvider;
+
+    @Inject(PhoneAppSocietyProvider)
+    private readonly phoneSocietyProvider: PhoneAppSocietyProvider;
 
     @Inject('Store')
     private store: Store;
@@ -277,14 +281,15 @@ export class WeaponProvider {
 
         const coords = GetEntityCoords(GetPlayerPed(source)) as Vector3;
 
-        exports['soz-phone'].sendSocietyMessage({
+        await this.phoneSocietyProvider.sendMessage(source, {
             anonymous: true,
+            position: false,
             number: '555-POLICE',
             message: alertMessage,
             htmlMessage: htmlMessage,
-            info: { type: 'shooting' },
+            type: 'shooting',
             overrideIdentifier: 'System',
-            pedPosition: JSON.stringify(toVector3Object(coords)),
+            pedPosition: coords,
         });
 
         this.lastAlertByZone[zoneID] = Date.now();

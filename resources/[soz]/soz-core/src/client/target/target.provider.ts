@@ -11,6 +11,7 @@ import { Control } from '../../shared/input';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { TargetOption } from '../../shared/target';
 import { NuiDispatch } from '../nui/nui.dispatch';
+import { PhoneManager } from '../phone/phone.manager';
 import { PlayerService } from '../player/player.service';
 import { ScreenService } from '../screen.service';
 import { TargetService } from './target.service';
@@ -37,6 +38,9 @@ export class TargetProvider {
 
     @Inject(Notifier)
     private readonly notifier: Notifier;
+
+    @Inject(PhoneManager)
+    private readonly phoneManager: PhoneManager;
 
     private _targetActive = false;
     private _targetFound = false;
@@ -159,7 +163,7 @@ export class TargetProvider {
         if (!option) return;
 
         if (option.blackoutGlobal) {
-            exports['soz-phone'].stopPhoneCall();
+            await this.phoneManager.stopPhoneCall();
         }
 
         const distance = getDistance(this.getPlayerCoords(), option.entityCoords);

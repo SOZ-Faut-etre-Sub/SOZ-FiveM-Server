@@ -8,7 +8,7 @@ import { useNotifications } from '../../system/notifications/hooks/useNotificati
 import { useRingtoneSound } from '../../system/sound/hooks/useRingtoneSound';
 
 const messagesAtom = atom<Array<SocietyMessage>>([]);
-const unTakenMessagesCountAtom = atom(get => get(messagesAtom).filter(m => !m.isTaken).length);
+const unTakenMessagesCountAtom = atom(get => get(messagesAtom)?.filter(m => !m.isTaken)?.length ?? 0);
 
 export const useSocietyMessages = () => useAtomValue(messagesAtom);
 export const useUnTakenMessagesCount = () => useAtomValue(unTakenMessagesCountAtom);
