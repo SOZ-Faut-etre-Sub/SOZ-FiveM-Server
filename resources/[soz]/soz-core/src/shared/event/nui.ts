@@ -682,6 +682,8 @@ export enum NuiEvent {
     PhoneSimCardAddContact = 'soz-core:nui:phone:sim-card-add-contact',
     PhoneSimCardUpdateContact = 'soz-core:nui:phone:sim-card-update-contact',
     PhoneSimCardDeleteContact = 'soz-core:nui:phone:sim-card-delete-contact',
+    PhoneEmergencyCallLSMC = 'soz-core:nui:phone:emergency-call-lsmc',
+    PhoneEmergencyCallUHU = 'soz-core:nui:phone:emergency-call-uhu',
     PhoneAppDarkWebFetchConversations = 'soz-core:nui:phone:app-dark-web-fetch-conversations',
     PhoneAppDarkWebAddConversation = 'soz-core:nui:phone:app-dark-web-add-conversation',
     PhoneAppDarkWebSetConversationAsRead = 'soz-core:nui:phone:app-dark-web-set-conversation-as-read',

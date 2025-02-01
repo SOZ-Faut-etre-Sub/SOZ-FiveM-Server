@@ -1,16 +1,25 @@
 import { wait } from '@public/core/utils';
 import { NuiEvent } from '@public/shared/event/nui';
+import { ServerEvent } from '@public/shared/event/server';
 
 import { Once, OnceStep, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
+import { LSMCDeathProvider } from '../job/lsmc/lsmc.death.provider';
 import { NuiDispatch } from '../nui/nui.dispatch';
+import { PhoneManager } from './phone.manager';
 
 @Provider()
 export class PhoneProvider {
     @Inject(NuiDispatch)
     private readonly nuiDispatch: NuiDispatch;
+
+    @Inject(LSMCDeathProvider)
+    private readonly lsmcDeathProvider: LSMCDeathProvider;
+
+    @Inject(PhoneManager)
+    private readonly phoneManager: PhoneManager;
 
     @Once(OnceStep.NuiLoaded)
     async onNuiLoaded() {
@@ -58,6 +67,17 @@ export class PhoneProvider {
         }
 
         return streets;
+    }
+
+    @OnNuiEvent(NuiEvent.PhoneEmergencyCallLSMC)
+    async phoneEmergencyCallLSMC() {
+        this.lsmcDeathProvider.call();
+    }
+
+    @OnNuiEvent(NuiEvent.PhoneEmergencyCallUHU)
+    async phoneEmergencyCallUHU() {
+        TriggerServerEvent(ServerEvent.LSMC_REVIVE, null, true, true);
+        this.phoneManager.hidePhone();
     }
 
     @Tick(TickInterval.EVERY_SECOND * 2)

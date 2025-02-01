@@ -21,6 +21,8 @@ import { Alerts } from './system/alerts/components/Alerts';
 import { useApps } from './system/apps/hooks/useApps';
 import { CallButtonDynamicIsland } from './system/dynamic-island/components/CallButtonDynamicIsland';
 import { CallDynamicIsland } from './system/dynamic-island/components/CallDynamicIsland';
+import { useEmergency, useEmergencyStateHandlers } from './system/emergency/emergency.atom';
+import { EmergencyApp } from './system/emergency/EmergencyApp';
 import { NotificationAlert } from './system/notifications/components/NotificationAlert';
 import { usePhoneFocus, usePhoneInsideInput, usePhoneStateHandlers } from './system/phone.atom';
 import { PhoneWrapper } from './system/PhoneWrapper';
@@ -31,6 +33,8 @@ export const PhoneApp: FunctionComponent = () => {
     const apps = useApps();
     const focus = usePhoneFocus();
     const insideInput = usePhoneInsideInput();
+
+    const emergency = useEmergency();
 
     useNuiFocus(focus, focus, insideInput ? false : focus, [Control.Attack, Control.Attack2, Control.Aim]);
 
@@ -46,16 +50,18 @@ export const PhoneApp: FunctionComponent = () => {
                     <CallButtonDynamicIsland />
                     <NotificationAlert />
 
-                    <Routes>
-                        <Route path="/call" element={<CallModalApp />} />
+                    {emergency ? (
+                        <EmergencyApp />
+                    ) : (
+                        <Routes>
+                            <Route index element={<HomeApp />} />
+                            <Route path="/call" element={<CallModalApp />} />
 
-                        <Route index element={<HomeApp />} />
-                        {/*<Route path="/emergency" element={<EmergencyModal />} />*/}
-
-                        {apps.map(app => (
-                            <Route key={app.id} path={app.path + '/*'} element={app.component} />
-                        ))}
-                    </Routes>
+                            {apps.map(app => (
+                                <Route key={app.id} path={app.path + '/*'} element={app.component} />
+                            ))}
+                        </Routes>
+                    )}
                 </PhoneWrapper>
             </MemoryRouter>
         </SoundProvider>
@@ -67,6 +73,7 @@ const PhoneAppHooks: FunctionComponent = () => {
     useSimCardStateHandlers();
 
     // System Apps
+    useEmergencyStateHandlers();
     useAppPhotosStateHandlers();
 
     // Apps

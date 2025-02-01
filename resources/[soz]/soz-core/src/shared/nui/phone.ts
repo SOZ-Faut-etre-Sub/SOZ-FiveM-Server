@@ -12,6 +12,9 @@ export interface NuiPhoneMap {
     SetPhoneFreeCamera: boolean;
     SetTime: { hour: number; minute: number };
 
+    SetEmergency: boolean;
+    SetEmergencyDeath: string;
+
     SetSimCard: string;
     SetSimCardAvatar: string;
 

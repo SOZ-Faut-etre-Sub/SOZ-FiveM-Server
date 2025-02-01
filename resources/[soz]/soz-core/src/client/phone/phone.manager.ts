@@ -2,7 +2,8 @@ import { Command } from '@core/decorators/command';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { PhoneState } from '@public/client/phone/phone.state';
-import { OnNuiEvent } from '@public/core/decorators/event';
+import { OnEvent, OnNuiEvent } from '@public/core/decorators/event';
+import { ClientEvent } from '@public/shared/event/client';
 import { NuiEvent } from '@public/shared/event/nui';
 
 import { PlayerInventoryUpdate } from '../../core/decorators/player';
@@ -105,6 +106,30 @@ export class PhoneManager {
         this.isInsideInput = insideInput;
     }
 
+    @OnEvent(ClientEvent.PLAYER_ON_DEATH)
+    async onPlayerDeath() {
+        if (this.phoneState.isPhoneOpen()) {
+            await this.hidePhone();
+        }
+
+        if (this.phoneState.isInCall()) {
+            await this.phoneSimCardCalls.onCallDecline(this.phoneState.getCurrentCall().transmitter);
+        }
+
+        this.nuiDispatch.dispatch('phone', 'SetEmergency', true);
+    }
+
+    @OnEvent(ClientEvent.INJURY_DEATH)
+    async onInjuryDeath(reason: string) {
+        this.nuiDispatch.dispatch('phone', 'SetEmergencyDeath', reason);
+    }
+
+    @OnEvent(ClientEvent.LSMC_REVIVE)
+    async onRevive() {
+        this.nuiDispatch.dispatch('phone', 'SetEmergency', false);
+        this.nuiDispatch.dispatch('phone', 'SetEmergencyDeath', null);
+    }
+
     @Command('phone', {
         description: 'Afficher le téléphone',
         passthroughNuiFocus: true,
@@ -142,7 +167,7 @@ export class PhoneManager {
         this.phoneState.setPhoneOpen(true);
     }
 
-    private async hidePhone() {
+    public async hidePhone() {
         this.phoneState.setPhoneFrontCameraEnabled(false);
         this.phoneState.setPhoneOpen(false);
         this.isInsideInput = false;

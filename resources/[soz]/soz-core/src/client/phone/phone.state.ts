@@ -4,6 +4,7 @@ import { Tick } from '@core/decorators/tick';
 import { AnimationService } from '@public/client/animation/animation.service';
 import { NuiDispatch } from '@public/client/nui/nui.dispatch';
 import { AttachedObjectService } from '@public/client/object/attached.object.service';
+import { PlayerService } from '@public/client/player/player.service';
 import { StateSelector } from '@public/client/store/store';
 import { ActiveCall } from '@public/shared/phone/simcard';
 
@@ -17,6 +18,9 @@ export class PhoneState {
 
     @Inject(AttachedObjectService)
     private attachedObjectService: AttachedObjectService;
+
+    @Inject(PlayerService)
+    private readonly playerService: PlayerService;
 
     private phoneProp: number | null = null;
     private phoneOpen = false;
@@ -107,6 +111,7 @@ export class PhoneState {
     async onTick() {
         const playerPed = PlayerPedId();
 
+        if (this.playerService.getState().isDead) return;
         if (this.phoneOnCamera) return;
 
         if (this.isInCall()) {
