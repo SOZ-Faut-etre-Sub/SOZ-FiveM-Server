@@ -155,10 +155,6 @@ export enum ClientEvent {
     OIL_REFILL_ESSENCE_STATION = 'soz-core:client:oil:refill-essence-station',
     OIL_REFILL_KEROSENE_STATION = 'soz-core:client:oil:refill-kerosene-station',
 
-    PHONE_APP_WEATHER_UPDATE_FORECASTS = 'phone:app:weather:updateForecasts',
-    PHONE_APP_WEATHER_UPDATE_STORM_ALERT = 'phone:app:weather:updateStormAlert',
-    PHONE_APP_BANK_UPDATE_BALANCE = 'phone:client:app:bank:updateBalance',
-
     STONK_DELIVER_LOCATION = 'stonk:client:DeliverLocation',
     STONK_APPLY_OUTFIT = 'soz-core:client:stonk:ApplyDutyClothing',
 
@@ -468,8 +464,11 @@ export enum ClientEvent {
     PHONE_SIMCARD_CALLS_UPDATE = 'phone:app:simcard:calls:update',
     PHONE_SIMCARD_MESSAGES_MESSAGE_NEW = 'phone:app:simcard:messages:message:new',
     PHONE_SIMCARD_MESSAGES_CONVERSATION_RELOAD = 'phone:app:simcard:messages:conversation:reload',
+    PHONE_APP_BANK_UPDATE_BALANCE = 'soz-core:server:phone:app:bank:updateBalance',
     PHONE_APP_SOCIETY_RECEIVE_MESSAGE = 'phone:app:society:receive-message',
     PHONE_APP_TETRIS_UPDATE_LEADERBOARD = 'phone:app:tetris:updateLeaderboard',
     PHONE_APP_SNAKE_UPDATE_LEADERBOARD = 'phone:app:snake:updateLeaderboard',
     PHONE_APP_NEWS_BROADCAST = 'soz-core:server:phone:app:news:broadcast',
+    PHONE_APP_WEATHER_UPDATE_FORECASTS = 'soz-core:server:phone:app:weather:updateForecasts',
+    PHONE_APP_WEATHER_UPDATE_STORM_ALERT = 'soz-core:server:phone:app:weather:updateStormAlert',
 }

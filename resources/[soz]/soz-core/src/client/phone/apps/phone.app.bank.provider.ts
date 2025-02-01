@@ -1,8 +1,9 @@
 import { PlayerService } from '@public/client/player/player.service';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
+import { ClientEvent } from '@public/shared/event/client';
 
-import { Once, OnceStep, OnNuiEvent } from '../../../core/decorators/event';
+import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../../core/decorators/event';
 import { emitRpc } from '../../../core/rpc';
 import { NuiEvent } from '../../../shared/event/nui';
 import { RpcServerEvent } from '../../../shared/rpc';
@@ -33,6 +34,7 @@ export class PhoneAppBankProvider {
         await this.updateBankBalance();
     }
 
+    @OnEvent(ClientEvent.PHONE_APP_BANK_UPDATE_BALANCE)
     protected async updateBankBalance() {
         const player = this.playerService.getPlayer();
         if (!player) {

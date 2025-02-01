@@ -1,4 +1,5 @@
 import { SOZ_CORE_IS_PRODUCTION } from '@public/globals';
+import { fetchNui } from '@public/nui/fetch';
 import { useInterval } from '@public/nui/hook/useInterval';
 import { formatDistanceToNow } from 'date-fns';
 import { fr } from 'date-fns/locale/fr';

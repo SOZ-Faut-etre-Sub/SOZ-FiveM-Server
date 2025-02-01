@@ -509,9 +509,6 @@ export enum ServerEvent {
 
     CRAFTING_TRAINING = 'soz-core:crafting:craft-training',
 
-    ALERT_POLICE = 'soz-core:alert:notification:draw-police',
-    ALERT_MESSAGE = 'phone:createSocietyMessagesBroadcast',
-
     FISHING_SUCCESS = 'soz-core:server:fishing:success',
     FISHING_ROTTEN = 'soz-core:server:fishing:rotten',
     FISHING_GARBAGE = 'soz-core:server:fishing:garbage',
