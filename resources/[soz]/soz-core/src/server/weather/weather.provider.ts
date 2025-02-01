@@ -5,7 +5,6 @@ import axios from 'axios';
 import { addMinutes, addSeconds, differenceInSeconds, format } from 'date-fns';
 
 import { Command } from '../../core/decorators/command';
-import { Exportable } from '../../core/decorators/exports';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
@@ -166,7 +165,7 @@ export class WeatherProvider {
                 });
 
                 TriggerClientEvent(ClientEvent.PHONE_APP_WEATHER_UPDATE_FORECASTS, -1);
-                TriggerLatentClientEvent(ClientEvent.WEATHER_UPDATE_FORECASTS, -1, 1024, this.getWeatherForecasts());
+                TriggerLatentClientEvent(ClientEvent.WEATHER_UPDATE_FORECASTS, -1, 1024, this.getForecasts());
 
                 const duration = currentForecast.duration;
                 await wait(duration);
@@ -195,7 +194,7 @@ export class WeatherProvider {
             this.prepareForecasts();
 
             TriggerClientEvent(ClientEvent.PHONE_APP_WEATHER_UPDATE_FORECASTS, -1);
-            TriggerLatentClientEvent(ClientEvent.WEATHER_UPDATE_FORECASTS, -1, 1024, this.getWeatherForecasts());
+            TriggerLatentClientEvent(ClientEvent.WEATHER_UPDATE_FORECASTS, -1, 1024, this.getForecasts());
 
             const duration = weather.duration;
             await wait(duration);
@@ -241,7 +240,7 @@ export class WeatherProvider {
         this.store.dispatch.global.update({ weather: weather });
 
         TriggerClientEvent(ClientEvent.PHONE_APP_WEATHER_UPDATE_FORECASTS, -1);
-        TriggerLatentClientEvent(ClientEvent.WEATHER_UPDATE_FORECASTS, -1, 1024, this.getWeatherForecasts());
+        TriggerLatentClientEvent(ClientEvent.WEATHER_UPDATE_FORECASTS, -1, 1024, this.getForecasts());
 
         this.monitor.traceEvent('weather_update', { weather: weather });
     }
@@ -289,18 +288,12 @@ export class WeatherProvider {
         }
     }
 
-    @Exportable('getWeatherForecasts')
-    @Rpc(RpcServerEvent.WEATHER_GET_FORECASTS)
-    getWeatherForecasts(): ForecastWithTemperature[] {
-        return this.incomingForecasts;
-    }
-
     @Rpc(RpcServerEvent.GET_FORECASTS)
     public async getForecasts(): Promise<ForecastWithTemperature[]> {
         return this.incomingForecasts;
     }
 
-    @Exportable('getStormAlert')
+    @Rpc(RpcServerEvent.GET_STORM_ALERT)
     getStormAlert(): number {
         return this.stormDeadline;
     }

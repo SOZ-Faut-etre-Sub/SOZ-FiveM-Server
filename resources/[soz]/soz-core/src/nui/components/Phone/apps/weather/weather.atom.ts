@@ -1,3 +1,4 @@
+import { useNuiEvent } from '@public/nui/hook/nui';
 import { atom } from 'jotai';
 import { useSetAtom } from 'jotai/index';
 import { atomWithRefresh } from 'jotai/utils';
@@ -14,6 +15,9 @@ export const currentForecastAtom = atom<ForecastWithTemperature | undefined>(get
 export const useAppWeatherStateHandlers = () => {
     const setAlertEndTimestamp = useSetAtom(alertEndTimestampAtom);
     const setForecasts = useSetAtom(forecastsAtom);
+
+    useNuiEvent('phone', 'AppWeatherSetData', setForecasts);
+    useNuiEvent('phone', 'AppWeatherSetStormAlert', setAlertEndTimestamp);
 
     useInjectDebugData(() => {
         setAlertEndTimestamp(Date.now() + 10000);

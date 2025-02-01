@@ -46,7 +46,7 @@ export class HudWeatherIconProvider {
         this.nuiReady = true;
         this.update();
 
-        this.forecasts = await emitRpc<ForecastWithTemperature[]>(RpcServerEvent.WEATHER_GET_FORECASTS);
+        this.forecasts = await emitRpc<ForecastWithTemperature[]>(RpcServerEvent.GET_FORECASTS);
 
         if (this.forecasts.length > 0) {
             this.nuiDispatch.dispatch('weather', 'forecast', this.forecasts.shift());

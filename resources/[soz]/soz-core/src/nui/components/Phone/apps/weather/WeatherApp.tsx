@@ -1,10 +1,12 @@
 import { useInterval } from '@public/nui/hook/useInterval';
+import { NuiEvent } from '@public/shared/event/nui';
 import clsx from 'clsx';
 import { formatDistanceToNow } from 'date-fns';
 import { fr } from 'date-fns/locale/fr';
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { fetchNui } from '../../../../fetch';
 import { AppContainer } from '../../components/system/AppContainer';
 import { AppContent } from '../../components/system/AppContent';
 import { AppWrapper } from '../../components/system/AppWrapper';
@@ -29,6 +31,10 @@ export const WeatherApp: FunctionComponent = () => {
         refreshAlertInProgress();
         forceRender(prev => prev + 1);
     }, 5000);
+
+    useEffect(() => {
+        fetchNui(NuiEvent.PhoneAppWeatherFetchData);
+    }, []);
 
     return (
         <AppContainer disableBackground>

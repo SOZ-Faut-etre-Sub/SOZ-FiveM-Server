@@ -705,6 +705,7 @@ export enum NuiEvent {
     PhoneAppBankRejectInvoice = 'soz-core:nui:phone:app-bank-reject-invoice',
     PhoneAppTetrisAddScore = 'soz-core:nui:phone:app-tetris-add-score',
     PhoneAppSnakeAddScore = 'soz-core:nui:phone:app-snake-add-score',
+    PhoneAppWeatherFetchData = 'soz-core:nui:phone:app-weather-fetch-data',
 
     GetPlayerPosition = 'soz-core:nui:get-player-position',
     GetStreetName = 'soz-core:nui:get-street-name',
