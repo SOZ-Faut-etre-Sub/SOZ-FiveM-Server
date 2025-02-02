@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactNode } from 'react';
+import { FunctionComponent } from 'react';
 
 import { IconComponentProps } from '../phone.types';
 
@@ -7,7 +7,7 @@ export interface INotification {
     app: string;
     id?: string;
     title: string;
-    content?: ReactNode;
+    content?: string;
     icon?: FunctionComponent<IconComponentProps>;
     notificationIcon?: FunctionComponent<IconComponentProps>;
     sound?: boolean;

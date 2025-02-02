@@ -82,8 +82,11 @@ export const TextareaField = forwardRef<HTMLInputElement, any>((props, ref) => {
             {...props}
             className={clsx(
                 'w-full h-full resize-none rounded-lg py-1 px-3 focus:bg-opacity-70 focus:outline-none',
+                'scrollbar scrollbar-w-[5px] scrollbar-thumb-rounded-full scrollbar-track-rounded-full',
                 props.className,
                 {
+                    'scrollbar-thumb-white/80': theme === 'dark',
+                    'scrollbar-thumb-black/20': theme === 'light',
                     'bg-ios-700 text-white': theme === 'dark',
                     'bg-gray-300 text-black': theme === 'light',
                 }

@@ -23,6 +23,7 @@ export const Checkbox: FunctionComponent<Props> = ({ title, enabled, onClick }) 
                 {title}
             </span>
             <button
+                type="button"
                 className={clsx(
                     'relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200',
                     {

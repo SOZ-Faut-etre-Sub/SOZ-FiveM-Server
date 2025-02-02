@@ -37,7 +37,23 @@ export const PhoneApp: FunctionComponent = () => {
 
     const emergency = useEmergency();
 
-    useNuiFocus(focus, focus, insideInput ? false : focus, [Control.Attack, Control.Attack2, Control.Aim]);
+    useNuiFocus(
+        focus,
+        focus,
+        insideInput ? false : focus,
+        focus
+            ? [
+                  Control.Attack,
+                  Control.Attack2,
+                  Control.Aim,
+                  Control.Reload,
+                  Control.MeleeAttack1,
+                  Control.MeleeAttack2,
+                  Control.MeleeAttackLight,
+                  Control.MeleeAttackHeavy,
+              ]
+            : null
+    );
 
     return (
         <SoundProvider>

@@ -21,7 +21,7 @@ export const useNotifications = () => {
 
             setNotifications(prev => [{ ...notification, id: uuidv4(), icon: app?.icon }, ...prev]);
         },
-        [setNotifications]
+        [apps, setNotifications]
     );
 
     const removeNotification = useCallback(

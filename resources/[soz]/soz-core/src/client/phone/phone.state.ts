@@ -58,6 +58,8 @@ export class PhoneState {
 
         const playerPed = PlayerPedId();
 
+        if (this.playerService.getState().isDead) return;
+
         if (value) {
             if (IsPedInAnyVehicle(playerPed, true)) {
                 this.triggerAnimation(playerPed, 'anim@cellphone@in_car@ps', 'cellphone_text_in');
@@ -73,6 +75,12 @@ export class PhoneState {
 
     public setPhoneDisabled(value: boolean) {
         this.phoneDisabled = value;
+
+        if (value) {
+            this.setPhoneOpen(false);
+            this.setPhoneOnCamera(false);
+            this.setPhoneFrontCameraEnabled(false);
+        }
     }
 
     public isPhoneOnCamera() {

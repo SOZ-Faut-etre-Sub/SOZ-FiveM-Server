@@ -1,4 +1,4 @@
-import { urlIsImage } from '../../../../../utils/image';
+import { formatMessage } from '../../../apps/messages/utils/format';
 import { INotification } from '../notification.types';
 
 export const NotificationItem = (notification: INotification) => {
@@ -16,7 +16,7 @@ export const NotificationItem = (notification: INotification) => {
             {Icon && <Icon className="text-white size-12 p-1 rounded-xl shrink-0" />}
             <div className="flex flex-col justify-around grow h-full">
                 <p className="font-semibold normal-case">{title}</p>
-                <p className="font-light normal-case">{urlIsImage(content) ? 'Vous avez reçu une image' : content}</p>
+                <p className="font-light normal-case">{formatMessage(content)}</p>
             </div>
         </li>
     );

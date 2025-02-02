@@ -13,6 +13,7 @@ import { AppContent } from '../../../components/system/AppContent';
 import { AppWrapper } from '../../../components/system/AppWrapper';
 import { useAppTitleGetBackUpdater } from '../../../system/apps/hooks/useAppTitleGetBackUpdater';
 import { useAppTitleUpdater } from '../../../system/apps/hooks/useAppTitleUpdater';
+import { useDynamicIsland } from '../../../system/dynamic-island/hooks/useDynamicIsland';
 import { useSocietyContact } from '../hooks/useContact';
 import { useContactsAPI } from '../hooks/useContactsAPI';
 
@@ -30,6 +31,7 @@ export const ContactShow: FunctionComponent = () => {
     const { getPath } = useAssetPath();
     const contact = useSocietyContact(number);
     const { sendSocietyMessage } = useContactsAPI();
+    const { sendIsland } = useDynamicIsland();
 
     const {
         register,
@@ -52,6 +54,7 @@ export const ContactShow: FunctionComponent = () => {
             anonymous: data.anonymous,
             position: data.position,
         });
+        sendIsland('success');
     };
 
     useAppTitleGetBackUpdater(() => navigate(-1));

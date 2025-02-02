@@ -7,7 +7,7 @@ export const PoliceContent: FunctionComponent<NewsMessage> = ({ type, message })
     if (!isActivePoliceMessage(type)) {
         return (
             <>
-                Les forces de l'ordre ont arrêté <strong>{message}</strong>.
+                Les forces de l'ordre ne sont plus à la recherche de <strong>{message}</strong>.
             </>
         );
     }

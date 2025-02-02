@@ -2,14 +2,11 @@ import { useAtomValue } from 'jotai';
 import { useEffect, useRef, useState } from 'react';
 
 import { useEmergency } from '../../emergency/emergency.atom';
-import { usePhoneAvailable, usePhoneVisibility } from '../../phone.atom';
 import { lastNotificationAtom } from '../notification.atom';
 
 const DEFAULT_ALERT_HIDE_TIME = 3000;
 
 export const useNotificationVisibility = () => {
-    const available = usePhoneAvailable();
-    const phoneVisible = usePhoneVisibility();
     const emergency = useEmergency();
 
     const lastNotification = useAtomValue(lastNotificationAtom);
@@ -18,13 +15,7 @@ export const useNotificationVisibility = () => {
     const [notifVisibility, setNotifVisibility] = useState<boolean>(false);
 
     useEffect(() => {
-        if (phoneVisible || emergency) {
-            setNotifVisibility(false);
-        }
-    }, [phoneVisible, emergency, setNotifVisibility]);
-
-    useEffect(() => {
-        if (available && !phoneVisible && lastNotification && !emergency) {
+        if (lastNotification && !emergency) {
             setNotifVisibility(true);
 
             if (notificationTimer.current) {
@@ -36,7 +27,7 @@ export const useNotificationVisibility = () => {
                 setNotifVisibility(false);
             }, DEFAULT_ALERT_HIDE_TIME);
         }
-    }, [available, phoneVisible, lastNotification, emergency, setNotifVisibility]);
+    }, [lastNotification, emergency, setNotifVisibility]);
 
     return notifVisibility;
 };

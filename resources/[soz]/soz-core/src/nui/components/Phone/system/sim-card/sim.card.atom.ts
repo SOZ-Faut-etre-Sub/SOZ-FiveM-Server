@@ -10,6 +10,7 @@ import {
     Separator,
 } from '../../../../../shared/phone/simcard';
 import { useNuiEvent } from '../../../../hook/nui';
+import { formatMessage } from '../../apps/messages/utils/format';
 import { useInjectDebugData } from '../debug/hooks/useInjectDebugData';
 import { useNotifications } from '../notifications/hooks/useNotifications';
 import { useDialingSound } from '../sound/hooks/useDialingSound';
@@ -96,9 +97,11 @@ export const filteredConversationsAtom = atom<Array<MessageConversation & { last
         })
         .map(c => ({
             ...c,
-            last_message: messages
-                .filter(m => m.conversation_id === c.conversation_id)
-                .sort((a, b) => b.createdAt - a.createdAt)?.[0]?.message,
+            last_message: formatMessage(
+                messages
+                    .filter(m => m.conversation_id === c.conversation_id)
+                    .sort((a, b) => b.createdAt - a.createdAt)?.[0]?.message
+            ),
         }));
 });
 

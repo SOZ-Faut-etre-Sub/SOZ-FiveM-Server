@@ -86,9 +86,9 @@ export const StatusBar: FunctionComponent<StatusBarProps> = memo(({ forceControl
                 <div className="flex justify-start items-center gap-1 font-semibold truncate pl-4 w-2/6">
                     <p className="mr-2">{time}</p>
                     {!emergency &&
-                        notifications.map(({ id, icon: Icon }) => (
-                            <Icon key={id} className="text-white size-4 rounded-sm" />
-                        ))}
+                        notifications
+                            .filter(n => n.icon !== undefined)
+                            .map(({ id, icon: Icon }) => <Icon key={id} className="text-white size-4 rounded-sm" />)}
                 </div>
 
                 <DynamicIsland />
