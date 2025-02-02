@@ -7,6 +7,7 @@ import { NuiDispatch } from '@public/client/nui/nui.dispatch';
 import { PhoneManager } from '@public/client/phone/phone.manager';
 import { PlayerService } from '@public/client/player/player.service';
 import { animationFlagsToOptions, AnimationProps, AnimationStopReason } from '@public/shared/animation';
+import { ClientEvent } from '@public/shared/event/client';
 import { Control } from '@public/shared/input';
 import { fromVector3Object } from '@public/shared/polyzone/vector';
 import PCancelable from 'p-cancelable';
@@ -38,9 +39,6 @@ export class ProgressService {
 
     @Inject(UpwPollutionProvider)
     private readonly upwPollutionProvider: UpwPollutionProvider;
-
-    @Inject(PhoneManager)
-    private readonly phoneManager: PhoneManager;
 
     private currentAction: Partial<ProgressOptions> | null = null;
     private currentPromise: PCancelable<ProgressResult> | null = null;
@@ -84,7 +82,7 @@ export class ProgressService {
             this.playerService.updateState({
                 isInventoryBusy: true,
             });
-            await this.phoneManager.hidePhone();
+            TriggerEvent(ClientEvent.PHONE_HIDE);
         }
 
         if (options.headingEntity) {

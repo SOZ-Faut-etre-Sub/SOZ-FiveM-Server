@@ -167,6 +167,7 @@ export class PhoneManager {
         this.phoneState.setPhoneOpen(true);
     }
 
+    @OnEvent(ClientEvent.PHONE_HIDE)
     public async hidePhone() {
         this.phoneState.setPhoneFrontCameraEnabled(false);
         this.phoneState.setPhoneOpen(false);
