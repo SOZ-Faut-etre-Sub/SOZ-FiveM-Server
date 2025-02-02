@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { NuiEvent } from '../../../../shared/event/nui';
+import { isErr, Result } from '../../../../shared/result';
 import { fetchNui } from '../../../fetch';
 import { useNotifications } from '../system/notifications/hooks/useNotifications';
 import { useCall } from '../system/sim-card/hooks/useCall';
@@ -24,8 +25,13 @@ export const useCallAPI = () => {
                 return addNotification({ title: t('CALLS.FEEDBACK.ERROR_MYSELF'), app: 'dialer' });
             }
 
-            fetchNui(NuiEvent.PhoneSimCardCallsInit, number)
-                .then(() => {
+            fetchNui<string, Result<any, string>>(NuiEvent.PhoneSimCardCallsInit, number)
+                .then(resp => {
+                    if (isErr(resp)) {
+                        addNotification({ title: t('CALLS.FEEDBACK.UNAVAILABLE'), app: 'dialer' });
+                        return;
+                    }
+
                     navigate('/call');
                 })
                 .catch(err => {

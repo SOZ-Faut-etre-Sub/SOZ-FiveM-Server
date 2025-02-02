@@ -1,10 +1,11 @@
+import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
-import { OnEvent, OnNuiEvent } from '@public/core/decorators/event';
+import { emitRpc } from '@core/rpc';
+import { Once, OnceStep, OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { ClientEvent } from '@public/shared/event/client';
-import { ActiveCall } from '@public/shared/phone/simcard';
+import { ActiveCall, CallHistory } from '@public/shared/phone/simcard';
+import { Err } from '@public/shared/result';
 
-import { Inject } from '../../core/decorators/injectable';
-import { emitRpc } from '../../core/rpc';
 import { NuiEvent } from '../../shared/event/nui';
 import { RpcServerEvent } from '../../shared/rpc';
 import { NuiDispatch } from '../nui/nui.dispatch';
@@ -22,13 +23,21 @@ export class PhoneSimCardCalls {
     @Inject(PlayerService)
     private readonly playerService: PlayerService;
 
+    @Once(OnceStep.NuiLoaded)
+    @OnEvent(ClientEvent.ADMIN_SWITCH_CHARACTER)
+    @OnEvent(ClientEvent.PHONE_SIMCARD_CALLS_HISTORY)
+    async sendCallsHistory() {
+        const callsHistory = await emitRpc<CallHistory[]>(RpcServerEvent.PHONE_SIMCARD_CALLS_HISTORY_GET);
+        this.nuiDispatch.dispatch('phone', 'SetCallsHistory', callsHistory);
+    }
+
     @OnNuiEvent(NuiEvent.PhoneSimCardCallsInit)
     async onCallsInit(phoneNumber: string) {
         if (this.phoneState.isInCall() || this.playerService.getState().isDead) {
-            return;
+            return Err('Appel impossible');
         }
 
-        await emitRpc(RpcServerEvent.PHONE_SIMCARD_CALLS_INIT, phoneNumber);
+        return emitRpc(RpcServerEvent.PHONE_SIMCARD_CALLS_INIT, phoneNumber);
     }
 
     @OnNuiEvent(NuiEvent.PhoneSimCardCallsEnd)

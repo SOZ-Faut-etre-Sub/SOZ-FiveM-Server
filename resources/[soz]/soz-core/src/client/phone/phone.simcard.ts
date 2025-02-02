@@ -6,7 +6,6 @@ import { On, Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/e
 import { emitRpc } from '../../core/rpc';
 import { ClientEvent } from '../../shared/event/client';
 import { NuiEvent } from '../../shared/event/nui';
-import { CallHistory } from '../../shared/phone/simcard';
 import { RpcServerEvent } from '../../shared/rpc';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { PlayerService } from '../player/player.service';
@@ -32,9 +31,6 @@ export class PhoneSimCard {
 
         const avatar = await emitRpc<string>(RpcServerEvent.PHONE_SIMCARD_GET_AVATAR);
         this.nuiDispatch.dispatch('phone', 'SetSimCardAvatar', avatar);
-
-        const callsHistory = await emitRpc<CallHistory[]>(RpcServerEvent.PHONE_SIMCARD_CALLS_HISTORY_GET);
-        this.nuiDispatch.dispatch('phone', 'SetCallsHistory', callsHistory);
     }
 
     @On('QBCore:Client:OnJobUpdate')

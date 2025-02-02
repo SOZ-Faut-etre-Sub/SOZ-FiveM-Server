@@ -7,7 +7,7 @@ import { uuidv4 } from '../../core/utils';
 import { ClientEvent } from '../../shared/event/client';
 import { ServerEvent } from '../../shared/event/server';
 import { ActiveCall } from '../../shared/phone/simcard';
-import { Err } from '../../shared/result';
+import { Err, Ok } from '../../shared/result';
 import { PrismaService } from '../database/prisma.service';
 import { PlayerService } from '../player/player.service';
 import { Store } from '../store/store';
@@ -30,14 +30,13 @@ export class PhoneSimCardCalls {
         const player = this.playerService.getPlayer(source);
         if (!player) {
             console.error('Player not found for', source);
-            return;
+            return Err('unavailable');
         }
 
         const targetPlayer = this.playerService.getPlayerByPhone(phoneNumber);
         if (!targetPlayer) {
             console.error('Player not found for', phoneNumber);
-            // todo: handle player is unnavailable or not found
-            return 'unavailable';
+            return Err('unavailable');
         }
 
         this.calls.set(player.charinfo.phone, {
@@ -64,36 +63,12 @@ export class PhoneSimCardCalls {
             },
         });
 
-        // todo: send notification to target player
-        // if (!receivingPlayer) {
-        //     return resp({
-        //         status: 'ok',
-        //         data: {
-        //             is_accepted: false,
-        //             transmitter: transmitterNumber,
-        //             isTransmitter: true,
-        //             receiver: reqObj.data.receiverNumber,
-        //             isUnavailable: true,
-        //         },
-        //     });
-        // }
-
-        // At this point we return back to the client that the player contacted
-        // is technically available and therefore intialization process ic omplete
-        // resp({
-        //     status: 'ok',
-        //     data: {
-        //         is_accepted: false,
-        //         transmitter: transmitterNumber,
-        //         receiver: reqObj.data.receiverNumber,
-        //         isTransmitter: true,
-        //     },
-        // });
-
         this.sendCallDataToClients(currentCall);
 
         TriggerClientEvent(ClientEvent.PHONE_SIMCARD_CALLS_INIT, currentCall.transmitterSource);
         TriggerClientEvent(ClientEvent.PHONE_SIMCARD_CALLS_RECEIVE, currentCall.receiverSource);
+
+        return Ok('success');
     }
 
     @Rpc(RpcServerEvent.PHONE_SIMCARD_CALLS_ACCEPT)
@@ -139,6 +114,9 @@ export class PhoneSimCardCalls {
         TriggerClientEvent(ClientEvent.PHONE_SIMCARD_CALLS_UPDATE, currentCall.transmitterSource, null);
         TriggerClientEvent(ClientEvent.PHONE_SIMCARD_CALLS_UPDATE, currentCall.receiverSource, null);
 
+        TriggerClientEvent(ClientEvent.PHONE_SIMCARD_CALLS_HISTORY, currentCall.transmitterSource);
+        TriggerClientEvent(ClientEvent.PHONE_SIMCARD_CALLS_HISTORY, currentCall.receiverSource);
+
         this.calls.delete(phoneNumber);
     }
 
@@ -159,6 +137,7 @@ export class PhoneSimCardCalls {
 
         if (currentCall.transmitterSource !== null) {
             TriggerClientEvent(ClientEvent.PHONE_SIMCARD_CALLS_UPDATE, currentCall.transmitterSource, null);
+            TriggerClientEvent(ClientEvent.PHONE_SIMCARD_CALLS_HISTORY, currentCall.transmitterSource);
         }
 
         if (
@@ -168,6 +147,7 @@ export class PhoneSimCardCalls {
             (currentCall?.is_accepted || !this.isReceiverIsBusy(transmitterCall?.receiver))
         ) {
             TriggerClientEvent(ClientEvent.PHONE_SIMCARD_CALLS_UPDATE, currentCall.receiverSource, null);
+            TriggerClientEvent(ClientEvent.PHONE_SIMCARD_CALLS_HISTORY, currentCall.receiverSource);
         }
 
         if (currentCall.is_accepted) {
@@ -194,5 +174,8 @@ export class PhoneSimCardCalls {
             ...call,
             isTransmitter: false,
         });
+
+        TriggerClientEvent(ClientEvent.PHONE_SIMCARD_CALLS_HISTORY, call.transmitterSource);
+        TriggerClientEvent(ClientEvent.PHONE_SIMCARD_CALLS_HISTORY, call.receiverSource);
     }
 }

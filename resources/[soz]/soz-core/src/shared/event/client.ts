@@ -461,6 +461,7 @@ export enum ClientEvent {
     XMAS_UPDATE_SCENE_STATE = 'soz-core:client:xmas:update-scene-state',
 
     PHONE_HIDE = 'soz-core:client:phone:hide',
+    PHONE_SIMCARD_CALLS_HISTORY = 'soz-core:client:phone:simcard:calls:history',
     PHONE_SIMCARD_CALLS_INIT = 'phone:app:simcard:calls:init',
     PHONE_SIMCARD_CALLS_RECEIVE = 'phone:app:simcard:calls:receive',
     PHONE_SIMCARD_CALLS_UPDATE = 'phone:app:simcard:calls:update',
