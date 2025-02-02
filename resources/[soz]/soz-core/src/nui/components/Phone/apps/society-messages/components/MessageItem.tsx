@@ -28,7 +28,7 @@ export const MessageItem: FunctionComponent<{ message: SocietyMessage }> = ({ me
         <ListButton
             key={message.id}
             actionWidth={64}
-            className={clsx('relative h-full rounded-lg', {
+            className={clsx('relative h-full rounded-lg my-1', {
                 'border-l-8': canUseDynamicAlerts,
                 'border-red-500/70': message.info?.type === 'red-alert',
                 'border-lime-500/70': message.info?.type === 'robbery',

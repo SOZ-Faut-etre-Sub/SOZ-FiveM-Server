@@ -1,6 +1,7 @@
 import { SocietyMessage } from '@public/shared/phone/apps/society';
 import { atom, useAtomValue } from 'jotai';
 import { useSetAtom } from 'jotai/index';
+import { useNavigate } from 'react-router-dom';
 
 import { useNuiEvent } from '../../../../hook/nui';
 import { useInjectDebugData } from '../../system/debug/hooks/useInjectDebugData';
@@ -17,6 +18,7 @@ export const useSocietyMessagesStateHandlers = () => {
     const notificationSound = useRingtoneSound('societyNotification', false);
     const { addNotification } = useNotifications();
 
+    const navigate = useNavigate();
     const setMessages = useSetAtom(messagesAtom);
 
     useNuiEvent('phone', 'AppSocietySetData', setMessages);
@@ -28,6 +30,7 @@ export const useSocietyMessagesStateHandlers = () => {
                 addNotification({
                     app: 'society-messages',
                     title: data.message,
+                    onClick: () => navigate('/society-messages'),
                 });
 
                 return [data, ...prev];

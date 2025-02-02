@@ -1,5 +1,6 @@
 import { useAtom, useSetAtom } from 'jotai';
 import { atom } from 'jotai/index';
+import { useNavigate } from 'react-router-dom';
 
 import {
     ActiveCall,
@@ -112,6 +113,7 @@ export const useSimCardStateHandlers = () => {
     const callSound = useRingtoneSound('ringtone', true);
     const notificationSound = useRingtoneSound('notiSound', false);
 
+    const navigate = useNavigate();
     const { addNotification } = useNotifications();
 
     const [number, setNumber] = useAtom(numberAtom);
@@ -153,6 +155,7 @@ export const useSimCardStateHandlers = () => {
                 app: 'messages',
                 title: message.author,
                 content: message.message,
+                onClick: () => navigate(`/messages/${message.conversation_id}`),
             });
         }
         setMessages(messages => [...messages, message]);

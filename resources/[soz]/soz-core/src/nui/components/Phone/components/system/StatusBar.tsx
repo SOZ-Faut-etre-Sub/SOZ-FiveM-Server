@@ -158,11 +158,12 @@ export const StatusBar: FunctionComponent<StatusBarProps> = memo(({ forceControl
                                 key={idx}
                                 {...notification}
                                 onClick={() => {
-                                    setDrawerOpen(false);
                                     if (!notification.cantClose) {
+                                        notification.onClick?.(notification);
                                         notification.onClose?.(notification);
                                         removeNotification(notification.id);
                                     }
+                                    setDrawerOpen(false);
                                 }}
                             />
                         ))}

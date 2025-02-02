@@ -19,7 +19,7 @@ export const useNotifications = () => {
         (notification: INotification) => {
             const app = apps.find(app => app.id === notification.app);
 
-            setNotifications(prev => [{ ...notification, id: uuidv4(), icon: app?.icon }, ...prev]);
+            setNotifications(prev => [{ id: uuidv4(), ...notification, icon: app?.icon }, ...prev]);
         },
         [apps, setNotifications]
     );
