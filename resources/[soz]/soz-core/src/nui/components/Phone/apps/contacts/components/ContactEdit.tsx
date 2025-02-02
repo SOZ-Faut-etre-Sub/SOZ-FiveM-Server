@@ -159,12 +159,7 @@ export const ContactEdit: FunctionComponent = () => {
                         })}
                     >
                         <p className="text-sm text-[#347DD9] pl-3">{t('CONTACTS.FORM_NUMBER')}</p>
-                        <NumberField
-                            format="555-####"
-                            defaultValue="555-"
-                            value={number}
-                            onChange={handleNumberChange}
-                        />
+                        <NumberField format="555-####" defaultValue="" value={number} onChange={handleNumberChange} />
                     </div>
                 </div>
             </AppContent>

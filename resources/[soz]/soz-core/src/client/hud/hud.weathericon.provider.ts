@@ -59,6 +59,8 @@ export class HudWeatherIconProvider {
 
     @OnEvent(ClientEvent.WEATHER_UPDATE_FORECASTS)
     public onWeatherUpdateForecasts(forecast: ForecastWithTemperature[]) {
+        if (!forecast) return;
+
         this.forecasts = forecast;
         this.nuiDispatch.dispatch('weather', 'forecast', this.forecasts?.shift());
     }

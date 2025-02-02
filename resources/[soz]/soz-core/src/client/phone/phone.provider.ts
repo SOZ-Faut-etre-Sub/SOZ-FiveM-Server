@@ -2,10 +2,11 @@ import { wait } from '@public/core/utils';
 import { NuiEvent } from '@public/shared/event/nui';
 import { ServerEvent } from '@public/shared/event/server';
 
-import { Once, OnceStep, OnNuiEvent } from '../../core/decorators/event';
+import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
+import { ClientEvent } from '../../shared/event/client';
 import { LSMCDeathProvider } from '../job/lsmc/lsmc.death.provider';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { PhoneManager } from './phone.manager';
@@ -22,6 +23,7 @@ export class PhoneProvider {
     private readonly phoneManager: PhoneManager;
 
     @Once(OnceStep.NuiLoaded)
+    @OnEvent(ClientEvent.ADMIN_SWITCH_CHARACTER)
     async onNuiLoaded() {
         this.nuiDispatch.dispatch('phone', 'SetAvailability', true);
     }

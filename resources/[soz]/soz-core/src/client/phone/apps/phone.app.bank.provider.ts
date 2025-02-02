@@ -18,6 +18,7 @@ export class PhoneAppBankProvider {
     private readonly nuiDispatch: NuiDispatch;
 
     @Once(OnceStep.NuiLoaded)
+    @OnEvent(ClientEvent.ADMIN_SWITCH_CHARACTER)
     async onNuiLoaded() {
         await this.updateBankBalance();
     }

@@ -1,8 +1,9 @@
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 
-import { Once, OnceStep, OnNuiEvent } from '../../../core/decorators/event';
+import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../../core/decorators/event';
 import { emitRpc } from '../../../core/rpc';
+import { ClientEvent } from '../../../shared/event/client';
 import { NuiEvent } from '../../../shared/event/nui';
 import { NewNoteItem, NoteItem } from '../../../shared/phone/apps/notes';
 import { RpcServerEvent } from '../../../shared/rpc';
@@ -14,6 +15,7 @@ export class PhoneAppNotesProvider {
     private readonly nuiDispatch: NuiDispatch;
 
     @Once(OnceStep.NuiLoaded)
+    @OnEvent(ClientEvent.ADMIN_SWITCH_CHARACTER)
     async onNuiLoaded() {
         await this.getNotes();
     }

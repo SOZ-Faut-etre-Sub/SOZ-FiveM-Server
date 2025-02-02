@@ -4,6 +4,7 @@ export enum ClientEvent {
     ADMIN_SHOW_GPS = 'soz-core:client:admin:show-gps',
     ADMIN_SPECTATE_PLAYER = 'soz-core:client:admin:spectate-player',
     ADMIN_KILL_PLAYER = 'soz-core:client:admin:kill-player',
+    ADMIN_SWITCH_CHARACTER = 'soz-core:client:admin:switch-character',
     ANIMATION_SURRENDER = 'soz-core:client:animation:surrender',
     ANIMATION_GIVE = 'soz-core:client:animation:give',
 

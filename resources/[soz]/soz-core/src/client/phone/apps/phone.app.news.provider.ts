@@ -14,6 +14,7 @@ export class PhoneAppNewsProvider {
     private readonly nuiDispatch: NuiDispatch;
 
     @Once(OnceStep.NuiLoaded)
+    @OnEvent(ClientEvent.ADMIN_SWITCH_CHARACTER)
     async onNuiLoaded() {
         const news = await emitRpc<NewsMessage[]>(RpcServerEvent.PHONE_APP_NEWS_GET);
         this.nuiDispatch.dispatch('phone', 'AppNewsSetData', news);

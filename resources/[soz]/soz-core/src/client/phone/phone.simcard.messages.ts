@@ -19,6 +19,7 @@ export class PhoneSimCardMessages {
     private readonly playerService: PlayerService;
 
     @Once(OnceStep.NuiLoaded)
+    @OnEvent(ClientEvent.ADMIN_SWITCH_CHARACTER)
     async onNuiLoaded() {
         const player = this.playerService.getPlayer();
         if (!player) {

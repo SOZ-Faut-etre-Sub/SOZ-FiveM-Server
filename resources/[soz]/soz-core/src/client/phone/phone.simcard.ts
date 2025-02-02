@@ -2,8 +2,9 @@ import { Provider } from '@core/decorators/provider';
 import { Inject } from '@public/core/decorators/injectable';
 
 import { SocietyNumberList } from '../../config/phone';
-import { On, Once, OnceStep, OnNuiEvent } from '../../core/decorators/event';
+import { On, Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { emitRpc } from '../../core/rpc';
+import { ClientEvent } from '../../shared/event/client';
 import { NuiEvent } from '../../shared/event/nui';
 import { CallHistory } from '../../shared/phone/simcard';
 import { RpcServerEvent } from '../../shared/rpc';
@@ -19,6 +20,7 @@ export class PhoneSimCard {
     private readonly playerService: PlayerService;
 
     @Once(OnceStep.NuiLoaded)
+    @OnEvent(ClientEvent.ADMIN_SWITCH_CHARACTER)
     async onNuiLoaded() {
         const player = this.playerService.getPlayer();
         if (!player) {

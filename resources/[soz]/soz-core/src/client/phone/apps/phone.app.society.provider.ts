@@ -1,4 +1,4 @@
-import { On, Once, OnceStep, OnNuiEvent } from '@core/decorators/event';
+import { On, Once, OnceStep, OnEvent, OnNuiEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { emitRpc } from '@core/rpc';
 import { Provider } from '@public/core/decorators/provider';
@@ -15,6 +15,7 @@ export class PhoneAppSocietyProvider {
     private readonly nuiDispatch: NuiDispatch;
 
     @Once(OnceStep.NuiLoaded)
+    @OnEvent(ClientEvent.ADMIN_SWITCH_CHARACTER)
     async onNuiLoaded() {
         await this.fetchSocietyMembers();
     }

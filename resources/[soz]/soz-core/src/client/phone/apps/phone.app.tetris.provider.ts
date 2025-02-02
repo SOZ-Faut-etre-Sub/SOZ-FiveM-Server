@@ -1,7 +1,7 @@
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 
-import { On, Once, OnceStep, OnNuiEvent } from '../../../core/decorators/event';
+import { On, Once, OnceStep, OnEvent, OnNuiEvent } from '../../../core/decorators/event';
 import { emitRpc } from '../../../core/rpc';
 import { ClientEvent } from '../../../shared/event/client';
 import { NuiEvent } from '../../../shared/event/nui';
@@ -15,6 +15,7 @@ export class PhoneAppTetrisProvider {
     private readonly nuiDispatch: NuiDispatch;
 
     @Once(OnceStep.NuiLoaded)
+    @OnEvent(ClientEvent.ADMIN_SWITCH_CHARACTER)
     async onNuiLoaded() {
         const leaderboard = await emitRpc<LeaderboardInterface[]>(RpcServerEvent.PHONE_APP_TETRIS_GET_LEADERBOARD);
         this.nuiDispatch.dispatch('phone', 'AppTetrisSetLeaderboard', leaderboard);
