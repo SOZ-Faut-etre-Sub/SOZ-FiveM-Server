@@ -56,32 +56,34 @@ export const PhoneApp: FunctionComponent = () => {
     );
 
     return (
-        <SoundProvider>
-            <MemoryRouter>
-                <PhoneAppHooks />
+        <div className="absolute h-full w-full">
+            <SoundProvider>
+                <MemoryRouter>
+                    <PhoneAppHooks />
 
-                <PhoneWrapper>
-                    <Alerts />
-                    <ActionSheet />
-                    <CallDynamicIsland />
-                    <CallButtonDynamicIsland />
-                    <NotificationAlert />
+                    <PhoneWrapper>
+                        <Alerts />
+                        <ActionSheet />
+                        <CallDynamicIsland />
+                        <CallButtonDynamicIsland />
+                        <NotificationAlert />
 
-                    {emergency ? (
-                        <EmergencyApp />
-                    ) : (
-                        <Routes>
-                            <Route index element={<HomeApp />} />
-                            <Route path="/call" element={<CallModalApp />} />
+                        {emergency ? (
+                            <EmergencyApp />
+                        ) : (
+                            <Routes>
+                                <Route index element={<HomeApp />} />
+                                <Route path="/call" element={<CallModalApp />} />
 
-                            {apps.map(app => (
-                                <Route key={app.id} path={app.path + '/*'} element={app.component} />
-                            ))}
-                        </Routes>
-                    )}
-                </PhoneWrapper>
-            </MemoryRouter>
-        </SoundProvider>
+                                {apps.map(app => (
+                                    <Route key={app.id} path={app.path + '/*'} element={app.component} />
+                                ))}
+                            </Routes>
+                        )}
+                    </PhoneWrapper>
+                </MemoryRouter>
+            </SoundProvider>
+        </div>
     );
 };
 
