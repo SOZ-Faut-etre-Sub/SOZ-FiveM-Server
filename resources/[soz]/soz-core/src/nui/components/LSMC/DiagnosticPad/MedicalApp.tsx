@@ -6,15 +6,8 @@ import { useNuiEvent, useNuiFocus } from '@public/nui/hook/nui';
 import { useOutside } from '@public/nui/hook/outside';
 import { NuiEvent } from '@public/shared/event/nui';
 import { healthLevelToLabel, stressLevelToLabel } from '@public/shared/health';
-import {
-    bones,
-    DamageConfigs,
-    DamageGravity,
-    DamageServerData,
-    DamagesTypes,
-    JobsWithInjuries,
-} from '@public/shared/job/lsmc';
-import { PlayerCriminalState, PlayerMetadata, PlayerPedHash } from '@public/shared/player';
+import { bones, DamageConfigs, DamageGravity, DamageServerData, DamagesTypes } from '@public/shared/job/lsmc';
+import { PlayerMetadata, PlayerPedHash } from '@public/shared/player';
 import { getRandomInt } from '@public/shared/random';
 import { format } from 'date-fns';
 import { FunctionComponent, useEffect, useState } from 'react';
@@ -153,29 +146,15 @@ export const MedicalApp: FunctionComponent = () => {
 
     const getInjuriesStatus = (metadata: PlayerMetadata): [allowed: boolean, label: string] => {
         let state = '';
-        let allowed = false;
-        if (metadata.criminal_state == PlayerCriminalState.Allowed) {
-            allowed = true;
-            if (metadata.injuries_count >= 7) {
-                state = 'graves';
-            } else if (metadata.injuries_count >= 4) {
-                state = 'moyennes';
-            } else if (metadata.injuries_count >= 1) {
-                state = 'légères';
-            } else {
-                state = 'aucunes';
-            }
-        } else if (JobsWithInjuries.includes(patient.job.id)) {
-            allowed = true;
-            if (metadata.injuries_count >= 3) {
-                state = 'graves';
-            } else if (metadata.injuries_count >= 2) {
-                state = 'moyennes';
-            } else if (metadata.injuries_count >= 1) {
-                state = 'légères';
-            } else {
-                state = 'aucunes';
-            }
+        const allowed = true;
+        if (metadata.injuries_count >= 7) {
+            state = 'graves';
+        } else if (metadata.injuries_count >= 4) {
+            state = 'moyennes';
+        } else if (metadata.injuries_count >= 1) {
+            state = 'légères';
+        } else {
+            state = 'aucunes';
         }
         return [allowed, state];
     };

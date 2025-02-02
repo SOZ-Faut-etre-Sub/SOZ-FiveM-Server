@@ -58,10 +58,6 @@ export class LSMCProvider {
             return false;
         }
 
-        if (this.playerInjuryProvider.remainingForcedITT(target) > 0) {
-            return false;
-        }
-
         return player.metadata.itt;
     }
 

@@ -2,7 +2,6 @@ import { Animation } from '../animation';
 import { Component, Prop, WardrobeConfig } from '../cloth';
 import { Control } from '../input';
 import { joaat } from '../joaat';
-import { JobType } from '../job';
 import { Vector3, Vector4 } from '../polyzone/vector';
 
 export type KillerVehData = {
@@ -10,8 +9,6 @@ export type KillerVehData = {
     seat: number;
     plate: string;
 };
-
-export const JobsWithInjuries = [JobType.LSPD, JobType.BCSO, JobType.SASP, JobType.CashTransfer];
 
 export const bones = {
     52301: 'Pied droit',

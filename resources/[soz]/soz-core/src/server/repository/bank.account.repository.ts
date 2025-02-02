@@ -205,7 +205,7 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
     protected getDefaultMoney(type: BankAccountType, atmType?: AtmType): number {
         switch (type) {
             case 'player':
-                return 5_000;
+                return 15_000;
             case 'business':
                 return 200_000;
             case 'bank_atm':

@@ -95,13 +95,13 @@ export class WeaponService {
         }
 
         SetPedAmmo(player, weaponHash, ammo);
-        SetCurrentPedWeapon(player, weaponHash, true);
+        SetCurrentPedWeapon(player, weaponHash, false);
     }
 
     async clear() {
         const ped = PlayerPedId();
 
-        await this.weaponHolsterProvider.storeWeapon(this.playerService.getPlayer(), ped);
+        //await this.weaponHolsterProvider.storeWeapon(this.playerService.getPlayer(), ped);
 
         if (this.currentWeapon) {
             const currhash = GetHashKey(this.currentWeapon.name);

@@ -1,5 +1,4 @@
-import { JobsWithInjuries } from './job/lsmc';
-import { PlayerCriminalState, PlayerData, PlayerHealthBook } from './player';
+import { PlayerData, PlayerHealthBook } from './player';
 
 export enum LabelStrategy {
     MinMax,
@@ -86,26 +85,14 @@ export const healthLevelToLabel = (
 
 export const injuriesLevelToLabel = (targetPlayer: PlayerData): string => {
     let state = 'aucunes';
-    if (targetPlayer.metadata.criminal_state == PlayerCriminalState.Allowed) {
-        if (targetPlayer.metadata.injuries_count >= 7) {
-            state = 'graves';
-        } else if (targetPlayer.metadata.injuries_count >= 4) {
-            state = 'moyennes';
-        } else if (targetPlayer.metadata.injuries_count >= 1) {
-            state = 'légères';
-        } else {
-            state = 'aucunes';
-        }
-    } else if (JobsWithInjuries.includes(targetPlayer.job.id)) {
-        if (targetPlayer.metadata.injuries_count >= 3) {
-            state = 'graves';
-        } else if (targetPlayer.metadata.injuries_count >= 2) {
-            state = 'moyennes';
-        } else if (targetPlayer.metadata.injuries_count >= 1) {
-            state = 'légères';
-        } else {
-            state = 'aucunes';
-        }
+    if (targetPlayer.metadata.injuries_count >= 7) {
+        state = 'graves';
+    } else if (targetPlayer.metadata.injuries_count >= 4) {
+        state = 'moyennes';
+    } else if (targetPlayer.metadata.injuries_count >= 1) {
+        state = 'légères';
+    } else {
+        state = 'aucunes';
     }
     return state;
 };
