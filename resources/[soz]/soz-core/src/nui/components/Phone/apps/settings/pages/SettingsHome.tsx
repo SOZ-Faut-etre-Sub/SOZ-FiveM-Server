@@ -15,7 +15,7 @@ import {
 import { SettingOption } from '@public/shared/phone/config';
 import clsx from 'clsx';
 import qs from 'qs';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -61,7 +61,7 @@ export const SettingsHome = () => {
 
     const { avatar } = useAvatar();
 
-    const { openActionSheet } = useActionSheet();
+    const { openActionSheet, closeActionSheet } = useActionSheet();
     const { handleSettingChange, resetSettings } = useSettingsChange();
 
     const mappedThemes = themeOptions.map(
@@ -115,6 +115,10 @@ export const SettingsHome = () => {
             })}`
         );
     }, [navigate, pathname, search]);
+
+    useEffect(() => {
+        return () => closeActionSheet();
+    }, []);
 
     return (
         <AppWrapper scrollable>

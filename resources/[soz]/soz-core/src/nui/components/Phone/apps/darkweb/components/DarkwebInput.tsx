@@ -3,7 +3,7 @@ import Picker from '@emoji-mart/react';
 import { EmojiHappyIcon, PaperClipIcon } from '@heroicons/react/outline';
 import clsx from 'clsx';
 import qs from 'qs';
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -26,7 +26,7 @@ const DarkWebInput: FunctionComponent<IProps> = ({ darkwebConversationId, autoFo
     const { t } = useTranslation();
     const { pathname, search } = useLocation();
 
-    const { openActionSheet } = useActionSheet();
+    const { openActionSheet, closeActionSheet } = useActionSheet();
 
     const [message, setMessage] = useState('');
     const [emojiKeyboard, setEmojiKeyboard] = useState(false);
@@ -99,6 +99,10 @@ const DarkWebInput: FunctionComponent<IProps> = ({ darkwebConversationId, autoFo
             },
         ]);
     };
+
+    useEffect(() => {
+        return () => closeActionSheet();
+    }, []);
 
     if (!darkwebConversationId) return null;
 

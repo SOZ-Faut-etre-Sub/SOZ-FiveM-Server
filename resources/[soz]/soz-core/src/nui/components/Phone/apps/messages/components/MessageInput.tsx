@@ -3,7 +3,7 @@ import Picker from '@emoji-mart/react';
 import { EmojiHappyIcon, PaperClipIcon } from '@heroicons/react/outline';
 import clsx from 'clsx';
 import qs from 'qs';
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -27,7 +27,7 @@ export const MessageInput: FunctionComponent<MessageInputProps> = ({ messageConv
 
     const theme = useThemeConfig();
 
-    const { openActionSheet } = useActionSheet();
+    const { openActionSheet, closeActionSheet } = useActionSheet();
 
     const [message, setMessage] = useState('');
     const [emojiKeyboard, setEmojiKeyboard] = useState(false);
@@ -91,6 +91,10 @@ export const MessageInput: FunctionComponent<MessageInputProps> = ({ messageConv
             },
         ]);
     };
+
+    useEffect(() => {
+        return () => closeActionSheet();
+    }, []);
 
     if (!messageConversationId) return null;
 
