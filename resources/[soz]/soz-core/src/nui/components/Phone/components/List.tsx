@@ -5,12 +5,12 @@ import React, { CSSProperties, FunctionComponent, LiHTMLAttributes, PropsWithChi
 import { useThemeConfig } from '../system/config/config.atom';
 import { IconComponentProps } from '../system/phone.types';
 
-export const List = ({ children }) => {
+export const List: FunctionComponent<PropsWithChildren<{ className?: string }>> = ({ children, className }) => {
     const theme = useThemeConfig();
 
     return (
         <div
-            className={clsx('mx-2 my-4 shadow overflow-y-auto rounded-xl', {
+            className={clsx('mx-2 my-4 shadow overflow-y-auto rounded-xl', className, {
                 'bg-phone-900': theme === 'dark',
                 'bg-white': theme === 'light',
             })}

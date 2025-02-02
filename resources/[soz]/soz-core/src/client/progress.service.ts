@@ -4,7 +4,6 @@ import { AnimationRunner } from '@public/client/animation/animation.factory';
 import { InstructionalService } from '@public/client/instructional.service';
 import { AudioService } from '@public/client/nui/audio.service';
 import { NuiDispatch } from '@public/client/nui/nui.dispatch';
-import { PhoneManager } from '@public/client/phone/phone.manager';
 import { PlayerService } from '@public/client/player/player.service';
 import { animationFlagsToOptions, AnimationProps, AnimationStopReason } from '@public/shared/animation';
 import { ClientEvent } from '@public/shared/event/client';

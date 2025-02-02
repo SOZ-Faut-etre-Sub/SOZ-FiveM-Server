@@ -15,7 +15,7 @@ import {
 import { SettingOption } from '@public/shared/phone/config';
 import clsx from 'clsx';
 import qs from 'qs';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -25,7 +25,6 @@ import { List, ListItem } from '../../../components/List';
 import { AppContent } from '../../../components/system/AppContent';
 import { AppTitle } from '../../../components/system/AppTitle';
 import { AppWrapper } from '../../../components/system/AppWrapper';
-import { useQueryParams } from '../../../hooks/useQueryParams';
 import { IActionSheetOption } from '../../../system/action-sheet/action.sheet.types';
 import { useActionSheet } from '../../../system/action-sheet/hooks/useActionSheet';
 import { useApp } from '../../../system/apps/hooks/useApp';
@@ -43,7 +42,6 @@ import { useSettingsChange } from '../../../system/config/hooks/useSettingsChang
 import { useAvatar } from '../../../system/sim-card/hooks/useAvatar';
 import { useSimCard } from '../../../system/sim-card/hooks/useSimCard';
 import { useSocietySimCard } from '../../../system/sim-card/hooks/useSocietySimCard';
-import { deleteQueryFromLocation } from '../../../utils/deleteQueryFromLocation';
 import { SettingItem } from '../components/SettingItem';
 import { SettingItemSlider } from '../components/SettingItemSlider';
 import { SettingSwitch } from '../components/SettingItemSwitch';
@@ -55,14 +53,13 @@ export const SettingsHome = () => {
 
     const settingsApp = useApp('settings');
     const { t } = useTranslation();
-    const query = useQueryParams();
 
     const { canUseDynamicAlerts } = useSocietySimCard();
     const { number } = useSimCard();
 
     const config = useConfig();
 
-    const { avatar, updateAvatar } = useAvatar();
+    const { avatar } = useAvatar();
 
     const { openActionSheet } = useActionSheet();
     const { handleSettingChange, resetSettings } = useSettingsChange();
@@ -114,17 +111,10 @@ export const SettingsHome = () => {
     const handleChooseImage = useCallback(() => {
         navigate(
             `/photos?${qs.stringify({
-                referral: encodeURIComponent(pathname + search),
+                referral: encodeURIComponent(pathname + '/avatar' + search),
             })}`
         );
     }, [navigate, pathname, search]);
-
-    useEffect(() => {
-        if (!query.image) return;
-
-        updateAvatar(query.image);
-        navigate(deleteQueryFromLocation({ pathname, search }, 'image'), { replace: true });
-    }, [query.image, updateAvatar, number, history, pathname, search]);
 
     return (
         <AppWrapper scrollable>

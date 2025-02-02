@@ -10,18 +10,20 @@ interface ISettingSlider {
     iconEnd: ReactNode;
     value: number;
     onCommit: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    min?: number;
+    max?: number;
 }
 
-export const SettingItemSlider = ({ iconStart, iconEnd, value, onCommit }: ISettingSlider) => {
+export const SettingItemSlider = ({ iconStart, iconEnd, value, onCommit, min = 0, max = 100 }: ISettingSlider) => {
     const theme = useThemeConfig();
 
     return (
         <ListItem className="px-2">
-            <div className="text-gray-300 w-6 h-6">{iconStart}</div>
+            <div className="flex justify-center items-center text-gray-300 size-6">{iconStart}</div>
             <input
                 type="range"
-                min={0}
-                max={100}
+                min={min}
+                max={max}
                 defaultValue={value}
                 onChange={onCommit}
                 className={clsx('w-full mx-2 h-1.5 appearance-none bg-opacity-20 rounded-full cursor-pointer', {
@@ -29,7 +31,7 @@ export const SettingItemSlider = ({ iconStart, iconEnd, value, onCommit }: ISett
                     'bg-ios-700': theme === 'light',
                 })}
             />
-            <div className="text-gray-300 w-6 h-6">{iconEnd}</div>
+            <div className="flex justify-center items-center text-gray-300 size-6">{iconEnd}</div>
         </ListItem>
     );
 };
