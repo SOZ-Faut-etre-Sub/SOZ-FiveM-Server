@@ -177,7 +177,7 @@ export class PhoneManager {
     public async stopPhoneCall() {
         if (!this.phoneState.isInCall()) return;
 
-        return this.phoneSimCardCalls.onCallDecline(this.phoneState.getCurrentCall()?.transmitter);
+        return this.phoneSimCardCalls.onCallEnd(this.phoneState.getCurrentCall()?.transmitter);
     }
 
     private hasPlayerPhone() {
