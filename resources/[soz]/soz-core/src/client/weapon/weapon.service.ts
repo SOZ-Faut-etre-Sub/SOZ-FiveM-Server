@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
 import { InventoryManager } from '@public/client/inventory/inventory.manager';
+import { wait } from '@public/core/utils';
 import { InventoryItem } from '@public/shared/inventory';
 import { VehicleSeat } from '@public/shared/vehicle/vehicle';
 
@@ -8,6 +9,7 @@ import { PlayerService } from '../player/player.service';
 import { WeaponHolsterProvider } from './weapon.holster.provider';
 
 const MONEY_CASE_HASH = GetHashKey('WEAPON_BRIEFCASE');
+const unarmed = GetHashKey('WEAPON_UNARMED');
 
 const backVeh = [
     GetHashKey('stockade'),
@@ -44,6 +46,7 @@ const farBackVeh = [GetHashKey('bison'), GetHashKey('dubsta3')];
 export class WeaponService {
     private currentWeapon: InventoryItem | null = null;
     private disabledReasons = new Set<string>();
+    private inAnimation = false;
 
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
@@ -102,6 +105,15 @@ export class WeaponService {
         const ped = PlayerPedId();
 
         //await this.weaponHolsterProvider.storeWeapon(this.playerService.getPlayer(), ped);
+        const inAnimation = this.inAnimation;
+        this.inAnimation = true;
+
+        SetCurrentPedWeapon(ped, unarmed, false);
+        await wait(1300);
+
+        if (!inAnimation) {
+            this.inAnimation = false;
+        }
 
         if (this.currentWeapon) {
             const currhash = GetHashKey(this.currentWeapon.name);
@@ -184,5 +196,9 @@ export class WeaponService {
         } else {
             this.disabledReasons.delete(reason);
         }
+    }
+
+    public isInAnimation() {
+        return this.inAnimation;
     }
 }

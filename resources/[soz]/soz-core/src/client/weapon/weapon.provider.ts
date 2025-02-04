@@ -33,7 +33,6 @@ import { FuelStationRepository } from '../repository/fuel.station.repository';
 import { ZoneRepository } from '../repository/zone.repository';
 import { VoipRadioProvider } from '../voip/voip.radio.provider';
 import { WeaponDrawingProvider } from './weapon.drawing.provider';
-import { WeaponHolsterProvider } from './weapon.holster.provider';
 import { WeaponService } from './weapon.service';
 
 const messageExcludeGroups = [
@@ -79,9 +78,6 @@ export class WeaponProvider {
 
     @Inject(VoipRadioProvider)
     private voipRadioProvider: VoipRadioProvider;
-
-    @Inject(WeaponHolsterProvider)
-    private weaponHolsterProvider: WeaponHolsterProvider;
 
     @Inject(PlayerService)
     private playerService: PlayerService;
@@ -426,7 +422,7 @@ export class WeaponProvider {
             await this.weaponDrawingProvider.refreshDrawWeapons();
         }
 
-        if (this.weaponHolsterProvider.isInAnimation()) {
+        if (this.weapon.isInAnimation()) {
             return;
         }
 
