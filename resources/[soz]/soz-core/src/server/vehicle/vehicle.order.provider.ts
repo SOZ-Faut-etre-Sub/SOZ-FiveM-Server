@@ -231,6 +231,7 @@ export class VehicleOrderProvider {
                     job: order.job,
                     citizenId: order.citizenId,
                     license: order.license,
+                    garage,
                 }),
             },
         });
