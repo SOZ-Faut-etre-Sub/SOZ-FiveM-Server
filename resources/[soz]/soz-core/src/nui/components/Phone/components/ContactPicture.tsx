@@ -5,11 +5,10 @@ import { useThemeConfig } from '../system/config/config.atom';
 
 type Props = {
     picture?: string;
-    useOffset?: boolean;
     size?: 'small' | 'medium' | 'large' | 'xlarge';
 };
 
-export const ContactPicture: FunctionComponent<Props> = ({ picture, useOffset = true, size = 'small' }) => {
+export const ContactPicture: FunctionComponent<Props> = ({ picture, size = 'small' }) => {
     const theme = useThemeConfig();
 
     return (
@@ -22,7 +21,7 @@ export const ContactPicture: FunctionComponent<Props> = ({ picture, useOffset = 
                 'size-20': size === 'large',
                 'size-28': size === 'xlarge',
             })}
-            style={{ backgroundImage: `url(${picture})`, backgroundPosition: useOffset ? '-300px 0' : undefined }}
+            style={{ backgroundImage: `url(${picture})` }}
         />
     );
 };

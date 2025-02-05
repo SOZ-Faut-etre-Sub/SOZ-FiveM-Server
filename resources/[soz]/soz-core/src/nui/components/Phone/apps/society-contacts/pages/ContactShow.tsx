@@ -75,11 +75,7 @@ export const ContactShow: FunctionComponent = () => {
             <AppContent>
                 <form onSubmit={handleSubmit(submitForm)} className="grow flex flex-col gap-4 py-4">
                     <div className="flex justify-center">
-                        <ContactPicture
-                            picture={getPath('images/society/' + contact.avatar)}
-                            useOffset={false}
-                            size="large"
-                        />
+                        <ContactPicture picture={getPath('images/society/' + contact.avatar)} size="large" />
                     </div>
 
                     <TextareaField

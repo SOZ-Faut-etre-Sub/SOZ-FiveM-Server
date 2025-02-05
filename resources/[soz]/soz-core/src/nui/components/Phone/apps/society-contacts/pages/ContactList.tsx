@@ -104,7 +104,7 @@ const ContactItem: FunctionComponent<VirtualizedListProps<SocietyContact | Separ
                 })}
             >
                 <div className="relative flex-shrink-0">
-                    <ContactPicture picture={getPath('images/society/' + contact.avatar)} useOffset={false} />
+                    <ContactPicture picture={getPath('images/society/' + contact.avatar)} />
                 </div>
                 <div className="flex-1 min-w-0 cursor-pointer">
                     <span className="absolute inset-0" aria-hidden="true" />

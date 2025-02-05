@@ -41,7 +41,11 @@ export const SettingsAvatar = () => {
         formData.append('map', MAP);
 
         try {
-            const blob = avatarRef.current.getImage().toDataURL('image/webp');
+            const imagePromise = new Promise<Blob>(resolve => {
+                avatarRef.current.getImage().toBlob((blob: Blob) => resolve(blob), 'image/webp', 0.9);
+            });
+
+            const blob = await imagePromise;
             const file = new File([blob], 'avatar.webp', { type: 'image/webp' });
 
             formData.append('0', file);
