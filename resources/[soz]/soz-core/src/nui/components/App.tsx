@@ -113,12 +113,12 @@ export const App: FunctionComponent = () => {
                 </div>
                 <div className={menuClasses}>
                     <MenuApp />
+                    <PhoneApp />
                     <PlayerInventoryApp />
                     <InventoryApp />
                     <KeychainApp />
                     <WalletApp />
                     <ShopCartApp />
-                    <PhoneApp />
                 </div>
                 <div className={classes}>
                     <PanelApp />
