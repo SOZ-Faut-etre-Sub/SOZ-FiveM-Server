@@ -44,7 +44,7 @@ export function PictureModal({ open, setOpen, children }) {
                                     }
                                 )}
                             >
-                                <div className="absolute top-0 right-0 hidden pt-4 pr-4 sm:block">
+                                <div className="absolute top-0 right-0 pt-4 pr-4 sm:block">
                                     <button
                                         type="button"
                                         className={clsx(

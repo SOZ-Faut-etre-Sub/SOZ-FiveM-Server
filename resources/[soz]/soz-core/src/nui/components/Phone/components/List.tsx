@@ -84,15 +84,15 @@ export const ListButton: FunctionComponent<ListButtonProps> = ({
         },
         to: {
             transform: open
-                ? `translateX(-${Number(actionWidth ?? style.height) * actions.filter(actionFilter).length + 10}px)`
+                ? `translateX(-${Number(actionWidth ?? style.height) * actions.filter(actionFilter).length}px)`
                 : `translateX(0px)`,
         },
     });
 
     return (
-        <div
+        <li
             style={style}
-            className="relative justify-between items-center text-sm"
+            className="relative justify-between items-center text-sm first:rounded-t-2xl last:rounded-b-2xl overflow-hidden"
             onClick={() => setOpen(open => !open)}
         >
             <animated.div
@@ -104,7 +104,7 @@ export const ListButton: FunctionComponent<ListButtonProps> = ({
             >
                 {children}
             </animated.div>
-            <div className="absolute h-full w-full right-0 top-0 flex justify-end items-center px-2 text-xs">
+            <div className="absolute h-full w-full right-0 top-0 flex justify-end items-center text-xs">
                 {actions.filter(actionFilter).map(({ color, label, icon: Icon, onClick }) => (
                     <button
                         className={clsx('flex flex-col justify-center items-center h-full aspect-square p-1', color)}
@@ -116,6 +116,6 @@ export const ListButton: FunctionComponent<ListButtonProps> = ({
                     </button>
                 ))}
             </div>
-        </div>
+        </li>
     );
 };
