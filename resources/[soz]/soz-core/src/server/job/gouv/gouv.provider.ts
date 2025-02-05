@@ -152,4 +152,28 @@ export class GouvProvider {
         this.notifier.notify(target, `Votre identité a été ~g~validée~s~.`);
         this.notifier.notify(source, `Vous avez ~g~validé~s~ l'identité.`);
     }
+
+    @OnEvent(ServerEvent.GOUV_SENAT_SALARY)
+    public async senatSalary(source: number, value: number) {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        if ((value < 16 || 30 < value) && !this.permissionService.isStaff(source)) {
+            this.notifier.error(source, `La valeur de taxe est en ~r~dehors~s~ des normes présidentielles.`);
+            return;
+        }
+
+        if (!(await this.jobService.hasPermission(player, JobType.Gouv, JobPermission.GouvSenatSalary))) {
+            return;
+        }
+
+        await this.configurationRepository.update('Gouv', {
+            SenatSalary: value,
+        });
+
+        this.notifier.notify(source, `Vous avez mis à jour le salaire des sénateurs ~g~${value}$~s~.`);
+    }
 }

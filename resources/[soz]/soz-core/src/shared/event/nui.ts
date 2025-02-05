@@ -413,6 +413,7 @@ export enum NuiEvent {
     RaceUpdateGarage = 'soz-core:client:race:garage',
 
     GouvAnnoncement = 'soz-core:client:gouv:annoncement',
+    GouvSenatSalary = 'soz-core:client:gouv:senat-salary',
     GouvSetTax = 'soz-core:nui:gouv:set-tax',
     GouvSetJobTaxTier = 'soz-core:nui:gouv:set-job-tax-tier',
     GouvSetJobTaxTierPercentage = 'soz-core:nui:gouv:set-job-tax-tier-percentage',

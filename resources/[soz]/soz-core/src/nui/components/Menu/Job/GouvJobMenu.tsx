@@ -1,4 +1,5 @@
 import { usePlayer } from '@public/nui/hook/data';
+import { GouvJobMenuPropData } from '@public/shared/job/gouv';
 import { FunctionComponent } from 'react';
 
 import { TaxLabel, TaxType } from '../../../../shared/bank';
@@ -24,9 +25,7 @@ import {
 } from '../../Styleguide/Menu';
 
 type GouvJobMenuProps = {
-    data: {
-        displayRadar: boolean;
-    };
+    data: GouvJobMenuPropData;
 };
 
 export const TAX_DESCRIPTION_ITEMS: Record<TaxType, string[]> = {
@@ -55,6 +54,7 @@ export const GouvJobMenu: FunctionComponent<GouvJobMenuProps> = ({ data }) => {
     const taxAllowed = useHasJobPermission(JobType.Gouv, JobPermission.GouvUpdateTax);
     const fineAllowed = useHasJobPermission(JobType.Gouv, JobPermission.GouvManageFine);
     const tier = useConfigurationValue('JobTaxTier');
+    const gouv = useConfigurationValue('Gouv');
     const player = usePlayer();
 
     if (!player.job.onduty) {
@@ -93,6 +93,18 @@ export const GouvJobMenu: FunctionComponent<GouvJobMenuProps> = ({ data }) => {
                     >
                         Afficher les radars sur le GPS
                     </MenuItemCheckbox>
+                    {data.updateSenatSalary && (
+                        <MenuItemButton
+                            onConfirm={async () => {
+                                await fetchNui(NuiEvent.GouvSenatSalary, gouv.SenatSalary);
+                            }}
+                        >
+                            <div className="pr-2 flex items-center justify-between">
+                                <span>Salaire de Sénateurs</span>
+                                <span>{gouv.SenatSalary}$</span>
+                            </div>
+                        </MenuItemButton>
+                    )}
                 </MenuContent>
             </MainMenu>
             <SubMenu id="tax">

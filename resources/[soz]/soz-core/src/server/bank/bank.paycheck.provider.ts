@@ -5,11 +5,10 @@ import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
 import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
+import { ConfigurationRepository } from '../repository/configuration.repository';
 import { JobGradeRepository } from '../repository/job.grade.repository';
 import { ServerStateService } from '../server.state.service';
 import { BankService } from './bank.service';
-
-const SENATOR_SALARY = 400;
 
 @Provider()
 export class BankPaycheckProvider {
@@ -27,6 +26,9 @@ export class BankPaycheckProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(ConfigurationRepository)
+    private configurationRepository: ConfigurationRepository;
 
     @Tick(20 * 60 * 1000)
     public async paycheckLoop() {
@@ -84,13 +86,14 @@ export class BankPaycheckProvider {
             }
         }
 
+        const gouvConf = await this.configurationRepository.getValue('Gouv');
         for (const player of players) {
             if (player.metadata.is_senator) {
                 const result = await this.bankService.transferBankMoney(
                     'gouv',
                     player.charinfo.account,
                     'money',
-                    SENATOR_SALARY,
+                    gouvConf.SenatSalary,
                     false,
                     'Indemnité de sénateur'
                 );
@@ -99,13 +102,13 @@ export class BankPaycheckProvider {
                         player.source,
                         'Fleeca Banque',
                         'Mouvement bancaire',
-                        `Votre indemnité de ~g~sénateur~s~ de ~g~${SENATOR_SALARY}$~s~ a été versé sur votre compte bancaire.`,
+                        `Votre indemnité de ~g~sénateur~s~ de ~g~${gouvConf.SenatSalary}$~s~ a été versé sur votre compte bancaire.`,
                         'CHAR_BANK_MAZE'
                     );
 
                     this.monitor.traceEvent('senator_paycheck', {
                         player_source: player.source,
-                        amount: SENATOR_SALARY,
+                        amount: gouvConf.SenatSalary,
                     });
                 }
             }

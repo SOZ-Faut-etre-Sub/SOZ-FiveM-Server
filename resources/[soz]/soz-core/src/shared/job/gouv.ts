@@ -6,3 +6,8 @@ export const GouvCloakroom: WardrobeConfig = {
 };
 
 export const SEARCH_WARRANT_PRICE = 500_000;
+
+export type GouvJobMenuPropData = {
+    displayRadar: boolean;
+    updateSenatSalary: boolean;
+};

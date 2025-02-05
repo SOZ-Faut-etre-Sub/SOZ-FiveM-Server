@@ -4,11 +4,12 @@ import { Provider } from '@core/decorators/provider';
 import { InputService } from '@public/client/nui/input.service';
 import { uuidv4 } from '@public/core/utils';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
+import { PositiveNumberValidator } from '@public/shared/nui/input';
 import { MenuType } from '@public/shared/nui/menu';
 
 import { TaxType } from '../../../shared/bank';
 import { JobTaxTier } from '../../../shared/configuration';
-import { JobType } from '../../../shared/job';
+import { JobPermission, JobType } from '../../../shared/job';
 import { Err, Ok } from '../../../shared/result';
 import { BlipFactory } from '../../blip';
 import { NuiMenu } from '../../nui/nui.menu';
@@ -17,6 +18,7 @@ import { PlayerService } from '../../player/player.service';
 import { ConfigurationRepository } from '../../repository/configuration.repository';
 import { TargetFactory } from '../../target/target.factory';
 import { VehicleRadarProvider } from '../../vehicle/vehicle.radar.provider';
+import { JobService } from '../job.service';
 
 @Provider()
 export class GouvProvider {
@@ -44,6 +46,9 @@ export class GouvProvider {
     @Inject(PlayerListStateService)
     private playerListStateService: PlayerListStateService;
 
+    @Inject(JobService)
+    private jobService: JobService;
+
     @Once(OnceStep.PlayerLoaded)
     public setupMdrJob() {
         this.createBlips();
@@ -69,14 +74,16 @@ export class GouvProvider {
     }
 
     @OnEvent(ClientEvent.JOBS_GOUV_OPEN_SOCIETY_MENU)
-    public onOpenSocietyMenu() {
+    public async onOpenSocietyMenu() {
         if (this.nuiMenu.getOpened() === MenuType.GouvJobMenu) {
             this.nuiMenu.closeMenu();
             return;
         }
 
+        const updateSenatSalary = this.jobService.hasPermission(JobType.Gouv, JobPermission.GouvSenatSalary);
         this.nuiMenu.openMenu(MenuType.GouvJobMenu, {
             displayRadar: this.vehicleRadarProvider.displayRadar,
+            updateSenatSalary,
         });
     }
 
@@ -207,5 +214,22 @@ export class GouvProvider {
                 }
             );
         }
+    }
+
+    @OnNuiEvent(NuiEvent.GouvSenatSalary)
+    public async senatSalary(value: number) {
+        const newValue = await this.inputService.askInput(
+            {
+                title: 'Salaire de Sénateurs',
+                defaultValue: value.toString(),
+            },
+            PositiveNumberValidator
+        );
+
+        if (newValue == null) {
+            return;
+        }
+
+        TriggerServerEvent(ServerEvent.GOUV_SENAT_SALARY, newValue);
     }
 }

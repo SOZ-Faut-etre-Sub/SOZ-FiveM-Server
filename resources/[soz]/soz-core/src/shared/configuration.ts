@@ -27,10 +27,15 @@ export type VampireGame = {
     mortalObjectivePart3Duration: number;
 };
 
+export type GouvConfig = {
+    SenatSalary: number;
+};
+
 export type Configuration = {
     JobTaxTier: JobTaxTier;
     Water: Water;
     VampireGame: VampireGame;
+    Gouv: GouvConfig;
 };
 
 export const DEFAULT_CONFIGURATION: Configuration = {
@@ -72,5 +77,8 @@ export const DEFAULT_CONFIGURATION: Configuration = {
             weapon: 15,
         },
         mortalObjectivePart3Duration: 10,
+    },
+    Gouv: {
+        SenatSalary: 400,
     },
 };

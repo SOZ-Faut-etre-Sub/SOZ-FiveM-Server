@@ -111,6 +111,7 @@ export enum JobPermission {
     GouvUpdateTax = 'update-tax',
     GouvManageRadar = 'manage-radar',
     GouvManageFine = 'manage-fine',
+    GouvSenatSalary = 'update-senat-salary',
 }
 
 export const JobLabel: Record<JobType, string> = {

@@ -12,6 +12,7 @@ import { DrivingSchoolMenuData } from '../driving-school';
 import { FuelType } from '../fuel';
 import { AdminMapperMenuData, HousingUpgradesMenuData } from '../housing/menu';
 import { DmcJobMenuData } from '../job/dmc';
+import { GouvJobMenuPropData } from '../job/gouv';
 import { PlasterMenuData } from '../job/lsmc';
 import {
     PoliceJobFineMenuData,
@@ -183,7 +184,7 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.RentMule]: null;
     [MenuType.RaceAdmin]: null;
     [MenuType.RaceRank]: { id: number; name: string };
-    [MenuType.GouvJobMenu]: { displayRadar: boolean };
+    [MenuType.GouvJobMenu]: GouvJobMenuPropData;
     [MenuType.PropPlacementMenu]: PropPlacementMenuData;
     [MenuType.HousingPropPlacementMenu]: HousingPropPlacementMenuData;
     [MenuType.FDFJobMenu]: any;
