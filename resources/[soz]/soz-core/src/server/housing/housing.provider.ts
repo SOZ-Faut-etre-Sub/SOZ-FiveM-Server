@@ -493,13 +493,22 @@ export class HousingProvider {
             return;
         }
 
+        const hasPlayerAnotherApartment = await this.housingRepository.hasApartment(player.citizenid);
+        if (hasPlayerAnotherApartment && apartment.identifier.toLowerCase().startsWith('trailer_motel')) {
+            this.notifier.error(
+                player.source,
+                "Il n'est pas possible d'acheter cette habitation en tant que résidence secondaire."
+            );
+
+            return;
+        }
+
         if (!(await this.playerMoneyService.buy(player.source, apartment.price, TaxType.HOUSING))) {
             this.notifier.error(player.source, "Vous n'avez pas assez d'argent.");
 
             return;
         }
 
-        const hasPlayerAnotherApartment = await this.housingRepository.hasApartment(player.citizenid);
         if (hasPlayerAnotherApartment) {
             await this.housingRepository.setApartmentOwner(player.citizenid, apartment.id);
         } else {

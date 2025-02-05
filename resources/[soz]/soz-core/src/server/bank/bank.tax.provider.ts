@@ -166,38 +166,48 @@ export class BankTaxProvider {
         }
 
         for (const [citizenId, taxeAmounts] of Object.entries(playerTaxes)) {
-            const amountToPay = Math.round(
-                taxeAmounts.reduce((acc, current) => acc + current, 0) / Math.max(7, taxeAmounts.length)
-            );
+            try {
+                const amountToPay = Math.round(
+                    taxeAmounts.reduce((acc, current) => acc + current, 0) / Math.max(7, taxeAmounts.length)
+                );
 
-            const account = await this.playerService.getBankAccountFromCitizenId(citizenId);
-            if (!account) {
-                continue;
-            }
-
-            if (!(await this.bankService.removeAccountMoney(account, amountToPay))) {
-                const dbApartments = await this.housingRepository.getAllApartmentForCitizenId(citizenId);
-                for (const dbApartment of dbApartments) {
-                    const [property, apartment] = await this.housingRepository.getApartment(
-                        dbApartment.propertyId,
-                        dbApartment.id
-                    );
-
-                    if (!property || !apartment) {
-                        continue;
-                    }
-
-                    this.housingProvider.clearApartment(property, apartment);
-
-                    this.monitor.traceEvent('house_taxe_clean', {
-                        citizen_id: citizenId,
-                        house_id: dbApartment.identifier,
-                    });
+                const account = await this.playerService.getBankAccountFromCitizenId(citizenId);
+                if (!account) {
+                    continue;
                 }
+
+                if (!(await this.bankService.removeAccountMoney(account, amountToPay))) {
+                    const dbApartments = await this.housingRepository.getAllApartmentForCitizenId(citizenId);
+                    for (const dbApartment of dbApartments) {
+                        const [property, apartment] = await this.housingRepository.getApartment(
+                            dbApartment.propertyId,
+                            dbApartment.id
+                        );
+
+                        if (!property || !apartment) {
+                            continue;
+                        }
+
+                        this.housingProvider.clearApartment(property, apartment);
+
+                        this.monitor.traceEvent('house_taxe_clean', {
+                            citizen_id: citizenId,
+                            house_id: dbApartment.identifier,
+                        });
+                    }
+                    await this.bankStatementsService.createStatement(
+                        '',
+                        account,
+                        0,
+                        'Taxe immobilière - Fond insuffisant'
+                    );
+                    continue;
+                }
+
+                await this.bankStatementsService.createStatement(account, '', amountToPay, 'Taxe immobilière');
+            } catch (error) {
                 continue;
             }
-
-            await this.bankStatementsService.createStatement(account, '', amountToPay, 'Taxe immobilière');
         }
 
         await this.apartmentRentTaxeRepository.deletePreviousTaxes();
