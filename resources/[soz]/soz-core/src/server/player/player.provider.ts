@@ -1,5 +1,6 @@
 import { PlayerSyringeProvider } from '@private/server/player/player.syringe.provider';
 import { Talent } from '@private/shared/talent';
+import { Command } from '@public/core/decorators/command';
 import { BankMoneyType } from '@public/shared/bank';
 import axios from 'axios';
 
@@ -20,6 +21,7 @@ import {
 } from '../../shared/player';
 import { RpcServerEvent } from '../../shared/rpc';
 import { InventoryFactory } from '../inventory/inventory.factory';
+import { Notifier } from '../notifier';
 import { QBCore } from '../qbcore';
 import { ServerStateService } from '../server.state.service';
 import { PlayerListStateService } from './player.list.state.service';
@@ -55,6 +57,9 @@ export class PlayerProvider {
 
     @Inject(CommandLoader)
     private commandLoader: CommandLoader;
+
+    @Inject(Notifier)
+    private notifier: Notifier;
 
     @Inject(PlayerSyringeProvider)
     private playerSyringeProvider: PlayerSyringeProvider;
@@ -238,5 +243,16 @@ export class PlayerProvider {
             });
 
         TriggerClientEvent('chat:addSuggestions', player.source, suggestions);
+    }
+
+    @Command('clearId', { role: ['admin', 'staff'] })
+    async startTracing(source: number, targetStr: string) {
+        const target = parseInt(targetStr);
+        if (!target && isNaN(target)) {
+            return;
+        }
+        this.QBCore.logout(target);
+
+        this.notifier.notify(source, `Id force logout:` + target);
     }
 }
