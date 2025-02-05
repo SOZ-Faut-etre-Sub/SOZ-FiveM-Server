@@ -160,7 +160,7 @@ export class PhoneState {
                     base: {
                         dictionary: 'cellphone@',
                         name: 'cellphone_text_out',
-                        duration: 500,
+                        duration: 200,
                         options: {
                             onlyUpperBody: true,
                             enablePlayerControl: true,

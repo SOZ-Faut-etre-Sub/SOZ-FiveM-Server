@@ -40,11 +40,13 @@ export class PhoneAppSnakeProvider {
     }
 
     @Rpc(RpcServerEvent.PHONE_APP_SNAKE_ADD_SCORE)
-    async addScore(source: number, score: number) {
+    async addScore(source: number, score: number = 0) {
         const player = this.playerService.getPlayer(source);
         if (!player) {
             return;
         }
+
+        if (!score || score <= 0) return;
 
         const maxScore = await this.prismaService.snake_score.aggregate({
             _max: {

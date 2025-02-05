@@ -92,7 +92,7 @@ export const ListButton: FunctionComponent<ListButtonProps> = ({
     return (
         <li
             style={style}
-            className="relative justify-between items-center text-sm first:rounded-t-2xl last:rounded-b-2xl overflow-hidden"
+            className="list-none relative justify-between items-center text-sm first:rounded-t-2xl last:rounded-b-2xl overflow-hidden"
             onClick={() => setOpen(open => !open)}
         >
             <animated.div

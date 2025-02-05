@@ -51,7 +51,7 @@ export const ContactEdit: FunctionComponent = () => {
     const contact = useContactByID(parseInt(id));
 
     const [name, setName] = useState(() => contact?.display || '');
-    const [number, setNumber] = useState(() => contact?.number || '555-');
+    const [number, setNumber] = useState(() => contact?.number || '');
     const [avatar, setAvatar] = useState(() => contact?.avatar || '');
 
     const { initializeCall } = useCallAPI();
@@ -159,7 +159,7 @@ export const ContactEdit: FunctionComponent = () => {
                         })}
                     >
                         <p className="text-sm text-[#347DD9] pl-3">{t('CONTACTS.FORM_NUMBER')}</p>
-                        <NumberField format="555-####" defaultValue="" value={number} onChange={handleNumberChange} />
+                        <NumberField format="555-####" value={number} onChange={handleNumberChange} />
                     </div>
                 </div>
             </AppContent>

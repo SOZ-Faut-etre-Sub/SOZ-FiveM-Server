@@ -68,6 +68,7 @@ export const NumberField = forwardRef<HTMLInputElement, any>((props, ref) => {
                     props.onBlur(e);
                 }
             }}
+            allowEmptyFormatting
         />
     );
 });
