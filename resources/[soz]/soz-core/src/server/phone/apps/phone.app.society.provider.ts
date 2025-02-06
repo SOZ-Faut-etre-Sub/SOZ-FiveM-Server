@@ -1,17 +1,17 @@
+import { Inject } from '@core/decorators/injectable';
+import { Rpc } from '@core/decorators/rpc';
 import { phone_society_messages } from '@prisma/client';
+import { SocietyNumberList } from '@public/config/phone';
 import { Provider } from '@public/core/decorators/provider';
 import { Notifier } from '@public/server/notifier';
+import { ClientEvent } from '@public/shared/event/client';
 import { JobType } from '@public/shared/job';
+import { NewSocietyMessage, SocietyMessage, UpdateSocietyMessage } from '@public/shared/phone/apps/society';
 import { PlayerData } from '@public/shared/player';
-import { subDays } from 'date-fns';
+import { toVector3Object, Vector3 } from '@public/shared/polyzone/vector';
+import { RpcServerEvent } from '@public/shared/rpc';
+import { format, subDays } from 'date-fns';
 
-import { SocietyNumberList } from '../../../config/phone';
-import { Inject } from '../../../core/decorators/injectable';
-import { Rpc } from '../../../core/decorators/rpc';
-import { ClientEvent } from '../../../shared/event/client';
-import { NewSocietyMessage, SocietyMessage, UpdateSocietyMessage } from '../../../shared/phone/apps/society';
-import { toVector3Object, Vector3 } from '../../../shared/polyzone/vector';
-import { RpcServerEvent } from '../../../shared/rpc';
 import { ApiPhoneProvider } from '../../api/api.phone.provider';
 import { PrismaService } from '../../database/prisma.service';
 import { PlayerService } from '../../player/player.service';
@@ -47,7 +47,8 @@ export class PhoneAppSocietyProvider {
             where: {
                 conversation_id: SocietyNumberList[player.job.id],
                 updatedAt: {
-                    gte: subDays(Date.now(), 2),
+                    // prevent a huge computation on the database
+                    gte: new Date(format(subDays(Date.now(), 2), 'yyyy-MM-dd')),
                 },
             },
             orderBy: {
