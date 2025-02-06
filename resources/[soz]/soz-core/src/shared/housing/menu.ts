@@ -3,6 +3,8 @@ import { ApartementTiers } from '@public/shared/housing/housing';
 import { SenateParty } from '@public/shared/senate';
 
 export type HousingUpgradesMenuData = {
+    apartmentId: number;
+    propertyId: number;
     currentTier: ApartementTiers;
     hasParking: boolean;
     apartmentPrice: number;

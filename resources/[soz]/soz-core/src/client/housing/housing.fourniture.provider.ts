@@ -26,6 +26,7 @@ import { NoClipProvider } from '@public/client/utils/noclip.provider';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import {
     Apartment,
+    canAccessTargetInApartment,
     canUseHousingInAppartment,
     getMaxFourntiure,
     isApartmentExcludeFromHousing,
@@ -136,7 +137,11 @@ export class HousingFournitureProvider {
 
     @OnEvent(ClientEvent.HOUSING_TELEPORT)
     public async houseEnter(apartmentId: number | false, propertyId: number | false) {
-        if (this.lastApartment && this.lastApartment.id !== apartmentId) {
+        if (
+            this.lastApartment &&
+            this.lastApartment.id !== apartmentId &&
+            this.apartmentFourntiures[this.lastApartment.id]
+        ) {
             for (const placementProp of Object.values(
                 this.apartmentFourntiures[this.lastApartment.id].placementProps
             )) {
@@ -320,15 +325,7 @@ export class HousingFournitureProvider {
                     category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
-
-                        if (!player) {
-                            return false;
-                        }
-
-                        return (
-                            (apartment.senatePartyId !== null || apartment.owner !== null) &&
-                            isPlayerInsideApartment(player)
-                        );
+                        return canAccessTargetInApartment(player, apartment);
                     },
                     action: () => {
                         this.inventoryManager.openInventory(
@@ -348,15 +345,7 @@ export class HousingFournitureProvider {
                     category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
-
-                        if (!player) {
-                            return false;
-                        }
-
-                        return (
-                            (apartment.senatePartyId !== null || apartment.owner !== null) &&
-                            isPlayerInsideApartment(player)
-                        );
+                        return canAccessTargetInApartment(player, apartment);
                     },
                     action: () => {
                         this.bankService.openHouseSafe(apartment);
@@ -372,15 +361,7 @@ export class HousingFournitureProvider {
                     category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
-
-                        if (!player) {
-                            return false;
-                        }
-
-                        return (
-                            (apartment.senatePartyId !== null || apartment.owner !== null) &&
-                            isPlayerInsideApartment(player)
-                        );
+                        return canAccessTargetInApartment(player, apartment);
                     },
                     action: () => {
                         this.inventoryManager.openInventory(
@@ -400,15 +381,7 @@ export class HousingFournitureProvider {
                     category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
-
-                        if (!player) {
-                            return false;
-                        }
-
-                        return (
-                            (apartment.senatePartyId !== null || apartment.owner !== null) &&
-                            isPlayerInsideApartment(player)
-                        );
+                        return canAccessTargetInApartment(player, apartment);
                     },
                     action: () => {
                         this.housingApartmentZoneProvider.openApartmentCloakroom();
@@ -427,7 +400,7 @@ export class HousingFournitureProvider {
         placementProp.targetLabel = null;
     }
 
-    private async setInteriorShell(propretyId: number, apartment: Apartment) {
+    private async setInteriorShell(propertyId: number, apartment: Apartment) {
         const interior = GetInteriorFromCollision(apartment.position[0], apartment.position[1], apartment.position[2]);
         const alreadyEnable = Boolean(IsInteriorEntitySetActive(interior, 'full'));
 
@@ -437,7 +410,9 @@ export class HousingFournitureProvider {
             }
             if (apartment.shell) {
                 ActivateInteriorEntitySet(interior, 'full');
-                this.housingApartmentZoneProvider.createOtherZoneForApartment(propretyId, apartment);
+                if (apartment.tenant !== null && apartment.roommate !== null) {
+                    this.housingApartmentZoneProvider.createOtherZoneForApartment(propertyId, apartment);
+                }
             } else {
                 DeactivateInteriorEntitySet(interior, 'full');
                 this.housingApartmentZoneProvider.deleteOtherzoneForApartment(apartment);

@@ -24,19 +24,6 @@ type HousingUpgradesMenuProps = {
 };
 
 export const HousingUpgradesMenu: FunctionComponent<HousingUpgradesMenuProps> = ({ data }) => {
-    if (!data) {
-        data = {
-            currentTier: {
-                tier: 0,
-                cloth_tier: 0,
-                money_tier: 0,
-                park_tier: 0,
-            },
-            hasParking: true,
-            apartmentPrice: 0,
-            isApartmentTrailer: true,
-        };
-    }
     if (!data.currentTier) {
         data.currentTier = {
             tier: 0,
@@ -85,6 +72,8 @@ export const HousingUpgradesMenu: FunctionComponent<HousingUpgradesMenuProps> = 
 
     const onConfirm = () => {
         fetchNui(NuiEvent.HousingUpgradeApartment, {
+            apartmentId: data.apartmentId,
+            propertyId: data.propertyId,
             apartmentTier: tier,
             price: tierPrice,
             isApartmentTrailer: data.isApartmentTrailer,

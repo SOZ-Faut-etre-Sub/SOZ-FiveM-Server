@@ -82,6 +82,7 @@ export type GarageMenuData = {
     id: string;
     max_places: number | null;
     has_fake_ticket: boolean;
+    citizenId: string;
     transferGarageList: {
         id: string;
         garage: Garage;

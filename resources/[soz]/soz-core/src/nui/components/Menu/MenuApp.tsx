@@ -31,14 +31,19 @@ import { FoodJobMenu } from '../Food/FoodJobMenu';
 import { GarbageJobMenu } from '../Garbage/GarbageJobMenu';
 import { MenuGunSmith } from '../GunSmith/GunSmithMenu';
 import { HousingAddRoommateMenu } from '../Housing/HousingAddRoommateMenu';
+import { HousingAddTenantMenu } from '../Housing/HousingAddTenantMenu';
 import { HousingBellMenu } from '../Housing/HousingBellMenu';
 import { HousingBuyMenu } from '../Housing/HousingBuyMenu';
+import { HousingChangePrincipalApartementMenu } from '../Housing/HousingChangePrincipalApartementMenu';
 import { HousingCloakroomMenu } from '../Housing/HousingCloakroomMenu';
 import { HousingEnterMenu } from '../Housing/HousingEnterMenu';
 import { HousingRemoveRoommateMenu } from '../Housing/HousingRemoveRoommateMenu';
+import { HousingRemoveTenantMenu } from '../Housing/HousingRemoveTenantMenu';
 import { HousingSearchWarrantMenu } from '../Housing/HousingSearchWarrantMenu';
 import { HousingSellMenu } from '../Housing/HousingSellMenu';
+import { HousingStoreFounitureSelectMenu } from '../Housing/HousingStoreFounitureSelectMenu';
 import { HousingUpgradesMenu } from '../Housing/HousingUpgradesMenu';
+import { HousingUpgradesSelectMenu } from '../Housing/HousingUpgradesSelectMenu';
 import { HousingVisitMenu } from '../Housing/HousingVisitMenu';
 import { JobOnDutyMenu } from '../Job/OnDutyMenu';
 import { LsmcJobMenu } from '../LSMC/LsmcJobMenu';
@@ -282,18 +287,35 @@ const MenuRouter: FunctionComponent = () => {
                 path={`/${MenuType.HousingAddRoommateMenu}/*`}
                 element={<HousingAddRoommateMenu data={menuData} />}
             />
+            <Route path={`/${MenuType.HousingAddTenantMenu}/*`} element={<HousingAddTenantMenu data={menuData} />} />
+            <Route
+                path={`/${MenuType.HousingChangePrincipalApartementMenu}/*`}
+                element={<HousingChangePrincipalApartementMenu data={menuData} />}
+            />
             <Route path={`/${MenuType.HousingBellMenu}/*`} element={<HousingBellMenu data={menuData} />} />
             <Route
                 path={`/${MenuType.HousingSearchWarrantMenu}/*`}
                 element={<HousingSearchWarrantMenu data={menuData} />}
+            />
+            <Route
+                path={`/${MenuType.HousingUpgradesSelectMenu}/*`}
+                element={<HousingUpgradesSelectMenu data={menuData} />}
             />
             <Route path={`/${MenuType.HousingBuyMenu}/*`} element={<HousingBuyMenu data={menuData} />} />
             <Route path={`/${MenuType.HousingCloakroomMenu}/*`} element={<HousingCloakroomMenu data={menuData} />} />
             <Route path={`/${MenuType.ZkeaFournitureMenu}/*`} element={<ZkeaFournitureMenu />} />
             <Route path={`/${MenuType.HousingEnterMenu}/*`} element={<HousingEnterMenu data={menuData} />} />
             <Route
+                path={`/${MenuType.HousingStoreFounitureSelectMenu}/*`}
+                element={<HousingStoreFounitureSelectMenu data={menuData} />}
+            />
+            <Route
                 path={`/${MenuType.HousingRemoveRoommateMenu}/*`}
                 element={<HousingRemoveRoommateMenu data={menuData} />}
+            />
+            <Route
+                path={`/${MenuType.HousingRemoveTenantMenu}/*`}
+                element={<HousingRemoveTenantMenu data={menuData} />}
             />
             <Route path={`/${MenuType.HousingSellMenu}/*`} element={<HousingSellMenu data={menuData} />} />
             <Route path={`/${MenuType.HousingVisitMenu}/*`} element={<HousingVisitMenu data={menuData} />} />

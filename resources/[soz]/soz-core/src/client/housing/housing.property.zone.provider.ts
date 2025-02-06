@@ -12,16 +12,23 @@ import { ServerEvent } from '../../shared/event/server';
 import {
     Apartment,
     canPlayerAddRoommate,
+    canPlayerAddTenant,
     canPlayerRemoveRoommate,
+    canPlayerRemoveTenant,
     canUseHousingInAppartmentNoStaff,
     canUseHousingInProperty,
     hasAccess,
     hasApartmentAccess,
+    hasApartmentWithoutAccessInProperty,
     hasAvailableApartment,
+    hasOwnedOrAccess,
     hasPlayerOwnedApartment,
+    hasPlayerOwnedEmptyApartment,
+    hasPlayerOwnedNonEmptyApartment,
     hasPlayerRoommateApartment,
+    hasPlayerTenantApartment,
+    hasPlayerTenantOrRoommateApartment,
     hasPropertyGarage,
-    hasRentedApartment,
     hasSearchWarrantAccessInApartment,
     isAdminHouse,
     isPlayerInsideApartment,
@@ -169,7 +176,7 @@ export class HousingPropertyZoneProvider {
             }
 
             const id = `property_${property.id}`;
-            const hasPropertyAccess = hasAccess(property, player, this.temporaryAccess);
+            const hasPropertyAccess = hasOwnedOrAccess(property, player, this.temporaryAccess);
             const hasAvailable = hasAvailableApartment(property);
 
             if (
@@ -190,11 +197,28 @@ export class HousingPropertyZoneProvider {
 
             const category = property.apartments.length > 1 ? 'building' : 'house';
             const owned = hasPropertyAccess ? 'owned' : 'free';
-            const name = hasPropertyAccess
-                ? 'Habitation - Résidence'
-                : category === 'building'
-                  ? 'Habitation - Immeuble'
-                  : 'Habitation - Maison';
+
+            let name: string;
+            let color = 0;
+            if (hasPropertyAccess) {
+                if (hasPlayerTenantOrRoommateApartment(property, player.citizenid)) {
+                    name = 'Habitation - Résidence';
+                } else if (hasPlayerOwnedNonEmptyApartment(property, player.citizenid)) {
+                    color = 7;
+                    name = 'Habitation - Location';
+                } else if (hasPlayerOwnedEmptyApartment(property, player.citizenid)) {
+                    color = 17;
+                    name = 'Habitation - Location vide';
+                } else {
+                    name = 'Habitation - Résidence';
+                }
+            } else {
+                if (category === 'building') {
+                    name = 'Habitation - Immeuble';
+                } else {
+                    name = 'Habitation - Maison';
+                }
+            }
 
             if (this.blipFactory.exist(id)) {
                 this.blipFactory.update(id, {
@@ -202,7 +226,7 @@ export class HousingPropertyZoneProvider {
                     position: property.entryZone.center,
                     sprite: BlipSprite[category][owned],
                     scale: owned === 'owned' ? 0.8 : 0.5,
-                    color: 0,
+                    color: color,
                 });
             } else {
                 this.blipFactory.create(id, {
@@ -210,7 +234,7 @@ export class HousingPropertyZoneProvider {
                     position: property.entryZone.center,
                     sprite: BlipSprite[category][owned],
                     scale: owned === 'owned' ? 0.8 : 0.5,
-                    color: 0,
+                    color: color,
                 });
             }
         }
@@ -263,10 +287,7 @@ export class HousingPropertyZoneProvider {
                     }
 
                     return (
-                        !isAdminHouse(property) &&
-                        !hasPlayerOwnedApartment(property, player.citizenid) &&
-                        hasAvailableApartment(property) &&
-                        !isPlayerInsideApartment(player)
+                        !isAdminHouse(property) && hasAvailableApartment(property) && !isPlayerInsideApartment(player)
                     );
                 },
                 action: () => {
@@ -349,7 +370,7 @@ export class HousingPropertyZoneProvider {
                 },
             },
             {
-                label: 'Sonner',
+                label: property.apartments.length === 1 ? `Sonner - ${property.apartments[0].label}` : 'Sonner',
                 icon: 'housing/bell',
                 category: 'citizen',
                 canInteract: () => {
@@ -359,7 +380,10 @@ export class HousingPropertyZoneProvider {
                         return false;
                     }
 
-                    return hasRentedApartment(property, player.citizenid) && !isPlayerInsideApartment(player);
+                    return (
+                        hasApartmentWithoutAccessInProperty(property, player, this.temporaryAccess) &&
+                        !isPlayerInsideApartment(player)
+                    );
                 },
                 action: () => {
                     this.bellProperty(property);
@@ -431,7 +455,51 @@ export class HousingPropertyZoneProvider {
                 },
             },
             {
-                label: 'Ajouter colocataire',
+                label: 'Changer de résidence principale',
+                icon: 'housing/house-user',
+                category: 'citizen',
+                blackoutGlobal: true,
+                canInteract: () => {
+                    const player = this.playerService.getPlayer();
+
+                    if (!player) {
+                        return false;
+                    }
+
+                    return (
+                        !isAdminHouse(property) &&
+                        hasPlayerOwnedEmptyApartment(property, player.citizenid) &&
+                        !isPlayerInsideApartment(player)
+                    );
+                },
+                action: () => {
+                    this.changePrincipalApartement(property);
+                },
+            },
+            {
+                label: 'Ajouter un locataire',
+                icon: 'jobs/enroll',
+                category: 'citizen',
+                blackoutGlobal: true,
+                canInteract: () => {
+                    const player = this.playerService.getPlayer();
+
+                    if (!player) {
+                        return false;
+                    }
+
+                    return (
+                        !isAdminHouse(property) &&
+                        canPlayerAddTenant(property, player.citizenid) &&
+                        !isPlayerInsideApartment(player)
+                    );
+                },
+                action: () => {
+                    this.addTenant(property);
+                },
+            },
+            {
+                label: 'Ajouter un colocataire',
                 icon: 'jobs/enroll',
                 category: 'citizen',
                 blackoutGlobal: true,
@@ -450,6 +518,28 @@ export class HousingPropertyZoneProvider {
                 },
                 action: () => {
                     this.addRoommate(property);
+                },
+            },
+            {
+                label: 'Retirer locataire',
+                icon: 'jobs/fire',
+                category: 'citizen',
+                blackoutGlobal: true,
+                canInteract: () => {
+                    const player = this.playerService.getPlayer();
+
+                    if (!player) {
+                        return false;
+                    }
+
+                    return (
+                        !isAdminHouse(property) &&
+                        canPlayerRemoveTenant(property, player.citizenid) &&
+                        !isPlayerInsideApartment(player)
+                    );
+                },
+                action: () => {
+                    this.removeTenant(property);
                 },
             },
             {
@@ -472,6 +562,28 @@ export class HousingPropertyZoneProvider {
                 },
                 action: () => {
                     this.removeRoommate(property);
+                },
+            },
+            {
+                label: 'Partir de la location',
+                icon: 'jobs/fire',
+                category: 'citizen',
+                blackoutGlobal: true,
+                canInteract: () => {
+                    const player = this.playerService.getPlayer();
+
+                    if (!player) {
+                        return false;
+                    }
+
+                    return (
+                        !isAdminHouse(property) &&
+                        hasPlayerTenantApartment(property, player.citizenid) &&
+                        !isPlayerInsideApartment(player)
+                    );
+                },
+                action: () => {
+                    this.leavePropertyAsTenant(property);
                 },
             },
             {
@@ -554,17 +666,35 @@ export class HousingPropertyZoneProvider {
             return [];
         }
 
-        const apartment = property.apartments.find(apartment =>
+        const apartments = property.apartments.filter(apartment =>
             canUseHousingInAppartmentNoStaff(player, apartment, this.temporaryAccess)
         );
 
-        if (!apartment) {
+        if (apartments.length === 0) {
+            return;
+        }
+
+        if (apartments.length > 1) {
+            this.nuiMenu.openMenu(
+                MenuType.HousingStoreFounitureSelectMenu,
+                {
+                    property,
+                    apartments,
+                },
+                {
+                    position: {
+                        distance: 3,
+                        position: property.entryZone.center,
+                    },
+                }
+            );
+
             return;
         }
 
         this.housingMenuProvider.storeFournitureInApartment({
-            apartmentId: apartment.id,
-            propretyId: apartment.propertyId,
+            apartmentId: apartments[0].id,
+            propertyId: apartments[0].propertyId,
         });
     }
 
@@ -661,6 +791,106 @@ export class HousingPropertyZoneProvider {
         );
     }
 
+    public async changePrincipalApartement(property: Property) {
+        const player = this.playerService.getPlayer();
+
+        if (!player) {
+            return [];
+        }
+
+        const apartments = property.apartments.filter(
+            apartment =>
+                apartment.owner === player.citizenid && apartment.tenant === null && apartment.roommate === null
+        );
+
+        if (apartments.length === 0) {
+            return;
+        }
+
+        this.nuiMenu.openMenu(
+            MenuType.HousingChangePrincipalApartementMenu,
+            {
+                property,
+                apartments,
+            },
+            {
+                position: {
+                    distance: 3,
+                    position: property.entryZone.center,
+                },
+            }
+        );
+    }
+
+    @OnEvent(ClientEvent.HOUSING_SELECT_UPGRADES_MENU)
+    public async selectUpgradesMenu() {
+        const player = this.playerService.getPlayer();
+
+        if (!player) {
+            return [];
+        }
+
+        const apartments: Apartment[] = [];
+        for (const property of this.housingRepository.get()) {
+            for (const apartment of property.apartments.filter(apartment => apartment.owner === player.citizenid)) {
+                apartments.push(apartment);
+            }
+        }
+
+        if (apartments.length === 0) {
+            return;
+        }
+
+        if (apartments.length > 1) {
+            this.nuiMenu.openMenu(MenuType.HousingUpgradesSelectMenu, {
+                apartments,
+            });
+
+            return;
+        }
+
+        TriggerEvent(ClientEvent.HOUSING_OPEN_UPGRADES_MENU, {
+            apartmentId: apartments[0].id,
+            propertyId: apartments[0].propertyId,
+        });
+    }
+
+    public async addTenant(property: Property) {
+        const player = this.playerService.getPlayer();
+
+        if (!player) {
+            return [];
+        }
+
+        const apartments = property.apartments.filter(
+            apartment => apartment.owner === player.citizenid && apartment.tenant === null
+        );
+
+        if (apartments.length === 0) {
+            return;
+        }
+
+        if (apartments.length > 1) {
+            this.nuiMenu.openMenu(
+                MenuType.HousingAddTenantMenu,
+                {
+                    property,
+                    apartments,
+                },
+                {
+                    position: {
+                        distance: 3,
+                        position: property.entryZone.center,
+                    },
+                }
+            );
+
+            return;
+        }
+
+        await this.housingMenuProvider.addTenant({ apartmentId: apartments[0].id, propertyId: property.id });
+    }
+
     public async addRoommate(property: Property) {
         const player = this.playerService.getPlayer();
 
@@ -740,6 +970,45 @@ export class HousingPropertyZoneProvider {
         await this.housingMenuProvider.removeRoommate({ apartmentId: apartments[0].id, propertyId: property.id });
     }
 
+    public async removeTenant(property: Property) {
+        const player = this.playerService.getPlayer();
+
+        if (!player) {
+            return [];
+        }
+
+        const apartments = property.apartments.filter(
+            apartment =>
+                apartment.owner === player.citizenid &&
+                apartment.tenant !== null &&
+                apartment.tenant !== player.citizenid
+        );
+
+        if (apartments.length === 0) {
+            return;
+        }
+
+        if (apartments.length > 1) {
+            this.nuiMenu.openMenu(
+                MenuType.HousingRemoveTenantMenu,
+                {
+                    property,
+                    apartments,
+                },
+                {
+                    position: {
+                        distance: 3,
+                        position: property.entryZone.center,
+                    },
+                }
+            );
+
+            return;
+        }
+
+        await this.housingMenuProvider.removeTenant({ apartmentId: apartments[0].id, propertyId: property.id });
+    }
+
     private getUniqueApartment(property: Property): Apartment | null {
         if (property.apartments.length > 1) {
             return null;
@@ -766,6 +1035,22 @@ export class HousingPropertyZoneProvider {
         );
 
         await this.vehicleGarageProvider.openHouseGarageMenu(property.identifier, apartments);
+    }
+
+    public leavePropertyAsTenant(property: Property) {
+        const player = this.playerService.getPlayer();
+
+        if (!player) {
+            return;
+        }
+
+        const apartment = property.apartments.find(apartment => apartment.tenant === player.citizenid);
+
+        if (!apartment) {
+            return;
+        }
+
+        TriggerServerEvent(ServerEvent.HOUSING_REMOVE_TENANT, property.id, apartment.id);
     }
 
     public leavePropertyAsRoommate(property: Property) {

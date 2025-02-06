@@ -224,11 +224,11 @@ export class HousingFournitureProvider {
         }
 
         this.plateChecked[apartmentId] = true;
-        const owner = this.playerService.getPlayerByCitizenId(apartement.owner);
+        const tenant = this.playerService.getPlayerByCitizenId(apartement.tenant);
         const roommate = this.playerService.getPlayerByCitizenId(apartement.roommate);
 
         const plates = Object.values(this.fournitures[apartmentId]).filter(v => v.model === ZkeaPlateModel);
-        const target = (owner?.metadata?.plate ? 1 : 0) + (roommate?.metadata?.plate ? 1 : 0);
+        const target = (tenant?.metadata?.plate ? 1 : 0) + (roommate?.metadata?.plate ? 1 : 0);
 
         if (plates.length < target) {
             await this.addFourntiureForApartement(
@@ -246,7 +246,7 @@ export class HousingFournitureProvider {
         }
 
         const special_plate = Object.values(this.fournitures[apartmentId]).find(v => v.model === ZkeaSpecialPlateModel);
-        if (!special_plate && (owner?.metadata?.special_plate || roommate?.metadata?.special_plate)) {
+        if (!special_plate && (tenant?.metadata?.special_plate || roommate?.metadata?.special_plate)) {
             await this.addFourntiureForApartement(
                 apartmentId,
                 Array(1).fill({ apartment_id: apartmentId, model: ZkeaSpecialPlateModel })
@@ -264,11 +264,15 @@ export class HousingFournitureProvider {
     }
 
     private async deletePlateIfNeeded(apartment: Apartment) {
-        const owner = this.playerService.getPlayerByCitizenId(apartment.owner);
+        if (!this.fournitures[apartment.id]) {
+            return;
+        }
+
+        const tenant = this.playerService.getPlayerByCitizenId(apartment.tenant);
         const roommate = this.playerService.getPlayerByCitizenId(apartment.roommate);
 
         const plates = Object.values(this.fournitures[apartment.id]).filter(v => v.model === ZkeaPlateModel);
-        const target = (owner?.metadata?.plate ? 1 : 0) + (roommate?.metadata?.plate ? 1 : 0);
+        const target = (tenant?.metadata?.plate ? 1 : 0) + (roommate?.metadata?.plate ? 1 : 0);
         if (plates.length <= target) {
             return;
         }
@@ -283,11 +287,15 @@ export class HousingFournitureProvider {
     }
 
     private async deleteSpecialPlateIfNeeded(apartment: Apartment) {
-        const owner = this.playerService.getPlayerByCitizenId(apartment.owner);
+        if (!this.fournitures[apartment.id]) {
+            return;
+        }
+
+        const tenant = this.playerService.getPlayerByCitizenId(apartment.tenant);
         const roommate = this.playerService.getPlayerByCitizenId(apartment.roommate);
 
         const plates = Object.values(this.fournitures[apartment.id]).filter(v => v.model === ZkeaSpecialPlateModel);
-        const target = owner?.metadata?.special_plate ? 1 : 0 + (roommate?.metadata?.special_plate ? 1 : 0);
+        const target = tenant?.metadata?.special_plate ? 1 : 0 + (roommate?.metadata?.special_plate ? 1 : 0);
         if (plates.length <= target) {
             return;
         }

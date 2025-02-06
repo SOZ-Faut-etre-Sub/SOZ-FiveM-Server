@@ -34,6 +34,40 @@ export class HousingMenuProvider {
     @Inject(ProgressService)
     private progressService: ProgressService;
 
+    @OnNuiEvent(NuiEvent.HousingChangePrincipalApartement)
+    public async changePrincipalApartement({ apartmentId, propertyId }: { apartmentId: number; propertyId: number }) {
+        const player = this.playerService.getPlayer();
+
+        if (!player) {
+            return;
+        }
+
+        TriggerServerEvent(ServerEvent.HOUSING_CHANGE_PRINCIPAL_APARTMENT, propertyId, apartmentId);
+
+        this.nuiMenu.closeMenu();
+    }
+
+    @OnNuiEvent(NuiEvent.HousingAddTenant)
+    public async addTenant({ apartmentId, propertyId }: { apartmentId: number; propertyId: number }) {
+        const player = this.playerService.getPlayer();
+
+        if (!player) {
+            return;
+        }
+
+        const [playerId, distance] = this.playerService.getClosestPlayer();
+
+        if (!playerId || playerId < 0 || distance > 2.0) {
+            this.notifier.error("Personne n'est à portée de vous.");
+
+            return;
+        }
+
+        TriggerServerEvent(ServerEvent.HOUSING_ADD_TENANT, propertyId, apartmentId, GetPlayerServerId(playerId));
+
+        this.nuiMenu.closeMenu();
+    }
+
     @OnNuiEvent(NuiEvent.HousingAddRoommate)
     public async addRoommate({ apartmentId, propertyId }: { apartmentId: number; propertyId: number }) {
         const player = this.playerService.getPlayer();
@@ -72,6 +106,13 @@ export class HousingMenuProvider {
     @OnNuiEvent(NuiEvent.HousingEnter)
     public async enter({ apartmentId, propertyId }: { apartmentId: number; propertyId: number }) {
         TriggerServerEvent(ServerEvent.HOUSING_ENTER_APARTMENT, propertyId, apartmentId);
+
+        this.nuiMenu.closeMenu();
+    }
+
+    @OnNuiEvent(NuiEvent.HousingRemoveTenant)
+    public async removeTenant({ apartmentId, propertyId }: { apartmentId: number; propertyId: number }) {
+        TriggerServerEvent(ServerEvent.HOUSING_REMOVE_TENANT, propertyId, apartmentId);
 
         this.nuiMenu.closeMenu();
     }
@@ -171,7 +212,7 @@ export class HousingMenuProvider {
     }
 
     @OnNuiEvent(NuiEvent.HousingStore)
-    public async storeFournitureInApartment({ apartmentId, propretyId }: { apartmentId: number; propretyId: number }) {
+    public async storeFournitureInApartment({ apartmentId, propertyId }: { apartmentId: number; propertyId: number }) {
         const { completed } = await this.progressService.progress(
             'store_fourntiure',
             'Rangement des meubles...',
@@ -195,6 +236,6 @@ export class HousingMenuProvider {
         if (!completed) {
             return;
         }
-        TriggerServerEvent(ServerEvent.HOUSING_STORE_FOURNITURE, apartmentId, propretyId);
+        TriggerServerEvent(ServerEvent.HOUSING_STORE_FOURNITURE, apartmentId, propertyId);
     }
 }

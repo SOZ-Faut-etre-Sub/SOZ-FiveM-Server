@@ -1,4 +1,4 @@
-import { ApartmentMenuData } from '@public/shared/housing/housing';
+import { ApartmentMenuData, ApartmentSelectUpgradesMenuData } from '@public/shared/housing/housing';
 import { HudSettings } from '@public/shared/hud';
 import { JobType } from '@public/shared/job';
 import { MenuOilData } from '@public/shared/job/oil';
@@ -123,9 +123,14 @@ export enum MenuType {
     HousingSellMenu = 'housing_sell_menu',
     HousingVisitMenu = 'housing_visit_menu',
     HousingBellMenu = 'housing_bell_menu',
+    HousingUpgradesSelectMenu = 'housing_upgrades_select_menu',
+    HousingStoreFounitureSelectMenu = 'housing_store_fourniture_select_menu',
     HousingEnterMenu = 'housing_enter_menu',
+    HousingChangePrincipalApartementMenu = 'housingchange_principal_apartment_menu',
     HousingAddRoommateMenu = 'housing_add_roommate_menu',
+    HousingAddTenantMenu = 'housing_add_tenant_menu',
     HousingRemoveRoommateMenu = 'housing_remove_roommate_menu',
+    HousingRemoveTenantMenu = 'housing_remove_tenant_menu',
     HousingCloakroomMenu = 'housing_cloakroom_menu',
     HousingSearchWarrantMenu = 'housing_search_warrant_menu',
     ZkeaFournitureMenu = 'zkea_fourniture_menu',
@@ -199,9 +204,12 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.HousingAddRoommateMenu]: ApartmentMenuData;
     [MenuType.HousingBellMenu]: ApartmentMenuData;
     [MenuType.HousingSearchWarrantMenu]: ApartmentMenuData;
+    [MenuType.HousingUpgradesSelectMenu]: ApartmentSelectUpgradesMenuData;
     [MenuType.HousingBuyMenu]: ApartmentMenuData;
     [MenuType.HousingEnterMenu]: ApartmentMenuData;
+    [MenuType.HousingStoreFounitureSelectMenu]: ApartmentMenuData;
     [MenuType.HousingRemoveRoommateMenu]: ApartmentMenuData;
+    [MenuType.HousingRemoveTenantMenu]: ApartmentMenuData;
     [MenuType.HousingSellMenu]: ApartmentMenuData;
     [MenuType.HousingVisitMenu]: ApartmentMenuData;
     [MenuType.HousingCloakroomMenu]: {

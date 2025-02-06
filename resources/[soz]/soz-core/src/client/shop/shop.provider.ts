@@ -1,6 +1,7 @@
 import { InventoryDragAndDropProvider } from '@public/client/inventory/inventory.draganddrop.provider';
 import { InventoryManager } from '@public/client/inventory/inventory.manager';
 import { ItemService } from '@public/client/item/item.service';
+import { HousingRepository } from '@public/client/repository/housing.repository';
 import { BrandsConfig, NoZoneShopBrand, NoZonesShopConfig, ShopBrand, ShopsConfig } from '@public/config/shops';
 import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
@@ -86,6 +87,9 @@ export class ShopProvider {
 
     @Inject(FeatureProvider)
     private featureProvider: FeatureProvider;
+
+    @Inject(HousingRepository)
+    private housingRepository: HousingRepository;
 
     public getShopActions(): TargetOption[] {
         return [
@@ -179,6 +183,7 @@ export class ShopProvider {
                 label: 'Location de camion de déménagement',
                 icon: 'vehicle/truck',
                 category: 'citizen',
+                blackoutGlobal: true,
                 canInteract: entity => this.shopService.checkTarget([ShopBrand.Zkea], entity),
                 action: async () => {
                     this.nuiMenu.openMenu(MenuType.RentMule, null, {
@@ -208,15 +213,13 @@ export class ShopProvider {
                 blackoutGlobal: true,
                 canInteract: entity => {
                     const player = this.playerService.getPlayer();
-                    if (!player.apartment || !player.apartment.owner) {
-                        return false;
-                    }
-                    if (player.apartment.owner !== player.citizenid) {
-                        return false;
-                    }
-                    return this.shopService.checkTarget([ShopBrand.Zkea], entity);
+                    const properties = this.housingRepository.get();
+                    const ownedAnyApartment = properties.some(property =>
+                        property.apartments.some(apartment => apartment.owner === player.citizenid)
+                    );
+                    return ownedAnyApartment && this.shopService.checkTarget([ShopBrand.Zkea], entity);
                 },
-                action: () => TriggerEvent(ClientEvent.HOUSING_OPEN_UPGRADES_MENU),
+                action: () => TriggerEvent(ClientEvent.HOUSING_SELECT_UPGRADES_MENU),
             },
             {
                 label: 'Enlever la tenue temporaire',

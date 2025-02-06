@@ -680,6 +680,11 @@ export class VehicleGarageProvider {
             return Err("vous n'avez pas accès à ce garage luxe ou ce véhicule n'est pas un véhicule de luxe");
         } else if (garage.type === GarageType.House && vehicle.job !== null) {
             return Err('ce véhicule appartient à une entreprise');
+        } else if (garage.type === GarageType.House) {
+            const apartment = await this.housingRepository.getApartmentByIdentifier(id);
+            if (apartment.owner && !apartment.tenant && !apartment.roommate) {
+                return Err(`Vous n'avez pas accès à ce garage.`);
+            }
         }
 
         return Ok(vehicle);
@@ -769,7 +774,7 @@ export class VehicleGarageProvider {
 
         const hasApartmentAccess =
             garage.type === GarageType.House &&
-            (await this.housingProvider.hasAccessToApartment(player, apartmentIdentifier));
+            (await this.housingProvider.hasAccessToApartmentGarageStore(player, apartmentIdentifier));
 
         let vehicle: PlayerVehicle | null = null;
 
