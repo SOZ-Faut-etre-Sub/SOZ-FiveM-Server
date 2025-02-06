@@ -94,4 +94,27 @@ export const PawlCraftsLists: Record<string, CraftCategory> = {
             },
         },
     },
+    ['Tenues']: {
+        animation: {
+            name: 'base',
+            dictionary: 'amb@prop_human_seat_sewing@female@base',
+            options: {
+                repeat: true,
+                onlyUpperBody: true,
+            },
+        },
+        duration: 8000,
+        icon: '⚒️',
+        event: 'job_pawl_craft',
+        recipes: {
+            work_clothes: {
+                amount: 4,
+                inputs: {
+                    wood_plank: { count: 1 },
+                    sawdust: { count: 20 },
+                    sap: { count: 3 },
+                },
+            },
+        },
+    },
 };

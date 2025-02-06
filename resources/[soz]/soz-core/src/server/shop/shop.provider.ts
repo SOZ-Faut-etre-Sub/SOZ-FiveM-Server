@@ -426,6 +426,7 @@ export class ShopProvider {
         }
 
         // Update BDD
+        /* Disabled with the stop FFS
         await this.prismaService.shop_content.update({
             where: {
                 id: product.id,
@@ -436,6 +437,7 @@ export class ShopProvider {
                 },
             },
         });
+        */
 
         // Update repository
         shopItem.stock -= 1;

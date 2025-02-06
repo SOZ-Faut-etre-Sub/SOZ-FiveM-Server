@@ -14,15 +14,11 @@ import { RpcServerEvent } from '@public/shared/rpc';
 import { BlipFactory } from '../../blip';
 import { FeatureProvider } from '../../feature/feature.provider';
 import { NuiMenu } from '../../nui/nui.menu';
-import { PlayerService } from '../../player/player.service';
 
 @Provider()
 export class FoodProvider {
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
-
-    @Inject(PlayerService)
-    private playerService: PlayerService;
 
     @Inject(BlipFactory)
     private blipFactory: BlipFactory;
@@ -54,7 +50,7 @@ export class FoodProvider {
                     job: JobType.Food,
                     blackoutGlobal: true,
                     blackoutJob: JobType.Food,
-                    category: 'citizen', // fixme?
+                    category: 'society',
                     canInteract: () => {
                         return true;
                     },
