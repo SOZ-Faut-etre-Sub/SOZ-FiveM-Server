@@ -106,6 +106,12 @@ export class PhoneState {
         return this.currentCall;
     }
 
+    public getTargetCallerId() {
+        if (!this.currentCall) return null;
+
+        return this.currentCall.isTransmitter ? this.currentCall.receiverSource : this.currentCall.transmitterSource;
+    }
+
     public setCurrentCall(call: ActiveCall | null) {
         this.currentCall = call;
     }

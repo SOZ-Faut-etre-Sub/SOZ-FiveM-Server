@@ -68,6 +68,15 @@ export class PhoneSimCardCalls {
         this.nuiDispatch.dispatch('phone', 'SetCurrentCall', this.phoneState.getCurrentCall());
     }
 
+    @OnNuiEvent(NuiEvent.PhoneSimCardCallsSpeaker)
+    async onCallSpeaker() {
+        const speaker = !(this.phoneState.getCurrentCall()?.speaker ?? false);
+        TriggerEvent(ClientEvent.VOIP_VOICE_SPEAKER_CALL, speaker);
+
+        this.phoneState.setCurrentCall({ ...this.phoneState.getCurrentCall(), speaker });
+        this.nuiDispatch.dispatch('phone', 'SetCurrentCall', this.phoneState.getCurrentCall());
+    }
+
     @OnEvent(ClientEvent.VOIP_VOICE_START_CALL)
     @OnEvent(ClientEvent.VOIP_VOICE_END_CALL)
     async clearCallSounds() {

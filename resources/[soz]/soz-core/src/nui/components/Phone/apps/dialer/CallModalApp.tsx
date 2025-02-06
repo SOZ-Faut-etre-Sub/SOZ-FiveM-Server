@@ -18,7 +18,7 @@ export const CallModalApp = () => {
     const { currentCall } = useCall();
     const navigate = useNavigate();
 
-    const { acceptCall, rejectCall, endCall, muteCall } = useCallAPI();
+    const { acceptCall, rejectCall, endCall, muteCall, speakerCall } = useCallAPI();
 
     const receiverContact = useContact(currentCall?.receiver);
     const transmitterContact = useContact(currentCall?.transmitter);
@@ -50,7 +50,17 @@ export const CallModalApp = () => {
             <div className="absolute bottom-40 grid grid-cols-3 gap-5 w-full px-5">
                 {callInProgress && (
                     <>
-                        <CallButton label="Audio" icon={BsVolumeUpFill} onClick={() => {}} />
+                        <CallButton
+                            label="Audio"
+                            icon={BsVolumeUpFill}
+                            onClick={speakerCall}
+                            className={clsx({
+                                'bg-white/80': currentCall.speaker,
+                            })}
+                            iconClassName={clsx({
+                                'text-green-500': currentCall.speaker,
+                            })}
+                        />
                         {!targetContact && (
                             <CallButton
                                 label="Ajouter"

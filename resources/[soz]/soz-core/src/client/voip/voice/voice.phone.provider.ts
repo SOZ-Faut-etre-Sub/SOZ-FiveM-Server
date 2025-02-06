@@ -1,8 +1,10 @@
+import { OnEvent } from '@core/decorators/event';
+import { Inject } from '@core/decorators/injectable';
+import { Tick } from '@core/decorators/tick';
 import { Provider } from '@public/core/decorators/provider';
+import { ClientEvent } from '@public/shared/event/client';
+import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 
-import { OnEvent } from '../../../core/decorators/event';
-import { Inject } from '../../../core/decorators/injectable';
-import { ClientEvent } from '../../../shared/event/client';
 import { VoiceListeningService } from './voice.listening.service';
 import { VoiceTargetService } from './voice.target.service';
 
@@ -15,6 +17,8 @@ export class VoicePhoneProvider {
     private voiceListeningService: VoiceListeningService;
 
     private currentCallerId: number | null = null;
+    private speakerEnabled: boolean = false;
+    private currentProximityPlayers = new Set<number>();
 
     public hasActiveCall(): boolean {
         return this.currentCallerId !== null;
@@ -44,6 +48,7 @@ export class VoicePhoneProvider {
         }
 
         this.currentCallerId = null;
+        this.speakerEnabled = false;
     }
 
     @OnEvent(ClientEvent.VOIP_VOICE_MUTE_CALL)
@@ -61,5 +66,85 @@ export class VoicePhoneProvider {
                 priority: 1,
             });
         }
+    }
+
+    @OnEvent(ClientEvent.VOIP_VOICE_SPEAKER_CALL)
+    public onSpeakerCall(enabled: boolean) {
+        this.speakerEnabled = enabled;
+
+        if (!this.speakerEnabled) {
+            this.voiceListeningService.removePlayerAudioContext(this.currentCallerId, 'phone_speaker');
+            this.voiceTargetService.removePlayer(this.currentCallerId, 'phone_speaker');
+            return;
+        }
+
+        this.voiceTargetService.addPlayer(this.currentCallerId, 'phone_speaker');
+        this.voiceListeningService.addPlayerAudioContext(this.currentCallerId, 'phone_speaker', {
+            type: 'phone_speaker',
+            priority: 1,
+        });
+    }
+
+    @Tick()
+    public checkProximityPlayers() {
+        const players = GetActivePlayers();
+        const currentPosition = GetEntityCoords(PlayerPedId(), false) as Vector3;
+        const selfPlayerId = GetPlayerServerId(PlayerId());
+        const newProximityPlayers = new Set<number>();
+
+        for (const player of players) {
+            if (!this.speakerEnabled) {
+                continue;
+            }
+
+            const serverId = GetPlayerServerId(player);
+            if (!serverId) {
+                continue;
+            }
+
+            if (serverId === selfPlayerId) {
+                continue;
+            }
+
+            const playerPed = GetPlayerPed(player);
+            const playerPosition = GetEntityCoords(playerPed, false) as Vector3;
+            const distance = getDistance(currentPosition, playerPosition);
+
+            if (distance > 5) {
+                continue;
+            }
+
+            newProximityPlayers.add(serverId);
+        }
+
+        // get diff
+        const leftPlayers = new Set([...this.currentProximityPlayers].filter(x => !newProximityPlayers.has(x)));
+        const newPlayers = new Set([...newProximityPlayers].filter(x => !this.currentProximityPlayers.has(x)));
+
+        // remove players from audio context
+        for (const player of leftPlayers) {
+            this.voiceListeningService.removePlayerAudioContext(player, 'phone_speaker');
+            this.voiceTargetService.removePlayer(player, 'phone_speaker');
+
+            console.log('remove player', player);
+        }
+
+        if (!this.speakerEnabled) {
+            this.currentProximityPlayers.clear();
+            return;
+        }
+
+        // add players to audio context
+        for (const player of newPlayers) {
+            this.voiceListeningService.addPlayerAudioContext(player, 'phone_speaker', {
+                type: 'phone_speaker',
+                priority: 1,
+            });
+            this.voiceTargetService.addPlayer(player, 'phone_speaker');
+
+            console.log('add player', player);
+        }
+
+        this.currentProximityPlayers = newProximityPlayers;
     }
 }

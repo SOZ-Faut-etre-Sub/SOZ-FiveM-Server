@@ -243,6 +243,7 @@ export enum ClientEvent {
     VOIP_VOICE_START_CALL = 'soz-core:client:voip:voice:start-call',
     VOIP_VOICE_END_CALL = 'soz-core:client:voip:voice:end-call',
     VOIP_VOICE_MUTE_CALL = 'soz-core:client:voip:voice:mute-call',
+    VOIP_VOICE_SPEAKER_CALL = 'soz-core:client:voip:voice:speaker-call',
     VOIP_VOICE_RADIO_PLAYER_START_TRANSMITTING = 'soz-core:client:voip:voice:radio:player-start-transmitting',
     VOIP_VOICE_RADIO_PLAYER_STOP_TRANSMITTING = 'soz-core:client:voip:voice:radio:player-stop-transmitting',
 

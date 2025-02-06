@@ -10,7 +10,7 @@ export type CallHistory = {
     is_accepted: boolean;
 };
 
-export type ActiveCall = Omit<CallHistory, 'id'> & { isTransmitter?: boolean; muted?: boolean };
+export type ActiveCall = Omit<CallHistory, 'id'> & { isTransmitter?: boolean; muted?: boolean; speaker?: boolean };
 
 export type Contact = {
     id?: number;

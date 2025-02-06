@@ -674,6 +674,7 @@ export enum NuiEvent {
     PhoneSimCardCallsDecline = 'soz-core:nui:phone:sim-card-calls-decline',
     PhoneSimCardCallsEnd = 'soz-core:nui:phone:sim-card-calls-end',
     PhoneSimCardCallsMute = 'soz-core:nui:phone:sim-card-calls-mute',
+    PhoneSimCardCallsSpeaker = 'soz-core:nui:phone:sim-card-calls-speaker',
     PhoneSimCardAddConversation = 'soz-core:nui:phone:sim-card-add-conversation',
     PhoneSimCardSetConversationAsRead = 'soz-core:nui:phone:sim-card-set-conversation-as-read',
     PhoneSimCardArchiveConversation = 'soz-core:nui:phone:sim-card-archive-conversation',

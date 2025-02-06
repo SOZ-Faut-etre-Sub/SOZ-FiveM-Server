@@ -56,5 +56,7 @@ export const useCallAPI = () => {
 
     const muteCall = useCallback(() => fetchNui(NuiEvent.PhoneSimCardCallsMute), []);
 
-    return { initializeCall, acceptCall, rejectCall, endCall, muteCall };
+    const speakerCall = useCallback(() => fetchNui(NuiEvent.PhoneSimCardCallsSpeaker), []);
+
+    return { initializeCall, acceptCall, rejectCall, endCall, muteCall, speakerCall };
 };
