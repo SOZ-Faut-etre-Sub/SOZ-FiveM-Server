@@ -69,7 +69,7 @@ export class JobService {
 
         const grade = this.jobGradeRepository.find(Number(player.job.grade));
 
-        if (!grade) {
+        if (!grade || grade.jobId != player.job.id) {
             return false;
         }
 
