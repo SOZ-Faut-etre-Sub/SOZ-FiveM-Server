@@ -9,9 +9,9 @@ import { JobMenuData } from '../../shared/nui/player';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
-import { JobService } from './job.service';
 import { Election2024CeremonyProvider } from '../story/election-2024/ceremony.provider';
 import { ParadeProvider } from '../story/parade.provider';
+import { JobService } from './job.service';
 
 @Provider()
 export class JobMenuProvider {
