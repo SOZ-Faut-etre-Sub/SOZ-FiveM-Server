@@ -37,17 +37,21 @@ export class CraftService {
         icon: string,
         label: string,
         job: JobType,
-        options?: craftOptions
+        options?: craftOptions,
+        craftJob?: JobType
     ) {
+        if (!craftJob) {
+            craftJob = job;
+        }
         zones.forEach(zone =>
-            this.targetFactory.createForBoxZone(zone.name, zone, [
+            this.targetFactory.createForBoxZone(zone.name + ':' + label, zone, [
                 {
                     icon: icon,
                     label: label,
                     job: job,
                     blackoutGlobal: true,
                     blackoutJob: job,
-                    category: 'citizen', // fixme?
+                    category: 'society',
                     canInteract: () => {
                         if (options) {
                             const currentWeapon = this.weaponService.getCurrentWeapon();
@@ -58,8 +62,8 @@ export class CraftService {
                         return true;
                     },
                     action: async () => {
-                        const crafting = await emitRpc<CraftsList>(RpcServerEvent.CRAFT_GET_RECIPES, job);
-                        crafting.title = this.jobService.getJob(job).label;
+                        const crafting = await emitRpc<CraftsList>(RpcServerEvent.CRAFT_GET_RECIPES, craftJob);
+                        crafting.title = this.jobService.getJob(craftJob).label;
                         crafting.subtitle = 'Confection';
                         this.nuiDispatch.dispatch('craft', 'ShowCraft', crafting);
                     },

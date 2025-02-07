@@ -101,8 +101,8 @@ export class InventoryOpenProvider {
             const inventories = JOB_INVENTORIES[job as JobType];
 
             for (const inventory of inventories) {
-                // For cloakroom, only ffs can open it
-                const openJob = inventory.data.type === InventoryType.Cloakroom ? JobType.Ffs : (job as JobType);
+                // For cloakroom, only Pawl can open it
+                const openJob = inventory.data.type === InventoryType.Cloakroom ? JobType.Pawl : (job as JobType);
                 const options: TargetOption[] = [
                     {
                         label: 'Ouvrir',

@@ -1,8 +1,6 @@
 import { joaat } from '@public/shared/joaat';
 
 import { Component, WardrobeConfig } from '../cloth';
-import { CraftCategory } from '../craft/craft';
-import { Feature } from '../features';
 import { NamedZone } from '../polyzone/box.zone';
 
 export const CraftZones: NamedZone[] = [

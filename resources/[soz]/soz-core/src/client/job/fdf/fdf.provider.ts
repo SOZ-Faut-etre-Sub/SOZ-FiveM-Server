@@ -95,12 +95,14 @@ export class FDFProvider {
             this.blipFactory.hide('fdfResellBlip' + index, true);
         });
 
+        /*
         this.blipFactory.create('jobs:fdf', {
             name: 'Ferme de Fou',
             coords: { x: 2443.96, y: 4974.61, z: 47.39 },
             sprite: 381,
             scale: 1.2,
         });
+        */
 
         if (this.featureProvider.isFeatureEnabled(Feature.Halloween)) {
             this.state.garlicEnabled = true;

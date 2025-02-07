@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@public/core/decorators/injectable';
 import { PlayerPedHash } from '@public/shared/player';
+import { getRandomInt } from '@public/shared/random';
 import {
     ClothingShop,
     ClothingShopID,
@@ -138,7 +139,7 @@ export class ClothingShopRepository extends RepositoryLegacy<ClothingShopReposit
                 underTypes: shopItemData.underTypes,
                 modelLabel: shopItemData.modelLabel,
                 colorLabel: shopItemData.colorLabel,
-                stock: item.stock,
+                stock: getRandomInt(0, 10), //item.stock,
             };
             if (!shopItem.modelLabel) {
                 continue;
