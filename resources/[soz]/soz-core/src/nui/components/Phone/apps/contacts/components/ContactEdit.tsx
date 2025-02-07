@@ -127,7 +127,14 @@ export const ContactEdit: FunctionComponent = () => {
             <AppContent>
                 <div className="flex flex-col justify-center items-center gap-2 truncate">
                     <ContactPicture picture={avatar} size="large" />
-                    <p className="font-semibold text-xl">{name}</p>
+                    <p
+                        className={clsx('font-semibold text-xl', {
+                            'text-gray-200': theme === 'dark',
+                            'text-black': theme === 'light',
+                        })}
+                    >
+                        {name}
+                    </p>
                 </div>
 
                 <div className="mt-4 grid grid-cols-2 gap-3">
