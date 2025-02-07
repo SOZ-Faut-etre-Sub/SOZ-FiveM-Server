@@ -54,10 +54,17 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
         return apartment ? this.serializeApartment(apartment) : null;
     }
 
-    public async getAllOwnedPlayerApartment(): Promise<Apartment[]> {
+    public async getAllOwnedPlayerApartmentForTaxes(): Promise<Apartment[]> {
         const apartments = await this.prismaService.housing_apartment.findMany({
             where: {
-                owner: { not: null },
+                AND: [
+                    {
+                        owner: { not: null },
+                    },
+                    {
+                        housing_taxe_enabled: true,
+                    },
+                ],
             },
         });
 
@@ -330,6 +337,19 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
         TriggerEvent(ServerEvent.BANK_REFRESH_ACCOUNT, apartment.identifier);
     }
 
+    public async setApartmentTaxe(apartmentId: number, shouldTaxe: boolean): Promise<void> {
+        const apartment = await this.prismaService.housing_apartment.update({
+            where: {
+                id: apartmentId,
+            },
+            data: { housing_taxe_enabled: shouldTaxe },
+        });
+
+        this.data[apartment.property_id].apartments.find(
+            apartment => apartment.id === apartmentId
+        ).housing_taxe_enabled = apartment.housing_taxe_enabled;
+    }
+
     public async setApartmentHasParking(apartmentId: number, hasParkingPlace: boolean): Promise<void> {
         const apartment = await this.prismaService.housing_apartment.update({
             where: {
@@ -540,6 +560,7 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
             hasParkingPlace: apartment.has_parking_place === 1,
             senatePartyId: apartment.senate_party_id || null,
             search_warrant_access: apartment.search_warrant_access?.getTime() ?? 0,
+            housing_taxe_enabled: apartment.housing_taxe_enabled,
         };
     }
 }

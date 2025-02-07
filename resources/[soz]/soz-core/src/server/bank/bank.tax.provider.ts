@@ -135,7 +135,7 @@ export class BankTaxProvider {
 
     @Cron(4, 30)
     public async saveApartmentRentTaxes() {
-        const apartments = await this.housingRepository.getAllOwnedPlayerApartment();
+        const apartments = await this.housingRepository.getAllOwnedPlayerApartmentForTaxes();
 
         const ownerAndTaxes = {};
         for (const apartment of apartments) {
@@ -184,7 +184,7 @@ export class BankTaxProvider {
                             dbApartment.id
                         );
 
-                        if (!property || !apartment) {
+                        if (!property || !apartment || !apartment.housing_taxe_enabled) {
                             continue;
                         }
 
