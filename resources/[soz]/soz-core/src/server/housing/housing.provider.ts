@@ -725,17 +725,6 @@ export class HousingProvider {
 
         await this.bankService.clearAccount(apartment.identifier);
 
-        if (apartment.owner !== null) {
-            this.playerAppearanceService.clearCloakroom(apartment.owner);
-            await this.vehicleService.transferToAirport(getPropertyGarageName(property), apartment.owner);
-
-            const player = this.playerService.getPlayerByCitizenId(apartment.owner);
-
-            if (player) {
-                this.playerService.setPlayerApartment(player.source, null, null);
-            }
-        }
-
         if (apartment.tenant !== null) {
             this.playerAppearanceService.clearCloakroom(apartment.tenant);
             await this.vehicleService.transferToAirport(getPropertyGarageName(property), apartment.tenant);

@@ -133,16 +133,13 @@ export class HousingProvider {
         const isApartmentTrailer = isTrailer(property);
 
         let hasParking = true;
-
         if (isApartmentTrailer) {
-            const apartment = property.apartments.find(apartment => apartment.id === id);
-
             hasParking = apartment && apartment.hasParkingPlace;
         }
 
         const position = GetEntityCoords(PlayerPedId()) as Vector3;
 
-        const { id, tier, cloth_tier, money_tier, park_tier, price } = apartment;
+        const { tier, cloth_tier, money_tier, park_tier, price } = apartment;
         this.nuiMenu.openMenu(
             MenuType.HousingUpgrades,
             {

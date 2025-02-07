@@ -23,7 +23,7 @@ function QBCore.Player.Login(source, citizenid, newData)
             local license = QBCore.Functions.GetSozIdentifier(src)
             local PlayerData = exports.oxmysql:singleSync("SELECT *, unix_timestamp(last_updated)  as updatedAt FROM player where citizenid = ?", {citizenid})
             local apartment = exports.oxmysql:singleSync(
-                                  "SELECT id,property_id,label,price,owner,tier,cloth_tier,money_tier,park_tier,shell,has_parking_place FROM housing_apartment where ? IN (owner, roommate)",
+                                  "SELECT id,property_id,label,price,owner,tier,cloth_tier,money_tier,park_tier,shell,has_parking_place FROM housing_apartment where ? IN (tenant, roommate)",
                                   {citizenid})
             local partyMember = exports.oxmysql:singleSync("SELECT * FROM senate_party_member WHERE citizenId = ?", {
                 citizenid,
