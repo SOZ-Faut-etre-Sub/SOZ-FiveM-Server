@@ -2,7 +2,7 @@ import { Command } from '@public/core/decorators/command';
 import { PlayerService } from '@public/server/player/player.service';
 import { ApartmentRentTaxeRepository } from '@public/server/repository/apartment.rent.taxe';
 import { HousingRepository } from '@public/server/repository/housing.repository';
-import { TaxType } from '@public/shared/bank';
+import { TaxType } from '@public/shared/tax';
 
 import { Cron } from '../../core/decorators/cron';
 import { Inject } from '../../core/decorators/injectable';
