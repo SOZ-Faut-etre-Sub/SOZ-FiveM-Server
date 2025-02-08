@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { AppSimpleIcon } from '../../components/system/AppIcon';
+import { AppIcon } from '../../components/system/AppIcon';
 
 const TaxIcon: React.FC = props => {
-    return <AppSimpleIcon {...props} name="tax" />;
+    return <AppIcon {...props} name="tax" />;
 };
 
 export default TaxIcon;
