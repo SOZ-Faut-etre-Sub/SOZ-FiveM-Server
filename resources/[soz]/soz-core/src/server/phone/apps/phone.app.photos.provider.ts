@@ -29,6 +29,9 @@ export class PhoneAppPhotosProvider {
             where: {
                 identifier: player.citizenid,
             },
+            orderBy: {
+                id: 'desc',
+            },
         });
     }
 
