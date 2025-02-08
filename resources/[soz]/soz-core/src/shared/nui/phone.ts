@@ -24,6 +24,7 @@ export interface NuiPhoneMap {
 
     SetCallSound: boolean;
     SetDialSound: boolean;
+    SetEndSound: never;
     SetCurrentCall: ActiveCall;
     SetCallsHistory: CallHistory[];
 

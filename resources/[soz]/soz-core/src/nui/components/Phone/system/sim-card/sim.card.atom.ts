@@ -15,6 +15,7 @@ import { formatMessage } from '../../apps/messages/utils/format';
 import { useInjectDebugData } from '../debug/hooks/useInjectDebugData';
 import { useNotifications } from '../notifications/hooks/useNotifications';
 import { useDialingSound } from '../sound/hooks/useDialingSound';
+import { useEndDialSound } from '../sound/hooks/useEndDialSound';
 import { useRingtoneSound } from '../sound/hooks/useRingtoneSound';
 import { mockCallHistory } from './call-history.constant';
 import { mockContacts } from './contacts.constant';
@@ -112,6 +113,7 @@ export const useSimCardStateHandlers = () => {
     const dialSound = useDialingSound();
     const callSound = useRingtoneSound('ringtone', true);
     const notificationSound = useRingtoneSound('notiSound', false);
+    const { startTone: endSound } = useEndDialSound();
 
     const navigate = useNavigate();
     const { addNotification } = useNotifications();
@@ -135,6 +137,7 @@ export const useSimCardStateHandlers = () => {
 
     useNuiEvent('phone', 'SetCallSound', (play: boolean) => (play ? callSound.play() : callSound.stop()));
     useNuiEvent('phone', 'SetDialSound', (play: boolean) => (play ? dialSound.play() : dialSound.stop()));
+    useNuiEvent('phone', 'SetEndSound', () => endSound());
 
     useNuiEvent('phone', 'SetCurrentCall', setCurrentCall);
     useNuiEvent('phone', 'SetCallsHistory', setCallHistory);

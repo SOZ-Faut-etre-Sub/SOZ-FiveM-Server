@@ -102,6 +102,7 @@ export class PhoneSimCardCalls {
         } else {
             this.phoneState.setCurrentCall(null);
             this.clearCallSounds();
+            this.nuiDispatch.dispatch('phone', 'SetEndSound');
         }
 
         this.nuiDispatch.dispatch('phone', 'SetCurrentCall', this.phoneState.getCurrentCall());
