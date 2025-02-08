@@ -77,5 +77,6 @@ export class PhoneSimCardMessages {
     @OnEvent(ClientEvent.PHONE_SIMCARD_MESSAGES_MESSAGE_NEW)
     async newMessage(message: Message) {
         this.nuiDispatch.dispatch('phone', 'AddMessage', message);
+        await this.reloadConversations();
     }
 }

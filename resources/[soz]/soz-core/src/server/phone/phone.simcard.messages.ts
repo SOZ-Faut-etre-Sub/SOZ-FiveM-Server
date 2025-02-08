@@ -217,7 +217,6 @@ export class PhoneSimCardMessages {
                     user_identifier: {
                         not: player.charinfo.phone,
                     },
-                    participant_identifier: player.charinfo.phone,
                 },
                 data: {
                     unread: {

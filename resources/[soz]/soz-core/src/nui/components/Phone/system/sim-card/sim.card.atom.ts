@@ -1,4 +1,4 @@
-import { useAtom, useSetAtom } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { atom } from 'jotai/index';
 import { useNavigate } from 'react-router-dom';
 
@@ -106,8 +106,13 @@ export const filteredConversationsAtom = atom<Array<MessageConversation & { last
             ),
         }));
 });
+const unreadConversationsCountAtom = atom<number>(
+    get => get(filteredConversationsAtom)?.filter(c => c.unread)?.length ?? 0
+);
 
 export const messagesAtom = atom<Array<Message>>([]);
+
+export const useUnreadConversationsCount = () => useAtomValue(unreadConversationsCountAtom);
 
 export const useSimCardStateHandlers = () => {
     const dialSound = useDialingSound();

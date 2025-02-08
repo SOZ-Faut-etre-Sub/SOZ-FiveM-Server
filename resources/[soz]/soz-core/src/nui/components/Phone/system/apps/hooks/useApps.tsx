@@ -38,6 +38,7 @@ import { WeatherApp } from '../../../apps/weather/WeatherApp';
 import ZutomIcon from '../../../apps/zutom/icon';
 import { ZutomApp } from '../../../apps/zutom/ZutomApp';
 import { useSocietySimCard } from '../../sim-card/hooks/useSocietySimCard';
+import { useUnreadConversationsCount } from '../../sim-card/sim.card.atom';
 
 export const useApps = () => {
     const { societyNumber } = useSocietySimCard();
@@ -45,6 +46,7 @@ export const useApps = () => {
 
     // badges
     const societyMessagesBadge = useUnTakenMessagesCount();
+    const unreadConversationsBadge = useUnreadConversationsCount();
 
     const APPS: Array<IAppConfig> = [
         /* System apps */
@@ -64,6 +66,7 @@ export const useApps = () => {
             icon: MessagesIcon,
             component: <MessagesApp />,
             position: 2,
+            badge: unreadConversationsBadge,
             home: true,
         },
         {
@@ -206,5 +209,5 @@ export const useApps = () => {
             if (app.condition) return app.condition();
             return true;
         });
-    }, [societyNumber, darkWebAppEnabled, societyMessagesBadge]);
+    }, [societyNumber, darkWebAppEnabled, societyMessagesBadge, unreadConversationsBadge]);
 };
