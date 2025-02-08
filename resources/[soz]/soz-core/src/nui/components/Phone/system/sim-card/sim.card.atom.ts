@@ -150,13 +150,16 @@ export const useSimCardStateHandlers = () => {
     useNuiEvent('phone', 'AddMessage', (message: Message) => {
         if (number !== message.author) {
             notificationSound.play();
-            addNotification({
-                id: message.conversation_id,
-                app: 'messages',
-                title: message.author,
-                content: message.message,
-                onClick: () => navigate(`/messages/${message.conversation_id}`),
-            });
+            addNotification(
+                {
+                    id: message.conversation_id,
+                    app: 'messages',
+                    title: message.author,
+                    content: message.message,
+                    onClick: () => navigate(`/messages/${message.conversation_id}`),
+                },
+                null
+            );
         }
         setMessages(messages => [...messages, message]);
     });

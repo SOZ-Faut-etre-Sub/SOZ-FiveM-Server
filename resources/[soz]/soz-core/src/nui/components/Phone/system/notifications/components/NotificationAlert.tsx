@@ -1,6 +1,6 @@
 import { animated, useTransition } from '@react-spring/web';
 import { useAtomValue } from 'jotai';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useNotification } from '../hooks/useNotifications';
 import { lastNotificationAtom } from '../notification.atom';
@@ -11,14 +11,25 @@ export const NotificationAlert = () => {
     const message = useNotification(lastNotification);
 
     const [currentMessage, setCurrentMessage] = useState([]);
+    const timer = useRef<NodeJS.Timeout>();
+
+    const removeCurrentMessage = () => {
+        setCurrentMessage([]);
+
+        if (timer.current) {
+            clearTimeout(timer.current);
+        }
+    };
 
     useEffect(() => {
-        if (!message) return;
+        if (message) {
+            setCurrentMessage([message]);
+            timer.current = setTimeout(removeCurrentMessage, 3000);
+        } else {
+            removeCurrentMessage();
+        }
 
-        setCurrentMessage([message]);
-        const timer = setTimeout(() => setCurrentMessage([]), 3000);
-
-        return () => clearTimeout(timer);
+        return () => removeCurrentMessage();
     }, [message]);
 
     const transitions = useTransition(currentMessage, {

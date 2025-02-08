@@ -6,7 +6,12 @@ import { Provider } from '@public/core/decorators/provider';
 import { Notifier } from '@public/server/notifier';
 import { ClientEvent } from '@public/shared/event/client';
 import { JobType } from '@public/shared/job';
-import { NewSocietyMessage, SocietyMessage, UpdateSocietyMessage } from '@public/shared/phone/apps/society';
+import {
+    NewSocietyMessage,
+    SocietyMessage,
+    SocietyMessageInfo,
+    UpdateSocietyMessage,
+} from '@public/shared/phone/apps/society';
 import { PlayerData } from '@public/shared/player';
 import { toVector3Object, Vector3 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
@@ -88,7 +93,7 @@ export class PhoneAppSocietyProvider {
             },
         });
 
-        const messageInfo: Record<string, any> = {};
+        const messageInfo: SocietyMessageInfo = {};
 
         if (
             [
@@ -105,7 +110,7 @@ export class PhoneAppSocietyProvider {
         }
 
         const players = this.serverStateService.getPlayersByJob(
-            Object.entries(SocietyNumberList).find(([, value]) => value === message.number)[0]
+            Object.entries(SocietyNumberList).find(([, value]) => value === message.number)?.[0]
         );
 
         players.forEach(player => this.createMessageBroadcastEvent(player, societyMessage, messageInfo));
@@ -202,12 +207,12 @@ export class PhoneAppSocietyProvider {
     private createMessageBroadcastEvent(
         player: PlayerData,
         message: phone_society_messages,
-        messageInfo: Record<string, any>
+        messageInfo: SocietyMessageInfo
     ) {
         const messageData = {
             ...this.messageMapper(message),
             muted: !player.job.onduty,
-            info: messageInfo.info,
+            info: messageInfo,
         };
 
         TriggerClientEvent(ClientEvent.PHONE_APP_SOCIETY_RECEIVE_MESSAGE, player.source, messageData);

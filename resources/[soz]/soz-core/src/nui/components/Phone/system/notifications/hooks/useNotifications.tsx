@@ -16,10 +16,15 @@ export const useNotifications = () => {
     const apps = useApps();
 
     const addNotification = useCallback(
-        (notification: INotification) => {
+        (notification: INotification, timeout: number = 3000) => {
             const app = apps.find(app => app.id === notification.app);
+            const newNotification = { id: uuidv4(), ...notification, icon: app?.icon };
 
-            setNotifications(prev => [{ id: uuidv4(), ...notification, icon: app?.icon }, ...prev]);
+            setNotifications(prev => [newNotification, ...prev]);
+
+            if (!timeout) return;
+
+            setTimeout(() => removeNotification(newNotification.id), timeout);
         },
         [apps, setNotifications]
     );

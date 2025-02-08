@@ -27,17 +27,20 @@ export const useSocietyMessagesStateHandlers = () => {
             const index = prev.findIndex(m => m.id === data.id);
             if (index === -1) {
                 notificationSound.play();
-                addNotification({
-                    app: 'society-messages',
-                    title: data.message,
-                    onClick: () => navigate('/society-messages'),
-                });
+                addNotification(
+                    {
+                        app: 'society-messages',
+                        title: data.message,
+                        onClick: () => navigate('/society-messages'),
+                    },
+                    null
+                );
 
                 return [data, ...prev];
             }
 
             const updated = [...prev];
-            updated[index] = data;
+            updated[index] = { ...prev[index], ...data, info: { ...prev[index].info, ...data.info } };
             return updated;
         });
     });
