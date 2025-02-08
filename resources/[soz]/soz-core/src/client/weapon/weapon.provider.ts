@@ -309,10 +309,6 @@ export class WeaponProvider {
     }
 
     public sendShootingAlert() {
-        if (!this.featureProvider.isFeatureEnabled(Feature.PoliceAlert)) {
-            return;
-        }
-
         const player = PlayerPedId();
         const coords = GetEntityCoords(player);
 
@@ -336,7 +332,7 @@ export class WeaponProvider {
                 number: '555-POLICE',
                 message: `${zone}: ${message.replace('${0}', name)}`,
                 htmlMessage: `${zone}: ${message.replace('${0}', nameHtml)}`,
-                position: true,
+                position: false,
                 info: { type: 'shooting' },
                 overrideIdentifier: 'System',
             });
