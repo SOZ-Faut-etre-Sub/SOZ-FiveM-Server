@@ -117,6 +117,10 @@ export class PhoneState {
     }
 
     public isInCall() {
+        return this.currentCall !== null;
+    }
+
+    public isInActiveCall() {
         return this.currentCall !== null && this.currentCall.is_accepted;
     }
 

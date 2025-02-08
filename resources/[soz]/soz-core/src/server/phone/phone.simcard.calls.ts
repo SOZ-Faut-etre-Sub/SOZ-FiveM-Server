@@ -35,8 +35,19 @@ export class PhoneSimCardCalls {
 
         const targetPlayer = this.playerService.getPlayerByPhone(phoneNumber);
         if (!targetPlayer) {
-            console.error('Player not found for', phoneNumber);
-            return Err('unavailable');
+            TriggerClientEvent(ClientEvent.PHONE_SIMCARD_CALLS_UPDATE, player.source, {
+                identifier: uuidv4(),
+                transmitter: player.charinfo.phone,
+                transmitterSource: player.source,
+                receiver: phoneNumber,
+                receiverSource: player.source,
+                start: Date.now(),
+                end: Date.now(),
+                is_accepted: false,
+                isTransmitter: true,
+            });
+            TriggerClientEvent(ClientEvent.PHONE_SIMCARD_CALLS_INIT, player.source);
+            return Ok('unavailable');
         }
 
         this.calls.set(player.charinfo.phone, {
@@ -124,7 +135,8 @@ export class PhoneSimCardCalls {
     async endCall(source: number, phoneNumber: string) {
         const currentCall = this.calls.get(phoneNumber);
         if (!currentCall) {
-            console.error('Call not found in active calls map for', phoneNumber);
+            TriggerClientEvent(ClientEvent.PHONE_SIMCARD_CALLS_UPDATE, source, null);
+            TriggerClientEvent(ClientEvent.PHONE_SIMCARD_CALLS_HISTORY, source);
             return Err('Call not found');
         }
 

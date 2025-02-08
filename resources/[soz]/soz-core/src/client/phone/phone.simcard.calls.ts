@@ -47,7 +47,7 @@ export class PhoneSimCardCalls {
 
     @OnNuiEvent(NuiEvent.PhoneSimCardCallsAccept)
     async onCallAccept(phoneNumber: string) {
-        if (this.phoneState.isInCall() || this.playerService.getState().isDead) {
+        if (this.phoneState.isInActiveCall() || this.playerService.getState().isDead) {
             return;
         }
 
