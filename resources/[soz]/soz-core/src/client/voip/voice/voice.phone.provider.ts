@@ -3,6 +3,7 @@ import { Inject } from '@core/decorators/injectable';
 import { Tick } from '@core/decorators/tick';
 import { Provider } from '@public/core/decorators/provider';
 import { ClientEvent } from '@public/shared/event/client';
+import { ServerEvent } from '@public/shared/event/server';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 
 import { VoiceListeningService } from './voice.listening.service';
@@ -17,6 +18,8 @@ export class VoicePhoneProvider {
     private voiceListeningService: VoiceListeningService;
 
     private currentCallerId: number | null = null;
+    private currentSpeakerIds = new Set<number>();
+
     private speakerEnabled: boolean = false;
     private currentProximityPlayers = new Set<number>();
 
@@ -69,24 +72,34 @@ export class VoicePhoneProvider {
     }
 
     @OnEvent(ClientEvent.VOIP_VOICE_SPEAKER_CALL)
-    public onSpeakerCall(enabled: boolean) {
+    public enableSpeakerCall(enabled: boolean) {
         this.speakerEnabled = enabled;
+    }
 
-        if (!this.speakerEnabled) {
-            this.voiceListeningService.removePlayerAudioContext(this.currentCallerId, 'phone_speaker');
-            this.voiceTargetService.removePlayer(this.currentCallerId, 'phone_speaker');
-            return;
+    @OnEvent(ClientEvent.VOIP_VOICE_SPEAKER_LISTENING_CALL)
+    public onSpeakerCall(callerId: number, enabled: boolean) {
+        const exists = this.currentSpeakerIds.has(callerId);
+
+        if (exists === enabled) return;
+
+        if (enabled) {
+            this.voiceTargetService.addPlayer(callerId, 'phone');
+            this.voiceListeningService.addPlayerAudioContext(callerId, 'phone', {
+                type: 'phone',
+                priority: 1,
+            });
+            this.currentSpeakerIds.add(callerId);
+        } else {
+            this.voiceListeningService.removePlayerAudioContext(this.currentCallerId, 'phone');
+            this.voiceTargetService.removePlayer(this.currentCallerId, 'phone');
+            this.currentSpeakerIds.delete(callerId);
         }
-
-        this.voiceTargetService.addPlayer(this.currentCallerId, 'phone_speaker');
-        this.voiceListeningService.addPlayerAudioContext(this.currentCallerId, 'phone_speaker', {
-            type: 'phone_speaker',
-            priority: 1,
-        });
     }
 
     @Tick()
     public checkProximityPlayers() {
+        if (!this.speakerEnabled && this.currentProximityPlayers.size === 0) return;
+
         const players = GetActivePlayers();
         const currentPosition = GetEntityCoords(PlayerPedId(), false) as Vector3;
         const selfPlayerId = GetPlayerServerId(PlayerId());
@@ -123,10 +136,7 @@ export class VoicePhoneProvider {
 
         // remove players from audio context
         for (const player of leftPlayers) {
-            this.voiceListeningService.removePlayerAudioContext(player, 'phone_speaker');
-            this.voiceTargetService.removePlayer(player, 'phone_speaker');
-
-            console.log('remove player', player);
+            TriggerServerEvent(ServerEvent.VOIP_PHONE_CALL_SPEAKER_LISTENER_REMOVE, player);
         }
 
         if (!this.speakerEnabled) {
@@ -136,13 +146,7 @@ export class VoicePhoneProvider {
 
         // add players to audio context
         for (const player of newPlayers) {
-            this.voiceListeningService.addPlayerAudioContext(player, 'phone_speaker', {
-                type: 'phone_speaker',
-                priority: 1,
-            });
-            this.voiceTargetService.addPlayer(player, 'phone_speaker');
-
-            console.log('add player', player);
+            TriggerServerEvent(ServerEvent.VOIP_PHONE_CALL_SPEAKER_LISTENER_ADD, player);
         }
 
         this.currentProximityPlayers = newProximityPlayers;

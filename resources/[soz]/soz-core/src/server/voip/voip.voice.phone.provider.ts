@@ -14,6 +14,7 @@ type Call = {
     callerPhone: string;
     receiverId: number;
     receiverPhone: string;
+    speakers?: number[];
 };
 
 @Provider()
@@ -70,6 +71,7 @@ export class VoipVoicePhoneProvider {
             callerPhone,
             receiverId: receiver.source,
             receiverPhone,
+            speakers: [],
         };
 
         this.calls.set(callId, call);
@@ -101,15 +103,57 @@ export class VoipVoicePhoneProvider {
         this.stopCall(call.id);
     }
 
+    @OnEvent(ServerEvent.VOIP_PHONE_CALL_SPEAKER_LISTENER_ADD)
+    public addSpeaker(source: number, target: number) {
+        const call = Array.from(this.calls.values()).find(
+            call => call.callerId === source || call.receiverId === source
+        );
+
+        if (!call) {
+            return;
+        }
+
+        if (call.callerId === target || call.receiverId === target) {
+            return;
+        }
+
+        call.speakers.push(target);
+        TriggerClientEvent(ClientEvent.VOIP_VOICE_SPEAKER_LISTENING_CALL, target, true);
+    }
+
+    @OnEvent(ServerEvent.VOIP_PHONE_CALL_SPEAKER_LISTENER_REMOVE)
+    public removeSpeaker(source: number, target: number) {
+        const call = Array.from(this.calls.values()).find(
+            call => call.callerId === source || call.receiverId === source
+        );
+
+        if (!call) {
+            return;
+        }
+
+        if (call.callerId === target || call.receiverId === target) {
+            return;
+        }
+
+        const index = call.speakers.indexOf(target);
+        if (index > -1) {
+            call.speakers.splice(index, 1);
+            TriggerClientEvent(ClientEvent.VOIP_VOICE_SPEAKER_LISTENING_CALL, target, false);
+        }
+    }
+
     private stopCall(callId: string) {
         const call = this.calls.get(callId);
-
         if (!call) {
             return;
         }
 
         TriggerClientEvent(ClientEvent.VOIP_VOICE_END_CALL, call.callerId);
         TriggerClientEvent(ClientEvent.VOIP_VOICE_END_CALL, call.receiverId);
+
+        call.speakers.forEach(speaker => {
+            TriggerClientEvent(ClientEvent.VOIP_VOICE_SPEAKER_LISTENING_CALL, speaker, false);
+        });
 
         this.calls.delete(call.id);
     }
