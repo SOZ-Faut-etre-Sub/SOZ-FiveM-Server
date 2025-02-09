@@ -803,6 +803,24 @@ export class AdminMenuMapperProvider {
         });
     }
 
+    @OnNuiEvent(NuiEvent.AdminMenuMapperHousingTaxe)
+    public async shouldTaxeApartment({
+        propertyId,
+        apartmentId,
+        shouldTaxe,
+    }: {
+        propertyId: number;
+        apartmentId: number;
+        shouldTaxe: boolean;
+    }): Promise<Property[]> {
+        return await emitRpc<Property[]>(
+            RpcServerEvent.ADMIN_MAPPER_SET_APARTMENT_TAXE,
+            propertyId,
+            apartmentId,
+            shouldTaxe
+        );
+    }
+
     @RepositoryUpdate(RepositoryType.Zone)
     public async gangRepoUpdate(zone: ZoneTyped) {
         const blipId = 'admin_zone' + zone.data.id.toString();

@@ -277,4 +277,28 @@ export class AdminMenuMapperProvider {
 
         return this.housingRepository.get();
     }
+
+    @Rpc(RpcServerEvent.ADMIN_MAPPER_SET_APARTMENT_TAXE)
+    public async setApartmentTaxe(
+        source: number,
+        propertyId: number,
+        apartmentId: number,
+        shouldTaxe: boolean
+    ): Promise<Property[]> {
+        const [property, apartment] = await this.housingRepository.getApartment(propertyId, apartmentId);
+
+        if (!property || !apartment) {
+            return this.housingRepository.get();
+        }
+
+        await this.housingRepository.setApartmentTaxe(apartment.id, shouldTaxe);
+
+        this.notifier.notify(
+            source,
+            `Taxe ${shouldTaxe ? `activée` : `désactivée`} pour ${apartment.label}`,
+            'success'
+        );
+
+        return this.housingRepository.get();
+    }
 }

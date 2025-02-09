@@ -4,6 +4,7 @@ import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { wait } from '@public/core/utils';
 import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { Feature } from '@public/shared/features';
+import { hasPlayerTenantOrRoommateApartment } from '@public/shared/housing/housing';
 
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -624,7 +625,8 @@ export class VehicleGarageProvider {
         player: PlayerData,
         id: string,
         garage: Garage,
-        vehicleId: number
+        vehicleId: number,
+        houseIdType?: 'apartment' | 'property'
     ): Promise<Result<PlayerVehicle, string>> {
         const vehicle = await this.prismaService.playerVehicle.findUnique({
             where: { id: vehicleId },
@@ -681,9 +683,18 @@ export class VehicleGarageProvider {
         } else if (garage.type === GarageType.House && vehicle.job !== null) {
             return Err('ce véhicule appartient à une entreprise');
         } else if (garage.type === GarageType.House) {
-            const apartment = await this.housingRepository.getApartmentByIdentifier(id);
-            if (apartment.owner && !apartment.tenant && !apartment.roommate) {
-                return Err(`Vous n'avez pas accès à ce garage.`);
+            if (houseIdType === 'apartment') {
+                const apartment = await this.housingRepository.getApartmentByIdentifier(id);
+                if (apartment.owner && !apartment.tenant && !apartment.roommate) {
+                    return Err(`Vous n'avez pas accès à ce garage.`);
+                }
+            } else if (houseIdType === 'property') {
+                const property = await this.housingRepository.getPropertyByIdentifier(id);
+                if (!hasPlayerTenantOrRoommateApartment(property, player.citizenid)) {
+                    return Err(`Vous n'avez pas accès à ce garage.`);
+                }
+            } else {
+                return Err("Vous n'avez pas accès à ce garage.");
             }
         }
 
@@ -704,7 +715,7 @@ export class VehicleGarageProvider {
             return;
         }
 
-        const vehicle = await this.checkCanManageVehicle(player, id, garage, vehicleId);
+        const vehicle = await this.checkCanManageVehicle(player, id, garage, vehicleId, 'property');
 
         if (isErr(vehicle)) {
             this.notifier.notify(source, `Vous ne pouvez pas renommer ce véhicule: ${vehicle.err}.`, 'error');
@@ -779,7 +790,13 @@ export class VehicleGarageProvider {
         let vehicle: PlayerVehicle | null = null;
 
         if (!hasApartmentAccess) {
-            const vehicleResult = await this.checkCanManageVehicle(player, id, garage, vehicleState.volatile.id);
+            const vehicleResult = await this.checkCanManageVehicle(
+                player,
+                id,
+                garage,
+                vehicleState.volatile.id,
+                'apartment'
+            );
 
             if (isErr(vehicleResult)) {
                 this.notifier.notify(

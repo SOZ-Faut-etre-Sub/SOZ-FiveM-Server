@@ -480,6 +480,23 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                                         </MenuItemSelect>
                                     );
                                 })}
+                                <MenuItemCheckbox
+                                    checked={apartment.housing_taxe_enabled}
+                                    onChange={async value => {
+                                        const properties = await fetchNui<any, Property[]>(
+                                            NuiEvent.AdminMenuMapperHousingTaxe,
+                                            {
+                                                propertyId: property.id,
+                                                apartmentId: apartment.id,
+                                                shouldTaxe: value,
+                                            }
+                                        );
+
+                                        setProperties(properties);
+                                    }}
+                                >
+                                    Taxe d'habitation
+                                </MenuItemCheckbox>
                             </MenuContent>
                         </SubMenu>
                     ))}

@@ -40,6 +40,7 @@ export enum NuiEvent {
     AdminMenuMapperSetOwner = 'soz-core:nui:admin:mapper:set-owner',
     AdminMenuMapperClearOwner = 'soz-core:nui:admin:mapper:clear-owner',
     AdminMenuMapperSetApartmentTier = 'soz-core:nui:admin:mapper:set-apartment-tier',
+    AdminMenuMapperHousingTaxe = 'soz-core:nui:admin:mapper:set-housing-taxe',
     AdminMenuPlayerHandleDiseaseOption = 'soz-core:client:admin:handle-disease-option',
     AdminMenuPlayerHandleEffectsOption = 'soz-core:client:admin:handle-effects-option',
     AdminMenuPlayerHandleHealthOption = 'soz-core:client:admin:handle-health-option',

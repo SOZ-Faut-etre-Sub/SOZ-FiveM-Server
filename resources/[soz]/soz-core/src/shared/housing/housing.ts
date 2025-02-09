@@ -33,6 +33,7 @@ export type Apartment = {
     hasParkingPlace: boolean;
     senatePartyId: string | null;
     search_warrant_access: number;
+    housing_taxe_enabled: boolean;
 } & ApartementTiers;
 
 export type RentTaxe = {

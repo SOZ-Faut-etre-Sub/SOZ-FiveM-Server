@@ -138,7 +138,8 @@ model housing_apartment {
     housing_property     housing_property       @relation(fields: [property_id], references: [id], onDelete: Cascade, map: "housing_apartment_housing_property_id_fk")
     senate_party         SenateParty?           @relation(fields: [senate_party_id], references: [id], onDelete: SetNull, map: "housing_apartment_senate_id_fk")
     apartment_fourniture apartment_fourniture[]
-    search_warrant_access DateTime?              @db.Timestamp(0)
+    search_warrant_access DateTime?             @db.Timestamp(0)
+    housing_taxe_enabled Boolean                @default(true)
 
     @@index([property_id], map: "housing_apartment_housing_property_id_fk")
 }
