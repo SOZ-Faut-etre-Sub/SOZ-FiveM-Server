@@ -69,6 +69,8 @@ type BaseItem = {
     notSearchable?: boolean;
     notGiveable?: boolean;
     canEngrave?: boolean;
+    packItem?: string;
+    packQuantity?: number;
 };
 
 export type Nutrition = {
