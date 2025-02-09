@@ -2,26 +2,27 @@ import clsx from 'clsx';
 import React, { FunctionComponent, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { RepositoryType } from '../../../../../../shared/repository';
 import { useAssetPath } from '../../../../../hook/assets';
 import { usePlayer } from '../../../../../hook/data';
+import { useRepository } from '../../../../../hook/repository';
 import LeaderBoardIcon from '../../../assets/leaderboard.svg';
 import { ActionButton } from '../../../components/ActionButton';
 import { AppContent } from '../../../components/system/AppContent';
 import { AppWrapper } from '../../../components/system/AppWrapper';
 import { DataContainer } from '../components/DataContainer';
 import { Tetris } from '../components/Tetris';
-import { useGameTetrisLeaderboard } from '../tetris.atom';
 
 export const TetrisGame: FunctionComponent = () => {
     const navigate = useNavigate();
 
     const player = usePlayer();
-    const leaderboard = useGameTetrisLeaderboard();
+    const leaderboard = useRepository(RepositoryType.LeaderboardTetris);
 
     const { getPath } = useAssetPath();
 
     const bestPlayerScore = useMemo(() => {
-        return leaderboard
+        return Object.values(leaderboard)
             .filter(v => v.citizenid === player?.citizenid)
             .reduce((acc, val) => Math.max(acc, val.score), 0);
     }, [player?.citizenid, leaderboard]);

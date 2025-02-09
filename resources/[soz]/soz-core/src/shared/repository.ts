@@ -3,6 +3,7 @@ import { BankAccount, Invoice } from '@public/shared/bank';
 import { Configuration } from '@public/shared/configuration';
 import { Field } from '@public/shared/field';
 import { Fine } from '@public/shared/job/police';
+import { LeaderboardInterface } from '@public/shared/phone/apps/game';
 import { ZoneTyped } from '@public/shared/polyzone/box.zone';
 import { Scene, WorldEvent } from '@public/shared/scene';
 import { SenateParty } from '@public/shared/senate';
@@ -23,36 +24,38 @@ import { TowRope } from './vehicle/tow.rope';
 import { Vehicle } from './vehicle/vehicle';
 
 export enum RepositoryType {
+    ApartmentRentTaxe = 'ApartmentRentTaxe',
     BankAccount = 'bankAccount',
     BankFarmAccount = 'bankFarmAccount',
     BankInvoice = 'bankInvoice',
     Billboard = 'billboard',
     ChargerUpw = 'chargerUpw',
     Configuration = 'configuration',
+    Door = 'door',
     Field = 'field',
     Fine = 'fine',
+    Gang = 'gang',
     Garage = 'garage',
     Housing = 'housing',
-    ApartmentRentTaxe = 'ApartmentRentTaxe',
     JobGrade = 'jobGrade',
+    LeaderboardSnake = 'leaderboardSnake',
+    LeaderboardTetris = 'leaderboardTetris',
     Object = 'object',
     Race = 'race',
     Radar = 'radar',
+    Scene = 'scene',
     SenateParty = 'senateParty',
     Shop = 'shop',
     ShopCategory = 'shopCategory',
-    ShopUnderTypes = 'shopUnderTypes',
     ShopGlove = 'shopGlove',
+    ShopUnderTypes = 'shopUnderTypes',
     StationFuel = 'stationFuel',
     StationUpw = 'stationUpw',
-    Vehicle = 'vehicle',
     Tax = 'tax',
     TowRope = 'towRope',
-    Zone = 'zone',
-    Gang = 'gang',
-    Door = 'door',
-    Scene = 'scene',
+    Vehicle = 'vehicle',
     WorldEvent = 'worldEvent',
+    Zone = 'zone',
 }
 
 export type RepositoryMapping = {
@@ -80,6 +83,8 @@ export type RepositoryMapping = {
     [RepositoryType.StationUpw]: UpwStation;
     [RepositoryType.Vehicle]: Vehicle;
     [RepositoryType.Tax]: Tax;
+    [RepositoryType.LeaderboardSnake]: LeaderboardInterface[];
+    [RepositoryType.LeaderboardTetris]: LeaderboardInterface[];
     [RepositoryType.TowRope]: TowRope;
     [RepositoryType.Zone]: ZoneTyped;
     [RepositoryType.Gang]: Gang;
@@ -101,6 +106,8 @@ export interface RepositoryConfig extends Record<keyof RepositoryMapping, any> {
     [RepositoryType.Radar]: Record<number, Radar>;
     [RepositoryType.SenateParty]: Record<string, SenateParty>;
     [RepositoryType.Tax]: Record<TaxType, Tax>;
+    [RepositoryType.LeaderboardSnake]: Record<number, LeaderboardInterface>;
+    [RepositoryType.LeaderboardTetris]: Record<number, LeaderboardInterface>;
     [RepositoryType.TowRope]: Record<string, TowRope>;
     [RepositoryType.Zone]: Record<number, ZoneTyped>;
     [RepositoryType.Gang]: Record<number, Gang>;

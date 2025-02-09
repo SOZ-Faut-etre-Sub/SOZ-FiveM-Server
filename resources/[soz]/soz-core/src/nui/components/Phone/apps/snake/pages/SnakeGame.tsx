@@ -4,14 +4,15 @@ import clsx from 'clsx';
 import React, { FunctionComponent, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { RepositoryType } from '../../../../../../shared/repository';
 import { useAssetPath } from '../../../../../hook/assets';
 import { usePlayer } from '../../../../../hook/data';
+import { useRepository } from '../../../../../hook/repository';
 import LeaderBoardIcon from '../../../assets/leaderboard.svg';
 import { ActionButton } from '../../../components/ActionButton';
 import { AppContent } from '../../../components/system/AppContent';
 import { AppWrapper } from '../../../components/system/AppWrapper';
 import { RowRenderer } from '../components/RowRenderer';
-import { useGameSnakeLeaderboard } from '../snake.atom';
 
 type Position = {
     x: number;
@@ -71,7 +72,7 @@ export const SnakeGame: FunctionComponent = () => {
     const navigate = useNavigate();
 
     const player = usePlayer();
-    const leaderboard = useGameSnakeLeaderboard();
+    const leaderboard = useRepository(RepositoryType.LeaderboardSnake);
 
     const { getPath } = useAssetPath();
 
@@ -115,7 +116,7 @@ export const SnakeGame: FunctionComponent = () => {
     const onClickLeaderboard = () => navigate('/snake/leaderboard');
 
     const bestPlayerScore = useMemo(() => {
-        return leaderboard
+        return Object.values(leaderboard)
             .filter(v => v.citizenid === player?.citizenid)
             .reduce((acc, val) => Math.max(acc, val.score), 0);
     }, [player?.citizenid, leaderboard]);

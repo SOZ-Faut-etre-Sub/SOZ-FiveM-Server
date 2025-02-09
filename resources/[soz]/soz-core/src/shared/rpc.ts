@@ -344,9 +344,7 @@ export enum RpcServerEvent {
     PHONE_APP_TAX_GET = 'soz-core:server:phone:app:tax:get',
     PHONE_APP_NEWS_GET = 'soz-core:server:phone:app:news:get',
     PHONE_APP_NEWS_CREATE = 'soz-core:server:phone:app:news:create',
-    PHONE_APP_TETRIS_GET_LEADERBOARD = 'soz-core:server:phone:app:tetris:get-leaderboard',
     PHONE_APP_TETRIS_ADD_SCORE = 'soz-core:server:phone:app:tetris:add-score',
-    PHONE_APP_SNAKE_GET_LEADERBOARD = 'soz-core:server:phone:app:snake:get-leaderboard',
     PHONE_APP_SNAKE_ADD_SCORE = 'soz-core:server:phone:app:snake:add-score',
 }
 

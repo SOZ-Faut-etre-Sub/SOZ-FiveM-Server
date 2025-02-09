@@ -12,9 +12,7 @@ import { HomeApp } from './apps/home/HomeApp';
 import { useAppNewsStateHandlers } from './apps/news/news.atom';
 import { useAppNotesStateHandlers } from './apps/notes/notes.atom';
 import { useAppPhotosStateHandlers } from './apps/photos/photos.atom';
-import { useAppSnakeStateHandlers } from './apps/snake/snake.atom';
 import { useSocietyMessagesStateHandlers } from './apps/society-messages/messages.atom';
-import { useAppTetrisStateHandlers } from './apps/tetris/tetris.atom';
 import { useAppWeatherStateHandlers } from './apps/weather/weather.atom';
 import { useKeyboard } from './hooks/useKeyboard';
 import { ActionSheet } from './system/action-sheet/components/ActionSheet';
@@ -102,8 +100,6 @@ const PhoneAppHooks: FunctionComponent = () => {
     useAppDarkWebStateHandlers();
     useAppNewsStateHandlers();
     useAppNotesStateHandlers();
-    useAppTetrisStateHandlers();
-    useAppSnakeStateHandlers();
     useAppWeatherStateHandlers();
     useSocietyMessagesStateHandlers();
 
