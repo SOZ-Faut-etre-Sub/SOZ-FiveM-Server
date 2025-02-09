@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { NuiEvent } from '../../../../../../shared/event/nui';
 import { NewNoteItem, NoteItem } from '../../../../../../shared/phone/apps/notes';
 import { fetchNui } from '../../../../../fetch';
-import { useNotifications } from '../../../system/notifications/hooks/useNotifications';
+import { useDynamicIsland } from '../../../system/dynamic-island/hooks/useDynamicIsland';
 
 interface NotesAPIValue {
     addNewNote: (data: NewNoteItem) => Promise<void>;
@@ -14,7 +14,7 @@ interface NotesAPIValue {
 
 export const useNotesAPI = (): NotesAPIValue => {
     const { t } = useTranslation();
-    const { addNotification } = useNotifications();
+    const { sendIsland } = useDynamicIsland();
 
     const addNewNote = useCallback(
         async ({ title, content }: NewNoteItem) => {
@@ -24,18 +24,12 @@ export const useNotesAPI = (): NotesAPIValue => {
                     content,
                 });
 
-                addNotification({
-                    app: 'notes',
-                    title: t('NOTES.FEEDBACK.ADD_SUCCESS'),
-                });
+                sendIsland('success');
             } catch (e) {
-                addNotification({
-                    app: 'notes',
-                    title: t('NOTES.FEEDBACK.ADD_FAILED'),
-                });
+                sendIsland('error');
             }
         },
-        [addNotification, t]
+        [sendIsland, t]
     );
 
     const updateNote = useCallback(
@@ -47,18 +41,12 @@ export const useNotesAPI = (): NotesAPIValue => {
                     title,
                 });
 
-                addNotification({
-                    app: 'notes',
-                    title: t('NOTES.FEEDBACK.UPDATE_SUCCESS'),
-                });
+                sendIsland('success');
             } catch (e) {
-                addNotification({
-                    app: 'notes',
-                    title: t('NOTES.FEEDBACK.UPDATE_FAILED'),
-                });
+                sendIsland('error');
             }
         },
-        [addNotification, t]
+        [sendIsland, t]
     );
 
     const deleteNote = useCallback(
@@ -66,18 +54,12 @@ export const useNotesAPI = (): NotesAPIValue => {
             try {
                 await fetchNui(NuiEvent.PhoneAppNotesDelete, note);
 
-                addNotification({
-                    app: 'notes',
-                    title: t('NOTES.FEEDBACK.DELETE_SUCCESS'),
-                });
+                sendIsland('success');
             } catch (e) {
-                addNotification({
-                    app: 'notes',
-                    title: t('NOTES.FEEDBACK.DELETE_FAILED'),
-                });
+                sendIsland('error');
             }
         },
-        [addNotification, t]
+        [sendIsland, t]
     );
 
     return { addNewNote, deleteNote, updateNote };

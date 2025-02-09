@@ -5,31 +5,25 @@ import { useNavigate } from 'react-router-dom';
 
 import { NuiEvent } from '../../../../../../shared/event/nui';
 import { ContactDTO } from '../../../../../../shared/phone/simcard';
-import { useNotifications } from '../../../system/notifications/hooks/useNotifications';
+import { useDynamicIsland } from '../../../system/dynamic-island/hooks/useDynamicIsland';
 
 export const useContactsAPI = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { addNotification } = useNotifications();
+    const { sendIsland } = useDynamicIsland();
 
     const addNewContact = useCallback(
         async (contact: ContactDTO, referral: string) => {
             try {
                 await fetchNui(NuiEvent.PhoneSimCardAddContact, contact);
 
-                addNotification({
-                    app: 'contacts',
-                    title: t('CONTACTS.FEEDBACK.ADD_SUCCESS'),
-                });
+                sendIsland('success');
                 navigate(referral, { replace: true });
             } catch (e) {
-                addNotification({
-                    app: 'contacts',
-                    title: t('CONTACTS.FEEDBACK.ADD_FAILED'),
-                });
+                sendIsland('error');
             }
         },
-        [addNotification, navigate, t]
+        [sendIsland, navigate, t]
     );
 
     const updateContact = useCallback(
@@ -37,19 +31,13 @@ export const useContactsAPI = () => {
             try {
                 await fetchNui(NuiEvent.PhoneSimCardUpdateContact, { id, ...contact });
 
-                addNotification({
-                    app: 'contacts',
-                    title: t('CONTACTS.FEEDBACK.UPDATE_SUCCESS'),
-                });
+                sendIsland('success');
                 navigate(-1);
             } catch (e) {
-                addNotification({
-                    app: 'contacts',
-                    title: t('CONTACTS.FEEDBACK.UPDATE_FAILED'),
-                });
+                sendIsland('error');
             }
         },
-        [addNotification, navigate, t]
+        [sendIsland, navigate, t]
     );
 
     const deleteContact = useCallback(
@@ -57,19 +45,13 @@ export const useContactsAPI = () => {
             try {
                 await fetchNui(NuiEvent.PhoneSimCardDeleteContact, id);
 
-                addNotification({
-                    app: 'contacts',
-                    title: t('CONTACTS.FEEDBACK.DELETE_SUCCESS'),
-                });
+                sendIsland('success');
                 navigate(-1);
             } catch (e) {
-                addNotification({
-                    app: 'contacts',
-                    title: t('CONTACTS.FEEDBACK.DELETE_FAILED'),
-                });
+                sendIsland('error');
             }
         },
-        [addNotification, navigate, t]
+        [sendIsland, navigate, t]
     );
 
     const addFavoriteContact = useCallback(
@@ -77,18 +59,12 @@ export const useContactsAPI = () => {
             try {
                 await fetchNui(NuiEvent.PhoneSimCardUpdateContact, { id, favorite: true });
 
-                addNotification({
-                    app: 'contacts',
-                    title: t('CONTACTS.FEEDBACK.ADD_FAVORITE_SUCCESS'),
-                });
+                sendIsland('success');
             } catch (e) {
-                addNotification({
-                    app: 'contacts',
-                    title: t('CONTACTS.FEEDBACK.ADD_FAVORITE_FAILED'),
-                });
+                sendIsland('error');
             }
         },
-        [addNotification, t]
+        [sendIsland, t]
     );
 
     const removeFavoriteContact = useCallback(
@@ -96,18 +72,12 @@ export const useContactsAPI = () => {
             try {
                 await fetchNui(NuiEvent.PhoneSimCardUpdateContact, { id, favorite: false });
 
-                addNotification({
-                    app: 'contacts',
-                    title: t('CONTACTS.FEEDBACK.DELETE_FAVORITE_SUCCESS'),
-                });
+                sendIsland('success');
             } catch (e) {
-                addNotification({
-                    app: 'contacts',
-                    title: t('CONTACTS.FEEDBACK.DELETE_FAVORITE_FAILED'),
-                });
+                sendIsland('error');
             }
         },
-        [addNotification, t]
+        [sendIsland, t]
     );
 
     return { addNewContact, updateContact, deleteContact, addFavoriteContact, removeFavoriteContact };
