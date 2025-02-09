@@ -1,12 +1,20 @@
+import { fetchNui } from '@public/nui/fetch';
+import { NotificationPoliceType } from '@public/shared/notification';
 import { SocietyMessage } from '@public/shared/phone/apps/society';
 import { atom, useAtomValue } from 'jotai';
 import { useSetAtom } from 'jotai/index';
 import { useNavigate } from 'react-router-dom';
 
+import { NuiEvent } from '../../../../../shared/event/nui';
 import { useNuiEvent } from '../../../../hook/nui';
+import { useDynamicAlertConfig, useDynamicAlertDurationConfig, usePlaneMode } from '../../system/config/config.atom';
 import { useInjectDebugData } from '../../system/debug/hooks/useInjectDebugData';
+import { useEmergency } from '../../system/emergency/emergency.atom';
 import { useNotifications } from '../../system/notifications/hooks/useNotifications';
+import { usePhoneAvailable } from '../../system/phone.atom';
 import { useRingtoneSound } from '../../system/sound/hooks/useRingtoneSound';
+
+const policeNumbers = ['555-POLICE', '555-BCSO', '555-SASP', '555-LSPD', '555-FBI', '555-LSCS'];
 
 const messagesAtom = atom<Array<SocietyMessage>>([]);
 const unTakenMessagesCountAtom = atom(get => get(messagesAtom)?.filter(m => !m.isTaken)?.length ?? 0);
@@ -15,27 +23,48 @@ export const useSocietyMessages = () => useAtomValue(messagesAtom);
 export const useUnTakenMessagesCount = () => useAtomValue(unTakenMessagesCountAtom);
 
 export const useSocietyMessagesStateHandlers = () => {
+    const navigate = useNavigate();
+
+    const available = usePhoneAvailable();
+    const emergency = useEmergency();
+    const planeMode = usePlaneMode();
+    const dynamicAlert = useDynamicAlertConfig();
+    const dynamicAlertDuration = useDynamicAlertDurationConfig();
+
     const notificationSound = useRingtoneSound('societyNotification', false);
+    const dynamicSound = useRingtoneSound('dynamicAlert', false);
     const { addNotification } = useNotifications();
 
-    const navigate = useNavigate();
     const setMessages = useSetAtom(messagesAtom);
+
+    const handleNewMessageAlert = (message: SocietyMessage) => {
+        if (!available || emergency || planeMode || message.muted) return;
+
+        if (policeNumbers.includes(message.conversation_id) && dynamicAlert === true) {
+            fetchNui(NuiEvent.PoliceSendNotification, {
+                ...message,
+                info: { ...message.info, duration: dynamicAlertDuration },
+            });
+            dynamicSound.play();
+        } else {
+            addNotification(
+                {
+                    app: 'society-messages',
+                    title: message.message,
+                    onClick: () => navigate('/society-messages'),
+                },
+                null
+            );
+            notificationSound.play();
+        }
+    };
 
     useNuiEvent('phone', 'AppSocietySetData', setMessages);
     useNuiEvent('phone', 'AppSocietyPatchData', (data: SocietyMessage) => {
         setMessages(prev => {
             const index = prev.findIndex(m => m.id === data.id);
             if (index === -1) {
-                notificationSound.play();
-                addNotification(
-                    {
-                        app: 'society-messages',
-                        title: data.message,
-                        onClick: () => navigate('/society-messages'),
-                    },
-                    null
-                );
-
+                handleNewMessageAlert(data);
                 return [data, ...prev];
             }
 
@@ -100,7 +129,7 @@ export const useSocietyMessagesStateHandlers = () => {
                 updatedAt: 1659788608000,
                 info: {
                     duration: 10000,
-                    type: 'shooting',
+                    type: 'shooting' as NotificationPoliceType,
                 },
             },
         ];
@@ -143,6 +172,15 @@ export const useSocietyMessagesStateHandlers = () => {
 };
 
 const randomType = () => {
-    const types = ['red-alert', 'robbery', 'vandalism', 'racket', 'shooting', 'auto-theft', 'drug', 'explosion'];
+    const types: NotificationPoliceType[] = [
+        'red-alert',
+        'robbery',
+        'vandalism',
+        'racket',
+        'shooting',
+        'auto-theft',
+        'drug',
+        'explosion',
+    ];
     return types[Math.floor(Math.random() * types.length)];
 };

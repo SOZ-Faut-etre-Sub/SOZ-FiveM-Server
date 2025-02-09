@@ -14,6 +14,8 @@ const zoomAtom = atom(get => get(configAtom).zoom.value);
 const handsFreeAtom = atom(get => get(configAtom).handsFree);
 const hidePicturesAtom = atom(get => get(configAtom).hidePictures);
 const textZoomAtom = atom(get => get(configAtom).textZoom.value);
+const dynamicAlertAtom = atom(get => get(configAtom).dynamicAlert);
+const dynamicAlertDurationAtom = atom(get => get(configAtom).dynamicAlertDuration.value);
 
 export const useConfig = () => useAtomValue(configAtom);
 export const useSetConfig = () => useSetAtom(configAtom);
@@ -26,3 +28,5 @@ export const usePlaneMode = () => useAtomValue(planeModeAtom);
 export const useHandsFreeConfig = () => useAtomValue(handsFreeAtom);
 export const useHidePicturesConfig = () => useAtomValue(hidePicturesAtom);
 export const useTextZoomConfig = () => useAtomValue(textZoomAtom);
+export const useDynamicAlertConfig = () => useAtomValue(dynamicAlertAtom);
+export const useDynamicAlertDurationConfig = () => useAtomValue(dynamicAlertDurationAtom);

@@ -69,14 +69,15 @@ export const useSound = (url: string, options: ISoundOptions = DEFAULT_OPTIONS) 
     };
 };
 
-export const useSoundSettings = (type: 'ringtone' | 'notiSound' | 'societyNotification') => {
+export const useSoundSettings = (type: 'ringtone' | 'notiSound' | 'societyNotification' | 'dynamicAlert') => {
     const { getPath } = useAssetPath();
     const settings = useConfig();
 
     const audioFolder = type === 'ringtone' ? 'ringtones' : 'notifications';
+    const audioFile = type === 'dynamicAlert' ? settings['societyNotification'].value : settings[type].value;
 
     return {
-        sound: getPath(`audio/phone/${audioFolder}/${settings[type].value}.mp3`),
+        sound: getPath(`audio/phone/${audioFolder}/${audioFile}.mp3`),
         volume: settings.planeMode ? 0 : settings[`${type}Vol`] / 100,
     };
 };

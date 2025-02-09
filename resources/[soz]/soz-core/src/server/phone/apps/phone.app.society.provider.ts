@@ -6,6 +6,7 @@ import { Provider } from '@public/core/decorators/provider';
 import { Notifier } from '@public/server/notifier';
 import { ClientEvent } from '@public/shared/event/client';
 import { JobType } from '@public/shared/job';
+import { NotificationPoliceType } from '@public/shared/notification';
 import {
     NewSocietyMessage,
     SocietyMessage,
@@ -93,7 +94,7 @@ export class PhoneAppSocietyProvider {
         });
 
         const messageInfo: SocietyMessageInfo = {
-            type: message?.type ?? '',
+            type: message?.type,
         };
 
         if (
@@ -196,11 +197,11 @@ export class PhoneAppSocietyProvider {
             );
         }
 
-        this.serverStateService
-            .getPlayersByJob(player.job.id)
-            .forEach(player =>
-                this.createMessageBroadcastEvent(player, societyMessage, { type: societyMessage?.type ?? '' })
-            );
+        this.serverStateService.getPlayersByJob(player.job.id).forEach(player =>
+            this.createMessageBroadcastEvent(player, societyMessage, {
+                type: societyMessage?.type as NotificationPoliceType,
+            })
+        );
 
         return this.messageMapper(societyMessage);
     }
@@ -226,7 +227,7 @@ export class PhoneAppSocietyProvider {
             updatedAt: message.updatedAt.getTime(),
             isDone: message.isDone === 1,
             isTaken: message.isTaken === 1,
-            info: { type: message.type ?? '' },
+            info: { type: message.type as NotificationPoliceType },
             source_phone: message.source_phone.startsWith('#') ? '' : message.source_phone,
         };
     }

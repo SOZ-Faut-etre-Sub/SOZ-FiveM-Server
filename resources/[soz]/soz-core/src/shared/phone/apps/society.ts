@@ -1,3 +1,4 @@
+import { NotificationPoliceType } from '@public/shared/notification';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
 export type SocietyContact = {
@@ -25,7 +26,7 @@ export type NewSocietyMessage = {
     position: boolean;
 
     htmlMessage?: string;
-    type?: string;
+    type?: NotificationPoliceType;
     overrideIdentifier?: string;
     pedPosition?: SocietyMessagePosition;
 };
@@ -50,7 +51,7 @@ export type SocietyMessage = {
 };
 
 export type SocietyMessageInfo = {
-    type?: string;
+    type?: NotificationPoliceType;
     serviceNumber?: string;
     duration?: number;
     notificationId?: number;

@@ -4,7 +4,10 @@ import { usePhoneAvailable } from '../../phone.atom';
 import { useSoundProvider } from '../providers/SoundProvider';
 import { useSoundSettings } from './useSound';
 
-export const useRingtoneSound = (type: 'ringtone' | 'notiSound' | 'societyNotification', loop: boolean = false) => {
+export const useRingtoneSound = (
+    type: 'ringtone' | 'notiSound' | 'societyNotification' | 'dynamicAlert',
+    loop: boolean = false
+) => {
     const isPhoneAvailable = usePhoneAvailable();
     const sound = useSoundProvider();
 
