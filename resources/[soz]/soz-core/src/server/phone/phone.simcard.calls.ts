@@ -169,6 +169,19 @@ export class PhoneSimCardCalls {
         this.calls.delete(phoneNumber);
     }
 
+    @Rpc(RpcServerEvent.PHONE_SIMCARD_CALLS_MUTE)
+    async muteCall(source: number, phoneNumber: string, muted: boolean) {
+        const currentCall = this.calls.get(phoneNumber);
+        if (!currentCall) {
+            return Err('Call not found');
+        }
+
+        const isTransmitter = currentCall.transmitterSource === source;
+        const targetSource = isTransmitter ? currentCall.receiverSource : currentCall.transmitterSource;
+
+        TriggerClientEvent(ClientEvent.VOIP_VOICE_MUTE_CALL, targetSource, muted);
+    }
+
     private isReceiverIsBusy(receiver: string) {
         return (
             Object.values(this.calls).find(

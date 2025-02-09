@@ -60,9 +60,9 @@ export class PhoneSimCardCalls {
     }
 
     @OnNuiEvent(NuiEvent.PhoneSimCardCallsMute)
-    async onCallMute() {
+    async onCallMute(phoneNumber: string) {
         const muted = !(this.phoneState.getCurrentCall()?.muted ?? false);
-        TriggerEvent(ClientEvent.VOIP_VOICE_MUTE_CALL, muted);
+        await emitRpc(RpcServerEvent.PHONE_SIMCARD_CALLS_MUTE, phoneNumber, muted);
 
         this.phoneState.setCurrentCall({ ...this.phoneState.getCurrentCall(), muted });
         this.nuiDispatch.dispatch('phone', 'SetCurrentCall', this.phoneState.getCurrentCall());

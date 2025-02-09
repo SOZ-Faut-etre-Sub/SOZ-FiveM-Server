@@ -311,6 +311,7 @@ export enum RpcServerEvent {
     PHONE_SIMCARD_CALLS_INIT = 'soz-core:server:phone:simcard:calls:init',
     PHONE_SIMCARD_CALLS_ACCEPT = 'soz-core:server:phone:simcard:calls:accept',
     PHONE_SIMCARD_CALLS_DECLINE = 'soz-core:server:phone:simcard:calls:decline',
+    PHONE_SIMCARD_CALLS_MUTE = 'soz-core:server:phone:simcard:calls:mute',
     PHONE_SIMCARD_CALLS_END = 'soz-core:server:phone:simcard:calls:end',
     PHONE_SIMCARD_MESSAGES_CONVERSATION_GET = 'soz-core:server:phone:simcard:messages:conversation:get',
     PHONE_SIMCARD_MESSAGES_CONVERSATION_ADD = 'soz-core:server:phone:simcard:messages:conversation:add',
