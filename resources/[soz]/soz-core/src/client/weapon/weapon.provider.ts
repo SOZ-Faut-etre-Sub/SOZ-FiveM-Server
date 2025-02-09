@@ -10,7 +10,7 @@ import { Control } from '@public/shared/input';
 import { PlasterConfigs } from '@public/shared/job/lsmc';
 import { BoxZone, ZoneType } from '@public/shared/polyzone/box.zone';
 import { Vector3 } from '@public/shared/polyzone/vector';
-import { getRandomItem } from '@public/shared/random';
+import { getRandomInt, getRandomItem } from '@public/shared/random';
 
 import { ClientEvent, GameEvent, ServerEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/inventory';
@@ -309,10 +309,6 @@ export class WeaponProvider {
     }
 
     public sendShootingAlert() {
-        if (!this.featureProvider.isFeatureEnabled(Feature.PoliceAlert)) {
-            return;
-        }
-
         const player = PlayerPedId();
         const coords = GetEntityCoords(player);
 
@@ -331,14 +327,25 @@ export class WeaponProvider {
 
             const message = getRandomItem(GunShotMessage);
 
+            const angle = getRandomInt(1, 360);
+            const dist = getRandomInt(0, 165);
+
             TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
                 anonymous: true,
                 number: '555-POLICE',
                 message: `${zone}: ${message.replace('${0}', name)}`,
                 htmlMessage: `${zone}: ${message.replace('${0}', nameHtml)}`,
-                position: true,
                 info: { type: 'shooting' },
                 overrideIdentifier: 'System',
+                pedPosition: JSON.stringify({
+                    x: coords[0] + Math.cos(angle) * dist,
+                    y: coords[1] + Math.sin(angle) * dist,
+                    z: coords[2],
+                    radius: 165,
+                    alpha: 150,
+                    flash: true,
+                    color: 3,
+                }),
             });
         }
     }

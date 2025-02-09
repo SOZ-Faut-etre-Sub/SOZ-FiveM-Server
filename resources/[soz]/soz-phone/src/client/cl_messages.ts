@@ -18,6 +18,26 @@ RegisterNuiProxy(MessageEvents.SET_MESSAGE_READ);
 RegisterNuiProxy(MessageEvents.SET_CONVERSATION_ARCHIVED);
 
 RegisterNuiCB<void>(MessageEvents.SET_WAYPOINT, async (position: any, cb) => {
+    if (position['x'] !== 0 && position['y'] !== 0 && position['radius'] != null) {
+        const blip = AddBlipForRadius(
+            parseInt(position['x']),
+            parseInt(position['y']),
+            parseInt(position['z']),
+            parseInt(position['radius'])
+        );
+        SetBlipAlpha(blip, parseInt(position['alpha']));
+        if (position['flash']) {
+            SetBlipFlashes(blip, true);
+        }
+        if (position['color']) {
+            SetBlipColour(blip, parseInt(position['color']));
+        }
+        if (position['alpha']) {
+            SetBlipAlpha(blip, parseInt(position['alpha']));
+        }
+
+        setTimeout(() => RemoveBlip(blip), 60_000);
+    }
     if (position['x'] !== 0 && position['y'] !== 0) {
         SetNewWaypoint(parseInt(position['x']), parseInt(position['y']));
     }

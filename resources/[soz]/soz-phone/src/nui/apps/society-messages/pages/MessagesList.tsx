@@ -57,10 +57,7 @@ const MessagesList = (): any => {
     const setWaypoint = pos => {
         const position = JSON.parse(pos);
 
-        fetchNui<ServerPromiseResp<void>>(MessageEvents.SET_WAYPOINT, {
-            x: position.x,
-            y: position.y,
-        });
+        fetchNui<ServerPromiseResp<void>>(MessageEvents.SET_WAYPOINT, position);
     };
 
     const setMessageState = (id, take, done) => {
