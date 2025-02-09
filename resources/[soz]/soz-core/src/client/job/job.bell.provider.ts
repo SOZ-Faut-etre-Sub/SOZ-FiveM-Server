@@ -130,7 +130,7 @@ export class JobBellProvider {
     private readonly animationService: AnimationService;
 
     @Inject(PhoneAppSocietyProvider)
-    private readonly phoneSocialProvider: PhoneAppSocietyProvider;
+    private readonly phoneSocietyProvider: PhoneAppSocietyProvider;
 
     private lastCall = GetGameTimer();
 
@@ -174,7 +174,7 @@ export class JobBellProvider {
             message += ` - ${location}`;
         }
 
-        await this.phoneSocialProvider.sendMessage({
+        await this.phoneSocietyProvider.sendMessage({
             anonymous: false,
             number,
             message: message,

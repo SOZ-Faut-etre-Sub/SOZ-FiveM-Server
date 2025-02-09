@@ -215,7 +215,7 @@ export class LSMCDeathProvider {
     private nuiDispatch: NuiDispatch;
 
     @Inject(PhoneAppSocietyProvider)
-    private readonly phoneSocialProvider: PhoneAppSocietyProvider;
+    private readonly phoneSocietyProvider: PhoneAppSocietyProvider;
 
     private IsDead = false;
     private doFeeze = false;
@@ -575,7 +575,7 @@ export class LSMCDeathProvider {
             ? `${GetStreetNameFromHashKey(street)}${street2 ? ` et ${GetStreetNameFromHashKey(street2)}` : ''}`
             : GetLabelText(zoneID);
 
-        await this.phoneSocialProvider.sendMessage({
+        await this.phoneSocietyProvider.sendMessage({
             anonymous: true,
             number: '555-LSMC',
             message: `Besoin d'aide vers ${name}`,

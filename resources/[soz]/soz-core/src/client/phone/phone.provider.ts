@@ -9,7 +9,6 @@ import { Tick, TickInterval } from '../../core/decorators/tick';
 import { BlipType } from '../../shared/blip';
 import { ClientEvent } from '../../shared/event/client';
 import { SocietyMessagePosition } from '../../shared/phone/apps/society';
-import { toVector3Object, Vector3 } from '../../shared/polyzone/vector';
 import { BlipFactory } from '../blip';
 import { LSMCDeathProvider } from '../job/lsmc/lsmc.death.provider';
 import { NuiDispatch } from '../nui/nui.dispatch';

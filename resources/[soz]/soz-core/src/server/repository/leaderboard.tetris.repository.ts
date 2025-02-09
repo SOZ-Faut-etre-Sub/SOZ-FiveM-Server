@@ -42,8 +42,6 @@ export class LeaderboardTetrisRepository extends Repository<RepositoryType.Leade
             };
         }
 
-        console.log(Object.keys(list).length);
-
         return list;
     }
 

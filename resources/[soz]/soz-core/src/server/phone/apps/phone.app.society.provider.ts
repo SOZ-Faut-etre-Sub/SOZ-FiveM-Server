@@ -15,7 +15,7 @@ import {
 import { PlayerData } from '@public/shared/player';
 import { toVector3Object, Vector3 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
-import { format, subDays } from 'date-fns';
+import { subDays } from 'date-fns';
 
 import { ApiPhoneProvider } from '../../api/api.phone.provider';
 import { PrismaService } from '../../database/prisma.service';
@@ -66,12 +66,9 @@ export class PhoneAppSocietyProvider {
     @Rpc(RpcServerEvent.PHONE_APP_SOCIETY_SEND_MESSAGE)
     async sendMessage(source: number, message: NewSocietyMessage) {
         const player = this.playerService.getPlayer(source);
-        if (!player) {
-            return;
-        }
 
-        const username = message.overrideIdentifier ?? `${player.charinfo.firstname} ${player.charinfo.lastname}`;
-        const identifier = (message.anonymous ? '#' : '') + (message.overrideIdentifier ?? player.charinfo.phone);
+        const username = message.overrideIdentifier ?? `${player?.charinfo?.firstname} ${player?.charinfo?.lastname}`;
+        const identifier = (message.anonymous ? '#' : '') + (message.overrideIdentifier ?? player?.charinfo?.phone);
 
         let position = message.position
             ? JSON.stringify(toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3))

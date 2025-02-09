@@ -93,7 +93,7 @@ export class WeaponProvider {
     private zoneRepository: ZoneRepository;
 
     @Inject(PhoneAppSocietyProvider)
-    private readonly phoneSocialProvider: PhoneAppSocietyProvider;
+    private readonly phoneSocietyProvider: PhoneAppSocietyProvider;
 
     @Inject(FeatureProvider)
     public featureProvider: FeatureProvider;
@@ -334,7 +334,7 @@ export class WeaponProvider {
             const angle = getRandomInt(1, 360);
             const dist = getRandomInt(0, 165);
 
-            this.phoneSocialProvider.sendMessage({
+            this.phoneSocietyProvider.sendMessage({
                 anonymous: true,
                 position: false,
                 number: '555-POLICE',
@@ -394,7 +394,7 @@ export class WeaponProvider {
 
         const message = getRandomItem(ExplosionMessage);
 
-        this.phoneSocialProvider.sendMessage({
+        this.phoneSocietyProvider.sendMessage({
             anonymous: true,
             number: '555-POLICE',
             message: message.replace('${0}', zone),

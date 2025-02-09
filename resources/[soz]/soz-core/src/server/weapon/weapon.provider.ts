@@ -289,7 +289,7 @@ export class WeaponProvider {
             htmlMessage: htmlMessage,
             type: 'shooting',
             overrideIdentifier: 'System',
-            pedPosition: coords,
+            pedPosition: { coords },
         });
 
         this.lastAlertByZone[zoneID] = Date.now();

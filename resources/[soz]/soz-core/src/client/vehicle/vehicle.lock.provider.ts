@@ -88,7 +88,7 @@ export class VehicleLockProvider {
     private phoneService: PhoneService;
 
     @Inject(PhoneAppSocietyProvider)
-    private readonly phoneSocialProvider: PhoneAppSocietyProvider;
+    private readonly phoneSocietyProvider: PhoneAppSocietyProvider;
 
     private vehicleOpened: Set<number> = new Set();
 
@@ -528,7 +528,7 @@ export class VehicleLockProvider {
         const message = getRandomItem(messages);
         const modelName = modelInfo ? modelInfo.name : GetDisplayNameFromVehicleModel(model);
 
-        this.phoneSocialProvider.sendMessage({
+        this.phoneSocietyProvider.sendMessage({
             anonymous: true,
             number: '555-POLICE',
             message: message.replace('${0}', zone).replace('${1}', modelName),

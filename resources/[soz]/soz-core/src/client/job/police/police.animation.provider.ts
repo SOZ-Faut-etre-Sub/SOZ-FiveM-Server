@@ -21,7 +21,7 @@ export class PoliceAnimationProvider {
     private progressService: ProgressService;
 
     @Inject(PhoneAppSocietyProvider)
-    private readonly phoneSocialProvider: PhoneAppSocietyProvider;
+    private readonly phoneSocietyProvider: PhoneAppSocietyProvider;
 
     @OnEvent(ClientEvent.POLICE_HANDCUFF_ANIMATION)
     public async onHandcuffAnimation() {
@@ -137,7 +137,7 @@ export class PoliceAnimationProvider {
                 return;
             }
         }
-        await this.phoneSocialProvider.sendMessage({
+        await this.phoneSocietyProvider.sendMessage({
             anonymous: true,
             number: societyNumber,
             message: msg,

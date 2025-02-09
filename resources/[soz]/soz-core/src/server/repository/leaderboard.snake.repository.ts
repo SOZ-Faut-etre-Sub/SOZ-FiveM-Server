@@ -42,8 +42,6 @@ export class LeaderboardSnakeRepository extends Repository<RepositoryType.Leader
             };
         }
 
-        console.log(Object.keys(list).length);
-
         return list;
     }
 
