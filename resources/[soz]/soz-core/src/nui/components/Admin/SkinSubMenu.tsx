@@ -178,7 +178,7 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, state
                             <MenuItemSelectOption key={option.key}>{option.label}</MenuItemSelectOption>
                         ))}
                     </MenuItemSelect>
-                    <MenuItemSubMenuLink id={'player_style2'}>Modifier les éléments par DLC</MenuItemSubMenuLink>
+                    {/*<MenuItemSubMenuLink id={'player_style2'}>Modifier les éléments par DLC</MenuItemSubMenuLink>*/}
                     <MenuItemSubMenuLink id={'player_style'}>Modifier les éléments du personnage</MenuItemSubMenuLink>
                 </MenuContent>
             </SubMenu>
@@ -226,7 +226,7 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, state
                     ))}
                 </MenuContent>
             </SubMenu>
-            <ClothCollectionSubMenu banner={banner} />
+            {/*<ClothCollectionSubMenu banner={banner} />*/}
 
             {Object.keys(state.clothConfig.Components).map(componentIndex => (
                 <SubMenu id={`player_style_component_${componentIndex}`} key={componentIndex}>
