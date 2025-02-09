@@ -336,20 +336,20 @@ export class WeaponProvider {
 
             this.phoneSocialProvider.sendMessage({
                 anonymous: true,
+                position: false,
                 number: '555-POLICE',
                 message: `${zone}: ${message.replace('${0}', name)}`,
                 htmlMessage: `${zone}: ${message.replace('${0}', nameHtml)}`,
-                info: { type: 'shooting' },
+                type: 'shooting',
                 overrideIdentifier: 'System',
-                pedPosition: JSON.stringify({
-                    x: coords[0] + Math.cos(angle) * dist,
-                    y: coords[1] + Math.sin(angle) * dist,
-                    z: coords[2],
+                pedPosition: {
+                    coords: [coords[0] + Math.cos(angle) * dist, coords[1] + Math.sin(angle) * dist, coords[2]],
                     radius: 165,
                     alpha: 150,
                     flash: true,
                     color: 3,
-                }),
+                    temporary: 60_000,
+                },
             });
         }
     }
@@ -402,7 +402,7 @@ export class WeaponProvider {
             position: false,
             type: 'explosion',
             overrideIdentifier: 'System',
-            pedPosition: [x, y, z] as Vector3,
+            pedPosition: { coords: [x, y, z] as Vector3 },
         });
     }
 

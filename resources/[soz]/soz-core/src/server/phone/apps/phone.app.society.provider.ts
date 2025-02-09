@@ -51,9 +51,8 @@ export class PhoneAppSocietyProvider {
         const messages = await this.prismaService.phone_society_messages.findMany({
             where: {
                 conversation_id: SocietyNumberList[player.job.id],
-                updatedAt: {
-                    // prevent a huge computation on the database
-                    gte: new Date(format(subDays(Date.now(), 2), 'yyyy-MM-dd')),
+                createdAt: {
+                    gte: subDays(Date.now(), 2),
                 },
             },
             orderBy: {
@@ -73,11 +72,14 @@ export class PhoneAppSocietyProvider {
 
         const username = message.overrideIdentifier ?? `${player.charinfo.firstname} ${player.charinfo.lastname}`;
         const identifier = (message.anonymous ? '#' : '') + (message.overrideIdentifier ?? player.charinfo.phone);
-        const pedPosition = message.position
+
+        let position = message.position
             ? JSON.stringify(toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3))
-            : message.pedPosition
-              ? JSON.stringify(toVector3Object(message.pedPosition))
-              : null;
+            : null;
+
+        if (message.pedPosition) {
+            position = JSON.stringify(message.pedPosition);
+        }
 
         if (message.number === SocietyNumberList.fbi && username) {
             await this.apiPhoneProvider.sendFbiMessage(player, message.message);
@@ -88,12 +90,14 @@ export class PhoneAppSocietyProvider {
                 conversation_id: message.number,
                 source_phone: identifier,
                 message: message.message,
-                position: pedPosition,
+                position,
                 type: message?.type ?? null,
             },
         });
 
-        const messageInfo: SocietyMessageInfo = {};
+        const messageInfo: SocietyMessageInfo = {
+            type: message?.type ?? '',
+        };
 
         if (
             [
@@ -124,7 +128,7 @@ export class PhoneAppSocietyProvider {
                         conversation_id: SocietyNumberList[society],
                         source_phone: identifier,
                         message: `[${message.number.replace('555-', '')}] ${message.message}`,
-                        position: pedPosition,
+                        position,
                         type: message?.type ?? null,
                     },
                 });
@@ -147,7 +151,7 @@ export class PhoneAppSocietyProvider {
                         conversation_id: SocietyNumberList[society],
                         source_phone: identifier,
                         message: `[${message.number.replace('555-', '')}] ${message.message}`,
-                        position: pedPosition,
+                        position,
                         type: message?.type ?? null,
                     },
                 });

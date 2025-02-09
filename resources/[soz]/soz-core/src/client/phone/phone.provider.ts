@@ -1,4 +1,4 @@
-import { wait } from '@public/core/utils';
+import { uuidv4, wait } from '@public/core/utils';
 import { NuiEvent } from '@public/shared/event/nui';
 import { ServerEvent } from '@public/shared/event/server';
 
@@ -6,7 +6,11 @@ import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
+import { BlipType } from '../../shared/blip';
 import { ClientEvent } from '../../shared/event/client';
+import { SocietyMessagePosition } from '../../shared/phone/apps/society';
+import { toVector3Object, Vector3 } from '../../shared/polyzone/vector';
+import { BlipFactory } from '../blip';
 import { LSMCDeathProvider } from '../job/lsmc/lsmc.death.provider';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { PhoneManager } from './phone.manager';
@@ -18,6 +22,9 @@ export class PhoneProvider {
 
     @Inject(LSMCDeathProvider)
     private readonly lsmcDeathProvider: LSMCDeathProvider;
+
+    @Inject(BlipFactory)
+    private readonly blipFactory: BlipFactory;
 
     @Inject(PhoneManager)
     private readonly phoneManager: PhoneManager;
@@ -34,8 +41,26 @@ export class PhoneProvider {
     }
 
     @OnNuiEvent(NuiEvent.SetWaypoint)
-    async setWaypoint({ x, y }: { x: number; y: number }) {
-        SetNewWaypoint(x, y);
+    async setWaypoint({ coords, color, radius, flash, alpha, temporary }: SocietyMessagePosition) {
+        if (radius) {
+            const blipId = uuidv4();
+
+            this.blipFactory.create(blipId, {
+                type: BlipType.Radius,
+                sprite: 9,
+                position: coords,
+                radius,
+                color,
+                alpha,
+                flash,
+            });
+
+            if (temporary) {
+                setTimeout(() => this.blipFactory.remove(blipId), temporary);
+            }
+        }
+
+        SetNewWaypoint(coords[0], coords[1]);
     }
 
     @OnNuiEvent(NuiEvent.DeleteWaypoint)

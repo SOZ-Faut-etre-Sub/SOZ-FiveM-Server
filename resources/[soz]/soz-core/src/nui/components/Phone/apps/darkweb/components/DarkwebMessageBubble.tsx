@@ -8,6 +8,7 @@ import { format } from 'date-fns';
 import React from 'react';
 
 import { NuiEvent } from '../../../../../../shared/event/nui';
+import { SocietyMessagePosition } from '../../../../../../shared/phone/apps/society';
 import { useClipboard } from '../../../../../hook/clipboard';
 import { Button } from '../../../components/Button';
 import { Emoji } from '../../../components/Emoji';
@@ -31,9 +32,8 @@ export const DarkWebMessageBubble: React.FC<DarkWebMessageBubbleProps> = ({ mess
     const setWaypoint = () => {
         const position = /vec2\((-?[0-9.]+),(-?[0-9.]+)\)/g.exec(message.message);
 
-        fetchNui(NuiEvent.SetWaypoint, {
-            x: Number(position[1]),
-            y: Number(position[2]),
+        fetchNui<SocietyMessagePosition, never>(NuiEvent.SetWaypoint, {
+            coords: [Number(position[1]), Number(position[2]), 0],
         });
     };
 

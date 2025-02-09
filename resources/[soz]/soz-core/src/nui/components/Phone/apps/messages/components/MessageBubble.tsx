@@ -8,6 +8,7 @@ import clsx from 'clsx';
 import { format } from 'date-fns';
 import React, { FunctionComponent, useEffect, useState } from 'react';
 
+import { SocietyMessagePosition } from '../../../../../../shared/phone/apps/society';
 import { useClipboard } from '../../../../../hook/clipboard';
 import { Button } from '../../../components/Button';
 import { Emoji } from '../../../components/Emoji';
@@ -52,9 +53,12 @@ export const MessageBubble: FunctionComponent<MessageBubbleProps> = ({ message }
         const position = /vec3\((-?[0-9.]+),(-?[0-9.]+),(-?[0-9.]+)\)/g.exec(message.message);
         const oldPosition = /vec2\((-?[0-9.]+),(-?[0-9.]+)\)/g.exec(message.message);
 
-        fetchNui(NuiEvent.SetWaypoint, {
-            x: Number(position ? position[1] : oldPosition[1]),
-            y: Number(position ? position[2] : oldPosition[2]),
+        fetchNui<SocietyMessagePosition, never>(NuiEvent.SetWaypoint, {
+            coords: [
+                Number(position ? position[1] : oldPosition[1]),
+                Number(position ? position[2] : oldPosition[2]),
+                0,
+            ],
         });
     };
 

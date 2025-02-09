@@ -9,6 +9,15 @@ export type SocietyContact = {
     anonymousCallAllowed?: boolean;
 };
 
+export type SocietyMessagePosition = {
+    coords: Vector3;
+    radius?: number;
+    alpha?: number;
+    flash?: boolean;
+    color?: number;
+    temporary?: number;
+};
+
 export type NewSocietyMessage = {
     number: string;
     message: string;
@@ -18,7 +27,7 @@ export type NewSocietyMessage = {
     htmlMessage?: string;
     type?: string;
     overrideIdentifier?: string;
-    pedPosition?: Vector3;
+    pedPosition?: SocietyMessagePosition;
 };
 
 export type UpdateSocietyMessage = Pick<SocietyMessage, 'id' | 'isTaken' | 'isDone'>;

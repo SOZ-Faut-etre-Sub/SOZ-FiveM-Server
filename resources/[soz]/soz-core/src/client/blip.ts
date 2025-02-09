@@ -297,6 +297,10 @@ export class BlipFactory {
             SetBlipCategory(gameId, blip.category);
         }
 
+        if (blip.flash !== undefined) {
+            SetBlipFlashes(gameId, blip.flash);
+        }
+
         if (blip.name !== undefined) {
             const blipTextEntryKey = `BLIP_SOZ_CORE_${id}`;
 
