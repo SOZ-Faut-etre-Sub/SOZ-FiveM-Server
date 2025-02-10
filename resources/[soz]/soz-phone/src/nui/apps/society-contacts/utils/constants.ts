@@ -104,6 +104,7 @@ export const SocietyContactsState: Society[] = [
         avatar: 'media/society_icon/baun.webp',
         type: 'Entreprise Privée',
     },
+    /*
     {
         id: 15,
         display: 'Fight For Style',
@@ -111,6 +112,7 @@ export const SocietyContactsState: Society[] = [
         avatar: 'media/society_icon/ffs.webp',
         type: 'Entreprise Privée',
     },
+    */
     {
         id: 16,
         display: 'Mandatory',
@@ -142,6 +144,7 @@ export const SocietyContactsState: Society[] = [
         type: 'Entreprise Publique',
         order: 6,
     },
+    /*
     {
         id: 20,
         display: 'Ferme de Fou',
@@ -149,6 +152,7 @@ export const SocietyContactsState: Society[] = [
         avatar: 'media/society_icon/fdf.webp',
         type: 'Entreprise Privée',
     },
+    */
     {
         id: 21,
         display: 'YouNews',
