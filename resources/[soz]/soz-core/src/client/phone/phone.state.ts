@@ -55,18 +55,6 @@ export class PhoneState {
     public setPhoneOpen(value: boolean) {
         this.phoneOpen = value;
         this.nuiDispatch.dispatch('phone', 'SetVisibility', value);
-
-        const playerPed = PlayerPedId();
-
-        if (this.playerService.getState().isDead) return;
-
-        if (value) {
-            if (IsPedInAnyVehicle(playerPed, true)) {
-                this.triggerAnimation(playerPed, 'anim@cellphone@in_car@ps', 'cellphone_text_in');
-            } else {
-                this.triggerAnimation(playerPed, 'cellphone@', 'cellphone_text_in');
-            }
-        }
     }
 
     public setPhoneFocus(value: boolean) {
@@ -182,7 +170,7 @@ export class PhoneState {
 
         if (this.phoneOpen) {
             await this.createPhoneProp();
-        } else {
+        } else if (!this.isInCall()) {
             await this.removePhoneProp();
         }
 
