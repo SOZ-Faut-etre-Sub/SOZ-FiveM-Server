@@ -94,12 +94,6 @@ export const societyContacts: SocietyContact[] = [
         type: 'private',
     },
     {
-        display: 'Fight For Style',
-        number: '555-FFS',
-        avatar: 'ffs.webp',
-        type: 'private',
-    },
-    {
         display: 'Mandatory',
         number: '555-MDR',
         avatar: 'mdr.webp',
@@ -127,12 +121,6 @@ export const societyContacts: SocietyContact[] = [
         avatar: 'gouv.webp',
         type: 'public',
         order: 6,
-    },
-    {
-        display: 'Ferme de Fou',
-        number: '555-FDF',
-        avatar: 'fdf.webp',
-        type: 'private',
     },
     {
         display: 'YouNews',
