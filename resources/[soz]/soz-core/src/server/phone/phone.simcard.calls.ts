@@ -180,6 +180,7 @@ export class PhoneSimCardCalls {
         const targetSource = isTransmitter ? currentCall.receiverSource : currentCall.transmitterSource;
 
         TriggerClientEvent(ClientEvent.VOIP_VOICE_MUTE_CALL, targetSource, muted);
+        TriggerEvent(ServerEvent.VOIP_PHONE_CALL_MUTED, source, muted);
     }
 
     private isReceiverIsBusy(receiver: string) {

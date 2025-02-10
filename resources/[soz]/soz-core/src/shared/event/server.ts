@@ -393,6 +393,7 @@ export enum ServerEvent {
     VOIP_RADIO_VEHICLE_UPDATE = 'soz-core:server:voip:radio-vehicle-update',
     VOIP_PHONE_CALL_START = 'soz-core:server:voip:phone-call-start',
     VOIP_PHONE_CALL_END = 'soz-core:server:voip:phone-call-end',
+    VOIP_PHONE_CALL_MUTED = 'soz-core:server:voip:phone-call-muted',
     VOIP_PHONE_CALL_SPEAKER_LISTENER_ADD = 'soz-core:server:voip:phone-call-speaker-listener-add',
     VOIP_PHONE_CALL_SPEAKER_LISTENER_REMOVE = 'soz-core:server:voip:phone-call-speaker-listener-remove',
     VOIP_RADIO_JOIN_CHANNEL = 'soz-core:server:voip:radio-join-channel',
