@@ -90,8 +90,8 @@ export class VoicePhoneProvider {
             });
             this.currentSpeakerIds.add(callerId);
         } else {
-            this.voiceListeningService.removePlayerAudioContext(this.currentCallerId, 'phone');
-            this.voiceTargetService.removePlayer(this.currentCallerId, 'phone');
+            this.voiceListeningService.removePlayerAudioContext(callerId, 'phone');
+            this.voiceTargetService.removePlayer(callerId, 'phone');
             this.currentSpeakerIds.delete(callerId);
         }
     }
