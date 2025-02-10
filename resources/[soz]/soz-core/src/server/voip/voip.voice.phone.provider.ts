@@ -118,7 +118,7 @@ export class VoipVoicePhoneProvider {
         }
 
         call.speakers.push(target);
-        TriggerClientEvent(ClientEvent.VOIP_VOICE_SPEAKER_LISTENING_CALL, target, true);
+        TriggerClientEvent(ClientEvent.VOIP_VOICE_SPEAKER_LISTENING_CALL, target, call.callerId, true);
     }
 
     @OnEvent(ServerEvent.VOIP_PHONE_CALL_SPEAKER_LISTENER_REMOVE)
@@ -138,7 +138,7 @@ export class VoipVoicePhoneProvider {
         const index = call.speakers.indexOf(target);
         if (index > -1) {
             call.speakers.splice(index, 1);
-            TriggerClientEvent(ClientEvent.VOIP_VOICE_SPEAKER_LISTENING_CALL, target, false);
+            TriggerClientEvent(ClientEvent.VOIP_VOICE_SPEAKER_LISTENING_CALL, target, call.callerId, false);
         }
     }
 
@@ -152,7 +152,7 @@ export class VoipVoicePhoneProvider {
         TriggerClientEvent(ClientEvent.VOIP_VOICE_END_CALL, call.receiverId);
 
         call.speakers.forEach(speaker => {
-            TriggerClientEvent(ClientEvent.VOIP_VOICE_SPEAKER_LISTENING_CALL, speaker, false);
+            TriggerClientEvent(ClientEvent.VOIP_VOICE_SPEAKER_LISTENING_CALL, speaker, call.callerId, false);
         });
 
         this.calls.delete(call.id);
