@@ -41,6 +41,7 @@ export const PhoneApp: FunctionComponent = () => {
         insideInput ? false : focus,
         focus
             ? [
+                  Control.VehicleNextRadio,
                   Control.Attack,
                   Control.Attack2,
                   Control.Aim,
