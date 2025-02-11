@@ -55,6 +55,8 @@ export class PhoneState {
     public setPhoneOpen(value: boolean) {
         this.phoneOpen = value;
         this.nuiDispatch.dispatch('phone', 'SetVisibility', value);
+
+        ClearPedTasks(PlayerPedId());
     }
 
     public setPhoneFocus(value: boolean) {
@@ -109,7 +111,7 @@ export class PhoneState {
     }
 
     public isInActiveCall() {
-        return this.currentCall !== null && this.currentCall.is_accepted;
+        return this.currentCall !== null && (this.currentCall.isTransmitter || this.currentCall.is_accepted);
     }
 
     @StateSelector(state => state.global.blackout, state => state.global.blackoutLevel)
@@ -120,24 +122,25 @@ export class PhoneState {
     @Tick(250)
     async onTick() {
         const playerPed = PlayerPedId();
+        const isPlayerInVehicle = IsPedInAnyVehicle(playerPed, false);
 
         if (this.playerService.getState().isDead) return;
         if (this.phoneOnCamera) return;
 
-        if (this.isInCall()) {
-            if (IsPedInAnyVehicle(playerPed, true)) {
+        if (this.isInActiveCall()) {
+            if (isPlayerInVehicle) {
                 this.triggerAnimation(playerPed, 'anim@cellphone@in_car@ps', 'cellphone_call_listen_base');
             } else {
                 this.triggerAnimation(playerPed, 'cellphone@', 'cellphone_call_listen_base');
             }
         } else if (this.phoneOpen) {
-            if (IsPedInAnyVehicle(playerPed, true)) {
+            if (isPlayerInVehicle) {
                 this.triggerAnimation(playerPed, 'anim@cellphone@in_car@ps', 'cellphone_text_in');
             } else {
                 this.triggerAnimation(playerPed, 'cellphone@', 'cellphone_text_in');
             }
         } else if (!this.phoneOpen && this.phoneProp !== null) {
-            if (IsPedInAnyVehicle(playerPed, true)) {
+            if (isPlayerInVehicle) {
                 ['cellphone_text_in', 'cellphone_call_to_text', 'cellphone_call_listen_base'].forEach(anim => {
                     this.animationService.stopAnimationIfRunning({
                         base: {

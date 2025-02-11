@@ -107,7 +107,7 @@ export const StatusBar: FunctionComponent<StatusBarProps> = memo(({ forceControl
                 })}
             >
                 <Button
-                    className="flex-none flex items-center text-[#347DD9] text-base w-1/4"
+                    className="flex-none flex items-center text-[#347DD9] text-base w-1/4 focus:outline-none"
                     onClick={appGetBack.onClick}
                 >
                     {appGetBack.display && (

@@ -11,10 +11,10 @@ type Call = {
     id: string;
     callerId: number;
     callerPhone: string;
-    callerSpeakers: Set<number>;
+    callerSpeakers: Array<number>;
     receiverId: number;
     receiverPhone: string;
-    receiverSpeakers: Set<number>;
+    receiverSpeakers: Array<number>;
 };
 
 @Provider()
@@ -66,10 +66,10 @@ export class VoipVoicePhoneProvider {
             id: callId,
             callerId: caller.source,
             callerPhone,
-            callerSpeakers: new Set<number>(),
+            callerSpeakers: [],
             receiverId: receiver.source,
             receiverPhone,
-            receiverSpeakers: new Set<number>(),
+            receiverSpeakers: [],
         };
 
         this.calls.set(callId, call);
@@ -142,12 +142,12 @@ export class VoipVoicePhoneProvider {
 
         if (call.callerId === source) {
             if (!skipCallUpdate) {
-                call.callerSpeakers.add(target);
+                call.callerSpeakers.push(target);
             }
             TriggerClientEvent(ClientEvent.VOIP_VOICE_SPEAKER_LISTENING_CALL, target, call.receiverId, true);
         } else {
             if (!skipCallUpdate) {
-                call.receiverSpeakers.add(target);
+                call.receiverSpeakers.push(target);
             }
             TriggerClientEvent(ClientEvent.VOIP_VOICE_SPEAKER_LISTENING_CALL, target, call.callerId, true);
         }
@@ -168,16 +168,18 @@ export class VoipVoicePhoneProvider {
         }
 
         if (call.callerId === source) {
-            if (call.callerSpeakers.has(target)) {
+            const index = call.callerSpeakers.indexOf(target);
+            if (index > -1) {
                 if (!skipCallUpdate) {
-                    call.callerSpeakers.delete(target);
+                    call.callerSpeakers.splice(index, 1);
                 }
                 TriggerClientEvent(ClientEvent.VOIP_VOICE_SPEAKER_LISTENING_CALL, target, call.receiverId, false);
             }
         } else {
-            if (call.receiverSpeakers.has(target)) {
+            const index = call.receiverSpeakers.indexOf(target);
+            if (index > -1) {
                 if (!skipCallUpdate) {
-                    call.receiverSpeakers.delete(target);
+                    call.receiverSpeakers.splice(index, 1);
                 }
                 TriggerClientEvent(ClientEvent.VOIP_VOICE_SPEAKER_LISTENING_CALL, target, call.callerId, false);
             }
