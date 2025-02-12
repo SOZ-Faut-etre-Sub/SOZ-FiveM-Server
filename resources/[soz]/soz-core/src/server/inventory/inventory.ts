@@ -611,6 +611,10 @@ export class Inventory {
             return false;
         }
 
+        if (amount !== 'all' && inventoryItem.amount < amount) {
+            return false;
+        }
+
         this._hasChanges = true;
 
         if (amount !== 'all' && inventoryItem.amount > amount) {

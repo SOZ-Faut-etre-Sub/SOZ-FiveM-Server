@@ -354,13 +354,18 @@ export class InventoryProvider {
 
             return;
         }
+        if (!amount) {
+            amount = sourceItem.amount;
+        }
+
+        if (sourceItem.amount < amount) {
+            this.notifier.error(source, 'Quantité trop élevée.');
+
+            return;
+        }
 
         if (sourceInventory.id != targetInventory.id || sourceInventory.id != playerInventoryId) {
             TriggerClientEvent(ClientEvent.ANIMATION_GIVE, source);
-        }
-
-        if (!amount) {
-            amount = sourceItem.amount;
         }
 
         // 1. Case : no target item, simply move item if possible
