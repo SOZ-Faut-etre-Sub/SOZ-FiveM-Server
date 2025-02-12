@@ -139,8 +139,8 @@ export const DefaultFeatureConfig: FeaturesConfig = {
         test: false,
     },
     [Feature.PoliceAlert]: {
-        production: false,
-        development: false,
-        test: false,
+        production: true,
+        development: true,
+        test: true,
     },
 };
