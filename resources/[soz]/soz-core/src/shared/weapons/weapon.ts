@@ -44,6 +44,11 @@ export type WeaponDrawPosition = {
     rotation: Vector3;
 };
 
+export type ExtraWeaponDrawPosition = {
+    model: string;
+    bone: string;
+};
+
 export type WeaponConfig = {
     recoil?: number;
     ammo?:
@@ -67,6 +72,7 @@ export type WeaponConfig = {
         | 'ammo_18'
         | 'ammo_19';
     drawPosition?: WeaponDrawPosition;
+    extaDraw?: ExtraWeaponDrawPosition[];
     attachments?: WeaponAttachment[];
 };
 
@@ -674,6 +680,12 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         recoil: 0.05,
         ammo: 'ammo_05',
         drawPosition: { model: 'w_ar_assaultriflemk2', ...DrawPositions['AR'] },
+        extaDraw: [
+            {
+                bone: 'WAPBarrel',
+                model: 'w_at_ar_barrel_1',
+            },
+        ],
         attachments: [
             {
                 label: 'Grand chargeur',
