@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
 
 import { NuiEvent } from '../../../../shared/event';
-import { JobType } from '../../../../shared/job';
+import { JobLabel, JobType } from '../../../../shared/job';
 import { MenuType } from '../../../../shared/nui/menu';
 import { fetchNui } from '../../../fetch';
 import { usePlayer } from '../../../hook/data';
@@ -28,18 +28,11 @@ export const MenuNews: FunctionComponent<MenuNewsProps> = ({ data }) => {
         return null;
     }
 
-    const banner =
-        data.job === JobType.News
-            ? 'https://nui-img/soz/menu_job_news'
-            : 'https://soz.zerator.com/static/game/images/banner/menu_job_you-news.webp';
-
-    const jobLabel = data.job === JobType.News ? 'Twitch News' : 'You News';
-
     if (!player?.job.onduty) {
         return (
             <Menu type={MenuType.JobUpw}>
                 <MainMenu>
-                    <MenuTitle banner={banner}>{jobLabel}</MenuTitle>
+                    <MenuTitle title={JobLabel[data.job]} />
                     <MenuContent>
                         <MenuItemText>Vous n'êtes pas en service.</MenuItemText>
                     </MenuContent>
@@ -51,7 +44,7 @@ export const MenuNews: FunctionComponent<MenuNewsProps> = ({ data }) => {
     return (
         <Menu type={MenuType.JobNews}>
             <MainMenu>
-                <MenuTitle banner={banner}>{jobLabel}</MenuTitle>
+                <MenuTitle title={JobLabel[data.job]} />
                 <MenuContent>
                     <MenuItemSelect
                         title="Faire une communication"

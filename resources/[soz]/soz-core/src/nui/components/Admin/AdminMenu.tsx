@@ -34,7 +34,7 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
     return (
         <Menu type={MenuType.AdminMenu}>
             <MainMenu>
-                <MenuTitle banner={data.banner}>Menu des admins</MenuTitle>
+                <MenuTitle title={data.permission} />
                 <MenuContent>
                     <MenuItemSubMenuLink id="game_master">🎲 Menu du maître du jeu</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink disabled={!isStaffOrAdminOrGM} id="interactive">
@@ -71,21 +71,19 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
                     <MenuItemSubMenuLink id="developer">🛠 Outils pour développeur</MenuItemSubMenuLink>
                 </MenuContent>
             </MainMenu>
-            <GameMasterSubMenu banner={data.banner} permission={data.permission} state={data.state.gameMaster} />
-            <InteractiveSubMenu banner={data.banner} state={data.state.interactive} />
-            <JobSubMenu banner={data.banner} />
-            <SkinSubMenu banner={data.banner} state={data.state.skin} />
-            <VehicleSubMenu banner={data.banner} permission={data.permission} state={data.state.vehicule} />
-            <PlayerSubMenu banner={data.banner} permission={data.permission} parties={data.parties} />
-            <DeveloperSubMenu banner={data.banner} permission={data.permission} state={data.state.developer} />
-            <EventSubMenu banner={data.banner} event={data.event} />
-            <CharacterSubMenu banner={data.banner} characters={data.characters} />
-            <MeteorSubMenu banner={data.banner} state={data.state.meteor} />
-            {/*<CeremonySubMenu banner={data.banner} state={data.state.ceremony} />*/}
-            {isHalloween && (
-                <HalloweenSubMenu banner={data.banner} permission={data.permission} state={data.state.halloween} />
-            )}
-            {/*<XmasSubMenu banner={data.banner} permission={data.permission} state={data.state.xmasSceneState} />*/}
+            <GameMasterSubMenu permission={data.permission} state={data.state.gameMaster} />
+            <InteractiveSubMenu permission={data.permission} state={data.state.interactive} />
+            <JobSubMenu permission={data.permission} />
+            <SkinSubMenu permission={data.permission} state={data.state.skin} />
+            <VehicleSubMenu permission={data.permission} state={data.state.vehicule} />
+            <PlayerSubMenu permission={data.permission} parties={data.parties} />
+            <DeveloperSubMenu permission={data.permission} state={data.state.developer} />
+            <EventSubMenu permission={data.permission} event={data.event} />
+            <CharacterSubMenu permission={data.permission} characters={data.characters} />
+            <MeteorSubMenu permission={data.permission} state={data.state.meteor} />
+            {/*<CeremonySubMenu permission={data.permission} state={data.state.ceremony} />*/}
+            {isHalloween && <HalloweenSubMenu permission={data.permission} state={data.state.halloween} />}
+            {/*<XmasSubMenu permission={data.permission} state={data.state.xmasSceneState} />*/}
         </Menu>
     );
 };

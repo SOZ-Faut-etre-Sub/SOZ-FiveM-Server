@@ -26,14 +26,10 @@ export const HousingCloakroomMenu: FunctionComponent<HousingCloakroomMenuProps> 
         return null;
     }
 
-    const banner = data.gang
-        ? 'https://soz.zerator.com/static/game/images/banner/menu_gang_management.webp'
-        : 'https://nui-img/soz/menu_habitation';
-
     return (
         <Menu type={MenuType.HousingCloakroomMenu}>
             <MainMenu>
-                <MenuTitle banner={banner}></MenuTitle>
+                <MenuTitle title={data.gang ? 'Hub criminel' : 'Habitation'} />
                 <MenuContent>
                     <MenuItemButton
                         onConfirm={() => {

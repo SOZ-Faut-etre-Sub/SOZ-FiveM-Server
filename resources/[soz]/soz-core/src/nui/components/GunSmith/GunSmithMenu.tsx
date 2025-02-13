@@ -32,12 +32,11 @@ type MenuGunSmithStateProps = {
 
 const GunSmithWeaponSubMenu: FunctionComponent<{
     submenu_id: number;
-    banner: string;
     weapon: InventoryItem;
     tint: Record<WeaponTintColor, WeaponTintColorChoiceItem>;
     attachments: WeaponAttachment[];
     admin: boolean;
-}> = ({ submenu_id, banner, weapon, tint, attachments, admin }) => {
+}> = ({ submenu_id, weapon, tint, attachments, admin }) => {
     const [configuration, setConfiguration] = useState<WeaponConfiguration>({});
     const getPrice = useGetPrice();
 
@@ -72,10 +71,8 @@ const GunSmithWeaponSubMenu: FunctionComponent<{
 
     return (
         <SubMenu id={`gunsmith_${submenu_id}`}>
-            <MenuTitle banner={banner}>
-                Modifier l'arme {configuration.label ? `(${configuration.label})` : ''}
-            </MenuTitle>
-            <MenuContent>
+            <MenuTitle title="Armurier" />
+            <MenuContent subtitle={`Modifier l'arme ${configuration.label ? `(${configuration.label})` : ''}`}>
                 <MenuItemCheckbox
                     onChange={label => {
                         setConfiguration(s => ({ ...s, label }));
@@ -217,13 +214,12 @@ const MenuWeaponComponentSelect: FunctionComponent<{
 export const MenuGunSmith: FunctionComponent<MenuGunSmithStateProps> = ({
     data: { weapons, tints, attachments, admin },
 }) => {
-    const banner = 'https://nui-img/soz/menu_job_gunsmith';
     const items = useItems();
 
     return (
         <Menu type={MenuType.GunSmith}>
             <MainMenu>
-                <MenuTitle banner={banner}></MenuTitle>
+                <MenuTitle title="Armurier" />
                 <MenuContent>
                     {weapons.map((weapon, id) => {
                         const item = items.find(i => i.name === weapon.name);
@@ -240,7 +236,6 @@ export const MenuGunSmith: FunctionComponent<MenuGunSmithStateProps> = ({
                 <GunSmithWeaponSubMenu
                     key={`gunsmith_${id}`}
                     submenu_id={id}
-                    banner={banner}
                     weapon={weapon}
                     tint={tints.find(t => t.slot === weapon.slot).tints}
                     attachments={attachments?.find(t => t.slot === weapon.slot)?.attachments || []}

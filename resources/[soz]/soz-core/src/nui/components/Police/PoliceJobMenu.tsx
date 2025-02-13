@@ -24,7 +24,6 @@ type PoliceJobStateProps = {
 
 export const PoliceJobMenu: FunctionComponent<PoliceJobStateProps> = ({ data }) => {
     const player = usePlayer();
-    const banner = `https://soz.zerator.com/static/game/images/banner/menu_job_${player.job.id}.webp`;
 
     const [wantedPlayers, setWantedPlayers] = useState(null);
 
@@ -40,7 +39,7 @@ export const PoliceJobMenu: FunctionComponent<PoliceJobStateProps> = ({ data }) 
         return (
             <Menu type={MenuType.PoliceJobMenu}>
                 <MainMenu>
-                    <MenuTitle banner={banner}></MenuTitle>
+                    <MenuTitle title={player.job.id} />
                     <MenuContent>
                         <MenuItemText>Vous n'êtes pas en service.</MenuItemText>
                     </MenuContent>
@@ -52,8 +51,8 @@ export const PoliceJobMenu: FunctionComponent<PoliceJobStateProps> = ({ data }) 
     return (
         <Menu type={MenuType.PoliceJobMenu}>
             <MainMenu>
-                <MenuTitle banner={banner}>L'ordre et la justice !</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={player.job.id} />
+                <MenuContent subtitle="L'ordre et la justice !">
                     {player.job.id == JobType.SASP || player.job.id == JobType.FBI ? (
                         <MenuItemButton
                             onConfirm={async () => {
@@ -108,8 +107,8 @@ export const PoliceJobMenu: FunctionComponent<PoliceJobStateProps> = ({ data }) 
                 </MenuContent>
             </MainMenu>
             <SubMenu id="persons_searched">
-                <MenuTitle banner={banner}>Personnes recherchées</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={player.job.id} />
+                <MenuContent subtitle="Personnes recherchées">
                     <MenuItemButton
                         onConfirm={async () => {
                             await fetchNui(NuiEvent.NewsCreateAnnounce, {

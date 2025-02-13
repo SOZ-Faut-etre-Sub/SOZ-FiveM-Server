@@ -32,8 +32,8 @@ export const MenuAlbum: FunctionComponent<MenuAlbumProps> = ({ data }) => {
     return (
         <Menu type={MenuType.Album}>
             <MainMenu>
-                <MenuTitle banner="https://nui-img/soz/menu_album">Choix de la piste</MenuTitle>
-                <MenuContent>
+                <MenuTitle title="Album" />
+                <MenuContent subtitle="Choix de la piste">
                     <MenuItemButton onConfirm={() => onConfirm(null)}>Arrêter</MenuItemButton>
                     <MenuItemSelect
                         title={`Volume`}

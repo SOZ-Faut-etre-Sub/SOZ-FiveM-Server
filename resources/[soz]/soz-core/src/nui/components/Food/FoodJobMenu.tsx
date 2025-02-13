@@ -3,6 +3,7 @@ import { CraftCategory, CraftRecipe } from '@public/shared/craft/craft';
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
+import { JobLabel } from '../../../shared/job';
 import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';
 import { CraftInputs } from '../Shared/CraftInputs';
@@ -30,7 +31,6 @@ type FoodStateProps = {
 };
 
 export const FoodJobMenu: FunctionComponent<FoodStateProps> = ({ data }) => {
-    const banner = 'https://nui-img/soz/menu_job_food';
     const [blips, setBlips] = useState(null);
     const [currentRecipe, setCurrentRecipe] = useState<CraftRecipe>(null);
     const items = useItems();
@@ -55,7 +55,7 @@ export const FoodJobMenu: FunctionComponent<FoodStateProps> = ({ data }) => {
         return (
             <Menu type={MenuType.FoodJobMenu}>
                 <MainMenu>
-                    <MenuTitle banner={banner}></MenuTitle>
+                    <MenuTitle title={JobLabel.food} />
                     <MenuContent>
                         <MenuItemText>Vous n'êtes pas en service.</MenuItemText>
                     </MenuContent>
@@ -67,7 +67,7 @@ export const FoodJobMenu: FunctionComponent<FoodStateProps> = ({ data }) => {
     return (
         <Menu type={MenuType.FoodJobMenu}>
             <MainMenu>
-                <MenuTitle banner={banner}></MenuTitle>
+                <MenuTitle title={JobLabel.food} />
                 <MenuContent>
                     {Object.keys(data.recipes).map(category => (
                         <MenuItemSubMenuLink
@@ -87,8 +87,8 @@ export const FoodJobMenu: FunctionComponent<FoodStateProps> = ({ data }) => {
             </MainMenu>
             {Object.entries(data.recipes).map(([name, category]) => (
                 <SubMenu id={`recipe_${name}`}>
-                    <MenuTitle banner={banner}>{`Livre de recettes ${data.recipes[name].icon} ${name}`}</MenuTitle>
-                    <MenuContent>
+                    <MenuTitle title={JobLabel.food} />
+                    <MenuContent subtitle={`Livre de recettes ${data.recipes[name].icon} ${name}`}>
                         <MenuItemSelect title="" titleWidth={0}>
                             {Object.entries(category.recipes).map(([output, recipe]) => (
                                 <MenuItemSelectOption

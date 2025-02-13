@@ -81,9 +81,6 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
     const getPrice = useGetPrice();
     const items = useItems();
     const crimi = ![LSCustomMode.Admin, LSCustomMode.LsCustom].includes(data.mode);
-    const banner = crimi
-        ? 'https://soz.zerator.com/static/game/images/banner/menu_vehbiz_perf.webp'
-        : 'https://nui-img/soz/menu_shop_lscustoms';
 
     useEffect(() => {
         if (data?.currentConfiguration) {
@@ -150,7 +147,7 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
     return (
         <Menu type={MenuType.VehicleCustom}>
             <MainMenu>
-                <MenuTitle banner={banner}>{crimi ? 'Performance' : 'LS Customs'}</MenuTitle>
+                <MenuTitle title={crimi ? 'Performance' : 'LS Customs'} />
                 <MenuContent
                     helpPanel={
                         data.mode == LSCustomMode.CrimiPerfo &&

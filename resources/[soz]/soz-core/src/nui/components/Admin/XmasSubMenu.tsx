@@ -23,12 +23,12 @@ import {
     MenuItemCheckbox,
     MenuItemSelect,
     MenuItemSelectOption,
+    MenuSubTitle,
     MenuTitle,
     SubMenu,
 } from '../Styleguide/Menu';
 
 export type MeteorSubMenuProps = {
-    banner: string;
     permission: SozRole;
     state: XmasSceneState;
 };
@@ -44,15 +44,15 @@ const copyToClipboard = text => {
     document.body.removeChild(clipElem);
 };
 
-export const XmasSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner, state }) => {
+export const XmasSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ permission, state }) => {
     const [temporaryState, setTemporaryState] = useState<XmasSceneState>(state);
 
     return (
         <>
             <SubMenu id="christmas">
-                <MenuTitle banner={banner}>Vive le vent !</MenuTitle>
-                <MenuContent>
-                    <MenuTitle>Scène</MenuTitle>
+                <MenuTitle title={permission} />
+                <MenuContent subtitle="Vive le vent !">
+                    <MenuSubTitle>Scène</MenuSubTitle>
                     <MenuItemButton
                         description={temporaryState.video_url || 'Aucune vidéo'}
                         onConfirm={async () => {
@@ -179,7 +179,7 @@ export const XmasSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner, sta
                         spots={SPOT_GROUP_SECOND_ROW}
                         suffix="deuxième rangée"
                     />
-                    <MenuTitle>Etat</MenuTitle>
+                    <MenuSubTitle>Etat</MenuSubTitle>
                     <MenuItemButton
                         onConfirm={() => {
                             copyToClipboard(JSON.stringify(temporaryState));
@@ -236,7 +236,7 @@ export const MenuLightGroup: FunctionComponent<MenuLightGroupProps> = ({
 }) => {
     return (
         <>
-            <MenuTitle>Lumières {suffix}</MenuTitle>
+            <MenuSubTitle>Lumières {suffix}</MenuSubTitle>
             <MenuItemSelect
                 title={`Toutes les lumieres ${suffix}`}
                 onChange={(_index, color) => {

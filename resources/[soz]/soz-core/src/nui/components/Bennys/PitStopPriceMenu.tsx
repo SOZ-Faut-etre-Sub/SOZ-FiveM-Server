@@ -3,13 +3,13 @@ import { VehicleCategory } from '@public/shared/vehicle/vehicle';
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
+import { JobLabel } from '../../../shared/job';
 import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';
 import { useGetPrice } from '../../hook/price';
 import { MainMenu, Menu, MenuContent, MenuItemButton, MenuTitle } from '../Styleguide/Menu';
 
 export const PitStopPriceMenu: FunctionComponent = () => {
-    const banner = 'https://nui-img/soz/menu_job_bennys';
     const [prices, setPrices] = useState<Record<string, number>>(null);
     const getPrice = useGetPrice();
 
@@ -32,8 +32,8 @@ export const PitStopPriceMenu: FunctionComponent = () => {
     return (
         <Menu type={MenuType.PitStopPriceMenu}>
             <MainMenu>
-                <MenuTitle banner={banner}>Gestion des Prix du Pit Stop</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={JobLabel.bennys} />
+                <MenuContent subtitle="Gestion des Prix du Pit Stop">
                     {Object.entries(prices)
                         .sort((a, b) => a[0].localeCompare(b[0]))
                         .map(([category, price]) => {

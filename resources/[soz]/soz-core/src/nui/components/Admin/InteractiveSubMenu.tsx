@@ -1,3 +1,4 @@
+import { SozRole } from '@core/permissions';
 import { FunctionComponent } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
@@ -12,7 +13,7 @@ import {
 } from '../Styleguide/Menu';
 
 export type InteractiveSubMenuProps = {
-    banner: string;
+    permission: SozRole;
     state: {
         displayOwners: boolean;
         displayDebugSurface: boolean;
@@ -21,11 +22,11 @@ export type InteractiveSubMenuProps = {
     };
 };
 
-export const InteractiveSubMenu: FunctionComponent<InteractiveSubMenuProps> = ({ banner, state }) => {
+export const InteractiveSubMenu: FunctionComponent<InteractiveSubMenuProps> = ({ permission, state }) => {
     return (
         <SubMenu id="interactive">
-            <MenuTitle banner={banner}>Des options à la carte</MenuTitle>
-            <MenuContent>
+            <MenuTitle title={permission} />
+            <MenuContent subtitle="Des options à la carte">
                 <MenuItemCheckbox
                     checked={state.displayOwners}
                     onChange={async value => {

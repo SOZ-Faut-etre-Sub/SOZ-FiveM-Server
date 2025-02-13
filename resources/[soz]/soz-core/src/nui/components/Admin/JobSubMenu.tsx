@@ -1,3 +1,4 @@
+import { SozRole } from '@core/permissions';
 import { useJobGrades } from '@public/nui/hook/job';
 import { NuiEvent } from '@public/shared/event';
 import { JobType } from '@public/shared/job';
@@ -16,10 +17,10 @@ import {
 } from '../Styleguide/Menu';
 
 export type JobSubMenuProps = {
-    banner: string;
+    permission: SozRole;
 };
 
-export const JobSubMenu: FunctionComponent<JobSubMenuProps> = ({ banner }) => {
+export const JobSubMenu: FunctionComponent<JobSubMenuProps> = ({ permission }) => {
     const player = usePlayer();
     const jobGrades = useJobGrades();
 
@@ -32,8 +33,8 @@ export const JobSubMenu: FunctionComponent<JobSubMenuProps> = ({ banner }) => {
 
     return (
         <SubMenu id="job">
-            <MenuTitle banner={banner}>Pour se construire un avenir</MenuTitle>
-            <MenuContent>
+            <MenuTitle title={permission} />
+            <MenuContent subtitle="Pour se construire un avenir">
                 <MenuItemSelect
                     title="Changer de métier"
                     value={player.job.id}

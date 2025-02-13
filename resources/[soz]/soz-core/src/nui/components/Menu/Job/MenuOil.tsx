@@ -4,6 +4,7 @@ import { NuiEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
 import { FunctionComponent } from 'react';
 
+import { JobLabel } from '../../../../shared/job';
 import { MenuOilData } from '../../../../shared/job/oil';
 import { MainMenu, Menu, MenuContent, MenuItemCheckbox, MenuItemText, MenuTitle } from '../../Styleguide/Menu';
 
@@ -12,7 +13,6 @@ type MenuOilProps = {
 };
 
 export const MenuOil: FunctionComponent<MenuOilProps> = ({ data }) => {
-    const banner = 'https://nui-img/soz/menu_job_oil';
     const player = usePlayer();
 
     if (!data || !player) {
@@ -23,7 +23,7 @@ export const MenuOil: FunctionComponent<MenuOilProps> = ({ data }) => {
         return (
             <Menu type={MenuType.JobOil}>
                 <MainMenu>
-                    <MenuTitle banner={banner}>Services MTP</MenuTitle>
+                    <MenuTitle title={JobLabel.oil} />
                     <MenuContent>
                         <MenuItemText>Vous n'êtes pas en service.</MenuItemText>
                     </MenuContent>
@@ -35,7 +35,7 @@ export const MenuOil: FunctionComponent<MenuOilProps> = ({ data }) => {
     return (
         <Menu type={MenuType.JobOil}>
             <MainMenu>
-                <MenuTitle banner={banner}>Services MTP</MenuTitle>
+                <MenuTitle title={JobLabel.oil} />
                 <MenuContent>
                     <MenuItemCheckbox
                         checked={data.showOilFields}

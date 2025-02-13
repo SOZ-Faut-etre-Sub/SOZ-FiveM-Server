@@ -16,12 +16,11 @@ import {
 } from '../Styleguide/Menu';
 
 export type GameMasterSubMenuProps = {
-    banner: string;
     permission: SozRole;
     state: GameMasterSubMenuState;
 };
 
-export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({ banner, permission, state }) => {
+export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({ permission, state }) => {
     const isAdmin = permission === 'admin';
     const isAdminOrStaff = isAdmin || permission === 'staff';
     const isAdminOrStaffOrGM = isAdminOrStaff || permission === 'gamemaster';
@@ -33,8 +32,8 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({ b
 
     return (
         <SubMenu id="game_master">
-            <MenuTitle banner={banner}>Dieu ? C'est toi ?</MenuTitle>
-            <MenuContent>
+            <MenuTitle title={permission} />
+            <MenuContent subtitle="Dieu ? C'est toi ?">
                 <MenuItemSelect
                     title="💰 Se donner de l'argent propre"
                     disabled={!isAdmin}

@@ -6,6 +6,7 @@ import { FunctionComponent, useEffect, useMemo, useState } from 'react';
 
 import { RGBColor } from '../../../shared/color';
 import { NuiEvent } from '../../../shared/event';
+import { JobLabel } from '../../../shared/job';
 import { MenuType } from '../../../shared/nui/menu';
 import {
     getVehicleCustomPrice,
@@ -332,9 +333,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
     const [options, setOptions] = useState<VehicleUpgradeOptions | null>(null);
     const item = useItem('veh_strip_piece_std');
     const crimi = ![LSCustomMode.Admin, LSCustomMode.LsCustom, LSCustomMode.NewGahray].includes(data.mode);
-    const banner = crimi
-        ? 'https://soz.zerator.com/static/game/images/banner/menu_vehbiz_customs.webp'
-        : 'https://nui-img/soz/menu_job_bennys';
+    const menuTitle = crimi ? 'Customisations' : JobLabel.bennys;
 
     useEffect(() => {
         if (data?.currentConfiguration) {
@@ -397,8 +396,9 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
     return (
         <Menu type={MenuType.BennysUpgradeVehicle}>
             <MainMenu>
-                <MenuTitle banner={banner}>{crimi ? 'Customisations' : 'Couleur et aspects'}</MenuTitle>
+                <MenuTitle title={menuTitle} />
                 <MenuContent
+                    subtitle={crimi ? 'Customisations' : 'Couleur et aspects'}
                     helpPanel={
                         data.mode == LSCustomMode.CrimiCusto && (
                             <>
@@ -433,8 +433,8 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                 </MenuContent>
             </MainMenu>
             <SubMenu id="colors">
-                <MenuTitle banner={banner}>Couleur et aspects</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={menuTitle} />
+                <MenuContent subtitle="Couleur et aspects">
                     {options?.livery && (
                         <MenuItemSelect
                             onChange={(index, value) => {
@@ -514,8 +514,8 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                 </MenuContent>
             </SubMenu>
             <SubMenu id="body">
-                <MenuTitle banner={banner}>Carrosserie</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={menuTitle} />
+                <MenuContent subtitle="Carrosserie">
                     <MenuItemVehicleModification
                         initialConfig={data?.originalConfiguration}
                         modKey="spoiler"
@@ -639,8 +639,8 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                 </MenuContent>
             </SubMenu>
             <SubMenu id="wheel">
-                <MenuTitle banner={banner}>Roues</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={menuTitle} />
+                <MenuContent subtitle="Roues">
                     {Object.keys(options.wheelType).length > 1 && (
                         <MenuItemSelect
                             title="Type de roues"
@@ -716,8 +716,8 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                 </MenuContent>
             </SubMenu>
             <SubMenu id="exterior">
-                <MenuTitle banner={banner}>Exterieur</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={menuTitle} />
+                <MenuContent subtitle="Exterieur">
                     <MenuItemSelect
                         title="Style plaque d'immatriculation"
                         value={config?.plateStyle}
@@ -814,8 +814,8 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                 </MenuContent>
             </SubMenu>
             <SubMenu id="interior">
-                <MenuTitle banner={banner}>Intérieur</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={menuTitle} />
+                <MenuContent subtitle="Intérieur">
                     <MenuItemVehicleModification
                         initialConfig={data?.originalConfiguration}
                         modKey="horn"
@@ -891,8 +891,8 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                 </MenuContent>
             </SubMenu>
             <SubMenu id="light">
-                <MenuTitle banner={banner}>Lumières</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={menuTitle} />
+                <MenuContent subtitle="Lumières">
                     <MenuItemCheckbox
                         checked={config?.neon?.light[VehicleNeonLight.Front]}
                         onChange={value => {
@@ -1004,8 +1004,8 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                 </MenuContent>
             </SubMenu>
             <SubMenu id="extra">
-                <MenuTitle banner={banner}>Extras</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={menuTitle} />
+                <MenuContent subtitle="Extras">
                     {options.extra?.map((extra, index) => (
                         <MenuItemCheckbox
                             key={index}

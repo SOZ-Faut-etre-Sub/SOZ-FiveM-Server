@@ -1,6 +1,7 @@
 import { FunctionComponent } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
+import { JobLabel } from '../../../shared/job';
 import { MenuType } from '../../../shared/nui/menu';
 import { PlayerMetadata } from '../../../shared/player';
 import { fetchNui } from '../../fetch';
@@ -23,7 +24,7 @@ export const MenuSetHealthState: FunctionComponent<MenuSetHealthStateProps> = ({
     return (
         <Menu type={MenuType.SetHealthState}>
             <MainMenu>
-                <MenuTitle banner="https://nui-img/soz/menu_job_lsmc">Carnet de santé</MenuTitle>
+                <MenuTitle title={JobLabel.lsmc} />
                 <MenuContent>
                     <MenuItemButton onConfirm={createSetHealthBookField('health_book_health_level')}>
                         Définir l'état de santé

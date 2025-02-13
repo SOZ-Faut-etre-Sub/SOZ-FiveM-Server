@@ -133,7 +133,7 @@ export class AdminMenuMapperProvider {
         ],
     })
     public async toggleMapperMenu(): Promise<void> {
-        const [isAllowed] = await emitRpc<[boolean, string]>(RpcServerEvent.ADMIN_IS_ALLOWED);
+        const [isAllowed, permission] = await emitRpc<[boolean, string]>(RpcServerEvent.ADMIN_IS_ALLOWED);
         if (!isAllowed) {
             return;
         }
@@ -145,6 +145,7 @@ export class AdminMenuMapperProvider {
         }
 
         this.nuiMenu.openMenu(MenuType.AdminMapperMenu, {
+            permission: permission as SozRole,
             properties: this.housingRepository.get(),
             showInterior: this.showInteriorData,
             parties: this.senateRepository.get(),

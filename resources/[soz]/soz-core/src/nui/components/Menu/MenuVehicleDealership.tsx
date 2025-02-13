@@ -72,8 +72,8 @@ export const MenuVehicleDealership: FunctionComponent<MenuVehicleDealershipProps
     return (
         <Menu type={MenuType.VehicleDealership}>
             <MainMenu>
-                <MenuTitle banner="https://nui-img/soz/menu_shop_vehicle_car">Concessionaire</MenuTitle>
-                <MenuContent>
+                <MenuTitle title="Véhicule" />
+                <MenuContent subtitle="Concessionaire">
                     {sortedCategories.length > 1 &&
                         sortedCategories.map((category, index) => {
                             return (
@@ -91,8 +91,8 @@ export const MenuVehicleDealership: FunctionComponent<MenuVehicleDealershipProps
                 sortedCategories.map((category, index) => {
                     return (
                         <SubMenu id={`category_${index}`} key={index}>
-                            <MenuTitle banner="https://nui-img/soz/menu_shop_vehicle_car">{category.name}</MenuTitle>
-                            <MenuContent>
+                            <MenuTitle title="Véhicule" />
+                            <MenuContent subtitle={category.name}>
                                 <MenuVehicleList
                                     vehicles={category.vehicles}
                                     onChange={onChange}

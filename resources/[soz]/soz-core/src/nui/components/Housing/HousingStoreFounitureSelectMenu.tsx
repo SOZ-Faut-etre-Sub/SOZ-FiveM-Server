@@ -18,7 +18,7 @@ export const HousingStoreFounitureSelectMenu: FunctionComponent<HousingStoreFoun
     return (
         <Menu type={MenuType.HousingStoreFounitureSelectMenu}>
             <MainMenu>
-                <MenuTitle banner="https://nui-img/soz/menu_habitation"></MenuTitle>
+                <MenuTitle title="Habitation" />
                 <MenuContent>
                     {data.apartments.map(apartment => {
                         return (

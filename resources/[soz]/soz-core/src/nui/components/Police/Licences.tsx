@@ -22,21 +22,19 @@ type LicencesStateProps = {
 };
 
 export const LicencesMenu: FunctionComponent<LicencesStateProps> = ({ data }) => {
-    const banner = `https://nui-img/soz/menu_job_${data.job}`;
-
     return (
         <Menu type={MenuType.PoliceJobLicences}>
             <MainMenu>
-                <MenuTitle banner={banner}>L'ordre et la justice !</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={data.job} />
+                <MenuContent subtitle="L'ordre et la justice !">
                     <MenuItemSubMenuLink id="removePoints">Retirer des points sur un permis</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="removePermis">Retirer complètement un permis</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="addPermis">Attribuer un permis</MenuItemSubMenuLink>
                 </MenuContent>
             </MainMenu>
             <SubMenu id="removePoints">
-                <MenuTitle banner={banner}>Retirer des points</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={data.job} />
+                <MenuContent subtitle="Retirer des points">
                     {Object.keys(data.playerLicences).map(licence => {
                         const value = data.playerLicences[licence];
                         const label = PlayerLicenceLabels[licence];
@@ -83,8 +81,8 @@ export const LicencesMenu: FunctionComponent<LicencesStateProps> = ({ data }) =>
                 </MenuContent>
             </SubMenu>
             <SubMenu id="removePermis">
-                <MenuTitle banner={banner}>Retirer complètement un permis</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={data.job} />
+                <MenuContent subtitle="Retirer complètement un permis">
                     {Object.keys(data.playerLicences).map(licence => {
                         const value = data.playerLicences[licence];
                         const label = PlayerLicenceLabels[licence];
@@ -122,8 +120,8 @@ export const LicencesMenu: FunctionComponent<LicencesStateProps> = ({ data }) =>
                 </MenuContent>
             </SubMenu>
             <SubMenu id="addPermis">
-                <MenuTitle banner={banner}>Attribuer un permis</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={data.job} />
+                <MenuContent subtitle="Attribuer un permis">
                     {Object.keys(data.playerLicences).map(licence => {
                         const value = data.playerLicences[licence];
                         const label = PlayerLicenceLabels[licence];

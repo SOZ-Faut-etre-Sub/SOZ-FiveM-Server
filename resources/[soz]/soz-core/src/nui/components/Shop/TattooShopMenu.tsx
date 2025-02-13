@@ -37,7 +37,7 @@ export const TattooShopMenu: FunctionComponent<MenuTattooShopStateProps> = ({ da
     return (
         <Menu type={MenuType.TattooShop}>
             <MainMenu>
-                <MenuTitle banner={config.banner}> Tatoueur </MenuTitle>
+                <MenuTitle title={config.label} />
                 <MenuContent>
                     <MenuItemButton
                         onConfirm={async () => {
@@ -62,8 +62,8 @@ export const TattooShopMenu: FunctionComponent<MenuTattooShopStateProps> = ({ da
             </MainMenu>
             {Object.keys(data.categories).map(category => (
                 <SubMenu key={category} id={category}>
-                    <MenuTitle banner={config.banner}> {data.categories[category].label} </MenuTitle>
-                    <MenuContent>
+                    <MenuTitle title={config.label} />
+                    <MenuContent subtitle={data.categories[category].label}>
                         {Object.values(data.products)
                             .filter(product => product.Zone === category)
                             .map((product, id) => (

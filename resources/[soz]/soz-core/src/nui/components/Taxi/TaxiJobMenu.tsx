@@ -4,20 +4,20 @@ import { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux';
 
 import { NuiEvent } from '../../../shared/event';
+import { JobLabel } from '../../../shared/job';
 import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';
 import { MainMenu, Menu, MenuContent, MenuItemButton, MenuItemText, MenuTitle } from '../Styleguide/Menu';
 
 export const TaxiJobMenu: FunctionComponent = () => {
     const status = useSelector((state: RootState) => state.taxi);
-    const banner = 'https://nui-img/soz/menu_job_taxi';
     const player = usePlayer();
 
     if (!player.job.onduty) {
         return (
             <Menu type={MenuType.TaxiJobMenu}>
                 <MainMenu>
-                    <MenuTitle banner={banner}></MenuTitle>
+                    <MenuTitle title={JobLabel.taxi} />
                     <MenuContent>
                         <MenuItemText>Vous n'êtes pas en service.</MenuItemText>
                     </MenuContent>
@@ -29,7 +29,7 @@ export const TaxiJobMenu: FunctionComponent = () => {
     return (
         <Menu type={MenuType.TaxiJobMenu}>
             <MainMenu>
-                <MenuTitle banner={banner}></MenuTitle>
+                <MenuTitle title={JobLabel.taxi} />
                 <MenuContent>
                     {status.horodateurDisplayed ? (
                         <MenuItemButton

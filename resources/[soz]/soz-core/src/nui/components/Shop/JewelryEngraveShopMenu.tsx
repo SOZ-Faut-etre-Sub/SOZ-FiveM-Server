@@ -17,7 +17,6 @@ type MenuJewelryEngraveShopProps = {
 };
 
 export const JewelryEngraveShopMenu: FunctionComponent<MenuJewelryEngraveShopProps> = ({ data }) => {
-    const banner = 'https://nui-img/soz/menu_shop_jewelry';
     const getPrice = useGetPrice();
 
     if (!data || !data.engravableItems?.length) {
@@ -27,8 +26,8 @@ export const JewelryEngraveShopMenu: FunctionComponent<MenuJewelryEngraveShopPro
     return (
         <Menu type={MenuType.JewelryEngraveShop}>
             <MainMenu>
-                <MenuTitle banner={banner}> Bijoutier - Service de gravure</MenuTitle>
-                <MenuContent>
+                <MenuTitle title="Bijouterie" />
+                <MenuContent subtitle="Service de gravure">
                     {data.engravableItems.map(({ inventoryItem, item }) => (
                         <MenuItemButton
                             onConfirm={async () => {

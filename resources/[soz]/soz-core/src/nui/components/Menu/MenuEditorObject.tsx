@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { ObjectEffects } from '../../../shared/animation';
 import { NuiEvent } from '../../../shared/event/nui';
-import { JobType } from '../../../shared/job';
+import { JobLabel, JobType } from '../../../shared/job';
 import { MenuType } from '../../../shared/nui/menu';
 import { EditorMenuData } from '../../../shared/object';
 import { fetchNui } from '../../fetch';
@@ -16,6 +16,7 @@ import {
     MenuItemSelect,
     MenuItemSelectOption,
     MenuItemText,
+    MenuSubTitle,
     MenuTitle,
 } from '../Styleguide/Menu';
 
@@ -31,19 +32,19 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
         return null;
     }
 
-    let banner = 'https://soz.zerator.com/static/game/images/banner/soz_hammer.webp';
+    let menuTitle = 'Hammer';
 
     if (data.context === 'admin') {
-        banner = 'https://nui-img/soz/menu_mapper';
+        menuTitle = 'Maper';
     } else if (data.context === JobType.Gouv) {
-        banner = 'https://nui-img/soz/menu_job_gouv';
+        menuTitle = JobLabel.gouv;
     }
 
     return (
         <Menu type={MenuType.ObjectEditor}>
             <MainMenu>
-                <MenuTitle banner={banner}>Edition d'objet</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={menuTitle} />
+                <MenuContent subtitle="Edition d'objet">
                     <MenuItemButton
                         onConfirm={() => {
                             fetchNui(NuiEvent.ObjectEditorSave);
@@ -151,7 +152,7 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
                     >
                         🔄 Réinitialiser tout
                     </MenuItemButton>
-                    <MenuTitle>Contrôle du mode editeur</MenuTitle>
+                    <MenuSubTitle>Contrôle du mode editeur</MenuSubTitle>
                     <MenuItemText> Mode Translation : T</MenuItemText>
                     <MenuItemText> Mode Rotation : R</MenuItemText>
                     {collision && <MenuItemText> Scale impossible si collision activé</MenuItemText>}

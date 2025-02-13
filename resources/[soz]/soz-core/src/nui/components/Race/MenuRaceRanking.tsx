@@ -24,7 +24,6 @@ function getDurationStr(ms: number) {
 
 export const MenuRaceRank: FunctionComponent<MenuRaceRankingProps> = ({ data }) => {
     const [ranks, setRanks] = useState<RaceRankingInfo>({ ranks: [], max: 0 });
-    const banner = 'https://soz.zerator.com/static/game/images/banner/MenuRaceRank.webp';
 
     const fetch = useCallback(() => {
         fetchNui<any, RaceRankingInfo>(NuiEvent.RaceGetRanking, data.id).then(values => setRanks(values));
@@ -37,8 +36,8 @@ export const MenuRaceRank: FunctionComponent<MenuRaceRankingProps> = ({ data }) 
     return (
         <Menu type={MenuType.RaceRank}>
             <MainMenu>
-                <MenuTitle banner={banner}>{data.name}</MenuTitle>
-                <MenuContent>
+                <MenuTitle title="Course" />
+                <MenuContent subtitle={data.name}>
                     {ranks.ranks.map((rank, indexRank) => {
                         return (
                             <MenuItemButton key={'race_rank_' + indexRank}>

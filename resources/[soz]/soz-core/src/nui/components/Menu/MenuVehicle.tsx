@@ -84,7 +84,7 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
     return (
         <Menu type={MenuType.Vehicle}>
             <MainMenu>
-                <MenuTitle banner="https://nui-img/soz/menu_vehicle">Gestion véhicule</MenuTitle>
+                <MenuTitle title="Véhicule" />
                 <MenuContent>
                     {data.isDriver && (
                         <MenuItemCheckbox onChange={onVehicleEngineChange} checked={data.engineOn}>
@@ -156,8 +156,8 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
                 </MenuContent>
             </MainMenu>
             <SubMenu id="door">
-                <MenuTitle banner="https://nui-img/soz/menu_vehicle">Gestion des portes</MenuTitle>
-                <MenuContent>
+                <MenuTitle title="Véhicule" />
+                <MenuContent subtitle="Gestion des portes">
                     {Object.entries(data.doorStatus).map(([door, status]) => {
                         return (
                             <MenuItemCheckbox

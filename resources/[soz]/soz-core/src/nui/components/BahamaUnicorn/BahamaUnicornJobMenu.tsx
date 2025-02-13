@@ -3,6 +3,7 @@ import { CraftCategory, CraftRecipe } from '@public/shared/craft/craft';
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
+import { JobLabel } from '../../../shared/job';
 import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';
 import { CraftInputs } from '../Shared/CraftInputs';
@@ -33,7 +34,6 @@ type BahamaUnicornStateProps = {
 };
 
 export const BahamaUnicornJobMenu: FunctionComponent<BahamaUnicornStateProps> = ({ data }) => {
-    const banner = 'https://nui-img/soz/menu_job_baun';
     const [state, setState] = useState(null);
     const [currentRecipe, setCurrentRecipe] = useState<CraftRecipe>();
     const items = useItems();
@@ -58,7 +58,7 @@ export const BahamaUnicornJobMenu: FunctionComponent<BahamaUnicornStateProps> = 
         return (
             <Menu type={MenuType.BahamaUnicornJobMenu}>
                 <MainMenu>
-                    <MenuTitle banner={banner}></MenuTitle>
+                    <MenuTitle title={JobLabel.baun} />
                     <MenuContent>
                         <MenuItemText>Vous n'êtes pas en service.</MenuItemText>
                     </MenuContent>
@@ -70,7 +70,7 @@ export const BahamaUnicornJobMenu: FunctionComponent<BahamaUnicornStateProps> = 
     return (
         <Menu type={MenuType.BahamaUnicornJobMenu}>
             <MainMenu>
-                <MenuTitle banner={banner}></MenuTitle>
+                <MenuTitle title={JobLabel.baun} />
                 <MenuContent>
                     {Object.keys(data.recipes).map(category => (
                         <MenuItemSubMenuLink
@@ -112,8 +112,8 @@ export const BahamaUnicornJobMenu: FunctionComponent<BahamaUnicornStateProps> = 
             </MainMenu>
             {Object.entries(data.recipes).map(([name, category]) => (
                 <SubMenu id={`recipe_${name}`}>
-                    <MenuTitle banner={banner}>{`Livre de recettes ${name}`}</MenuTitle>
-                    <MenuContent>
+                    <MenuTitle title={JobLabel.baun} />
+                    <MenuContent subtitle={`Livre de recettes ${name}`}>
                         <MenuItemSelect title="" titleWidth={0}>
                             {Object.entries(category.recipes).map(([output, recipe]) => (
                                 <MenuItemSelectOption

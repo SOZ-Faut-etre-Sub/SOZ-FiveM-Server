@@ -14,6 +14,7 @@ interface GlassMorphismContainerProps extends HTMLAttributes<any>, PropsWithChil
     rounded?: number;
     circle?: boolean;
     duration?: string;
+    overflowHidden?: boolean;
 }
 
 export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerProps> = ({
@@ -29,6 +30,7 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
     rounded,
     circle,
     duration = 'duration-1000',
+    overflowHidden = true,
 }) => {
     const { glassmorphismColors } = useHudColor();
     const childrenRef = useRef<HTMLDivElement>(null);
@@ -44,7 +46,11 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
     }, [glassmorphismColors, borderColor]);
 
     return (
-        <div className={cn('relative bg-opacity-10 h-full w-full overflow-hidden group z-10', borderClassName)}>
+        <div
+            className={cn('relative bg-opacity-10 h-full w-full group z-10', borderClassName, {
+                'overflow-hidden': overflowHidden,
+            })}
+        >
             <GameCanvasBox
                 borderClassName={borderClassName}
                 disableGameClone={disableGameClone}

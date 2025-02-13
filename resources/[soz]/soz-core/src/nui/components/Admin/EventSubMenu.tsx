@@ -1,3 +1,4 @@
+import { SozRole } from '@core/permissions';
 import { SubMenuScene } from '@public/nui/components/Menu/SubMenuScene';
 import { fetchNui } from '@public/nui/fetch';
 import { useItems } from '@public/nui/hook/data';
@@ -13,16 +14,17 @@ import {
     MenuItemSelect,
     MenuItemSelectOption,
     MenuItemSubMenuLink,
+    MenuSubTitle,
     MenuTitle,
     SubMenu,
 } from '../Styleguide/Menu';
 
 export type EventSubMenuProps = {
-    banner: string;
+    permission: SozRole;
     event: EventInfo;
 };
 
-export const EventSubMenu: FunctionComponent<EventSubMenuProps> = ({ banner, event }) => {
+export const EventSubMenu: FunctionComponent<EventSubMenuProps> = ({ permission, event }) => {
     const [eventInfo, setEventInfo] = useState<EventInfo>(event);
     const events = useRepository(RepositoryType.WorldEvent);
     const scenes = useRepository(RepositoryType.Scene);
@@ -38,16 +40,16 @@ export const EventSubMenu: FunctionComponent<EventSubMenuProps> = ({ banner, eve
     return (
         <>
             <SubMenu id="event">
-                <MenuTitle banner={banner}>Evenements HC</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={permission} />
+                <MenuContent subtitle="Évènements HC">
                     <MenuItemButton onConfirm={() => fetchNui(NuiEvent.AdminMenuEventCreate)}>
-                        📅 Ajouter un nouveau evenement
+                        📅 Ajouter un nouveau évènement
                     </MenuItemButton>
                     {currentEvent && currentScene && (
                         <MenuItemButton
                             description={
                                 <div>
-                                    <div>Evenement: {currentEvent.name}</div>
+                                    <div>Évènement: {currentEvent.name}</div>
                                     <div>Scène: {currentScene.name}</div>
                                 </div>
                             }
@@ -62,7 +64,7 @@ export const EventSubMenu: FunctionComponent<EventSubMenuProps> = ({ banner, eve
                                 });
                             }}
                         >
-                            🔴 Arreter evenement en cours
+                            🔴 Arreter évènement en cours
                         </MenuItemButton>
                     )}
                     {Object.values(events).map(event => (
@@ -75,8 +77,8 @@ export const EventSubMenu: FunctionComponent<EventSubMenuProps> = ({ banner, eve
             {Object.values(events).map(event => (
                 <Fragment key={event.id}>
                     <SubMenu id={`event-${event.id}`}>
-                        <MenuTitle banner={banner}>Evenement {event.name}</MenuTitle>
-                        <MenuContent>
+                        <MenuTitle title={permission} />
+                        <MenuContent subtitle={`Évènement ${event.name}`}>
                             <MenuItemButton
                                 onConfirm={() => fetchNui(NuiEvent.AdminMenuEventAddReward, { eventId: event.id })}
                             >
@@ -115,16 +117,16 @@ export const EventSubMenu: FunctionComponent<EventSubMenuProps> = ({ banner, eve
                             >
                                 ❌ Supprimer
                             </MenuItemButton>
-                            <MenuTitle>Récompenses</MenuTitle>
+                            <MenuSubTitle>Récompenses</MenuSubTitle>
                             {[
                                 ...new Set(
                                     event.reward.map(reward => items.find(item => item.name === reward.item).type)
                                 ),
                             ].map(type => (
                                 <div key={`reward_${type}`}>
-                                    <MenuTitle>
+                                    <MenuSubTitle>
                                         <span className="font-normal lowercase">{type}</span>
-                                    </MenuTitle>
+                                    </MenuSubTitle>
 
                                     {event.reward
                                         .map((elem, index) => ({ ...elem, index }))
@@ -187,7 +189,7 @@ export const EventSubMenu: FunctionComponent<EventSubMenuProps> = ({ banner, eve
                                         ))}
                                 </div>
                             ))}
-                            <MenuTitle>Scènes</MenuTitle>
+                            <MenuSubTitle>Scènes</MenuSubTitle>
                             {Object.values(scenes)
                                 .filter(scene => scene.worldEventId === event.id)
                                 .map(scene => (

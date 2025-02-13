@@ -20,6 +20,7 @@ import {
     MenuItemSelectOption,
     MenuItemSubMenuLink,
     MenuItemText,
+    MenuSubTitle,
     MenuTitle,
     SubMenu,
 } from '../Styleguide/Menu';
@@ -29,7 +30,6 @@ type MenuPropPlacementProps = {
 };
 
 export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ data }) => {
-    const banner = 'https://soz.zerator.com/static/game/images/banner/soz_hammer.webp';
     const player = usePlayer();
     const [collectionList, setCollectionList] = useState<PropCollectionData[]>(data.collections);
     const [serverData, setServerData] = useState<PropServerData>(data.serverData);
@@ -105,11 +105,8 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
     return (
         <Menu type={MenuType.PropPlacementMenu}>
             <MainMenu>
-                <MenuTitle banner={banner}></MenuTitle>
-                <MenuContent>
-                    <MenuTitle>
-                        Serveur : {serverData.loaded}/{serverData.total}
-                    </MenuTitle>
+                <MenuTitle title="Hammer" />
+                <MenuContent subtitle={`Serveur : ${serverData.loaded}/${serverData.total}`}>
                     <MenuItemButton
                         onConfirm={async () => {
                             await fetchNui(NuiEvent.RequestCreatePropCollection);
@@ -117,7 +114,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                     >
                         ➕ Créer une Collection
                     </MenuItemButton>
-                    <MenuTitle>Collections</MenuTitle>
+                    <MenuSubTitle>Collections</MenuSubTitle>
                     {['staff', 'admin'].includes(player.role) && (
                         <MenuItemCheckbox
                             checked={showAll}
@@ -155,19 +152,19 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
             </MainMenu>
 
             <SubMenu id="collection">
-                <MenuTitle banner={banner}>Collection : {collection.name}</MenuTitle>
-                <MenuContent>
-                    <MenuTitle>
-                        Props chargés : {collection.loaded_size} / {collection.size}
-                    </MenuTitle>
-                    <MenuTitle>
+                <MenuTitle title="Hammer" />
+                <MenuContent subtitle={`Collection : ${collection.name}`}>
+                    <MenuSubTitle>
+                        Props chargés : ${collection.loaded_size} / ${collection.size}
+                    </MenuSubTitle>
+                    <MenuSubTitle>
                         Etat :{' '}
                         {collection.loaded_size == 0
                             ? '🔴 Déchargée'
                             : collection.loaded_size < collection.size
                               ? '🔵 Partiellement chargée'
                               : '🟢 Complètement chargée'}
-                    </MenuTitle>
+                    </MenuSubTitle>
                     <MenuItemSubMenuLink id={`collection/props`}>
                         📝 Voir la liste des props de la collection
                     </MenuItemSubMenuLink>
@@ -235,8 +232,8 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                 </MenuContent>
             </SubMenu>
             <SubMenu id="collection/props">
-                <MenuTitle banner={banner}>Props de la collection : {collection.name}</MenuTitle>
-                <MenuContent>
+                <MenuTitle title="Hammer" />
+                <MenuContent subtitle={`Props de la collection : ${collection.name}`}>
                     <MenuItemCheckbox
                         checked={false}
                         onChange={async value => {
@@ -295,8 +292,8 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
             </SubMenu>
 
             <SubMenu id="collection/prop_choose">
-                <MenuTitle banner={banner}>Choisir un prop</MenuTitle>
-                <MenuContent>
+                <MenuTitle title="Hammer" />
+                <MenuContent subtitle="Choisir un prop">
                     <MenuItemButton onConfirm={onChooseCreateProp(null)}>🔎 Entrer un modèle</MenuItemButton>
                     <MenuItemSubMenuLink id={`collection/prop_search`}>🔎 Rechercher un prop</MenuItemSubMenuLink>
                     <MenuItemCheckbox
@@ -308,7 +305,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                     >
                         Pipette
                     </MenuItemCheckbox>
-                    <MenuTitle>Liste de props</MenuTitle>
+                    <MenuSubTitle>Liste de props</MenuSubTitle>
                     {Object.keys(data.props)
                         .sort((a, b) => a.localeCompare(b))
                         .map(propCategory => (
@@ -320,8 +317,8 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
             </SubMenu>
 
             <SubMenu id="collection/prop_search">
-                <MenuTitle banner={banner}>Rechercher un prop</MenuTitle>
-                <MenuContent>
+                <MenuTitle title="Hammer" />
+                <MenuContent subtitle="Rechercher un prop">
                     <MenuItemButton
                         onConfirm={async () => {
                             await fetchNui(NuiEvent.SearchProp);
@@ -329,7 +326,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                     >
                         🔎: {currentSearch || 'Entrer un modèle'}
                     </MenuItemButton>
-                    <MenuTitle>Resultats</MenuTitle>
+                    <MenuSubTitle>Resultats</MenuSubTitle>
                     {currentSearch &&
                         Object.keys(data.props).map(propCategory =>
                             data.props[propCategory]
@@ -350,8 +347,8 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
 
             {Object.keys(data.props).map(propCategory => (
                 <SubMenu key={propCategory} id={`collection/prop_choose/${propCategory}`}>
-                    <MenuTitle banner={banner}>{propCategory}</MenuTitle>
-                    <MenuContent>
+                    <MenuTitle title="Hammer" />
+                    <MenuContent subtitle={propCategory}>
                         {data.props[propCategory]
                             .sort((a, b) => a.label.localeCompare(b.label))
                             .map(prop => (
@@ -368,8 +365,8 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
             ))}
 
             <SubMenu id="editor">
-                <MenuTitle banner={banner}>Mode Editeur</MenuTitle>
-                <MenuContent>
+                <MenuTitle title="Hammer" />
+                <MenuContent subtitle="Mode Editeur">
                     <MenuItemButton
                         onConfirm={async () => {
                             const result: Result<any, never> = await fetchNui(NuiEvent.ValidatePlacement);
@@ -436,7 +433,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                     >
                         🔄 Réinitialiser tout
                     </MenuItemButton>
-                    <MenuTitle>Contrôle du mode editeur</MenuTitle>
+                    <MenuSubTitle>Contrôle du mode editeur</MenuSubTitle>
                     <MenuItemText> Mode Translation : T</MenuItemText>
                     <MenuItemText> Mode Rotation : R</MenuItemText>
                     <MenuItemText> Mode Scale : S</MenuItemText>

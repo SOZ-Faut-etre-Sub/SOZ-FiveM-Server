@@ -14,6 +14,7 @@ import {
 } from '@public/shared/vehicle/vehicle';
 import { FunctionComponent, useState } from 'react';
 
+import { JobLabel } from '../../../shared/job';
 import {
     MainMenu,
     Menu,
@@ -32,11 +33,10 @@ export const VehicleOrderMenu: FunctionComponent<VehicleOrderMenuProps> = ({ dat
     const [orders, setOrders] = useState<VehicleOrder[]>([]);
     const vehicles = useRepository(RepositoryType.Vehicle);
     const player = usePlayer();
-    let banner = `https://nui-img/soz/menu_job_${player.job.id}`;
-    if (data.mode == VehicleOrderMode.Crimi) {
-        banner = 'https://soz.zerator.com/static/game/images/banner/menu_vehbiz_import.webp';
-    } else if (data.mode == VehicleOrderMode.Cartel) {
-        banner = 'https://soz.zerator.com/static/game/images/banner/menu_cartel_plane.webp';
+
+    let menuTitle = JobLabel[player.job.id];
+    if (data.mode == VehicleOrderMode.Crimi || data.mode == VehicleOrderMode.Cartel) {
+        menuTitle = 'Importation';
     }
 
     useState(() => {
@@ -54,8 +54,8 @@ export const VehicleOrderMenu: FunctionComponent<VehicleOrderMenuProps> = ({ dat
     return (
         <Menu type={MenuType.VehicleOrderMenu}>
             <MainMenu>
-                <MenuTitle banner={banner}>Gestion des commandes</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={menuTitle} />
+                <MenuContent subtitle="Gestion des commandes">
                     <MenuItemSubMenuLink id="order">➕ Commander un véhicule</MenuItemSubMenuLink>
                     {orders
                         .sort((a, b) => a.deliverDate - b.deliverDate)
@@ -78,8 +78,8 @@ export const VehicleOrderMenu: FunctionComponent<VehicleOrderMenuProps> = ({ dat
                 </MenuContent>
             </MainMenu>
             <SubMenu id="order">
-                <MenuTitle banner={banner}>Catalogue des véhicules</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={menuTitle} />
+                <MenuContent subtitle="Catalogue des véhicules">
                     {sortedCategories.map((category, index) => {
                         return (
                             <MenuItemSubMenuLink id={`category_${index}`} key={index}>
@@ -92,8 +92,8 @@ export const VehicleOrderMenu: FunctionComponent<VehicleOrderMenuProps> = ({ dat
             {sortedCategories.map((category, index) => {
                 return (
                     <SubMenu id={`category_${index}`} key={index}>
-                        <MenuTitle banner={banner}>{category}</MenuTitle>
-                        <MenuContent>
+                        <MenuTitle title={menuTitle} />
+                        <MenuContent subtitle={category}>
                             {sortedCatalog
                                 .filter(veh => veh.category == category)
                                 .map(vehicle => (

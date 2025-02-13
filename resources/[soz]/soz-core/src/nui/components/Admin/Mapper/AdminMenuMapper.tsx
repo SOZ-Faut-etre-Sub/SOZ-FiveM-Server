@@ -68,7 +68,7 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
     return (
         <Menu type={MenuType.AdminMapperMenu}>
             <MainMenu>
-                <MenuTitle banner="https://nui-img/soz/menu_mapper">Menu mapper</MenuTitle>
+                <MenuTitle title={data.permission} />
                 <MenuContent>
                     <MenuItemSubMenuLink id="objects">🚏 Gestion des objets</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="properties">🏠 Gestion des propriétés</MenuItemSubMenuLink>
@@ -88,8 +88,8 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                 </MenuContent>
             </MainMenu>
             <SubMenu id="objects">
-                <MenuTitle banner="https://nui-img/soz/menu_mapper">Un poteau, une borne, des poubelles !</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={data.permission} />
+                <MenuContent subtitle="Un poteau, une borne, des poubelles !">
                     <MenuItemSelect title={'🚏 Objet séléctionné'} onChange={(i, value) => setSelectedObject(value)}>
                         <MenuItemSelectOption value="soz_prop_bb_bin">Poubelle</MenuItemSelectOption>
                         <MenuItemSelectOption value="soz_prop_elec01">Borne civile</MenuItemSelectOption>
@@ -137,8 +137,8 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                 </MenuContent>
             </SubMenu>
             <SubMenu id="properties">
-                <MenuTitle banner="https://nui-img/soz/menu_mapper">Gestion des propriétés</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={data.permission} />
+                <MenuContent subtitle="Gestion des propriétés">
                     <MenuItemCheckbox
                         onChange={value => {
                             fetchNui(NuiEvent.AdminMenuMapperShowAllProperty, { show: value });
@@ -179,14 +179,14 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                 </MenuContent>
             </SubMenu>
             <SubMenu id="tools">
-                <MenuTitle banner="https://nui-img/soz/menu_mapper">Menu pour les mappeurs</MenuTitle>
-                <MenuContent></MenuContent>
+                <MenuTitle title={data.permission} />
+                <MenuContent subtitle="Menu pour les mappeurs"></MenuContent>
             </SubMenu>
             {sortedProperties.map(property => (
                 <Fragment key={property.id}>
                     <SubMenu id={`property_${property.identifier}`}>
-                        <MenuTitle banner="https://nui-img/soz/menu_mapper">Batiment : {property.identifier}</MenuTitle>
-                        <MenuContent>
+                        <MenuTitle title={data.permission} />
+                        <MenuContent subtitle={`Batiment : ${property.identifier}`}>
                             <ZoneHouseMenuSelect
                                 title="🚪 Zone entrée"
                                 type="entry"
@@ -267,8 +267,8 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                     </SubMenu>
                     {property.apartments.map(apartment => (
                         <SubMenu key={apartment.id} id={`apartment_${apartment.identifier}`}>
-                            <MenuTitle banner="https://nui-img/soz/menu_mapper">{apartment.label}</MenuTitle>
-                            <MenuContent>
+                            <MenuTitle title={data.permission} />
+                            <MenuContent subtitle={apartment.label}>
                                 <MenuItemButton
                                     onConfirm={async () => {
                                         const properties = await fetchNui<any, Property[]>(
@@ -503,10 +503,8 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                 </Fragment>
             ))}
             <SubMenu id="zones">
-                <MenuTitle banner="https://nui-img/soz/menu_mapper">
-                    Des zones, des zoneuh, oui mais des panzazones !
-                </MenuTitle>
-                <MenuContent>
+                <MenuTitle title={data.permission} />
+                <MenuContent subtitle="Des zones, des zoneuh, oui mais des panzazones !">
                     {Object.values(ZoneType).map(type => (
                         <MenuItemSubMenuLink key={'link_zones_' + type} id={'zones_' + type}>
                             {ZoneTypeLabel[type]}
@@ -516,8 +514,8 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
             </SubMenu>
             {Object.values(ZoneType).map(type => (
                 <SubMenu id={'zones_' + type} key={'zones_' + type}>
-                    <MenuTitle banner="https://nui-img/soz/menu_mapper">Zones {ZoneTypeLabel[type]}</MenuTitle>
-                    <MenuContent>
+                    <MenuTitle title={data.permission} />
+                    <MenuContent subtitle={`Zones ${ZoneTypeLabel[type]}`}>
                         <MenuItemSelect
                             title="Blips"
                             onConfirm={async (index, action) => {

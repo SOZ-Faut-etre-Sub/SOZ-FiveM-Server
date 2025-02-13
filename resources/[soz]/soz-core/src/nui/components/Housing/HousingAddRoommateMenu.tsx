@@ -18,7 +18,7 @@ export const HousingAddRoommateMenu: FunctionComponent<HousingAddRoommateMenuPro
     return (
         <Menu type={MenuType.HousingAddRoommateMenu}>
             <MainMenu>
-                <MenuTitle banner="https://nui-img/soz/menu_habitation"></MenuTitle>
+                <MenuTitle title="Habitation" />
                 <MenuContent>
                     {data.apartments.map(apartment => {
                         return (

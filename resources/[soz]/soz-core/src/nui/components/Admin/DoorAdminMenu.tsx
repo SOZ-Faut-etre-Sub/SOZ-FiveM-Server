@@ -18,6 +18,7 @@ import {
     MenuItemSelect,
     MenuItemSelectOption,
     MenuItemSubMenuLink,
+    MenuSubTitle,
     MenuTitle,
     SubMenu,
 } from '../Styleguide/Menu';
@@ -38,8 +39,8 @@ export const DoorGangSubMenu: FunctionComponent<DoorMenuStateProps> = ({ data })
 
     return (
         <SubMenu id="gang">
-            <MenuTitle banner="https://nui-img/soz/menu_mapper">Gestion de Porte - Gang</MenuTitle>
-            <MenuContent>
+            <MenuTitle title="Porte" />
+            <MenuContent subtitle="Gestion des gangs">
                 <MenuItemSelect
                     title="Ajouter"
                     onConfirm={async (index, gangId) => {
@@ -86,8 +87,8 @@ export const DoorJobSubMenu: FunctionComponent<DoorMenuStateProps> = ({ data }) 
 
     return (
         <SubMenu id="job">
-            <MenuTitle banner="https://nui-img/soz/menu_mapper">Gestion de Porte - Métier</MenuTitle>
-            <MenuContent>
+            <MenuTitle title="Porte" />
+            <MenuContent subtitle="Gestion des métiers">
                 <MenuItemSelect
                     title="Ajouter"
                     onConfirm={async (index, jobId) => {
@@ -134,8 +135,8 @@ export const DoorKeySubMenu: FunctionComponent<DoorMenuStateProps> = ({ data }) 
 
     return (
         <SubMenu id="key">
-            <MenuTitle banner="https://nui-img/soz/menu_mapper">Gestion de Porte - Clef</MenuTitle>
-            <MenuContent>
+            <MenuTitle title="Porte" />
+            <MenuContent subtitle="Gestion des clefs">
                 <MenuItemButton
                     onConfirm={async () => {
                         const inputData: AskInput = {
@@ -179,7 +180,7 @@ export const DoorAdminMenu: FunctionComponent<DoorMenuStateProps> = ({ data }) =
     return (
         <Menu type={MenuType.DoorAdmin}>
             <MainMenu>
-                <MenuTitle banner="https://nui-img/soz/menu_mapper">Gestion de Porte</MenuTitle>
+                <MenuTitle title="Porte" />
                 <MenuContent>
                     <MenuItemCheckbox
                         checked={door.lock}
@@ -214,7 +215,7 @@ export const DoorAdminMenu: FunctionComponent<DoorMenuStateProps> = ({ data }) =
                         Supprimer la porte
                     </MenuItemButton>
 
-                    <MenuTitle>Intéraction</MenuTitle>
+                    <MenuSubTitle>Intéraction</MenuSubTitle>
                     <MenuItemButton
                         onConfirm={async () => {
                             fetchNui(NuiEvent.AdminDoorSetTarget, { id: door.id, type: 'draw' });
@@ -236,7 +237,7 @@ export const DoorAdminMenu: FunctionComponent<DoorMenuStateProps> = ({ data }) =
                         </div>
                     </MenuItemButton>
 
-                    <MenuTitle>Permissions</MenuTitle>
+                    <MenuSubTitle>Permissions</MenuSubTitle>
                     <MenuItemSubMenuLink id="gang">Gang</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="job">Métier</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="key">Clef</MenuItemSubMenuLink>

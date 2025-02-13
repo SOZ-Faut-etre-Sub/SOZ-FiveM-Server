@@ -16,7 +16,6 @@ import {
 } from '../Styleguide/Menu';
 
 export type DeveloperSubMenuProps = {
-    banner: string;
     permission: SozRole;
     state: DeveloperSubMenuState;
 };
@@ -32,13 +31,13 @@ const notificationTypeOptions = [
     { label: 'Police', value: 'police' },
 ];
 
-export const DeveloperSubMenu: FunctionComponent<DeveloperSubMenuProps> = ({ banner, permission, state }) => {
+export const DeveloperSubMenu: FunctionComponent<DeveloperSubMenuProps> = ({ permission, state }) => {
     const isAdmin = permission === 'admin';
     const isAdminOrStaff = isAdmin || permission === 'staff';
     return (
         <SubMenu id="developer">
-            <MenuTitle banner={banner}>Si véloces ces développeurs</MenuTitle>
-            <MenuContent>
+            <MenuTitle title={permission} />
+            <MenuContent subtitle="Si véloces ces développeurs">
                 <MenuItemCheckbox
                     checked={state.noClip}
                     onChange={async () => {

@@ -1,3 +1,4 @@
+import { SozRole } from '@core/permissions';
 import { ClothCollectionSubMenuState, ClothingFields, CollectionInfo } from '@public/shared/cloth';
 import { FunctionComponent, useEffect, useState } from 'react';
 
@@ -6,10 +7,10 @@ import { fetchNui } from '../../fetch';
 import { MenuContent, MenuItemSelect, MenuItemSelectOption, MenuTitle, SubMenu } from '../Styleguide/Menu';
 
 export type ClothCollectionSubMenuProps = {
-    banner: string;
+    permission: SozRole;
 };
 
-export const ClothCollectionSubMenu: FunctionComponent<ClothCollectionSubMenuProps> = ({ banner }) => {
+export const ClothCollectionSubMenu: FunctionComponent<ClothCollectionSubMenuProps> = ({ permission }) => {
     const [data, setData] = useState<CollectionInfo>(null);
     const [state, setState] = useState<ClothCollectionSubMenuState>();
     const [defaults, setDefault] = useState<ClothCollectionSubMenuState[]>([]);
@@ -51,7 +52,7 @@ export const ClothCollectionSubMenu: FunctionComponent<ClothCollectionSubMenuPro
 
     return (
         <SubMenu id="player_style2">
-            <MenuTitle banner={banner}></MenuTitle>
+            <MenuTitle title={permission} />
             <MenuContent>
                 <MenuItemSelect
                     title="Type"

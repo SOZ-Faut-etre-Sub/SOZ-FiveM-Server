@@ -39,7 +39,6 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({
     const [shopCategories, setShopCategories] = useState<Record<number, ClothingShopCategory>>(shop_categories);
     const playerData = usePlayer();
 
-    const banner = BrandsConfig[brand]?.banner || 'https://nui-img/soz/menu_shop_clothe_normal';
     const shopName = BrandsConfig[brand]?.label || 'Magasin';
     const navigate = useNavigate();
     const location = useLocation();
@@ -132,7 +131,7 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({
     return (
         <Menu type={MenuType.ClothShop}>
             <MainMenu>
-                <MenuTitle banner={banner}>{shopName}</MenuTitle>
+                <MenuTitle title={shopName} />
                 <MenuContent>
                     <MenuItemCheckbox
                         onChange={check => {
@@ -156,8 +155,8 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({
             {Object.values(shopCategories).map(cat => {
                 return (
                     <SubMenu key={cat.id} id={String(cat.id)}>
-                        <MenuTitle banner={banner}>{cat.name}</MenuTitle>
-                        <MenuContent>
+                        <MenuTitle title={shopName} />
+                        <MenuContent subtitle={cat.name}>
                             {GetChildrenCategoriesNotEmpty(cat).map(childCat => (
                                 <MenuItemButton
                                     key={childCat.id}

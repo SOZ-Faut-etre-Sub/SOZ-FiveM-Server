@@ -4,6 +4,7 @@ import { NuiEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
 import { FunctionComponent } from 'react';
 
+import { JobLabel } from '../../../../shared/job';
 import { MenuPawlData } from '../../../../shared/nui/pawl';
 import { MainMenu, Menu, MenuContent, MenuItemCheckbox, MenuItemText, MenuTitle } from '../../Styleguide/Menu';
 
@@ -12,7 +13,6 @@ type MenuPawlProps = {
 };
 
 export const MenuPawl: FunctionComponent<MenuPawlProps> = ({ data }) => {
-    const banner = 'https://nui-img/soz/menu_job_pawl';
     const player = usePlayer();
 
     if (!data || !player) {
@@ -23,7 +23,7 @@ export const MenuPawl: FunctionComponent<MenuPawlProps> = ({ data }) => {
         return (
             <Menu type={MenuType.JobPawl}>
                 <MainMenu>
-                    <MenuTitle banner={banner}>Pipe And Wooden Leg</MenuTitle>
+                    <MenuTitle title={JobLabel.pawl} />
                     <MenuContent>
                         <MenuItemText>Vous n'êtes pas en service.</MenuItemText>
                     </MenuContent>
@@ -35,7 +35,7 @@ export const MenuPawl: FunctionComponent<MenuPawlProps> = ({ data }) => {
     return (
         <Menu type={MenuType.JobPawl}>
             <MainMenu>
-                <MenuTitle banner={banner}>Pipe And Wooden Leg</MenuTitle>
+                <MenuTitle title={JobLabel.pawl} />
                 <MenuContent>
                     <MenuItemCheckbox
                         checked={data.showFields}

@@ -25,13 +25,12 @@ import { RepositoryType } from '@public/shared/repository';
 import { FunctionComponent } from 'react';
 
 export const MenuRaceAdmin: FunctionComponent = () => {
-    const banner = 'https://nui-img/soz/menu_mapper';
     const races = Object.values(useRepository(RepositoryType.Race));
 
     return (
         <Menu type={MenuType.RaceAdmin}>
             <MainMenu>
-                <MenuTitle banner={banner}>Courses</MenuTitle>
+                <MenuTitle title="Courses" />
                 <MenuContent>
                     <MenuItemButton onConfirm={() => fetchNui(NuiEvent.RaceAdd)}>➕ Ajouter une course</MenuItemButton>
                     {races
@@ -57,13 +56,11 @@ type MenuRaceSubProps = {
 };
 
 export const RaceSubMenu: FunctionComponent<MenuRaceSubProps> = ({ data }) => {
-    const banner = 'https://nui-img/soz/menu_mapper';
-
     return (
         <>
             <SubMenu id={data.id.toString()}>
-                <MenuTitle banner={banner}>{data.name}</MenuTitle>
-                <MenuContent>
+                <MenuTitle title="Courses" />
+                <MenuContent subtitle={data.name}>
                     <MenuItemButton onConfirm={() => fetchNui(NuiEvent.RaceRename, data.id)}>
                         Renommer la course
                     </MenuItemButton>

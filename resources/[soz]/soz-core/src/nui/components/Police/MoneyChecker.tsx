@@ -11,13 +11,11 @@ type MoneycheckerStateProps = {
 };
 
 export const MoneyChecker: FunctionComponent<MoneycheckerStateProps> = ({ data }) => {
-    const banner = `https://nui-img/soz/menu_job_${data.job}`;
-
     return (
         <Menu type={MenuType.PoliceJobLicences}>
             <MainMenu>
-                <MenuTitle banner={banner}>L'ordre et la justice !</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={data.job} />
+                <MenuContent subtitle="L'ordre et la justice !">
                     <MenuItemText>
                         <div className="flex justify-between">
                             <div>Argent marqué</div>

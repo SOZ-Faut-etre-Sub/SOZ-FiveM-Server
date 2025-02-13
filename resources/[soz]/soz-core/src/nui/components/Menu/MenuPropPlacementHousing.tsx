@@ -10,6 +10,7 @@ import {
     MenuItemStringInput,
     MenuItemSubMenuLink,
     MenuItemText,
+    MenuSubTitle,
     MenuTitle,
     SubMenu,
 } from '@public/nui/components/Styleguide/Menu';
@@ -30,7 +31,6 @@ type MenuPropPlacementProps = {
 };
 
 export const MenuPropPlacementHousing: FunctionComponent<MenuPropPlacementProps> = ({ data }) => {
-    const banner = 'https://soz.zerator.com/static/game/images/banner/menu_housing.webp';
     const player = usePlayer();
     const navigate = useNavigate();
     const location = useLocation();
@@ -205,7 +205,7 @@ export const MenuPropPlacementHousing: FunctionComponent<MenuPropPlacementProps>
             childTextFocus={childTextFocus}
         >
             <MainMenu>
-                <MenuTitle banner={banner}></MenuTitle>
+                <MenuTitle title="Aménagement" />
                 <MenuContent helpPanel={HousingHelpPanel}>
                     <MenuItemSelect
                         title={
@@ -236,9 +236,9 @@ export const MenuPropPlacementHousing: FunctionComponent<MenuPropPlacementProps>
                         </MenuItemSelectOptionBox>
                     </MenuItemSelect>
                     {maxFourntiure && (
-                        <MenuTitle>
+                        <MenuSubTitle>
                             Meubles placés : {counter} / {maxFourntiure}
-                        </MenuTitle>
+                        </MenuSubTitle>
                     )}
                     <MenuItemSubMenuLink id={`collection/props`} disabled={Boolean(shell)}>
                         📝 Voir la liste des meubles placés
@@ -285,9 +285,9 @@ export const MenuPropPlacementHousing: FunctionComponent<MenuPropPlacementProps>
             </MainMenu>
 
             <SubMenu id="collection/props">
-                <MenuTitle banner={banner}>Choisir un type de meuble</MenuTitle>
-                <MenuContent helpPanel={HousingHelpPanel}>
-                    <MenuTitle>Type de meuble</MenuTitle>
+                <MenuTitle title="Aménagement" />
+                <MenuContent subtitle="Choisir un type de meuble" helpPanel={HousingHelpPanel}>
+                    <MenuSubTitle>Type de meuble</MenuSubTitle>
                     <MenuItemStringInput
                         setChildTextFocus={setChildTextFocus}
                         onChange={handleFilter}
@@ -312,8 +312,8 @@ export const MenuPropPlacementHousing: FunctionComponent<MenuPropPlacementProps>
 
             {Object.keys(placedFiltered).map(propCategory => (
                 <SubMenu id={`collection/props_${propCategory}`}>
-                    <MenuTitle banner={banner}>{`Choisir un ${propCategory}`}</MenuTitle>
-                    <MenuContent helpPanel={HousingHelpPanel}>
+                    <MenuTitle title="Aménagement" />
+                    <MenuContent subtitle={`Choisir un ${propCategory}`} helpPanel={HousingHelpPanel}>
                         <MenuItemStringInput
                             onSelected={onSelectedCreateProp()}
                             setChildTextFocus={setChildTextFocus}
@@ -361,9 +361,9 @@ export const MenuPropPlacementHousing: FunctionComponent<MenuPropPlacementProps>
             ))}
 
             <SubMenu id="collection/propchoose">
-                <MenuTitle banner={banner}>Choisir un type de meuble</MenuTitle>
-                <MenuContent helpPanel={HousingHelpPanel}>
-                    <MenuTitle>Type de meuble</MenuTitle>
+                <MenuTitle title="Aménagement" />
+                <MenuContent subtitle="Choisir un type de meuble" helpPanel={HousingHelpPanel}>
+                    <MenuSubTitle>Type de meuble</MenuSubTitle>
                     <MenuItemStringInput
                         setChildTextFocus={setChildTextFocus}
                         onChange={handleFilter}
@@ -388,8 +388,8 @@ export const MenuPropPlacementHousing: FunctionComponent<MenuPropPlacementProps>
 
             {Object.keys(notPlacedFiltered).map(propCategory => (
                 <SubMenu key={propCategory} id={`collection/propchoose_${propCategory}`}>
-                    <MenuTitle banner={banner}>{`Choisir un ${propCategory}`}</MenuTitle>
-                    <MenuContent helpPanel={HousingHelpPanel}>
+                    <MenuTitle title="Aménagement" />
+                    <MenuContent subtitle={`Choisir un ${propCategory}`} helpPanel={HousingHelpPanel}>
                         <MenuItemStringInput
                             onSelected={onSelectedCreateProp()}
                             setChildTextFocus={setChildTextFocus}
@@ -418,8 +418,8 @@ export const MenuPropPlacementHousing: FunctionComponent<MenuPropPlacementProps>
             ))}
 
             <SubMenu id="editor">
-                <MenuTitle banner={banner}>Mode Editeur</MenuTitle>
-                <MenuContent helpPanel={HousingPlacementHelpPanel}>
+                <MenuTitle title="Aménagement" />
+                <MenuContent subtitle="Mode Editeur" helpPanel={HousingPlacementHelpPanel}>
                     <MenuItemSelect
                         title="Type de stockage"
                         value={debugProp?.storageType}
@@ -535,7 +535,7 @@ export const MenuPropPlacementHousing: FunctionComponent<MenuPropPlacementProps>
 
 const HousingHelpPanel = (
     <>
-        <MenuTitle>Contrôle général</MenuTitle>
+        <MenuSubTitle>Contrôle général</MenuSubTitle>
         <MenuItemText> Tab : Basculer le mode caméra ou souris</MenuItemText>
         <MenuItemText> Clic Gauche (en mode souris) : Sélection d'objet</MenuItemText>
         <MenuItemText> O (hors menu) : Allumer/éteindre les lumières</MenuItemText>
@@ -544,7 +544,7 @@ const HousingHelpPanel = (
 
 const HousingPlacementHelpPanel = (
     <>
-        <MenuTitle>Contrôle du mode editeur</MenuTitle>
+        <MenuSubTitle>Contrôle du mode editeur</MenuSubTitle>
         <MenuItemText> Tab : Basculer le mode caméra ou souris</MenuItemText>
         <MenuItemText> R : Basculer le mode translation/rotation</MenuItemText>
         <MenuItemText> L : Basculer mode de reférence</MenuItemText>

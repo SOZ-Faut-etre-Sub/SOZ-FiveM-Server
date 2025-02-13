@@ -91,7 +91,6 @@ export class AdminMenuProvider {
             return;
         }
 
-        const banner = 'https://nui-img/soz/menu_admin_' + permission;
         const ped = PlayerPedId();
         const characters = await emitRpc<Record<string, PlayerCharInfo>>(RpcServerEvent.ADMIN_GET_CHARACTERS);
         const meteorState = await emitRpc<MeteorSubMenuState>(RpcServerEvent.ADMIN_METEOR_STATE);
@@ -101,7 +100,6 @@ export class AdminMenuProvider {
         this.nuiMenu.openMenu<MenuType.AdminMenu>(
             MenuType.AdminMenu,
             {
-                banner,
                 characters,
                 event: eventInfo,
                 permission: permission as SozRole,

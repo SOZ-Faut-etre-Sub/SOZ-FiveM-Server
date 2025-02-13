@@ -44,7 +44,7 @@ export const MenuWardrobe: FunctionComponent<MenuWardrobeProps> = ({ wardrobe })
     return (
         <Menu type={MenuType.Wardrobe}>
             <MainMenu>
-                <MenuTitle banner="https://nui-img/soz/menu_wardrobe_outdoor">Changer de tenue</MenuTitle>
+                <MenuTitle title="Vestiaire" />
                 <MenuContent>
                     {wardrobe.allowNullLabel && (
                         <MenuItemButton onConfirm={() => onConfirm(null)}>{wardrobe.allowNullLabel}</MenuItemButton>
@@ -62,7 +62,7 @@ export const MenuWardrobe: FunctionComponent<MenuWardrobeProps> = ({ wardrobe })
                 </MenuContent>
             </MainMenu>
             <SubMenu id="custom" key="custom">
-                <MenuTitle banner="https://nui-img/soz/menu_wardrobe_outdoor">Changer de tenue</MenuTitle>
+                <MenuTitle title="Vestiaire" />
                 <MenuContent>
                     {Object.keys(WardRobeElements).map(wardRobeElementId => {
                         const elems = Object.keys(wardrobe.wardrobe)

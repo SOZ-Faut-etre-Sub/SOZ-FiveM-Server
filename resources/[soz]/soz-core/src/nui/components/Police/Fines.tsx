@@ -4,6 +4,7 @@ import { PoliceJobFineMenuData } from '@public/shared/job/police';
 import { MenuType } from '@public/shared/nui/menu';
 import { FunctionComponent } from 'react';
 
+import { JobLabel } from '../../../shared/job';
 import { RepositoryType } from '../../../shared/repository';
 import { useRepository } from '../../hook/repository';
 import {
@@ -21,12 +22,11 @@ type FinesStateProps = {
 };
 
 export const FinesMenu: FunctionComponent<FinesStateProps> = ({ data }) => {
-    const banner = `https://nui-img/soz/menu_job_${data.job}`;
     return (
         <Menu type={MenuType.PoliceJobFines}>
             <MainMenu>
-                <MenuTitle banner={banner}>L'ordre et la justice !</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={data.job} />
+                <MenuContent subtitle="L'ordre et la justice !">
                     <MenuItemButton
                         onConfirm={async () => {
                             await fetchNui(NuiEvent.PolicePreCustomFine, {
@@ -61,8 +61,8 @@ const FineSubMenu: FunctionComponent<FineSubMenuProps> = ({ category, playerServ
 
     return (
         <SubMenu id={`fine_${category}`}>
-            <MenuTitle banner="https://nui-img/soz/menu_job_gouv">Amendes catégorie {category}</MenuTitle>
-            <MenuContent>
+            <MenuTitle title={JobLabel.gouv} />
+            <MenuContent subtitle={`Amendes catégorie ${category}`}>
                 {finesForCategory.map(fine => (
                     <MenuItemButton
                         onConfirm={async () => {

@@ -2,6 +2,7 @@ import { FunctionComponent } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
 import { FuelType } from '../../../shared/fuel';
+import { JobLabel } from '../../../shared/job';
 import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';
 import { MainMenu, Menu, MenuContent, MenuItemButton, MenuTitle } from '../Styleguide/Menu';
@@ -25,7 +26,7 @@ export const MenuOilSetPrice: FunctionComponent<MenuOilSetPriceProps> = ({ data 
     return (
         <Menu type={MenuType.OilSetStationPrice}>
             <MainMenu>
-                <MenuTitle banner="https://nui-img/soz/menu_job_oil">Changement de prix des stations</MenuTitle>
+                <MenuTitle title={JobLabel.oil} />
                 <MenuContent>
                     <MenuItemButton onConfirm={() => onConfirm(FuelType.Essence, data.essence)}>
                         <div className="pr-2 flex items-center justify-between">

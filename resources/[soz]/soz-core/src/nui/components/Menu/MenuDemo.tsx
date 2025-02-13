@@ -11,19 +11,17 @@ import {
     MenuItemSelectOption,
     MenuItemSubMenuLink,
     MenuItemText,
+    MenuSubTitle,
     MenuTitle,
     SubMenu,
 } from '../Styleguide/Menu';
 
 export const MenuDemo: FunctionComponent = () => {
-    const banner =
-        'https://cdn.discordapp.com/attachments/924645707640619089/991854200843669564/SOZ_fond_menus_upw.jpg';
-
     return (
         <Menu type={MenuType.Demo}>
             <MainMenu>
-                <MenuTitle banner={banner}>Main menu</MenuTitle>
-                <MenuContent>
+                <MenuTitle title="Demo" />
+                <MenuContent subtitle="Subtitle">
                     <MenuItemButton>Button 1</MenuItemButton>
                     <MenuItemButton disabled>Button 2</MenuItemButton>
                     <MenuItemSelect value="d" title="Test">
@@ -43,7 +41,7 @@ export const MenuDemo: FunctionComponent = () => {
                 </MenuContent>
             </MainMenu>
             <SubMenu id="submenu1">
-                <MenuTitle>Sub Menu 1</MenuTitle>
+                <MenuSubTitle>Sub Menu 1</MenuSubTitle>
                 <MenuContent>
                     <MenuItemButton>Sub Menu Button 1</MenuItemButton>
                     <MenuItemButton>Sub Menu Button 2</MenuItemButton>
@@ -51,21 +49,21 @@ export const MenuDemo: FunctionComponent = () => {
                 </MenuContent>
             </SubMenu>
             <SubMenu id="submenu2">
-                <MenuTitle banner={banner}>Sub Menu 21</MenuTitle>
+                <MenuSubTitle>Sub Menu 21</MenuSubTitle>
                 <MenuContent>
                     <MenuItemButton>Sub Menu Button 1</MenuItemButton>
                     <MenuItemButton>Sub Menu Button 2</MenuItemButton>
                 </MenuContent>
             </SubMenu>
             <SubMenu id="submenu3">
-                <MenuTitle banner={banner}>Sub Menu 3</MenuTitle>
+                <MenuSubTitle>Sub Menu 3</MenuSubTitle>
                 <MenuContent>
                     <MenuItemButton>Sub Menu Button 1</MenuItemButton>
                     <MenuItemButton>Sub Menu Button 2</MenuItemButton>
                 </MenuContent>
             </SubMenu>
             <SubMenu id="submenu4">
-                <MenuTitle banner={banner}>Sub Menu 4</MenuTitle>
+                <MenuSubTitle>Sub Menu 4</MenuSubTitle>
                 <MenuContent>
                     <MenuItemButton>Sub Menu Button 1</MenuItemButton>
                     <MenuItemButton>Sub Menu Button 2</MenuItemButton>
