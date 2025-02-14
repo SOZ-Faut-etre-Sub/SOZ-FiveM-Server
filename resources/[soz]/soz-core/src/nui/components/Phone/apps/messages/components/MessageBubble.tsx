@@ -15,27 +15,8 @@ import { Emoji } from '../../../components/Emoji';
 import { PictureReveal } from '../../../components/PictureReveal';
 import { useTextZoomConfig, useThemeConfig } from '../../../system/config/config.atom';
 import { useSimCard } from '../../../system/sim-card/hooks/useSimCard';
-
-export const isImage = url => {
-    return /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png|jpeg|gif|webp)/g.test(url);
-};
-
-export const isOldPosition = url => {
-    return /vec2\((-?[0-9.]+),(-?[0-9.]+)\)/g.test(url);
-};
-
-const isPosition = url => {
-    return /vec3\((-?[0-9.]+),(-?[0-9.]+),(-?[0-9.]+)\)/g.test(url);
-};
-
-const getAddress = async (input: string) => {
-    const position = /vec3\((-?[0-9.]+),(-?[0-9.]+),(-?[0-9.]+)\)/g.exec(input);
-    return fetchNui<{ x: number; y: number; z: number }, string[]>(NuiEvent.GetStreetName, {
-        x: Number(position[1]),
-        y: Number(position[2]),
-        z: Number(position[3]),
-    });
-};
+import { isImage } from '../utils/image';
+import { getAddress, isPosition, isVec2Position, isVec3Position } from '../utils/position';
 
 interface MessageBubbleProps {
     message: Message;
@@ -99,17 +80,17 @@ export const MessageBubble: FunctionComponent<MessageBubbleProps> = ({ message }
                         <img src={message.message} className="rounded-lg" alt="message multimedia" />
                     </PictureReveal>
                 )}
-                {isPosition(message.message) && (
+                {isVec3Position(message.message) && (
                     <span className="flex items-center cursor-pointer" onClick={setWaypoint}>
                         <LocationMarkerIcon className="h-5 w-5 mr-2" /> {address}
                     </span>
                 )}
-                {isOldPosition(message.message) && (
+                {isVec2Position(message.message) && (
                     <span className="flex items-center cursor-pointer" onClick={setWaypoint}>
                         <LocationMarkerIcon className="h-5 w-5 mr-2" /> Destination
                     </span>
                 )}
-                {!isImage(message.message) && !isPosition(message.message) && !isOldPosition(message.message) && (
+                {!isImage(message.message) && !isPosition(message.message) && (
                     <Menu.Button className="left-0 h-full w-full text-left">
                         <p
                             className={clsx('break-words text-ellipsis w-full select-text whitespace-pre-wrap', {

@@ -79,6 +79,7 @@ const DarkWebInput: FunctionComponent<IProps> = ({ darkwebConversationId, autoFo
                 label: t('MESSAGES.DESTINATION_OPTION'),
                 onClick: async () => {
                     const position = await fetchNui<null, string[]>(NuiEvent.GetWaypoint);
+                    if (!position) return;
 
                     sendMessage({
                         conversationId: darkwebConversationId,

@@ -71,6 +71,7 @@ export const MessageInput: FunctionComponent<MessageInputProps> = ({ messageConv
                 label: t('MESSAGES.DESTINATION_OPTION'),
                 onClick: async () => {
                     const position = await fetchNui<null, string[]>(NuiEvent.GetWaypoint);
+                    if (!position) return;
 
                     sendMessage({
                         conversation_id: messageConversationId,

@@ -5,7 +5,7 @@ import { fetchNui } from '@public/nui/fetch';
 import { DarkwebMessage } from '@public/shared/phone/apps/darkweb';
 import cn from 'classnames';
 import { format } from 'date-fns';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { NuiEvent } from '../../../../../../shared/event/nui';
 import { SocietyMessagePosition } from '../../../../../../shared/phone/apps/society';
@@ -15,7 +15,8 @@ import { Emoji } from '../../../components/Emoji';
 import { PictureReveal } from '../../../components/PictureReveal';
 import { useTextZoomConfig, useThemeConfig } from '../../../system/config/config.atom';
 import { useSimCard } from '../../../system/sim-card/hooks/useSimCard';
-import { isImage, isOldPosition } from '../../messages/components/MessageBubble';
+import { isImage } from '../../messages/utils/image';
+import { getAddress, isPosition, isVec2Position, isVec3Position } from '../../messages/utils/position';
 
 interface DarkWebMessageBubbleProps {
     message: DarkwebMessage;
@@ -29,13 +30,34 @@ export const DarkWebMessageBubble: React.FC<DarkWebMessageBubbleProps> = ({ mess
     const { number } = useSimCard();
     const copyToClipboard = useClipboard();
 
+    const [address, setAddress] = useState('');
     const setWaypoint = () => {
-        const position = /vec2\((-?[0-9.]+),(-?[0-9.]+)\)/g.exec(message.message);
+        const position = /vec3\((-?[0-9.]+),(-?[0-9.]+),(-?[0-9.]+)\)/g.exec(message.message);
+        const oldPosition = /vec2\((-?[0-9.]+),(-?[0-9.]+)\)/g.exec(message.message);
 
         fetchNui<SocietyMessagePosition, never>(NuiEvent.SetWaypoint, {
-            coords: [Number(position[1]), Number(position[2]), 0],
+            coords: [
+                Number(position ? position[1] : oldPosition[1]),
+                Number(position ? position[2] : oldPosition[2]),
+                0,
+            ],
         });
     };
+
+    useEffect(() => {
+        const getAddressAsync = async () => {
+            try {
+                const address = await getAddress(message.message);
+                setAddress(address.join('& '));
+            } catch (error) {
+                console.error(error);
+                setAddress('Destination');
+            }
+        };
+        if (isPosition(message.message)) {
+            getAddressAsync();
+        }
+    }, [message.message]);
 
     const isMine = message.phoneNumber === number;
 
@@ -65,12 +87,17 @@ export const DarkWebMessageBubble: React.FC<DarkWebMessageBubbleProps> = ({ mess
                         <img src={message.message} className="rounded-lg" alt="message multimedia" />
                     </PictureReveal>
                 )}
-                {isOldPosition(message.message) && (
+                {isVec3Position(message.message) && (
+                    <span className="flex items-center cursor-pointer" onClick={setWaypoint}>
+                        <LocationMarkerIcon className="h-5 w-5 mr-2" /> {address}
+                    </span>
+                )}
+                {isVec2Position(message.message) && (
                     <span className="flex items-center cursor-pointer" onClick={setWaypoint}>
                         <LocationMarkerIcon className="h-5 w-5 mr-2" /> Destination
                     </span>
                 )}
-                {!isImage(message.message) && !isOldPosition(message.message) && (
+                {!isImage(message.message) && !isPosition(message.message) && (
                     <Menu.Button className="left-0 h-full w-full text-left">
                         <p
                             className={cn('break-words text-ellipsis w-full select-text whitespace-pre-wrap', {

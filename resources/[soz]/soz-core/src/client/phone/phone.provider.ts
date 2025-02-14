@@ -36,7 +36,12 @@ export class PhoneProvider {
 
     @OnNuiEvent(NuiEvent.GetWaypoint)
     async getWaypoint() {
-        return GetBlipInfoIdCoord(GetFirstBlipInfoId(8));
+        const coords = GetBlipInfoIdCoord(GetFirstBlipInfoId(8));
+        if (coords.every(v => v === 0)) {
+            return null;
+        }
+
+        return coords;
     }
 
     @OnNuiEvent(NuiEvent.SetWaypoint)
