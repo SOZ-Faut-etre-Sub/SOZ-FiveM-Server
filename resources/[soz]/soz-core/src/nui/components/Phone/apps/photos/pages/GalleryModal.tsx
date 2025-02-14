@@ -12,12 +12,14 @@ import { useQueryParams } from '../../../hooks/useQueryParams';
 import { useAlert } from '../../../system/alerts/hooks/useAlert';
 import { useAppTitleActionsUpdater } from '../../../system/apps/hooks/useAppTitleActionsUpdater';
 import { useAppTitleGetBackUpdater } from '../../../system/apps/hooks/useAppTitleGetBackUpdater';
+import { useThemeConfig } from '../../../system/config/config.atom';
 import { useDynamicIsland } from '../../../system/dynamic-island/hooks/useDynamicIsland';
 import { useNotifications } from '../../../system/notifications/hooks/useNotifications';
 
 export const GalleryModal = () => {
     const navigate = useNavigate();
     const { t } = useTranslation();
+    const theme = useThemeConfig();
 
     const [bigImage, setBigImage] = useState<boolean>(false);
 
@@ -55,7 +57,11 @@ export const GalleryModal = () => {
     useAppTitleActionsUpdater([
         {
             display: true,
-            icon: <ShareIcon className="size-5 text-black" />,
+            icon: <ShareIcon className="size-5" />,
+            className: {
+                'text-ios-100 hover:text-ios-200': theme === 'dark',
+                'text-ios-700 hover:text-ios-600': theme === 'light',
+            },
             onClick: handleCopyImage,
         },
         {
