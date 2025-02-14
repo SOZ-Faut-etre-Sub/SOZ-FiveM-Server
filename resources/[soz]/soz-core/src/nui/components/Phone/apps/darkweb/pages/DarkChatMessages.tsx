@@ -1,7 +1,7 @@
 import { DotsVerticalIcon } from '@heroicons/react/solid';
 import clsx from 'clsx';
 import React, { FunctionComponent, memo, useEffect, useMemo, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Virtuoso } from 'react-virtuoso';
 
 import { DarkwebMessage } from '../../../../../../shared/phone/apps/darkweb';
@@ -9,6 +9,7 @@ import { Separator } from '../../../../../../shared/phone/simcard';
 import { AppContent } from '../../../components/system/AppContent';
 import { AppWrapper } from '../../../components/system/AppWrapper';
 import { useBackgroundClasses } from '../../../hooks/useBackgroundClasses';
+import { useQueryParams } from '../../../hooks/useQueryParams';
 import { useAppTitleActionsUpdater } from '../../../system/apps/hooks/useAppTitleActionsUpdater';
 import { useAppTitleGetBackUpdater } from '../../../system/apps/hooks/useAppTitleGetBackUpdater';
 import { useAppTitleUpdater } from '../../../system/apps/hooks/useAppTitleUpdater';
@@ -24,11 +25,14 @@ import { useParticipant } from '../hooks/useParticipants';
 
 export const DarkChatMessages = memo(() => {
     const navigate = useNavigate();
+    const { pathname } = useLocation();
+
     const theme = useThemeConfig();
+    const query = useQueryParams();
 
     const { conversationId } = useParams<{ conversationId: string }>();
 
-    const { setConversationAsRead, fetchMessages, fetchParticipants } = useDarkWebAPI();
+    const { sendMessage, setConversationAsRead, fetchMessages, fetchParticipants } = useDarkWebAPI();
     const { number } = useSimCard();
 
     const [isSettingsModalOpen, setIsSettingsModalOpen] = useState<boolean>(false);
@@ -56,6 +60,14 @@ export const DarkChatMessages = memo(() => {
             onClick: () => setIsSettingsModalOpen(!isSettingsModalOpen),
         },
     ]);
+
+    useEffect(() => {
+        if (!conversation) return;
+        if (!query?.image) return;
+
+        sendMessage({ conversationId: conversation.id, message: query.image });
+        navigate(pathname, { replace: true });
+    }, [query]);
 
     useEffect(() => {
         if (!conversation) return;
