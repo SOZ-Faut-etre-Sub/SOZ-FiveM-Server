@@ -9,6 +9,8 @@ import { DarkWebIntro } from './pages/DarkWebIntro';
 export const DarkWebApp: FunctionComponent = () => {
     return (
         <AppContainer forceControlColor="light">
+            <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 from-40% via-zinc-900 via-10% to-teal-900 -z-10" />
+
             <Routes>
                 <Route index element={<DarkWebIntro />} />
 
