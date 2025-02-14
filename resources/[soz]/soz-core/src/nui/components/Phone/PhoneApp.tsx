@@ -20,9 +20,9 @@ import { Alerts } from './system/alerts/components/Alerts';
 import { useApps } from './system/apps/hooks/useApps';
 import { CallButtonDynamicIsland } from './system/dynamic-island/components/CallButtonDynamicIsland';
 import { CallDynamicIsland } from './system/dynamic-island/components/CallDynamicIsland';
+import { NotificationDynamicIsland } from './system/dynamic-island/components/NotificationDynamicIsland';
 import { useEmergency, useEmergencyStateHandlers } from './system/emergency/emergency.atom';
 import { EmergencyApp } from './system/emergency/EmergencyApp';
-import { NotificationAlert } from './system/notifications/components/NotificationAlert';
 import { usePhoneFocus, usePhoneInsideInput, usePhoneStateHandlers } from './system/phone.atom';
 import { PhoneWrapper } from './system/PhoneWrapper';
 import { useSimCardStateHandlers } from './system/sim-card/sim.card.atom';
@@ -63,9 +63,10 @@ export const PhoneApp: FunctionComponent = () => {
                     <PhoneWrapper>
                         <Alerts />
                         <ActionSheet />
+
                         <CallDynamicIsland />
                         <CallButtonDynamicIsland />
-                        <NotificationAlert />
+                        <NotificationDynamicIsland />
 
                         {emergency ? (
                             <EmergencyApp />

@@ -50,7 +50,8 @@ export const useSocietyMessagesStateHandlers = () => {
             addNotification(
                 {
                     app: 'society-messages',
-                    title: message.message,
+                    title: "Nouveau message d'entreprise",
+                    content: message.message,
                     onClick: () => navigate('/society-messages'),
                 },
                 null
