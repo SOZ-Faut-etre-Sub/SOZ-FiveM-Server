@@ -47,6 +47,9 @@ export const DialerKeyboard: FunctionComponent = () => {
         if (number.length !== 8) {
             return;
         }
+
+        if (!/^555-[\d-]{4}$/i.test(number)) return;
+
         navigate(`/messages/new/${number}`);
     };
 
