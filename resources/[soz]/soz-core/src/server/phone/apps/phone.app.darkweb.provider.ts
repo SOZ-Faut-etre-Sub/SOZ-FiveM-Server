@@ -4,7 +4,7 @@ import { Notifier } from '@public/server/notifier';
 
 import { Inject } from '../../../core/decorators/injectable';
 import { Rpc } from '../../../core/decorators/rpc';
-import { DarkwebConversation, DarkwebConversationUpdate, THREAD_PRICE } from '../../../shared/phone/apps/darkweb';
+import { DarkwebConversationUpdate, THREAD_PRICE } from '../../../shared/phone/apps/darkweb';
 import { RpcServerEvent } from '../../../shared/rpc';
 import { PrismaService } from '../../database/prisma.service';
 import { InventoryFactory } from '../../inventory/inventory.factory';
