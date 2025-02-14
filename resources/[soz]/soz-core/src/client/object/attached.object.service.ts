@@ -10,6 +10,7 @@ export type AttachedObject = {
     position: Vector3;
     rotation: Vector3;
     rotationOrder?: number;
+    entity?: number;
 };
 
 @Injectable()
@@ -43,8 +44,8 @@ export class AttachedObjectService {
 
         AttachEntityToEntity(
             object,
-            PlayerPedId(),
-            GetPedBoneIndex(PlayerPedId(), attached.bone),
+            attached.entity ? attached.entity : PlayerPedId(),
+            attached.entity ? attached.bone : GetPedBoneIndex(PlayerPedId(), attached.bone),
             attached.position[0],
             attached.position[1],
             attached.position[2],

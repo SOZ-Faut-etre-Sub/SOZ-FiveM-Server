@@ -5,15 +5,16 @@ import { PlayerInventoryUpdate } from '@public/core/decorators/player';
 import { InventoryItem } from '@public/shared/inventory';
 
 import { ClientEvent } from '../../shared/event';
-import { WeaponDrawPosition, Weapons } from '../../shared/weapons/weapon';
+import { WeaponConfig, WeaponName, Weapons } from '../../shared/weapons/weapon';
 import { AttachedObjectService } from '../object/attached.object.service';
+import { ResourceLoader } from '../repository/resource.loader';
 import { WeaponService } from './weapon.service';
 
 @Provider()
 export class WeaponDrawingProvider {
     private shouldDrawWeapon = true;
     private shouldAdminDrawWeapon = true;
-    private weaponsToDraw: WeaponDrawPosition[] = [];
+    private weaponsToDraw: WeaponName[] = [];
     private weaponAttached: Record<string, number> = {};
 
     @Inject(AttachedObjectService)
@@ -22,17 +23,20 @@ export class WeaponDrawingProvider {
     @Inject(WeaponService)
     private weaponService: WeaponService;
 
+    @Inject(ResourceLoader)
+    private resourceLoader: ResourceLoader;
+
     private async updateWeaponDrawList(playerItem: Record<number, InventoryItem>) {
-        const weaponToDraw = Object.values(playerItem)
+        const weaponToDraw: WeaponName[] = Object.values(playerItem)
             .filter(
                 item =>
                     item.type === 'weapon' &&
                     Weapons[item.name.toUpperCase()] &&
                     Weapons[item.name.toUpperCase()].drawPosition
             )
-            .map(item => Weapons[item.name.toUpperCase()].drawPosition);
+            .map(item => item.name.toUpperCase() as WeaponName);
 
-        if (weaponToDraw.map(w => w.model).join('') !== this.weaponsToDraw.map(w => w.model).join('')) {
+        if (weaponToDraw.join('') !== this.weaponsToDraw.join('')) {
             await this.undrawWeapon();
             this.weaponsToDraw = weaponToDraw;
             await this.drawWeapon();
@@ -45,24 +49,41 @@ export class WeaponDrawingProvider {
         }
 
         for (const weapon of this.weaponsToDraw) {
-            if (this.weaponAttached[weapon.model]) continue;
-            this.weaponAttached[weapon.model] = -1;
+            const config: WeaponConfig = Weapons[weapon];
+            if (this.weaponAttached[config.drawPosition.model]) continue;
+            this.weaponAttached[config.drawPosition.model] = -1;
 
             const object = await this.attachedObjectService.attachObjectToPlayer({
                 bone: 24816,
-                model: weapon.model,
-                position: weapon.position,
-                rotation: weapon.rotation,
+                model: config.drawPosition.model,
+                position: config.drawPosition.position,
+                rotation: config.drawPosition.rotation,
                 rotationOrder: 2,
             });
 
-            this.weaponAttached[weapon.model] = object;
+            this.weaponAttached[config.drawPosition.model] = object;
 
             const playerWeapon = this.weaponService.getCurrentWeapon();
             if (playerWeapon) {
                 const weaponModel = Weapons[playerWeapon.name.toUpperCase()].drawPosition?.model;
                 if (weaponModel) {
                     SetEntityVisible(object, false, false);
+                }
+            }
+
+            if (config.extaDraw) {
+                for (const extra of config.extaDraw) {
+                    const boneIndex = GetEntityBoneIndexByName(object, extra.bone);
+
+                    const extraObject = await this.attachedObjectService.attachObjectToPlayer({
+                        bone: boneIndex,
+                        model: extra.model,
+                        position: [0, 0, 0],
+                        rotation: [0, 0, 0],
+                        rotationOrder: 2,
+                        entity: object,
+                    });
+                    this.weaponAttached[config.drawPosition.model + extra.model] = extraObject;
                 }
             }
         }
@@ -146,7 +167,7 @@ export class WeaponDrawingProvider {
         });
 
         const weapon = this.weaponService.getCurrentWeapon();
-        const weaponModel = Weapons[usedWeapon?.name.toUpperCase()]?.drawPosition?.model;
+        const weaponModel = Weapons[usedWeapon?.name.toUpperCase() as WeaponName]?.drawPosition?.model;
         if (weaponModel) {
             if (this.weaponAttached[weaponModel]) {
                 SetEntityVisible(this.weaponAttached[weaponModel], !weapon, false);
