@@ -1,5 +1,21 @@
 export const wallpaperOptions = [
     {
+        label: 'Zos 1',
+        value: 'zos1.webp',
+    },
+    {
+        label: 'Zos 2',
+        value: 'zos2.webp',
+    },
+    {
+        label: 'ZT 1',
+        value: 'zt1.webp',
+    },
+    {
+        label: 'ZT 2',
+        value: 'zt2.webp',
+    },
+    {
         label: 'SoZ 1',
         value: 'back1.webp',
     },

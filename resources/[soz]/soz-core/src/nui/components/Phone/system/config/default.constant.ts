@@ -4,8 +4,8 @@ export const defaultConfig = {
         value: 'fr',
     },
     wallpaper: {
-        label: 'Soz1',
-        value: 'back1.webp',
+        label: 'ZT 2',
+        value: 'zt2.webp',
     },
     customWallpaper: '',
     frame: {
