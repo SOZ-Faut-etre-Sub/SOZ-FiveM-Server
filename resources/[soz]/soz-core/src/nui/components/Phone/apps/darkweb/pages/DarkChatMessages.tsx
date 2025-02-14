@@ -28,13 +28,13 @@ export const DarkChatMessages = memo(() => {
 
     const { conversationId } = useParams<{ conversationId: string }>();
 
-    const { setConversationAsRead, fetchMessages } = useDarkWebAPI();
+    const { setConversationAsRead, fetchMessages, fetchParticipants } = useDarkWebAPI();
     const { number } = useSimCard();
 
     const [isSettingsModalOpen, setIsSettingsModalOpen] = useState<boolean>(false);
 
     const conversation = useConversation(conversationId);
-    const participant = useParticipant(number);
+    const participant = useParticipant(conversationId, number);
     const messages = useMessages(conversationId);
 
     const blockTime = useMemo(() => {
@@ -60,6 +60,7 @@ export const DarkChatMessages = memo(() => {
     useEffect(() => {
         if (!conversation) return;
 
+        fetchParticipants();
         fetchMessages(conversation.id);
         setConversationAsRead(conversation.id);
     }, []);
@@ -103,7 +104,10 @@ const MessageItem: FunctionComponent<{ message: DarkwebMessage | Separator }> = 
     const theme = useThemeConfig();
     const backgroundClass = useBackgroundClasses();
 
-    const participant = useParticipant('phoneNumber' in message ? message?.phoneNumber : null);
+    const participant = useParticipant(
+        'conversation_id' in message ? message?.conversation_id : null,
+        'phoneNumber' in message ? message?.phoneNumber : null
+    );
 
     if ('separator' in message) {
         return (

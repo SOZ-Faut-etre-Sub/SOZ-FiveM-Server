@@ -1,9 +1,10 @@
+import { darkweb_conversations } from '@prisma/client';
 import { Provider } from '@public/core/decorators/provider';
 import { Notifier } from '@public/server/notifier';
 
 import { Inject } from '../../../core/decorators/injectable';
 import { Rpc } from '../../../core/decorators/rpc';
-import { THREAD_PRICE } from '../../../shared/phone/apps/darkweb';
+import { DarkwebConversation, DarkwebConversationUpdate, THREAD_PRICE } from '../../../shared/phone/apps/darkweb';
 import { RpcServerEvent } from '../../../shared/rpc';
 import { PrismaService } from '../../database/prisma.service';
 import { InventoryFactory } from '../../inventory/inventory.factory';
@@ -36,7 +37,7 @@ export class PhoneAppDarkWebProvider {
             return;
         }
 
-        return this.prismaService.darkweb_conversations.findMany({
+        const conversations: darkweb_conversations[] = await this.prismaService.darkweb_conversations.findMany({
             distinct: ['id'],
             where: {
                 masked: false,
@@ -45,6 +46,12 @@ export class PhoneAppDarkWebProvider {
                 updatedAt: 'desc',
             },
         });
+
+        return conversations.map(conversation => ({
+            ...conversation,
+            updatedAt: conversation.updatedAt.getTime(),
+            createdAt: conversation.createdAt.getTime(),
+        }));
     }
 
     @Rpc(RpcServerEvent.PHONE_APP_DARKWEB_CREATE_CONVERSATION)
@@ -79,15 +86,15 @@ export class PhoneAppDarkWebProvider {
         await this.prismaService.darkweb_participants.create({
             data: {
                 conversation_id: conversation.id,
-                user_identifier: player.charinfo.phone,
+                user_identifier: player.citizenid,
                 role: 'ADMIN',
                 phoneNumber: player.charinfo.phone,
             },
         });
     }
 
-    @Rpc(RpcServerEvent.PHONE_APP_DARKWEB_UPDATE_PARTICIPANT_ROLE)
-    async updateParticipantRole(source: number, conversationId: number, phoneNumber: string, role: string) {
+    @Rpc(RpcServerEvent.PHONE_APP_DARKWEB_UPDATE_CONVERSATION)
+    async updateConversation(source: number, conversationId: number, conversation: Partial<DarkwebConversationUpdate>) {
         const player = this.playerService.getPlayer(source);
         if (!player) {
             return;
@@ -98,12 +105,45 @@ export class PhoneAppDarkWebProvider {
             return;
         }
 
-        await this.prismaService.darkweb_participants.updateMany({
+        await this.prismaService.darkweb_conversations.update({
             where: {
-                conversation_id: conversationId,
-                phoneNumber,
+                id: conversationId,
             },
-            data: {
+            data: conversation,
+        });
+    }
+
+    @Rpc(RpcServerEvent.PHONE_APP_DARKWEB_UPDATE_PARTICIPANT_ROLE)
+    async updateParticipantRole(source: number, conversationId: number, phoneNumber: string, role: string) {
+        const player = this.playerService.getPlayer(source);
+        if (!player) {
+            return;
+        }
+
+        const target = this.playerService.getPlayerByPhone(phoneNumber);
+        if (!target) {
+            return;
+        }
+
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+        if (!inventory.hasEnoughItem(DARKWEB_ITEM, 1, true)) {
+            return;
+        }
+
+        await this.prismaService.darkweb_participants.upsert({
+            where: {
+                user_identifier_conversation_id: {
+                    conversation_id: conversationId,
+                    user_identifier: target.citizenid,
+                },
+            },
+            create: {
+                conversation_id: conversationId,
+                user_identifier: target.citizenid,
+                phoneNumber,
+                role,
+            },
+            update: {
                 role,
             },
         });
@@ -124,7 +164,7 @@ export class PhoneAppDarkWebProvider {
         await this.prismaService.darkweb_participants.updateMany({
             where: {
                 conversation_id: conversationId,
-                user_identifier: player.charinfo.phone,
+                user_identifier: player.citizenid,
             },
             data: {
                 unread: false,
@@ -139,9 +179,7 @@ export class PhoneAppDarkWebProvider {
             return;
         }
 
-        return this.prismaService.darkweb_participants.findMany({
-            distinct: ['conversation_id'],
-        });
+        return this.prismaService.darkweb_participants.findMany();
     }
 
     @Rpc(RpcServerEvent.PHONE_APP_DARKWEB_GET_MESSAGES)

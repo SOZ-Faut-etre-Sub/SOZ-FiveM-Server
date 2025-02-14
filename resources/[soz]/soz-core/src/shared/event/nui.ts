@@ -693,6 +693,7 @@ export enum NuiEvent {
     PhoneAppDarkWebUpdateParticipantRole = 'soz-core:nui:phone:app-dark-web-update-participant-role',
     PhoneAppDarkWebFetchMessages = 'soz-core:nui:phone:aapp-dark-web-fetch-messages',
     PhoneAppDarkWebSendMessage = 'soz-core:nui:phone:app-dark-web-send-message',
+    PhoneAppDarkWebFetchParticipants = 'soz-core:nui:phone:app-dark-web-fetch-participants',
     PhoneAppSocietySendMessage = 'soz-core:nui:phone:app-society-send-message',
     PhoneAppSocietyUpdateMessage = 'soz-core:nui:phone:app-society-update-message',
     PhoneAppPhotosUpload = 'soz-core:nui:phone:app-photos-upload',

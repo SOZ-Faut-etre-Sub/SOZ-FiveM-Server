@@ -25,6 +25,8 @@ export interface DarkwebConversation {
     phoneNumber: string;
 }
 
+export type DarkwebConversationUpdate = Omit<DarkwebConversation, 'id' | 'createdAt' | 'updatedAt'>;
+
 export interface DarkwebParticipant {
     conversation_id: number;
     user_identifier: string;

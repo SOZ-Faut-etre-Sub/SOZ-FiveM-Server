@@ -1,5 +1,10 @@
 import { fetchNui } from '@public/nui/fetch';
-import { DarkwebConversation, DarkwebMessage, PreDBDarkwebMessage } from '@public/shared/phone/apps/darkweb';
+import {
+    DarkwebConversation,
+    DarkwebMessage,
+    DarkwebParticipant,
+    PreDBDarkwebMessage,
+} from '@public/shared/phone/apps/darkweb';
 import { useSetAtom } from 'jotai';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -7,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { NuiEvent } from '../../../../../../shared/event/nui';
 import { useNotifications } from '../../../system/notifications/hooks/useNotifications';
-import { conversationsAtom, messagesAtom } from '../darkweb.atom';
+import { conversationsAtom, messagesAtom, participantsAtom } from '../darkweb.atom';
 
 type UseDarkwebAPIProps = {
     fetchConversations: () => Promise<void>;
@@ -17,6 +22,8 @@ type UseDarkwebAPIProps = {
 
     fetchMessages: (conversationId: number) => Promise<void>;
     sendMessage: ({ conversationId, message }: PreDBDarkwebMessage) => void;
+
+    fetchParticipants: () => Promise<void>;
     updateParticipantRole: (conversationId: number, userIdentifier: string, role: string) => void;
 };
 
@@ -26,6 +33,7 @@ export const useDarkWebAPI = (): UseDarkwebAPIProps => {
 
     const setConversations = useSetAtom(conversationsAtom);
     const setMessages = useSetAtom(messagesAtom);
+    const setParticipants = useSetAtom(participantsAtom);
 
     const { addNotification } = useNotifications();
 
@@ -49,6 +57,8 @@ export const useDarkWebAPI = (): UseDarkwebAPIProps => {
                 label,
                 password,
             });
+
+            await fetchParticipants();
         } catch (e) {
             addNotification({
                 app: 'darkweb',
@@ -57,11 +67,6 @@ export const useDarkWebAPI = (): UseDarkwebAPIProps => {
                 }),
             });
         }
-
-        //     if (resp.data.conversation && resp.data.conversationParticipants) {
-        //         store.dispatch.appDarkweb.addConversationSuccess(resp.data.conversation);
-        //         store.dispatch.appDarkweb.addConversationParticipants(resp.data.conversationParticipants);
-        //     }
     }, []);
 
     const updateConversation = useCallback(
@@ -71,6 +76,8 @@ export const useDarkWebAPI = (): UseDarkwebAPIProps => {
                     id: conversationId,
                     ...conversation,
                 });
+
+                await fetchConversations();
             } catch (e) {
                 addNotification({
                     app: 'darkweb',
@@ -79,10 +86,6 @@ export const useDarkWebAPI = (): UseDarkwebAPIProps => {
             }
 
             navigate(-1);
-
-            //     if (resp.data.conversation) {
-            //         store.dispatch.appDarkweb.updateConversationInfos(resp.data.conversation[0]);
-            //     }
         },
         []
     );
@@ -137,6 +140,8 @@ export const useDarkWebAPI = (): UseDarkwebAPIProps => {
                 phoneNumber,
                 role,
             });
+
+            await fetchParticipants();
         } catch (e) {
             addNotification({
                 app: 'darkweb',
@@ -145,10 +150,21 @@ export const useDarkWebAPI = (): UseDarkwebAPIProps => {
                 }),
             });
         }
+    }, []);
 
-        //     if (resp.data.participant) {
-        //         store.dispatch.appDarkweb.updateDarkwebParticipantRole(resp.data.participant);
-        //     }
+    const fetchParticipants = useCallback(async () => {
+        try {
+            const participants = await fetchNui<number, DarkwebParticipant[]>(
+                NuiEvent.PhoneAppDarkWebFetchParticipants
+            );
+
+            setParticipants(participants);
+        } catch (e) {
+            addNotification({
+                app: 'darkweb',
+                title: t('DARKWEB.FEEDBACK.FETCH_MESSAGES_FAILED'),
+            });
+        }
     }, []);
 
     return {
@@ -159,6 +175,8 @@ export const useDarkWebAPI = (): UseDarkwebAPIProps => {
 
         fetchMessages,
         sendMessage,
+
+        fetchParticipants,
         updateParticipantRole,
     };
 };

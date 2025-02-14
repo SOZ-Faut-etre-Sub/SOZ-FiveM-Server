@@ -175,7 +175,7 @@ export const DarkWebConversationSettingsModal = memo(
                 leaveFrom=" opacity-100"
                 leaveTo="translate-y-[20vh] opacity-100"
                 className={cn(
-                    'absolute h-[20%] bottom-0 left-0 w-full flex bg-gradient-to-t from-zinc-900 from-10% via-zinc-900 via-20% to-teal-900/90 to-70% rounded-t-3xl'
+                    'absolute min-h-[20%] bottom-0 left-0 w-full flex bg-gradient-to-t from-zinc-900 from-10% via-zinc-900 via-20% to-teal-900/90 to-70% rounded-t-3xl'
                 )}
             >
                 {!isEditConversationOpen &&
@@ -183,7 +183,7 @@ export const DarkWebConversationSettingsModal = memo(
                     !isDeleteConfirmationOpen &&
                     !isOpenAdminManagementNew && (
                         <div className="flex flex-col h-full w-full">
-                            <div className="flex justify-center h-fit flex-wrap rounded-t-3xl w-full pt-2 pb-2 bg-black/40">
+                            <div className="flex justify-center items-center h-fit flex-wrap rounded-t-3xl w-full pt-2 pb-2 bg-black/40">
                                 <p className="text-2xl font-bold text-teal-500 uppercase">Options</p>
                                 <span
                                     className="text-teal-500 absolute right-[1vh] rounded-2xl cursor-pointer hover:bg-teal-900"
@@ -222,7 +222,7 @@ export const DarkWebConversationSettingsModal = memo(
                     )}
                 {isEditConversationOpen && (
                     <div className="flex flex-col h-full w-full">
-                        <div className="flex justify-center h-fit flex-wrap rounded-t-3xl w-full pt-2 pb-2 bg-black/40">
+                        <div className="flex justify-center items-center h-fit flex-wrap rounded-t-3xl w-full pt-2 pb-2 bg-black/40">
                             <span
                                 className="text-teal-500 absolute left-[1vh] rounded-2xl cursor-pointer hover:bg-teal-900"
                                 onClick={() => setIsEditConversationOpen(false)}
@@ -288,7 +288,7 @@ export const DarkWebConversationSettingsModal = memo(
                 )}
                 {isOpenAdminManagement && (
                     <div className="flex flex-col h-full w-full">
-                        <div className="flex justify-center h-fit flex-wrap rounded-t-3xl w-full pt-2 pb-2 bg-black/40">
+                        <div className="flex justify-center items-center h-fit flex-wrap rounded-t-3xl w-full pt-2 pb-2 bg-black/40">
                             <span
                                 className="text-teal-500 absolute left-[1vh] rounded-2xl cursor-pointer hover:bg-teal-900"
                                 onClick={() => setIsOpenAdminManagement(false)}
@@ -351,7 +351,7 @@ export const DarkWebConversationSettingsModal = memo(
                 )}
                 {isOpenAdminManagementNew && (
                     <div className="flex flex-col h-full w-full">
-                        <div className="flex justify-center h-fit flex-wrap rounded-t-3xl w-full pt-2 pb-2 bg-black/40">
+                        <div className="flex justify-center items-center h-fit flex-wrap rounded-t-3xl w-full pt-2 pb-2 bg-black/40">
                             <span
                                 className="text-teal-500 absolute left-[1vh] rounded-2xl cursor-pointer hover:bg-teal-900"
                                 onClick={() => {
@@ -408,7 +408,7 @@ export const DarkWebConversationSettingsModal = memo(
                 )}
                 {isDeleteConfirmationOpen && (
                     <div className="flex flex-col h-full w-full">
-                        <div className="flex justify-center h-fit flex-wrap rounded-t-3xl w-full pt-2 pb-2 bg-black/40">
+                        <div className="flex justify-center items-center h-fit flex-wrap rounded-t-3xl w-full pt-2 pb-2 bg-black/40">
                             <span
                                 className="text-teal-500 absolute left-[1vh] rounded-2xl cursor-pointer hover:bg-teal-900"
                                 onClick={() => setIsDeleteConfirmationOpen(false)}

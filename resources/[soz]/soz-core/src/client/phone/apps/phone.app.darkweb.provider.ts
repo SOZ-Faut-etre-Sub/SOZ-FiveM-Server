@@ -46,6 +46,11 @@ export class PhoneAppDarkWebProvider {
         return emitRpc(RpcServerEvent.PHONE_APP_DARKWEB_GET_MESSAGES, conversationId);
     }
 
+    @OnNuiEvent(NuiEvent.PhoneAppDarkWebFetchParticipants)
+    async fetchParticipants() {
+        return emitRpc(RpcServerEvent.PHONE_APP_DARKWEB_GET_PARTICIPANTS);
+    }
+
     @OnNuiEvent(NuiEvent.PhoneAppDarkWebSendMessage)
     async sendMessage({ conversationId, message }: PreDBDarkwebMessage) {
         await emitRpc(RpcServerEvent.PHONE_APP_DARKWEB_SEND_MESSAGE, conversationId, message);
