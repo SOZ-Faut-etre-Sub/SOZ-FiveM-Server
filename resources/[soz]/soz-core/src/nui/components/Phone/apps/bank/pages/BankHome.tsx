@@ -35,7 +35,7 @@ export const BankHome = memo(() => {
                 <div
                     className="h-full w-full bg-cover bg-center object-cover"
                     style={{
-                        backgroundImage: `url(${getPath('images/bank/cover.webp')})`,
+                        backgroundImage: `url(${getPath('images/phone/apps/bank/cover.webp')})`,
                     }}
                 />
                 <div className="absolute inset-0 bg-gray-500 mix-blend-multiply" aria-hidden="true" />
