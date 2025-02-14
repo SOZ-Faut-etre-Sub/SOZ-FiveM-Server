@@ -7,7 +7,7 @@ export const LSMCButton = () => {
     const [lsmcCalled, setLsmcCalled] = useLsmcCalled();
     const deathReason = useDeathReason();
 
-    const isDead = Boolean(deathReason.length);
+    const isDead = Boolean(deathReason?.length);
 
     const handleCallLSMC = () => {
         setLsmcCalled(true);

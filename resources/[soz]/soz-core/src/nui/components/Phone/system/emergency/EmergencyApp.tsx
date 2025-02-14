@@ -10,7 +10,7 @@ export const EmergencyApp = () => {
     const { getPath } = useAssetPath();
 
     const deathReason = useDeathReason();
-    const isDead = Boolean(deathReason.length);
+    const isDead = Boolean(deathReason?.length);
 
     return (
         <AppContainer
