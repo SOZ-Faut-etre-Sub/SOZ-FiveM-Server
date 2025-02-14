@@ -13,7 +13,7 @@ export const useContactByID = (id: number) => {
 export const useContact = (number: string) => {
     const contacts = useAtomValue(contactsAtom);
 
-    return useMemo(() => contacts.find(contact => contact.number === number), [contacts]);
+    return useMemo(() => contacts.find(contact => contact.number === number), [number, contacts]);
 };
 
 export const useContacts = () => {
