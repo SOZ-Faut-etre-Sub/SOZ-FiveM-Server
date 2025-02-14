@@ -3,6 +3,7 @@ import { formatDistance } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import React, { FunctionComponent, memo } from 'react';
 
+import { JobType } from '../../../../../../shared/job';
 import { NewsMessage } from '../../../../../../shared/phone/apps/news';
 import { useThemeConfig } from '../../../system/config/config.atom';
 import { convertTypeToName, isBCSOMessage, isLSPDMessage, isPoliceMessage, isSASPMessage } from '../utils/isPolice';
@@ -19,8 +20,11 @@ export const Card: FunctionComponent<NewsMessage> = memo(({ type, image, message
                 'border-[#3336E1]': isLSPDMessage(type),
                 'border-[#2d5547]': isBCSOMessage(type),
                 'border-[#c1b7af]': isSASPMessage(type),
-                'border-[#6741b1]': isPoliceMessage(type) === false && job === 'news',
-                'border-[#B11F1E]': isPoliceMessage(type) === false && job !== 'news',
+                'border-[#6741b1]': isPoliceMessage(type) === false && job === JobType.News,
+                'border-[#B11F1E]': isPoliceMessage(type) === false && job === JobType.YouNews,
+                'border-[#0c60ac]': isPoliceMessage(type) === false && job === JobType.Gouv,
+                'border-[#023c5c]': isPoliceMessage(type) === false && job === JobType.FBI && type !== 'presidence',
+                'border-[#041131]': isPoliceMessage(type) === false && job === JobType.FBI && type === 'presidence',
             })}
         >
             <div className={`relative p-3 flex items-center space-x-3`}>
