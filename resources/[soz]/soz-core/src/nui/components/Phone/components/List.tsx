@@ -105,8 +105,9 @@ export const ListButton: FunctionComponent<ListButtonProps> = ({
                 {children}
             </animated.div>
             <div className="absolute h-full w-full right-0 top-0 flex justify-end items-center text-xs">
-                {actions.filter(actionFilter).map(({ color, label, icon: Icon, onClick }) => (
+                {actions.filter(actionFilter).map(({ color, label, icon: Icon, onClick }, index) => (
                     <button
+                        key={`action-${label}-${index}`}
                         className={clsx('flex flex-col justify-center items-center h-full aspect-square p-1', color)}
                         style={{ width: actionWidth ?? style.height }}
                         onClick={onClick}

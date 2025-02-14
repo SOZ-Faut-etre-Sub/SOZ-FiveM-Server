@@ -1,3 +1,4 @@
+import { BankContact, BankStatement, Invoice } from '@public/shared/bank';
 import { BankData } from '@public/shared/phone/apps/bank';
 import { LeaderboardInterface } from '@public/shared/phone/apps/game';
 import { NewsMessage } from '@public/shared/phone/apps/news';
@@ -42,6 +43,12 @@ export interface NuiPhoneMap {
     // Apps
     AppDarkWebHasDongle: boolean;
     AppBankSetData: BankData;
+    AppBankSetStatements: BankStatement[];
+    AppBankAddStatement: BankStatement;
+    AppBankSetContacts: BankContact[];
+    AppBankSetInvoices: Invoice[];
+    AppBankAddContact: BankContact;
+    AppBankRemoveContact: number;
     AppNewsSetData: NewsMessage[];
     AppNewsAddData: NewsMessage;
     AppNotesSetData: NoteItem[];

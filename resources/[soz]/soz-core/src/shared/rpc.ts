@@ -231,6 +231,8 @@ export enum RpcServerEvent {
     BANK_GET_ACCOUNT = 'soz-core:server:bank:safe:get-account',
     BANK_GET_ACCOUNT_MONEY = 'soz-core:server:bank:get-account-money',
     BANK_GET_ACCOUNT_UI = 'soz-core:server:bank:get-account-ui',
+    BANK_GET_STATEMENTS = 'soz-core:server:bank:get-statements',
+    BANK_GET_CONTACTS = 'soz-core:server:bank:get-contacts',
     BANK_TRANSFER_ACTION = 'soz-core:server:bank:transfer-action',
     BANK_CASH_TRANSFER_ACTION = 'soz-core:server:bank:safe:transfer-action',
     BANK_CREATE_OFFSHORE_ACCOUNT = 'soz-core:server:bank:create-offshore-account',

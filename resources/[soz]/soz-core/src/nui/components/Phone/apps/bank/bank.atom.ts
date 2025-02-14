@@ -35,13 +35,24 @@ export const useAppBankStateHandlers = () => {
 
     const setBalance = useSetAtom(balanceAtom);
     const setStatements = useSetAtom(statementsAtom);
-
+    const setContacts = useSetAtom(contactAtom);
     const setInvoices = useSetAtom(invoicesAtom);
 
     useNuiEvent('phone', 'AppBankSetData', data => {
         setAccountId(data.account);
         setBalance(data.balance);
     });
+
+    useNuiEvent('phone', 'AppBankSetInvoices', setInvoices);
+
+    useNuiEvent('phone', 'AppBankSetStatements', setStatements);
+    useNuiEvent('phone', 'AppBankAddStatement', (statement: BankStatement) => setStatements(s => [statement, ...s]));
+
+    useNuiEvent('phone', 'AppBankSetContacts', setContacts);
+    useNuiEvent('phone', 'AppBankAddContact', (contact: BankContact) => setContacts(c => [contact, ...c]));
+    useNuiEvent('phone', 'AppBankRemoveContact', (id: number) =>
+        setContacts(c => c.filter(contact => contact.id !== id))
+    );
 
     useInjectDebugData(() => {
         setBalance(1000);

@@ -77,7 +77,15 @@ export const BankHome = memo(() => {
                 </div>
             </div>
 
-            <ul className="relative space-y-2 h-[49%] w-full px-4 overflow-auto">
+            <ul
+                className={clsx(
+                    'relative space-y-2 h-[49%] w-full px-4 overflow-auto scrollbar scrollbar-w-[5px] scrollbar-thumb-rounded-full scrollbar-track-rounded-full',
+                    {
+                        'scrollbar-thumb-white/80': theme === 'dark',
+                        'scrollbar-thumb-black/20': theme === 'light',
+                    }
+                )}
+            >
                 {statements.map(statement => (
                     <HistoryRow key={statement.id} statement={statement} />
                 ))}

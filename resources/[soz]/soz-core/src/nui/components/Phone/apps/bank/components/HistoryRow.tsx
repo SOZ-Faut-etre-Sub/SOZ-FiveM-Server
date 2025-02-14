@@ -51,7 +51,7 @@ export const HistoryRow: FunctionComponent<HistoryRowProps> = ({ statement }) =>
                     'text-gray-600': theme === 'light',
                 })}
             >
-                <div className="grow min-w-0 overflow-hidden">
+                <div className="grow min-w-0 truncate overflow-hidden">
                     {statement.source_accountid === '' || statement.target_accountid === '' ? (
                         <span>Action effectuée sur votre compte</span>
                     ) : (
@@ -62,7 +62,7 @@ export const HistoryRow: FunctionComponent<HistoryRowProps> = ({ statement }) =>
                     {statement.reason && <p className="text-gray-400 text-ellipsis">{statement.reason}</p>}
                 </div>
 
-                <div className="shrink text-right">
+                <div className="shrink-0 text-right">
                     <span
                         className={clsx({
                             'text-red-500': isSource(statement),
