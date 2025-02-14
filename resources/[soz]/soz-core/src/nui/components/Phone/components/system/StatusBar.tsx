@@ -107,9 +107,13 @@ export const StatusBar: FunctionComponent<StatusBarProps> = memo(({ forceControl
                 })}
             >
                 <Button
-                    className={clsx('flex-none flex items-center text-[#347DD9] text-base w-1/4 focus:outline-none', {
-                        'cursor-default': !appGetBack.display,
-                    })}
+                    className={clsx(
+                        'flex-none flex items-center text-[#347DD9] text-base w-1/4 focus:outline-none',
+                        appGetBack.className,
+                        {
+                            'cursor-default': !appGetBack.display,
+                        }
+                    )}
                     onClick={appGetBack.onClick}
                 >
                     {appGetBack.display && (

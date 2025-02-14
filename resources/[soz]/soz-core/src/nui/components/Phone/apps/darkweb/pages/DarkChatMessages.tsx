@@ -47,7 +47,7 @@ export const DarkChatMessages = memo(() => {
         return myMessages.sort((a, b) => a.createdAt - b.createdAt).reverse()[0]?.createdAt + 60_000;
     }, [messages, number, conversationId]);
 
-    useAppTitleGetBackUpdater(() => navigate(-1));
+    useAppTitleGetBackUpdater(() => navigate(-1), undefined, 'text-teal-500');
     useAppTitleUpdater(true, conversation?.label || 'Erreur');
     useAppTitleActionsUpdater([
         {

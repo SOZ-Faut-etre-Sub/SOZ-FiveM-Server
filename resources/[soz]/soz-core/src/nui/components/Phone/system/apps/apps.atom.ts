@@ -11,6 +11,7 @@ interface AppTitleState {
 interface AppGetBackState {
     display: boolean;
     label: string;
+    className?: ClassValue;
     onClick: () => void;
 }
 
