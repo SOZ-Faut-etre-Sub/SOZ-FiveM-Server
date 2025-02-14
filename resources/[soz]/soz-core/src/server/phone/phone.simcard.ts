@@ -2,6 +2,7 @@ import { Provider } from '@public/core/decorators/provider';
 
 import { Inject } from '../../core/decorators/injectable';
 import { Rpc } from '../../core/decorators/rpc';
+import { ClientEvent } from '../../shared/event/client';
 import { RpcServerEvent } from '../../shared/rpc';
 import { PrismaService } from '../database/prisma.service';
 import { PlayerService } from '../player/player.service';
@@ -13,6 +14,40 @@ export class PhoneSimCard {
 
     @Inject(PlayerService)
     private readonly playerService: PlayerService;
+
+    @Rpc(RpcServerEvent.PHONE_SIMCARD_RESET)
+    async reset(source: number) {
+        const player = this.playerService.getPlayer(source);
+        if (!player) {
+            return;
+        }
+
+        await this.prismaService.phone_profile.deleteMany({
+            where: {
+                number: player.charinfo.phone,
+            },
+        });
+
+        await this.prismaService.phone_notes.deleteMany({
+            where: {
+                identifier: player.citizenid,
+            },
+        });
+
+        await this.prismaService.phone_contacts.deleteMany({
+            where: {
+                identifier: player.citizenid,
+            },
+        });
+
+        await this.prismaService.phone_gallery.deleteMany({
+            where: {
+                identifier: player.citizenid,
+            },
+        });
+
+        TriggerClientEvent(ClientEvent.ADMIN_SWITCH_CHARACTER, source);
+    }
 
     @Rpc(RpcServerEvent.PHONE_SIMCARD_GET_AVATAR)
     async getAvatar(source: number): Promise<string> {

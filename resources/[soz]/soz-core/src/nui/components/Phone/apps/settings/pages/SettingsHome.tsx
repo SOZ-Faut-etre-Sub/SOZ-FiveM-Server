@@ -19,14 +19,15 @@ import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import { usePhoneAPI } from '../../../api/usePhoneAPI';
 import { Button } from '../../../components/Button';
 import { ContactPicture } from '../../../components/ContactPicture';
 import { List, ListItem } from '../../../components/List';
 import { AppContent } from '../../../components/system/AppContent';
 import { AppTitle } from '../../../components/system/AppTitle';
 import { AppWrapper } from '../../../components/system/AppWrapper';
-import { IActionSheetOption } from '../../../system/action-sheet/action.sheet.types';
 import { useActionSheet } from '../../../system/action-sheet/hooks/useActionSheet';
+import { useAlert } from '../../../system/alerts/hooks/useAlert';
 import { useApp } from '../../../system/apps/hooks/useApp';
 import { useConfig } from '../../../system/config/config.atom';
 import {
@@ -58,7 +59,9 @@ export const SettingsHome = () => {
     const { number } = useSimCard();
 
     const config = useConfig();
+    const { resetPhone } = usePhoneAPI();
 
+    const { sendAlert } = useAlert();
     const { avatar } = useAvatar();
 
     const { openActionSheet, closeActionSheet } = useActionSheet();
@@ -99,14 +102,21 @@ export const SettingsHome = () => {
         )
     );
 
-    const resetSettingsOpts: IActionSheetOption[] = [
-        {
-            selected: false,
-            onClick: () => resetSettings(),
-            key: 'RESET_SETTINGS',
-            label: t('SETTINGS.OPTIONS.RESET_SETTINGS'),
-        },
-    ];
+    const resetPhoneSettings = () => {
+        sendAlert(
+            'Réinitialisation les paramètres',
+            'Êtes-vous sûr de vouloir réinitialiser les paramètres de votre téléphone ?',
+            resetSettings
+        );
+    };
+
+    const resetPhoneStorage = () => {
+        sendAlert(
+            'Réinitialisation de votre ZPhone',
+            "Souhaitez-vous vraiment réinitialiser les valeurs d'usines de votre ZPhone ? Attention, cette action est irréversible et supprimera votre avatar, vos notes, contacts et photos.",
+            resetPhone
+        );
+    };
 
     const handleChooseImage = useCallback(() => {
         navigate(
@@ -289,16 +299,24 @@ export const SettingsHome = () => {
                     <SettingSwitch
                         label={t('SETTINGS.OPTIONS.HIDE_PICTURES.DESCRIPTION')}
                         icon={<EyeOffIcon />}
-                        color="bg-[#c41515]"
+                        color="bg-[#EA4E3D]"
                         value={config.hidePictures}
                         onClick={curr => handleSettingChange('hidePictures', !curr)}
                     />
+                </List>
+
+                <List>
                     <SettingItem
                         label={t('SETTINGS.OPTIONS.RESET_SETTINGS')}
-                        icon={<TrashIcon />}
+                        icon={<AdjustmentsIcon />}
                         color="bg-[#f11f1f]"
-                        onClick={openActionSheet}
-                        options={resetSettingsOpts}
+                        onClick={resetPhoneSettings}
+                    />
+                    <SettingItem
+                        label={t('SETTINGS.OPTIONS.RESET_PHONE')}
+                        icon={<TrashIcon />}
+                        color="bg-[#ae1313]"
+                        onClick={resetPhoneStorage}
                     />
                 </List>
             </AppContent>

@@ -38,6 +38,11 @@ export class PhoneSimCard {
         this.nuiDispatch.dispatch('phone', 'SetSocietySimCard', SocietyNumberList[id]);
     }
 
+    @OnNuiEvent(NuiEvent.PhoneSimCardReset)
+    async onReset() {
+        await emitRpc(RpcServerEvent.PHONE_SIMCARD_RESET);
+    }
+
     @OnNuiEvent(NuiEvent.PhoneSimCardUpdateAvatar)
     async onUpdateAvatar({ avatar }: { avatar: string }) {
         await emitRpc(RpcServerEvent.PHONE_SIMCARD_UPDATE_AVATAR, avatar);

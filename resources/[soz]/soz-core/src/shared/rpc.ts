@@ -307,6 +307,7 @@ export enum RpcServerEvent {
 
     XMAS_GET_SCENE_STATE = 'soz-core:server:xmas:get-scene-state',
 
+    PHONE_SIMCARD_RESET = 'soz-core:server:phone:simcard:reset',
     PHONE_SIMCARD_GET_AVATAR = 'soz-core:server:phone:simcard:get-avatar',
     PHONE_SIMCARD_UPDATE_AVATAR = 'soz-core:server:phone:simcard:update-avatar',
     PHONE_SIMCARD_CALLS_HISTORY_GET = 'soz-core:server:phone:simcard:calls-history:get',

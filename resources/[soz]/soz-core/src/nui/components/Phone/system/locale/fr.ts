@@ -38,7 +38,8 @@ export const fr = {
                 ZOOM: 'Zoom',
                 TEXT_ZOOM: 'Taille des SMS',
                 WALLPAPER: "Fond d'écran",
-                RESET_SETTINGS: 'Réinitialiser toutes vos données',
+                RESET_SETTINGS: 'Réinitialiser vos paramètres',
+                RESET_PHONE: 'Réinitialiser votre ZPhone',
                 HIDE_PICTURES: {
                     TITLE: 'Mode NSFW',
                     DESCRIPTION: 'Masquer les images par défaut',
@@ -74,6 +75,8 @@ export const fr = {
             FEEDBACK: {
                 UPDATE_FAILED: 'Mise a jour impossible',
                 UPDATE_SUCCESS: 'Image mise a jour',
+                RESET_SUCCESS: 'Paramètres réinitialisés',
+                RESET_FAILED: 'Impossible de réinitialiser les paramètres',
             },
         },
         CAMERA: {
