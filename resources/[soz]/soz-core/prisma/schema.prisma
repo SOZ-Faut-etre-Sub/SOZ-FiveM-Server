@@ -953,13 +953,14 @@ model vehicle_order {
 }
 
 model loot_item {
-    id       Int     @id @default(autoincrement())
-    type     String  @db.VarChar(100)
-    item     String  @db.VarChar(100)
-    metadata String? @db.Text
-    min      Int     @default(1)
-    max      Int
-    chance   Int
+    id           Int     @id @default(autoincrement())
+    type         String  @db.VarChar(100)
+    item         String  @db.VarChar(100)
+    metadata     String? @db.Text
+    min          Int     @default(1)
+    max          Int
+    chance       Int
+    cryptoPrice  Int?
 
     @@index([type])
 }
