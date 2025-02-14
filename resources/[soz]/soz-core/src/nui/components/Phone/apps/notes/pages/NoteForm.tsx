@@ -100,9 +100,8 @@ export const NoteForm: FunctionComponent = () => {
                     />
                     <TextareaField
                         className="grow"
-                        {...register('content', { required: true, maxLength: 1024 })}
+                        {...register('content', { required: true })}
                         placeholder={t('GENERIC.CONTENT')}
-                        maxLength={1024}
                     />
                 </form>
             </AppContent>
