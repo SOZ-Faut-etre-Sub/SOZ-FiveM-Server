@@ -134,7 +134,7 @@ const DarkWebInput: FunctionComponent<IProps> = ({ darkwebConversationId, autoFo
                 <EmojiHappyIcon className={'h-5 w-5 mx-2 text-teal-500 hover:text-teal-400'} />
             </button>
             <TextareaField
-                className="bg-black/20 border-2 border-teal-500 text-teal-500 placeholder:text-teal-800"
+                className="bg-black/20 border-2 border-teal-500 text-teal-800 placeholder:text-teal-800"
                 onKeyPress={handleKeyPress}
                 value={message}
                 onChange={e => setMessage(e.target.value)}
