@@ -5,12 +5,14 @@ import { fetchNui } from '../../../../../fetch';
 import { GameView } from '../../../../../hook/createGameView';
 import { RootState } from '../../../../../store';
 import { useDynamicIsland } from '../../../system/dynamic-island/hooks/useDynamicIsland';
+import { useSetPhoneFreeCamera } from '../../../system/phone.atom';
 
 const OPERATION = `{"operationName": "createScreenshot", "variables": {"file":null}, "query":"mutation createScreenshot($file: Upload!) { createScreenshot(file: $file) {url} }"}`;
 const MAP = `{"0": ["variables.file"]}`;
 
 export const usePhoto = () => {
     const { sendIsland } = useDynamicIsland();
+    const setFreeCamera = useSetPhoneFreeCamera();
 
     const apiEndpoint = useSelector((state: RootState) => state.api.apiEndpoint);
     const publicEndpoint = useSelector((state: RootState) => state.api.publicEndpoint);
@@ -24,6 +26,7 @@ export const usePhoto = () => {
             const blob = await gameView.takeScreenshot();
             const file = new File([blob], 'screenshot.webp', { type: 'image/webp' });
 
+            setFreeCamera(false);
             formData.append('0', file);
         } catch (e) {
             console.error(e);
