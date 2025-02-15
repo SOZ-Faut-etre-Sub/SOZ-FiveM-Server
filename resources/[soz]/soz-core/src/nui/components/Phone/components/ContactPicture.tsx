@@ -13,7 +13,7 @@ export const ContactPicture: FunctionComponent<Props> = ({ picture, size = 'smal
     const randomId = useId();
 
     return (
-        <div
+        <img
             className={clsx('bg-cover bg-center my-1 rounded-full shrink-0', {
                 'bg-ios-700': theme === 'dark',
                 'bg-gray-300': theme === 'light',
@@ -22,7 +22,10 @@ export const ContactPicture: FunctionComponent<Props> = ({ picture, size = 'smal
                 'size-20': size === 'large',
                 'size-28': size === 'xlarge',
             })}
-            style={{ backgroundImage: `url(${picture}?id=${randomId})` }}
+            onError={e => (e.currentTarget.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg"/>')}
+            src={`${picture}?id=${randomId}`}
+            alt={randomId}
+            loading="lazy"
         />
     );
 };
