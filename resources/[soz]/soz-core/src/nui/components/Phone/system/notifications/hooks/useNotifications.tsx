@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 import { uuidv4 } from '../../../../../../core/utils';
 import { useApps } from '../../apps/hooks/useApps';
 import { notificationsAtom } from '../notification.atom';
-import { INotification } from '../notification.types';
+import { INotification, NewNotification } from '../notification.types';
 
 export const useNotification = (id: INotification['id']) => {
     return useAtomValue(notificationsAtom).find(notification => notification.id === id);
@@ -16,7 +16,7 @@ export const useNotifications = () => {
     const apps = useApps();
 
     const addNotification = useCallback(
-        (notification: INotification, timeout: number = 3000) => {
+        (notification: NewNotification, timeout: number = 3000) => {
             const app = apps.find(app => app.id === notification.app);
             const newNotification = { id: uuidv4(), ...notification, icon: app?.icon };
 
@@ -34,9 +34,11 @@ export const useNotifications = () => {
         [setNotifications]
     );
 
-    const removeNotificationByIdAndApp = useCallback(
-        (app: INotification['app'], id: INotification['id']) =>
-            setNotifications(prev => prev.filter(notification => notification.id !== id && notification.app !== app)),
+    const removeNotificationByGroup = useCallback(
+        (app: INotification['app'], group: INotification['group']) =>
+            setNotifications(prev =>
+                prev.filter(notification => notification.group !== group && notification.app !== app)
+            ),
         [setNotifications]
     );
 
@@ -52,7 +54,7 @@ export const useNotifications = () => {
         addNotification,
         removeNotification,
         removeAppNotifications,
-        removeNotificationByIdAndApp,
+        removeNotificationByGroup,
 
         cleanNotifications,
     };

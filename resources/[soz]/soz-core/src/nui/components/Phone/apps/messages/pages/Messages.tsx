@@ -35,7 +35,7 @@ export const Messages = () => {
 
     const query = useQueryParams();
 
-    const { removeNotificationByIdAndApp } = useNotifications();
+    const { removeNotificationByGroup } = useNotifications();
 
     const conversation = useConversation(conversationId);
     const messages = useMessages(conversationId);
@@ -53,7 +53,7 @@ export const Messages = () => {
         if (!conversation) return;
 
         fetchNui(NuiEvent.PhoneSimCardSetConversationAsRead, conversation.conversation_id);
-        removeNotificationByIdAndApp('messages', conversation.conversation_id);
+        removeNotificationByGroup('messages', conversation.conversation_id);
     }, []);
 
     useEffect(() => {

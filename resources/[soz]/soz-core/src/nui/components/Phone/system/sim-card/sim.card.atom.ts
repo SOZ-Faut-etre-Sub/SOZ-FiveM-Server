@@ -160,8 +160,8 @@ export const useSimCardStateHandlers = () => {
             notificationSound.play();
             addNotification(
                 {
-                    id: message.conversation_id,
                     app: 'messages',
+                    group: message.conversation_id,
                     title: message.author,
                     content: message.message,
                     onClick: () => navigate(`/messages/${message.conversation_id}`),

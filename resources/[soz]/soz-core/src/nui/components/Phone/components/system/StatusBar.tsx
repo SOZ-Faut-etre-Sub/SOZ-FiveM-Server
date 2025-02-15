@@ -152,7 +152,7 @@ export const StatusBar: FunctionComponent<StatusBarProps> = memo(({ forceControl
                 >
                     <div className="mt-24 mb-12 font-semibold text-8xl">{time}</div>
 
-                    <ul className="flex grow flex-col-reverse gap-2 p-4 overflow-y-scroll scrollbar scrollbar-w-[5px] scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
+                    <ul className="flex grow flex-col-reverse gap-2 p-4 w-full overflow-y-scroll scrollbar scrollbar-w-[5px] scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
                         {notifications.map((notification, idx) => (
                             <NotificationItem
                                 key={idx}
@@ -170,6 +170,7 @@ export const StatusBar: FunctionComponent<StatusBarProps> = memo(({ forceControl
 
                         {planeMode && (
                             <NotificationItem
+                                id="plane-mode"
                                 app="settings"
                                 notificationIcon={FlyIcon}
                                 title={t('SETTINGS.OPTIONS.PLANE_MODE')}

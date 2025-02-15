@@ -20,7 +20,6 @@ export const useNotificationVisibility = () => {
 
             if (notificationTimer.current) {
                 clearTimeout(notificationTimer.current);
-                notificationTimer.current = undefined;
             }
 
             notificationTimer.current = setTimeout(() => {
