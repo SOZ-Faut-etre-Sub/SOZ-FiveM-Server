@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { NuiEvent } from '../../../../../../shared/event/nui';
 import { SocietyMessage, SocietyMessagePosition } from '../../../../../../shared/phone/apps/society';
+import { fromVector3Object } from '../../../../../../shared/polyzone/vector';
 import { fetchNui } from '../../../../../fetch';
 import { useClipboard } from '../../../../../hook/clipboard';
 import { useCallAPI } from '../../../api/useCallAPI';
@@ -62,8 +63,12 @@ export const MessageItem: FunctionComponent<{ message: SocietyMessage }> = ({ me
                         label: 'Aller à la position',
                         color: 'bg-gray-500 text-white',
                         icon: LocationMarkerIcon,
-                        onClick: () =>
-                            fetchNui<SocietyMessagePosition, never>(NuiEvent.SetWaypoint, JSON.parse(message.position)),
+                        onClick: () => {
+                            const position = JSON.parse(message.position);
+                            fetchNui<SocietyMessagePosition, never>(NuiEvent.SetWaypoint, {
+                                coords: fromVector3Object(position),
+                            });
+                        },
                         condition: Boolean(message.position),
                     },
                     {
