@@ -69,7 +69,7 @@ export const BankHome = memo(() => {
                             'text-emerald-500': balance > 0,
                         })}
                     >
-                        {balance?.toLocaleString('en-US', FORMAT_CURRENCY)}
+                        {balance?.toLocaleString('en-US', { ...FORMAT_CURRENCY, style: 'currency' })}
                     </h2>
                     <TextWithCopy text={accountId}>
                         IBAN: <span className="font-bold">{accountId}</span>
