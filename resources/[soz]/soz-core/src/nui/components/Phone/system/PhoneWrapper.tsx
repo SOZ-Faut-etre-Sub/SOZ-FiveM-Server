@@ -1,6 +1,7 @@
 import '../Phone.scss';
 
 import { animated, useSpring } from '@react-spring/web';
+import clsx from 'clsx';
 import React, { FunctionComponent, memo, PropsWithChildren, ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
 
@@ -63,9 +64,14 @@ export const PhoneWrapper: FunctionComponent<PropsWithChildren> = memo(({ childr
     });
 
     return (
-        <animated.div onClick={handlePhoneClick} className="font-sfpro relative h-screen w-screen z-10">
+        <animated.div
+            onClick={handlePhoneClick}
+            className={clsx('font-sfpro relative h-screen w-screen z-10', {
+                'pointer-events-auto': pathname.includes('/camera'),
+            })}
+        >
             <animated.div
-                className="absolute bg-cover origin-bottom-right"
+                className="absolute bg-cover origin-bottom-right pointer-events-auto"
                 style={{
                     ...styles,
                     width: PHONE_WIDTH,

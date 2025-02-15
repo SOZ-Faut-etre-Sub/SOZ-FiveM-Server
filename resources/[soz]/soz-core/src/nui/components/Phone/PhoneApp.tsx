@@ -55,7 +55,7 @@ export const PhoneApp: FunctionComponent = () => {
     );
 
     return (
-        <div className="absolute h-full w-full">
+        <div className="absolute h-full w-full pointer-events-none">
             <SoundProvider>
                 <MemoryRouter>
                     <PhoneAppHooks />
