@@ -64,10 +64,7 @@ export const MessageItem: FunctionComponent<{ message: SocietyMessage }> = ({ me
                         color: 'bg-gray-500 text-white',
                         icon: LocationMarkerIcon,
                         onClick: () => {
-                            const position = JSON.parse(message.position);
-                            fetchNui<SocietyMessagePosition, never>(NuiEvent.SetWaypoint, {
-                                coords: fromVector3Object(position),
-                            });
+                            fetchNui<SocietyMessagePosition, never>(NuiEvent.SetWaypoint, JSON.parse(message.position));
                         },
                         condition: Boolean(message.position),
                     },

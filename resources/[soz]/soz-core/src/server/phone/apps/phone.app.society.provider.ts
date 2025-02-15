@@ -11,10 +11,11 @@ import {
     NewSocietyMessage,
     SocietyMessage,
     SocietyMessageInfo,
+    SocietyMessagePosition,
     UpdateSocietyMessage,
 } from '@public/shared/phone/apps/society';
 import { PlayerData } from '@public/shared/player';
-import { toVector3Object, Vector3 } from '@public/shared/polyzone/vector';
+import { Vector3 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
 import { subDays } from 'date-fns';
 
@@ -71,12 +72,12 @@ export class PhoneAppSocietyProvider {
         const username = message.overrideIdentifier ?? `${player?.charinfo?.firstname} ${player?.charinfo?.lastname}`;
         const identifier = (message.anonymous ? '#' : '') + (message.overrideIdentifier ?? player?.charinfo?.phone);
 
-        let position = message.position
-            ? JSON.stringify(toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3))
+        let position: SocietyMessagePosition | null = message.position
+            ? { coords: GetEntityCoords(GetPlayerPed(source)) as Vector3 }
             : null;
 
         if (message.pedPosition) {
-            position = JSON.stringify(message.pedPosition);
+            position = message.pedPosition;
         }
 
         if (message.number === SocietyNumberList.fbi && username) {
@@ -88,7 +89,7 @@ export class PhoneAppSocietyProvider {
                 conversation_id: message.number,
                 source_phone: identifier,
                 message: message.message,
-                position,
+                position: JSON.stringify(position),
                 type: message?.type ?? null,
             },
         });
@@ -128,7 +129,7 @@ export class PhoneAppSocietyProvider {
                         conversation_id: SocietyNumberList[society],
                         source_phone: identifier,
                         message: `[${message.number.replace('555-', '')}] ${message.message}`,
-                        position,
+                        position: JSON.stringify(position),
                         type: message?.type ?? null,
                     },
                 });
@@ -153,7 +154,7 @@ export class PhoneAppSocietyProvider {
                         conversation_id: SocietyNumberList[society],
                         source_phone: identifier,
                         message: `[${message.number.replace('555-', '')}] ${message.message}`,
-                        position,
+                        position: JSON.stringify(position),
                         type: message?.type ?? null,
                     },
                 });
