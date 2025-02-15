@@ -13,11 +13,17 @@ import { useEmergency } from '../../system/emergency/emergency.atom';
 import { useNotifications } from '../../system/notifications/hooks/useNotifications';
 import { usePhoneAvailable } from '../../system/phone.atom';
 import { useRingtoneSound } from '../../system/sound/hooks/useRingtoneSound';
+import { alerts } from './messages.constant';
 
 const policeNumbers = ['555-POLICE', '555-BCSO', '555-SASP', '555-LSPD', '555-FBI', '555-LSCS'];
 
 const messagesAtom = atom<Array<SocietyMessage>>([]);
-const unTakenMessagesCountAtom = atom(get => get(messagesAtom)?.filter(m => !m.isTaken)?.length ?? 0);
+const unTakenMessagesCountAtom = atom(
+    get =>
+        get(messagesAtom)
+            ?.filter(m => !m.isTaken)
+            ?.filter(m => !alerts.includes(m.info?.type))?.length ?? 0
+);
 
 export const useSocietyMessages = () => useAtomValue(messagesAtom);
 export const useUnTakenMessagesCount = () => useAtomValue(unTakenMessagesCountAtom);
