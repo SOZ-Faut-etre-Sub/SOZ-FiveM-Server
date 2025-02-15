@@ -115,7 +115,9 @@ export class PhoneAppSocietyProvider {
             Object.entries(SocietyNumberList).find(([, value]) => value === message.number)?.[0]
         );
 
-        players.forEach(player => this.createMessageBroadcastEvent(player, societyMessage, messageInfo));
+        players.forEach(player =>
+            this.createMessageBroadcastEvent(player, societyMessage, messageInfo, message.htmlMessage)
+        );
 
         const hasLsmcOnDuty = players.filter(player => player.job.onduty).length > 0;
 
@@ -138,7 +140,9 @@ export class PhoneAppSocietyProvider {
 
                 this.serverStateService
                     .getPlayersByJob(society)
-                    .forEach(player => this.createMessageBroadcastEvent(player, societyMessage, messageInfo));
+                    .forEach(player =>
+                        this.createMessageBroadcastEvent(player, societyMessage, messageInfo, message.htmlMessage)
+                    );
             }
         }
 
@@ -156,7 +160,9 @@ export class PhoneAppSocietyProvider {
 
                 this.serverStateService
                     .getPlayersByJob(society)
-                    .forEach(player => this.createMessageBroadcastEvent(player, societyMessage, messageInfo));
+                    .forEach(player =>
+                        this.createMessageBroadcastEvent(player, societyMessage, messageInfo, message.htmlMessage)
+                    );
             }
         }
     }
@@ -209,10 +215,12 @@ export class PhoneAppSocietyProvider {
     private createMessageBroadcastEvent(
         player: PlayerData,
         message: phone_society_messages,
-        messageInfo: SocietyMessageInfo
+        messageInfo: SocietyMessageInfo,
+        htmlMessage?: string
     ) {
         const messageData = {
             ...this.messageMapper(message),
+            htmlMessage,
             muted: !player.job.onduty,
             info: messageInfo,
         };
