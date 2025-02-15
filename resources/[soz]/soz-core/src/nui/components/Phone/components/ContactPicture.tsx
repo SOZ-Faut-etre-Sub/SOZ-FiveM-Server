@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useId } from 'react';
 
 import { useThemeConfig } from '../system/config/config.atom';
 
@@ -10,6 +10,7 @@ type Props = {
 
 export const ContactPicture: FunctionComponent<Props> = ({ picture, size = 'small' }) => {
     const theme = useThemeConfig();
+    const randomId = useId();
 
     return (
         <div
@@ -21,7 +22,7 @@ export const ContactPicture: FunctionComponent<Props> = ({ picture, size = 'smal
                 'size-20': size === 'large',
                 'size-28': size === 'xlarge',
             })}
-            style={{ backgroundImage: `url(${picture})` }}
+            style={{ backgroundImage: `url(${picture}?id=${randomId})` }}
         />
     );
 };
