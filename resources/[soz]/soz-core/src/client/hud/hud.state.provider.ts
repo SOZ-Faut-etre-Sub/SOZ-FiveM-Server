@@ -133,13 +133,13 @@ export class HudStateProvider {
         }
     }
 
-    @On('phone:camera:enter')
+    @On(ClientEvent.PHONE_CAMERA_OPEN)
     public enterCamera(): void {
         this.isPhoneCameraMode = true;
         this.updateHudState();
     }
 
-    @On('phone:camera:exit')
+    @On(ClientEvent.PHONE_CAMERA_CLOSE)
     public exitCamera(): void {
         this.isPhoneCameraMode = false;
         this.updateHudState();

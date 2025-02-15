@@ -474,4 +474,6 @@ export enum ClientEvent {
     PHONE_APP_NEWS_BROADCAST = 'soz-core:server:phone:app:news:broadcast',
     PHONE_APP_WEATHER_UPDATE_FORECASTS = 'soz-core:server:phone:app:weather:updateForecasts',
     PHONE_APP_WEATHER_UPDATE_STORM_ALERT = 'soz-core:server:phone:app:weather:updateStormAlert',
+    PHONE_CAMERA_OPEN = 'soz-core:client:phone:camera:open',
+    PHONE_CAMERA_CLOSE = 'soz-core:client:phone:camera:close',
 }

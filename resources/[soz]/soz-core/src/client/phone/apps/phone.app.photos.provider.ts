@@ -47,6 +47,7 @@ export class PhoneAppPhotosProvider {
         this.phoneState.setPhoneOnCamera(true);
         CreateMobilePhone(1);
         CellCamActivate(true, true);
+        TriggerEvent(ClientEvent.PHONE_CAMERA_OPEN);
     }
 
     @OnNuiEvent(NuiEvent.PhoneAppPhotosExitCamera)
@@ -55,5 +56,6 @@ export class PhoneAppPhotosProvider {
         CellCamActivate(false, false);
         DestroyMobilePhone();
         this.nuiDispatch.dispatch('phone', 'SetPhoneFreeCamera', false);
+        TriggerEvent(ClientEvent.PHONE_CAMERA_CLOSE);
     }
 }
