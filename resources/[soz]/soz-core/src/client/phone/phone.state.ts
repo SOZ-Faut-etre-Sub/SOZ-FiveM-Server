@@ -168,13 +168,12 @@ export class PhoneState {
         } else if (!this.isInCall()) {
             await this.removePhoneProp();
         }
-
-        SetPedConfigFlag(playerPed, 104, this.phoneOpen);
     }
 
     private async createPhoneProp() {
         if (this.phoneProp !== null) return;
 
+        SetPedConfigFlag(PlayerPedId(), 104, false);
         this.phoneProp = await this.attachedObjectService.attachObjectToPlayer({
             bone: 28422,
             model: 'soz_prop_phone',
@@ -187,6 +186,7 @@ export class PhoneState {
     private async removePhoneProp() {
         if (this.phoneProp === null) return;
 
+        SetPedConfigFlag(PlayerPedId(), 104, true);
         this.attachedObjectService.detachObjectToPlayer(this.phoneProp);
         this.phoneProp = null;
     }
