@@ -81,6 +81,7 @@ export const filteredContactsAtom = atom<Array<Contact | Separator>>(get => {
 export const conversationsAtom = atom<Array<MessageConversation>>([]);
 export const conversationSearchQueryAtom = atom<string>('');
 export const filteredConversationsAtom = atom<Array<MessageConversation & { last_message: string }>>(get => {
+    const myNumber = get(numberAtom);
     const conversations = get(conversationsAtom);
     const messages = get(messagesAtom);
     const contacts = get(contactsAtom);
@@ -97,14 +98,16 @@ export const filteredConversationsAtom = atom<Array<MessageConversation & { last
                 contact?.number?.includes(searchQuery)
             );
         })
-        .map(c => ({
-            ...c,
-            last_message: formatMessage(
-                messages
-                    .filter(m => m.conversation_id === c.conversation_id)
-                    .sort((a, b) => b.createdAt - a.createdAt)?.[0]?.message
-            ),
-        }));
+        .map(c => {
+            const lastMessage = messages
+                .filter(m => m.conversation_id === c.conversation_id)
+                .sort((a, b) => b.createdAt - a.createdAt)?.[0];
+
+            return {
+                ...c,
+                last_message: formatMessage(lastMessage?.message, lastMessage?.author === myNumber),
+            };
+        });
 });
 const unreadConversationsCountAtom = atom<number>(
     get => get(filteredConversationsAtom)?.filter(c => c.unread)?.length ?? 0
