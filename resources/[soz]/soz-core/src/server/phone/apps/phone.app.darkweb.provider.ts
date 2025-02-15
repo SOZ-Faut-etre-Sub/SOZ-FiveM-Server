@@ -41,6 +41,9 @@ export class PhoneAppDarkWebProvider {
             distinct: ['id'],
             where: {
                 masked: false,
+                updatedAt: {
+                    gte: new Date(Date.now() - 1000 * 60 * 60 * 24 * 14),
+                },
             },
             orderBy: {
                 updatedAt: 'desc',
