@@ -2,6 +2,7 @@ import { useCallback, useEffect } from 'react';
 
 import { useAssetPath } from '../../../../../hook/assets';
 import { useSoundProvider } from '../providers/SoundProvider';
+import { useSoundSettings } from './useSound';
 
 interface useEndDialSoundValue {
     startTone: () => void;
@@ -13,16 +14,22 @@ export const useEndDialSound = (): useEndDialSoundValue => {
 
     const END_DIAL_URL = getPath(`audio/phone/misc/End-Dial.mp3`);
 
+    if (!sound) {
+        throw new Error('useRingtoneSound must be wrapped in SoundProvider');
+    }
+
+    const options = useSoundSettings('ringtone');
+
     useEffect(() => {
         if (!sound.isMounted(END_DIAL_URL)) {
-            sound.mount(END_DIAL_URL, 0.1, false);
+            sound.mount(END_DIAL_URL, options.volume, false);
             return;
         }
-        sound.volume(END_DIAL_URL, 0.1);
+        sound.volume(END_DIAL_URL, options.volume);
     }, [sound]);
 
     const startTone = useCallback(() => {
-        sound.play(END_DIAL_URL, 0.1, false);
+        sound.play(END_DIAL_URL, options.volume, false);
     }, [sound]);
 
     return { startTone };
