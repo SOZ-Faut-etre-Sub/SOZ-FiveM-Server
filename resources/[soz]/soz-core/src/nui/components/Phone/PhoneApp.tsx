@@ -45,6 +45,7 @@ export const PhoneApp: FunctionComponent = () => {
                   Control.Attack,
                   Control.Attack2,
                   Control.Aim,
+                  Control.Sprint,
                   Control.VehicleAim,
                   Control.VehiclePassengerAim,
                   Control.VehiclePassengerAttack,
