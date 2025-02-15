@@ -517,7 +517,11 @@ export class PlayerHealthProvider {
         const { completed } = await this.progressService.progress(
             'Haltères',
             'Vous faites des haltères...',
-            EXERCISE_TIME
+            EXERCISE_TIME,
+            {},
+            {
+                allowExistingAnimation: true,
+            }
         );
         progressEnd = true;
 
@@ -601,7 +605,15 @@ export class PlayerHealthProvider {
             }
         });
 
-        const { completed } = await this.progressService.progress(type, message, EXERCISE_TIME);
+        const { completed } = await this.progressService.progress(
+            type,
+            message,
+            EXERCISE_TIME,
+            {},
+            {
+                allowExistingAnimation: true,
+            }
+        );
         progressEnd = true;
 
         if (completed) {
