@@ -32,7 +32,7 @@ export const DarkWebConversationSettingsModal = memo(
         const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] = useState<boolean>(false);
 
         const participants = useParticipants(conversation.id.toString());
-        const admins = participants.filter(participant => participant.role === 'ADMIN');
+        const admins = participants?.filter(participant => participant.role === 'ADMIN');
 
         const onPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
             setPasswordInputValue(event.target.value);
