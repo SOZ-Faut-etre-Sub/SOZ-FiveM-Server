@@ -34,7 +34,7 @@ export class PhoneSimCardCalls {
         }
 
         const targetPlayer = this.playerService.getPlayerByPhone(phoneNumber);
-        if (!targetPlayer) {
+        if (!targetPlayer || this.playerAlreadyInCall(targetPlayer.source)) {
             TriggerClientEvent(ClientEvent.PHONE_SIMCARD_CALLS_UPDATE, player.source, {
                 identifier: uuidv4(),
                 transmitter: player.charinfo.phone,
@@ -181,6 +181,12 @@ export class PhoneSimCardCalls {
 
         TriggerClientEvent(ClientEvent.VOIP_VOICE_MUTE_CALL, targetSource, muted);
         TriggerEvent(ServerEvent.VOIP_PHONE_CALL_MUTED, source, muted);
+    }
+
+    private playerAlreadyInCall(source: number) {
+        return Array.from(this.calls.values()).find(
+            call => call.transmitterSource === source || call.receiverSource === source
+        );
     }
 
     private isReceiverIsBusy(receiver: string) {
