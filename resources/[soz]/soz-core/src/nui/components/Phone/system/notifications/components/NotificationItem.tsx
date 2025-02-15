@@ -9,7 +9,7 @@ export const NotificationItem = (notification: INotification) => {
 
     return (
         <li
-            className={`cursor-pointer py-2 px-4 flex items-center gap-4 bg-ios-800 hover:bg-opacity-80 text-white rounded-[20px] text-sm`}
+            className={`cursor-pointer py-2 px-4 flex items-center gap-4 bg-ios-700/80 hover:bg-opacity-80 text-white rounded-[20px] text-sm`}
             onClick={() => {
                 if (onClick) {
                     onClick(notification);

@@ -45,11 +45,15 @@ export const useNotifications = () => {
         [setNotifications]
     );
 
+    const cleanNotifications = useCallback(() => setNotifications([]), [setNotifications]);
+
     return {
         notifications,
         addNotification,
         removeNotification,
         removeAppNotifications,
         removeNotificationByIdAndApp,
+
+        cleanNotifications,
     };
 };

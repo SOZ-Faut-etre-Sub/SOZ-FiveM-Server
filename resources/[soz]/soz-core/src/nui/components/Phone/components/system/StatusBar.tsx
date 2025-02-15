@@ -1,5 +1,4 @@
-import { Transition } from '@headlessui/react';
-import { ChevronLeftIcon } from '@heroicons/react/outline';
+import { ChevronLeftIcon, XIcon } from '@heroicons/react/solid';
 import { animated, useSpring } from '@react-spring/web';
 import clsx from 'clsx';
 import React, { FunctionComponent, memo, useEffect, useMemo } from 'react';
@@ -7,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { BatteryIcon } from '../../assets/battery';
+import CameraIcon from '../../assets/camera.svg';
 import { CellIcon } from '../../assets/cell';
 import { FlyIcon } from '../../assets/fly';
 import { SatelliteIcon } from '../../assets/satellite';
@@ -31,7 +31,7 @@ export const StatusBar: FunctionComponent<StatusBarProps> = memo(({ forceControl
 
     const { t } = useTranslation();
 
-    const { notifications, removeNotification } = useNotifications();
+    const { notifications, removeNotification, cleanNotifications } = useNotifications();
     const { drawerOpen, setDrawerOpen } = useNotificationDrawer();
     const { currentCall } = useCall();
 
@@ -68,8 +68,12 @@ export const StatusBar: FunctionComponent<StatusBarProps> = memo(({ forceControl
         }
     }, [currentCall, pathname, themeConfig, forceControlColor]);
 
-    const styles = useSpring({
+    const titleStyles = useSpring({
         opacity: appTitle.display ? 1 : 0,
+    });
+
+    const drawerStyles = useSpring({
+        translateY: drawerOpen ? `0vh` : `-100vh`,
     });
 
     return (
@@ -122,7 +126,7 @@ export const StatusBar: FunctionComponent<StatusBarProps> = memo(({ forceControl
                         </>
                     )}
                 </Button>
-                <animated.span style={styles} className="grow text-center truncate">
+                <animated.span style={titleStyles} className="grow text-center truncate">
                     <p className="truncate">{appTitle.title}</p>
                     {appTitle.subtitle && <p className="truncate text-gray-500 text-xs">{appTitle.subtitle}</p>}
                 </animated.span>
@@ -141,24 +145,14 @@ export const StatusBar: FunctionComponent<StatusBarProps> = memo(({ forceControl
                 </div>
             </span>
 
-            <Transition
-                appear={true}
-                show={drawerOpen}
-                className="absolute inset-0 h-full w-full z-40"
-                enter="transition ease-in-out duration-300 transform"
-                enterFrom="-translate-y-full"
-                enterTo="translate-y-0"
-                leave="transition ease-in-out duration-300 transform"
-                leaveFrom="translate-y-0"
-                leaveTo="-translate-y-full"
-            >
+            <animated.div style={drawerStyles} className="absolute inset-0 h-full w-full z-40">
                 <div
-                    className="h-full bg-ios-800 bg-opacity-90 text-white flex flex-col items-center"
+                    className="flex flex-col items-center h-full bg-ios-800 bg-opacity-90 text-white pb-12"
                     onClick={() => setDrawerOpen(false)}
                 >
                     <div className="mt-24 mb-12 font-semibold text-8xl">{time}</div>
 
-                    <ul className="flex flex-col-reverse gap-2 h-full w-full p-4 mb-6 overflow-y-scroll scrollbar scrollbar-w-[5px] scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
+                    <ul className="flex grow flex-col-reverse gap-2 p-4 overflow-y-scroll scrollbar scrollbar-w-[5px] scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
                         {notifications.map((notification, idx) => (
                             <NotificationItem
                                 key={idx}
@@ -186,9 +180,31 @@ export const StatusBar: FunctionComponent<StatusBarProps> = memo(({ forceControl
                                 }}
                             />
                         )}
+
+                        {notifications.length > 0 && (
+                            <div className="flex justify-between items-center">
+                                <h2 className="text-xl">Centre de Notification</h2>
+
+                                <button
+                                    className="flex justify-center items-center size-7 rounded-full bg-ios-700/80 text-white/50"
+                                    onClick={cleanNotifications}
+                                >
+                                    <XIcon className="size-4" />
+                                </button>
+                            </div>
+                        )}
                     </ul>
+
+                    <div className="flex justify-end items-center gap-2 px-6 w-full">
+                        <button
+                            className="flex justify-center items-center size-12 rounded-full bg-ios-700/80"
+                            onClick={() => navigate('/camera')}
+                        >
+                            <CameraIcon className="size-6" />
+                        </button>
+                    </div>
                 </div>
-            </Transition>
+            </animated.div>
         </>
     );
 });
