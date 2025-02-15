@@ -63,6 +63,13 @@ export const NewConversation = () => {
                         }
                         itemCount={contacts.length}
                         itemData={contacts}
+                        className={clsx(
+                            'scrollbar scrollbar-w-[5px] scrollbar-thumb-rounded-full scrollbar-track-rounded-full',
+                            {
+                                'scrollbar-thumb-white/80': theme === 'dark',
+                                'scrollbar-thumb-black/20': theme === 'light',
+                            }
+                        )}
                     >
                         {ContactItem}
                     </List>
