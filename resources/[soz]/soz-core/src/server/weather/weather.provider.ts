@@ -289,7 +289,7 @@ export class WeatherProvider {
     }
 
     @Rpc(RpcServerEvent.GET_FORECASTS)
-    public async getForecasts(): Promise<ForecastWithTemperature[]> {
+    public getForecasts(): ForecastWithTemperature[] {
         return this.incomingForecasts;
     }
 
