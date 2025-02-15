@@ -27,9 +27,7 @@ export class PhoneSimCardMessages {
         }
 
         await this.reloadConversations();
-
-        const messages = await emitRpc<Message[]>(RpcServerEvent.PHONE_SIMCARD_MESSAGES_GET);
-        this.nuiDispatch.dispatch('phone', 'SetMessages', messages);
+        await this.reloadMessages();
     }
 
     @OnNuiEvent(NuiEvent.PhoneSimCardAddConversation)
@@ -40,6 +38,7 @@ export class PhoneSimCardMessages {
         );
 
         await this.reloadConversations();
+        await this.reloadMessages();
 
         return {
             conversation_id: addedConversation.conversation_id,
@@ -78,5 +77,10 @@ export class PhoneSimCardMessages {
     async newMessage(message: Message) {
         this.nuiDispatch.dispatch('phone', 'AddMessage', message);
         await this.reloadConversations();
+    }
+
+    async reloadMessages() {
+        const messages = await emitRpc<Message[]>(RpcServerEvent.PHONE_SIMCARD_MESSAGES_GET);
+        this.nuiDispatch.dispatch('phone', 'SetMessages', messages);
     }
 }

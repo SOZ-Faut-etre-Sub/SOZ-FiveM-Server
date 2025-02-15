@@ -55,10 +55,6 @@ export class PhoneState {
     public setPhoneOpen(value: boolean) {
         this.phoneOpen = value;
         this.nuiDispatch.dispatch('phone', 'SetVisibility', value);
-
-        if (this.playerService.getState().isDead) return;
-
-        ClearPedTasks(PlayerPedId());
     }
 
     public setPhoneFocus(value: boolean) {

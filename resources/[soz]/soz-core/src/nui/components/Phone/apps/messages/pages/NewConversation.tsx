@@ -110,7 +110,7 @@ const ContactItem: FunctionComponent<VirtualizedListProps<Contact | Separator>> 
             >
                 <div className="relative flex-shrink-0">
                     <ContactPicture picture={contact.avatar} />
-                    {contact.favorite && (
+                    {Boolean(contact?.favorite) && (
                         <StarIcon className="absolute right-0 top-0 size-4 text-yellow-500 translate-x-1/4" />
                     )}
                 </div>
